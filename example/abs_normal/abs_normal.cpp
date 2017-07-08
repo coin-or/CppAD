@@ -25,7 +25,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # include <cppad/utility/test_boolofvoid.hpp>
 
 // external complied tests
-extern bool eval_tilde(void);
+extern bool abs_eval(void);
 extern bool get_started(void);
 extern bool lp_box(void);
 extern bool min_non_smo(void);
@@ -43,7 +43,7 @@ int main(void)
 	// This line is used by test_one.sh
 
 	// external compiled tests
-	Run( eval_tilde,          "eval_tilde"         );
+	Run( abs_eval,          "abs_eval"         );
 	Run( get_started,         "get_started"        );
 	Run( lp_box,              "lp_box"             );
 	Run( min_non_smo,         "min_non_smo"        );

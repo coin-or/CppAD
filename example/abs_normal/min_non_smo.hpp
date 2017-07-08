@@ -142,7 +142,7 @@ $end
 */
 # include <cppad/cppad.hpp>
 # include "min_tilde.hpp"
-# include "eval_tilde.hpp"
+# include "abs_eval.hpp"
 
 namespace {
 	CPPAD_TESTVECTOR(double) min_non_smo_join(
@@ -220,7 +220,7 @@ bool min_non_smo(
 	if( level > 0 )
 	{	std::cout << "start min_non_smo\n";
 		std::cout << "b_in = " << b_in << "\n";
-		CppAD::abs_normal_print_mat("x_in", n, 1, x_in);
+		CppAD::abs_print_mat("x_in", n, 1, x_in);
 	}
 	// level in min_tilde sub-problem
 	size_t level_tilde = 0;
@@ -287,7 +287,7 @@ bool min_non_smo(
 			return true;
 		}
 		// value of abs-normal approximation at minimizer
-		DblVector g_tilde = CppAD::eval_tilde(n, m, s, g_cur, g_jac, delta_x);
+		DblVector g_tilde = CppAD::abs_eval(n, m, s, g_cur, g_jac, delta_x);
 		//
 		double derivative = (g_tilde[0] - g_cur[0]) / max_delta_x;
 		CPPAD_ASSERT_UNKNOWN( derivative <= 0.0 )
@@ -330,7 +330,7 @@ bool min_non_smo(
 				<< ", derivative = "<< derivative
 				<< ", max_delta_x = "<< max_delta_x
 				<< ", objective = " << g_cur[0] << "\n";
-				abs_normal_print_mat("x_out", n, 1, x_out);
+				abs_print_mat("x_out", n, 1, x_out);
 			}
 		}
 	}

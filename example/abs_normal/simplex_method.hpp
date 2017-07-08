@@ -92,7 +92,7 @@ $end
 */
 # include <cmath>
 # include <cppad/utility/error_handler.hpp>
-# include "print_mat.hpp"
+# include "abs_print_mat.hpp"
 
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 
@@ -115,9 +115,9 @@ bool simplex_method(
 	//
 	if( level > 0 )
 	{	std::cout << "start simplex_method\n";
-		CppAD::abs_normal_print_mat("A", ne, nx, A);
-		CppAD::abs_normal_print_mat("b", ne,  1, b);
-		CppAD::abs_normal_print_mat("c", nx, 1, c);
+		CppAD::abs_print_mat("A", ne, nx, A);
+		CppAD::abs_print_mat("b", ne,  1, b);
+		CppAD::abs_print_mat("c", nx, 1, c);
 	}
 	//
 	// variables (columns) in the Tableau:
@@ -235,9 +235,9 @@ bool simplex_method(
 			}
 		}
 		if( level > 1 )
-			CppAD::abs_normal_print_mat("T", nr, nc, T);
+			CppAD::abs_print_mat("T", nr, nc, T);
 		if( level > 0 )
-		{	CppAD::abs_normal_print_mat("x", nx, 1, xout);
+		{	CppAD::abs_print_mat("x", nx, 1, xout);
 			std::cout << "itr = " << itr;
 			if( iobj > ne )
 				std::cout << ", auxillary objective w = ";

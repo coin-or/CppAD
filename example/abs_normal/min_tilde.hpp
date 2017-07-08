@@ -177,7 +177,7 @@ $end
 */
 # include <cppad/cppad.hpp>
 # include "lp_box.hpp"
-# include "eval_tilde.hpp"
+# include "abs_eval.hpp"
 
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 
@@ -237,9 +237,9 @@ bool min_tilde(
 	);
 	if( level > 0 )
 	{	std::cout << "start min_tilde\n";
-		CppAD::abs_normal_print_mat("bound", n, 1, bound);
-		CppAD::abs_normal_print_mat("g_hat", m + s, 1, g_hat);
-		CppAD::abs_normal_print_mat("g_jac", m + s, n + s, g_jac);
+		CppAD::abs_print_mat("bound", n, 1, bound);
+		CppAD::abs_print_mat("g_hat", m + s, 1, g_hat);
+		CppAD::abs_print_mat("g_jac", m + s, n + s, g_jac);
 
 	}
 	// partial y(x, u) w.r.t x (J in reference)
@@ -271,7 +271,7 @@ bool min_tilde(
 		delta_x[j] = 0.0;
 	//
 	// value of approximation for g(x, u) at current delta_x
-	DblVector g_tilde = CppAD::eval_tilde(n, m, s, g_hat, g_jac, delta_x);
+	DblVector g_tilde = CppAD::abs_eval(n, m, s, g_hat, g_jac, delta_x);
 	//
 	// value of sigma at delta_x = 0; i.e., sign( z(x, u) )
 	CppAD::vector<int> sigma(s);
@@ -374,7 +374,7 @@ bool min_tilde(
 		);
 		if( ! ok )
 		{	if( level > 0 )
-			{	CppAD::abs_normal_print_mat("delta_x", n, 1, delta_x);
+			{	CppAD::abs_print_mat("delta_x", n, 1, delta_x);
 				std::cout << "end min_tilde: lp_box failed\n";
 			}
 			return false;
@@ -391,12 +391,12 @@ bool min_tilde(
 		DblVector delta_new(n);
 		for(size_t j = 0; j < n; j++)
 			delta_new[j] = xout_box[j];
-		DblVector g_new = CppAD::eval_tilde(n, m, s, g_hat, g_jac, delta_new);
+		DblVector g_new = CppAD::abs_eval(n, m, s, g_hat, g_jac, delta_new);
 		if( level > 0 )
 		{	std::cout << "itr = " << itr << ", max_diff = " << max_diff
 				<< ", y_cur = " << g_tilde[0] << ", y_new = " << g_new[0]
 				<< "\n";
-			CppAD::abs_normal_print_mat("delta_new", n, 1, delta_new);
+			CppAD::abs_print_mat("delta_new", n, 1, delta_new);
 		}
 		//
 		g_tilde = g_new;

@@ -275,7 +275,7 @@ $end
 */
 # include <cmath>
 # include <cppad/utility/lu_solve.hpp>
-# include "print_mat.hpp"
+# include "abs_print_mat.hpp"
 
 namespace {
 	// ------------------------------------------------------------------------
@@ -394,11 +394,11 @@ bool qp_interior(
 	);
 	if( level > 0 )
 	{	std::cout << "start qp_interior\n";
-		CppAD::abs_normal_print_mat("c", m, 1, c);
-		CppAD::abs_normal_print_mat("C", m, n, C);
-		CppAD::abs_normal_print_mat("g", n, 1, g);
-		CppAD::abs_normal_print_mat("G", n, n, G);
-		CppAD::abs_normal_print_mat("xin", n, 1, xin);
+		CppAD::abs_print_mat("c", m, 1, c);
+		CppAD::abs_print_mat("C", m, n, C);
+		CppAD::abs_print_mat("g", n, 1, g);
+		CppAD::abs_print_mat("G", n, n, G);
+		CppAD::abs_print_mat("xin", n, 1, xin);
 	}
 	//
 	// compute the maximum absolute element of the problem vectors and matrices
@@ -572,7 +572,7 @@ bool qp_interior(
 				<< ", mu = " << mu
 				<< ", lam = " << lam
 				<< ", F_max_abs = " << F_max_abs << "\n";
-			abs_normal_print_mat("xout", 1, n, xout);
+			abs_print_mat("xout", 1, n, xout);
 		}
 	}
 	if( level > 0 )

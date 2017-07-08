@@ -213,13 +213,13 @@ bool qp_box(
 	);
 	if( level > 0 )
 	{	std::cout << "start qp_box\n";
-		CppAD::abs_normal_print_mat("a", n, 1, a);
-		CppAD::abs_normal_print_mat("b", n, 1, b);
-		CppAD::abs_normal_print_mat("c", m, 1, c);
-		CppAD::abs_normal_print_mat("C", m, n, C);
-		CppAD::abs_normal_print_mat("g", 1, n, g);
-		CppAD::abs_normal_print_mat("G", n, n, G);
-		CppAD::abs_normal_print_mat("xin", n, 1, xin);
+		CppAD::abs_print_mat("a", n, 1, a);
+		CppAD::abs_print_mat("b", n, 1, b);
+		CppAD::abs_print_mat("c", m, 1, c);
+		CppAD::abs_print_mat("C", m, n, C);
+		CppAD::abs_print_mat("g", 1, n, g);
+		CppAD::abs_print_mat("G", n, n, G);
+		CppAD::abs_print_mat("xin", n, 1, xin);
 	}
 	//
 	// count number of lower and upper limits
@@ -271,7 +271,7 @@ bool qp_box(
 	);
 	if( level > 0 )
 	{	if( level < 2 )
-			CppAD::abs_normal_print_mat("xout", n, 1, xout);
+			CppAD::abs_print_mat("xout", n, 1, xout);
 		if( ok )
 			std::cout << "end q_box: ok = true\n";
 		else

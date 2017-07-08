@@ -10,12 +10,12 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 
 /*
-$begin eval_tilde.cpp$$
+$begin abs_eval.cpp$$
 $spell
 	eval
 $$
 
-$section abs_normal eval_tilde: Example and Test$$
+$section abs_normal abs_eval: Example and Test$$
 
 $head Purpose$$
 The function
@@ -28,7 +28,7 @@ For this case, the abs_normal approximation should be equal
 to the function itself.
 
 $head Source$$
-$srcfile%example/abs_normal/eval_tilde.cpp%
+$srcfile%example/abs_normal/abs_eval.cpp%
 	0%// BEGIN C++%// END C++%
 1%$$
 
@@ -37,7 +37,7 @@ $end
 */
 // BEGIN C++
 # include <cppad/cppad.hpp>
-# include "eval_tilde.hpp"
+# include "abs_eval.hpp"
 
 namespace {
 	CPPAD_TESTVECTOR(double) join(
@@ -53,7 +53,7 @@ namespace {
 		return xu;
 	}
 }
-bool eval_tilde(void)
+bool abs_eval(void)
 {	bool ok = true;
 	//
 	using CppAD::AD;
@@ -125,7 +125,7 @@ bool eval_tilde(void)
 	d_vector y = f.Forward(0, x);
 
 	// value of g_tilde
-	d_vector g_tilde = CppAD::eval_tilde(n, m, s, g_hat, g_jac, delta_x);
+	d_vector g_tilde = CppAD::abs_eval(n, m, s, g_hat, g_jac, delta_x);
 
 	// should be equal because f is affine, except for abs terms
 	ok &= CppAD::NearEqual(y[0], g_tilde[0], eps99, eps99);

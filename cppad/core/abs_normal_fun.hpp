@@ -264,8 +264,8 @@ $cref/reference/abs_normal/Reference/$$.
 $children%example/abs_normal/get_started.cpp
 %$$
 $head Example$$
-The file $cref abs_normal_get_started.cpp$$ contains
-and example and test using this operation.
+The file $cref abs_get_started.cpp$$ contains
+an example and test using this operation.
 
 $end
 -------------------------------------------------------------------------------

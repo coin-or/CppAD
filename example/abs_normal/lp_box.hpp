@@ -138,10 +138,10 @@ bool lp_box(
 	);
 	if( level > 0 )
 	{	std::cout << "start lp_box\n";
-		CppAD::abs_normal_print_mat("A", m, n, A);
-		CppAD::abs_normal_print_mat("b", m, 1, b);
-		CppAD::abs_normal_print_mat("c", n, 1, c);
-		CppAD::abs_normal_print_mat("d", n, 1, d);
+		CppAD::abs_print_mat("A", m, n, A);
+		CppAD::abs_print_mat("b", m, 1, b);
+		CppAD::abs_print_mat("c", n, 1, c);
+		CppAD::abs_print_mat("d", n, 1, d);
 	}
 	//
 	// count number of limits
@@ -201,7 +201,7 @@ bool lp_box(
 	for(size_t j = 0; j < n; j++)
 		xout[j] = x_simplex[2 * j] - x_simplex[2 * j + 1];
 	if( level > 0 )
-	{	CppAD::abs_normal_print_mat("xout", n, 1, xout);
+	{	CppAD::abs_print_mat("xout", n, 1, xout);
 		if( ok )
 			std::cout << "end lp_box: ok = true\n";
 		else

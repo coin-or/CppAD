@@ -12,7 +12,7 @@
 #
 SET(source_list
 	abs_normal.cpp
-	eval_tilde.cpp
+	abs_eval.cpp
 	get_started.cpp
 	lp_box.cpp
 	min_non_smo.cpp

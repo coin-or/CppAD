@@ -11,7 +11,7 @@ A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 /*
-$begin abs_normal_print_mat$$
+$begin abs_print_mat$$
 $spell
 	nr
 	nc
@@ -20,7 +20,7 @@ $$
 $section abs_normal: Print a Vector or Matrix$$
 
 $head Syntax$$
-$codei%abs_normal_print_mat(%name%, %nr%, %nc%, %mat%)%$$
+$codei%abs_print_mat(%name%, %nr%, %nc%, %mat%)%$$
 $pre
 $$
 see $cref/prototype/qp_box/Prototype/$$
@@ -51,7 +51,7 @@ $codei%
 must output the $th i$$ element of the simple vector $icode mat$$.
 
 $head Prototype$$
-$srcfile%example/abs_normal/print_mat.hpp%
+$srcfile%example/abs_normal/abs_print_mat.hpp%
 	0%// BEGIN PROTOTYPE%// END PROTOTYPE%
 1%$$
 
@@ -64,7 +64,7 @@ namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 
 // BEGIN PROTOTYPE
 template <class Vector>
-void abs_normal_print_mat(
+void abs_print_mat(
 	const std::string& name ,
 	size_t             nr   ,
 	size_t             nc   ,
@@ -73,7 +73,7 @@ void abs_normal_print_mat(
 {
 	CPPAD_ASSERT_KNOWN(
 		size_t(mat.size()) == nr * nc,
-		"abs_normal_print_mat: size of mat is not nr * nc"
+		"abs_print_mat: size of mat is not nr * nc"
 	);
 	// output name
 	std::cout << name << " =";

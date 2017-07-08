@@ -33,8 +33,8 @@ AM_CXXFLAGS       = -g $(CXX_FLAGS)
 #
 abs_normal_SOURCES = \
 	abs_normal.cpp \
-	eval_tilde.cpp \
-	eval_tilde.hpp \
+	abs_eval.cpp \
+	abs_eval.hpp \
 	get_started.cpp \
 	lp_box.cpp \
 	lp_box.hpp \
@@ -48,7 +48,7 @@ abs_normal_SOURCES = \
 	qp_interior.hpp \
 	simplex_method.cpp \
 	simplex_method.hpp \
-	print_mat.hpp
+	abs_print_mat.hpp
 
 test: check
 	./abs_normal
