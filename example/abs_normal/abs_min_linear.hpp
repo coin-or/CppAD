@@ -17,7 +17,7 @@ $spell
 	Jacobian
 	maxitr
 $$
-$section abs_normal: Minimize First Order Approximation$$
+$section abs_normal: Minimize a Linear Abs-normal Approximation$$
 
 $head Syntax$$
 $icode%ok% = abs_min_linear(
@@ -40,6 +40,8 @@ $cref/approximation for f(x)
 	/Approximating f(x)
 /$$
 over a trust region.
+It is called linear because no quadratic term is added to the
+abs-normal approximation.
 
 
 $head DblVector$$
