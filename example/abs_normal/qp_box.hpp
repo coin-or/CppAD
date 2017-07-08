@@ -44,7 +44,7 @@ $latex c \in \B{R}^m$$,
 $latex C \in \B{R}^{m \times n}$$,
 $latex g \in \B{R}^n$$,
 $latex G \in \B{R}^{n \times n}$$,
-where $latex G$$ is positive semi-definite.
+where $latex G$$ is positive definite.
 This routine solves the problem
 $latex \[
 \begin{array}{rl}
@@ -94,7 +94,6 @@ For $latex j = 0 , \ldots , n-1$$,
 $latex - \infty < a_j$$ or
 $latex b_j < + \infty$$ or
 $latex G_{j,j} > 0.0$$.
-
 
 $head epsilon$$
 This argument is the convergence criteria;
