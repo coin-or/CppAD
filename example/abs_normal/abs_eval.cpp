@@ -15,7 +15,7 @@ $spell
 	eval
 $$
 
-$section abs_normal abs_eval: Example and Test$$
+$section abs_eval: Example and Test$$
 
 $head Purpose$$
 The function

@@ -29,7 +29,7 @@ extern bool abs_eval(void);
 extern bool get_started(void);
 extern bool lp_box(void);
 extern bool min_non_smo(void);
-extern bool min_tilde(void);
+extern bool abs_min_linear(void);
 extern bool qp_box(void);
 extern bool qp_interior(void);
 extern bool simplex_method(void);
@@ -47,7 +47,7 @@ int main(void)
 	Run( get_started,         "get_started"        );
 	Run( lp_box,              "lp_box"             );
 	Run( min_non_smo,         "min_non_smo"        );
-	Run( min_tilde,           "min_tilde"          );
+	Run( abs_min_linear,           "abs_min_linear"          );
 	Run( qp_box,              "qp_box"             );
 	Run( qp_interior,         "qp_interior"        );
 	Run( simplex_method,      "simplex_method"     );

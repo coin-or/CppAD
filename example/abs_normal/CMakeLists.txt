@@ -11,12 +11,12 @@
 # Build the example/print_for directory tests
 #
 SET(source_list
-	abs_normal.cpp
 	abs_eval.cpp
+	abs_min_linear.cpp
+	abs_normal.cpp
 	get_started.cpp
 	lp_box.cpp
 	min_non_smo.cpp
-	min_tilde.cpp
 	qp_box.cpp
 	qp_interior.cpp
 	simplex_method.cpp

@@ -10,9 +10,9 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 
 /*
-$begin min_tilde.cpp$$
+$begin abs_min_linear.cpp$$
 
-$section abs_normal min_tilde: Example and Test$$
+$section abs_min_linear: Example and Test$$
 
 $head Purpose$$
 The function
@@ -32,14 +32,14 @@ is affine, except for its absolute value terms.
 For this case, the abs_normal approximation should be equal
 to the function itself.
 In addition, the function is convex and
-$cref min_tilde$$ should find its global minimizer.
+$cref abs_min_linear$$ should find its global minimizer.
 The minimizer of this function is
 $latex x_0 = \R{median}( d_0, d_1, d_2 )$$
 and
 $latex x_1 = \R{median}( d_3, d_4, d_5 )$$
 
 $head Source$$
-$srcfile%example/abs_normal/min_tilde.cpp%
+$srcfile%example/abs_normal/abs_min_linear.cpp%
 	0%// BEGIN C++%// END C++%
 1%$$
 
@@ -48,7 +48,7 @@ $end
 */
 // BEGIN C++
 # include <cppad/cppad.hpp>
-# include "min_tilde.hpp"
+# include "abs_min_linear.hpp"
 
 namespace {
 	CPPAD_TESTVECTOR(double) join(
@@ -64,7 +64,7 @@ namespace {
 		return xu;
 	}
 }
-bool min_tilde(void)
+bool abs_min_linear(void)
 {	bool ok = true;
 	//
 	using CppAD::AD;
@@ -139,13 +139,13 @@ bool min_tilde(void)
 
 	// maximum number of iterations
 	s_vector maxitr(2);
-	maxitr[0] = 10; // maximum number of min_tilde iterations
+	maxitr[0] = 10; // maximum number of abs_min_linear iterations
 	maxitr[1] = 35; // maximum number of qp_interior iterations
 
 	// minimize the approxiamtion for f, which is equal to f because
 	// f is affine, except for absolute value terms
 	d_vector delta_x(n);
-	ok &= CppAD::min_tilde(
+	ok &= CppAD::abs_min_linear(
 		level, n, m, s, g_hat, g_jac, bound, epsilon, maxitr, delta_x
 	);
 

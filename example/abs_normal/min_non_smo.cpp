@@ -27,7 +27,7 @@ f( x_0, x_1, x_2  ) & = & x_0^2 + 2 (x_0 + x_1)^2 + | x_2 |
 \] $$
 
 $head Discussion$$
-This routine uses $cref min_tilde$$ which uses $cref lp_box$$,
+This routine uses $cref abs_min_linear$$ which uses $cref lp_box$$,
 a linear programming algorithm.
 You can see that the convergence is linear for this algorithm by setting
 $icode%level% = 1%$$.

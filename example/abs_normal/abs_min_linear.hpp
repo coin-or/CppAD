@@ -11,7 +11,7 @@ A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 /*
-$begin min_tilde$$
+$begin abs_min_linear$$
 $spell
 	jac
 	Jacobian
@@ -20,14 +20,14 @@ $$
 $section abs_normal: Minimize First Order Approximation$$
 
 $head Syntax$$
-$icode%ok% = min_tilde(
+$icode%ok% = abs_min_linear(
 	%level%, %n%, %m%, %s%,
 	%g_hat%, %g_jac%, %bound%, %epsilon%, %maxitr%, %delta_x%
 )%$$
 $pre
 $$
 see
-$cref/prototype/min_tilde/Prototype/$$
+$cref/prototype/abs_min_linear/Prototype/$$
 
 $head Purpose$$
 Given a current that abs-normal representation at a point
@@ -57,7 +57,7 @@ This value is less that or equal 4.
 If $icode%level% == 0%$$,
 no tracing of the optimization is printed.
 If $icode%level% >= 1%$$,
-a trace of each iteration of $code min_tilde$$ is printed.
+a trace of each iteration of $code abs_min_linear$$ is printed.
 If $icode%level% >= 2%$$,
 a trace of the $cref lp_box$$ sub-problem is printed.
 If $icode%level% >= 3%$$,
@@ -111,7 +111,7 @@ of the derivative of $latex f(x)$$.
 $head maxitr$$
 This is a vector with size 2.
 The value $icode%maxitr%[0]%$$ is the maximum number of
-$code min_tilde$$ iterations to try before giving up on convergence.
+$code abs_min_linear$$ iterations to try before giving up on convergence.
 The value $icode%maxitr%[1]%$$ is the maximum number of iterations in
 the $cref/simplex_method/simplex_method/maxitr/$$ sub-problems.
 
@@ -160,15 +160,15 @@ This process is iterated until the difference
 $latex x_K - x_{K-1}$$ is small enough.
 
 
-$children%example/abs_normal/min_tilde.cpp
+$children%example/abs_normal/abs_min_linear.cpp
 %$$
 $head Example$$
-The file $cref min_tilde.cpp$$ contains an example and test of
-$code min_tilde$$.
+The file $cref abs_min_linear.cpp$$ contains an example and test of
+$code abs_min_linear$$.
 It returns true if the test passes and false otherwise.
 
 $head Prototype$$
-$srcfile%example/abs_normal/min_tilde.hpp%
+$srcfile%example/abs_normal/abs_min_linear.hpp%
 	0%// BEGIN PROTOTYPE%// END PROTOTYPE%
 1%$$
 
@@ -183,7 +183,7 @@ namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 
 // BEGIN PROTOTYPE
 template <class DblVector, class SizeVector>
-bool min_tilde(
+bool abs_min_linear(
 	size_t            level   ,
 	size_t            n       ,
 	size_t            m       ,
@@ -201,42 +201,42 @@ bool min_tilde(
 	//
 	CPPAD_ASSERT_KNOWN(
 		level <= 4,
-		"min_tilde: level is not less that or equal 4"
+		"abs_min_linear: level is not less that or equal 4"
 	);
 	CPPAD_ASSERT_KNOWN(
 		size_t(epsilon.size()) == 2,
-		"min_tilde: size of epsilon not equal to 2"
+		"abs_min_linear: size of epsilon not equal to 2"
 	);
 	CPPAD_ASSERT_KNOWN(
 		size_t(maxitr.size()) == 2,
-		"min_tilde: size of maxitr not equal to 2"
+		"abs_min_linear: size of maxitr not equal to 2"
 	);
 	CPPAD_ASSERT_KNOWN(
 		m == 1,
-		"min_tilde: m is not equal to 1"
+		"abs_min_linear: m is not equal to 1"
 	);
 	CPPAD_ASSERT_KNOWN(
 		size_t(delta_x.size()) == n,
-		"min_tilde: size of delta_x not equal to n"
+		"abs_min_linear: size of delta_x not equal to n"
 	);
 	CPPAD_ASSERT_KNOWN(
 		size_t(bound.size()) == n,
-		"min_tilde: size of bound not equal to n"
+		"abs_min_linear: size of bound not equal to n"
 	);
 	CPPAD_ASSERT_KNOWN(
 		size_t(g_hat.size()) == m + s,
-		"min_tilde: size of g_hat not equal to m + s"
+		"abs_min_linear: size of g_hat not equal to m + s"
 	);
 	CPPAD_ASSERT_KNOWN(
 		size_t(g_jac.size()) == (m + s) * (n + s),
-		"min_tilde: size of g_jac not equal to (m + s)*(n + s)"
+		"abs_min_linear: size of g_jac not equal to (m + s)*(n + s)"
 	);
 	CPPAD_ASSERT_KNOWN(
 		size_t(bound.size()) == n,
-		"min_tilde: size of bound is not equal to n"
+		"abs_min_linear: size of bound is not equal to n"
 	);
 	if( level > 0 )
-	{	std::cout << "start min_tilde\n";
+	{	std::cout << "start abs_min_linear\n";
 		CppAD::abs_print_mat("bound", n, 1, bound);
 		CppAD::abs_print_mat("g_hat", m + s, 1, g_hat);
 		CppAD::abs_print_mat("g_jac", m + s, n + s, g_jac);
@@ -320,7 +320,7 @@ bool min_tilde(
 			near_zero &= std::fabs( dy_dx[j] ) < epsilon[1];
 		if( near_zero )
 		{	if( level > 0 )
-				std::cout << "end min_tilde: local derivative near zero\n";
+				std::cout << "end abs_min_linear: local derivative near zero\n";
 			return true;
 		}
 
@@ -375,7 +375,7 @@ bool min_tilde(
 		if( ! ok )
 		{	if( level > 0 )
 			{	CppAD::abs_print_mat("delta_x", n, 1, delta_x);
-				std::cout << "end min_tilde: lp_box failed\n";
+				std::cout << "end abs_min_linear: lp_box failed\n";
 			}
 			return false;
 		}
@@ -408,12 +408,12 @@ bool min_tilde(
 		//
 		if( max_diff < epsilon[0] )
 		{	if( level > 0 )
-				std::cout << "end min_tilde: change in delta_x near zero\n";
+				std::cout << "end abs_min_linear: change in delta_x near zero\n";
 			return true;
 		}
 	}
 	if( level > 0 )
-		std::cout << "end min_tilde: maximum number of iterations exceeded\n";
+		std::cout << "end abs_min_linear: maximum number of iterations exceeded\n";
 	return false;
 }
 } // END_CPPAD_NAMESPACE

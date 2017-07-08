@@ -34,7 +34,7 @@ $icode%ok% = qp_interior(
 see $cref/prototype/qp_interior/Prototype/$$
 
 $head Purpose$$
-This routine could be used to create a version of $cref min_tilde$$
+This routine could be used to create a version of $cref abs_min_linear$$
 that solved Quadratic programs (instead of linear programs).
 
 $head Problem$$

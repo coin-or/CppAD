@@ -97,7 +97,7 @@ This is a vector with size 3.
 The value $icode%maxitr%[0]%$$ is the maximum number of
 $code min_non_smo$$ iterations to try before giving up on convergence.
 The value $icode%maxitr%[1]%$$ is the maximum number of iterations in the
-$code min_tilde$$ sub-problem.
+$code abs_min_linear$$ sub-problem.
 The value $icode%maxitr%[2]%$$ is the maximum number of iterations in
 the $cref/simplex_method/simplex_method/maxitr/$$ sub-problems.
 
@@ -141,7 +141,7 @@ $end
 -----------------------------------------------------------------------------
 */
 # include <cppad/cppad.hpp>
-# include "min_tilde.hpp"
+# include "abs_min_linear.hpp"
 # include "abs_eval.hpp"
 
 namespace {
@@ -222,17 +222,17 @@ bool min_non_smo(
 		std::cout << "b_in = " << b_in << "\n";
 		CppAD::abs_print_mat("x_in", n, 1, x_in);
 	}
-	// level in min_tilde sub-problem
+	// level in abs_min_linear sub-problem
 	size_t level_tilde = 0;
 	if( level > 0 )
 		level_tilde = level - 1;
 	//
-	// maxitr in min_tilde sub-problem
+	// maxitr in abs_min_linear sub-problem
 	SizeVector maxitr_tilde(2);
 	maxitr_tilde[0] = maxitr[1];
 	maxitr_tilde[1] = maxitr[2];
 	//
-	// epsilon in min_tilde sub-problem
+	// epsilon in abs_min_linear sub-problem
 	DblVector eps_tilde(2);
 	eps_tilde[0] = epsilon[0] / 10.;
 	eps_tilde[1] = epsilon[1] / 10.;
@@ -257,19 +257,19 @@ bool min_non_smo(
 		// Jacobian of g[ x_cur, a_cur ]
 		DblVector g_jac = g.Jacobian(xu_cur);
 		//
-		// bound in min_tilde sub-problem
+		// bound in abs_min_linear sub-problem
 		DblVector bound_tilde(n);
 		for(size_t j = 0; j < n; j++)
 			bound_tilde[j] = b_cur;
 		//
 		DblVector delta_x(n);
-		bool ok = min_tilde(
+		bool ok = abs_min_linear(
 			level_tilde, n, m, s,
 			g_cur, g_jac, bound_tilde, eps_tilde, maxitr_tilde, delta_x
 		);
 		if( ! ok )
 		{	if( level > 0 )
-				std::cout << "end min_non_smo: min_tilde failed\n";
+				std::cout << "end min_non_smo: abs_min_linear failed\n";
 			return false;
 		}
 		//

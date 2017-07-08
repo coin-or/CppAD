@@ -32,23 +32,23 @@ AM_CPPFLAGS       = -I. $(CPPAD_INCLUDE) $(BOOST_INCLUDE) $(EIGEN_INCLUDE)
 AM_CXXFLAGS       = -g $(CXX_FLAGS)
 #
 abs_normal_SOURCES = \
-	abs_normal.cpp \
 	abs_eval.cpp \
 	abs_eval.hpp \
+	abs_min_linear.cpp \
+	abs_min_linear.hpp \
+	abs_normal.cpp \
+	abs_print_mat.hpp
 	get_started.cpp \
 	lp_box.cpp \
 	lp_box.hpp \
 	min_non_smo.cpp \
 	min_non_smo.hpp \
-	min_tilde.cpp \
-	min_tilde.hpp \
 	qp_box.cpp \
 	qp_box.hpp \
 	qp_interior.cpp \
 	qp_interior.hpp \
 	simplex_method.cpp \
 	simplex_method.hpp \
-	abs_print_mat.hpp
 
 test: check
 	./abs_normal

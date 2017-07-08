@@ -33,7 +33,7 @@ $icode%ok% = qp_box(
 see $cref/prototype/qp_box/Prototype/$$
 
 $head Purpose$$
-This routine could be used to create a version of $cref min_tilde$$
+This routine could be used to create a version of $cref abs_min_linear$$
 that solved quadratic programs (instead of linear programs).
 
 $head Problem$$
