@@ -13,6 +13,7 @@
 SET(source_list
 	abs_eval.cpp
 	abs_min_linear.cpp
+	abs_min_quad.cpp
 	abs_normal.cpp
 	get_started.cpp
 	lp_box.cpp

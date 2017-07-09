@@ -30,6 +30,7 @@ extern bool get_started(void);
 extern bool lp_box(void);
 extern bool min_non_smo(void);
 extern bool abs_min_linear(void);
+extern bool abs_min_quad(void);
 extern bool qp_box(void);
 extern bool qp_interior(void);
 extern bool simplex_method(void);
@@ -43,11 +44,12 @@ int main(void)
 	// This line is used by test_one.sh
 
 	// external compiled tests
-	Run( abs_eval,          "abs_eval"         );
+	Run( abs_eval,          "abs_eval"             );
 	Run( get_started,         "get_started"        );
 	Run( lp_box,              "lp_box"             );
 	Run( min_non_smo,         "min_non_smo"        );
-	Run( abs_min_linear,           "abs_min_linear"          );
+	Run( abs_min_linear,      "abs_min_linear"     );
+	Run( abs_min_quad,        "abs_min_quad"       );
 	Run( qp_box,              "qp_box"             );
 	Run( qp_interior,         "qp_interior"        );
 	Run( simplex_method,      "simplex_method"     );

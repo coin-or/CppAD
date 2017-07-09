@@ -11,7 +11,7 @@ A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 /*
-$begin abs_min_linear$$
+$begin abs_min_quad$$
 $spell
 	jac
 	Jacobian
@@ -20,14 +20,14 @@ $$
 $section abs_normal: Minimize a Linear Abs-normal Approximation$$
 
 $head Syntax$$
-$icode%ok% = abs_min_linear(
+$icode%ok% = abs_min_quad(
 	%level%, %n%, %m%, %s%,
-	%g_hat%, %g_jac%, %bound%, %epsilon%, %maxitr%, %delta_x%
+	%g_hat%, %g_jac%, %hessian%, %bound%, %epsilon%, %maxitr%, %delta_x%
 )%$$
 $pre
 $$
 see
-$cref/prototype/abs_min_linear/Prototype/$$
+$cref/prototype/abs_min_quad/Prototype/$$
 
 $head Purpose$$
 We are given a point $latex \hat{x} \in \B{R}^n$$ and
@@ -38,16 +38,18 @@ $cref/approximation for f(x)
 	/Approximating f(x)
 /$$
 near $latex \hat{x}$$.
-We are also given a vector b \in \B{R}_+^n$$.
+We are also given a vector b \in \B{R}_+^n$$
+and a positive definite matrix $latex H \in \B{R}^{n \times n}$$.
 This routine solves the problem
 $latex \[
 \begin{array}{lll}
-\R{minimize} & \tilde{f}(x) & \R{w.r.t} \; x \in \B{R}^n
+\R{minimize} &
+	\Delta x^T H \Delta x / 2 + \tilde{f}( \hat{x} + \Delta x ) &
+	\R{w.r.t} \; \Delta x \in \B{R}^n
 \\
-\R{subject \; to} & | x_j - \hat{x}_j | \leq b_j & j = 0 , \ldots , n-1
+\R{subject \; to} & | \Delta x_j | \leq b_j & j = 0 , \ldots , n-1
 \end{array}
 \] $$
-
 
 $head DblVector$$
 is a $cref SimpleVector$$ class with elements of type $code double$$.
@@ -60,18 +62,15 @@ We use the notation $icode f$$ for the original function; see
 $cref/f/abs_normal_fun/f/$$.
 
 $head level$$
-This value is less that or equal 4.
+This value is less that or equal 3.
 If $icode%level% == 0%$$,
 no tracing of the optimization is printed.
 If $icode%level% >= 1%$$,
-a trace of each iteration of $code abs_min_linear$$ is printed.
+a trace of each iteration of $code abs_min_quad$$ is printed.
 If $icode%level% >= 2%$$,
-a trace of the $cref lp_box$$ sub-problem is printed.
+a trace of the $cref qp_box$$ sub-problem is printed.
 If $icode%level% >= 3%$$,
-a trace of the objective and primal variables $latex x$$ are printed
-at each $cref simplex_method$$ iteration.
-If $icode%level% == 4%$$,
-the simplex tableau is printed at each simplex iteration.
+a trace of the $cref qp_interior$$ sub-problem is printed.
 
 $head n$$
 This is the dimension of the domain space for $icode f$$; see
@@ -98,38 +97,41 @@ $head g_jac$$
 This vector has size $codei%(%m% + %s%) * (%n% + %s%)%$$ and is the Jacobian of
 $latex g(x, u)$$ at $latex x = \hat{x}$$ and $latex u = a( \hat{x} )$$.
 
-$head bound$$
-This vector has size $icode n$$
-and we denote its value by $latex b \in \B{R}^n$$.
-The trust region is defined as the set of $latex x$$ such that
-$latex \[
-	| x_j - \hat{x}_j | \leq b_j
-\]$$
-for $latex j = 0 , \ldots , n-1$$,
-where $latex x$$ is the point that we are approximating $latex f(x)$$.
+$head hessian$$
+This vector has size $icode%n% * %n%$$.
+It is a $cref/row-major/glossary/Row-major Representation/$$ representation
+of the matrix $latex H \in \B{R}^{n \times n}$$.
 
+$head bound$$
+This vector has size $icode n$$ and is the vector $latex b \in \B{R}^n$$.
+The trust region is defined as the set of $latex \Delta x$$ such that
+$latex \[
+	| \Delta x | \leq b_j
+\]$$
+for $latex j = 0 , \ldots , n-1$$.
 
 $head epsilon$$
 The value $icode%epsilon%[0]%$$ is convergence criteria in terms
 of the infinity norm of the difference of $icode delta_x$$
 between iterations.
 The value $icode%epsilon%[1]%$$ is convergence criteria in terms
-of the derivative of the objective; i.e., $latex \tilde{f}(x)$$.
+of the derivative of the objective; i.e.
+$latex \[
+	\Delta x^T H \Delta x / 2 + \tilde{f}( \hat{x} + \Delta x)
+\] $$
 
 $head maxitr$$
 This is a vector with size 2.
 The value $icode%maxitr%[0]%$$ is the maximum number of
-$code abs_min_linear$$ iterations to try before giving up on convergence.
+$code abs_min_quad$$ iterations to try before giving up on convergence.
 The value $icode%maxitr%[1]%$$ is the maximum number of iterations in
-the $cref/simplex_method/simplex_method/maxitr/$$ sub-problems.
+the $cref/qp_interor/qp_interor/maxitr/$$ sub-problems.
 
 $head delta_x$$
 This vector $latex \Delta x$$ has size $icode n$$.
 The input value of its elements does not matter.
 Upon return,
-the approximate minimizer of $latex \tilde{f}(x)$$
-with respect to the trust region
-is $latex x = \hat{x} + \Delta x$$.
+the approximate minimizer of the objective with respect to the trust region.
 
 $head Method$$
 
@@ -147,8 +149,7 @@ $subhead Cutting Planes$$
 At each iteration,
 we are given affine functions $latex p_k (x)$$
 such that $latex p_k ( x_k ) = \tilde{f}( x_k )$$  and
-$latex p_k^{(1)} ( x_k )$$ is the derivative
-$latex \tilde{f}^{(1)} ( x_k )$$
+$latex p_k^{(1)} ( x_k )$$ is the derivative $latex \tilde{f}^{(1)} ( x_k )$$
 corresponding to $latex \sigma ( x_k )$$.
 
 $subhead Iteration$$
@@ -156,10 +157,11 @@ At iteration $latex k$$, we solve the problem
 $latex \[
 \begin{array}{lll}
 \R{minimize}
-	& \max \{ p_k (x) \W{:} k = 0 , \ldots , K-1 \}
-	& \R{w.r.t} \; x
+& \Delta x^T H \Delta x / 2 +
+	\max \{ p_k ( \hat{x} + \Delta x) \W{:} k = 0 , \ldots , K-1 \}
+& \R{w.r.t} \; \Delta x
 \\
-\R{subject \; to} & - b \leq x \leq + b
+\R{subject \; to} & - b \leq \Delta x \leq + b
 \end{array}
 \] $$
 The solution is the new point $latex x_K$$
@@ -169,15 +171,15 @@ This process is iterated until the difference
 $latex x_K - x_{K-1}$$ is small enough.
 
 
-$children%example/abs_normal/abs_min_linear.cpp
+$children%example/abs_normal/abs_min_quad.cpp
 %$$
 $head Example$$
-The file $cref abs_min_linear.cpp$$ contains an example and test of
-$code abs_min_linear$$.
+The file $cref abs_min_quad.cpp$$ contains an example and test of
+$code abs_min_quad$$.
 It returns true if the test passes and false otherwise.
 
 $head Prototype$$
-$srcfile%example/abs_normal/abs_min_linear.hpp%
+$srcfile%example/abs_normal/abs_min_quad.hpp%
 	0%// BEGIN PROTOTYPE%// END PROTOTYPE%
 1%$$
 
@@ -185,20 +187,21 @@ $end
 -----------------------------------------------------------------------------
 */
 # include <cppad/cppad.hpp>
-# include "lp_box.hpp"
+# include "qp_box.hpp"
 # include "abs_eval.hpp"
 
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 
 // BEGIN PROTOTYPE
 template <class DblVector, class SizeVector>
-bool abs_min_linear(
+bool abs_min_quad(
 	size_t            level   ,
 	size_t            n       ,
 	size_t            m       ,
 	size_t            s       ,
 	const DblVector&  g_hat   ,
 	const DblVector&  g_jac   ,
+	const DblVector&  hessian ,
 	const DblVector&  bound   ,
 	const DblVector&  epsilon ,
 	const SizeVector& maxitr  ,
@@ -210,46 +213,50 @@ bool abs_min_linear(
 	//
 	CPPAD_ASSERT_KNOWN(
 		level <= 4,
-		"abs_min_linear: level is not less that or equal 4"
+		"abs_min_quad: level is not less that or equal 3"
 	);
 	CPPAD_ASSERT_KNOWN(
 		size_t(epsilon.size()) == 2,
-		"abs_min_linear: size of epsilon not equal to 2"
+		"abs_min_quad: size of epsilon not equal to 2"
 	);
 	CPPAD_ASSERT_KNOWN(
 		size_t(maxitr.size()) == 2,
-		"abs_min_linear: size of maxitr not equal to 2"
+		"abs_min_quad: size of maxitr not equal to 2"
 	);
 	CPPAD_ASSERT_KNOWN(
 		m == 1,
-		"abs_min_linear: m is not equal to 1"
+		"abs_min_quad: m is not equal to 1"
 	);
 	CPPAD_ASSERT_KNOWN(
 		size_t(delta_x.size()) == n,
-		"abs_min_linear: size of delta_x not equal to n"
+		"abs_min_quad: size of delta_x not equal to n"
 	);
 	CPPAD_ASSERT_KNOWN(
 		size_t(bound.size()) == n,
-		"abs_min_linear: size of bound not equal to n"
+		"abs_min_quad: size of bound not equal to n"
 	);
 	CPPAD_ASSERT_KNOWN(
 		size_t(g_hat.size()) == m + s,
-		"abs_min_linear: size of g_hat not equal to m + s"
+		"abs_min_quad: size of g_hat not equal to m + s"
 	);
 	CPPAD_ASSERT_KNOWN(
 		size_t(g_jac.size()) == (m + s) * (n + s),
-		"abs_min_linear: size of g_jac not equal to (m + s)*(n + s)"
+		"abs_min_quad: size of g_jac not equal to (m + s)*(n + s)"
+	);
+	CPPAD_ASSERT_KNOWN(
+		size_t(hessian.size()) == n * n,
+		"abs_min_quad: size of hessian not equal to n * n"
 	);
 	CPPAD_ASSERT_KNOWN(
 		size_t(bound.size()) == n,
-		"abs_min_linear: size of bound is not equal to n"
+		"abs_min_quad: size of bound is not equal to n"
 	);
 	if( level > 0 )
-	{	std::cout << "start abs_min_linear\n";
-		CppAD::abs_print_mat("bound", n, 1, bound);
+	{	std::cout << "start abs_min_quad\n";
 		CppAD::abs_print_mat("g_hat", m + s, 1, g_hat);
 		CppAD::abs_print_mat("g_jac", m + s, n + s, g_jac);
-
+		CppAD::abs_print_mat("hessian", n, n, hessian);
+		CppAD::abs_print_mat("bound", n, 1, bound);
 	}
 	// partial y(x, u) w.r.t x (J in reference)
 	DblVector py_px(n);
@@ -279,7 +286,10 @@ bool abs_min_linear(
 	for(size_t j = 0; j < n; j++)
 		delta_x[j] = 0.0;
 	//
-	// value of approximation for g(x, u) at current delta_x
+	// current set of cutting planes
+	DblVector C(maxitr[0] * n), c(maxitr[0]);
+	//
+	// value of abs-normal approximation at x_hat + delta_x
 	DblVector g_tilde = CppAD::abs_eval(n, m, s, g_hat, g_jac, delta_x);
 	//
 	// value of sigma at delta_x = 0; i.e., sign( z(x, u) )
@@ -287,11 +297,16 @@ bool abs_min_linear(
 	for(size_t i = 0; i < s; i++)
 		sigma[i] = CppAD::sign( g_tilde[m + i] );
 	//
-	// current set of cutting planes
-	DblVector C(maxitr[0] * n), c(maxitr[0]);
+	// initial value of the objective
+	double obj_cur =  g_tilde[0];
 	//
-	//
+	// initial number of cutting planes
 	size_t n_plane = 0;
+	//
+	if( level > 0 )
+	{	std::cout << "obj = " << obj_cur << "\n";
+		CppAD::abs_print_mat("delta_x", n, 1, delta_x);
+	}
 	for(size_t itr = 0; itr < maxitr[0]; itr++)
 	{
 		// Equation (5), Propostion 3.1 of reference
@@ -322,19 +337,27 @@ bool abs_min_linear(
 				dy_dx[j] += py_pu[k] * tmp_sn[ k * n + j];
 		}
 		//
-		// check for case where derivative of hyperplane is zero
+		// compute derivative of the quadratic term
+		DblVector dq_dx(n);
+		for(size_t j = 0; j < n; j++)
+		{	dq_dx[j] = 0.0;
+			for(size_t i = 0; i < n; i++)
+				dq_dx[j] += delta_x[i] * hessian[i * n + j];
+		}
+		//
+		// check for case where derivative of objective is zero
 		// (in convex case, this is the minimizer)
 		bool near_zero = true;
 		for(size_t j = 0; j < n; j++)
-			near_zero &= std::fabs( dy_dx[j] ) < epsilon[1];
+			near_zero &= std::fabs( dq_dx[j] + dy_dx[j] ) < epsilon[1];
 		if( near_zero )
 		{	if( level > 0 )
-				std::cout << "end abs_min_linear: local derivative near zero\n";
+				std::cout << "end abs_min_quad: local derivative near zero\n";
 			return true;
 		}
-
 		// value of hyperplane at delta_x
 		double plane_at_zero = g_tilde[0];
+		//
 		// value of hyperplane at 0
 		for(size_t j = 0; j < n; j++)
 			plane_at_zero -= dy_dx[j] * delta_x[j];
@@ -347,69 +370,101 @@ bool abs_min_linear(
 		++n_plane;
 		//
 		// variables for cutting plane problem are (dx, w)
-		// c[i] + C[i,:]*dx <= w
-		DblVector b_box(n_plane), A_box(n_plane * (n + 1));
+		// c[i] + C[i,:] * dx <= w
+		DblVector c_box(n_plane), C_box(n_plane * (n + 1));
 		for(size_t i = 0; i < n_plane; i++)
-		{	b_box[i] = c[i];
+		{	c_box[i] = c[i];
 			for(size_t j = 0; j < n; j++)
-				A_box[i * (n+1) + j] = C[i * n + j];
-			A_box[i *(n+1) + n] = -1.0;
+				C_box[i * (n+1) + j] = C[i * n + j];
+			C_box[i * (n+1) + n] = -1.0;
 		}
-		// w is the objective
-		DblVector c_box(n + 1);
-		for(size_t i = 0; i < size_t(c_box.size()); i++)
-			c_box[i] = 0.0;
-		c_box[n] = 1.0;
 		//
-		// d_box
-		DblVector d_box(n+1);
+		// w is the objective
+		DblVector g_box(n + 1);
+		for(size_t i = 0; i < size_t(c_box.size()); i++)
+			g_box[i] = 0.0;
+		g_box[n] = 1.0;
+		//
+		// a_box, b_box
+		DblVector a_box(n+1), b_box(n+1);
 		for(size_t j = 0; j < n; j++)
-			d_box[j] = bound[j];
-		d_box[n] = inf;
+		{	a_box[j] = - bound[j];
+			b_box[j] = + bound[j];
+		}
+		a_box[n] = - inf;
+		b_box[n] = + inf;
+		//
+		// initial delta_x in qp_box is zero
+		DblVector xin_box(n + 1);
+		for(size_t j = 0; j < n; j++)
+			xin_box[j] = 0.0;
+		// initial w in qp_box is 1 + max_i c[i]
+		xin_box[n] = 1.0 + c_box[0];
+		for(size_t i = 1; i < n_plane; i++)
+			xin_box[n] = std::max( xin_box[n], 1.0 + c_box[i] );
+		//
+		DblVector hessian_box( (n+1) * (n+1) );
+		for(size_t i = 0; i < n+1; i++)
+		{	for(size_t j = 0; j < n+1; j++)
+			{	if( i == n || j == n )
+					hessian_box[i * (n+1) + j] = 0.0;
+				else
+					hessian_box[i * (n+1) + j] = hessian[i * n + j];
+			}
+		}
 		//
 		// solve the cutting plane problem
 		DblVector xout_box(n + 1);
 		size_t level_box = 0;
 		if( level > 0 )
 			level_box = level - 1;
-		ok &= CppAD::lp_box(
+		ok &= CppAD::qp_box(
 			level_box,
-			A_box,
+			a_box,
 			b_box,
 			c_box,
-			d_box,
+			C_box,
+			g_box,
+			hessian_box,
+			epsilon[1],
 			maxitr[1],
+			xin_box,
 			xout_box
 		);
 		if( ! ok )
 		{	if( level > 0 )
 			{	CppAD::abs_print_mat("delta_x", n, 1, delta_x);
-				std::cout << "end abs_min_linear: lp_box failed\n";
+				std::cout << "end abs_min_quad: qp_box failed\n";
 			}
 			return false;
 		}
+		DblVector delta_new(n);
+		for(size_t j = 0; j < n; j++)
+			delta_new[j] = xout_box[j];
 		//
 		// check for convergence
 		double max_diff = 0.0;
 		for(size_t j = 0; j < n; j++)
-		{	double diff = delta_x[j] - xout_box[j];
+		{	double diff = delta_x[j] - delta_new[j];
 			max_diff    = std::max( max_diff, std::fabs(diff) );
 		}
 		//
-		// check for descent in value of approximation objective
-		DblVector delta_new(n);
-		for(size_t j = 0; j < n; j++)
-			delta_new[j] = xout_box[j];
-		DblVector g_new = CppAD::abs_eval(n, m, s, g_hat, g_jac, delta_new);
+		// new value of the objective
+		DblVector g_new   = CppAD::abs_eval(n, m, s, g_hat, g_jac, delta_new);
+		double    obj_new = g_new[0];
+		for(size_t i = 0; i < n; i++)
+		{	for(size_t j = 0; j < n; j++)
+				obj_new += delta_new[i] * hessian[i * n + j] * delta_new[j];
+		}
+		g_tilde = g_new;
+		obj_cur = obj_new;
+		delta_x = delta_new;
+		//
 		if( level > 0 )
 		{	std::cout << "itr = " << itr << ", max_diff = " << max_diff
-				<< ", y_cur = " << g_tilde[0] << ", y_new = " << g_new[0]
-				<< "\n";
-			CppAD::abs_print_mat("delta_new", n, 1, delta_new);
+				<< ", obj_cur = " << obj_cur << "\n";
+			CppAD::abs_print_mat("delta_x", n, 1, delta_x);
 		}
-		//
-		g_tilde = g_new;
-		delta_x = delta_new;
 		//
 		// value of sigma at new delta_x; i.e., sign( z(x, u) )
 		for(size_t i = 0; i < s; i++)
@@ -417,12 +472,12 @@ bool abs_min_linear(
 		//
 		if( max_diff < epsilon[0] )
 		{	if( level > 0 )
-				std::cout << "end abs_min_linear: change in delta_x near zero\n";
+				std::cout << "end abs_min_quad: change in delta_x near zero\n";
 			return true;
 		}
 	}
 	if( level > 0 )
-		std::cout << "end abs_min_linear: maximum number of iterations exceeded\n";
+		std::cout << "end abs_min_quad: maximum number of iterations exceeded\n";
 	return false;
 }
 } // END_CPPAD_NAMESPACE

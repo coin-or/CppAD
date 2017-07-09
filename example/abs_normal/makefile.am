@@ -36,8 +36,10 @@ abs_normal_SOURCES = \
 	abs_eval.hpp \
 	abs_min_linear.cpp \
 	abs_min_linear.hpp \
+	abs_min_quad.cpp \
+	abs_min_quad.hpp \
 	abs_normal.cpp \
-	abs_print_mat.hpp
+	abs_print_mat.hpp \
 	get_started.cpp \
 	lp_box.cpp \
 	lp_box.hpp \
@@ -48,7 +50,7 @@ abs_normal_SOURCES = \
 	qp_interior.cpp \
 	qp_interior.hpp \
 	simplex_method.cpp \
-	simplex_method.hpp \
+	simplex_method.hpp
 
 test: check
 	./abs_normal

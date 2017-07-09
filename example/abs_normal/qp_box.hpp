@@ -44,7 +44,7 @@ $latex c \in \B{R}^m$$,
 $latex C \in \B{R}^{m \times n}$$,
 $latex g \in \B{R}^n$$,
 $latex G \in \B{R}^{n \times n}$$,
-where $latex G$$ is positive definite.
+where $latex G + C^T C$$ is positive definite.
 This routine solves the problem
 $latex \[
 \begin{array}{rl}
@@ -66,7 +66,7 @@ no tracing is printed.
 If $icode%level% >= 1%$$,
 a trace of the $code qp_box$$ operations is printed.
 If $icode%level% == 2%$$,
-a trace of the $cref qp_interior$$ optimization is printed.
+a trace of the $cref qp_interior$$ sub-problem is printed.
 
 $head a$$
 This is the vector of lower limits for $latex x$$ in the problem.
@@ -101,7 +101,8 @@ see $cref/KKT conditions/qp_box/KKT Conditions/$$ below.
 It must be greater than zero.
 
 $head maxitr$$
-This is the maximum number of newton iterations to try before giving up
+This is the maximum number of
+$cref qp_interior$$ iterations to try before giving up
 on convergence.
 
 $head xin$$
@@ -226,10 +227,6 @@ bool qp_box(
 	size_t n_limit = 0;
 	for(size_t j = 0; j < n; j++)
 	{	CPPAD_ASSERT_KNOWN(G[j * n + j] >= 0.0, "qp_box: G_{j,j} < 0.0");
-		CPPAD_ASSERT_KNOWN(
-			-inf < a[j] || b[j] < inf || G[j * n + j] > 0.0,
-			"qp_box: a_j = -infinity, b_j = +infinity, and G_{j,j} = 0.0"
-		);
 		if( -inf < a[j] )
 			++n_limit;
 		if( b[j] < inf )
