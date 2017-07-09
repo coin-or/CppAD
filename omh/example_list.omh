@@ -202,7 +202,7 @@ $rref lu_ratio.cpp$$
 $rref lu_solve.cpp$$
 $rref lu_vec_ad_ok.cpp$$
 $rref mat_sum_sq.cpp$$
-$rref min_non_smo.cpp$$
+$rref min_nso_linear.cpp$$
 $rref mul.cpp$$
 $rref mul_eq.cpp$$
 $rref mul_level_adolc.cpp$$

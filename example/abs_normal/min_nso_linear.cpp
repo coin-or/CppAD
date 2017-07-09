@@ -10,12 +10,13 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 
 /*
-$begin min_non_smo.cpp$$
+$begin min_nso_linear.cpp$$
 $spell
+	nso
 	smo
 $$
 
-$section abs_normal min_non_smo: Example and Test$$
+$section abs_normal min_nso_linear: Example and Test$$
 
 $head Purpose$$
 We minimize the function
@@ -39,7 +40,7 @@ is a beginning prototypes for such an algorithm.
 
 
 $head Source$$
-$srcfile%example/abs_normal/min_non_smo.cpp%
+$srcfile%example/abs_normal/min_nso_linear.cpp%
 	0%// BEGIN C++%// END C++%
 1%$$
 
@@ -48,9 +49,9 @@ $end
 */
 // BEGIN C++
 # include <cppad/cppad.hpp>
-# include "min_non_smo.hpp"
+# include "min_nso_linear.hpp"
 
-bool min_non_smo(void)
+bool min_nso_linear(void)
 {	bool ok = true;
 	//
 	using CppAD::AD;
@@ -103,13 +104,13 @@ bool min_non_smo(void)
 	// b_in
 	double b_in = 1.0;
 
-	// call min_non_smo
+	// call min_nso_linear
 	d_vector x_in(n), x_out(n);
 	for(size_t j = 0; j < n; j++)
 		x_in[j]  = double(j + 1);
 
 	//
-	ok &= CppAD::min_non_smo(
+	ok &= CppAD::min_nso_linear(
 		level, g, a, epsilon, maxitr, b_in, x_in, x_out
 	);
 	//

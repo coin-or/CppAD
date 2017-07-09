@@ -30,7 +30,7 @@ $childtable%cppad/core/abs_normal_fun.hpp
 	%example/abs_normal/simplex_method.hpp
 	%example/abs_normal/lp_box.hpp
 	%example/abs_normal/abs_min_linear.hpp
-	%example/abs_normal/min_non_smo.hpp
+	%example/abs_normal/min_nso_linear.hpp
 	%example/abs_normal/qp_interior.hpp
 	%example/abs_normal/qp_box.hpp
 	%example/abs_normal/abs_min_quad.hpp

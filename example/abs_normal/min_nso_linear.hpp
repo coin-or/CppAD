@@ -1,5 +1,5 @@
-# ifndef CPPAD_EXAMPLE_ABS_NORMAL_MIN_NON_SMO_HPP
-# define CPPAD_EXAMPLE_ABS_NORMAL_MIN_NON_SMO_HPP
+# ifndef CPPAD_EXAMPLE_ABS_NORMAL_MIN_NSO_LINEAR_HPP
+# define CPPAD_EXAMPLE_ABS_NORMAL_MIN_NSO_LINEAR_HPP
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
@@ -11,8 +11,9 @@ A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 /*
-$begin min_non_smo$$
+$begin min_nso_linear$$
 $spell
+	nso
 	jac
 	Jacobian
 	maxitr
@@ -21,13 +22,13 @@ $$
 $section abs_normal: Non-Smooth Minimization Using Abs-normal Form$$
 
 $head Syntax$$
-$icode%ok% = min_non_smo(
+$icode%ok% = min_nso_linear(
 	%level%, %g%, %a%, %epsilon%, %maxitr%, %b_in%, %x_in%, %x_out%
 )%$$
 $pre
 $$
 see
-$cref/prototype/min_non_smo/Prototype/$$
+$cref/prototype/min_nso_linear/Prototype/$$
 
 $head Purpose$$
 Given a current that abs-normal representation
@@ -63,9 +64,9 @@ This value is less that or equal 5.
 If $icode%level% == 0%$$,
 no tracing of the optimization is printed.
 If $icode%level% >= 1%$$,
-a trace of each iteration of $code min_non_smo$$ is printed.
+a trace of each iteration of $code min_nso_linear$$ is printed.
 If $icode%level% >= 2%$$,
-a trace of each iteration of the $code min_non_smo$$ sub-problem is printed.
+a trace of each iteration of the $code min_nso_linear$$ sub-problem is printed.
 If $icode%level% >= 3%$$,
 a trace of the $cref lp_box$$ sub-problem is printed.
 If $icode%level% >= 4%$$,
@@ -95,7 +96,7 @@ in the direction of the sub-problem minimizer.
 $head maxitr$$
 This is a vector with size 3.
 The value $icode%maxitr%[0]%$$ is the maximum number of
-$code min_non_smo$$ iterations to try before giving up on convergence.
+$code min_nso_linear$$ iterations to try before giving up on convergence.
 The value $icode%maxitr%[1]%$$ is the maximum number of iterations in the
 $code abs_min_linear$$ sub-problem.
 The value $icode%maxitr%[2]%$$ is the maximum number of iterations in
@@ -115,7 +116,7 @@ It must hold that $icode%b_in% > %epsilon%[0]%$$.
 $head x_in$$
 This vector $icode x_out$$ has size $icode n$$.
 It is the starting point for the optimization procedure; i.e.,
-the $code min_non_smo$$ iterations.
+the $code min_nso_linear$$ iterations.
 
 $head x_out$$
 This vector $icode x_out$$ has size $icode n$$.
@@ -125,15 +126,15 @@ it is the approximate minimizer
 of the abs-normal approximation for $latex f(x)$$ over the trust region
 is $latex x = \hat{x} + \Delta x$$.
 
-$children%example/abs_normal/min_non_smo.cpp
+$children%example/abs_normal/min_nso_linear.cpp
 %$$
 $head Example$$
-The file $cref min_non_smo.cpp$$ contains an example and test of
-$code min_non_smo$$.
+The file $cref min_nso_linear.cpp$$ contains an example and test of
+$code min_nso_linear$$.
 It returns true if the test passes and false otherwise.
 
 $head Prototype$$
-$srcfile%example/abs_normal/min_non_smo.hpp%
+$srcfile%example/abs_normal/min_nso_linear.hpp%
 	0%// BEGIN PROTOTYPE%// END PROTOTYPE%
 1%$$
 
@@ -145,7 +146,7 @@ $end
 # include "abs_eval.hpp"
 
 namespace {
-	CPPAD_TESTVECTOR(double) min_non_smo_join(
+	CPPAD_TESTVECTOR(double) min_nso_linear_join(
 		const CPPAD_TESTVECTOR(double)& x ,
 		const CPPAD_TESTVECTOR(double)& u )
 	{	size_t n = x.size();
@@ -163,7 +164,7 @@ namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 
 // BEGIN PROTOTYPE
 template <class DblVector, class SizeVector>
-bool min_non_smo(
+bool min_nso_linear(
 	size_t           level     ,
 	ADFun<double>&   g         ,
 	ADFun<double>&   a         ,
@@ -187,38 +188,38 @@ bool min_non_smo(
 	//
 	CPPAD_ASSERT_KNOWN(
 		level <= 5,
-		"min_non_smo: level is not less that or equal 5"
+		"min_nso_linear: level is not less that or equal 5"
 	);
 	CPPAD_ASSERT_KNOWN(
 		size_t(epsilon.size()) == 2,
-		"min_non_smo: size of epsilon not equal to 2"
+		"min_nso_linear: size of epsilon not equal to 2"
 	);
 	CPPAD_ASSERT_KNOWN(
 		size_t(maxitr.size()) == 3,
-		"min_non_smo: size of maxitr not equal to 3"
+		"min_nso_linear: size of maxitr not equal to 3"
 	);
 	CPPAD_ASSERT_KNOWN(
 		g.Domain() > s && g.Range() > s,
-		"min_non_smo: g, a is not an abs-normal representation"
+		"min_nso_linear: g, a is not an abs-normal representation"
 	);
 	CPPAD_ASSERT_KNOWN(
 		m == 1,
-		"min_non_smo: m is not equal to 1"
+		"min_nso_linear: m is not equal to 1"
 	);
 	CPPAD_ASSERT_KNOWN(
 		size_t(x_in.size()) == n,
-		"min_non_smo: size of x_in not equal to n"
+		"min_nso_linear: size of x_in not equal to n"
 	);
 	CPPAD_ASSERT_KNOWN(
 		size_t(x_out.size()) == n,
-		"min_non_smo: size of x_out not equal to n"
+		"min_nso_linear: size of x_out not equal to n"
 	);
 	CPPAD_ASSERT_KNOWN(
 		epsilon[0] < b_in,
-		"min_non_smo: b_in <= epsilon[0]"
+		"min_nso_linear: b_in <= epsilon[0]"
 	);
 	if( level > 0 )
-	{	std::cout << "start min_non_smo\n";
+	{	std::cout << "start min_nso_linear\n";
 		std::cout << "b_in = " << b_in << "\n";
 		CppAD::abs_print_mat("x_in", n, 1, x_in);
 	}
@@ -247,7 +248,7 @@ bool min_non_smo(
 	DblVector a_cur = a.Forward(0, x_out);
 	//
 	// (x_out, a_cur)
-	DblVector xu_cur = min_non_smo_join(x_out, a_cur);
+	DblVector xu_cur = min_nso_linear_join(x_out, a_cur);
 	//
 	// value of g[ x_cur, a_cur ]
 	DblVector g_cur = g.Forward(0, xu_cur);
@@ -269,7 +270,7 @@ bool min_non_smo(
 		);
 		if( ! ok )
 		{	if( level > 0 )
-				std::cout << "end min_non_smo: abs_min_linear failed\n";
+				std::cout << "end min_nso_linear: abs_min_linear failed\n";
 			return false;
 		}
 		//
@@ -283,7 +284,7 @@ bool min_non_smo(
 		//
 		if( max_delta_x < b_cur && max_delta_x < epsilon[0] )
 		{	if( level > 0 )
-				std::cout << "end min_non_smo: delta_x is near zero\n";
+				std::cout << "end min_nso_linear: delta_x is near zero\n";
 			return true;
 		}
 		// value of abs-normal approximation at minimizer
@@ -293,7 +294,7 @@ bool min_non_smo(
 		CPPAD_ASSERT_UNKNOWN( derivative <= 0.0 )
 		if( - epsilon[1] < derivative )
 		{	if( level > 0 )
-				std::cout << "end min_non_smo: derivative near zero\n";
+				std::cout << "end min_nso_linear: derivative near zero\n";
 			return true;
 		}
 		//
@@ -301,7 +302,7 @@ bool min_non_smo(
 		DblVector a_new = a.Forward(0, x_new);
 		//
 		// (x_new, a_new)
-		DblVector xu_new = min_non_smo_join(x_new, a_new);
+		DblVector xu_new = min_nso_linear_join(x_new, a_new);
 		//
 		// value of g[ x_new, a_new ]
 		DblVector g_new = g.Forward(0, xu_new);
@@ -335,7 +336,7 @@ bool min_non_smo(
 		}
 	}
 	if( level > 0 )
-		std::cout << "end min_non_smo: maximum number of iterations exceeded\n";
+		std::cout << "end min_nso_linear: maximum number of iterations exceeded\n";
 	return false;
 }
 } // END_CPPAD_NAMESPACE

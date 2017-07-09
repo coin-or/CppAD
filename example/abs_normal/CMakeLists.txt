@@ -17,7 +17,7 @@ SET(source_list
 	abs_normal.cpp
 	get_started.cpp
 	lp_box.cpp
-	min_non_smo.cpp
+	min_nso_linear.cpp
 	qp_box.cpp
 	qp_interior.cpp
 	simplex_method.cpp
