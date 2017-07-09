@@ -1,5 +1,5 @@
-# ifndef CPPAD_EXAMPLE_ABS_NORMAL_MIN_TILDE_HPP
-# define CPPAD_EXAMPLE_ABS_NORMAL_MIN_TILDE_HPP
+# ifndef CPPAD_EXAMPLE_ABS_NORMAL_ABS_MIN_LINEAR_HPP
+# define CPPAD_EXAMPLE_ABS_NORMAL_ABS_MIN_LINEAR_HPP
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
@@ -38,7 +38,7 @@ $cref/approximation for f(x)
 	/Approximating f(x)
 /$$
 near $latex \hat{x}$$.
-We are also given a vector b \in \B{R}_+^n$$.
+We are also given a vector $latex b \in \B{R}_+^n$$.
 This routine solves the problem
 $latex \[
 \begin{array}{lll}

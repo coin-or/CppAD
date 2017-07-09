@@ -1,5 +1,5 @@
-# ifndef CPPAD_EXAMPLE_ABS_NORMAL_EVAL_TILDE_HPP
-# define CPPAD_EXAMPLE_ABS_NORMAL_EVAL_TILDE_HPP
+# ifndef CPPAD_EXAMPLE_ABS_NORMAL_ABS_EVAL_HPP
+# define CPPAD_EXAMPLE_ABS_NORMAL_ABS_EVAL_HPP
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 

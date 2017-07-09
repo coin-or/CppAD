@@ -81,6 +81,7 @@ $rref abort_recording.cpp$$
 $rref abs_eval.cpp$$
 $rref abs_get_started.cpp$$
 $rref abs_min_linear.cpp$$
+$rref abs_min_quad.cpp$$
 $rref acos.cpp$$
 $rref acosh.cpp$$
 $rref ad_assign.cpp$$

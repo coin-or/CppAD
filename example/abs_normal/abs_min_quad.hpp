@@ -1,5 +1,5 @@
-# ifndef CPPAD_EXAMPLE_ABS_NORMAL_MIN_TILDE_HPP
-# define CPPAD_EXAMPLE_ABS_NORMAL_MIN_TILDE_HPP
+# ifndef CPPAD_EXAMPLE_ABS_NORMAL_ABS_MIN_QUAD_HPP
+# define CPPAD_EXAMPLE_ABS_NORMAL_ABS_MIN_QUAD_HPP
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
@@ -13,6 +13,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin abs_min_quad$$
 $spell
+	qp
 	jac
 	Jacobian
 	maxitr
@@ -38,7 +39,7 @@ $cref/approximation for f(x)
 	/Approximating f(x)
 /$$
 near $latex \hat{x}$$.
-We are also given a vector b \in \B{R}_+^n$$
+We are also given a vector $latex b \in \B{R}_+^n$$
 and a positive definite matrix $latex H \in \B{R}^{n \times n}$$.
 This routine solves the problem
 $latex \[
@@ -125,7 +126,7 @@ This is a vector with size 2.
 The value $icode%maxitr%[0]%$$ is the maximum number of
 $code abs_min_quad$$ iterations to try before giving up on convergence.
 The value $icode%maxitr%[1]%$$ is the maximum number of iterations in
-the $cref/qp_interor/qp_interor/maxitr/$$ sub-problems.
+the $cref/qp_interior/qp_interior/maxitr/$$ sub-problems.
 
 $head delta_x$$
 This vector $latex \Delta x$$ has size $icode n$$.

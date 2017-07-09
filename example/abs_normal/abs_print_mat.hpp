@@ -1,5 +1,5 @@
-# ifndef CPPAD_EXAMPLE_ABS_NORMAL_PRINT_MAT_HPP
-# define CPPAD_EXAMPLE_ABS_NORMAL_PRINT_MAT_HPP
+# ifndef CPPAD_EXAMPLE_ABS_NORMAL_ABS_PRINT_MAT_HPP
+# define CPPAD_EXAMPLE_ABS_NORMAL_ABS_PRINT_MAT_HPP
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
