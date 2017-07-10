@@ -1,5 +1,5 @@
-# ifndef CPPAD_EXAMPLE_ABS_NORMAL_MIN_NSO_LINEAR_HPP
-# define CPPAD_EXAMPLE_ABS_NORMAL_MIN_NSO_LINEAR_HPP
+# ifndef CPPAD_EXAMPLE_ABS_NORMAL_MIN_NSO_QUAD_HPP
+# define CPPAD_EXAMPLE_ABS_NORMAL_MIN_NSO_QUAD_HPP
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 

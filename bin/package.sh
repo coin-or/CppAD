@@ -54,14 +54,16 @@ else
 	exit 1
 fi
 # ----------------------------------------------------------------------------
-# Make sure version is set correctly
+## Version number check has been moved to end of git_commit.sh
+##
+## if this is the master, set version to today
+## (This has been moved to git_commit.sh)
+#branch=`git branch | grep '^\*' | sed -e 's|^\* *||'`
+#if [ "$branch" == 'master' ]
+#then
+#	bin/version.sh set
+#fi
 #
-# if this is the master, set version to today
-branch=`git branch | grep '^\*' | sed -e 's|^\* *||'`
-if [ "$branch" == 'master' ]
-then
-	bin/version.sh set
-fi
 # make sure that version number is the same in all files
 echo_log_eval bin/version.sh check
 #
