@@ -45,6 +45,8 @@ abs_normal_SOURCES = \
 	lp_box.hpp \
 	min_nso_linear.cpp \
 	min_nso_linear.hpp \
+	min_nso_quad.cpp \
+	min_nso_quad.hpp \
 	qp_box.cpp \
 	qp_box.hpp \
 	qp_interior.cpp \

@@ -10,13 +10,13 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 
 /*
-$begin min_nso_linear.cpp$$
+$begin min_nso_quad.cpp$$
 $spell
 	nso
 	smo
 $$
 
-$section abs_normal min_nso_linear: Example and Test$$
+$section abs_normal min_nso_quad: Example and Test$$
 
 $head Purpose$$
 We minimize the function
@@ -28,15 +28,15 @@ f( x_0, x_1, x_2  ) & = & x_0^2 + 2 (x_0 + x_1)^2 + | x_2 |
 \] $$
 
 $head Discussion$$
-This routine uses $cref abs_min_linear$$ which uses $cref lp_box$$,
-a linear programming algorithm.
-It is mean to be compared with $cref min_nso_quad.cpp$$ which uses
-a quadratic programing algorithm for the same problem.
+This routine uses $cref abs_min_quad$$ which uses $cref qp_box$$,
+a quadratic programming algorithm.
+It is mean to be compared with $cref min_nso_linear.cpp$$ which uses
+a linear programing algorithm for the same problem.
 To see this comparison, set $icode%level% = 1%$$ is both examples.
 
 
 $head Source$$
-$srcfile%example/abs_normal/min_nso_linear.cpp%
+$srcfile%example/abs_normal/min_nso_quad.cpp%
 	0%// BEGIN C++%// END C++%
 1%$$
 
@@ -45,9 +45,9 @@ $end
 */
 // BEGIN C++
 # include <cppad/cppad.hpp>
-# include "min_nso_linear.hpp"
+# include "min_nso_quad.hpp"
 
-bool min_nso_linear(void)
+bool min_nso_quad(void)
 {	bool ok = true;
 	//
 	using CppAD::AD;
@@ -100,14 +100,14 @@ bool min_nso_linear(void)
 	// b_in
 	double b_in = 1.0;
 
-	// call min_nso_linear
+	// call min_nso_quad
 	d_vector x_in(n), x_out(n);
 	for(size_t j = 0; j < n; j++)
 		x_in[j]  = double(j + 1);
 
 	//
-	ok &= CppAD::min_nso_linear(
-		level, g, a, epsilon, maxitr, b_in, x_in, x_out
+	ok &= CppAD::min_nso_quad(
+		level, f, g, a, epsilon, maxitr, b_in, x_in, x_out
 	);
 	//
 	for(size_t j = 0; j < n; j++)

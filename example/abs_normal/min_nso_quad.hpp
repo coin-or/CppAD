@@ -11,24 +11,25 @@ A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 /*
-$begin min_nso_linear$$
+$begin min_nso_quad$$
 $spell
+	qp
 	nso
 	jac
 	Jacobian
 	maxitr
 	smo
 $$
-$section Non-Smooth Optimization Using Abs-normal Linear Approximations$$
+$section Non-Smooth Optimization Using Abs-normal Quadratic Approximations$$
 
 $head Syntax$$
-$icode%ok% = min_nso_linear(
-	%level%, %g%, %a%, %epsilon%, %maxitr%, %b_in%, %x_in%, %x_out%
+$icode%ok% = min_nso_quad(
+	%level%, %f%, %g%, %a%, %epsilon%, %maxitr%, %b_in%, %x_in%, %x_out%
 )%$$
 $pre
 $$
 see
-$cref/prototype/min_nso_linear/Prototype/$$
+$cref/prototype/min_nso_quad/Prototype/$$
 
 $head Purpose$$
 Given a current that abs-normal representation
@@ -42,8 +43,21 @@ is a $cref SimpleVector$$ class with elements of type $code double$$.
 $head SizeVector$$
 is a $cref SimpleVector$$ class with elements of type $code size_t$$.
 
+$head level$$
+This value is less that or equal 5.
+If $icode%level% == 0%$$,
+no tracing of the optimization is printed.
+If $icode%level% >= 1%$$,
+a trace of each iteration of $code min_nso_quad$$ is printed.
+If $icode%level% >= 2%$$,
+a trace of each iteration of the $code abs_min_quad$$ sub-problem is printed.
+If $icode%level% >= 3%$$,
+a trace of the $cref qp_box$$ sub-problem is printed.
+If $icode%level% >= 4%$$,
+a trace of the $cref qp_interior$$ sub-problem is printed.
+
 $head f$$
-We use the notation $icode f$$ for the original function; see
+This is the original function for the abs-normal form; see
 $cref/f/abs_normal_fun/f/$$.
 
 $subhead n$$
@@ -58,22 +72,6 @@ This must be equal to one.
 $subhead s$$
 We use
 $cref/s/abs_normal_fun/f/s/$$ to denote the number absolute terms in $icode f$$.
-
-$head level$$
-This value is less that or equal 5.
-If $icode%level% == 0%$$,
-no tracing of the optimization is printed.
-If $icode%level% >= 1%$$,
-a trace of each iteration of $code min_nso_linear$$ is printed.
-If $icode%level% >= 2%$$,
-a trace of each iteration of the $code abs_min_linear$$ sub-problem is printed.
-If $icode%level% >= 3%$$,
-a trace of the $cref lp_box$$ sub-problem is printed.
-If $icode%level% >= 4%$$,
-a trace of the objective and primal variables $latex x$$ are printed
-at each $cref simplex_method$$ iteration.
-If $icode%level% == 5%$$,
-the simplex tableau is printed at each simplex iteration.
 
 $head g$$
 This is the function $cref/g/abs_normal_fun/g/$$
@@ -96,11 +94,11 @@ in the direction of the sub-problem minimizer.
 $head maxitr$$
 This is a vector with size 3.
 The value $icode%maxitr%[0]%$$ is the maximum number of
-$code min_nso_linear$$ iterations to try before giving up on convergence.
+$code min_nso_quad$$ iterations to try before giving up on convergence.
 The value $icode%maxitr%[1]%$$ is the maximum number of iterations in the
-$code abs_min_linear$$ sub-problem.
+$code abs_min_quad$$ sub-problem.
 The value $icode%maxitr%[2]%$$ is the maximum number of iterations in
-the $cref/simplex_method/simplex_method/maxitr/$$ sub-problems.
+the $cref/qp_interior/qp_interior/maxitr/$$ sub-problems.
 
 $head b_in$$
 This the initial bound on the trust region size.
@@ -116,7 +114,7 @@ It must hold that $icode%b_in% > %epsilon%[0]%$$.
 $head x_in$$
 This vector $icode x_out$$ has size $icode n$$.
 It is the starting point for the optimization procedure; i.e.,
-the $code min_nso_linear$$ iterations.
+the $code min_nso_quad$$ iterations.
 
 $head x_out$$
 This vector $icode x_out$$ has size $icode n$$.
@@ -126,15 +124,15 @@ it is the approximate minimizer
 of the abs-normal approximation for $latex f(x)$$ over the trust region
 is $latex x = \hat{x} + \Delta x$$.
 
-$children%example/abs_normal/min_nso_linear.cpp
+$children%example/abs_normal/min_nso_quad.cpp
 %$$
 $head Example$$
-The file $cref min_nso_linear.cpp$$ contains an example and test of
-$code min_nso_linear$$.
+The file $cref min_nso_quad.cpp$$ contains an example and test of
+$code min_nso_quad$$.
 It returns true if the test passes and false otherwise.
 
 $head Prototype$$
-$srcfile%example/abs_normal/min_nso_linear.hpp%
+$srcfile%example/abs_normal/min_nso_quad.hpp%
 	0%// BEGIN PROTOTYPE%// END PROTOTYPE%
 1%$$
 
@@ -142,11 +140,11 @@ $end
 -----------------------------------------------------------------------------
 */
 # include <cppad/cppad.hpp>
-# include "abs_min_linear.hpp"
+# include "abs_min_quad.hpp"
 # include "abs_eval.hpp"
 
 namespace {
-	CPPAD_TESTVECTOR(double) min_nso_linear_join(
+	CPPAD_TESTVECTOR(double) min_nso_quad_join(
 		const CPPAD_TESTVECTOR(double)& x ,
 		const CPPAD_TESTVECTOR(double)& u )
 	{	size_t n = x.size();
@@ -164,8 +162,9 @@ namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 
 // BEGIN PROTOTYPE
 template <class DblVector, class SizeVector>
-bool min_nso_linear(
+bool min_nso_quad(
 	size_t           level     ,
+	ADFun<double>&   f         ,
 	ADFun<double>&   g         ,
 	ADFun<double>&   a         ,
 	const DblVector& epsilon   ,
@@ -181,59 +180,65 @@ bool min_nso_linear(
 	size_t s  = a.Range();
 	//
 	// size of domain for f
-	size_t n  = g.Domain() - s;
+	size_t n  = f.Domain();
 	//
 	// size of range space for f
-	size_t m = g.Range() - s;
+	size_t m = f.Range();
 	//
+	CPPAD_ASSERT_KNOWN( g.Domain() == n + s,
+		"min_nso_quad: (g, a) is not an abs-normal for for f"
+	);
+	CPPAD_ASSERT_KNOWN( g.Range() == m + s,
+		"min_nso_quad: (g, a) is not an abs-normal for for f"
+	);
 	CPPAD_ASSERT_KNOWN(
 		level <= 5,
-		"min_nso_linear: level is not less that or equal 5"
+		"min_nso_quad: level is not less that or equal 5"
 	);
 	CPPAD_ASSERT_KNOWN(
 		size_t(epsilon.size()) == 2,
-		"min_nso_linear: size of epsilon not equal to 2"
+		"min_nso_quad: size of epsilon not equal to 2"
 	);
 	CPPAD_ASSERT_KNOWN(
 		size_t(maxitr.size()) == 3,
-		"min_nso_linear: size of maxitr not equal to 3"
+		"min_nso_quad: size of maxitr not equal to 3"
 	);
 	CPPAD_ASSERT_KNOWN(
 		g.Domain() > s && g.Range() > s,
-		"min_nso_linear: g, a is not an abs-normal representation"
+		"min_nso_quad: g, a is not an abs-normal representation"
 	);
 	CPPAD_ASSERT_KNOWN(
 		m == 1,
-		"min_nso_linear: m is not equal to 1"
+		"min_nso_quad: m is not equal to 1"
 	);
 	CPPAD_ASSERT_KNOWN(
 		size_t(x_in.size()) == n,
-		"min_nso_linear: size of x_in not equal to n"
+		"min_nso_quad: size of x_in not equal to n"
 	);
 	CPPAD_ASSERT_KNOWN(
 		size_t(x_out.size()) == n,
-		"min_nso_linear: size of x_out not equal to n"
+		"min_nso_quad: size of x_out not equal to n"
 	);
 	CPPAD_ASSERT_KNOWN(
 		epsilon[0] < b_in,
-		"min_nso_linear: b_in <= epsilon[0]"
+		"min_nso_quad: b_in <= epsilon[0]"
 	);
 	if( level > 0 )
-	{	std::cout << "start min_nso_linear\n";
+	{	std::cout << "start min_nso_quad\n";
 		std::cout << "b_in = " << b_in << "\n";
 		CppAD::abs_print_mat("x_in", n, 1, x_in);
 	}
-	// level in abs_min_linear sub-problem
+	// level in abs_min_quad sub-problem
 	size_t level_tilde = 0;
 	if( level > 0 )
 		level_tilde = level - 1;
 	//
-	// maxitr in abs_min_linear sub-problem
+	// maxitr in abs_min_quad sub-problem
 	SizeVector maxitr_tilde(2);
 	maxitr_tilde[0] = maxitr[1];
 	maxitr_tilde[1] = maxitr[2];
 	//
-	// epsilon in abs_min_linear sub-problem
+	// epsilon in abs_min_quad sub-problem
 	DblVector eps_tilde(2);
 	eps_tilde[0] = epsilon[0] / 10.;
 	eps_tilde[1] = epsilon[1] / 10.;
@@ -248,7 +253,7 @@ bool min_nso_linear(
 	DblVector a_cur = a.Forward(0, x_out);
 	//
 	// (x_out, a_cur)
-	DblVector xu_cur = min_nso_linear_join(x_out, a_cur);
+	DblVector xu_cur = min_nso_quad_join(x_out, a_cur);
 	//
 	// value of g[ x_cur, a_cur ]
 	DblVector g_cur = g.Forward(0, xu_cur);
@@ -258,19 +263,22 @@ bool min_nso_linear(
 		// Jacobian of g[ x_cur, a_cur ]
 		DblVector g_jac = g.Jacobian(xu_cur);
 		//
-		// bound in abs_min_linear sub-problem
+		// Hessian at x_cur
+		DblVector f_hes = f.Hessian(x_out, 0);
+		//
+		// bound in abs_min_quad sub-problem
 		DblVector bound_tilde(n);
 		for(size_t j = 0; j < n; j++)
 			bound_tilde[j] = b_cur;
 		//
 		DblVector delta_x(n);
-		bool ok = abs_min_linear(
+		bool ok = abs_min_quad(
 			level_tilde, n, m, s,
-			g_cur, g_jac, bound_tilde, eps_tilde, maxitr_tilde, delta_x
+			g_cur, g_jac, f_hes, bound_tilde, eps_tilde, maxitr_tilde, delta_x
 		);
 		if( ! ok )
 		{	if( level > 0 )
-				std::cout << "end min_nso_linear: abs_min_linear failed\n";
+				std::cout << "end min_nso_quad: abs_min_quad failed\n";
 			return false;
 		}
 		//
@@ -282,9 +290,9 @@ bool min_nso_linear(
 			max_delta_x = std::max(max_delta_x, std::fabs( delta_x[j] ) );
 		}
 		//
-		if( max_delta_x < b_cur && max_delta_x < epsilon[0] )
+		if( max_delta_x < 0.75 * b_cur && max_delta_x < epsilon[0] )
 		{	if( level > 0 )
-				std::cout << "end min_nso_linear: delta_x is near zero\n";
+				std::cout << "end min_nso_quad: delta_x is near zero\n";
 			return true;
 		}
 		// value of abs-normal approximation at minimizer
@@ -294,7 +302,7 @@ bool min_nso_linear(
 		CPPAD_ASSERT_UNKNOWN( derivative <= 0.0 )
 		if( - epsilon[1] < derivative )
 		{	if( level > 0 )
-				std::cout << "end min_nso_linear: derivative near zero\n";
+				std::cout << "end min_nso_quad: derivative near zero\n";
 			return true;
 		}
 		//
@@ -302,11 +310,10 @@ bool min_nso_linear(
 		DblVector a_new = a.Forward(0, x_new);
 		//
 		// (x_new, a_new)
-		DblVector xu_new = min_nso_linear_join(x_new, a_new);
+		DblVector xu_new = min_nso_quad_join(x_new, a_new);
 		//
 		// value of g[ x_new, a_new ]
 		DblVector g_new = g.Forward(0, xu_new);
-		//
 		//
 		// check for descent of objective
 		double rate_new = (g_new[0] - g_cur[0]) / max_delta_x;
@@ -336,7 +343,7 @@ bool min_nso_linear(
 		}
 	}
 	if( level > 0 )
-		std::cout << "end min_nso_linear: maximum number of iterations exceeded\n";
+		std::cout << "end min_nso_quad: maximum number of iterations exceeded\n";
 	return false;
 }
 } // END_CPPAD_NAMESPACE

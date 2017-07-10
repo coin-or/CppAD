@@ -18,6 +18,7 @@ SET(source_list
 	get_started.cpp
 	lp_box.cpp
 	min_nso_linear.cpp
+	min_nso_quad.cpp
 	qp_box.cpp
 	qp_interior.cpp
 	simplex_method.cpp

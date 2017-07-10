@@ -34,6 +34,7 @@ $childtable%cppad/core/abs_normal_fun.hpp
 	%example/abs_normal/qp_interior.hpp
 	%example/abs_normal/qp_box.hpp
 	%example/abs_normal/abs_min_quad.hpp
+	%example/abs_normal/min_nso_quad.hpp
 %$$
 
 $end
