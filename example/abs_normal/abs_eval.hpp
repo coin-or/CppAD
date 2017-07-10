@@ -16,14 +16,21 @@ $spell
 	jac
 	Jacobian
 	eval
+	hpp
 $$
 $section abs_normal: Evaluate First Order Approximation$$
 
 $head Syntax$$
 $icode%g_tilde% = abs_eval(%n%, %m%, %s%, %g_hat%, %g_jac%, %delta_x%)%$$
-$pre
-$$
-see $cref/prototype/qp_box/Prototype/$$
+
+$head Prototype$$
+$srcfile%example/abs_normal/abs_eval.hpp%
+	0%// BEGIN PROTOTYPE%// END PROTOTYPE%
+1%$$
+
+$head Source$$
+This following is a link to the source code for this example:
+$cref/abs_eval.hpp/abs_eval.hpp/$$.
 
 $head Purpose$$
 Given a current that abs-normal representation at a point
@@ -36,6 +43,10 @@ $cref/approximation for f(x)
 	/Approximating f(x)
 /$$
 where $latex x = \hat{x} + \Delta x$$.
+
+$head Vector$$
+The type $icode Vector$$ is a
+simple vector with elements of type $code double$$.
 
 $head f$$
 We use the notation $icode f$$ for the original function; see
@@ -77,23 +88,19 @@ that corresponds to the point
 $latex x = \hat{x} + \Delta x$$ and $latex u = a(x)$$.
 
 $children%example/abs_normal/abs_eval.cpp
+	%example/abs_normal/abs_eval.omh
 %$$
 $head Example$$
 The file $cref abs_eval.cpp$$ contains an example and test of
 $code abs_eval$$.
 It returns true if the test passes and false otherwise.
 
-$head Prototype$$
-$srcfile%example/abs_normal/abs_eval.hpp%
-	0%// BEGIN PROTOTYPE%// END PROTOTYPE%
-1%$$
-
 $end
 -----------------------------------------------------------------------------
 */
 
+// BEGIN C++
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
-
 // BEGIN PROTOTYPE
 template <class Vector>
 Vector abs_eval(
@@ -181,5 +188,6 @@ Vector abs_eval(
 	return g_tilde;
 }
 } // END_CPPAD_NAMESPACE
+// END C++
 
 # endif
