@@ -8,14 +8,14 @@
   A copy of this license is included in the COPYING file of this distribution.
   Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------------
-$begin lp_box.hpp$$
+$begin min_nso_linear.hpp$$
 $spell
-	lp
+	nso
 $$
 
-$section lp_box Source Code$$
+$section min_nso_linear Source Code$$
 
-$srcfile%example/abs_normal/lp_box.hpp%
+$srcfile%example/abs_normal/min_nso_linear.hpp%
 	0%// BEGIN C++%// END C++%
 0%$$
 

@@ -13,6 +13,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin min_nso_linear$$
 $spell
+	hpp
 	nso
 	jac
 	Jacobian
@@ -25,10 +26,15 @@ $head Syntax$$
 $icode%ok% = min_nso_linear(
 	%level%, %g%, %a%, %epsilon%, %maxitr%, %b_in%, %x_in%, %x_out%
 )%$$
-$pre
-$$
-see
-$cref/prototype/min_nso_linear/Prototype/$$
+
+$head Prototype$$
+$srcfile%example/abs_normal/min_nso_linear.hpp%
+	0%// BEGIN PROTOTYPE%// END PROTOTYPE%
+1%$$
+
+$head Source$$
+This following is a link to the source code for this example:
+$cref/min_nso_linear.hpp/min_nso_linear.hpp/$$.
 
 $head Purpose$$
 Given a current that abs-normal representation
@@ -127,16 +133,12 @@ of the abs-normal approximation for $latex f(x)$$ over the trust region
 is $latex x = \hat{x} + \Delta x$$.
 
 $children%example/abs_normal/min_nso_linear.cpp
+	%example/abs_normal/min_nso_linear.omh
 %$$
 $head Example$$
 The file $cref min_nso_linear.cpp$$ contains an example and test of
 $code min_nso_linear$$.
 It returns true if the test passes and false otherwise.
-
-$head Prototype$$
-$srcfile%example/abs_normal/min_nso_linear.hpp%
-	0%// BEGIN PROTOTYPE%// END PROTOTYPE%
-1%$$
 
 $end
 -----------------------------------------------------------------------------
@@ -145,6 +147,7 @@ $end
 # include "abs_min_linear.hpp"
 # include "abs_eval.hpp"
 
+// BEGIN C++
 namespace {
 	CPPAD_TESTVECTOR(double) min_nso_linear_join(
 		const CPPAD_TESTVECTOR(double)& x ,
@@ -160,6 +163,7 @@ namespace {
 	}
 }
 
+// BEGIN C++
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 
 // BEGIN PROTOTYPE
@@ -340,5 +344,6 @@ bool min_nso_linear(
 	return false;
 }
 } // END_CPPAD_NAMESPACE
+// END C++
 
 # endif
