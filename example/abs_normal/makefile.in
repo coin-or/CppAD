@@ -374,25 +374,34 @@ AM_CXXFLAGS = -g $(CXX_FLAGS)
 abs_normal_SOURCES = \
 	abs_eval.cpp \
 	abs_eval.hpp \
+	abs_eval.omh \
 	abs_min_linear.cpp \
 	abs_min_linear.hpp \
+	abs_min_linear.omh \
 	abs_min_quad.cpp \
 	abs_min_quad.hpp \
+	abs_min_quad.omh \
 	abs_normal.cpp \
 	abs_print_mat.hpp \
 	get_started.cpp \
 	lp_box.cpp \
 	lp_box.hpp \
+	lp_box.omh \
 	min_nso_linear.cpp \
 	min_nso_linear.hpp \
+	min_nso_linear.omh \
 	min_nso_quad.cpp \
 	min_nso_quad.hpp \
+	min_nso_quad.omh \
 	qp_box.cpp \
 	qp_box.hpp \
+	qp_box.omh \
 	qp_interior.cpp \
 	qp_interior.hpp \
+	qp_interior.omh \
 	simplex_method.cpp \
-	simplex_method.hpp
+	simplex_method.hpp \
+	simplex_method.omh
 
 all: all-am
 
