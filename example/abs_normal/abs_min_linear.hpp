@@ -13,6 +13,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin abs_min_linear$$
 $spell
+	hpp
 	jac
 	Jacobian
 	maxitr
@@ -24,10 +25,15 @@ $icode%ok% = abs_min_linear(
 	%level%, %n%, %m%, %s%,
 	%g_hat%, %g_jac%, %bound%, %epsilon%, %maxitr%, %delta_x%
 )%$$
-$pre
-$$
-see
-$cref/prototype/abs_min_linear/Prototype/$$
+
+$head Prototype$$
+$srcfile%example/abs_normal/abs_min_linear.hpp%
+	0%// BEGIN PROTOTYPE%// END PROTOTYPE%
+1%$$
+
+$head Source$$
+This following is a link to the source code for this example:
+$cref/abs_min_linear.hpp/abs_min_linear.hpp/$$.
 
 $head Purpose$$
 We are given a point $latex \hat{x} \in \B{R}^n$$ and
@@ -170,16 +176,12 @@ $latex x_K - x_{K-1}$$ is small enough.
 
 
 $children%example/abs_normal/abs_min_linear.cpp
+	%example/abs_normal/abs_min_linear.omh
 %$$
 $head Example$$
 The file $cref abs_min_linear.cpp$$ contains an example and test of
 $code abs_min_linear$$.
 It returns true if the test passes and false otherwise.
-
-$head Prototype$$
-$srcfile%example/abs_normal/abs_min_linear.hpp%
-	0%// BEGIN PROTOTYPE%// END PROTOTYPE%
-1%$$
 
 $end
 -----------------------------------------------------------------------------
@@ -188,6 +190,7 @@ $end
 # include "lp_box.hpp"
 # include "abs_eval.hpp"
 
+// BEGIN C++
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 
 // BEGIN PROTOTYPE
@@ -426,5 +429,6 @@ bool abs_min_linear(
 	return false;
 }
 } // END_CPPAD_NAMESPACE
+// END C++
 
 # endif

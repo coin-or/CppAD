@@ -34,8 +34,10 @@ AM_CXXFLAGS       = -g $(CXX_FLAGS)
 abs_normal_SOURCES = \
 	abs_eval.cpp \
 	abs_eval.hpp \
+	abs_eval.omh \
 	abs_min_linear.cpp \
 	abs_min_linear.hpp \
+	abs_min_linear.omh \
 	abs_min_quad.cpp \
 	abs_min_quad.hpp \
 	abs_normal.cpp \
