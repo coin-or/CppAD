@@ -58,6 +58,7 @@ abs_normal_SOURCES = \
 	qp_box.omh \
 	qp_interior.cpp \
 	qp_interior.hpp \
+	qp_interior.omh \
 	simplex_method.cpp \
 	simplex_method.hpp
 

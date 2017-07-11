@@ -13,6 +13,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin qp_interior$$
 $spell
+	hpp
 	const
 	col
 	xout
@@ -31,7 +32,15 @@ $head Syntax$$
 $icode%ok% = qp_interior(
 %level%, %c%, %C%, %g%, %G%, %epsilon%, %maxitr%, %xin%, %xout%, %yout%, %sout%
 )%$$
-see $cref/prototype/qp_interior/Prototype/$$
+
+$head Prototype$$
+$srcfile%example/abs_normal/qp_interior.hpp%
+	0%// BEGIN PROTOTYPE%// END PROTOTYPE%
+1%$$
+
+$head Source$$
+This following is a link to the source code for this example:
+$cref/qp_interior.hpp/qp_interior.hpp/$$.
 
 $head Purpose$$
 This routine could be used to create a version of $cref abs_min_linear$$
@@ -259,16 +268,12 @@ D(s)^{-1}[ D(y) r_y(x, y, s) - r_s (x, y, s) + D(y) C \Delta x ]
 \] $$
 
 $children%example/abs_normal/qp_interior.cpp
+	%example/abs_normal/qp_interior.omh
 %$$
 $head Example$$
 The file $cref qp_interior.cpp$$ contains an example and test of
 $code qp_interior$$.
 It returns true if the test passes and false otherwise.
-
-$head Prototype$$
-$srcfile%example/abs_normal/qp_interior.hpp%
-	0%// BEGIN PROTOTYPE%// END PROTOTYPE%
-1%$$
 
 $end
 -----------------------------------------------------------------------------
@@ -277,6 +282,7 @@ $end
 # include <cppad/utility/lu_solve.hpp>
 # include "abs_print_mat.hpp"
 
+// BEGIN C++
 namespace {
 	// ------------------------------------------------------------------------
 	template <class Vector>
@@ -361,6 +367,7 @@ namespace {
 		return F_0;
 	}
 }
+// BEGIN C++
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 
 // BEGIN PROTOTYPE
@@ -580,5 +587,6 @@ bool qp_interior(
 	return false;
 }
 } // END_CPPAD_NAMESPACE
+// END C++
 
 # endif
