@@ -46,6 +46,7 @@ abs_normal_SOURCES = \
 	get_started.cpp \
 	lp_box.cpp \
 	lp_box.hpp \
+	lp_box.omh \
 	min_nso_linear.cpp \
 	min_nso_linear.hpp \
 	min_nso_quad.cpp \

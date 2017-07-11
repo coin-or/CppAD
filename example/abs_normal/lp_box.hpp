@@ -13,6 +13,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin lp_box$$
 $spell
+	hpp
 	lp
 	const
 	col
@@ -31,7 +32,15 @@ $head Syntax$$
 $icode%ok% = lp_box(
 	%level%, %A%, %b%, %c%, %d%, %maxitr%, %xout%
 )%$$
-see $cref/prototype/lp_box/Prototype/$$
+
+$head Prototype$$
+$srcfile%example/abs_normal/lp_box.hpp%
+	0%// BEGIN PROTOTYPE%// END PROTOTYPE%
+1%$$
+
+$head Source$$
+This following is a link to the source code for this example:
+$cref/lp_box.hpp/lp_box.hpp/$$.
 
 $head Problem$$
 We are given
@@ -94,22 +103,19 @@ $head ok$$
 If the return value $icode ok$$ is true, an optimal solution was found.
 
 $children%example/abs_normal/lp_box.cpp
+	%example/abs_normal/lp_box.omh
 %$$
 $head Example$$
 The file $cref lp_box.cpp$$ contains an example and test of
 $code lp_box$$.
 It returns true if the test passes and false otherwise.
 
-$head Prototype$$
-$srcfile%example/abs_normal/lp_box.hpp%
-	0%// BEGIN PROTOTYPE%// END PROTOTYPE%
-1%$$
-
 $end
 -----------------------------------------------------------------------------
 */
 # include "simplex_method.hpp"
 
+// BEGIN C++
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 
 // BEGIN PROTOTYPE
@@ -211,5 +217,6 @@ bool lp_box(
 }
 
 } // END_CPPAD_NAMESPACE
+// END C++
 
 # endif
