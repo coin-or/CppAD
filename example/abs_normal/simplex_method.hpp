@@ -13,6 +13,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin simplex_method$$
 $spell
+	hpp
 	maxitr
 	xout
 $$
@@ -22,7 +23,15 @@ $section abs_normal: Solve a Linear Program Using Simplex Method$$
 $head Syntax$$
 $icode%ok% = simplex_method(%level%, %b%, %A%, %c%, %maxitr%, %xout%)
 %$$
-see $cref/prototype/simplex_method/Prototype/$$
+
+$head Prototype$$
+$srcfile%example/abs_normal/simplex_method.hpp%
+	0%// BEGIN PROTOTYPE%// END PROTOTYPE%
+1%$$
+
+$head Source$$
+This following is a link to the source code for this example:
+$cref/simplex_method.hpp/simplex_method.hpp/$$.
 
 $head Problem$$
 We are given
@@ -76,16 +85,12 @@ $head ok$$
 If the return value $icode ok$$ is true, a solution has been found.
 
 $children%example/abs_normal/simplex_method.cpp
+	%example/abs_normal/simplex_method.omh
 %$$
 $head Example$$
 The file $cref simplex_method.cpp$$ contains an example and test of
 $code simplex_method$$.
 It returns true if the test passes and false otherwise.
-
-$head Prototype$$
-$srcfile%example/abs_normal/simplex_method.hpp%
-	0%// BEGIN PROTOTYPE%// END PROTOTYPE%
-1%$$
 
 $end
 -----------------------------------------------------------------------------
@@ -94,6 +99,7 @@ $end
 # include <cppad/utility/error_handler.hpp>
 # include "abs_print_mat.hpp"
 
+// BEGIN C++
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 
 // BEGIN PROTOTYPE
@@ -343,5 +349,6 @@ bool simplex_method(
 	return false;
 }
 } // END_CPPAD_NAMESPACE
+// END C++
 
 # endif

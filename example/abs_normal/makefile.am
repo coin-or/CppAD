@@ -60,7 +60,8 @@ abs_normal_SOURCES = \
 	qp_interior.hpp \
 	qp_interior.omh \
 	simplex_method.cpp \
-	simplex_method.hpp
+	simplex_method.hpp \
+	simplex_method.omh
 
 test: check
 	./abs_normal
