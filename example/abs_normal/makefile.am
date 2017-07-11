@@ -40,6 +40,7 @@ abs_normal_SOURCES = \
 	abs_min_linear.omh \
 	abs_min_quad.cpp \
 	abs_min_quad.hpp \
+	abs_min_quad.omh \
 	abs_normal.cpp \
 	abs_print_mat.hpp \
 	get_started.cpp \

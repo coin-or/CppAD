@@ -13,6 +13,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin abs_min_quad$$
 $spell
+	hpp
 	qp
 	jac
 	Jacobian
@@ -25,10 +26,15 @@ $icode%ok% = abs_min_quad(
 	%level%, %n%, %m%, %s%,
 	%g_hat%, %g_jac%, %hessian%, %bound%, %epsilon%, %maxitr%, %delta_x%
 )%$$
-$pre
-$$
-see
-$cref/prototype/abs_min_quad/Prototype/$$
+
+$head Prototype$$
+$srcfile%example/abs_normal/abs_min_quad.hpp%
+	0%// BEGIN PROTOTYPE%// END PROTOTYPE%
+1%$$
+
+$head Source$$
+This following is a link to the source code for this example:
+$cref/abs_min_quad.hpp/abs_min_quad.hpp/$$.
 
 $head Purpose$$
 We are given a point $latex \hat{x} \in \B{R}^n$$ and
@@ -173,16 +179,12 @@ $latex x_K - x_{K-1}$$ is small enough.
 
 
 $children%example/abs_normal/abs_min_quad.cpp
+	%example/abs_normal/abs_min_quad.omh
 %$$
 $head Example$$
 The file $cref abs_min_quad.cpp$$ contains an example and test of
 $code abs_min_quad$$.
 It returns true if the test passes and false otherwise.
-
-$head Prototype$$
-$srcfile%example/abs_normal/abs_min_quad.hpp%
-	0%// BEGIN PROTOTYPE%// END PROTOTYPE%
-1%$$
 
 $end
 -----------------------------------------------------------------------------
@@ -191,6 +193,7 @@ $end
 # include "qp_box.hpp"
 # include "abs_eval.hpp"
 
+// BEGIN C++
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 
 // BEGIN PROTOTYPE
@@ -482,5 +485,6 @@ bool abs_min_quad(
 	return false;
 }
 } // END_CPPAD_NAMESPACE
+// END C++
 
 # endif
