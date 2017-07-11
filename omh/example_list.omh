@@ -79,9 +79,12 @@ $rref a11c_openmp.cpp$$
 $rref a11c_pthread.cpp$$
 $rref abort_recording.cpp$$
 $rref abs_eval.cpp$$
+$rref abs_eval.hpp$$
 $rref abs_get_started.cpp$$
 $rref abs_min_linear.cpp$$
+$rref abs_min_linear.hpp$$
 $rref abs_min_quad.cpp$$
+$rref abs_min_quad.hpp$$
 $rref acos.cpp$$
 $rref acosh.cpp$$
 $rref ad_assign.cpp$$
@@ -196,6 +199,7 @@ $rref log10.cpp$$
 $rref log1p.cpp$$
 $rref log.cpp$$
 $rref lp_box.cpp$$
+$rref lp_box.hpp$$
 $rref lu_factor.cpp$$
 $rref lu_invert.cpp$$
 $rref lu_ratio.cpp$$
@@ -203,7 +207,9 @@ $rref lu_solve.cpp$$
 $rref lu_vec_ad_ok.cpp$$
 $rref mat_sum_sq.cpp$$
 $rref min_nso_linear.cpp$$
+$rref min_nso_linear.hpp$$
 $rref min_nso_quad.cpp$$
+$rref min_nso_quad.hpp$$
 $rref mul.cpp$$
 $rref mul_eq.cpp$$
 $rref mul_level_adolc.cpp$$
@@ -240,7 +246,9 @@ $rref pow_int.cpp$$
 $rref print_for_cout.cpp$$
 $rref print_for_string.cpp$$
 $rref qp_box.cpp$$
+$rref qp_box.hpp$$
 $rref qp_interior.cpp$$
+$rref qp_interior.hpp$$
 $rref rc_sparsity.cpp$$
 $rref reverse_checkpoint.cpp$$
 $rref reverse_one.cpp$$
@@ -264,6 +272,7 @@ $rref simple_ad_openmp.cpp$$
 $rref simple_ad_pthread.cpp$$
 $rref simple_vector.cpp$$
 $rref simplex_method.cpp$$
+$rref simplex_method.hpp$$
 $rref sin.cpp$$
 $rref sinh.cpp$$
 $rref sparse_hes.cpp$$
