@@ -53,7 +53,7 @@ $latex c \in \B{R}^m$$,
 $latex C \in \B{R}^{m \times n}$$,
 $latex g \in \B{R}^n$$,
 $latex G \in \B{R}^{n \times n}$$,
-where $latex G + C^T C$$ is positive definite.
+where $latex G$$ is positive semi-definate.
 This routine solves the problem
 $latex \[
 \begin{array}{rl}
@@ -63,6 +63,9 @@ $latex \[
 \R{subject \; to} & C x + c \leq 0 \; \R{and} \; a \leq x \leq b
 \end{array}
 \] $$
+The matrix $latex G + C^T C$$ must be positive definite on components
+of the vector $latex x$$ where the lower limit minus infinity
+and the upper limit is plus infinity; see $icode a$$ and $icode b$$ below.
 
 $head Vector$$
 The type $icode Vector$$ is a

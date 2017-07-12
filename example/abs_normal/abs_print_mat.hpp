@@ -21,9 +21,12 @@ $section abs_normal: Print a Vector or Matrix$$
 
 $head Syntax$$
 $codei%abs_print_mat(%name%, %nr%, %nc%, %mat%)%$$
-$pre
-$$
-see $cref/prototype/qp_box/Prototype/$$
+
+$head Prototype$$
+$srcfile%example/abs_normal/abs_print_mat.hpp%
+	0%// BEGIN PROTOTYPE%// END PROTOTYPE%
+1%$$
+
 
 $head Purpose$$
 This routine is used by the $cref abs_normal$$ examples to print
@@ -42,18 +45,14 @@ This is the number of columns in the matrix. Use $icode%nc% = 1%$$ for
 column vectors.
 
 $head mat$$
-This is a $cref SimpleVector$$
-$cref/row-major/glossary/Row-major Representation/$$ of the matrix.
+This is a
+$cref/row-major/glossary/Row-major Representation/$$ representation
+of the matrix (hence a $cref SimpleVector$$).
 The syntax
 $codei%
 	std::cout << %mat%[%i%]%
 %$$
 must output the $th i$$ element of the simple vector $icode mat$$.
-
-$head Prototype$$
-$srcfile%example/abs_normal/abs_print_mat.hpp%
-	0%// BEGIN PROTOTYPE%// END PROTOTYPE%
-1%$$
 
 $end
 -----------------------------------------------------------------------------
