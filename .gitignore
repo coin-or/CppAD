@@ -1,4 +1,14 @@
 # script use to make git commits
 git_commit.sh
-# a name used for temporary files
+# names used for temporary files
 junk
+junk.sed
+# build directory used by other branches
+build
+# doxygen directory and file used by other branches
+doxydoc
+doxyfile
+# log files
+*.log
+# error files
+*.err

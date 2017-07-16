@@ -34,6 +34,7 @@ echo_eval mv doc $temporary_dir/cppad.doc
 echo_eval git checkout gh-pages
 # restore build.sh
 echo_eval cp $temporary_dir/cppad.build.sh build.sh
+echo_eval chmod +x build.sh
 # get temporary directory version of documentation
 echo_eval rm -r doc
 echo_eval mv $temporary_dir/cppad.doc doc
