@@ -53,7 +53,7 @@ $latex c \in \B{R}^m$$,
 $latex C \in \B{R}^{m \times n}$$,
 $latex g \in \B{R}^n$$,
 $latex G \in \B{R}^{n \times n}$$,
-where $latex G$$ is positive semi-definate.
+where $latex G$$ is positive semi-definite.
 This routine solves the problem
 $latex \[
 \begin{array}{rl}
