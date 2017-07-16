@@ -49,11 +49,24 @@ done
 # -----------------------------------------------------------------------------
 add_list=`git status -s | \
 	sed -n -e '/^?? /p' | sed -e '/^\.build.sh.swp/d' -e 's/^?? *//'`
-echo 'adding new files'
-git add $add_list
+if [ "$add_list" != '' ]
+then
+	echo 'adding new files'
+	git add $add_list
+fi
 # -----------------------------------------------------------------------------
 mod_list=`git status -s | sed -n -e '/^ M /p' | sed -e 's/^ M *//'`
-echo 'adding modified files'
-git add $mod_list
+if [ "$mod_list" != '' ]
+then
+	echo 'adding modified files'
+	git add $mod_list
+fi
+# -----------------------------------------------------------------------------
+del_list=`git status -s | sed -n -e '/^ D /p' | sed -e 's/^ D *//'`
+if [ "$del_list" != '' ]
+then
+	echo 'remove deleted files'
+	git add $del_list
+fi
 # -----------------------------------------------------------------------------
 echo 'build.sh: OK'
