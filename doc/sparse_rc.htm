@@ -1,0 +1,447 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>Row and Column Index Sparsity Patterns</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Row and Column Index Sparsity Patterns">
+<meta name="keywords" id="keywords" content=" row column index sparsity patterns syntax sizevector empty pattern target nr nc nnz resize set k r c col row_major col_major example ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_sparse_rc_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://coin-or.github.io/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="set_union.cpp.htm" target="_top">Prev</a>
+</td><td><a href="sparse_rc.cpp.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>utility</option>
+<option>sparse_rc</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>CppAD-&gt;</option>
+<option>Install</option>
+<option>Introduction</option>
+<option>AD</option>
+<option>ADFun</option>
+<option>preprocessor</option>
+<option>multi_thread</option>
+<option>utility</option>
+<option>ipopt_solve</option>
+<option>Example</option>
+<option>speed</option>
+<option>Appendix</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>utility-&gt;</option>
+<option>ErrorHandler</option>
+<option>NearEqual</option>
+<option>speed_test</option>
+<option>SpeedTest</option>
+<option>time_test</option>
+<option>test_boolofvoid</option>
+<option>NumericType</option>
+<option>CheckNumericType</option>
+<option>SimpleVector</option>
+<option>CheckSimpleVector</option>
+<option>nan</option>
+<option>pow_int</option>
+<option>Poly</option>
+<option>LuDetAndSolve</option>
+<option>RombergOne</option>
+<option>RombergMul</option>
+<option>Runge45</option>
+<option>Rosen34</option>
+<option>OdeErrControl</option>
+<option>OdeGear</option>
+<option>OdeGearControl</option>
+<option>CppAD_vector</option>
+<option>thread_alloc</option>
+<option>index_sort</option>
+<option>to_string</option>
+<option>set_union</option>
+<option>sparse_rc</option>
+<option>sparse_rcv</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down0(this)'>
+<option>sparse_rc-&gt;</option>
+<option>sparse_rc.cpp</option>
+</select>
+</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Syntax</option>
+<option>SizeVector</option>
+<option>empty</option>
+<option>pattern</option>
+<option>target</option>
+<option>nr</option>
+<option>nc</option>
+<option>nnz</option>
+<option>resize</option>
+<option>set</option>
+<option>---..k</option>
+<option>---..r</option>
+<option>---..c</option>
+<option>row</option>
+<option>col</option>
+<option>row_major</option>
+<option>col_major</option>
+<option>Example</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>Row and Column Index Sparsity Patterns</big></big></b></center>
+<br>
+<b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
+
+<br>
+
+<code><font color="blue"><span style='white-space: nowrap'>#&nbsp;include&nbsp;&lt;cppad/utility/sparse_rc.hpp&gt;<br>
+</span></font></code>
+
+<code><font color="blue"><span style='white-space: nowrap'>sparse_rc&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>SizeVector</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>empty</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+
+<code><font color="blue"><span style='white-space: nowrap'>sparse_rc&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>SizeVector</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>pattern</span></font></i><font color="blue"><span style='white-space: nowrap'>(</span></font><i><font color="black"><span style='white-space: nowrap'>nr</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>nc</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>nnz</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+
+<code><font color="blue"><span style='white-space: nowrap'>target</span></font><i><font color="black"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font></i><font color="blue"><span style='white-space: nowrap'>pattern</span></font><i><font color="black"><span style='white-space: nowrap'><br>
+</span></font></i></code>
+
+<code><i><font color="black"><span style='white-space: nowrap'>resize</span></font></i><font color="blue"><span style='white-space: nowrap'>(</span></font><i><font color="black"><span style='white-space: nowrap'>nr</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>nc</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>nnz</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+
+<code><i><font color="black"><span style='white-space: nowrap'>pattern</span></font></i><font color="blue"><span style='white-space: nowrap'>.set(</span></font><i><font color="black"><span style='white-space: nowrap'>k</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>r</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>c</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+
+<code><i><font color="black"><span style='white-space: nowrap'>pattern</span></font></i><font color="blue"><span style='white-space: nowrap'>.nr()<br>
+</span></font></code>
+
+<code><i><font color="black"><span style='white-space: nowrap'>pattern</span></font></i><font color="blue"><span style='white-space: nowrap'>.nc()<br>
+</span></font></code>
+
+<code><i><font color="black"><span style='white-space: nowrap'>pattern</span></font></i><font color="blue"><span style='white-space: nowrap'>.nnz()<br>
+</span></font></code>
+
+<code><font color="blue"><span style='white-space: nowrap'>const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>SizeVector</span></font></i><font color="blue"><span style='white-space: nowrap'>&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>row</span></font></i><font color="blue"><span style='white-space: nowrap'>(&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>pattern</span></font></i><font color="blue"><span style='white-space: nowrap'>.row()&nbsp;)<br>
+</span></font></code>
+
+<code><font color="blue"><span style='white-space: nowrap'>const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>SizeVector</span></font></i><font color="blue"><span style='white-space: nowrap'>&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>col</span></font></i><font color="blue"><span style='white-space: nowrap'>(&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>pattern</span></font></i><font color="blue"><span style='white-space: nowrap'>.col()&nbsp;)<br>
+</span></font></code>
+
+<code><i><font color="black"><span style='white-space: nowrap'>row_major</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>pattern</span></font></i><font color="blue"><span style='white-space: nowrap'>.row_major()<br>
+</span></font></code>
+
+<code><i><font color="black"><span style='white-space: nowrap'>col_major</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>pattern</span></font></i><font color="blue"><span style='white-space: nowrap'>.col_major()<br>
+</span></font></code>
+<br>
+<b><big><a name="SizeVector" id="SizeVector">SizeVector</a></big></b>
+<br>
+We use 
+<code><i><font color="black"><span style='white-space: nowrap'>SizeVector</span></font></i></code>
+ to denote <a href="simplevector.htm" target="_top"><span style='white-space: nowrap'>SimpleVector</span></a>
+ class
+<a href="simplevector.htm#Elements of Specified Type" target="_top"><span style='white-space: nowrap'>with&nbsp;elements&nbsp;of&nbsp;type</span></a>
+
+<code><font color="blue">size</font></code>.
+
+<br>
+<br>
+<b><big><a name="empty" id="empty">empty</a></big></b>
+<br>
+This is an empty sparsity pattern. To be specific,
+the corresponding number of rows 
+<code><i><font color="black"><span style='white-space: nowrap'>nr</span></font></i></code>
+,
+number of columns 
+<code><i><font color="black"><span style='white-space: nowrap'>nc</span></font></i></code>
+,
+and number of possibly non-zero values 
+<code><i><font color="black"><span style='white-space: nowrap'>nnz</span></font></i></code>
+,
+are all zero.
+
+<br>
+<br>
+<b><big><a name="pattern" id="pattern">pattern</a></big></b>
+<br>
+This object is used to hold a sparsity pattern for a matrix.
+The sparsity 
+<code><i><font color="black"><span style='white-space: nowrap'>pattern</span></font></i></code>
+ is <code><font color="blue">const</font></code>
+except during its constructor, <code><font color="blue">resize</font></code>, and <code><font color="blue">set</font></code>.
+
+<br>
+<br>
+<b><big><a name="target" id="target">target</a></big></b>
+<br>
+The target of the assignment statement must have prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sparse_rc&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>SizeVector</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>target</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+After this assignment statement, 
+<code><i><font color="black"><span style='white-space: nowrap'>target</span></font></i></code>
+ is an independent copy
+of 
+<code><i><font color="black"><span style='white-space: nowrap'>pattern</span></font></i></code>
+; i.e. it has all the same values as 
+<code><i><font color="black"><span style='white-space: nowrap'>pattern</span></font></i></code>
+
+and changes to 
+<code><i><font color="black"><span style='white-space: nowrap'>target</span></font></i></code>
+ do not affect 
+<code><i><font color="black"><span style='white-space: nowrap'>pattern</span></font></i></code>
+.
+
+<br>
+<br>
+<b><big><a name="nr" id="nr">nr</a></big></b>
+<br>
+This argument has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>nr</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+It specifies the number of rows in the sparsity pattern.
+The function call <code><font color="blue">nr()</font></code> returns the value of 
+<code><i><font color="black"><span style='white-space: nowrap'>nr</span></font></i></code>
+.
+
+<br>
+<br>
+<b><big><a name="nc" id="nc">nc</a></big></b>
+<br>
+This argument has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>nc</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+It specifies the number of columns in the sparsity pattern.
+The function call <code><font color="blue">nc()</font></code> returns the value of 
+<code><i><font color="black"><span style='white-space: nowrap'>nc</span></font></i></code>
+.
+
+<br>
+<br>
+<b><big><a name="nnz" id="nnz">nnz</a></big></b>
+<br>
+This argument has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>nnz</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+It specifies the number of possibly non-zero
+index pairs in the sparsity pattern.
+The function call <code><font color="blue">nnz()</font></code> returns the value of 
+<code><i><font color="black"><span style='white-space: nowrap'>nnz</span></font></i></code>
+.
+
+<br>
+<br>
+<b><big><a name="resize" id="resize">resize</a></big></b>
+<br>
+The current sparsity pattern is lost and a new one is started
+with the specified parameters. The elements in the 
+<code><i><font color="black"><span style='white-space: nowrap'>row</span></font></i></code>
+
+and 
+<code><i><font color="black"><span style='white-space: nowrap'>col</span></font></i></code>
+ vectors should be assigned using <code><font color="blue">set</font></code>.
+
+<br>
+<br>
+<b><big><a name="set" id="set">set</a></big></b>
+<br>
+This function sets the values
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>row</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>k</span></font></i><font color="blue"><span style='white-space: nowrap'>]&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>r</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>col</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>k</span></font></i><font color="blue"><span style='white-space: nowrap'>]&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>c</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+<br>
+<b><a name="set.k" id="set.k">k</a></b>
+<br>
+This argument has type
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>k</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+and must be less than 
+<code><i><font color="black"><span style='white-space: nowrap'>nnz</span></font></i></code>
+.
+
+<br>
+<br>
+<b><a name="set.r" id="set.r">r</a></b>
+<br>
+This argument has type
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>r</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+It specifies the value assigned to 
+<code><i><font color="black"><span style='white-space: nowrap'>row</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>k</span></font></i><font color="blue"><span style='white-space: nowrap'>]</span></font></code>
+ and must
+be less than 
+<code><i><font color="black"><span style='white-space: nowrap'>nr</span></font></i></code>
+.
+
+<br>
+<br>
+<b><a name="set.c" id="set.c">c</a></b>
+<br>
+This argument has type
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>c</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+It specifies the value assigned to 
+<code><i><font color="black"><span style='white-space: nowrap'>col</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>k</span></font></i><font color="blue"><span style='white-space: nowrap'>]</span></font></code>
+ and must
+be less than 
+<code><i><font color="black"><span style='white-space: nowrap'>nc</span></font></i></code>
+.
+
+<br>
+<br>
+<b><big><a name="row" id="row">row</a></big></b>
+<br>
+This vector has size 
+<code><i><font color="black"><span style='white-space: nowrap'>nnz</span></font></i></code>
+ and
+
+<code><i><font color="black"><span style='white-space: nowrap'>row</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>k</span></font></i><font color="blue"><span style='white-space: nowrap'>]</span></font></code>
+
+is the row index of the <code><i>k</i></code>-th possibly non-zero
+index pair in the sparsity pattern.
+
+<br>
+<br>
+<b><big><a name="col" id="col">col</a></big></b>
+<br>
+This vector has size 
+<code><i><font color="black"><span style='white-space: nowrap'>nnz</span></font></i></code>
+ and
+
+<code><i><font color="black"><span style='white-space: nowrap'>col</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>k</span></font></i><font color="blue"><span style='white-space: nowrap'>]</span></font></code>
+ is the column index of the <code><i>k</i></code>-th possibly non-zero
+index pair in the sparsity pattern.
+
+<br>
+<br>
+<b><big><a name="row_major" id="row_major">row_major</a></big></b>
+<br>
+This vector has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>SizeVector</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>row_major</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+and its size 
+<code><i><font color="black"><span style='white-space: nowrap'>nnz</span></font></i></code>
+.
+It sorts the sparsity pattern in row-major order.
+To be specific,
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>col</span></font></i><font color="blue"><span style='white-space: nowrap'>[&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>row_major</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>k</span></font></i><font color="blue"><span style='white-space: nowrap'>]&nbsp;]&nbsp;&lt;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>col</span></font></i><font color="blue"><span style='white-space: nowrap'>[&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>row_major</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>k</span></font></i><font color="blue"><span style='white-space: nowrap'>+1]&nbsp;]<br>
+</span></font></code>
+and if 
+<code><i><font color="black"><span style='white-space: nowrap'>col</span></font></i><font color="blue"><span style='white-space: nowrap'>[&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>row_major</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>k</span></font></i><font color="blue"><span style='white-space: nowrap'>]&nbsp;]&nbsp;==&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>col</span></font></i><font color="blue"><span style='white-space: nowrap'>[&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>row_major</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>k</span></font></i><font color="blue"><span style='white-space: nowrap'>+1]&nbsp;]</span></font></code>
+,
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>row</span></font></i><font color="blue"><span style='white-space: nowrap'>[&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>row_major</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>k</span></font></i><font color="blue"><span style='white-space: nowrap'>]&nbsp;]&nbsp;&lt;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>row</span></font></i><font color="blue"><span style='white-space: nowrap'>[&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>row_major</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>k</span></font></i><font color="blue"><span style='white-space: nowrap'>+1]&nbsp;]<br>
+</span></font></code>
+This routine generates an assert if there are two entries with the same
+row and column values (if <code><font color="blue">NDEBUG</font></code> is not defined).
+
+<br>
+<br>
+<b><big><a name="col_major" id="col_major">col_major</a></big></b>
+<br>
+This vector has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>SizeVector</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>col_major</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+and its size 
+<code><i><font color="black"><span style='white-space: nowrap'>nnz</span></font></i></code>
+.
+It sorts the sparsity pattern in column-major order.
+To be specific,
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>row</span></font></i><font color="blue"><span style='white-space: nowrap'>[&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>col_major</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>k</span></font></i><font color="blue"><span style='white-space: nowrap'>]&nbsp;]&nbsp;&lt;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>row</span></font></i><font color="blue"><span style='white-space: nowrap'>[&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>col_major</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>k</span></font></i><font color="blue"><span style='white-space: nowrap'>+1]&nbsp;]<br>
+</span></font></code>
+and if 
+<code><i><font color="black"><span style='white-space: nowrap'>row</span></font></i><font color="blue"><span style='white-space: nowrap'>[&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>col_major</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>k</span></font></i><font color="blue"><span style='white-space: nowrap'>]&nbsp;]&nbsp;==&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>row</span></font></i><font color="blue"><span style='white-space: nowrap'>[&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>col_major</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>k</span></font></i><font color="blue"><span style='white-space: nowrap'>+1]&nbsp;]</span></font></code>
+,
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>col</span></font></i><font color="blue"><span style='white-space: nowrap'>[&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>col_major</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>k</span></font></i><font color="blue"><span style='white-space: nowrap'>]&nbsp;]&nbsp;&lt;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>col</span></font></i><font color="blue"><span style='white-space: nowrap'>[&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>col_major</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>k</span></font></i><font color="blue"><span style='white-space: nowrap'>+1]&nbsp;]<br>
+</span></font></code>
+This routine generates an assert if there are two entries with the same
+row and column values (if <code><font color="blue">NDEBUG</font></code> is not defined).
+
+
+<br>
+<br>
+<b><big><a name="Example" id="Example">Example</a></big></b>
+<br>
+The file <a href="sparse_rc.cpp.htm" target="_top"><span style='white-space: nowrap'>sparse_rc.cpp</span></a>
+
+contains an example and test of this class.
+It returns true if it succeeds and false otherwise.
+
+
+<hr>Input File: cppad/utility/sparse_rc.hpp
+
+</body>
+</html>

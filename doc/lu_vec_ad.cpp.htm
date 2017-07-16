@@ -1,0 +1,340 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>Lu Factor and Solve with Recorded Pivoting</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Lu Factor and Solve with Recorded Pivoting">
+<meta name="keywords" id="keywords" content=" lu factor solve with recorded pivoting Luvecad linear equation determinant syntax purpose storage convention n m matrix rhs result logdet example ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_lu_vec_ad.cpp_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://coin-or.github.io/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="speed_example.cpp.htm" target="_top">Prev</a>
+</td><td><a href="lu_vec_ad_ok.cpp.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>Example</option>
+<option>ExampleUtility</option>
+<option>lu_vec_ad.cpp</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>CppAD-&gt;</option>
+<option>Install</option>
+<option>Introduction</option>
+<option>AD</option>
+<option>ADFun</option>
+<option>preprocessor</option>
+<option>multi_thread</option>
+<option>utility</option>
+<option>ipopt_solve</option>
+<option>Example</option>
+<option>speed</option>
+<option>Appendix</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>Example-&gt;</option>
+<option>get_started.cpp</option>
+<option>General</option>
+<option>ExampleUtility</option>
+<option>ListAllExamples</option>
+<option>testvector</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>ExampleUtility-&gt;</option>
+<option>general.cpp</option>
+<option>speed_example.cpp</option>
+<option>lu_vec_ad.cpp</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down0(this)'>
+<option>lu_vec_ad.cpp-&gt;</option>
+<option>lu_vec_ad_ok.cpp</option>
+</select>
+</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Syntax</option>
+<option>Purpose</option>
+<option>Storage Convention</option>
+<option>n</option>
+<option>m</option>
+<option>Matrix</option>
+<option>Rhs</option>
+<option>Result</option>
+<option>logdet</option>
+<option>Example</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>Lu Factor and Solve with Recorded Pivoting</big></big></b></center>
+<code><span style='white-space: nowrap'><br>
+</span></code><b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
+
+<br>
+
+<code><font color="blue"><span style='white-space: nowrap'>int&nbsp;LuVecAD(<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>m</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;VecAD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>double</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>Matrix</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;VecAD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>double</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>Rhs</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;VecAD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>double</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>Result</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>double</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>logdet</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+
+
+
+<br>
+<br>
+<b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
+<br>
+Solves the linear equation
+<small>@[@
+
+	Matrix * Result = Rhs
+
+@]@</small>
+where 
+<code><i><font color="black"><span style='white-space: nowrap'>Matrix</span></font></i></code>
+ is an <small>@(@
+n \times n
+@)@</small> matrix,
+
+<code><i><font color="black"><span style='white-space: nowrap'>Rhs</span></font></i></code>
+ is an <small>@(@
+n x m
+@)@</small> matrix, and
+
+<code><i><font color="black"><span style='white-space: nowrap'>Result</span></font></i></code>
+ is an <small>@(@
+n x m
+@)@</small> matrix.
+<code><span style='white-space: nowrap'><br>
+<br>
+</span></code>The routine <a href="lusolve.htm" target="_top"><span style='white-space: nowrap'>LuSolve</span></a>
+ uses an arbitrary vector type,
+instead of <a href="vecad.htm" target="_top"><span style='white-space: nowrap'>VecAD</span></a>
+,
+to hold its elements.
+The pivoting operations for a <code><font color="blue">ADFun</font></code> object
+corresponding to an <code><font color="blue">LuVecAD</font></code> solution
+will change to be optimal for the matrix being factored.
+<code><span style='white-space: nowrap'><br>
+<br>
+</span></code>It is often the case that
+<code><font color="blue">LuSolve</font></code> is faster than <code><font color="blue">LuVecAD</font></code> when <code><font color="blue">LuSolve</font></code>
+uses a simple vector class with
+<a href="simplevector.htm#Elements of Specified Type" target="_top"><span style='white-space: nowrap'>elements&nbsp;of&nbsp;type&nbsp;double</span></a>
+,
+but the corresponding <a href="adfun.htm" target="_top"><span style='white-space: nowrap'>ADFun</span></a>
+ objects have a fixed
+set of pivoting operations.
+
+<br>
+<br>
+<b><big><a name="Storage Convention" id="Storage Convention">Storage Convention</a></big></b>
+<br>
+The matrices stored in row major order.
+To be specific, if <small>@(@
+A
+@)@</small> contains the vector storage for an
+<small>@(@
+n x m
+@)@</small> matrix,
+<small>@(@
+i
+@)@</small> is between zero and <small>@(@
+n-1
+@)@</small>,
+and <small>@(@
+j
+@)@</small> is between zero and <small>@(@
+m-1
+@)@</small>,
+<small>@[@
+
+
+	A_{i,j} = A[ i * m + j ]
+
+@]@</small>
+(The length of <small>@(@
+A
+@)@</small> must be equal to <small>@(@
+n * m
+@)@</small>.)
+
+<br>
+<br>
+<b><big><a name="n" id="n">n</a></big></b>
+<br>
+is the number of rows in
+
+<code><i><font color="black"><span style='white-space: nowrap'>Matrix</span></font></i></code>
+,
+
+<code><i><font color="black"><span style='white-space: nowrap'>Rhs</span></font></i></code>
+,
+and 
+<code><i><font color="black"><span style='white-space: nowrap'>Result</span></font></i></code>
+.
+
+<br>
+<br>
+<b><big><a name="m" id="m">m</a></big></b>
+<br>
+is the number of columns in
+
+<code><i><font color="black"><span style='white-space: nowrap'>Rhs</span></font></i></code>
+
+and 
+<code><i><font color="black"><span style='white-space: nowrap'>Result</span></font></i></code>
+.
+It is ok for 
+<code><i><font color="black"><span style='white-space: nowrap'>m</span></font></i></code>
+ to be zero which is reasonable when
+you are only interested in the determinant of 
+<code><i><font color="black"><span style='white-space: nowrap'>Matrix</span></font></i></code>
+.
+
+
+<br>
+<br>
+<b><big><a name="Matrix" id="Matrix">Matrix</a></big></b>
+<br>
+On input, this is an
+<small>@(@
+n \times n
+@)@</small> matrix containing the variable coefficients for
+the equation we wish to solve.
+On output, the elements of 
+<code><i><font color="black"><span style='white-space: nowrap'>Matrix</span></font></i></code>
+ have been overwritten
+and are not specified.
+
+<br>
+<br>
+<b><big><a name="Rhs" id="Rhs">Rhs</a></big></b>
+<br>
+On input, this is an
+<small>@(@
+n \times m
+@)@</small> matrix containing the right hand side
+for the equation we wish to solve.
+On output, the elements of 
+<code><i><font color="black"><span style='white-space: nowrap'>Rhs</span></font></i></code>
+ have been overwritten
+and are not specified.
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>m</span></font></i></code>
+ is zero, 
+<code><i><font color="black"><span style='white-space: nowrap'>Rhs</span></font></i></code>
+ is not used.
+
+<br>
+<br>
+<b><big><a name="Result" id="Result">Result</a></big></b>
+<br>
+On input, this is an
+<small>@(@
+n \times m
+@)@</small> matrix and the value of its elements do not matter.
+On output, the elements of 
+<code><i><font color="black"><span style='white-space: nowrap'>Rhs</span></font></i></code>
+ contain the solution
+of the equation we wish to solve
+(unless the value returned by <code><font color="blue">LuVecAD</font></code> is equal to zero).
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>m</span></font></i></code>
+ is zero, 
+<code><i><font color="black"><span style='white-space: nowrap'>Result</span></font></i></code>
+ is not used.
+
+<br>
+<br>
+<b><big><a name="logdet" id="logdet">logdet</a></big></b>
+<br>
+On input, the value of 
+<code><i><font color="black"><span style='white-space: nowrap'>logdet</span></font></i></code>
+ does not matter.
+On output, it has been set to the
+log of the determinant of 
+<code><i><font color="black"><span style='white-space: nowrap'>Matrix</span></font></i></code>
+ (but not quite).
+To be more specific,
+if 
+<code><i><font color="black"><span style='white-space: nowrap'>signdet</span></font></i></code>
+ is the value returned by <code><font color="blue">LuVecAD</font></code>,
+the determinant of 
+<code><i><font color="black"><span style='white-space: nowrap'>Matrix</span></font></i></code>
+ is given by the formula
+<small>@[@
+
+	det = signdet \exp( logdet )
+
+@]@</small>
+This enables <code><font color="blue">LuVecAD</font></code> to use logs of absolute values.
+
+
+<br>
+<br>
+<b><big><a name="Example" id="Example">Example</a></big></b>
+
+<br>
+The file
+<a href="lu_vec_ad_ok.cpp.htm" target="_top"><span style='white-space: nowrap'>lu_vec_ad_ok.cpp</span></a>
+
+contains an example and test of <code><font color="blue">LuVecAD</font></code>.
+It returns true if it succeeds and false otherwise.
+
+
+
+<hr>Input File: example/general/lu_vec_ad.cpp
+
+</body>
+</html>

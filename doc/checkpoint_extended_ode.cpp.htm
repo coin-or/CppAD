@@ -1,0 +1,556 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>Checkpointing an Extended ODE Solver: Example and Test</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Checkpointing an Extended ODE Solver: Example and Test">
+<meta name="keywords" id="keywords" content=" checkpointing extended ode solver: example test mul_level checkpoint see also discussion problem solver solution ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_checkpoint_extended_ode.cpp_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://coin-or.github.io/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="checkpoint_ode.cpp.htm" target="_top">Prev</a>
+</td><td><a href="atomic_base.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>AD</option>
+<option>ADValued</option>
+<option>atomic</option>
+<option>checkpoint</option>
+<option>checkpoint_extended_ode.cpp</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>ADValued-&gt;</option>
+<option>Arithmetic</option>
+<option>unary_standard_math</option>
+<option>binary_math</option>
+<option>CondExp</option>
+<option>Discrete</option>
+<option>numeric_limits</option>
+<option>atomic</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>atomic-&gt;</option>
+<option>checkpoint</option>
+<option>atomic_base</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>checkpoint-&gt;</option>
+<option>checkpoint.cpp</option>
+<option>atomic_mul_level.cpp</option>
+<option>checkpoint_ode.cpp</option>
+<option>checkpoint_extended_ode.cpp</option>
+</select>
+</td>
+<td>checkpoint_extended_ode.cpp</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>See Also</option>
+<option>Discussion</option>
+<option>Problem</option>
+<option>ODE Solver</option>
+<option>ODE</option>
+<option>Solution</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>Checkpointing an Extended ODE Solver: Example and Test</big></big></b></center>
+<br>
+<b><big><a name="See Also" id="See Also">See Also</a></big></b>
+
+<br>
+<a href="checkpoint_ode.cpp.htm" target="_top"><span style='white-space: nowrap'>checkpoint_ode.cpp</span></a>
+,
+<a href="atomic_mul_level.cpp.htm" target="_top"><span style='white-space: nowrap'>atomic_mul_level.cpp</span></a>
+.
+
+
+<br>
+<br>
+<b><big><a name="Discussion" id="Discussion">Discussion</a></big></b>
+<br>
+Suppose that we wish to extend an ODE to include derivatives with respect
+to some parameter in the ODE. In addition, suppose we wish to
+differentiate a function that depends on these derivatives.
+Applying checkpointing to at the second level of AD would not work;
+see <a href="atomic_mul_level.cpp.htm" target="_top"><span style='white-space: nowrap'>atomic_mul_level.cpp</span></a>
+
+In this example we show how one can do this by
+checkpointing an extended ODE solver.
+
+<br>
+<br>
+<b><big><a name="Problem" id="Problem">Problem</a></big></b>
+<br>
+We consider the initial value problem with parameter <small>@(@
+x
+@)@</small> defined by,
+<small>@(@
+z(0, x) = z_0 (x)
+@)@</small>,
+<small>@[@
+
+	\partial_t z(t, x ) = h [ x , z(t, x) ]
+
+@]@</small>
+Note that if <small>@(@
+t
+@)@</small> needs to be in the equation, one can define
+the first component of <small>@(@
+z(t, x)
+@)@</small> to be equal to <small>@(@
+t
+@)@</small>.
+
+<br>
+<br>
+<b><big><a name="ODE Solver" id="ODE Solver">ODE Solver</a></big></b>
+<br>
+For this example, we consider the Fourth order Runge-Kutta ODE solver.
+Given an approximation solution at time <small>@(@
+t_k
+@)@</small> denoted by
+<small>@(@
+\tilde{z}_k (x)
+@)@</small>, and <small>@(@
+\Delta t = t_{k+1} - t_k
+@)@</small>,
+it defines the approximation solution <small>@(@
+\tilde{z}_{k+1} (x)
+@)@</small>
+at time <small>@(@
+t_{k+1}
+@)@</small> by
+<small>@[@
+
+\begin{array}{rcl}
+h_1 & =  & h [ x , \tilde{z}_k (x) ]
+\\
+h_2 & =  & h [ x , \tilde{z}_k (x) + \Delta t \; h_1 / 2 ]
+\\
+h_3 & =  & h [ x , \tilde{z}_k (x) + \Delta t \; h_2 / 2 ]
+\\
+h_4 & =  & h [ x , \tilde{z}_k (x) + \Delta t \; h_3 ]
+\\
+\tilde{z}_{k+1} (x) & = &
+	\tilde{z}_k (x) + \Delta t \; ( h_1 +  2 h_2 + 2 h_3 + h_4 ) / 6
+\end{array}
+
+@]@</small>
+If <small>@(@
+\tilde{z}_k (x) = z_k (x)
+@)@</small>, then
+<small>@(@
+\tilde{z}_{k+1} (x) = z_{k+1} (x) + O( \Delta t^5 )
+@)@</small>, then
+Other ODE solvers can use a similar method to the one used below.
+
+<br>
+<br>
+<b><big><a name="ODE" id="ODE">ODE</a></big></b>
+<br>
+For this example the ODE is defined by
+<small>@(@
+z(0, x) = 0
+@)@</small> and
+<small>@[@
+
+	h[ x, z(t, x) ] =
+	\left( \begin{array}{c}
+			x_0                     \\
+			x_1 z_0 (t, x)          \\
+			\vdots                  \\
+			x_{n-1} z_{n-2} (t, x)
+	\end{array} \right)
+	=
+	\left( \begin{array}{c}
+			\partial_t z_0 (t , x)      \\
+			\partial_t z_1 (t , x)      \\
+			\vdots                      \\
+			\partial_t z_{n-1} (t , x)
+	\end{array} \right)
+
+@]@</small>
+
+<br>
+<br>
+<b><big><a name="Solution" id="Solution">Solution</a></big></b>
+<br>
+The solution of the ODE for this example,
+which is used to check the results,
+can be calculated by
+starting with the first row and then using the solution
+for the first row to solve the second and so on.
+Doing this we obtain
+<small>@[@
+
+	z(t, x) =
+	\left( \begin{array}{c}
+		x_0 t                  \\
+		x_1 x_0 t^2 / 2        \\
+		\vdots                 \\
+		x_{n-1} x_{n-2} \ldots x_0 t^n / n !
+	\end{array} \right)
+
+@]@</small>
+
+
+<code><font color="blue">
+<pre><tt>
+<b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/cppad.hpp&gt;</font>
+
+<b><font color="#0000FF">namespace</font></b> <font color="#FF0000">{</font>
+     <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>AD<font color="#990000">;</font>
+     <b><font color="#0000FF">typedef</font></b> <font color="#008080">AD&lt;double&gt;</font>                     a1double<font color="#990000">;</font>
+     <b><font color="#0000FF">typedef</font></b> <font color="#008080">AD&lt;a1double&gt;</font>                   a2double<font color="#990000">;</font>
+     <i><font color="#9A1900">//</font></i>
+     <b><font color="#0000FF">typedef</font></b> <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font>   <font color="#009900">double</font> <font color="#990000">)</font>   a0vector<font color="#990000">;</font>
+     <b><font color="#0000FF">typedef</font></b> <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font> a1double <font color="#990000">)</font>   a1vector<font color="#990000">;</font>
+     <b><font color="#0000FF">typedef</font></b> <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font> a2double <font color="#990000">)</font>   a2vector<font color="#990000">;</font>
+     <i><font color="#9A1900">//</font></i>
+     <i><font color="#9A1900">// set once by main and kept that way</font></i>
+     <font color="#009900">double</font> delta_t_ <font color="#990000">=</font> std<font color="#990000">::</font>numeric_limits<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;::</font><b><font color="#000000">quiet_NaN</font></b><font color="#990000">();</font>
+     <font color="#008080">size_t</font> n_       <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
+     <i><font color="#9A1900">//</font></i>
+     <i><font color="#9A1900">// The function h( x , y)</font></i>
+     <b><font color="#0000FF">template</font></b> <font color="#990000">&lt;</font><b><font color="#0000FF">class</font></b> <font color="#008080">FloatVector</font><font color="#990000">&gt;</font>
+     <font color="#008080">FloatVector</font> <b><font color="#000000">h</font></b><font color="#990000">(</font><b><font color="#0000FF">const</font></b> FloatVector<font color="#990000">&amp;</font> x<font color="#990000">,</font> <b><font color="#0000FF">const</font></b> FloatVector<font color="#990000">&amp;</font> y<font color="#990000">)</font>
+     <font color="#FF0000">{</font>    <b><font color="#000000">assert</font></b><font color="#990000">(</font> <b><font color="#000000">size_t</font></b><font color="#990000">(</font> x<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">)</font> <font color="#990000">==</font> n_ <font color="#990000">);</font>
+          <b><font color="#000000">assert</font></b><font color="#990000">(</font> <b><font color="#000000">size_t</font></b><font color="#990000">(</font> y<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">)</font> <font color="#990000">==</font> n_ <font color="#990000">);</font>
+          <font color="#008080">FloatVector</font> <b><font color="#000000">result</font></b><font color="#990000">(</font>n_<font color="#990000">);</font>
+          result<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">];</font>
+          <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> n_<font color="#990000">;</font> i<font color="#990000">++)</font>
+               result<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> x<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">*</font> y<font color="#990000">[</font>i<font color="#990000">-</font><font color="#993399">1</font><font color="#990000">];</font>
+          <b><font color="#0000FF">return</font></b> result<font color="#990000">;</font>
+     <font color="#FF0000">}</font>
+
+     <i><font color="#9A1900">// The 4-th Order Runge-Kutta Step</font></i>
+     <b><font color="#0000FF">template</font></b> <font color="#990000">&lt;</font><b><font color="#0000FF">class</font></b> <font color="#008080">FloatVector</font><font color="#990000">&gt;</font>
+     <font color="#008080">FloatVector</font> <b><font color="#000000">Runge4</font></b><font color="#990000">(</font><b><font color="#0000FF">const</font></b> FloatVector<font color="#990000">&amp;</font> x<font color="#990000">,</font> <b><font color="#0000FF">const</font></b> FloatVector<font color="#990000">&amp;</font> z0
+     <font color="#990000">)</font>
+     <font color="#FF0000">{</font>    <b><font color="#000000">assert</font></b><font color="#990000">(</font> <b><font color="#000000">size_t</font></b><font color="#990000">(</font> x<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">)</font> <font color="#990000">==</font> n_ <font color="#990000">);</font>
+          <b><font color="#000000">assert</font></b><font color="#990000">(</font> <b><font color="#000000">size_t</font></b><font color="#990000">(</font> z0<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">)</font> <font color="#990000">==</font> n_ <font color="#990000">);</font>
+          <i><font color="#9A1900">//</font></i>
+          <b><font color="#0000FF">typedef</font></b> <b><font color="#0000FF">typename</font></b> <font color="#008080">FloatVector</font><font color="#990000">::</font><font color="#008080">value_type</font> Float<font color="#990000">;</font>
+          <i><font color="#9A1900">//</font></i>
+          <font color="#008080">Float</font>  dt <font color="#990000">=</font> <b><font color="#000000">Float</font></b><font color="#990000">(</font>delta_t_<font color="#990000">);</font>
+          <font color="#008080">size_t</font> m  <font color="#990000">=</font> z0<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">();</font>
+          <i><font color="#9A1900">//</font></i>
+          <font color="#008080">FloatVector</font> <b><font color="#000000">h1</font></b><font color="#990000">(</font>m<font color="#990000">),</font> <b><font color="#000000">h2</font></b><font color="#990000">(</font>m<font color="#990000">),</font> <b><font color="#000000">h3</font></b><font color="#990000">(</font>m<font color="#990000">),</font> <b><font color="#000000">h4</font></b><font color="#990000">(</font>m<font color="#990000">),</font> <b><font color="#000000">result</font></b><font color="#990000">(</font>m<font color="#990000">);</font>
+          h1 <font color="#990000">=</font> <b><font color="#000000">h</font></b><font color="#990000">(</font> x<font color="#990000">,</font> z0 <font color="#990000">);</font>
+          <i><font color="#9A1900">//</font></i>
+          <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> m<font color="#990000">;</font> i<font color="#990000">++)</font>
+               h2<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> z0<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">+</font> dt <font color="#990000">*</font> h1<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">/</font> <font color="#993399">2.0</font><font color="#990000">;</font>
+          h2 <font color="#990000">=</font> <b><font color="#000000">h</font></b><font color="#990000">(</font> x<font color="#990000">,</font> h2 <font color="#990000">);</font>
+          <i><font color="#9A1900">//</font></i>
+          <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> m<font color="#990000">;</font> i<font color="#990000">++)</font>
+               h3<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> z0<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">+</font> dt <font color="#990000">*</font> h2<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">/</font> <font color="#993399">2.0</font><font color="#990000">;</font>
+          h3 <font color="#990000">=</font> <b><font color="#000000">h</font></b><font color="#990000">(</font> x<font color="#990000">,</font> h3 <font color="#990000">);</font>
+          <i><font color="#9A1900">//</font></i>
+          <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> m<font color="#990000">;</font> i<font color="#990000">++)</font>
+               h4<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> z0<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">+</font> dt <font color="#990000">*</font> h3<font color="#990000">[</font>i<font color="#990000">];</font>
+          h4 <font color="#990000">=</font> <b><font color="#000000">h</font></b><font color="#990000">(</font> x<font color="#990000">,</font> h4 <font color="#990000">);</font>
+          <i><font color="#9A1900">//</font></i>
+          <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> m<font color="#990000">;</font> i<font color="#990000">++)</font>
+          <font color="#FF0000">{</font>    <font color="#008080">Float</font> dz <font color="#990000">=</font> dt <font color="#990000">*</font> <font color="#990000">(</font> h1<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">+</font> <font color="#993399">2.0</font><font color="#990000">*</font>h2<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">+</font> <font color="#993399">2.0</font><font color="#990000">*</font>h3<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">+</font> h4<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">)</font> <font color="#990000">/</font> <font color="#993399">6.0</font><font color="#990000">;</font>
+               result<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> z0<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">+</font> dz<font color="#990000">;</font>
+          <font color="#FF0000">}</font>
+          <b><font color="#0000FF">return</font></b> result<font color="#990000">;</font>
+     <font color="#FF0000">}</font>
+
+     <i><font color="#9A1900">// Derivative of 4-th Order Runge-Kutta Step w.r.t x</font></i>
+     <font color="#008080">a1vector</font> <b><font color="#000000">Runge4_x</font></b><font color="#990000">(</font><b><font color="#0000FF">const</font></b> a1vector<font color="#990000">&amp;</font> x<font color="#990000">,</font> <b><font color="#0000FF">const</font></b> a1vector<font color="#990000">&amp;</font> z0<font color="#990000">)</font>
+     <font color="#FF0000">{</font>    <b><font color="#000000">assert</font></b><font color="#990000">(</font> <b><font color="#000000">size_t</font></b><font color="#990000">(</font> x<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">)</font> <font color="#990000">==</font> n_ <font color="#990000">);</font>
+          <b><font color="#000000">assert</font></b><font color="#990000">(</font> <b><font color="#000000">size_t</font></b><font color="#990000">(</font> z0<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">)</font> <font color="#990000">==</font> n_ <font color="#990000">);</font>
+          <i><font color="#9A1900">//</font></i>
+          <font color="#008080">a2vector</font> <b><font color="#000000">ax</font></b><font color="#990000">(</font>n_<font color="#990000">);</font>
+          <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> n_<font color="#990000">;</font> j<font color="#990000">++)</font>
+               ax<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">=</font> x<font color="#990000">[</font>j<font color="#990000">];</font>
+          <i><font color="#9A1900">//</font></i>
+          <font color="#008080">a2vector</font> <b><font color="#000000">az0</font></b><font color="#990000">(</font>n_<font color="#990000">);</font>
+          <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> n_<font color="#990000">;</font> i<font color="#990000">++)</font>
+               az0<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> z0<font color="#990000">[</font>i<font color="#990000">];</font>
+          <i><font color="#9A1900">//</font></i>
+          CppAD<font color="#990000">::</font><b><font color="#000000">Independent</font></b><font color="#990000">(</font>ax<font color="#990000">);</font>
+          <font color="#008080">a2vector</font> <b><font color="#000000">az</font></b><font color="#990000">(</font>n_<font color="#990000">);</font>
+          az <font color="#990000">=</font> <b><font color="#000000">Runge4</font></b><font color="#990000">(</font>ax<font color="#990000">,</font> az0<font color="#990000">);</font>
+          CppAD<font color="#990000">::</font><font color="#008080">ADFun&lt;a1double&gt;</font> <b><font color="#000000">f</font></b><font color="#990000">(</font>ax<font color="#990000">,</font> az<font color="#990000">);</font>
+          <i><font color="#9A1900">//</font></i>
+          <font color="#008080">a1vector</font> result <font color="#990000">=</font>  f<font color="#990000">.</font><b><font color="#000000">Jacobian</font></b><font color="#990000">(</font>x<font color="#990000">);</font>
+          <i><font color="#9A1900">//</font></i>
+          <b><font color="#0000FF">return</font></b> result<font color="#990000">;</font>
+     <font color="#FF0000">}</font>
+
+     <i><font color="#9A1900">// Derivative of 4-th Order Runge-Kutta Step w.r.t z0</font></i>
+     <font color="#008080">a1vector</font> <b><font color="#000000">Runge4_z0</font></b><font color="#990000">(</font><b><font color="#0000FF">const</font></b> a1vector<font color="#990000">&amp;</font> x<font color="#990000">,</font> <b><font color="#0000FF">const</font></b> a1vector<font color="#990000">&amp;</font> z0<font color="#990000">)</font>
+     <font color="#FF0000">{</font>    <b><font color="#000000">assert</font></b><font color="#990000">(</font> <b><font color="#000000">size_t</font></b><font color="#990000">(</font> x<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font>  <font color="#990000">)</font> <font color="#990000">==</font> n_ <font color="#990000">);</font>
+          <b><font color="#000000">assert</font></b><font color="#990000">(</font> <b><font color="#000000">size_t</font></b><font color="#990000">(</font> z0<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">)</font> <font color="#990000">==</font> n_ <font color="#990000">);</font>
+          <i><font color="#9A1900">//</font></i>
+          <font color="#008080">a2vector</font> <b><font color="#000000">ax</font></b><font color="#990000">(</font>n_<font color="#990000">);</font>
+          <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> n_<font color="#990000">;</font> j<font color="#990000">++)</font>
+               ax<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">=</font> x<font color="#990000">[</font>j<font color="#990000">];</font>
+          <i><font color="#9A1900">//</font></i>
+          <font color="#008080">a2vector</font> <b><font color="#000000">az0</font></b><font color="#990000">(</font>n_<font color="#990000">);</font>
+          <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> n_<font color="#990000">;</font> i<font color="#990000">++)</font>
+               az0<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> z0<font color="#990000">[</font>i<font color="#990000">];</font>
+          <i><font color="#9A1900">//</font></i>
+          CppAD<font color="#990000">::</font><b><font color="#000000">Independent</font></b><font color="#990000">(</font>az0<font color="#990000">);</font>
+          <font color="#008080">a2vector</font> <b><font color="#000000">az</font></b><font color="#990000">(</font>n_<font color="#990000">);</font>
+          az <font color="#990000">=</font> <b><font color="#000000">Runge4</font></b><font color="#990000">(</font>ax<font color="#990000">,</font> az0<font color="#990000">);</font>
+          CppAD<font color="#990000">::</font><font color="#008080">ADFun&lt;a1double&gt;</font> <b><font color="#000000">f</font></b><font color="#990000">(</font>az0<font color="#990000">,</font> az<font color="#990000">);</font>
+          <i><font color="#9A1900">//</font></i>
+          <font color="#008080">a1vector</font> result <font color="#990000">=</font>  f<font color="#990000">.</font><b><font color="#000000">Jacobian</font></b><font color="#990000">(</font>z0<font color="#990000">);</font>
+          <i><font color="#9A1900">//</font></i>
+          <b><font color="#0000FF">return</font></b> result<font color="#990000">;</font>
+     <font color="#FF0000">}</font>
+
+     <i><font color="#9A1900">// pack an extended ode vector</font></i>
+     <b><font color="#0000FF">template</font></b> <font color="#990000">&lt;</font><b><font color="#0000FF">class</font></b> <font color="#008080">FloatVector</font><font color="#990000">&gt;</font>
+     <font color="#009900">void</font> <b><font color="#000000">pack</font></b><font color="#990000">(</font>
+          FloatVector<font color="#990000">&amp;</font>         extended_ode <font color="#990000">,</font>
+          <b><font color="#0000FF">const</font></b> FloatVector<font color="#990000">&amp;</font>   x            <font color="#990000">,</font>
+          <b><font color="#0000FF">const</font></b> FloatVector<font color="#990000">&amp;</font>   z            <font color="#990000">,</font>
+          <b><font color="#0000FF">const</font></b> FloatVector<font color="#990000">&amp;</font>   z_x          <font color="#990000">)</font>
+     <font color="#FF0000">{</font>    <b><font color="#000000">assert</font></b><font color="#990000">(</font> <b><font color="#000000">size_t</font></b><font color="#990000">(</font> extended_ode<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">)</font> <font color="#990000">==</font> n_ <font color="#990000">+</font> n_ <font color="#990000">+</font> n_ <font color="#990000">*</font> n_ <font color="#990000">);</font>
+          <b><font color="#000000">assert</font></b><font color="#990000">(</font> <b><font color="#000000">size_t</font></b><font color="#990000">(</font> x<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font>            <font color="#990000">)</font> <font color="#990000">==</font> n_                <font color="#990000">);</font>
+          <b><font color="#000000">assert</font></b><font color="#990000">(</font> <b><font color="#000000">size_t</font></b><font color="#990000">(</font> z<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font>            <font color="#990000">)</font> <font color="#990000">==</font> n_                <font color="#990000">);</font>
+          <b><font color="#000000">assert</font></b><font color="#990000">(</font> <b><font color="#000000">size_t</font></b><font color="#990000">(</font> z_x<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font>          <font color="#990000">)</font> <font color="#990000">==</font> n_ <font color="#990000">*</font> n_           <font color="#990000">);</font>
+          <i><font color="#9A1900">//</font></i>
+          <font color="#008080">size_t</font> offset <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
+          <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> n_<font color="#990000">;</font> i<font color="#990000">++)</font>
+               extended_ode<font color="#990000">[</font>offset <font color="#990000">+</font> i<font color="#990000">]</font> <font color="#990000">=</font> x<font color="#990000">[</font>i<font color="#990000">];</font>
+          offset <font color="#990000">+=</font> n_<font color="#990000">;</font>
+          <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> n_<font color="#990000">;</font> i<font color="#990000">++)</font>
+               extended_ode<font color="#990000">[</font>offset <font color="#990000">+</font> i<font color="#990000">]</font> <font color="#990000">=</font> z<font color="#990000">[</font>i<font color="#990000">];</font>
+          offset <font color="#990000">+=</font> n_<font color="#990000">;</font>
+          <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> n_<font color="#990000">;</font> i<font color="#990000">++)</font>
+          <font color="#FF0000">{</font>    <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> n_<font color="#990000">;</font> j<font color="#990000">++)</font>
+               <font color="#FF0000">{</font>    <i><font color="#9A1900">// partial of z_i (t , x ) w.r.t x_j</font></i>
+                    extended_ode<font color="#990000">[</font>offset <font color="#990000">+</font> i <font color="#990000">*</font> n_ <font color="#990000">+</font> j<font color="#990000">]</font> <font color="#990000">=</font> z_x<font color="#990000">[</font>i <font color="#990000">*</font> n_ <font color="#990000">+</font> j<font color="#990000">];</font>
+               <font color="#FF0000">}</font>
+          <font color="#FF0000">}</font>
+     <font color="#FF0000">}</font>
+
+     <i><font color="#9A1900">// unpack an extended ode vector</font></i>
+     <b><font color="#0000FF">template</font></b> <font color="#990000">&lt;</font><b><font color="#0000FF">class</font></b> <font color="#008080">FloatVector</font><font color="#990000">&gt;</font>
+     <font color="#009900">void</font> <b><font color="#000000">unpack</font></b><font color="#990000">(</font>
+          <b><font color="#0000FF">const</font></b> FloatVector<font color="#990000">&amp;</font>         extended_ode <font color="#990000">,</font>
+          FloatVector<font color="#990000">&amp;</font>               x            <font color="#990000">,</font>
+          FloatVector<font color="#990000">&amp;</font>               z            <font color="#990000">,</font>
+          FloatVector<font color="#990000">&amp;</font>               z_x          <font color="#990000">)</font>
+     <font color="#FF0000">{</font>    <b><font color="#000000">assert</font></b><font color="#990000">(</font> <b><font color="#000000">size_t</font></b><font color="#990000">(</font> extended_ode<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">)</font> <font color="#990000">==</font> n_ <font color="#990000">+</font> n_ <font color="#990000">+</font> n_ <font color="#990000">*</font> n_ <font color="#990000">);</font>
+          <b><font color="#000000">assert</font></b><font color="#990000">(</font> <b><font color="#000000">size_t</font></b><font color="#990000">(</font> x<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font>            <font color="#990000">)</font> <font color="#990000">==</font> n_                <font color="#990000">);</font>
+          <b><font color="#000000">assert</font></b><font color="#990000">(</font> <b><font color="#000000">size_t</font></b><font color="#990000">(</font> z<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font>            <font color="#990000">)</font> <font color="#990000">==</font> n_                <font color="#990000">);</font>
+          <b><font color="#000000">assert</font></b><font color="#990000">(</font> <b><font color="#000000">size_t</font></b><font color="#990000">(</font> z_x<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font>          <font color="#990000">)</font> <font color="#990000">==</font> n_ <font color="#990000">*</font> n_           <font color="#990000">);</font>
+          <i><font color="#9A1900">//</font></i>
+          <font color="#008080">size_t</font> offset <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
+          <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> n_<font color="#990000">;</font> i<font color="#990000">++)</font>
+               x<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> extended_ode<font color="#990000">[</font>offset <font color="#990000">+</font> i<font color="#990000">];</font>
+          offset <font color="#990000">+=</font> n_<font color="#990000">;</font>
+          <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> n_<font color="#990000">;</font> i<font color="#990000">++)</font>
+               z<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> extended_ode<font color="#990000">[</font>offset <font color="#990000">+</font> i<font color="#990000">];</font>
+          offset <font color="#990000">+=</font> n_<font color="#990000">;</font>
+          <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> n_<font color="#990000">;</font> i<font color="#990000">++)</font>
+          <font color="#FF0000">{</font>    <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> n_<font color="#990000">;</font> j<font color="#990000">++)</font>
+               <font color="#FF0000">{</font>    <i><font color="#9A1900">// partial of z_i (t , x ) w.r.t x_j</font></i>
+                    z_x<font color="#990000">[</font>i <font color="#990000">*</font> n_ <font color="#990000">+</font> j<font color="#990000">]</font> <font color="#990000">=</font> extended_ode<font color="#990000">[</font>offset <font color="#990000">+</font> i <font color="#990000">*</font> n_ <font color="#990000">+</font> j<font color="#990000">];</font>
+               <font color="#FF0000">}</font>
+          <font color="#FF0000">}</font>
+     <font color="#FF0000">}</font>
+
+     <i><font color="#9A1900">// Algorithm that advances the partial of z(t, x) w.r.t x</font></i>
+     <font color="#009900">void</font> <b><font color="#000000">ext_ode_algo</font></b><font color="#990000">(</font><b><font color="#0000FF">const</font></b> a1vector<font color="#990000">&amp;</font> ext_ode_in<font color="#990000">,</font> a1vector<font color="#990000">&amp;</font> ext_ode_out<font color="#990000">)</font>
+     <font color="#FF0000">{</font>    <b><font color="#000000">assert</font></b><font color="#990000">(</font> <b><font color="#000000">size_t</font></b><font color="#990000">(</font> ext_ode_in<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font>  <font color="#990000">)</font> <font color="#990000">==</font> n_ <font color="#990000">+</font> n_ <font color="#990000">+</font> n_ <font color="#990000">*</font> n_ <font color="#990000">);</font>
+          <b><font color="#000000">assert</font></b><font color="#990000">(</font> <b><font color="#000000">size_t</font></b><font color="#990000">(</font> ext_ode_out<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">)</font> <font color="#990000">==</font> n_ <font color="#990000">+</font> n_ <font color="#990000">+</font> n_ <font color="#990000">*</font> n_ <font color="#990000">);</font>
+          <i><font color="#9A1900">//</font></i>
+          <i><font color="#9A1900">// initial extended ode information</font></i>
+          <font color="#008080">a1vector</font> <b><font color="#000000">x</font></b><font color="#990000">(</font>n_<font color="#990000">),</font> <b><font color="#000000">z0</font></b><font color="#990000">(</font>n_<font color="#990000">),</font> <b><font color="#000000">z0_x</font></b><font color="#990000">(</font>n_ <font color="#990000">*</font> n_<font color="#990000">);</font>
+          <b><font color="#000000">unpack</font></b><font color="#990000">(</font>ext_ode_in<font color="#990000">,</font> x<font color="#990000">,</font> z0<font color="#990000">,</font> z0_x<font color="#990000">);</font>
+          <i><font color="#9A1900">//</font></i>
+          <i><font color="#9A1900">// advance z(t, x)</font></i>
+          <font color="#008080">a1vector</font> z1 <font color="#990000">=</font> <b><font color="#000000">Runge4</font></b><font color="#990000">(</font>x<font color="#990000">,</font> z0<font color="#990000">);</font>
+          <i><font color="#9A1900">//</font></i>
+          <i><font color="#9A1900">// partial of z1 w.r.t. x</font></i>
+          <font color="#008080">a1vector</font> z1_x <font color="#990000">=</font> <b><font color="#000000">Runge4_x</font></b><font color="#990000">(</font>x<font color="#990000">,</font> z0<font color="#990000">);</font>
+          <i><font color="#9A1900">//</font></i>
+          <i><font color="#9A1900">// partial of z1 w.r.t. z0</font></i>
+          <font color="#008080">a1vector</font> z1_z0 <font color="#990000">=</font> <b><font color="#000000">Runge4_z0</font></b><font color="#990000">(</font>x<font color="#990000">,</font> z0<font color="#990000">);</font>
+          <i><font color="#9A1900">//</font></i>
+          <i><font color="#9A1900">// total derivative of z1 w.r.t x</font></i>
+          <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> n_<font color="#990000">;</font> i<font color="#990000">++)</font>
+          <font color="#FF0000">{</font>    <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> n_<font color="#990000">;</font> j<font color="#990000">++)</font>
+               <font color="#FF0000">{</font>    <font color="#008080">a1double</font> sum <font color="#990000">=</font> <font color="#993399">0.0</font><font color="#990000">;</font>
+                    <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> k <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> k <font color="#990000">&lt;</font> n_<font color="#990000">;</font> k<font color="#990000">++)</font>
+                         sum <font color="#990000">+=</font> z1_z0 <font color="#990000">[</font> i <font color="#990000">*</font> n_ <font color="#990000">+</font> k <font color="#990000">]</font> <font color="#990000">*</font> z0_x <font color="#990000">[</font> k <font color="#990000">*</font> n_ <font color="#990000">+</font> j <font color="#990000">];</font>
+                    z1_x<font color="#990000">[</font> i <font color="#990000">*</font> n_ <font color="#990000">+</font> j<font color="#990000">]</font> <font color="#990000">+=</font> sum<font color="#990000">;</font>
+               <font color="#FF0000">}</font>
+          <font color="#FF0000">}</font>
+          <i><font color="#9A1900">//</font></i>
+          <i><font color="#9A1900">// final extended ode information</font></i>
+          <b><font color="#000000">pack</font></b><font color="#990000">(</font>ext_ode_out<font color="#990000">,</font> x<font color="#990000">,</font> z1<font color="#990000">,</font> z1_x<font color="#990000">);</font>
+          <i><font color="#9A1900">//</font></i>
+          <b><font color="#0000FF">return</font></b><font color="#990000">;</font>
+     <font color="#FF0000">}</font>
+<font color="#FF0000">}</font>
+<i><font color="#9A1900">//</font></i>
+<font color="#009900">bool</font> <b><font color="#000000">extended_ode</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
+<font color="#FF0000">{</font>    <font color="#009900">bool</font> ok <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
+     <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>NearEqual<font color="#990000">;</font>
+     <font color="#009900">double</font> eps <font color="#990000">=</font> std<font color="#990000">::</font>numeric_limits<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;::</font><b><font color="#000000">epsilon</font></b><font color="#990000">();</font>
+     <i><font color="#9A1900">//</font></i>
+     <i><font color="#9A1900">// number of terms in the differential equation</font></i>
+     n_ <font color="#990000">=</font> <font color="#993399">6</font><font color="#990000">;</font>
+     <i><font color="#9A1900">//</font></i>
+     <i><font color="#9A1900">// step size for the differentiail equation</font></i>
+     <font color="#008080">size_t</font> n_step <font color="#990000">=</font> <font color="#993399">10</font><font color="#990000">;</font>
+     <font color="#009900">double</font> T      <font color="#990000">=</font> <font color="#993399">1.0</font><font color="#990000">;</font>
+     delta_t_ <font color="#990000">=</font> T <font color="#990000">/</font> <font color="#009900">double</font><font color="#990000">(</font>n_step<font color="#990000">);</font>
+     <i><font color="#9A1900">//</font></i>
+     <i><font color="#9A1900">// set parameter value and initial value of the extended ode</font></i>
+     <font color="#008080">a1vector</font> <b><font color="#000000">ax</font></b><font color="#990000">(</font>n_<font color="#990000">),</font> <b><font color="#000000">az0</font></b><font color="#990000">(</font>n_<font color="#990000">),</font> <b><font color="#000000">az0_x</font></b><font color="#990000">(</font>n_ <font color="#990000">*</font> n_<font color="#990000">);</font>
+     <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> n_<font color="#990000">;</font> i<font color="#990000">++)</font>
+     <font color="#FF0000">{</font>    ax<font color="#990000">[</font>i<font color="#990000">]</font>  <font color="#990000">=</font> <b><font color="#000000">a1double</font></b><font color="#990000">(</font>i <font color="#990000">+</font> <font color="#993399">1</font><font color="#990000">);</font>
+          az0<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> <b><font color="#000000">a1double</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">);</font>
+          <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> n_<font color="#990000">;</font> j<font color="#990000">++)</font>
+               az0_x<font color="#990000">[</font> i <font color="#990000">*</font> n_ <font color="#990000">+</font> j <font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">0.0</font><font color="#990000">;</font>
+     <font color="#FF0000">}</font>
+     <i><font color="#9A1900">//</font></i>
+     <i><font color="#9A1900">// pack into extended ode information input vector</font></i>
+     <font color="#008080">size_t</font> n_ext <font color="#990000">=</font> n_ <font color="#990000">+</font> n_ <font color="#990000">+</font> n_ <font color="#990000">*</font> n_<font color="#990000">;</font>
+     <font color="#008080">a1vector</font> <b><font color="#000000">aext_ode_in</font></b><font color="#990000">(</font>n_ext<font color="#990000">);</font>
+     <b><font color="#000000">pack</font></b><font color="#990000">(</font>aext_ode_in<font color="#990000">,</font> ax<font color="#990000">,</font> az0<font color="#990000">,</font> az0_x<font color="#990000">);</font>
+     <i><font color="#9A1900">//</font></i>
+     <i><font color="#9A1900">// create checkpoint version of the algorithm</font></i>
+     <font color="#008080">a1vector</font> <b><font color="#000000">aext_ode_out</font></b><font color="#990000">(</font>n_ext<font color="#990000">);</font>
+     CppAD<font color="#990000">::</font><font color="#008080">checkpoint&lt;double&gt;</font> <b><font color="#000000">ext_ode_check</font></b><font color="#990000">(</font>
+          <font color="#FF0000">"ext_ode"</font><font color="#990000">,</font> ext_ode_algo<font color="#990000">,</font> aext_ode_in<font color="#990000">,</font> aext_ode_out
+     <font color="#990000">);</font>
+     <i><font color="#9A1900">//</font></i>
+     <i><font color="#9A1900">// set the independent variables for recording</font></i>
+     CppAD<font color="#990000">::</font><b><font color="#000000">Independent</font></b><font color="#990000">(</font> ax <font color="#990000">);</font>
+     <i><font color="#9A1900">//</font></i>
+     <i><font color="#9A1900">// repack to get dependence on ax</font></i>
+     <b><font color="#000000">pack</font></b><font color="#990000">(</font>aext_ode_in<font color="#990000">,</font> ax<font color="#990000">,</font> az0<font color="#990000">,</font> az0_x<font color="#990000">);</font>
+     <i><font color="#9A1900">//</font></i>
+     <i><font color="#9A1900">// Now run the checkpoint algorithm n_step times</font></i>
+     <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> k <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> k <font color="#990000">&lt;</font> n_step<font color="#990000">;</font> k<font color="#990000">++)</font>
+     <font color="#FF0000">{</font>    <b><font color="#000000">ext_ode_check</font></b><font color="#990000">(</font>aext_ode_in<font color="#990000">,</font> aext_ode_out<font color="#990000">);</font>
+          aext_ode_in <font color="#990000">=</font> aext_ode_out<font color="#990000">;</font>
+     <font color="#FF0000">}</font>
+     <i><font color="#9A1900">//</font></i>
+     <i><font color="#9A1900">// Unpack the results (must use ax1 so do not overwrite ax)</font></i>
+     <font color="#008080">a1vector</font> <b><font color="#000000">ax1</font></b><font color="#990000">(</font>n_<font color="#990000">),</font> <b><font color="#000000">az1</font></b><font color="#990000">(</font>n_<font color="#990000">),</font> <b><font color="#000000">az1_x</font></b><font color="#990000">(</font>n_ <font color="#990000">*</font> n_<font color="#990000">);</font>
+     <b><font color="#000000">unpack</font></b><font color="#990000">(</font>aext_ode_out<font color="#990000">,</font> ax1<font color="#990000">,</font> az1<font color="#990000">,</font> az1_x<font color="#990000">);</font>
+     <i><font color="#9A1900">//</font></i>
+     <i><font color="#9A1900">// We could record a complicated funciton of x and z_x(T, x) in f,</font></i>
+     <i><font color="#9A1900">// but make this example simpler we record x -&gt; z_x(T, x).</font></i>
+     CppAD<font color="#990000">::</font><font color="#008080">ADFun&lt;double&gt;</font> <b><font color="#000000">f</font></b><font color="#990000">(</font>ax<font color="#990000">,</font> az1_x<font color="#990000">);</font>
+     <i><font color="#9A1900">//</font></i>
+     <i><font color="#9A1900">// check function values</font></i>
+     <font color="#008080">a0vector</font> <b><font color="#000000">x</font></b><font color="#990000">(</font>n_<font color="#990000">),</font> <b><font color="#000000">z1</font></b><font color="#990000">(</font>n_<font color="#990000">),</font> <b><font color="#000000">z1_x</font></b><font color="#990000">(</font>n_ <font color="#990000">*</font> n_<font color="#990000">);</font>
+     <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> n_<font color="#990000">;</font> j<font color="#990000">++)</font>
+          x<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">=</font> <font color="#009900">double</font><font color="#990000">(</font>j <font color="#990000">+</font> <font color="#993399">1</font><font color="#990000">);</font>
+     z1_x <font color="#990000">=</font> f<font color="#990000">.</font><b><font color="#000000">Forward</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">,</font> x<font color="#990000">);</font>
+     <i><font color="#9A1900">//</font></i>
+     <i><font color="#9A1900">// use z(t, x) for checking solution</font></i>
+     z1<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">*</font> T<font color="#990000">;</font>
+     <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> n_<font color="#990000">;</font> i<font color="#990000">++)</font>
+          z1<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> x<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">*</font> T <font color="#990000">*</font> z1<font color="#990000">[</font>i<font color="#990000">-</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">/</font> <font color="#009900">double</font><font color="#990000">(</font>i<font color="#990000">+</font><font color="#993399">1</font><font color="#990000">);</font>
+     <i><font color="#9A1900">//</font></i>
+     <i><font color="#9A1900">// expected accuracy for each component of of z(t, x)</font></i>
+     <font color="#008080">a0vector</font> <b><font color="#000000">acc</font></b><font color="#990000">(</font>n_<font color="#990000">);</font>
+     <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> n_<font color="#990000">;</font> i<font color="#990000">++)</font>
+     <font color="#FF0000">{</font>    <b><font color="#0000FF">if</font></b><font color="#990000">(</font> i <font color="#990000">&lt;</font> <font color="#993399">4</font> <font color="#990000">)</font>
+          <font color="#FF0000">{</font>    <i><font color="#9A1900">// Runge-Kutta methos is exact for this case</font></i>
+               acc<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">10</font><font color="#990000">.</font> <font color="#990000">*</font> eps<font color="#990000">;</font>
+          <font color="#FF0000">}</font>
+          <b><font color="#0000FF">else</font></b>
+          <font color="#FF0000">{</font>    acc<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">1.0</font><font color="#990000">;</font>
+               <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> k <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> k <font color="#990000">&lt;</font> <font color="#993399">5</font><font color="#990000">;</font> k<font color="#990000">++)</font>
+                         acc<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">*=</font> x<font color="#990000">[</font>k<font color="#990000">]</font> <font color="#990000">*</font> delta_t_<font color="#990000">;</font>
+          <font color="#FF0000">}</font>
+     <font color="#FF0000">}</font>
+     <i><font color="#9A1900">// check z1(T, x)</font></i>
+     <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> n_<font color="#990000">;</font> i<font color="#990000">++)</font>
+     <font color="#FF0000">{</font>    <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> n_<font color="#990000">;</font> j<font color="#990000">++)</font>
+          <font color="#FF0000">{</font>    <i><font color="#9A1900">// check partial of z1_i w.r.t x_j</font></i>
+               <font color="#009900">double</font> check <font color="#990000">=</font> <font color="#993399">0.0</font><font color="#990000">;</font>
+               <b><font color="#0000FF">if</font></b><font color="#990000">(</font> j <font color="#990000">&lt;=</font> i <font color="#990000">)</font>
+                    check <font color="#990000">=</font> z1<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">/</font> x<font color="#990000">[</font>j<font color="#990000">];</font>
+               ok <font color="#990000">&amp;=</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>z1_x<font color="#990000">[</font> i <font color="#990000">*</font> n_ <font color="#990000">+</font> j <font color="#990000">]</font> <font color="#990000">,</font> check<font color="#990000">,</font> acc<font color="#990000">[</font>i<font color="#990000">],</font> acc<font color="#990000">[</font>i<font color="#990000">]);</font>
+          <font color="#FF0000">}</font>
+     <font color="#FF0000">}</font>
+     <i><font color="#9A1900">//</font></i>
+     <i><font color="#9A1900">// Now use f to compute a derivative. For this 'simple' example it is</font></i>
+     <i><font color="#9A1900">// the derivative with respect to x of the</font></i>
+     <i><font color="#9A1900">// parital with respect to x[n-1] of z_{n-1} (t , x)</font></i>
+     <font color="#008080">a0vector</font> <b><font color="#000000">w</font></b><font color="#990000">(</font>n_ <font color="#990000">*</font> n_<font color="#990000">),</font> <b><font color="#000000">dw</font></b><font color="#990000">(</font>n_<font color="#990000">);</font>
+     <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> n_<font color="#990000">;</font> i<font color="#990000">++)</font>
+     <font color="#FF0000">{</font>    <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> n_<font color="#990000">;</font> j<font color="#990000">++)</font>
+          <font color="#FF0000">{</font>    w<font color="#990000">[</font> i <font color="#990000">*</font> n_ <font color="#990000">+</font> j <font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">0.0</font><font color="#990000">;</font>
+               <b><font color="#0000FF">if</font></b><font color="#990000">(</font> i <font color="#990000">==</font> n_ <font color="#990000">-</font> <font color="#993399">1</font> <font color="#990000">&amp;&amp;</font> j <font color="#990000">==</font> n_ <font color="#990000">-</font> <font color="#993399">1</font> <font color="#990000">)</font>
+                    w<font color="#990000">[</font> i <font color="#990000">*</font> n_ <font color="#990000">+</font> j <font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">1.0</font><font color="#990000">;</font>
+          <font color="#FF0000">}</font>
+     <font color="#FF0000">}</font>
+     dw <font color="#990000">=</font> f<font color="#990000">.</font><b><font color="#000000">Reverse</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">,</font> w<font color="#990000">);</font>
+     <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> n_<font color="#990000">;</font> j<font color="#990000">++)</font>
+     <font color="#FF0000">{</font>    <font color="#009900">double</font> check <font color="#990000">=</font> <font color="#993399">0.0</font><font color="#990000">;</font>
+          <b><font color="#0000FF">if</font></b><font color="#990000">(</font> j <font color="#990000">&lt;</font> n_ <font color="#990000">-</font> <font color="#993399">1</font> <font color="#990000">)</font>
+               check <font color="#990000">=</font> z1<font color="#990000">[</font>n_ <font color="#990000">-</font> <font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">/</font> <font color="#990000">(</font> x<font color="#990000">[</font>n_ <font color="#990000">-</font> <font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">*</font> x<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">);</font>
+          ok <font color="#990000">&amp;=</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>dw<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">,</font> check<font color="#990000">,</font> acc<font color="#990000">[</font>n_<font color="#990000">-</font><font color="#993399">1</font><font color="#990000">],</font> acc<font color="#990000">[</font>n_<font color="#990000">-</font><font color="#993399">1</font><font color="#990000">]);</font>
+     <font color="#FF0000">}</font>
+     <i><font color="#9A1900">//</font></i>
+     <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
+<font color="#FF0000">}</font></tt></pre>
+</font></code>
+<hr>Input File: example/atomic/extended_ode.cpp
+
+</body>
+</html>

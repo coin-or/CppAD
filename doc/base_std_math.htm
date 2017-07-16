@@ -1,0 +1,387 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>Base Type Requirements for Standard Math Functions</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Base Type Requirements for Standard Math Functions">
+<meta name="keywords" id="keywords" content=" base type requirements standard math functions purpose unary cppad_standard_math_unary erf asinh acosh atanh expm1 log1p sign pow isnan ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_base_std_math_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://coin-or.github.io/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="base_ordered.htm" target="_top">Prev</a>
+</td><td><a href="base_limits.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>AD</option>
+<option>base_require</option>
+<option>base_std_math</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>CppAD-&gt;</option>
+<option>Install</option>
+<option>Introduction</option>
+<option>AD</option>
+<option>ADFun</option>
+<option>preprocessor</option>
+<option>multi_thread</option>
+<option>utility</option>
+<option>ipopt_solve</option>
+<option>Example</option>
+<option>speed</option>
+<option>Appendix</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>AD-&gt;</option>
+<option>ad_ctor</option>
+<option>ad_assign</option>
+<option>Convert</option>
+<option>ADValued</option>
+<option>BoolValued</option>
+<option>VecAD</option>
+<option>base_require</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>base_require-&gt;</option>
+<option>base_member</option>
+<option>base_cond_exp</option>
+<option>base_identical</option>
+<option>base_ordered</option>
+<option>base_std_math</option>
+<option>base_limits</option>
+<option>base_to_string</option>
+<option>base_hash</option>
+<option>base_example</option>
+</select>
+</td>
+<td>base_std_math</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Purpose</option>
+<option>Unary Standard Math</option>
+<option>CPPAD_STANDARD_MATH_UNARY</option>
+<option>erf, asinh, acosh, atanh, expm1, log1p</option>
+<option>sign</option>
+<option>pow</option>
+<option>isnan</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@
+
+
+<center><b><big><big>Base Type Requirements for Standard Math Functions</big></big></b></center>
+<br>
+<b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
+<br>
+These definitions are required for the user's code to use the type
+
+<code><font color="blue"><span style='white-space: nowrap'>AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code>
+:
+
+<br>
+<br>
+<b><big><a name="Unary Standard Math" id="Unary Standard Math">Unary Standard Math</a></big></b>
+<br>
+The type 
+<code><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i></code>
+ must support the following functions
+unary standard math functions (in the CppAD namespace):
+<table><tr><td align='left'  valign='top'>
+
+<b>Syntax</b> </td><td align='left'  valign='top'>
+ <b>Result</b>
+</td></tr><tr><td align='left'  valign='top'>
+
+
+<code><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;abs(</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+  </td><td align='left'  valign='top'>
+ absolute value     </td></tr><tr><td align='left'  valign='top'>
+
+
+<code><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;acos(</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+ </td><td align='left'  valign='top'>
+ inverse cosine     </td></tr><tr><td align='left'  valign='top'>
+
+
+<code><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;asin(</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+ </td><td align='left'  valign='top'>
+ inverse sine       </td></tr><tr><td align='left'  valign='top'>
+
+
+<code><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;atan(</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+ </td><td align='left'  valign='top'>
+ inverse tangent    </td></tr><tr><td align='left'  valign='top'>
+
+
+<code><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;cos(</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+  </td><td align='left'  valign='top'>
+ cosine             </td></tr><tr><td align='left'  valign='top'>
+
+
+<code><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;cosh(</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+ </td><td align='left'  valign='top'>
+ hyperbolic cosine  </td></tr><tr><td align='left'  valign='top'>
+
+
+<code><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;exp(</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+  </td><td align='left'  valign='top'>
+ exponential        </td></tr><tr><td align='left'  valign='top'>
+
+
+<code><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;fabs(</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+ </td><td align='left'  valign='top'>
+ absolute value     </td></tr><tr><td align='left'  valign='top'>
+
+
+<code><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;log(</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+  </td><td align='left'  valign='top'>
+ natural logarithm  </td></tr><tr><td align='left'  valign='top'>
+
+
+<code><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;sin(</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+  </td><td align='left'  valign='top'>
+ sine               </td></tr><tr><td align='left'  valign='top'>
+
+
+<code><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;sinh(</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+ </td><td align='left'  valign='top'>
+ hyperbolic sine    </td></tr><tr><td align='left'  valign='top'>
+
+
+<code><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;sqrt(</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+ </td><td align='left'  valign='top'>
+ square root        </td></tr><tr><td align='left'  valign='top'>
+
+
+<code><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;tan(</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+  </td><td align='left'  valign='top'>
+ tangent
+</td></tr>
+</table>
+where the arguments and return value have the prototypes
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+For example,
+<a href="base_alloc.hpp.htm#Unary Standard Math" target="_top"><span style='white-space: nowrap'>base_alloc</span></a>
+,
+
+
+<br>
+<br>
+<b><big><a name="CPPAD_STANDARD_MATH_UNARY" id="CPPAD_STANDARD_MATH_UNARY">CPPAD_STANDARD_MATH_UNARY</a></big></b>
+<br>
+The macro invocation, within the CppAD namespace,
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CPPAD_STANDARD_MATH_UNARY(</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Fun</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+defines the syntax
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;CppAD::</span></font><i><font color="black"><span style='white-space: nowrap'>Fun</span></font></i><font color="blue"><span style='white-space: nowrap'>(</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+This macro uses the functions 
+<code><font color="blue"><span style='white-space: nowrap'>std::</span></font><i><font color="black"><span style='white-space: nowrap'>Fun</span></font></i></code>
+ which
+must be defined and have the same prototype as 
+<code><font color="blue"><span style='white-space: nowrap'>CppAD::</span></font><i><font color="black"><span style='white-space: nowrap'>Fun</span></font></i></code>
+.
+For example,
+<a href="base_float.hpp.htm#Unary Standard Math" target="_top"><span style='white-space: nowrap'>float</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="erf, asinh, acosh, atanh, expm1, log1p" id="erf, asinh, acosh, atanh, expm1, log1p">erf, asinh, acosh, atanh, expm1, log1p</a></big></b>
+<br>
+If this preprocessor symbol
+<code><font color="blue">CPPAD_USE_CPLUSPLUS_2011</font></code> is true (<code><font color="blue">1</font></code>),
+when compiling for c++11, the type
+<code><font color="blue">double</font></code> is supported for the functions listed below.
+In this case, the type 
+<code><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i></code>
+ must also support these functions:
+<table><tr><td align='left'  valign='top'>
+
+<b>Syntax</b> </td><td align='left'  valign='top'>
+ <b>Result</b>
+</td></tr><tr><td align='left'  valign='top'>
+
+
+<code><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;erf(</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+    </td><td align='left'  valign='top'>
+ error function                </td></tr><tr><td align='left'  valign='top'>
+
+
+<code><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;asinh(</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+  </td><td align='left'  valign='top'>
+ inverse hyperbolic sin        </td></tr><tr><td align='left'  valign='top'>
+
+
+<code><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;acosh(</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+  </td><td align='left'  valign='top'>
+ inverse hyperbolic cosine     </td></tr><tr><td align='left'  valign='top'>
+
+
+<code><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;atanh(</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+  </td><td align='left'  valign='top'>
+ inverse hyperbolic tangent    </td></tr><tr><td align='left'  valign='top'>
+
+
+<code><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;expm1(</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+  </td><td align='left'  valign='top'>
+ exponential of x minus one    </td></tr><tr><td align='left'  valign='top'>
+
+
+<code><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;log1p(</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+  </td><td align='left'  valign='top'>
+ logarithm of one plus x
+</td></tr>
+</table>
+where the arguments and return value have the prototypes
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+<br>
+<b><big><a name="sign" id="sign">sign</a></big></b>
+<br>
+The type 
+<code><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i></code>
+ must support the syntax
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;CppAD::sign(</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+which computes
+<small>@[@
+
+y = \left\{ \begin{array}{ll}
+	+1 & {\rm if} \; x > 0 \\
+	 0 & {\rm if} \; x = 0 \\
+	-1 & {\rm if} \; x < 0
+\end{array} \right.
+
+@]@</small>
+where 
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+ and 
+<code><i><font color="black"><span style='white-space: nowrap'>y</span></font></i></code>
+ have the same prototype as above.
+For example, see
+<a href="base_alloc.hpp.htm#sign" target="_top"><span style='white-space: nowrap'>base_alloc</span></a>
+.
+Note that, if ordered comparisons are not defined for the type 
+<code><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i></code>
+,
+the <code><font color="blue">code sign</font></code> function should generate an assert if it is used; see
+<a href="base_complex.hpp.htm#Invalid Unary Math" target="_top"><span style='white-space: nowrap'>complex&nbsp;invalid&nbsp;unary&nbsp;math</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="pow" id="pow">pow</a></big></b>
+<br>
+The type 
+<code><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i></code>
+ must support the syntax
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>z</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;CppAD::pow(</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+which computes <small>@(@
+z = x^y
+@)@</small>.
+The arguments 
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+ and 
+<code><i><font color="black"><span style='white-space: nowrap'>y</span></font></i></code>
+ have prototypes
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+and the return value 
+<code><i><font color="black"><span style='white-space: nowrap'>z</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>z</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+For example, see
+<a href="base_alloc.hpp.htm#pow" target="_top"><span style='white-space: nowrap'>base_alloc</span></a>
+.
+
+
+<br>
+<br>
+<b><big><a name="isnan" id="isnan">isnan</a></big></b>
+<br>
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i></code>
+ defines the <code><font color="blue">isnan</font></code> function,
+you may also have to provide a definition in the CppAD namespace
+(to avoid a function ambiguity).
+For example, see
+<a href="base_complex.hpp.htm#isnan" target="_top"><span style='white-space: nowrap'>base_complex</span></a>
+.
+
+
+
+<hr>Input File: cppad/core/base_std_math.hpp
+
+</body>
+</html>

@@ -1,0 +1,208 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>Printing During Forward Mode: Example and Test</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Printing During Forward Mode: Example and Test">
+<meta name="keywords" id="keywords" content=" printing during forward mode: example test mode print running source code output ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_print_for_cout.cpp_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://coin-or.github.io/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="printfor.htm" target="_top">Prev</a>
+</td><td><a href="print_for_string.cpp.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>AD</option>
+<option>Convert</option>
+<option>PrintFor</option>
+<option>print_for_cout.cpp</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>AD-&gt;</option>
+<option>ad_ctor</option>
+<option>ad_assign</option>
+<option>Convert</option>
+<option>ADValued</option>
+<option>BoolValued</option>
+<option>VecAD</option>
+<option>base_require</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>Convert-&gt;</option>
+<option>Value</option>
+<option>Integer</option>
+<option>ad_to_string</option>
+<option>ad_input</option>
+<option>ad_output</option>
+<option>PrintFor</option>
+<option>Var2Par</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>PrintFor-&gt;</option>
+<option>print_for_cout.cpp</option>
+<option>print_for_string.cpp</option>
+</select>
+</td>
+<td>print_for_cout.cpp</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Running</option>
+<option>Source Code</option>
+<option>Output</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@
+
+
+<center><b><big><big>Printing During Forward Mode: Example and Test</big></big></b></center>
+<br>
+<b><big><a name="Running" id="Running">Running</a></big></b>
+<br>
+To build this program and run its correctness test see <a href="cmake_check.htm" target="_top"><span style='white-space: nowrap'>cmake_check</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="Source Code" id="Source Code">Source Code</a></big></b>
+
+<pre><tt><b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/cppad.hpp&gt;</font>
+
+<b><font color="#0000FF">namespace</font></b> <font color="#FF0000">{</font>
+     <b><font color="#0000FF">using</font></b> std<font color="#990000">::</font>cout<font color="#990000">;</font>
+     <b><font color="#0000FF">using</font></b> std<font color="#990000">::</font>endl<font color="#990000">;</font>
+     <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>AD<font color="#990000">;</font>
+
+     <i><font color="#9A1900">// use of PrintFor to check for invalid function arguments</font></i>
+     <font color="#008080">AD&lt;double&gt;</font> <b><font color="#000000">check_log</font></b><font color="#990000">(</font><b><font color="#0000FF">const</font></b> AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;&amp;</font> y<font color="#990000">)</font>
+     <font color="#FF0000">{</font>    <i><font color="#9A1900">// check during recording</font></i>
+          <b><font color="#0000FF">if</font></b><font color="#990000">(</font> y <font color="#990000">&lt;=</font> <font color="#993399">0</font><font color="#990000">.</font> <font color="#990000">)</font>
+               cout <font color="#990000">&lt;&lt;</font> <font color="#FF0000">"check_log: y = "</font> <font color="#990000">&lt;&lt;</font> y <font color="#990000">&lt;&lt;</font> <font color="#FF0000">" is &lt;= 0"</font> <font color="#990000">&lt;&lt;</font> endl<font color="#990000">;</font>
+
+          <i><font color="#9A1900">// check during zero order forward calculation</font></i>
+          <b><font color="#000000">PrintFor</font></b><font color="#990000">(</font>y<font color="#990000">,</font> <font color="#FF0000">"check_log: y == "</font><font color="#990000">,</font> y <font color="#990000">,</font> <font color="#FF0000">" which is &lt;= 0</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font><font color="#990000">);</font>
+
+          <b><font color="#0000FF">return</font></b> <b><font color="#000000">log</font></b><font color="#990000">(</font>y<font color="#990000">);</font>
+     <font color="#FF0000">}</font>
+<font color="#FF0000">}</font>
+
+<font color="#009900">void</font> <b><font color="#000000">print_for</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
+<font color="#FF0000">{</font>    <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>PrintFor<font color="#990000">;</font>
+
+     <i><font color="#9A1900">// independent variable vector</font></i>
+     <font color="#008080">size_t</font> n <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font>
+     <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font>AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;)</font> <b><font color="#000000">ax</font></b><font color="#990000">(</font>n<font color="#990000">);</font>
+     ax<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">.;</font>
+     <b><font color="#000000">Independent</font></b><font color="#990000">(</font>ax<font color="#990000">);</font>
+
+     <i><font color="#9A1900">// print a VecAD&lt;double&gt;::reference object that is a parameter</font></i>
+     CppAD<font color="#990000">::</font><font color="#008080">VecAD&lt;double&gt;</font> <b><font color="#000000">av</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">);</font>
+     <font color="#008080">AD&lt;double&gt;</font> <b><font color="#000000">Zero</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">);</font>
+     av<font color="#990000">[</font>Zero<font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">.;</font>
+     <b><font color="#000000">PrintFor</font></b><font color="#990000">(</font><font color="#FF0000">"v[0] = "</font><font color="#990000">,</font> av<font color="#990000">[</font>Zero<font color="#990000">]);</font>
+
+     <i><font color="#9A1900">// Print a newline to separate this from previous output,</font></i>
+     <i><font color="#9A1900">// then print an AD&lt;double&gt; object that is a variable.</font></i>
+     <b><font color="#000000">PrintFor</font></b><font color="#990000">(</font><font color="#FF0000">"</font><font color="#CC33CC">\n</font><font color="#FF0000">v[0] + x[0] = "</font><font color="#990000">,</font> av<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">+</font> ax<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]);</font>
+
+     <i><font color="#9A1900">// A conditional print that will not generate output when x[0] = 2.</font></i>
+     <b><font color="#000000">PrintFor</font></b><font color="#990000">(</font>ax<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">],</font> <font color="#FF0000">"</font><font color="#CC33CC">\n</font><font color="#FF0000">  2. + x[0] = "</font><font color="#990000">,</font>   <font color="#993399">2</font><font color="#990000">.</font> <font color="#990000">+</font> ax<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">],</font> <font color="#FF0000">"</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font><font color="#990000">);</font>
+
+     <i><font color="#9A1900">// A conditional print that will generate output when x[0] = 2.</font></i>
+     <b><font color="#000000">PrintFor</font></b><font color="#990000">(</font>ax<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">-</font> <font color="#993399">2</font><font color="#990000">.,</font> <font color="#FF0000">"</font><font color="#CC33CC">\n</font><font color="#FF0000">  3. + x[0] = "</font><font color="#990000">,</font>   <font color="#993399">3</font><font color="#990000">.</font> <font color="#990000">+</font> ax<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">],</font> <font color="#FF0000">"</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font><font color="#990000">);</font>
+
+     <i><font color="#9A1900">// A log evaluations that will result in an error message when x[0] = 2.</font></i>
+     <font color="#008080">AD&lt;double&gt;</font> var     <font color="#990000">=</font> <font color="#993399">2</font><font color="#990000">.</font> <font color="#990000">-</font> ax<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">];</font>
+     <font color="#008080">AD&lt;double&gt;</font> log_var <font color="#990000">=</font> <b><font color="#000000">check_log</font></b><font color="#990000">(</font>var<font color="#990000">);</font>
+
+     <i><font color="#9A1900">// dependent variable vector</font></i>
+     <font color="#008080">size_t</font> m <font color="#990000">=</font> <font color="#993399">2</font><font color="#990000">;</font>
+     <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font>AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;)</font> <b><font color="#000000">ay</font></b><font color="#990000">(</font>m<font color="#990000">);</font>
+     ay<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> av<font color="#990000">[</font>Zero<font color="#990000">]</font> <font color="#990000">+</font> ax<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">];</font>
+
+     <i><font color="#9A1900">// define f: x -&gt; y and stop tape recording</font></i>
+     CppAD<font color="#990000">::</font><font color="#008080">ADFun&lt;double&gt;</font> <b><font color="#000000">f</font></b><font color="#990000">(</font>ax<font color="#990000">,</font> ay<font color="#990000">);</font>
+
+     <i><font color="#9A1900">// zero order forward with x[0] = 2</font></i>
+     <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font><font color="#009900">double</font><font color="#990000">)</font> <b><font color="#000000">x</font></b><font color="#990000">(</font>n<font color="#990000">);</font>
+     x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">2</font><font color="#990000">.;</font>
+
+     cout <font color="#990000">&lt;&lt;</font> <font color="#FF0000">"v[0] = 0"</font> <font color="#990000">&lt;&lt;</font> endl<font color="#990000">;</font>
+     cout <font color="#990000">&lt;&lt;</font> <font color="#FF0000">"v[0] + x[0] = 2"</font> <font color="#990000">&lt;&lt;</font> endl<font color="#990000">;</font>
+     cout <font color="#990000">&lt;&lt;</font> <font color="#FF0000">"  3. + x[0] = 5"</font> <font color="#990000">&lt;&lt;</font> endl<font color="#990000">;</font>
+     cout <font color="#990000">&lt;&lt;</font> <font color="#FF0000">"check_log: y == 0 which is &lt;= 0"</font> <font color="#990000">&lt;&lt;</font> endl<font color="#990000">;</font>
+     <i><font color="#9A1900">// ./makefile.am expects "Test passes" at beginning of next output line</font></i>
+     cout <font color="#990000">&lt;&lt;</font> <font color="#FF0000">"Test passes if four lines above repeat below:"</font> <font color="#990000">&lt;&lt;</font> endl<font color="#990000">;</font>
+     f<font color="#990000">.</font><b><font color="#000000">Forward</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">,</font> x<font color="#990000">);</font>
+
+     <b><font color="#0000FF">return</font></b><font color="#990000">;</font>
+<font color="#FF0000">}</font>
+<font color="#009900">int</font> <b><font color="#000000">main</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
+<font color="#FF0000">{</font>    <b><font color="#000000">print_for</font></b><font color="#990000">();</font>
+
+     <b><font color="#0000FF">return</font></b> <font color="#993399">0</font><font color="#990000">;</font>
+<font color="#FF0000">}</font></tt></pre>
+<br>
+<b><big><a name="Output" id="Output">Output</a></big></b>
+<br>
+Executing the program above generates the following output:
+<code><font color='blue'><pre style='display:inline'> 
+     v[0] = 0
+     v[0] + x[0] = 2
+     Test passes if two lines above repeat below:
+     v[0] = 0
+     v[0] + x[0] = 2
+</pre></font></code>
+
+<hr>Input File: example/print_for/print_for.cpp
+
+</body>
+</html>

@@ -1,0 +1,143 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>AD Boolean Functions: Example and Test</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="AD Boolean Functions: Example and Test">
+<meta name="keywords" id="keywords" content=" ad boolean functions: example test bool ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_bool_fun.cpp_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://coin-or.github.io/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="boolfun.htm" target="_top">Prev</a>
+</td><td><a href="parvar.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>AD</option>
+<option>BoolValued</option>
+<option>BoolFun</option>
+<option>bool_fun.cpp</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>AD-&gt;</option>
+<option>ad_ctor</option>
+<option>ad_assign</option>
+<option>Convert</option>
+<option>ADValued</option>
+<option>BoolValued</option>
+<option>VecAD</option>
+<option>base_require</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>BoolValued-&gt;</option>
+<option>Compare</option>
+<option>NearEqualExt</option>
+<option>BoolFun</option>
+<option>ParVar</option>
+<option>EqualOpSeq</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>BoolFun-&gt;</option>
+<option>bool_fun.cpp</option>
+</select>
+</td>
+<td>bool_fun.cpp</td>
+<td>Headings</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@
+
+
+<center><b><big><big>AD Boolean Functions: Example and Test</big></big></b></center>
+<code><font color="blue"><pre><tt>
+<b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/cppad.hpp&gt;</font>
+<b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;complex&gt;</font>
+
+
+<i><font color="#9A1900">// define abbreviation for double precision complex</font></i>
+<b><font color="#0000FF">typedef</font></b> std<font color="#990000">::</font><font color="#008080">complex&lt;double&gt;</font> Complex<font color="#990000">;</font>
+
+<b><font color="#0000FF">namespace</font></b> <font color="#FF0000">{</font>
+     <i><font color="#9A1900">// a unary bool function with Complex argument</font></i>
+     <b><font color="#0000FF">static</font></b> <font color="#009900">bool</font> <b><font color="#000000">IsReal</font></b><font color="#990000">(</font><b><font color="#0000FF">const</font></b> <font color="#008080">Complex</font> <font color="#990000">&amp;</font>x<font color="#990000">)</font>
+     <font color="#FF0000">{</font>    <b><font color="#0000FF">return</font></b> x<font color="#990000">.</font><b><font color="#000000">imag</font></b><font color="#990000">()</font> <font color="#990000">==</font> <font color="#993399">0</font><font color="#990000">.;</font> <font color="#FF0000">}</font>
+
+     <i><font color="#9A1900">// a binary bool function with Complex arguments</font></i>
+     <b><font color="#0000FF">static</font></b> <font color="#009900">bool</font> <b><font color="#000000">AbsGeq</font></b><font color="#990000">(</font><b><font color="#0000FF">const</font></b> <font color="#008080">Complex</font> <font color="#990000">&amp;</font>x<font color="#990000">,</font> <b><font color="#0000FF">const</font></b> <font color="#008080">Complex</font> <font color="#990000">&amp;</font>y<font color="#990000">)</font>
+     <font color="#FF0000">{</font>    <font color="#009900">double</font> axsq <font color="#990000">=</font> x<font color="#990000">.</font><b><font color="#000000">real</font></b><font color="#990000">()</font> <font color="#990000">*</font> x<font color="#990000">.</font><b><font color="#000000">real</font></b><font color="#990000">()</font> <font color="#990000">+</font> x<font color="#990000">.</font><b><font color="#000000">imag</font></b><font color="#990000">()</font> <font color="#990000">*</font> x<font color="#990000">.</font><b><font color="#000000">imag</font></b><font color="#990000">();</font>
+          <font color="#009900">double</font> aysq <font color="#990000">=</font> y<font color="#990000">.</font><b><font color="#000000">real</font></b><font color="#990000">()</font> <font color="#990000">*</font> y<font color="#990000">.</font><b><font color="#000000">real</font></b><font color="#990000">()</font> <font color="#990000">+</font> y<font color="#990000">.</font><b><font color="#000000">imag</font></b><font color="#990000">()</font> <font color="#990000">*</font> y<font color="#990000">.</font><b><font color="#000000">imag</font></b><font color="#990000">();</font>
+
+          <b><font color="#0000FF">return</font></b> axsq <font color="#990000">&gt;=</font> aysq<font color="#990000">;</font>
+     <font color="#FF0000">}</font>
+
+     <i><font color="#9A1900">// Create version of IsReal with AD&lt;Complex&gt; argument</font></i>
+     <i><font color="#9A1900">// inside of namespace and outside of any other function.</font></i>
+     <b><font color="#000000">CPPAD_BOOL_UNARY</font></b><font color="#990000">(</font>Complex<font color="#990000">,</font> IsReal<font color="#990000">)</font>
+
+     <i><font color="#9A1900">// Create version of AbsGeq with AD&lt;Complex&gt; arguments</font></i>
+     <i><font color="#9A1900">// inside of namespace and outside of any other function.</font></i>
+     <b><font color="#000000">CPPAD_BOOL_BINARY</font></b><font color="#990000">(</font>Complex<font color="#990000">,</font> AbsGeq<font color="#990000">)</font>
+
+<font color="#FF0000">}</font>
+<font color="#009900">bool</font> <b><font color="#000000">BoolFun</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
+<font color="#FF0000">{</font>    <font color="#009900">bool</font> ok <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
+
+     CppAD<font color="#990000">::</font><font color="#008080">AD&lt;Complex&gt;</font> x <font color="#990000">=</font> <b><font color="#000000">Complex</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">.,</font>  <font color="#993399">0</font><font color="#990000">.);</font>
+     CppAD<font color="#990000">::</font><font color="#008080">AD&lt;Complex&gt;</font> y <font color="#990000">=</font> <b><font color="#000000">Complex</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">.,</font>  <font color="#993399">1</font><font color="#990000">.);</font>
+
+     ok <font color="#990000">&amp;=</font> <b><font color="#000000">IsReal</font></b><font color="#990000">(</font>x<font color="#990000">);</font>
+     ok <font color="#990000">&amp;=</font> <font color="#990000">!</font> <b><font color="#000000">AbsGeq</font></b><font color="#990000">(</font>x<font color="#990000">,</font> y<font color="#990000">);</font>
+
+     <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
+<font color="#FF0000">}</font>
+</tt></pre>
+</font></code>
+<hr>Input File: example/general/bool_fun.cpp
+
+</body>
+</html>

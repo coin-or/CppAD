@@ -1,0 +1,126 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>Source: uniform_01</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Source: uniform_01">
+<meta name="keywords" id="keywords" content=" source: uniform_01 source ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_uniform_01.hpp_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://coin-or.github.io/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="uniform_01.htm" target="_top">Prev</a>
+</td><td><a href="speed_double.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>speed</option>
+<option>speed_utility</option>
+<option>uniform_01</option>
+<option>uniform_01.hpp</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>speed-&gt;</option>
+<option>speed_main</option>
+<option>speed_utility</option>
+<option>speed_double</option>
+<option>speed_adolc</option>
+<option>speed_cppad</option>
+<option>speed_fadbad</option>
+<option>speed_sacado</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>speed_utility-&gt;</option>
+<option>det_by_lu</option>
+<option>det_of_minor</option>
+<option>det_by_minor</option>
+<option>det_33</option>
+<option>det_grad_33</option>
+<option>mat_sum_sq</option>
+<option>ode_evaluate</option>
+<option>sparse_jac_fun</option>
+<option>sparse_hes_fun</option>
+<option>uniform_01</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>uniform_01-&gt;</option>
+<option>uniform_01.hpp</option>
+</select>
+</td>
+<td>uniform_01.hpp</td>
+<td>Headings</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@
+
+
+<center><b><big><big>Source: uniform_01</big></big></b></center>
+<code><font color="blue"># ifndef CPPAD_UNIFORM_01_HPP
+<code><span style='white-space: nowrap'><br>
+</span></code># define CPPAD_UNIFORM_01_HPP
+
+<pre><tt><b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cstdlib&gt;</font>
+
+<b><font color="#0000FF">namespace</font></b> CppAD <font color="#FF0000">{</font>
+     <b><font color="#0000FF">inline</font></b> <font color="#009900">void</font> <b><font color="#000000">uniform_01</font></b><font color="#990000">(</font><font color="#008080">size_t</font> seed<font color="#990000">)</font>
+     <font color="#FF0000">{</font>    std<font color="#990000">::</font><b><font color="#000000">srand</font></b><font color="#990000">(</font> <font color="#990000">(</font><font color="#009900">unsigned</font> <font color="#009900">int</font><font color="#990000">)</font> seed<font color="#990000">);</font> <font color="#FF0000">}</font>
+
+     <b><font color="#0000FF">template</font></b> <font color="#990000">&lt;</font><b><font color="#0000FF">class</font></b> <font color="#008080">Vector</font><font color="#990000">&gt;</font>
+     <font color="#009900">void</font> <b><font color="#000000">uniform_01</font></b><font color="#990000">(</font><font color="#008080">size_t</font> n<font color="#990000">,</font> <font color="#008080">Vector</font> <font color="#990000">&amp;</font>x<font color="#990000">)</font>
+     <font color="#FF0000">{</font>    <b><font color="#0000FF">static</font></b> <font color="#009900">double</font> factor <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">.</font> <font color="#990000">/</font> <font color="#009900">double</font><font color="#990000">(</font>RAND_MAX<font color="#990000">);</font>
+          <b><font color="#0000FF">while</font></b><font color="#990000">(</font>n<font color="#990000">--)</font>
+               x<font color="#990000">[</font>n<font color="#990000">]</font> <font color="#990000">=</font> std<font color="#990000">::</font><b><font color="#000000">rand</font></b><font color="#990000">()</font> <font color="#990000">*</font> factor<font color="#990000">;</font>
+     <font color="#FF0000">}</font>
+<font color="#FF0000">}</font></tt></pre>
+# endif
+</font></code>
+
+
+<hr>Input File: omh/uniform_01_hpp.omh
+
+</body>
+</html>

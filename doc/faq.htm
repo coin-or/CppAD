@@ -1,0 +1,393 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>Frequently Asked Questions and Answers</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Frequently Asked Questions and Answers">
+<meta name="keywords" id="keywords" content=" frequently asked questions answers assignment independent bugs comparechange complex types exceptions variables matrix inverse lusolve atomic operation mode: forward reverse namespace test vector preprocessor symbol speed ndebug optimize memory allocation tape storage: disk ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_faq_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://coin-or.github.io/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="appendix.htm" target="_top">Prev</a>
+</td><td><a href="directory.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>Appendix</option>
+<option>Faq</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>CppAD-&gt;</option>
+<option>Install</option>
+<option>Introduction</option>
+<option>AD</option>
+<option>ADFun</option>
+<option>preprocessor</option>
+<option>multi_thread</option>
+<option>utility</option>
+<option>ipopt_solve</option>
+<option>Example</option>
+<option>speed</option>
+<option>Appendix</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>Appendix-&gt;</option>
+<option>Faq</option>
+<option>directory</option>
+<option>Theory</option>
+<option>glossary</option>
+<option>Bib</option>
+<option>wish_list</option>
+<option>whats_new</option>
+<option>deprecated</option>
+<option>compare_c</option>
+<option>numeric_ad</option>
+<option>addon</option>
+<option>License</option>
+</select>
+</td>
+<td>Faq</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Assignment and Independent</option>
+<option>Bugs</option>
+<option>CompareChange</option>
+<option>Complex Types</option>
+<option>Exceptions</option>
+<option>Independent Variables</option>
+<option>Matrix Inverse</option>
+<option>---..LuSolve</option>
+<option>---..Atomic Operation</option>
+<option>Mode: Forward or Reverse</option>
+<option>Namespace</option>
+<option>---..Test Vector Preprocessor Symbol</option>
+<option>Speed</option>
+<option>---..NDEBUG</option>
+<option>---..Optimize</option>
+<option>---..Memory Allocation</option>
+<option>Tape Storage: Disk or Memory</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>Frequently Asked Questions and Answers</big></big></b></center>
+<br>
+<b><big><a name="Assignment and Independent" id="Assignment and Independent">Assignment and Independent</a></big></b>
+<br>
+Why does the code sequence
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Independent(</span></font><i><font color="black"><span style='white-space: nowrap'>u</span></font></i><font color="blue"><span style='white-space: nowrap'>);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>v</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>u</span></font></i><font color="blue"><span style='white-space: nowrap'>[0];<br>
+</span></font></code>
+behave differently from the code sequence
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>v</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>u</span></font></i><font color="blue"><span style='white-space: nowrap'>[0];<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Independent(</span></font><i><font color="black"><span style='white-space: nowrap'>u</span></font></i><font color="blue"><span style='white-space: nowrap'>);<br>
+</span></font></code>
+Before the call to <a href="independent.htm" target="_top"><span style='white-space: nowrap'>Independent</span></a>
+,
+
+<code><i><font color="black"><span style='white-space: nowrap'>u</span></font></i><font color="blue"><span style='white-space: nowrap'>[0]</span></font></code>
+ is a <a href="glossary.htm#Parameter" target="_top"><span style='white-space: nowrap'>parameter</span></a>
+
+and after the call it is a variable.
+Thus in the first case, 
+<code><i><font color="black"><span style='white-space: nowrap'>v</span></font></i></code>
+ is a variable
+and in the second case it is a parameter.
+
+<br>
+<br>
+<b><big><a name="Bugs" id="Bugs">Bugs</a></big></b>
+<br>
+What should I do if I suspect that there is a bug in CppAD ?
+<code><span style='white-space: nowrap'><br>
+<br>
+</span></code><ol type="1"><li>The first step is to check currently open
+<a href="https://github.com/coin-or/CppAD/issues" target="_top"><span style='white-space: nowrap'>issues</span></a>
+ on github.
+If it is an open issue, and you want to hurry it along, you can add
+a comment to the effect that it is holding you up.
+</li><li>
+
+The next step is to search the
+<a href="whats_new.htm" target="_top"><span style='white-space: nowrap'>whats_new</span></a>
+ sections for mention of a related bug fix
+between the date of the version you are using and the current date.
+It the bug has been fixed, obtain a more recent release that has the fix
+and see if that works for you.
+</li><li>
+
+The next step is to
+create a simple demonstration of the bug;
+see the file <code><font color="blue">bug/template.sh</font></code> for a template that you can
+edit for that purpose.
+The smaller the program, the better the bug report.
+</li><li>
+
+The next step is open a new issue on github and provide your simple
+example so that the problem can be reproduced.
+</li></ol>
+
+
+<br>
+<br>
+<b><big><a name="CompareChange" id="CompareChange">CompareChange</a></big></b>
+<br>
+If you attempt to use the
+<a href="comparechange.htm" target="_top"><span style='white-space: nowrap'>CompareChange</span></a>
+
+function when <code><font color="blue">NDEBUG</font></code> is true,
+you will get an error message stating that
+<code><font color="blue">CompareChange</font></code> is not a member of the
+<a href="adfun.htm" target="_top"><span style='white-space: nowrap'>ADFun</span></a>
+ template class.
+
+<br>
+<br>
+<b><big><a name="Complex Types" id="Complex Types">Complex Types</a></big></b>
+<br>
+Which of the following complex types is better:
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;AD&lt;&nbsp;std::complex&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;std::complex&lt;&nbsp;AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;&gt;<br>
+</span></font></code>
+The <a href="abs.htm#Complex Types" target="_top"><span style='white-space: nowrap'>complex&nbsp;abs&nbsp;function</span></a>
+ is differentiable
+with respect to its real and imaginary parts,
+but it is not complex differentiable.
+Thus one would prefer to use
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;std::complex&lt;&nbsp;AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;&gt;<br>
+</span></font></code>
+On the other hand, the C++ standard only specifies
+
+<code><font color="blue"><span style='white-space: nowrap'>std::complex&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Type</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code>
+ where 
+<code><i><font color="black"><span style='white-space: nowrap'>Type</span></font></i></code>
+ is
+<code><font color="blue">float</font></code>, <code><font color="blue">double</font></code>, or <code><font color="blue">lone double</font></code>.
+The effect of instantiating the template complex for any other type
+is unspecified.
+
+<br>
+<br>
+<b><big><a name="Exceptions" id="Exceptions">Exceptions</a></big></b>
+<br>
+Why, in all the examples, do you pass back a boolean variable instead
+of throwing an exception ?
+<code><span style='white-space: nowrap'><br>
+<br>
+</span></code>The examples are also used to test the correctness of CppAD
+and to check your installation.
+For these two uses, it is helpful to run all the tests
+and to know which ones failed.
+The actual code in CppAD uses the <a href="errorhandler.htm" target="_top"><span style='white-space: nowrap'>ErrorHandler</span></a>
+ utility
+to signal exceptions.
+Specifications for redefining this action are provided.
+
+<br>
+<br>
+<b><big><a name="Independent Variables" id="Independent Variables">Independent Variables</a></big></b>
+<br>
+Is it possible to evaluate the same tape recording with different values
+for the independent variables ?
+<code><span style='white-space: nowrap'><br>
+<br>
+</span></code>Yes (see <a href="forward_zero.htm" target="_top"><span style='white-space: nowrap'>forward_zero</span></a>
+).
+
+<br>
+<br>
+<b><big><a name="Matrix Inverse" id="Matrix Inverse">Matrix Inverse</a></big></b>
+<br>
+Is it possible to differentiate (with respect to the matrix elements)
+the computation of the inverse of a matrix
+where the computation of the inverse uses pivoting ?
+
+<br>
+<br>
+<b><a name="Matrix Inverse.LuSolve" id="Matrix Inverse.LuSolve">LuSolve</a></b>
+<br>
+#
+The example routine <a href="lusolve.htm" target="_top"><span style='white-space: nowrap'>LuSolve</span></a>
+ can be used to do this
+because the inverse is a special case of the solution of linear equations.
+The examples
+<a href="jac_lu_det.cpp.htm" target="_top"><span style='white-space: nowrap'>jac_lu_det.cpp</span></a>
+ and <a href="hes_lu_det.cpp.htm" target="_top"><span style='white-space: nowrap'>hes_lu_det.cpp</span></a>
+
+use LuSolve to compute derivatives of the
+determinant with respect to the components of the matrix.
+
+<br>
+<br>
+<b><a name="Matrix Inverse.Atomic Operation" id="Matrix Inverse.Atomic Operation">Atomic Operation</a></b>
+<br>
+One can also do this by making the inversion of the matrix an atomic operation;
+e.g., see <a href="atomic_eigen_mat_inv.cpp.htm" target="_top"><span style='white-space: nowrap'>atomic_eigen_mat_inv.cpp</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="Mode: Forward or Reverse" id="Mode: Forward or Reverse">Mode: Forward or Reverse</a></big></b>
+<br>
+When evaluating derivatives,
+one always has a choice between
+forward and reverse mode.
+How does one decide which mode to use ?
+<code><span style='white-space: nowrap'><br>
+<br>
+</span></code>In general, the best mode depends on the number of domain and range
+components in the function that your are differentiating.
+Each call to <a href="forward.htm" target="_top"><span style='white-space: nowrap'>Forward</span></a>
+ computes the derivative of all
+the range directions with respect to one domain direction.
+Each call to <a href="reverse.htm" target="_top"><span style='white-space: nowrap'>Reverse</span></a>
+ computes the derivative of one
+range direction with respect to all the domain directions.
+The times required for (speed of)
+calls <code><font color="blue">Forward</font></code> and <code><font color="blue">Reverse</font></code> are about equal.
+The <a href="seq_property.htm#Parameter" target="_top"><span style='white-space: nowrap'>Parameter</span></a>
+
+function can be used to quickly determine that
+some range directions have derivative zero.
+
+
+
+<br>
+<br>
+<b><big><a name="Namespace" id="Namespace">Namespace</a></big></b>
+
+
+
+<br>
+<br>
+<b><a name="Namespace.Test Vector Preprocessor Symbol" id="Namespace.Test Vector Preprocessor Symbol">Test Vector Preprocessor Symbol</a></b>
+<br>
+Why do you use <code><font color="blue">CPPAD_TESTVECTOR</font></code> instead of a namespace for
+the CppAD <a href="testvector.htm" target="_top"><span style='white-space: nowrap'>testvector</span></a>
+ class ?
+<code><span style='white-space: nowrap'><br>
+<br>
+</span></code>The preprocessor symbol
+<small><a href="testvector.htm" target="_top"><span style='white-space: nowrap'>CPPAD_TESTVECTOR</span></a>
+ </small>
+determines which
+<a href="simplevector.htm" target="_top"><span style='white-space: nowrap'>SimpleVector</span></a>
+ template class is used for extensive testing.
+The default definition for <code><font color="blue">CPPAD_TESTVECTOR</font></code> is the
+<a href="cppad_vector.htm" target="_top"><span style='white-space: nowrap'>CppAD::vector</span></a>
+ template class, but it can be changed.
+Note that all the preprocessor symbols that are defined or used
+by CppAD begin with either <code><font color="blue">CPPAD</font></code>
+(some old deprecated symbols begin with <code><font color="blue">CppAD</font></code>).
+
+<br>
+<br>
+<b><big><a name="Speed" id="Speed">Speed</a></big></b>
+<br>
+How do I get the best speed performance out of CppAD ?
+
+<br>
+<br>
+<b><a name="Speed.NDEBUG" id="Speed.NDEBUG">NDEBUG</a></b>
+<br>
+You should compile your code with optimization, without debugging,
+and with the preprocessor symbol <code><font color="blue">NDEBUG</font></code> defined.
+(The <a href="speed_cppad.htm" target="_top"><span style='white-space: nowrap'>speed_cppad</span></a>
+ tests do this.)
+Note that defining <code><font color="blue">NDEBUG</font></code>
+will turn off all of the error checking and reporting that
+is done using <a href="errorhandler.htm" target="_top"><span style='white-space: nowrap'>ErrorHandler</span></a>
+.
+
+<br>
+<br>
+<b><a name="Speed.Optimize" id="Speed.Optimize">Optimize</a></b>
+<br>
+It is also possible that preforming a tape
+<a href="optimize.htm" target="_top"><span style='white-space: nowrap'>optimization</span></a>
+ will improve the speed of evaluation
+more than the time required for the optimization.
+
+<br>
+<br>
+<b><a name="Speed.Memory Allocation" id="Speed.Memory Allocation">Memory Allocation</a></b>
+<br>
+You may also increase execution speed
+by calling <code><font color="blue">hold_memory</font></code> with
+<a href="ta_hold_memory.htm#value" target="_top"><span style='white-space: nowrap'>value</span></a>
+ equal to true.
+
+<br>
+<br>
+<b><big><a name="Tape Storage: Disk or Memory" id="Tape Storage: Disk or Memory">Tape Storage: Disk or Memory</a></big></b>
+<br>
+Does CppAD store the tape on disk or in memory ?
+<code><span style='white-space: nowrap'><br>
+<br>
+</span></code>CppAD uses memory to store a different tape for recording operations
+for each 
+<code><font color="blue"><span style='white-space: nowrap'>AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code>
+ type that is used.
+If you have a very large number calculations that are recorded
+on a tape, the tape will keep growing to hold the necessary information.
+Eventually, virtual memory may be used to store the tape
+and the calculations may slow down because of necessary disk access.
+
+
+
+<hr>Input File: omh/appendix/faq.omh
+
+</body>
+</html>

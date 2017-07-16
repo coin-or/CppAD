@@ -1,0 +1,422 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>Forward Mode Jacobian Sparsity Patterns</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Forward Mode Jacobian Sparsity Patterns">
+<meta name="keywords" id="keywords" content=" forward mode jacobian sparsity patterns syntax purpose x sizevector f size_forward_bool size_forward_set pattern_in transpose dependency internal_bool pattern_out entire example ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_for_jac_sparsity_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://coin-or.github.io/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="sparsity_pattern.htm" target="_top">Prev</a>
+</td><td><a href="for_jac_sparsity.cpp.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>ADFun</option>
+<option>sparsity_pattern</option>
+<option>for_jac_sparsity</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>CppAD-&gt;</option>
+<option>Install</option>
+<option>Introduction</option>
+<option>AD</option>
+<option>ADFun</option>
+<option>preprocessor</option>
+<option>multi_thread</option>
+<option>utility</option>
+<option>ipopt_solve</option>
+<option>Example</option>
+<option>speed</option>
+<option>Appendix</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>ADFun-&gt;</option>
+<option>record_adfun</option>
+<option>drivers</option>
+<option>Forward</option>
+<option>Reverse</option>
+<option>sparsity_pattern</option>
+<option>sparse_derivative</option>
+<option>optimize</option>
+<option>abs_normal</option>
+<option>FunCheck</option>
+<option>check_for_nan</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>sparsity_pattern-&gt;</option>
+<option>for_jac_sparsity</option>
+<option>ForSparseJac</option>
+<option>rev_jac_sparsity</option>
+<option>RevSparseJac</option>
+<option>rev_hes_sparsity</option>
+<option>RevSparseHes</option>
+<option>for_hes_sparsity</option>
+<option>ForSparseHes</option>
+<option>dependency.cpp</option>
+<option>rc_sparsity.cpp</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down0(this)'>
+<option>for_jac_sparsity-&gt;</option>
+<option>for_jac_sparsity.cpp</option>
+</select>
+</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Syntax</option>
+<option>Purpose</option>
+<option>x</option>
+<option>SizeVector</option>
+<option>f</option>
+<option>---..size_forward_bool</option>
+<option>---..size_forward_set</option>
+<option>pattern_in</option>
+<option>transpose</option>
+<option>dependency</option>
+<option>internal_bool</option>
+<option>pattern_out</option>
+<option>Sparsity for Entire Jacobian</option>
+<option>Example</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>Forward Mode Jacobian Sparsity Patterns</big></big></b></center>
+<br>
+<b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
+
+<br>
+
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.for_jac_sparsity(<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>pattern_in</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>transpose</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>dependency</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>internal_bool</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>pattern_out</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+)</span></font></code>
+
+
+<br>
+<br>
+<b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
+<br>
+We use <small>@(@
+F : \B{R}^n \rightarrow \B{R}^m
+@)@</small> to denote the
+<a href="glossary.htm#AD Function" target="_top"><span style='white-space: nowrap'>AD&nbsp;function</span></a>
+ corresponding to
+the operation sequence stored in 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+.
+Fix <small>@(@
+R \in \B{R}^{n \times \ell}
+@)@</small> and define the function
+<small>@[@
+
+	J(x) = F^{(1)} ( x ) * R
+
+@]@</small>
+Given the <a href="glossary.htm#Sparsity Pattern" target="_top"><span style='white-space: nowrap'>sparsity&nbsp;pattern</span></a>
+ for <small>@(@
+R
+@)@</small>,
+<code><font color="blue">for_jac_sparsity</font></code> computes a sparsity pattern for <small>@(@
+J(x)
+@)@</small>.
+
+<br>
+<br>
+<b><big><a name="x" id="x">x</a></big></b>
+<br>
+Note that the sparsity pattern <small>@(@
+J(x)
+@)@</small> corresponds to the
+operation sequence stored in 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+ and does not depend on
+the argument 
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+.
+(The operation sequence may contain
+<a href="condexp.htm" target="_top"><span style='white-space: nowrap'>CondExp</span></a>
+ and  <a href="vecad.htm" target="_top"><span style='white-space: nowrap'>VecAD</span></a>
+ operations.)
+
+<br>
+<br>
+<b><big><a name="SizeVector" id="SizeVector">SizeVector</a></big></b>
+<br>
+The type 
+<code><i><font color="black"><span style='white-space: nowrap'>SizeVector</span></font></i></code>
+ is a <a href="simplevector.htm" target="_top"><span style='white-space: nowrap'>SimpleVector</span></a>
+ class with
+<a href="simplevector.htm#Elements of Specified Type" target="_top"><span style='white-space: nowrap'>elements&nbsp;of&nbsp;type</span></a>
+
+<code><font color="blue">size_t</font></code>.
+
+<br>
+<br>
+<b><big><a name="f" id="f">f</a></big></b>
+<br>
+The object 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ADFun&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+The <a href="adfun.htm" target="_top"><span style='white-space: nowrap'>ADFun</span></a>
+ object 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+ is not <code><font color="blue">const</font></code>.
+After a call to <code><font color="blue">for_jac_sparsity</font></code>, a sparsity pattern
+for each of the variables in the operation sequence
+is held in 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+ for possible later use during
+reverse Hessian sparsity calculations.
+
+<br>
+<br>
+<b><a name="f.size_forward_bool" id="f.size_forward_bool">size_forward_bool</a></b>
+<br>
+After <code><font color="blue">for_jac_sparsity</font></code>, if 
+<code><i><font color="black"><span style='white-space: nowrap'>k</span></font></i></code>
+ is a <code><font color="blue">size_t</font></code> object,
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>k</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.size_forward_bool()<br>
+</span></font></code>
+sets 
+<code><i><font color="black"><span style='white-space: nowrap'>k</span></font></i></code>
+ to the amount of memory (in unsigned character units)
+used to store the
+<a href="glossary.htm#Sparsity Pattern.Boolean Vector" target="_top"><span style='white-space: nowrap'>boolean&nbsp;vector</span></a>
+
+sparsity patterns.
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>internal_bool</span></font></i></code>
+ if false, 
+<code><i><font color="black"><span style='white-space: nowrap'>k</span></font></i></code>
+ will be zero.
+Otherwise it will be non-zero.
+If you do not need this information for <a href="revsparsehes.htm" target="_top"><span style='white-space: nowrap'>RevSparseHes</span></a>
+
+calculations, it can be deleted
+(and the corresponding memory freed) using
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.size_forward_bool(0)<br>
+</span></font></code>
+after which 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.size_forward_bool()</span></font></code>
+ will return zero.
+
+<br>
+<br>
+<b><a name="f.size_forward_set" id="f.size_forward_set">size_forward_set</a></b>
+<br>
+After <code><font color="blue">for_jac_sparsity</font></code>, if 
+<code><i><font color="black"><span style='white-space: nowrap'>k</span></font></i></code>
+ is a <code><font color="blue">size_t</font></code> object,
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>k</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.size_forward_set()<br>
+</span></font></code>
+sets 
+<code><i><font color="black"><span style='white-space: nowrap'>k</span></font></i></code>
+ to the amount of memory (in unsigned character units)
+used to store the
+<a href="glossary.htm#Sparsity Pattern.Vector of Sets" target="_top"><span style='white-space: nowrap'>vector&nbsp;of&nbsp;sets</span></a>
+
+sparsity patterns.
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>internal_bool</span></font></i></code>
+ if true, 
+<code><i><font color="black"><span style='white-space: nowrap'>k</span></font></i></code>
+ will be zero.
+Otherwise it will be non-zero.
+If you do not need this information for future <a href="rev_hes_sparsity.htm" target="_top"><span style='white-space: nowrap'>rev_hes_sparsity</span></a>
+
+calculations, it can be deleted
+(and the corresponding memory freed) using
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.size_forward_set(0)<br>
+</span></font></code>
+after which 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.size_forward_set()</span></font></code>
+ will return zero.
+
+<br>
+<br>
+<b><big><a name="pattern_in" id="pattern_in">pattern_in</a></big></b>
+<br>
+The argument 
+<code><i><font color="black"><span style='white-space: nowrap'>pattern_in</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;sparse_rc&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>SizeVector</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>pattern_in</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+see <a href="sparse_rc.htm" target="_top"><span style='white-space: nowrap'>sparse_rc</span></a>
+.
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>transpose</span></font></i></code>
+ it is false (true),
+
+<code><i><font color="black"><span style='white-space: nowrap'>pattern_in</span></font></i></code>
+ is a sparsity pattern for <small>@(@
+R
+@)@</small> (<small>@(@
+R^\R{T}
+@)@</small>).
+
+<br>
+<br>
+<b><big><a name="transpose" id="transpose">transpose</a></big></b>
+<br>
+This argument has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bool&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>transpose</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+See <a href="for_jac_sparsity.htm#pattern_in" target="_top"><span style='white-space: nowrap'>pattern_in</span></a>
+ above and
+<a href="for_jac_sparsity.htm#pattern_out" target="_top"><span style='white-space: nowrap'>pattern_out</span></a>
+ below.
+
+<br>
+<br>
+<b><big><a name="dependency" id="dependency">dependency</a></big></b>
+<br>
+This argument has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bool&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>dependency</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+see <a href="for_jac_sparsity.htm#pattern_out" target="_top"><span style='white-space: nowrap'>pattern_out</span></a>
+ below.
+
+<br>
+<br>
+<b><big><a name="internal_bool" id="internal_bool">internal_bool</a></big></b>
+<br>
+If this is true, calculations are done with sets represented by a vector
+of boolean values. Otherwise, a vector of sets of integers is used.
+
+<br>
+<br>
+<b><big><a name="pattern_out" id="pattern_out">pattern_out</a></big></b>
+<br>
+This argument has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sparse_rc&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>SizeVector</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>pattern_out</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+This input value of 
+<code><i><font color="black"><span style='white-space: nowrap'>pattern_out</span></font></i></code>
+ does not matter.
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>transpose</span></font></i></code>
+ it is false (true),
+upon return 
+<code><i><font color="black"><span style='white-space: nowrap'>pattern_out</span></font></i></code>
+ is a sparsity pattern for
+<small>@(@
+J(x)
+@)@</small> (<small>@(@
+J(x)^\R{T}
+@)@</small>).
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>dependency</span></font></i></code>
+ is true, 
+<code><i><font color="black"><span style='white-space: nowrap'>pattern_out</span></font></i></code>
+ is a
+<a href="dependency.cpp.htm#Dependency Pattern" target="_top"><span style='white-space: nowrap'>dependency&nbsp;pattern</span></a>
+
+instead of sparsity pattern.
+
+<br>
+<br>
+<b><big><a name="Sparsity for Entire Jacobian" id="Sparsity for Entire Jacobian">Sparsity for Entire Jacobian</a></big></b>
+<br>
+Suppose that
+<small>@(@
+R
+@)@</small> is the <small>@(@
+n \times n
+@)@</small> identity matrix.
+In this case, 
+<code><i><font color="black"><span style='white-space: nowrap'>pattern_out</span></font></i></code>
+ is a sparsity pattern for
+<small>@(@
+F^{(1)} ( x )
+@)@</small>  ( <small>@(@
+F^{(1)} (x)^\R{T}
+@)@</small> )
+if 
+<code><i><font color="black"><span style='white-space: nowrap'>transpose</span></font></i></code>
+ is false (true).
+
+<br>
+<br>
+<b><big><a name="Example" id="Example">Example</a></big></b>
+
+<br>
+The file
+<a href="for_jac_sparsity.cpp.htm" target="_top"><span style='white-space: nowrap'>for_jac_sparsity.cpp</span></a>
+
+contains an example and test of this operation.
+It returns true if it succeeds and false otherwise.
+
+
+<hr>Input File: cppad/core/for_jac_sparsity.hpp
+
+</body>
+</html>

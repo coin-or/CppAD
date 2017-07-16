@@ -1,0 +1,717 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>An Arbitrary Order Gear Method</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="An Arbitrary Order Gear Method">
+<meta name="keywords" id="keywords" content=" arbitrary order gear method Odegear Ode stiff differential equation syntax purpose include fun t x f f_x warning m n e scalar vector example source code theory gear's ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_odegear_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://coin-or.github.io/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="ode_err_maxabs.cpp.htm" target="_top">Prev</a>
+</td><td><a href="ode_gear.cpp.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>utility</option>
+<option>OdeGear</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>CppAD-&gt;</option>
+<option>Install</option>
+<option>Introduction</option>
+<option>AD</option>
+<option>ADFun</option>
+<option>preprocessor</option>
+<option>multi_thread</option>
+<option>utility</option>
+<option>ipopt_solve</option>
+<option>Example</option>
+<option>speed</option>
+<option>Appendix</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>utility-&gt;</option>
+<option>ErrorHandler</option>
+<option>NearEqual</option>
+<option>speed_test</option>
+<option>SpeedTest</option>
+<option>time_test</option>
+<option>test_boolofvoid</option>
+<option>NumericType</option>
+<option>CheckNumericType</option>
+<option>SimpleVector</option>
+<option>CheckSimpleVector</option>
+<option>nan</option>
+<option>pow_int</option>
+<option>Poly</option>
+<option>LuDetAndSolve</option>
+<option>RombergOne</option>
+<option>RombergMul</option>
+<option>Runge45</option>
+<option>Rosen34</option>
+<option>OdeErrControl</option>
+<option>OdeGear</option>
+<option>OdeGearControl</option>
+<option>CppAD_vector</option>
+<option>thread_alloc</option>
+<option>index_sort</option>
+<option>to_string</option>
+<option>set_union</option>
+<option>sparse_rc</option>
+<option>sparse_rcv</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down0(this)'>
+<option>OdeGear-&gt;</option>
+<option>ode_gear.cpp</option>
+</select>
+</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Syntax</option>
+<option>Purpose</option>
+<option>Include</option>
+<option>Fun</option>
+<option>---..t</option>
+<option>---..x</option>
+<option>---..f</option>
+<option>---..f_x</option>
+<option>---..Warning</option>
+<option>m</option>
+<option>n</option>
+<option>T</option>
+<option>X</option>
+<option>e</option>
+<option>Scalar</option>
+<option>Vector</option>
+<option>Example</option>
+<option>Source Code</option>
+<option>Theory</option>
+<option>Gear's Method</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>An Arbitrary Order Gear Method</big></big></b></center>
+<br>
+<b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
+
+<br>
+
+<code><font color="blue"><span style='white-space: nowrap'>#&nbsp;include&nbsp;&lt;cppad/utility/ode_gear.hpp&gt;<br>
+</span></font></code>
+
+<code><font color="blue"><span style='white-space: nowrap'>OdeGear(</span></font><i><font color="black"><span style='white-space: nowrap'>F</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>m</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>T</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>X</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>e</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+
+
+
+<br>
+<br>
+<b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
+<br>
+This routine applies
+<a href="odegear.htm#Gear's Method" target="_top"><span style='white-space: nowrap'>Gear's&nbsp;Method</span></a>
+
+to solve an explicit set of ordinary differential equations.
+We are given
+<small>@(@
+f : \B{R} \times \B{R}^n \rightarrow \B{R}^n
+@)@</small> be a smooth function.
+This routine solves the following initial value problem
+<small>@[@
+
+\begin{array}{rcl}
+	x( t_{m-1} )  & = & x^0    \\
+	x^\prime (t)  & = & f[t , x(t)]
+\end{array}
+
+@]@</small>
+for the value of <small>@(@
+x( t_m )
+@)@</small>.
+If your set of  ordinary differential equations are not stiff
+an explicit method may be better (perhaps <a href="runge45.htm" target="_top"><span style='white-space: nowrap'>Runge45</span></a>
+.)
+
+<br>
+<br>
+<b><big><a name="Include" id="Include">Include</a></big></b>
+<br>
+The file <code><font color="blue">cppad/ode_gear.hpp</font></code> is included by <code><font color="blue">cppad/cppad.hpp</font></code>
+but it can also be included separately with out the rest of
+the <code><font color="blue">CppAD</font></code> routines.
+
+<br>
+<br>
+<b><big><a name="Fun" id="Fun">Fun</a></big></b>
+<br>
+The class 
+<code><i><font color="black"><span style='white-space: nowrap'>Fun</span></font></i></code>
+
+and the object 
+<code><i><font color="black"><span style='white-space: nowrap'>F</span></font></i></code>
+ satisfy the prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Fun</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>F</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+This must support the following set of calls
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>F</span></font></i><font color="blue"><span style='white-space: nowrap'>.Ode(</span></font><i><font color="black"><span style='white-space: nowrap'>t</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>F</span></font></i><font color="blue"><span style='white-space: nowrap'>.Ode_dep(</span></font><i><font color="black"><span style='white-space: nowrap'>t</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f_x</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+<br>
+<b><a name="Fun.t" id="Fun.t">t</a></b>
+<br>
+The argument 
+<code><i><font color="black"><span style='white-space: nowrap'>t</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Scalar</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>t</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+(see description of <a href="odegear.htm#Scalar" target="_top"><span style='white-space: nowrap'>Scalar</span></a>
+ below).
+
+<br>
+<br>
+<b><a name="Fun.x" id="Fun.x">x</a></b>
+<br>
+The argument 
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Vector</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+and has size 
+<code><i><font color="black"><span style='white-space: nowrap'>n</span></font></i></code>
+
+(see description of <a href="odegear.htm#Vector" target="_top"><span style='white-space: nowrap'>Vector</span></a>
+ below).
+
+<br>
+<br>
+<b><a name="Fun.f" id="Fun.f">f</a></b>
+<br>
+The argument 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+ to 
+<code><i><font color="black"><span style='white-space: nowrap'>F</span></font></i><font color="blue"><span style='white-space: nowrap'>.Ode</span></font></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Vector</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+On input and output, 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+ is a vector of size 
+<code><i><font color="black"><span style='white-space: nowrap'>n</span></font></i></code>
+
+and the input values of the elements of 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+ do not matter.
+On output,
+
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+ is set equal to <small>@(@
+f(t, x)
+@)@</small>
+(see 
+<code><i><font color="black"><span style='white-space: nowrap'>f(t,&nbsp;x)</span></font></i></code>
+ in <a href="odegear.htm#Purpose" target="_top"><span style='white-space: nowrap'>Purpose</span></a>
+).
+
+<br>
+<br>
+<b><a name="Fun.f_x" id="Fun.f_x">f_x</a></b>
+<br>
+The argument 
+<code><i><font color="black"><span style='white-space: nowrap'>f_x</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Vector</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>f_x</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+On input and output, 
+<code><i><font color="black"><span style='white-space: nowrap'>f_x</span></font></i></code>
+ is a vector of size <small>@(@
+n * n
+@)@</small>
+and the input values of the elements of 
+<code><i><font color="black"><span style='white-space: nowrap'>f_x</span></font></i></code>
+ do not matter.
+On output,
+<small>@[@
+
+	f\_x [i * n + j] = \partial_{x(j)} f_i ( t , x )
+
+@]@</small>
+
+<br>
+<br>
+<b><a name="Fun.Warning" id="Fun.Warning">Warning</a></b>
+<br>
+The arguments 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+, and 
+<code><i><font color="black"><span style='white-space: nowrap'>f_x</span></font></i></code>
+
+must have a call by reference in their prototypes; i.e.,
+do not forget the <code><font color="blue">&amp;</font></code> in the prototype for
+
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+ and 
+<code><i><font color="black"><span style='white-space: nowrap'>f_x</span></font></i></code>
+.
+
+<br>
+<br>
+<b><big><a name="m" id="m">m</a></big></b>
+<br>
+The argument 
+<code><i><font color="black"><span style='white-space: nowrap'>m</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>m</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+It specifies the order (highest power of <small>@(@
+t
+@)@</small>)
+used to represent the function <small>@(@
+x(t)
+@)@</small> in the multi-step method.
+Upon return from <code><font color="blue">OdeGear</font></code>,
+the <code><i>i</i></code>-th component of the polynomial is defined by
+<small>@[@
+
+	p_i ( t_j ) = X[ j * n + i ]
+
+@]@</small>
+for <small>@(@
+j = 0 , \ldots , m
+@)@</small> (where <small>@(@
+0 \leq i < n
+@)@</small>).
+The value of <small>@(@
+m
+@)@</small> must be greater than or equal one.
+
+<br>
+<br>
+<b><big><a name="n" id="n">n</a></big></b>
+<br>
+The argument 
+<code><i><font color="black"><span style='white-space: nowrap'>n</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+It specifies the range space dimension of the
+vector valued function <small>@(@
+x(t)
+@)@</small>.
+
+<br>
+<br>
+<b><big><a name="T" id="T">T</a></big></b>
+<br>
+The argument 
+<code><i><font color="black"><span style='white-space: nowrap'>T</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Vector</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>T</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+and size greater than or equal to <small>@(@
+m+1
+@)@</small>.
+For <small>@(@
+j = 0 , \ldots m
+@)@</small>, <small>@(@
+T[j]
+@)@</small> is the time
+corresponding to time corresponding
+to a previous point in the multi-step method.
+The value <small>@(@
+T[m]
+@)@</small> is the time
+of the next point in the multi-step method.
+The array <small>@(@
+T
+@)@</small> must be monotone increasing; i.e.,
+<small>@(@
+T[j] < T[j+1]
+@)@</small>.
+Above and below we often use the shorthand <small>@(@
+t_j
+@)@</small> for <small>@(@
+T[j]
+@)@</small>.
+
+
+<br>
+<br>
+<b><big><a name="X" id="X">X</a></big></b>
+<br>
+The argument 
+<code><i><font color="black"><span style='white-space: nowrap'>X</span></font></i></code>
+ has the prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Vector</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>X</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+and size greater than or equal to <small>@(@
+(m+1) * n
+@)@</small>.
+On input to <code><font color="blue">OdeGear</font></code>,
+for <small>@(@
+j = 0 , \ldots , m-1
+@)@</small>, and
+<small>@(@
+i = 0 , \ldots , n-1
+@)@</small>
+<small>@[@
+
+	X[ j * n + i ] = x_i ( t_j )
+
+@]@</small>
+Upon return from <code><font color="blue">OdeGear</font></code>,
+for <small>@(@
+i = 0 , \ldots , n-1
+@)@</small>
+<small>@[@
+
+	X[ m * n + i ] \approx x_i ( t_m )
+
+@]@</small>
+
+<br>
+<br>
+<b><big><a name="e" id="e">e</a></big></b>
+<br>
+The vector 
+<code><i><font color="black"><span style='white-space: nowrap'>e</span></font></i></code>
+ is an approximate error bound for the result; i.e.,
+<small>@[@
+
+	e[i] \geq | X[ m * n + i ] - x_i ( t_m ) |
+
+@]@</small>
+The order of this approximation is one less than the order of
+the solution; i.e.,
+<small>@[@
+
+	e = O ( h^m )
+
+@]@</small>
+where <small>@(@
+h
+@)@</small> is the maximum of <small>@(@
+t_{j+1} - t_j
+@)@</small>.
+
+<br>
+<br>
+<b><big><a name="Scalar" id="Scalar">Scalar</a></big></b>
+<br>
+The type 
+<code><i><font color="black"><span style='white-space: nowrap'>Scalar</span></font></i></code>
+ must satisfy the conditions
+for a <a href="numerictype.htm" target="_top"><span style='white-space: nowrap'>NumericType</span></a>
+ type.
+The routine <a href="checknumerictype.htm" target="_top"><span style='white-space: nowrap'>CheckNumericType</span></a>
+ will generate an error message
+if this is not the case.
+In addition, the following operations must be defined for
+
+<code><i><font color="black"><span style='white-space: nowrap'>Scalar</span></font></i></code>
+ objects 
+<code><i><font color="black"><span style='white-space: nowrap'>a</span></font></i></code>
+ and 
+<code><i><font color="black"><span style='white-space: nowrap'>b</span></font></i></code>
+:
+
+<table><tr><td align='left'  valign='top'>
+
+<b>Operation</b> </td><td align='left'  valign='top'>
+ <b>Description</b>  </td></tr><tr><td align='left'  valign='top'>
+
+
+<code><i><font color="black"><span style='white-space: nowrap'>a</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&lt;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>b</span></font></i></code>
+ </td><td align='left'  valign='top'>
+
+	less than operator (returns a <code><font color="blue">bool</font></code> object)
+</td></tr>
+</table>
+<br>
+<b><big><a name="Vector" id="Vector">Vector</a></big></b>
+<br>
+The type 
+<code><i><font color="black"><span style='white-space: nowrap'>Vector</span></font></i></code>
+ must be a <a href="simplevector.htm" target="_top"><span style='white-space: nowrap'>SimpleVector</span></a>
+ class with
+<a href="simplevector.htm#Elements of Specified Type" target="_top"><span style='white-space: nowrap'>elements&nbsp;of&nbsp;type&nbsp;Scalar</span></a>
+.
+The routine <a href="checksimplevector.htm" target="_top"><span style='white-space: nowrap'>CheckSimpleVector</span></a>
+ will generate an error message
+if this is not the case.
+
+<br>
+<br>
+<b><big><a name="Example" id="Example">Example</a></big></b>
+
+<br>
+The file
+<a href="ode_gear.cpp.htm" target="_top"><span style='white-space: nowrap'>ode_gear.cpp</span></a>
+
+contains an example and test a test of using this routine.
+It returns true if it succeeds and false otherwise.
+
+<br>
+<br>
+<b><big><a name="Source Code" id="Source Code">Source Code</a></big></b>
+<br>
+The source code for this routine is in the file
+<code><font color="blue">cppad/ode_gear.hpp</font></code>.
+
+<br>
+<br>
+<b><big><a name="Theory" id="Theory">Theory</a></big></b>
+<br>
+For this discussion we use the shorthand <small>@(@
+x_j
+@)@</small>
+for the value <small>@(@
+x ( t_j ) \in \B{R}^n
+@)@</small> which is not to be confused
+with <small>@(@
+x_i (t) \in \B{R}
+@)@</small> in the notation above.
+The interpolating polynomial <small>@(@
+p(t)
+@)@</small> is given by
+<small>@[@
+
+p(t) =
+\sum_{j=0}^m
+x_j
+\frac{
+	\prod_{i \neq j} ( t - t_i )
+}{
+	\prod_{i \neq j} ( t_j - t_i )
+}
+
+@]@</small>
+The derivative <small>@(@
+p^\prime (t)
+@)@</small> is given by
+<small>@[@
+
+p^\prime (t) =
+\sum_{j=0}^m
+x_j
+\frac{
+	\sum_{i \neq j} \prod_{k \neq i,j} ( t - t_k )
+}{
+	\prod_{k \neq j} ( t_j - t_k )
+}
+
+@]@</small>
+Evaluating the derivative at the point <small>@(@
+t_\ell
+@)@</small> we have
+<small>@[@
+
+\begin{array}{rcl}
+p^\prime ( t_\ell ) & = &
+x_\ell
+\frac{
+	\sum_{i \neq \ell} \prod_{k \neq i,\ell} ( t_\ell - t_k )
+}{
+	\prod_{k \neq \ell} ( t_\ell - t_k )
+}
++
+\sum_{j \neq \ell}
+x_j
+\frac{
+	\sum_{i \neq j} \prod_{k \neq i,j} ( t_\ell - t_k )
+}{
+	\prod_{k \neq j} ( t_j - t_k )
+}
+\\
+& = &
+x_\ell
+\sum_{i \neq \ell}
+\frac{ 1 }{ t_\ell - t_i }
++
+\sum_{j \neq \ell}
+x_j
+\frac{
+	\prod_{k \neq \ell,j} ( t_\ell - t_k )
+}{
+	\prod_{k \neq j} ( t_j - t_k )
+}
+\\
+& = &
+x_\ell
+\sum_{k \neq \ell} ( t_\ell - t_k )^{-1}
++
+\sum_{j \neq \ell}
+x_j
+( t_j - t_\ell )^{-1}
+\prod_{k \neq \ell ,j} ( t_\ell - t_k ) / ( t_j - t_k )
+\end{array}
+
+@]@</small>
+We define the vector <small>@(@
+\alpha \in \B{R}^{m+1}
+@)@</small> by
+<small>@[@
+
+\alpha_j = \left\{ \begin{array}{ll}
+\sum_{k \neq m} ( t_m - t_k )^{-1}
+	& {\rm if} \; j = m
+\\
+( t_j - t_m )^{-1}
+\prod_{k \neq m,j} ( t_m - t_k ) / ( t_j - t_k )
+	& {\rm otherwise}
+\end{array} \right.
+
+@]@</small>
+It follows that
+<small>@[@
+
+	p^\prime ( t_m ) = \alpha_0 x_0 + \cdots + \alpha_m x_m
+
+@]@</small>
+Gear's method determines <small>@(@
+x_m
+@)@</small> by solving the following
+nonlinear equation
+<small>@[@
+
+	f( t_m , x_m ) = \alpha_0 x_0 + \cdots + \alpha_m x_m
+
+@]@</small>
+Newton's method for solving this equation determines iterates,
+which we denote by <small>@(@
+x_m^k
+@)@</small>, by solving the following affine
+approximation of the equation above
+<small>@[@
+
+\begin{array}{rcl}
+f( t_m , x_m^{k-1} ) + \partial_x f( t_m , x_m^{k-1} ) ( x_m^k - x_m^{k-1} )
+& = &
+\alpha_0 x_0^k + \alpha_1 x_1 + \cdots + \alpha_m x_m
+\\
+\left[ \alpha_m I - \partial_x f( t_m , x_m^{k-1} ) \right]  x_m
+& = &
+\left[
+f( t_m , x_m^{k-1} ) - \partial_x f( t_m , x_m^{k-1} ) x_m^{k-1}
+- \alpha_0 x_0 - \cdots - \alpha_{m-1} x_{m-1}
+\right]
+\end{array}
+
+@]@</small>
+In order to initialize Newton's method; i.e. choose <small>@(@
+x_m^0
+@)@</small>
+we define the vector <small>@(@
+\beta \in \B{R}^{m+1}
+@)@</small> by
+<small>@[@
+
+\beta_j = \left\{ \begin{array}{ll}
+\sum_{k \neq m-1} ( t_{m-1} - t_k )^{-1}
+	& {\rm if} \; j = m-1
+\\
+( t_j - t_{m-1} )^{-1}
+\prod_{k \neq m-1,j} ( t_{m-1} - t_k ) / ( t_j - t_k )
+	& {\rm otherwise}
+\end{array} \right.
+
+@]@</small>
+It follows that
+<small>@[@
+
+	p^\prime ( t_{m-1} ) = \beta_0 x_0 + \cdots + \beta_m x_m
+
+@]@</small>
+We solve the following approximation of the equation above to determine
+<small>@(@
+x_m^0
+@)@</small>:
+<small>@[@
+
+	f( t_{m-1} , x_{m-1} ) =
+	\beta_0 x_0 + \cdots + \beta_{m-1} x_{m-1} + \beta_m x_m^0
+
+@]@</small>
+
+
+<br>
+<br>
+<b><big><a name="Gear's Method" id="Gear's Method">Gear's Method</a></big></b>
+<br>
+C. W. Gear,
+``Simultaneous Numerical Solution of Differential-Algebraic Equations,''
+IEEE Transactions on Circuit Theory,
+vol. 18, no. 1, pp. 89-95, Jan. 1971.
+
+
+
+<hr>Input File: cppad/utility/ode_gear.hpp
+
+</body>
+</html>

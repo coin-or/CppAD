@@ -1,0 +1,138 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>Multi-Threaded Newton Method Example / Test</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Multi-Threaded Newton Method Example / Test">
+<meta name="keywords" id="keywords" content=" multi-threaded newton method example / test source file ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_multi_newton.cpp_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://coin-or.github.io/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="multi_atomic_time.htm" target="_top">Prev</a>
+</td><td><a href="multi_newton_common.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>multi_thread</option>
+<option>thread_test.cpp</option>
+<option>multi_newton.cpp</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>CppAD-&gt;</option>
+<option>Install</option>
+<option>Introduction</option>
+<option>AD</option>
+<option>ADFun</option>
+<option>preprocessor</option>
+<option>multi_thread</option>
+<option>utility</option>
+<option>ipopt_solve</option>
+<option>Example</option>
+<option>speed</option>
+<option>Appendix</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>multi_thread-&gt;</option>
+<option>parallel_ad</option>
+<option>thread_test.cpp</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>thread_test.cpp-&gt;</option>
+<option>a11c_openmp.cpp</option>
+<option>a11c_bthread.cpp</option>
+<option>a11c_pthread.cpp</option>
+<option>simple_ad_openmp.cpp</option>
+<option>simple_ad_bthread.cpp</option>
+<option>simple_ad_pthread.cpp</option>
+<option>team_example.cpp</option>
+<option>harmonic.cpp</option>
+<option>multi_atomic.cpp</option>
+<option>multi_newton.cpp</option>
+<option>team_thread.hpp</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down0(this)'>
+<option>multi_newton.cpp-&gt;</option>
+<option>multi_newton_common</option>
+<option>multi_newton_setup</option>
+<option>multi_newton_worker</option>
+<option>multi_newton_takedown</option>
+<option>multi_newton_run</option>
+<option>multi_newton_time</option>
+</select>
+</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Source File</option>
+<option>Contents</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@
+
+
+<center><b><big><big>Multi-Threaded Newton Method Example / Test</big></big></b></center>
+<br>
+<b><big><a name="Source File" id="Source File">Source File</a></big></b>
+<br>
+All of the routines below are located in the file
+<code><font color='blue'><pre style='display:inline'> 
+     example/multi_thread/multi_newton.cpp
+</pre></font></code>
+<br>
+<b><big><a name="Contents" id="Contents">Contents</a></big></b>
+<br>
+<table>
+<tr><td><a href="multi_newton_common.htm" target="_top">multi_newton_common</a></td><td>Common&nbsp;Variables&nbsp;use&nbsp;by&nbsp;Multi-Threaded&nbsp;Newton&nbsp;Method</td></tr><tr><td><a href="multi_newton_setup.htm" target="_top">multi_newton_setup</a></td><td>Set&nbsp;Up&nbsp;Multi-Threaded&nbsp;Newton&nbsp;Method</td></tr><tr><td><a href="multi_newton_worker.htm" target="_top">multi_newton_worker</a></td><td>Do&nbsp;One&nbsp;Thread's&nbsp;Work&nbsp;for&nbsp;Multi-Threaded&nbsp;Newton&nbsp;Method</td></tr><tr><td><a href="multi_newton_takedown.htm" target="_top">multi_newton_takedown</a></td><td>Take&nbsp;Down&nbsp;Multi-threaded&nbsp;Newton&nbsp;Method</td></tr><tr><td><a href="multi_newton_run.htm" target="_top">multi_newton_run</a></td><td>A&nbsp;Multi-Threaded&nbsp;Newton's&nbsp;Method</td></tr><tr><td><a href="multi_newton_time.htm" target="_top">multi_newton_time</a></td><td>Timing&nbsp;Test&nbsp;of&nbsp;Multi-Threaded&nbsp;Newton&nbsp;Method</td></tr></table>
+<hr>Input File: example/multi_thread/multi_newton.omh
+
+</body>
+</html>

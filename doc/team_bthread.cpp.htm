@@ -1,0 +1,343 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>Boost Thread Implementation of a Team of AD Threads</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Boost Thread Implementation of a Team of AD Threads">
+<meta name="keywords" id="keywords" content=" boost thread implementation team ad threads bthread ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_team_bthread.cpp_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://coin-or.github.io/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="team_openmp.cpp.htm" target="_top">Prev</a>
+</td><td><a href="team_pthread.cpp.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>multi_thread</option>
+<option>thread_test.cpp</option>
+<option>team_thread.hpp</option>
+<option>team_bthread.cpp</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>multi_thread-&gt;</option>
+<option>parallel_ad</option>
+<option>thread_test.cpp</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>thread_test.cpp-&gt;</option>
+<option>a11c_openmp.cpp</option>
+<option>a11c_bthread.cpp</option>
+<option>a11c_pthread.cpp</option>
+<option>simple_ad_openmp.cpp</option>
+<option>simple_ad_bthread.cpp</option>
+<option>simple_ad_pthread.cpp</option>
+<option>team_example.cpp</option>
+<option>harmonic.cpp</option>
+<option>multi_atomic.cpp</option>
+<option>multi_newton.cpp</option>
+<option>team_thread.hpp</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>team_thread.hpp-&gt;</option>
+<option>team_openmp.cpp</option>
+<option>team_bthread.cpp</option>
+<option>team_pthread.cpp</option>
+</select>
+</td>
+<td>team_bthread.cpp</td>
+<td>Headings</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>Boost Thread Implementation of a Team of AD Threads</big></big></b></center>
+See <a href="team_thread.hpp.htm" target="_top"><span style='white-space: nowrap'>team_thread.hpp</span></a>
+ for this routines specifications.
+
+<code><font color="blue">
+<pre><tt><b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;boost/thread.hpp&gt;</font>
+<b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/cppad.hpp&gt;</font>
+<b><font color="#000080"># include</font></b> <font color="#FF0000">"../team_thread.hpp"</font>
+<b><font color="#000080"># define</font></b> MAX_NUMBER_THREADS <font color="#993399">48</font>
+
+<b><font color="#0000FF">namespace</font></b> <font color="#FF0000">{</font>
+     <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>thread_alloc<font color="#990000">;</font>
+
+     <i><font color="#9A1900">// number of threads in the team</font></i>
+     <font color="#008080">size_t</font> num_threads_ <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font>
+
+     <i><font color="#9A1900">// no need to cleanup up thread specific data</font></i>
+     <font color="#009900">void</font> <b><font color="#000000">cleanup</font></b><font color="#990000">(</font>size_t<font color="#990000">*)</font>
+     <font color="#FF0000">{</font>    <b><font color="#0000FF">return</font></b><font color="#990000">;</font> <font color="#FF0000">}</font>
+
+     <i><font color="#9A1900">// thread specific pointer the thread number (initialize as null)</font></i>
+     boost<font color="#990000">::</font><font color="#008080">thread_specific_ptr&lt;size_t&gt;</font> <b><font color="#000000">thread_num_ptr_</font></b><font color="#990000">(</font>cleanup<font color="#990000">);</font>
+
+     <i><font color="#9A1900">// type of the job currently being done by each thread</font></i>
+     <b><font color="#0000FF">enum</font></b> thread_job_t <font color="#FF0000">{</font> init_enum<font color="#990000">,</font> work_enum<font color="#990000">,</font> join_enum <font color="#FF0000">}</font> thread_job_<font color="#990000">;</font>
+
+     <i><font color="#9A1900">// barrier used to wait for other threads to finish work</font></i>
+     boost<font color="#990000">::</font>barrier<font color="#990000">*</font> wait_for_work_ <font color="#990000">=</font> CPPAD_NULL<font color="#990000">;</font>
+
+     <i><font color="#9A1900">// barrier used to wait for master thread to set next job</font></i>
+     boost<font color="#990000">::</font>barrier<font color="#990000">*</font> wait_for_job_ <font color="#990000">=</font> CPPAD_NULL<font color="#990000">;</font>
+
+     <i><font color="#9A1900">// Are we in sequential mode; i.e., other threads are waiting for</font></i>
+     <i><font color="#9A1900">// master thread to set up next job ?</font></i>
+     <font color="#009900">bool</font> sequential_execution_ <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
+
+     <i><font color="#9A1900">// structure with information for one thread</font></i>
+     <b><font color="#0000FF">typedef</font></b> <b><font color="#0000FF">struct</font></b> <font color="#FF0000">{</font>
+          <i><font color="#9A1900">// The thread</font></i>
+          boost<font color="#990000">::</font>thread<font color="#990000">*</font>       bthread<font color="#990000">;</font>
+          <i><font color="#9A1900">// CppAD thread number as global (pointed to by thread_num_ptr_)</font></i>
+          <font color="#008080">size_t</font>               thread_num<font color="#990000">;</font>
+          <i><font color="#9A1900">// true if no error for this thread, false otherwise.</font></i>
+          <font color="#009900">bool</font>                 ok<font color="#990000">;</font>
+     <font color="#FF0000">}</font> thread_one_t<font color="#990000">;</font>
+
+     <i><font color="#9A1900">// vector with information for all threads</font></i>
+     <font color="#008080">thread_one_t</font> thread_all_<font color="#990000">[</font>MAX_NUMBER_THREADS<font color="#990000">];</font>
+
+     <i><font color="#9A1900">// pointer to function that does the work for one thread</font></i>
+     <font color="#009900">void</font> <font color="#990000">(*</font> worker_<font color="#990000">)(</font><font color="#009900">void</font><font color="#990000">)</font> <font color="#990000">=</font> CPPAD_NULL<font color="#990000">;</font>
+
+     <i><font color="#9A1900">// ---------------------------------------------------------------------</font></i>
+     <i><font color="#9A1900">// in_parallel()</font></i>
+     <font color="#009900">bool</font> <b><font color="#000000">in_parallel</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
+     <font color="#FF0000">{</font>    <b><font color="#0000FF">return</font></b> <font color="#990000">!</font> sequential_execution_<font color="#990000">;</font> <font color="#FF0000">}</font>
+
+     <i><font color="#9A1900">// ---------------------------------------------------------------------</font></i>
+     <i><font color="#9A1900">// thread_number()</font></i>
+     <font color="#008080">size_t</font> <b><font color="#000000">thread_number</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
+     <font color="#FF0000">{</font>    <i><font color="#9A1900">// return thread_all_[thread_num].thread_num</font></i>
+          <b><font color="#0000FF">return</font></b> <font color="#990000">*</font>thread_num_ptr_<font color="#990000">.</font><b><font color="#000000">get</font></b><font color="#990000">();</font>
+     <font color="#FF0000">}</font>
+     <i><font color="#9A1900">// --------------------------------------------------------------------</font></i>
+     <i><font color="#9A1900">// function that gets called by boost thread constructor</font></i>
+     <font color="#009900">void</font> <b><font color="#000000">thread_work</font></b><font color="#990000">(</font><font color="#008080">size_t</font> thread_num<font color="#990000">)</font>
+     <font color="#FF0000">{</font>    <font color="#009900">bool</font> ok <font color="#990000">=</font> wait_for_work_ <font color="#990000">!=</font> CPPAD_NULL<font color="#990000">;</font>
+          ok     <font color="#990000">&amp;=</font> wait_for_job_  <font color="#990000">!=</font> CPPAD_NULL<font color="#990000">;</font>
+          ok     <font color="#990000">&amp;=</font> thread_num     <font color="#990000">!=</font> <font color="#993399">0</font><font color="#990000">;</font>
+
+          <i><font color="#9A1900">// thread specific storage of thread number for this thread</font></i>
+          thread_num_ptr_<font color="#990000">.</font><b><font color="#000000">reset</font></b><font color="#990000">(&amp;</font> thread_all_<font color="#990000">[</font>thread_num<font color="#990000">].</font>thread_num <font color="#990000">);</font>
+
+          <b><font color="#0000FF">while</font></b><font color="#990000">(</font> <b><font color="#0000FF">true</font></b> <font color="#990000">)</font>
+          <font color="#FF0000">{</font>
+               <i><font color="#9A1900">// Use wait_for_jog_ to give master time in sequential mode</font></i>
+               <i><font color="#9A1900">// (so it can change global information like thread_job_)</font></i>
+               wait_for_job_<font color="#990000">-&gt;</font><b><font color="#000000">wait</font></b><font color="#990000">();</font>
+
+               <i><font color="#9A1900">// case where we are terminating this thread (no more work)</font></i>
+               <b><font color="#0000FF">if</font></b><font color="#990000">(</font> thread_job_ <font color="#990000">==</font> join_enum<font color="#990000">)</font>
+                    <b><font color="#0000FF">break</font></b><font color="#990000">;</font>
+
+               <i><font color="#9A1900">// only other case once wait_for_job_ has been completed (so far)</font></i>
+               ok <font color="#990000">&amp;=</font> thread_job_ <font color="#990000">==</font> work_enum<font color="#990000">;</font>
+               <b><font color="#000000">worker_</font></b><font color="#990000">();</font>
+
+               <i><font color="#9A1900">// Use wait_for_work_ to inform master that our work is done and</font></i>
+               <i><font color="#9A1900">// that this thread will not use global infromation until</font></i>
+               <i><font color="#9A1900">// passing its barrier wait_for_job_ above.</font></i>
+               wait_for_work_<font color="#990000">-&gt;</font><b><font color="#000000">wait</font></b><font color="#990000">();</font>
+
+          <font color="#FF0000">}</font>
+          thread_all_<font color="#990000">[</font>thread_num<font color="#990000">].</font>ok <font color="#990000">&amp;=</font> ok<font color="#990000">;</font>
+          <b><font color="#0000FF">return</font></b><font color="#990000">;</font>
+     <font color="#FF0000">}</font>
+<font color="#FF0000">}</font>
+
+<font color="#009900">bool</font> <b><font color="#000000">team_create</font></b><font color="#990000">(</font><font color="#008080">size_t</font> num_threads<font color="#990000">)</font>
+<font color="#FF0000">{</font>    <font color="#009900">bool</font> ok <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;;</font>
+
+     <b><font color="#0000FF">if</font></b><font color="#990000">(</font> num_threads <font color="#990000">&gt;</font> MAX_NUMBER_THREADS <font color="#990000">)</font>
+     <font color="#FF0000">{</font>    std<font color="#990000">::</font>cerr <font color="#990000">&lt;&lt;</font> <font color="#FF0000">"team_create: num_threads greater than "</font><font color="#990000">;</font>
+          std<font color="#990000">::</font>cerr <font color="#990000">&lt;&lt;</font> MAX_NUMBER_THREADS <font color="#990000">&lt;&lt;</font> std<font color="#990000">::</font>endl<font color="#990000">;</font>
+          <b><font color="#000000">exit</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">);</font>
+     <font color="#FF0000">}</font>
+     <i><font color="#9A1900">// check that we currently do not have multiple threads running</font></i>
+     ok  <font color="#990000">=</font> num_threads_ <font color="#990000">==</font> <font color="#993399">1</font><font color="#990000">;</font>
+     ok <font color="#990000">&amp;=</font> wait_for_work_ <font color="#990000">==</font> CPPAD_NULL<font color="#990000">;</font>
+     ok <font color="#990000">&amp;=</font> wait_for_job_  <font color="#990000">==</font> CPPAD_NULL<font color="#990000">;</font>
+     ok <font color="#990000">&amp;=</font> sequential_execution_<font color="#990000">;</font>
+
+     <font color="#008080">size_t</font> thread_num<font color="#990000">;</font>
+     <b><font color="#0000FF">for</font></b><font color="#990000">(</font>thread_num <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> thread_num <font color="#990000">&lt;</font> num_threads<font color="#990000">;</font> thread_num<font color="#990000">++)</font>
+     <font color="#FF0000">{</font>    <i><font color="#9A1900">// Each thread gets a pointer to its version of this thread_num</font></i>
+          <i><font color="#9A1900">// so it knows which section of thread_all it is working with</font></i>
+          thread_all_<font color="#990000">[</font>thread_num<font color="#990000">].</font>thread_num <font color="#990000">=</font> thread_num<font color="#990000">;</font>
+
+          <i><font color="#9A1900">// initialize</font></i>
+          thread_all_<font color="#990000">[</font>thread_num<font color="#990000">].</font>ok <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
+          thread_all_<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">].</font>bthread     <font color="#990000">=</font> CPPAD_NULL<font color="#990000">;</font>
+     <font color="#FF0000">}</font>
+     <i><font color="#9A1900">// Finish setup of thread_all_ for this thread</font></i>
+     thread_num_ptr_<font color="#990000">.</font><b><font color="#000000">reset</font></b><font color="#990000">(&amp;</font> thread_all_<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">].</font>thread_num<font color="#990000">);</font>
+
+     <i><font color="#9A1900">// Now that thread_number() has necessary information for the case</font></i>
+     <i><font color="#9A1900">// num_threads_ == 1, and while still in sequential mode,</font></i>
+     <i><font color="#9A1900">// call setup for using CppAD::AD&lt;double&gt; in parallel mode.</font></i>
+     thread_alloc<font color="#990000">::</font><b><font color="#000000">parallel_setup</font></b><font color="#990000">(</font>num_threads<font color="#990000">,</font> in_parallel<font color="#990000">,</font> thread_number<font color="#990000">);</font>
+     thread_alloc<font color="#990000">::</font><b><font color="#000000">hold_memory</font></b><font color="#990000">(</font><b><font color="#0000FF">true</font></b><font color="#990000">);</font>
+     CppAD<font color="#990000">::</font>parallel_ad<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;();</font>
+
+     <i><font color="#9A1900">// now change num_threads_ to its final value.</font></i>
+     num_threads_ <font color="#990000">=</font> num_threads<font color="#990000">;</font>
+
+     <i><font color="#9A1900">// initialize two barriers, one for work done, one for new job ready</font></i>
+     wait_for_work_ <font color="#990000">=</font> <b><font color="#0000FF">new</font></b> boost<font color="#990000">::</font><b><font color="#000000">barrier</font></b><font color="#990000">(</font>num_threads<font color="#990000">);</font>
+     wait_for_job_  <font color="#990000">=</font> <b><font color="#0000FF">new</font></b> boost<font color="#990000">::</font><b><font color="#000000">barrier</font></b><font color="#990000">(</font>num_threads<font color="#990000">);</font>
+
+     <i><font color="#9A1900">// initial job for the threads</font></i>
+     thread_job_           <font color="#990000">=</font> init_enum<font color="#990000">;</font>
+     <b><font color="#0000FF">if</font></b><font color="#990000">(</font> num_threads <font color="#990000">&gt;</font> <font color="#993399">1</font> <font color="#990000">)</font>
+          sequential_execution_ <font color="#990000">=</font> <b><font color="#0000FF">false</font></b><font color="#990000">;</font>
+
+     <i><font color="#9A1900">// This master thread is already running, we need to create</font></i>
+     <i><font color="#9A1900">// num_threads - 1 more threads</font></i>
+     <b><font color="#0000FF">for</font></b><font color="#990000">(</font>thread_num <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font> thread_num <font color="#990000">&lt;</font> num_threads<font color="#990000">;</font> thread_num<font color="#990000">++)</font>
+     <font color="#FF0000">{</font>    <i><font color="#9A1900">// Create the thread with thread number equal to thread_num</font></i>
+          thread_all_<font color="#990000">[</font>thread_num<font color="#990000">].</font>bthread <font color="#990000">=</font>
+               <b><font color="#0000FF">new</font></b> boost<font color="#990000">::</font><b><font color="#000000">thread</font></b><font color="#990000">(</font>thread_work<font color="#990000">,</font> thread_num<font color="#990000">);</font>
+     <font color="#FF0000">}</font>
+
+     <i><font color="#9A1900">// Current state is other threads are at wait_for_job_.</font></i>
+     <i><font color="#9A1900">// This master thread (thread zero) has not completed wait_for_job_</font></i>
+     sequential_execution_ <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
+     <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
+<font color="#FF0000">}</font>
+
+<font color="#009900">bool</font> <b><font color="#000000">team_work</font></b><font color="#990000">(</font><font color="#009900">void</font> <b><font color="#000000">worker</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">))</font>
+<font color="#FF0000">{</font>
+     <i><font color="#9A1900">// Current state is other threads are at wait_for_job_.</font></i>
+     <i><font color="#9A1900">// This master thread (thread zero) has not completed wait_for_job_</font></i>
+     <font color="#009900">bool</font> ok <font color="#990000">=</font> sequential_execution_<font color="#990000">;</font>
+     ok     <font color="#990000">&amp;=</font> <b><font color="#000000">thread_number</font></b><font color="#990000">()</font> <font color="#990000">==</font> <font color="#993399">0</font><font color="#990000">;</font>
+     ok     <font color="#990000">&amp;=</font> wait_for_work_  <font color="#990000">!=</font> CPPAD_NULL<font color="#990000">;</font>
+     ok     <font color="#990000">&amp;=</font> wait_for_job_   <font color="#990000">!=</font> CPPAD_NULL<font color="#990000">;</font>
+
+     <i><font color="#9A1900">// set global version of this work routine</font></i>
+     worker_ <font color="#990000">=</font> worker<font color="#990000">;</font>
+
+     <i><font color="#9A1900">// set the new job that other threads are waiting for</font></i>
+     thread_job_ <font color="#990000">=</font> work_enum<font color="#990000">;</font>
+
+     <i><font color="#9A1900">// Enter parallel exectuion when master thread calls wait_for_job_</font></i>
+     <b><font color="#0000FF">if</font></b><font color="#990000">(</font> num_threads_ <font color="#990000">&gt;</font> <font color="#993399">1</font> <font color="#990000">)</font>
+          sequential_execution_ <font color="#990000">=</font> <b><font color="#0000FF">false</font></b><font color="#990000">;</font>
+     wait_for_job_<font color="#990000">-&gt;</font><b><font color="#000000">wait</font></b><font color="#990000">();</font>
+
+     <i><font color="#9A1900">// Now do the work in this thread and then wait</font></i>
+     <i><font color="#9A1900">// until all threads have completed wait_for_work_</font></i>
+     <b><font color="#000000">worker</font></b><font color="#990000">();</font>
+     wait_for_work_<font color="#990000">-&gt;</font><b><font color="#000000">wait</font></b><font color="#990000">();</font>
+
+     <i><font color="#9A1900">// Current state is other threads are at wait_for_job_.</font></i>
+     <i><font color="#9A1900">// This master thread (thread zero) has not completed wait_for_job_</font></i>
+     sequential_execution_ <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
+
+     <font color="#008080">size_t</font> thread_num<font color="#990000">;</font>
+     <b><font color="#0000FF">for</font></b><font color="#990000">(</font>thread_num <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> thread_num <font color="#990000">&lt;</font> num_threads_<font color="#990000">;</font> thread_num<font color="#990000">++)</font>
+          ok <font color="#990000">&amp;=</font> thread_all_<font color="#990000">[</font>thread_num<font color="#990000">].</font>ok<font color="#990000">;</font>
+     <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
+<font color="#FF0000">}</font>
+
+<font color="#009900">bool</font> <b><font color="#000000">team_destroy</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
+<font color="#FF0000">{</font>    <i><font color="#9A1900">// Current state is other threads are at wait_for_job_.</font></i>
+     <i><font color="#9A1900">// This master thread (thread zero) has not completed wait_for_job_</font></i>
+     <font color="#009900">bool</font> ok <font color="#990000">=</font> sequential_execution_<font color="#990000">;</font>
+     ok     <font color="#990000">&amp;=</font> <b><font color="#000000">thread_number</font></b><font color="#990000">()</font> <font color="#990000">==</font> <font color="#993399">0</font><font color="#990000">;</font>
+     ok     <font color="#990000">&amp;=</font> wait_for_work_ <font color="#990000">!=</font> CPPAD_NULL<font color="#990000">;</font>
+     ok     <font color="#990000">&amp;=</font> wait_for_job_  <font color="#990000">!=</font> CPPAD_NULL<font color="#990000">;</font>
+
+     <i><font color="#9A1900">// set the new job that other threads are waiting for</font></i>
+     thread_job_ <font color="#990000">=</font> join_enum<font color="#990000">;</font>
+
+     <i><font color="#9A1900">// enter parallel exectuion soon as master thread completes wait_for_job_</font></i>
+     <b><font color="#0000FF">if</font></b><font color="#990000">(</font> num_threads_ <font color="#990000">&gt;</font> <font color="#993399">1</font> <font color="#990000">)</font>
+               sequential_execution_ <font color="#990000">=</font> <b><font color="#0000FF">false</font></b><font color="#990000">;</font>
+     wait_for_job_<font color="#990000">-&gt;</font><b><font color="#000000">wait</font></b><font color="#990000">();</font>
+
+     <i><font color="#9A1900">// now wait for the other threads to be destroyed</font></i>
+     <font color="#008080">size_t</font> thread_num<font color="#990000">;</font>
+     ok <font color="#990000">&amp;=</font> thread_all_<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">].</font>bthread <font color="#990000">==</font> CPPAD_NULL<font color="#990000">;</font>
+     <b><font color="#0000FF">for</font></b><font color="#990000">(</font>thread_num <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font> thread_num <font color="#990000">&lt;</font> num_threads_<font color="#990000">;</font> thread_num<font color="#990000">++)</font>
+     <font color="#FF0000">{</font>    thread_all_<font color="#990000">[</font>thread_num<font color="#990000">].</font>bthread<font color="#990000">-&gt;</font><b><font color="#000000">join</font></b><font color="#990000">();</font>
+          <b><font color="#0000FF">delete</font></b> thread_all_<font color="#990000">[</font>thread_num<font color="#990000">].</font>bthread<font color="#990000">;</font>
+          thread_all_<font color="#990000">[</font>thread_num<font color="#990000">].</font>bthread <font color="#990000">=</font> CPPAD_NULL<font color="#990000">;</font>
+     <font color="#FF0000">}</font>
+     <i><font color="#9A1900">// now we are down to just the master thread (thread zero)</font></i>
+     sequential_execution_ <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
+
+     <i><font color="#9A1900">// destroy wait_for_work_</font></i>
+     <b><font color="#0000FF">delete</font></b> wait_for_work_<font color="#990000">;</font>
+     wait_for_work_ <font color="#990000">=</font> CPPAD_NULL<font color="#990000">;</font>
+
+     <i><font color="#9A1900">// destroy wait_for_job_</font></i>
+     <b><font color="#0000FF">delete</font></b> wait_for_job_<font color="#990000">;</font>
+     wait_for_job_ <font color="#990000">=</font> CPPAD_NULL<font color="#990000">;</font>
+
+     <i><font color="#9A1900">// check ok before changing num_threads_</font></i>
+     <b><font color="#0000FF">for</font></b><font color="#990000">(</font>thread_num <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> thread_num <font color="#990000">&lt;</font> num_threads_<font color="#990000">;</font> thread_num<font color="#990000">++)</font>
+          ok <font color="#990000">&amp;=</font> thread_all_<font color="#990000">[</font>thread_num<font color="#990000">].</font>ok<font color="#990000">;</font>
+
+     <i><font color="#9A1900">// now inform CppAD that there is only one thread</font></i>
+     num_threads_ <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font>
+     thread_alloc<font color="#990000">::</font><b><font color="#000000">parallel_setup</font></b><font color="#990000">(</font>num_threads_<font color="#990000">,</font> CPPAD_NULL<font color="#990000">,</font> CPPAD_NULL<font color="#990000">);</font>
+     thread_alloc<font color="#990000">::</font><b><font color="#000000">hold_memory</font></b><font color="#990000">(</font><b><font color="#0000FF">false</font></b><font color="#990000">);</font>
+     CppAD<font color="#990000">::</font>parallel_ad<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;();</font>
+
+     <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
+<font color="#FF0000">}</font>
+
+<b><font color="#0000FF">const</font></b> <font color="#009900">char</font><font color="#990000">*</font> <b><font color="#000000">team_name</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
+<font color="#FF0000">{</font>    <b><font color="#0000FF">return</font></b> <font color="#FF0000">"bthread"</font><font color="#990000">;</font> <font color="#FF0000">}</font></tt></pre>
+</font></code>
+<hr>Input File: example/multi_thread/bthread/team_bthread.cpp
+
+</body>
+</html>

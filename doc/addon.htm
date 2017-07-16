@@ -1,0 +1,251 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>CppAD Addons</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="CppAD Addons">
+<meta name="keywords" id="keywords" content=" cppad addons name include files library preprocessor symbols namespace ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_addon_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://coin-or.github.io/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="lu_ratio.cpp.htm" target="_top">Prev</a>
+</td><td><a href="license.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>Appendix</option>
+<option>addon</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>CppAD-&gt;</option>
+<option>Install</option>
+<option>Introduction</option>
+<option>AD</option>
+<option>ADFun</option>
+<option>preprocessor</option>
+<option>multi_thread</option>
+<option>utility</option>
+<option>ipopt_solve</option>
+<option>Example</option>
+<option>speed</option>
+<option>Appendix</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>Appendix-&gt;</option>
+<option>Faq</option>
+<option>directory</option>
+<option>Theory</option>
+<option>glossary</option>
+<option>Bib</option>
+<option>wish_list</option>
+<option>whats_new</option>
+<option>deprecated</option>
+<option>compare_c</option>
+<option>numeric_ad</option>
+<option>addon</option>
+<option>License</option>
+</select>
+</td>
+<td>addon</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Name</option>
+<option>Include Files</option>
+<option>Library Files</option>
+<option>Preprocessor Symbols</option>
+<option>Namespace</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>CppAD Addons</big></big></b></center>
+<br>
+<b><big><a name="Name" id="Name">Name</a></big></b>
+<br>
+Each CppAD addon has a short name which we denote by 
+<code><i><font color="black"><span style='white-space: nowrap'>name</span></font></i></code>
+ below,
+a longer name 
+<code><i><font color="black"><span style='white-space: nowrap'>longer</span></font></i></code>
+ and a 
+<code><i><font color="black"><span style='white-space: nowrap'>description</span></font></i></code>
+:
+
+<table><tr><td align='left'  valign='top'>
+
+
+<code><i><font color="black"><span style='white-space: nowrap'>name</span></font></i></code>
+  <code><span style='white-space: nowrap'>&nbsp;&nbsp;</span></code> </td><td align='left'  valign='top'>
+
+
+<code><i><font color="black"><span style='white-space: nowrap'>longer</span></font></i></code>
+ <code><span style='white-space: nowrap'>&nbsp;&nbsp;</span></code> </td><td align='left'  valign='top'>
+
+
+<code><i><font color="black"><span style='white-space: nowrap'>description</span></font></i></code>
+
+</td></tr><tr><td align='left'  valign='top'>
+
+<a href="https://github.com/kaskr/adcomp" target="_top"><span style='white-space: nowrap'>tmb</span></a>
+ </td><td align='left'  valign='top'>
+
+	<code><font color="blue">adcomp</font></code> </td><td align='left'  valign='top'>
+
+	An R Interface to CppAD with Random Effects Modeling Utilities
+</td></tr><tr><td align='left'  valign='top'>
+
+<a href="https://github.com/joaoleal/CppADCodeGen/" target="_top"><span style='white-space: nowrap'>cg</span></a>
+ </td><td align='left'  valign='top'>
+
+	<code><font color="blue">CppADCodeGen</font></code> </td><td align='left'  valign='top'>
+
+	C++ Source Code Generation of CppAD Derivative Calculations
+</td></tr><tr><td align='left'  valign='top'>
+
+<a href="http://moby.ihme.washington.edu/bradbell/cppad_mixed" target="_top"><span style='white-space: nowrap'>mixed</span></a>
+
+	</td><td align='left'  valign='top'>
+ <code><font color="blue">cppad_mixed</font></code> </td><td align='left'  valign='top'>
+
+	A C++ Interface to Random Effects Laplace Approximation
+</td></tr><tr><td align='left'  valign='top'>
+
+<a href="http://www.seanet.com/~bradbell/cppad_swig" target="_top"><span style='white-space: nowrap'>swig</span></a>
+
+	</td><td align='left'  valign='top'>
+ <code><font color="blue">cppad_swig</font></code> </td><td align='left'  valign='top'>
+
+	A C++ AD Library with a Swig Interface to Perl, Octave, and Python
+</td></tr><tr><td align='left'  valign='top'>
+
+<a href="http://www.seanet.com/~bradbell/pycppad/pycppad.htm" target="_top"><span style='white-space: nowrap'>py</span></a>
+ </td><td align='left'  valign='top'>
+
+	<code><font color="blue">pycppad</font></code> </td><td align='left'  valign='top'>
+
+	A Python Interface to CppAD
+</td></tr>
+</table>
+<br>
+<b><big><a name="Include Files" id="Include Files">Include Files</a></big></b>
+<br>
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>includedir</span></font></i></code>
+ is the directory where the include files are installed,
+the file
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>includedir</span></font></i><font color="blue"><span style='white-space: nowrap'>/cppad/</span></font><i><font color="black"><span style='white-space: nowrap'>name</span></font></i><font color="blue"><span style='white-space: nowrap'>.hpp<br>
+</span></font></code>
+and the directory
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>includedir</span></font></i><font color="blue"><span style='white-space: nowrap'>/cppad/</span></font><i><font color="black"><span style='white-space: nowrap'>name</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+are reserved for use by the 
+<code><i><font color="black"><span style='white-space: nowrap'>name</span></font></i></code>
+ addon.
+
+<br>
+<br>
+<b><big><a name="Library Files" id="Library Files">Library Files</a></big></b>
+<br>
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>libdir</span></font></i></code>
+ is the directory where CppAD library files are installed,
+files with the name
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>libdir</span></font></i><font color="blue"><span style='white-space: nowrap'>/libcppad_</span></font><i><font color="black"><span style='white-space: nowrap'>name</span></font></i><font color="blue"><span style='white-space: nowrap'>.</span></font><i><font color="black"><span style='white-space: nowrap'>ext</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>libdir</span></font></i><font color="blue"><span style='white-space: nowrap'>/libcppad_</span></font><i><font color="black"><span style='white-space: nowrap'>name</span></font></i><font color="blue"><span style='white-space: nowrap'>_</span></font><i><font color="black"><span style='white-space: nowrap'>anything</span></font></i><font color="blue"><span style='white-space: nowrap'>.</span></font><i><font color="black"><span style='white-space: nowrap'>ext</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+where 
+<code><i><font color="black"><span style='white-space: nowrap'>anything</span></font></i></code>
+ and 
+<code><i><font color="black"><span style='white-space: nowrap'>ext</span></font></i></code>
+ are arbitrary,
+are reserved for use by the 
+<code><i><font color="black"><span style='white-space: nowrap'>name</span></font></i></code>
+ addon.
+
+<br>
+<br>
+<b><big><a name="Preprocessor Symbols" id="Preprocessor Symbols">Preprocessor Symbols</a></big></b>
+<br>
+C++ preprocessor symbols that begin with
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CPPAD_</span></font><i><font color="black"><span style='white-space: nowrap'>NAME</span></font></i><font color="blue"><span style='white-space: nowrap'>_<br>
+</span></font></code>
+where 
+<code><i><font color="black"><span style='white-space: nowrap'>NAME</span></font></i></code>
+ is a upper-case version of 
+<code><i><font color="black"><span style='white-space: nowrap'>name</span></font></i></code>
+,
+are reserved for use by the 
+<code><i><font color="black"><span style='white-space: nowrap'>name</span></font></i></code>
+ addon.
+
+<br>
+<br>
+<b><big><a name="Namespace" id="Namespace">Namespace</a></big></b>
+<br>
+The C++ namespace
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CppAD::</span></font><i><font color="black"><span style='white-space: nowrap'>name</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+is reserved for use by the 
+<code><i><font color="black"><span style='white-space: nowrap'>name</span></font></i></code>
+ addon.
+
+
+
+<hr>Input File: omh/appendix/addon.omh
+
+</body>
+</html>

@@ -1,0 +1,362 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>AD Compound Assignment Operators</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="AD Compound Assignment Operators">
+<meta name="keywords" id="keywords" content=" ad compound assignment operators + add plus - subtract minus * multiply times / divide multiple syntax purpose op base x y result operation sequence example derivative addition subtraction multiplication division ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_compound_assign_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://coin-or.github.io/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="div.cpp.htm" target="_top">Prev</a>
+</td><td><a href="addeq.cpp.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>AD</option>
+<option>ADValued</option>
+<option>Arithmetic</option>
+<option>compound_assign</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>AD-&gt;</option>
+<option>ad_ctor</option>
+<option>ad_assign</option>
+<option>Convert</option>
+<option>ADValued</option>
+<option>BoolValued</option>
+<option>VecAD</option>
+<option>base_require</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>ADValued-&gt;</option>
+<option>Arithmetic</option>
+<option>unary_standard_math</option>
+<option>binary_math</option>
+<option>CondExp</option>
+<option>Discrete</option>
+<option>numeric_limits</option>
+<option>atomic</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>Arithmetic-&gt;</option>
+<option>UnaryPlus</option>
+<option>UnaryMinus</option>
+<option>ad_binary</option>
+<option>compound_assign</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down0(this)'>
+<option>compound_assign-&gt;</option>
+<option>AddEq.cpp</option>
+<option>sub_eq.cpp</option>
+<option>mul_eq.cpp</option>
+<option>div_eq.cpp</option>
+</select>
+</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Syntax</option>
+<option>Purpose</option>
+<option>Op</option>
+<option>Base</option>
+<option>x</option>
+<option>y</option>
+<option>Result</option>
+<option>Operation Sequence</option>
+<option>Example</option>
+<option>Derivative</option>
+<option>---..Addition</option>
+<option>---..Subtraction</option>
+<option>---..Multiplication</option>
+<option>---..Division</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>AD Compound Assignment Operators</big></big></b></center>
+<br>
+<b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
+
+<br>
+
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Op</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>y</span></font></i></code>
+
+
+<br>
+<br>
+<b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
+<br>
+Performs compound assignment operations
+where either 
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+ has type
+
+<code><font color="blue"><span style='white-space: nowrap'>AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code>
+.
+
+<br>
+<br>
+<b><big><a name="Op" id="Op">Op</a></big></b>
+<br>
+The operator 
+<code><i><font color="black"><span style='white-space: nowrap'>Op</span></font></i></code>
+ is one of the following
+<table><tr><td align='left'  valign='top'>
+
+<b>Op</b>  </td><td align='left'  valign='top'>
+ <b>Meaning</b> </td></tr><tr><td align='left'  valign='top'>
+
+<code><font color="blue">+=</font></code>   </td><td align='left'  valign='top'>
+ 
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+ is assigned 
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+ plus 
+<code><i><font color="black"><span style='white-space: nowrap'>y</span></font></i></code>
+ </td></tr><tr><td align='left'  valign='top'>
+
+<code><font color="blue">-=</font></code>   </td><td align='left'  valign='top'>
+ 
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+ is assigned 
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+ minus 
+<code><i><font color="black"><span style='white-space: nowrap'>y</span></font></i></code>
+ </td></tr><tr><td align='left'  valign='top'>
+
+<code><font color="blue">*=</font></code>   </td><td align='left'  valign='top'>
+ 
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+ is assigned 
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+ times 
+<code><i><font color="black"><span style='white-space: nowrap'>y</span></font></i></code>
+ </td></tr><tr><td align='left'  valign='top'>
+
+<code><font color="blue">/=</font></code>   </td><td align='left'  valign='top'>
+ 
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+ is assigned 
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+ divided by 
+<code><i><font color="black"><span style='white-space: nowrap'>y</span></font></i></code>
+
+</td></tr>
+</table>
+<br>
+<b><big><a name="Base" id="Base">Base</a></big></b>
+<br>
+The type 
+<code><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i></code>
+ is determined by the operand 
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+.
+
+<br>
+<br>
+<b><big><a name="x" id="x">x</a></big></b>
+<br>
+The operand 
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+ has the following prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+<br>
+<b><big><a name="y" id="y">y</a></big></b>
+<br>
+The operand 
+<code><i><font color="black"><span style='white-space: nowrap'>y</span></font></i></code>
+ has the following prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Type</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+where 
+<code><i><font color="black"><span style='white-space: nowrap'>Type</span></font></i></code>
+ is
+
+<code><font color="blue"><span style='white-space: nowrap'>VecAD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;::reference</span></font></code>
+,
+
+<code><font color="blue"><span style='white-space: nowrap'>AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code>
+,
+
+<code><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i></code>
+, or
+<code><font color="blue">double</font></code>.
+
+<br>
+<br>
+<b><big><a name="Result" id="Result">Result</a></big></b>
+<br>
+The result of this assignment
+can be used as a reference to 
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+.
+For example, if 
+<code><i><font color="black"><span style='white-space: nowrap'>z</span></font></i></code>
+ has the following type
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>z</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+then the syntax
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>z</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;+=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+will compute 
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+ plus 
+<code><i><font color="black"><span style='white-space: nowrap'>y</span></font></i></code>
+
+and then assign this value to both 
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+ and 
+<code><i><font color="black"><span style='white-space: nowrap'>z</span></font></i></code>
+.
+
+
+<br>
+<br>
+<b><big><a name="Operation Sequence" id="Operation Sequence">Operation Sequence</a></big></b>
+<br>
+This is an <a href="glossary.htm#Operation.Atomic" target="_top"><span style='white-space: nowrap'>atomic</span></a>
+
+<a href="glossary.htm#AD of Base" target="_top"><span style='white-space: nowrap'>AD&nbsp;of&nbsp;Base</span></a>
+ operation
+and hence it is part of the current
+AD of 
+<code><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i></code>
+
+<a href="glossary.htm#Operation.Sequence" target="_top"><span style='white-space: nowrap'>operation&nbsp;sequence</span></a>
+.
+
+
+
+<br>
+<br>
+<b><big><a name="Example" id="Example">Example</a></big></b>
+<br>
+The following files contain examples and tests of these functions.
+Each test returns true if it succeeds and false otherwise.
+<table><tr><td align='left'  valign='top'>
+
+<a href="addeq.cpp.htm" target="_top">AddEq.cpp</a></td><td>
+AD Compound Assignment Addition: Example and Test</td></tr>
+<tr><td>
+
+<a href="sub_eq.cpp.htm" target="_top">sub_eq.cpp</a></td><td>
+AD Compound Assignment Subtraction: Example and Test</td></tr>
+<tr><td>
+
+<a href="mul_eq.cpp.htm" target="_top">mul_eq.cpp</a></td><td>
+AD Compound Assignment Multiplication: Example and Test</td></tr>
+<tr><td>
+
+<a href="div_eq.cpp.htm" target="_top">div_eq.cpp</a></td><td>
+AD Compound Assignment Division: Example and Test</td></tr>
+<tr><td>
+
+</td></tr>
+</table>
+<br>
+<b><big><a name="Derivative" id="Derivative">Derivative</a></big></b>
+<br>
+If <small>@(@
+f
+@)@</small> and <small>@(@
+g
+@)@</small> are
+<a href="glossary.htm#Base Function" target="_top"><span style='white-space: nowrap'>Base&nbsp;functions</span></a>
+
+
+<br>
+<br>
+<b><a name="Derivative.Addition" id="Derivative.Addition">Addition</a></b>
+
+<br>
+<small>@[@
+
+	\D{[ f(x) + g(x) ]}{x} = \D{f(x)}{x} + \D{g(x)}{x}
+
+@]@</small><br>
+<b><a name="Derivative.Subtraction" id="Derivative.Subtraction">Subtraction</a></b>
+
+<br>
+<small>@[@
+
+	\D{[ f(x) - g(x) ]}{x} = \D{f(x)}{x} - \D{g(x)}{x}
+
+@]@</small><br>
+<b><a name="Derivative.Multiplication" id="Derivative.Multiplication">Multiplication</a></b>
+
+<br>
+<small>@[@
+
+	\D{[ f(x) * g(x) ]}{x} = g(x) * \D{f(x)}{x} + f(x) * \D{g(x)}{x}
+
+@]@</small><br>
+<b><a name="Derivative.Division" id="Derivative.Division">Division</a></b>
+
+<br>
+<small>@[@
+
+	\D{[ f(x) / g(x) ]}{x} =
+		[1/g(x)] * \D{f(x)}{x} - [f(x)/g(x)^2] * \D{g(x)}{x}
+
+@]@</small>
+<hr>Input File: cppad/core/compound_assign.hpp
+
+</body>
+</html>

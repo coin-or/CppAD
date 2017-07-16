@@ -1,0 +1,398 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>exp_2: Operation Sequence and Zero Order Forward Mode</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="exp_2: Operation Sequence and Zero Order Forward Mode">
+<meta name="keywords" id="keywords" content=" exp_2: operation sequence zero order forward mode example mathematical form expansion index code sweep return value verification exercises ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_exp_2_for0_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://coin-or.github.io/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="exp_2.cpp.htm" target="_top">Prev</a>
+</td><td><a href="exp_2_for0.cpp.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>Introduction</option>
+<option>exp_2</option>
+<option>exp_2_for0</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>CppAD-&gt;</option>
+<option>Install</option>
+<option>Introduction</option>
+<option>AD</option>
+<option>ADFun</option>
+<option>preprocessor</option>
+<option>multi_thread</option>
+<option>utility</option>
+<option>ipopt_solve</option>
+<option>Example</option>
+<option>speed</option>
+<option>Appendix</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>Introduction-&gt;</option>
+<option>exp_2</option>
+<option>exp_eps</option>
+<option>exp_apx.cpp</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>exp_2-&gt;</option>
+<option>exp_2.hpp</option>
+<option>exp_2.cpp</option>
+<option>exp_2_for0</option>
+<option>exp_2_for1</option>
+<option>exp_2_rev1</option>
+<option>exp_2_for2</option>
+<option>exp_2_rev2</option>
+<option>exp_2_cppad</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down0(this)'>
+<option>exp_2_for0-&gt;</option>
+<option>exp_2_for0.cpp</option>
+</select>
+</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Mathematical Form</option>
+<option>Zero Order Expansion</option>
+<option>Operation Sequence</option>
+<option>---..Index</option>
+<option>---..Code</option>
+<option>---..Operation</option>
+<option>---..Zero Order</option>
+<option>---..Sweep</option>
+<option>Return Value</option>
+<option>Verification</option>
+<option>Exercises</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>exp_2: Operation Sequence and Zero Order Forward Mode</big></big></b></center>
+<br>
+<b><big><a name="Mathematical Form" id="Mathematical Form">Mathematical Form</a></big></b>
+<br>
+The operation sequence (see below) corresponding to
+the algorithm <a href="exp_2.hpp.htm" target="_top"><span style='white-space: nowrap'>exp_2.hpp</span></a>
+ is the same for all values of 
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+.
+The mathematical form for the corresponding function is
+<small>@[@
+
+	f(x) = 1 + x + x^2 / 2
+
+@]@</small>
+An algorithmic differentiation package
+does not operate on the mathematical function <small>@(@
+f(x)
+@)@</small>
+but rather on the particular algorithm used to compute the function
+(in this case <a href="exp_2.hpp.htm" target="_top"><span style='white-space: nowrap'>exp_2.hpp</span></a>
+).
+
+<br>
+<br>
+<b><big><a name="Zero Order Expansion" id="Zero Order Expansion">Zero Order Expansion</a></big></b>
+<br>
+In general, a zero order forward sweep is given a vector
+<small>@(@
+x^{(0)} \in \B{R}^n
+@)@</small> and it returns the corresponding vector
+<small>@(@
+y^{(0)} \in \B{R}^m
+@)@</small> given by
+<small>@[@
+
+	y^{(0)} = f( x^{(0)} )
+
+@]@</small>
+The superscript <small>@(@
+(0)
+@)@</small> denotes zero order derivative;
+i.e., it is equal to the value
+of the corresponding variable.
+For the example we are considering here,
+both <small>@(@
+n
+@)@</small> and <small>@(@
+m
+@)@</small> are equal to one.
+
+
+<br>
+<br>
+<b><big><a name="Operation Sequence" id="Operation Sequence">Operation Sequence</a></big></b>
+<br>
+An atomic 
+<code><i><font color="black"><span style='white-space: nowrap'>Type</span></font></i></code>
+ operation is an operation
+that has a 
+<code><i><font color="black"><span style='white-space: nowrap'>Type</span></font></i></code>
+ result and is not made up of
+other more basic operations.
+A sequence of atomic 
+<code><i><font color="black"><span style='white-space: nowrap'>Type</span></font></i></code>
+ operations is called a
+
+<code><i><font color="black"><span style='white-space: nowrap'>Type</span></font></i></code>
+ operation sequence.
+Given an C++ algorithm and its inputs,
+there is a corresponding 
+<code><i><font color="black"><span style='white-space: nowrap'>Type</span></font></i></code>
+ operation sequence for each type.
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>Type</span></font></i></code>
+ is clear from the context,
+we drop it and just refer to the operation sequence.
+<code><span style='white-space: nowrap'><br>
+<br>
+</span></code>We consider the case where <a href="exp_2.hpp.htm" target="_top"><span style='white-space: nowrap'>exp_2.hpp</span></a>
+ is executed with
+<small>@(@
+x^{(0)} = .5
+@)@</small>.
+The table below contains the corresponding operation sequence
+and the results of a zero order sweep.
+
+<br>
+<br>
+<b><a name="Operation Sequence.Index" id="Operation Sequence.Index">Index</a></b>
+<br>
+The Index column contains the index in the operation sequence
+of the corresponding atomic operation and variable.
+A Forward sweep starts with the first operation
+and ends with the last.
+
+<br>
+<br>
+<b><a name="Operation Sequence.Code" id="Operation Sequence.Code">Code</a></b>
+<br>
+The Code column contains the C++ source code corresponding
+to the corresponding atomic operation in the sequence.
+
+<br>
+<br>
+<b><a name="Operation Sequence.Operation" id="Operation Sequence.Operation">Operation</a></b>
+<br>
+The Operation column contains the
+mathematical function corresponding to each atomic operation in the sequence.
+
+<br>
+<br>
+<b><a name="Operation Sequence.Zero Order" id="Operation Sequence.Zero Order">Zero Order</a></b>
+<br>
+The Zero Order column contains the zero order derivative for
+the corresponding variable in the operation sequence.
+Forward mode refers to the fact that
+these coefficients are computed in the same order as the original algorithm;
+i.e, in order of increasing index in the operation sequence.
+
+<br>
+<br>
+<b><a name="Operation Sequence.Sweep" id="Operation Sequence.Sweep">Sweep</a></b>
+
+<center>
+<table><tr><td align='left'  valign='top'>
+
+<b>Index</b>
+	</td><td align='left'  valign='top'>
+ <code><span style='white-space: nowrap'>&nbsp;&nbsp;</span></code> </td><td align='left'  valign='top'>
+ <b>Code</b>
+	</td><td align='left'  valign='top'>
+ <code><span style='white-space: nowrap'>&nbsp;&nbsp;</span></code> </td><td align='left'  valign='top'>
+ <b>Operation</b>
+	</td><td align='left'  valign='top'>
+ <code><span style='white-space: nowrap'>&nbsp;&nbsp;</span></code> </td><td align='left'  valign='top'>
+ <b>Zero Order</b>
+</td></tr><tr><td align='left'  valign='top'>
+
+1
+	</td><td align='left'  valign='top'>
+ <code><span style='white-space: nowrap'>&nbsp;&nbsp;</span></code> </td><td align='left'  valign='top'>
+ <code><font color="blue">Type v1  = x;</font></code>
+	</td><td align='left'  valign='top'>
+ </td><td align='left'  valign='top'>
+ <small>@(@
+v_1 = x
+@)@</small>
+	</td><td align='left'  valign='top'>
+ </td><td align='left'  valign='top'>
+ <small>@(@
+v_1^{(0)} = 0.5
+@)@</small>
+</td></tr><tr><td align='left'  valign='top'>
+
+2
+	</td><td align='left'  valign='top'>
+ <code><span style='white-space: nowrap'>&nbsp;&nbsp;</span></code> </td><td align='left'  valign='top'>
+ <code><font color="blue">Type v2  = Type(1) + v1;</font></code>
+	</td><td align='left'  valign='top'>
+ </td><td align='left'  valign='top'>
+ <small>@(@
+v_2 = 1 + v_1
+@)@</small>
+	</td><td align='left'  valign='top'>
+ </td><td align='left'  valign='top'>
+ <small>@(@
+v_2^{(0)} = 1.5
+@)@</small>
+</td></tr><tr><td align='left'  valign='top'>
+
+3
+	</td><td align='left'  valign='top'>
+ <code><span style='white-space: nowrap'>&nbsp;&nbsp;</span></code> </td><td align='left'  valign='top'>
+ <code><font color="blue">Type v3  = v1 * v1;</font></code>
+	</td><td align='left'  valign='top'>
+ </td><td align='left'  valign='top'>
+ <small>@(@
+v_3 = v_1 * v_1
+@)@</small>
+	</td><td align='left'  valign='top'>
+ </td><td align='left'  valign='top'>
+ <small>@(@
+v_3^{(0)} = 0.25
+@)@</small>
+</td></tr><tr><td align='left'  valign='top'>
+
+4
+	</td><td align='left'  valign='top'>
+ <code><span style='white-space: nowrap'>&nbsp;&nbsp;</span></code> </td><td align='left'  valign='top'>
+ <code><font color="blue">Type v4  = v3 / Type(2);</font></code>
+	</td><td align='left'  valign='top'>
+ </td><td align='left'  valign='top'>
+ <small>@(@
+v_4 = v_3 / 2
+@)@</small>
+	</td><td align='left'  valign='top'>
+ </td><td align='left'  valign='top'>
+ <small>@(@
+v_4^{(0)} = 0.125
+@)@</small>
+</td></tr><tr><td align='left'  valign='top'>
+
+5
+	</td><td align='left'  valign='top'>
+ <code><span style='white-space: nowrap'>&nbsp;&nbsp;</span></code> </td><td align='left'  valign='top'>
+ <code><font color="blue"> Type v5  = v2 + v4;</font></code>
+	</td><td align='left'  valign='top'>
+ </td><td align='left'  valign='top'>
+ <small>@(@
+v_5 = v_2 + v_4
+@)@</small>
+	</td><td align='left'  valign='top'>
+ </td><td align='left'  valign='top'>
+ <small>@(@
+v_5^{(0)} = 1.625
+@)@</small>
+</td></tr>
+</table>
+</center><b><big><a name="Return Value" id="Return Value">Return Value</a></big></b>
+<br>
+The return value for this case is
+<small>@[@
+
+	1.625 =
+	v_5^{(0)} =
+	f( x^{(0)} )
+
+@]@</small>
+
+
+
+<br>
+<br>
+<b><big><a name="Verification" id="Verification">Verification</a></big></b>
+<br>
+The file <a href="exp_2_for0.cpp.htm" target="_top"><span style='white-space: nowrap'>exp_2_for0.cpp</span></a>
+ contains a routine
+that verifies the values computed above.
+It returns true for success and false for failure.
+
+<br>
+<br>
+<b><big><a name="Exercises" id="Exercises">Exercises</a></big></b>
+
+<ol type="1"><li>
+Suppose that <small>@(@
+x^{(0)} = .2
+@)@</small>,
+what is the result of a zero order forward sweep for
+the operation sequence above;
+i.e., what are the corresponding values for
+<small>@[@
+
+	v_1^{(0)} , v_2^{(0)} , \cdots , v_5^{(0)}
+
+@]@</small>
+</li><li>
+
+Create a modified version of
+<a href="exp_2_for0.cpp.htm" target="_top"><span style='white-space: nowrap'>exp_2_for0.cpp</span></a>
+ that verifies the values you obtained
+for the previous exercise.
+</li><li>
+
+Create and run a main program that reports the result of calling
+the modified version
+of <a href="exp_2_for0.cpp.htm" target="_top"><span style='white-space: nowrap'>exp_2_for0.cpp</span></a>
+ in the previous exercise.
+</li></ol>
+
+
+
+
+<hr>Input File: introduction/exp_2.omh
+
+</body>
+</html>

@@ -1,0 +1,453 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>Enable use of AD&lt;Base&gt; where Base is Adolc's adouble Type</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Enable use of AD&lt;Base&gt; where Base is Adolc's adouble Type">
+<meta name="keywords" id="keywords" content=" enable use ad&lt;base&gt; where base is adolc's adouble type syntax example include files condexpop condexprel equalopseq identical integer azmul ordered unary standard math erf asinh acosh atanh expm1 log1p sign abs pow numeric_limits to_string hash_code ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_base_adolc.hpp_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://coin-or.github.io/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="base_require.cpp.htm" target="_top">Prev</a>
+</td><td><a href="mul_level_adolc.cpp.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>AD</option>
+<option>base_require</option>
+<option>base_example</option>
+<option>base_adolc.hpp</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>AD-&gt;</option>
+<option>ad_ctor</option>
+<option>ad_assign</option>
+<option>Convert</option>
+<option>ADValued</option>
+<option>BoolValued</option>
+<option>VecAD</option>
+<option>base_require</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>base_require-&gt;</option>
+<option>base_member</option>
+<option>base_cond_exp</option>
+<option>base_identical</option>
+<option>base_ordered</option>
+<option>base_std_math</option>
+<option>base_limits</option>
+<option>base_to_string</option>
+<option>base_hash</option>
+<option>base_example</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>base_example-&gt;</option>
+<option>base_alloc.hpp</option>
+<option>base_require.cpp</option>
+<option>base_adolc.hpp</option>
+<option>base_float.hpp</option>
+<option>base_double.hpp</option>
+<option>base_complex.hpp</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down0(this)'>
+<option>base_adolc.hpp-&gt;</option>
+<option>mul_level_adolc.cpp</option>
+</select>
+</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Syntax</option>
+<option>Example</option>
+<option>Include Files</option>
+<option>CondExpOp</option>
+<option>CondExpRel</option>
+<option>EqualOpSeq</option>
+<option>Identical</option>
+<option>Integer</option>
+<option>azmul</option>
+<option>Ordered</option>
+<option>Unary Standard Math</option>
+<option>erf, asinh, acosh, atanh, expm1, log1p</option>
+<option>sign</option>
+<option>abs</option>
+<option>pow</option>
+<option>numeric_limits</option>
+<option>to_string</option>
+<option>hash_code</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@
+
+
+
+<center><b><big><big>Enable use of AD&lt;Base&gt; where Base is Adolc's adouble Type</big></big></b></center>
+<br>
+<b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
+
+<br>
+
+<code><font color="blue"><span style='white-space: nowrap'>#&nbsp;include&nbsp;&lt;cppad/example/base_adolc.hpp&gt;<br>
+</span></font></code>
+<br>
+<b><big><a name="Example" id="Example">Example</a></big></b>
+<br>
+The file <a href="mul_level_adolc.cpp.htm" target="_top"><span style='white-space: nowrap'>mul_level_adolc.cpp</span></a>
+ contains an example use of
+Adolc's <code><font color="blue">adouble</font></code> type for a CppAD 
+<code><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i></code>
+ type.
+It returns true if it succeeds and false otherwise.
+The file <a href="mul_level_adolc_ode.cpp.htm" target="_top"><span style='white-space: nowrap'>mul_level_adolc_ode.cpp</span></a>
+ contains a more realistic
+(and complex) example.
+
+<br>
+<br>
+<b><big><a name="Include Files" id="Include Files">Include Files</a></big></b>
+<br>
+This file <code><font color="blue">base_adolc.hpp</font></code> requires <code><font color="blue">adouble</font></code> to be defined.
+In addition, it is included before <code><font color="blue">&lt;cppad/cppad.hpp&gt;</font></code>,
+but it needs to include parts of CppAD that are used by this file.
+This is done with the following include commands:
+<pre style='display:inline'><tt>
+<b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;adolc/adolc.h&gt;</font>
+<b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/base_require.hpp&gt;</font>
+</tt></pre>
+<br>
+<b><big><a name="CondExpOp" id="CondExpOp">CondExpOp</a></big></b>
+<br>
+The type <code><font color="blue">adouble</font></code> supports a conditional assignment function
+with the syntax
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;condassign(</span></font><i><font color="black"><span style='white-space: nowrap'>a</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>b</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>c</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>d</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+which evaluates to
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>a</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;(</span></font><i><font color="black"><span style='white-space: nowrap'>b</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&gt;&nbsp;0)&nbsp;?&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>c</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;:&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>d</span></font></i><font color="blue"><span style='white-space: nowrap'>;<br>
+</span></font></code>
+This enables one to include conditionals in the recording of
+<code><font color="blue">adouble</font></code> operations and later evaluation for different
+values of the independent variables
+(in the same spirit as the CppAD <a href="condexp.htm" target="_top"><span style='white-space: nowrap'>CondExp</span></a>
+ function).
+<pre><tt><b><font color="#0000FF">namespace</font></b> CppAD <font color="#FF0000">{</font>
+     <b><font color="#0000FF">inline</font></b> <font color="#008080">adouble</font> <b><font color="#000000">CondExpOp</font></b><font color="#990000">(</font>
+          <b><font color="#0000FF">enum</font></b>  CppAD<font color="#990000">::</font><font color="#008080">CompareOp</font>     cop <font color="#990000">,</font>
+          <b><font color="#0000FF">const</font></b> <font color="#008080">adouble</font>            <font color="#990000">&amp;</font>left <font color="#990000">,</font>
+          <b><font color="#0000FF">const</font></b> <font color="#008080">adouble</font>           <font color="#990000">&amp;</font>right <font color="#990000">,</font>
+          <b><font color="#0000FF">const</font></b> <font color="#008080">adouble</font>        <font color="#990000">&amp;</font>trueCase <font color="#990000">,</font>
+          <b><font color="#0000FF">const</font></b> <font color="#008080">adouble</font>       <font color="#990000">&amp;</font>falseCase <font color="#990000">)</font>
+     <font color="#FF0000">{</font>    <font color="#008080">adouble</font> result<font color="#990000">;</font>
+          <b><font color="#0000FF">switch</font></b><font color="#990000">(</font> cop <font color="#990000">)</font>
+          <font color="#FF0000">{</font>
+               <b><font color="#0000FF">case</font></b> CompareLt<font color="#990000">:</font> <i><font color="#9A1900">// left &lt; right</font></i>
+               <b><font color="#000000">condassign</font></b><font color="#990000">(</font>result<font color="#990000">,</font> right <font color="#990000">-</font> left<font color="#990000">,</font> trueCase<font color="#990000">,</font> falseCase<font color="#990000">);</font>
+               <b><font color="#0000FF">break</font></b><font color="#990000">;</font>
+
+               <b><font color="#0000FF">case</font></b> CompareLe<font color="#990000">:</font> <i><font color="#9A1900">// left &lt;= right</font></i>
+               <b><font color="#000000">condassign</font></b><font color="#990000">(</font>result<font color="#990000">,</font> left <font color="#990000">-</font> right<font color="#990000">,</font> falseCase<font color="#990000">,</font> trueCase<font color="#990000">);</font>
+               <b><font color="#0000FF">break</font></b><font color="#990000">;</font>
+
+               <b><font color="#0000FF">case</font></b> CompareEq<font color="#990000">:</font> <i><font color="#9A1900">// left == right</font></i>
+               <b><font color="#000000">condassign</font></b><font color="#990000">(</font>result<font color="#990000">,</font> left <font color="#990000">-</font> right<font color="#990000">,</font> falseCase<font color="#990000">,</font> trueCase<font color="#990000">);</font>
+               <b><font color="#000000">condassign</font></b><font color="#990000">(</font>result<font color="#990000">,</font> right <font color="#990000">-</font> left<font color="#990000">,</font> falseCase<font color="#990000">,</font> result<font color="#990000">);</font>
+               <b><font color="#0000FF">break</font></b><font color="#990000">;</font>
+
+               <b><font color="#0000FF">case</font></b> CompareGe<font color="#990000">:</font> <i><font color="#9A1900">// left &gt;= right</font></i>
+               <b><font color="#000000">condassign</font></b><font color="#990000">(</font>result<font color="#990000">,</font> right <font color="#990000">-</font> left<font color="#990000">,</font> falseCase<font color="#990000">,</font> trueCase<font color="#990000">);</font>
+               <b><font color="#0000FF">break</font></b><font color="#990000">;</font>
+
+               <b><font color="#0000FF">case</font></b> CompareGt<font color="#990000">:</font> <i><font color="#9A1900">// left &gt; right</font></i>
+               <b><font color="#000000">condassign</font></b><font color="#990000">(</font>result<font color="#990000">,</font> left <font color="#990000">-</font> right<font color="#990000">,</font> trueCase<font color="#990000">,</font> falseCase<font color="#990000">);</font>
+               <b><font color="#0000FF">break</font></b><font color="#990000">;</font>
+<b><font color="#008080">               default:</font></b>
+               CppAD<font color="#990000">::</font>ErrorHandler<font color="#990000">::</font><b><font color="#000000">Call</font></b><font color="#990000">(</font>
+                    <b><font color="#0000FF">true</font></b>     <font color="#990000">,</font> __LINE__ <font color="#990000">,</font> __FILE__ <font color="#990000">,</font>
+                    <font color="#FF0000">"CppAD::CondExp"</font><font color="#990000">,</font>
+                    <font color="#FF0000">"Error: for unknown reason."</font>
+               <font color="#990000">);</font>
+               result <font color="#990000">=</font> trueCase<font color="#990000">;</font>
+          <font color="#FF0000">}</font>
+          <b><font color="#0000FF">return</font></b> result<font color="#990000">;</font>
+     <font color="#FF0000">}</font>
+<font color="#FF0000">}</font></tt></pre>
+<br>
+<b><big><a name="CondExpRel" id="CondExpRel">CondExpRel</a></big></b>
+<br>
+The <a href="base_cond_exp.htm#CondExpRel" target="_top"><span style='white-space: nowrap'>CPPAD_COND_EXP_REL</span></a>
+ macro invocation
+<pre style='display:inline'><tt>
+<b><font color="#0000FF">namespace</font></b> CppAD <font color="#FF0000">{</font>
+     <b><font color="#000000">CPPAD_COND_EXP_REL</font></b><font color="#990000">(</font>adouble<font color="#990000">)</font>
+<font color="#FF0000">}</font>
+</tt></pre>
+<br>
+<b><big><a name="EqualOpSeq" id="EqualOpSeq">EqualOpSeq</a></big></b>
+<br>
+The Adolc user interface does not specify a way to determine if
+two <code><font color="blue">adouble</font></code> variables correspond to the same operations sequence.
+Make <code><font color="blue">EqualOpSeq</font></code> an error if it gets used:
+<pre><tt><b><font color="#0000FF">namespace</font></b> CppAD <font color="#FF0000">{</font>
+     <b><font color="#0000FF">inline</font></b> <font color="#009900">bool</font> <b><font color="#000000">EqualOpSeq</font></b><font color="#990000">(</font><b><font color="#0000FF">const</font></b> <font color="#008080">adouble</font> <font color="#990000">&amp;</font>x<font color="#990000">,</font> <b><font color="#0000FF">const</font></b> <font color="#008080">adouble</font> <font color="#990000">&amp;</font>y<font color="#990000">)</font>
+     <font color="#FF0000">{</font>    CppAD<font color="#990000">::</font>ErrorHandler<font color="#990000">::</font><b><font color="#000000">Call</font></b><font color="#990000">(</font>
+               <b><font color="#0000FF">true</font></b>     <font color="#990000">,</font> __LINE__ <font color="#990000">,</font> __FILE__ <font color="#990000">,</font>
+               <font color="#FF0000">"CppAD::EqualOpSeq(x, y)"</font><font color="#990000">,</font>
+               <font color="#FF0000">"Error: adouble does not support EqualOpSeq."</font>
+          <font color="#990000">);</font>
+          <b><font color="#0000FF">return</font></b> <b><font color="#0000FF">false</font></b><font color="#990000">;</font>
+     <font color="#FF0000">}</font>
+<font color="#FF0000">}</font></tt></pre>
+<br>
+<b><big><a name="Identical" id="Identical">Identical</a></big></b>
+<br>
+The Adolc user interface does not specify a way to determine if an
+<code><font color="blue">adouble</font></code> depends on the independent variables.
+To be safe (but slow) return <code><font color="blue">false</font></code> in all the cases below.
+<pre><tt><b><font color="#0000FF">namespace</font></b> CppAD <font color="#FF0000">{</font>
+     <b><font color="#0000FF">inline</font></b> <font color="#009900">bool</font> <b><font color="#000000">IdenticalPar</font></b><font color="#990000">(</font><b><font color="#0000FF">const</font></b> <font color="#008080">adouble</font> <font color="#990000">&amp;</font>x<font color="#990000">)</font>
+     <font color="#FF0000">{</font>    <b><font color="#0000FF">return</font></b> <b><font color="#0000FF">false</font></b><font color="#990000">;</font> <font color="#FF0000">}</font>
+     <b><font color="#0000FF">inline</font></b> <font color="#009900">bool</font> <b><font color="#000000">IdenticalZero</font></b><font color="#990000">(</font><b><font color="#0000FF">const</font></b> <font color="#008080">adouble</font> <font color="#990000">&amp;</font>x<font color="#990000">)</font>
+     <font color="#FF0000">{</font>    <b><font color="#0000FF">return</font></b> <b><font color="#0000FF">false</font></b><font color="#990000">;</font> <font color="#FF0000">}</font>
+     <b><font color="#0000FF">inline</font></b> <font color="#009900">bool</font> <b><font color="#000000">IdenticalOne</font></b><font color="#990000">(</font><b><font color="#0000FF">const</font></b> <font color="#008080">adouble</font> <font color="#990000">&amp;</font>x<font color="#990000">)</font>
+     <font color="#FF0000">{</font>    <b><font color="#0000FF">return</font></b> <b><font color="#0000FF">false</font></b><font color="#990000">;</font> <font color="#FF0000">}</font>
+     <b><font color="#0000FF">inline</font></b> <font color="#009900">bool</font> <b><font color="#000000">IdenticalEqualPar</font></b><font color="#990000">(</font><b><font color="#0000FF">const</font></b> <font color="#008080">adouble</font> <font color="#990000">&amp;</font>x<font color="#990000">,</font> <b><font color="#0000FF">const</font></b> <font color="#008080">adouble</font> <font color="#990000">&amp;</font>y<font color="#990000">)</font>
+     <font color="#FF0000">{</font>    <b><font color="#0000FF">return</font></b> <b><font color="#0000FF">false</font></b><font color="#990000">;</font> <font color="#FF0000">}</font>
+<font color="#FF0000">}</font></tt></pre>
+<br>
+<b><big><a name="Integer" id="Integer">Integer</a></big></b>
+
+<pre style='display:inline'><tt>
+     <b><font color="#0000FF">inline</font></b> <font color="#009900">int</font> <b><font color="#000000">Integer</font></b><font color="#990000">(</font><b><font color="#0000FF">const</font></b> <font color="#008080">adouble</font> <font color="#990000">&amp;</font>x<font color="#990000">)</font>
+     <font color="#FF0000">{</font>    <b><font color="#0000FF">return</font></b> <b><font color="#0000FF">static_cast</font></b><font color="#990000">&lt;</font><font color="#009900">int</font><font color="#990000">&gt;(</font> x<font color="#990000">.</font><b><font color="#000000">getValue</font></b><font color="#990000">()</font> <font color="#990000">);</font> <font color="#FF0000">}</font>
+</tt></pre>
+<br>
+<b><big><a name="azmul" id="azmul">azmul</a></big></b>
+
+<pre style='display:inline'><tt>
+<b><font color="#0000FF">namespace</font></b> CppAD <font color="#FF0000">{</font>
+     <b><font color="#000000">CPPAD_AZMUL</font></b><font color="#990000">(</font> adouble <font color="#990000">)</font>
+<font color="#FF0000">}</font>
+</tt></pre>
+<br>
+<b><big><a name="Ordered" id="Ordered">Ordered</a></big></b>
+
+<pre><tt><b><font color="#0000FF">namespace</font></b> CppAD <font color="#FF0000">{</font>
+     <b><font color="#0000FF">inline</font></b> <font color="#009900">bool</font> <b><font color="#000000">GreaterThanZero</font></b><font color="#990000">(</font><b><font color="#0000FF">const</font></b> <font color="#008080">adouble</font> <font color="#990000">&amp;</font>x<font color="#990000">)</font>
+     <font color="#FF0000">{</font>    <b><font color="#0000FF">return</font></b> <font color="#990000">(</font>x <font color="#990000">&gt;</font> <font color="#993399">0</font><font color="#990000">);</font> <font color="#FF0000">}</font>
+     <b><font color="#0000FF">inline</font></b> <font color="#009900">bool</font> <b><font color="#000000">GreaterThanOrZero</font></b><font color="#990000">(</font><b><font color="#0000FF">const</font></b> <font color="#008080">adouble</font> <font color="#990000">&amp;</font>x<font color="#990000">)</font>
+     <font color="#FF0000">{</font>    <b><font color="#0000FF">return</font></b> <font color="#990000">(</font>x <font color="#990000">&gt;=</font> <font color="#993399">0</font><font color="#990000">);</font> <font color="#FF0000">}</font>
+     <b><font color="#0000FF">inline</font></b> <font color="#009900">bool</font> <b><font color="#000000">LessThanZero</font></b><font color="#990000">(</font><b><font color="#0000FF">const</font></b> <font color="#008080">adouble</font> <font color="#990000">&amp;</font>x<font color="#990000">)</font>
+     <font color="#FF0000">{</font>    <b><font color="#0000FF">return</font></b> <font color="#990000">(</font>x <font color="#990000">&lt;</font> <font color="#993399">0</font><font color="#990000">);</font> <font color="#FF0000">}</font>
+     <b><font color="#0000FF">inline</font></b> <font color="#009900">bool</font> <b><font color="#000000">LessThanOrZero</font></b><font color="#990000">(</font><b><font color="#0000FF">const</font></b> <font color="#008080">adouble</font> <font color="#990000">&amp;</font>x<font color="#990000">)</font>
+     <font color="#FF0000">{</font>    <b><font color="#0000FF">return</font></b> <font color="#990000">(</font>x <font color="#990000">&lt;=</font> <font color="#993399">0</font><font color="#990000">);</font> <font color="#FF0000">}</font>
+     <b><font color="#0000FF">inline</font></b> <font color="#009900">bool</font> <b><font color="#000000">abs_geq</font></b><font color="#990000">(</font><b><font color="#0000FF">const</font></b> adouble<font color="#990000">&amp;</font> x<font color="#990000">,</font> <b><font color="#0000FF">const</font></b> adouble<font color="#990000">&amp;</font> y<font color="#990000">)</font>
+     <font color="#FF0000">{</font>    <b><font color="#0000FF">return</font></b> <b><font color="#000000">fabs</font></b><font color="#990000">(</font>x<font color="#990000">)</font> <font color="#990000">&gt;=</font> <b><font color="#000000">fabs</font></b><font color="#990000">(</font>y<font color="#990000">);</font> <font color="#FF0000">}</font>
+<font color="#FF0000">}</font></tt></pre>
+<br>
+<b><big><a name="Unary Standard Math" id="Unary Standard Math">Unary Standard Math</a></big></b>
+<br>
+The following <a href="base_require.htm" target="_top"><span style='white-space: nowrap'>required</span></a>
+ functions
+are defined by the Adolc package for the <code><font color="blue">adouble</font></code> base case:
+<code><span style='white-space: nowrap'><br>
+</span></code><code><font color="blue">acos</font></code>,
+<code><font color="blue">asin</font></code>,
+<code><font color="blue">atan</font></code>,
+<code><font color="blue">cos</font></code>,
+<code><font color="blue">cosh</font></code>,
+<code><font color="blue">exp</font></code>,
+<code><font color="blue">fabs</font></code>,
+<code><font color="blue">log</font></code>,
+<code><font color="blue">sin</font></code>,
+<code><font color="blue">sinh</font></code>,
+<code><font color="blue">sqrt</font></code>,
+<code><font color="blue">tan</font></code>.
+
+<br>
+<br>
+<b><big><a name="erf, asinh, acosh, atanh, expm1, log1p" id="erf, asinh, acosh, atanh, expm1, log1p">erf, asinh, acosh, atanh, expm1, log1p</a></big></b>
+<br>
+If the
+<a href="base_std_math.htm#erf, asinh, acosh, atanh, expm1, log1p" target="_top"><span style='white-space: nowrap'>erf,&nbsp;asinh,&nbsp;acosh,&nbsp;atanh,&nbsp;expm1,&nbsp;log1p</span></a>
+,
+functions are supported by the compiler,
+they must also be supported by a 
+<code><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i></code>
+ type;
+The adolc package does not support these functions so make
+their use an error:
+<pre><tt><b><font color="#0000FF">namespace</font></b> CppAD <font color="#FF0000">{</font>
+<b><font color="#000080"># define</font></b> <b><font color="#000000">CPPAD_BASE_ADOLC_NO_SUPPORT</font></b><font color="#990000">(</font>fun<font color="#990000">)</font>                         <font color="#990000">\</font>
+    <b><font color="#0000FF">inline</font></b> <font color="#008080">adouble</font> <b><font color="#000000">fun</font></b><font color="#990000">(</font><b><font color="#0000FF">const</font></b> adouble<font color="#990000">&amp;</font> x<font color="#990000">)</font>                          <font color="#990000">\</font>
+    <font color="#FF0000">{</font>   <b><font color="#000000">CPPAD_ASSERT_KNOWN</font></b><font color="#990000">(</font>                                       <font color="#990000">\</font>
+            <b><font color="#0000FF">false</font></b><font color="#990000">,</font>                                                <font color="#990000">\</font>
+<b><font color="#000080">            #fun</font></b> <font color="#FF0000">": adolc does not support this function"</font>         <font color="#990000">\</font>
+        <font color="#990000">);</font>                                                        <font color="#990000">\</font>
+        <b><font color="#0000FF">return</font></b> <font color="#993399">0.0</font><font color="#990000">;</font>                                               <font color="#990000">\</font>
+    <font color="#FF0000">}</font>
+<b><font color="#000080"># if</font></b> CPPAD_USE_CPLUSPLUS_2011
+     <b><font color="#000000">CPPAD_BASE_ADOLC_NO_SUPPORT</font></b><font color="#990000">(</font>erf<font color="#990000">)</font>
+     <b><font color="#000000">CPPAD_BASE_ADOLC_NO_SUPPORT</font></b><font color="#990000">(</font>asinh<font color="#990000">)</font>
+     <b><font color="#000000">CPPAD_BASE_ADOLC_NO_SUPPORT</font></b><font color="#990000">(</font>acosh<font color="#990000">)</font>
+     <b><font color="#000000">CPPAD_BASE_ADOLC_NO_SUPPORT</font></b><font color="#990000">(</font>atanh<font color="#990000">)</font>
+     <b><font color="#000000">CPPAD_BASE_ADOLC_NO_SUPPORT</font></b><font color="#990000">(</font>expm1<font color="#990000">)</font>
+     <b><font color="#000000">CPPAD_BASE_ADOLC_NO_SUPPORT</font></b><font color="#990000">(</font>log1p<font color="#990000">)</font>
+<b><font color="#000080"># endif</font></b>
+<b><font color="#000080"># undef</font></b> CPPAD_BASE_ADOLC_NO_SUPPORT
+<font color="#FF0000">}</font></tt></pre>
+<br>
+<b><big><a name="sign" id="sign">sign</a></big></b>
+<br>
+This <a href="base_require.htm" target="_top"><span style='white-space: nowrap'>required</span></a>
+ function is defined using the
+<code><font color="blue">codassign</font></code> function so that its <code><font color="blue">adouble</font></code> operation sequence
+does not depend on the value of 
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+.
+<pre><tt><b><font color="#0000FF">namespace</font></b> CppAD <font color="#FF0000">{</font>
+     <b><font color="#0000FF">inline</font></b> <font color="#008080">adouble</font> <b><font color="#000000">sign</font></b><font color="#990000">(</font><b><font color="#0000FF">const</font></b> adouble<font color="#990000">&amp;</font> x<font color="#990000">)</font>
+     <font color="#FF0000">{</font>    <font color="#008080">adouble</font> s_plus<font color="#990000">,</font> s_minus<font color="#990000">,</font> <b><font color="#000000">half</font></b><font color="#990000">(.</font><font color="#993399">5</font><font color="#990000">);</font>
+          <i><font color="#9A1900">// set s_plus to sign(x)/2,  except for case x == 0, s_plus = -.5</font></i>
+          <b><font color="#000000">condassign</font></b><font color="#990000">(</font>s_plus<font color="#990000">,</font>  <font color="#990000">+</font>x<font color="#990000">,</font> <font color="#990000">-</font>half<font color="#990000">,</font> <font color="#990000">+</font>half<font color="#990000">);</font>
+          <i><font color="#9A1900">// set s_minus to -sign(x)/2, except for case x == 0, s_minus = -.5</font></i>
+          <b><font color="#000000">condassign</font></b><font color="#990000">(</font>s_minus<font color="#990000">,</font> <font color="#990000">-</font>x<font color="#990000">,</font> <font color="#990000">-</font>half<font color="#990000">,</font> <font color="#990000">+</font>half<font color="#990000">);</font>
+          <i><font color="#9A1900">// set s to sign(x)</font></i>
+          <b><font color="#0000FF">return</font></b> s_plus <font color="#990000">-</font> s_minus<font color="#990000">;</font>
+     <font color="#FF0000">}</font>
+<font color="#FF0000">}</font></tt></pre>
+<br>
+<b><big><a name="abs" id="abs">abs</a></big></b>
+<br>
+This <a href="base_require.htm" target="_top"><span style='white-space: nowrap'>required</span></a>
+ function uses the adolc <code><font color="blue">fabs</font></code>
+function:
+<pre><tt><b><font color="#0000FF">namespace</font></b> CppAD <font color="#FF0000">{</font>
+     <b><font color="#0000FF">inline</font></b> <font color="#008080">adouble</font> <b><font color="#000000">abs</font></b><font color="#990000">(</font><b><font color="#0000FF">const</font></b> adouble<font color="#990000">&amp;</font> x<font color="#990000">)</font>
+     <font color="#FF0000">{</font>    <b><font color="#0000FF">return</font></b> <b><font color="#000000">fabs</font></b><font color="#990000">(</font>x<font color="#990000">);</font> <font color="#FF0000">}</font>
+<font color="#FF0000">}</font></tt></pre>
+<br>
+<b><big><a name="pow" id="pow">pow</a></big></b>
+<br>
+This <a href="base_require.htm" target="_top"><span style='white-space: nowrap'>required</span></a>
+ function
+is defined by the Adolc package for the <code><font color="blue">adouble</font></code> base case.
+
+<br>
+<br>
+<b><big><a name="numeric_limits" id="numeric_limits">numeric_limits</a></big></b>
+<br>
+The following defines the CppAD <a href="numeric_limits.htm" target="_top"><span style='white-space: nowrap'>numeric_limits</span></a>
+
+for the type <code><font color="blue">adouble</font></code>:
+<pre style='display:inline'><tt>
+<b><font color="#0000FF">namespace</font></b> CppAD <font color="#FF0000">{</font>
+     <b><font color="#000000">CPPAD_NUMERIC_LIMITS</font></b><font color="#990000">(</font><font color="#009900">double</font><font color="#990000">,</font> adouble<font color="#990000">)</font>
+<font color="#FF0000">}</font>
+</tt></pre>
+<br>
+<b><big><a name="to_string" id="to_string">to_string</a></big></b>
+<br>
+The following defines the CppAD <a href="to_string.htm" target="_top"><span style='white-space: nowrap'>to_string</span></a>
+ function
+for the type <code><font color="blue">adouble</font></code>:
+<pre><tt><b><font color="#0000FF">namespace</font></b> CppAD <font color="#FF0000">{</font>
+     <b><font color="#0000FF">template</font></b> <font color="#990000">&lt;&gt;</font> <b><font color="#0000FF">struct</font></b> <font color="#008080">to_string_struct</font><font color="#990000">&lt;</font>adouble<font color="#990000">&gt;</font>
+     <font color="#FF0000">{</font>    std<font color="#990000">::</font><font color="#008080">string</font> <b><font color="#0000FF">operator</font></b><font color="#990000">()(</font><b><font color="#0000FF">const</font></b> adouble<font color="#990000">&amp;</font> x<font color="#990000">)</font>
+          <font color="#FF0000">{</font>    std<font color="#990000">::</font><font color="#008080">stringstream</font> os<font color="#990000">;</font>
+               <font color="#009900">int</font> n_digits <font color="#990000">=</font> <font color="#993399">1</font> <font color="#990000">+</font> std<font color="#990000">::</font>numeric_limits<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;::</font>digits10<font color="#990000">;</font>
+               os <font color="#990000">&lt;&lt;</font> std<font color="#990000">::</font><b><font color="#000000">setprecision</font></b><font color="#990000">(</font>n_digits<font color="#990000">);</font>
+               os <font color="#990000">&lt;&lt;</font> x<font color="#990000">.</font><b><font color="#000000">value</font></b><font color="#990000">();</font>
+               <b><font color="#0000FF">return</font></b> os<font color="#990000">.</font><b><font color="#000000">str</font></b><font color="#990000">();</font>
+          <font color="#FF0000">}</font>
+     <font color="#FF0000">}</font><font color="#990000">;</font>
+<font color="#FF0000">}</font></tt></pre>
+<br>
+<b><big><a name="hash_code" id="hash_code">hash_code</a></big></b>
+<br>
+It appears that an <code><font color="blue">adouble</font></code> object can have fields
+that are not initialized.
+This results in a <code><font color="blue">valgrind</font></code> error when these fields are used by the
+<a href="base_hash.htm#Default" target="_top"><span style='white-space: nowrap'>default</span></a>
+ hashing function.
+For this reason, the <code><font color="blue">adouble</font></code> class overrides the default definition.
+<pre><tt><b><font color="#0000FF">namespace</font></b> CppAD <font color="#FF0000">{</font>
+     <b><font color="#0000FF">inline</font></b> <font color="#009900">unsigned</font> <font color="#009900">short</font> <b><font color="#000000">hash_code</font></b><font color="#990000">(</font><b><font color="#0000FF">const</font></b> adouble<font color="#990000">&amp;</font> x<font color="#990000">)</font>
+     <font color="#FF0000">{</font>    <font color="#009900">unsigned</font> <font color="#009900">short</font> code <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
+          <font color="#009900">double</font> value <font color="#990000">=</font> x<font color="#990000">.</font><b><font color="#000000">value</font></b><font color="#990000">();</font>
+          <b><font color="#0000FF">if</font></b><font color="#990000">(</font> value <font color="#990000">==</font> <font color="#993399">0.0</font> <font color="#990000">)</font>
+               <b><font color="#0000FF">return</font></b> code<font color="#990000">;</font>
+          <font color="#009900">double</font> log_x <font color="#990000">=</font> std<font color="#990000">::</font><b><font color="#000000">log</font></b><font color="#990000">(</font> <b><font color="#000000">fabs</font></b><font color="#990000">(</font> value <font color="#990000">)</font> <font color="#990000">);</font>
+          <i><font color="#9A1900">// assume log( std::numeric_limits&lt;double&gt;::max() ) is near 700</font></i>
+          code <font color="#990000">=</font> <b><font color="#0000FF">static_cast</font></b><font color="#990000">&lt;</font><font color="#009900">unsigned</font> <font color="#009900">short</font><font color="#990000">&gt;(</font>
+               <font color="#990000">(</font>CPPAD_HASH_TABLE_SIZE <font color="#990000">/</font> <font color="#993399">700</font> <font color="#990000">+</font> <font color="#993399">1</font><font color="#990000">)</font> <font color="#990000">*</font> log_x
+          <font color="#990000">);</font>
+          code <font color="#990000">=</font> code <font color="#990000">%</font> CPPAD_HASH_TABLE_SIZE<font color="#990000">;</font>
+          <b><font color="#0000FF">return</font></b> code<font color="#990000">;</font>
+     <font color="#FF0000">}</font>
+<font color="#FF0000">}</font></tt></pre>
+Note that after the hash codes match, the
+<a href="base_adolc.hpp.htm#Identical" target="_top"><span style='white-space: nowrap'>Identical</span></a>
+ function will be used
+to make sure two values are the same and one can replace the other.
+A more sophisticated implementation of the <code><font color="blue">Identical</font></code> function
+would detect which <code><font color="blue">adouble</font></code> values depend on the
+<code><font color="blue">adouble</font></code> independent variables (and hence can change).
+
+
+
+<hr>Input File: cppad/example/base_adolc.hpp
+
+</body>
+</html>

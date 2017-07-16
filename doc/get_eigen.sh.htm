@@ -1,0 +1,160 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>Download and Install Eigen in Build Directory</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Download and Install Eigen in Build Directory">
+<meta name="keywords" id="keywords" content=" download install eigen build directory syntax purpose distribution external prefix reuse ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_get_eigen.sh_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://coin-or.github.io/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="eigen_prefix.htm" target="_top">Prev</a>
+</td><td><a href="fadbad_prefix.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>Install</option>
+<option>cmake</option>
+<option>eigen_prefix</option>
+<option>get_eigen.sh</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>Install-&gt;</option>
+<option>download</option>
+<option>cmake</option>
+<option>cmake_check</option>
+<option>pkgconfig</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>cmake-&gt;</option>
+<option>adolc_prefix</option>
+<option>colpack_prefix</option>
+<option>eigen_prefix</option>
+<option>fadbad_prefix</option>
+<option>ipopt_prefix</option>
+<option>sacado_prefix</option>
+<option>cppad_testvector</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>eigen_prefix-&gt;</option>
+<option>get_eigen.sh</option>
+</select>
+</td>
+<td>get_eigen.sh</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Syntax</option>
+<option>Purpose</option>
+<option>Distribution Directory</option>
+<option>External Directory</option>
+<option>Prefix Directory</option>
+<option>Reuse</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@ 
+
+
+<center><b><big><big>Download and Install Eigen in Build Directory</big></big></b></center>
+<br>
+<b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
+
+<code><font color="blue"><br>
+bin/get_eigen.sh</font></code>
+
+<br>
+<br>
+<b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
+<br>
+If you are using Unix, this command will download and install
+<a href="http://eigen.tuxfamily.org" target="_top"><span style='white-space: nowrap'>Eigen</span></a>
+ in the
+CppAD <code><font color="blue">build</font></code> directory.
+
+<br>
+<br>
+<b><big><a name="Distribution Directory" id="Distribution Directory">Distribution Directory</a></big></b>
+<br>
+This command must be executed in the
+<a href="download.htm#Distribution Directory" target="_top"><span style='white-space: nowrap'>distribution&nbsp;directory</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="External Directory" id="External Directory">External Directory</a></big></b>
+<br>
+The Eigen source code is downloaded into the sub-directory
+<code><font color="blue">build/external</font></code> below the distribution directory.
+
+<br>
+<br>
+<b><big><a name="Prefix Directory" id="Prefix Directory">Prefix Directory</a></big></b>
+<br>
+The Eigen include files are installed in the sub-directory
+<code><font color="blue">build/prefix/include/Eigen</font></code> below the distribution directory.
+
+<br>
+<br>
+<b><big><a name="Reuse" id="Reuse">Reuse</a></big></b>
+<br>
+The file 
+<code><font color="blue"><span style='white-space: nowrap'>build/external/eigen-</span></font><i><font color="black"><span style='white-space: nowrap'>version</span></font></i><font color="blue"><span style='white-space: nowrap'>.tar.gz</span></font></code>
+
+and the directory 
+<code><font color="blue"><span style='white-space: nowrap'>build/external/eigen-</span></font><i><font color="black"><span style='white-space: nowrap'>version</span></font></i></code>
+
+will be reused if they exist. Delete this file and directory
+to get a complete rebuild.
+
+
+<hr>Input File: bin/get_eigen.sh
+
+</body>
+</html>

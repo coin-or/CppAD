@@ -1,0 +1,306 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>Enable use of AD&lt;Base&gt; where Base is float</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Enable use of AD&lt;Base&gt; where Base is float">
+<meta name="keywords" id="keywords" content=" enable use ad&lt;base&gt; where base is float condexpop condexprel equalopseq identical integer azmul ordered unary standard math sign pow numeric_limits to_string ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_base_float.hpp_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://coin-or.github.io/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="mul_level_adolc.cpp.htm" target="_top">Prev</a>
+</td><td><a href="base_double.hpp.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>AD</option>
+<option>base_require</option>
+<option>base_example</option>
+<option>base_float.hpp</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>AD-&gt;</option>
+<option>ad_ctor</option>
+<option>ad_assign</option>
+<option>Convert</option>
+<option>ADValued</option>
+<option>BoolValued</option>
+<option>VecAD</option>
+<option>base_require</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>base_require-&gt;</option>
+<option>base_member</option>
+<option>base_cond_exp</option>
+<option>base_identical</option>
+<option>base_ordered</option>
+<option>base_std_math</option>
+<option>base_limits</option>
+<option>base_to_string</option>
+<option>base_hash</option>
+<option>base_example</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>base_example-&gt;</option>
+<option>base_alloc.hpp</option>
+<option>base_require.cpp</option>
+<option>base_adolc.hpp</option>
+<option>base_float.hpp</option>
+<option>base_double.hpp</option>
+<option>base_complex.hpp</option>
+</select>
+</td>
+<td>base_float.hpp</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>CondExpOp</option>
+<option>CondExpRel</option>
+<option>EqualOpSeq</option>
+<option>Identical</option>
+<option>Integer</option>
+<option>azmul</option>
+<option>Ordered</option>
+<option>Unary Standard Math</option>
+<option>sign</option>
+<option>pow</option>
+<option>numeric_limits</option>
+<option>to_string</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>Enable use of AD&lt;Base&gt; where Base is float</big></big></b></center>
+<br>
+<b><big><a name="CondExpOp" id="CondExpOp">CondExpOp</a></big></b>
+<br>
+The type <code><font color="blue">float</font></code> is a relatively simple type that supports
+<code><font color="blue">&lt;</font></code>, <code><font color="blue">&lt;=</font></code>, <code><font color="blue">==</font></code>, <code><font color="blue">&gt;=</font></code>, and <code><font color="blue">&gt;</font></code> operators; see
+<a href="base_cond_exp.htm#CondExpTemplate.Ordered Type" target="_top"><span style='white-space: nowrap'>ordered&nbsp;type</span></a>
+.
+Hence its <code><font color="blue">CondExpOp</font></code> function is defined by
+<pre><tt><b><font color="#0000FF">namespace</font></b> CppAD <font color="#FF0000">{</font>
+     <b><font color="#0000FF">inline</font></b> <font color="#009900">float</font> <b><font color="#000000">CondExpOp</font></b><font color="#990000">(</font>
+          <b><font color="#0000FF">enum</font></b> <font color="#008080">CompareOp</font>     cop          <font color="#990000">,</font>
+          <b><font color="#0000FF">const</font></b> <font color="#009900">float</font><font color="#990000">&amp;</font>       left         <font color="#990000">,</font>
+          <b><font color="#0000FF">const</font></b> <font color="#009900">float</font><font color="#990000">&amp;</font>       right        <font color="#990000">,</font>
+          <b><font color="#0000FF">const</font></b> <font color="#009900">float</font><font color="#990000">&amp;</font>       exp_if_true  <font color="#990000">,</font>
+          <b><font color="#0000FF">const</font></b> <font color="#009900">float</font><font color="#990000">&amp;</font>       exp_if_false <font color="#990000">)</font>
+     <font color="#FF0000">{</font>    <b><font color="#0000FF">return</font></b> <b><font color="#000000">CondExpTemplate</font></b><font color="#990000">(</font>cop<font color="#990000">,</font> left<font color="#990000">,</font> right<font color="#990000">,</font> exp_if_true<font color="#990000">,</font> exp_if_false<font color="#990000">);</font>
+     <font color="#FF0000">}</font>
+<font color="#FF0000">}</font></tt></pre>
+<br>
+<b><big><a name="CondExpRel" id="CondExpRel">CondExpRel</a></big></b>
+<br>
+The <a href="base_cond_exp.htm#CondExpRel" target="_top"><span style='white-space: nowrap'>CPPAD_COND_EXP_REL</span></a>
+ macro invocation
+<pre style='display:inline'><tt>
+<b><font color="#0000FF">namespace</font></b> CppAD <font color="#FF0000">{</font>
+     <b><font color="#000000">CPPAD_COND_EXP_REL</font></b><font color="#990000">(</font><font color="#009900">float</font><font color="#990000">)</font>
+<font color="#FF0000">}</font>
+</tt></pre>
+uses <code><font color="blue">CondExpOp</font></code> above to
+define 
+<code><font color="blue"><span style='white-space: nowrap'>CondExp</span></font><i><font color="black"><span style='white-space: nowrap'>Rel</span></font></i></code>
+ for <code><font color="blue">float</font></code> arguments
+and 
+<code><i><font color="black"><span style='white-space: nowrap'>Rel</span></font></i></code>
+ equal to
+<code><font color="blue">Lt</font></code>, <code><font color="blue">Le</font></code>, <code><font color="blue">Eq</font></code>, <code><font color="blue">Ge</font></code>, and <code><font color="blue">Gt</font></code>.
+
+<br>
+<br>
+<b><big><a name="EqualOpSeq" id="EqualOpSeq">EqualOpSeq</a></big></b>
+<br>
+The type <code><font color="blue">float</font></code> is simple (in this respect) and so we define
+<pre><tt><b><font color="#0000FF">namespace</font></b> CppAD <font color="#FF0000">{</font>
+     <b><font color="#0000FF">inline</font></b> <font color="#009900">bool</font> <b><font color="#000000">EqualOpSeq</font></b><font color="#990000">(</font><b><font color="#0000FF">const</font></b> <font color="#009900">float</font><font color="#990000">&amp;</font> x<font color="#990000">,</font> <b><font color="#0000FF">const</font></b> <font color="#009900">float</font><font color="#990000">&amp;</font> y<font color="#990000">)</font>
+     <font color="#FF0000">{</font>    <b><font color="#0000FF">return</font></b> x <font color="#990000">==</font> y<font color="#990000">;</font> <font color="#FF0000">}</font>
+<font color="#FF0000">}</font></tt></pre>
+<br>
+<b><big><a name="Identical" id="Identical">Identical</a></big></b>
+<br>
+The type <code><font color="blue">float</font></code> is simple (in this respect) and so we define
+<pre><tt><b><font color="#0000FF">namespace</font></b> CppAD <font color="#FF0000">{</font>
+     <b><font color="#0000FF">inline</font></b> <font color="#009900">bool</font> <b><font color="#000000">IdenticalPar</font></b><font color="#990000">(</font><b><font color="#0000FF">const</font></b> <font color="#009900">float</font><font color="#990000">&amp;</font> x<font color="#990000">)</font>
+     <font color="#FF0000">{</font>    <b><font color="#0000FF">return</font></b> <b><font color="#0000FF">true</font></b><font color="#990000">;</font> <font color="#FF0000">}</font>
+     <b><font color="#0000FF">inline</font></b> <font color="#009900">bool</font> <b><font color="#000000">IdenticalZero</font></b><font color="#990000">(</font><b><font color="#0000FF">const</font></b> <font color="#009900">float</font><font color="#990000">&amp;</font> x<font color="#990000">)</font>
+     <font color="#FF0000">{</font>    <b><font color="#0000FF">return</font></b> <font color="#990000">(</font>x <font color="#990000">==</font> <font color="#993399">0</font><font color="#990000">.</font>f<font color="#990000">);</font> <font color="#FF0000">}</font>
+     <b><font color="#0000FF">inline</font></b> <font color="#009900">bool</font> <b><font color="#000000">IdenticalOne</font></b><font color="#990000">(</font><b><font color="#0000FF">const</font></b> <font color="#009900">float</font><font color="#990000">&amp;</font> x<font color="#990000">)</font>
+     <font color="#FF0000">{</font>    <b><font color="#0000FF">return</font></b> <font color="#990000">(</font>x <font color="#990000">==</font> <font color="#993399">1</font><font color="#990000">.</font>f<font color="#990000">);</font> <font color="#FF0000">}</font>
+     <b><font color="#0000FF">inline</font></b> <font color="#009900">bool</font> <b><font color="#000000">IdenticalEqualPar</font></b><font color="#990000">(</font><b><font color="#0000FF">const</font></b> <font color="#009900">float</font><font color="#990000">&amp;</font> x<font color="#990000">,</font> <b><font color="#0000FF">const</font></b> <font color="#009900">float</font><font color="#990000">&amp;</font> y<font color="#990000">)</font>
+     <font color="#FF0000">{</font>    <b><font color="#0000FF">return</font></b> <font color="#990000">(</font>x <font color="#990000">==</font> y<font color="#990000">);</font> <font color="#FF0000">}</font>
+<font color="#FF0000">}</font></tt></pre>
+<br>
+<b><big><a name="Integer" id="Integer">Integer</a></big></b>
+
+<pre><tt><b><font color="#0000FF">namespace</font></b> CppAD <font color="#FF0000">{</font>
+     <b><font color="#0000FF">inline</font></b> <font color="#009900">int</font> <b><font color="#000000">Integer</font></b><font color="#990000">(</font><b><font color="#0000FF">const</font></b> <font color="#009900">float</font><font color="#990000">&amp;</font> x<font color="#990000">)</font>
+     <font color="#FF0000">{</font>    <b><font color="#0000FF">return</font></b> <b><font color="#0000FF">static_cast</font></b><font color="#990000">&lt;</font><font color="#009900">int</font><font color="#990000">&gt;(</font>x<font color="#990000">);</font> <font color="#FF0000">}</font>
+<font color="#FF0000">}</font></tt></pre>
+<br>
+<b><big><a name="azmul" id="azmul">azmul</a></big></b>
+
+<pre style='display:inline'><tt>
+<b><font color="#0000FF">namespace</font></b> CppAD <font color="#FF0000">{</font>
+     <b><font color="#000000">CPPAD_AZMUL</font></b><font color="#990000">(</font> <font color="#009900">float</font> <font color="#990000">)</font>
+<font color="#FF0000">}</font>
+</tt></pre>
+<br>
+<b><big><a name="Ordered" id="Ordered">Ordered</a></big></b>
+<br>
+The <code><font color="blue">float</font></code> type supports ordered comparisons
+<pre><tt><b><font color="#0000FF">namespace</font></b> CppAD <font color="#FF0000">{</font>
+     <b><font color="#0000FF">inline</font></b> <font color="#009900">bool</font> <b><font color="#000000">GreaterThanZero</font></b><font color="#990000">(</font><b><font color="#0000FF">const</font></b> <font color="#009900">float</font><font color="#990000">&amp;</font> x<font color="#990000">)</font>
+     <font color="#FF0000">{</font>    <b><font color="#0000FF">return</font></b> x <font color="#990000">&gt;</font> <font color="#993399">0</font><font color="#990000">.</font>f<font color="#990000">;</font> <font color="#FF0000">}</font>
+     <b><font color="#0000FF">inline</font></b> <font color="#009900">bool</font> <b><font color="#000000">GreaterThanOrZero</font></b><font color="#990000">(</font><b><font color="#0000FF">const</font></b> <font color="#009900">float</font><font color="#990000">&amp;</font> x<font color="#990000">)</font>
+     <font color="#FF0000">{</font>    <b><font color="#0000FF">return</font></b> x <font color="#990000">&gt;=</font> <font color="#993399">0</font><font color="#990000">.</font>f<font color="#990000">;</font> <font color="#FF0000">}</font>
+     <b><font color="#0000FF">inline</font></b> <font color="#009900">bool</font> <b><font color="#000000">LessThanZero</font></b><font color="#990000">(</font><b><font color="#0000FF">const</font></b> <font color="#009900">float</font><font color="#990000">&amp;</font> x<font color="#990000">)</font>
+     <font color="#FF0000">{</font>    <b><font color="#0000FF">return</font></b> x <font color="#990000">&lt;</font> <font color="#993399">0</font><font color="#990000">.</font>f<font color="#990000">;</font> <font color="#FF0000">}</font>
+     <b><font color="#0000FF">inline</font></b> <font color="#009900">bool</font> <b><font color="#000000">LessThanOrZero</font></b><font color="#990000">(</font><b><font color="#0000FF">const</font></b> <font color="#009900">float</font><font color="#990000">&amp;</font> x<font color="#990000">)</font>
+     <font color="#FF0000">{</font>    <b><font color="#0000FF">return</font></b> x <font color="#990000">&lt;=</font> <font color="#993399">0</font><font color="#990000">.</font>f<font color="#990000">;</font> <font color="#FF0000">}</font>
+     <b><font color="#0000FF">inline</font></b> <font color="#009900">bool</font> <b><font color="#000000">abs_geq</font></b><font color="#990000">(</font><b><font color="#0000FF">const</font></b> <font color="#009900">float</font><font color="#990000">&amp;</font> x<font color="#990000">,</font> <b><font color="#0000FF">const</font></b> <font color="#009900">float</font><font color="#990000">&amp;</font> y<font color="#990000">)</font>
+     <font color="#FF0000">{</font>    <b><font color="#0000FF">return</font></b> std<font color="#990000">::</font><b><font color="#000000">fabs</font></b><font color="#990000">(</font>x<font color="#990000">)</font> <font color="#990000">&gt;=</font> std<font color="#990000">::</font><b><font color="#000000">fabs</font></b><font color="#990000">(</font>y<font color="#990000">);</font> <font color="#FF0000">}</font>
+<font color="#FF0000">}</font></tt></pre>
+<br>
+<b><big><a name="Unary Standard Math" id="Unary Standard Math">Unary Standard Math</a></big></b>
+<br>
+The following macro invocations import the <code><font color="blue">float</font></code> versions of
+the unary standard math functions into the <code><font color="blue">CppAD</font></code> namespace.
+Importing avoids ambiguity errors when using both the
+<code><font color="blue">CppAD</font></code> and <code><font color="blue">std</font></code> namespaces.
+Note this also defines the <a href="base_double.hpp.htm#Unary Standard Math" target="_top"><span style='white-space: nowrap'>double</span></a>
+
+versions of these functions.
+<pre><tt><b><font color="#0000FF">namespace</font></b> CppAD <font color="#FF0000">{</font>
+     <b><font color="#0000FF">using</font></b> std<font color="#990000">::</font>acos<font color="#990000">;</font>
+     <b><font color="#0000FF">using</font></b> std<font color="#990000">::</font>asin<font color="#990000">;</font>
+     <b><font color="#0000FF">using</font></b> std<font color="#990000">::</font>atan<font color="#990000">;</font>
+     <b><font color="#0000FF">using</font></b> std<font color="#990000">::</font>cos<font color="#990000">;</font>
+     <b><font color="#0000FF">using</font></b> std<font color="#990000">::</font>cosh<font color="#990000">;</font>
+     <b><font color="#0000FF">using</font></b> std<font color="#990000">::</font>exp<font color="#990000">;</font>
+     <b><font color="#0000FF">using</font></b> std<font color="#990000">::</font>fabs<font color="#990000">;</font>
+     <b><font color="#0000FF">using</font></b> std<font color="#990000">::</font>log<font color="#990000">;</font>
+     <b><font color="#0000FF">using</font></b> std<font color="#990000">::</font>log10<font color="#990000">;</font>
+     <b><font color="#0000FF">using</font></b> std<font color="#990000">::</font>sin<font color="#990000">;</font>
+     <b><font color="#0000FF">using</font></b> std<font color="#990000">::</font>sinh<font color="#990000">;</font>
+     <b><font color="#0000FF">using</font></b> std<font color="#990000">::</font>sqrt<font color="#990000">;</font>
+     <b><font color="#0000FF">using</font></b> std<font color="#990000">::</font>tan<font color="#990000">;</font>
+     <b><font color="#0000FF">using</font></b> std<font color="#990000">::</font>tanh<font color="#990000">;</font>
+<b><font color="#000080"># if</font></b> CPPAD_USE_CPLUSPLUS_2011
+     <b><font color="#0000FF">using</font></b> std<font color="#990000">::</font>erf<font color="#990000">;</font>
+     <b><font color="#0000FF">using</font></b> std<font color="#990000">::</font>asinh<font color="#990000">;</font>
+     <b><font color="#0000FF">using</font></b> std<font color="#990000">::</font>acosh<font color="#990000">;</font>
+     <b><font color="#0000FF">using</font></b> std<font color="#990000">::</font>atanh<font color="#990000">;</font>
+     <b><font color="#0000FF">using</font></b> std<font color="#990000">::</font>expm1<font color="#990000">;</font>
+     <b><font color="#0000FF">using</font></b> std<font color="#990000">::</font>log1p<font color="#990000">;</font>
+<b><font color="#000080"># endif</font></b>
+<font color="#FF0000">}</font>
+</tt></pre>
+The absolute value function is special because its <code><font color="blue">std</font></code> name is
+<code><font color="blue">fabs</font></code>
+<pre><tt><b><font color="#0000FF">namespace</font></b> CppAD <font color="#FF0000">{</font>
+     <b><font color="#0000FF">inline</font></b> <font color="#009900">float</font> <b><font color="#000000">abs</font></b><font color="#990000">(</font><b><font color="#0000FF">const</font></b> <font color="#009900">float</font><font color="#990000">&amp;</font> x<font color="#990000">)</font>
+     <font color="#FF0000">{</font>    <b><font color="#0000FF">return</font></b> std<font color="#990000">::</font><b><font color="#000000">fabs</font></b><font color="#990000">(</font>x<font color="#990000">);</font> <font color="#FF0000">}</font>
+<font color="#FF0000">}</font></tt></pre>
+<br>
+<b><big><a name="sign" id="sign">sign</a></big></b>
+<br>
+The following defines the <code><font color="blue">CppAD::sign</font></code> function that
+is required to use <code><font color="blue">AD&lt;float&gt;</font></code>:
+<pre><tt><b><font color="#0000FF">namespace</font></b> CppAD <font color="#FF0000">{</font>
+     <b><font color="#0000FF">inline</font></b> <font color="#009900">float</font> <b><font color="#000000">sign</font></b><font color="#990000">(</font><b><font color="#0000FF">const</font></b> <font color="#009900">float</font><font color="#990000">&amp;</font> x<font color="#990000">)</font>
+     <font color="#FF0000">{</font>    <b><font color="#0000FF">if</font></b><font color="#990000">(</font> x <font color="#990000">&gt;</font> <font color="#993399">0</font><font color="#990000">.</font>f <font color="#990000">)</font>
+               <b><font color="#0000FF">return</font></b> <font color="#993399">1</font><font color="#990000">.</font>f<font color="#990000">;</font>
+          <b><font color="#0000FF">if</font></b><font color="#990000">(</font> x <font color="#990000">==</font> <font color="#993399">0</font><font color="#990000">.</font>f <font color="#990000">)</font>
+               <b><font color="#0000FF">return</font></b> <font color="#993399">0</font><font color="#990000">.</font>f<font color="#990000">;</font>
+          <b><font color="#0000FF">return</font></b> <font color="#990000">-</font><font color="#993399">1</font><font color="#990000">.</font>f<font color="#990000">;</font>
+     <font color="#FF0000">}</font>
+<font color="#FF0000">}</font></tt></pre>
+<br>
+<b><big><a name="pow" id="pow">pow</a></big></b>
+<br>
+The following defines a <code><font color="blue">CppAD::pow</font></code> function that
+is required to use <code><font color="blue">AD&lt;float&gt;</font></code>.
+As with the unary standard math functions,
+this has the exact same signature as <code><font color="blue">std::pow</font></code>,
+so use it instead of defining another function.
+<pre style='display:inline'><tt>
+<b><font color="#0000FF">namespace</font></b> CppAD <font color="#FF0000">{</font>
+     <b><font color="#0000FF">using</font></b> std<font color="#990000">::</font>pow<font color="#990000">;</font>
+<font color="#FF0000">}</font>
+</tt></pre>
+<br>
+<b><big><a name="numeric_limits" id="numeric_limits">numeric_limits</a></big></b>
+<br>
+The following defines the CppAD <a href="numeric_limits.htm" target="_top"><span style='white-space: nowrap'>numeric_limits</span></a>
+
+for the type <code><font color="blue">float</font></code>:
+<pre style='display:inline'><tt>
+<b><font color="#0000FF">namespace</font></b> CppAD <font color="#FF0000">{</font>
+     <b><font color="#000000">CPPAD_NUMERIC_LIMITS</font></b><font color="#990000">(</font><font color="#009900">float</font><font color="#990000">,</font> <font color="#009900">float</font><font color="#990000">)</font>
+<font color="#FF0000">}</font>
+</tt></pre>
+<br>
+<b><big><a name="to_string" id="to_string">to_string</a></big></b>
+<br>
+There is no need to define <code><font color="blue">to_string</font></code> for <code><font color="blue">float</font></code>
+because it is defined by including <code><font color="blue">cppad/utility/to_string.hpp</font></code>;
+see <a href="to_string.htm" target="_top"><span style='white-space: nowrap'>to_string</span></a>
+.
+See <a href="base_complex.hpp.htm#to_string" target="_top"><span style='white-space: nowrap'>base_complex.hpp</span></a>
+ for an example where
+it is necessary to define <code><font color="blue">to_string</font></code> for a 
+<code><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i></code>
+ type.
+
+
+<hr>Input File: cppad/core/base_float.hpp
+
+</body>
+</html>

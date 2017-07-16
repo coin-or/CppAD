@@ -1,0 +1,425 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>Second Order Reverse Mode</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Second Order Reverse Mode">
+<meta name="keywords" id="keywords" content=" second order reverse mode derivative syntax purpose x^(k) w f dw first partials vector hessian times direction example ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_reverse_two_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://coin-or.github.io/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="reverse_one.cpp.htm" target="_top">Prev</a>
+</td><td><a href="reverse_two.cpp.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>ADFun</option>
+<option>Reverse</option>
+<option>reverse_two</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>CppAD-&gt;</option>
+<option>Install</option>
+<option>Introduction</option>
+<option>AD</option>
+<option>ADFun</option>
+<option>preprocessor</option>
+<option>multi_thread</option>
+<option>utility</option>
+<option>ipopt_solve</option>
+<option>Example</option>
+<option>speed</option>
+<option>Appendix</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>ADFun-&gt;</option>
+<option>record_adfun</option>
+<option>drivers</option>
+<option>Forward</option>
+<option>Reverse</option>
+<option>sparsity_pattern</option>
+<option>sparse_derivative</option>
+<option>optimize</option>
+<option>abs_normal</option>
+<option>FunCheck</option>
+<option>check_for_nan</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>Reverse-&gt;</option>
+<option>reverse_one</option>
+<option>reverse_two</option>
+<option>reverse_any</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down0(this)'>
+<option>reverse_two-&gt;</option>
+<option>reverse_two.cpp</option>
+<option>hes_times_dir.cpp</option>
+</select>
+</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Syntax</option>
+<option>Purpose</option>
+<option>x^(k)</option>
+<option>W</option>
+<option>f</option>
+<option>w</option>
+<option>dw</option>
+<option>---..First Order Partials</option>
+<option>---..Second Order Partials</option>
+<option>Vector</option>
+<option>Hessian Times Direction</option>
+<option>Example</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>Second Order Reverse Mode</big></big></b></center>
+<br>
+<b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
+
+<br>
+
+<code><i><font color="black"><span style='white-space: nowrap'>dw</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.Reverse(2,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>w</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+
+
+<br>
+<br>
+<b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
+<br>
+We use <small>@(@
+F : B^n \rightarrow B^m
+@)@</small> to denote the
+<a href="glossary.htm#AD Function" target="_top"><span style='white-space: nowrap'>AD&nbsp;function</span></a>
+ corresponding to 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+.
+Reverse mode computes the derivative of the <a href="forward.htm" target="_top"><span style='white-space: nowrap'>Forward</span></a>
+ mode
+<a href="glossary.htm#Taylor Coefficient" target="_top"><span style='white-space: nowrap'>Taylor&nbsp;coefficients</span></a>
+
+with respect to the domain variable <small>@(@
+x
+@)@</small>.
+
+<br>
+<br>
+<b><big><a name="x^(k)" id="x^(k)">x^(k)</a></big></b>
+<br>
+For <small>@(@
+k = 0, 1
+@)@</small>,
+the vector <small>@(@
+x^{(k)} \in B^n
+@)@</small> is defined as the value of
+
+<code><i><font color="black"><span style='white-space: nowrap'>x_k</span></font></i></code>
+ in the previous call (counting this call) of the form
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.Forward(</span></font><i><font color="black"><span style='white-space: nowrap'>k</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x_k</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+If there is no previous call with <small>@(@
+k = 0
+@)@</small>,
+<small>@(@
+x^{(0)}
+@)@</small> is the value of the independent variables when the
+corresponding
+AD of 
+<code><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i></code>
+
+<a href="glossary.htm#Operation.Sequence" target="_top"><span style='white-space: nowrap'>operation&nbsp;sequence</span></a>
+ was recorded.
+
+
+<br>
+<br>
+<b><big><a name="W" id="W">W</a></big></b>
+<br>
+The functions
+<small>@(@
+W_0 : B^n \rightarrow B
+@)@</small> and
+<small>@(@
+W_1 : B^n \rightarrow B
+@)@</small>
+are defined by
+<small>@[@
+
+\begin{array}{rcl}
+W_0 ( u ) & = & w_0 * F_0 ( u ) + \cdots + w_{m-1} * F_{m-1} (u)
+\\
+W_1 ( u ) & = &
+w_0 * F_0^{(1)} ( u ) * x^{(1)}
+	+ \cdots + w_{m-1} * F_{m-1}^{(1)} (u) * x^{(1)}
+\end{array}
+
+@]@</small>
+This operation computes the derivatives
+<small>@[@
+
+\begin{array}{rcl}
+W_0^{(1)} (u) & = &
+	w_0 * F_0^{(1)} ( u ) + \cdots + w_{m-1} * F_{m-1}^{(1)} (u)
+\\
+W_1^{(1)} (u) & = &
+	w_0 * \left( x^{(1)} \right)^\R{T} * F_0^{(2)} ( u )
+	+ \cdots +
+	w_{m-1} * \left( x^{(1)} \right)^\R{T} F_{m-1}^{(2)} (u)
+\end{array}
+
+@]@</small>
+at <small>@(@
+u = x^{(0)}
+@)@</small>.
+
+<br>
+<br>
+<b><big><a name="f" id="f">f</a></big></b>
+<br>
+The object 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;ADFun&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+Before this call to <code><font color="blue">Reverse</font></code>, the value returned by
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.size_order()<br>
+</span></font></code>
+must be greater than or equal two (see <a href="size_order.htm" target="_top"><span style='white-space: nowrap'>size_order</span></a>
+).
+
+<br>
+<br>
+<b><big><a name="w" id="w">w</a></big></b>
+<br>
+The argument 
+<code><i><font color="black"><span style='white-space: nowrap'>w</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Vector</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>w</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+(see <a href="reverse_two.htm#Vector" target="_top"><span style='white-space: nowrap'>Vector</span></a>
+ below)
+and its size
+must be equal to 
+<code><i><font color="black"><span style='white-space: nowrap'>m</span></font></i></code>
+, the dimension of the
+<a href="seq_property.htm#Range" target="_top"><span style='white-space: nowrap'>range</span></a>
+ space for 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+.
+
+<br>
+<br>
+<b><big><a name="dw" id="dw">dw</a></big></b>
+<br>
+The result 
+<code><i><font color="black"><span style='white-space: nowrap'>dw</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Vector</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>dw</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+(see <a href="reverse_two.htm#Vector" target="_top"><span style='white-space: nowrap'>Vector</span></a>
+ below).
+It contains both the derivative
+<small>@(@
+W^{(1)} (x)
+@)@</small> and the derivative <small>@(@
+U^{(1)} (x)
+@)@</small>.
+The size of 
+<code><i><font color="black"><span style='white-space: nowrap'>dw</span></font></i></code>
+
+is equal to <small>@(@
+n \times 2
+@)@</small>,
+where <small>@(@
+n
+@)@</small> is the dimension of the
+<a href="seq_property.htm#Domain" target="_top"><span style='white-space: nowrap'>domain</span></a>
+ space for 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+.
+
+<br>
+<br>
+<b><a name="dw.First Order Partials" id="dw.First Order Partials">First Order Partials</a></b>
+<br>
+For <small>@(@
+j = 0 , \ldots , n - 1
+@)@</small>,
+<small>@[@
+
+dw [ j * 2 + 0 ]
+=
+\D{ W_0 }{ u_j } \left( x^{(0)} \right)
+=
+w_0 * \D{ F_0 }{ u_j } \left( x^{(0)} \right)
++ \cdots +
+w_{m-1} * \D{ F_{m-1} }{ u_j } \left( x^{(0)} \right)
+
+@]@</small>
+This part of 
+<code><i><font color="black"><span style='white-space: nowrap'>dw</span></font></i></code>
+ contains the same values as are returned
+by <a href="reverse_one.htm" target="_top"><span style='white-space: nowrap'>reverse_one</span></a>
+.
+
+<br>
+<br>
+<b><a name="dw.Second Order Partials" id="dw.Second Order Partials">Second Order Partials</a></b>
+<br>
+For <small>@(@
+j = 0 , \ldots , n - 1
+@)@</small>,
+<small>@[@
+
+dw [ j * 2 + 1 ]
+=
+\D{ W_1 }{ u_j } \left( x^{(0)} \right)
+=
+\sum_{\ell=0}^{n-1} x_\ell^{(1)} \left[
+w_0 * \DD{ F_0 }{ u_\ell }{ u_j } \left( x^{(0)} \right)
++ \cdots +
+w_{m-1} * \DD{ F_{m-1} }{ u_\ell }{ u_j } \left( x^{(0)} \right)
+\right]
+
+@]@</small>
+
+
+<br>
+<br>
+<b><big><a name="Vector" id="Vector">Vector</a></big></b>
+<br>
+The type 
+<code><i><font color="black"><span style='white-space: nowrap'>Vector</span></font></i></code>
+ must be a <a href="simplevector.htm" target="_top"><span style='white-space: nowrap'>SimpleVector</span></a>
+ class with
+<a href="simplevector.htm#Elements of Specified Type" target="_top"><span style='white-space: nowrap'>elements&nbsp;of&nbsp;type</span></a>
+
+
+<code><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i></code>
+.
+The routine <a href="checksimplevector.htm" target="_top"><span style='white-space: nowrap'>CheckSimpleVector</span></a>
+ will generate an error message
+if this is not the case.
+
+
+<br>
+<br>
+<b><big><a name="Hessian Times Direction" id="Hessian Times Direction">Hessian Times Direction</a></big></b>
+<br>
+Suppose that <small>@(@
+w
+@)@</small> is the <code><i>i</i></code>-th elementary vector.
+It follows that for <small>@(@
+j = 0, \ldots, n-1
+@)@</small>
+<small>@[@
+
+\begin{array}{rcl}
+dw[ j * 2 + 1 ]
+& = &
+w_i \sum_{\ell=0}^{n-1}
+\DD{F_i}{ u_j }{ u_\ell } \left( x^{(0)} \right) x_\ell^{(1)}
+\\
+& = &
+\left[ F_i^{(2)} \left( x^{(0)} \right) * x^{(1)} \right]_j
+\end{array}
+
+@]@</small>
+Thus the vector <small>@(@
+( dw[1], dw[3], \ldots , dw[ n * q - 1 ] )
+@)@</small>
+is equal to the Hessian of <small>@(@
+F_i (x)
+@)@</small> times the direction
+<small>@(@
+x^{(1)}
+@)@</small>.
+In the special case where
+<small>@(@
+x^{(1)}
+@)@</small> is the <code><i>l</i></code>-th
+<a href="glossary.htm#Elementary Vector" target="_top"><span style='white-space: nowrap'>elementary&nbsp;vector</span></a>
+,
+<small>@[@
+
+dw[ j * 2 + 1 ] = \DD{ F_i }{ x_j }{ x_\ell } \left( x^{(0)} \right)
+
+@]@</small>
+
+<br>
+<br>
+<b><big><a name="Example" id="Example">Example</a></big></b>
+
+<br>
+The files
+<a href="reverse_two.cpp.htm" target="_top"><span style='white-space: nowrap'>reverse_two.cpp</span></a>
+
+and
+<a href="hes_times_dir.cpp.htm" target="_top"><span style='white-space: nowrap'>hes_times_dir.cpp</span></a>
+
+contain a examples and tests of reverse mode calculations.
+They return true if they succeed and false otherwise.
+
+
+<hr>Input File: omh/reverse/reverse_two.omh
+
+</body>
+</html>

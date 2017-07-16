@@ -1,0 +1,589 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>Create An Abs-normal Representation of a Function</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Create An Abs-normal Representation of a Function">
+<meta name="keywords" id="keywords" content=" create abs-normal representation function syntax f n m s zeta a(x) g z(x u) y(x affine approximation approximating f(x) correspondence to literature example ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_abs_normal_fun_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://coin-or.github.io/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="abs_normal.htm" target="_top">Prev</a>
+</td><td><a href="abs_get_started.cpp.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>ADFun</option>
+<option>abs_normal</option>
+<option>abs_normal_fun</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>CppAD-&gt;</option>
+<option>Install</option>
+<option>Introduction</option>
+<option>AD</option>
+<option>ADFun</option>
+<option>preprocessor</option>
+<option>multi_thread</option>
+<option>utility</option>
+<option>ipopt_solve</option>
+<option>Example</option>
+<option>speed</option>
+<option>Appendix</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>ADFun-&gt;</option>
+<option>record_adfun</option>
+<option>drivers</option>
+<option>Forward</option>
+<option>Reverse</option>
+<option>sparsity_pattern</option>
+<option>sparse_derivative</option>
+<option>optimize</option>
+<option>abs_normal</option>
+<option>FunCheck</option>
+<option>check_for_nan</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>abs_normal-&gt;</option>
+<option>abs_normal_fun</option>
+<option>abs_print_mat</option>
+<option>abs_eval</option>
+<option>simplex_method</option>
+<option>lp_box</option>
+<option>abs_min_linear</option>
+<option>min_nso_linear</option>
+<option>qp_interior</option>
+<option>qp_box</option>
+<option>abs_min_quad</option>
+<option>min_nso_quad</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down0(this)'>
+<option>abs_normal_fun-&gt;</option>
+<option>abs_get_started.cpp</option>
+</select>
+</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Syntax</option>
+<option>f</option>
+<option>---..n</option>
+<option>---..m</option>
+<option>---..s</option>
+<option>a</option>
+<option>---..zeta</option>
+<option>---..a(x)</option>
+<option>g</option>
+<option>---..z(x, u)</option>
+<option>---..y(x, u)</option>
+<option>Affine Approximation</option>
+<option>Abs-normal Approximation</option>
+<option>---..Approximating a(x)</option>
+<option>---..Approximating f(x)</option>
+<option>Correspondence to Literature</option>
+<option>Example</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>Create An Abs-normal Representation of a Function</big></big></b></center>
+<br>
+<b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
+
+<br>
+
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.abs_normal_fun(</span></font><i><font color="black"><span style='white-space: nowrap'>g</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>a</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+
+
+<br>
+<br>
+<b><big><a name="f" id="f">f</a></big></b>
+<br>
+The object 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ADFun&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+It represents a function <small>@(@
+f : \B{R}^n \rightarrow \B{R}^m
+@)@</small>.
+We assume that the only non-smooth terms in the representation are
+absolute value functions and use <small>@(@
+s \in \B{Z}_+
+@)@</small>
+to represent the number of these terms.
+It is effectively <code><font color="blue">const</font></code>, except that some internal state
+that is not relevant to the user; see
+<a href="wish_list.htm#const ADFun" target="_top"><span style='white-space: nowrap'>const&nbsp;ADFun</span></a>
+.
+
+<br>
+<br>
+<b><a name="f.n" id="f.n">n</a></b>
+<br>
+We use 
+<code><i><font color="black"><span style='white-space: nowrap'>n</span></font></i></code>
+ to denote the dimension of the domain space for 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+.
+
+<br>
+<br>
+<b><a name="f.m" id="f.m">m</a></b>
+<br>
+We use 
+<code><i><font color="black"><span style='white-space: nowrap'>m</span></font></i></code>
+ to denote the dimension of the range space for 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+.
+
+<br>
+<br>
+<b><a name="f.s" id="f.s">s</a></b>
+<br>
+We use 
+<code><i><font color="black"><span style='white-space: nowrap'>s</span></font></i></code>
+ to denote the number of absolute value terms in 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+.
+
+
+<br>
+<br>
+<b><big><a name="a" id="a">a</a></big></b>
+<br>
+The object 
+<code><i><font color="black"><span style='white-space: nowrap'>a</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ADFun&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>a</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+The initial function representation in 
+<code><i><font color="black"><span style='white-space: nowrap'>a</span></font></i></code>
+ is lost.
+Upon return it represents the result of the absolute terms
+<small>@(@
+a : \B{R}^n \rightarrow \B{R}^s
+@)@</small>; see <small>@(@
+a(x)
+@)@</small> defined below.
+Note that 
+<code><i><font color="black"><span style='white-space: nowrap'>a</span></font></i></code>
+ is constructed by copying 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+
+and then changing the dependent variables. There may
+be many calculations in this representation that are not necessary
+and can be removed using
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>a</span></font></i><font color="blue"><span style='white-space: nowrap'>.optimize()<br>
+</span></font></code>
+This optimization is not done automatically by <code><font color="blue">abs_normal_fun</font></code>
+because it may take a significant amount of time.
+
+<br>
+<br>
+<b><a name="a.zeta" id="a.zeta">zeta</a></b>
+<br>
+Let <small>@(@
+\zeta_0 ( x )
+@)@</small>
+denote the argument for the first absolute value term in <small>@(@
+f(x)
+@)@</small>,
+<small>@(@
+\zeta_1 ( x , |\zeta_0 (x)| )
+@)@</small> for the second term, and so on.
+
+<br>
+<br>
+<b><a name="a.a(x)" id="a.a(x)">a(x)</a></b>
+<br>
+For <small>@(@
+i = 0 , \ldots , {s-1}
+@)@</small> define
+<small>@[@
+
+a_i (x)
+=
+| \zeta_i ( x , a_0 (x) , \ldots , a_{i-1} (x ) ) |
+
+@]@</small>
+This defines <small>@(@
+a : \B{R}^n \rightarrow \B{R}^s
+@)@</small>.
+
+<br>
+<br>
+<b><big><a name="g" id="g">g</a></big></b>
+<br>
+The object 
+<code><i><font color="black"><span style='white-space: nowrap'>g</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ADFun&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>g</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+The initial function representation in 
+<code><i><font color="black"><span style='white-space: nowrap'>g</span></font></i></code>
+ is lost.
+Upon return it represents the smooth function
+<small>@(@
+g : \B{R}^{n + s} \rightarrow  \B{R}^{m + s}
+@)@</small> is defined by
+<small>@[@
+
+g( x , u )
+=
+\left[ \begin{array}{c} y(x, u) \\ z(x, u) \end{array} \right]
+
+@]@</small>
+were <small>@(@
+y(x, u)
+@)@</small> and <small>@(@
+z(x, u)
+@)@</small> are defined below.
+
+<br>
+<br>
+<b><a name="g.z(x, u)" id="g.z(x, u)">z(x, u)</a></b>
+<br>
+Define the smooth function
+<small>@(@
+z : \B{R}^{n + s} \rightarrow  \B{R}^s
+@)@</small> by
+<small>@[@
+
+z_i ( x , u ) = \zeta_i ( x , u_0 , \ldots , u_{i-1} )
+
+@]@</small>
+Note that the partial of <small>@(@
+z_i
+@)@</small> with respect to <small>@(@
+u_j
+@)@</small> is zero
+for <small>@(@
+j \geq i
+@)@</small>.
+
+<br>
+<br>
+<b><a name="g.y(x, u)" id="g.y(x, u)">y(x, u)</a></b>
+<br>
+There is a smooth function
+<small>@(@
+y : \B{R}^{n + s} \rightarrow  \B{R}^m
+@)@</small>
+such that <small>@(@
+y( x , u ) = f(x)
+@)@</small> whenever <small>@(@
+u = a(x)
+@)@</small>.
+
+<br>
+<br>
+<b><big><a name="Affine Approximation" id="Affine Approximation">Affine Approximation</a></big></b>
+<br>
+We define the affine approximations
+<small>@[@
+
+\begin{array}{rcl}
+y[ \hat{x} ]( x , u )
+& = &
+y ( \hat{x}, a( \hat{x} ) )
+	+ \partial_x y ( \hat{x}, a( \hat{x} ) ) ( x - \hat{x} )
+	+ \partial_u y ( \hat{x}, a( \hat{x} ) ) ( u - a( \hat{x} ) )
+\\
+z[ \hat{x} ]( x , u )
+& = &
+z ( \hat{x}, a( \hat{x} ) )
+	+ \partial_x z ( \hat{x}, a( \hat{x} ) ) ( x - \hat{x} )
+	+ \partial_u z ( \hat{x}, a( \hat{x} ) ) ( u - a( \hat{x} ) )
+\end{array}
+
+@]@</small>
+It follows that
+<small>@[@
+
+\begin{array}{rcl}
+y( x , u )
+& = &
+y[ \hat{x} ]( x , u ) + o ( x - \hat{x}, u - a( \hat{x} ) )
+\\
+z( x , u )
+& = &
+z[ \hat{x} ]( x , u ) + o ( x - \hat{x}, u - a( \hat{x} ) )
+\end{array}
+
+@]@</small>
+
+<br>
+<br>
+<b><big><a name="Abs-normal Approximation" id="Abs-normal Approximation">Abs-normal Approximation</a></big></b>
+
+
+<br>
+<br>
+<b><a name="Abs-normal Approximation.Approximating a(x)" id="Abs-normal Approximation.Approximating a(x)">Approximating a(x)</a></b>
+<br>
+The function <small>@(@
+a(x)
+@)@</small> is not smooth, but it is equal to
+<small>@(@
+| z(x, u) |
+@)@</small> when <small>@(@
+u = a(x)
+@)@</small>.
+Furthermore
+<small>@[@
+
+z[ \hat{x} ]( x , u )
+=
+z ( \hat{x}, a( \hat{x} ) )
+	+ \partial_x z ( \hat{x}, a( \hat{x} ) ) ( x - \hat{x} )
+	+ \partial_u z ( \hat{x}, a( \hat{x} ) ) ( u - a( \hat{x} ) )
+
+@]@</small>
+The partial of <small>@(@
+z_i
+@)@</small> with respect to <small>@(@
+u_j
+@)@</small> is zero
+for <small>@(@
+j \geq i
+@)@</small>. It follows that
+<small>@[@
+
+z_i [ \hat{x} ]( x , u )
+=
+z_i ( \hat{x}, a( \hat{x} ) )
+	+ \partial_x z_i ( \hat{x}, a( \hat{x} ) ) ( x - \hat{x} )
+	+ \sum_{j < i} \partial_{u(j)}
+		z_i ( \hat{x}, a( \hat{x} ) ) ( u_j - a_j ( \hat{x} ) )
+
+@]@</small>
+Considering the case <small>@(@
+i = 0
+@)@</small> we define
+<small>@[@
+
+a_0 [ \hat{x} ]( x )
+=
+| z_0 [ \hat{x} ]( x , u ) |
+=
+\left|
+	z_0 ( \hat{x}, a( \hat{x} ) )
+	+ \partial_x z_0 ( \hat{x}, a( \hat{x} ) ) ( x - \hat{x} )
+\right|
+
+@]@</small>
+It follows that
+<small>@[@
+
+	a_0 (x) = a_0 [ \hat{x} ]( x ) + o ( x - \hat{x} )
+
+@]@</small>
+In general, we define <small>@(@
+a_i [ \hat{x} ]
+@)@</small> using
+<small>@(@
+a_j [ \hat{x} ]
+@)@</small> for <small>@(@
+j < i
+@)@</small> as follows:
+<small>@[@
+
+a_i [ \hat{x} ]( x )
+=
+\left |
+	z_i ( \hat{x}, a( \hat{x} ) )
+	+ \partial_x z_i ( \hat{x}, a( \hat{x} ) ) ( x - \hat{x} )
+	+ \sum_{j < i} \partial_{u(j)}
+		z_i ( \hat{x}, a( \hat{x} ) )
+			( a_j [ \hat{x} ] ( x )  - a_j ( \hat{x} ) )
+\right|
+
+@]@</small>
+It follows that
+<small>@[@
+
+	a (x) = a[ \hat{x} ]( x ) + o ( x - \hat{x} )
+
+@]@</small>
+Note that in the case where <small>@(@
+z(x, u)
+@)@</small> and <small>@(@
+y(x, u)
+@)@</small> are
+affine,
+<small>@[@
+
+	a[ \hat{x} ]( x ) = a( x )
+
+@]@</small>
+
+
+<br>
+<br>
+<b><a name="Abs-normal Approximation.Approximating f(x)" id="Abs-normal Approximation.Approximating f(x)">Approximating f(x)</a></b>
+
+<br>
+<small>@[@
+
+f(x)
+=
+y ( x , a(x ) )
+=
+y [ \hat{x} ] ( x , a[ \hat{x} ] ( x ) )
++ o( \Delta x )
+
+@]@</small><br>
+<b><big><a name="Correspondence to Literature" id="Correspondence to Literature">Correspondence to Literature</a></big></b>
+<br>
+Using the notation
+<small>@(@
+Z = \partial_x z(\hat{x}, \hat{u})
+@)@</small>,
+<small>@(@
+L = \partial_u z(\hat{x}, \hat{u})
+@)@</small>,
+<small>@(@
+J = \partial_x y(\hat{x}, \hat{u})
+@)@</small>,
+<small>@(@
+Y = \partial_u y(\hat{x}, \hat{u})
+@)@</small>,
+the approximation for <small>@(@
+z
+@)@</small> and <small>@(@
+y
+@)@</small> are
+<small>@[@
+
+\begin{array}{rcl}
+z[ \hat{x} ]( x , u )
+& = &
+z ( \hat{x}, a( \hat{x} ) ) + Z ( x - \hat{x} ) + L ( u - a( \hat{x} ) )
+\\
+y[ \hat{x} ]( x , u )
+& = &
+y ( \hat{x}, a( \hat{x} ) ) + J ( x - \hat{x} ) + Y ( u - a( \hat{x} ) )
+\end{array}
+
+@]@</small>
+Moving the terms with <small>@(@
+\hat{x}
+@)@</small> together, we have
+<small>@[@
+
+\begin{array}{rcl}
+z[ \hat{x} ]( x , u )
+& = &
+z ( \hat{x}, a( \hat{x} ) ) - Z \hat{x} - L a( \hat{x} )  + Z x + L u
+\\
+y[ \hat{x} ]( x , u )
+& = &
+y ( \hat{x}, a( \hat{x} ) ) - J \hat{x} - Y a( \hat{x} )  + J x + Y u
+\end{array}
+
+@]@</small>
+Using the notation
+<small>@(@
+c = z ( \hat{x}, \hat{u} ) - Z \hat{x} - L \hat{u}
+@)@</small>,
+<small>@(@
+b = y ( \hat{x}, \hat{u} ) - J \hat{x} - Y \hat{u}
+@)@</small>,
+we have
+<small>@[@
+
+\begin{array}{rcl}
+z[ \hat{x} ]( x , u ) & = & c + Z x + L u
+\\
+y[ \hat{x} ]( x , u ) & = & b + J x + Y u
+\end{array}
+
+@]@</small>
+Considering the affine case, where the approximations are exact,
+and choosing <small>@(@
+u = a(x) = |z(x, u)|
+@)@</small>, we obtain
+<small>@[@
+
+\begin{array}{rcl}
+z( x , a(x ) ) & = & c + Z x + L |z( x , a(x ) )|
+\\
+y( x , a(x ) ) & = & b + J x + Y |z( x , a(x ) )|
+\end{array}
+
+@]@</small>
+This is Equation (2) of the
+<a href="abs_normal.htm#Reference" target="_top"><span style='white-space: nowrap'>reference</span></a>
+.
+
+
+<br>
+<br>
+<b><big><a name="Example" id="Example">Example</a></big></b>
+<br>
+The file <a href="abs_get_started.cpp.htm" target="_top"><span style='white-space: nowrap'>abs_get_started.cpp</span></a>
+ contains
+an example and test using this operation.
+
+
+<hr>Input File: cppad/core/abs_normal_fun.hpp
+
+</body>
+</html>

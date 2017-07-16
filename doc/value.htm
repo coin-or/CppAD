@@ -1,0 +1,214 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>Convert From an AD Type to its Base Type</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Convert From an AD Type to its Base Type">
+<meta name="keywords" id="keywords" content=" convert from ad type to its base Value syntax see also purpose x b operation sequence restriction example ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_value_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://coin-or.github.io/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="convert.htm" target="_top">Prev</a>
+</td><td><a href="value.cpp.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>AD</option>
+<option>Convert</option>
+<option>Value</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>CppAD-&gt;</option>
+<option>Install</option>
+<option>Introduction</option>
+<option>AD</option>
+<option>ADFun</option>
+<option>preprocessor</option>
+<option>multi_thread</option>
+<option>utility</option>
+<option>ipopt_solve</option>
+<option>Example</option>
+<option>speed</option>
+<option>Appendix</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>AD-&gt;</option>
+<option>ad_ctor</option>
+<option>ad_assign</option>
+<option>Convert</option>
+<option>ADValued</option>
+<option>BoolValued</option>
+<option>VecAD</option>
+<option>base_require</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>Convert-&gt;</option>
+<option>Value</option>
+<option>Integer</option>
+<option>ad_to_string</option>
+<option>ad_input</option>
+<option>ad_output</option>
+<option>PrintFor</option>
+<option>Var2Par</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down0(this)'>
+<option>Value-&gt;</option>
+<option>value.cpp</option>
+</select>
+</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Syntax</option>
+<option>See Also</option>
+<option>Purpose</option>
+<option>x</option>
+<option>b</option>
+<option>Operation Sequence</option>
+<option>Restriction</option>
+<option>Example</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>Convert From an AD Type to its Base Type</big></big></b></center>
+<br>
+<b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
+
+<br>
+
+<code><i><font color="black"><span style='white-space: nowrap'>b</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;Value(</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+
+
+<br>
+<br>
+<b><big><a name="See Also" id="See Also">See Also</a></big></b>
+
+<br>
+<a href="var2par.htm" target="_top"><span style='white-space: nowrap'>var2par</span></a>
+
+
+
+<br>
+<br>
+<b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
+<br>
+Converts from an AD type to the corresponding
+<a href="glossary.htm#Base Type" target="_top"><span style='white-space: nowrap'>base&nbsp;type</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="x" id="x">x</a></big></b>
+<br>
+The argument 
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+<br>
+<b><big><a name="b" id="b">b</a></big></b>
+<br>
+The return value 
+<code><i><font color="black"><span style='white-space: nowrap'>b</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>b</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+<br>
+<b><big><a name="Operation Sequence" id="Operation Sequence">Operation Sequence</a></big></b>
+<br>
+The result of this operation is not an
+<a href="glossary.htm#AD of Base" target="_top"><span style='white-space: nowrap'>AD&nbsp;of&nbsp;Base</span></a>
+ object.
+Thus it will not be recorded as part of an
+AD of 
+<code><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i></code>
+
+<a href="glossary.htm#Operation.Sequence" target="_top"><span style='white-space: nowrap'>operation&nbsp;sequence</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="Restriction" id="Restriction">Restriction</a></big></b>
+<br>
+If the argument 
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+ is a
+<a href="glossary.htm#Variable" target="_top"><span style='white-space: nowrap'>variable</span></a>
+ its dependency information
+would not be included in the <code><font color="blue">Value</font></code> result (see above).
+For this reason,
+the argument 
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+ must be a <a href="glossary.htm#Parameter" target="_top"><span style='white-space: nowrap'>parameter</span></a>
+; i.e.,
+it cannot depend on the current
+<a href="glossary.htm#Tape.Independent Variable" target="_top"><span style='white-space: nowrap'>independent&nbsp;variables</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="Example" id="Example">Example</a></big></b>
+
+<br>
+The file
+<a href="value.cpp.htm" target="_top"><span style='white-space: nowrap'>value.cpp</span></a>
+
+contains an example and test of this operation.
+
+
+<hr>Input File: cppad/core/value.hpp
+
+</body>
+</html>

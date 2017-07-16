@@ -1,0 +1,218 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>abs_normal simplex_method: Example and Test</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="abs_normal simplex_method: Example and Test">
+<meta name="keywords" id="keywords" content=" abs_normal simplex_method: example test problem source ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_simplex_method.cpp_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://coin-or.github.io/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="simplex_method.htm" target="_top">Prev</a>
+</td><td><a href="simplex_method.hpp.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>ADFun</option>
+<option>abs_normal</option>
+<option>simplex_method</option>
+<option>simplex_method.cpp</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>ADFun-&gt;</option>
+<option>record_adfun</option>
+<option>drivers</option>
+<option>Forward</option>
+<option>Reverse</option>
+<option>sparsity_pattern</option>
+<option>sparse_derivative</option>
+<option>optimize</option>
+<option>abs_normal</option>
+<option>FunCheck</option>
+<option>check_for_nan</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>abs_normal-&gt;</option>
+<option>abs_normal_fun</option>
+<option>abs_print_mat</option>
+<option>abs_eval</option>
+<option>simplex_method</option>
+<option>lp_box</option>
+<option>abs_min_linear</option>
+<option>min_nso_linear</option>
+<option>qp_interior</option>
+<option>qp_box</option>
+<option>abs_min_quad</option>
+<option>min_nso_quad</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>simplex_method-&gt;</option>
+<option>simplex_method.cpp</option>
+<option>simplex_method.hpp</option>
+</select>
+</td>
+<td>simplex_method.cpp</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Problem</option>
+<option>Source</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@
+
+
+<center><b><big><big>abs_normal simplex_method: Example and Test</big></big></b></center>
+<br>
+<b><big><a name="Problem" id="Problem">Problem</a></big></b>
+<br>
+Our original problem is
+<small>@[@
+
+	\R{minimize} \; | u - 1| \; \R{w.r.t} \; u \in \B{R}
+
+@]@</small>
+We reformulate this as the following problem
+<small>@[@
+
+\begin{array}{rlr}
+	\R{minimize}      & v             & \R{w.r.t} \; (u,v) \in \B{R}^2 \\
+	\R{subject \; to} &  u - 1 \leq v \\
+	                  &  1 - u \leq v
+\end{array}
+
+@]@</small>
+We know that the value of <small>@(@
+v
+@)@</small> at the solution is greater than
+or equal zero. Hence we can reformulate this problem as
+<small>@[@
+
+\begin{array}{rlr}
+\R{minimize}      & v             & \R{w.r.t} \; ( u_- , u_+ , v) \in \B{R}_+^3 \\
+\R{subject \; to} & u_+ - u_- - 1  \leq v \\
+	              &  1 - u_+ + u_- \leq v
+\end{array}
+
+@]@</small>
+This is equivalent to
+<small>@[@
+
+\begin{array}{rlr}
+	\R{minimize}
+	& (0, 0, 1) \cdot ( u_+, u_- , v)^T  & \R{w.r.t} \; (u,v) \in \B{R}_+^3 \\
+\R{subject \; to}
+	&
+	\left( \begin{array}{ccc}
+		+1 & -1 & -1 \\
+		-1 & +1 & +1
+	\end{array} \right)
+	\left( \begin{array}{c} u_+ \\ u_- \\ v \end{array} \right)
+	+
+	\left( \begin{array}{c} -1 \\ 1 \end{array} \right)
+	\leq
+	0
+\end{array}
+
+@]@</small>
+which is in the form expected by <a href="simplex_method.htm" target="_top"><span style='white-space: nowrap'>simplex_method</span></a>
+.
+
+
+<br>
+<br>
+<b><big><a name="Source" id="Source">Source</a></big></b>
+
+<pre><tt>
+<b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;limits&gt;</font>
+<b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/utility/vector.hpp&gt;</font>
+<b><font color="#000080"># include</font></b> <font color="#FF0000">"simplex_method.hpp"</font>
+
+<font color="#009900">bool</font> <b><font color="#000000">simplex_method</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
+<font color="#FF0000">{</font>    <font color="#009900">bool</font> ok <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
+     <b><font color="#0000FF">typedef</font></b> CppAD<font color="#990000">::</font><font color="#008080">vector&lt;double&gt;</font> vector<font color="#990000">;</font>
+     <font color="#009900">double</font> eps99 <font color="#990000">=</font> <font color="#993399">99.0</font> <font color="#990000">*</font> std<font color="#990000">::</font>numeric_limits<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;::</font><b><font color="#000000">epsilon</font></b><font color="#990000">();</font>
+     <i><font color="#9A1900">//</font></i>
+     <font color="#008080">size_t</font> n <font color="#990000">=</font> <font color="#993399">3</font><font color="#990000">;</font>
+     <font color="#008080">size_t</font> m <font color="#990000">=</font> <font color="#993399">2</font><font color="#990000">;</font>
+     <font color="#008080">vector</font> <b><font color="#000000">A</font></b><font color="#990000">(</font>m <font color="#990000">*</font> n<font color="#990000">),</font> <b><font color="#000000">b</font></b><font color="#990000">(</font>m<font color="#990000">),</font> <b><font color="#000000">c</font></b><font color="#990000">(</font>n<font color="#990000">),</font> <b><font color="#000000">xout</font></b><font color="#990000">(</font>n<font color="#990000">);</font>
+     A<font color="#990000">[</font> <font color="#993399">0</font> <font color="#990000">*</font> n <font color="#990000">+</font> <font color="#993399">0</font> <font color="#990000">]</font> <font color="#990000">=</font>  <font color="#993399">1.0</font><font color="#990000">;</font> <i><font color="#9A1900">// A(0,0)</font></i>
+     A<font color="#990000">[</font> <font color="#993399">0</font> <font color="#990000">*</font> n <font color="#990000">+</font> <font color="#993399">1</font> <font color="#990000">]</font> <font color="#990000">=</font> <font color="#990000">-</font><font color="#993399">1.0</font><font color="#990000">;</font> <i><font color="#9A1900">// A(0,1)</font></i>
+     A<font color="#990000">[</font> <font color="#993399">0</font> <font color="#990000">*</font> n <font color="#990000">+</font> <font color="#993399">2</font> <font color="#990000">]</font> <font color="#990000">=</font> <font color="#990000">-</font><font color="#993399">1.0</font><font color="#990000">;</font> <i><font color="#9A1900">// A(0,2)</font></i>
+     <i><font color="#9A1900">//</font></i>
+     A<font color="#990000">[</font> <font color="#993399">1</font> <font color="#990000">*</font> n <font color="#990000">+</font> <font color="#993399">0</font> <font color="#990000">]</font> <font color="#990000">=</font> <font color="#990000">-</font><font color="#993399">1.0</font><font color="#990000">;</font> <i><font color="#9A1900">// A(1,0)</font></i>
+     A<font color="#990000">[</font> <font color="#993399">1</font> <font color="#990000">*</font> n <font color="#990000">+</font> <font color="#993399">1</font> <font color="#990000">]</font> <font color="#990000">=</font> <font color="#990000">+</font><font color="#993399">1.0</font><font color="#990000">;</font> <i><font color="#9A1900">// A(1,1)</font></i>
+     A<font color="#990000">[</font> <font color="#993399">1</font> <font color="#990000">*</font> n <font color="#990000">+</font> <font color="#993399">2</font> <font color="#990000">]</font> <font color="#990000">=</font> <font color="#990000">-</font><font color="#993399">1.0</font><font color="#990000">;</font> <i><font color="#9A1900">// A(1,2)</font></i>
+     <i><font color="#9A1900">//</font></i>
+     b<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font>           <font color="#990000">=</font> <font color="#990000">-</font><font color="#993399">1.0</font><font color="#990000">;</font>
+     b<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font>           <font color="#990000">=</font>  <font color="#993399">1.0</font><font color="#990000">;</font>
+     <i><font color="#9A1900">//</font></i>
+     c<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font>           <font color="#990000">=</font>  <font color="#993399">0.0</font><font color="#990000">;</font>
+     c<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font>           <font color="#990000">=</font>  <font color="#993399">0.0</font><font color="#990000">;</font>
+     c<font color="#990000">[</font><font color="#993399">2</font><font color="#990000">]</font>           <font color="#990000">=</font>  <font color="#993399">1.0</font><font color="#990000">;</font>
+     <i><font color="#9A1900">//</font></i>
+     <font color="#008080">size_t</font> maxitr  <font color="#990000">=</font> <font color="#993399">10</font><font color="#990000">;</font>
+     <font color="#008080">size_t</font> level   <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
+     <i><font color="#9A1900">//</font></i>
+     ok <font color="#990000">&amp;=</font> CppAD<font color="#990000">::</font><b><font color="#000000">simplex_method</font></b><font color="#990000">(</font>level<font color="#990000">,</font> A<font color="#990000">,</font> b<font color="#990000">,</font> c<font color="#990000">,</font>  maxitr<font color="#990000">,</font> xout<font color="#990000">);</font>
+     <i><font color="#9A1900">//</font></i>
+     <i><font color="#9A1900">// check optimal value for u</font></i>
+     ok <font color="#990000">&amp;=</font> std<font color="#990000">::</font><b><font color="#000000">fabs</font></b><font color="#990000">(</font> xout<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">-</font> <font color="#993399">1.0</font> <font color="#990000">)</font> <font color="#990000">&lt;</font> eps99<font color="#990000">;</font>
+     <i><font color="#9A1900">//</font></i>
+     <i><font color="#9A1900">// check optimal value for v</font></i>
+     ok <font color="#990000">&amp;=</font> std<font color="#990000">::</font><b><font color="#000000">fabs</font></b><font color="#990000">(</font> xout<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">)</font> <font color="#990000">&lt;</font> eps99<font color="#990000">;</font>
+     <i><font color="#9A1900">//</font></i>
+     <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
+<font color="#FF0000">}</font></tt></pre>
+
+<hr>Input File: example/abs_normal/simplex_method.cpp
+
+</body>
+</html>

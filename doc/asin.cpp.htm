@@ -1,0 +1,174 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>The AD asin Function: Example and Test</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="The AD asin Function: Example and Test">
+<meta name="keywords" id="keywords" content=" the ad asin function: example test ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_asin.cpp_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://coin-or.github.io/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="asin.htm" target="_top">Prev</a>
+</td><td><a href="atan.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>AD</option>
+<option>ADValued</option>
+<option>unary_standard_math</option>
+<option>asin</option>
+<option>asin.cpp</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>ADValued-&gt;</option>
+<option>Arithmetic</option>
+<option>unary_standard_math</option>
+<option>binary_math</option>
+<option>CondExp</option>
+<option>Discrete</option>
+<option>numeric_limits</option>
+<option>atomic</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>unary_standard_math-&gt;</option>
+<option>acos</option>
+<option>asin</option>
+<option>atan</option>
+<option>cos</option>
+<option>cosh</option>
+<option>exp</option>
+<option>log</option>
+<option>log10</option>
+<option>sin</option>
+<option>sinh</option>
+<option>sqrt</option>
+<option>tan</option>
+<option>tanh</option>
+<option>abs</option>
+<option>acosh</option>
+<option>asinh</option>
+<option>atanh</option>
+<option>erf</option>
+<option>expm1</option>
+<option>log1p</option>
+<option>sign</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>asin-&gt;</option>
+<option>asin.cpp</option>
+</select>
+</td>
+<td>asin.cpp</td>
+<td>Headings</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>The AD asin Function: Example and Test</big></big></b></center>
+<code><font color="blue"><pre><tt>
+<b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/cppad.hpp&gt;</font>
+
+<font color="#009900">bool</font> <b><font color="#000000">asin</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
+<font color="#FF0000">{</font>    <font color="#009900">bool</font> ok <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
+
+     <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>AD<font color="#990000">;</font>
+     <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>NearEqual<font color="#990000">;</font>
+
+     <i><font color="#9A1900">// 10 times machine epsilon</font></i>
+     <font color="#009900">double</font> eps <font color="#990000">=</font> <font color="#993399">10</font><font color="#990000">.</font> <font color="#990000">*</font> std<font color="#990000">::</font>numeric_limits<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;::</font><b><font color="#000000">epsilon</font></b><font color="#990000">();</font>
+
+     <i><font color="#9A1900">// domain space vector</font></i>
+     <font color="#008080">size_t</font> n  <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font>
+     <font color="#009900">double</font> x0 <font color="#990000">=</font> <font color="#993399">0.5</font><font color="#990000">;</font>
+     <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font>AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;)</font> <b><font color="#000000">x</font></b><font color="#990000">(</font>n<font color="#990000">);</font>
+     x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font>      <font color="#990000">=</font> x0<font color="#990000">;</font>
+
+     <i><font color="#9A1900">// declare independent variables and start tape recording</font></i>
+     CppAD<font color="#990000">::</font><b><font color="#000000">Independent</font></b><font color="#990000">(</font>x<font color="#990000">);</font>
+
+     <i><font color="#9A1900">// a temporary value</font></i>
+     <font color="#008080">AD&lt;double&gt;</font> sin_of_x0 <font color="#990000">=</font> CppAD<font color="#990000">::</font><b><font color="#000000">sin</font></b><font color="#990000">(</font>x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]);</font>
+
+     <i><font color="#9A1900">// range space vector</font></i>
+     <font color="#008080">size_t</font> m <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font>
+     <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font>AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;)</font> <b><font color="#000000">y</font></b><font color="#990000">(</font>m<font color="#990000">);</font>
+     y<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> CppAD<font color="#990000">::</font><b><font color="#000000">asin</font></b><font color="#990000">(</font>sin_of_x0<font color="#990000">);</font>
+
+     <i><font color="#9A1900">// create f: x -&gt; y and stop tape recording</font></i>
+     CppAD<font color="#990000">::</font><font color="#008080">ADFun&lt;double&gt;</font> <b><font color="#000000">f</font></b><font color="#990000">(</font>x<font color="#990000">,</font> y<font color="#990000">);</font>
+
+     <i><font color="#9A1900">// check value</font></i>
+     ok <font color="#990000">&amp;=</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>y<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">,</font> x0<font color="#990000">,</font>  eps<font color="#990000">,</font> eps<font color="#990000">);</font>
+
+     <i><font color="#9A1900">// forward computation of first partial w.r.t. x[0]</font></i>
+     <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font><font color="#009900">double</font><font color="#990000">)</font> <b><font color="#000000">dx</font></b><font color="#990000">(</font>n<font color="#990000">);</font>
+     <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font><font color="#009900">double</font><font color="#990000">)</font> <b><font color="#000000">dy</font></b><font color="#990000">(</font>m<font color="#990000">);</font>
+     dx<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">.;</font>
+     dy    <font color="#990000">=</font> f<font color="#990000">.</font><b><font color="#000000">Forward</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">,</font> dx<font color="#990000">);</font>
+     ok   <font color="#990000">&amp;=</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>dy<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">],</font> <font color="#993399">1</font><font color="#990000">.,</font> eps<font color="#990000">,</font> eps<font color="#990000">);</font>
+
+     <i><font color="#9A1900">// reverse computation of derivative of y[0]</font></i>
+     <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font><font color="#009900">double</font><font color="#990000">)</font>  <b><font color="#000000">w</font></b><font color="#990000">(</font>m<font color="#990000">);</font>
+     <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font><font color="#009900">double</font><font color="#990000">)</font> <b><font color="#000000">dw</font></b><font color="#990000">(</font>n<font color="#990000">);</font>
+     w<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font>  <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">.;</font>
+     dw    <font color="#990000">=</font> f<font color="#990000">.</font><b><font color="#000000">Reverse</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">,</font> w<font color="#990000">);</font>
+     ok   <font color="#990000">&amp;=</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>dw<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">],</font> <font color="#993399">1</font><font color="#990000">.,</font> eps<font color="#990000">,</font> eps<font color="#990000">);</font>
+
+     <i><font color="#9A1900">// use a VecAD&lt;Base&gt;::reference object with asin</font></i>
+     CppAD<font color="#990000">::</font><font color="#008080">VecAD&lt;double&gt;</font> <b><font color="#000000">v</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">);</font>
+     <font color="#008080">AD&lt;double&gt;</font> <b><font color="#000000">zero</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">);</font>
+     v<font color="#990000">[</font>zero<font color="#990000">]</font> <font color="#990000">=</font> sin_of_x0<font color="#990000">;</font>
+     <font color="#008080">AD&lt;double&gt;</font> result <font color="#990000">=</font> CppAD<font color="#990000">::</font><b><font color="#000000">asin</font></b><font color="#990000">(</font>v<font color="#990000">[</font>zero<font color="#990000">]);</font>
+     ok     <font color="#990000">&amp;=</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>result<font color="#990000">,</font> x0<font color="#990000">,</font> eps<font color="#990000">,</font> eps<font color="#990000">);</font>
+
+     <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
+<font color="#FF0000">}</font>
+</tt></pre>
+</font></code>
+<hr>Input File: example/general/asin.cpp
+
+</body>
+</html>

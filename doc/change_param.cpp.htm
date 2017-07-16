@@ -1,0 +1,153 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>Computing a Jacobian With Constants that Change</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Computing a Jacobian With Constants that Change">
+<meta name="keywords" id="keywords" content=" computing jacobian with constants that change multiple Ad level purpose ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_change_param.cpp_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://coin-or.github.io/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="mul_level.cpp.htm" target="_top">Prev</a>
+</td><td><a href="ode_stiff.cpp.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>Example</option>
+<option>General</option>
+<option>mul_level</option>
+<option>change_param.cpp</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>Example-&gt;</option>
+<option>get_started.cpp</option>
+<option>General</option>
+<option>ExampleUtility</option>
+<option>ListAllExamples</option>
+<option>testvector</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>General-&gt;</option>
+<option>ad_fun.cpp</option>
+<option>ad_in_c.cpp</option>
+<option>conj_grad.cpp</option>
+<option>cppad_eigen.hpp</option>
+<option>hes_minor_det.cpp</option>
+<option>hes_lu_det.cpp</option>
+<option>interface2c.cpp</option>
+<option>jac_minor_det.cpp</option>
+<option>jac_lu_det.cpp</option>
+<option>mul_level</option>
+<option>ode_stiff.cpp</option>
+<option>mul_level_ode.cpp</option>
+<option>mul_level_adolc_ode.cpp</option>
+<option>ode_taylor.cpp</option>
+<option>stack_machine.cpp</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>mul_level-&gt;</option>
+<option>mul_level.cpp</option>
+<option>change_param.cpp</option>
+</select>
+</td>
+<td>change_param.cpp</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Purpose</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>Computing a Jacobian With Constants that Change</big></big></b></center>
+<br>
+<b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
+<br>
+In this example we use two levels of taping so that a derivative
+can have constant parameters that can be changed. To be specific,
+we consider the function <small>@(@
+f : \B{R}^2 \rightarrow \B{R}^2
+@)@</small>
+<small>@[@
+
+f(x) = p \left( \begin{array}{c}
+	\sin( x_0 ) \\
+	\sin( x_1 )
+\end{array} \right)
+
+@]@</small>
+were <small>@(@
+p \in \B{R}
+@)@</small> is a parameter.
+The Jacobian of this function is
+<small>@[@
+
+g(x,p) = p \left( \begin{array}{cc}
+	\cos( x_0 ) & 0 \\
+	0           & \cos( x_1 )
+\end{array} \right)
+
+@]@</small>
+In this example we use two levels of AD to avoid computing
+the partial of <small>@(@
+f(x)
+@)@</small> with respect to <small>@(@
+p
+@)@</small>,
+but still allow for the evaluation of <small>@(@
+g(x, p)
+@)@</small>
+at different values of <small>@(@
+p
+@)@</small>.
+
+
+<hr>Input File: example/general/change_param.cpp
+
+</body>
+</html>

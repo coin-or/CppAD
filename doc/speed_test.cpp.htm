@@ -1,0 +1,187 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>speed_test: Example and test</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="speed_test: Example and test">
+<meta name="keywords" id="keywords" content=" speed_test: example test speed_test ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_speed_test.cpp_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://coin-or.github.io/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="speed_test.htm" target="_top">Prev</a>
+</td><td><a href="speedtest.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>utility</option>
+<option>speed_test</option>
+<option>speed_test.cpp</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>CppAD-&gt;</option>
+<option>Install</option>
+<option>Introduction</option>
+<option>AD</option>
+<option>ADFun</option>
+<option>preprocessor</option>
+<option>multi_thread</option>
+<option>utility</option>
+<option>ipopt_solve</option>
+<option>Example</option>
+<option>speed</option>
+<option>Appendix</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>utility-&gt;</option>
+<option>ErrorHandler</option>
+<option>NearEqual</option>
+<option>speed_test</option>
+<option>SpeedTest</option>
+<option>time_test</option>
+<option>test_boolofvoid</option>
+<option>NumericType</option>
+<option>CheckNumericType</option>
+<option>SimpleVector</option>
+<option>CheckSimpleVector</option>
+<option>nan</option>
+<option>pow_int</option>
+<option>Poly</option>
+<option>LuDetAndSolve</option>
+<option>RombergOne</option>
+<option>RombergMul</option>
+<option>Runge45</option>
+<option>Rosen34</option>
+<option>OdeErrControl</option>
+<option>OdeGear</option>
+<option>OdeGearControl</option>
+<option>CppAD_vector</option>
+<option>thread_alloc</option>
+<option>index_sort</option>
+<option>to_string</option>
+<option>set_union</option>
+<option>sparse_rc</option>
+<option>sparse_rcv</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>speed_test-&gt;</option>
+<option>speed_test.cpp</option>
+</select>
+</td>
+<td>speed_test.cpp</td>
+<td>Headings</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@
+
+
+
+<center><b><big><big>speed_test: Example and test</big></big></b></center>
+<code><font color="blue"><pre><tt><b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/utility/speed_test.hpp&gt;</font>
+<b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/utility/vector.hpp&gt;</font>
+
+<b><font color="#0000FF">namespace</font></b> <font color="#FF0000">{</font> <i><font color="#9A1900">// empty namespace</font></i>
+     <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">;</font>
+     <font color="#008080">vector&lt;double&gt;</font> a<font color="#990000">,</font> b<font color="#990000">,</font> c<font color="#990000">;</font>
+     <font color="#009900">void</font> <b><font color="#000000">test</font></b><font color="#990000">(</font><font color="#008080">size_t</font> size<font color="#990000">,</font> <font color="#008080">size_t</font> repeat<font color="#990000">)</font>
+     <font color="#FF0000">{</font>    <i><font color="#9A1900">// setup</font></i>
+          a<font color="#990000">.</font><b><font color="#000000">resize</font></b><font color="#990000">(</font>size<font color="#990000">);</font>
+          b<font color="#990000">.</font><b><font color="#000000">resize</font></b><font color="#990000">(</font>size<font color="#990000">);</font>
+          c<font color="#990000">.</font><b><font color="#000000">resize</font></b><font color="#990000">(</font>size<font color="#990000">);</font>
+          <font color="#008080">size_t</font> i  <font color="#990000">=</font> size<font color="#990000">;;</font>
+          <b><font color="#0000FF">while</font></b><font color="#990000">(</font>i<font color="#990000">)</font>
+          <font color="#FF0000">{</font>    <font color="#990000">--</font>i<font color="#990000">;</font>
+               a<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> i<font color="#990000">;</font>
+               b<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">2</font> <font color="#990000">*</font> i<font color="#990000">;</font>
+               c<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">0.0</font><font color="#990000">;</font>
+          <font color="#FF0000">}</font>
+          <i><font color="#9A1900">// operations we are timing</font></i>
+          <b><font color="#0000FF">while</font></b><font color="#990000">(</font>repeat<font color="#990000">--)</font>
+          <font color="#FF0000">{</font>    i <font color="#990000">=</font> size<font color="#990000">;;</font>
+               <b><font color="#0000FF">while</font></b><font color="#990000">(</font>i<font color="#990000">)</font>
+               <font color="#FF0000">{</font>    <font color="#990000">--</font>i<font color="#990000">;</font>
+                    c<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">+=</font> std<font color="#990000">::</font><b><font color="#000000">sqrt</font></b><font color="#990000">(</font>a<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">*</font> a<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">+</font> b<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">*</font> b<font color="#990000">[</font>i<font color="#990000">]);</font>
+               <font color="#FF0000">}</font>
+          <font color="#FF0000">}</font>
+     <font color="#FF0000">}</font>
+<font color="#FF0000">}</font>
+<font color="#009900">bool</font> <b><font color="#000000">speed_test</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
+<font color="#FF0000">{</font>    <font color="#009900">bool</font> ok <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
+
+     <i><font color="#9A1900">// size of the test cases</font></i>
+     <font color="#008080">vector&lt;size_t&gt;</font> <b><font color="#000000">size_vec</font></b><font color="#990000">(</font><font color="#993399">2</font><font color="#990000">);</font>
+     size_vec<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">40</font><font color="#990000">;</font>
+     size_vec<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">80</font><font color="#990000">;</font>
+
+     <i><font color="#9A1900">// minimum amount of time to run test</font></i>
+     <font color="#009900">double</font> time_min <font color="#990000">=</font> <font color="#993399">0.5</font><font color="#990000">;</font>
+
+     <i><font color="#9A1900">// run the test cases</font></i>
+     <font color="#008080">vector&lt;size_t&gt;</font> <b><font color="#000000">rate_vec</font></b><font color="#990000">(</font><font color="#993399">2</font><font color="#990000">);</font>
+     rate_vec <font color="#990000">=</font> CppAD<font color="#990000">::</font><b><font color="#000000">speed_test</font></b><font color="#990000">(</font>test<font color="#990000">,</font> size_vec<font color="#990000">,</font> time_min<font color="#990000">);</font>
+
+     <i><font color="#9A1900">// time per repeat loop (note counting setup or teardown)</font></i>
+     <font color="#009900">double</font> time_0 <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">.</font> <font color="#990000">/</font> <font color="#009900">double</font><font color="#990000">(</font>rate_vec<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]);</font>
+     <font color="#009900">double</font> time_1 <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">.</font> <font color="#990000">/</font> <font color="#009900">double</font><font color="#990000">(</font>rate_vec<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]);</font>
+
+     <i><font color="#9A1900">// for this case, time should be linear w.r.t size</font></i>
+     <font color="#009900">double</font> check    <font color="#990000">=</font> <font color="#009900">double</font><font color="#990000">(</font>size_vec<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">])</font> <font color="#990000">*</font> time_0 <font color="#990000">/</font> <font color="#009900">double</font><font color="#990000">(</font>size_vec<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]);</font>
+     <font color="#009900">double</font> rel_diff <font color="#990000">=</font> <font color="#990000">(</font>check <font color="#990000">-</font> time_1<font color="#990000">)</font> <font color="#990000">/</font> time_1<font color="#990000">;</font>
+     ok             <font color="#990000">&amp;=</font> <font color="#990000">(</font>std<font color="#990000">::</font><b><font color="#000000">fabs</font></b><font color="#990000">(</font>rel_diff<font color="#990000">)</font> <font color="#990000">&lt;=</font> <font color="#990000">.</font><font color="#993399">1</font><font color="#990000">);</font>
+     <b><font color="#0000FF">if</font></b><font color="#990000">(</font> <font color="#990000">!</font> ok <font color="#990000">)</font>
+          std<font color="#990000">::</font>cout <font color="#990000">&lt;&lt;</font> std<font color="#990000">::</font>endl <font color="#990000">&lt;&lt;</font> <font color="#FF0000">"rel_diff = "</font> <font color="#990000">&lt;&lt;</font> rel_diff <font color="#990000">&lt;&lt;</font> std<font color="#990000">::</font>endl<font color="#990000">;</font>
+
+     a<font color="#990000">.</font><b><font color="#000000">clear</font></b><font color="#990000">();</font>
+     b<font color="#990000">.</font><b><font color="#000000">clear</font></b><font color="#990000">();</font>
+     c<font color="#990000">.</font><b><font color="#000000">clear</font></b><font color="#990000">();</font>
+     <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
+<font color="#FF0000">}</font></tt></pre>
+</font></code>
+<hr>Input File: speed/example/speed_test.cpp
+
+</body>
+</html>

@@ -1,0 +1,309 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>Replacing the CppAD Error Handler</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Replacing the CppAD Error Handler">
+<meta name="keywords" id="keywords" content=" replacing the cppad error handler replace assert exception Errorhandler syntax constructor parallel mode call info known line file exp msg example ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_errorhandler_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://coin-or.github.io/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="utility.htm" target="_top">Prev</a>
+</td><td><a href="error_handler.cpp.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>utility</option>
+<option>ErrorHandler</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>CppAD-&gt;</option>
+<option>Install</option>
+<option>Introduction</option>
+<option>AD</option>
+<option>ADFun</option>
+<option>preprocessor</option>
+<option>multi_thread</option>
+<option>utility</option>
+<option>ipopt_solve</option>
+<option>Example</option>
+<option>speed</option>
+<option>Appendix</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>utility-&gt;</option>
+<option>ErrorHandler</option>
+<option>NearEqual</option>
+<option>speed_test</option>
+<option>SpeedTest</option>
+<option>time_test</option>
+<option>test_boolofvoid</option>
+<option>NumericType</option>
+<option>CheckNumericType</option>
+<option>SimpleVector</option>
+<option>CheckSimpleVector</option>
+<option>nan</option>
+<option>pow_int</option>
+<option>Poly</option>
+<option>LuDetAndSolve</option>
+<option>RombergOne</option>
+<option>RombergMul</option>
+<option>Runge45</option>
+<option>Rosen34</option>
+<option>OdeErrControl</option>
+<option>OdeGear</option>
+<option>OdeGearControl</option>
+<option>CppAD_vector</option>
+<option>thread_alloc</option>
+<option>index_sort</option>
+<option>to_string</option>
+<option>set_union</option>
+<option>sparse_rc</option>
+<option>sparse_rcv</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down0(this)'>
+<option>ErrorHandler-&gt;</option>
+<option>error_handler.cpp</option>
+<option>cppad_assert</option>
+</select>
+</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Syntax</option>
+<option>Constructor</option>
+<option>---..Parallel Mode</option>
+<option>Call</option>
+<option>info</option>
+<option>handler</option>
+<option>known</option>
+<option>line</option>
+<option>file</option>
+<option>exp</option>
+<option>msg</option>
+<option>Example</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>Replacing the CppAD Error Handler</big></big></b></center>
+<br>
+<b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
+
+<br>
+
+<code><font color="blue"><span style='white-space: nowrap'>#&nbsp;include&nbsp;&lt;cppad/utility/error_handler.hpp&gt;<br>
+</span></font></code>
+
+<code><font color="blue"><span style='white-space: nowrap'>ErrorHandler&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>info</span></font></i><font color="blue"><span style='white-space: nowrap'>(</span></font><i><font color="black"><span style='white-space: nowrap'>handler</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+
+<code><font color="blue"><span style='white-space: nowrap'>ErrorHandler::Call(</span></font><i><font color="black"><span style='white-space: nowrap'>known</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>line</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>file</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>exp</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>msg</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+<br>
+<b><big><a name="Constructor" id="Constructor">Constructor</a></big></b>
+<br>
+When you construct a <code><font color="blue">ErrorHandler</font></code> object,
+the current CppAD error handler is replaced by 
+<code><i><font color="black"><span style='white-space: nowrap'>handler</span></font></i></code>
+.
+When the object is destructed, the previous CppAD error handler is restored.
+
+<br>
+<br>
+<b><a name="Constructor.Parallel Mode" id="Constructor.Parallel Mode">Parallel Mode</a></b>
+<br>
+The <code><font color="blue">ErrorHandler</font></code> constructor and destructor cannot be called in
+<a href="ta_in_parallel.htm" target="_top"><span style='white-space: nowrap'>parallel</span></a>
+ execution mode.
+Furthermore, this rule is not abided by, a raw C++ <code><font color="blue">assert</font></code>,
+instead of one that uses this error handler, will be generated.
+
+<br>
+<br>
+<b><big><a name="Call" id="Call">Call</a></big></b>
+<br>
+When <code><font color="blue">ErrorHandler::Call</font></code> is called,
+the current CppAD error handler is used to report an error.
+This starts out as a default error handler and can be replaced
+using the <code><font color="blue">ErrorHandler</font></code> constructor.
+
+<br>
+<br>
+<b><big><a name="info" id="info">info</a></big></b>
+<br>
+The object 
+<code><i><font color="black"><span style='white-space: nowrap'>info</span></font></i></code>
+ is used to store information
+that is necessary to restore the previous CppAD error handler.
+This is done when the destructor for 
+<code><i><font color="black"><span style='white-space: nowrap'>info</span></font></i></code>
+ is called.
+
+
+<br>
+<br>
+<b><big><a name="handler" id="handler">handler</a></big></b>
+<br>
+The argument 
+<code><i><font color="black"><span style='white-space: nowrap'>handler</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;void&nbsp;(*</span></font><i><font color="black"><span style='white-space: nowrap'>handler</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(bool,&nbsp;int,&nbsp;const&nbsp;char&nbsp;*,&nbsp;const&nbsp;char&nbsp;*,&nbsp;const&nbsp;char&nbsp;*);<br>
+</span></font></code>
+When an error is detected,
+it is called with the syntax
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>handler</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;(</span></font><i><font color="black"><span style='white-space: nowrap'>known</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>line</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>file</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>exp</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>msg</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+This routine should not return; i.e., upon detection of the error,
+the routine calling 
+<code><i><font color="black"><span style='white-space: nowrap'>handler</span></font></i></code>
+ does not know how to proceed.
+
+<br>
+<br>
+<b><big><a name="known" id="known">known</a></big></b>
+<br>
+The 
+<code><i><font color="black"><span style='white-space: nowrap'>handler</span></font></i></code>
+ argument 
+<code><i><font color="black"><span style='white-space: nowrap'>known</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bool&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>known</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+If it is true, the error being reported is from a know problem.
+
+<br>
+<br>
+<b><big><a name="line" id="line">line</a></big></b>
+<br>
+The 
+<code><i><font color="black"><span style='white-space: nowrap'>handler</span></font></i></code>
+ argument 
+<code><i><font color="black"><span style='white-space: nowrap'>line</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>line</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+It reports the source code line number where the error is detected.
+
+<br>
+<br>
+<b><big><a name="file" id="file">file</a></big></b>
+<br>
+The 
+<code><i><font color="black"><span style='white-space: nowrap'>handler</span></font></i></code>
+ argument 
+<code><i><font color="black"><span style='white-space: nowrap'>file</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;char&nbsp;*</span></font><i><font color="black"><span style='white-space: nowrap'>file</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+and is a <code><font color="blue">'\0'</font></code> terminated character vector.
+It reports the source code file where the error is detected.
+
+<br>
+<br>
+<b><big><a name="exp" id="exp">exp</a></big></b>
+<br>
+The 
+<code><i><font color="black"><span style='white-space: nowrap'>handler</span></font></i></code>
+ argument 
+<code><i><font color="black"><span style='white-space: nowrap'>exp</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;char&nbsp;*</span></font><i><font color="black"><span style='white-space: nowrap'>exp</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+and is a <code><font color="blue">'\0'</font></code> terminated character vector.
+It is a source code boolean expression that should have been true,
+but is false,
+and thereby causes this call to 
+<code><i><font color="black"><span style='white-space: nowrap'>handler</span></font></i></code>
+.
+
+<br>
+<br>
+<b><big><a name="msg" id="msg">msg</a></big></b>
+<br>
+The 
+<code><i><font color="black"><span style='white-space: nowrap'>handler</span></font></i></code>
+ argument 
+<code><i><font color="black"><span style='white-space: nowrap'>msg</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;char&nbsp;*</span></font><i><font color="black"><span style='white-space: nowrap'>msg</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+and is a <code><font color="blue">'\0'</font></code> terminated character vector.
+It reports the meaning of the error from the C++ programmers point of view.
+
+
+<br>
+<br>
+<b><big><a name="Example" id="Example">Example</a></big></b>
+<br>
+The file
+<a href="error_handler.cpp.htm" target="_top"><span style='white-space: nowrap'>error_handler.cpp</span></a>
+
+contains an example and test a test of using this routine.
+It returns true if it succeeds and false otherwise.
+
+
+<hr>Input File: cppad/utility/error_handler.hpp
+
+</body>
+</html>

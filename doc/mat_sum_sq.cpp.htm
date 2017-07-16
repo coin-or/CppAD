@@ -1,0 +1,151 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>Sum of the Elements of the Square of a Matrix: Example and Test</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Sum of the Elements of the Square of a Matrix: Example and Test">
+<meta name="keywords" id="keywords" content=" sum the elements square matrix: example test mat_sum_sq ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_mat_sum_sq.cpp_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://coin-or.github.io/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="mat_sum_sq.htm" target="_top">Prev</a>
+</td><td><a href="mat_sum_sq.hpp.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>speed</option>
+<option>speed_utility</option>
+<option>mat_sum_sq</option>
+<option>mat_sum_sq.cpp</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>speed-&gt;</option>
+<option>speed_main</option>
+<option>speed_utility</option>
+<option>speed_double</option>
+<option>speed_adolc</option>
+<option>speed_cppad</option>
+<option>speed_fadbad</option>
+<option>speed_sacado</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>speed_utility-&gt;</option>
+<option>det_by_lu</option>
+<option>det_of_minor</option>
+<option>det_by_minor</option>
+<option>det_33</option>
+<option>det_grad_33</option>
+<option>mat_sum_sq</option>
+<option>ode_evaluate</option>
+<option>sparse_jac_fun</option>
+<option>sparse_hes_fun</option>
+<option>uniform_01</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>mat_sum_sq-&gt;</option>
+<option>mat_sum_sq.cpp</option>
+<option>mat_sum_sq.hpp</option>
+</select>
+</td>
+<td>mat_sum_sq.cpp</td>
+<td>Headings</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@
+
+
+<center><b><big><big>Sum of the Elements of the Square of a Matrix: Example and Test</big></big></b></center>
+<code><font color="blue"><pre><tt><b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;vector&gt;</font>
+<b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cstddef&gt;</font>
+<b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/utility/vector.hpp&gt;</font>
+<b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/speed/mat_sum_sq.hpp&gt;</font>
+
+<font color="#009900">bool</font> <b><font color="#000000">mat_sum_sq</font></b><font color="#990000">()</font>
+<font color="#FF0000">{</font>    <font color="#009900">bool</font>   ok <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
+     <font color="#009900">double</font> x_00<font color="#990000">,</font> x_01<font color="#990000">,</font> x_10<font color="#990000">,</font> x_11<font color="#990000">,</font> check<font color="#990000">;</font>
+
+     <i><font color="#9A1900">// dimension of the matrices x, y, and the result z</font></i>
+     <font color="#008080">size_t</font> n <font color="#990000">=</font> <font color="#993399">2</font><font color="#990000">;</font>
+     CppAD<font color="#990000">::</font><font color="#008080">vector&lt;double&gt;</font> <b><font color="#000000">x</font></b><font color="#990000">(</font>n <font color="#990000">*</font> n<font color="#990000">),</font> <b><font color="#000000">y</font></b><font color="#990000">(</font>n <font color="#990000">*</font> n<font color="#990000">),</font> <b><font color="#000000">z</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">);</font>
+
+     <i><font color="#9A1900">// x = [ 1 2 ; 3 4 ]</font></i>
+     x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> x_00 <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">.;</font>
+     x<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">=</font> x_01 <font color="#990000">=</font> <font color="#993399">2</font><font color="#990000">.;</font>
+     x<font color="#990000">[</font><font color="#993399">2</font><font color="#990000">]</font> <font color="#990000">=</font> x_10 <font color="#990000">=</font> <font color="#993399">3</font><font color="#990000">.;</font>
+     x<font color="#990000">[</font><font color="#993399">3</font><font color="#990000">]</font> <font color="#990000">=</font> x_11 <font color="#990000">=</font> <font color="#993399">4</font><font color="#990000">.;</font>
+
+     <i><font color="#9A1900">// compute y = x * x and z = sum of elements in y</font></i>
+     CppAD<font color="#990000">::</font><b><font color="#000000">mat_sum_sq</font></b><font color="#990000">(</font>n<font color="#990000">,</font> x<font color="#990000">,</font> y<font color="#990000">,</font> z<font color="#990000">);</font>
+
+     <i><font color="#9A1900">// check y_00</font></i>
+     check <font color="#990000">=</font> x_00 <font color="#990000">*</font> x_00 <font color="#990000">+</font> x_01 <font color="#990000">*</font> x_10<font color="#990000">;</font>
+     ok   <font color="#990000">&amp;=</font> <font color="#990000">(</font>check <font color="#990000">==</font> y<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]);</font>
+
+     <i><font color="#9A1900">// check y_01</font></i>
+     check <font color="#990000">=</font> x_00 <font color="#990000">*</font> x_01 <font color="#990000">+</font> x_01 <font color="#990000">*</font> x_11<font color="#990000">;</font>
+     ok   <font color="#990000">&amp;=</font> <font color="#990000">(</font>check <font color="#990000">==</font> y<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]);</font>
+
+     <i><font color="#9A1900">// check y_10</font></i>
+     check <font color="#990000">=</font> x_10 <font color="#990000">*</font> x_00 <font color="#990000">+</font> x_11 <font color="#990000">*</font> x_10<font color="#990000">;</font>
+     ok   <font color="#990000">&amp;=</font> <font color="#990000">(</font>check <font color="#990000">==</font> y<font color="#990000">[</font><font color="#993399">2</font><font color="#990000">]);</font>
+
+     <i><font color="#9A1900">// check y_11</font></i>
+     check <font color="#990000">=</font> x_10 <font color="#990000">*</font> x_01 <font color="#990000">+</font> x_11 <font color="#990000">*</font> x_11<font color="#990000">;</font>
+     ok   <font color="#990000">&amp;=</font> <font color="#990000">(</font>check <font color="#990000">==</font> y<font color="#990000">[</font><font color="#993399">3</font><font color="#990000">]);</font>
+
+     <i><font color="#9A1900">// check z</font></i>
+     check <font color="#990000">=</font> y<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">+</font> y<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">+</font> y<font color="#990000">[</font><font color="#993399">2</font><font color="#990000">]</font> <font color="#990000">+</font> y<font color="#990000">[</font><font color="#993399">3</font><font color="#990000">];</font>
+     ok   <font color="#990000">&amp;=</font> <font color="#990000">(</font>check <font color="#990000">==</font> z<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]);</font>
+
+     <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
+<font color="#FF0000">}</font></tt></pre>
+</font></code>
+<hr>Input File: speed/example/mat_sum_sq.cpp
+
+</body>
+</html>

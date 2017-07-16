@@ -1,0 +1,596 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>Solve a Quadratic Program Using Interior Point Method</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Solve a Quadratic Program Using Interior Point Method">
+<meta name="keywords" id="keywords" content=" solve quadratic program using interior point method syntax prototype source purpose problem vector level c g epsilon maxitr xin xout yout sout ok kkt conditions newton step elementary row reduction solution example ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_qp_interior_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://coin-or.github.io/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="min_nso_linear.hpp.htm" target="_top">Prev</a>
+</td><td><a href="qp_interior.cpp.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>ADFun</option>
+<option>abs_normal</option>
+<option>qp_interior</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>CppAD-&gt;</option>
+<option>Install</option>
+<option>Introduction</option>
+<option>AD</option>
+<option>ADFun</option>
+<option>preprocessor</option>
+<option>multi_thread</option>
+<option>utility</option>
+<option>ipopt_solve</option>
+<option>Example</option>
+<option>speed</option>
+<option>Appendix</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>ADFun-&gt;</option>
+<option>record_adfun</option>
+<option>drivers</option>
+<option>Forward</option>
+<option>Reverse</option>
+<option>sparsity_pattern</option>
+<option>sparse_derivative</option>
+<option>optimize</option>
+<option>abs_normal</option>
+<option>FunCheck</option>
+<option>check_for_nan</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>abs_normal-&gt;</option>
+<option>abs_normal_fun</option>
+<option>abs_print_mat</option>
+<option>abs_eval</option>
+<option>simplex_method</option>
+<option>lp_box</option>
+<option>abs_min_linear</option>
+<option>min_nso_linear</option>
+<option>qp_interior</option>
+<option>qp_box</option>
+<option>abs_min_quad</option>
+<option>min_nso_quad</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down0(this)'>
+<option>qp_interior-&gt;</option>
+<option>qp_interior.cpp</option>
+<option>qp_interior.hpp</option>
+</select>
+</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Syntax</option>
+<option>Prototype</option>
+<option>Source</option>
+<option>Purpose</option>
+<option>Problem</option>
+<option>Vector</option>
+<option>level</option>
+<option>c</option>
+<option>C</option>
+<option>g</option>
+<option>G</option>
+<option>epsilon</option>
+<option>maxitr</option>
+<option>xin</option>
+<option>xout</option>
+<option>yout</option>
+<option>sout</option>
+<option>ok</option>
+<option>KKT Conditions</option>
+<option>Newton Step</option>
+<option>---..Elementary Row Reduction</option>
+<option>Solution</option>
+<option>Example</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>Solve a Quadratic Program Using Interior Point Method</big></big></b></center>
+<br>
+<b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
+
+<br>
+
+<code><i><font color="black"><span style='white-space: nowrap'>ok</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;qp_interior(<br>
+</span></font><i><font color="black"><span style='white-space: nowrap'>level</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>c</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>C</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>g</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>G</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>epsilon</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>maxitr</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>xin</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>xout</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>yout</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>sout</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+)</span></font></code>
+
+
+<br>
+<br>
+<b><big><a name="Prototype" id="Prototype">Prototype</a></big></b>
+
+<pre><tt>
+<b><font color="#0000FF">template</font></b> <font color="#990000">&lt;</font><b><font color="#0000FF">class</font></b> <font color="#008080">Vector</font><font color="#990000">&gt;</font>
+<font color="#009900">bool</font> <b><font color="#000000">qp_interior</font></b><font color="#990000">(</font>
+     <font color="#008080">size_t</font>        level   <font color="#990000">,</font>
+     <b><font color="#0000FF">const</font></b> Vector<font color="#990000">&amp;</font> c       <font color="#990000">,</font>
+     <b><font color="#0000FF">const</font></b> Vector<font color="#990000">&amp;</font> C       <font color="#990000">,</font>
+     <b><font color="#0000FF">const</font></b> Vector<font color="#990000">&amp;</font> g       <font color="#990000">,</font>
+     <b><font color="#0000FF">const</font></b> Vector<font color="#990000">&amp;</font> G       <font color="#990000">,</font>
+     <font color="#009900">double</font>        epsilon <font color="#990000">,</font>
+     <font color="#008080">size_t</font>        maxitr  <font color="#990000">,</font>
+     <b><font color="#0000FF">const</font></b> Vector<font color="#990000">&amp;</font> xin     <font color="#990000">,</font>
+     Vector<font color="#990000">&amp;</font>       xout    <font color="#990000">,</font>
+     Vector<font color="#990000">&amp;</font>       yout    <font color="#990000">,</font>
+     Vector<font color="#990000">&amp;</font>       sout    <font color="#990000">)</font></tt></pre>
+<br>
+<b><big><a name="Source" id="Source">Source</a></big></b>
+<br>
+This following is a link to the source code for this example:
+<a href="qp_interior.hpp.htm" target="_top"><span style='white-space: nowrap'>qp_interior.hpp</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
+<br>
+This routine could be used to create a version of <a href="abs_min_linear.htm" target="_top"><span style='white-space: nowrap'>abs_min_linear</span></a>
+
+that solved Quadratic programs (instead of linear programs).
+
+<br>
+<br>
+<b><big><a name="Problem" id="Problem">Problem</a></big></b>
+<br>
+We are given
+<small>@(@
+C \in \B{R}^{m \times n}
+@)@</small>,
+<small>@(@
+c \in \B{R}^m
+@)@</small>,
+<small>@(@
+G \in \B{R}^{n \times n}
+@)@</small>,
+<small>@(@
+g \in \B{R}^n
+@)@</small>,
+where <small>@(@
+G
+@)@</small> is positive semi-definite
+and <small>@(@
+G + C^T C
+@)@</small> is positive definite.
+This routine solves the problem
+<small>@[@
+
+\begin{array}{rl}
+\R{minimize} &
+\frac{1}{2} x^T G x + g^T x \; \R{w.r.t} \; x \in \B{R}^n
+\\
+\R{subject \; to} &
+C x + c \leq 0
+\end{array}
+
+@]@</small>
+
+<br>
+<br>
+<b><big><a name="Vector" id="Vector">Vector</a></big></b>
+<br>
+The type 
+<code><i><font color="black"><span style='white-space: nowrap'>Vector</span></font></i></code>
+ is a
+simple vector with elements of type <code><font color="blue">double</font></code>.
+
+<br>
+<br>
+<b><big><a name="level" id="level">level</a></big></b>
+<br>
+This value is zero or one.
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>level</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;==&nbsp;0</span></font></code>
+,
+no tracing is printed.
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>level</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;==&nbsp;1</span></font></code>
+,
+a trace of the <code><font color="blue">qp_interior</font></code> optimization is printed.
+
+<br>
+<br>
+<b><big><a name="c" id="c">c</a></big></b>
+<br>
+This is the vector <small>@(@
+c
+@)@</small> in the problem.
+
+<br>
+<br>
+<b><big><a name="C" id="C">C</a></big></b>
+<br>
+This is a <a href="glossary.htm#Row-major Representation" target="_top"><span style='white-space: nowrap'>row-major</span></a>
+
+of the matrix <small>@(@
+C
+@)@</small> in the problem.
+
+<br>
+<br>
+<b><big><a name="g" id="g">g</a></big></b>
+<br>
+This is the vector <small>@(@
+g
+@)@</small> in the problem.
+
+<br>
+<br>
+<b><big><a name="G" id="G">G</a></big></b>
+<br>
+This is a <a href="glossary.htm#Row-major Representation" target="_top"><span style='white-space: nowrap'>row-major</span></a>
+
+of the matrix <small>@(@
+G
+@)@</small> in the problem.
+
+<br>
+<br>
+<b><big><a name="epsilon" id="epsilon">epsilon</a></big></b>
+<br>
+This argument is the convergence criteria;
+see <a href="qp_interior.htm#KKT Conditions" target="_top"><span style='white-space: nowrap'>KKT&nbsp;conditions</span></a>
+ below.
+It must be greater than zero.
+
+<br>
+<br>
+<b><big><a name="maxitr" id="maxitr">maxitr</a></big></b>
+<br>
+This is the maximum number of newton iterations to try before giving up
+on convergence.
+
+<br>
+<br>
+<b><big><a name="xin" id="xin">xin</a></big></b>
+<br>
+This argument has size 
+<code><i><font color="black"><span style='white-space: nowrap'>n</span></font></i></code>
+ and is the initial point for the algorithm.
+It must strictly satisfy the constraints; i.e.,
+<small>@(@
+C x - c < 0
+@)@</small>  for 
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>xin</span></font></i></code>
+.
+
+<br>
+<br>
+<b><big><a name="xout" id="xout">xout</a></big></b>
+<br>
+This argument has size is 
+<code><i><font color="black"><span style='white-space: nowrap'>n</span></font></i></code>
+ and
+the input value of its elements does no matter.
+Upon return it is the primal variables corresponding to the problem solution.
+
+<br>
+<br>
+<b><big><a name="yout" id="yout">yout</a></big></b>
+<br>
+This argument has size is 
+<code><i><font color="black"><span style='white-space: nowrap'>m</span></font></i></code>
+ and
+the input value of its elements does no matter.
+Upon return it the components of 
+<code><i><font color="black"><span style='white-space: nowrap'>yout</span></font></i></code>
+ are all positive
+and it is the dual variables corresponding to the program solution.
+
+<br>
+<br>
+<b><big><a name="sout" id="sout">sout</a></big></b>
+<br>
+This argument has size is 
+<code><i><font color="black"><span style='white-space: nowrap'>m</span></font></i></code>
+ and
+the input value of its elements does no matter.
+Upon return it the components of 
+<code><i><font color="black"><span style='white-space: nowrap'>sout</span></font></i></code>
+ are all positive
+and it is the slack variables corresponding to the program solution.
+
+<br>
+<br>
+<b><big><a name="ok" id="ok">ok</a></big></b>
+<br>
+If the return value 
+<code><i><font color="black"><span style='white-space: nowrap'>ok</span></font></i></code>
+ is true, convergence is obtained; i.e.,
+<small>@[@
+
+	| F_0 (xout , yout, sout) |_\infty \leq epsilon
+
+@]@</small>
+where <small>@(@
+| v |_\infty
+@)@</small> is the maximum absolute element
+for the vector <small>@(@
+v
+@)@</small> and <small>@(@
+F_\mu (x, y, s)
+@)@</small> is defined below.
+
+
+<br>
+<br>
+<b><big><a name="KKT Conditions" id="KKT Conditions">KKT Conditions</a></big></b>
+<br>
+Give a vector <small>@(@
+v \in \B{R}^m
+@)@</small> we define
+<small>@(@
+D(v) \in \B{R}^{m \times m}
+@)@</small> as the corresponding diagonal matrix.
+We also define <small>@(@
+1_m \in \B{R}^m
+@)@</small> as the vector of ones.
+We define
+<small>@(@
+F_\mu : \B{R}^{n + m + m } \rightarrow \B{R}^{n + m + m}
+@)@</small>
+by
+<small>@[@
+
+F_\mu ( x , y , s )
+=
+\left(
+\begin{array}{c}
+g + G x + y^T C             \\
+C x + c + s                           \\
+D(s) D(y) 1_m - \mu 1_m
+\end{array}
+\right)
+
+@]@</small>
+The KKT conditions for a solution of this problem is
+<small>@(@
+0 \leq y
+@)@</small>,
+<small>@(@
+0 \leq s
+@)@</small>, and
+<small>@(@
+F_0 (x , y, s) = 0
+@)@</small>.
+
+<br>
+<br>
+<b><big><a name="Newton Step" id="Newton Step">Newton Step</a></big></b>
+<br>
+The derivative of <small>@(@
+F_\mu
+@)@</small> is given by
+<small>@[@
+
+F_\mu^{(1)} (x, y, s)  =
+\left( \begin{array}{ccc}
+G       & C^T  & 0_{n,m} \\
+C       & 0    & I_{m,m} \\
+0_{m,m} & D(s) & D(y)
+\end{array} \right)
+
+@]@</small>
+The Newton step solves the following equation for
+<small>@(@
+\Delta x
+@)@</small>, <small>@(@
+\Delta y
+@)@</small>, and <small>@(@
+\Delta z
+@)@</small>
+<small>@[@
+
+F_\mu^{(1)} (x, y, s)
+\left( \begin{array}{c} \Delta x \\ \Delta y \\ \Delta s \end{array} \right)
+=
+- F_\mu (x, y, s)
+
+@]@</small>
+To simplify notation, we define
+<small>@[@
+
+\begin{array}{rcl}
+r_x (x, y, s) & = & g + G x + y^T C \\
+r_y (x, y, s) & = & C x + c + s          \\
+r_s (x, y, s) & = & D(s) D(y) 1_m - \mu 1_m
+\end{array}
+
+@]@</small>
+It follows that
+<small>@[@
+
+\left( \begin{array}{ccc}
+G       & C^T  & 0_{n,m} \\
+C       & 0    & I_{m,m} \\
+0_{m,m} & D(s) & D(y)
+\end{array} \right)
+\left( \begin{array}{c} \Delta x \\ \Delta y \\ \Delta s \end{array} \right)
+=
+-
+\left( \begin{array}{c}
+	r_x (x, y, s) \\
+	r_y (x, y, s) \\
+	r_s (x, y, s)
+\end{array} \right)
+
+@]@</small>
+
+<br>
+<br>
+<b><a name="Newton Step.Elementary Row Reduction" id="Newton Step.Elementary Row Reduction">Elementary Row Reduction</a></b>
+<br>
+Subtracting <small>@(@
+D(y)
+@)@</small> times the second row from the third row
+we obtain:
+<small>@[@
+
+\left( \begin{array}{ccc}
+G        & C^T  & 0_{n,m} \\
+C        & 0    & I_{m,m} \\
+- D(y) C & D(s) & 0_{m,m}
+\end{array} \right)
+\left( \begin{array}{c} \Delta x \\ \Delta y \\ \Delta s \end{array} \right)
+=
+-
+\left( \begin{array}{c}
+	r_x (x, y, s) \\
+	r_y (x, y, s) \\
+	r_s (x, y, s) - D(y) r_y(x, y, s)
+\end{array} \right)
+
+@]@</small>
+Multiplying the third row by <small>@(@
+D(s)^{-1}
+@)@</small> we obtain:
+<small>@[@
+
+\left( \begin{array}{ccc}
+G          & C^T     & 0_{n,m} \\
+C          & 0       & I_{m,m} \\
+- D(y/s) C & I_{m,m} & 0_{m,m}
+\end{array} \right)
+\left( \begin{array}{c} \Delta x \\ \Delta y \\ \Delta s \end{array} \right)
+=
+-
+\left( \begin{array}{c}
+	r_x (x, y, s) \\
+	r_y (x, y, s) \\
+	D(s)^{-1} r_s (x, y, s) - D(y/s) r_y(x, y, s)
+\end{array} \right)
+
+@]@</small>
+where <small>@(@
+y/s
+@)@</small> is the vector in <small>@(@
+\B{R}^m
+@)@</small> defined by
+<small>@(@
+(y/s)_i = y_i / s_i
+@)@</small>.
+Subtracting <small>@(@
+C^T
+@)@</small> times the third row from the first row we obtain:
+<small>@[@
+
+\left( \begin{array}{ccc}
+G + C^T D(y/s) C & 0_{n,m} & 0_{n,m} \\
+C                & 0       & I_{m,m} \\
+- D(y/s) C       & I_{m,m} & 0_{m,m}
+\end{array} \right)
+\left( \begin{array}{c} \Delta x \\ \Delta y \\ \Delta s \end{array} \right)
+=
+-
+\left( \begin{array}{c}
+	r_x (x, y, s)
+		- C^T D(s)^{-1} \left[ r_s (x, y, s) - D(y) r_y(x, y, s) \right] \\
+	r_y (x, y, s) \\
+	D(s)^{-1} r_s (x, y, s) - D(y/s) r_y(x, y, s)
+\end{array} \right)
+
+@]@</small>
+
+<br>
+<br>
+<b><big><a name="Solution" id="Solution">Solution</a></big></b>
+<br>
+It follows that <small>@(@
+G + C^T D(y/s) C
+@)@</small> is invertible and
+we can determine <small>@(@
+\Delta x
+@)@</small> by solving the equation
+<small>@[@
+
+[ G + C^T D(y/s) C ] \Delta x
+=
+C^T D(s)^{-1} \left[ r_s (x, y, s) - D(y) r_y(x, y, s) \right] - r_x (x, y, s)
+
+@]@</small>
+Given <small>@(@
+\Delta x
+@)@</small> we have that
+<small>@[@
+
+\Delta s = - r_y (x, y, s) - C \Delta x
+
+@]@</small>
+<small>@[@
+
+\Delta y =
+D(s)^{-1}[ D(y) r_y(x, y, s) - r_s (x, y, s) + D(y) C \Delta x ]
+
+@]@</small>
+
+
+<br>
+<br>
+<b><big><a name="Example" id="Example">Example</a></big></b>
+<br>
+The file <a href="qp_interior.cpp.htm" target="_top"><span style='white-space: nowrap'>qp_interior.cpp</span></a>
+ contains an example and test of
+<code><font color="blue">qp_interior</font></code>.
+It returns true if the test passes and false otherwise.
+
+
+<hr>Input File: example/abs_normal/qp_interior.hpp
+
+</body>
+</html>

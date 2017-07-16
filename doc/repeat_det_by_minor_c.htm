@@ -1,0 +1,173 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>Repeat det_by_minor Routine A Specified Number of Times</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Repeat det_by_minor Routine A Specified Number of Times">
+<meta name="keywords" id="keywords" content=" repeat det_by_minor routine specified number times syntax size source code ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_repeat_det_by_minor_c_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://coin-or.github.io/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="correct_det_by_minor_c.htm" target="_top">Prev</a>
+</td><td><a href="elapsed_seconds_c.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>Appendix</option>
+<option>compare_c</option>
+<option>repeat_det_by_minor_c</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>CppAD-&gt;</option>
+<option>Install</option>
+<option>Introduction</option>
+<option>AD</option>
+<option>ADFun</option>
+<option>preprocessor</option>
+<option>multi_thread</option>
+<option>utility</option>
+<option>ipopt_solve</option>
+<option>Example</option>
+<option>speed</option>
+<option>Appendix</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>Appendix-&gt;</option>
+<option>Faq</option>
+<option>directory</option>
+<option>Theory</option>
+<option>glossary</option>
+<option>Bib</option>
+<option>wish_list</option>
+<option>whats_new</option>
+<option>deprecated</option>
+<option>compare_c</option>
+<option>numeric_ad</option>
+<option>addon</option>
+<option>License</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>compare_c-&gt;</option>
+<option>det_of_minor_c</option>
+<option>det_by_minor_c</option>
+<option>uniform_01_c</option>
+<option>correct_det_by_minor_c</option>
+<option>repeat_det_by_minor_c</option>
+<option>elapsed_seconds_c</option>
+<option>time_det_by_minor_c</option>
+<option>main_compare_c</option>
+</select>
+</td>
+<td>repeat_det_by_minor_c</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Syntax</option>
+<option>repeat</option>
+<option>size</option>
+<option>Source Code</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>Repeat det_by_minor Routine A Specified Number of Times</big></big></b></center>
+<br>
+<b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
+
+<br>
+
+<code><font color="blue"><span style='white-space: nowrap'>repeat_det_by_minor(</span></font><i><font color="black"><span style='white-space: nowrap'>repeat</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>size</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+
+
+<br>
+<br>
+<b><big><a name="repeat" id="repeat">repeat</a></big></b>
+<br>
+The argument has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>repeat</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+It specifies the number of times to repeat the calculation.
+
+<br>
+<br>
+<b><big><a name="size" id="size">size</a></big></b>
+<br>
+The argument has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>size</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+It specifies the number of rows (and columns) in the square
+matrix we are computing the determinant of.
+
+
+
+
+<br>
+<br>
+<b><big><a name="Source Code" id="Source Code">Source Code</a></big></b>
+
+<pre><tt><font color="#009900">void</font> <b><font color="#000000">repeat_det_by_minor</font></b><font color="#990000">(</font><font color="#008080">size_t</font> repeat<font color="#990000">,</font> <font color="#008080">size_t</font> size<font color="#990000">)</font>
+<font color="#FF0000">{</font>    <font color="#009900">double</font> <font color="#990000">*</font>a<font color="#990000">;</font>
+     a <font color="#990000">=</font> <font color="#990000">(</font><font color="#009900">double</font><font color="#990000">*)</font> <b><font color="#000000">malloc</font></b><font color="#990000">(</font> <font color="#990000">(</font>size <font color="#990000">*</font> size<font color="#990000">)</font> <font color="#990000">*</font> <b><font color="#0000FF">sizeof</font></b><font color="#990000">(</font><font color="#009900">double</font><font color="#990000">)</font> <font color="#990000">);</font>
+
+     <b><font color="#0000FF">while</font></b><font color="#990000">(</font>repeat<font color="#990000">--)</font>
+     <font color="#FF0000">{</font>    <b><font color="#000000">uniform_01</font></b><font color="#990000">(</font>size <font color="#990000">*</font> size<font color="#990000">,</font> a<font color="#990000">);</font>
+          <b><font color="#000000">det_by_minor</font></b><font color="#990000">(</font>a<font color="#990000">,</font> size<font color="#990000">);</font>
+     <font color="#FF0000">}</font>
+
+     <b><font color="#000000">free</font></b><font color="#990000">(</font>a<font color="#990000">);</font>
+     <b><font color="#0000FF">return</font></b><font color="#990000">;</font>
+<font color="#FF0000">}</font></tt></pre>
+
+<hr>Input File: test_more/compare_c/det_by_minor.c
+
+</body>
+</html>

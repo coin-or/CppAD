@@ -1,0 +1,180 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>Sacado Speed: Gradient of Determinant Using Lu Factorization</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Sacado Speed: Gradient of Determinant Using Lu Factorization">
+<meta name="keywords" id="keywords" content=" sacado speed: gradient determinant using lu factorization link_det_lu speed matrix factor specifications implementation ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_sacado_det_lu.cpp_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://coin-or.github.io/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="sacado_det_minor.cpp.htm" target="_top">Prev</a>
+</td><td><a href="sacado_mat_mul.cpp.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>speed</option>
+<option>speed_sacado</option>
+<option>sacado_det_lu.cpp</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>CppAD-&gt;</option>
+<option>Install</option>
+<option>Introduction</option>
+<option>AD</option>
+<option>ADFun</option>
+<option>preprocessor</option>
+<option>multi_thread</option>
+<option>utility</option>
+<option>ipopt_solve</option>
+<option>Example</option>
+<option>speed</option>
+<option>Appendix</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>speed-&gt;</option>
+<option>speed_main</option>
+<option>speed_utility</option>
+<option>speed_double</option>
+<option>speed_adolc</option>
+<option>speed_cppad</option>
+<option>speed_fadbad</option>
+<option>speed_sacado</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>speed_sacado-&gt;</option>
+<option>sacado_det_minor.cpp</option>
+<option>sacado_det_lu.cpp</option>
+<option>sacado_mat_mul.cpp</option>
+<option>sacado_ode.cpp</option>
+<option>sacado_poly.cpp</option>
+<option>sacado_sparse_hessian.cpp</option>
+<option>sacado_sparse_jacobian.cpp</option>
+</select>
+</td>
+<td>sacado_det_lu.cpp</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Specifications</option>
+<option>Implementation</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>Sacado Speed: Gradient of Determinant Using Lu Factorization</big></big></b></center>
+<br>
+<b><big><a name="Specifications" id="Specifications">Specifications</a></big></b>
+<br>
+See <a href="link_det_lu.htm" target="_top"><span style='white-space: nowrap'>link_det_lu</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="Implementation" id="Implementation">Implementation</a></big></b>
+
+<pre><tt><b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;Sacado.hpp&gt;</font>
+<b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/speed/det_by_lu.hpp&gt;</font>
+<b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/speed/uniform_01.hpp&gt;</font>
+<b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/utility/vector.hpp&gt;</font>
+
+<i><font color="#9A1900">// list of possible options</font></i>
+<b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;map&gt;</font>
+<b><font color="#0000FF">extern</font></b> std<font color="#990000">::</font><font color="#008080">map&lt;std::string, bool&gt;</font> global_option<font color="#990000">;</font>
+
+<font color="#009900">bool</font> <b><font color="#000000">link_det_lu</font></b><font color="#990000">(</font>
+     <font color="#008080">size_t</font>                     size     <font color="#990000">,</font>
+     <font color="#008080">size_t</font>                     repeat   <font color="#990000">,</font>
+     CppAD<font color="#990000">::</font><font color="#008080">vector&lt;double&gt;</font>     <font color="#990000">&amp;</font>matrix   <font color="#990000">,</font>
+     CppAD<font color="#990000">::</font><font color="#008080">vector&lt;double&gt;</font>     <font color="#990000">&amp;</font>gradient <font color="#990000">)</font>
+<font color="#FF0000">{</font>
+     <i><font color="#9A1900">// speed test global option values</font></i>
+     <b><font color="#0000FF">if</font></b><font color="#990000">(</font> global_option<font color="#990000">[</font><font color="#FF0000">"onetape"</font><font color="#990000">]</font> <font color="#990000">||</font> global_option<font color="#990000">[</font><font color="#FF0000">"atomic"</font><font color="#990000">]</font> <font color="#990000">)</font>
+          <b><font color="#0000FF">return</font></b> <b><font color="#0000FF">false</font></b><font color="#990000">;</font>
+     <b><font color="#0000FF">if</font></b><font color="#990000">(</font> global_option<font color="#990000">[</font><font color="#FF0000">"memory"</font><font color="#990000">]</font> <font color="#990000">||</font> global_option<font color="#990000">[</font><font color="#FF0000">"optimize"</font><font color="#990000">]</font> <font color="#990000">)</font>
+          <b><font color="#0000FF">return</font></b> <b><font color="#0000FF">false</font></b><font color="#990000">;</font>
+     <i><font color="#9A1900">// -----------------------------------------------------</font></i>
+     <i><font color="#9A1900">// setup</font></i>
+     <i><font color="#9A1900">//</font></i>
+     <i><font color="#9A1900">// object for computing determinant</font></i>
+     <b><font color="#0000FF">typedef</font></b> Sacado<font color="#990000">::</font>Rad<font color="#990000">::</font><font color="#008080">ADvar&lt;double&gt;</font>   ADScalar<font color="#990000">;</font>
+     <b><font color="#0000FF">typedef</font></b> CppAD<font color="#990000">::</font><font color="#008080">vector&lt;ADScalar&gt;</font>      ADVector<font color="#990000">;</font>
+     CppAD<font color="#990000">::</font><font color="#008080">det_by_lu&lt;ADScalar&gt;</font>           <b><font color="#000000">Det</font></b><font color="#990000">(</font>size<font color="#990000">);</font>
+
+     <font color="#008080">size_t</font> i<font color="#990000">;</font>                <i><font color="#9A1900">// temporary index</font></i>
+     <font color="#008080">size_t</font> n <font color="#990000">=</font> size <font color="#990000">*</font> size<font color="#990000">;</font>  <i><font color="#9A1900">// number of independent variables</font></i>
+     <font color="#008080">ADScalar</font>   detA<font color="#990000">;</font>         <i><font color="#9A1900">// AD value of the determinant</font></i>
+     <font color="#008080">ADVector</font>   <b><font color="#000000">A</font></b><font color="#990000">(</font>n<font color="#990000">);</font>         <i><font color="#9A1900">// AD version of matrix</font></i>
+
+     <i><font color="#9A1900">// ------------------------------------------------------</font></i>
+     <b><font color="#0000FF">while</font></b><font color="#990000">(</font>repeat<font color="#990000">--)</font>
+     <font color="#FF0000">{</font>    <i><font color="#9A1900">// get the next matrix</font></i>
+          CppAD<font color="#990000">::</font><b><font color="#000000">uniform_01</font></b><font color="#990000">(</font>n<font color="#990000">,</font> matrix<font color="#990000">);</font>
+
+          <i><font color="#9A1900">// set independent variable values</font></i>
+          <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> n<font color="#990000">;</font> i<font color="#990000">++)</font>
+               A<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> matrix<font color="#990000">[</font>i<font color="#990000">];</font>
+
+          <i><font color="#9A1900">// compute the determinant</font></i>
+          detA <font color="#990000">=</font> <b><font color="#000000">Det</font></b><font color="#990000">(</font>A<font color="#990000">);</font>
+
+          <i><font color="#9A1900">// compute the gradient of detA</font></i>
+          ADScalar<font color="#990000">::</font><b><font color="#000000">Gradcomp</font></b><font color="#990000">();</font>
+
+          <i><font color="#9A1900">// evaluate and return gradient using reverse mode</font></i>
+          <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font><font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> n<font color="#990000">;</font> i<font color="#990000">++)</font>
+               gradient<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> A<font color="#990000">[</font>i<font color="#990000">].</font><b><font color="#000000">adj</font></b><font color="#990000">();</font> <i><font color="#9A1900">// partial detA w.r.t A[i]</font></i>
+     <font color="#FF0000">}</font>
+     <i><font color="#9A1900">// ---------------------------------------------------------</font></i>
+     <b><font color="#0000FF">return</font></b> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
+<font color="#FF0000">}</font></tt></pre>
+
+<hr>Input File: speed/sacado/det_lu.cpp
+
+</body>
+</html>

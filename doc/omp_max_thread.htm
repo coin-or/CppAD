@@ -1,0 +1,206 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>OpenMP Parallel Setup</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="OpenMP Parallel Setup">
+<meta name="keywords" id="keywords" content=" openmp parallel setup omp_max_thread deprecated 2011-06-23 syntax purpose number independent restriction ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_omp_max_thread_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://coin-or.github.io/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="comparechange.htm" target="_top">Prev</a>
+</td><td><a href="tracknewdel.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>Appendix</option>
+<option>deprecated</option>
+<option>omp_max_thread</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>CppAD-&gt;</option>
+<option>Install</option>
+<option>Introduction</option>
+<option>AD</option>
+<option>ADFun</option>
+<option>preprocessor</option>
+<option>multi_thread</option>
+<option>utility</option>
+<option>ipopt_solve</option>
+<option>Example</option>
+<option>speed</option>
+<option>Appendix</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>Appendix-&gt;</option>
+<option>Faq</option>
+<option>directory</option>
+<option>Theory</option>
+<option>glossary</option>
+<option>Bib</option>
+<option>wish_list</option>
+<option>whats_new</option>
+<option>deprecated</option>
+<option>compare_c</option>
+<option>numeric_ad</option>
+<option>addon</option>
+<option>License</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>deprecated-&gt;</option>
+<option>include_deprecated</option>
+<option>FunDeprecated</option>
+<option>CompareChange</option>
+<option>omp_max_thread</option>
+<option>TrackNewDel</option>
+<option>omp_alloc</option>
+<option>memory_leak</option>
+<option>epsilon</option>
+<option>test_vector</option>
+<option>cppad_ipopt_nlp</option>
+<option>old_atomic</option>
+<option>zdouble</option>
+<option>autotools</option>
+</select>
+</td>
+<td>omp_max_thread</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Deprecated 2011-06-23</option>
+<option>Syntax</option>
+<option>Purpose</option>
+<option>number</option>
+<option>Independent</option>
+<option>Restriction</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@
+
+
+<center><b><big><big>OpenMP Parallel Setup</big></big></b></center>
+<br>
+<b><big><a name="Deprecated 2011-06-23" id="Deprecated 2011-06-23">Deprecated 2011-06-23</a></big></b>
+<br>
+Use <a href="ta_parallel_setup.htm" target="_top"><span style='white-space: nowrap'>thread_alloc::parallel_setup</span></a>
+
+to set the number of threads.
+
+<br>
+<br>
+<b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
+
+<br>
+
+<code><font color="blue"><span style='white-space: nowrap'>AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;::omp_max_thread(</span></font><i><font color="black"><span style='white-space: nowrap'>number</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+<br>
+<b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
+<br>
+By default, for each 
+<code><font color="blue"><span style='white-space: nowrap'>AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code>
+ class there is only one
+tape that records <a href="glossary.htm#AD of Base" target="_top"><span style='white-space: nowrap'>AD&nbsp;of&nbsp;Base</span></a>
+ operations.
+This tape is a global variable and hence it cannot be used
+by multiple OpenMP threads at the same time.
+The <code><font color="blue">omp_max_thread</font></code> function is used to set the
+maximum number of OpenMP threads that can be active.
+In this case, there is a different tape corresponding to each
+
+<code><font color="blue"><span style='white-space: nowrap'>AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code>
+ class and thread pair.
+
+<br>
+<br>
+<b><big><a name="number" id="number">number</a></big></b>
+<br>
+The argument 
+<code><i><font color="black"><span style='white-space: nowrap'>number</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>number</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+It must be greater than zero and specifies the maximum number of
+OpenMp threads that will be active at one time.
+
+
+<br>
+<br>
+<b><big><a name="Independent" id="Independent">Independent</a></big></b>
+<br>
+Each call to <a href="independent.htm" target="_top"><span style='white-space: nowrap'>Independent(x)</span></a>
+
+creates a new <a href="glossary.htm#Tape.Active" target="_top"><span style='white-space: nowrap'>active</span></a>
+ tape.
+All of the operations with the corresponding variables
+must be preformed by the same OpenMP thread.
+This includes the corresponding call to
+<a href="dependent.htm" target="_top"><span style='white-space: nowrap'>f.Dependent(x,y)</span></a>
+ or the
+<a href="funconstruct.htm#Sequence Constructor" target="_top"><span style='white-space: nowrap'>ADFun&nbsp;f(x,&nbsp;y)</span></a>
+
+during which the tape stops recording and the variables
+become parameters.
+
+<br>
+<br>
+<b><big><a name="Restriction" id="Restriction">Restriction</a></big></b>
+<br>
+No tapes can be
+<a href="glossary.htm#Tape.Active" target="_top"><span style='white-space: nowrap'>active</span></a>
+ when this function is called.
+
+
+<hr>Input File: cppad/core/omp_max_thread.hpp
+
+</body>
+</html>

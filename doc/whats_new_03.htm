@@ -1,0 +1,1257 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>Changes and Additions to CppAD During 2003</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Changes and Additions to CppAD During 2003">
+<meta name="keywords" id="keywords" content=" changes additions to cppad during 2003 introduction 12-24 12-22 12-14 12-13 12-12 12-10 12-05 12-01 11-21 11-20 11-16 11-15 11-14 11-12 11-11 11-06 11-04 11-02 10-21 10-16 10-14 10-10 10-06 10-05 09-30 09-20 09-19 09-18 09-15 09-14 09-13 09-06 09-05 09-04 09-03 08-23 08-22 08-19 08-17 08-16 08-11 08-10 08-07 08-06 08-05 08-04 08-03 08-01 07-30 07-29 07-26 07-22 07-20 07-18 07-16 07-14 ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_whats_new_03_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://coin-or.github.io/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="whats_new_04.htm" target="_top">Prev</a>
+</td><td><a href="deprecated.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>Appendix</option>
+<option>whats_new</option>
+<option>whats_new_03</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>CppAD-&gt;</option>
+<option>Install</option>
+<option>Introduction</option>
+<option>AD</option>
+<option>ADFun</option>
+<option>preprocessor</option>
+<option>multi_thread</option>
+<option>utility</option>
+<option>ipopt_solve</option>
+<option>Example</option>
+<option>speed</option>
+<option>Appendix</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>Appendix-&gt;</option>
+<option>Faq</option>
+<option>directory</option>
+<option>Theory</option>
+<option>glossary</option>
+<option>Bib</option>
+<option>wish_list</option>
+<option>whats_new</option>
+<option>deprecated</option>
+<option>compare_c</option>
+<option>numeric_ad</option>
+<option>addon</option>
+<option>License</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>whats_new-&gt;</option>
+<option>whats_new_17</option>
+<option>whats_new_16</option>
+<option>whats_new_15</option>
+<option>whats_new_14</option>
+<option>whats_new_13</option>
+<option>whats_new_12</option>
+<option>whats_new_11</option>
+<option>whats_new_10</option>
+<option>whats_new_09</option>
+<option>whats_new_08</option>
+<option>whats_new_07</option>
+<option>whats_new_06</option>
+<option>whats_new_05</option>
+<option>whats_new_04</option>
+<option>whats_new_03</option>
+</select>
+</td>
+<td>whats_new_03</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Introduction</option>
+<option>12-24</option>
+<option>12-22</option>
+<option>12-14</option>
+<option>12-13</option>
+<option>12-12</option>
+<option>12-10</option>
+<option>12-05</option>
+<option>12-01</option>
+<option>11-21</option>
+<option>11-20</option>
+<option>11-16</option>
+<option>11-15</option>
+<option>11-14</option>
+<option>11-12</option>
+<option>11-11</option>
+<option>11-06</option>
+<option>11-04</option>
+<option>11-02</option>
+<option>10-21</option>
+<option>10-16</option>
+<option>10-14</option>
+<option>10-10</option>
+<option>10-06</option>
+<option>10-05</option>
+<option>09-30</option>
+<option>09-20</option>
+<option>09-19</option>
+<option>09-18</option>
+<option>09-15</option>
+<option>09-14</option>
+<option>09-13</option>
+<option>09-06</option>
+<option>09-05</option>
+<option>09-04</option>
+<option>09-03</option>
+<option>08-23</option>
+<option>08-22</option>
+<option>08-19</option>
+<option>08-17</option>
+<option>08-16</option>
+<option>08-11</option>
+<option>08-10</option>
+<option>08-07</option>
+<option>08-06</option>
+<option>08-05</option>
+<option>08-04</option>
+<option>08-03</option>
+<option>08-01</option>
+<option>07-30</option>
+<option>07-29</option>
+<option>07-26</option>
+<option>07-22</option>
+<option>07-20</option>
+<option>07-18</option>
+<option>07-16</option>
+<option>07-14</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@
+
+
+<center><b><big><big>Changes and Additions to CppAD During 2003</big></big></b></center>
+<br>
+<b><big><a name="Introduction" id="Introduction">Introduction</a></big></b>
+<br>
+This section contains a list of the changes plus for
+(in reverse order by date).
+The purpose of this section is to
+assist you in learning about changes between various versions.
+
+<br>
+<br>
+<b><big><a name="12-24" id="12-24">12-24</a></big></b>
+<br>
+Some references to <code><font color="blue">double</font></code> should have been references
+to the <a href="glossary.htm#Base Type" target="_top"><span style='white-space: nowrap'>base&nbsp;type</span></a>
+
+(in reverse mode and in the <code><font color="blue">Grad/</font></code> and <code><font color="blue">Hess</font></code> functions).
+This has been fixed.
+
+<br>
+<br>
+<b><big><a name="12-22" id="12-22">12-22</a></big></b>
+<br>
+The preprocessor symbol <code><font color="blue">WIN32</font></code> was being used to determine
+if one was using Microsoft's C++ compiler.
+This symbol is predefined by the
+<a href="http://www.mingw.org" target="_top"><span style='white-space: nowrap'>MinGW</span></a>
+ version of the GNU C++ compiler
+and hence CppAD had errors during installation using MinGW.
+This has been fixed by using the preprocessor symbol
+<code><font color="blue">_MSC_VER</font></code> to determine if
+one is using the Microsoft C++ compiler.
+
+
+<br>
+<br>
+<b><big><a name="12-14" id="12-14">12-14</a></big></b>
+<br>
+The extended system solvers <code><font color="blue">OdeOne</font></code> and <code><font color="blue">OdeTwo</font></code> have
+been removed from the distribution.
+In addition, the interface to the ODE solvers have been simplified.
+
+<br>
+<br>
+<b><big><a name="12-13" id="12-13">12-13</a></big></b>
+<br>
+Remove the <code><font color="blue">CppADCreateTape</font></code> macro
+and have the tapes created and grow automatically.
+
+
+<br>
+<br>
+<b><big><a name="12-12" id="12-12">12-12</a></big></b>
+<br>
+The old method where one directly accesses the tape has been removed and the
+following functions are no longer available:
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>TapeName</span></font></i><font color="blue"><span style='white-space: nowrap'>.Independent(AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>indvar</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>TapeName</span></font></i><font color="blue"><span style='white-space: nowrap'>.Record(size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>order</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>TapeName</span></font></i><font color="blue"><span style='white-space: nowrap'>.Stop(void)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bool&nbsp;Dependent(const&nbsp;AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>var</span></font></i><font color="blue"><span style='white-space: nowrap'>)&nbsp;const<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bool&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>TapeName</span></font></i><font color="blue"><span style='white-space: nowrap'>.Dependent(const&nbsp;AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>var</span></font></i><font color="blue"><span style='white-space: nowrap'>)&nbsp;const<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>TapeName</span></font></i><font color="blue"><span style='white-space: nowrap'>.Total(void)&nbsp;const<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>TapeName</span></font></i><font color="blue"><span style='white-space: nowrap'>.Required(void)&nbsp;const<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>TapeName</span></font></i><font color="blue"><span style='white-space: nowrap'>.Erase(void)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TapeState&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>TapeName</span></font></i><font color="blue"><span style='white-space: nowrap'>.State(void)&nbsp;const<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>TapeName</span></font></i><font color="blue"><span style='white-space: nowrap'>.Order(void)&nbsp;const<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>TapeName</span></font></i><font color="blue"><span style='white-space: nowrap'>.Required(void)&nbsp;const<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bool&nbsp;Parameter(CppADvector&lt;&nbsp;AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;&gt;&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>u</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>TapeName</span></font></i><font color="blue"><span style='white-space: nowrap'>.Forward(</span></font><i><font color="black"><span style='white-space: nowrap'>indvar</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>TapeName</span></font></i><font color="blue"><span style='white-space: nowrap'>.Reverse(</span></font><i><font color="black"><span style='white-space: nowrap'>var</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>TapeName</span></font></i><font color="blue"><span style='white-space: nowrap'>.Partial(</span></font><i><font color="black"><span style='white-space: nowrap'>var</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>TapeName</span></font></i><font color="blue"><span style='white-space: nowrap'>.ForwardTwo(</span></font><i><font color="black"><span style='white-space: nowrap'>indvar</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>TapeName</span></font></i><font color="blue"><span style='white-space: nowrap'>.ReverseTwo(</span></font><i><font color="black"><span style='white-space: nowrap'>var</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>TapeName</span></font></i><font color="blue"><span style='white-space: nowrap'>.PartialTwo(</span></font><i><font color="black"><span style='white-space: nowrap'>var</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+<br>
+<b><big><a name="12-10" id="12-10">12-10</a></big></b>
+<br>
+The change on <a href="whats_new_03.htm#12-01" target="_top"><span style='white-space: nowrap'>12-01</span></a>
+ make the taping process simpler
+if one does not directly access
+<code><font color="blue">CppADCreateTape</font></code>.
+The <a href="example.htm" target="_top"><span style='white-space: nowrap'>examples</span></a>
+ were changed to not use
+
+<code><i><font color="black"><span style='white-space: nowrap'>TapeName</span></font></i></code>
+.
+The following examples were skipped because
+they document the functions that access 
+<code><i><font color="black"><span style='white-space: nowrap'>TapeName</span></font></i></code>
+:
+<code><font color="blue">DefFun.cpp</font></code>,
+<code><font color="blue">For.cpp</font></code>,
+<code><font color="blue">for_two.cpp</font></code>,
+<code><font color="blue">Rev.cpp</font></code>, and
+<code><font color="blue">rev_two.cpp</font></code>.
+
+<br>
+<br>
+<b><big><a name="12-05" id="12-05">12-05</a></big></b>
+<br>
+There was a bug in
+
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.Rev</span></font></code>
+ and
+
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.RevTwo</span></font></code>
+ and
+when two dependent variables were always equal and shared
+the same location in the tape.
+This has been fixed.
+<code><span style='white-space: nowrap'><br>
+<br>
+</span></code>The ODE Example was changed to tape the solution
+(and not use <code><font color="blue">OdeOne</font></code> or <code><font color="blue">OdeTwo</font></code>).
+This is simpler to use and
+the resulting speed tests gave much faster results.
+
+<br>
+<br>
+<b><big><a name="12-01" id="12-01">12-01</a></big></b>
+<br>
+The following function has been added:
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;void&nbsp;Independent(const&nbsp;CppADvector&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+which will declare the independent variables and begin recording
+
+<code><font color="blue"><span style='white-space: nowrap'>AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code>
+ operations
+(see <a href="independent.htm" target="_top"><span style='white-space: nowrap'>Independent</span></a>
+).
+The <a href="adfun.htm" target="_top"><span style='white-space: nowrap'>ADFun</span></a>
+ constructor was modified so that it
+stops the recording and erases that tape as well as creates the
+<a href="adfun.htm" target="_top"><span style='white-space: nowrap'>ADFun</span></a>
+ object.
+In addition, the tape no longer needs to be specified in the constructor.
+
+
+<br>
+<br>
+<b><big><a name="11-21" id="11-21">11-21</a></big></b>
+<br>
+Add <code><font color="blue">StiffZero</font></code> to set of ODE solvers.
+
+
+<br>
+<br>
+<b><big><a name="11-20" id="11-20">11-20</a></big></b>
+<br>
+The <code><font color="blue">AbsGeq</font></code> and <code><font color="blue">LeqZero</font></code> in
+<a href="lusolve.htm" target="_top"><span style='white-space: nowrap'>LuSolve</span></a>
+ were changed to template functions so they could have
+default definitions in the case where the <code><font color="blue">&lt;=</font></code> and <code><font color="blue">&gt;=</font></code>
+operators are defined.
+This made the <code><font color="blue">double</font></code> and <code><font color="blue">AD&lt;double&gt;</font></code> use of
+<code><font color="blue">LuSolve</font></code> simpler because the user need not worry about these functions.
+On the other hand, it made the <code><font color="blue">std::complex</font></code>
+and <code><font color="blue">AD&lt;std::complex&gt;</font></code> use of
+<code><font color="blue">LuSolve</font></code> more complex.
+<code><span style='white-space: nowrap'><br>
+<br>
+</span></code>The member function names for the
+
+<code><i><font color="black"><span style='white-space: nowrap'>fun</span></font></i></code>
+ argument to ODE were changed from
+
+<code><i><font color="black"><span style='white-space: nowrap'>fun</span></font></i><font color="blue"><span style='white-space: nowrap'>.f</span></font></code>
+ to
+
+<code><i><font color="black"><span style='white-space: nowrap'>fun</span></font></i><font color="blue"><span style='white-space: nowrap'>.Ode</span></font></code>
+
+and from
+
+<code><i><font color="black"><span style='white-space: nowrap'>fun</span></font></i><font color="blue"><span style='white-space: nowrap'>.g</span></font></code>
+ to
+
+<code><i><font color="black"><span style='white-space: nowrap'>fun</span></font></i><font color="blue"><span style='white-space: nowrap'>.Ode_ini</span></font></code>
+.
+
+
+<br>
+<br>
+<b><big><a name="11-16" id="11-16">11-16</a></big></b>
+<br>
+The
+<a href="_contents.htm" target="_top"><span style='white-space: nowrap'>table&nbsp;of&nbsp;contents</span></a>
+ was reorganized
+to provide a better grouping of the documentation.
+<code><span style='white-space: nowrap'><br>
+<br>
+</span></code>The <a href="lusolve.htm" target="_top"><span style='white-space: nowrap'>LuSolve</span></a>
+ utility is now part of the distribution
+and not just an example; i.e.,
+it is automatically included by
+<code><font color="blue">cppad.hpp</font></code>.
+
+
+<br>
+<br>
+<b><big><a name="11-15" id="11-15">11-15</a></big></b>
+<br>
+The
+ODE solver was modified so that it can
+be used with any type (not just an AD type.
+This was useful for the speed testing.
+It is also useful for determining how the integrator
+steps should be before starting the tape.
+<code><span style='white-space: nowrap'><br>
+<br>
+</span></code>The template argument 
+<code><i><font color="black"><span style='white-space: nowrap'>Type</span></font></i></code>
+ was changed to
+
+<code><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i></code>
+ where ever it was the
+<a href="glossary.htm#Base Type" target="_top"><span style='white-space: nowrap'>base&nbsp;type</span></a>
+ of an AD class.
+
+
+<br>
+<br>
+<b><big><a name="11-14" id="11-14">11-14</a></big></b>
+<br>
+An
+<code><font color="blue">speed_cppad/OdeSpeed.cpp/</font></code> test was added
+and some changes were made to the
+ODE interface in order to make it faster.
+The most significant change was in the specifications for
+the ODE function object 
+<code><i><font color="black"><span style='white-space: nowrap'>fun</span></font></i></code>
+.
+
+
+<br>
+<br>
+<b><big><a name="11-12" id="11-12">11-12</a></big></b>
+<br>
+The user defined unary function example
+<code><font color="blue">example/UnaryFun.cpp</font></code> was incorrect.
+It has been corrected and extended.
+
+<br>
+<br>
+<b><big><a name="11-11" id="11-11">11-11</a></big></b>
+<br>
+The <a href="cppad_vector.htm" target="_top"><span style='white-space: nowrap'>CppAD::vector</span></a>
+ template class is now
+used where the <code><font color="blue">std::vector</font></code> template class was previously used.
+You can replace the <code><font color="blue">CppAD::vector</font></code> class
+with a vector template class of your choosing during the
+<a href="install.htm" target="_top"><span style='white-space: nowrap'>Install</span></a>
+ procedure.
+
+<br>
+<br>
+<b><big><a name="11-06" id="11-06">11-06</a></big></b>
+<br>
+The documentation for
+<a href="mul_level.htm" target="_top"><span style='white-space: nowrap'>taping&nbsp;derivative&nbsp;calculations</span></a>
+ was improved
+as well as the corresponding example.
+In order to make this simpler,
+the example tape name <code><font color="blue">DoubleTape</font></code> was changed to <code><font color="blue">ADdoubleTape</font></code>
+(and the other example tape names were also changed).
+
+<br>
+<br>
+<b><big><a name="11-04" id="11-04">11-04</a></big></b>
+<br>
+The ODE utility was changed from an example to
+part of the distribution.
+In addition, it was extended so that it now supports taping the
+solution of the differential equations (case 
+<code><i><font color="black"><span style='white-space: nowrap'>order</span></font></i></code>
+ equal zero)
+or solving the extended set of differential equations
+for both first and second derivatives (cases 
+<code><i><font color="black"><span style='white-space: nowrap'>order</span></font></i></code>
+ equal
+one and two).
+In addition, an initial condition that depends on the parameter
+values is also allowed.
+
+
+
+<br>
+<br>
+<b><big><a name="11-02" id="11-02">11-02</a></big></b>
+<br>
+It is now legal to differentiate a
+<a href="glossary.htm#Parameter" target="_top"><span style='white-space: nowrap'>parameter</span></a>
+
+with respect to an
+<a href="glossary.htm#Tape.Independent Variable" target="_top"><span style='white-space: nowrap'>independent&nbsp;variable</span></a>
+
+(parameter derivatives are always equal to zero).
+This is an extension of the
+<code><font color="blue">Reverse</font></code>,
+<code><font color="blue">Partial</font></code>,
+<code><font color="blue">ReverseTwo</font></code>, and
+<code><font color="blue">PartialTwo</font></code>
+functions.
+
+<br>
+<br>
+<b><big><a name="10-21" id="10-21">10-21</a></big></b>
+<br>
+All the <code><font color="blue">CppAD</font></code> include files,
+except <code><font color="blue">cppad.hpp</font></code> were moved into an <code><font color="blue">include</font></code> subdirectory.
+
+
+
+<br>
+<br>
+<b><big><a name="10-16" id="10-16">10-16</a></big></b>
+<br>
+The <a href="adfun.htm" target="_top"><span style='white-space: nowrap'>ADFun</span></a>
+ template class was added so that one can save
+a tape recording and use it as a differentiable function.
+The <code><font color="blue">ADFun</font></code> functions supports directional derivatives in both
+<a href="forward.htm" target="_top"><span style='white-space: nowrap'>Forward</span></a>
+ and <a href="reverse.htm" target="_top"><span style='white-space: nowrap'>Reverse</span></a>
+ mode where as the
+tape only supports partial derivatives.
+
+<br>
+<br>
+<b><big><a name="10-14" id="10-14">10-14</a></big></b>
+<br>
+The <code><font color="blue">sqrt</font></code> function was added to the
+<a href="unary_standard_math.htm" target="_top"><span style='white-space: nowrap'>unary_standard_math</span></a>
+ functions.
+In addition, a definition of the power function for the types
+<code><font color="blue">float</font></code> and <code><font color="blue">double</font></code>
+was automatically included in the <code><font color="blue">CppAD</font></code> namespace.
+<code><span style='white-space: nowrap'><br>
+<br>
+</span></code>The <a href="value.htm" target="_top"><span style='white-space: nowrap'>Value</span></a>
+ function was changed so that it can
+be called when the tape is in the Empty state.
+
+<br>
+<br>
+<b><big><a name="10-10" id="10-10">10-10</a></big></b>
+<br>
+The <code><font color="blue">atan</font></code> function was added to the
+<a href="unary_standard_math.htm" target="_top"><span style='white-space: nowrap'>unary_standard_math</span></a>
+ functions.
+
+<br>
+<br>
+<b><big><a name="10-06" id="10-06">10-06</a></big></b>
+<br>
+In the notation below, 
+<code><i><font color="black"><span style='white-space: nowrap'>zero</span></font></i></code>
+ and 
+<code><i><font color="black"><span style='white-space: nowrap'>one</span></font></i></code>
+
+are parameters that are exactly equal to zero and one.
+If the variables 
+<code><i><font color="black"><span style='white-space: nowrap'>z</span></font></i></code>
+ and 
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+
+were related in any of the following ways,
+they share can share the same record on the tape
+because they will have the same derivatives.
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>z</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;+&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>zero</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>z</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;*&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>one</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>z</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>zero</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;+&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>z</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>one</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;*&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>z</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;-&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>zero</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>z</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;/&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>one</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+Furthermore, in the following cases, the result
+
+<code><i><font color="black"><span style='white-space: nowrap'>z</span></font></i></code>
+ is a parameter (equal to zero)
+and need not be recorded in the tape:
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>z</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;*&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>zero</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>z</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>zero</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;/&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>z</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>zero</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;*&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+The
+<a href="arithmetic.htm" target="_top"><span style='white-space: nowrap'>arithmetic&nbsp;operators</span></a>
+ were
+all checked to make sure they did not add to the tape
+in these special cases.
+The total record count for the program in the Example directory
+was 552 before this change
+and 458 after.
+
+<br>
+<br>
+<b><big><a name="10-05" id="10-05">10-05</a></big></b>
+<br>
+The process of converting the tape to operators was completed.
+In order to make this conversion, the binary user defined
+functions were removed.
+(Bob Goddard
+suggested a very nice way to keep the unary functions.)
+Another significant change was made to the user interface during this procedure,
+the standard math library functions
+are now part of the CppAD distribution and not defined by the user.
+<code><span style='white-space: nowrap'><br>
+<br>
+</span></code>The function 
+<code><i><font color="black"><span style='white-space: nowrap'>TapeName</span></font></i><font color="blue"><span style='white-space: nowrap'>.Total</span></font></code>
+ was added
+to make it easy to track how many tape records are used by
+the test suite.
+This will help with future optimization of the CppAD recording process.
+<code><span style='white-space: nowrap'><br>
+<br>
+</span></code>There was a bug
+(found by <a href="mailto:magister@u.washington.edu" target="_top"><span style='white-space: nowrap'>Mike&nbsp;Dodds</span></a>
+)
+in the error checking of the
+
+<code><i><font color="black"><span style='white-space: nowrap'>TapeName</span></font></i><font color="blue"><span style='white-space: nowrap'>.Erase</span></font></code>
+ function.
+If <code><font color="blue">Erase</font></code> was called twice in a row,
+and <code><font color="blue">NDEBUG</font></code> was false during compilation,
+the program would abort.
+This has been fixed.
+
+
+<br>
+<br>
+<b><big><a name="09-30" id="09-30">09-30</a></big></b>
+<br>
+A process of changing the tape from storing partial derivatives to
+storing operators has been started.
+This will make the tape smaller and it will enable the computation
+of higher derivatives with out having to tape the tape
+(see <a href="mul_level.htm" target="_top"><span style='white-space: nowrap'>mul_level</span></a>
+).
+The Add, Subtract, Multiply and Divide operators have been converted.
+The user defined functions are presenting some difficulties,
+so this process has not yet been completed.
+<code><span style='white-space: nowrap'><br>
+<br>
+</span></code>There was a bug in reverse mode when an dependent variable
+was exactly equal to an independent variable.
+In this case, it was possible for it to be located
+before other of the independent variables on the tape.
+These other independent variable partials were not initialized
+to zero before the reverse calculation and hence had what ever
+value was left by the previous mode calculation.
+This has been fixed and the
+<code><font color="blue">Eq.cpp</font></code> example has been changed to test for this case.
+<code><span style='white-space: nowrap'><br>
+<br>
+</span></code>The following tape functions were changed to be declared
+<code><font color="blue">const</font></code> because they do not modify the tape in any way:
+<code><font color="blue">State</font></code>,
+<code><font color="blue">Order</font></code>,
+<code><font color="blue">Required</font></code>,
+<code><font color="blue">Dependent</font></code>, and
+<a href="parvar.htm" target="_top"><span style='white-space: nowrap'>Parameter</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="09-20" id="09-20">09-20</a></big></b>
+<br>
+The functions <code><font color="blue">Grad</font></code> and <code><font color="blue">Hess</font></code> were
+changed to use function objects
+instead of function pointers.
+
+
+<br>
+<br>
+<b><big><a name="09-19" id="09-19">09-19</a></big></b>
+<br>
+The higher order constructors (in standard valarray) were removed from the
+ODE example in order to avoid memory allocation of temporaries
+(and hence increase speed).
+In addition, the function objects in the
+ODE examples were changed to be <code><font color="blue">const</font></code>.
+
+<br>
+<br>
+<b><big><a name="09-18" id="09-18">09-18</a></big></b>
+<br>
+An ordinary differential equation solver was added.
+In addition,
+the extended system to differentiate the solution was included.
+
+<br>
+<br>
+<b><big><a name="09-15" id="09-15">09-15</a></big></b>
+<br>
+The linked list of AD variables was not being maintained correctly
+by the AD destructor.
+This was fixed by have the destructor use <code><font color="blue">RemoveFromVarList</font></code>
+to remove variables from the list.
+(<code><font color="blue">RemoveFromVarList</font></code> is a private AD member function
+not visible to the user.)
+
+<br>
+<br>
+<b><big><a name="09-14" id="09-14">09-14</a></big></b>
+<br>
+There is a new Faq question about evaluating derivatives at multiple
+values for the
+<a href="faq.htm#Independent Variables" target="_top"><span style='white-space: nowrap'>independent&nbsp;variables</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="09-13" id="09-13">09-13</a></big></b>
+<br>
+An example that uses
+<code><font color="blue">AD&lt; AD&lt;double&gt; &gt;</font></code>
+to compute higher derivatives was added.
+<code><span style='white-space: nowrap'><br>
+<br>
+</span></code>The name <code><font color="blue">GaussEliminate</font></code> was changed to
+<a href="lusolve.htm" target="_top"><span style='white-space: nowrap'>LuSolve</span></a>
+ to better reflect the solution method.
+
+<br>
+<br>
+<b><big><a name="09-06" id="09-06">09-06</a></big></b>
+<br>
+Changed the
+<a href="get_started.cpp.htm" target="_top"><span style='white-space: nowrap'>get_started.cpp</span></a>
+ and <a href="complex_poly.cpp.htm" target="_top"><span style='white-space: nowrap'>complex_poly.cpp</span></a>
+ examples
+so they use a template function with both base type and AD type arguments.
+(The resulting code is simpler and a good use of templates.)
+
+<br>
+<br>
+<b><big><a name="09-05" id="09-05">09-05</a></big></b>
+<br>
+A <a href="get_started.cpp.htm" target="_top"><span style='white-space: nowrap'>getting&nbsp;started</span></a>
+
+example was added and the organization
+of the <a href="example.htm" target="_top"><span style='white-space: nowrap'>Examples</span></a>
+ was changed.
+
+<br>
+<br>
+<b><big><a name="09-04" id="09-04">09-04</a></big></b>
+<br>
+The <code><font color="blue">AbsOfDoubleNotDefine</font></code> flag is no longer used
+and it was removed from the Windows
+<a href="install.htm" target="_top"><span style='white-space: nowrap'>install</span></a>
+ instructions.
+<code><span style='white-space: nowrap'><br>
+<br>
+</span></code>The 03-09-03 distribution did not have the proper date
+attached to it.
+The distribution script has been changed so that attaching
+the proper date is automated
+(i.e., this should not happen again).
+<code><span style='white-space: nowrap'><br>
+<br>
+</span></code>A <a href="faq.htm" target="_top">Frequently Asked Questions and Answers</a> section was started.
+
+<br>
+<br>
+<b><big><a name="09-03" id="09-03">09-03</a></big></b>
+<br>
+Added the
+<a href="value.htm" target="_top"><span style='white-space: nowrap'>Value</span></a>
+ function which returns
+the <a href="glossary.htm#Base Type" target="_top"><span style='white-space: nowrap'>base&nbsp;type</span></a>
+ value
+corresponding to an AD object.
+
+<br>
+<br>
+<b><big><a name="08-23" id="08-23">08-23</a></big></b>
+<br>
+A new version of Cygwin was installed on the development system
+(this may affect the timing tests reported in this document).
+In addition, <a href="lusolve.htm" target="_top"><span style='white-space: nowrap'>LuSolve</span></a>
+ was changed to use back substitution
+instead of reduction to an identity matrix. This reduced the number
+of floating point operations corresponding to evaluation of the determinant.
+The following results correspond to the speed test
+of DetLu on a 9 by 9 matrix:
+<table><tr><td align='left'  valign='top'>
+
+<b>Version</b>
+	</td><td align='left'  valign='top'>
+ <b>double Rate</b>
+	</td><td align='left'  valign='top'>
+ <b>AD&lt;double&gt; Rate</b>
+	</td><td align='left'  valign='top'>
+ <b>Gradient Rate</b>
+	</td><td align='left'  valign='top'>
+ <b>Hessian Rate</b>
+	</td><td align='left'  valign='top'>
+ <b>Tape Length</b>
+</td></tr><tr><td align='left'  valign='top'>
+
+03-08-20
+	</td><td align='left'  valign='top'>
+ 8,524
+	</td><td align='left'  valign='top'>
+ 5,278
+	</td><td align='left'  valign='top'>
+ 4,260
+	</td><td align='left'  valign='top'>
+ 2,450
+	</td><td align='left'  valign='top'>
+ 532
+</td></tr><tr><td align='left'  valign='top'>
+
+03-08-23
+	</td><td align='left'  valign='top'>
+ 7,869
+	</td><td align='left'  valign='top'>
+ 4,989
+	</td><td align='left'  valign='top'>
+ 4,870
+	</td><td align='left'  valign='top'>
+ 2,637
+	</td><td align='left'  valign='top'>
+ 464
+</td></tr>
+</table>
+<br>
+<b><big><a name="08-22" id="08-22">08-22</a></big></b>
+<br>
+The
+<a href="unaryminus.htm" target="_top"><span style='white-space: nowrap'>unary&nbsp;minus</span></a>
+ operator was added to the AD operations.
+
+
+<br>
+<br>
+<b><big><a name="08-19" id="08-19">08-19</a></big></b>
+<br>
+The standard math function
+examples were extended to include the complex case.
+<code><span style='white-space: nowrap'><br>
+<br>
+</span></code>The
+<a href="lusolve.htm" target="_top"><span style='white-space: nowrap'>LuSolve</span></a>
+
+routine what changed to use
+
+<code><font color="blue"><span style='white-space: nowrap'>std::vector&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;&amp;</span></font></code>
+ arguments in place of
+
+<code><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;*</span></font></code>
+ arguments.
+This removes the need to use <code><font color="blue">new</font></code> and <code><font color="blue">delete</font></code>
+with <code><font color="blue">LuSolve</font></code>.
+<code><span style='white-space: nowrap'><br>
+<br>
+</span></code>When testing the speed of the change to using standard vector,
+it was noticed that the LuSolve routine
+was much slower. (see times for 03-08-16 below).
+This was do to computing the determinant instead of the log
+of the determinant.
+Converting back to the log of the determinant regained
+the high speeds.
+The following results correspond to the speed test
+of DetLu on a 9 by 9 matrix:
+<table><tr><td align='left'  valign='top'>
+
+<b>Version</b>
+	</td><td align='left'  valign='top'>
+ <b>double Rate</b>
+	</td><td align='left'  valign='top'>
+ <b>AD&lt;double&gt; Rate</b>
+	</td><td align='left'  valign='top'>
+ <b>Gradient Rate</b>
+	</td><td align='left'  valign='top'>
+ <b>Hessian Rate</b>
+	</td><td align='left'  valign='top'>
+ <b>Tape Length</b>
+</td></tr><tr><td align='left'  valign='top'>
+
+03-08-16
+	</td><td align='left'  valign='top'>
+ 9,509
+	</td><td align='left'  valign='top'>
+ 5,565
+	</td><td align='left'  valign='top'>
+ 3,587
+	</td><td align='left'  valign='top'>
+ 54
+	</td><td align='left'  valign='top'>
+ 537
+</td></tr><tr><td align='left'  valign='top'>
+
+03-08-19
+	</td><td align='left'  valign='top'>
+ 8,655
+	</td><td align='left'  valign='top'>
+ 5,313
+	</td><td align='left'  valign='top'>
+ 4,307
+	</td><td align='left'  valign='top'>
+ 2,495
+	</td><td align='left'  valign='top'>
+ 532
+</td></tr>
+</table>
+<br>
+<b><big><a name="08-17" id="08-17">08-17</a></big></b>
+<br>
+The macro
+<code><font color="blue">CppADTapeOverflow</font></code> was added
+so that CppAD can check for tape overflow
+even in the <code><font color="blue">NDEBUG</font></code> preprocessor flag is defined.
+
+<br>
+<br>
+<b><big><a name="08-16" id="08-16">08-16</a></big></b>
+<br>
+The
+<a href="lusolve.htm" target="_top"><span style='white-space: nowrap'>LuSolve</span></a>
+ routine was extended to
+handle complex arguments.
+Because the complex absolute value function is nowhere differentiable,
+this required the allowing for user defined
+<a href="boolfun.htm" target="_top"><span style='white-space: nowrap'>boolean&nbsp;valued&nbsp;functions&nbsp;with&nbsp;AD&nbsp;arguments</span></a>
+.
+The examples
+<a href="lu_solve.cpp.htm" target="_top"><span style='white-space: nowrap'>lu_solve.cpp</span></a>
+
+and
+<code><font color="blue">GradLu.cpp</font></code>
+were converted to a complex case.
+
+
+<br>
+<br>
+<b><big><a name="08-11" id="08-11">08-11</a></big></b>
+<br>
+The routine <a href="lusolve.htm" target="_top"><span style='white-space: nowrap'>LuSolve</span></a>
+ was made more efficient
+so that it is more useful as a tool for
+differentiating linear algebra calculations.
+The following results correspond to the speed test
+of DetLu on a 9 by 9 matrix:
+<table><tr><td align='left'  valign='top'>
+
+<b>Version</b>
+	</td><td align='left'  valign='top'>
+ <b>double Rate</b>
+	</td><td align='left'  valign='top'>
+ <b>AD&lt;double&gt; Rate</b>
+	</td><td align='left'  valign='top'>
+ <b>Gradient Rate</b>
+	</td><td align='left'  valign='top'>
+ <b>Hessian Rate</b>
+	</td><td align='left'  valign='top'>
+ <b>Tape Length</b>
+</td></tr><tr><td align='left'  valign='top'>
+
+03-08-10
+	</td><td align='left'  valign='top'>
+ 49,201
+	</td><td align='left'  valign='top'>
+ 7,787
+	</td><td align='left'  valign='top'>
+ 2,655
+	</td><td align='left'  valign='top'>
+ 1,809
+	</td><td align='left'  valign='top'>
+ 824
+</td></tr><tr><td align='left'  valign='top'>
+
+03-08-11
+	</td><td align='left'  valign='top'>
+ 35,178
+	</td><td align='left'  valign='top'>
+ 12,681
+	</td><td align='left'  valign='top'>
+ 4,521
+	</td><td align='left'  valign='top'>
+ 2,541
+	</td><td align='left'  valign='top'>
+ 540
+</td></tr>
+</table>
+In addition the corresponding test case
+<a href="lu_solve.cpp.htm" target="_top"><span style='white-space: nowrap'>lu_solve.cpp</span></a>
+ was changed to a Hilbert matrix case.
+
+
+
+<br>
+<br>
+<b><big><a name="08-10" id="08-10">08-10</a></big></b>
+<br>
+A <a href="complex_poly.cpp.htm" target="_top"><span style='white-space: nowrap'>complex&nbsp;polynomial</span></a>
+
+example was added.
+<code><span style='white-space: nowrap'><br>
+<br>
+</span></code>The documentation and type conversion in
+<a href="lusolve.htm" target="_top"><span style='white-space: nowrap'>LuSolve</span></a>
+ was improved.
+<code><span style='white-space: nowrap'><br>
+<br>
+</span></code>The absolute value function was removed from the examples because
+some systems do not yet properly support 
+<code><font color="blue"><span style='white-space: nowrap'>double&nbsp;abs(double&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+,
+
+
+<br>
+<br>
+<b><big><a name="08-07" id="08-07">08-07</a></big></b>
+<br>
+Because the change to the multiplication operator had such
+a large positive effect,
+all of the
+<a href="arithmetic.htm" target="_top"><span style='white-space: nowrap'>arithmetic&nbsp;operators</span></a>
+
+were modified to reduce the amount of information
+in the tape (where possible).
+
+<br>
+<br>
+<b><big><a name="08-06" id="08-06">08-06</a></big></b>
+<br>
+During Lu factorization, certain elements of the matrix
+are know to be zero or one and do not depend on the variables.
+The <a href="ad_binary.htm" target="_top"><span style='white-space: nowrap'>multiplication</span></a>
+ operator was modified to take
+advantage of this fact.
+This reduced the size of the tape and increased the speed
+for the calculation of the gradient and Hessian for
+the Lu determinant test of a 5 by 5 matrix as follows:
+<table><tr><td align='left'  valign='top'>
+
+<b>Version</b>
+	</td><td align='left'  valign='top'>
+ <b>Tape Length</b>
+	</td><td align='left'  valign='top'>
+ <b>Gradient Rate</b>
+	</td><td align='left'  valign='top'>
+ <b>Hessian Rate</b>
+</td></tr><tr><td align='left'  valign='top'>
+
+03-08-05 </td><td align='left'  valign='top'>
+ 176  </td><td align='left'  valign='top'>
+ 11,362 </td><td align='left'  valign='top'>
+ 1,149 </td></tr><tr><td align='left'  valign='top'>
+
+03-08-06 </td><td align='left'  valign='top'>
+ 167  </td><td align='left'  valign='top'>
+ 12,780 </td><td align='left'  valign='top'>
+ 10,625
+</td></tr>
+</table>
+<br>
+<b><big><a name="08-05" id="08-05">08-05</a></big></b>
+<br>
+Fixed a mistake in the calculation of the sign of the determinant in
+the <a href="lusolve.htm" target="_top"><span style='white-space: nowrap'>LuSolve</span></a>
+ example.
+
+<br>
+<br>
+<b><big><a name="08-04" id="08-04">08-04</a></big></b>
+<br>
+Added a the compiler flag
+<code><font color='blue'><pre style='display:inline'> 
+     AbsOfDoubleNotDefined
+</pre></font></code>
+to the make files so that it could be removed on systems where the
+function
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;double&nbsp;abs(double&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+was defined in <code><font color="blue">math.h</font></code>.
+
+<br>
+<br>
+<b><big><a name="08-03" id="08-03">08-03</a></big></b>
+<br>
+The
+<code><font color="blue">Grad</font></code> and <code><font color="blue">Hess</font></code> functions were modified
+to handel the case where the function does not depend on
+the independent variables.
+<code><span style='white-space: nowrap'><br>
+<br>
+</span></code>The
+<a href="lusolve.htm" target="_top"><span style='white-space: nowrap'>LuSolve</span></a>
+ example was added to show how
+on can differentiate linear algebra calculations.
+In addition, it was used to add another set of
+<a href="speed_cppad.htm" target="_top"><span style='white-space: nowrap'>speed&nbsp;tests</span></a>
+.
+<code><span style='white-space: nowrap'><br>
+<br>
+</span></code>The standard Math functions were added both
+as examples of defining atomic operations and to support
+mathematical operations for the <code><font color="blue">AD&lt;double&gt;</font></code> case.
+<code><span style='white-space: nowrap'><br>
+<br>
+</span></code>The <a href="ad_output.htm" target="_top"><span style='white-space: nowrap'>&lt;&lt;</span></a>
+ operator was added to the <code><font color="blue">AD</font></code>
+template class for output to streams.
+
+
+<br>
+<br>
+<b><big><a name="08-01" id="08-01">08-01</a></big></b>
+<br>
+The
+<a href="arithmetic.htm" target="_top"><span style='white-space: nowrap'>compound&nbsp;assignment</span></a>
+ operators were added
+to the <code><font color="blue">AD</font></code> template class.
+<code><span style='white-space: nowrap'><br>
+<br>
+</span></code>The name of the <code><font color="blue">Speed/SpeedTest</font></code> program was changed to
+<a href="speed_cppad.htm" target="_top"><span style='white-space: nowrap'>Speed/Speed</span></a>
+.
+In addition, <code><font color="blue">Speed/SpeedRun</font></code> was changed to
+<code><font color="blue">Speed/SpeedTest</font></code>.
+
+
+<br>
+<br>
+<b><big><a name="07-30" id="07-30">07-30</a></big></b>
+<br>
+The
+<a href="ad_assign.htm" target="_top"><span style='white-space: nowrap'>assignment</span></a>
+
+operator was changed so the it returns a reference to
+the target.
+This allows for statements of the form
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>z</span></font></i><font color="blue"><span style='white-space: nowrap'>;<br>
+</span></font></code>
+i.e., multiple assignments.
+
+<br>
+<br>
+<b><big><a name="07-29" id="07-29">07-29</a></big></b>
+<br>
+If the
+<a href="ad_ctor.htm" target="_top"><span style='white-space: nowrap'>AD&nbsp;copy&nbsp;constructor</span></a>
+ constructor or
+<a href="ad_assign.htm" target="_top"><span style='white-space: nowrap'>assignment</span></a>
+ operator
+used an
+<a href="glossary.htm#Tape.Independent Variable" target="_top"><span style='white-space: nowrap'>independent&nbsp;variable</span></a>
+
+for its source value,
+the result was also an independent variable.
+This has been fixed so that the result is
+a dependent variable in these cases.
+
+<br>
+<br>
+<b><big><a name="07-26" id="07-26">07-26</a></big></b>
+<br>
+The 
+<code><font color="blue"><span style='white-space: nowrap'>AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code>
+ data structure
+was changed to include a doubly linked list of variables.
+This enabled  the
+<a href="ad_ctor.htm" target="_top"><span style='white-space: nowrap'>AD&nbsp;copy&nbsp;constructor</span></a>
+ constructor and
+<a href="ad_assign.htm" target="_top"><span style='white-space: nowrap'>assignment</span></a>
+ operator
+to create multiple references to
+the same place in the tape.
+This reduced the size of the tape and increased the speed
+for the calculation of the gradient and Hessian for
+the determinant of a 5 by 5 matrix as follows:
+<table><tr><td align='left'  valign='top'>
+
+<b>Version</b>
+	</td><td align='left'  valign='top'>
+ <b>Tape Length</b>
+	</td><td align='left'  valign='top'>
+ <b>Gradient Rate</b>
+	</td><td align='left'  valign='top'>
+ <b>Hessian Rate</b>
+</td></tr><tr><td align='left'  valign='top'>
+
+03-07-22 </td><td align='left'  valign='top'>
+ 1668 </td><td align='left'  valign='top'>
+ 1,363 </td><td align='left'  valign='top'>
+ 53 </td></tr><tr><td align='left'  valign='top'>
+
+03-07-26 </td><td align='left'  valign='top'>
+ 436  </td><td align='left'  valign='top'>
+ 3,436 </td><td align='left'  valign='top'>
+ 213
+</td></tr>
+</table>
+<br>
+<b><big><a name="07-22" id="07-22">07-22</a></big></b>
+<br>
+The facility was added so that the user can define
+binary functions
+together with their derivatives.
+(This facility has been removed because it is better to define
+binary functions using AD variables.)
+<code><span style='white-space: nowrap'><br>
+<br>
+</span></code>The Windows version make file directive <code><font color="blue">/I ..\..</font></code>
+in <code><font color="blue">example\Example.mak</font></code> and <code><font color="blue">Speed\Speed.mak</font></code>
+was changed to <code><font color="blue">/I ..</font></code> (as it should have been).
+
+
+
+<br>
+<br>
+<b><big><a name="07-20" id="07-20">07-20</a></big></b>
+<br>
+The facility was added so that the user can define
+unary functions,
+together with their derivatives.
+For example, the standard math functions such as
+<a href="exp.cpp.htm" target="_top"><span style='white-space: nowrap'>exp</span></a>
+
+are good candidates for such definitions.
+(This feature has been replaced by and the standard math functions
+are now part of the AD types, see <a href="ad.htm" target="_top"><span style='white-space: nowrap'>AD</span></a>
+.)
+<code><span style='white-space: nowrap'><br>
+<br>
+</span></code>The first Alpha for the Windows
+<a href="install.htm" target="_top"><span style='white-space: nowrap'>installation</span></a>
+ was released.
+
+<br>
+<br>
+<b><big><a name="07-18" id="07-18">07-18</a></big></b>
+<br>
+Computing the determinant of a minor of a matrix
+<a href="det_of_minor.htm" target="_top"><span style='white-space: nowrap'>det_of_minor</span></a>
+
+was documented as a realistic example using CppAD.
+
+
+<br>
+<br>
+<b><big><a name="07-16" id="07-16">07-16</a></big></b>
+<br>
+Fixed some non-standard constructions that caused problems
+with the installation on other machines.
+<code><span style='white-space: nowrap'><br>
+<br>
+</span></code>Compiled and ran the tests under Microsoft Windows.
+(The Windows release should not take much more work.)
+
+<br>
+<br>
+<b><big><a name="07-14" id="07-14">07-14</a></big></b>
+<br>
+First Alpha release of CppAD
+and is being released under the
+<a href="license.htm" target="_top"><span style='white-space: nowrap'>Gnu&nbsp;Public&nbsp;License</span></a>
+.
+It is intended for use by a Unix system.
+A Microsoft release is intended in the near future.
+
+
+<hr>Input File: omh/appendix/whats_new/whats_new_03.omh
+
+</body>
+</html>

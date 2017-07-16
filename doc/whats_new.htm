@@ -1,0 +1,182 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>Changes and Additions to CppAD</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Changes and Additions to CppAD">
+<meta name="keywords" id="keywords" content=" changes additions to cppad introduction this year previous years ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_whats_new_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://coin-or.github.io/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="wish_list.htm" target="_top">Prev</a>
+</td><td><a href="whats_new_17.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>Appendix</option>
+<option>whats_new</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>CppAD-&gt;</option>
+<option>Install</option>
+<option>Introduction</option>
+<option>AD</option>
+<option>ADFun</option>
+<option>preprocessor</option>
+<option>multi_thread</option>
+<option>utility</option>
+<option>ipopt_solve</option>
+<option>Example</option>
+<option>speed</option>
+<option>Appendix</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>Appendix-&gt;</option>
+<option>Faq</option>
+<option>directory</option>
+<option>Theory</option>
+<option>glossary</option>
+<option>Bib</option>
+<option>wish_list</option>
+<option>whats_new</option>
+<option>deprecated</option>
+<option>compare_c</option>
+<option>numeric_ad</option>
+<option>addon</option>
+<option>License</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down0(this)'>
+<option>whats_new-&gt;</option>
+<option>whats_new_17</option>
+<option>whats_new_16</option>
+<option>whats_new_15</option>
+<option>whats_new_14</option>
+<option>whats_new_13</option>
+<option>whats_new_12</option>
+<option>whats_new_11</option>
+<option>whats_new_10</option>
+<option>whats_new_09</option>
+<option>whats_new_08</option>
+<option>whats_new_07</option>
+<option>whats_new_06</option>
+<option>whats_new_05</option>
+<option>whats_new_04</option>
+<option>whats_new_03</option>
+</select>
+</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Introduction</option>
+<option>This Year</option>
+<option>Previous Years</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@
+
+
+<center><b><big><big>Changes and Additions to CppAD</big></big></b></center>
+<br>
+<b><big><a name="Introduction" id="Introduction">Introduction</a></big></b>
+<br>
+The sections listed below contain a list of the changes to CppAD
+in reverse order by date.
+The purpose of these sections is to
+assist you in learning about changes between various versions of CppAD.
+
+
+
+<br>
+<br>
+<b><big><a name="This Year" id="This Year">This Year</a></big></b>
+
+<br>
+<a href="whats_new_17.htm" target="_top"><span style='white-space: nowrap'>whats_new_17</span></a>
+
+
+<br>
+<br>
+<b><big><a name="Previous Years" id="Previous Years">Previous Years</a></big></b>
+
+<br>
+<a href="whats_new_16.htm" target="_top"><span style='white-space: nowrap'>whats_new_16</span></a>
+
+<a href="whats_new_15.htm" target="_top"><span style='white-space: nowrap'>whats_new_15</span></a>
+
+<a href="whats_new_14.htm" target="_top"><span style='white-space: nowrap'>whats_new_14</span></a>
+
+<a href="whats_new_13.htm" target="_top"><span style='white-space: nowrap'>whats_new_13</span></a>
+
+<a href="whats_new_12.htm" target="_top"><span style='white-space: nowrap'>whats_new_12</span></a>
+
+<a href="whats_new_11.htm" target="_top"><span style='white-space: nowrap'>whats_new_11</span></a>
+,
+<a href="whats_new_10.htm" target="_top"><span style='white-space: nowrap'>whats_new_10</span></a>
+,
+<a href="whats_new_09.htm" target="_top"><span style='white-space: nowrap'>whats_new_09</span></a>
+,
+<a href="whats_new_08.htm" target="_top"><span style='white-space: nowrap'>whats_new_08</span></a>
+,
+<a href="whats_new_07.htm" target="_top"><span style='white-space: nowrap'>whats_new_07</span></a>
+,
+<a href="whats_new_06.htm" target="_top"><span style='white-space: nowrap'>whats_new_06</span></a>
+,
+<a href="whats_new_05.htm" target="_top"><span style='white-space: nowrap'>whats_new_05</span></a>
+,
+<a href="whats_new_04.htm" target="_top"><span style='white-space: nowrap'>whats_new_04</span></a>
+,
+<a href="whats_new_03.htm" target="_top"><span style='white-space: nowrap'>whats_new_03</span></a>
+.
+
+
+<hr>Input File: omh/appendix/whats_new/whats_new.omh
+
+</body>
+</html>

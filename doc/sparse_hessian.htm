@@ -1,0 +1,695 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>Sparse Hessian</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Sparse Hessian">
+<meta name="keywords" id="keywords" content=" sparse hessian syntax purpose f x w p work column subset row col hes color_method colpack.star deprecated 2017-06-01 n_sweep vectorbase vectorset restrictions vectorsize uses forward example ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_sparse_hessian_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://coin-or.github.io/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="sparse_hes.cpp.htm" target="_top">Prev</a>
+</td><td><a href="sparse_hessian.cpp.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>ADFun</option>
+<option>sparse_derivative</option>
+<option>sparse_hessian</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>CppAD-&gt;</option>
+<option>Install</option>
+<option>Introduction</option>
+<option>AD</option>
+<option>ADFun</option>
+<option>preprocessor</option>
+<option>multi_thread</option>
+<option>utility</option>
+<option>ipopt_solve</option>
+<option>Example</option>
+<option>speed</option>
+<option>Appendix</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>ADFun-&gt;</option>
+<option>record_adfun</option>
+<option>drivers</option>
+<option>Forward</option>
+<option>Reverse</option>
+<option>sparsity_pattern</option>
+<option>sparse_derivative</option>
+<option>optimize</option>
+<option>abs_normal</option>
+<option>FunCheck</option>
+<option>check_for_nan</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>sparse_derivative-&gt;</option>
+<option>sparse_jac</option>
+<option>sparse_jacobian</option>
+<option>sparse_hes</option>
+<option>sparse_hessian</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down0(this)'>
+<option>sparse_hessian-&gt;</option>
+<option>sparse_hessian.cpp</option>
+<option>sub_sparse_hes.cpp</option>
+<option>sparse_sub_hes.cpp</option>
+</select>
+</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Syntax</option>
+<option>Purpose</option>
+<option>f</option>
+<option>x</option>
+<option>w</option>
+<option>p</option>
+<option>---..Purpose</option>
+<option>---..work</option>
+<option>---..Column Subset</option>
+<option>row, col</option>
+<option>hes</option>
+<option>work</option>
+<option>---..color_method</option>
+<option>---..colpack.star Deprecated 2017-06-01</option>
+<option>---..p</option>
+<option>n_sweep</option>
+<option>VectorBase</option>
+<option>VectorSet</option>
+<option>---..Restrictions</option>
+<option>VectorSize</option>
+<option>Uses Forward</option>
+<option>Example</option>
+<option>Subset Hessian</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>Sparse Hessian</big></big></b></center>
+<br>
+<b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
+
+<br>
+
+<code><i><font color="black"><span style='white-space: nowrap'>hes</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.SparseHessian(</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>w</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font><i><font color="black"><span style='white-space: nowrap'>hes</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.SparseHessian(</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>w</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>p</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font><i><font color="black"><span style='white-space: nowrap'>n_sweep</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.SparseHessian(</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>w</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>p</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>row</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>col</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>hes</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>work</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+<br>
+<b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
+<br>
+We use <small>@(@
+n
+@)@</small> for the <a href="seq_property.htm#Domain" target="_top"><span style='white-space: nowrap'>domain</span></a>
+ size,
+and <small>@(@
+m
+@)@</small> for the <a href="seq_property.htm#Range" target="_top"><span style='white-space: nowrap'>range</span></a>
+ size of 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+.
+We use <small>@(@
+F : \B{R}^n \rightarrow \B{R}^m
+@)@</small> do denote the
+<a href="glossary.htm#AD Function" target="_top"><span style='white-space: nowrap'>AD&nbsp;function</span></a>
+
+corresponding to 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+.
+The syntax above sets 
+<code><i><font color="black"><span style='white-space: nowrap'>hes</span></font></i></code>
+ to the Hessian
+<small>@[@
+
+	H(x) = \dpow{2}{x} \sum_{i=1}^m w_i F_i (x)
+
+@]@</small>
+This routine takes advantage of the sparsity of the Hessian
+in order to reduce the amount of computation necessary.
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>row</span></font></i></code>
+ and 
+<code><i><font color="black"><span style='white-space: nowrap'>col</span></font></i></code>
+ are present, it also takes
+advantage of the reduced set of elements of the Hessian that
+need to be computed.
+One can use speed tests (e.g. <a href="speed_test.htm" target="_top"><span style='white-space: nowrap'>speed_test</span></a>
+)
+to verify that results are computed faster
+than when using the routine <a href="hessian.htm" target="_top"><span style='white-space: nowrap'>Hessian</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="f" id="f">f</a></big></b>
+<br>
+The object 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ADFun&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+Note that the <a href="adfun.htm" target="_top"><span style='white-space: nowrap'>ADFun</span></a>
+ object 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+ is not <code><font color="blue">const</font></code>
+(see <a href="sparse_hessian.htm#Uses Forward" target="_top"><span style='white-space: nowrap'>Uses&nbsp;Forward</span></a>
+ below).
+
+<br>
+<br>
+<b><big><a name="x" id="x">x</a></big></b>
+<br>
+The argument 
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>VectorBase</span></font></i><font color="blue"><span style='white-space: nowrap'>&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+(see <a href="sparse_hessian.htm#VectorBase" target="_top"><span style='white-space: nowrap'>VectorBase</span></a>
+ below)
+and its size
+must be equal to 
+<code><i><font color="black"><span style='white-space: nowrap'>n</span></font></i></code>
+, the dimension of the
+<a href="seq_property.htm#Domain" target="_top"><span style='white-space: nowrap'>domain</span></a>
+ space for 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+.
+It specifies
+that point at which to evaluate the Hessian.
+
+<br>
+<br>
+<b><big><a name="w" id="w">w</a></big></b>
+<br>
+The argument 
+<code><i><font color="black"><span style='white-space: nowrap'>w</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>VectorBase</span></font></i><font color="blue"><span style='white-space: nowrap'>&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>w</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+and size <small>@(@
+m
+@)@</small>.
+It specifies the value of <small>@(@
+w_i
+@)@</small> in the expression
+for 
+<code><i><font color="black"><span style='white-space: nowrap'>hes</span></font></i></code>
+.
+The more components of <small>@(@
+w
+@)@</small> that are identically zero,
+the more sparse the resulting Hessian may be (and hence the more efficient
+the calculation of 
+<code><i><font color="black"><span style='white-space: nowrap'>hes</span></font></i></code>
+ may be).
+
+<br>
+<br>
+<b><big><a name="p" id="p">p</a></big></b>
+<br>
+The argument 
+<code><i><font color="black"><span style='white-space: nowrap'>p</span></font></i></code>
+ is optional and has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>VectorSet</span></font></i><font color="blue"><span style='white-space: nowrap'>&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>p</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+(see <a href="sparse_hessian.htm#VectorSet" target="_top"><span style='white-space: nowrap'>VectorSet</span></a>
+ below)
+If it has elements of type <code><font color="blue">bool</font></code>,
+its size is <small>@(@
+n * n
+@)@</small>.
+If it has elements of type <code><font color="blue">std::set&lt;size_t&gt;</font></code>,
+its size is <small>@(@
+n
+@)@</small> and all its set elements are between
+zero and <small>@(@
+n - 1
+@)@</small>.
+It specifies a
+<a href="glossary.htm#Sparsity Pattern" target="_top"><span style='white-space: nowrap'>sparsity&nbsp;pattern</span></a>
+
+for the Hessian <small>@(@
+H(x)
+@)@</small>.
+
+<br>
+<br>
+<b><a name="p.Purpose" id="p.Purpose">Purpose</a></b>
+<br>
+If this sparsity pattern does not change between calls to
+
+<code><font color="blue"><span style='white-space: nowrap'>SparseHessian</span></font></code>
+, it should be faster to calculate 
+<code><i><font color="black"><span style='white-space: nowrap'>p</span></font></i></code>
+ once and
+pass this argument to 
+<code><font color="blue"><span style='white-space: nowrap'>SparseHessian</span></font></code>
+.
+If you specify 
+<code><i><font color="black"><span style='white-space: nowrap'>p</span></font></i></code>
+, CppAD will use the same
+type of sparsity representation
+(vectors of <code><font color="blue">bool</font></code> or vectors of <code><font color="blue">std::set&lt;size_t&gt;</font></code>)
+for its internal calculations.
+Otherwise, the representation
+for the internal calculations is unspecified.
+
+<br>
+<br>
+<b><a name="p.work" id="p.work">work</a></b>
+<br>
+If you specify 
+<code><i><font color="black"><span style='white-space: nowrap'>work</span></font></i></code>
+ in the calling sequence,
+it is not necessary to keep the sparsity pattern; see the heading
+<a href="sparse_hessian.htm#work.p" target="_top"><span style='white-space: nowrap'>p</span></a>
+ under the 
+<code><i><font color="black"><span style='white-space: nowrap'>work</span></font></i></code>
+ description.
+
+<br>
+<br>
+<b><a name="p.Column Subset" id="p.Column Subset">Column Subset</a></b>
+<br>
+If the arguments 
+<code><i><font color="black"><span style='white-space: nowrap'>row</span></font></i></code>
+ and 
+<code><i><font color="black"><span style='white-space: nowrap'>col</span></font></i></code>
+ are present,
+and <a href="sparse_hessian.htm#work.color_method" target="_top"><span style='white-space: nowrap'>color_method</span></a>
+ is
+<code><font color="blue">cppad.general</font></code> or <code><font color="blue">cppad.symmetric</font></code>,
+it is not necessary to compute the entire sparsity pattern.
+Only the following subset of column values will matter:
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>col</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>k</span></font></i><font color="blue"><span style='white-space: nowrap'>]&nbsp;:&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>k</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;0&nbsp;,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>...</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>K</span></font></i><font color="blue"><span style='white-space: nowrap'>-1&nbsp;}<br>
+</span></font></code>
+.
+
+
+<br>
+<br>
+<b><big><a name="row, col" id="row, col">row, col</a></big></b>
+<br>
+The arguments 
+<code><i><font color="black"><span style='white-space: nowrap'>row</span></font></i></code>
+ and 
+<code><i><font color="black"><span style='white-space: nowrap'>col</span></font></i></code>
+ are optional and have prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>VectorSize</span></font></i><font color="blue"><span style='white-space: nowrap'>&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>row</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>VectorSize</span></font></i><font color="blue"><span style='white-space: nowrap'>&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>col</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+(see <a href="sparse_hessian.htm#VectorSize" target="_top"><span style='white-space: nowrap'>VectorSize</span></a>
+ below).
+They specify which rows and columns of <small>@(@
+H (x)
+@)@</small> are
+returned and in what order.
+We use <small>@(@
+K
+@)@</small> to denote the value 
+<code><i><font color="black"><span style='white-space: nowrap'>hes</span></font></i><font color="blue"><span style='white-space: nowrap'>.size()</span></font></code>
+
+which must also equal the size of 
+<code><i><font color="black"><span style='white-space: nowrap'>row</span></font></i></code>
+ and 
+<code><i><font color="black"><span style='white-space: nowrap'>col</span></font></i></code>
+.
+Furthermore,
+for <small>@(@
+k = 0 , \ldots , K-1
+@)@</small>, it must hold that
+<small>@(@
+row[k] < n
+@)@</small> and <small>@(@
+col[k] < n
+@)@</small>.
+In addition,
+all of the <small>@(@
+(row[k], col[k])
+@)@</small> pairs must correspond to a true value
+in the sparsity pattern 
+<code><i><font color="black"><span style='white-space: nowrap'>p</span></font></i></code>
+.
+
+<br>
+<br>
+<b><big><a name="hes" id="hes">hes</a></big></b>
+<br>
+The result 
+<code><i><font color="black"><span style='white-space: nowrap'>hes</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>VectorBase</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>hes</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+In the case where 
+<code><i><font color="black"><span style='white-space: nowrap'>row</span></font></i></code>
+ and 
+<code><i><font color="black"><span style='white-space: nowrap'>col</span></font></i></code>
+ are not present,
+the size of 
+<code><i><font color="black"><span style='white-space: nowrap'>hes</span></font></i></code>
+ is <small>@(@
+n * n
+@)@</small> and
+its size is <small>@(@
+n * n
+@)@</small>.
+In this case, for <small>@(@
+i = 0 , \ldots , n - 1
+@)@</small>
+and <small>@(@
+ell = 0 , \ldots , n - 1
+@)@</small>
+<small>@[@
+
+	hes [ j * n + \ell ] = \DD{ w^{\rm T} F }{ x_j }{ x_\ell } ( x )
+
+@]@</small>
+<code><span style='white-space: nowrap'><br>
+<br>
+</span></code>In the case where the arguments 
+<code><i><font color="black"><span style='white-space: nowrap'>row</span></font></i></code>
+ and 
+<code><i><font color="black"><span style='white-space: nowrap'>col</span></font></i></code>
+ are present,
+we use <small>@(@
+K
+@)@</small> to denote the size of 
+<code><i><font color="black"><span style='white-space: nowrap'>hes</span></font></i></code>
+.
+The input value of its elements does not matter.
+Upon return, for <small>@(@
+k = 0 , \ldots , K - 1
+@)@</small>,
+<small>@[@
+
+	hes [ k ] = \DD{ w^{\rm T} F }{ x_j }{ x_\ell } (x)
+	\; , \;
+	\; {\rm where} \;
+	j = row[k]
+	\; {\rm and } \;
+	\ell = col[k]
+
+@]@</small>
+
+<br>
+<br>
+<b><big><a name="work" id="work">work</a></big></b>
+<br>
+If this argument is present, it has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sparse_hessian_work&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>work</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+This object can only be used with the routines <code><font color="blue">SparseHessian</font></code>.
+During its the first use, information is stored in 
+<code><i><font color="black"><span style='white-space: nowrap'>work</span></font></i></code>
+.
+This is used to reduce the work done by future calls to <code><font color="blue">SparseHessian</font></code>
+with the same 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+, 
+<code><i><font color="black"><span style='white-space: nowrap'>p</span></font></i></code>
+, 
+<code><i><font color="black"><span style='white-space: nowrap'>row</span></font></i></code>
+, and 
+<code><i><font color="black"><span style='white-space: nowrap'>col</span></font></i></code>
+.
+If a future call is made where any of these values have changed,
+you must first call 
+<code><i><font color="black"><span style='white-space: nowrap'>work</span></font></i><font color="blue"><span style='white-space: nowrap'>.clear()</span></font></code>
+
+to inform CppAD that this information needs to be recomputed.
+
+<br>
+<br>
+<b><a name="work.color_method" id="work.color_method">color_method</a></b>
+<br>
+The coloring algorithm determines which rows and columns
+can be computed during the same sweep.
+This field has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;std::string&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>work</span></font></i><font color="blue"><span style='white-space: nowrap'>.color_method<br>
+</span></font></code>
+This value only matters on the first call to <code><font color="blue">sparse_hessian</font></code> that
+follows the 
+<code><i><font color="black"><span style='white-space: nowrap'>work</span></font></i></code>
+ constructor or a call to
+
+<code><i><font color="black"><span style='white-space: nowrap'>work</span></font></i><font color="blue"><span style='white-space: nowrap'>.clear()</span></font></code>
+.
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+<br>
+&quot;cppad.symmetric&quot;<br>
+</span></font></code>
+This is the default coloring method (after a constructor or <code><font color="blue">clear()</font></code>).
+It takes advantage of the fact that the Hessian matrix
+is symmetric to find a coloring that requires fewer
+<a href="sparse_hessian.htm#n_sweep" target="_top"><span style='white-space: nowrap'>sweeps</span></a>
+.
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+<br>
+&quot;cppad.general&quot;<br>
+</span></font></code>
+This is the same as the <code><font color="blue">&quot;cppad&quot;</font></code> method for the
+<a href="sparse_jacobian.htm#work.color_method" target="_top"><span style='white-space: nowrap'>sparse_jacobian</span></a>
+ calculation.
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+<br>
+&quot;colpack.symmetric&quot;<br>
+</span></font></code>
+This method requires that
+<a href="colpack_prefix.htm" target="_top"><span style='white-space: nowrap'>colpack_prefix</span></a>
+ was specified on the
+<a href="cmake.htm#CMake Command" target="_top"><span style='white-space: nowrap'>cmake&nbsp;command</span></a>
+ line.
+It also takes advantage of the fact that the Hessian matrix is symmetric.
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+<br>
+&quot;colpack.general&quot;<br>
+</span></font></code>
+This is the same as the <code><font color="blue">&quot;colpack&quot;</font></code> method for the
+<a href="sparse_jacobian.htm#work.color_method" target="_top"><span style='white-space: nowrap'>sparse_jacobian</span></a>
+ calculation.
+
+<br>
+<br>
+<b><a name="work.colpack.star Deprecated 2017-06-01" id="work.colpack.star Deprecated 2017-06-01">colpack.star Deprecated 2017-06-01</a></b>
+<br>
+The <code><font color="blue">colpack.star</font></code> method is deprecated.
+It is the same as the <code><font color="blue">colpack.symmetric</font></code>
+which should be used instead.
+
+<br>
+<br>
+<b><a name="work.p" id="work.p">p</a></b>
+<br>
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>work</span></font></i></code>
+ is present, and it is not the first call after
+its construction or a clear,
+the sparsity pattern 
+<code><i><font color="black"><span style='white-space: nowrap'>p</span></font></i></code>
+ is not used.
+This enables one to free the sparsity pattern
+and still compute corresponding sparse Hessians.
+
+<br>
+<br>
+<b><big><a name="n_sweep" id="n_sweep">n_sweep</a></big></b>
+<br>
+The return value 
+<code><i><font color="black"><span style='white-space: nowrap'>n_sweep</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n_sweep</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+It is the number of first order forward sweeps
+used to compute the requested Hessian values.
+Each first forward sweep is followed by a second order reverse sweep
+so it is also the number of reverse sweeps.
+This is proportional to the total work that <code><font color="blue">SparseHessian</font></code> does,
+not counting the zero order forward sweep,
+or the work to combine multiple columns into a single
+forward-reverse sweep pair.
+
+<br>
+<br>
+<b><big><a name="VectorBase" id="VectorBase">VectorBase</a></big></b>
+<br>
+The type 
+<code><i><font color="black"><span style='white-space: nowrap'>VectorBase</span></font></i></code>
+ must be a <a href="simplevector.htm" target="_top"><span style='white-space: nowrap'>SimpleVector</span></a>
+ class with
+<a href="simplevector.htm#Elements of Specified Type" target="_top"><span style='white-space: nowrap'>elements&nbsp;of&nbsp;type</span></a>
+
+
+<code><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i></code>
+.
+The routine <a href="checksimplevector.htm" target="_top"><span style='white-space: nowrap'>CheckSimpleVector</span></a>
+ will generate an error message
+if this is not the case.
+
+<br>
+<br>
+<b><big><a name="VectorSet" id="VectorSet">VectorSet</a></big></b>
+<br>
+The type 
+<code><i><font color="black"><span style='white-space: nowrap'>VectorSet</span></font></i></code>
+ must be a <a href="simplevector.htm" target="_top"><span style='white-space: nowrap'>SimpleVector</span></a>
+ class with
+<a href="simplevector.htm#Elements of Specified Type" target="_top"><span style='white-space: nowrap'>elements&nbsp;of&nbsp;type</span></a>
+
+<code><font color="blue">bool</font></code> or <code><font color="blue">std::set&lt;size_t&gt;</font></code>;
+see <a href="glossary.htm#Sparsity Pattern" target="_top"><span style='white-space: nowrap'>sparsity&nbsp;pattern</span></a>
+ for a discussion
+of the difference.
+The routine <a href="checksimplevector.htm" target="_top"><span style='white-space: nowrap'>CheckSimpleVector</span></a>
+ will generate an error message
+if this is not the case.
+
+<br>
+<br>
+<b><a name="VectorSet.Restrictions" id="VectorSet.Restrictions">Restrictions</a></b>
+<br>
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>VectorSet</span></font></i></code>
+ has elements of <code><font color="blue">std::set&lt;size_t&gt;</font></code>,
+then 
+<code><i><font color="black"><span style='white-space: nowrap'>p</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>]</span></font></code>
+ must return a reference (not a copy) to the
+corresponding set.
+According to section 26.3.2.3 of the 1998 C++ standard,
+<code><font color="blue">std::valarray&lt; std::set&lt;size_t&gt; &gt;</font></code> does not satisfy
+this condition.
+
+<br>
+<br>
+<b><big><a name="VectorSize" id="VectorSize">VectorSize</a></big></b>
+<br>
+The type 
+<code><i><font color="black"><span style='white-space: nowrap'>VectorSize</span></font></i></code>
+ must be a <a href="simplevector.htm" target="_top"><span style='white-space: nowrap'>SimpleVector</span></a>
+ class with
+<a href="simplevector.htm#Elements of Specified Type" target="_top"><span style='white-space: nowrap'>elements&nbsp;of&nbsp;type</span></a>
+
+<code><font color="blue">size_t</font></code>.
+The routine <a href="checksimplevector.htm" target="_top"><span style='white-space: nowrap'>CheckSimpleVector</span></a>
+ will generate an error message
+if this is not the case.
+
+<br>
+<br>
+<b><big><a name="Uses Forward" id="Uses Forward">Uses Forward</a></big></b>
+<br>
+After each call to <a href="forward.htm" target="_top"><span style='white-space: nowrap'>Forward</span></a>
+,
+the object 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+ contains the corresponding
+<a href="glossary.htm#Taylor Coefficient" target="_top"><span style='white-space: nowrap'>Taylor&nbsp;coefficients</span></a>
+.
+After a call to any of the sparse Hessian routines,
+the zero order Taylor coefficients correspond to
+
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.Forward(0,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+
+and the other coefficients are unspecified.
+
+
+
+<br>
+<br>
+<b><big><a name="Example" id="Example">Example</a></big></b>
+<br>
+The routine
+<a href="sparse_hessian.cpp.htm" target="_top"><span style='white-space: nowrap'>sparse_hessian.cpp</span></a>
+
+is examples and tests of <code><font color="blue">sparse_hessian</font></code>.
+It return <code><font color="blue">true</font></code>, if it succeeds and <code><font color="blue">false</font></code> otherwise.
+
+<br>
+<br>
+<b><big><a name="Subset Hessian" id="Subset Hessian">Subset Hessian</a></big></b>
+<br>
+The routine
+<a href="sub_sparse_hes.cpp.htm" target="_top"><span style='white-space: nowrap'>sub_sparse_hes.cpp</span></a>
+
+is an example and test that compute a sparse Hessian
+for a subset of the variables.
+It returns <code><font color="blue">true</font></code>, for success, and <code><font color="blue">false</font></code> otherwise.
+
+
+<hr>Input File: cppad/core/sparse_hessian.hpp
+
+</body>
+</html>

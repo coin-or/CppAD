@@ -1,0 +1,279 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>Convert Certain Types to a String</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Convert Certain Types to a String">
+<meta name="keywords" id="keywords" content=" convert certain types to string syntax see also purpose value integer float s example ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_to_string_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://coin-or.github.io/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="index_sort.cpp.htm" target="_top">Prev</a>
+</td><td><a href="to_string.cpp.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>utility</option>
+<option>to_string</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>CppAD-&gt;</option>
+<option>Install</option>
+<option>Introduction</option>
+<option>AD</option>
+<option>ADFun</option>
+<option>preprocessor</option>
+<option>multi_thread</option>
+<option>utility</option>
+<option>ipopt_solve</option>
+<option>Example</option>
+<option>speed</option>
+<option>Appendix</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>utility-&gt;</option>
+<option>ErrorHandler</option>
+<option>NearEqual</option>
+<option>speed_test</option>
+<option>SpeedTest</option>
+<option>time_test</option>
+<option>test_boolofvoid</option>
+<option>NumericType</option>
+<option>CheckNumericType</option>
+<option>SimpleVector</option>
+<option>CheckSimpleVector</option>
+<option>nan</option>
+<option>pow_int</option>
+<option>Poly</option>
+<option>LuDetAndSolve</option>
+<option>RombergOne</option>
+<option>RombergMul</option>
+<option>Runge45</option>
+<option>Rosen34</option>
+<option>OdeErrControl</option>
+<option>OdeGear</option>
+<option>OdeGearControl</option>
+<option>CppAD_vector</option>
+<option>thread_alloc</option>
+<option>index_sort</option>
+<option>to_string</option>
+<option>set_union</option>
+<option>sparse_rc</option>
+<option>sparse_rcv</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down0(this)'>
+<option>to_string-&gt;</option>
+<option>to_string.cpp</option>
+</select>
+</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Syntax</option>
+<option>See Also</option>
+<option>Purpose</option>
+<option>value</option>
+<option>---..Integer</option>
+<option>---..Float</option>
+<option>s</option>
+<option>---..Integer</option>
+<option>---..Float</option>
+<option>Example</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>Convert Certain Types to a String</big></big></b></center>
+<br>
+<b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
+
+<br>
+
+<code><font color="blue"><span style='white-space: nowrap'>#&nbsp;include&nbsp;&lt;cppad/utility/to_string.hpp&gt;<br>
+</span></font></code>
+
+<code><i><font color="black"><span style='white-space: nowrap'>s</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;to_string(</span></font><i><font color="black"><span style='white-space: nowrap'>value</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+.
+
+<br>
+<br>
+<b><big><a name="See Also" id="See Also">See Also</a></big></b>
+
+<br>
+<a href="base_to_string.htm" target="_top"><span style='white-space: nowrap'>base_to_string</span></a>
+, <a href="ad_to_string.htm" target="_top"><span style='white-space: nowrap'>ad_to_string</span></a>
+
+
+<br>
+<br>
+<b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
+<br>
+This routine is similar to the C++11 routine <code><font color="blue">std::to_string</font></code>
+with the following differences:
+<ol type="1"><li>
+It works with C++98.
+</li><li>
+
+It has been extended to the fundamental floating point types.
+</li><li>
+
+It has specifications for extending to an arbitrary type; see
+<a href="base_to_string.htm" target="_top"><span style='white-space: nowrap'>base_to_string</span></a>
+.
+</li><li>
+
+If <code><font color="blue">&lt;cppad/cppad.hpp&gt;</font></code> is included,
+and it has been extended to a 
+<code><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i></code>
+ type,
+it automatically extends to the
+<a href="glossary.htm#AD Type Above Base" target="_top"><span style='white-space: nowrap'>AD&nbsp;types&nbsp;above&nbsp;Base</span></a>
+.
+</li><li>
+
+For integer types, conversion to a string is exact.
+For floating point types, conversion to a string yields a value
+that has relative error within machine epsilon.
+</li></ol>
+
+
+<br>
+<br>
+<b><big><a name="value" id="value">value</a></big></b>
+
+
+<br>
+<br>
+<b><a name="value.Integer" id="value.Integer">Integer</a></b>
+<br>
+The argument 
+<code><i><font color="black"><span style='white-space: nowrap'>value</span></font></i></code>
+ can have the following prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Integer</span></font></i><font color="blue"><span style='white-space: nowrap'>&amp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>value</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+where 
+<code><i><font color="black"><span style='white-space: nowrap'>Integer</span></font></i></code>
+ is any of the fundamental integer types; e.g.,
+<code><font color="blue">short int</font></code> and <code><font color="blue">unsigned long</font></code>.
+Note that if C++11 is supported by this compilation,
+<code><font color="blue">unsigned long long</font></code> is also a fundamental integer type.
+
+<br>
+<br>
+<b><a name="value.Float" id="value.Float">Float</a></b>
+<br>
+The argument 
+<code><i><font color="black"><span style='white-space: nowrap'>value</span></font></i></code>
+ can have the following prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Float</span></font></i><font color="blue"><span style='white-space: nowrap'>&amp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>value</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+where 
+<code><i><font color="black"><span style='white-space: nowrap'>Float</span></font></i></code>
+ is any of the fundamental floating point types; i.e.,
+<code><font color="blue">float</font></code>, <code><font color="blue">double</font></code>, and <code><font color="blue">long double</font></code>.
+
+<br>
+<br>
+<b><big><a name="s" id="s">s</a></big></b>
+<br>
+The return value has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;std::string&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>s</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+and contains a representation of the specified 
+<code><i><font color="black"><span style='white-space: nowrap'>value</span></font></i></code>
+.
+
+<br>
+<br>
+<b><a name="s.Integer" id="s.Integer">Integer</a></b>
+<br>
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>value</span></font></i></code>
+ is an 
+<code><font color="blue"><span style='white-space: nowrap'>Integer</span></font></code>
+,
+the representation is equivalent to 
+<code><font color="blue"><span style='white-space: nowrap'>os</span></font><i><font color="black"><span style='white-space: nowrap'>&nbsp;&lt;&lt;&nbsp;</span></font></i><font color="blue"><span style='white-space: nowrap'>value</span></font></code>
+
+where 
+<code><i><font color="black"><span style='white-space: nowrap'>os</span></font></i></code>
+ is an <code><font color="blue">std::ostringstream</font></code>.
+
+<br>
+<br>
+<b><a name="s.Float" id="s.Float">Float</a></b>
+<br>
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>value</span></font></i></code>
+ is a 
+<code><font color="blue"><span style='white-space: nowrap'>Float</span></font></code>
+,
+enough digits are used in the representation so that
+the result is accurate to withing round off error.
+
+
+<br>
+<br>
+<b><big><a name="Example" id="Example">Example</a></big></b>
+<br>
+The file <a href="to_string.cpp.htm" target="_top"><span style='white-space: nowrap'>to_string.cpp</span></a>
+
+contains an example and test of this routine.
+It returns true if it succeeds and false otherwise.
+
+
+<hr>Input File: cppad/utility/to_string.hpp
+
+</body>
+</html>

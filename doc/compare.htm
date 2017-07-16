@@ -1,0 +1,331 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>AD Binary Comparison Operators</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="AD Binary Comparison Operators">
+<meta name="keywords" id="keywords" content=" ad binary comparison operators compare &lt; &lt;= &gt; &gt;= == != syntax purpose op x y b operation sequence assumptions example ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_compare_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://coin-or.github.io/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="boolvalued.htm" target="_top">Prev</a>
+</td><td><a href="compare.cpp.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>AD</option>
+<option>BoolValued</option>
+<option>Compare</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>CppAD-&gt;</option>
+<option>Install</option>
+<option>Introduction</option>
+<option>AD</option>
+<option>ADFun</option>
+<option>preprocessor</option>
+<option>multi_thread</option>
+<option>utility</option>
+<option>ipopt_solve</option>
+<option>Example</option>
+<option>speed</option>
+<option>Appendix</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>AD-&gt;</option>
+<option>ad_ctor</option>
+<option>ad_assign</option>
+<option>Convert</option>
+<option>ADValued</option>
+<option>BoolValued</option>
+<option>VecAD</option>
+<option>base_require</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>BoolValued-&gt;</option>
+<option>Compare</option>
+<option>NearEqualExt</option>
+<option>BoolFun</option>
+<option>ParVar</option>
+<option>EqualOpSeq</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down0(this)'>
+<option>Compare-&gt;</option>
+<option>compare.cpp</option>
+</select>
+</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Syntax</option>
+<option>Purpose</option>
+<option>Op</option>
+<option>x</option>
+<option>y</option>
+<option>b</option>
+<option>Operation Sequence</option>
+<option>Assumptions</option>
+<option>Example</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>AD Binary Comparison Operators</big></big></b></center>
+<br>
+<b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
+
+
+<br>
+
+<code><i><font color="black"><span style='white-space: nowrap'>b</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Op</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>y</span></font></i></code>
+
+
+
+<br>
+<br>
+<b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
+<br>
+Compares two operands where one of the operands is an
+
+<code><font color="blue"><span style='white-space: nowrap'>AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code>
+ object.
+The comparison has the same interpretation as for
+the 
+<code><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i></code>
+ type.
+
+
+<br>
+<br>
+<b><big><a name="Op" id="Op">Op</a></big></b>
+<br>
+The operator 
+<code><i><font color="black"><span style='white-space: nowrap'>Op</span></font></i></code>
+ is one of the following:
+<table><tr><td align='left'  valign='top'>
+
+<b>Op</b> <code><span style='white-space: nowrap'>&nbsp;</span></code>  </td><td align='left'  valign='top'>
+ <b>Meaning</b>                           </td></tr><tr><td align='left'  valign='top'>
+
+<code><font color="blue">&lt;</font></code>   </td><td align='left'  valign='top'>
+ is 
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+ less than 
+<code><i><font color="black"><span style='white-space: nowrap'>y</span></font></i></code>
+              </td></tr><tr><td align='left'  valign='top'>
+
+<code><font color="blue">&lt;=</font></code>  </td><td align='left'  valign='top'>
+ is 
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+ less than or equal 
+<code><i><font color="black"><span style='white-space: nowrap'>y</span></font></i></code>
+     </td></tr><tr><td align='left'  valign='top'>
+
+<code><font color="blue">&gt;</font></code>   </td><td align='left'  valign='top'>
+ is 
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+ greater than 
+<code><i><font color="black"><span style='white-space: nowrap'>y</span></font></i></code>
+           </td></tr><tr><td align='left'  valign='top'>
+
+<code><font color="blue">&gt;=</font></code>  </td><td align='left'  valign='top'>
+ is 
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+ greater than or equal 
+<code><i><font color="black"><span style='white-space: nowrap'>y</span></font></i></code>
+  </td></tr><tr><td align='left'  valign='top'>
+
+<code><font color="blue">==</font></code>  </td><td align='left'  valign='top'>
+ is 
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+ equal to 
+<code><i><font color="black"><span style='white-space: nowrap'>y</span></font></i></code>
+               </td></tr><tr><td align='left'  valign='top'>
+
+<code><font color="blue">!=</font></code>  </td><td align='left'  valign='top'>
+ is 
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+ not equal to 
+<code><i><font color="black"><span style='white-space: nowrap'>y</span></font></i></code>
+
+</td></tr>
+</table>
+<br>
+<b><big><a name="x" id="x">x</a></big></b>
+<br>
+The operand 
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Type</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+where 
+<code><i><font color="black"><span style='white-space: nowrap'>Type</span></font></i></code>
+ is 
+<code><font color="blue"><span style='white-space: nowrap'>AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code>
+, 
+<code><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i></code>
+, or <code><font color="blue">int</font></code>.
+
+<br>
+<br>
+<b><big><a name="y" id="y">y</a></big></b>
+<br>
+The operand 
+<code><i><font color="black"><span style='white-space: nowrap'>y</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Type</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+where 
+<code><i><font color="black"><span style='white-space: nowrap'>Type</span></font></i></code>
+ is 
+<code><font color="blue"><span style='white-space: nowrap'>AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code>
+, 
+<code><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i></code>
+, or <code><font color="blue">int</font></code>.
+
+<br>
+<br>
+<b><big><a name="b" id="b">b</a></big></b>
+<br>
+The result 
+<code><i><font color="black"><span style='white-space: nowrap'>b</span></font></i></code>
+ has type
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bool&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>b</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+<br>
+<b><big><a name="Operation Sequence" id="Operation Sequence">Operation Sequence</a></big></b>
+<br>
+The result of this operation is a <code><font color="blue">bool</font></code> value
+(not an <a href="glossary.htm#AD of Base" target="_top"><span style='white-space: nowrap'>AD&nbsp;of&nbsp;Base</span></a>
+ object).
+Thus it will not be recorded as part of an
+AD of 
+<code><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i></code>
+
+<a href="glossary.htm#Operation.Sequence" target="_top"><span style='white-space: nowrap'>operation&nbsp;sequence</span></a>
+.
+<code><span style='white-space: nowrap'><br>
+<br>
+</span></code>For example, suppose
+
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+ and 
+<code><i><font color="black"><span style='white-space: nowrap'>y</span></font></i></code>
+ are 
+<code><font color="blue"><span style='white-space: nowrap'>AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code>
+ objects,
+the tape corresponding to 
+<code><font color="blue"><span style='white-space: nowrap'>AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code>
+ is recording,
+
+<code><i><font color="black"><span style='white-space: nowrap'>b</span></font></i></code>
+ is true,
+and the subsequent code is
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>b</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;cos(</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;sin(</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>);<br>
+</span></font></code>
+only the assignment 
+<code><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;cos(</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+ is recorded on the tape
+(if 
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+ is a <a href="glossary.htm#Parameter" target="_top"><span style='white-space: nowrap'>parameter</span></a>
+,
+nothing is recorded).
+The <a href="comparechange.htm" target="_top"><span style='white-space: nowrap'>CompareChange</span></a>
+ function can yield
+some information about changes in comparison operation results.
+You can use <a href="condexp.htm" target="_top"><span style='white-space: nowrap'>CondExp</span></a>
+ to obtain comparison operations
+that depends on the
+<a href="glossary.htm#Tape.Independent Variable" target="_top"><span style='white-space: nowrap'>independent&nbsp;variable</span></a>
+
+values with out re-taping the AD sequence of operations.
+
+<br>
+<br>
+<b><big><a name="Assumptions" id="Assumptions">Assumptions</a></big></b>
+<br>
+If one of the 
+<code><i><font color="black"><span style='white-space: nowrap'>Op</span></font></i></code>
+ operators listed above
+is used with an 
+<code><font color="blue"><span style='white-space: nowrap'>AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code>
+ object,
+it is assumed that the same operator is supported by the base type
+
+<code><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i></code>
+.
+
+<br>
+<br>
+<b><big><a name="Example" id="Example">Example</a></big></b>
+
+<br>
+The file
+<a href="compare.cpp.htm" target="_top"><span style='white-space: nowrap'>compare.cpp</span></a>
+
+contains an example and test of these operations.
+It returns true if it succeeds and false otherwise.
+
+
+<hr>Input File: cppad/core/compare.hpp
+
+</body>
+</html>

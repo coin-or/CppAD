@@ -1,0 +1,424 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>ADFun Object Deprecated Member Functions</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="ADFun Object Deprecated Member Functions">
+<meta name="keywords" id="keywords" content=" adfun object deprecated member functions syntax purpose dependent 2007-08-07 order 2006-03-31 memory size 2006-04-03 taylor_size 2006-06-17 use_vecad 2006-04-08 size_taylor 2014-03-18 capacity_taylor ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_fundeprecated_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://coin-or.github.io/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="include_deprecated.htm" target="_top">Prev</a>
+</td><td><a href="comparechange.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>Appendix</option>
+<option>deprecated</option>
+<option>FunDeprecated</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>CppAD-&gt;</option>
+<option>Install</option>
+<option>Introduction</option>
+<option>AD</option>
+<option>ADFun</option>
+<option>preprocessor</option>
+<option>multi_thread</option>
+<option>utility</option>
+<option>ipopt_solve</option>
+<option>Example</option>
+<option>speed</option>
+<option>Appendix</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>Appendix-&gt;</option>
+<option>Faq</option>
+<option>directory</option>
+<option>Theory</option>
+<option>glossary</option>
+<option>Bib</option>
+<option>wish_list</option>
+<option>whats_new</option>
+<option>deprecated</option>
+<option>compare_c</option>
+<option>numeric_ad</option>
+<option>addon</option>
+<option>License</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>deprecated-&gt;</option>
+<option>include_deprecated</option>
+<option>FunDeprecated</option>
+<option>CompareChange</option>
+<option>omp_max_thread</option>
+<option>TrackNewDel</option>
+<option>omp_alloc</option>
+<option>memory_leak</option>
+<option>epsilon</option>
+<option>test_vector</option>
+<option>cppad_ipopt_nlp</option>
+<option>old_atomic</option>
+<option>zdouble</option>
+<option>autotools</option>
+</select>
+</td>
+<td>FunDeprecated</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Syntax</option>
+<option>Purpose</option>
+<option>Dependent</option>
+<option>---..Deprecated 2007-08-07</option>
+<option>Order</option>
+<option>---..Deprecated 2006-03-31</option>
+<option>Memory</option>
+<option>---..Deprecated 2006-03-31</option>
+<option>Size</option>
+<option>---..Deprecated 2006-04-03</option>
+<option>taylor_size</option>
+<option>---..Deprecated 2006-06-17</option>
+<option>use_VecAD</option>
+<option>---..Deprecated 2006-04-08</option>
+<option>size_taylor</option>
+<option>---..Deprecated 2014-03-18</option>
+<option>capacity_taylor</option>
+<option>---..Deprecated 2014-03-18</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>ADFun Object Deprecated Member Functions</big></big></b></center>
+<br>
+<b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
+
+<br>
+
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.Dependent(</span></font><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+
+<code><i><font color="black"><span style='white-space: nowrap'>o</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.Order()<br>
+</span></font></code>
+
+<code><i><font color="black"><span style='white-space: nowrap'>m</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.Memory()<br>
+</span></font></code>
+
+<code><i><font color="black"><span style='white-space: nowrap'>s</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.Size()<br>
+</span></font></code>
+
+<code><i><font color="black"><span style='white-space: nowrap'>t</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.taylor_size()<br>
+</span></font></code>
+
+<code><i><font color="black"><span style='white-space: nowrap'>u</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.use_VecAD()<br>
+</span></font></code>
+
+<code><i><font color="black"><span style='white-space: nowrap'>v</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.size_taylor()<br>
+</span></font></code>
+
+<code><i><font color="black"><span style='white-space: nowrap'>w</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.capacity_taylor()<br>
+</span></font></code>
+<br>
+<b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
+<br>
+The 
+<code><font color="blue"><span style='white-space: nowrap'>ADFun&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code>
+ functions documented here have been deprecated;
+i.e., they are no longer approved of and may be removed from some future
+version of CppAD.
+
+<br>
+<br>
+<b><big><a name="Dependent" id="Dependent">Dependent</a></big></b>
+<br>
+A recording of and AD of 
+<code><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i></code>
+
+<a href="glossary.htm#Operation.Sequence" target="_top"><span style='white-space: nowrap'>operation&nbsp;sequence</span></a>
+
+is started by a call of the form
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Independent(</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+If there is only one such recording at the current time,
+you can use 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.Dependent(</span></font><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+ in place of
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.Dependent(</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+See <a href="dependent.htm" target="_top"><span style='white-space: nowrap'>Dependent</span></a>
+ for a description of this operation.
+
+<br>
+<br>
+<b><a name="Dependent.Deprecated 2007-08-07" id="Dependent.Deprecated 2007-08-07">Deprecated 2007-08-07</a></b>
+<br>
+This syntax was deprecated when CppAD was extended to allow
+for more than one 
+<code><font color="blue"><span style='white-space: nowrap'>AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code>
+ recording to be
+active at one time.
+This was necessary to allow for multiple threading applications.
+
+<br>
+<br>
+<b><big><a name="Order" id="Order">Order</a></big></b>
+<br>
+The result 
+<code><i><font color="black"><span style='white-space: nowrap'>o</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>o</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+and is the order of the previous forward operation
+using the function 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+.
+This is the highest order of the
+<a href="glossary.htm#Taylor Coefficient" target="_top"><span style='white-space: nowrap'>Taylor&nbsp;coefficients</span></a>
+
+that are currently stored in 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+.
+
+<br>
+<br>
+<b><a name="Order.Deprecated 2006-03-31" id="Order.Deprecated 2006-03-31">Deprecated 2006-03-31</a></b>
+<br>
+Zero order corresponds to function values being stored in 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+.
+In the future, we would like to be able to erase the function
+values so that 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+ uses less memory.
+In this case, the return value of <code><font color="blue">Order</font></code> would not make sense.
+Use <a href="size_order.htm" target="_top"><span style='white-space: nowrap'>size_order</span></a>
+ to obtain
+the number of Taylor coefficients currently stored
+in the ADFun object 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+
+(which is equal to the order plus one).
+
+
+<br>
+<br>
+<b><big><a name="Memory" id="Memory">Memory</a></big></b>
+<br>
+The result
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>m</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+and is the number of memory units (<code><font color="blue">sizeof</font></code>) required for the
+information currently stored in 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+.
+This memory is returned to the system when the destructor for
+
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+ is called.
+
+<br>
+<br>
+<b><a name="Memory.Deprecated 2006-03-31" id="Memory.Deprecated 2006-03-31">Deprecated 2006-03-31</a></b>
+<br>
+It used to be the case that an ADFun object just kept increasing its
+buffers to the maximum size necessary during its lifetime.
+It would then return the buffers to the system when its destructor
+was called.
+This is no longer the case, an ADFun object now returns memory
+when it no longer needs the values stored in that memory.
+Thus the <code><font color="blue">Memory</font></code> function is no longer well defined.
+
+<br>
+<br>
+<b><big><a name="Size" id="Size">Size</a></big></b>
+<br>
+The result 
+<code><i><font color="black"><span style='white-space: nowrap'>s</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>s</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+and is the number of variables in the operation sequence plus the following:
+one for a phantom variable with tape address zero,
+one for each component of the domain that is a parameter.
+The amount of work and memory necessary for computing function values
+and derivatives using 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+ is roughly proportional to 
+<code><i><font color="black"><span style='white-space: nowrap'>s</span></font></i></code>
+.
+
+<br>
+<br>
+<b><a name="Size.Deprecated 2006-04-03" id="Size.Deprecated 2006-04-03">Deprecated 2006-04-03</a></b>
+<br>
+There are other sizes attached to an ADFun object, for example,
+the number of operations in the sequence.
+In order to avoid confusion with these other sizes,
+use <a href="seq_property.htm#size_var" target="_top"><span style='white-space: nowrap'>size_var</span></a>
+ to obtain
+the number of variables in the operation sequence.
+
+<br>
+<br>
+<b><big><a name="taylor_size" id="taylor_size">taylor_size</a></big></b>
+<br>
+The result 
+<code><i><font color="black"><span style='white-space: nowrap'>t</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>t</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+and is the number of Taylor coefficient orders
+currently calculated and stored in the ADFun object 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+.
+
+<br>
+<br>
+<b><a name="taylor_size.Deprecated 2006-06-17" id="taylor_size.Deprecated 2006-06-17">Deprecated 2006-06-17</a></b>
+<br>
+This function has been replaced by <a href="size_order.htm" target="_top"><span style='white-space: nowrap'>size_order</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="use_VecAD" id="use_VecAD">use_VecAD</a></big></b>
+<br>
+The result 
+<code><i><font color="black"><span style='white-space: nowrap'>u</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bool&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>u</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+If it is true, the
+AD of 
+<code><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i></code>
+
+<a href="glossary.htm#Operation.Sequence" target="_top"><span style='white-space: nowrap'>operation&nbsp;sequence</span></a>
+
+stored in 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+ contains
+<a href="vecad.htm#VecAD&lt;Base&gt;::reference" target="_top"><span style='white-space: nowrap'>VecAD</span></a>
+ operands.
+Otherwise 
+<code><i><font color="black"><span style='white-space: nowrap'>u</span></font></i></code>
+ is false.
+
+<br>
+<br>
+<b><a name="use_VecAD.Deprecated 2006-04-08" id="use_VecAD.Deprecated 2006-04-08">Deprecated 2006-04-08</a></b>
+<br>
+You can instead use
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>u</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.size_VecAD()&nbsp;&gt;&nbsp;0<br>
+</span></font></code>
+<br>
+<b><big><a name="size_taylor" id="size_taylor">size_taylor</a></big></b>
+<br>
+The result 
+<code><i><font color="black"><span style='white-space: nowrap'>v</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>v</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+and is the number of Taylor coefficient orders
+currently calculated and stored in the ADFun object 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+.
+
+<br>
+<br>
+<b><a name="size_taylor.Deprecated 2014-03-18" id="size_taylor.Deprecated 2014-03-18">Deprecated 2014-03-18</a></b>
+<br>
+This function has been replaced by <a href="size_order.htm" target="_top"><span style='white-space: nowrap'>size_order</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="capacity_taylor" id="capacity_taylor">capacity_taylor</a></big></b>
+<br>
+The result 
+<code><i><font color="black"><span style='white-space: nowrap'>w</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>w</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+and is the number of Taylor coefficient orders currently allocated
+in the ADFun object 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+.
+
+<br>
+<br>
+<b><a name="capacity_taylor.Deprecated 2014-03-18" id="capacity_taylor.Deprecated 2014-03-18">Deprecated 2014-03-18</a></b>
+<br>
+This function has been replaced by <a href="capacity_order.htm" target="_top"><span style='white-space: nowrap'>capacity_order</span></a>
+.
+
+
+
+<hr>Input File: omh/appendix/deprecated/fun_deprecated.omh
+
+</body>
+</html>

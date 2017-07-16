@@ -1,0 +1,574 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>exp_eps: First Order Reverse Sweep</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="exp_eps: First Order Reverse Sweep">
+<meta name="keywords" id="keywords" content=" exp_eps: first order reverse sweep mode purpose mathematical form epsilon f_7 index 7: f_6 6: f_5 5: f_4 4: f_3 3: f_2 2: f_1 verification exercises ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_exp_eps_rev1_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://coin-or.github.io/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="exp_eps_for1.cpp.htm" target="_top">Prev</a>
+</td><td><a href="exp_eps_rev1.cpp.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>Introduction</option>
+<option>exp_eps</option>
+<option>exp_eps_rev1</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>CppAD-&gt;</option>
+<option>Install</option>
+<option>Introduction</option>
+<option>AD</option>
+<option>ADFun</option>
+<option>preprocessor</option>
+<option>multi_thread</option>
+<option>utility</option>
+<option>ipopt_solve</option>
+<option>Example</option>
+<option>speed</option>
+<option>Appendix</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>Introduction-&gt;</option>
+<option>exp_2</option>
+<option>exp_eps</option>
+<option>exp_apx.cpp</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>exp_eps-&gt;</option>
+<option>exp_eps.hpp</option>
+<option>exp_eps.cpp</option>
+<option>exp_eps_for0</option>
+<option>exp_eps_for1</option>
+<option>exp_eps_rev1</option>
+<option>exp_eps_for2</option>
+<option>exp_eps_rev2</option>
+<option>exp_eps_cppad</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down0(this)'>
+<option>exp_eps_rev1-&gt;</option>
+<option>exp_eps_rev1.cpp</option>
+</select>
+</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Purpose</option>
+<option>Mathematical Form</option>
+<option>epsilon</option>
+<option>f_7</option>
+<option>Index 7: f_6</option>
+<option>Index 6: f_5</option>
+<option>Index 5: f_4</option>
+<option>Index 4: f_3</option>
+<option>Index 3: f_2</option>
+<option>Index 2: f_1</option>
+<option>Verification</option>
+<option>Exercises</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>exp_eps: First Order Reverse Sweep</big></big></b></center>
+<br>
+<b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
+<br>
+First order reverse mode uses the
+<a href="exp_eps_for0.htm#Operation Sequence" target="_top"><span style='white-space: nowrap'>operation&nbsp;sequence</span></a>
+,
+and zero order forward sweep values,
+to compute the first order derivative
+of one dependent variable with respect to all the independent variables.
+The computations are done in reverse
+of the order of the computations in the original algorithm.
+
+<br>
+<br>
+<b><big><a name="Mathematical Form" id="Mathematical Form">Mathematical Form</a></big></b>
+<br>
+Suppose that we use the algorithm <a href="exp_eps.hpp.htm" target="_top"><span style='white-space: nowrap'>exp_eps.hpp</span></a>
+
+to compute 
+<code><font color="blue"><span style='white-space: nowrap'>exp_eps(</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>epsilon</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+
+with 
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+ is equal to .5
+and 
+<code><i><font color="black"><span style='white-space: nowrap'>epsilon</span></font></i></code>
+ is equal to .2.
+For this case, the mathematical function for the operation sequence
+corresponding to <code><font color="blue">exp_eps</font></code> is
+<small>@[@
+
+f ( x , \varepsilon ) =   1 + x + x^2 / 2
+
+@]@</small>
+The corresponding partial derivatives,
+and the value of the derivatives, are
+<small>@[@
+
+\begin{array}{rcl}
+\partial_x f ( x , \varepsilon ) & = &  1 + x  = 1.5
+\\
+\partial_\varepsilon f ( x , \varepsilon ) & = &  0
+\end{array}
+
+@]@</small>
+
+<br>
+<br>
+<b><big><a name="epsilon" id="epsilon">epsilon</a></big></b>
+<br>
+Since <small>@(@
+\varepsilon
+@)@</small> is an independent variable,
+it could included as an argument to all of the
+<small>@(@
+f_j
+@)@</small> functions below.
+The result would be that all the partials with respect to
+<small>@(@
+\varepsilon
+@)@</small> would be zero and hence we drop it to simplify
+the presentation.
+
+<br>
+<br>
+<b><big><a name="f_7" id="f_7">f_7</a></big></b>
+<br>
+In reverse mode we choose one dependent variable and
+compute its derivative with respect to all the independent variables.
+For our example, we chose the value returned by <a href="exp_eps.hpp.htm" target="_top"><span style='white-space: nowrap'>exp_eps.hpp</span></a>
+
+which is <small>@(@
+v_7
+@)@</small>.
+We begin with the function <small>@(@
+f_7
+@)@</small> where <small>@(@
+v_7
+@)@</small>
+is both an argument and the value of the function; i.e.,
+<small>@[@
+
+\begin{array}{rcl}
+f_7 ( v_1 , v_2 , v_3 , v_4 , v_5 , v_6 , v_7 ) & = & v_7
+\\
+\D{f_7}{v_7} & = & 1
+\end{array}
+
+@]@</small>
+All the other partial derivatives of <small>@(@
+f_7
+@)@</small> are zero.
+
+<br>
+<br>
+<b><big><a name="Index 7: f_6" id="Index 7: f_6">Index 7: f_6</a></big></b>
+<br>
+The last operation has index 7,
+<small>@[@
+
+	v_7 =   v_4 + v_6
+
+@]@</small>
+We define the function
+<small>@(@
+f_6 ( v_1 , v_2 , v_3 , v_4 , v_5 , v_6 )
+@)@</small>
+as equal to <small>@(@
+f_7
+@)@</small>
+except that <small>@(@
+v_7
+@)@</small> is eliminated using
+this operation; i.e.
+<small>@[@
+
+f_6  =
+f_7 [ v_1 , v_2 , v_3 , v_4 , v_5 , v_6 , v_7 ( v_4 , v_6 ) ]
+
+@]@</small>
+It follows that
+<small>@[@
+
+\begin{array}{rcll}
+\D{f_6}{v_4}
+& = & \D{f_7}{v_4} +
+	\D{f_7}{v_7} * \D{v_7}{v_4}
+& = 1
+\\
+\D{f_6}{v_6}
+& = & \D{f_7}{v_6} +
+	\D{f_7}{v_7} * \D{v_7}{v_6}
+& = 1
+\end{array}
+
+@]@</small>
+All the other partial derivatives of <small>@(@
+f_6
+@)@</small> are zero.
+
+<br>
+<br>
+<b><big><a name="Index 6: f_5" id="Index 6: f_5">Index 6: f_5</a></big></b>
+<br>
+The previous operation has index 6,
+<small>@[@
+
+	v_6 = v_5 / 2
+
+@]@</small>
+We define the function
+<small>@(@
+f_5 (  v_1 , v_2 , v_3 , v_4 , v_5 )
+@)@</small>
+as equal to <small>@(@
+f_6
+@)@</small>
+except that <small>@(@
+v_6
+@)@</small> is eliminated using this operation; i.e.,
+<small>@[@
+
+f_5 =
+f_6 [  v_1 , v_2 , v_3 , v_4 , v_5 , v_6 ( v_5 ) ]
+
+@]@</small>
+It follows that
+<small>@[@
+
+\begin{array}{rcll}
+\D{f_5}{v_4}
+& = & \D{f_6}{v_4}
+& = 1
+\\
+\D{f_5}{v_5}
+& = & \D{f_6}{v_5} +
+	\D{f_6}{v_6} * \D{v_6}{v_5}
+& = 0.5
+\end{array}
+
+@]@</small>
+All the other partial derivatives of <small>@(@
+f_5
+@)@</small> are zero.
+
+<br>
+<br>
+<b><big><a name="Index 5: f_4" id="Index 5: f_4">Index 5: f_4</a></big></b>
+<br>
+The previous operation has index 5,
+<small>@[@
+
+	v_5 = v_3 * v_1
+
+@]@</small>
+We define the function
+<small>@(@
+f_4 (  v_1 , v_2 , v_3 , v_4 )
+@)@</small>
+as equal to <small>@(@
+f_5
+@)@</small>
+except that <small>@(@
+v_5
+@)@</small> is eliminated using this operation; i.e.,
+<small>@[@
+
+f_4 =
+f_5 [  v_1 , v_2 , v_3 , v_4 , v_5 ( v_3 , v_1 )  ]
+
+@]@</small>
+Given the information from the forward sweep, we have
+<small>@(@
+v_3 =  0.5
+@)@</small> and <small>@(@
+v_1 = 0.5
+@)@</small>.
+It follows that
+<small>@[@
+
+\begin{array}{rcll}
+\D{f_4}{v_1}
+& = & \D{f_5}{v_1} +
+	\D{f_5}{v_5} * \D{v_5}{v_1}
+& =  0.25
+\\
+\D{f_4}{v_2} & = & \D{f_5}{v_2}  & = 0
+\\
+\D{f_4}{v_3}
+& = & \D{f_5}{v_3} +
+	\D{f_5}{v_5} * \D{v_5}{v_3}
+& =  0.25
+\\
+\D{f_4}{v_4}
+& = & \D{f_5}{v_4}
+& = 1
+\end{array}
+
+@]@</small>
+
+<br>
+<br>
+<b><big><a name="Index 4: f_3" id="Index 4: f_3">Index 4: f_3</a></big></b>
+<br>
+The previous operation has index 4,
+<small>@[@
+
+	v_4 = 1 + v_3
+
+@]@</small>
+We define the function
+<small>@(@
+f_3 (  v_1 , v_2 , v_3 )
+@)@</small>
+as equal to <small>@(@
+f_4
+@)@</small>
+except that <small>@(@
+v_4
+@)@</small> is eliminated using this operation; i.e.,
+<small>@[@
+
+f_3 =
+f_4 [  v_1 , v_2 , v_3 , v_4 ( v_3 )  ]
+
+@]@</small>
+It follows that
+<small>@[@
+
+\begin{array}{rcll}
+\D{f_3}{v_1}
+& = & \D{f_4}{v_1}
+& =  0.25
+\\
+\D{f_3}{v_2} & = & \D{f_4}{v_2}  & = 0
+\\
+\D{f_3}{v_3}
+& = & \D{f_4}{v_3} +
+	\D{f_4}{v_4} * \D{v_4}{v_3}
+& =  1.25
+\end{array}
+
+@]@</small>
+
+
+<br>
+<br>
+<b><big><a name="Index 3: f_2" id="Index 3: f_2">Index 3: f_2</a></big></b>
+<br>
+The previous operation has index 3,
+<small>@[@
+
+	v_3 = v_2 / 1
+
+@]@</small>
+We define the function
+<small>@(@
+f_2 (  v_1 , v_2 )
+@)@</small>
+as equal to <small>@(@
+f_3
+@)@</small>
+except that <small>@(@
+v_3
+@)@</small> is eliminated using this operation; i.e.,
+<small>@[@
+
+f_2 =
+f_4 [  v_1 , v_2 , v_3 ( v_2 )  ]
+
+@]@</small>
+It follows that
+<small>@[@
+
+\begin{array}{rcll}
+\D{f_2}{v_1}
+& = & \D{f_3}{v_1}
+& =  0.25
+\\
+\D{f_2}{v_2} & = & \D{f_3}{v_2}  +
+	\D{f_3}{v_3} * \D{v_3}{v_2}
+& = 1.25
+\end{array}
+
+@]@</small>
+
+<br>
+<br>
+<b><big><a name="Index 2: f_1" id="Index 2: f_1">Index 2: f_1</a></big></b>
+<br>
+The previous operation has index 1,
+<small>@[@
+
+	v_2 = 1 * v_1
+
+@]@</small>
+We define the function
+<small>@(@
+f_1 (  v_1 )
+@)@</small>
+as equal to <small>@(@
+f_2
+@)@</small>
+except that <small>@(@
+v_2
+@)@</small> is eliminated using this operation; i.e.,
+<small>@[@
+
+f_1 =
+f_2 [  v_1 , v_2 ( v_1 )  ]
+
+@]@</small>
+It follows that
+<small>@[@
+
+\begin{array}{rcll}
+\D{f_1}{v_1} & = & \D{f_2}{v_1}  +
+	\D{f_2}{v_2} * \D{v_2}{v_1}
+& = 1.5
+\end{array}
+
+@]@</small>
+
+Note that <small>@(@
+v_1
+@)@</small> is equal to <small>@(@
+x
+@)@</small>,
+so the derivative of 
+<code><font color="blue"><span style='white-space: nowrap'>exp_eps(</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>epsilon</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+
+at 
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+ equal to .5 and 
+<code><i><font color="black"><span style='white-space: nowrap'>epsilon</span></font></i></code>
+ equal .2 is
+1.5 in the 
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+ direction and zero in the 
+<code><i><font color="black"><span style='white-space: nowrap'>epsilon</span></font></i></code>
+ direction.
+We also note that
+<a href="exp_eps_for1.htm" target="_top"><span style='white-space: nowrap'>forward</span></a>
+ forward mode gave the
+same result for the partial in the 
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+ direction.
+
+
+
+
+<br>
+<br>
+<b><big><a name="Verification" id="Verification">Verification</a></big></b>
+<br>
+The file <a href="exp_eps_rev1.cpp.htm" target="_top"><span style='white-space: nowrap'>exp_eps_rev1.cpp</span></a>
+ contains a routine
+that verifies the values computed above.
+It returns true for success and false for failure.
+It only tests the partial derivatives of
+<small>@(@
+f_j
+@)@</small> that might not be equal to the corresponding
+partials of <small>@(@
+f_{j+1}
+@)@</small>; i.e., the
+other partials of <small>@(@
+f_j
+@)@</small> must be equal to the corresponding
+partials of <small>@(@
+f_{j+1}
+@)@</small>.
+
+<br>
+<br>
+<b><big><a name="Exercises" id="Exercises">Exercises</a></big></b>
+
+<ol type="1"><li>
+Consider the case where <small>@(@
+x = .1
+@)@</small>
+and we first preform a zero order forward mode sweep
+for the operation sequence used above (in reverse order).
+What are the results of a
+first order reverse mode sweep; i.e.,
+what are the corresponding values for
+<small>@(@
+\D{f_j}{v_k}
+@)@</small> for all <small>@(@
+j, k
+@)@</small> such that
+<small>@(@
+\D{f_j}{v_k} \neq 0
+@)@</small>.
+</li><li>
+
+Create a modified version of
+<a href="exp_eps_rev1.cpp.htm" target="_top"><span style='white-space: nowrap'>exp_eps_rev1.cpp</span></a>
+
+that verifies the values you obtained for the previous exercise.
+Also create and run a main program that reports the result
+of calling the modified version of
+<a href="exp_eps_rev1.cpp.htm" target="_top"><span style='white-space: nowrap'>exp_eps_rev1.cpp</span></a>
+.
+</li></ol>
+
+
+
+<hr>Input File: introduction/exp_eps.omh
+
+</body>
+</html>

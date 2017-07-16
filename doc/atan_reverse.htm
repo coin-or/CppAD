@@ -1,0 +1,276 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>Inverse Tangent and Hyperbolic Tangent Reverse Mode Theory</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Inverse Tangent and Hyperbolic Tangent Reverse Mode Theory">
+<meta name="keywords" id="keywords" content=" inverse tangent hyperbolic reverse mode theory ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_atan_reverse_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://coin-or.github.io/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="sin_cos_reverse.htm" target="_top">Prev</a>
+</td><td><a href="asin_reverse.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>Appendix</option>
+<option>Theory</option>
+<option>ReverseTheory</option>
+<option>atan_reverse</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>Appendix-&gt;</option>
+<option>Faq</option>
+<option>directory</option>
+<option>Theory</option>
+<option>glossary</option>
+<option>Bib</option>
+<option>wish_list</option>
+<option>whats_new</option>
+<option>deprecated</option>
+<option>compare_c</option>
+<option>numeric_ad</option>
+<option>addon</option>
+<option>License</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>Theory-&gt;</option>
+<option>ForwardTheory</option>
+<option>ReverseTheory</option>
+<option>reverse_identity</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>ReverseTheory-&gt;</option>
+<option>exp_reverse</option>
+<option>log_reverse</option>
+<option>sqrt_reverse</option>
+<option>sin_cos_reverse</option>
+<option>atan_reverse</option>
+<option>asin_reverse</option>
+<option>acos_reverse</option>
+<option>tan_reverse</option>
+<option>erf_reverse</option>
+</select>
+</td>
+<td>atan_reverse</td>
+<td>Headings</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@
+
+
+<center><b><big><big>Inverse Tangent and Hyperbolic Tangent Reverse Mode Theory</big></big></b></center>
+We use the reverse theory
+<a href="reversetheory.htm#Standard Math Functions" target="_top"><span style='white-space: nowrap'>standard&nbsp;math&nbsp;function</span></a>
+
+definition for the functions <small>@(@
+H
+@)@</small> and <small>@(@
+G
+@)@</small>.
+In addition, we use the forward mode notation in
+<a href="atan_forward.htm" target="_top"><span style='white-space: nowrap'>atan_forward</span></a>
+ for
+<small>@[@
+
+	B(t) = 1 \pm X(t) * X(t)
+
+@]@</small>
+We use <small>@(@
+b
+@)@</small>
+for the <code><i>p</i></code>-th order Taylor coefficient
+row vectors corresponding to <small>@(@
+B(t)
+@)@</small>
+and replace <small>@(@
+z^{(j)}
+@)@</small> by
+<small>@[@
+
+	( z^{(j)} , b^{(j)} )
+
+@]@</small>
+in the definition for <small>@(@
+G
+@)@</small> and <small>@(@
+H
+@)@</small>.
+The zero order forward mode formulas for the
+<a href="atan_forward.htm" target="_top"><span style='white-space: nowrap'>atan</span></a>
+
+function are
+<small>@[@
+
+\begin{array}{rcl}
+	z^{(0)}  & = & F ( x^{(0)} ) \\
+	b^{(0)}  & = & 1 \pm x^{(0)} x^{(0)}
+\end{array}
+
+@]@</small>
+where <small>@(@
+F(x) = \R{atan} (x)
+@)@</small> for <small>@(@
++
+@)@</small>
+and <small>@(@
+F(x) = \R{atanh} (x)
+@)@</small> for <small>@(@
+-
+@)@</small>.
+For orders <small>@(@
+j
+@)@</small> greater than zero we have
+<small>@[@
+
+\begin{array}{rcl}
+b^{(j)} & = &
+	\pm \sum_{k=0}^j x^{(k)} x^{(j-k)}
+\\
+z^{(j)} & = & \frac{1}{j} \frac{1}{ b^{(0)} }
+\left(
+	j x^{(j)}
+	- \sum_{k=1}^{j-1} k z^{(k)}  b^{(j-k)}
+\right)
+\end{array}
+
+@]@</small>
+
+
+If <small>@(@
+j = 0
+@)@</small>, we note that
+<small>@(@
+F^{(1)} ( x^{(0)} ) =  1 / b^{(0)}
+@)@</small> and hence
+<small>@[@
+
+\begin{array}{rcl}
+\D{H}{ x^{(j)} } & = &
+\D{G}{ x^{(j)} }
++ \D{G}{ z^{(j)} } \D{ z^{(j)} }{ x^{(0)} }
++ \D{G}{ b^{(j)} } \D{ b^{(j)} }{ x^{(0)} }
+\\
+& = &
+\D{G}{ x^{(j)} }
++ \D{G}{ z^{(j)} } \frac{1}{ b^{(0)} }
+\pm \D{G}{ b^{(j)} } 2 x^{(0)}
+\end{array}
+
+@]@</small>
+
+If <small>@(@
+j > 0
+@)@</small>, then for <small>@(@
+k = 1, \ldots , j-1
+@)@</small>
+<small>@[@
+
+\begin{array}{rcl}
+\D{H}{ b^{(0)} } & = &
+\D{G}{ b^{(0)} }
++ \D{G}{ z^{(j)} } \D{ z^{(j)} }{ b^{(0)} }
+\\
+& = &
+\D{G}{ b^{(0)} }
+- \D{G}{ z^{(j)} } \frac{ z^{(j)} }{ b^{(0)} }
+\\
+\D{H}{ x^{(j)} } & = &
+\D{G}{ x^{(j)} }
++ \D{G}{ z^{(j)} } \D{ z^{(j)} }{ x^{(j)} }
++ \D{G}{ b^{(j)} } \D{ b^{(j)} }{ x^{(j)} }
+\\
+& = &
+\D{G}{ x^{(j)} }
++ \D{G}{ z^{(j)} } \frac{1}{ b^{(0)} }
+\pm \D{G}{ b^{(j)} } 2 x^{(0)}
+\\
+\D{H}{ x^{(0)} } & = &
+\D{G}{ x^{(0)} }
++ \D{G}{ z^{(j)} } \D{ z^{(j)} }{ x^{(0)} }
++ \D{G}{ b^{(j)} } \D{ b^{(j)} }{ x^{(0)} }
+\\
+& = &
+\D{G}{ x^{(0)} }
+\pm \D{G}{ b^{(j)} } 2 x^{(j)}
+\\
+\D{H}{ x^{(k)} } & = &
+\D{G}{ x^{(k)} }
++ \D{G}{ z^{(j)} } \D{ z^{(j)} }{ x^{(k)} }
++ \D{G}{ b^{(j)} } \D{ b^{(j)} }{ x^{(k)} }
+\\
+& = &
+\D{G}{ x^{(k)} }
+\pm \D{G}{ b^{(j)} } 2 x^{(j-k)}
+\\
+\D{H}{ z^{(k)} } & = &
+\D{G}{ z^{(k)} }
++ \D{G}{ z^{(j)} } \D{ z^{(j)} }{ z^{(k)} }
++ \D{G}{ b^{(j)} } \D{ b^{(j)} }{ z^{(k)} }
+\\
+& = &
+\D{G}{ z^{(k)} }
+- \D{G}{ z^{(j)} } \frac{k b^{(j-k)} }{ j b^{(0)} }
+\\
+\D{H}{ b^{(j-k)} } & = &
+\D{G}{ b^{(j-k)} }
++ \D{G}{ z^{(j)} } \D{ z^{(j)} }{ b^{(j-k)} }
++ \D{G}{ b^{(j)} } \D{ b^{(j)} }{ b^{(j-k)} }
+\\
+& = &
+\D{G}{ b^{(j-k)} }
+- \D{G}{ z^{(j)} } \frac{k z^{(k)} }{ j b^{(0)} }
+\end{array}
+
+@]@</small>
+
+
+<hr>Input File: omh/appendix/theory/atan_reverse.omh
+
+</body>
+</html>

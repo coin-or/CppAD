@@ -1,0 +1,246 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>CppAD pkg-config Files</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="CppAD pkg-config Files">
+<meta name="keywords" id="keywords" content=" cppad pkg-config files pc purpose usage defined fields configuration ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_pkgconfig_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://coin-or.github.io/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="cmake_check.htm" target="_top">Prev</a>
+</td><td><a href="introduction.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>Install</option>
+<option>pkgconfig</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>CppAD-&gt;</option>
+<option>Install</option>
+<option>Introduction</option>
+<option>AD</option>
+<option>ADFun</option>
+<option>preprocessor</option>
+<option>multi_thread</option>
+<option>utility</option>
+<option>ipopt_solve</option>
+<option>Example</option>
+<option>speed</option>
+<option>Appendix</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>Install-&gt;</option>
+<option>download</option>
+<option>cmake</option>
+<option>cmake_check</option>
+<option>pkgconfig</option>
+</select>
+</td>
+<td>pkgconfig</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Purpose</option>
+<option>Usage</option>
+<option>Defined Fields</option>
+<option>CppAD Configuration Files</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@
+
+
+<center><b><big><big>CppAD pkg-config Files</big></big></b></center>
+<br>
+<b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
+<br>
+The <code><font color="blue">pkg-config</font></code> package helps with the use of installed libraries;
+see its
+<a href="http://people.freedesktop.org/~dbn/pkg-config-guide.html" target="_top"><span style='white-space: nowrap'>guide</span></a>
+
+for more information.
+
+<br>
+<br>
+<b><big><a name="Usage" id="Usage">Usage</a></big></b>
+<br>
+The necessary flags for compiling code that includes CppAD can
+be obtained with the command
+<code><font color='blue'><pre style='display:inline'> 
+     pkg-config --cflags cppad
+</pre></font></code>
+Note that this command assumes <a href="pkgconfig.htm" target="_top"><span style='white-space: nowrap'>cppad.pc</span></a>
+ is in
+the search path <code><font color="blue">PKG_CONFIG_PATH</font></code>.
+If <a href="ipopt_prefix.htm" target="_top"><span style='white-space: nowrap'>ipopt_prefix</span></a>
+ is specified,
+the necessary flags for linking <a href="cppad_ipopt_nlp.htm" target="_top"><span style='white-space: nowrap'>cppad_ipopt</span></a>
+
+can be obtained with the commands
+<code><font color='blue'><pre style='display:inline'> 
+     pkg-config --libs cppad
+</pre></font></code>
+Note that this command assumes <code><font color="blue">ipopt.pc</font></code> is in
+the search path <code><font color="blue">PKG_CONFIG_PATH</font></code>.
+
+<br>
+<br>
+<b><big><a name="Defined Fields" id="Defined Fields">Defined Fields</a></big></b>
+
+<table><tr><td align='left'  valign='top'>
+
+
+<code><i><font color="black"><span style='white-space: nowrap'>Name</span></font></i></code>
+ </td><td align='left'  valign='top'>
+
+	A human-readable name for the CppAD package.
+</td></tr><tr><td align='left'  valign='top'>
+
+
+<code><i><font color="black"><span style='white-space: nowrap'>Description</span></font></i></code>
+ </td><td align='left'  valign='top'>
+
+	A brief description of the CppAD package.
+</td></tr><tr><td align='left'  valign='top'>
+
+
+<code><i><font color="black"><span style='white-space: nowrap'>URL</span></font></i></code>
+ </td><td align='left'  valign='top'>
+
+	A URL where people can get more information about the CppAD package.
+</td></tr><tr><td align='left'  valign='top'>
+
+
+<code><i><font color="black"><span style='white-space: nowrap'>Version</span></font></i></code>
+ </td><td align='left'  valign='top'>
+
+	A string specifically defining the version of the CppAD package.
+</td></tr><tr><td align='left'  valign='top'>
+
+
+<code><i><font color="black"><span style='white-space: nowrap'>Cflags</span></font></i></code>
+ </td><td align='left'  valign='top'>
+
+	The necessary flags for using any of the CppAD include files.
+</td></tr><tr><td align='left'  valign='top'>
+
+
+<code><i><font color="black"><span style='white-space: nowrap'>Libs</span></font></i></code>
+ </td><td align='left'  valign='top'>
+
+	If <a href="ipopt_prefix.htm" target="_top"><span style='white-space: nowrap'>ipopt_prefix</span></a>
+ is specified,
+	the necessary flags for using the <a href="cppad_ipopt_nlp.htm" target="_top"><span style='white-space: nowrap'>cppad_ipopt</span></a>
+
+	library
+</td></tr><tr><td align='left'  valign='top'>
+
+
+<code><i><font color="black"><span style='white-space: nowrap'>Requires</span></font></i></code>
+ </td><td align='left'  valign='top'>
+
+	If <a href="ipopt_prefix.htm" target="_top"><span style='white-space: nowrap'>ipopt_prefix</span></a>
+ is specified,
+	the packages required to use the <a href="cppad_ipopt_nlp.htm" target="_top"><span style='white-space: nowrap'>cppad_ipopt</span></a>
+
+	library
+</td></tr>
+</table>
+<br>
+<b><big><a name="CppAD Configuration Files" id="CppAD Configuration Files">CppAD Configuration Files</a></big></b>
+<br>
+In the table below,
+
+<code><i><font color="black"><span style='white-space: nowrap'>builddir</span></font></i></code>
+ is the build directory; i.e., the directory where
+the CppAD
+<a href="cmake.htm#CMake Command" target="_top"><span style='white-space: nowrap'>cmake&nbsp;command</span></a>
+ is executed.
+The directory 
+<code><i><font color="black"><span style='white-space: nowrap'>prefix</span></font></i></code>
+ is the value of
+<a href="cmake.htm#cppad_prefix" target="_top"><span style='white-space: nowrap'>cppad_prefix</span></a>
+ during configuration.
+The directory 
+<code><i><font color="black"><span style='white-space: nowrap'>datadir</span></font></i></code>
+ is the value of
+<a href="cmake.htm#cmake_install_datadir" target="_top"><span style='white-space: nowrap'>cmake_install_datadir</span></a>
+.
+The following configuration files contain the information above
+<table><tr><td align='left'  valign='top'>
+
+
+<code><i><font color="black"><span style='white-space: nowrap'>File</span></font></i></code>
+             </td><td align='left'  valign='top'>
+
+	
+<code><i><font color="black"><span style='white-space: nowrap'>Description</span></font></i></code>
+ </td></tr><tr><td align='left'  valign='top'>
+
+
+<code><i><font color="black"><span style='white-space: nowrap'>prefix</span></font></i><font color="blue"><span style='white-space: nowrap'>/</span></font><i><font color="black"><span style='white-space: nowrap'>datadir</span></font></i><font color="blue"><span style='white-space: nowrap'>/pkgconfig/cppad.pc</span></font></code>
+              </td><td align='left'  valign='top'>
+
+	for use after
+	<a href="install.htm#Instructions.Step 4: Installation" target="_top"><span style='white-space: nowrap'>make&nbsp;install</span></a>
+
+</td></tr><tr><td align='left'  valign='top'>
+
+
+<code><i><font color="black"><span style='white-space: nowrap'>builddir</span></font></i><font color="blue"><span style='white-space: nowrap'>/pkgconfig/cppad-uninstalled.pc</span></font></code>
+       </td><td align='left'  valign='top'>
+
+	for testing before <code><font color="blue">make install</font></code>
+</td></tr>
+</table>
+
+<hr>Input File: omh/install/pkgconfig.omh
+
+</body>
+</html>

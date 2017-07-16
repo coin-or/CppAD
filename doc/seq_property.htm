@@ -1,0 +1,486 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>ADFun Sequence Properties</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="ADFun Sequence Properties">
+<meta name="keywords" id="keywords" content=" adfun sequence properties syntax see also purpose f domain range parameter size_var size_par size_op size_op_arg size_text size_vecad size_op_seq example ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_seq_property_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://coin-or.github.io/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="abort_recording.cpp.htm" target="_top">Prev</a>
+</td><td><a href="seq_property.cpp.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>ADFun</option>
+<option>record_adfun</option>
+<option>seq_property</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>CppAD-&gt;</option>
+<option>Install</option>
+<option>Introduction</option>
+<option>AD</option>
+<option>ADFun</option>
+<option>preprocessor</option>
+<option>multi_thread</option>
+<option>utility</option>
+<option>ipopt_solve</option>
+<option>Example</option>
+<option>speed</option>
+<option>Appendix</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>ADFun-&gt;</option>
+<option>record_adfun</option>
+<option>drivers</option>
+<option>Forward</option>
+<option>Reverse</option>
+<option>sparsity_pattern</option>
+<option>sparse_derivative</option>
+<option>optimize</option>
+<option>abs_normal</option>
+<option>FunCheck</option>
+<option>check_for_nan</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>record_adfun-&gt;</option>
+<option>Independent</option>
+<option>FunConstruct</option>
+<option>Dependent</option>
+<option>abort_recording</option>
+<option>seq_property</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down0(this)'>
+<option>seq_property-&gt;</option>
+<option>seq_property.cpp</option>
+</select>
+</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Syntax</option>
+<option>---..See Also</option>
+<option>Purpose</option>
+<option>f</option>
+<option>Domain</option>
+<option>Range</option>
+<option>Parameter</option>
+<option>size_var</option>
+<option>size_par</option>
+<option>size_op</option>
+<option>size_op_arg</option>
+<option>size_text</option>
+<option>size_VecAD</option>
+<option>size_op_seq</option>
+<option>Example</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>ADFun Sequence Properties</big></big></b></center>
+<br>
+<b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
+
+<br>
+
+<code><i><font color="black"><span style='white-space: nowrap'>n</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.Domain()<br>
+</span></font></code>
+
+<code><i><font color="black"><span style='white-space: nowrap'>m</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.Range()<br>
+</span></font></code>
+
+<code><i><font color="black"><span style='white-space: nowrap'>p</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.Parameter(</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+
+<code><i><font color="black"><span style='white-space: nowrap'>s</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.size_var()<br>
+</span></font></code>
+
+<code><i><font color="black"><span style='white-space: nowrap'>s</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.size_par()<br>
+</span></font></code>
+
+<code><i><font color="black"><span style='white-space: nowrap'>s</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.size_op()<br>
+</span></font></code>
+
+<code><i><font color="black"><span style='white-space: nowrap'>s</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.size_op_arg()<br>
+</span></font></code>
+
+<code><i><font color="black"><span style='white-space: nowrap'>s</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.size_text()<br>
+</span></font></code>
+
+<code><i><font color="black"><span style='white-space: nowrap'>s</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.size_VecAD()<br>
+</span></font></code>
+
+<code><i><font color="black"><span style='white-space: nowrap'>s</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.size_op_seq()<br>
+</span></font></code>
+<br>
+<b><a name="Syntax.See Also" id="Syntax.See Also">See Also</a></b>
+
+<br>
+<a href="size_order.htm" target="_top"><span style='white-space: nowrap'>size_order</span></a>
+, <a href="capacity_order.htm" target="_top"><span style='white-space: nowrap'>capacity_order</span></a>
+, <a href="number_skip.htm" target="_top"><span style='white-space: nowrap'>number_skip</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
+<br>
+The operations above return properties of the
+AD of 
+<code><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i></code>
+
+<a href="glossary.htm#Operation.Sequence" target="_top"><span style='white-space: nowrap'>operation&nbsp;sequence</span></a>
+
+stored in the ADFun object 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+.
+(If there is no operation sequence stored in 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+,
+<code><font color="blue">size_var</font></code> returns zero.)
+
+<br>
+<br>
+<b><big><a name="f" id="f">f</a></big></b>
+<br>
+The object 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;ADFun&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+(see 
+<code><font color="blue"><span style='white-space: nowrap'>ADFun&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code>
+ <a href="funconstruct.htm" target="_top"><span style='white-space: nowrap'>constructor</span></a>
+).
+
+<br>
+<br>
+<b><big><a name="Domain" id="Domain">Domain</a></big></b>
+<br>
+The result 
+<code><i><font color="black"><span style='white-space: nowrap'>n</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+and is the dimension of the domain space corresponding to 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+.
+This is equal to the size of the vector 
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+ in the call
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Independent(</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+that starting recording the operation sequence
+currently stored in 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+
+(see <a href="funconstruct.htm" target="_top"><span style='white-space: nowrap'>FunConstruct</span></a>
+ and <a href="dependent.htm" target="_top"><span style='white-space: nowrap'>Dependent</span></a>
+).
+
+<br>
+<br>
+<b><big><a name="Range" id="Range">Range</a></big></b>
+<br>
+The result 
+<code><i><font color="black"><span style='white-space: nowrap'>m</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>m</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+and is the dimension of the range space corresponding to 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+.
+This is equal to the size of the vector 
+<code><i><font color="black"><span style='white-space: nowrap'>y</span></font></i></code>
+ in syntax
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ADFun&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base&gt;&nbsp;</span></font></i><font color="blue"><span style='white-space: nowrap'>f</span></font><i><font color="black"><span style='white-space: nowrap'>(</span></font></i><font color="blue"><span style='white-space: nowrap'>x</span></font><i><font color="black"><span style='white-space: nowrap'>,&nbsp;</span></font></i><font color="blue"><span style='white-space: nowrap'>y</span></font><i><font color="black"><span style='white-space: nowrap'>)<br>
+</span></font></i></code>
+or
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.Dependent(</span></font><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+depending on which stored the operation sequence currently in 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+
+(see <a href="funconstruct.htm" target="_top"><span style='white-space: nowrap'>FunConstruct</span></a>
+ and <a href="dependent.htm" target="_top"><span style='white-space: nowrap'>Dependent</span></a>
+).
+
+<br>
+<br>
+<b><big><a name="Parameter" id="Parameter">Parameter</a></big></b>
+<br>
+The argument 
+<code><i><font color="black"><span style='white-space: nowrap'>i</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+and <small>@(@
+0 \leq i < m
+@)@</small>.
+The result 
+<code><i><font color="black"><span style='white-space: nowrap'>p</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bool&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>p</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+It is true if the <code><i>i</i></code>-th component of range space for <small>@(@
+F
+@)@</small>
+corresponds to a
+<a href="glossary.htm#Parameter" target="_top"><span style='white-space: nowrap'>parameter</span></a>
+ in the operation sequence.
+In this case,
+the <code><i>i</i></code>-th component of <small>@(@
+F
+@)@</small> is constant and
+<small>@[@
+
+	\D{F_i}{x_j} (x) = 0
+
+@]@</small>
+for <small>@(@
+j = 0 , \ldots , n-1
+@)@</small> and all <small>@(@
+x \in B^n
+@)@</small>.
+
+<br>
+<br>
+<b><big><a name="size_var" id="size_var">size_var</a></big></b>
+<br>
+The result 
+<code><i><font color="black"><span style='white-space: nowrap'>s</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>s</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+and is the number of variables in the operation sequence plus the following:
+one for a phantom variable with tape address zero,
+one for each component of the range that is a parameter.
+The amount of work and memory necessary for computing function values
+and derivatives using 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+ is roughly proportional to 
+<code><i><font color="black"><span style='white-space: nowrap'>s</span></font></i></code>
+.
+(The function call <a href="size_order.htm" target="_top"><span style='white-space: nowrap'>f.size_order()</span></a>
+
+returns the number of Taylor coefficient orders, per variable,direction,
+currently stored in 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+.)
+<code><span style='white-space: nowrap'><br>
+<br>
+</span></code>If there is no operation sequence stored in 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+,
+<code><font color="blue">size_var</font></code> returns zero
+(see <a href="funconstruct.htm#Default Constructor" target="_top"><span style='white-space: nowrap'>default&nbsp;constructor</span></a>
+).
+
+<br>
+<br>
+<b><big><a name="size_par" id="size_par">size_par</a></big></b>
+<br>
+The result 
+<code><i><font color="black"><span style='white-space: nowrap'>s</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>s</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+and is the number of parameters in the operation sequence.
+Parameters differ from variables in that only values
+(and not derivatives) need to be stored for each parameter.
+These parameters are considered part of the operation
+sequence, as opposed to the Taylor coefficients which are
+considered extra data in the function object 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+.
+Note that one 
+<code><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i></code>
+ value is required for each parameter.
+
+<br>
+<br>
+<b><big><a name="size_op" id="size_op">size_op</a></big></b>
+<br>
+The result 
+<code><i><font color="black"><span style='white-space: nowrap'>s</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>s</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+and is the number of operations in the operation sequence.
+Some operators, like comparison operators,
+do not correspond to a variable.
+Other operators, like the sine operator,
+correspond to two variables.
+Thus, this value will be different from
+<a href="seq_property.htm#size_var" target="_top"><span style='white-space: nowrap'>size_var</span></a>
+.
+Note that one <code><font color="blue">enum</font></code> value is required for each operator.
+
+<br>
+<br>
+<b><big><a name="size_op_arg" id="size_op_arg">size_op_arg</a></big></b>
+<br>
+The result 
+<code><i><font color="black"><span style='white-space: nowrap'>s</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>s</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+and is the total number of operator arguments in the operation sequence.
+For example, Binary operators (e.g. addition) have two arguments.
+Note that one integer index is stored in the operation sequence
+for each argument.
+Also note that, as of 2013-10-20, there is an extra
+phantom argument with index 0 that is not used.
+
+<br>
+<br>
+<b><big><a name="size_text" id="size_text">size_text</a></big></b>
+<br>
+The result 
+<code><i><font color="black"><span style='white-space: nowrap'>s</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>s</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+and is the total characters used in the <a href="printfor.htm" target="_top"><span style='white-space: nowrap'>PrintFor</span></a>
+ commands
+in this operation sequence.
+
+<br>
+<br>
+<b><big><a name="size_VecAD" id="size_VecAD">size_VecAD</a></big></b>
+<br>
+The result 
+<code><i><font color="black"><span style='white-space: nowrap'>s</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>s</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+and is the number of <a href="vecad.htm" target="_top"><span style='white-space: nowrap'>VecAD</span></a>
+ vectors,
+plus the number of elements in the vectors.
+Only <code><font color="blue">VecAD</font></code> vectors that depend on the
+independent variables are stored in the operation sequence.
+
+<br>
+<br>
+<b><big><a name="size_op_seq" id="size_op_seq">size_op_seq</a></big></b>
+<br>
+The result 
+<code><i><font color="black"><span style='white-space: nowrap'>s</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>s</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+and is the amount of memory required to store the operation sequence
+(not counting a small amount of memory required for every operation sequence).
+For the current version of CppAD, this is given by
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>s</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.size_op()&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;sizeof(CppAD::local::OpCode)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.size_op_arg()&nbsp;*&nbsp;sizeof(</span></font><i><font color="black"><span style='white-space: nowrap'>tape_addr_type</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.size_par()&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;sizeof(</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.size_text()&nbsp;&nbsp;&nbsp;*&nbsp;sizeof(char)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.size_VecAD()&nbsp;&nbsp;*&nbsp;sizeof(</span></font><i><font color="black"><span style='white-space: nowrap'>tape_addr_type</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+see <a href="cmake.htm#cppad_tape_addr_type" target="_top"><span style='white-space: nowrap'>tape_addr_type</span></a>
+.
+Note that this is the minimal amount of memory that can hold
+the information corresponding to an operation sequence.
+The actual amount of memory allocated (<a href="ta_inuse.htm" target="_top"><span style='white-space: nowrap'>inuse</span></a>
+)
+for the operations sequence may be larger.
+
+<br>
+<br>
+<b><big><a name="Example" id="Example">Example</a></big></b>
+
+<br>
+The file
+<a href="seq_property.cpp.htm" target="_top"><span style='white-space: nowrap'>seq_property.cpp</span></a>
+
+contains an example and test of these operations.
+It returns true if it succeeds and false otherwise.
+
+
+
+<hr>Input File: omh/seq_property.omh
+
+</body>
+</html>

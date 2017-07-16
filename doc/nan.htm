@@ -1,0 +1,373 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>Obtain Nan or Determine if a Value is Nan</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Obtain Nan or Determine if a Value is Nan">
+<meta name="keywords" id="keywords" content=" obtain nan determine if value is syntax purpose include macros isnan s b hasnan v nan(zero) deprecated 2015-10-04 z scalar vector example ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_nan_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://coin-or.github.io/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="check_simple_vector.cpp.htm" target="_top">Prev</a>
+</td><td><a href="nan.cpp.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>utility</option>
+<option>nan</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>CppAD-&gt;</option>
+<option>Install</option>
+<option>Introduction</option>
+<option>AD</option>
+<option>ADFun</option>
+<option>preprocessor</option>
+<option>multi_thread</option>
+<option>utility</option>
+<option>ipopt_solve</option>
+<option>Example</option>
+<option>speed</option>
+<option>Appendix</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>utility-&gt;</option>
+<option>ErrorHandler</option>
+<option>NearEqual</option>
+<option>speed_test</option>
+<option>SpeedTest</option>
+<option>time_test</option>
+<option>test_boolofvoid</option>
+<option>NumericType</option>
+<option>CheckNumericType</option>
+<option>SimpleVector</option>
+<option>CheckSimpleVector</option>
+<option>nan</option>
+<option>pow_int</option>
+<option>Poly</option>
+<option>LuDetAndSolve</option>
+<option>RombergOne</option>
+<option>RombergMul</option>
+<option>Runge45</option>
+<option>Rosen34</option>
+<option>OdeErrControl</option>
+<option>OdeGear</option>
+<option>OdeGearControl</option>
+<option>CppAD_vector</option>
+<option>thread_alloc</option>
+<option>index_sort</option>
+<option>to_string</option>
+<option>set_union</option>
+<option>sparse_rc</option>
+<option>sparse_rcv</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down0(this)'>
+<option>nan-&gt;</option>
+<option>nan.cpp</option>
+</select>
+</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Syntax</option>
+<option>Purpose</option>
+<option>Include</option>
+<option>---..Macros</option>
+<option>isnan</option>
+<option>---..s</option>
+<option>---..b</option>
+<option>hasnan</option>
+<option>---..v</option>
+<option>---..b</option>
+<option>nan(zero)</option>
+<option>---..Deprecated 2015-10-04</option>
+<option>---..Syntax</option>
+<option>---..z</option>
+<option>---..s</option>
+<option>Scalar</option>
+<option>Vector</option>
+<option>Example</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>Obtain Nan or Determine if a Value is Nan</big></big></b></center>
+<br>
+<b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
+
+<br>
+
+<code><font color="blue"><span style='white-space: nowrap'>#&nbsp;include&nbsp;&lt;cppad/utility/nan.hpp&gt;<br>
+</span></font></code>
+
+<code><i><font color="black"><span style='white-space: nowrap'>b</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;isnan(</span></font><i><font color="black"><span style='white-space: nowrap'>s</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+
+<code><i><font color="black"><span style='white-space: nowrap'>b</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;hasnan(</span></font><i><font color="black"><span style='white-space: nowrap'>v</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+
+
+<br>
+<br>
+<b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
+<br>
+It obtain and check for the value not a number <code><font color="blue">nan</font></code>.
+The IEEE standard specifies that a floating point value 
+<code><i><font color="black"><span style='white-space: nowrap'>a</span></font></i></code>
+
+is <code><font color="blue">nan</font></code> if and only if the following returns true
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>a</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;!=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>a</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+<br>
+<b><big><a name="Include" id="Include">Include</a></big></b>
+<br>
+The file <code><font color="blue">cppad/nan.hpp</font></code> is included by <code><font color="blue">cppad/cppad.hpp</font></code>
+but it can also be included separately with out the rest of
+the <code><font color="blue">CppAD</font></code> routines.
+
+<br>
+<br>
+<b><a name="Include.Macros" id="Include.Macros">Macros</a></b>
+<br>
+Some C++ compilers use preprocessor symbols called <code><font color="blue">nan</font></code>
+and <code><font color="blue">isnan</font></code>.
+These preprocessor symbols will no longer be defined after
+this file is included.
+
+<br>
+<br>
+<b><big><a name="isnan" id="isnan">isnan</a></big></b>
+<br>
+This routine determines if a scalar value is <code><font color="blue">nan</font></code>.
+
+<br>
+<br>
+<b><a name="isnan.s" id="isnan.s">s</a></b>
+<br>
+The argument 
+<code><i><font color="black"><span style='white-space: nowrap'>s</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Scalar</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>s</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+<br>
+<b><a name="isnan.b" id="isnan.b">b</a></b>
+<br>
+The return value 
+<code><i><font color="black"><span style='white-space: nowrap'>b</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bool&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>b</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+It is true if the value 
+<code><i><font color="black"><span style='white-space: nowrap'>s</span></font></i></code>
+ is <code><font color="blue">nan</font></code>.
+
+<br>
+<br>
+<b><big><a name="hasnan" id="hasnan">hasnan</a></big></b>
+<br>
+This routine determines if a
+<a href="simplevector.htm" target="_top"><span style='white-space: nowrap'>SimpleVector</span></a>
+ has an element that is <code><font color="blue">nan</font></code>.
+
+<br>
+<br>
+<b><a name="hasnan.v" id="hasnan.v">v</a></b>
+<br>
+The argument 
+<code><i><font color="black"><span style='white-space: nowrap'>v</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Vector</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>v</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+(see <a href="nan.htm#Vector" target="_top"><span style='white-space: nowrap'>Vector</span></a>
+ for the definition of 
+<code><i><font color="black"><span style='white-space: nowrap'>Vector</span></font></i></code>
+).
+
+<br>
+<br>
+<b><a name="hasnan.b" id="hasnan.b">b</a></b>
+<br>
+The return value 
+<code><i><font color="black"><span style='white-space: nowrap'>b</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bool&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>b</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+It is true if the vector 
+<code><i><font color="black"><span style='white-space: nowrap'>v</span></font></i></code>
+ has a <code><font color="blue">nan</font></code>.
+
+
+<br>
+<br>
+<b><big><a name="nan(zero)" id="nan(zero)">nan(zero)</a></big></b>
+
+
+<br>
+<br>
+<b><a name="nan(zero).Deprecated 2015-10-04" id="nan(zero).Deprecated 2015-10-04">Deprecated 2015-10-04</a></b>
+<br>
+This routine has been deprecated, use CppAD numeric limits
+<a href="numeric_limits.htm#quiet_NaN" target="_top"><span style='white-space: nowrap'>quiet_NaN</span></a>
+ in its place.
+
+<br>
+<br>
+<b><a name="nan(zero).Syntax" id="nan(zero).Syntax">Syntax</a></b>
+
+<br>
+
+<code><i><font color="black"><span style='white-space: nowrap'>s</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;nan(</span></font><i><font color="black"><span style='white-space: nowrap'>z</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+<br>
+<b><a name="nan(zero).z" id="nan(zero).z">z</a></b>
+<br>
+The argument 
+<code><i><font color="black"><span style='white-space: nowrap'>z</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Scalar</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>z</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+and its value is zero
+(see <a href="nan.htm#Scalar" target="_top"><span style='white-space: nowrap'>Scalar</span></a>
+ for the definition of 
+<code><i><font color="black"><span style='white-space: nowrap'>Scalar</span></font></i></code>
+).
+
+<br>
+<br>
+<b><a name="nan(zero).s" id="nan(zero).s">s</a></b>
+<br>
+The return value 
+<code><i><font color="black"><span style='white-space: nowrap'>s</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Scalar</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>s</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+It is the value <code><font color="blue">nan</font></code> for this floating point type.
+
+<br>
+<br>
+<b><big><a name="Scalar" id="Scalar">Scalar</a></big></b>
+<br>
+The type 
+<code><i><font color="black"><span style='white-space: nowrap'>Scalar</span></font></i></code>
+ must support the following operations;
+<table><tr><td align='left'  valign='top'>
+
+<b>Operation</b> </td><td align='left'  valign='top'>
+ <b>Description</b>  </td></tr><tr><td align='left'  valign='top'>
+
+
+<code><i><font color="black"><span style='white-space: nowrap'>a</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;/&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>b</span></font></i></code>
+ </td><td align='left'  valign='top'>
+
+	division operator (returns a 
+<code><i><font color="black"><span style='white-space: nowrap'>Scalar</span></font></i></code>
+ object)
+</td></tr><tr><td align='left'  valign='top'>
+
+
+<code><i><font color="black"><span style='white-space: nowrap'>a</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;==&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>b</span></font></i></code>
+ </td><td align='left'  valign='top'>
+
+	equality operator (returns a <code><font color="blue">bool</font></code> object)
+</td></tr><tr><td align='left'  valign='top'>
+
+
+<code><i><font color="black"><span style='white-space: nowrap'>a</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;!=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>b</span></font></i></code>
+ </td><td align='left'  valign='top'>
+
+	not equality operator (returns a <code><font color="blue">bool</font></code> object)
+</td></tr>
+</table>
+Note that the division operator will be used with 
+<code><i><font color="black"><span style='white-space: nowrap'>a</span></font></i></code>
+ and 
+<code><i><font color="black"><span style='white-space: nowrap'>b</span></font></i></code>
+
+equal to zero. For some types (e.g. <code><font color="blue">int</font></code>) this may generate
+an exception. No attempt is made to catch any such exception.
+
+<br>
+<br>
+<b><big><a name="Vector" id="Vector">Vector</a></big></b>
+<br>
+The type 
+<code><i><font color="black"><span style='white-space: nowrap'>Vector</span></font></i></code>
+ must be a <a href="simplevector.htm" target="_top"><span style='white-space: nowrap'>SimpleVector</span></a>
+ class with
+elements of type 
+<code><i><font color="black"><span style='white-space: nowrap'>Scalar</span></font></i></code>
+.
+
+
+<br>
+<br>
+<b><big><a name="Example" id="Example">Example</a></big></b>
+<br>
+The file <a href="nan.cpp.htm" target="_top"><span style='white-space: nowrap'>nan.cpp</span></a>
+
+contains an example and test of this routine.
+It returns true if it succeeds and false otherwise.
+
+
+<hr>Input File: cppad/utility/nan.hpp
+
+</body>
+</html>

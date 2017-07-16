@@ -1,0 +1,293 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>Controlling Taylor Coefficients Memory Allocation</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Controlling Taylor Coefficients Memory Allocation">
+<meta name="keywords" id="keywords" content=" controlling taylor coefficients memory allocation Forward capacity_order control syntax see also purpose f c pre-allocating freeing original state example ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_capacity_order_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://coin-or.github.io/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="compare_change.cpp.htm" target="_top">Prev</a>
+</td><td><a href="capacity_order.cpp.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>ADFun</option>
+<option>Forward</option>
+<option>capacity_order</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>CppAD-&gt;</option>
+<option>Install</option>
+<option>Introduction</option>
+<option>AD</option>
+<option>ADFun</option>
+<option>preprocessor</option>
+<option>multi_thread</option>
+<option>utility</option>
+<option>ipopt_solve</option>
+<option>Example</option>
+<option>speed</option>
+<option>Appendix</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>ADFun-&gt;</option>
+<option>record_adfun</option>
+<option>drivers</option>
+<option>Forward</option>
+<option>Reverse</option>
+<option>sparsity_pattern</option>
+<option>sparse_derivative</option>
+<option>optimize</option>
+<option>abs_normal</option>
+<option>FunCheck</option>
+<option>check_for_nan</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>Forward-&gt;</option>
+<option>forward_zero</option>
+<option>forward_one</option>
+<option>forward_two</option>
+<option>forward_order</option>
+<option>forward_dir</option>
+<option>size_order</option>
+<option>compare_change</option>
+<option>capacity_order</option>
+<option>number_skip</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down0(this)'>
+<option>capacity_order-&gt;</option>
+<option>capacity_order.cpp</option>
+</select>
+</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Syntax</option>
+<option>---..See Also</option>
+<option>Purpose</option>
+<option>f</option>
+<option>c</option>
+<option>---..Pre-Allocating Memory</option>
+<option>---..Freeing Memory</option>
+<option>Original State</option>
+<option>Example</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>Controlling Taylor Coefficients Memory Allocation</big></big></b></center>
+<br>
+<b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
+
+<br>
+
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.capacity_order(</span></font><i><font color="black"><span style='white-space: nowrap'>c</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+
+
+<br>
+<br>
+<b><a name="Syntax.See Also" id="Syntax.See Also">See Also</a></b>
+
+<br>
+<a href="seq_property.htm" target="_top"><span style='white-space: nowrap'>seq_property</span></a>
+
+
+<br>
+<br>
+<b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
+<br>
+The Taylor coefficients calculated by <a href="forward.htm" target="_top"><span style='white-space: nowrap'>Forward</span></a>
+ mode calculations
+are retained in an <a href="adfun.htm" target="_top"><span style='white-space: nowrap'>ADFun</span></a>
+ object for subsequent use during
+<a href="reverse.htm" target="_top"><span style='white-space: nowrap'>Reverse</span></a>
+ mode and higher order Forward mode calculations.
+For example, a call to <a href="forward_order.htm" target="_top"><span style='white-space: nowrap'>Forward</span></a>
+ with the syntax
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>yq</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.Forward(</span></font><i><font color="black"><span style='white-space: nowrap'>q</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>xq</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+where 
+<code><i><font color="black"><span style='white-space: nowrap'>q</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&gt;&nbsp;0</span></font></code>
+ and  <code><font color="blue">%xq%.size() == %f%.Domain()%</font></code>,
+uses the lower order Taylor coefficients and
+computes the <code><i>q</i></code>-th order Taylor coefficients for all
+the variables in the operation sequence corresponding to 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+.
+The <code><font color="blue">capacity_order</font></code> operation allows you to control that
+amount of memory that is retained by an AD function object
+(to hold <code><font color="blue">Forward</font></code> results for subsequent calculations).
+
+<br>
+<br>
+<b><big><a name="f" id="f">f</a></big></b>
+<br>
+The object 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ADFun&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+<br>
+<b><big><a name="c" id="c">c</a></big></b>
+<br>
+The argument 
+<code><i><font color="black"><span style='white-space: nowrap'>c</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>c</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+It specifies the number of Taylor coefficient orders that are allocated
+in the AD operation sequence corresponding to 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+.
+
+<br>
+<br>
+<b><a name="c.Pre-Allocating Memory" id="c.Pre-Allocating Memory">Pre-Allocating Memory</a></b>
+<br>
+If you plan to make calls to <code><font color="blue">Forward</font></code> with the maximum value of
+
+<code><i><font color="black"><span style='white-space: nowrap'>q</span></font></i></code>
+ equal to 
+<code><i><font color="black"><span style='white-space: nowrap'>Q</span></font></i></code>
+,
+it should be faster to pre-allocate memory for these calls using
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.capacity_order(</span></font><i><font color="black"><span style='white-space: nowrap'>c</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+with 
+<code><i><font color="black"><span style='white-space: nowrap'>c</span></font></i></code>
+ equal to <small>@(@
+Q + 1
+@)@</small>.
+If you do no do this, <code><font color="blue">Forward</font></code> will automatically allocate memory
+and will copy the results to a larger buffer, when necessary.
+<code><span style='white-space: nowrap'><br>
+<br>
+</span></code>Note that each call to <a href="dependent.htm" target="_top"><span style='white-space: nowrap'>Dependent</span></a>
+ frees the old memory
+connected to the function object and sets the corresponding
+taylor capacity to zero.
+
+<br>
+<br>
+<b><a name="c.Freeing Memory" id="c.Freeing Memory">Freeing Memory</a></b>
+<br>
+If you no longer need the Taylor coefficients of order 
+<code><i><font color="black"><span style='white-space: nowrap'>q</span></font></i></code>
+
+and higher (that are stored in 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+),
+you can reduce the memory allocated to 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+ using
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.capacity_order(</span></font><i><font color="black"><span style='white-space: nowrap'>c</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+with 
+<code><i><font color="black"><span style='white-space: nowrap'>c</span></font></i></code>
+ equal to 
+<code><i><font color="black"><span style='white-space: nowrap'>q</span></font></i></code>
+.
+Note that, if <a href="ta_hold_memory.htm" target="_top"><span style='white-space: nowrap'>ta_hold_memory</span></a>
+ is true, this memory is not actually
+returned to the system, but rather held for future use by the same thread.
+
+<br>
+<br>
+<b><big><a name="Original State" id="Original State">Original State</a></big></b>
+<br>
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+ is <a href="funconstruct.htm" target="_top"><span style='white-space: nowrap'>constructed</span></a>
+ with the syntax
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ADFun&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>(</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+,
+there is an implicit call to <a href="forward_zero.htm" target="_top"><span style='white-space: nowrap'>forward_zero</span></a>
+ with 
+<code><i><font color="black"><span style='white-space: nowrap'>xq</span></font></i></code>
+ equal to
+the value of the
+<a href="glossary.htm#Tape.Independent Variable" target="_top"><span style='white-space: nowrap'>independent&nbsp;variables</span></a>
+
+when the AD operation sequence was recorded.
+This corresponds to 
+<code><i><font color="black"><span style='white-space: nowrap'>c</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;==&nbsp;1</span></font></code>
+.
+
+
+<br>
+<br>
+<b><big><a name="Example" id="Example">Example</a></big></b>
+<br>
+The file
+<a href="capacity_order.cpp.htm" target="_top"><span style='white-space: nowrap'>capacity_order.cpp</span></a>
+
+contains an example and test of these operations.
+It returns true if it succeeds and false otherwise.
+
+
+<hr>Input File: cppad/core/capacity_order.hpp
+
+</body>
+</html>

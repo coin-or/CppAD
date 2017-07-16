@@ -1,0 +1,437 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>Download The CppAD Source Code</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Download The CppAD Source Code">
+<meta name="keywords" id="keywords" content=" download the cppad source code purpose distribution directory compressed archives current version subversion git release versions coin github monthly daily windows file extraction testing install instructions no documentation building ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_download_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://coin-or.github.io/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="install.htm" target="_top">Prev</a>
+</td><td><a href="cmake.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>Install</option>
+<option>download</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>CppAD-&gt;</option>
+<option>Install</option>
+<option>Introduction</option>
+<option>AD</option>
+<option>ADFun</option>
+<option>preprocessor</option>
+<option>multi_thread</option>
+<option>utility</option>
+<option>ipopt_solve</option>
+<option>Example</option>
+<option>speed</option>
+<option>Appendix</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>Install-&gt;</option>
+<option>download</option>
+<option>cmake</option>
+<option>cmake_check</option>
+<option>pkgconfig</option>
+</select>
+</td>
+<td>download</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Purpose</option>
+<option>Distribution Directory</option>
+<option>Compressed Archives</option>
+<option>Current Version</option>
+<option>---..Compressed Archives</option>
+<option>---..Subversion</option>
+<option>---..Git</option>
+<option>Release Versions</option>
+<option>---..Coin</option>
+<option>---..github</option>
+<option>Monthly Versions</option>
+<option>Daily Versions</option>
+<option>Windows File Extraction and Testing</option>
+<option>Install Instructions</option>
+<option>No Documentation</option>
+<option>---..Building Documentation</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@
+
+
+
+
+<center><b><big><big>Download The CppAD Source Code</big></big></b></center>
+<br>
+<b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
+<br>
+CppAD is an include file library and you therefore need the source
+code to use it.
+This section discusses how to download the different versions of CppAD.
+
+<br>
+<br>
+<b><big><a name="Distribution Directory" id="Distribution Directory">Distribution Directory</a></big></b>
+<br>
+We refer to the CppAD source directory created by the download instruction
+below as the distribution directory.
+To be specific, the distribution directory contains the file
+<code><font color="blue">cppad/cppad.hpp</font></code>.
+
+<br>
+<br>
+<b><big><a name="Compressed Archives" id="Compressed Archives">Compressed Archives</a></big></b>
+<br>
+These files have been archived using <code><font color="blue">tar</font></code> and compressed using
+<code><font color="blue">gzip</font></code>.
+We use 
+<code><i><font color="black"><span style='white-space: nowrap'>version</span></font></i></code>
+ to denote the year, month, and day,
+corresponding to a version of the CppAD API.
+For example <code><font color="blue">20160101</font></code> corresponds to January 1, 2016.
+We use 
+<code><i><font color="black"><span style='white-space: nowrap'>rel</span></font></i></code>
+ to denote the release number.
+Higher release numbers corresponding to more bug fixes.
+We use 
+<code><i><font color="black"><span style='white-space: nowrap'>lic</span></font></i></code>
+ to denote the licence corresponding to a compressed
+archive which can be either <code><font color="blue">epl</font></code> or <code><font color="blue">gpl</font></code>
+(<code><font color="blue">gpl</font></code> denotes the GNU General Public License and
+<code><font color="blue">epl</font></code> denotes the Eclipse Public License).
+The compressed archives names have one of the following formats:
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cppad-</span></font><i><font color="black"><span style='white-space: nowrap'>version</span></font></i><font color="blue"><span style='white-space: nowrap'>.</span></font><i><font color="black"><span style='white-space: nowrap'>rel</span></font></i><font color="blue"><span style='white-space: nowrap'>.</span></font><i><font color="black"><span style='white-space: nowrap'>lic</span></font></i><font color="blue"><span style='white-space: nowrap'>.tgz<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cppad-</span></font><i><font color="black"><span style='white-space: nowrap'>version</span></font></i><font color="blue"><span style='white-space: nowrap'>.</span></font><i><font color="black"><span style='white-space: nowrap'>rel</span></font></i><font color="blue"><span style='white-space: nowrap'>.tgz<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cppad-</span></font><i><font color="black"><span style='white-space: nowrap'>version</span></font></i><font color="blue"><span style='white-space: nowrap'>.</span></font><i><font color="black"><span style='white-space: nowrap'>lic</span></font></i><font color="blue"><span style='white-space: nowrap'>.tgz<br>
+</span></font></code>
+In Unix, you can extract these compressed archives using <code><font color="blue">tar</font></code>.
+For example,
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tar&nbsp;-xzf&nbsp;cppad-</span></font><i><font color="black"><span style='white-space: nowrap'>version</span></font></i><font color="blue"><span style='white-space: nowrap'>.</span></font><i><font color="black"><span style='white-space: nowrap'>rel</span></font></i><font color="blue"><span style='white-space: nowrap'>.</span></font><i><font color="black"><span style='white-space: nowrap'>lic</span></font></i><font color="blue"><span style='white-space: nowrap'>.tgz<br>
+</span></font></code>
+No matter what the format of the name, the corresponding distribution
+directory is 
+<code><font color="blue"><span style='white-space: nowrap'>cppad-</span></font><i><font color="black"><span style='white-space: nowrap'>version</span></font></i></code>
+.
+To see that the extraction has been done correctly,
+check for the following file:
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cppad-</span></font><i><font color="black"><span style='white-space: nowrap'>version</span></font></i><font color="blue"><span style='white-space: nowrap'>/cppad/cppad.hpp<br>
+</span></font></code>
+<br>
+<b><big><a name="Current Version" id="Current Version">Current Version</a></big></b>
+
+
+<br>
+<br>
+<b><a name="Current Version.Compressed Archives" id="Current Version.Compressed Archives">Compressed Archives</a></b>
+
+<table><tr><td align='left'  valign='top'>
+
+<b>version</b> <code><span style='white-space: nowrap'>&nbsp;&nbsp;</span></code> </td><td align='left'  valign='top'>
+ <b>license</b> <code><span style='white-space: nowrap'>&nbsp;&nbsp;</span></code> </td><td align='left'  valign='top'>
+ <b>link</b>
+</td></tr><tr><td align='left'  valign='top'>
+
+current  </td><td align='left'  valign='top'>
+ EPL </td><td align='left'  valign='top'>
+ <a href="http://coin-or.github.io/download/source/CppAD/cppad-20170716.epl.tgz" target="_top"><span style='white-space: nowrap'>cppad-20170716.epl.tgz</span></a>
+
+</td></tr><tr><td align='left'  valign='top'>
+
+current  </td><td align='left'  valign='top'>
+ GPL </td><td align='left'  valign='top'>
+ <a href="http://coin-or.github.io/download/source/CppAD/cppad-20170716.gpl.tgz" target="_top"><span style='white-space: nowrap'>cppad-20170716.gpl.tgz</span></a>
+
+</td></tr>
+</table>
+<br>
+<b><a name="Current Version.Subversion" id="Current Version.Subversion">Subversion</a></b>
+<br>
+The archives above correspond to the current subversion
+<a href="https://projects.coin-or.org/CppAD/browser/trunk" target="_top"><span style='white-space: nowrap'>trunk</span></a>
+.
+You can obtain a subversion copy of the current version using the command
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;svn&nbsp;checkout&nbsp;https://projects.coin-or.org/svn/CppAD/trunk&nbsp;cppad.svn/trunk<br>
+</span></font></code>
+This procedure requires that
+the <a href="http://subversion.tigris.org/" target="_top"><span style='white-space: nowrap'>subversion</span></a>
+ program
+is installed on your system.
+
+<br>
+<br>
+<b><a name="Current Version.Git" id="Current Version.Git">Git</a></b>
+<br>
+The archives above correspond to the current git
+<a href="https://github.com/bradbell/cppad" target="_top"><span style='white-space: nowrap'>master</span></a>
+.
+You can a git clone of the current version using the command
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;git&nbsp;clone&nbsp;https://github.com/coin-or/CppAD.git&nbsp;cppad.git<br>
+</span></font></code>
+This procedure requires that
+the <a href="https://en.wikipedia.org/wiki/Git_%28software%29" target="_top"><span style='white-space: nowrap'>git</span></a>
+
+is installed on your system.
+
+
+<br>
+<br>
+<b><big><a name="Release Versions" id="Release Versions">Release Versions</a></big></b>
+
+
+<br>
+<br>
+<b><a name="Release Versions.Coin" id="Release Versions.Coin">Coin</a></b>
+<br>
+Release versions have the 
+<code><i><font color="black"><span style='white-space: nowrap'>rel</span></font></i></code>
+ field in the compressed archive name.
+The release version on the
+<a href="http://coin-or.github.io/download/source/CppAD/" target="_top"><span style='white-space: nowrap'>Coin&nbsp;download&nbsp;page</span></a>
+
+have the format
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cppad-</span></font><i><font color="black"><span style='white-space: nowrap'>version</span></font></i><font color="blue"><span style='white-space: nowrap'>.</span></font><i><font color="black"><span style='white-space: nowrap'>rel</span></font></i><font color="blue"><span style='white-space: nowrap'>.</span></font><i><font color="black"><span style='white-space: nowrap'>lic</span></font></i><font color="blue"><span style='white-space: nowrap'>.tgz<br>
+</span></font></code>
+<br>
+<b><a name="Release Versions.github" id="Release Versions.github">github</a></b>
+<br>
+The release versions on the
+<a href="https://github.com/coin-or/CppAD/releases" target="_top"><span style='white-space: nowrap'>github&nbsp;download&nbsp;page</span></a>
+
+have the format
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cppad-</span></font><i><font color="black"><span style='white-space: nowrap'>version</span></font></i><font color="blue"><span style='white-space: nowrap'>.</span></font><i><font color="black"><span style='white-space: nowrap'>rel</span></font></i><font color="blue"><span style='white-space: nowrap'>.tgz<br>
+</span></font></code>
+<br>
+<b><big><a name="Monthly Versions" id="Monthly Versions">Monthly Versions</a></big></b>
+<br>
+Monthly versions of the compressed tar files are available on the
+<a href="http://coin-or.github.io/download/source/CppAD/" target="_top"><span style='white-space: nowrap'>Coin&nbsp;download&nbsp;page</span></a>
+.
+These are kept until the end of the current year,
+when the next release is created.
+The monthly versions have the form
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cppad-</span></font><i><font color="black"><span style='white-space: nowrap'>yyyy</span></font></i><font color="blue"><span style='white-space: nowrap'>0101.</span></font><i><font color="black"><span style='white-space: nowrap'>lic</span></font></i><font color="blue"><span style='white-space: nowrap'>.tgz<br>
+</span></font></code>
+where the license code 
+<code><i><font color="black"><span style='white-space: nowrap'>lic</span></font></i></code>
+
+is <code><font color="blue">gpl</font></code> or <code><font color="blue">epl</font></code>
+and 
+<code><i><font color="black"><span style='white-space: nowrap'>yyyy</span></font></i></code>
+ is the current year.
+
+<br>
+<br>
+<b><big><a name="Daily Versions" id="Daily Versions">Daily Versions</a></big></b>
+<br>
+You can use the git version of the repository to obtain the version
+corresponding to a specific day as follows:
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;git&nbsp;clone&nbsp;https://github.com/coin-or/CppAD.git&nbsp;cppad.git<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cd&nbsp;cppad.git<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;git&nbsp;checkout&nbsp;--quiet&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>hash_id</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+where 
+<code><i><font color="black"><span style='white-space: nowrap'>hash_id</span></font></i></code>
+ is the SHA-1 hash code for the version
+of the repository for the day of interest.
+Note that a list of these 
+<code><i><font color="black"><span style='white-space: nowrap'>hash_id</span></font></i></code>
+ values can be found at the
+CppAD github
+<a href="https://github.com/coin-or/CppAD/commits/master" target="_top"><span style='white-space: nowrap'>commits/master</span></a>
+.
+page.
+
+<br>
+<br>
+<b><big><a name="Windows File Extraction and Testing" id="Windows File Extraction and Testing">Windows File Extraction and Testing</a></big></b>
+<br>
+If you know how to extract the distribution directory from
+the tar file, just do so. Otherwise, below is one way you can do it.
+(Note that if <code><font color="blue">7z.exe</font></code>, <code><font color="blue">cmake.exe</font></code>, and <code><font color="blue">nmake.exe</font></code> are you
+your execution path, you will not need to specify their paths below.)
+
+<ol type="1"><li>
+Download and install the open source program
+<a href="http://www.7-zip.org" target="_top"><span style='white-space: nowrap'>http://www.7-zip.org</span></a>
+.
+</li><li>
+
+Download and install the Visual Studio Express; for example
+<a href="http://www.microsoft.com/en-us/download/confirmation.aspx?id=44914" target="_top"><span style='white-space: nowrap'>Visual&nbsp;Studio&nbsp;2013</span></a>
+
+</li><li>
+
+In a command window, execute the following commands:
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;set&nbsp;PATH=</span></font><i><font color="black"><span style='white-space: nowrap'>path_to_7_zip</span></font></i><font color="blue"><span style='white-space: nowrap'>;%PATH%<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;set&nbsp;PATH=</span></font><i><font color="black"><span style='white-space: nowrap'>path_to_cmake</span></font></i><font color="blue"><span style='white-space: nowrap'>;%PATH%<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;set&nbsp;VCDIR=</span></font><i><font color="black"><span style='white-space: nowrap'>path_to_vcdir</span></font></i><font color="blue"><span style='white-space: nowrap'>;%PATH%<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;call&nbsp;&quot;%VCDIR%\vcvarsall.bat&quot;&nbsp;x86<br>
+</span></font></code>
+For example, on one machine these paths had the following values:
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>path_to_7_zip</span></font></i><font color="blue"><span style='white-space: nowrap'>=C:\Program&nbsp;Files\7-zip<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>path_to_cmake</span></font></i><font color="blue"><span style='white-space: nowrap'>=C:\Program&nbsp;Files&nbsp;(x86)\CMake\bin<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>path_to_vcdir</span></font></i><font color="blue"><span style='white-space: nowrap'>=C:\Program&nbsp;Files&nbsp;(x86)\Microsoft&nbsp;Visual&nbsp;Studio&nbsp;14.0\VC<br>
+</span></font></code>
+</li><li>
+Use the following commands to extract the distribution from the
+compressed archive:
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;7z&nbsp;x&nbsp;cppad-</span></font><i><font color="black"><span style='white-space: nowrap'>version</span></font></i><font color="blue"><span style='white-space: nowrap'>.</span></font><i><font color="black"><span style='white-space: nowrap'>lic</span></font></i><font color="blue"><span style='white-space: nowrap'>.tgz<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;7z&nbsp;x&nbsp;cppad-</span></font><i><font color="black"><span style='white-space: nowrap'>version</span></font></i><font color="blue"><span style='white-space: nowrap'>.</span></font><i><font color="black"><span style='white-space: nowrap'>lic</span></font></i><font color="blue"><span style='white-space: nowrap'>.tar<br>
+</span></font></code>
+</li><li>
+To see if this has been done correctly, check for the following file:
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cppad-</span></font><i><font color="black"><span style='white-space: nowrap'>version</span></font></i><font color="blue"><span style='white-space: nowrap'>\cppad\cppad.hpp<br>
+</span></font></code>
+</li><li>
+The commands below are optional.
+They run the CppAD tests using the default <a href="cmake.htm" target="_top"><span style='white-space: nowrap'>cmake</span></a>
+ settings
+(except for the <a href="cmake.htm#generator" target="_top"><span style='white-space: nowrap'>generator</span></a>
+ option)
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;mkdir&nbsp;build<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cd&nbsp;build<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cmake&nbsp;-G&nbsp;&quot;NMake&nbsp;Makefiles&quot;&nbsp;..<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;nmake&nbsp;check<br>
+</span></font></code>
+</li></ol>
+<br>
+<b><big><a name="Install Instructions" id="Install Instructions">Install Instructions</a></big></b>
+<br>
+The <a href="install.htm" target="_top"><span style='white-space: nowrap'>install</span></a>
+ instructions on this web site correspond to the
+<a href="download.htm#Current Version" target="_top"><span style='white-space: nowrap'>current&nbsp;version</span></a>
+ of CppAD.
+If you are using an old version of CppAD
+these instructions may work.
+If you have trouble (or just to be careful),
+you should follow the instructions in
+the <code><font color="blue">doc</font></code> subdirectory of the distribution directory.
+If there is no such documentation, you can build it; see
+<a href="download.htm#No Documentation.Building Documentation" target="_top"><span style='white-space: nowrap'>building&nbsp;documentation</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="No Documentation" id="No Documentation">No Documentation</a></big></b>
+<br>
+Some of the download methods do not include documentation.
+To be specific, the
+<a href="download.htm#Current Version.Subversion" target="_top"><span style='white-space: nowrap'>subversion</span></a>
+ method,
+<a href="download.htm#Current Version.Git" target="_top"><span style='white-space: nowrap'>git</span></a>
+ method,
+<a href="download.htm#Daily Versions" target="_top"><span style='white-space: nowrap'>daily&nbsp;version</span></a>
+ method, and the
+<a href="download.htm#Release Versions.github" target="_top"><span style='white-space: nowrap'>github&nbsp;release&nbsp;version</span></a>
+ method.
+In addition, these methods only provide the
+<a href="http://opensource.org/licenses/EPL-1.0" target="_top"><span style='white-space: nowrap'>EPL&nbsp;licensed</span></a>
+
+version of CppAD.
+
+<br>
+<br>
+<b><a name="No Documentation.Building Documentation" id="No Documentation.Building Documentation">Building Documentation</a></b>
+<br>
+If you are using one of these download methods,
+you can build the documentation to get the corresponding install instructions.
+The documentation for CppAD is built from the source code files using
+<a href="http://www.seanet.com/~bradbell/omhelp/" target="_top"><span style='white-space: nowrap'>OMhelp</span></a>
+.
+You will need to install the <code><font color="blue">omhelp</font></code> command so that
+<code><font color='blue'><pre style='display:inline'> 
+     which omhelp
+</pre></font></code>
+shows it is in your path.
+Once you have done this,
+in the distribution directory execute the following command:
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bin/run_omhelp.sh&nbsp;htm<br>
+</span></font></code>
+You will then be able to follow the install instructions in
+the <code><font color="blue">doc</font></code> subdirectory of the distribution directory.
+
+
+
+<hr>Input File: omh/install/download.omh
+
+</body>
+</html>

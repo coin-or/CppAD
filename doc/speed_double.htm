@@ -1,0 +1,161 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>Speed Test of Functions in Double</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Speed Test of Functions in Double">
+<meta name="keywords" id="keywords" content=" speed test functions double purpose running tests ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_speed_double_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://coin-or.github.io/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="uniform_01.hpp.htm" target="_top">Prev</a>
+</td><td><a href="double_det_minor.cpp.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>speed</option>
+<option>speed_double</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>CppAD-&gt;</option>
+<option>Install</option>
+<option>Introduction</option>
+<option>AD</option>
+<option>ADFun</option>
+<option>preprocessor</option>
+<option>multi_thread</option>
+<option>utility</option>
+<option>ipopt_solve</option>
+<option>Example</option>
+<option>speed</option>
+<option>Appendix</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>speed-&gt;</option>
+<option>speed_main</option>
+<option>speed_utility</option>
+<option>speed_double</option>
+<option>speed_adolc</option>
+<option>speed_cppad</option>
+<option>speed_fadbad</option>
+<option>speed_sacado</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down0(this)'>
+<option>speed_double-&gt;</option>
+<option>double_det_minor.cpp</option>
+<option>double_det_lu.cpp</option>
+<option>double_mat_mul.cpp</option>
+<option>double_ode.cpp</option>
+<option>double_poly.cpp</option>
+<option>double_sparse_hessian.cpp</option>
+<option>double_sparse_jacobian.cpp</option>
+</select>
+</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Purpose</option>
+<option>Running Tests</option>
+<option>Contents</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@
+
+
+
+<center><b><big><big>Speed Test of Functions in Double</big></big></b></center>
+<br>
+<b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
+<br>
+CppAD has a set of speed tests for just calculating functions
+(in double precision instead of an AD type).
+This section links to the source code the function value speed tests.
+
+<br>
+<br>
+<b><big><a name="Running Tests" id="Running Tests">Running Tests</a></big></b>
+<br>
+To build these speed tests, and run their correctness tests,
+execute the following commands starting in the
+<a href="cmake.htm#CMake Command.Build Directory" target="_top"><span style='white-space: nowrap'>build&nbsp;directory</span></a>
+:
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cd&nbsp;speed/double<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;make&nbsp;check_speed_double&nbsp;VERBOSE=1<br>
+</span></font></code>
+You can then run the corresponding speed tests
+with the following command
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;./speed_double&nbsp;speed&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>seed</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+where 
+<code><i><font color="black"><span style='white-space: nowrap'>seed</span></font></i></code>
+ is a positive integer.
+See <a href="speed_main.htm" target="_top"><span style='white-space: nowrap'>speed_main</span></a>
+ for more options.
+
+<br>
+<br>
+<b><big><a name="Contents" id="Contents">Contents</a></big></b>
+<br>
+<div><a href="double_det_minor.cpp.htm" target="_top">Double&nbsp;Speed:&nbsp;Determinant&nbsp;by&nbsp;Minor&nbsp;Expansion</a><br>
+<a href="double_det_lu.cpp.htm" target="_top">Double&nbsp;Speed:&nbsp;Determinant&nbsp;Using&nbsp;Lu&nbsp;Factorization</a><br>
+<a href="double_mat_mul.cpp.htm" target="_top">CppAD&nbsp;Speed:&nbsp;Matrix&nbsp;Multiplication&nbsp;(Double&nbsp;Version)</a><br>
+<a href="double_ode.cpp.htm" target="_top">Double&nbsp;Speed:&nbsp;Ode&nbsp;Solution</a><br>
+<a href="double_poly.cpp.htm" target="_top">Double&nbsp;Speed:&nbsp;Evaluate&nbsp;a&nbsp;Polynomial</a><br>
+<a href="double_sparse_hessian.cpp.htm" target="_top">Double&nbsp;Speed:&nbsp;Sparse&nbsp;Hessian</a><br>
+<a href="double_sparse_jacobian.cpp.htm" target="_top">Double&nbsp;Speed:&nbsp;Sparse&nbsp;Jacobian</a><br>
+</div>
+<hr>Input File: omh/speed/speed_double.omh
+
+</body>
+</html>

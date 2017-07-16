@@ -1,0 +1,319 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>Printing AD Values During Forward Mode</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Printing AD Values During Forward Mode">
+<meta name="keywords" id="keywords" content=" printing ad values during forward mode print text output debug syntax purpose f.forward(0 x) pos before var after redirecting discussion alternative example ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_printfor_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://coin-or.github.io/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="ad_output.cpp.htm" target="_top">Prev</a>
+</td><td><a href="print_for_cout.cpp.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>AD</option>
+<option>Convert</option>
+<option>PrintFor</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>CppAD-&gt;</option>
+<option>Install</option>
+<option>Introduction</option>
+<option>AD</option>
+<option>ADFun</option>
+<option>preprocessor</option>
+<option>multi_thread</option>
+<option>utility</option>
+<option>ipopt_solve</option>
+<option>Example</option>
+<option>speed</option>
+<option>Appendix</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>AD-&gt;</option>
+<option>ad_ctor</option>
+<option>ad_assign</option>
+<option>Convert</option>
+<option>ADValued</option>
+<option>BoolValued</option>
+<option>VecAD</option>
+<option>base_require</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>Convert-&gt;</option>
+<option>Value</option>
+<option>Integer</option>
+<option>ad_to_string</option>
+<option>ad_input</option>
+<option>ad_output</option>
+<option>PrintFor</option>
+<option>Var2Par</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down0(this)'>
+<option>PrintFor-&gt;</option>
+<option>print_for_cout.cpp</option>
+<option>print_for_string.cpp</option>
+</select>
+</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Syntax</option>
+<option>Purpose</option>
+<option>f.Forward(0, x)</option>
+<option>pos</option>
+<option>before</option>
+<option>var</option>
+<option>after</option>
+<option>Redirecting Output</option>
+<option>Discussion</option>
+<option>Alternative</option>
+<option>Example</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>Printing AD Values During Forward Mode</big></big></b></center>
+<br>
+<b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
+
+<br>
+
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.Forward(0,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+
+<code><font color="blue"><span style='white-space: nowrap'>PrintFor(</span></font><i><font color="black"><span style='white-space: nowrap'>before</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>var</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+
+<code><font color="blue"><span style='white-space: nowrap'>PrintFor(</span></font><i><font color="black"><span style='white-space: nowrap'>pos</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>before</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>var</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>after</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+<br>
+<b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
+<br>
+The <a href="forward_zero.htm" target="_top"><span style='white-space: nowrap'>zero&nbsp;order&nbsp;forward</span></a>
+ mode command
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.Forward(0,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+assigns the
+<a href="glossary.htm#Tape.Independent Variable" target="_top"><span style='white-space: nowrap'>independent&nbsp;variable</span></a>
+ vector
+equal to 
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+.
+It then computes a value for all of the dependent variables in the
+<a href="glossary.htm#Operation.Sequence" target="_top"><span style='white-space: nowrap'>operation&nbsp;sequence</span></a>
+ corresponding
+to 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+.
+Putting a <code><font color="blue">PrintFor</font></code> in the operation sequence will
+cause the value of 
+<code><i><font color="black"><span style='white-space: nowrap'>var</span></font></i></code>
+, corresponding to 
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+,
+to be printed during zero order forward operations.
+
+<br>
+<br>
+<b><big><a name="f.Forward(0, x)" id="f.Forward(0, x)">f.Forward(0, x)</a></big></b>
+<br>
+The objects 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+, 
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+, and the purpose
+for this operation, are documented in <a href="forward.htm" target="_top"><span style='white-space: nowrap'>Forward</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="pos" id="pos">pos</a></big></b>
+<br>
+If present, the argument 
+<code><i><font color="black"><span style='white-space: nowrap'>pos</span></font></i></code>
+ has one of the following prototypes
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&amp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>pos</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;VecAD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;::reference&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>pos</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+In this case
+the text and 
+<code><i><font color="black"><span style='white-space: nowrap'>var</span></font></i></code>
+ will be printed if and only if
+
+<code><i><font color="black"><span style='white-space: nowrap'>pos</span></font></i></code>
+ is not greater than zero and a finite number.
+
+<br>
+<br>
+<b><big><a name="before" id="before">before</a></big></b>
+<br>
+The argument 
+<code><i><font color="black"><span style='white-space: nowrap'>before</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;char*&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>before</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+This text is written to <code><font color="blue">std::cout</font></code> before 
+<code><i><font color="black"><span style='white-space: nowrap'>var</span></font></i></code>
+.
+
+<br>
+<br>
+<b><big><a name="var" id="var">var</a></big></b>
+<br>
+The argument 
+<code><i><font color="black"><span style='white-space: nowrap'>var</span></font></i></code>
+ has one of the following prototypes
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&amp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>var</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;VecAD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;::reference&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>var</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+The value of 
+<code><i><font color="black"><span style='white-space: nowrap'>var</span></font></i></code>
+, that corresponds to 
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+,
+is written to <code><font color="blue">std::cout</font></code> during the execution of
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.Forward(0,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+Note that 
+<code><i><font color="black"><span style='white-space: nowrap'>var</span></font></i></code>
+ may be a
+<a href="glossary.htm#Variable" target="_top"><span style='white-space: nowrap'>variable</span></a>
+ or
+<a href="glossary.htm#Parameter" target="_top"><span style='white-space: nowrap'>parameter</span></a>
+.
+(A parameters value does not depend on the value of
+the independent variable vector 
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+.)
+
+<br>
+<br>
+<b><big><a name="after" id="after">after</a></big></b>
+<br>
+The argument 
+<code><i><font color="black"><span style='white-space: nowrap'>after</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;char*&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>after</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+This text is written to <code><font color="blue">std::cout</font></code> after 
+<code><i><font color="black"><span style='white-space: nowrap'>var</span></font></i></code>
+.
+
+<br>
+<br>
+<b><big><a name="Redirecting Output" id="Redirecting Output">Redirecting Output</a></big></b>
+<br>
+You can redirect this output to any standard output stream; see the
+<a href="forward_order.htm#s" target="_top"><span style='white-space: nowrap'>s</span></a>
+ in the forward mode documentation.
+
+<br>
+<br>
+<b><big><a name="Discussion" id="Discussion">Discussion</a></big></b>
+<br>
+This is helpful for understanding why tape evaluations
+have trouble.
+For example, if one of the operations in 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+ is
+
+<code><font color="blue"><span style='white-space: nowrap'>log(</span></font><i><font color="black"><span style='white-space: nowrap'>var</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+ and 
+<code><i><font color="black"><span style='white-space: nowrap'>var</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&lt;=&nbsp;0</span></font></code>
+,
+the corresponding result will be <a href="nan.htm" target="_top"><span style='white-space: nowrap'>nan</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="Alternative" id="Alternative">Alternative</a></big></b>
+<br>
+The <a href="ad_output.htm" target="_top"><span style='white-space: nowrap'>ad_output</span></a>
+ section describes the normal
+printing of values; i.e., printing when the corresponding
+code is executed.
+
+<br>
+<br>
+<b><big><a name="Example" id="Example">Example</a></big></b>
+
+<br>
+The program
+<a href="print_for_cout.cpp.htm" target="_top"><span style='white-space: nowrap'>print_for_cout.cpp</span></a>
+
+is an example and test that prints to standard output.
+The output of this program
+states the conditions for passing and failing the test.
+The function
+<a href="print_for_string.cpp.htm" target="_top"><span style='white-space: nowrap'>print_for_string.cpp</span></a>
+
+is an example and test that prints to an standard string stream.
+This function automatically check for correct output.
+
+
+<hr>Input File: cppad/core/print_for.hpp
+
+</body>
+</html>

@@ -1,0 +1,248 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>Comparison Changes During Zero Order Forward Mode</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Comparison Changes During Zero Order Forward Mode">
+<meta name="keywords" id="keywords" content=" comparison changes during zero order forward mode Adfun Comparechange syntax deprecated 2015-01-20 purpose f c discussion ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_comparechange_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://coin-or.github.io/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="fundeprecated.htm" target="_top">Prev</a>
+</td><td><a href="omp_max_thread.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>Appendix</option>
+<option>deprecated</option>
+<option>CompareChange</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>CppAD-&gt;</option>
+<option>Install</option>
+<option>Introduction</option>
+<option>AD</option>
+<option>ADFun</option>
+<option>preprocessor</option>
+<option>multi_thread</option>
+<option>utility</option>
+<option>ipopt_solve</option>
+<option>Example</option>
+<option>speed</option>
+<option>Appendix</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>Appendix-&gt;</option>
+<option>Faq</option>
+<option>directory</option>
+<option>Theory</option>
+<option>glossary</option>
+<option>Bib</option>
+<option>wish_list</option>
+<option>whats_new</option>
+<option>deprecated</option>
+<option>compare_c</option>
+<option>numeric_ad</option>
+<option>addon</option>
+<option>License</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>deprecated-&gt;</option>
+<option>include_deprecated</option>
+<option>FunDeprecated</option>
+<option>CompareChange</option>
+<option>omp_max_thread</option>
+<option>TrackNewDel</option>
+<option>omp_alloc</option>
+<option>memory_leak</option>
+<option>epsilon</option>
+<option>test_vector</option>
+<option>cppad_ipopt_nlp</option>
+<option>old_atomic</option>
+<option>zdouble</option>
+<option>autotools</option>
+</select>
+</td>
+<td>CompareChange</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Syntax</option>
+<option>Deprecated 2015-01-20</option>
+<option>Purpose</option>
+<option>f</option>
+<option>c</option>
+<option>Discussion</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@
+
+
+<center><b><big><big>Comparison Changes During Zero Order Forward Mode</big></big></b></center>
+<br>
+<b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
+
+<br>
+
+<code><i><font color="black"><span style='white-space: nowrap'>c</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.CompareChange()</span></font></code>
+
+<code><span style='white-space: nowrap'><br>
+</span></code><b>See Also</b>
+<a href="funcheck.htm" target="_top"><span style='white-space: nowrap'>FunCheck</span></a>
+
+
+<br>
+<br>
+<b><big><a name="Deprecated 2015-01-20" id="Deprecated 2015-01-20">Deprecated 2015-01-20</a></big></b>
+<br>
+This routine has been deprecated, use <a href="compare_change.htm" target="_top"><span style='white-space: nowrap'>compare_change</span></a>
+
+instead.
+
+<br>
+<br>
+<b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
+<br>
+We use <small>@(@
+F : B^n \rightarrow B^m
+@)@</small> to denote the
+<a href="glossary.htm#AD Function" target="_top"><span style='white-space: nowrap'>AD&nbsp;function</span></a>
+ corresponding to 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+.
+This function may be not agree with the algorithm that was used
+to create the corresponding
+AD of 
+<code><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i></code>
+
+<a href="glossary.htm#Operation.Sequence" target="_top"><span style='white-space: nowrap'>operation&nbsp;sequence</span></a>
+
+because of changes in AD
+<a href="compare.htm" target="_top"><span style='white-space: nowrap'>comparison</span></a>
+ results.
+The <code><font color="blue">CompareChange</font></code> function can be used to detect these changes.
+
+<br>
+<br>
+<b><big><a name="f" id="f">f</a></big></b>
+<br>
+The object 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;ADFun&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+<br>
+<b><big><a name="c" id="c">c</a></big></b>
+<br>
+The result 
+<code><i><font color="black"><span style='white-space: nowrap'>c</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>c</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+It is the number of
+
+<code><font color="blue"><span style='white-space: nowrap'>AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code>
+ <a href="compare.htm" target="_top"><span style='white-space: nowrap'>comparison</span></a>
+
+operations,
+corresponding to the previous call to <a href="forward.htm" target="_top"><span style='white-space: nowrap'>Forward</span></a>
+
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.Forward(0,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+that have a different result from
+when 
+<code><i><font color="black"><span style='white-space: nowrap'>F</span></font></i></code>
+ was created by taping an algorithm.
+
+<br>
+<br>
+<b><big><a name="Discussion" id="Discussion">Discussion</a></big></b>
+<br>
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>c</span></font></i></code>
+ is not zero,
+the boolean values resulting from some of the
+<a href="compare.htm" target="_top"><span style='white-space: nowrap'>comparison&nbsp;operations</span></a>
+ corresponding to 
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+
+are different from when the
+AD of 
+<code><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i></code>
+
+<a href="glossary.htm#Operation.Sequence" target="_top"><span style='white-space: nowrap'>operation&nbsp;sequence</span></a>
+ was created.
+In this case, you may want to re-tape the algorithm with the
+<a href="glossary.htm#Tape.Independent Variable" target="_top"><span style='white-space: nowrap'>independent&nbsp;variables</span></a>
+
+equal to the values in 
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+
+(so AD operation sequence properly represents the algorithm
+for this value of independent variables).
+On the other hand, re-taping the AD operation sequence usually takes
+significantly more time than evaluation using <a href="forward_zero.htm" target="_top"><span style='white-space: nowrap'>forward_zero</span></a>
+.
+If the functions values have not changed (see <a href="funcheck.htm" target="_top"><span style='white-space: nowrap'>FunCheck</span></a>
+)
+it may not be worth re-taping a new AD operation sequence.
+
+
+
+<hr>Input File: omh/appendix/deprecated/compare_change.omh
+
+</body>
+</html>

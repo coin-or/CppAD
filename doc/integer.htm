@@ -1,0 +1,253 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>Convert From AD to Integer</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Convert From AD to Integer">
+<meta name="keywords" id="keywords" content=" convert from ad to integer syntax purpose i x real types complex operation sequence example ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_integer_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://coin-or.github.io/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="value.cpp.htm" target="_top">Prev</a>
+</td><td><a href="integer.cpp.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>AD</option>
+<option>Convert</option>
+<option>Integer</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>CppAD-&gt;</option>
+<option>Install</option>
+<option>Introduction</option>
+<option>AD</option>
+<option>ADFun</option>
+<option>preprocessor</option>
+<option>multi_thread</option>
+<option>utility</option>
+<option>ipopt_solve</option>
+<option>Example</option>
+<option>speed</option>
+<option>Appendix</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>AD-&gt;</option>
+<option>ad_ctor</option>
+<option>ad_assign</option>
+<option>Convert</option>
+<option>ADValued</option>
+<option>BoolValued</option>
+<option>VecAD</option>
+<option>base_require</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>Convert-&gt;</option>
+<option>Value</option>
+<option>Integer</option>
+<option>ad_to_string</option>
+<option>ad_input</option>
+<option>ad_output</option>
+<option>PrintFor</option>
+<option>Var2Par</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down0(this)'>
+<option>Integer-&gt;</option>
+<option>integer.cpp</option>
+</select>
+</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Syntax</option>
+<option>Purpose</option>
+<option>i</option>
+<option>x</option>
+<option>---..Real Types</option>
+<option>---..Complex Types</option>
+<option>---..AD Types</option>
+<option>Operation Sequence</option>
+<option>Example</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>Convert From AD to Integer</big></big></b></center>
+<br>
+<b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
+
+<br>
+
+<code><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;Integer(</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+
+
+
+<br>
+<br>
+<b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
+<br>
+Converts from an AD type to the corresponding integer value.
+
+<br>
+<br>
+<b><big><a name="i" id="i">i</a></big></b>
+<br>
+The result 
+<code><i><font color="black"><span style='white-space: nowrap'>i</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+<br>
+<b><big><a name="x" id="x">x</a></big></b>
+
+
+<br>
+<br>
+<b><a name="x.Real Types" id="x.Real Types">Real Types</a></b>
+<br>
+If the argument 
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+ has either of the following prototypes:
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;float&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;double&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+the fractional part is dropped to form the integer value.
+For example, if 
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+ is 1.5, 
+<code><i><font color="black"><span style='white-space: nowrap'>i</span></font></i></code>
+ is 1.
+In general, if <small>@(@
+x \geq 0
+@)@</small>, 
+<code><i><font color="black"><span style='white-space: nowrap'>i</span></font></i></code>
+ is the
+greatest integer less than or equal 
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+.
+If <small>@(@
+x \leq 0
+@)@</small>, 
+<code><i><font color="black"><span style='white-space: nowrap'>i</span></font></i></code>
+ is the
+smallest integer greater than or equal 
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+.
+
+<br>
+<br>
+<b><a name="x.Complex Types" id="x.Complex Types">Complex Types</a></b>
+<br>
+If the argument 
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+ has either of the following prototypes:
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;std::complex&lt;float&gt;&nbsp;&nbsp;</span></font><i><font color="black"></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;std::complex&lt;double&gt;&nbsp;</span></font><i><font color="black"></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+The result 
+<code><i><font color="black"><span style='white-space: nowrap'>i</span></font></i></code>
+ is given by
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;Integer(</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>.real())<br>
+</span></font></code>
+<br>
+<b><a name="x.AD Types" id="x.AD Types">AD Types</a></b>
+<br>
+If the argument 
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+ has either of the following prototypes:
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;VecAD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;::reference&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+
+<code><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i></code>
+ must support the <code><font color="blue">Integer</font></code> function and
+the conversion has the same meaning as for 
+<code><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i></code>
+.
+
+<br>
+<br>
+<b><big><a name="Operation Sequence" id="Operation Sequence">Operation Sequence</a></big></b>
+<br>
+The result of this operation is not an
+<a href="glossary.htm#AD of Base" target="_top"><span style='white-space: nowrap'>AD&nbsp;of&nbsp;Base</span></a>
+ object.
+Thus it will not be recorded as part of an
+AD of 
+<code><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i></code>
+
+<a href="glossary.htm#Operation.Sequence" target="_top"><span style='white-space: nowrap'>operation&nbsp;sequence</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="Example" id="Example">Example</a></big></b>
+
+<br>
+The file
+<a href="integer.cpp.htm" target="_top"><span style='white-space: nowrap'>integer.cpp</span></a>
+
+contains an example and test of this operation.
+
+
+<hr>Input File: cppad/core/integer.hpp
+
+</body>
+</html>

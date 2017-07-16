@@ -1,0 +1,394 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>Definition of a Numeric Type</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Definition of a Numeric Type">
+<meta name="keywords" id="keywords" content=" definition numeric type int requirements default constructor from integer copy assignment operators example exercise ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_numerictype_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://coin-or.github.io/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="test_boolofvoid.htm" target="_top">Prev</a>
+</td><td><a href="numeric_type.cpp.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>utility</option>
+<option>NumericType</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>CppAD-&gt;</option>
+<option>Install</option>
+<option>Introduction</option>
+<option>AD</option>
+<option>ADFun</option>
+<option>preprocessor</option>
+<option>multi_thread</option>
+<option>utility</option>
+<option>ipopt_solve</option>
+<option>Example</option>
+<option>speed</option>
+<option>Appendix</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>utility-&gt;</option>
+<option>ErrorHandler</option>
+<option>NearEqual</option>
+<option>speed_test</option>
+<option>SpeedTest</option>
+<option>time_test</option>
+<option>test_boolofvoid</option>
+<option>NumericType</option>
+<option>CheckNumericType</option>
+<option>SimpleVector</option>
+<option>CheckSimpleVector</option>
+<option>nan</option>
+<option>pow_int</option>
+<option>Poly</option>
+<option>LuDetAndSolve</option>
+<option>RombergOne</option>
+<option>RombergMul</option>
+<option>Runge45</option>
+<option>Rosen34</option>
+<option>OdeErrControl</option>
+<option>OdeGear</option>
+<option>OdeGearControl</option>
+<option>CppAD_vector</option>
+<option>thread_alloc</option>
+<option>index_sort</option>
+<option>to_string</option>
+<option>set_union</option>
+<option>sparse_rc</option>
+<option>sparse_rcv</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down0(this)'>
+<option>NumericType-&gt;</option>
+<option>numeric_type.cpp</option>
+</select>
+</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Type Requirements</option>
+<option>Default Constructor</option>
+<option>Constructor From Integer</option>
+<option>Copy Constructor</option>
+<option>Assignment</option>
+<option>Operators</option>
+<option>Example</option>
+<option>Exercise</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@
+
+
+
+<center><b><big><big>Definition of a Numeric Type</big></big></b></center>
+<br>
+<b><big><a name="Type Requirements" id="Type Requirements">Type Requirements</a></big></b>
+<br>
+A 
+<code><i><font color="black"><span style='white-space: nowrap'>NumericType</span></font></i></code>
+ is any type
+that satisfies the requirements below.
+The following is a list of some numeric types:
+<code><font color="blue">int</font></code>, <code><font color="blue">float</font></code>, <code><font color="blue">double</font></code>,
+<code><font color="blue">AD&lt;double&gt;</font></code>, <code><font color="blue">AD&lt; AD&lt;double&gt; &gt;</font></code>.
+The routine <a href="checknumerictype.htm" target="_top"><span style='white-space: nowrap'>CheckNumericType</span></a>
+ can be used to check
+that a type satisfies these conditions.
+
+<br>
+<br>
+<b><big><a name="Default Constructor" id="Default Constructor">Default Constructor</a></big></b>
+<br>
+The syntax
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>NumericType</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>;<br>
+</span></font></code>
+creates a 
+<code><i><font color="black"><span style='white-space: nowrap'>NumericType</span></font></i></code>
+ object
+with an unspecified value.
+
+<br>
+<br>
+<b><big><a name="Constructor From Integer" id="Constructor From Integer">Constructor From Integer</a></big></b>
+<br>
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>i</span></font></i></code>
+ is an <code><font color="blue">int</font></code>,
+the syntax
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>NumericType</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>(</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>);<br>
+</span></font></code>
+creates a 
+<code><i><font color="black"><span style='white-space: nowrap'>NumericType</span></font></i></code>
+ object with a value
+equal to 
+<code><i><font color="black"><span style='white-space: nowrap'>i</span></font></i></code>
+ where 
+<code><i><font color="black"><span style='white-space: nowrap'>i</span></font></i></code>
+ can be <code><font color="blue">const</font></code>.
+
+<br>
+<br>
+<b><big><a name="Copy Constructor" id="Copy Constructor">Copy Constructor</a></big></b>
+<br>
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+ is a 
+<code><i><font color="black"><span style='white-space: nowrap'>NumericType</span></font></i></code>
+ object
+the syntax
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>NumericType</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'>(</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>);<br>
+</span></font></code>
+creates a 
+<code><i><font color="black"><span style='white-space: nowrap'>NumericType</span></font></i></code>
+ object 
+<code><i><font color="black"><span style='white-space: nowrap'>y</span></font></i></code>
+
+with the same value as 
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+
+where 
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+ can be <code><font color="blue">const</font></code>.
+
+<br>
+<br>
+<b><big><a name="Assignment" id="Assignment">Assignment</a></big></b>
+<br>
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+ and 
+<code><i><font color="black"><span style='white-space: nowrap'>y</span></font></i></code>
+ are 
+<code><i><font color="black"><span style='white-space: nowrap'>NumericType</span></font></i></code>
+ objects,
+the syntax
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+sets the value of 
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+ equal to the value of 
+<code><i><font color="black"><span style='white-space: nowrap'>y</span></font></i></code>
+
+where 
+<code><i><font color="black"><span style='white-space: nowrap'>y</span></font></i></code>
+ can be <code><font color="blue">const</font></code>.
+The expression corresponding to this operation is unspecified; i.e.,
+it could be <code><font color="blue">void</font></code> and hence
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>z</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+may not be legal.
+
+<br>
+<br>
+<b><big><a name="Operators" id="Operators">Operators</a></big></b>
+<br>
+Suppose 
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+, 
+<code><i><font color="black"><span style='white-space: nowrap'>y</span></font></i></code>
+ and 
+<code><i><font color="black"><span style='white-space: nowrap'>z</span></font></i></code>
+
+
+<code><i><font color="black"><span style='white-space: nowrap'>NumericType</span></font></i></code>
+ objects where
+
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+ and 
+<code><i><font color="black"><span style='white-space: nowrap'>y</span></font></i></code>
+ may be <code><font color="blue">const</font></code>.
+In the result type column,
+
+<code><i><font color="black"><span style='white-space: nowrap'>NumericType</span></font></i></code>
+ can be replaced by any type that can
+be used just like a 
+<code><i><font color="black"><span style='white-space: nowrap'>NumericType</span></font></i></code>
+ object.
+<table><tr><td align='left'  valign='top'>
+
+<b>Operation</b>     </td><td align='left'  valign='top'>
+ <b>Description</b>               </td><td align='left'  valign='top'>
+
+	<b>Result Type</b>  </td></tr><tr><td align='left'  valign='top'>
+
+
+<code><font color="blue"><span style='white-space: nowrap'>+</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+        </td><td align='left'  valign='top'>
+ unary plus                        </td><td align='left'  valign='top'>
+
+	
+<code><i><font color="black"><span style='white-space: nowrap'>NumericType</span></font></i></code>
+    </td></tr><tr><td align='left'  valign='top'>
+
+
+<code><font color="blue"><span style='white-space: nowrap'>-</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+        </td><td align='left'  valign='top'>
+ unary minus                       </td><td align='left'  valign='top'>
+
+	
+<code><i><font color="black"><span style='white-space: nowrap'>NumericType</span></font></i></code>
+    </td></tr><tr><td align='left'  valign='top'>
+
+
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;+&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>y</span></font></i></code>
+  </td><td align='left'  valign='top'>
+ binary addition                   </td><td align='left'  valign='top'>
+
+	
+<code><i><font color="black"><span style='white-space: nowrap'>NumericType</span></font></i></code>
+    </td></tr><tr><td align='left'  valign='top'>
+
+
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;-&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>y</span></font></i></code>
+  </td><td align='left'  valign='top'>
+ binary subtraction                </td><td align='left'  valign='top'>
+
+	
+<code><i><font color="black"><span style='white-space: nowrap'>NumericType</span></font></i></code>
+    </td></tr><tr><td align='left'  valign='top'>
+
+
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;*&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>y</span></font></i></code>
+  </td><td align='left'  valign='top'>
+ binary multiplication             </td><td align='left'  valign='top'>
+
+	
+<code><i><font color="black"><span style='white-space: nowrap'>NumericType</span></font></i></code>
+    </td></tr><tr><td align='left'  valign='top'>
+
+
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;/&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>y</span></font></i></code>
+  </td><td align='left'  valign='top'>
+ binary division                   </td><td align='left'  valign='top'>
+
+	
+<code><i><font color="black"><span style='white-space: nowrap'>NumericType</span></font></i></code>
+    </td></tr><tr><td align='left'  valign='top'>
+
+
+<code><i><font color="black"><span style='white-space: nowrap'>z</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;+=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>y</span></font></i></code>
+  </td><td align='left'  valign='top'>
+ compound assignment addition       </td><td align='left'  valign='top'>
+
+	unspecified          </td></tr><tr><td align='left'  valign='top'>
+
+
+<code><i><font color="black"><span style='white-space: nowrap'>z</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;-=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>y</span></font></i></code>
+  </td><td align='left'  valign='top'>
+ compound assignment subtraction    </td><td align='left'  valign='top'>
+
+	unspecified          </td></tr><tr><td align='left'  valign='top'>
+
+
+<code><i><font color="black"><span style='white-space: nowrap'>z</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;*=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>y</span></font></i></code>
+  </td><td align='left'  valign='top'>
+ compound assignment multiplication </td><td align='left'  valign='top'>
+
+	unspecified          </td></tr><tr><td align='left'  valign='top'>
+
+
+<code><i><font color="black"><span style='white-space: nowrap'>z</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;/=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>y</span></font></i></code>
+  </td><td align='left'  valign='top'>
+ compound assignment division       </td><td align='left'  valign='top'>
+
+	unspecified
+</td></tr>
+</table>
+<br>
+<b><big><a name="Example" id="Example">Example</a></big></b>
+
+<br>
+The file
+<a href="numeric_type.cpp.htm" target="_top"><span style='white-space: nowrap'>numeric_type.cpp</span></a>
+
+contains an example and test of using numeric types.
+It returns true if it succeeds and false otherwise.
+(It is easy to modify to test additional numeric types.)
+
+<br>
+<br>
+<b><big><a name="Exercise" id="Exercise">Exercise</a></big></b>
+
+
+<ol type="1"><li>
+List three operators that are not supported by every
+numeric type but that are supported by the numeric types
+<code><font color="blue">int</font></code>,
+<code><font color="blue">float</font></code>,
+<code><font color="blue">double</font></code>.
+
+</li><li>
+
+Which of the following are numeric types:
+<code><font color="blue">std::complex&lt;double&gt;</font></code>,
+<code><font color="blue">std::valarray&lt;double&gt;</font></code>,
+<code><font color="blue">std::vector&lt;double&gt;</font></code> ?
+
+</li></ol>
+
+
+
+<hr>Input File: omh/numeric_type.omh
+
+</body>
+</html>

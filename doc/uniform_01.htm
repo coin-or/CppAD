@@ -1,0 +1,245 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>Simulate a [0,1] Uniform Random Variate</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Simulate a [0,1] Uniform Random Variate">
+<meta name="keywords" id="keywords" content=" simulate [01] uniform random variate uniform_01 syntax purpose inclusion seed n x vector source code ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_uniform_01_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://coin-or.github.io/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="sparse_hes_fun.hpp.htm" target="_top">Prev</a>
+</td><td><a href="uniform_01.hpp.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>speed</option>
+<option>speed_utility</option>
+<option>uniform_01</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>CppAD-&gt;</option>
+<option>Install</option>
+<option>Introduction</option>
+<option>AD</option>
+<option>ADFun</option>
+<option>preprocessor</option>
+<option>multi_thread</option>
+<option>utility</option>
+<option>ipopt_solve</option>
+<option>Example</option>
+<option>speed</option>
+<option>Appendix</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>speed-&gt;</option>
+<option>speed_main</option>
+<option>speed_utility</option>
+<option>speed_double</option>
+<option>speed_adolc</option>
+<option>speed_cppad</option>
+<option>speed_fadbad</option>
+<option>speed_sacado</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>speed_utility-&gt;</option>
+<option>det_by_lu</option>
+<option>det_of_minor</option>
+<option>det_by_minor</option>
+<option>det_33</option>
+<option>det_grad_33</option>
+<option>mat_sum_sq</option>
+<option>ode_evaluate</option>
+<option>sparse_jac_fun</option>
+<option>sparse_hes_fun</option>
+<option>uniform_01</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down0(this)'>
+<option>uniform_01-&gt;</option>
+<option>uniform_01.hpp</option>
+</select>
+</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Syntax</option>
+<option>Purpose</option>
+<option>Inclusion</option>
+<option>seed</option>
+<option>n</option>
+<option>x</option>
+<option>Vector</option>
+<option>Source Code</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@
+
+
+<center><b><big><big>Simulate a [0,1] Uniform Random Variate</big></big></b></center>
+<br>
+<b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
+
+<br>
+
+<code><font color="blue"><span style='white-space: nowrap'>#&nbsp;include&nbsp;&lt;cppad/speed/uniform_01.hpp&gt;<br>
+</span></font></code>
+
+<code><font color="blue"><span style='white-space: nowrap'>uniform_01(</span></font><i><font color="black"><span style='white-space: nowrap'>seed</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+
+<code><font color="blue"><span style='white-space: nowrap'>uniform_01(</span></font><i><font color="black"><span style='white-space: nowrap'>n</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+
+
+<br>
+<br>
+<b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
+<br>
+This routine is used to create random values for speed testing purposes.
+
+<br>
+<br>
+<b><big><a name="Inclusion" id="Inclusion">Inclusion</a></big></b>
+<br>
+The template function <code><font color="blue">uniform_01</font></code> is defined in the <code><font color="blue">CppAD</font></code>
+namespace by including
+the file <code><font color="blue">cppad/speed/uniform_01.hpp</font></code>
+(relative to the CppAD distribution directory).
+
+<br>
+<br>
+<b><big><a name="seed" id="seed">seed</a></big></b>
+<br>
+The argument 
+<code><i><font color="black"><span style='white-space: nowrap'>seed</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>seed</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+It specifies a seed
+for the uniform random number generator.
+
+<br>
+<br>
+<b><big><a name="n" id="n">n</a></big></b>
+<br>
+The argument 
+<code><i><font color="black"><span style='white-space: nowrap'>n</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+It specifies the number of elements in the random vector 
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+.
+
+<br>
+<br>
+<b><big><a name="x" id="x">x</a></big></b>
+<br>
+The argument 
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Vector</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+.
+The input value of the elements of 
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+ does not matter.
+Upon return, the elements of 
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+ are set to values
+randomly sampled over the interval [0,1].
+
+<br>
+<br>
+<b><big><a name="Vector" id="Vector">Vector</a></big></b>
+<br>
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>y</span></font></i></code>
+ is a <code><font color="blue">double</font></code> value,
+the object 
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+ must support the syntax
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>]&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+where 
+<code><i><font color="black"><span style='white-space: nowrap'>i</span></font></i></code>
+ has type <code><font color="blue">size_t</font></code> with value less than
+or equal <small>@(@
+n-1
+@)@</small>.
+This is the only requirement of the type 
+<code><i><font color="black"><span style='white-space: nowrap'>Vector</span></font></i></code>
+.
+
+
+
+<br>
+<br>
+<b><big><a name="Source Code" id="Source Code">Source Code</a></big></b>
+<br>
+The file
+<a href="uniform_01.hpp.htm" target="_top"><span style='white-space: nowrap'>uniform_01.hpp</span></a>
+
+constraints the source code for this template function.
+
+
+<hr>Input File: cppad/speed/uniform_01.hpp
+
+</body>
+</html>

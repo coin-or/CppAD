@@ -1,0 +1,293 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>First Order Reverse Mode</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="First Order Reverse Mode">
+<meta name="keywords" id="keywords" content=" first order reverse mode derivative syntax purpose f x w dw vector example ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_reverse_one_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://coin-or.github.io/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="reverse.htm" target="_top">Prev</a>
+</td><td><a href="reverse_one.cpp.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>ADFun</option>
+<option>Reverse</option>
+<option>reverse_one</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>CppAD-&gt;</option>
+<option>Install</option>
+<option>Introduction</option>
+<option>AD</option>
+<option>ADFun</option>
+<option>preprocessor</option>
+<option>multi_thread</option>
+<option>utility</option>
+<option>ipopt_solve</option>
+<option>Example</option>
+<option>speed</option>
+<option>Appendix</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>ADFun-&gt;</option>
+<option>record_adfun</option>
+<option>drivers</option>
+<option>Forward</option>
+<option>Reverse</option>
+<option>sparsity_pattern</option>
+<option>sparse_derivative</option>
+<option>optimize</option>
+<option>abs_normal</option>
+<option>FunCheck</option>
+<option>check_for_nan</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>Reverse-&gt;</option>
+<option>reverse_one</option>
+<option>reverse_two</option>
+<option>reverse_any</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down0(this)'>
+<option>reverse_one-&gt;</option>
+<option>reverse_one.cpp</option>
+</select>
+</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Syntax</option>
+<option>Purpose</option>
+<option>f</option>
+<option>x</option>
+<option>w</option>
+<option>dw</option>
+<option>Vector</option>
+<option>Example</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>First Order Reverse Mode</big></big></b></center>
+<br>
+<b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
+
+<br>
+
+<code><i><font color="black"><span style='white-space: nowrap'>dw</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.Reverse(1,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>w</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+
+
+
+<br>
+<br>
+<b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
+<br>
+We use <small>@(@
+F : B^n \rightarrow B^m
+@)@</small> to denote the
+<a href="glossary.htm#AD Function" target="_top"><span style='white-space: nowrap'>AD&nbsp;function</span></a>
+ corresponding to 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+.
+The function <small>@(@
+W : B^n \rightarrow B
+@)@</small> is defined by
+<small>@[@
+
+	W(x) = w_0 * F_0 ( x ) + \cdots + w_{m-1} * F_{m-1} (x)
+
+@]@</small>
+The result of this operation is the derivative
+<small>@(@
+dw = W^{(1)} (x)
+@)@</small>; i.e.,
+<small>@[@
+
+	dw = w_0 * F_0^{(1)} ( x ) + \cdots + w_{m-1} * F_{m-1}^{(1)} (x)
+
+@]@</small>
+Note that if <small>@(@
+w
+@)@</small> is the <code><i>i</i></code>-th
+<a href="glossary.htm#Elementary Vector" target="_top"><span style='white-space: nowrap'>elementary&nbsp;vector</span></a>
+,
+<small>@(@
+dw = F_i^{(1)} (x)
+@)@</small>.
+
+<br>
+<br>
+<b><big><a name="f" id="f">f</a></big></b>
+<br>
+The object 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;ADFun&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+Before this call to <code><font color="blue">Reverse</font></code>, the value returned by
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.size_order()<br>
+</span></font></code>
+must be greater than or equal one (see <a href="size_order.htm" target="_top"><span style='white-space: nowrap'>size_order</span></a>
+).
+
+<br>
+<br>
+<b><big><a name="x" id="x">x</a></big></b>
+<br>
+The vector 
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+ in expression for 
+<code><i><font color="black"><span style='white-space: nowrap'>dw</span></font></i></code>
+ above
+corresponds to the previous call to <a href="forward_zero.htm" target="_top"><span style='white-space: nowrap'>forward_zero</span></a>
+
+using this ADFun object 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+; i.e.,
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.Forward(0,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+If there is no previous call with the first argument zero,
+the value of the <a href="independent.htm" target="_top"><span style='white-space: nowrap'>independent</span></a>
+ variables
+during the recording of the AD sequence of operations is used
+for 
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+.
+
+<br>
+<br>
+<b><big><a name="w" id="w">w</a></big></b>
+<br>
+The argument 
+<code><i><font color="black"><span style='white-space: nowrap'>w</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Vector</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>w</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+(see <a href="reverse_one.htm#Vector" target="_top"><span style='white-space: nowrap'>Vector</span></a>
+ below)
+and its size
+must be equal to 
+<code><i><font color="black"><span style='white-space: nowrap'>m</span></font></i></code>
+, the dimension of the
+<a href="seq_property.htm#Range" target="_top"><span style='white-space: nowrap'>range</span></a>
+ space for 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+.
+
+<br>
+<br>
+<b><big><a name="dw" id="dw">dw</a></big></b>
+<br>
+The result 
+<code><i><font color="black"><span style='white-space: nowrap'>dw</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Vector</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>dw</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+(see <a href="reverse_one.htm#Vector" target="_top"><span style='white-space: nowrap'>Vector</span></a>
+ below)
+and its value is the derivative <small>@(@
+W^{(1)} (x)
+@)@</small>.
+The size of 
+<code><i><font color="black"><span style='white-space: nowrap'>dw</span></font></i></code>
+
+is equal to 
+<code><i><font color="black"><span style='white-space: nowrap'>n</span></font></i></code>
+, the dimension of the
+<a href="seq_property.htm#Domain" target="_top"><span style='white-space: nowrap'>domain</span></a>
+ space for 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+.
+
+<br>
+<br>
+<b><big><a name="Vector" id="Vector">Vector</a></big></b>
+<br>
+The type 
+<code><i><font color="black"><span style='white-space: nowrap'>Vector</span></font></i></code>
+ must be a <a href="simplevector.htm" target="_top"><span style='white-space: nowrap'>SimpleVector</span></a>
+ class with
+<a href="simplevector.htm#Elements of Specified Type" target="_top"><span style='white-space: nowrap'>elements&nbsp;of&nbsp;type</span></a>
+
+
+<code><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i></code>
+.
+The routine <a href="checksimplevector.htm" target="_top"><span style='white-space: nowrap'>CheckSimpleVector</span></a>
+ will generate an error message
+if this is not the case.
+
+<br>
+<br>
+<b><big><a name="Example" id="Example">Example</a></big></b>
+
+<br>
+The file
+<a href="reverse_one.cpp.htm" target="_top"><span style='white-space: nowrap'>reverse_one.cpp</span></a>
+
+contains an example and test of this operation.
+It returns true if it succeeds and false otherwise.
+
+
+<hr>Input File: omh/reverse/reverse_one.omh
+
+</body>
+</html>

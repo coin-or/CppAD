@@ -1,0 +1,188 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>A Quick OpenMP Memory Allocator Used by CppAD</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="A Quick OpenMP Memory Allocator Used by CppAD">
+<meta name="keywords" id="keywords" content=" quick openmp memory allocator used cppad multi-threading allocation syntax purpose include deprecated 2011-08-23 ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_omp_alloc_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://coin-or.github.io/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="tracknewdel.cpp.htm" target="_top">Prev</a>
+</td><td><a href="omp_max_num_threads.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>Appendix</option>
+<option>deprecated</option>
+<option>omp_alloc</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>CppAD-&gt;</option>
+<option>Install</option>
+<option>Introduction</option>
+<option>AD</option>
+<option>ADFun</option>
+<option>preprocessor</option>
+<option>multi_thread</option>
+<option>utility</option>
+<option>ipopt_solve</option>
+<option>Example</option>
+<option>speed</option>
+<option>Appendix</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>Appendix-&gt;</option>
+<option>Faq</option>
+<option>directory</option>
+<option>Theory</option>
+<option>glossary</option>
+<option>Bib</option>
+<option>wish_list</option>
+<option>whats_new</option>
+<option>deprecated</option>
+<option>compare_c</option>
+<option>numeric_ad</option>
+<option>addon</option>
+<option>License</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>deprecated-&gt;</option>
+<option>include_deprecated</option>
+<option>FunDeprecated</option>
+<option>CompareChange</option>
+<option>omp_max_thread</option>
+<option>TrackNewDel</option>
+<option>omp_alloc</option>
+<option>memory_leak</option>
+<option>epsilon</option>
+<option>test_vector</option>
+<option>cppad_ipopt_nlp</option>
+<option>old_atomic</option>
+<option>zdouble</option>
+<option>autotools</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down0(this)'>
+<option>omp_alloc-&gt;</option>
+<option>omp_max_num_threads</option>
+<option>omp_in_parallel</option>
+<option>omp_get_thread_num</option>
+<option>omp_get_memory</option>
+<option>omp_return_memory</option>
+<option>omp_free_available</option>
+<option>omp_inuse</option>
+<option>omp_available</option>
+<option>omp_create_array</option>
+<option>omp_delete_array</option>
+<option>omp_efficient</option>
+<option>old_max_num_threads</option>
+<option>omp_alloc.cpp</option>
+</select>
+</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Syntax</option>
+<option>Purpose</option>
+<option>Include</option>
+<option>Deprecated 2011-08-23</option>
+<option>Contents</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>A Quick OpenMP Memory Allocator Used by CppAD</big></big></b></center>
+<br>
+<b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
+
+<code><font color="blue"><br>
+# include &lt;cppad/omp_alloc.hpp&gt;</font></code>
+
+<br>
+<br>
+<b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
+<br>
+The C++ <code><font color="blue">new</font></code> and <code><font color="blue">delete</font></code> operators are thread safe,
+but this means that a thread may have to wait for a lock on these operations.
+Once memory is obtained for a thread, the <code><font color="blue">omp_alloc</font></code> memory
+allocator keeps that memory <a href="omp_available.htm" target="_top"><span style='white-space: nowrap'>omp_available</span></a>
+ for the thread so that
+it can be re-used without waiting for a lock.
+All the CppAD memory allocations use this utility.
+The <a href="omp_free_available.htm" target="_top"><span style='white-space: nowrap'>omp_free_available</span></a>
+ function should be used to return memory
+to the system (once it is no longer required by a thread).
+
+<br>
+<br>
+<b><big><a name="Include" id="Include">Include</a></big></b>
+<br>
+The routines in sections below are defined by <code><font color="blue">cppad/omp_alloc.hpp</font></code>.
+This file is included by
+<code><font color="blue">cppad/cppad.hpp</font></code>, but it can also be included separately with out
+the rest of the <code><font color="blue">CppAD</font></code>.
+
+<br>
+<br>
+<b><big><a name="Deprecated 2011-08-23" id="Deprecated 2011-08-23">Deprecated 2011-08-23</a></big></b>
+<br>
+Use <a href="thread_alloc.htm" target="_top"><span style='white-space: nowrap'>thread_alloc</span></a>
+ instead.
+
+<br>
+<br>
+<b><big><a name="Contents" id="Contents">Contents</a></big></b>
+<br>
+<table>
+<tr><td><a href="omp_max_num_threads.htm" target="_top">omp_max_num_threads</a></td><td>Set&nbsp;and&nbsp;Get&nbsp;Maximum&nbsp;Number&nbsp;of&nbsp;Threads&nbsp;for&nbsp;omp_alloc&nbsp;Allocator</td></tr><tr><td><a href="omp_in_parallel.htm" target="_top">omp_in_parallel</a></td><td>Is&nbsp;The&nbsp;Current&nbsp;Execution&nbsp;in&nbsp;OpenMP&nbsp;Parallel&nbsp;Mode</td></tr><tr><td><a href="omp_get_thread_num.htm" target="_top">omp_get_thread_num</a></td><td>Get&nbsp;the&nbsp;Current&nbsp;OpenMP&nbsp;Thread&nbsp;Number</td></tr><tr><td><a href="omp_get_memory.htm" target="_top">omp_get_memory</a></td><td>Get&nbsp;At&nbsp;Least&nbsp;A&nbsp;Specified&nbsp;Amount&nbsp;of&nbsp;Memory</td></tr><tr><td><a href="omp_return_memory.htm" target="_top">omp_return_memory</a></td><td>Return&nbsp;Memory&nbsp;to&nbsp;omp_alloc</td></tr><tr><td><a href="omp_free_available.htm" target="_top">omp_free_available</a></td><td>Free&nbsp;Memory&nbsp;Currently&nbsp;Available&nbsp;for&nbsp;Quick&nbsp;Use&nbsp;by&nbsp;a&nbsp;Thread</td></tr><tr><td><a href="omp_inuse.htm" target="_top">omp_inuse</a></td><td>Amount&nbsp;of&nbsp;Memory&nbsp;a&nbsp;Thread&nbsp;is&nbsp;Currently&nbsp;Using</td></tr><tr><td><a href="omp_available.htm" target="_top">omp_available</a></td><td>Amount&nbsp;of&nbsp;Memory&nbsp;Available&nbsp;for&nbsp;Quick&nbsp;Use&nbsp;by&nbsp;a&nbsp;Thread</td></tr><tr><td><a href="omp_create_array.htm" target="_top">omp_create_array</a></td><td>Allocate&nbsp;Memory&nbsp;and&nbsp;Create&nbsp;A&nbsp;Raw&nbsp;Array</td></tr><tr><td><a href="omp_delete_array.htm" target="_top">omp_delete_array</a></td><td>Return&nbsp;A&nbsp;Raw&nbsp;Array&nbsp;to&nbsp;The&nbsp;Available&nbsp;Memory&nbsp;for&nbsp;a&nbsp;Thread</td></tr><tr><td><a href="omp_efficient.htm" target="_top">omp_efficient</a></td><td>Check&nbsp;If&nbsp;A&nbsp;Memory&nbsp;Allocation&nbsp;is&nbsp;Efficient&nbsp;for&nbsp;Another&nbsp;Use</td></tr><tr><td><a href="old_max_num_threads.htm" target="_top">old_max_num_threads</a></td><td>Set&nbsp;Maximum&nbsp;Number&nbsp;of&nbsp;Threads&nbsp;for&nbsp;omp_alloc&nbsp;Allocator</td></tr><tr><td><a href="omp_alloc.cpp.htm" target="_top">omp_alloc.cpp</a></td><td>OpenMP&nbsp;Memory&nbsp;Allocator:&nbsp;Example&nbsp;and&nbsp;Test</td></tr></table>
+<hr>Input File: omh/appendix/deprecated/omp_alloc.omh
+
+</body>
+</html>

@@ -18,6 +18,7 @@ fi
 # -----------------------------------------------------------------------------
 # copy build.sh to temporary directory
 echo_eval cp build.sh $temporary_dir/cppad.build.sh
+echo_eval git checkout build.sh
 # -----------------------------------------------------------------------------
 # checkout master
 echo_eval git checkout master
@@ -46,7 +47,13 @@ do
 	sed -i $file -e 's|/www\.coin-or\.org/|/coin-or.github.io/|'
 done
 # -----------------------------------------------------------------------------
-add_list=`git status -s | sed -n -e '/^?? /p' | sed -e 's/^?? *//'`
+add_list=`git status -s | \
+	sed -n -e '/^?? /p' | sed -e '/^\.build.sh.swp/d' -e 's/^?? *//'`
+echo 'adding new files'
 git add $add_list
+# -----------------------------------------------------------------------------
+mod_list=`git status -s | sed -n -e '/^ M /p' | sed -e 's/^ M *//'`
+echo 'adding modified files'
+git add $mod_list
 # -----------------------------------------------------------------------------
 echo 'build.sh: OK'

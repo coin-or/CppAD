@@ -1,0 +1,181 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>Convert An AD or Base Type to String</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Convert An AD or Base Type to String">
+<meta name="keywords" id="keywords" content=" convert ad base type to string syntax see also value s example ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_ad_to_string_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://coin-or.github.io/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="integer.cpp.htm" target="_top">Prev</a>
+</td><td><a href="ad_input.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>AD</option>
+<option>Convert</option>
+<option>ad_to_string</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>CppAD-&gt;</option>
+<option>Install</option>
+<option>Introduction</option>
+<option>AD</option>
+<option>ADFun</option>
+<option>preprocessor</option>
+<option>multi_thread</option>
+<option>utility</option>
+<option>ipopt_solve</option>
+<option>Example</option>
+<option>speed</option>
+<option>Appendix</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>AD-&gt;</option>
+<option>ad_ctor</option>
+<option>ad_assign</option>
+<option>Convert</option>
+<option>ADValued</option>
+<option>BoolValued</option>
+<option>VecAD</option>
+<option>base_require</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>Convert-&gt;</option>
+<option>Value</option>
+<option>Integer</option>
+<option>ad_to_string</option>
+<option>ad_input</option>
+<option>ad_output</option>
+<option>PrintFor</option>
+<option>Var2Par</option>
+</select>
+</td>
+<td>ad_to_string</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Syntax</option>
+<option>See Also</option>
+<option>value</option>
+<option>s</option>
+<option>Example</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>Convert An AD or Base Type to String</big></big></b></center>
+<br>
+<b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
+
+<br>
+
+<code><i><font color="black"><span style='white-space: nowrap'>s</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;to_string(</span></font><i><font color="black"><span style='white-space: nowrap'>value</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+.
+
+<br>
+<br>
+<b><big><a name="See Also" id="See Also">See Also</a></big></b>
+
+<br>
+<a href="to_string.htm" target="_top"><span style='white-space: nowrap'>to_string</span></a>
+, <a href="base_to_string.htm" target="_top"><span style='white-space: nowrap'>base_to_string</span></a>
+
+
+<br>
+<br>
+<b><big><a name="value" id="value">value</a></big></b>
+<br>
+The argument 
+<code><i><font color="black"><span style='white-space: nowrap'>value</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>value</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&amp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>value</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+where 
+<code><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i></code>
+ is a type that supports the
+<a href="base_to_string.htm" target="_top"><span style='white-space: nowrap'>base_to_string</span></a>
+ type requirement.
+
+<br>
+<br>
+<b><big><a name="s" id="s">s</a></big></b>
+<br>
+The return value has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;std::string&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>s</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+and contains a representation of the specified 
+<code><i><font color="black"><span style='white-space: nowrap'>value</span></font></i></code>
+.
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>value</span></font></i></code>
+ is an AD type,
+the result has the same precision as for the 
+<code><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i></code>
+ type.
+
+<br>
+<br>
+<b><big><a name="Example" id="Example">Example</a></big></b>
+<br>
+The file <a href="to_string.cpp.htm" target="_top"><span style='white-space: nowrap'>to_string.cpp</span></a>
+
+includes an example and test of <code><font color="blue">to_string</font></code> with AD types.
+It returns true if it succeeds and false otherwise.
+
+
+<hr>Input File: cppad/core/ad_to_string.hpp
+
+</body>
+</html>

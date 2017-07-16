@@ -1,0 +1,212 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>Error Function Reverse Mode Theory</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Error Function Reverse Mode Theory">
+<meta name="keywords" id="keywords" content=" error function reverse mode theory erf notation positive orders z(t) order zero ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_erf_reverse_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://coin-or.github.io/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="tan_reverse.htm" target="_top">Prev</a>
+</td><td><a href="reverse_identity.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>Appendix</option>
+<option>Theory</option>
+<option>ReverseTheory</option>
+<option>erf_reverse</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>Appendix-&gt;</option>
+<option>Faq</option>
+<option>directory</option>
+<option>Theory</option>
+<option>glossary</option>
+<option>Bib</option>
+<option>wish_list</option>
+<option>whats_new</option>
+<option>deprecated</option>
+<option>compare_c</option>
+<option>numeric_ad</option>
+<option>addon</option>
+<option>License</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>Theory-&gt;</option>
+<option>ForwardTheory</option>
+<option>ReverseTheory</option>
+<option>reverse_identity</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>ReverseTheory-&gt;</option>
+<option>exp_reverse</option>
+<option>log_reverse</option>
+<option>sqrt_reverse</option>
+<option>sin_cos_reverse</option>
+<option>atan_reverse</option>
+<option>asin_reverse</option>
+<option>acos_reverse</option>
+<option>tan_reverse</option>
+<option>erf_reverse</option>
+</select>
+</td>
+<td>erf_reverse</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Notation</option>
+<option>Positive Orders Z(t)</option>
+<option>Order Zero Z(t)</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@
+
+
+
+<center><b><big><big>Error Function Reverse Mode Theory</big></big></b></center>
+<br>
+<b><big><a name="Notation" id="Notation">Notation</a></big></b>
+<br>
+We use the reverse theory
+<a href="reversetheory.htm#Standard Math Functions" target="_top"><span style='white-space: nowrap'>standard&nbsp;math&nbsp;function</span></a>
+
+definition for the functions <small>@(@
+H
+@)@</small> and <small>@(@
+G
+@)@</small>.
+
+<br>
+<br>
+<b><big><a name="Positive Orders Z(t)" id="Positive Orders Z(t)">Positive Orders Z(t)</a></big></b>
+<br>
+For order <small>@(@
+j > 0
+@)@</small>,
+suppose that <small>@(@
+H
+@)@</small> is the same as <small>@(@
+G
+@)@</small>.
+<small>@[@
+
+z^{(j)}
+=
+\frac{1}{j}  \sum_{k=1}^j k x^{(k)} y^{(j-k)}
+
+@]@</small>
+For <small>@(@
+k = 1 , \ldots , j
+@)@</small>,
+the partial of <small>@(@
+H
+@)@</small> with respect to <small>@(@
+x^{(k)}
+@)@</small> is given by
+<small>@[@
+
+\D{H}{ x^{(k)} }
+=
+\D{G}{ x^{(k)} } + \D{G}{ z^{(j)} } \D{ z^{(j)} }{ x^{(k)} }
+=
+\D{G}{ x^{(k)} } + \D{G}{ z^{(j)} } \frac{k}{j} y^{(j-k)}
+
+@]@</small>
+For <small>@(@
+k = 1 , \ldots ,  j
+@)@</small>
+The partial of <small>@(@
+H
+@)@</small> with respect to <small>@(@
+y^{j-k}
+@)@</small>,
+is given by
+<small>@[@
+
+\D{H}{ y^{(j-k)} }
+=
+\D{G}{ y^{(j-k)} } + \D{G}{ z^{(j)} } \D{ z^{(j)} }{ y^{(j-k)} }
+=
+\D{G}{ y^{(j-k)} } + \D{G}{ z^{(j)} } \frac{k}{j} x^{k}
+
+@]@</small>
+
+
+<br>
+<br>
+<b><big><a name="Order Zero Z(t)" id="Order Zero Z(t)">Order Zero Z(t)</a></big></b>
+<br>
+The <small>@(@
+z^{(0)}
+@)@</small> coefficient
+is expressed as a function of the Taylor coefficients
+for <small>@(@
+X(t)
+@)@</small> and <small>@(@
+Y(t)
+@)@</small> as follows:
+In this case,
+<small>@[@
+
+\D{H}{ x^{(0)} }
+=
+\D{G}{ x^{(0)} } + \D{G}{ z^{(0)} } \D{ z^{(0)} }{ x^{(0)} }
+=
+\D{G}{ x^{(0)} } + \D{G}{ z^{(0)} } y^{(0)}
+
+@]@</small>
+
+
+<hr>Input File: omh/appendix/theory/erf_reverse.omh
+
+</body>
+</html>

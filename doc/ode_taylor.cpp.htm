@@ -1,0 +1,309 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>Taylor's Ode Solver: An Example and Test</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Taylor's Ode Solver: An Example and Test">
+<meta name="keywords" id="keywords" content=" taylor's ode solver: example test Taylor purpose solution forward mode ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_ode_taylor.cpp_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://coin-or.github.io/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="mul_level_adolc_ode.cpp.htm" target="_top">Prev</a>
+</td><td><a href="stack_machine.cpp.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>Example</option>
+<option>General</option>
+<option>ode_taylor.cpp</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>CppAD-&gt;</option>
+<option>Install</option>
+<option>Introduction</option>
+<option>AD</option>
+<option>ADFun</option>
+<option>preprocessor</option>
+<option>multi_thread</option>
+<option>utility</option>
+<option>ipopt_solve</option>
+<option>Example</option>
+<option>speed</option>
+<option>Appendix</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>Example-&gt;</option>
+<option>get_started.cpp</option>
+<option>General</option>
+<option>ExampleUtility</option>
+<option>ListAllExamples</option>
+<option>testvector</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>General-&gt;</option>
+<option>ad_fun.cpp</option>
+<option>ad_in_c.cpp</option>
+<option>conj_grad.cpp</option>
+<option>cppad_eigen.hpp</option>
+<option>hes_minor_det.cpp</option>
+<option>hes_lu_det.cpp</option>
+<option>interface2c.cpp</option>
+<option>jac_minor_det.cpp</option>
+<option>jac_lu_det.cpp</option>
+<option>mul_level</option>
+<option>ode_stiff.cpp</option>
+<option>mul_level_ode.cpp</option>
+<option>mul_level_adolc_ode.cpp</option>
+<option>ode_taylor.cpp</option>
+<option>stack_machine.cpp</option>
+</select>
+</td>
+<td>ode_taylor.cpp</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Purpose</option>
+<option>ODE</option>
+<option>ODE Solution</option>
+<option>Forward Mode</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>Taylor's Ode Solver: An Example and Test</big></big></b></center>
+<br>
+<b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
+<br>
+This example solves an ordinary differential equation using Taylor's method;
+i.e.,
+<small>@[@
+
+	Z(t + \Delta t)
+	\approx
+	Z^{(0)} (t) +
+	\frac{ Z^{(1)} (t) }{ 1 !} \Delta t + \cdots +
+	\frac{ Z^{(p)} (t) }{ p !} ( \Delta t )^p )
+
+@]@</small>
+
+<br>
+<br>
+<b><big><a name="ODE" id="ODE">ODE</a></big></b>
+<br>
+The ODE is defined by the function
+<small>@(@
+h : \B{R}^n \rightarrow \B{R}^n
+@)@</small>,
+which for this example is given by
+<small>@[@
+
+	Z^{(1)} (t) = H[ Z(t) ] =
+	\left( \begin{array}{c}
+			1                       \\
+			Z_1 (t)                 \\
+			\vdots                  \\
+			Z_{n-1} (t)
+	\end{array} \right)
+
+@]@</small>
+and the initial condition is <small>@(@
+z(0) = 0
+@)@</small>.
+
+<br>
+<br>
+<b><big><a name="ODE Solution" id="ODE Solution">ODE Solution</a></big></b>
+<br>
+The solution for this example can be calculated by
+starting with the first row and then using the solution
+for the first row to solve the second and so on.
+Doing this we obtain
+<small>@[@
+
+	Z(t) =
+	\left( \begin{array}{c}
+		t           \\
+		t^2 / 2     \\
+		\vdots      \\
+		t^n / n !
+	\end{array} \right)
+
+@]@</small>
+
+<br>
+<br>
+<b><big><a name="Forward Mode" id="Forward Mode">Forward Mode</a></big></b>
+<br>
+Given the Taylor coefficients for <small>@(@
+k = 0 , \ldots , K
+@)@</small>
+<small>@[@
+
+	z^{(k)} = \frac{ Z^{(k)} }{ k !} (t)
+
+@]@</small>
+we note that
+<small>@[@
+
+\begin{array}{rcl}
+Z^{(1)} (t)
+& = &
+H( z^{(0)} + z^{(1)} t + \cdots + z^{(K)} t^K ) + O( t^{K+1} )
+\\
+& = &
+h^{(0)} + h^{(1)} t + \cdots + h^{(K)} t^K + O( t^{K+1} )
+\end{array}
+
+@]@</small>
+where <small>@(@
+h^{(k)}
+@)@</small> is the <code><i>k</i></code>-th order Taylor coefficient for
+<small>@(@
+H( Z(t) )
+@)@</small>.
+Taking <code><i>K</i></code>-th order derivatives of both sides we obtain
+<small>@[@
+
+\begin{array}{rcl}
+Z^{(K+1)} (t) & = & K ! h^{(K)}  \\
+z^{(K+1)}     & = & h^{(K)} / K
+\end{array}
+
+@]@</small>
+The code below uses this relationship to implement Taylor's
+method for approximating the solution of an ODE.
+
+<code><font color="blue">
+<pre><tt>
+<b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/cppad.hpp&gt;</font>
+
+<i><font color="#9A1900">// =========================================================================</font></i>
+<i><font color="#9A1900">// define types for each level</font></i>
+<b><font color="#0000FF">namespace</font></b> <font color="#FF0000">{</font> <i><font color="#9A1900">// BEGIN empty namespace</font></i>
+     <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>AD<font color="#990000">;</font>
+
+     <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font> AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;</font> <font color="#990000">)</font> <b><font color="#000000">ode</font></b><font color="#990000">(</font>
+          <b><font color="#0000FF">const</font></b> <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font> AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;</font> <font color="#990000">)&amp;</font> Z <font color="#990000">)</font>
+     <font color="#FF0000">{</font>    <font color="#008080">size_t</font> n <font color="#990000">=</font> Z<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">();</font>
+          <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font> AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;</font> <font color="#990000">)</font> <b><font color="#000000">y</font></b><font color="#990000">(</font>n<font color="#990000">);</font>
+          y<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font>
+          <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> k <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font> k <font color="#990000">&lt;</font> n<font color="#990000">;</font> k<font color="#990000">++)</font>
+               y<font color="#990000">[</font>k<font color="#990000">]</font> <font color="#990000">=</font> Z<font color="#990000">[</font>k<font color="#990000">-</font><font color="#993399">1</font><font color="#990000">];</font>
+          <b><font color="#0000FF">return</font></b> y<font color="#990000">;</font>
+     <font color="#FF0000">}</font>
+
+<font color="#FF0000">}</font>
+
+<i><font color="#9A1900">// -------------------------------------------------------------------------</font></i>
+<i><font color="#9A1900">// Example that uses Taylor's method to solve ordinary differential equaitons</font></i>
+<font color="#009900">bool</font> <b><font color="#000000">ode_taylor</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
+<font color="#FF0000">{</font>    <i><font color="#9A1900">// initialize the return value as true</font></i>
+     <font color="#009900">bool</font> ok <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
+
+     <i><font color="#9A1900">// some temporary indices</font></i>
+     <font color="#008080">size_t</font> i<font color="#990000">,</font> j<font color="#990000">,</font> k<font color="#990000">;</font>
+
+     <i><font color="#9A1900">// The ODE does not depend on the arugment values</font></i>
+     <i><font color="#9A1900">// so only tape once, also note that ode does not depend on t</font></i>
+     <font color="#008080">size_t</font> n <font color="#990000">=</font> <font color="#993399">5</font><font color="#990000">;</font>    <i><font color="#9A1900">// number of independent and dependent variables</font></i>
+     <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font> AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;</font> <font color="#990000">)</font> <b><font color="#000000">a_x</font></b><font color="#990000">(</font>n<font color="#990000">),</font> <b><font color="#000000">a_y</font></b><font color="#990000">(</font>n<font color="#990000">);</font>
+     CppAD<font color="#990000">::</font><b><font color="#000000">Independent</font></b><font color="#990000">(</font> a_x <font color="#990000">);</font>
+     a_y <font color="#990000">=</font> <b><font color="#000000">ode</font></b><font color="#990000">(</font>a_x<font color="#990000">);</font>
+     CppAD<font color="#990000">::</font><font color="#008080">ADFun&lt;double&gt;</font> <b><font color="#000000">H</font></b><font color="#990000">(</font>a_x<font color="#990000">,</font> a_y<font color="#990000">);</font>
+
+     <i><font color="#9A1900">// initialize the solution vector at time zero</font></i>
+     <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font> <font color="#009900">double</font> <font color="#990000">)</font> <b><font color="#000000">z</font></b><font color="#990000">(</font>n<font color="#990000">);</font>
+     <b><font color="#0000FF">for</font></b><font color="#990000">(</font>j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> n<font color="#990000">;</font> j<font color="#990000">++)</font>
+          z<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">0.0</font><font color="#990000">;</font>
+
+     <font color="#008080">size_t</font> order   <font color="#990000">=</font> n<font color="#990000">;</font>   <i><font color="#9A1900">// order of the Taylor method</font></i>
+     <font color="#008080">size_t</font> n_step  <font color="#990000">=</font> <font color="#993399">4</font><font color="#990000">;</font>   <i><font color="#9A1900">// number of time steps</font></i>
+     <font color="#009900">double</font> dt      <font color="#990000">=</font> <font color="#993399">0.5</font><font color="#990000">;</font> <i><font color="#9A1900">// step size in time</font></i>
+     <i><font color="#9A1900">// Taylor coefficients of order k</font></i>
+     <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font> <font color="#009900">double</font> <font color="#990000">)</font> <b><font color="#000000">hk</font></b><font color="#990000">(</font>n<font color="#990000">),</font> <b><font color="#000000">zk</font></b><font color="#990000">(</font>n<font color="#990000">);</font>
+
+     <i><font color="#9A1900">// loop with respect to each step of Taylor's method</font></i>
+     <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i_step <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i_step <font color="#990000">&lt;</font> n_step<font color="#990000">;</font> i_step<font color="#990000">++)</font>
+     <font color="#FF0000">{</font>    <i><font color="#9A1900">// Use Taylor's method to take a step</font></i>
+          zk           <font color="#990000">=</font> z<font color="#990000">;</font>     <i><font color="#9A1900">// initialize z^{(k)}  for k = 0</font></i>
+          <font color="#009900">double</font> dt_kp <font color="#990000">=</font> dt<font color="#990000">;</font>    <i><font color="#9A1900">// initialize dt^(k+1) for k = 0</font></i>
+          <b><font color="#0000FF">for</font></b><font color="#990000">(</font>k <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> k <font color="#990000">&lt;</font> order<font color="#990000">;</font> k<font color="#990000">++)</font>
+          <font color="#FF0000">{</font>    <i><font color="#9A1900">// evaluate k-th order Taylor coefficient of H</font></i>
+               hk <font color="#990000">=</font> H<font color="#990000">.</font><b><font color="#000000">Forward</font></b><font color="#990000">(</font>k<font color="#990000">,</font> zk<font color="#990000">);</font>
+
+               <b><font color="#0000FF">for</font></b><font color="#990000">(</font>j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> n<font color="#990000">;</font> j<font color="#990000">++)</font>
+               <font color="#FF0000">{</font>    <i><font color="#9A1900">// convert to (k+1)-Taylor coefficient for z</font></i>
+                    zk<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">=</font> hk<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">/</font> <font color="#009900">double</font><font color="#990000">(</font>k <font color="#990000">+</font> <font color="#993399">1</font><font color="#990000">);</font>
+
+                    <i><font color="#9A1900">// add term for to this Taylor coefficient</font></i>
+                    <i><font color="#9A1900">// to solution for y(t, x)</font></i>
+                    z<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">+=</font> zk<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">*</font> dt_kp<font color="#990000">;</font>
+               <font color="#FF0000">}</font>
+               <i><font color="#9A1900">// next power of t</font></i>
+               dt_kp <font color="#990000">*=</font> dt<font color="#990000">;</font>
+          <font color="#FF0000">}</font>
+     <font color="#FF0000">}</font>
+
+     <i><font color="#9A1900">// check solution of the ODE,</font></i>
+     <i><font color="#9A1900">// Taylor's method should have no truncation error for this case</font></i>
+     <font color="#009900">double</font> eps   <font color="#990000">=</font> <font color="#993399">100</font><font color="#990000">.</font> <font color="#990000">*</font> std<font color="#990000">::</font>numeric_limits<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;::</font><b><font color="#000000">epsilon</font></b><font color="#990000">();</font>
+     <font color="#009900">double</font> check <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">.;</font>
+     <font color="#009900">double</font> t     <font color="#990000">=</font> n_step <font color="#990000">*</font> dt<font color="#990000">;</font>
+     <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> n<font color="#990000">;</font> i<font color="#990000">++)</font>
+     <font color="#FF0000">{</font>    check <font color="#990000">*=</font> t <font color="#990000">/</font> <font color="#009900">double</font><font color="#990000">(</font>i <font color="#990000">+</font> <font color="#993399">1</font><font color="#990000">);</font>
+          ok <font color="#990000">&amp;=</font> CppAD<font color="#990000">::</font><b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>z<font color="#990000">[</font>i<font color="#990000">],</font> check<font color="#990000">,</font> eps<font color="#990000">,</font> eps<font color="#990000">);</font>
+     <font color="#FF0000">}</font>
+
+     <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
+<font color="#FF0000">}</font>
+</tt></pre>
+</font></code>
+<hr>Input File: example/general/ode_taylor.cpp
+
+</body>
+</html>

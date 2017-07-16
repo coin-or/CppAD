@@ -1,0 +1,153 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>Source: det_by_minor</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Source: det_by_minor">
+<meta name="keywords" id="keywords" content=" source: det_by_minor source ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_det_by_minor.hpp_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://coin-or.github.io/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="det_by_minor.cpp.htm" target="_top">Prev</a>
+</td><td><a href="det_33.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>speed</option>
+<option>speed_utility</option>
+<option>det_by_minor</option>
+<option>det_by_minor.hpp</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>speed-&gt;</option>
+<option>speed_main</option>
+<option>speed_utility</option>
+<option>speed_double</option>
+<option>speed_adolc</option>
+<option>speed_cppad</option>
+<option>speed_fadbad</option>
+<option>speed_sacado</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>speed_utility-&gt;</option>
+<option>det_by_lu</option>
+<option>det_of_minor</option>
+<option>det_by_minor</option>
+<option>det_33</option>
+<option>det_grad_33</option>
+<option>mat_sum_sq</option>
+<option>ode_evaluate</option>
+<option>sparse_jac_fun</option>
+<option>sparse_hes_fun</option>
+<option>uniform_01</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>det_by_minor-&gt;</option>
+<option>det_by_minor.cpp</option>
+<option>det_by_minor.hpp</option>
+</select>
+</td>
+<td>det_by_minor.hpp</td>
+<td>Headings</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>Source: det_by_minor</big></big></b></center>
+<code><font color="blue"># ifndef CPPAD_DET_BY_MINOR_HPP
+<code><span style='white-space: nowrap'><br>
+</span></code># define CPPAD_DET_BY_MINOR_HPP
+
+<pre><tt><b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/speed/det_of_minor.hpp&gt;</font>
+<b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;vector&gt;</font>
+
+<i><font color="#9A1900">// BEGIN CppAD namespace</font></i>
+<b><font color="#0000FF">namespace</font></b> CppAD <font color="#FF0000">{</font>
+
+<b><font color="#0000FF">template</font></b> <font color="#990000">&lt;</font><b><font color="#0000FF">class</font></b> <font color="#008080">Scalar</font><font color="#990000">&gt;</font>
+<b><font color="#0000FF">class</font></b> <font color="#008080">det_by_minor</font> <font color="#FF0000">{</font>
+<b><font color="#0000FF">private</font></b><font color="#990000">:</font>
+     <font color="#008080">size_t</font>              m_<font color="#990000">;</font>
+
+     <i><font color="#9A1900">// made mutable because modified and then restored</font></i>
+     <b><font color="#0000FF">mutable</font></b> std<font color="#990000">::</font><font color="#008080">vector&lt;size_t&gt;</font> r_<font color="#990000">;</font>
+     <b><font color="#0000FF">mutable</font></b> std<font color="#990000">::</font><font color="#008080">vector&lt;size_t&gt;</font> c_<font color="#990000">;</font>
+
+     <i><font color="#9A1900">// make mutable because its value does not matter</font></i>
+     <b><font color="#0000FF">mutable</font></b> std<font color="#990000">::</font><font color="#008080">vector&lt;Scalar&gt;</font> a_<font color="#990000">;</font>
+<b><font color="#0000FF">public</font></b><font color="#990000">:</font>
+     <b><font color="#000000">det_by_minor</font></b><font color="#990000">(</font><font color="#008080">size_t</font> m<font color="#990000">)</font> <font color="#990000">:</font> <b><font color="#000000">m_</font></b><font color="#990000">(</font>m<font color="#990000">)</font> <font color="#990000">,</font> <b><font color="#000000">r_</font></b><font color="#990000">(</font>m <font color="#990000">+</font> <font color="#993399">1</font><font color="#990000">)</font> <font color="#990000">,</font> <b><font color="#000000">c_</font></b><font color="#990000">(</font>m <font color="#990000">+</font> <font color="#993399">1</font><font color="#990000">),</font> <b><font color="#000000">a_</font></b><font color="#990000">(</font>m <font color="#990000">*</font> m<font color="#990000">)</font>
+     <font color="#FF0000">{</font>
+          <font color="#008080">size_t</font> i<font color="#990000">;</font>
+
+          <i><font color="#9A1900">// values for r and c that correspond to entire matrix</font></i>
+          <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> m<font color="#990000">;</font> i<font color="#990000">++)</font>
+          <font color="#FF0000">{</font>    r_<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> i<font color="#990000">+</font><font color="#993399">1</font><font color="#990000">;</font>
+               c_<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> i<font color="#990000">+</font><font color="#993399">1</font><font color="#990000">;</font>
+          <font color="#FF0000">}</font>
+          r_<font color="#990000">[</font>m<font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
+          c_<font color="#990000">[</font>m<font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
+     <font color="#FF0000">}</font>
+
+     <b><font color="#0000FF">template</font></b> <font color="#990000">&lt;</font><b><font color="#0000FF">class</font></b> <font color="#008080">Vector</font><font color="#990000">&gt;</font>
+     <b><font color="#0000FF">inline</font></b> <font color="#008080">Scalar</font> <b><font color="#0000FF">operator</font></b><font color="#990000">()(</font><b><font color="#0000FF">const</font></b> <font color="#008080">Vector</font> <font color="#990000">&amp;</font>x<font color="#990000">)</font> <b><font color="#0000FF">const</font></b>
+     <font color="#FF0000">{</font>    <font color="#008080">size_t</font> i <font color="#990000">=</font> m_ <font color="#990000">*</font> m_<font color="#990000">;</font>
+          <b><font color="#0000FF">while</font></b><font color="#990000">(</font>i<font color="#990000">--)</font>
+               a_<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> x<font color="#990000">[</font>i<font color="#990000">];</font>
+          <b><font color="#0000FF">return</font></b> <b><font color="#000000">det_of_minor</font></b><font color="#990000">(</font>a_<font color="#990000">,</font> m_<font color="#990000">,</font> m_<font color="#990000">,</font> r_<font color="#990000">,</font> c_<font color="#990000">);</font>
+     <font color="#FF0000">}</font>
+
+<font color="#FF0000">}</font><font color="#990000">;</font>
+
+<font color="#FF0000">}</font> <i><font color="#9A1900">// END CppAD namespace</font></i></tt></pre>
+# endif
+</font></code>
+
+
+<hr>Input File: omh/det_by_minor_hpp.omh
+
+</body>
+</html>

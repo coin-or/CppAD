@@ -1,0 +1,599 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>An Embedded 4th and 5th Order Runge-Kutta ODE Solver</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="An Embedded 4th and 5th Order Runge-Kutta ODE Solver">
+<meta name="keywords" id="keywords" content=" embedded 4th 5th order runge-kutta ode solver Runge45 Runge Kutta solve differential equation syntax purpose operation sequence include xf fun t x f warning m ti tf xi e scalar fabs vector parallel mode example source code ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_runge45_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://coin-or.github.io/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="rombergmul.cpp.htm" target="_top">Prev</a>
+</td><td><a href="runge45_1.cpp.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>utility</option>
+<option>Runge45</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>CppAD-&gt;</option>
+<option>Install</option>
+<option>Introduction</option>
+<option>AD</option>
+<option>ADFun</option>
+<option>preprocessor</option>
+<option>multi_thread</option>
+<option>utility</option>
+<option>ipopt_solve</option>
+<option>Example</option>
+<option>speed</option>
+<option>Appendix</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>utility-&gt;</option>
+<option>ErrorHandler</option>
+<option>NearEqual</option>
+<option>speed_test</option>
+<option>SpeedTest</option>
+<option>time_test</option>
+<option>test_boolofvoid</option>
+<option>NumericType</option>
+<option>CheckNumericType</option>
+<option>SimpleVector</option>
+<option>CheckSimpleVector</option>
+<option>nan</option>
+<option>pow_int</option>
+<option>Poly</option>
+<option>LuDetAndSolve</option>
+<option>RombergOne</option>
+<option>RombergMul</option>
+<option>Runge45</option>
+<option>Rosen34</option>
+<option>OdeErrControl</option>
+<option>OdeGear</option>
+<option>OdeGearControl</option>
+<option>CppAD_vector</option>
+<option>thread_alloc</option>
+<option>index_sort</option>
+<option>to_string</option>
+<option>set_union</option>
+<option>sparse_rc</option>
+<option>sparse_rcv</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down0(this)'>
+<option>Runge45-&gt;</option>
+<option>runge45_1.cpp</option>
+<option>runge45_2.cpp</option>
+</select>
+</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Syntax</option>
+<option>Purpose</option>
+<option>Operation Sequence</option>
+<option>Include</option>
+<option>xf</option>
+<option>Fun</option>
+<option>---..t</option>
+<option>---..x</option>
+<option>---..f</option>
+<option>---..Warning</option>
+<option>M</option>
+<option>ti</option>
+<option>tf</option>
+<option>xi</option>
+<option>e</option>
+<option>Scalar</option>
+<option>---..fabs</option>
+<option>Vector</option>
+<option>Parallel Mode</option>
+<option>Example</option>
+<option>Source Code</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>An Embedded 4th and 5th Order Runge-Kutta ODE Solver</big></big></b></center>
+<br>
+<b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
+
+<br>
+
+<code><font color="blue"><span style='white-space: nowrap'>#&nbsp;include&nbsp;&lt;cppad/utility/runge_45.hpp&gt;<br>
+</span></font></code>
+
+<code><i><font color="black"><span style='white-space: nowrap'>xf</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;Runge45(</span></font><i><font color="black"><span style='white-space: nowrap'>F</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>M</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ti</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>tf</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>xi</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+
+<code><i><font color="black"><span style='white-space: nowrap'>xf</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;Runge45(</span></font><i><font color="black"><span style='white-space: nowrap'>F</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>M</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ti</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>tf</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>xi</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>e</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+<br>
+<b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
+<br>
+This is an implementation of the
+Cash-Karp embedded 4th and 5th order Runge-Kutta ODE solver
+described in Section 16.2 of <a href="bib.htm#Numerical Recipes" target="_top"><span style='white-space: nowrap'>Numerical&nbsp;Recipes</span></a>
+.
+We use <small>@(@
+n
+@)@</small> for the size of the vector 
+<code><i><font color="black"><span style='white-space: nowrap'>xi</span></font></i></code>
+.
+Let <small>@(@
+\B{R}
+@)@</small> denote the real numbers
+and let <small>@(@
+F : \B{R} \times \B{R}^n \rightarrow \B{R}^n
+@)@</small>
+be a smooth function.
+The return value 
+<code><i><font color="black"><span style='white-space: nowrap'>xf</span></font></i></code>
+ contains a 5th order
+approximation for the value <small>@(@
+X(tf)
+@)@</small> where
+<small>@(@
+X : [ti , tf] \rightarrow \B{R}^n
+@)@</small> is defined by
+the following initial value problem:
+<small>@[@
+
+\begin{array}{rcl}
+	X(ti)  & = & xi    \\
+	X'(t)  & = & F[t , X(t)]
+\end{array}
+
+@]@</small>
+If your set of ordinary differential equations
+are stiff, an implicit method may be better
+(perhaps <a href="rosen34.htm" target="_top"><span style='white-space: nowrap'>Rosen34</span></a>
+.)
+
+<br>
+<br>
+<b><big><a name="Operation Sequence" id="Operation Sequence">Operation Sequence</a></big></b>
+<br>
+The <a href="glossary.htm#Operation.Sequence" target="_top"><span style='white-space: nowrap'>operation&nbsp;sequence</span></a>
+ for 
+<code><i><font color="black"><span style='white-space: nowrap'>Runge</span></font></i></code>
+
+does not depend on any of its 
+<code><i><font color="black"><span style='white-space: nowrap'>Scalar</span></font></i></code>
+ input values provided that
+the operation sequence for
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>F</span></font></i><font color="blue"><span style='white-space: nowrap'>.Ode(</span></font><i><font color="black"><span style='white-space: nowrap'>t</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+does not on any of its 
+<code><i><font color="black"><span style='white-space: nowrap'>Scalar</span></font></i></code>
+ inputs (see below).
+
+<br>
+<br>
+<b><big><a name="Include" id="Include">Include</a></big></b>
+<br>
+The file <code><font color="blue">cppad/runge_45.hpp</font></code> is included by <code><font color="blue">cppad/cppad.hpp</font></code>
+but it can also be included separately with out the rest of
+the <code><font color="blue">CppAD</font></code> routines.
+
+<br>
+<br>
+<b><big><a name="xf" id="xf">xf</a></big></b>
+<br>
+The return value 
+<code><i><font color="black"><span style='white-space: nowrap'>xf</span></font></i></code>
+ has the prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Vector</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>xf</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+and the size of 
+<code><i><font color="black"><span style='white-space: nowrap'>xf</span></font></i></code>
+ is equal to 
+<code><i><font color="black"><span style='white-space: nowrap'>n</span></font></i></code>
+
+(see description of <a href="runge45.htm#Vector" target="_top"><span style='white-space: nowrap'>Vector</span></a>
+ below).
+<small>@[@
+
+	X(tf) = xf + O( h^6 )
+
+@]@</small>
+where <small>@(@
+h = (tf - ti) / M
+@)@</small> is the step size.
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>xf</span></font></i></code>
+ contains not a number <a href="nan.htm" target="_top"><span style='white-space: nowrap'>nan</span></a>
+,
+see the discussion for <a href="runge45.htm#Fun.f" target="_top"><span style='white-space: nowrap'>f</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="Fun" id="Fun">Fun</a></big></b>
+<br>
+The class 
+<code><i><font color="black"><span style='white-space: nowrap'>Fun</span></font></i></code>
+
+and the object 
+<code><i><font color="black"><span style='white-space: nowrap'>F</span></font></i></code>
+ satisfy the prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Fun</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>F</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+The object 
+<code><i><font color="black"><span style='white-space: nowrap'>F</span></font></i></code>
+ (and the class 
+<code><i><font color="black"><span style='white-space: nowrap'>Fun</span></font></i></code>
+)
+must have a member function named <code><font color="blue">Ode</font></code>
+that supports the syntax
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>F</span></font></i><font color="blue"><span style='white-space: nowrap'>.Ode(</span></font><i><font color="black"><span style='white-space: nowrap'>t</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+<br>
+<b><a name="Fun.t" id="Fun.t">t</a></b>
+<br>
+The argument 
+<code><i><font color="black"><span style='white-space: nowrap'>t</span></font></i></code>
+ to 
+<code><i><font color="black"><span style='white-space: nowrap'>F</span></font></i><font color="blue"><span style='white-space: nowrap'>.Ode</span></font></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Scalar</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>t</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+(see description of <a href="runge45.htm#Scalar" target="_top"><span style='white-space: nowrap'>Scalar</span></a>
+ below).
+
+<br>
+<br>
+<b><a name="Fun.x" id="Fun.x">x</a></b>
+<br>
+The argument 
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+ to 
+<code><i><font color="black"><span style='white-space: nowrap'>F</span></font></i><font color="blue"><span style='white-space: nowrap'>.Ode</span></font></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Vector</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+and has size 
+<code><i><font color="black"><span style='white-space: nowrap'>n</span></font></i></code>
+
+(see description of <a href="runge45.htm#Vector" target="_top"><span style='white-space: nowrap'>Vector</span></a>
+ below).
+
+<br>
+<br>
+<b><a name="Fun.f" id="Fun.f">f</a></b>
+<br>
+The argument 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+ to 
+<code><i><font color="black"><span style='white-space: nowrap'>F</span></font></i><font color="blue"><span style='white-space: nowrap'>.Ode</span></font></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Vector</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+On input and output, 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+ is a vector of size 
+<code><i><font color="black"><span style='white-space: nowrap'>n</span></font></i></code>
+
+and the input values of the elements of 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+ do not matter.
+On output,
+
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+ is set equal to <small>@(@
+F(t, x)
+@)@</small> in the differential equation.
+If any of the elements of 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+ have the value not a number <code><font color="blue">nan</font></code>
+the routine <code><font color="blue">Runge45</font></code> returns with all the
+elements of 
+<code><i><font color="black"><span style='white-space: nowrap'>xf</span></font></i></code>
+ and 
+<code><i><font color="black"><span style='white-space: nowrap'>e</span></font></i></code>
+ equal to <code><font color="blue">nan</font></code>.
+
+<br>
+<br>
+<b><a name="Fun.Warning" id="Fun.Warning">Warning</a></b>
+<br>
+The argument 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+ to 
+<code><i><font color="black"><span style='white-space: nowrap'>F</span></font></i><font color="blue"><span style='white-space: nowrap'>.Ode</span></font></code>
+
+must have a call by reference in its prototype; i.e.,
+do not forget the <code><font color="blue">&amp;</font></code> in the prototype for 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+.
+
+<br>
+<br>
+<b><big><a name="M" id="M">M</a></big></b>
+<br>
+The argument 
+<code><i><font color="black"><span style='white-space: nowrap'>M</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>M</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+It specifies the number of steps
+to use when solving the differential equation.
+This must be greater than or equal one.
+The step size is given by <small>@(@
+h = (tf - ti) / M
+@)@</small>, thus
+the larger 
+<code><i><font color="black"><span style='white-space: nowrap'>M</span></font></i></code>
+, the more accurate the
+return value 
+<code><i><font color="black"><span style='white-space: nowrap'>xf</span></font></i></code>
+ is as an approximation
+for <small>@(@
+X(tf)
+@)@</small>.
+
+<br>
+<br>
+<b><big><a name="ti" id="ti">ti</a></big></b>
+<br>
+The argument 
+<code><i><font color="black"><span style='white-space: nowrap'>ti</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Scalar</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>ti</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+(see description of <a href="runge45.htm#Scalar" target="_top"><span style='white-space: nowrap'>Scalar</span></a>
+ below).
+It specifies the initial time for 
+<code><i><font color="black"><span style='white-space: nowrap'>t</span></font></i></code>
+ in the
+differential equation; i.e.,
+the time corresponding to the value 
+<code><i><font color="black"><span style='white-space: nowrap'>xi</span></font></i></code>
+.
+
+<br>
+<br>
+<b><big><a name="tf" id="tf">tf</a></big></b>
+<br>
+The argument 
+<code><i><font color="black"><span style='white-space: nowrap'>tf</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Scalar</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>tf</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+It specifies the final time for 
+<code><i><font color="black"><span style='white-space: nowrap'>t</span></font></i></code>
+ in the
+differential equation; i.e.,
+the time corresponding to the value 
+<code><i><font color="black"><span style='white-space: nowrap'>xf</span></font></i></code>
+.
+
+<br>
+<br>
+<b><big><a name="xi" id="xi">xi</a></big></b>
+<br>
+The argument 
+<code><i><font color="black"><span style='white-space: nowrap'>xi</span></font></i></code>
+ has the prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Vector</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>xi</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+and the size of 
+<code><i><font color="black"><span style='white-space: nowrap'>xi</span></font></i></code>
+ is equal to 
+<code><i><font color="black"><span style='white-space: nowrap'>n</span></font></i></code>
+.
+It specifies the value of <small>@(@
+X(ti)
+@)@</small>
+
+<br>
+<br>
+<b><big><a name="e" id="e">e</a></big></b>
+<br>
+The argument 
+<code><i><font color="black"><span style='white-space: nowrap'>e</span></font></i></code>
+ is optional and has the prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Vector</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>e</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>e</span></font></i></code>
+ is present,
+the size of 
+<code><i><font color="black"><span style='white-space: nowrap'>e</span></font></i></code>
+ must be equal to 
+<code><i><font color="black"><span style='white-space: nowrap'>n</span></font></i></code>
+.
+The input value of the elements of 
+<code><i><font color="black"><span style='white-space: nowrap'>e</span></font></i></code>
+ does not matter.
+On output
+it contains an element by element
+estimated bound for the absolute value of the error in 
+<code><i><font color="black"><span style='white-space: nowrap'>xf</span></font></i></code>
+
+<small>@[@
+
+	e = O( h^5 )
+
+@]@</small>
+where <small>@(@
+h = (tf - ti) / M
+@)@</small> is the step size.
+If on output, 
+<code><i><font color="black"><span style='white-space: nowrap'>e</span></font></i></code>
+ contains not a number <code><font color="blue">nan</font></code>,
+see the discussion for <a href="runge45.htm#Fun.f" target="_top"><span style='white-space: nowrap'>f</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="Scalar" id="Scalar">Scalar</a></big></b>
+<br>
+The type 
+<code><i><font color="black"><span style='white-space: nowrap'>Scalar</span></font></i></code>
+ must satisfy the conditions
+for a <a href="numerictype.htm" target="_top"><span style='white-space: nowrap'>NumericType</span></a>
+ type.
+The routine <a href="checknumerictype.htm" target="_top"><span style='white-space: nowrap'>CheckNumericType</span></a>
+ will generate an error message
+if this is not the case.
+
+<br>
+<br>
+<b><a name="Scalar.fabs" id="Scalar.fabs">fabs</a></b>
+<br>
+In addition, the following function must be defined for
+
+<code><i><font color="black"><span style='white-space: nowrap'>Scalar</span></font></i></code>
+ objects 
+<code><i><font color="black"><span style='white-space: nowrap'>a</span></font></i></code>
+ and 
+<code><i><font color="black"><span style='white-space: nowrap'>b</span></font></i></code>
+
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>a</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;fabs(</span></font><i><font color="black"><span style='white-space: nowrap'>b</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+Note that this operation is only used for computing 
+<code><i><font color="black"><span style='white-space: nowrap'>e</span></font></i></code>
+; hence
+the operation sequence for 
+<code><i><font color="black"><span style='white-space: nowrap'>xf</span></font></i></code>
+ can still be independent of
+the arguments to <code><font color="blue">Runge45</font></code> even if
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fabs(</span></font><i><font color="black"><span style='white-space: nowrap'>b</span></font></i><font color="blue"><span style='white-space: nowrap'>)&nbsp;=&nbsp;std::max(-</span></font><i><font color="black"><span style='white-space: nowrap'>b</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>b</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+.
+
+<br>
+<br>
+<b><big><a name="Vector" id="Vector">Vector</a></big></b>
+<br>
+The type 
+<code><i><font color="black"><span style='white-space: nowrap'>Vector</span></font></i></code>
+ must be a <a href="simplevector.htm" target="_top"><span style='white-space: nowrap'>SimpleVector</span></a>
+ class with
+<a href="simplevector.htm#Elements of Specified Type" target="_top"><span style='white-space: nowrap'>elements&nbsp;of&nbsp;type&nbsp;Scalar</span></a>
+.
+The routine <a href="checksimplevector.htm" target="_top"><span style='white-space: nowrap'>CheckSimpleVector</span></a>
+ will generate an error message
+if this is not the case.
+
+<br>
+<br>
+<b><big><a name="Parallel Mode" id="Parallel Mode">Parallel Mode</a></big></b>
+<br>
+For each set of types
+<a href="runge45.htm#Scalar" target="_top"><span style='white-space: nowrap'>Scalar</span></a>
+,
+<a href="runge45.htm#Vector" target="_top"><span style='white-space: nowrap'>Vector</span></a>
+, and
+<a href="runge45.htm#Fun" target="_top"><span style='white-space: nowrap'>Fun</span></a>
+,
+the first call to <code><font color="blue">Runge45</font></code>
+must not be <a href="ta_in_parallel.htm" target="_top"><span style='white-space: nowrap'>parallel</span></a>
+ execution mode.
+
+
+<br>
+<br>
+<b><big><a name="Example" id="Example">Example</a></big></b>
+
+<br>
+The file
+<a href="runge45_1.cpp.htm" target="_top"><span style='white-space: nowrap'>runge45_1.cpp</span></a>
+
+contains a simple example and test of <code><font color="blue">Runge45</font></code>.
+It returns true if it succeeds and false otherwise.
+<code><span style='white-space: nowrap'><br>
+<br>
+</span></code>The file
+<a href="runge45_2.cpp.htm" target="_top"><span style='white-space: nowrap'>runge45_2.cpp</span></a>
+ contains an example using <code><font color="blue">Runge45</font></code>
+in the context of algorithmic differentiation.
+It also returns true if it succeeds and false otherwise.
+
+<br>
+<br>
+<b><big><a name="Source Code" id="Source Code">Source Code</a></big></b>
+<br>
+The source code for this routine is in the file
+<code><font color="blue">cppad/runge_45.hpp</font></code>.
+
+
+<hr>Input File: cppad/utility/runge_45.hpp
+
+</body>
+</html>

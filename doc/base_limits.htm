@@ -1,0 +1,180 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>Base Type Requirements for Numeric Limits</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Base Type Requirements for Numeric Limits">
+<meta name="keywords" id="keywords" content=" base type requirements numeric limits cppad::numeric_limits cppad_numeric_limits ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_base_limits_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://coin-or.github.io/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="base_std_math.htm" target="_top">Prev</a>
+</td><td><a href="base_to_string.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>AD</option>
+<option>base_require</option>
+<option>base_limits</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>CppAD-&gt;</option>
+<option>Install</option>
+<option>Introduction</option>
+<option>AD</option>
+<option>ADFun</option>
+<option>preprocessor</option>
+<option>multi_thread</option>
+<option>utility</option>
+<option>ipopt_solve</option>
+<option>Example</option>
+<option>speed</option>
+<option>Appendix</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>AD-&gt;</option>
+<option>ad_ctor</option>
+<option>ad_assign</option>
+<option>Convert</option>
+<option>ADValued</option>
+<option>BoolValued</option>
+<option>VecAD</option>
+<option>base_require</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>base_require-&gt;</option>
+<option>base_member</option>
+<option>base_cond_exp</option>
+<option>base_identical</option>
+<option>base_ordered</option>
+<option>base_std_math</option>
+<option>base_limits</option>
+<option>base_to_string</option>
+<option>base_hash</option>
+<option>base_example</option>
+</select>
+</td>
+<td>base_limits</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>CppAD::numeric_limits</option>
+<option>CPPAD_NUMERIC_LIMITS</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@
+
+
+<center><b><big><big>Base Type Requirements for Numeric Limits</big></big></b></center>
+<br>
+<b><big><a name="CppAD::numeric_limits" id="CppAD::numeric_limits">CppAD::numeric_limits</a></big></b>
+<br>
+A specialization for
+<a href="numeric_limits.htm" target="_top"><span style='white-space: nowrap'>CppAD::numeric_limits</span></a>
+
+must be defined in order to use the type 
+<code><font color="blue"><span style='white-space: nowrap'>AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code>
+.
+CppAD does not use a specialization of
+
+<code><font color="blue"><span style='white-space: nowrap'>std::numeric_limits&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code>
+.
+Since C++11, using a specialization of
+
+<code><font color="blue"><span style='white-space: nowrap'>std::numeric_limits&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code>
+
+would require that 
+<code><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i></code>
+ be a literal type.
+
+<br>
+<br>
+<b><big><a name="CPPAD_NUMERIC_LIMITS" id="CPPAD_NUMERIC_LIMITS">CPPAD_NUMERIC_LIMITS</a></big></b>
+<br>
+In most cases, this macro can be used to define the specialization where
+the numeric limits for the type 
+<code><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i></code>
+
+are the same as the standard numeric limits for the type 
+<code><i><font color="black"><span style='white-space: nowrap'>Other</span></font></i></code>
+.
+For most 
+<code><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i></code>
+ types,
+there is a choice of 
+<code><i><font color="black"><span style='white-space: nowrap'>Other</span></font></i></code>
+,
+for which the following preprocessor macro invocation suffices:
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;namespace&nbsp;CppAD&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CPPAD_NUMERIC_LIMITS(</span></font><i><font color="black"><span style='white-space: nowrap'>Other</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+</span></font></code>
+where the macro is defined by
+<pre><tt><b><font color="#000080"># define</font></b> <b><font color="#000000">CPPAD_NUMERIC_LIMITS</font></b><font color="#990000">(</font>Other<font color="#990000">,</font> Base<font color="#990000">)</font> <font color="#990000">\</font>
+<b><font color="#0000FF">template</font></b> <font color="#990000">&lt;&gt;</font> <b><font color="#0000FF">class</font></b> <font color="#008080">numeric_limits</font><font color="#990000">&lt;</font>Base<font color="#990000">&gt;\</font>
+<font color="#FF0000">{</font><font color="#990000">\</font>
+     <b><font color="#0000FF">public</font></b><font color="#990000">:\</font>
+     <b><font color="#0000FF">static</font></b> <font color="#008080">Base</font> <b><font color="#000000">min</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font> <font color="#990000">\</font>
+     <font color="#FF0000">{</font>    <b><font color="#0000FF">return</font></b> <b><font color="#0000FF">static_cast</font></b><font color="#990000">&lt;</font>Base<font color="#990000">&gt;(</font> std<font color="#990000">::</font>numeric_limits<font color="#990000">&lt;</font>Other<font color="#990000">&gt;::</font><b><font color="#000000">min</font></b><font color="#990000">()</font> <font color="#990000">);</font> <font color="#FF0000">}</font><font color="#990000">\</font>
+     <b><font color="#0000FF">static</font></b> <font color="#008080">Base</font> <b><font color="#000000">max</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font> <font color="#990000">\</font>
+     <font color="#FF0000">{</font>    <b><font color="#0000FF">return</font></b> <b><font color="#0000FF">static_cast</font></b><font color="#990000">&lt;</font>Base<font color="#990000">&gt;(</font> std<font color="#990000">::</font>numeric_limits<font color="#990000">&lt;</font>Other<font color="#990000">&gt;::</font><b><font color="#000000">max</font></b><font color="#990000">()</font> <font color="#990000">);</font> <font color="#FF0000">}</font><font color="#990000">\</font>
+     <b><font color="#0000FF">static</font></b> <font color="#008080">Base</font> <b><font color="#000000">epsilon</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font> <font color="#990000">\</font>
+     <font color="#FF0000">{</font>    <b><font color="#0000FF">return</font></b> <b><font color="#0000FF">static_cast</font></b><font color="#990000">&lt;</font>Base<font color="#990000">&gt;(</font> std<font color="#990000">::</font>numeric_limits<font color="#990000">&lt;</font>Other<font color="#990000">&gt;::</font><b><font color="#000000">epsilon</font></b><font color="#990000">()</font> <font color="#990000">);</font> <font color="#FF0000">}</font><font color="#990000">\</font>
+     <b><font color="#0000FF">static</font></b> <font color="#008080">Base</font> <b><font color="#000000">quiet_NaN</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font> <font color="#990000">\</font>
+     <font color="#FF0000">{</font>    <b><font color="#0000FF">return</font></b> <b><font color="#0000FF">static_cast</font></b><font color="#990000">&lt;</font>Base<font color="#990000">&gt;(</font> std<font color="#990000">::</font>numeric_limits<font color="#990000">&lt;</font>Other<font color="#990000">&gt;::</font><b><font color="#000000">quiet_NaN</font></b><font color="#990000">()</font> <font color="#990000">);</font> <font color="#FF0000">}</font><font color="#990000">\</font>
+     <b><font color="#0000FF">static</font></b> <b><font color="#0000FF">const</font></b> <font color="#009900">int</font> digits10 <font color="#990000">=</font> std<font color="#990000">::</font>numeric_limits<font color="#990000">&lt;</font>Other<font color="#990000">&gt;::</font>digits10<font color="#990000">;\</font>
+<font color="#FF0000">}</font><font color="#990000">;</font></tt></pre>
+
+<hr>Input File: cppad/core/base_limits.hpp
+
+</body>
+</html>

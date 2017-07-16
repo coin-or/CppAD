@@ -1,0 +1,474 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>Check an ADFun Sequence of Operations</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Check an ADFun Sequence of Operations">
+<meta name="keywords" id="keywords" content=" check adfun sequence operations syntax purpose f g x y r ok vector funcheck uses forward discussion example ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_funcheck_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://coin-or.github.io/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="min_nso_quad.hpp.htm" target="_top">Prev</a>
+</td><td><a href="fun_check.cpp.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>ADFun</option>
+<option>FunCheck</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>CppAD-&gt;</option>
+<option>Install</option>
+<option>Introduction</option>
+<option>AD</option>
+<option>ADFun</option>
+<option>preprocessor</option>
+<option>multi_thread</option>
+<option>utility</option>
+<option>ipopt_solve</option>
+<option>Example</option>
+<option>speed</option>
+<option>Appendix</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>ADFun-&gt;</option>
+<option>record_adfun</option>
+<option>drivers</option>
+<option>Forward</option>
+<option>Reverse</option>
+<option>sparsity_pattern</option>
+<option>sparse_derivative</option>
+<option>optimize</option>
+<option>abs_normal</option>
+<option>FunCheck</option>
+<option>check_for_nan</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down0(this)'>
+<option>FunCheck-&gt;</option>
+<option>fun_check.cpp</option>
+</select>
+</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Syntax</option>
+<option>Purpose</option>
+<option>f</option>
+<option>g</option>
+<option>---..x</option>
+<option>y</option>
+<option>x</option>
+<option>r</option>
+<option>a</option>
+<option>ok</option>
+<option>Vector</option>
+<option>FunCheck Uses Forward</option>
+<option>Discussion</option>
+<option>Example</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>Check an ADFun Sequence of Operations</big></big></b></center>
+<br>
+<b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
+
+<br>
+
+<code><i><font color="black"><span style='white-space: nowrap'>ok</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;FunCheck(</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>g</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>r</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>a</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+
+<code><span style='white-space: nowrap'><br>
+</span></code><b>See Also</b>
+<a href="comparechange.htm" target="_top"><span style='white-space: nowrap'>CompareChange</span></a>
+
+
+
+<br>
+<br>
+<b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
+<br>
+We use <small>@(@
+F : B^n \rightarrow B^m
+@)@</small> to denote the
+<a href="glossary.htm#AD Function" target="_top"><span style='white-space: nowrap'>AD&nbsp;function</span></a>
+ corresponding to 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+.
+We use <small>@(@
+G : B^n \rightarrow B^m
+@)@</small> to denote the
+function corresponding to the C++ function object 
+<code><i><font color="black"><span style='white-space: nowrap'>g</span></font></i></code>
+.
+This routine check if
+<small>@[@
+
+	F(x) = G(x)
+
+@]@</small>
+If <small>@(@
+F(x) \neq G(x)
+@)@</small>, the
+<a href="glossary.htm#Operation.Sequence" target="_top"><span style='white-space: nowrap'>operation&nbsp;sequence</span></a>
+
+corresponding to 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+ does not represents the algorithm used
+by 
+<code><i><font color="black"><span style='white-space: nowrap'>g</span></font></i></code>
+ to calculate values for <small>@(@
+G
+@)@</small>
+(see <a href="funcheck.htm#Discussion" target="_top"><span style='white-space: nowrap'>Discussion</span></a>
+ below).
+
+<br>
+<br>
+<b><big><a name="f" id="f">f</a></big></b>
+<br>
+The <code><font color="blue">FunCheck</font></code> argument 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ADFun&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+Note that the <a href="adfun.htm" target="_top"><span style='white-space: nowrap'>ADFun</span></a>
+ object 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+ is not <code><font color="blue">const</font></code>
+(see <a href="funcheck.htm#FunCheck Uses Forward" target="_top"><span style='white-space: nowrap'>Forward</span></a>
+ below).
+
+<br>
+<br>
+<b><big><a name="g" id="g">g</a></big></b>
+<br>
+The <code><font color="blue">FunCheck</font></code> argument 
+<code><i><font color="black"><span style='white-space: nowrap'>g</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Fun</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>g</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+(
+<code><i><font color="black"><span style='white-space: nowrap'>Fun</span></font></i></code>
+ is defined the properties of 
+<code><i><font color="black"><span style='white-space: nowrap'>g</span></font></i></code>
+).
+The C++ function object 
+<code><i><font color="black"><span style='white-space: nowrap'>g</span></font></i></code>
+ supports the syntax
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>g</span></font></i><font color="blue"><span style='white-space: nowrap'>(</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+which computes <small>@(@
+y = G(x)
+@)@</small>.
+
+<br>
+<br>
+<b><a name="g.x" id="g.x">x</a></b>
+<br>
+The 
+<code><i><font color="black"><span style='white-space: nowrap'>g</span></font></i></code>
+ argument 
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Vector</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+(see <a href="funcheck.htm#Vector" target="_top"><span style='white-space: nowrap'>Vector</span></a>
+ below)
+and its size
+must be equal to 
+<code><i><font color="black"><span style='white-space: nowrap'>n</span></font></i></code>
+, the dimension of the
+<a href="seq_property.htm#Domain" target="_top"><span style='white-space: nowrap'>domain</span></a>
+ space for 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+.
+
+<br>
+<br>
+<b><big><a name="y" id="y">y</a></big></b>
+<br>
+The 
+<code><i><font color="black"><span style='white-space: nowrap'>g</span></font></i></code>
+ result 
+<code><i><font color="black"><span style='white-space: nowrap'>y</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Vector</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+and its value is <small>@(@
+G(x)
+@)@</small>.
+The size of 
+<code><i><font color="black"><span style='white-space: nowrap'>y</span></font></i></code>
+
+is equal to 
+<code><i><font color="black"><span style='white-space: nowrap'>m</span></font></i></code>
+, the dimension of the
+<a href="seq_property.htm#Range" target="_top"><span style='white-space: nowrap'>range</span></a>
+ space for 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+.
+
+<br>
+<br>
+<b><big><a name="x" id="x">x</a></big></b>
+<br>
+The <code><font color="blue">FunCheck</font></code> argument 
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Vector</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+and its size
+must be equal to 
+<code><i><font color="black"><span style='white-space: nowrap'>n</span></font></i></code>
+, the dimension of the
+<a href="seq_property.htm#Domain" target="_top"><span style='white-space: nowrap'>domain</span></a>
+ space for 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+.
+This specifies that point at which to compare the values
+calculated by 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+ and 
+<code><i><font color="black"><span style='white-space: nowrap'>G</span></font></i></code>
+.
+
+<br>
+<br>
+<b><big><a name="r" id="r">r</a></big></b>
+<br>
+The <code><font color="blue">FunCheck</font></code> argument 
+<code><i><font color="black"><span style='white-space: nowrap'>r</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>r</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+It specifies the relative error the element by element
+comparison of the value of <small>@(@
+F(x)
+@)@</small> and <small>@(@
+G(x)
+@)@</small>.
+
+<br>
+<br>
+<b><big><a name="a" id="a">a</a></big></b>
+<br>
+The <code><font color="blue">FunCheck</font></code> argument 
+<code><i><font color="black"><span style='white-space: nowrap'>a</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>a</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+It specifies the absolute error the element by element
+comparison of the value of <small>@(@
+F(x)
+@)@</small> and <small>@(@
+G(x)
+@)@</small>.
+
+<br>
+<br>
+<b><big><a name="ok" id="ok">ok</a></big></b>
+<br>
+The <code><font color="blue">FunCheck</font></code> result 
+<code><i><font color="black"><span style='white-space: nowrap'>ok</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bool&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ok</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+It is true, if for <small>@(@
+i = 0 , \ldots , m-1
+@)@</small>
+either the relative error bound is satisfied
+<small>@[@
+
+| F_i (x) - G_i (x) |
+\leq
+r ( | F_i (x) | + | G_i (x) | )
+
+@]@</small>
+or the absolute error bound is satisfied
+<small>@[@
+
+	| F_i (x) - G_i (x) | \leq a
+
+@]@</small>
+It is false if for some <small>@(@
+(i, j)
+@)@</small> neither
+of these bounds is satisfied.
+
+<br>
+<br>
+<b><big><a name="Vector" id="Vector">Vector</a></big></b>
+<br>
+The type 
+<code><i><font color="black"><span style='white-space: nowrap'>Vector</span></font></i></code>
+ must be a <a href="simplevector.htm" target="_top"><span style='white-space: nowrap'>SimpleVector</span></a>
+ class with
+<a href="simplevector.htm#Elements of Specified Type" target="_top"><span style='white-space: nowrap'>elements&nbsp;of&nbsp;type</span></a>
+
+
+<code><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i></code>
+.
+The routine <a href="checksimplevector.htm" target="_top"><span style='white-space: nowrap'>CheckSimpleVector</span></a>
+ will generate an error message
+if this is not the case.
+
+<br>
+<br>
+<b><big><a name="FunCheck Uses Forward" id="FunCheck Uses Forward">FunCheck Uses Forward</a></big></b>
+<br>
+After each call to <a href="forward.htm" target="_top"><span style='white-space: nowrap'>Forward</span></a>
+,
+the object 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+ contains the corresponding
+<a href="glossary.htm#Taylor Coefficient" target="_top"><span style='white-space: nowrap'>Taylor&nbsp;coefficients</span></a>
+.
+After <code><font color="blue">FunCheck</font></code>,
+the previous calls to <a href="forward.htm" target="_top"><span style='white-space: nowrap'>Forward</span></a>
+ are undefined.
+
+<br>
+<br>
+<b><big><a name="Discussion" id="Discussion">Discussion</a></big></b>
+<br>
+Suppose that the algorithm corresponding to 
+<code><i><font color="black"><span style='white-space: nowrap'>g</span></font></i></code>
+ contains
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&gt;=&nbsp;0&nbsp;)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;exp(</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;exp(-</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+where 
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+ and 
+<code><i><font color="black"><span style='white-space: nowrap'>y</span></font></i></code>
+ are 
+<code><font color="blue"><span style='white-space: nowrap'>AD&lt;double&gt;</span></font></code>
+ objects.
+It follows that the
+AD of <code><font color="blue">double</font></code> <a href="glossary.htm#Operation.Sequence" target="_top"><span style='white-space: nowrap'>operation&nbsp;sequence</span></a>
+
+depends on the value of 
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+.
+If the sequence of operations stored in 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+ corresponds to
+
+<code><i><font color="black"><span style='white-space: nowrap'>g</span></font></i></code>
+ with <small>@(@
+x \geq 0
+@)@</small>,
+the function values computed using 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+ when <small>@(@
+x < 0
+@)@</small>
+will not agree with the function values computed by <small>@(@
+g
+@)@</small>.
+This is because the operation sequence corresponding to 
+<code><i><font color="black"><span style='white-space: nowrap'>g</span></font></i></code>
+ changed
+(and hence the object 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+ does not represent the function
+<small>@(@
+G
+@)@</small> for this value of 
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+).
+In this case, you probably want to re-tape the calculations
+performed by 
+<code><i><font color="black"><span style='white-space: nowrap'>g</span></font></i></code>
+ with the
+<a href="glossary.htm#Tape.Independent Variable" target="_top"><span style='white-space: nowrap'>independent&nbsp;variables</span></a>
+
+equal to the values in 
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+
+(so AD operation sequence properly represents the algorithm
+for this value of independent variables).
+
+
+<br>
+<br>
+<b><big><a name="Example" id="Example">Example</a></big></b>
+
+<br>
+The file
+<a href="fun_check.cpp.htm" target="_top"><span style='white-space: nowrap'>fun_check.cpp</span></a>
+
+contains an example and test of this function.
+It returns true if it succeeds and false otherwise.
+
+
+<hr>Input File: cppad/core/fun_check.hpp
+
+</body>
+</html>

@@ -1,0 +1,210 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>Using CppAD in a Multi-Threading Environment</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Using CppAD in a Multi-Threading Environment">
+<meta name="keywords" id="keywords" content=" using cppad multi-threading environment mode execution maximum number purpose cppad_max_num_threads parallel_setup hold_memory parallel ad initialization same thread prohibited ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_multi_thread_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://coin-or.github.io/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="preprocessor.htm" target="_top">Prev</a>
+</td><td><a href="parallel_ad.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>multi_thread</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>CppAD-&gt;</option>
+<option>Install</option>
+<option>Introduction</option>
+<option>AD</option>
+<option>ADFun</option>
+<option>preprocessor</option>
+<option>multi_thread</option>
+<option>utility</option>
+<option>ipopt_solve</option>
+<option>Example</option>
+<option>speed</option>
+<option>Appendix</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down0(this)'>
+<option>multi_thread-&gt;</option>
+<option>parallel_ad</option>
+<option>thread_test.cpp</option>
+</select>
+</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Purpose</option>
+<option>CPPAD_MAX_NUM_THREADS</option>
+<option>parallel_setup</option>
+<option>hold_memory</option>
+<option>Parallel AD</option>
+<option>Initialization</option>
+<option>Same Thread</option>
+<option>Parallel Prohibited</option>
+<option>Contents</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>Using CppAD in a Multi-Threading Environment</big></big></b></center>
+<br>
+<b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
+<br>
+Extra steps and care must be taken to use CppAD
+in <a href="ta_in_parallel.htm" target="_top"><span style='white-space: nowrap'>parallel</span></a>
+ execution mode.
+This section collects this information in one place.
+
+<br>
+<br>
+<b><big><a name="CPPAD_MAX_NUM_THREADS" id="CPPAD_MAX_NUM_THREADS">CPPAD_MAX_NUM_THREADS</a></big></b>
+<br>
+The value <code><font color="blue">CPPAD_MAX_NUM_THREADS</font></code> is an absolute maximum for
+the number of threads that CppAD should support.
+If this preprocessor symbol is defined
+before including any CppAD header files,
+it must be an integer greater than or equal to one.
+Otherwise, <a href="cmake.htm#cppad_max_num_threads" target="_top"><span style='white-space: nowrap'>cppad_max_num_threads</span></a>
+
+is used to define this preprocessor symbol.
+Note that the minimum allowable value for
+
+<code><i><font color="black"><span style='white-space: nowrap'>cppad_max_num_threads</span></font></i></code>
+ is 4; i.e., you can only
+get smaller values for <code><font color="blue">CPPAD_MAX_NUM_THREADS</font></code> by
+defining it before including the CppAD header files.
+
+<br>
+<br>
+<b><big><a name="parallel_setup" id="parallel_setup">parallel_setup</a></big></b>
+<br>
+Using any of the following routines in a multi-threading environment
+requires that <a href="ta_parallel_setup.htm" target="_top"><span style='white-space: nowrap'>thread_alloc::parallel_setup</span></a>
+
+has been completed:
+<a href="cppad_vector.htm#Memory and Parallel Mode" target="_top"><span style='white-space: nowrap'>CppAD::vector</span></a>
+,
+<a href="checksimplevector.htm#Parallel Mode" target="_top"><span style='white-space: nowrap'>CheckSimpleVector</span></a>
+,
+<a href="checknumerictype.htm#Parallel Mode" target="_top"><span style='white-space: nowrap'>CheckNumericType</span></a>
+,
+<a href="parallel_ad.htm" target="_top"><span style='white-space: nowrap'>parallel_ad</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="hold_memory" id="hold_memory">hold_memory</a></big></b>
+<br>
+Memory allocation should be much faster after calling
+<code><font color="blue">hold_memory</font></code> with
+<a href="ta_hold_memory.htm#value" target="_top"><span style='white-space: nowrap'>value</span></a>
+ equal to true.
+This may even be true if there is only one thread.
+
+<br>
+<br>
+<b><big><a name="Parallel AD" id="Parallel AD">Parallel AD</a></big></b>
+<br>
+One must first call
+<a href="ta_parallel_setup.htm" target="_top"><span style='white-space: nowrap'>thread_alloc::parallel_setup</span></a>
+
+and then call <a href="parallel_ad.htm" target="_top"><span style='white-space: nowrap'>parallel_ad</span></a>
+ before using <code><font color="blue">AD</font></code> types
+in <a href="ta_in_parallel.htm" target="_top"><span style='white-space: nowrap'>parallel</span></a>
+ execution mode.
+
+<br>
+<br>
+<b><big><a name="Initialization" id="Initialization">Initialization</a></big></b>
+<br>
+The following routines must be called at least once before being used
+in parallel mode:
+<a href="checksimplevector.htm#Parallel Mode" target="_top"><span style='white-space: nowrap'>CheckSimpleVector</span></a>
+,
+<a href="checknumerictype.htm#Parallel Mode" target="_top"><span style='white-space: nowrap'>CheckNumericType</span></a>
+,
+<a href="discrete.htm#Parallel Mode" target="_top"><span style='white-space: nowrap'>discrete&nbsp;functions</span></a>
+,
+<a href="rosen34.htm#Parallel Mode" target="_top"><span style='white-space: nowrap'>Rosen34</span></a>
+,
+<a href="runge45.htm#Parallel Mode" target="_top"><span style='white-space: nowrap'>Runge45</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="Same Thread" id="Same Thread">Same Thread</a></big></b>
+<br>
+Some operations must be preformed by the same thread:
+<a href="funconstruct.htm#Parallel Mode" target="_top"><span style='white-space: nowrap'>ADFun</span></a>
+,
+<a href="independent.htm" target="_top"><span style='white-space: nowrap'>Independent</span></a>
+, <a href="dependent.htm" target="_top"><span style='white-space: nowrap'>Dependent</span></a>
+.
+
+
+<br>
+<br>
+<b><big><a name="Parallel Prohibited" id="Parallel Prohibited">Parallel Prohibited</a></big></b>
+<br>
+The following routine cannot be called in parallel mode:
+<a href="errorhandler.htm#Constructor.Parallel Mode" target="_top"><span style='white-space: nowrap'>ErrorHandler&nbsp;constructor</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="Contents" id="Contents">Contents</a></big></b>
+<br>
+<table>
+<tr><td><a href="parallel_ad.htm" target="_top">parallel_ad</a></td><td>Enable&nbsp;AD&nbsp;Calculations&nbsp;During&nbsp;Parallel&nbsp;Mode</td></tr><tr><td><a href="thread_test.cpp.htm" target="_top">thread_test.cpp</a></td><td>Run&nbsp;Multi-Threading&nbsp;Examples&nbsp;and&nbsp;Speed&nbsp;Tests</td></tr></table>
+<hr>Input File: omh/multi_thread.omh
+
+</body>
+</html>

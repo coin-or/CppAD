@@ -1,0 +1,178 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>Speed Test for Both Simple and Fast Representations</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Speed Test for Both Simple and Fast Representations">
+<meta name="keywords" id="keywords" content=" speed test both simple fast representations ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_ipopt_ode_speed.cpp_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://coin-or.github.io/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="ipopt_nlp_ode_check.cpp.htm" target="_top">Prev</a>
+</td><td><a href="old_atomic.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>Appendix</option>
+<option>deprecated</option>
+<option>cppad_ipopt_nlp</option>
+<option>ipopt_ode_speed.cpp</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>Appendix-&gt;</option>
+<option>Faq</option>
+<option>directory</option>
+<option>Theory</option>
+<option>glossary</option>
+<option>Bib</option>
+<option>wish_list</option>
+<option>whats_new</option>
+<option>deprecated</option>
+<option>compare_c</option>
+<option>numeric_ad</option>
+<option>addon</option>
+<option>License</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>deprecated-&gt;</option>
+<option>include_deprecated</option>
+<option>FunDeprecated</option>
+<option>CompareChange</option>
+<option>omp_max_thread</option>
+<option>TrackNewDel</option>
+<option>omp_alloc</option>
+<option>memory_leak</option>
+<option>epsilon</option>
+<option>test_vector</option>
+<option>cppad_ipopt_nlp</option>
+<option>old_atomic</option>
+<option>zdouble</option>
+<option>autotools</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>cppad_ipopt_nlp-&gt;</option>
+<option>ipopt_nlp_get_started.cpp</option>
+<option>ipopt_nlp_ode</option>
+<option>ipopt_ode_speed.cpp</option>
+</select>
+</td>
+<td>ipopt_ode_speed.cpp</td>
+<td>Headings</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>Speed Test for Both Simple and Fast Representations</big></big></b></center>
+<code><font color="blue"><pre><tt><b><font color="#000080"># include</font></b> <font color="#FF0000">"../example/ode_run.hpp"</font>
+<b><font color="#000080"># include</font></b> <font color="#FF0000">"../example/ode_simple.hpp"</font>
+<b><font color="#000080"># include</font></b> <font color="#FF0000">"../example/ode_fast.hpp"</font>
+<b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cassert&gt;</font>
+<b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cstring&gt;</font>
+
+<b><font color="#000080"># if</font></b> CPPAD_HAS_GETTIMEOFDAY <font color="#990000">&amp;</font> CPPAD_NO_MICROSOFT
+<b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;sys/time.h&gt;</font>
+<b><font color="#000080"># else</font></b>
+<b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;ctime&gt;</font>
+<b><font color="#000080"># endif</font></b>
+
+<b><font color="#0000FF">namespace</font></b> <font color="#FF0000">{</font>
+     <font color="#009900">double</font> <b><font color="#000000">current_second</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
+     <font color="#FF0000">{</font>
+<b><font color="#000080"># if</font></b> CPPAD_HAS_GETTIMEOFDAY <font color="#990000">&amp;</font> CPPAD_NOT_MICOROSOFT
+          <b><font color="#0000FF">struct</font></b> <font color="#008080">timeval</font> value<font color="#990000">;</font>
+          <b><font color="#000000">gettimeofday</font></b><font color="#990000">(&amp;</font>value<font color="#990000">,</font> <font color="#993399">0</font><font color="#990000">);</font>
+          <b><font color="#0000FF">return</font></b> <font color="#009900">double</font><font color="#990000">(</font>value<font color="#990000">.</font>tv_sec<font color="#990000">)</font> <font color="#990000">+</font> <font color="#009900">double</font><font color="#990000">(</font>value<font color="#990000">.</font>tv_usec<font color="#990000">)</font> <font color="#990000">*</font> <font color="#993399">1e-6</font><font color="#990000">;</font>
+<b><font color="#000080"># else</font></b>
+          <b><font color="#0000FF">return</font></b> <font color="#990000">(</font><font color="#009900">double</font><font color="#990000">)</font> <b><font color="#000000">clock</font></b><font color="#990000">()</font> <font color="#990000">/</font> <font color="#990000">(</font><font color="#009900">double</font><font color="#990000">)</font> CLOCKS_PER_SEC<font color="#990000">;</font>
+<b><font color="#000080"># endif</font></b>
+     <font color="#FF0000">}</font>
+<font color="#FF0000">}</font>
+
+<font color="#009900">double</font> <b><font color="#000000">ode_speed</font></b><font color="#990000">(</font><b><font color="#0000FF">const</font></b> <font color="#009900">char</font><font color="#990000">*</font> name<font color="#990000">,</font> size_t<font color="#990000">&amp;</font> count<font color="#990000">)</font>
+<font color="#FF0000">{</font>
+     <i><font color="#9A1900">// determine simple and retape flags</font></i>
+     <font color="#009900">bool</font> simple <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">,</font> retape <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
+     <b><font color="#0000FF">if</font></b><font color="#990000">(</font> std<font color="#990000">::</font><b><font color="#000000">strcmp</font></b><font color="#990000">(</font>name<font color="#990000">,</font> <font color="#FF0000">"simple_retape_no"</font><font color="#990000">)</font> <font color="#990000">==</font> <font color="#993399">0</font> <font color="#990000">)</font>
+     <font color="#FF0000">{</font>    simple <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font> retape <font color="#990000">=</font> <b><font color="#0000FF">false</font></b><font color="#990000">;</font> <font color="#FF0000">}</font>
+     <b><font color="#0000FF">else</font></b> <b><font color="#0000FF">if</font></b><font color="#990000">(</font> std<font color="#990000">::</font><b><font color="#000000">strcmp</font></b><font color="#990000">(</font>name<font color="#990000">,</font> <font color="#FF0000">"simple_retape_yes"</font><font color="#990000">)</font> <font color="#990000">==</font> <font color="#993399">0</font> <font color="#990000">)</font>
+     <font color="#FF0000">{</font>    simple <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font> retape <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font> <font color="#FF0000">}</font>
+     <b><font color="#0000FF">else</font></b> <b><font color="#0000FF">if</font></b><font color="#990000">(</font> std<font color="#990000">::</font><b><font color="#000000">strcmp</font></b><font color="#990000">(</font>name<font color="#990000">,</font> <font color="#FF0000">"fast_retape_no"</font><font color="#990000">)</font> <font color="#990000">==</font> <font color="#993399">0</font> <font color="#990000">)</font>
+     <font color="#FF0000">{</font>    simple <font color="#990000">=</font> <b><font color="#0000FF">false</font></b><font color="#990000">;</font> retape <font color="#990000">=</font> <b><font color="#0000FF">false</font></b><font color="#990000">;</font> <font color="#FF0000">}</font>
+     <b><font color="#0000FF">else</font></b> <b><font color="#0000FF">if</font></b><font color="#990000">(</font> std<font color="#990000">::</font><b><font color="#000000">strcmp</font></b><font color="#990000">(</font>name<font color="#990000">,</font> <font color="#FF0000">"fast_retape_yes"</font><font color="#990000">)</font> <font color="#990000">==</font> <font color="#993399">0</font> <font color="#990000">)</font>
+     <font color="#FF0000">{</font>    simple <font color="#990000">=</font> <b><font color="#0000FF">false</font></b><font color="#990000">;</font> retape <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font> <font color="#FF0000">}</font>
+     <b><font color="#0000FF">else</font></b> <b><font color="#000000">assert</font></b><font color="#990000">(</font><b><font color="#0000FF">false</font></b><font color="#990000">);</font>
+
+     <font color="#008080">size_t</font> i<font color="#990000">;</font>
+        <font color="#009900">double</font> s0<font color="#990000">,</font> s1<font color="#990000">;</font>
+     <font color="#008080">size_t</font>  c0<font color="#990000">,</font> c1<font color="#990000">;</font>
+
+     <i><font color="#9A1900">// solution vector</font></i>
+     <font color="#008080">NumberVector</font> x<font color="#990000">;</font>
+
+     <i><font color="#9A1900">// number of time grid intervals between measurement values</font></i>
+     <font color="#008080">SizeVector</font> <b><font color="#000000">N</font></b><font color="#990000">(</font>Nz <font color="#990000">+</font> <font color="#993399">1</font><font color="#990000">);</font>
+     N<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
+     <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font> i <font color="#990000">&lt;=</font> Nz<font color="#990000">;</font> i<font color="#990000">++)</font>
+     <font color="#FF0000">{</font>    N<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">10</font><font color="#990000">;</font>
+          <i><font color="#9A1900">// n   += N[i] * Ny;</font></i>
+     <font color="#FF0000">}</font>
+     <i><font color="#9A1900">// n += Na;</font></i>
+
+     s0              <font color="#990000">=</font> <b><font color="#000000">current_second</font></b><font color="#990000">();</font>
+     c0              <font color="#990000">=</font> <b><font color="#000000">count_eval_r</font></b><font color="#990000">();</font>
+     <b><font color="#0000FF">if</font></b><font color="#990000">(</font> simple <font color="#990000">)</font>
+          ipopt_ode_case<font color="#990000">&lt;</font>FG_simple<font color="#990000">&gt;(</font>retape<font color="#990000">,</font> N<font color="#990000">,</font> x<font color="#990000">);</font>
+     <b><font color="#0000FF">else</font></b> ipopt_ode_case<font color="#990000">&lt;</font>FG_fast<font color="#990000">&gt;(</font>retape<font color="#990000">,</font> N<font color="#990000">,</font> x<font color="#990000">);</font>
+     s1              <font color="#990000">=</font> <b><font color="#000000">current_second</font></b><font color="#990000">();</font>
+     c1              <font color="#990000">=</font> <b><font color="#000000">count_eval_r</font></b><font color="#990000">();</font>
+     count           <font color="#990000">=</font> c1 <font color="#990000">-</font> c0 <font color="#990000">-</font> <font color="#993399">1</font><font color="#990000">;</font>
+     <b><font color="#0000FF">return</font></b> s1 <font color="#990000">-</font> s0<font color="#990000">;</font>
+<font color="#FF0000">}</font></tt></pre>
+</font></code>
+<hr>Input File: cppad_ipopt/speed/ode_speed.cpp
+
+</body>
+</html>

@@ -1,0 +1,603 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>An ODE Inverse Problem Example</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="An ODE Inverse Problem Example">
+<meta name="keywords" id="keywords" content=" ode inverse problem example notation forward measurements simulation analytic solution parameter values simulated measurement trapezoidal approximation time grid black box method two levels iteration derivatives simultaneous source ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_ipopt_nlp_ode_problem_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://coin-or.github.io/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="ipopt_nlp_ode.htm" target="_top">Prev</a>
+</td><td><a href="ipopt_nlp_ode_problem.hpp.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>Appendix</option>
+<option>deprecated</option>
+<option>cppad_ipopt_nlp</option>
+<option>ipopt_nlp_ode</option>
+<option>ipopt_nlp_ode_problem</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>deprecated-&gt;</option>
+<option>include_deprecated</option>
+<option>FunDeprecated</option>
+<option>CompareChange</option>
+<option>omp_max_thread</option>
+<option>TrackNewDel</option>
+<option>omp_alloc</option>
+<option>memory_leak</option>
+<option>epsilon</option>
+<option>test_vector</option>
+<option>cppad_ipopt_nlp</option>
+<option>old_atomic</option>
+<option>zdouble</option>
+<option>autotools</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>cppad_ipopt_nlp-&gt;</option>
+<option>ipopt_nlp_get_started.cpp</option>
+<option>ipopt_nlp_ode</option>
+<option>ipopt_ode_speed.cpp</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>ipopt_nlp_ode-&gt;</option>
+<option>ipopt_nlp_ode_problem</option>
+<option>ipopt_nlp_ode_simple</option>
+<option>ipopt_nlp_ode_fast</option>
+<option>ipopt_nlp_ode_run.hpp</option>
+<option>ipopt_nlp_ode_check.cpp</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down0(this)'>
+<option>ipopt_nlp_ode_problem-&gt;</option>
+<option>ipopt_nlp_ode_problem.hpp</option>
+</select>
+</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Notation</option>
+<option>Forward Problem</option>
+<option>Measurements</option>
+<option>---..Simulation Analytic Solution</option>
+<option>---..Simulation Parameter Values</option>
+<option>---..Simulated Measurement Values</option>
+<option>Inverse Problem</option>
+<option>Trapezoidal Approximation</option>
+<option>---..Trapezoidal Time Grid</option>
+<option>Black Box Method</option>
+<option>---..Two levels of Iteration</option>
+<option>---..Derivatives</option>
+<option>Simultaneous Method</option>
+<option>Source</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>An ODE Inverse Problem Example</big></big></b></center>
+<br>
+<b><big><a name="Notation" id="Notation">Notation</a></big></b>
+<br>
+The table below contains
+the name of a variable,
+the meaning of the variable value,
+and the value for this particular example.
+If the value is not specified in the table below,
+the corresponding value in <a href="ipopt_nlp_ode_problem.hpp.htm" target="_top"><span style='white-space: nowrap'>ipopt_nlp_ode_problem.hpp</span></a>
+
+can be changed and the example should still run
+(with no other changes).
+<table><tr><td align='left'  valign='top'>
+
+<b>Name</b>  </td><td align='left'  valign='top'>
+ <b>Meaning</b> </td><td align='left'  valign='top'>
+ <b>Value</b>
+</td></tr><tr><td align='left'  valign='top'>
+
+<small>@(@
+Na
+@)@</small>   </td><td align='left'  valign='top'>
+ number of parameters to fit </td><td align='left'  valign='top'>
+ 3
+</td></tr><tr><td align='left'  valign='top'>
+
+<small>@(@
+Ny
+@)@</small>   </td><td align='left'  valign='top'>
+ number components in ODE    </td><td align='left'  valign='top'>
+ 2
+</td></tr><tr><td align='left'  valign='top'>
+
+<small>@(@
+Nz
+@)@</small>   </td><td align='left'  valign='top'>
+ number of measurements      </td><td align='left'  valign='top'>
+ 4
+</td></tr><tr><td align='left'  valign='top'>
+
+<small>@(@
+N(i)
+@)@</small> </td><td align='left'  valign='top'>
+
+number of grid points between <code><i>i-1</i></code>-th and <code><i>i</i></code>-th measurement
+</td></tr><tr><td align='left'  valign='top'>
+
+<small>@(@
+S(i)
+@)@</small> </td><td align='left'  valign='top'>
+
+number of grid points up to an including the <code><i>i</i></code>-th measurement
+</td></tr>
+</table>
+<br>
+<b><big><a name="Forward Problem" id="Forward Problem">Forward Problem</a></big></b>
+<br>
+We consider the following ordinary differential equation:
+<small>@[@
+
+\begin{array}{rcl}
+	\partial_t y_0 ( t , a ) & = & - a_1 * y_0 (t, a )
+	\\
+	\partial_t y_1 (t , a ) & = & + a_1 * y_0 (t, a ) - a_2 * y_1 (t, a )
+\end{array}
+
+@]@</small>
+with the initial conditions
+<small>@[@
+
+y_0 (0 , a) = F(a) = \left( \begin{array}{c} a_0 \\ 0 \end{array} \right)
+
+@]@</small>
+where <small>@(@
+Na
+@)@</small> is the number of parameters,
+<small>@(@
+a \in \B{R}^{Na}
+@)@</small> is an unknown parameter vector.
+The function and <small>@(@
+F : \B{R}^{Na} \rightarrow \B{R}^{Ny}
+@)@</small>
+is defined by the equation above
+where <small>@(@
+Ny
+@)@</small> is the number of components in <small>@(@
+y(t, a)
+@)@</small>.
+Our forward problem is stated as follows: Given <small>@(@
+a \in \B{R}^{Na}
+@)@</small>
+determine the value of <small>@(@
+y ( t , a )
+@)@</small>, for <small>@(@
+t \in R
+@)@</small>, that
+solves the initial value problem above.
+
+<br>
+<br>
+<b><big><a name="Measurements" id="Measurements">Measurements</a></big></b>
+<br>
+We use <small>@(@
+Nz
+@)@</small> to denote the number of measurements.
+Suppose we are also given a measurement vector <small>@(@
+z \in \B{R}^{Nz}
+@)@</small>
+and for <small>@(@
+i = 1, \ldots, Nz
+@)@</small>,
+we model <small>@(@
+z_i
+@)@</small> by
+<small>@[@
+
+	z_i = y_1 ( s_i , a) + e_i
+
+@]@</small>
+where <small>@(@
+s_i \in \B{R}
+@)@</small> is the time for the <code><i>i</i></code>-th measurement,
+<small>@(@
+e_i \sim {\bf N} (0 , \sigma^2 )
+@)@</small> is the corresponding noise,
+and <small>@(@
+\sigma \in \B{R}_+
+@)@</small> is the corresponding standard deviation.
+
+<br>
+<br>
+<b><a name="Measurements.Simulation Analytic Solution" id="Measurements.Simulation Analytic Solution">Simulation Analytic Solution</a></b>
+<br>
+The following analytic solution to the forward problem is used
+to simulate a data set:
+<small>@[@
+
+\begin{array}{rcl}
+	y_0 (t , a) & = & a_0 * \exp( - a_1 * t )
+	\\
+	y_1 (t , a) & = &
+	a_0 * a_1 * \frac{\exp( - a_2 * t ) - \exp( -a_1 * t )}{ a_1 - a_2 }
+\end{array}
+
+@]@</small>
+
+<br>
+<br>
+<b><a name="Measurements.Simulation Parameter Values" id="Measurements.Simulation Parameter Values">Simulation Parameter Values</a></b>
+
+<table><tr><td align='left'  valign='top'>
+
+<small>@(@
+\bar{a}_0 = 1
+@)@</small> <code><span style='white-space: nowrap'>&nbsp;</span></code> </td><td align='left'  valign='top'>
+
+	initial value of <small>@(@
+y_0 (t, a)
+@)@</small>
+</td></tr><tr><td align='left'  valign='top'>
+
+<small>@(@
+\bar{a}_1 = 2
+@)@</small> <code><span style='white-space: nowrap'>&nbsp;</span></code> </td><td align='left'  valign='top'>
+
+	transfer rate from compartment zero to compartment one
+</td></tr><tr><td align='left'  valign='top'>
+
+<small>@(@
+\bar{a}_2 = 1
+@)@</small> <code><span style='white-space: nowrap'>&nbsp;</span></code> </td><td align='left'  valign='top'>
+
+	transfer rate from compartment one to outside world
+</td></tr><tr><td align='left'  valign='top'>
+
+<small>@(@
+\sigma = 0
+@)@</small> <code><span style='white-space: nowrap'>&nbsp;</span></code> </td><td align='left'  valign='top'>
+
+	standard deviation of measurement noise
+</td></tr><tr><td align='left'  valign='top'>
+
+<small>@(@
+e_i = 0
+@)@</small> <code><span style='white-space: nowrap'>&nbsp;</span></code> </td><td align='left'  valign='top'>
+
+	simulated measurement noise, <small>@(@
+i = 1 , \ldots , Nz
+@)@</small>
+</td></tr><tr><td align='left'  valign='top'>
+
+<small>@(@
+s_i = i * .5
+@)@</small> <code><span style='white-space: nowrap'>&nbsp;</span></code> </td><td align='left'  valign='top'>
+
+	time corresponding to the <code><i>i</i></code>-th measurement,
+	<small>@(@
+i = 1 , \ldots , Nz
+@)@</small>
+</td></tr>
+</table>
+<br>
+<b><a name="Measurements.Simulated Measurement Values" id="Measurements.Simulated Measurement Values">Simulated Measurement Values</a></b>
+<br>
+The simulated measurement values are given by the equation
+<small>@[@
+
+\begin{array}{rcl}
+z_i
+& = &  e_i + y_1 ( s_i , \bar{a} )
+\\
+& = &
+e_i + \bar{a}_0 * \bar{a}_1 *
+	\frac{\exp( - \bar{a}_2 * s_i ) - \exp( -\bar{a}_1 * s_i )}
+		{ \bar{a}_1 - \bar{a}_2 }
+\end{array}
+
+@]@</small>
+for <small>@(@
+k = 1, \ldots , Nz
+@)@</small>.
+
+
+<br>
+<br>
+<b><big><a name="Inverse Problem" id="Inverse Problem">Inverse Problem</a></big></b>
+<br>
+The maximum likelihood estimate for <small>@(@
+a
+@)@</small> given <small>@(@
+z
+@)@</small>
+solves the following inverse problem
+<small>@[@
+
+\begin{array}{rcl}
+{\rm minimize} \;
+	& \sum_{i=1}^{Nz} H_i [ y( s_i , a ) , a ]
+	& \;{\rm w.r.t} \; a \in \B{R}^{Na}
+\end{array}
+
+@]@</small>
+where the functions
+<small>@(@
+H_i : \B{R}^{Ny} \times \B{R}^{Na} \rightarrow \B{R}
+@)@</small> is
+defined by
+<small>@[@
+
+	H_i (y, a) = ( z_i - y_1 )^2
+
+@]@</small>
+
+<br>
+<br>
+<b><big><a name="Trapezoidal Approximation" id="Trapezoidal Approximation">Trapezoidal Approximation</a></big></b>
+<br>
+This example uses a trapezoidal approximation to solve the ODE.
+This approximation procedures starts with
+<small>@[@
+
+	y^0 = y(0, a) = \left( \begin{array}{c} a_0 \\ 0 \end{array} \right)
+
+@]@</small>
+Given a time grid <small>@(@
+\{ t_i \}
+@)@</small> and
+an approximate value <small>@(@
+y^{i-1}
+@)@</small> for <small>@(@
+y ( t_{i-1} , a )
+@)@</small>,
+the a trapezoidal method approximates <small>@(@
+y ( t_i , a )
+@)@</small>
+(denoted by <small>@(@
+y^i
+@)@</small> ) by solving the equation
+<small>@[@
+
+y^i  =  y^{i-1} +
+\left[ G( y^i , a ) + G( y^{i-1} , a ) \right] * \frac{t_i - t_{i-1} }{ 2 }
+
+@]@</small>
+where <small>@(@
+G : \B{R}^{Ny} \times \B{R}^{Na} \rightarrow \B{R}^{Ny}
+@)@</small> is the
+function representing this ODE; i.e.
+<small>@[@
+
+	G(y, a) = \left(  \begin{array}{c}
+		- a_1 * y_0
+		\\
+		+ a_1 * y_0 - a_2 * y_1
+	\end{array} \right)
+
+@]@</small>
+This <small>@(@
+G(y, a)
+@)@</small> is linear with respect to <small>@(@
+y
+@)@</small>, hence
+the implicit equation defining <small>@(@
+y^i
+@)@</small> can be solved
+inverting the a set of linear equations.
+In the general case,
+where <small>@(@
+G(y, a)
+@)@</small> is non-linear with respect to <small>@(@
+y
+@)@</small>,
+an iterative procedure is used to calculate <small>@(@
+y^i
+@)@</small>
+from <small>@(@
+y^{i-1}
+@)@</small>.
+
+<br>
+<br>
+<b><a name="Trapezoidal Approximation.Trapezoidal Time Grid" id="Trapezoidal Approximation.Trapezoidal Time Grid">Trapezoidal Time Grid</a></b>
+<br>
+The discrete time grid, used for the trapezoidal approximation, is
+denoted by <small>@(@
+\{ t_i \}
+@)@</small> which is defined by:
+<small>@(@
+t_0 = 0
+@)@</small> and
+for <small>@(@
+i = 1 , \ldots , Nz
+@)@</small> and for <small>@(@
+j = 1 , \ldots , N(i)
+@)@</small>,
+<small>@[@
+
+\begin{array}{rcl}
+	\Delta t_i & = & ( s_i - s_{i-1} ) / N(i)
+	\\
+	t_{S(i-1)+j} & = & s_{i-1} + \Delta t_i * j
+\end{array}
+
+@]@</small>
+where <small>@(@
+s_0 = 0
+@)@</small>,
+<small>@(@
+N(i)
+@)@</small> is the number of time grid points between
+<small>@(@
+s_{i-1}
+@)@</small> and <small>@(@
+s_i
+@)@</small>,
+<small>@(@
+S(0) = 0
+@)@</small>, and
+<small>@(@
+S(i) = N(1) + \ldots + N(i)
+@)@</small>.
+Note that for <small>@(@
+i = 0 , \ldots , S(Nz)
+@)@</small>,
+<small>@(@
+y^i
+@)@</small> denotes our approximation for <small>@(@
+y( t_i , a )
+@)@</small>
+and <small>@(@
+t_{S(i)}
+@)@</small> is equal to <small>@(@
+s_i
+@)@</small>.
+
+<br>
+<br>
+<b><big><a name="Black Box Method" id="Black Box Method">Black Box Method</a></big></b>
+<br>
+A common approach to an inverse problem is to treat the forward problem
+as a black box (that we do not look inside of or try to understand).
+In this approach, for each value of the parameter vector <small>@(@
+a
+@)@</small>
+one uses the
+<a href="ipopt_nlp_ode_problem.htm#Trapezoidal Approximation" target="_top"><span style='white-space: nowrap'>trapezoidal&nbsp;approximation</span></a>
+
+(on a finer grid that <small>@(@
+\{ s_i \}
+@)@</small>)
+to solve for <small>@(@
+y_1 ( s_i , a )
+@)@</small> for <small>@(@
+i = 1 , \ldots , Nz
+@)@</small>.
+
+<br>
+<br>
+<b><a name="Black Box Method.Two levels of Iteration" id="Black Box Method.Two levels of Iteration">Two levels of Iteration</a></b>
+<br>
+As noted above, the trapezoidal approximation
+often requires an iterative procedure.
+Thus, in this approach, there are two levels of iterations,
+one with respect to the parameter values during the minimization
+and the other for solving the trapezoidal approximation equation.
+
+<br>
+<br>
+<b><a name="Black Box Method.Derivatives" id="Black Box Method.Derivatives">Derivatives</a></b>
+<br>
+In addition, in the black box approach, differentiating the ODE solution
+often involves differentiating an iterative procedure.
+Direct application of AD to compute these derivatives
+requires a huge amount of memory and calculations to differentiate the
+iterative procedure.
+(There are special techniques for applying AD to the solutions of iterative
+procedures, but that is outside the scope of this presentation).
+
+<br>
+<br>
+<b><big><a name="Simultaneous Method" id="Simultaneous Method">Simultaneous Method</a></big></b>
+<br>
+The simultaneous forward and inverse method
+uses constraints to include the solution of
+the forward problem in the inverse problem.
+To be specific for our example,
+<small>@[@
+
+\begin{array}{rcl}
+{\rm minimize}
+& \sum_{i=1}^{Nz} H_i ( y^{N(i)} , a )
+& \; {\rm w.r.t} \; y^1 \in \B{R}^{Ny} , \ldots , y^{S(Nz)} \in \B{R}^{Ny} ,
+  \; a \in \B{R}^{Na}
+\\
+{\rm subject \; to}
+	& y^j  =  y^{j-1} +
+\left[ G( y^{j-1} , a ) + G( y^j , a ) \right] * \frac{ t_j - t_{j-1} }{ 2 }
+	& \; {\rm for} \; j = 1 , \ldots , S(Nz)
+\\
+	& y^0 = F(a)
+\end{array}
+
+@]@</small>
+where for <small>@(@
+i = 1, \ldots , Nz
+@)@</small>,
+<small>@(@
+N(i)
+@)@</small> is the number of time intervals between
+<small>@(@
+s_{i-1}
+@)@</small> and <small>@(@
+s_i
+@)@</small> (with <small>@(@
+s_0 = 0
+@)@</small>)
+and <small>@(@
+S(i) = N(1) + \ldots + N(i)
+@)@</small>.
+Note that, in this form, the iterations of the optimization procedure
+also solve the forward problem equations.
+In addition, the functions that need to be differentiated
+do not involve an iterative procedure.
+
+
+<br>
+<br>
+<b><big><a name="Source" id="Source">Source</a></big></b>
+<br>
+The file <a href="ipopt_nlp_ode_problem.hpp.htm" target="_top"><span style='white-space: nowrap'>ipopt_nlp_ode_problem.hpp</span></a>
+ contains
+source code that defines the example values and functions defined above.
+
+
+<hr>Input File: cppad_ipopt/example/ode2.omh
+
+</body>
+</html>

@@ -1,0 +1,1734 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>Changes and Additions to CppAD During 2011</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Changes and Additions to CppAD During 2011">
+<meta name="keywords" id="keywords" content=" changes additions to cppad during 2011 introduction 12-30 12-28 12-21 12-20 11-29 11-27 11-24 11-21 11-20 11-18 11-17 11-09 11-07 11-06 11-04 11-01 10-30 10-29 10-14 10-12 09-06 09-05 09-02 09-01 08-31 08-30 08-25 08-23 08-21 08-11 08-10 08-09 08-08 08-07 08-06 08-04 08-03 08-02 07-31 07-29 07-28 07-27 07-25 07-18 07-17 07-14 07-13 07-11 openmp/run.sh 07-10 07-09 07-07 06-23 06-21 06-18 05-29 05-28 05-26 05-22 05-11 05-03 04-29 04-20 04-19 03-19 03-11 03-05 02-22 02-19 02-17 02-15 02-09 02-06 02-02 02-01 01-19 01-16 01-09 ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_whats_new_11_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://coin-or.github.io/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="whats_new_12.htm" target="_top">Prev</a>
+</td><td><a href="whats_new_10.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>Appendix</option>
+<option>whats_new</option>
+<option>whats_new_11</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>CppAD-&gt;</option>
+<option>Install</option>
+<option>Introduction</option>
+<option>AD</option>
+<option>ADFun</option>
+<option>preprocessor</option>
+<option>multi_thread</option>
+<option>utility</option>
+<option>ipopt_solve</option>
+<option>Example</option>
+<option>speed</option>
+<option>Appendix</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>Appendix-&gt;</option>
+<option>Faq</option>
+<option>directory</option>
+<option>Theory</option>
+<option>glossary</option>
+<option>Bib</option>
+<option>wish_list</option>
+<option>whats_new</option>
+<option>deprecated</option>
+<option>compare_c</option>
+<option>numeric_ad</option>
+<option>addon</option>
+<option>License</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>whats_new-&gt;</option>
+<option>whats_new_17</option>
+<option>whats_new_16</option>
+<option>whats_new_15</option>
+<option>whats_new_14</option>
+<option>whats_new_13</option>
+<option>whats_new_12</option>
+<option>whats_new_11</option>
+<option>whats_new_10</option>
+<option>whats_new_09</option>
+<option>whats_new_08</option>
+<option>whats_new_07</option>
+<option>whats_new_06</option>
+<option>whats_new_05</option>
+<option>whats_new_04</option>
+<option>whats_new_03</option>
+</select>
+</td>
+<td>whats_new_11</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Introduction</option>
+<option>12-30</option>
+<option>12-28</option>
+<option>12-21</option>
+<option>12-20</option>
+<option>11-29</option>
+<option>11-27</option>
+<option>11-24</option>
+<option>11-21</option>
+<option>11-20</option>
+<option>11-18</option>
+<option>11-17</option>
+<option>11-09</option>
+<option>11-07</option>
+<option>11-06</option>
+<option>11-04</option>
+<option>11-01</option>
+<option>10-30</option>
+<option>10-29</option>
+<option>10-14</option>
+<option>10-12</option>
+<option>09-06</option>
+<option>09-05</option>
+<option>09-02</option>
+<option>09-01</option>
+<option>09-01.08-31</option>
+<option>09-01.08-30</option>
+<option>09-01.08-25</option>
+<option>09-01.08-23</option>
+<option>09-01.08-21</option>
+<option>08-11</option>
+<option>08-11.08-10</option>
+<option>08-11.08-09</option>
+<option>08-11.08-08</option>
+<option>08-11.08-07</option>
+<option>08-11.08-06</option>
+<option>08-11.08-04</option>
+<option>08-03</option>
+<option>08-02</option>
+<option>07-31</option>
+<option>07-29</option>
+<option>07-28</option>
+<option>07-27</option>
+<option>07-25</option>
+<option>07-18</option>
+<option>07-17</option>
+<option>07-14</option>
+<option>07-13</option>
+<option>07-11</option>
+<option>07-11.openmp/run.sh</option>
+<option>07-10</option>
+<option>07-09</option>
+<option>07-07</option>
+<option>06-23</option>
+<option>06-21</option>
+<option>06-18</option>
+<option>05-29</option>
+<option>05-28</option>
+<option>05-26</option>
+<option>05-22</option>
+<option>05-11</option>
+<option>05-03</option>
+<option>04-29</option>
+<option>04-20</option>
+<option>04-19</option>
+<option>03-19</option>
+<option>03-11</option>
+<option>03-05</option>
+<option>02-22</option>
+<option>02-19</option>
+<option>02-17</option>
+<option>02-15</option>
+<option>02-09</option>
+<option>02-06</option>
+<option>02-02</option>
+<option>02-01</option>
+<option>01-19</option>
+<option>01-16</option>
+<option>01-09</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@
+
+
+<center><b><big><big>Changes and Additions to CppAD During 2011</big></big></b></center>
+<br>
+<b><big><a name="Introduction" id="Introduction">Introduction</a></big></b>
+<br>
+This section contains a list of the changes to CppAD during 2011
+(in reverse order by date).
+The purpose of this section is to
+assist you in learning about changes between various versions of CppAD.
+
+<br>
+<br>
+<b><big><a name="12-30" id="12-30">12-30</a></big></b>
+
+<ol type="1"><li>
+There was a bug when using <a href="abs.htm" target="_top"><span style='white-space: nowrap'>abs</span></a>
+ with an <code><font color="blue">AD&lt; AD&lt;double&gt; &gt;</font></code>
+argument, whereby the corresponding <code><font color="blue">AD&lt;double&gt;</font></code> operation sequence
+depended on the value of the argument to the <code><font color="blue">abs</font></code> function.
+</li><li>
+
+Change the specifications for the derivative of the <a href="abs.htm" target="_top"><span style='white-space: nowrap'>abs</span></a>
+
+function to be the <a href="sign.htm" target="_top"><span style='white-space: nowrap'>sign</span></a>
+ function instead of a directional derivative.
+</li><li>
+
+Add the <a href="sign.htm" target="_top"><span style='white-space: nowrap'>sign</span></a>
+ function to the 
+<code><font color="blue"><span style='white-space: nowrap'>AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code>
+ list of
+available functions.
+In addition, add the
+<a href="base_std_math.htm#sign" target="_top"><span style='white-space: nowrap'>sign</span></a>
+ function to the list of
+<a href="base_require.htm" target="_top"><span style='white-space: nowrap'>base&nbsp;type&nbsp;requirements</span></a>
+.
+</li></ol>
+
+
+<br>
+<br>
+<b><big><a name="12-28" id="12-28">12-28</a></big></b>
+<br>
+The file <a href="time_test.htm#Include" target="_top"><span style='white-space: nowrap'>time_test.hpp</span></a>
+
+was not being included by <code><font color="blue">cppad/cppad.hpp</font></code>.
+This has been fixed.
+
+<br>
+<br>
+<b><big><a name="12-21" id="12-21">12-21</a></big></b>
+<br>
+The types
+<code><font color="blue">SizeVector</font></code>,
+<code><font color="blue">NumberVector</font></code>,
+<code><font color="blue">ADNumber</font></code>, and
+<code><font color="blue">ADVector</font></code>,
+were in the global namespace and this was causing warnings
+about the shadowing of these declarations.
+The
+<a href="cppad_ipopt_nlp.htm#cppad_ipopt namespace" target="_top"><span style='white-space: nowrap'>cppad_ipopt&nbsp;namespace</span></a>
+
+was created to avoid these problems.
+The simplest way to make old <a href="cppad_ipopt_nlp.htm" target="_top"><span style='white-space: nowrap'>cppad_ipopt_nlp</span></a>
+ code work with this
+change is to use the command
+<code><font color='blue'><pre style='display:inline'> 
+     using namespace cppad_ipopt;
+</pre></font></code>
+<br>
+<b><big><a name="12-20" id="12-20">12-20</a></big></b>
+
+<ol type="1"><li>
+Change <code><font color="blue">team_start</font></code> to <a href="team_thread.hpp.htm#team_create" target="_top"><span style='white-space: nowrap'>team_create</span></a>
+
+and <code><font color="blue">team_stop</font></code> to <a href="team_thread.hpp.htm#team_destroy" target="_top"><span style='white-space: nowrap'>team_destroy</span></a>
+.
+</li><li>
+
+Change <code><font color="blue">NDEBUG</font></code> mentions to include link to
+<a href="faq.htm#Speed.NDEBUG" target="_top"><span style='white-space: nowrap'>NDEBUG</span></a>
+.
+</li><li>
+
+Improve <a href="memory_leak.htm" target="_top"><span style='white-space: nowrap'>memory_leak</span></a>
+ documentation.
+</li></ol>
+
+
+<br>
+<br>
+<b><big><a name="11-29" id="11-29">11-29</a></big></b>
+<br>
+THe <a href="time_test.htm" target="_top"><span style='white-space: nowrap'>time_test</span></a>
+ routine was still executing the
+test at least twice, even if that was not necessary for the specified
+minimum time. This has been fixed.
+
+<br>
+<br>
+<b><big><a name="11-27" id="11-27">11-27</a></big></b>
+<br>
+Move <code><font color="blue">multi_thread.cpp</font></code> to <a href="thread_test.cpp.htm" target="_top"><span style='white-space: nowrap'>thread_test.cpp</span></a>
+
+and fix its <a href="thread_test.cpp.htm#Running Tests" target="_top"><span style='white-space: nowrap'>running</span></a>
+ instructions.
+
+<br>
+<br>
+<b><big><a name="11-24" id="11-24">11-24</a></big></b>
+<br>
+Create <a href="preprocessor.htm" target="_top"><span style='white-space: nowrap'>preprocessor</span></a>
+ section with pointers to all the
+preprocessor symbols that are in the CppAD API.
+
+<br>
+<br>
+<b><big><a name="11-21" id="11-21">11-21</a></big></b>
+<br>
+Separate <a href="autotools.htm#--with-testvector" target="_top"><span style='white-space: nowrap'>--with-boostvector</span></a>
+
+for <a href="autotools.htm#boost_dir" target="_top"><span style='white-space: nowrap'>boost_dir</span></a>
+.
+This enables one to specify 
+<code><i><font color="black"><span style='white-space: nowrap'>boost_dir</span></font></i></code>
+ for
+<a href="team_bthread.cpp.htm" target="_top"><span style='white-space: nowrap'>team_bthread.cpp</span></a>
+ with out using boost vectors.
+
+<br>
+<br>
+<b><big><a name="11-20" id="11-20">11-20</a></big></b>
+
+<ol type="1"><li>
+Move <code><font color="blue">sum_i_inv.cpp</font></code> to <a href="harmonic.cpp.htm" target="_top"><span style='white-space: nowrap'>harmonic.cpp</span></a>
+.
+</li><li>
+
+Include the date, time, CppAD version, and
+<a href="team_thread.hpp.htm#team_name" target="_top"><span style='white-space: nowrap'>team_name</span></a>
+ in the
+<a href="thread_test.cpp.htm" target="_top"><span style='white-space: nowrap'>thread_test.cpp</span></a>
+ output.
+</li></ol>
+
+
+<br>
+<br>
+<b><big><a name="11-18" id="11-18">11-18</a></big></b>
+
+<ol type="1"><li>
+The <a href="thread_test.cpp.htm" target="_top"><span style='white-space: nowrap'>thread_test.cpp</span></a>
+ program was truncating 
+<code><i><font color="black"><span style='white-space: nowrap'>test_time</span></font></i></code>
+
+to the nearest integer.
+This has been fixed.
+</li><li>
+
+The <a href="time_test.htm" target="_top"><span style='white-space: nowrap'>time_test</span></a>
+ routine has been made more efficient and now
+check for the case where only one execution of the test is necessary
+to achieve the desired 
+<code><i><font color="black"><span style='white-space: nowrap'>test_time</span></font></i></code>
+
+(it used to always run at least two).
+</li><li>
+
+The <code><font color="blue">sum_i_inv_time.cpp</font></code> and <a href="multi_newton.cpp.htm" target="_top"><span style='white-space: nowrap'>multi_newton.cpp</span></a>
+
+routines were calling the test an extra time at the end to check for
+correctness.
+The results of the last test are now cached and used for the correctness
+test so that an extra call is not necessary (to make the tests run faster
+when only a few repetitions are necessary).
+</li></ol>
+
+
+
+<br>
+<br>
+<b><big><a name="11-17" id="11-17">11-17</a></big></b>
+
+<ol type="1"><li>
+Create another speed testing routine <a href="time_test.htm" target="_top"><span style='white-space: nowrap'>time_test</span></a>
+ which is
+like <a href="speed_test.htm" target="_top"><span style='white-space: nowrap'>speed_test</span></a>
+ but it returns the time instead of rate
+and as a <code><font color="blue">double</font></code> instead of a <code><font color="blue">size_t</font></code>.
+The use it for the timing tests in
+<code><font color="blue">sum_i_inv_time.cpp</font></code> and <a href="multi_newton_time.htm" target="_top"><span style='white-space: nowrap'>multi_newton_time</span></a>
+.
+</li><li>
+
+Add 
+<code><i><font color="black"><span style='white-space: nowrap'>test_time</span></font></i></code>
+ as a command line argument
+to the multi-threading <code><font color="blue">sum_i_inv</font></code>
+and <a href="thread_test.cpp.htm#multi_newton" target="_top"><span style='white-space: nowrap'>multi_newton</span></a>
+
+timing tests.
+</li></ol>
+
+
+
+<br>
+<br>
+<b><big><a name="11-09" id="11-09">11-09</a></big></b>
+<br>
+Change <code><font color="blue">thread_team.hpp</font></code> to <a href="team_thread.hpp.htm" target="_top"><span style='white-space: nowrap'>team_thread.hpp</span></a>
+ and do
+the same for all other names that ended in <code><font color="blue">_team</font></code>; e.g.,
+<a href="team_openmp.cpp.htm" target="_top"><span style='white-space: nowrap'>team_openmp.cpp</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="11-07" id="11-07">11-07</a></big></b>
+<br>
+The users choice for <a href="test_vector.htm" target="_top"><span style='white-space: nowrap'>test_vector</span></a>
+ was not actually changing
+the tests that the user ran. This have been fixed.
+
+<br>
+<br>
+<b><big><a name="11-06" id="11-06">11-06</a></big></b>
+<br>
+Make all the output generated by <a href="multi_newton.cpp.htm" target="_top"><span style='white-space: nowrap'>multi_newton.cpp</span></a>
+ valid
+matlab and octave input so it is easy to plot the results.
+
+<br>
+<br>
+<b><big><a name="11-04" id="11-04">11-04</a></big></b>
+<br>
+Use thread specific data to simplify <a href="team_openmp.cpp.htm" target="_top"><span style='white-space: nowrap'>team_openmp.cpp</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="11-01" id="11-01">11-01</a></big></b>
+<br>
+Make <a href="team_bthread.cpp.htm" target="_top"><span style='white-space: nowrap'>team_bthread.cpp</span></a>
+ more similar to <a href="team_pthread.cpp.htm" target="_top"><span style='white-space: nowrap'>team_pthread.cpp</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="10-30" id="10-30">10-30</a></big></b>
+
+<ol type="1"><li>
+Reorganize and improve the <a href="multi_thread.htm" target="_top"><span style='white-space: nowrap'>multi_thread</span></a>
+ section and its subsections.
+</li><li>
+
+There was a bug in <a href="multi_newton.cpp.htm" target="_top"><span style='white-space: nowrap'>multi_newton.cpp</span></a>
+ that only showed up when
+the number of threads was greater than or equal 4.
+This has been fixed.
+In addition,
+<a href="multi_thread.htm#CPPAD_MAX_NUM_THREADS" target="_top"><span style='white-space: nowrap'>CPPAD_MAX_NUM_THREADS</span></a>
+
+was increased from 2 to 4 (to enable testing for this bug).
+</li><li>
+
+The accuracy expected in the <code><font color="blue"> sum_i_inv.cpp</font></code> results were failing
+when <code><font color="blue">mega_sum</font></code> was large.
+This check has been modified to include a correction for 
+<code><i><font color="black"><span style='white-space: nowrap'>mega_sum</span></font></i></code>
+.
+</li></ol>
+
+
+<br>
+<br>
+<b><big><a name="10-29" id="10-29">10-29</a></big></b>
+<br>
+The following changes were merged in from <code><font color="blue">branches/thread</font></code>:
+
+<ol type="1"><li>
+Move <code><font color="blue">openmp</font></code> to <code><font color="blue">example/multi_thread/openmp</font></code>.
+and create <code><font color="blue">example/multi_thread/bthread</font></code>, <code><font color="blue">multi_thread/pthread</font></code>
+with similar tests.
+</li><li>
+
+Put multi-threading common code in <code><font color="blue">multi_thread</font></code> directory
+and threading system specific code in 
+<code><font color="blue"><span style='white-space: nowrap'>example/multi_thread/</span></font><i><font color="black"><span style='white-space: nowrap'>threading</span></font></i></code>
+
+for 
+<code><i><font color="black"><span style='white-space: nowrap'>threading</span></font></i></code>
+ equal to <code><font color="blue">openmp</font></code>, <code><font color="blue">bthread</font></code>,
+and <code><font color="blue">pthread</font></code>.
+</li><li>
+
+Update the README file.
+</li><li>
+
+Remove the <code><font color="blue">bug/optimize.sh</font></code> file (no longer a bug).
+</li><li>
+
+Make <code><font color="blue">arc_tan.cpp</font></code>
+utility that can be used by multiple multi-threading tests.
+</li><li>
+
+Create <a href="team_thread.hpp.htm" target="_top"><span style='white-space: nowrap'>team_thread.hpp</span></a>
+ specifications,
+move OpenMP management to <a href="team_openmp.cpp.htm" target="_top"><span style='white-space: nowrap'>team_openmp.cpp</span></a>
+,
+Boost thread management to <a href="team_bthread.cpp.htm" target="_top"><span style='white-space: nowrap'>team_bthread.cpp</span></a>
+,
+and pthread management to <a href="team_pthread.cpp.htm" target="_top"><span style='white-space: nowrap'>team_pthread.cpp</span></a>
+.
+</li><li>
+
+All of the make files were modified so that the command
+<code><font color='blue'><pre style='display:inline'> 
+     make test
+</pre></font></code>
+would run the tests for the current directory.
+</li><li>
+
+Extend the multi-threading speed tests
+<code><font color="blue">sum_i_inv.cpp</font></code> and <a href="multi_newton.cpp.htm" target="_top"><span style='white-space: nowrap'>multi_newton.cpp</span></a>
+ so they run
+using Boost threads and pthreads (as well as OpenMP threads).
+</li></ol>
+
+
+<br>
+<br>
+<b><big><a name="10-14" id="10-14">10-14</a></big></b>
+<br>
+Fix some compiler warnings about shadowed variables that were
+detected by <code><font color="blue">g++</font></code> version <code><font color="blue">4.6.1 20110908</font></code>.
+
+<br>
+<br>
+<b><big><a name="10-12" id="10-12">10-12</a></big></b>
+
+<ol type="1"><li>
+The MAC version of the <code><font color="blue">pthread</font></code> library does not include the
+<code><font color="blue">pthread_barrier_wait</font></code> function; i.e., is not compliant with
+the IEEE Std 1003.1, 2004 Edition for <code><font color="blue">pthread</font></code>.
+This caused the <code><font color="blue">pthread_simple_ad.cpp</font></code> to fail to compile on the MAC.
+This has been fixed by not compiling the <code><font color="blue">pthread</font></code> examples
+unless <code><font color="blue">pthread_barrier_wait</font></code> is present.
+</li><li>
+
+The <a href="cppad_ipopt_nlp.htm" target="_top"><span style='white-space: nowrap'>cppad_ipopt_nlp</span></a>
+ routine has been changed to
+<a href="optimize.htm" target="_top"><span style='white-space: nowrap'>optimize</span></a>
+ the functions <small>@(@
+r_k (u)
+@)@</small> such that
+
+<code><font color="blue"><span style='white-space: nowrap'>retape(</span></font><i><font color="black"><span style='white-space: nowrap'>k</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+ is false.
+</li></ol>
+
+
+<br>
+<br>
+<b><big><a name="09-06" id="09-06">09-06</a></big></b>
+
+<ol type="1"><li>
+Add the
+<a href="http://www.boost.org/doc/libs/1_47_0/doc/html/thread.html" target="_top"><span style='white-space: nowrap'>boost&nbsp;multi-threading</span></a>
+
+examples <a href="a11c_bthread.cpp.htm" target="_top"><span style='white-space: nowrap'>a11c_bthread.cpp</span></a>
+ and <code><font color="blue">bthread_simple_ad.cpp</font></code>.
+</li><li>
+
+Improve documentation for
+<a href="ta_parallel_setup.htm#thread_num" target="_top"><span style='white-space: nowrap'>thread_num</span></a>
+ argument
+to <code><font color="blue">parallel_setup</font></code>.
+</li><li>
+
+More simplification of <code><font color="blue">bthread_simple_ad.cpp</font></code> example.
+</li></ol>
+
+
+<br>
+<br>
+<b><big><a name="09-05" id="09-05">09-05</a></big></b>
+<br>
+Simply and fix some problems with <code><font color="blue">pthread_simple_ad.cpp</font></code>,
+including avoiding a <a href="team_pthread.cpp.htm#Bug in Cygwin" target="_top"><span style='white-space: nowrap'>Bug&nbsp;in&nbsp;Cygwin</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="09-02" id="09-02">09-02</a></big></b>
+
+<ol type="1"><li>
+The OpenMP speed test program <code><font color="blue">openmp/run.cpp</font></code> was not setting
+the number of threads for the one thread case (so dynamic thread adjustment was
+used). This has been fixed.
+</li><li>
+
+The <a href="thread_alloc.cpp.htm" target="_top"><span style='white-space: nowrap'>thread_alloc.cpp</span></a>
+ example was missing from the
+Microsoft <code><font color="blue">example/example.vcproj</font></code> file and a attempt was made
+to link to missing OpenMP routines (this has been fixed).
+In addition,
+some Microsoft compiler warning have been fixed; see the examples and tests
+in the Windows install instructions.
+</li><li>
+
+There was an oversight,
+and <code><font color="blue">CPPAD_MAX_NUM_THREAD</font></code>
+was being set to 2 when <code><font color="blue">_OPENMP</font></code> was not defined.
+This has been fixed and
+<a href="multi_thread.htm#CPPAD_MAX_NUM_THREADS" target="_top"><span style='white-space: nowrap'>CPPAD_MAX_NUM_THREADS</span></a>
+
+has been documented and is now part of the CppAD API.
+</li><li>
+
+The <code><font color="blue">pthread_simple_ad.cpp</font></code> test failed under cygwin.
+This was because the previous test <code><font color="blue">openmp_ad.cpp</font></code> was
+set up calls to OpenMP routines that were still in effect
+when <code><font color="blue">pthread/simple_ad</font></code> ran.
+This has been fixed by making
+
+<code><i><font color="black"><span style='white-space: nowrap'>num_threads</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;==&nbsp;1</span></font></code>
+ a special case in
+<a href="ta_parallel_setup.htm" target="_top"><span style='white-space: nowrap'>parallel_setup</span></a>
+.
+</li></ol>
+
+
+<br>
+<br>
+<b><big><a name="09-01" id="09-01">09-01</a></big></b>
+
+<ol type="1"><li>
+Modify the CppAD trunk using the
+changes from svn revision 2060 to revision 2081 in the branch
+<code><font color='blue'><pre style='display:inline'> 
+     https://projects.coin-or.org/svn/CppAD/branches/pthread
+</pre></font></code>
+These changes are described below under the headings
+<a href="whats_new_11.htm#09-01.08-21" target="_top"><span style='white-space: nowrap'>08-21</span></a>
+ through
+<a href="whats_new_11.htm#09-01.08-31" target="_top"><span style='white-space: nowrap'>08-31</span></a>
+.
+</li><li>
+
+There was a bug in the <a href="old_atomic.htm" target="_top"><span style='white-space: nowrap'>old_atomic</span></a>
+ functions
+in the case where none of the elements of the argument to the function
+was a <a href="glossary.htm#Variable" target="_top"><span style='white-space: nowrap'>variable</span></a>
+.
+This has been fixed.
+In addition, <a href="old_tan.cpp.htm" target="_top"><span style='white-space: nowrap'>old_tan.cpp</span></a>
+ generated an assert for this
+case and this has also been fixed (in addition to including an example
+for this case).
+</li></ol>
+
+
+<br>
+<br>
+<b><a name="09-01.08-31" id="09-01.08-31">08-31</a></b>
+
+<ol type="1"><li>
+Move the <code><font color="blue">sum_i_inv_time.cpp</font></code> test from
+<code><font color="blue">openmp/run.sh</font></code> to <code><font color="blue">openmp/run.cpp</font></code>.
+</li><li>
+
+Change <code><font color="blue">--with-openmp</font></code> to
+<a href="autotools.htm#openmp_flags" target="_top"><span style='white-space: nowrap'>OPENMP_FLAGS=openmp_flags</span></a>
+ configure
+command line argument.
+</li></ol>
+
+
+<br>
+<br>
+<b><a name="09-01.08-30" id="09-01.08-30">08-30</a></b>
+
+<ol type="1"><li>
+Create the <code><font color="blue">openmp/run.cpp</font></code> program
+and move the <code><font color="blue">openmp_multi_newton.cpp</font></code> test from
+<code><font color="blue">openmp/run.sh</font></code> to <code><font color="blue">openmp/run.cpp</font></code>.
+This uses <a href="autotools.htm#Configure" target="_top"><span style='white-space: nowrap'>configure</span></a>
+
+information for building the tests.
+</li><li>
+
+Document the <code><font color="blue">--with-openmp</font></code> configure
+command line argument.
+</li><li>
+
+Move <code><font color="blue">openmp/multi_newton.hpp</font></code> to
+<code><font color="blue">openmp/newton_method.hpp</font></code> and
+<code><font color="blue">openmp/multi_newton.cpp</font></code> to
+<code><font color="blue">openmp/newton_example.cpp</font></code>.
+</li></ol>
+
+
+<br>
+<br>
+<b><a name="09-01.08-25" id="09-01.08-25">08-25</a></b>
+
+<ol type="1"><li>
+Replace <a href="omp_alloc.htm" target="_top"><span style='white-space: nowrap'>omp_alloc</span></a>
+ by <a href="thread_alloc.htm" target="_top"><span style='white-space: nowrap'>thread_alloc</span></a>
+ in
+<a href="multi_thread.htm" target="_top"><span style='white-space: nowrap'>multi_thread</span></a>
+, the section on how to use CppAD in parallel.
+</li><li>
+
+Implement <a href="omp_alloc.htm" target="_top"><span style='white-space: nowrap'>omp_alloc</span></a>
+ as links to corresponding <a href="thread_alloc.htm" target="_top"><span style='white-space: nowrap'>thread_alloc</span></a>
+
+sections.
+</li><li>
+
+Create the <code><font color="blue">pthread_simple_ad.cpp</font></code> example that does AD using the
+pthread library.
+In addition, fix some problems in <code><font color="blue">openmp_simple_ad.cpp</font></code>
+</li><li>
+
+Move <code><font color="blue">openmp/example_a11c.cpp</font></code> to
+<a href="a11c_openmp.cpp.htm" target="_top"><span style='white-space: nowrap'>example/a11c_openmp.cpp</span></a>
+.
+</li><li>
+
+Move <code><font color="blue">openmp/parallel_ad.cpp</font></code> to
+<code><font color="blue">openmp_simple_ad.cpp</font></code>.
+</li></ol>
+
+
+<br>
+<br>
+<b><a name="09-01.08-23" id="09-01.08-23">08-23</a></b>
+<br>
+Beginning steps in replacing <a href="omp_alloc.htm" target="_top"><span style='white-space: nowrap'>omp_alloc</span></a>
+ by <a href="thread_alloc.htm" target="_top"><span style='white-space: nowrap'>thread_alloc</span></a>
+:
+<ol type="1"><li>
+Replace <a href="omp_alloc.htm" target="_top"><span style='white-space: nowrap'>omp_alloc</span></a>
+ by <a href="thread_alloc.htm" target="_top"><span style='white-space: nowrap'>thread_alloc</span></a>
+
+in the <a href="utility.htm" target="_top"><span style='white-space: nowrap'>utilities</span></a>
+.
+</li><li>
+
+move <a href="omp_alloc.htm" target="_top"><span style='white-space: nowrap'>omp_alloc</span></a>
+ to the deprecated section of the
+documentation.
+</li><li>
+
+Change all <a href="omp_alloc.htm" target="_top"><span style='white-space: nowrap'>omp_alloc</span></a>
+ section names to begin with <code><font color="blue">omp_</font></code>,
+and change all <a href="thread_alloc.htm" target="_top"><span style='white-space: nowrap'>thread_alloc</span></a>
+ section names to begin with <code><font color="blue">new_</font></code>.
+</li><li>
+
+Convert <a href="cppad_vector.htm" target="_top"><span style='white-space: nowrap'>CppAD_vector</span></a>
+ from using <a href="omp_alloc.htm" target="_top"><span style='white-space: nowrap'>omp_alloc</span></a>
+ to using
+<a href="thread_alloc.htm" target="_top"><span style='white-space: nowrap'>thread_alloc</span></a>
+ for memory allocation.
+</li><li>
+
+Extend the <a href="memory_leak.htm" target="_top"><span style='white-space: nowrap'>memory_leak</span></a>
+ routine to also check the
+<a href="thread_alloc.htm" target="_top"><span style='white-space: nowrap'>thread_alloc</span></a>
+ allocator.
+</li></ol>
+
+
+<br>
+<br>
+<b><a name="09-01.08-21" id="09-01.08-21">08-21</a></b>
+<br>
+Create the OpenMP and pthread examples
+<a href="a11c_openmp.cpp.htm" target="_top"><span style='white-space: nowrap'>a11c_openmp.cpp</span></a>
+,
+<a href="a11c_pthread.cpp.htm" target="_top"><span style='white-space: nowrap'>a11c_pthread.cpp</span></a>
+, and
+<code><font color="blue">openmp_simple_ad.cpp</font></code>.
+These OpenMP examples were originally in the <code><font color="blue">openmp</font></code> directory,
+and have been moved, and modified to conform, to the normal example directory.
+
+<br>
+<br>
+<b><big><a name="08-11" id="08-11">08-11</a></big></b>
+<br>
+Modify the CppAD trunk using the
+changes from svn revision 2044 to revision 2056 in the branch
+<code><font color='blue'><pre style='display:inline'> 
+     https://projects.coin-or.org/svn/CppAD/branches/base_require
+</pre></font></code>
+These changes are described below under the headings
+<a href="whats_new_11.htm#08-11.08-04" target="_top"><span style='white-space: nowrap'>08-04</span></a>
+ through
+<a href="whats_new_11.htm#08-11.08-10" target="_top"><span style='white-space: nowrap'>08-10</span></a>
+.
+
+<br>
+<br>
+<b><a name="08-11.08-10" id="08-11.08-10">08-10</a></b>
+
+<ol type="1"><li>
+Add the output stream optional argument 
+<code><i><font color="black"><span style='white-space: nowrap'>s</span></font></i></code>
+ in
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.Forward(0,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>s</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+See <a href="forward_zero.htm" target="_top"><span style='white-space: nowrap'>zero&nbsp;order&nbsp;forward&nbsp;mode</span></a>
+ and <a href="printfor.htm" target="_top"><span style='white-space: nowrap'>PrintFor</span></a>
+.
+</li><li>
+
+Improve <a href="omp_alloc.cpp.htm" target="_top"><span style='white-space: nowrap'>omp_alloc.cpp</span></a>
+ example.
+</li></ol>
+
+
+
+<br>
+<br>
+<b><a name="08-11.08-09" id="08-11.08-09">08-09</a></b>
+
+<ol type="1"><li>
+<a href="base_require.htm" target="_top"><span style='white-space: nowrap'>base_require</span></a>
+:
+Add <a href="numeric_limits.htm#epsilon" target="_top"><span style='white-space: nowrap'>epsilon</span></a>
+ to the
+
+<code><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i></code>
+ type requirements.
+</li><li>
+
+Extend <code><font color="blue">epsilon</font></code> to AD types.
+</li></ol>
+
+
+<br>
+<br>
+<b><a name="08-11.08-08" id="08-11.08-08">08-08</a></b>
+
+<ol type="1"><li>
+Improve the <a href="base_require.htm" target="_top"><span style='white-space: nowrap'>base_require</span></a>
+ documentation for
+<a href="base_std_math.htm" target="_top"><span style='white-space: nowrap'>standard&nbsp;math&nbsp;functions</span></a>
+.
+</li><li>
+
+<a href="base_require.htm" target="_top"><span style='white-space: nowrap'>base_require</span></a>
+:
+Add <code><font color="blue">abs_geq</font></code> to the <a href="base_require.htm" target="_top"><span style='white-space: nowrap'>requirements</span></a>
+
+for a user defined 
+<code><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i></code>
+ type.
+</li><li>
+
+Check that zero order forward mode results are approximately equal,
+instead of exactly equal,
+after an <a href="optimize.htm" target="_top"><span style='white-space: nowrap'>optimize</span></a>
+ operation.
+This fixes a bug in the optimize correctness check
+(The  order of operations can be changed by <code><font color="blue">optimize</font></code>
+and hence the zero order forward mode results may not be exactly the same.)
+</li></ol>
+
+
+<br>
+<br>
+<b><a name="08-11.08-07" id="08-11.08-07">08-07</a></b>
+<br>
+Improve the <a href="base_require.htm" target="_top"><span style='white-space: nowrap'>base_require</span></a>
+ documentation for
+<a href="base_identical.htm#EqualOpSeq" target="_top"><span style='white-space: nowrap'>EqualOpSeq</span></a>
+,
+<a href="base_identical.htm#Identical" target="_top"><span style='white-space: nowrap'>Identical</span></a>
+
+<a href="base_require.htm#Integer" target="_top"><span style='white-space: nowrap'>Integer</span></a>
+, and
+<a href="base_ordered.htm" target="_top"><span style='white-space: nowrap'>Ordered</span></a>
+
+operations.
+
+<br>
+<br>
+<b><a name="08-11.08-06" id="08-11.08-06">08-06</a></b>
+<br>
+Add the <a href="base_cond_exp.htm#CondExpRel" target="_top"><span style='white-space: nowrap'>CondExpRel</span></a>
+ paragraph to the
+base requirements documentation.
+This was missing and are required for
+<a href="condexp.htm" target="_top"><span style='white-space: nowrap'>CondExp</span></a>
+ to work with 
+<code><font color="blue"><span style='white-space: nowrap'>AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code>
+ arguments
+and a non-standard 
+<code><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i></code>
+ type.
+
+<br>
+<br>
+<b><a name="08-11.08-04" id="08-11.08-04">08-04</a></b>
+
+<ol type="1"><li>
+<a href="base_require.htm" target="_top"><span style='white-space: nowrap'>base_require</span></a>
+:
+Change the <a href="base_require.htm#Include Order" target="_top"><span style='white-space: nowrap'>include</span></a>
+ file name to
+<a href="base_require.htm" target="_top"><span style='white-space: nowrap'>base_require.hpp</span></a>
+.
+</li><li>
+
+Use <a href="base_float.hpp.htm" target="_top"><span style='white-space: nowrap'>base_float.hpp</span></a>
+ and <a href="base_double.hpp.htm" target="_top"><span style='white-space: nowrap'>base_double.hpp</span></a>
+ as additional examples
+for the <a href="base_cond_exp.htm" target="_top"><span style='white-space: nowrap'>CondExp&nbsp;Base&nbsp;requirements</span></a>
+
+requirements.
+</li></ol>
+
+
+<br>
+<br>
+<b><big><a name="08-03" id="08-03">08-03</a></big></b>
+<br>
+Change <a href="printfor.htm" target="_top"><span style='white-space: nowrap'>PrintFor</span></a>
+ condition from less than or equal zero
+to not greater than zero;i.e., not positive.
+This makes <code><font color="blue">nan</font></code> print because it results in false for all comparisons.
+
+<br>
+<br>
+<b><big><a name="08-02" id="08-02">08-02</a></big></b>
+
+<ol type="1"><li>
+Change <a href="printfor.htm" target="_top"><span style='white-space: nowrap'>PrintFor</span></a>
+ so it no longer aborts execution when
+there is no operation sequence being recording; see
+<a href="independent.htm#Start Recording" target="_top"><span style='white-space: nowrap'>start&nbsp;recording</span></a>
+.
+</li><li>
+
+Improve the <a href="print_for_cout.cpp.htm" target="_top"><span style='white-space: nowrap'>print_for_cout.cpp</span></a>
+ example.
+</li></ol>
+
+
+<br>
+<br>
+<b><big><a name="07-31" id="07-31">07-31</a></big></b>
+<br>
+Add a conditional version of the <a href="printfor.htm" target="_top"><span style='white-space: nowrap'>PrintFor</span></a>
+ command
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PrintFor(</span></font><i><font color="black"><span style='white-space: nowrap'>text</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>z</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+which only prints when 
+<code><i><font color="black"><span style='white-space: nowrap'>z</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&lt;=&nbsp;0</span></font></code>
+.
+This is useful for error reporting during forward mode; i.e.,
+reporting when the argument to the <code><font color="blue">log</font></code> function is not valid.
+
+<br>
+<br>
+<b><big><a name="07-29" id="07-29">07-29</a></big></b>
+
+<ol type="1"><li>
+The routines <a href="omp_max_num_threads.htm" target="_top"><span style='white-space: nowrap'>set_max_num_threads</span></a>
+ and
+<code><font color="blue">get_max_num_threads</font></code> were created.
+User's will need to replace calls to
+<a href="old_max_num_threads.htm" target="_top"><span style='white-space: nowrap'>max_num_threads</span></a>
+
+by calls to <code><font color="blue">set_max_num_threads</font></code>.
+</li><li>
+
+The functions <a href="omp_efficient.htm" target="_top"><span style='white-space: nowrap'>omp_efficient</span></a>
+ was deprecated because it
+has not been shown to be useful.
+</li></ol>
+
+
+<br>
+<br>
+<b><big><a name="07-28" id="07-28">07-28</a></big></b>
+
+<ol type="1"><li>
+Change <a href="omp_return_memory.htm" target="_top"><span style='white-space: nowrap'>omp_return_memory</span></a>
+ so that if <a href="omp_max_num_threads.htm" target="_top"><span style='white-space: nowrap'>omp_max_num_threads</span></a>
+ is one
+(the default), <a href="omp_alloc.htm" target="_top"><span style='white-space: nowrap'>omp_alloc</span></a>
+ does not hold onto memory
+(keep it available for the corresponding thread).
+</li><li>
+
+Add files that were missing from the Microsoft Visual Studio
+<code><font color="blue">example</font></code> and <code><font color="blue">test_more</font></code> subdirectory
+project files.
+</li><li>
+
+Fix some warnings generated by Microsoft Visual Studio 2010 build.
+</li></ol>
+
+
+<br>
+<br>
+<b><big><a name="07-27" id="07-27">07-27</a></big></b>
+<br>
+Make <code><font color="blue">tan</font></code> and <code><font color="blue">tanh</font></code> <a href="glossary.htm#Operation.Atomic" target="_top"><span style='white-space: nowrap'>atomic</span></a>
+
+operations; see <a href="tan_forward.htm" target="_top"><span style='white-space: nowrap'>tan_forward</span></a>
+ and <a href="tan_reverse.htm" target="_top"><span style='white-space: nowrap'>tan_reverse</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="07-25" id="07-25">07-25</a></big></b>
+<br>
+Finish the <a href="old_atomic.htm" target="_top"><span style='white-space: nowrap'>old_atomic</span></a>
+ example <a href="old_tan.cpp.htm" target="_top"><span style='white-space: nowrap'>old_tan.cpp</span></a>
+.
+This is also a design and implementation of the routines necessary
+to make <code><font color="blue">tan</font></code> and <code><font color="blue">tanh</font></code> CppAD atomic operations.
+
+<br>
+<br>
+<b><big><a name="07-18" id="07-18">07-18</a></big></b>
+<br>
+The reverse mode formulas for <small>@(@
+Z(t)
+@)@</small> need to involve
+the lower order Taylor coefficients for <small>@(@
+Y(t)
+@)@</small>.
+This has been fixed in <a href="tan_reverse.htm" target="_top"><span style='white-space: nowrap'>tan_reverse</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="07-17" id="07-17">07-17</a></big></b>
+
+<ol type="1"><li>
+Fix bug in <a href="old_atomic.htm" target="_top"><span style='white-space: nowrap'>old_atomic</span></a>
+ functions.
+To be specific, the Taylor coefficients for <small>@(@
+y
+@)@</small>,
+of order less than 
+<code><i><font color="black"><span style='white-space: nowrap'>k</span></font></i></code>
+,
+were not passed into the <code><font color="blue">old_atomic</font></code>
+<a href="old_atomic.htm#forward" target="_top"><span style='white-space: nowrap'>forward</span></a>
+ callback function.
+</li><li>
+
+Derive the theory for including the tangent and hyperbolic tangent
+as CppAD atomic operations <a href="tan_forward.htm" target="_top"><span style='white-space: nowrap'>tan_forward</span></a>
+ and <a href="tan_reverse.htm" target="_top"><span style='white-space: nowrap'>tan_reverse</span></a>
+;
+see the wish list item <code><font color="blue">Tan and Tanh</font></code>.
+</li><li>
+
+Implement and test forward mode calculation of derivative for
+the tangent and hyperbolic tangent functions;
+see the new <a href="old_atomic.htm" target="_top"><span style='white-space: nowrap'>old_atomic</span></a>
+ example <a href="old_tan.cpp.htm" target="_top"><span style='white-space: nowrap'>old_tan.cpp</span></a>
+.
+</li></ol>
+
+
+<br>
+<br>
+<b><big><a name="07-14" id="07-14">07-14</a></big></b>
+
+<ol type="1"><li>
+The <a href="autotools.htm" target="_top"><span style='white-space: nowrap'>autotools</span></a>
+ instructions for running the individual
+correctness and speed tests were out of date.
+This has been fixed; see
+<a href="autotools.htm#make.Examples and Tests" target="_top"><span style='white-space: nowrap'>example&nbsp;and&nbsp;tests</span></a>
+.
+</li><li>
+
+Move <code><font color="blue">parallel_ad.cpp</font></code> from <code><font color="blue">example</font></code> directory
+to <code><font color="blue">openmp</font></code> directory (and convert it from a function to a program).
+</li><li>
+
+Simplify <code><font color="blue">example_a11c.cpp</font></code> by making it just a correctness test.
+</li><li>
+
+Change <code><font color="blue">openmp/run.sh</font></code> so that it runs correctness tests with
+the compiler debugging flags.
+</li></ol>
+
+
+<br>
+<br>
+<b><big><a name="07-13" id="07-13">07-13</a></big></b>
+
+<ol type="1"><li>
+static hash code data that was begin used by multiple threads
+when recording 
+<code><font color="blue"><span style='white-space: nowrap'>AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code>
+ operations
+<a href="omp_in_parallel.htm" target="_top"><span style='white-space: nowrap'>omp_in_parallel</span></a>
+ execution mode. This has been fixed.
+</li><li>
+
+Make the sparse calculations safe
+for use during <a href="omp_in_parallel.htm" target="_top"><span style='white-space: nowrap'>omp_in_parallel</span></a>
+ execution mode.
+</li><li>
+
+Add the <code><font color="blue">parallel_ad.cpp</font></code> example.
+</li><li>
+
+Change <code><font color="blue">example_a11c.cpp</font></code> example so that is just a correctness
+(not speed) test.
+</li></ol>
+
+
+<br>
+<br>
+<b><big><a name="07-11" id="07-11">07-11</a></big></b>
+
+<ol type="1"><li>
+Change the upper limit for
+<a href="omp_max_num_threads.htm" target="_top"><span style='white-space: nowrap'>omp_max_num_threads</span></a>
+ from 32 to 48.
+</li><li>
+
+Add <a href="ta_in_parallel.htm" target="_top"><span style='white-space: nowrap'>parallel</span></a>
+ documentation for,
+<code><font color="blue">nan</font></code>,
+<a href="rosen34.htm#Parallel Mode" target="_top"><span style='white-space: nowrap'>Rosen34</span></a>
+, and
+<a href="runge45.htm#Parallel Mode" target="_top"><span style='white-space: nowrap'>Runge45</span></a>
+.
+</li><li>
+
+Fix <a href="checknumerictype.htm" target="_top"><span style='white-space: nowrap'>CheckNumericType</span></a>
+ and <a href="checksimplevector.htm" target="_top"><span style='white-space: nowrap'>CheckSimpleVector</span></a>
+
+so they work properly when used in parallel mode.
+</li></ol>
+
+
+
+<br>
+<br>
+<b><a name="07-11.openmp/run.sh" id="07-11.openmp/run.sh">openmp/run.sh</a></b>
+<br>
+The following changes were made to <code><font color="blue">openmp/run.sh</font></code>:
+<ol type="1"><li>
+</li><li>
+
+Change to <code><font color="blue">openmp/run.sh</font></code>
+maximum number of threads
+instead of specifying the entire set of values to be tested.
+</li><li>
+
+Change settings for
+<code><font color="blue">newton_example</font></code>
+so that <code><font color="blue">n_gird</font></code> is a multiple of the maximum number of threads.
+</li><li>
+
+Report dynamic number of thread
+results as a separate result in the summary output line.
+</li><li>
+
+Fix automatic removal of executables from <code><font color="blue">openmp</font></code> directory
+(was commented out).
+</li><li>
+
+The documentation for <code><font color="blue">openmp/run.sh</font></code> was moved to the
+<code><font color="blue">multi_thread</font></code> section.
+</li></ol>
+
+
+
+<br>
+<br>
+<b><big><a name="07-10" id="07-10">07-10</a></big></b>
+
+<ol type="1"><li>
+Add link to <a href="discrete.htm" target="_top">Discrete AD Functions</a> in <a href="multi_thread.htm" target="_top"><span style='white-space: nowrap'>multi_thread</span></a>
+.
+</li><li>
+
+Make use of the <a href="tracknewdel.htm" target="_top"><span style='white-space: nowrap'>TrackNewDel</span></a>
+ routines
+<a href="omp_in_parallel.htm" target="_top"><span style='white-space: nowrap'>omp_in_parallel</span></a>
+ execution mode an error (it never worked properly);
+see <a href="tracknewdel.htm#Multi-Threading" target="_top"><span style='white-space: nowrap'>TrackNewDel&nbsp;multi-threading</span></a>
+.
+</li><li>
+
+Change <a href="memory_leak.htm" target="_top"><span style='white-space: nowrap'>memory_leak</span></a>
+ so that it checks for a leak in all threads.
+This is what <code><font color="blue">openmp_newton_example.cpp</font></code> and
+<code><font color="blue">sum_i_inv_time.cpp</font></code>
+assumed was being done.
+</li></ol>
+
+
+<br>
+<br>
+<b><big><a name="07-09" id="07-09">07-09</a></big></b>
+<br>
+All the OpenMP parallel execution requirements
+have been grouped in the section <a href="multi_thread.htm" target="_top"><span style='white-space: nowrap'>multi_thread</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="07-07" id="07-07">07-07</a></big></b>
+<br>
+Add the routine <a href="parallel_ad.htm" target="_top"><span style='white-space: nowrap'>parallel_ad</span></a>
+ to fix bug when using
+
+<code><font color="blue"><span style='white-space: nowrap'>AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code>
+ in <a href="omp_in_parallel.htm" target="_top"><span style='white-space: nowrap'>parallel</span></a>
+ execution mode.
+
+<br>
+<br>
+<b><big><a name="06-23" id="06-23">06-23</a></big></b>
+
+<ol type="1"><li>
+Fix a bug whereby the assert
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Error&nbsp;detected&nbsp;by&nbsp;false&nbsp;result&nbsp;for<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;!&nbsp;omp_in_parallel()<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;at&nbsp;line&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;in&nbsp;the&nbsp;file<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>prefix</span></font></i><font color="blue"><span style='white-space: nowrap'>/include/cppad/omp_alloc.hpp<br>
+</span></font></code>
+sometimes occurred.
+</li><li>
+
+The routine <a href="omp_max_thread.htm" target="_top"><span style='white-space: nowrap'>omp_max_thread</span></a>
+ was deprecated,
+use the routine <a href="omp_max_num_threads.htm" target="_top"><span style='white-space: nowrap'>omp_max_num_threads</span></a>
+ instead.
+</li><li>
+
+The deprecated routines have been grouped together in the
+<a href="deprecated.htm" target="_top"><span style='white-space: nowrap'>deprecated</span></a>
+ section of the CppAD manual.
+</li></ol>
+
+
+<br>
+<br>
+<b><big><a name="06-21" id="06-21">06-21</a></big></b>
+
+<ol type="1"><li>
+The <code><font color="blue">openmp/run.sh</font></code> routine was changed to use zero,
+instead of <code><font color="blue">automatic</font></code>, for automatic choice of
+<code><font color="blue">openmp/run.sh</font></code>
+number of repeats
+and
+maximum number of threads.
+
+</li><li>
+
+The output of each of the OpenMP examples / speed tests
+(run by <code><font color="blue">openmp/run.sh</font></code>)
+was changed to be valid matlab / octave assignment statements.
+
+</li><li>
+
+In the case where OpenMP is enabled during compilation,
+a summary for the different number of threads as added at the end of
+the <code><font color="blue">openmp/run.sh</font></code> output.
+
+</li></ol>
+
+
+<br>
+<br>
+<b><big><a name="06-18" id="06-18">06-18</a></big></b>
+
+<ol type="1"><li>
+The <a href="autotools.htm#tape_addr_type" target="_top"><span style='white-space: nowrap'>tape_addr_type</span></a>
+ option was added
+to the <a href="autotools.htm#Configure" target="_top"><span style='white-space: nowrap'>configure</span></a>
+ command line.
+</li><li>
+
+The function <a href="seq_property.htm#size_op_seq" target="_top"><span style='white-space: nowrap'>size_op_seq</span></a>
+ results uses
+<code><font color="blue">sizeof(CppAD_TAPE_ADDR_TYPE)</font></code>
+where it used to use <code><font color="blue">sizeof(size_t)</font></code>.
+</li><li>
+
+Remove <code><font color="blue">cppad/config.h</font></code> from CppAD distribution,
+(put the information in <code><font color="blue">cppad/configure.hpp</font></code>.)
+This removes the need to undefine symbols that were
+defined by <code><font color="blue">cppad/config.h</font></code> and that did not begin with <code><font color="blue">CPPAD_</font></code>.
+</li><li>
+
+Change <a href="autotools.htm#adolc_dir" target="_top"><span style='white-space: nowrap'>adolc</span></a>
+ library linkage so it
+works with version <code><font color="blue">ADOL-C-2.2.0</font></code>.
+</li></ol>
+
+
+<br>
+<br>
+<b><big><a name="05-29" id="05-29">05-29</a></big></b>
+<br>
+Fix bug (introduced on <a href="whats_new_11.htm#05-22" target="_top"><span style='white-space: nowrap'>05-22</span></a>
+)
+whereby constructor might not be called (but required) when the
+<a href="base_require.htm" target="_top"><span style='white-space: nowrap'>base&nbsp;type</span></a>
+ is not plain old data.
+
+<br>
+<br>
+<b><big><a name="05-28" id="05-28">05-28</a></big></b>
+
+<ol type="1"><li>
+Add the <a href="omp_efficient.htm" target="_top"><span style='white-space: nowrap'>omp_efficient</span></a>
+ routine to the <a href="omp_alloc.htm" target="_top"><span style='white-space: nowrap'>omp_alloc</span></a>
+ system.
+</li><li>
+
+Improve the <code><font color="blue">omp_alloc</font></code> tracing so it prints the same pointer
+as returned to the user (not an offset version of that pointer).
+</li></ol>
+
+
+<br>
+<br>
+<b><big><a name="05-26" id="05-26">05-26</a></big></b>
+<br>
+Fix Visual Studio project files that were broken during the change on 05-22.
+In addition, in the file <code><font color="blue">cppad/omp_alloc.hpp</font></code>,
+suppress the following Microsoft Visual Studio warning
+<code><font color='blue'><pre style='display:inline'> 
+     warning C4345: behavior change: an object of POD type constructed with
+     an initializer of the form () will be default-initialized
+</pre></font></code>
+<br>
+<b><big><a name="05-22" id="05-22">05-22</a></big></b>
+
+<ol type="1"><li>
+The old memory tracking routines <a href="tracknewdel.htm" target="_top"><span style='white-space: nowrap'>TrackNewDel</span></a>
+ have been deprecated.
+Their use should be replaced using the <a href="omp_alloc.htm" target="_top"><span style='white-space: nowrap'>omp_alloc</span></a>
+
+a memory allocator which is designed to work well in a multi-threading OpenMP
+environment; see <a href="omp_alloc.htm#Purpose" target="_top"><span style='white-space: nowrap'>purpose</span></a>
+.
+</li><li>
+
+The replacement of <code><font color="blue">TrackNewDel</font></code> by <code><font color="blue">omp_alloc</font></code>
+has been throughout the CppAD source code, including the examples
+that used <code><font color="blue">TrackNewDel</font></code>; namely,
+<a href="mul_level_adolc.cpp.htm" target="_top"><span style='white-space: nowrap'>mul_level_adolc.cpp</span></a>
+, <a href="mul_level_adolc_ode.cpp.htm" target="_top"><span style='white-space: nowrap'>mul_level_adolc_ode.cpp</span></a>
+.
+</li><li>
+
+The CppAD vector template class
+and the <a href="cppad_vector.htm#vectorBool" target="_top"><span style='white-space: nowrap'>vectorBool</span></a>
+ class
+were modified to use the <code><font color="blue">omp_alloc</font></code>
+<a href="cppad_vector.htm#Memory and Parallel Mode" target="_top"><span style='white-space: nowrap'>memory</span></a>
+ manager.
+This should improves its speed of memory allocation
+<a href="omp_in_parallel.htm" target="_top"><span style='white-space: nowrap'>omp_in_parallel</span></a>
+ sections of a program.
+</li><li>
+
+The <a href="speed_test.htm" target="_top"><span style='white-space: nowrap'>speed_test</span></a>
+ argument
+<a href="speed_test.htm#size_vec" target="_top"><span style='white-space: nowrap'>size_vec</span></a>
+ call was by value,
+instead of by reference (as documented).
+This has been fixed and the call is now by reference.
+</li><li>
+
+The <a href="cppad_vector.htm#capacity" target="_top"><span style='white-space: nowrap'>capacity</span></a>
+ function has been added
+to the CppAD vector class.
+</li><li>
+
+The simple vector
+<a href="simplevector.htm#Element Constructor and Destructor" target="_top"><span style='white-space: nowrap'>element&nbsp;constructor&nbsp;and&nbsp;destructor</span></a>
+
+description has been changed to explicitly specify that the
+default constructor is used to initialize elements of the array.
+</li><li>
+
+The <a href="seq_property.htm#size_op_seq" target="_top"><span style='white-space: nowrap'>size_op_seq</span></a>
+ documentation
+has been improved to mention that the allocated memory may be larger.
+</li></ol>
+
+
+<br>
+<br>
+<b><big><a name="05-11" id="05-11">05-11</a></big></b>
+
+<ol type="1"><li>
+Avoid ambiguity in the definition of the
+<a href="base_complex.hpp.htm#isnan" target="_top"><span style='white-space: nowrap'>complex&nbsp;isnan</span></a>
+ function.
+</li><li>
+
+Errors during <code><font color="blue">make test</font></code> were not
+being detected.
+This has been fixed.
+</li></ol>
+
+
+<br>
+<br>
+<b><big><a name="05-03" id="05-03">05-03</a></big></b>
+
+<ol type="1"><li>
+If <code><font color="blue">NDEBUG</font></code> is not defined,
+the <a href="nan.htm" target="_top"><span style='white-space: nowrap'>hasnan</span></a>
+ function is used to make sure that the
+results of any <a href="forward.htm" target="_top"><span style='white-space: nowrap'>Forward</span></a>
+ operation does not contain a
+nan (not a number).
+If so, an error message is generated and the program terminates.
+This error message and termination can be caught; see <a href="errorhandler.htm" target="_top"><span style='white-space: nowrap'>ErrorHandler</span></a>
+.
+
+</li><li>
+
+In the event that the
+<a href="cppad_ipopt_nlp.htm" target="_top"><span style='white-space: nowrap'>cppad_ipopt_nlp</span></a>
+ objective function, the constraints,
+or their derivatives are infinite,
+an error message is generated and the program terminates
+(proved that <code><font color="blue">NDEBUG</font></code> is not defined and the default error
+handler has not been replaced).
+</li></ol>
+
+
+<br>
+<br>
+<b><big><a name="04-29" id="04-29">04-29</a></big></b>
+
+<ol type="1"><li>
+The Microsoft Visual Studio 2003 project files
+for the Windows examples and tests no longer worked because
+the current version of CppAD uses local types in template instantiation; see
+<a href="http://msdn.microsoft.com/en-us/library/bh44f2cb(v=vs.71).aspx" target="_top"><span style='white-space: nowrap'>Compiler&nbsp;Error&nbsp;C2918</span></a>
+.
+These project files were converted to Visual Studio 2008 where they do work
+(if you use a later version, Visual Studio should automatically
+convert them for you).
+
+</li><li>
+
+The old speed test directory was moved to <code><font color="blue">speed_cppad</font></code>
+before the new <a href="speed.htm" target="_top"><span style='white-space: nowrap'>speed</span></a>
+ test organization was created on 2006-12-11
+(revision 715 of the repository).
+The old speed tests have not been used for years and so have been deleted.
+</li></ol>
+
+
+<br>
+<br>
+<b><big><a name="04-20" id="04-20">04-20</a></big></b>
+<br>
+The <code><font color="blue">openmp/run.sh</font></code> script what changed
+to take an argument that specifies which tests is run
+(it no longer runs all the tests).
+Also improve the openmp test program output formatting.
+
+<br>
+<br>
+<b><big><a name="04-19" id="04-19">04-19</a></big></b>
+<br>
+The 
+<code><i><font color="black"><span style='white-space: nowrap'>use_ad</span></font></i></code>
+ option was added to the
+<code><font color="blue">openmp_newton_example.cpp</font></code> test case.
+
+<br>
+<br>
+<b><big><a name="03-19" id="03-19">03-19</a></big></b>
+<br>
+The subversion write protected directory
+<code><font color="blue">bin/.svn</font></code> was mistakenly part of the
+<a href="download.htm#Compressed Archives" target="_top"><span style='white-space: nowrap'>compressed&nbsp;tar&nbsp;file</span></a>
+.
+It has been removed.
+
+<br>
+<br>
+<b><big><a name="03-11" id="03-11">03-11</a></big></b>
+<br>
+The vector of sets argument
+<a href="old_atomic.htm#rev_hes_sparse.r" target="_top"><span style='white-space: nowrap'>r</span></a>
+
+to the <code><font color="blue">old_atomic</font></code> function 
+<code><i><font color="black"><span style='white-space: nowrap'>rev_hes_sparse</span></font></i></code>
+
+must have size greater than or equal to 
+<code><i><font color="black"><span style='white-space: nowrap'>n</span></font></i></code>
+.
+There was a check that its size was greater than or equal 
+<code><i><font color="black"><span style='white-space: nowrap'>q</span></font></i></code>
+.
+This was incorrect and has been fixed.
+
+<br>
+<br>
+<b><big><a name="03-05" id="03-05">03-05</a></big></b>
+<br>
+Add the <a href="conj_grad.cpp.htm" target="_top"><span style='white-space: nowrap'>conjugate&nbsp;gradient</span></a>
+ example.
+
+<br>
+<br>
+<b><big><a name="02-22" id="02-22">02-22</a></big></b>
+<br>
+Add the <a href="speed_main.htm#Global Options.atomic" target="_top"><span style='white-space: nowrap'>atomic</span></a>
+ option to the
+speed test program and use
+<a href="old_mat_mul.hpp.htm" target="_top"><span style='white-space: nowrap'>old_mat_mul.hpp</span></a>
+ during the
+<a href="cppad_mat_mul.cpp.htm" target="_top"><span style='white-space: nowrap'>cppad_mat_mul.cpp</span></a>
+ speed test when the atomic option is specified.
+
+
+<br>
+<br>
+<b><big><a name="02-19" id="02-19">02-19</a></big></b>
+<br>
+There was a bug when <a href="omp_max_thread.htm" target="_top"><span style='white-space: nowrap'>omp_max_thread</span></a>
+ was set to one,
+and <code><font color="blue">NDEBUG</font></code> was not defined,
+the thread corresponding to parameters was one, but the only valid thread
+number was zero (only one thread)
+and an CPPAD stopped with an assertion error.
+This has been fixed.
+
+<br>
+<br>
+<b><big><a name="02-17" id="02-17">02-17</a></big></b>
+<br>
+There was a mistake in <code><font color="blue">openmp/run.sh</font></code> where it attempted
+to remove a non-existent file in the case where
+<code><font color="blue">openmp/run.sh</font></code>
+openmp_flag was not <code><font color="blue">&quot;&quot;</font></code>.
+This has been fixed.
+
+<br>
+<br>
+<b><big><a name="02-15" id="02-15">02-15</a></big></b>
+<br>
+A matrix multiply speed test has been added.
+So far, this has only implemented for the
+<a href="cppad_mat_mul.cpp.htm" target="_top"><span style='white-space: nowrap'>cppad</span></a>
+ and <a href="double_mat_mul.cpp.htm" target="_top"><span style='white-space: nowrap'>double</span></a>
+ cases.
+(For the time being this test is not available for the other
+speed comparison cases.)
+
+<br>
+<br>
+<b><big><a name="02-09" id="02-09">02-09</a></big></b>
+<br>
+A variable in <code><font color="blue">old_atomic.hpp</font></code> was declare of type 
+<code><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i></code>
+
+when it should have been declared of type <code><font color="blue">size_t</font></code>.
+It caused the <a href="old_atomic.htm" target="_top"><span style='white-space: nowrap'>old_atomic</span></a>
+ feature to fail with some base types.
+This has been fixed.
+<code><span style='white-space: nowrap'><br>
+<br>
+</span></code>The <a href="old_mat_mul.hpp.htm" target="_top"><span style='white-space: nowrap'>old_mat_mul.hpp</span></a>
+ example has been improved by
+caching the <small>@(@
+x
+@)@</small> variable information and using it during
+<a href="old_atomic.htm#rev_hes_sparse" target="_top"><span style='white-space: nowrap'>reverse&nbsp;Hessian&nbsp;sparsity</span></a>
+ calculations.
+<code><span style='white-space: nowrap'><br>
+<br>
+</span></code>Some of the <a href="old_atomic.htm" target="_top"><span style='white-space: nowrap'>old_atomic</span></a>
+ documentation was extended to
+include more explanation.
+
+<br>
+<br>
+<b><big><a name="02-06" id="02-06">02-06</a></big></b>
+<br>
+The use can now define complex <a href="old_atomic.htm" target="_top"><span style='white-space: nowrap'>atomic</span></a>
+ operations
+and store them in a CppAD <a href="adfun.htm" target="_top"><span style='white-space: nowrap'>ADFun</span></a>
+ object.
+This item has been remove from the
+<a href="wish_list.htm" target="_top"><span style='white-space: nowrap'>wish&nbsp;list</span></a>
+.
+<code><span style='white-space: nowrap'><br>
+<br>
+</span></code>The documentation for <a href="revsparsehes.htm" target="_top"><span style='white-space: nowrap'>RevSparseHes</span></a>
+ had a dimension error.
+This has been fixed.
+<code><span style='white-space: nowrap'><br>
+<br>
+</span></code>A faster set operations item was added to the wish list.
+This has since been satisfied by
+<code><font color="blue">cppad_sparse_list</font></code> choice during
+the install process (since removed).
+
+<br>
+<br>
+<b><big><a name="02-02" id="02-02">02-02</a></big></b>
+<br>
+The documentation for <a href="forsparsejac.htm" target="_top"><span style='white-space: nowrap'>ForSparseJac</span></a>
+ had some formatting errors.
+The errors have been fix and the documentation has been improved.
+
+<br>
+<br>
+<b><big><a name="02-01" id="02-01">02-01</a></big></b>
+<br>
+The subversion
+install instructions were brought up to date.
+They have since been replaced by just separate
+<code><font color="blue">subversion</font></code> instructions.
+
+<br>
+<br>
+<b><big><a name="01-19" id="01-19">01-19</a></big></b>
+<br>
+The directory where the <a href="pkgconfig.htm" target="_top"><span style='white-space: nowrap'>pkgconfig</span></a>
+ file <code><font color="blue">cppad.pc</font></code>
+is stored has been moved from
+
+<code><i><font color="black"><span style='white-space: nowrap'>prefixdir</span></font></i><font color="blue"><span style='white-space: nowrap'>/lib/pkgconfig/cppad.pc</span></font></code>
+
+to
+
+<code><i><font color="black"><span style='white-space: nowrap'>prefixdir</span></font></i><font color="blue"><span style='white-space: nowrap'>/share/pkgconfig/cppad.pc</span></font></code>
+;
+see
+<a href="http://lists.fedoraproject.org/pipermail/devel/2011-January/147915.html" target="_top"><span style='white-space: nowrap'>devel@lists.fedoraproject.org</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="01-16" id="01-16">01-16</a></big></b>
+<br>
+The following have been fixed:
+<ol type="1"><li>
+The install of the documentation failed
+when it was done from a directory other than the top source directory.
+</li><li>
+
+The GPL distribution had the output of the
+<a href="autotools.htm#Configure" target="_top"><span style='white-space: nowrap'>configure</span></a>
+ command in it.
+</li><li>
+
+Since the change on 01-09, the file
+<code><font color="blue">omh/appendix/whats_new_11.omh</font></code> has been required to build the
+documentation (and it has been missing from the distribution).
+</li><li>
+
+Fadbad was generating warnings due to the <code><font color="blue">-Wshadow</font></code> flag
+with the <code><font color="blue">g++</font></code> compiler.
+The Fadbad <a href="speed_fadbad.htm" target="_top"><span style='white-space: nowrap'>speed</span></a>
+ tests have a special
+flag with this warning removed from the
+<a href="autotools.htm#cxx_flags" target="_top"><span style='white-space: nowrap'>cxx_flags</span></a>
+.
+</li></ol>
+
+
+<br>
+<br>
+<b><big><a name="01-09" id="01-09">01-09</a></big></b>
+<br>
+There were some problems running <code><font color="blue">make test</font></code> in the releases
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+http://coin-or.github.io/download/source/CppAD/cppad-20110101.0.</span></font><i><font color="black"><span style='white-space: nowrap'>license</span></font></i><font color="blue"><span style='white-space: nowrap'>.tgz<br>
+</span></font></code>
+where 
+<code><i><font color="black"><span style='white-space: nowrap'>license</span></font></i></code>
+ is <code><font color="blue">gpl</font></code> or <code><font color="blue">cpl</font></code>.
+<ol type="1"><li>
+The version of automake used to build the corresponding
+<code><font color="blue">makefile.in</font></code> files did not define <code><font color="blue">abs_top_builddir</font></code>.
+</li><li>
+
+The include file <code><font color="blue">cppad_ipopt_nlp.hpp</font></code> was always installed, even if
+<a href="autotools.htm#ipopt_dir" target="_top"><span style='white-space: nowrap'>ipopt_dir</span></a>
+ was not defined on the
+<code><font color="blue">configure</font></code> command line.
+</li><li>
+
+The speed test library <code><font color="blue">libspeed.a</font></code> was being installed
+(it is only intended for testing).
+</li></ol>
+
+These problems are fixed in the trunk
+and these fixes will be copied to the corresponding stable and
+release versions; i.e.,
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+http://coin-or.github.io/download/source/CppAD/cppad-20110101.1.</span></font><i><font color="black"><span style='white-space: nowrap'>license</span></font></i><font color="blue"><span style='white-space: nowrap'>.tgz<br>
+</span></font></code>
+will not have this problem.
+
+
+<hr>Input File: omh/appendix/whats_new/whats_new_11.omh
+
+</body>
+</html>

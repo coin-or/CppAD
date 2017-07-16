@@ -1,0 +1,130 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>exp_eps: Implementation</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="exp_eps: Implementation">
+<meta name="keywords" id="keywords" content=" exp_eps: implementation exp_eps ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_exp_eps.hpp_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://coin-or.github.io/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="exp_eps.htm" target="_top">Prev</a>
+</td><td><a href="exp_eps.cpp.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>Introduction</option>
+<option>exp_eps</option>
+<option>exp_eps.hpp</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>CppAD-&gt;</option>
+<option>Install</option>
+<option>Introduction</option>
+<option>AD</option>
+<option>ADFun</option>
+<option>preprocessor</option>
+<option>multi_thread</option>
+<option>utility</option>
+<option>ipopt_solve</option>
+<option>Example</option>
+<option>speed</option>
+<option>Appendix</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>Introduction-&gt;</option>
+<option>exp_2</option>
+<option>exp_eps</option>
+<option>exp_apx.cpp</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>exp_eps-&gt;</option>
+<option>exp_eps.hpp</option>
+<option>exp_eps.cpp</option>
+<option>exp_eps_for0</option>
+<option>exp_eps_for1</option>
+<option>exp_eps_rev1</option>
+<option>exp_eps_for2</option>
+<option>exp_eps_rev2</option>
+<option>exp_eps_cppad</option>
+</select>
+</td>
+<td>exp_eps.hpp</td>
+<td>Headings</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@
+
+
+<center><b><big><big>exp_eps: Implementation</big></big></b></center>
+<code><font color="blue"><pre><tt><b><font color="#0000FF">template</font></b> <font color="#990000">&lt;</font><b><font color="#0000FF">class</font></b> <font color="#008080">Type</font><font color="#990000">&gt;</font>
+<font color="#008080">Type</font> <b><font color="#000000">exp_eps</font></b><font color="#990000">(</font><b><font color="#0000FF">const</font></b> <font color="#008080">Type</font> <font color="#990000">&amp;</font>x<font color="#990000">,</font> <b><font color="#0000FF">const</font></b> <font color="#008080">Type</font> <font color="#990000">&amp;</font>epsilon<font color="#990000">)</font>
+<font color="#FF0000">{</font>    <i><font color="#9A1900">// abs_x = |x|</font></i>
+     <font color="#008080">Type</font> abs_x <font color="#990000">=</font> x<font color="#990000">;</font>
+     <b><font color="#0000FF">if</font></b><font color="#990000">(</font> <b><font color="#000000">Type</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">)</font> <font color="#990000">&gt;</font> x <font color="#990000">)</font>
+          abs_x <font color="#990000">=</font> <font color="#990000">-</font> x<font color="#990000">;</font>
+     <i><font color="#9A1900">// initialize</font></i>
+     <font color="#009900">int</font>  k    <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>          <i><font color="#9A1900">// initial order</font></i>
+     <font color="#008080">Type</font> term <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">.;</font>         <i><font color="#9A1900">// term = |x|^k / k !</font></i>
+     <font color="#008080">Type</font> sum  <font color="#990000">=</font> term<font color="#990000">;</font>       <i><font color="#9A1900">// initial sum</font></i>
+     <b><font color="#0000FF">while</font></b><font color="#990000">(</font>term <font color="#990000">&gt;</font> epsilon<font color="#990000">)</font>
+     <font color="#FF0000">{</font>    k         <font color="#990000">=</font> k <font color="#990000">+</font> <font color="#993399">1</font><font color="#990000">;</font>          <i><font color="#9A1900">// order for next term</font></i>
+          <font color="#008080">Type</font> temp <font color="#990000">=</font> term <font color="#990000">*</font> abs_x<font color="#990000">;</font>   <i><font color="#9A1900">// term = |x|^k / (k-1)!</font></i>
+          term      <font color="#990000">=</font> temp <font color="#990000">/</font> <b><font color="#000000">Type</font></b><font color="#990000">(</font>k<font color="#990000">);</font> <i><font color="#9A1900">// term = |x|^k / k !</font></i>
+          sum       <font color="#990000">=</font> sum <font color="#990000">+</font> term<font color="#990000">;</font>     <i><font color="#9A1900">// sum  = 1 + ... + |x|^k / k !</font></i>
+     <font color="#FF0000">}</font>
+     <i><font color="#9A1900">// In the case where x is negative, use exp(x) = 1 / exp(-|x|)</font></i>
+     <b><font color="#0000FF">if</font></b><font color="#990000">(</font> <b><font color="#000000">Type</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">)</font> <font color="#990000">&gt;</font> x <font color="#990000">)</font>
+          sum <font color="#990000">=</font> <b><font color="#000000">Type</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">)</font> <font color="#990000">/</font> sum<font color="#990000">;</font>
+     <b><font color="#0000FF">return</font></b> sum<font color="#990000">;</font>
+<font color="#FF0000">}</font></tt></pre>
+</font></code>
+<hr>Input File: introduction/exp_eps.omh
+
+</body>
+</html>

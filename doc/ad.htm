@@ -1,0 +1,141 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>AD Objects</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="AD Objects">
+<meta name="keywords" id="keywords" content=" ad objects require purpose base type requirements ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_ad_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://coin-or.github.io/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="exp_apx.cpp.htm" target="_top">Prev</a>
+</td><td><a href="ad_ctor.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>AD</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>CppAD-&gt;</option>
+<option>Install</option>
+<option>Introduction</option>
+<option>AD</option>
+<option>ADFun</option>
+<option>preprocessor</option>
+<option>multi_thread</option>
+<option>utility</option>
+<option>ipopt_solve</option>
+<option>Example</option>
+<option>speed</option>
+<option>Appendix</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down0(this)'>
+<option>AD-&gt;</option>
+<option>ad_ctor</option>
+<option>ad_assign</option>
+<option>Convert</option>
+<option>ADValued</option>
+<option>BoolValued</option>
+<option>VecAD</option>
+<option>base_require</option>
+</select>
+</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Purpose</option>
+<option>Base Type Requirements</option>
+<option>Contents</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>AD Objects</big></big></b></center>
+<br>
+<b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
+<br>
+The sections listed below describe the operations
+that are available to <a href="glossary.htm#AD of Base" target="_top"><span style='white-space: nowrap'>AD&nbsp;of&nbsp;Base</span></a>
+ objects.
+These objects are used to <a href="glossary.htm#Tape" target="_top"><span style='white-space: nowrap'>tape</span></a>
+
+an AD of 
+<code><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i></code>
+
+<a href="glossary.htm#Operation.Sequence" target="_top"><span style='white-space: nowrap'>operation&nbsp;sequence</span></a>
+.
+This operation sequence can
+be transferred to an <a href="adfun.htm" target="_top"><span style='white-space: nowrap'>ADFun</span></a>
+ object where it
+can be used to evaluate the corresponding
+function and derivative values.
+
+<br>
+<br>
+<b><big><a name="Base Type Requirements" id="Base Type Requirements">Base Type Requirements</a></big></b>
+<br>
+The 
+<code><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i></code>
+ requirements are provided by the CppAD package
+for the following base types:
+<code><font color="blue">float</font></code>,
+<code><font color="blue">double</font></code>,
+<code><font color="blue">std::complex&lt;float&gt;</font></code>,
+<code><font color="blue">std::complex&lt;double&gt;</font></code>.
+Otherwise, see <a href="base_require.htm" target="_top"><span style='white-space: nowrap'>base_require</span></a>
+.
+
+
+<br>
+<br>
+<b><big><a name="Contents" id="Contents">Contents</a></big></b>
+<br>
+<table>
+<tr><td><a href="ad_ctor.htm" target="_top">ad_ctor</a></td><td>AD&nbsp;Constructors</td></tr><tr><td><a href="ad_assign.htm" target="_top">ad_assign</a></td><td>AD&nbsp;Assignment&nbsp;Operator</td></tr><tr><td><a href="convert.htm" target="_top">Convert</a></td><td>Conversion&nbsp;and&nbsp;I/O&nbsp;of&nbsp;AD&nbsp;Objects</td></tr><tr><td><a href="advalued.htm" target="_top">ADValued</a></td><td>AD&nbsp;Valued&nbsp;Operations&nbsp;and&nbsp;Functions</td></tr><tr><td><a href="boolvalued.htm" target="_top">BoolValued</a></td><td>Bool&nbsp;Valued&nbsp;Operations&nbsp;and&nbsp;Functions&nbsp;with&nbsp;AD&nbsp;Arguments</td></tr><tr><td><a href="vecad.htm" target="_top">VecAD</a></td><td>AD&nbsp;Vectors&nbsp;that&nbsp;Record&nbsp;Index&nbsp;Operations</td></tr><tr><td><a href="base_require.htm" target="_top">base_require</a></td><td>AD&lt;Base&gt;&nbsp;Requirements&nbsp;for&nbsp;a&nbsp;CppAD&nbsp;Base&nbsp;Type</td></tr></table>
+<hr>Input File: cppad/core/user_ad.hpp
+
+</body>
+</html>

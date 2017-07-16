@@ -1,0 +1,271 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>Computing Dependency: Example and Test</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Computing Dependency: Example and Test">
+<meta name="keywords" id="keywords" content=" computing dependency: example test discussion dependency pattern computation ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_dependency.cpp_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://coin-or.github.io/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="for_sparse_hes.cpp.htm" target="_top">Prev</a>
+</td><td><a href="rc_sparsity.cpp.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>ADFun</option>
+<option>sparsity_pattern</option>
+<option>dependency.cpp</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>CppAD-&gt;</option>
+<option>Install</option>
+<option>Introduction</option>
+<option>AD</option>
+<option>ADFun</option>
+<option>preprocessor</option>
+<option>multi_thread</option>
+<option>utility</option>
+<option>ipopt_solve</option>
+<option>Example</option>
+<option>speed</option>
+<option>Appendix</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>ADFun-&gt;</option>
+<option>record_adfun</option>
+<option>drivers</option>
+<option>Forward</option>
+<option>Reverse</option>
+<option>sparsity_pattern</option>
+<option>sparse_derivative</option>
+<option>optimize</option>
+<option>abs_normal</option>
+<option>FunCheck</option>
+<option>check_for_nan</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>sparsity_pattern-&gt;</option>
+<option>for_jac_sparsity</option>
+<option>ForSparseJac</option>
+<option>rev_jac_sparsity</option>
+<option>RevSparseJac</option>
+<option>rev_hes_sparsity</option>
+<option>RevSparseHes</option>
+<option>for_hes_sparsity</option>
+<option>ForSparseHes</option>
+<option>dependency.cpp</option>
+<option>rc_sparsity.cpp</option>
+</select>
+</td>
+<td>dependency.cpp</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Discussion</option>
+<option>Dependency Pattern</option>
+<option>Computation</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>Computing Dependency: Example and Test</big></big></b></center>
+<br>
+<b><big><a name="Discussion" id="Discussion">Discussion</a></big></b>
+<br>
+The partial of an dependent variable with respect to an independent variable
+might always be zero even though the dependent variable depends on the
+value of the dependent variable. Consider the following case
+<small>@[@
+
+f(x) = {\rm sign} (x) =
+\left\{ \begin{array}{rl}
+	+1 & {\rm if} \; x > 0 \\
+	0  & {\rm if} \; x = 0 \\
+	-1 & {\rm if} \; x < 0
+\end{array} \right.
+
+@]@</small>
+In this case the value of <small>@(@
+f(x)
+@)@</small> depends on the value of <small>@(@
+x
+@)@</small>
+but CppAD always returns zero for the derivative of the <a href="sign.htm" target="_top"><span style='white-space: nowrap'>sign</span></a>
+ function.
+
+<br>
+<br>
+<b><big><a name="Dependency Pattern" id="Dependency Pattern">Dependency Pattern</a></big></b>
+<br>
+If the <code><i>i</i></code>-th dependent variables depends on the
+value of the <code><i>j</i></code>-th independent variable,
+the corresponding entry in the dependency pattern is non-zero (true).
+Otherwise it is zero (false).
+CppAD uses <a href="glossary.htm#Sparsity Pattern" target="_top"><span style='white-space: nowrap'>sparsity&nbsp;patterns</span></a>
+
+to represent dependency patterns.
+
+<br>
+<br>
+<b><big><a name="Computation" id="Computation">Computation</a></big></b>
+<br>
+The 
+<code><i><font color="black"><span style='white-space: nowrap'>dependency</span></font></i></code>
+ argument to
+<a href="for_jac_sparsity.htm#dependency" target="_top"><span style='white-space: nowrap'>for_jac_sparsity</span></a>
+ and
+<a href="revsparsejac.htm#dependency" target="_top"><span style='white-space: nowrap'>RevSparseJac</span></a>
+ is a flag that signals
+that the dependency pattern (instead of the sparsity pattern) is computed.
+
+<code><font color="blue">
+<pre><tt><b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/cppad.hpp&gt;</font>
+<b><font color="#0000FF">namespace</font></b> <font color="#FF0000">{</font>
+     <font color="#009900">double</font> <b><font color="#000000">heavyside</font></b><font color="#990000">(</font><b><font color="#0000FF">const</font></b> <font color="#009900">double</font><font color="#990000">&amp;</font> x<font color="#990000">)</font>
+     <font color="#FF0000">{</font>    <b><font color="#0000FF">if</font></b><font color="#990000">(</font> x <font color="#990000">&lt;=</font> <font color="#993399">0.0</font> <font color="#990000">)</font>
+               <b><font color="#0000FF">return</font></b> <font color="#993399">0.0</font><font color="#990000">;</font>
+          <b><font color="#0000FF">return</font></b> <font color="#993399">1.0</font><font color="#990000">;</font>
+     <font color="#FF0000">}</font>
+     <b><font color="#000000">CPPAD_DISCRETE_FUNCTION</font></b><font color="#990000">(</font><font color="#009900">double</font><font color="#990000">,</font> heavyside<font color="#990000">)</font>
+<font color="#FF0000">}</font>
+
+<font color="#009900">bool</font> <b><font color="#000000">dependency</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
+<font color="#FF0000">{</font>    <font color="#009900">bool</font> ok <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
+     <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>AD<font color="#990000">;</font>
+     <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>NearEqual<font color="#990000">;</font>
+     <b><font color="#0000FF">typedef</font></b> <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font>size_t<font color="#990000">)</font>     SizeVector<font color="#990000">;</font>
+     <b><font color="#0000FF">typedef</font></b> CppAD<font color="#990000">::</font><font color="#008080">sparse_rc&lt;SizeVector&gt;</font> sparsity<font color="#990000">;</font>
+
+     <i><font color="#9A1900">// VecAD object for use later</font></i>
+     CppAD<font color="#990000">::</font><font color="#008080">VecAD&lt;double&gt;</font> <b><font color="#000000">vec_ad</font></b><font color="#990000">(</font><font color="#993399">2</font><font color="#990000">);</font>
+     vec_ad<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">0.0</font><font color="#990000">;</font>
+     vec_ad<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">1.0</font><font color="#990000">;</font>
+
+     <i><font color="#9A1900">// domain space vector</font></i>
+     <font color="#008080">size_t</font> n  <font color="#990000">=</font> <font color="#993399">5</font><font color="#990000">;</font>
+     <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font>AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;)</font> <b><font color="#000000">ax</font></b><font color="#990000">(</font>n<font color="#990000">);</font>
+     <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> n<font color="#990000">;</font> j<font color="#990000">++)</font>
+          ax<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">=</font> AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;(</font>j <font color="#990000">+</font> <font color="#993399">1</font><font color="#990000">);</font>
+
+     <i><font color="#9A1900">// declare independent variables and start tape recording</font></i>
+     CppAD<font color="#990000">::</font><b><font color="#000000">Independent</font></b><font color="#990000">(</font>ax<font color="#990000">);</font>
+
+     <i><font color="#9A1900">// some AD constants</font></i>
+     <font color="#008080">AD&lt;double&gt;</font> <b><font color="#000000">azero</font></b><font color="#990000">(</font><font color="#993399">0.0</font><font color="#990000">),</font> <b><font color="#000000">aone</font></b><font color="#990000">(</font><font color="#993399">1.0</font><font color="#990000">);</font>
+
+     <i><font color="#9A1900">// range space vector</font></i>
+     <font color="#008080">size_t</font> m  <font color="#990000">=</font> n<font color="#990000">;</font>
+     <font color="#008080">size_t</font> m1 <font color="#990000">=</font> n <font color="#990000">-</font> <font color="#993399">1</font><font color="#990000">;</font>
+     <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font>AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;)</font> <b><font color="#000000">ay</font></b><font color="#990000">(</font>m<font color="#990000">);</font>
+     <i><font color="#9A1900">// Note that ay[m1 - j] depends on ax[j]</font></i>
+     ay<font color="#990000">[</font>m1 <font color="#990000">-</font> <font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <b><font color="#000000">sign</font></b><font color="#990000">(</font> ax<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">);</font>
+     ay<font color="#990000">[</font>m1 <font color="#990000">-</font> <font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">=</font> <b><font color="#000000">CondExpLe</font></b><font color="#990000">(</font> ax<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">],</font> azero<font color="#990000">,</font> azero<font color="#990000">,</font> aone<font color="#990000">);</font>
+     ay<font color="#990000">[</font>m1 <font color="#990000">-</font> <font color="#993399">2</font><font color="#990000">]</font> <font color="#990000">=</font> <b><font color="#000000">CondExpLe</font></b><font color="#990000">(</font> azero<font color="#990000">,</font> ax<font color="#990000">[</font><font color="#993399">2</font><font color="#990000">],</font> azero<font color="#990000">,</font> aone<font color="#990000">);</font>
+     ay<font color="#990000">[</font>m1 <font color="#990000">-</font> <font color="#993399">3</font><font color="#990000">]</font> <font color="#990000">=</font> <b><font color="#000000">heavyside</font></b><font color="#990000">(</font> ax<font color="#990000">[</font><font color="#993399">3</font><font color="#990000">]</font> <font color="#990000">);</font>
+     ay<font color="#990000">[</font>m1 <font color="#990000">-</font> <font color="#993399">4</font><font color="#990000">]</font> <font color="#990000">=</font> vec_ad<font color="#990000">[</font> ax<font color="#990000">[</font><font color="#993399">4</font><font color="#990000">]</font> <font color="#990000">-</font> AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;(</font><font color="#993399">4.0</font><font color="#990000">)</font> <font color="#990000">];</font>
+
+     <i><font color="#9A1900">// create f: x -&gt; y and stop tape recording</font></i>
+     CppAD<font color="#990000">::</font><font color="#008080">ADFun&lt;double&gt;</font> <b><font color="#000000">f</font></b><font color="#990000">(</font>ax<font color="#990000">,</font> ay<font color="#990000">);</font>
+
+     <i><font color="#9A1900">// sparsity pattern for n by n identity matrix</font></i>
+     <font color="#008080">size_t</font> nr  <font color="#990000">=</font> n<font color="#990000">;</font>
+     <font color="#008080">size_t</font> nc  <font color="#990000">=</font> n<font color="#990000">;</font>
+     <font color="#008080">size_t</font> nnz <font color="#990000">=</font> n<font color="#990000">;</font>
+     <font color="#008080">sparsity</font> <b><font color="#000000">pattern_in</font></b><font color="#990000">(</font>nr<font color="#990000">,</font> nc<font color="#990000">,</font> nnz<font color="#990000">);</font>
+     <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> k <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> k <font color="#990000">&lt;</font> nnz<font color="#990000">;</font> k<font color="#990000">++)</font>
+     <font color="#FF0000">{</font>    <font color="#008080">size_t</font> r <font color="#990000">=</font> k<font color="#990000">;</font>
+          <font color="#008080">size_t</font> c <font color="#990000">=</font> k<font color="#990000">;</font>
+          pattern_in<font color="#990000">.</font><b><font color="#000000">set</font></b><font color="#990000">(</font>k<font color="#990000">,</font> r<font color="#990000">,</font> c<font color="#990000">);</font>
+     <font color="#FF0000">}</font>
+
+     <i><font color="#9A1900">// compute dependency pattern</font></i>
+     <font color="#009900">bool</font> transpose     <font color="#990000">=</font> <b><font color="#0000FF">false</font></b><font color="#990000">;</font>
+     <font color="#009900">bool</font> dependency    <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>  <i><font color="#9A1900">// would transpose dependency pattern</font></i>
+     <font color="#009900">bool</font> internal_bool <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>  <i><font color="#9A1900">// does not affect result</font></i>
+     <font color="#008080">sparsity</font> pattern_out<font color="#990000">;</font>
+     f<font color="#990000">.</font><b><font color="#000000">for_jac_sparsity</font></b><font color="#990000">(</font>
+          pattern_in<font color="#990000">,</font> transpose<font color="#990000">,</font> dependency<font color="#990000">,</font> internal_bool<font color="#990000">,</font> pattern_out
+     <font color="#990000">);</font>
+     <b><font color="#0000FF">const</font></b> SizeVector<font color="#990000">&amp;</font> <b><font color="#000000">row</font></b><font color="#990000">(</font> pattern_out<font color="#990000">.</font><b><font color="#000000">row</font></b><font color="#990000">()</font> <font color="#990000">);</font>
+     <b><font color="#0000FF">const</font></b> SizeVector<font color="#990000">&amp;</font> <b><font color="#000000">col</font></b><font color="#990000">(</font> pattern_out<font color="#990000">.</font><b><font color="#000000">col</font></b><font color="#990000">()</font> <font color="#990000">);</font>
+     <font color="#008080">SizeVector</font> col_major <font color="#990000">=</font> pattern_out<font color="#990000">.</font><b><font color="#000000">col_major</font></b><font color="#990000">();</font>
+
+     <i><font color="#9A1900">// check result</font></i>
+     ok <font color="#990000">&amp;=</font> pattern_out<font color="#990000">.</font><b><font color="#000000">nr</font></b><font color="#990000">()</font>  <font color="#990000">==</font> n<font color="#990000">;</font>
+     ok <font color="#990000">&amp;=</font> pattern_out<font color="#990000">.</font><b><font color="#000000">nc</font></b><font color="#990000">()</font>  <font color="#990000">==</font> n<font color="#990000">;</font>
+     ok <font color="#990000">&amp;=</font> pattern_out<font color="#990000">.</font><b><font color="#000000">nnz</font></b><font color="#990000">()</font> <font color="#990000">==</font> n<font color="#990000">;</font>
+     <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> k <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> k <font color="#990000">&lt;</font> n<font color="#990000">;</font> k<font color="#990000">++)</font>
+     <font color="#FF0000">{</font>    ok <font color="#990000">&amp;=</font> row<font color="#990000">[</font> col_major<font color="#990000">[</font>k<font color="#990000">]</font> <font color="#990000">]</font> <font color="#990000">==</font> m1 <font color="#990000">-</font> k<font color="#990000">;</font>
+          ok <font color="#990000">&amp;=</font> col<font color="#990000">[</font> col_major<font color="#990000">[</font>k<font color="#990000">]</font> <font color="#990000">]</font> <font color="#990000">==</font> k<font color="#990000">;</font>
+     <font color="#FF0000">}</font>
+     <i><font color="#9A1900">// -----------------------------------------------------------</font></i>
+     <i><font color="#9A1900">// RevSparseJac and set dependency</font></i>
+     CppAD<font color="#990000">::</font><font color="#008080">vector&lt;    std::set&lt;size_t&gt; &gt;</font> <b><font color="#000000">eye_set</font></b><font color="#990000">(</font>m<font color="#990000">),</font> <b><font color="#000000">depend_set</font></b><font color="#990000">(</font>m<font color="#990000">);</font>
+     <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> m<font color="#990000">;</font> i<font color="#990000">++)</font>
+     <font color="#FF0000">{</font>    ok <font color="#990000">&amp;=</font> eye_set<font color="#990000">[</font>i<font color="#990000">].</font><b><font color="#000000">empty</font></b><font color="#990000">();</font>
+          eye_set<font color="#990000">[</font>i<font color="#990000">].</font><b><font color="#000000">insert</font></b><font color="#990000">(</font>i<font color="#990000">);</font>
+     <font color="#FF0000">}</font>
+     depend_set <font color="#990000">=</font> f<font color="#990000">.</font><b><font color="#000000">RevSparseJac</font></b><font color="#990000">(</font>n<font color="#990000">,</font> eye_set<font color="#990000">,</font> transpose<font color="#990000">,</font> dependency<font color="#990000">);</font>
+     <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> m<font color="#990000">;</font> i<font color="#990000">++)</font>
+     <font color="#FF0000">{</font>    std<font color="#990000">::</font><font color="#008080">set&lt;size_t&gt;</font> check<font color="#990000">;</font>
+          check<font color="#990000">.</font><b><font color="#000000">insert</font></b><font color="#990000">(</font>m1 <font color="#990000">-</font> i<font color="#990000">);</font>
+          ok <font color="#990000">&amp;=</font> depend_set<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">==</font> check<font color="#990000">;</font>
+     <font color="#FF0000">}</font>
+     dependency <font color="#990000">=</font> <b><font color="#0000FF">false</font></b><font color="#990000">;</font>
+     depend_set <font color="#990000">=</font> f<font color="#990000">.</font><b><font color="#000000">RevSparseJac</font></b><font color="#990000">(</font>n<font color="#990000">,</font> eye_set<font color="#990000">,</font> transpose<font color="#990000">,</font> dependency<font color="#990000">);</font>
+     <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> m<font color="#990000">;</font> i<font color="#990000">++)</font>
+          ok <font color="#990000">&amp;=</font> depend_set<font color="#990000">[</font>i<font color="#990000">].</font><b><font color="#000000">empty</font></b><font color="#990000">();</font>
+     <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
+<font color="#FF0000">}</font>
+</tt></pre>
+</font></code>
+<hr>Input File: example/sparse/dependency.cpp
+
+</body>
+</html>

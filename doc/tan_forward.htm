@@ -1,0 +1,235 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>Tangent and Hyperbolic Tangent Forward Taylor Polynomial Theory</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Tangent and Hyperbolic Tangent Forward Taylor Polynomial Theory">
+<meta name="keywords" id="keywords" content=" tangent hyperbolic forward taylor polynomial theory tan derivatives coefficients recursion ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_tan_forward_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://coin-or.github.io/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="acos_forward.htm" target="_top">Prev</a>
+</td><td><a href="erf_forward.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>Appendix</option>
+<option>Theory</option>
+<option>ForwardTheory</option>
+<option>tan_forward</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>Appendix-&gt;</option>
+<option>Faq</option>
+<option>directory</option>
+<option>Theory</option>
+<option>glossary</option>
+<option>Bib</option>
+<option>wish_list</option>
+<option>whats_new</option>
+<option>deprecated</option>
+<option>compare_c</option>
+<option>numeric_ad</option>
+<option>addon</option>
+<option>License</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>Theory-&gt;</option>
+<option>ForwardTheory</option>
+<option>ReverseTheory</option>
+<option>reverse_identity</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>ForwardTheory-&gt;</option>
+<option>exp_forward</option>
+<option>log_forward</option>
+<option>sqrt_forward</option>
+<option>sin_cos_forward</option>
+<option>atan_forward</option>
+<option>asin_forward</option>
+<option>acos_forward</option>
+<option>tan_forward</option>
+<option>erf_forward</option>
+</select>
+</td>
+<td>tan_forward</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Derivatives</option>
+<option>Taylor Coefficients Recursion</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@
+
+
+
+<center><b><big><big>Tangent and Hyperbolic Tangent Forward Taylor Polynomial Theory</big></big></b></center>
+<br>
+<b><big><a name="Derivatives" id="Derivatives">Derivatives</a></big></b>
+
+<br>
+<small>@[@
+
+\begin{array}{rcl}
+\tan^{(1)} ( u ) & = & [ \cos (u)^2 + \sin (u)^2  ] / \cos (u)^2
+\\
+& = & 1 + \tan (u)^2
+\\
+\tanh^{(1)} ( u ) & = & [ \cosh (u)^2 - \sinh (u)^2 ] / \cosh (u)^2
+\\
+& = & 1 - \tanh (u)^2
+\end{array}
+
+@]@</small>If <small>@(@
+F(u)
+@)@</small> is <small>@(@
+\tan (u)
+@)@</small> or <small>@(@
+\tanh (u)
+@)@</small>
+the corresponding derivative is given by
+<small>@[@
+
+	F^{(1)} (u) = 1 \pm F(u)^2
+
+@]@</small>
+Given <small>@(@
+X(t)
+@)@</small>, we define the function <small>@(@
+Z(t) = F[ X(t) ]
+@)@</small>.
+It follows that
+<small>@[@
+
+Z^{(1)} (t) = F^{(1)} [ X(t) ] X^{(1)} (t) = [ 1 \pm Y(t) ] X^{(1)} (t)
+
+@]@</small>
+where we define the function <small>@(@
+Y(t) = Z(t)^2
+@)@</small>.
+
+<br>
+<br>
+<b><big><a name="Taylor Coefficients Recursion" id="Taylor Coefficients Recursion">Taylor Coefficients Recursion</a></big></b>
+<br>
+Suppose that we are given the Taylor coefficients
+up to order <small>@(@
+j
+@)@</small> for the function <small>@(@
+X(t)
+@)@</small> and
+up to order <small>@(@
+j-1
+@)@</small> for the functions <small>@(@
+Y(t)
+@)@</small> and <small>@(@
+Z(t)
+@)@</small>.
+We need a formula that computes the coefficient of order <small>@(@
+j
+@)@</small>
+for <small>@(@
+Y(t)
+@)@</small> and <small>@(@
+Z(t)
+@)@</small>.
+Using the equation above for <small>@(@
+Z^{(1)} (t)
+@)@</small>, we have
+<small>@[@
+
+\begin{array}{rcl}
+\sum_{k=1}^j k z^{(k)} t^{k-1}
+& = &
+\sum_{k=1}^j k x^{(k)} t^{k-1}
+\pm
+\left[ \sum_{k=0}^{j-1} y^{(k)} t^k        \right]
+\left[ \sum_{k=1}^j k x^{(k)} t^{k-1}  \right]
++
+o( t^{j-1} )
+\end{array}
+
+@]@</small>
+Setting the coefficients of <small>@(@
+t^{j-1}
+@)@</small> equal, we have
+<small>@[@
+
+\begin{array}{rcl}
+j z^{(j)}
+=
+j x^{(j)}
+\pm
+\sum_{k=1}^j k x^{(k)} y^{(j-k)}
+\\
+z^{(j)}
+=
+x^{(j)} \pm \frac{1}{j}  \sum_{k=1}^j k x^{(k)} y^{(j-k)}
+\end{array}
+
+@]@</small>
+Once we have computed <small>@(@
+z^{(j)}
+@)@</small>,
+we can compute <small>@(@
+y^{(j)}
+@)@</small> as follows:
+<small>@[@
+
+y^{(j)} = \sum_{k=0}^j z^{(k)} z^{(j-k)}
+
+@]@</small>
+
+
+<hr>Input File: omh/appendix/theory/tan_forward.omh
+
+</body>
+</html>

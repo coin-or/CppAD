@@ -1,0 +1,227 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>ODE Fitting Using Simple Representation</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="ODE Fitting Using Simple Representation">
+<meta name="keywords" id="keywords" content=" ode fitting using simple representation cppad_ipopt_nlp purpose argument vector objective function initial condition constraint trapezoidal approximation source ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_ipopt_nlp_ode_simple_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://coin-or.github.io/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="ipopt_nlp_ode_problem.hpp.htm" target="_top">Prev</a>
+</td><td><a href="ipopt_nlp_ode_simple.hpp.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>Appendix</option>
+<option>deprecated</option>
+<option>cppad_ipopt_nlp</option>
+<option>ipopt_nlp_ode</option>
+<option>ipopt_nlp_ode_simple</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>deprecated-&gt;</option>
+<option>include_deprecated</option>
+<option>FunDeprecated</option>
+<option>CompareChange</option>
+<option>omp_max_thread</option>
+<option>TrackNewDel</option>
+<option>omp_alloc</option>
+<option>memory_leak</option>
+<option>epsilon</option>
+<option>test_vector</option>
+<option>cppad_ipopt_nlp</option>
+<option>old_atomic</option>
+<option>zdouble</option>
+<option>autotools</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>cppad_ipopt_nlp-&gt;</option>
+<option>ipopt_nlp_get_started.cpp</option>
+<option>ipopt_nlp_ode</option>
+<option>ipopt_ode_speed.cpp</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>ipopt_nlp_ode-&gt;</option>
+<option>ipopt_nlp_ode_problem</option>
+<option>ipopt_nlp_ode_simple</option>
+<option>ipopt_nlp_ode_fast</option>
+<option>ipopt_nlp_ode_run.hpp</option>
+<option>ipopt_nlp_ode_check.cpp</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down0(this)'>
+<option>ipopt_nlp_ode_simple-&gt;</option>
+<option>ipopt_nlp_ode_simple.hpp</option>
+</select>
+</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Purpose</option>
+<option>Argument Vector</option>
+<option>Objective Function</option>
+<option>Initial Condition Constraint</option>
+<option>Trapezoidal Approximation Constraint</option>
+<option>Source</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@
+
+
+<center><b><big><big>ODE Fitting Using Simple Representation</big></big></b></center>
+<br>
+<b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
+<br>
+In this section we represent the objective and constraint functions,
+(in the simultaneous forward and reverse optimization problem)
+using the <a href="cppad_ipopt_nlp.htm#Simple Representation" target="_top"><span style='white-space: nowrap'>simple&nbsp;representation</span></a>
+
+in the sense of <code><font color="blue">cppad_ipopt_nlp</font></code>.
+
+<br>
+<br>
+<b><big><a name="Argument Vector" id="Argument Vector">Argument Vector</a></big></b>
+<br>
+The argument vector that we are optimizing with respect to
+( <small>@(@
+x
+@)@</small> in <a href="cppad_ipopt_nlp.htm" target="_top"><span style='white-space: nowrap'>cppad_ipopt_nlp</span></a>
+ )
+has the following structure
+<small>@[@
+
+x = ( y^0 , \cdots , y^{S(Nz)} , a )
+
+@]@</small>
+Note that <small>@(@
+x \in \B{R}^{S(Nz) + Na}
+@)@</small> and
+<small>@[@
+
+\begin{array}{rcl}
+	y^i & = & ( x_{Ny * i} , \ldots ,  x_{Ny * i + Ny - 1} )
+	\\
+	a   & = & ( x_{Ny *S(Nz) + Ny} , \ldots , x_{Ny * S(Nz) + Na - 1} )
+\end{array}
+
+@]@</small>
+
+<br>
+<br>
+<b><big><a name="Objective Function" id="Objective Function">Objective Function</a></big></b>
+<br>
+The objective function
+( <small>@(@
+fg_0 (x)
+@)@</small> in <a href="cppad_ipopt_nlp.htm" target="_top"><span style='white-space: nowrap'>cppad_ipopt_nlp</span></a>
+ )
+has the following representation,
+<small>@[@
+
+	fg_0 (x) = \sum_{i=1}^{Nz} H_i ( y^{S(i)} , a )
+
+@]@</small>
+
+<br>
+<br>
+<b><big><a name="Initial Condition Constraint" id="Initial Condition Constraint">Initial Condition Constraint</a></big></b>
+<br>
+For <small>@(@
+i = 1 , \ldots , Ny
+@)@</small>,
+we define the component functions <small>@(@
+fg_i (x)
+@)@</small>,
+and corresponding constraint equations, by
+<small>@[@
+
+	0 = fg_i ( x ) = y_i^0 - F_i (a)
+
+@]@</small>
+
+<br>
+<br>
+<b><big><a name="Trapezoidal Approximation Constraint" id="Trapezoidal Approximation Constraint">Trapezoidal Approximation Constraint</a></big></b>
+<br>
+For <small>@(@
+i = 1, \ldots , S(Nz)
+@)@</small>,
+and for <small>@(@
+j = 1 , \ldots , Ny
+@)@</small>,
+we define the component functions <small>@(@
+fg_{Ny*i + j} (x)
+@)@</small>,
+and corresponding constraint equations, by
+<small>@[@
+
+0 = fg_{Ny*i + j } = y_j^{i}  -  y_j^{i-1} -
+	\left[ G_j ( y^i , a ) + G_j ( y^{i-1} , a ) \right] *
+		\frac{t_i - t_{i-1} }{ 2 }
+
+@]@</small>
+
+
+<br>
+<br>
+<b><big><a name="Source" id="Source">Source</a></big></b>
+<br>
+The file <a href="ipopt_nlp_ode_simple.hpp.htm" target="_top"><span style='white-space: nowrap'>ipopt_nlp_ode_simple.hpp</span></a>
+
+contains source code for this representation of the
+objective and constraints.
+
+
+<hr>Input File: cppad_ipopt/example/ode2.omh
+
+</body>
+</html>

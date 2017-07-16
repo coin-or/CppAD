@@ -1,0 +1,789 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>CppAD Changes and Additions During 2013</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="CppAD Changes and Additions During 2013">
+<meta name="keywords" id="keywords" content=" cppad changes additions during 2013 introduction 12-29 12-27 12-26 12-24 11-27 11-13 11-12 10-29 10-23 10-22 10-16 10-15 10-14 10-13 10-12 09-20 09-19 09-18 09-07 08-12 08-11 08-06 07-26 05-28 05-21 05-17 05-15 05-14 05-12 05-11 05-04 04-28 04-27 04-26 ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_whats_new_13_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://coin-or.github.io/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="whats_new_14.htm" target="_top">Prev</a>
+</td><td><a href="whats_new_12.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>Appendix</option>
+<option>whats_new</option>
+<option>whats_new_13</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>CppAD-&gt;</option>
+<option>Install</option>
+<option>Introduction</option>
+<option>AD</option>
+<option>ADFun</option>
+<option>preprocessor</option>
+<option>multi_thread</option>
+<option>utility</option>
+<option>ipopt_solve</option>
+<option>Example</option>
+<option>speed</option>
+<option>Appendix</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>Appendix-&gt;</option>
+<option>Faq</option>
+<option>directory</option>
+<option>Theory</option>
+<option>glossary</option>
+<option>Bib</option>
+<option>wish_list</option>
+<option>whats_new</option>
+<option>deprecated</option>
+<option>compare_c</option>
+<option>numeric_ad</option>
+<option>addon</option>
+<option>License</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>whats_new-&gt;</option>
+<option>whats_new_17</option>
+<option>whats_new_16</option>
+<option>whats_new_15</option>
+<option>whats_new_14</option>
+<option>whats_new_13</option>
+<option>whats_new_12</option>
+<option>whats_new_11</option>
+<option>whats_new_10</option>
+<option>whats_new_09</option>
+<option>whats_new_08</option>
+<option>whats_new_07</option>
+<option>whats_new_06</option>
+<option>whats_new_05</option>
+<option>whats_new_04</option>
+<option>whats_new_03</option>
+</select>
+</td>
+<td>whats_new_13</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Introduction</option>
+<option>12-29</option>
+<option>12-27</option>
+<option>12-26</option>
+<option>12-24</option>
+<option>11-27</option>
+<option>11-13</option>
+<option>11-12</option>
+<option>10-29</option>
+<option>10-23</option>
+<option>10-22</option>
+<option>10-16</option>
+<option>10-15</option>
+<option>10-14</option>
+<option>10-13</option>
+<option>10-12</option>
+<option>09-20</option>
+<option>09-19</option>
+<option>09-18</option>
+<option>09-07</option>
+<option>08-12</option>
+<option>08-11</option>
+<option>08-06</option>
+<option>07-26</option>
+<option>05-28</option>
+<option>05-21</option>
+<option>05-17</option>
+<option>05-15</option>
+<option>05-14</option>
+<option>05-12</option>
+<option>05-11</option>
+<option>05-04</option>
+<option>04-28</option>
+<option>04-27</option>
+<option>04-26</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@
+
+
+
+<center><b><big><big>CppAD Changes and Additions During 2013</big></big></b></center>
+<br>
+<b><big><a name="Introduction" id="Introduction">Introduction</a></big></b>
+<br>
+This section contains a list of the changes to CppAD during 2013
+(in reverse order by date).
+The purpose of this section is to
+assist you in learning about changes between various versions of CppAD.
+
+<br>
+<br>
+<b><big><a name="12-29" id="12-29">12-29</a></big></b>
+
+<ol type="1"><li>
+The include file
+<a href="cppad_eigen.hpp.htm" target="_top"><span style='white-space: nowrap'>cppad_eigen.hpp</span></a>
+ now automatically includes <code><font color="blue">cppad.hpp</font></code>.
+</li><li>
+
+There was a problem with this automation
+when <code><font color="blue">eigen</font></code> was used for the cppad <a href="testvector.htm" target="_top"><span style='white-space: nowrap'>testvector</span></a>
+.
+This has been fixed.
+</li><li>
+
+There was a problem with deprecated <a href="autotools.htm" target="_top"><span style='white-space: nowrap'>autotools</span></a>
+
+(created when optional implicit constructor from any type was added).
+This has been fixed by adding the
+<code><font color="blue">--with-implicit_ctor</font></code> option
+(later removed on <a href="whats_new_17.htm#02-10" target="_top"><span style='white-space: nowrap'>2017-02-10</span></a>
+.)
+</li></ol>
+
+
+<br>
+<br>
+<b><big><a name="12-27" id="12-27">12-27</a></big></b>
+<br>
+The constructor from an arbitrary type to 
+<code><font color="blue"><span style='white-space: nowrap'>AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code>
+ was
+implicit, but there was no specification to this effect.
+The caused problems when using CppAD with
+<a href="eigen_prefix.htm" target="_top"><span style='white-space: nowrap'>eigen&nbsp;3.2</span></a>
+ (scheduled to be fixed in 3.3).
+The default for this constructor has been changed to be
+<a href="ad_ctor.htm#x.explicit" target="_top"><span style='white-space: nowrap'>explicit</span></a>
+.
+In addition, other
+<a href="ad_ctor.htm#x.implicit" target="_top"><span style='white-space: nowrap'>implicit</span></a>
+ constructors
+are now listed in the documentation.
+<code><span style='white-space: nowrap'><br>
+<br>
+</span></code>If you get a compiler error on an constructor / assignment of the form
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;x&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+(that used to work) try changing the constructor call to
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;(&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;)<br>
+</span></font></code>
+A deprecated alternative is to make this constructor implicit using the
+<a href="cmake.htm#cppad_deprecated" target="_top"><span style='white-space: nowrap'>cppad_deprecated</span></a>
+
+option during the install procedure.
+
+<br>
+<br>
+<b><big><a name="12-26" id="12-26">12-26</a></big></b>
+<br>
+Document fact that
+<a href="download.htm#Monthly Versions" target="_top"><span style='white-space: nowrap'>monthly&nbsp;versions</span></a>
+
+of the CppAD compressed tar file last till the end of the year.
+
+<br>
+<br>
+<b><big><a name="12-24" id="12-24">12-24</a></big></b>
+<br>
+The interface to <a href="cppad_eigen.hpp.htm" target="_top"><span style='white-space: nowrap'>eigen</span></a>
+ defined a function
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NumTraits&lt;&nbsp;CppAD::AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;&gt;::dummy_epsilon()<br>
+</span></font></code>
+that should have been named <code><font color="blue">dummy_precision()</font></code>.
+This has been fixed.
+
+<br>
+<br>
+<b><big><a name="11-27" id="11-27">11-27</a></big></b>
+
+<ol type="1"><li>
+Fix bug when using <a href="optimize.htm" target="_top"><span style='white-space: nowrap'>optimize</span></a>
+ with an <a href="adfun.htm" target="_top"><span style='white-space: nowrap'>ADFun</span></a>
+ object containing
+the <a href="sign.htm" target="_top"><span style='white-space: nowrap'>sign</span></a>
+ function.
+</li><li>
+
+Add <a href="atomic_norm_sq.cpp.htm" target="_top"><span style='white-space: nowrap'>atomic_norm_sq.cpp</span></a>
+, an atomic function example
+with domain dimension two and range dimension one.
+</li></ol>
+
+
+<br>
+<br>
+<b><big><a name="11-13" id="11-13">11-13</a></big></b>
+<br>
+It used to be that one had to define the <code><font color="blue">std::set</font></code> version of
+<a href="atomic_rev_sparse_jac.htm" target="_top"><span style='white-space: nowrap'>atomic_rev_sparse_jac</span></a>
+ for each atomic function that was
+part of an <a href="adfun.htm" target="_top"><span style='white-space: nowrap'>ADFun</span></a>
+ object that was <a href="optimize.htm" target="_top"><span style='white-space: nowrap'>optimized</span></a>
+.
+Now the current
+<a href="atomic_option.htm#atomic_sparsity" target="_top"><span style='white-space: nowrap'>atomic_sparsity</span></a>
+ setting is used
+to determine if the <code><font color="blue">bool</font></code> or <code><font color="blue">std::set</font></code> version of
+<code><font color="blue">rev_sparse_jac</font></code> is used by the optimization process.
+
+<br>
+<br>
+<b><big><a name="11-12" id="11-12">11-12</a></big></b>
+<br>
+Error detection and reporting (when <code><font color="blue">NDEBUG</font></code> is not defined)
+has been added for the following case:
+Using <a href="optimize.htm" target="_top"><span style='white-space: nowrap'>optimize</span></a>
+
+with <a href="atomic_base.htm" target="_top"><span style='white-space: nowrap'>atomic_base</span></a>
+ functions that have not defined
+<a href="optimize.htm#Atomic Functions.rev_sparse_jac" target="_top"><span style='white-space: nowrap'>rev_sparse_jac</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="10-29" id="10-29">10-29</a></big></b>
+<br>
+The <a href="condexp.htm#Optimize" target="_top"><span style='white-space: nowrap'>optimization</span></a>
+
+now handles nested conditional expressions.
+For example, give the code
+<code><font color='blue'><pre style='display:inline'> 
+     x = CondExpLt(left_x, right_x, true_x, false_x)
+     y = CondExpGt(left_y, right_y, true_y, false_y)
+     z = CondExpEq(left_z, right_z, x, y)
+</pre></font></code>
+only two of the conditional expressions will be evaluated
+(one will be skipped depending on the result of <code><font color="blue">left_z == right_z</font></code>).
+For more details, see <a href="optimize_nest_conditional.cpp.htm" target="_top"><span style='white-space: nowrap'>optimize_nest_conditional.cpp</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="10-23" id="10-23">10-23</a></big></b>
+
+<ol type="1"><li>
+Fix a bug in the optimization of calls to <a href="atomic.htm" target="_top"><span style='white-space: nowrap'>atomic</span></a>
+ functions.
+This bug existed before recent change to optimizing conditional expressions.
+This required adding the
+<a href="revsparsejac.htm#dependency" target="_top"><span style='white-space: nowrap'>dependency</span></a>
+ argument to the
+reverse Jacobian sparsity pattern calculation.
+</li><li>
+
+Fix the deprecated autotools install (see <a href="autotools.htm" target="_top"><span style='white-space: nowrap'>autotools</span></a>
+)
+which was broken by the changes on 10-22.
+To be specific, the
+example for <a href="number_skip.htm" target="_top"><span style='white-space: nowrap'>number_skip</span></a>
+ was not being included.
+</li></ol>
+
+
+<br>
+<br>
+<b><big><a name="10-22" id="10-22">10-22</a></big></b>
+
+<ol type="1"><li>
+Add <a href="optimize.htm" target="_top"><span style='white-space: nowrap'>optimization</span></a>
+ of conditional expressions; see
+<a href="condexp.htm#Optimize" target="_top"><span style='white-space: nowrap'>CondExp</span></a>
+.
+</li><li>
+
+Add a phantom argument at the beginning of the operations sequence;
+<a href="seq_property.htm#size_op_arg" target="_top"><span style='white-space: nowrap'>size_op_arg</span></a>
+ and <a href="seq_property.cpp.htm" target="_top"><span style='white-space: nowrap'>seq_property.cpp</span></a>
+.
+(This helps with the optimization mentioned above.)
+</li><li>
+
+Add the function <a href="number_skip.htm" target="_top"><span style='white-space: nowrap'>number_skip</span></a>
+ to measure how much optimization
+of the conditional expressions there is.
+</li></ol>
+
+
+<br>
+<br>
+<b><big><a name="10-16" id="10-16">10-16</a></big></b>
+<br>
+Fix bug in <a href="wish_list.htm#Tracing" target="_top"><span style='white-space: nowrap'>Tracing</span></a>
+ <a href="atomic.htm" target="_top"><span style='white-space: nowrap'>atomic</span></a>
+ functions.
+
+<br>
+<br>
+<b><big><a name="10-15" id="10-15">10-15</a></big></b>
+<br>
+The documentation for the class
+<a href="cppad_vector.htm#vectorBool" target="_top"><span style='white-space: nowrap'>vectorBool</span></a>
+ was improved.
+
+<br>
+<br>
+<b><big><a name="10-14" id="10-14">10-14</a></big></b>
+<br>
+The script <a href="get_adolc.sh.htm" target="_top"><span style='white-space: nowrap'>get_adolc.sh</span></a>
+ was added
+(for downloading and installing
+<a href="https://projects.coin-or.org/ADOL-C" target="_top"><span style='white-space: nowrap'>ADOL-C</span></a>
+) in the
+<code><font color="blue">build</font></code> directory.
+Note that this local install of Adolc requires ColPack; see
+<a href="get_colpack.sh.htm" target="_top"><span style='white-space: nowrap'>get_colpack.sh</span></a>
+.
+In addition, the requirement that ColPack and Adolc are installed
+with the same prefix was added.
+
+<br>
+<br>
+<b><big><a name="10-13" id="10-13">10-13</a></big></b>
+<br>
+Make sure that all of the
+<a href="cppad.htm#Preprocessor Symbols" target="_top"><span style='white-space: nowrap'>preprocessor&nbsp;symbols</span></a>
+,
+that are not part of the CppAD API, are undefined when the
+<code><font color="blue">&lt;cppad/cppad.hpp&gt;</font></code> file concludes.
+
+<br>
+<br>
+<b><big><a name="10-12" id="10-12">10-12</a></big></b>
+
+<ol type="1"><li>
+Change <a href="get_eigen.sh.htm" target="_top"><span style='white-space: nowrap'>get_eigen.sh</span></a>
+ so that it will reuse install information
+when it is present.
+In addition document reuse for
+<a href="get_eigen.sh.htm#Reuse" target="_top"><span style='white-space: nowrap'>get_eigen.sh</span></a>
+,
+<a href="get_ipopt.sh.htm#Reuse" target="_top"><span style='white-space: nowrap'>get_ipopt.sh</span></a>
+, and
+<a href="get_sacado.sh.htm#Reuse" target="_top"><span style='white-space: nowrap'>get_sacado.sh</span></a>
+.
+</li><li>
+
+Fix following <code><font color="blue">g++</font></code> error on OSX system:
+<code><font color='blue'><pre style='display:inline'> 
+error: no match for 'operator|=' (operand types are
+'std::vector&lt;bool&gt;::reference {aka std::_Bit_reference}' and 'bool')
+    Check[i * n + j] |= F2[i * n + k] &amp; r[ k * n + j];
+                     ^
+</pre></font></code>
+</li></ol>
+<br>
+<b><big><a name="09-20" id="09-20">09-20</a></big></b>
+
+<ol type="1"><li>
+Add lines for <a href="atomic_base.htm" target="_top"><span style='white-space: nowrap'>atomic_base</span></a>
+ function documentation
+to both the definition and use of each operation.
+This required adding sub-headings in the example usages
+corresponding to the function documentation sections.
+For example; see
+<a href="atomic_forward.htm#Examples" target="_top"><span style='white-space: nowrap'>atomic&nbsp;forward&nbsp;examples</span></a>
+.
+</li><li>
+
+Improve the documentation for <a href="atomic_base_clear.htm" target="_top"><span style='white-space: nowrap'>atomic_base_clear</span></a>
+
+and remove its use from the
+<a href="atomic_base.htm#Examples" target="_top"><span style='white-space: nowrap'>atomic_base&nbsp;examples</span></a>
+
+(because it is not needed).
+</li></ol>
+
+
+<br>
+<br>
+<b><big><a name="09-19" id="09-19">09-19</a></big></b>
+<br>
+Add links from the <a href="atomic_base.htm" target="_top"><span style='white-space: nowrap'>atomic_base</span></a>
+ functions documentation
+to the corresponding examples.
+This required adding headings in the examples that
+correspond to the function documentation sections.
+For example; see
+<a href="atomic_forward.htm#Examples" target="_top"><span style='white-space: nowrap'>atomic&nbsp;forward&nbsp;examples</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="09-18" id="09-18">09-18</a></big></b>
+
+<ol type="1"><li>
+A segmentation fault would occur if
+an <a href="adfun.htm" target="_top"><span style='white-space: nowrap'>ADFun</span></a>
+ object used an <a href="atomic.htm" target="_top"><span style='white-space: nowrap'>atomic</span></a>
+
+function that had been deleted.
+This has been fixed so that when <code><font color="blue">NDEBUG</font></code> is not defined,
+an error message is generated.
+</li><li>
+
+A mistake in the documentation for
+<a href="cppad_vector.htm#Memory and Parallel Mode" target="_top"><span style='white-space: nowrap'>Memory&nbsp;and&nbsp;Parallel&nbsp;Mode</span></a>
+
+has been fixed.
+This corresponds to the change in the specifications for
+<a href="cppad_vector.htm#resize" target="_top"><span style='white-space: nowrap'>CppAD::vector::resize</span></a>
+ made on
+<a href="whats_new_12.htm#07-30" target="_top"><span style='white-space: nowrap'>2012-07-30</span></a>
+
+</li><li>
+
+There was a bug during the
+<a href="check_for_nan.htm" target="_top"><span style='white-space: nowrap'>checking&nbsp;for&nbsp;nan</span></a>
+ during
+<a href="reverse.htm" target="_top"><span style='white-space: nowrap'>reverse</span></a>
+ mode.
+This has been fixed.
+</li><li>
+
+It appears, from inspecting the Ipopt source file
+<code><font color="blue">Ipopt/src/Algorithm/IpIpoptAlg.cpp</font></code> that the option <code><font color="blue">sb</font></code>
+to <code><font color="blue">yes</font></code> suppress the printing of the Ipopt banner.
+The Ipopt examples and tests have been changed to use this option
+(although it is not in the ipopt documentation).
+</li><li>
+
+Fix the a typo in the documentation for <code><font color="blue">ipopt_solve</font></code>
+<a href="ipopt_solve.htm#options.Integer" target="_top"><span style='white-space: nowrap'>Integer</span></a>
+ options
+(<code><font color="blue">Numeric</font></code> was changed to <code><font color="blue">Integer</font></code>).
+</li></ol>
+
+
+<br>
+<br>
+<b><big><a name="09-07" id="09-07">09-07</a></big></b>
+<br>
+There was a bug in the cumulative sum operator
+(which is used by <a href="optimize.htm" target="_top"><span style='white-space: nowrap'>optimize</span></a>
+ )
+for <a href="forward.htm" target="_top"><span style='white-space: nowrap'>Forward</span></a>
+ orders greater than zero.
+This was detected by the <a href="checkpoint.htm" target="_top"><span style='white-space: nowrap'>checkpoint</span></a>
+ tests
+when <code><font color="blue">optimize</font></code> was used to make the
+checkpoint functions faster.
+The bug has been fixed and the checkpoint functions now use
+optimize (and hence should be faster).
+
+<br>
+<br>
+<b><big><a name="08-12" id="08-12">08-12</a></big></b>
+
+<ol type="1"><li>
+The ability to turn on and off checking for <a href="nan.htm" target="_top"><span style='white-space: nowrap'>nan</span></a>
+ in
+<a href="forward.htm" target="_top"><span style='white-space: nowrap'>Forward</span></a>
+ mode results has been added; see <a href="check_for_nan.htm" target="_top"><span style='white-space: nowrap'>check_for_nan</span></a>
+.
+</li><li>
+
+Use this option to remove the need to handel <code><font color="blue">nan</font></code> as a special
+case in <a href="checkpoint.htm" target="_top"><span style='white-space: nowrap'>checkpoint</span></a>
+ functions that
+<a href="optimize.htm#Atomic Functions" target="_top"><span style='white-space: nowrap'>atomic&nbsp;functions</span></a>
+ in within
+another function is optimized.
+</li><li>
+
+Check <a href="reverse_any.htm" target="_top"><span style='white-space: nowrap'>reverse</span></a>
+  mode results when
+<a href="check_for_nan.htm" target="_top"><span style='white-space: nowrap'>check_for_nan</span></a>
+ is true.
+(It used to be the case that only <a href="forward_order.htm" target="_top"><span style='white-space: nowrap'>forward</span></a>
+ results
+were checked for <code><font color="blue">nan</font></code>.)
+</li></ol>
+
+
+<br>
+<br>
+<b><big><a name="08-11" id="08-11">08-11</a></big></b>
+<br>
+If an <a href="atomic.htm" target="_top"><span style='white-space: nowrap'>atomic</span></a>
+ function had arguments that did not affect
+the final dependent variables in 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+,
+<a href="optimize.htm" target="_top"><span style='white-space: nowrap'>f.optimize()</span></a>
+ would fail.
+This has been fixed.
+In addition, documentation about using <code><font color="blue">optimize</font></code>
+with <a href="optimize.htm#Atomic Functions" target="_top"><span style='white-space: nowrap'>atomic&nbsp;functions</span></a>
+ has been added.
+
+<br>
+<br>
+<b><big><a name="08-06" id="08-06">08-06</a></big></b>
+<br>
+Fix a case where the test <code><font color="blue">test_more/num_limits.cpp</font></code> failed because
+<code><font color='blue'><pre style='display:inline'> 
+     double inf   = std::numeric_limits&lt;double&gt;::infinity();
+     double check = std::complex&lt;double&gt;(inf) / std::complex&lt;float&gt;(1.)
+</pre></font></code>
+can result in the imaginary part of <code><font color="blue">check</font></code> being <code><font color="blue">- nan</font></code>.
+
+<br>
+<br>
+<b><big><a name="07-26" id="07-26">07-26</a></big></b>
+<br>
+Allow for use of <code><font color="blue">const::string&amp;</font></code> as a possible type for
+<a href="atomic_ctor.htm#atomic_base.name" target="_top"><span style='white-space: nowrap'>name</span></a>
+ in the <code><font color="blue">atomic_base</font></code>
+constructor.
+
+<br>
+<br>
+<b><big><a name="05-28" id="05-28">05-28</a></big></b>
+<br>
+Remove 
+<code><i><font color="black"><span style='white-space: nowrap'>ok</span></font></i></code>
+ return flag from
+<a href="checkpoint.htm#algo" target="_top"><span style='white-space: nowrap'>checkpoint&nbsp;algo</span></a>
+
+and
+<a href="checkpoint.htm#atom_fun" target="_top"><span style='white-space: nowrap'>checkpoint&nbsp;atom_fun</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="05-21" id="05-21">05-21</a></big></b>
+
+<ol type="1"><li>
+Deprecate the <a href="old_atomic.htm" target="_top"><span style='white-space: nowrap'>old_atomic</span></a>
+ interface and replace it by the
+<a href="atomic_base.htm" target="_top"><span style='white-space: nowrap'>atomic_base</span></a>
+ and <a href="checkpoint.htm" target="_top"><span style='white-space: nowrap'>checkpoint</span></a>
+ interfaces.
+</li><li>
+
+There was a problem with the <a href="cmake.htm" target="_top"><span style='white-space: nowrap'>cmake</span></a>
+ command
+if the <a href="cmake.htm#cppad_cxx_flags" target="_top"><span style='white-space: nowrap'>cppad_cxx_flags</span></a>
+ was not specified.
+This has been fixed.
+</li></ol>
+
+
+
+<br>
+<br>
+<b><big><a name="05-17" id="05-17">05-17</a></big></b>
+
+<ol type="1"><li>
+Add the <a href="forsparsejac.htm#transpose" target="_top"><span style='white-space: nowrap'>transpose</span></a>
+ option to
+<a href="forsparsejac.htm" target="_top"><span style='white-space: nowrap'>ForSparseJac</span></a>
+.
+</li><li>
+
+Add the <a href="revsparsehes.htm#transpose" target="_top"><span style='white-space: nowrap'>transpose</span></a>
+ option to
+<a href="revsparsehes.htm" target="_top"><span style='white-space: nowrap'>RevSparseHes</span></a>
+.
+</li></ol>
+
+
+<br>
+<br>
+<b><big><a name="05-15" id="05-15">05-15</a></big></b>
+<br>
+Change <a href="revsparsejac.htm" target="_top"><span style='white-space: nowrap'>RevSparseJac</span></a>
+ parameter names to be closer to the
+<a href="forsparsejac.htm" target="_top"><span style='white-space: nowrap'>ForSparseJac</span></a>
+ names so the difference is clearer.
+
+<br>
+<br>
+<b><big><a name="05-14" id="05-14">05-14</a></big></b>
+
+<ol type="1"><li>
+The <a href="checkpoint.htm" target="_top"><span style='white-space: nowrap'>checkpoint</span></a>
+ class has been added.
+This is a much easier way to do checkpointing than the
+old checkpoint example.
+The old checkpointing example is now the <a href="reverse_checkpoint.cpp.htm" target="_top"><span style='white-space: nowrap'>reverse_checkpoint.cpp</span></a>
+ example.
+</li><li>
+
+Fix bug in <a href="revsparsejac.htm" target="_top"><span style='white-space: nowrap'>RevSparseJac</span></a>
+ for case when <a href="revsparsejac.htm#q" target="_top"><span style='white-space: nowrap'>q</span></a>
+
+was not equal to 
+<code><i><font color="black"><span style='white-space: nowrap'>m</span></font></i></code>
+ (range dimension) and sparsity pattern was a
+vector of <code><font color="blue">bool</font></code>.
+</li><li>
+
+Add the <a href="revsparsejac.htm#transpose" target="_top"><span style='white-space: nowrap'>transpose</span></a>
+ option to
+<a href="revsparsejac.htm" target="_top"><span style='white-space: nowrap'>RevSparseJac</span></a>
+.
+</li></ol>
+
+
+<br>
+<br>
+<b><big><a name="05-12" id="05-12">05-12</a></big></b>
+<br>
+The sparse hessian example in <a href="old_reciprocal.cpp.htm" target="_top"><span style='white-space: nowrap'>old_reciprocal.cpp</span></a>
+ was not
+being run. This has been fixed.
+
+<br>
+<br>
+<b><big><a name="05-11" id="05-11">05-11</a></big></b>
+<br>
+The <a href="old_atomic.htm#Example" target="_top"><span style='white-space: nowrap'>old_atomic&nbsp;examples</span></a>
+
+names were all changed to begin with <code><font color="blue">user</font></code>.
+
+<br>
+<br>
+<b><big><a name="05-04" id="05-04">05-04</a></big></b>
+<br>
+The option to compute
+<a href="forward_order.htm#xq.Multiple Orders" target="_top"><span style='white-space: nowrap'>multiple&nbsp;orders</span></a>
+ was added.
+The <a href="old_usead_2.cpp.htm" target="_top"><span style='white-space: nowrap'>old_usead_2.cpp</span></a>
+ example shows the need for this.
+The problem is that a new atomic function interface needs to be designed
+with checkpointing as a particular application.
+Multiple order forward mode is the first step in this direction.
+
+<br>
+<br>
+<b><big><a name="04-28" id="04-28">04-28</a></big></b>
+
+<ol type="1"><li>
+The scripts <a href="get_eigen.sh.htm" target="_top"><span style='white-space: nowrap'>get_eigen.sh</span></a>
+ and <a href="get_sacado.sh.htm" target="_top"><span style='white-space: nowrap'>get_sacado.sh</span></a>
+ were added.
+If you are using Unix, and you do not have
+<a href="http://eigen.tuxfamily.org" target="_top"><span style='white-space: nowrap'>Eigen</span></a>
+ or
+<a href="http://trilinos.sandia.gov/packages/sacado" target="_top"><span style='white-space: nowrap'>Sacado</span></a>
+
+installed on your system, you can use the corresponding script
+to download and install a local copy for use when testing CppAD.
+</li><li>
+
+The code 
+<code><font color="blue"><span style='white-space: nowrap'>std::cout&nbsp;&lt;&lt;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>X</span></font></i></code>
+,
+would generate a compile error when 
+<code><i><font color="black"><span style='white-space: nowrap'>X</span></font></i></code>
+ was an Eigen matrix
+with 
+<code><font color="blue"><span style='white-space: nowrap'>CppAD::AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code>
+ elements.
+This has been fixed.
+</li></ol>
+
+
+
+<br>
+<br>
+<b><big><a name="04-27" id="04-27">04-27</a></big></b>
+<br>
+There was a problem using the output operator <code><font color="blue">&lt;&lt;</font></code> with
+and <a href="cppad_eigen.hpp.htm" target="_top"><span style='white-space: nowrap'>eigen</span></a>
+ matrix of <code><font color="blue">AD</font></code> elements.
+This has been fixed using a template partial specialization of
+<code><font color='blue'><pre style='display:inline'> 
+     template&lt;typename Scalar, bool IsInteger&gt;
+     struct significant_decimals_default_impl
+</pre></font></code>
+because the original template requires definition of a implicit conversion
+from the scalar type to an <code><font color="blue">int</font></code> and this is dangerous for AD types
+(note that <a href="integer.htm" target="_top"><span style='white-space: nowrap'>Integer</span></a>
+ is used for explicit conversions).
+
+
+<br>
+<br>
+<b><big><a name="04-26" id="04-26">04-26</a></big></b>
+
+<ol type="1"><li>
+The example <a href="old_usead_2.cpp.htm" target="_top"><span style='white-space: nowrap'>old_usead_2.cpp</span></a>
+ was completed.
+This is a more realistic, but also more complicated, example of
+using AD to computed derivatives inside an atomic function.
+</li><li>
+
+The script <a href="get_fadbad.sh.htm" target="_top"><span style='white-space: nowrap'>get_fadbad.sh</span></a>
+ has been added.
+If you are using Unix, and you do not have
+<a href="http://www.fadbad.com" target="_top"><span style='white-space: nowrap'>FADBAD</span></a>
+
+installed on your system, you can use this script
+to download and install a local copy for use when testing CppAD.
+</li></ol>
+
+
+
+<hr>Input File: omh/appendix/whats_new/whats_new_13.omh
+
+</body>
+</html>

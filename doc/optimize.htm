@@ -1,0 +1,394 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>Optimize an ADFun Object Tape</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Optimize an ADFun Object Tape">
+<meta name="keywords" id="keywords" content=" optimize adfun object tape sequence operations speed memory Ndebug syntax purpose f options no_conditional_skip no_compare_op no_print_for_op examples efficiency testing atomic functions rev_sparse_jac nan checking optimization ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_optimize_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://coin-or.github.io/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="sparse_sub_hes.cpp.htm" target="_top">Prev</a>
+</td><td><a href="optimize_forward_active.cpp.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>ADFun</option>
+<option>optimize</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>CppAD-&gt;</option>
+<option>Install</option>
+<option>Introduction</option>
+<option>AD</option>
+<option>ADFun</option>
+<option>preprocessor</option>
+<option>multi_thread</option>
+<option>utility</option>
+<option>ipopt_solve</option>
+<option>Example</option>
+<option>speed</option>
+<option>Appendix</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>ADFun-&gt;</option>
+<option>record_adfun</option>
+<option>drivers</option>
+<option>Forward</option>
+<option>Reverse</option>
+<option>sparsity_pattern</option>
+<option>sparse_derivative</option>
+<option>optimize</option>
+<option>abs_normal</option>
+<option>FunCheck</option>
+<option>check_for_nan</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down0(this)'>
+<option>optimize-&gt;</option>
+<option>optimize_forward_active.cpp</option>
+<option>optimize_reverse_active.cpp</option>
+<option>optimize_compare_op.cpp</option>
+<option>optimize_print_for.cpp</option>
+<option>optimize_conditional_skip.cpp</option>
+<option>optimize_nest_conditional.cpp</option>
+<option>optimize_cumulative_sum.cpp</option>
+</select>
+</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Syntax</option>
+<option>Purpose</option>
+<option>f</option>
+<option>options</option>
+<option>---..no_conditional_skip</option>
+<option>---..no_compare_op</option>
+<option>---..no_print_for_op</option>
+<option>Examples</option>
+<option>Efficiency</option>
+<option>Speed Testing</option>
+<option>Atomic Functions</option>
+<option>---..rev_sparse_jac</option>
+<option>---..nan</option>
+<option>Checking Optimization</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>Optimize an ADFun Object Tape</big></big></b></center>
+<br>
+<b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
+
+<br>
+
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.optimize()<br>
+</span></font></code>
+
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.optimize(</span></font><i><font color="black"><span style='white-space: nowrap'>options</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+<br>
+<b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
+<br>
+The operation sequence corresponding to an <a href="adfun.htm" target="_top"><span style='white-space: nowrap'>ADFun</span></a>
+ object can
+be very large and involve many operations; see the
+size functions in <a href="seq_property.htm" target="_top"><span style='white-space: nowrap'>seq_property</span></a>
+.
+The 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.optimize</span></font></code>
+ procedure reduces the number of operations,
+and thereby the time and the memory, required to
+compute function and derivative values.
+
+<br>
+<br>
+<b><big><a name="f" id="f">f</a></big></b>
+<br>
+The object 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ADFun&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+<br>
+<b><big><a name="options" id="options">options</a></big></b>
+<br>
+This argument has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;std::string&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>options</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+The default for 
+<code><i><font color="black"><span style='white-space: nowrap'>options</span></font></i></code>
+ is the empty string.
+If it is present, it must consist of one or more of the options below
+separated by a single space character.
+
+<br>
+<br>
+<b><a name="options.no_conditional_skip" id="options.no_conditional_skip">no_conditional_skip</a></b>
+<br>
+The <code><font color="blue">optimize</font></code> function can create conditional skip operators
+to improve the speed of conditional expressions; see
+<a href="condexp.htm#Optimize" target="_top"><span style='white-space: nowrap'>optimize</span></a>
+.
+If the sub-string <code><font color="blue">no_conditional_skip</font></code> appears in 
+<code><i><font color="black"><span style='white-space: nowrap'>options</span></font></i></code>
+,
+conditional skip operations are not be generated.
+This may make the optimize routine use significantly less memory
+and take less time to optimize 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+.
+If conditional skip operations are generated,
+it may save a significant amount of time when
+using 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+ for <a href="forward.htm" target="_top"><span style='white-space: nowrap'>forward</span></a>
+ or <a href="reverse.htm" target="_top"><span style='white-space: nowrap'>reverse</span></a>
+ mode calculations;
+see <a href="number_skip.htm" target="_top"><span style='white-space: nowrap'>number_skip</span></a>
+.
+
+<br>
+<br>
+<b><a name="options.no_compare_op" id="options.no_compare_op">no_compare_op</a></b>
+<br>
+If the sub-string <code><font color="blue">no_compare_op</font></code> appears in 
+<code><i><font color="black"><span style='white-space: nowrap'>options</span></font></i></code>
+,
+comparison operators will be removed from the optimized function.
+These operators are necessary for the
+<a href="compare_change.htm" target="_top"><span style='white-space: nowrap'>compare_change</span></a>
+ functions to be meaningful.
+On the other hand, they are not necessary, and take extra time,
+when the compare_change functions are not used.
+
+<br>
+<br>
+<b><a name="options.no_print_for_op" id="options.no_print_for_op">no_print_for_op</a></b>
+<br>
+If the sub-string <code><font color="blue">no_compare_op</font></code> appears in 
+<code><i><font color="black"><span style='white-space: nowrap'>options</span></font></i></code>
+,
+<a href="printfor.htm" target="_top"><span style='white-space: nowrap'>PrintFor</span></a>
+ operations will be removed form the optimized function.
+These operators are useful for reporting problems evaluating derivatives
+at independent variable values different from those used to record a function.
+
+<br>
+<br>
+<b><big><a name="Examples" id="Examples">Examples</a></big></b>
+
+
+<table><tr><td align='left'  valign='top'>
+
+<a href="optimize_forward_active.cpp.htm" target="_top"><span style='white-space: nowrap'>forward_active.cpp</span></a>
+ </td><td align='left'  valign='top'>
+
+	Example Optimization and Forward Activity Analysis
+</td></tr><tr><td align='left'  valign='top'>
+
+<a href="optimize_reverse_active.cpp.htm" target="_top"><span style='white-space: nowrap'>reverse_active.cpp</span></a>
+ </td><td align='left'  valign='top'>
+
+	Example Optimization and Reverse Activity Analysis
+</td></tr><tr><td align='left'  valign='top'>
+
+<a href="optimize_compare_op.cpp.htm" target="_top"><span style='white-space: nowrap'>compare_op.cpp</span></a>
+ </td><td align='left'  valign='top'>
+
+	Example Optimization and Comparison Operators
+</td></tr><tr><td align='left'  valign='top'>
+
+<a href="optimize_print_for.cpp.htm" target="_top"><span style='white-space: nowrap'>print_for_op.cpp</span></a>
+ </td><td align='left'  valign='top'>
+
+	Example Optimization and Print Forward Operators
+</td></tr><tr><td align='left'  valign='top'>
+
+<a href="optimize_conditional_skip.cpp.htm" target="_top"><span style='white-space: nowrap'>conditional_skip.cpp</span></a>
+ </td><td align='left'  valign='top'>
+
+	Example Optimization and Conditional Expressions
+</td></tr><tr><td align='left'  valign='top'>
+
+<a href="optimize_nest_conditional.cpp.htm" target="_top"><span style='white-space: nowrap'>nest_conditional.cpp</span></a>
+ </td><td align='left'  valign='top'>
+
+	Example Optimization and Nested Conditional Expressions
+</td></tr><tr><td align='left'  valign='top'>
+
+<a href="optimize_cumulative_sum.cpp.htm" target="_top"><span style='white-space: nowrap'>cumulative_sum.cpp</span></a>
+ </td><td align='left'  valign='top'>
+
+	Example Optimization and Cumulative Sum Operations
+</td></tr>
+</table>
+<br>
+<b><big><a name="Efficiency" id="Efficiency">Efficiency</a></big></b>
+<br>
+If a <a href="forward_zero.htm" target="_top"><span style='white-space: nowrap'>zero&nbsp;order&nbsp;forward</span></a>
+ calculation is done during
+the construction of 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+, it will require more memory
+and time than required after the optimization procedure.
+In addition, it will need to be redone.
+For this reason, it is more efficient to use
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ADFun&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.Dependent(</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'>);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.optimize();<br>
+</span></font></code>
+instead of
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ADFun&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>(</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.optimize();<br>
+</span></font></code>
+See the discussion about
+<a href="funconstruct.htm#Sequence Constructor" target="_top"><span style='white-space: nowrap'>sequence&nbsp;constructors</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="Speed Testing" id="Speed Testing">Speed Testing</a></big></b>
+<br>
+You can run the CppAD <a href="speed_main.htm" target="_top"><span style='white-space: nowrap'>speed</span></a>
+ tests and see
+the corresponding changes in number of variables and execution time.
+Note that there is an interaction between using
+<a href="speed_main.htm#Global Options.optimize" target="_top"><span style='white-space: nowrap'>optimize</span></a>
+ and
+<a href="speed_main.htm#Global Options.onetape" target="_top"><span style='white-space: nowrap'>onetape</span></a>
+.
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>onetape</span></font></i></code>
+ is true and 
+<code><i><font color="black"><span style='white-space: nowrap'>optimize</span></font></i></code>
+ is true,
+the optimized tape will be reused many times.
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>onetape</span></font></i></code>
+ is false and 
+<code><i><font color="black"><span style='white-space: nowrap'>optimize</span></font></i></code>
+ is true,
+the tape will be re-optimized for each test.
+
+<br>
+<br>
+<b><big><a name="Atomic Functions" id="Atomic Functions">Atomic Functions</a></big></b>
+<br>
+There are some subtitle issue with optimized <a href="atomic.htm" target="_top"><span style='white-space: nowrap'>atomic</span></a>
+ functions
+<small>@(@
+v = g(u)
+@)@</small>:
+
+<br>
+<br>
+<b><a name="Atomic Functions.rev_sparse_jac" id="Atomic Functions.rev_sparse_jac">rev_sparse_jac</a></b>
+<br>
+The <a href="atomic_rev_sparse_jac.htm" target="_top"><span style='white-space: nowrap'>atomic_rev_sparse_jac</span></a>
+ function is be used to determine
+which components of 
+<code><i><font color="black"><span style='white-space: nowrap'>u</span></font></i></code>
+ affect the dependent variables of 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+.
+For each atomic operation, the current
+<a href="atomic_option.htm#atomic_sparsity" target="_top"><span style='white-space: nowrap'>atomic_sparsity</span></a>
+ setting is used
+to determine if <code><font color="blue">pack_sparsity_enum</font></code>, <code><font color="blue">bool_sparsity_enum</font></code>,
+or <code><font color="blue">set_sparsity_enum</font></code> is used to determine dependency relations
+between argument and result variables.
+
+<br>
+<br>
+<b><a name="Atomic Functions.nan" id="Atomic Functions.nan">nan</a></b>
+<br>
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>u</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>]</span></font></code>
+ does not affect the value of
+the dependent variables for 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+,
+the value of 
+<code><i><font color="black"><span style='white-space: nowrap'>u</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>]</span></font></code>
+ is set to <a href="nan.htm" target="_top"><span style='white-space: nowrap'>nan</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="Checking Optimization" id="Checking Optimization">Checking Optimization</a></big></b>
+<br>
+If <a href="faq.htm#Speed.NDEBUG" target="_top"><span style='white-space: nowrap'>NDEBUG</span></a>
+ is not defined,
+and <a href="size_order.htm" target="_top"><span style='white-space: nowrap'>f.size_order()</span></a>
+ is greater than zero,
+a <a href="forward_zero.htm" target="_top"><span style='white-space: nowrap'>forward_zero</span></a>
+ calculation is done using the optimized version
+of 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+ and the results are checked to see that they are
+the same as before.
+If they are not the same, the
+<a href="errorhandler.htm" target="_top"><span style='white-space: nowrap'>ErrorHandler</span></a>
+ is called with a known error message
+related to 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.optimize()</span></font></code>
+.
+
+
+<hr>Input File: cppad/core/optimize.hpp
+
+</body>
+</html>

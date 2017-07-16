@@ -1,0 +1,444 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>Evaluate a Function That Has a Sparse Jacobian</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Evaluate a Function That Has a Sparse Jacobian">
+<meta name="keywords" id="keywords" content=" evaluate function that has sparse jacobian sparse_jac_fun syntax purpose inclusion float floatvector n m x row col p fp example source code ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_sparse_jac_fun_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://coin-or.github.io/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="ode_evaluate.hpp.htm" target="_top">Prev</a>
+</td><td><a href="sparse_jac_fun.cpp.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>speed</option>
+<option>speed_utility</option>
+<option>sparse_jac_fun</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>CppAD-&gt;</option>
+<option>Install</option>
+<option>Introduction</option>
+<option>AD</option>
+<option>ADFun</option>
+<option>preprocessor</option>
+<option>multi_thread</option>
+<option>utility</option>
+<option>ipopt_solve</option>
+<option>Example</option>
+<option>speed</option>
+<option>Appendix</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>speed-&gt;</option>
+<option>speed_main</option>
+<option>speed_utility</option>
+<option>speed_double</option>
+<option>speed_adolc</option>
+<option>speed_cppad</option>
+<option>speed_fadbad</option>
+<option>speed_sacado</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>speed_utility-&gt;</option>
+<option>det_by_lu</option>
+<option>det_of_minor</option>
+<option>det_by_minor</option>
+<option>det_33</option>
+<option>det_grad_33</option>
+<option>mat_sum_sq</option>
+<option>ode_evaluate</option>
+<option>sparse_jac_fun</option>
+<option>sparse_hes_fun</option>
+<option>uniform_01</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down0(this)'>
+<option>sparse_jac_fun-&gt;</option>
+<option>sparse_jac_fun.cpp</option>
+<option>sparse_jac_fun.hpp</option>
+</select>
+</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Syntax</option>
+<option>Purpose</option>
+<option>Inclusion</option>
+<option>Float</option>
+<option>FloatVector</option>
+<option>n</option>
+<option>m</option>
+<option>x</option>
+<option>row</option>
+<option>col</option>
+<option>p</option>
+<option>fp</option>
+<option>---..Function</option>
+<option>---..Jacobian</option>
+<option>Example</option>
+<option>Source Code</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@
+
+
+<center><b><big><big>Evaluate a Function That Has a Sparse Jacobian</big></big></b></center>
+<br>
+<b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
+
+<br>
+
+<code><font color="blue"><span style='white-space: nowrap'>#&nbsp;include&nbsp;&lt;cppad/speed/sparse_jac_fun.hpp&gt;<br>
+</span></font></code>
+
+<code><font color="blue"><span style='white-space: nowrap'>sparse_jac_fun(</span></font><i><font color="black"><span style='white-space: nowrap'>m</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>row</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>col</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>p</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>fp</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+
+
+<br>
+<br>
+<b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
+<br>
+This routine evaluates
+<small>@(@
+f(x)
+@)@</small> and <small>@(@
+f^{(1)} (x)
+@)@</small>
+where the Jacobian <small>@(@
+f^{(1)} (x)
+@)@</small> is sparse.
+The function <small>@(@
+f : \B{R}^n \rightarrow \B{R}^m
+@)@</small> only depends on the
+size and contents of the index vectors 
+<code><i><font color="black"><span style='white-space: nowrap'>row</span></font></i></code>
+ and 
+<code><i><font color="black"><span style='white-space: nowrap'>col</span></font></i></code>
+.
+The non-zero entries in the Jacobian of this function have
+one of the following forms:
+<small>@[@
+
+	\D{ f[row[k]]}{x[col[k]]}
+
+@]@</small>
+for some <small>@(@
+k
+@)@</small> between zero and <small>@(@
+K-1
+@)@</small>.
+All the other terms of the Jacobian are zero.
+
+<br>
+<br>
+<b><big><a name="Inclusion" id="Inclusion">Inclusion</a></big></b>
+<br>
+The template function <code><font color="blue">sparse_jac_fun</font></code>
+is defined in the <code><font color="blue">CppAD</font></code> namespace by including
+the file <code><font color="blue">cppad/speed/sparse_jac_fun.hpp</font></code>
+(relative to the CppAD distribution directory).
+
+<br>
+<br>
+<b><big><a name="Float" id="Float">Float</a></big></b>
+<br>
+The type 
+<code><i><font color="black"><span style='white-space: nowrap'>Float</span></font></i></code>
+ must be a <a href="numerictype.htm" target="_top"><span style='white-space: nowrap'>NumericType</span></a>
+.
+In addition, if 
+<code><i><font color="black"><span style='white-space: nowrap'>y</span></font></i></code>
+ and 
+<code><i><font color="black"><span style='white-space: nowrap'>z</span></font></i></code>
+ are 
+<code><i><font color="black"><span style='white-space: nowrap'>Float</span></font></i></code>
+ objects,
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;exp(</span></font><i><font color="black"><span style='white-space: nowrap'>z</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+must set the 
+<code><i><font color="black"><span style='white-space: nowrap'>y</span></font></i></code>
+ equal the exponential of 
+<code><i><font color="black"><span style='white-space: nowrap'>z</span></font></i></code>
+, i.e.,
+the derivative of 
+<code><i><font color="black"><span style='white-space: nowrap'>y</span></font></i></code>
+ with respect to 
+<code><i><font color="black"><span style='white-space: nowrap'>z</span></font></i></code>
+ is equal to 
+<code><i><font color="black"><span style='white-space: nowrap'>y</span></font></i></code>
+.
+
+<br>
+<br>
+<b><big><a name="FloatVector" id="FloatVector">FloatVector</a></big></b>
+<br>
+The type 
+<code><i><font color="black"><span style='white-space: nowrap'>FloatVector</span></font></i></code>
+ is any
+<a href="simplevector.htm" target="_top"><span style='white-space: nowrap'>SimpleVector</span></a>
+, or it can be a raw pointer,
+with elements of type 
+<code><i><font color="black"><span style='white-space: nowrap'>Float</span></font></i></code>
+.
+
+<br>
+<br>
+<b><big><a name="n" id="n">n</a></big></b>
+<br>
+The argument 
+<code><i><font color="black"><span style='white-space: nowrap'>n</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+It specifies the dimension for the domain space for <small>@(@
+f(x)
+@)@</small>.
+
+<br>
+<br>
+<b><big><a name="m" id="m">m</a></big></b>
+<br>
+The argument 
+<code><i><font color="black"><span style='white-space: nowrap'>m</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>m</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+It specifies the dimension for the range space for <small>@(@
+f(x)
+@)@</small>.
+
+<br>
+<br>
+<b><big><a name="x" id="x">x</a></big></b>
+<br>
+The argument 
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>FloatVector</span></font></i><font color="blue"><span style='white-space: nowrap'>&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+It contains the argument value for which the function,
+or its derivative, is being evaluated.
+We use <small>@(@
+n
+@)@</small> to denote the size of the vector 
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+.
+
+<br>
+<br>
+<b><big><a name="row" id="row">row</a></big></b>
+<br>
+The argument 
+<code><i><font color="black"><span style='white-space: nowrap'>row</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;CppAD::vector&lt;size_t&gt;&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>row</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+It specifies indices in the range of <small>@(@
+f(x)
+@)@</small> for non-zero components
+of the Jacobian
+(see <a href="sparse_hes_fun.htm#Purpose" target="_top"><span style='white-space: nowrap'>purpose</span></a>
+ above).
+The value <small>@(@
+K
+@)@</small> is defined by 
+<code><i><font color="black"><span style='white-space: nowrap'>K</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>row</span></font></i><font color="blue"><span style='white-space: nowrap'>.size()</span></font></code>
+.
+All the elements of 
+<code><i><font color="black"><span style='white-space: nowrap'>row</span></font></i></code>
+ must be between zero and 
+<code><i><font color="black"><span style='white-space: nowrap'>m</span></font></i><font color="blue"><span style='white-space: nowrap'>-1</span></font></code>
+.
+
+<br>
+<br>
+<b><big><a name="col" id="col">col</a></big></b>
+<br>
+The argument 
+<code><i><font color="black"><span style='white-space: nowrap'>col</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;CppAD::vector&lt;size_t&gt;&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>col</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+and its size must be <small>@(@
+K
+@)@</small>; i.e., the same as 
+<code><i><font color="black"><span style='white-space: nowrap'>row</span></font></i></code>
+.
+It specifies the component of <small>@(@
+x
+@)@</small> for
+the non-zero Jacobian terms.
+All the elements of 
+<code><i><font color="black"><span style='white-space: nowrap'>col</span></font></i></code>
+ must be between zero and 
+<code><i><font color="black"><span style='white-space: nowrap'>n</span></font></i><font color="blue"><span style='white-space: nowrap'>-1</span></font></code>
+.
+
+<br>
+<br>
+<b><big><a name="p" id="p">p</a></big></b>
+<br>
+The argument 
+<code><i><font color="black"><span style='white-space: nowrap'>p</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>p</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+It is either zero or one and
+specifies the order of the derivative of <small>@(@
+f
+@)@</small>
+that is being evaluated, i.e., <small>@(@
+f^{(p)} (x)
+@)@</small> is evaluated.
+
+<br>
+<br>
+<b><big><a name="fp" id="fp">fp</a></big></b>
+<br>
+The argument 
+<code><i><font color="black"><span style='white-space: nowrap'>fp</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>FloatVector</span></font></i><font color="blue"><span style='white-space: nowrap'>&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>fp</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>p</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;0</span></font></code>
+, it size is 
+<code><i><font color="black"><span style='white-space: nowrap'>m</span></font></i></code>
+
+otherwise its size is 
+<code><i><font color="black"><span style='white-space: nowrap'>K</span></font></i></code>
+.
+The input value of the elements of 
+<code><i><font color="black"><span style='white-space: nowrap'>fp</span></font></i></code>
+ does not matter.
+
+<br>
+<br>
+<b><a name="fp.Function" id="fp.Function">Function</a></b>
+<br>
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>p</span></font></i></code>
+ is zero, 
+<code><i><font color="black"><span style='white-space: nowrap'>fp</span></font></i></code>
+ has size <small>@(@
+m
+@)@</small> and
+
+<code><font color="blue"><span style='white-space: nowrap'>(</span></font><i><font color="black"><span style='white-space: nowrap'>fp</span></font></i><font color="blue"><span style='white-space: nowrap'>[0]</span></font><i><font color="black"><span style='white-space: nowrap'>,&nbsp;...&nbsp;,&nbsp;</span></font></i><font color="blue"><span style='white-space: nowrap'>fp</span></font><i><font color="black"><span style='white-space: nowrap'>[</span></font></i><font color="blue"><span style='white-space: nowrap'>m</span></font><i><font color="black"><span style='white-space: nowrap'>-1])</span></font></i></code>
+ is the value of <small>@(@
+f(x)
+@)@</small>.
+
+<br>
+<br>
+<b><a name="fp.Jacobian" id="fp.Jacobian">Jacobian</a></b>
+<br>
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>p</span></font></i></code>
+ is one, 
+<code><i><font color="black"><span style='white-space: nowrap'>fp</span></font></i></code>
+ has size 
+<code><i><font color="black"><span style='white-space: nowrap'>K</span></font></i></code>
+ and
+for <small>@(@
+k = 0 , \ldots , K-1
+@)@</small>,
+<small>@[@
+
+	\D{f[ \R{row}[i] ]}{x[ \R{col}[j] ]} = fp [k]
+
+@]@</small>
+
+
+
+<br>
+<br>
+<b><big><a name="Example" id="Example">Example</a></big></b>
+<br>
+The file
+<a href="sparse_jac_fun.cpp.htm" target="_top"><span style='white-space: nowrap'>sparse_jac_fun.cpp</span></a>
+
+contains an example and test  of <code><font color="blue">sparse_jac_fun.hpp</font></code>.
+It returns true if it succeeds and false otherwise.
+
+<br>
+<br>
+<b><big><a name="Source Code" id="Source Code">Source Code</a></big></b>
+<br>
+The file
+<a href="sparse_jac_fun.hpp.htm" target="_top"><span style='white-space: nowrap'>sparse_jac_fun.hpp</span></a>
+
+contains the source code for this template function.
+
+
+<hr>Input File: cppad/speed/sparse_jac_fun.hpp
+
+</body>
+</html>

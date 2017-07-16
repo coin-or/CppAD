@@ -1,0 +1,182 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>Gradient of Determinant Using Expansion by Minors: Example and Test</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Gradient of Determinant Using Expansion by Minors: Example and Test">
+<meta name="keywords" id="keywords" content=" gradient determinant using expansion minors: example test minors ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_hes_minor_det.cpp_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://coin-or.github.io/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="eigen_det.cpp.htm" target="_top">Prev</a>
+</td><td><a href="hes_lu_det.cpp.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>Example</option>
+<option>General</option>
+<option>hes_minor_det.cpp</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>CppAD-&gt;</option>
+<option>Install</option>
+<option>Introduction</option>
+<option>AD</option>
+<option>ADFun</option>
+<option>preprocessor</option>
+<option>multi_thread</option>
+<option>utility</option>
+<option>ipopt_solve</option>
+<option>Example</option>
+<option>speed</option>
+<option>Appendix</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>Example-&gt;</option>
+<option>get_started.cpp</option>
+<option>General</option>
+<option>ExampleUtility</option>
+<option>ListAllExamples</option>
+<option>testvector</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>General-&gt;</option>
+<option>ad_fun.cpp</option>
+<option>ad_in_c.cpp</option>
+<option>conj_grad.cpp</option>
+<option>cppad_eigen.hpp</option>
+<option>hes_minor_det.cpp</option>
+<option>hes_lu_det.cpp</option>
+<option>interface2c.cpp</option>
+<option>jac_minor_det.cpp</option>
+<option>jac_lu_det.cpp</option>
+<option>mul_level</option>
+<option>ode_stiff.cpp</option>
+<option>mul_level_ode.cpp</option>
+<option>mul_level_adolc_ode.cpp</option>
+<option>ode_taylor.cpp</option>
+<option>stack_machine.cpp</option>
+</select>
+</td>
+<td>hes_minor_det.cpp</td>
+<td>Headings</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>Gradient of Determinant Using Expansion by Minors: Example and Test</big></big></b></center>
+<code><font color="blue"><pre><tt>
+<b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/cppad.hpp&gt;</font>
+<b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/speed/det_by_minor.hpp&gt;</font>
+<b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;complex&gt;</font>
+
+<b><font color="#0000FF">typedef</font></b> std<font color="#990000">::</font><font color="#008080">complex&lt;double&gt;</font>     Complex<font color="#990000">;</font>
+<b><font color="#0000FF">typedef</font></b> CppAD<font color="#990000">::</font><font color="#008080">AD&lt;Complex&gt;</font>       ADComplex<font color="#990000">;</font>
+<b><font color="#0000FF">typedef</font></b> <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font>ADComplex<font color="#990000">)</font>   ADVector<font color="#990000">;</font>
+
+<i><font color="#9A1900">// ----------------------------------------------------------------------------</font></i>
+
+<font color="#009900">bool</font> <b><font color="#000000">HesMinorDet</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
+<font color="#FF0000">{</font>    <font color="#009900">bool</font> ok <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
+
+     <b><font color="#0000FF">using</font></b> <b><font color="#0000FF">namespace</font></b> CppAD<font color="#990000">;</font>
+
+     <font color="#008080">size_t</font> n <font color="#990000">=</font> <font color="#993399">2</font><font color="#990000">;</font>
+
+     <i><font color="#9A1900">// object for computing determinants</font></i>
+     <font color="#008080">det_by_minor&lt;ADComplex&gt;</font> <b><font color="#000000">Det</font></b><font color="#990000">(</font>n<font color="#990000">);</font>
+
+     <i><font color="#9A1900">// independent and dependent variable vectors</font></i>
+     <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font>ADComplex<font color="#990000">)</font>  <b><font color="#000000">X</font></b><font color="#990000">(</font>n <font color="#990000">*</font> n<font color="#990000">);</font>
+     <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font>ADComplex<font color="#990000">)</font>  <b><font color="#000000">D</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">);</font>
+
+     <i><font color="#9A1900">// value of the independent variable</font></i>
+     <font color="#008080">size_t</font> i<font color="#990000">;</font>
+     <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> n <font color="#990000">*</font> n<font color="#990000">;</font> i<font color="#990000">++)</font>
+          X<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> <b><font color="#000000">Complex</font></b><font color="#990000">(</font><font color="#009900">int</font><font color="#990000">(</font>i<font color="#990000">),</font> <font color="#990000">-</font><font color="#009900">int</font><font color="#990000">(</font>i<font color="#990000">));</font>
+
+     <i><font color="#9A1900">// set the independent variables</font></i>
+     <b><font color="#000000">Independent</font></b><font color="#990000">(</font>X<font color="#990000">);</font>
+
+     <i><font color="#9A1900">// comupute the determinant</font></i>
+     D<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <b><font color="#000000">Det</font></b><font color="#990000">(</font>X<font color="#990000">);</font>
+
+     <i><font color="#9A1900">// create the function object</font></i>
+     <font color="#008080">ADFun&lt;Complex&gt;</font> <b><font color="#000000">f</font></b><font color="#990000">(</font>X<font color="#990000">,</font> D<font color="#990000">);</font>
+
+     <i><font color="#9A1900">// argument value</font></i>
+     <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font>Complex<font color="#990000">)</font>     <b><font color="#000000">x</font></b><font color="#990000">(</font> n <font color="#990000">*</font> n <font color="#990000">);</font>
+     <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> n <font color="#990000">*</font> n<font color="#990000">;</font> i<font color="#990000">++)</font>
+          x<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> <b><font color="#000000">Complex</font></b><font color="#990000">(</font><font color="#993399">2</font> <font color="#990000">*</font> i<font color="#990000">,</font> i<font color="#990000">);</font>
+
+     <i><font color="#9A1900">// first derivative of the determinant</font></i>
+     <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font>Complex<font color="#990000">)</font> <b><font color="#000000">H</font></b><font color="#990000">(</font> n <font color="#990000">*</font> n <font color="#990000">*</font> n <font color="#990000">*</font> n<font color="#990000">);</font>
+     H <font color="#990000">=</font> f<font color="#990000">.</font><b><font color="#000000">Hessian</font></b><font color="#990000">(</font>x<font color="#990000">,</font> <font color="#993399">0</font><font color="#990000">);</font>
+
+     <i><font color="#9A1900">/*</font></i>
+<i><font color="#9A1900">     f(x)     = x[0] * x[3] - x[1] * x[2]</font></i>
+<i><font color="#9A1900">     f'(x)    = ( x[3], -x[2], -x[1], x[0] )</font></i>
+<i><font color="#9A1900">     */</font></i>
+     <font color="#008080">Complex</font> <b><font color="#000000">zero</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">.,</font> <font color="#993399">0</font><font color="#990000">.);</font>
+     <font color="#008080">Complex</font> <b><font color="#000000">one</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">.,</font> <font color="#993399">0</font><font color="#990000">.);</font>
+     <font color="#008080">Complex</font> Htrue<font color="#990000">[]</font>  <font color="#990000">=</font> <font color="#FF0000">{</font>
+          zero<font color="#990000">,</font> zero<font color="#990000">,</font> zero<font color="#990000">,</font>  one<font color="#990000">,</font>
+          zero<font color="#990000">,</font> zero<font color="#990000">,</font> <font color="#990000">-</font>one<font color="#990000">,</font> zero<font color="#990000">,</font>
+          zero<font color="#990000">,</font> <font color="#990000">-</font>one<font color="#990000">,</font> zero<font color="#990000">,</font> zero<font color="#990000">,</font>
+           one<font color="#990000">,</font> zero<font color="#990000">,</font> zero<font color="#990000">,</font> zero
+     <font color="#FF0000">}</font><font color="#990000">;</font>
+     <b><font color="#0000FF">for</font></b><font color="#990000">(</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> n<font color="#990000">*</font>n<font color="#990000">*</font>n<font color="#990000">*</font>n<font color="#990000">;</font> i<font color="#990000">++)</font>
+          ok <font color="#990000">&amp;=</font> Htrue<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">==</font> H<font color="#990000">[</font>i<font color="#990000">];</font>
+
+     <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
+
+<font color="#FF0000">}</font>
+</tt></pre>
+</font></code>
+<hr>Input File: example/general/hes_minor_det.cpp
+
+</body>
+</html>

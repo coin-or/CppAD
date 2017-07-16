@@ -1,0 +1,534 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>Any Order Reverse Mode</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Any Order Reverse Mode">
+<meta name="keywords" id="keywords" content=" any order reverse mode derivative syntax purpose notation u^(k) x(t u) y(t w^(k) w(u) f q w dw first second vector example ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_reverse_any_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://coin-or.github.io/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="hes_times_dir.cpp.htm" target="_top">Prev</a>
+</td><td><a href="reverse_three.cpp.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>ADFun</option>
+<option>Reverse</option>
+<option>reverse_any</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>CppAD-&gt;</option>
+<option>Install</option>
+<option>Introduction</option>
+<option>AD</option>
+<option>ADFun</option>
+<option>preprocessor</option>
+<option>multi_thread</option>
+<option>utility</option>
+<option>ipopt_solve</option>
+<option>Example</option>
+<option>speed</option>
+<option>Appendix</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>ADFun-&gt;</option>
+<option>record_adfun</option>
+<option>drivers</option>
+<option>Forward</option>
+<option>Reverse</option>
+<option>sparsity_pattern</option>
+<option>sparse_derivative</option>
+<option>optimize</option>
+<option>abs_normal</option>
+<option>FunCheck</option>
+<option>check_for_nan</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>Reverse-&gt;</option>
+<option>reverse_one</option>
+<option>reverse_two</option>
+<option>reverse_any</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down0(this)'>
+<option>reverse_any-&gt;</option>
+<option>reverse_three.cpp</option>
+<option>reverse_checkpoint.cpp</option>
+</select>
+</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Syntax</option>
+<option>Purpose</option>
+<option>Notation</option>
+<option>---..u^(k)</option>
+<option>---..X(t, u)</option>
+<option>---..Y(t, u)</option>
+<option>---..w^(k)</option>
+<option>---..W(u)</option>
+<option>f</option>
+<option>q</option>
+<option>w</option>
+<option>dw</option>
+<option>First Order</option>
+<option>Second Order</option>
+<option>Vector</option>
+<option>Example</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>Any Order Reverse Mode</big></big></b></center>
+<br>
+<b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
+
+<br>
+
+<code><i><font color="black"><span style='white-space: nowrap'>dw</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.Reverse(</span></font><i><font color="black"><span style='white-space: nowrap'>q</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>w</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+
+
+
+<br>
+<br>
+<b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
+<br>
+We use <small>@(@
+F : B^n \rightarrow B^m
+@)@</small> to denote the
+<a href="glossary.htm#AD Function" target="_top"><span style='white-space: nowrap'>AD&nbsp;function</span></a>
+ corresponding to 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+.
+Reverse mode computes the derivative of the <a href="forward.htm" target="_top"><span style='white-space: nowrap'>Forward</span></a>
+ mode
+<a href="glossary.htm#Taylor Coefficient" target="_top"><span style='white-space: nowrap'>Taylor&nbsp;coefficients</span></a>
+
+with respect to the domain variable <small>@(@
+x
+@)@</small>.
+To be specific, it computes the derivative
+<small>@(@
+W^{(1)} (u)
+@)@</small> at <small>@(@
+u = x
+@)@</small>
+which is specified by the following notation:
+
+<br>
+<br>
+<b><big><a name="Notation" id="Notation">Notation</a></big></b>
+
+
+<br>
+<br>
+<b><a name="Notation.u^(k)" id="Notation.u^(k)">u^(k)</a></b>
+<br>
+For <small>@(@
+k = 0, \ldots , q-1
+@)@</small>,
+the vector <small>@(@
+u^{(k)} \in B^n
+@)@</small> is defined as the value of
+
+<code><i><font color="black"><span style='white-space: nowrap'>x_k</span></font></i></code>
+ in the previous calls of the form
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.Forward(</span></font><i><font color="black"><span style='white-space: nowrap'>k</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x_k</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+If there is no previous call with <small>@(@
+k = 0
+@)@</small>,
+<small>@(@
+u^{(0)}
+@)@</small> is the value of the independent variables when the
+corresponding
+AD of 
+<code><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i></code>
+
+<a href="glossary.htm#Operation.Sequence" target="_top"><span style='white-space: nowrap'>operation&nbsp;sequence</span></a>
+ was recorded.
+
+
+<br>
+<br>
+<b><a name="Notation.X(t, u)" id="Notation.X(t, u)">X(t, u)</a></b>
+<br>
+The function
+<small>@(@
+X : B \times B^{n \times q} \rightarrow B^n
+@)@</small> is defined by
+<small>@[@
+
+	X ( t , u ) = u^{(0)} + u^{(1)} * t + \cdots + u^{(q-1)} * t^{q-1}
+
+@]@</small>
+Note that for <small>@(@
+k = 0 , \ldots , q-1
+@)@</small>,
+<small>@(@
+u^{(k)}
+@)@</small> is related to the <code><i>k</i></code>-th partial of <small>@(@
+X(t, u)
+@)@</small>
+with respect to <small>@(@
+t
+@)@</small> by
+<small>@[@
+
+	u^{(k)} = \frac{1}{k !} \Dpow{k}{t} X(0, u)
+
+@]@</small>
+
+<br>
+<br>
+<b><a name="Notation.Y(t, u)" id="Notation.Y(t, u)">Y(t, u)</a></b>
+<br>
+The function
+<small>@(@
+Y : B \times B^{n \times q} \rightarrow B^m
+@)@</small> is defined by
+<small>@[@
+
+	Y(t, u) = F [ X(t,u) ]
+
+@]@</small>
+
+<br>
+<br>
+<b><a name="Notation.w^(k)" id="Notation.w^(k)">w^(k)</a></b>
+<br>
+If the argument 
+<code><i><font color="black"><span style='white-space: nowrap'>w</span></font></i></code>
+ has size 
+<code><i><font color="black"><span style='white-space: nowrap'>m</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;*&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>q</span></font></i></code>
+,
+for <small>@(@
+k = 0 , \ldots , q-1
+@)@</small> and <small>@(@
+i = 0, \ldots , m-1
+@)@</small>,
+<small>@[@
+
+	w_i^{(k)} = w [ i * q + k ]
+
+@]@</small>
+If the argument 
+<code><i><font color="black"><span style='white-space: nowrap'>w</span></font></i></code>
+ has size 
+<code><i><font color="black"><span style='white-space: nowrap'>m</span></font></i></code>
+,
+for <small>@(@
+k = 0 , \ldots , q-1
+@)@</small> and <small>@(@
+i = 0, \ldots , m-1
+@)@</small>,
+<small>@[@
+
+w_i^{(k)} = \left\{ \begin{array}{ll}
+	w [ i ] & {\rm if} \; k = q-1
+	\\
+	0       & {\rm otherwise}
+\end{array} \right.
+
+@]@</small>
+
+
+<br>
+<br>
+<b><a name="Notation.W(u)" id="Notation.W(u)">W(u)</a></b>
+<br>
+The function <small>@(@
+W : B^{n \times q} \rightarrow B
+@)@</small> is defined by
+<small>@[@
+
+W(u) = \sum_{k=0}^{q-1} ( w^{(k)} )^\R{T} \frac{1}{k !} \Dpow{k}{t} Y(0, u)
+
+@]@</small>
+
+
+<br>
+<br>
+<b><big><a name="f" id="f">f</a></big></b>
+<br>
+The object 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;ADFun&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+Before this call to <code><font color="blue">Reverse</font></code>, the value returned by
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.size_order()<br>
+</span></font></code>
+must be greater than or equal 
+<code><i><font color="black"><span style='white-space: nowrap'>q</span></font></i></code>
+
+(see <a href="size_order.htm" target="_top"><span style='white-space: nowrap'>size_order</span></a>
+).
+
+<br>
+<br>
+<b><big><a name="q" id="q">q</a></big></b>
+<br>
+The argument 
+<code><i><font color="black"><span style='white-space: nowrap'>q</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>q</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+and specifies the number of Taylor coefficient orders to be differentiated
+(for each variable).
+
+
+<br>
+<br>
+<b><big><a name="w" id="w">w</a></big></b>
+<br>
+The argument 
+<code><i><font color="black"><span style='white-space: nowrap'>w</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Vector</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>w</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+(see <a href="reverse_any.htm#Vector" target="_top"><span style='white-space: nowrap'>Vector</span></a>
+ below)
+and its size
+must be equal to 
+<code><i><font color="black"><span style='white-space: nowrap'>m</span></font></i></code>
+ or 
+<code><i><font color="black"><span style='white-space: nowrap'>m</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;*&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>q</span></font></i></code>
+,
+It specifies the weighting vector 
+<code><i><font color="black"><span style='white-space: nowrap'>w</span></font></i></code>
+
+in the definition of
+<a href="reverse_any.htm#Notation.W(u)" target="_top"><span style='white-space: nowrap'>W(u)</span></a>
+.
+
+
+<br>
+<br>
+<b><big><a name="dw" id="dw">dw</a></big></b>
+<br>
+The return value 
+<code><i><font color="black"><span style='white-space: nowrap'>dw</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Vector</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>dw</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+(see <a href="reverse_any.htm#Vector" target="_top"><span style='white-space: nowrap'>Vector</span></a>
+ below).
+It is a vector with size <small>@(@
+n \times q
+@)@</small>.
+For <small>@(@
+j = 0, \ldots, n-1
+@)@</small> and <small>@(@
+k = 0 , \ldots , q-1
+@)@</small>
+If the argument 
+<code><i><font color="black"><span style='white-space: nowrap'>w</span></font></i></code>
+ has size 
+<code><i><font color="black"><span style='white-space: nowrap'>m</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;*&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>q</span></font></i></code>
+,
+<small>@[@
+
+	dw[ j * q + k ] = W^{(1)} ( x )_{j,k}
+
+@]@</small>
+where <small>@(@
+u = x
+@)@</small> is value of the Taylor coefficients where the
+derivative is evaluated.
+<code><span style='white-space: nowrap'><br>
+<br>
+</span></code>If the argument 
+<code><i><font color="black"><span style='white-space: nowrap'>w</span></font></i></code>
+ has size 
+<code><i><font color="black"><span style='white-space: nowrap'>m</span></font></i></code>
+,
+<small>@[@
+
+	dw[ j * q + q - k - 1 ] = W^{(1)} ( x )_{j,k}
+
+@]@</small>
+where <small>@(@
+u = x
+@)@</small> is value of the Taylor coefficients where the
+derivative is evaluated.
+Note the reverse order in which the order indices are stored.
+This is an unfortunate consequence of keeping <code><font color="blue">Reverse</font></code> backward
+compatible.
+
+<br>
+<br>
+<b><big><a name="First Order" id="First Order">First Order</a></big></b>
+<br>
+We consider the case where
+
+<code><i><font color="black"><span style='white-space: nowrap'>q</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;1</span></font></code>
+ and 
+<code><i><font color="black"><span style='white-space: nowrap'>w</span></font></i><font color="blue"><span style='white-space: nowrap'>.size()&nbsp;==&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>m</span></font></i></code>
+.
+In this case
+<small>@[@
+
+\begin{array}{rcl}
+W(u) & = & w_0 Y_0 (0, u) + \cdots + w_m Y_m (0, u)
+\\
+W(u) & = & w_0 F_0 [ X(0, u) ] + \cdots + w_m F_m [ X(0, u) ]
+\\
+W^{(1)} (x) & = &
+	w_0 F_0^{(1)} ( x^{(0)} ) + \cdots + w_m F_m^{(1)} ( x^{(0)} )
+\end{array}
+
+@]@</small>
+This is the same as the result documented in <a href="reverse_one.htm" target="_top"><span style='white-space: nowrap'>reverse_one</span></a>
+.
+
+
+<br>
+<br>
+<b><big><a name="Second Order" id="Second Order">Second Order</a></big></b>
+<br>
+We consider the case where
+
+<code><i><font color="black"><span style='white-space: nowrap'>q</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;2</span></font></code>
+ and 
+<code><i><font color="black"><span style='white-space: nowrap'>w</span></font></i><font color="blue"><span style='white-space: nowrap'>.size()&nbsp;==&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>m</span></font></i></code>
+.
+In this case
+<small>@[@
+
+\begin{array}{rcl}
+W(u) & = & w_0 \partial_t Y_0 (0, u) + \cdots + w_m \partial_t Y_m (0, u)
+\\
+W(u) & = &
+	w_0 \partial_t \{ F_0 [ X(t, u) ] \}_{t = 0}
+	 + \cdots +
+	w_m \partial_t \{ F_m [ X(t, u) ] \}_{t = 0}
+\\
+W(u) & = &
+	w_0 F_0^{(1)} ( u^{(0)} ) u^{(1)}
+	 + \cdots +
+	w_0 F_m^{(1)} ( u^{(0)} ) u^{(1)}
+\\
+\partial_{u(0)} W(x) & = &
+	w_0 (  x^{(1)} )^\R{T} F_0^{(2)} ( x^{(0)} )
+	+ \cdots +
+	w_m (  x^{(1)} )^\R{T} F_m^{(2)} ( x^{(0)} )
+\\
+\partial_{u(1)} W(x) & = &
+	w_0 F_0^{(1)} ( x^{(0)} )
+	+ \cdots +
+	w_m F_m^{(1)} ( x^{(0)} )
+\end{array}
+
+@]@</small>
+where <small>@(@
+\partial{u(0)}
+@)@</small>
+denotes partial with respect to <small>@(@
+u^{(0)}
+@)@</small>.
+These are the same as the result documented in <a href="reverse_two.htm" target="_top"><span style='white-space: nowrap'>reverse_two</span></a>
+.
+
+
+<br>
+<br>
+<b><big><a name="Vector" id="Vector">Vector</a></big></b>
+<br>
+The type 
+<code><i><font color="black"><span style='white-space: nowrap'>Vector</span></font></i></code>
+ must be a <a href="simplevector.htm" target="_top"><span style='white-space: nowrap'>SimpleVector</span></a>
+ class with
+<a href="simplevector.htm#Elements of Specified Type" target="_top"><span style='white-space: nowrap'>elements&nbsp;of&nbsp;type</span></a>
+
+
+<code><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i></code>
+.
+The routine <a href="checksimplevector.htm" target="_top"><span style='white-space: nowrap'>CheckSimpleVector</span></a>
+ will generate an error message
+if this is not the case.
+
+
+<br>
+<br>
+<b><big><a name="Example" id="Example">Example</a></big></b>
+
+
+
+<ol type="1"><li>
+The file <a href="reverse_three.cpp.htm" target="_top"><span style='white-space: nowrap'>reverse_three.cpp</span></a>
+
+contains an example and test of using reverse mode
+to compute third order derivatives.
+</li><li>
+
+The file <a href="reverse_checkpoint.cpp.htm" target="_top"><span style='white-space: nowrap'>reverse_checkpoint.cpp</span></a>
+
+contains an example and test of the general reverse mode case.
+</li></ol>
+
+
+
+<hr>Input File: omh/reverse/reverse_any.omh
+
+</body>
+</html>

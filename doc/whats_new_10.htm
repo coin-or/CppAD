@@ -1,0 +1,591 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>Changes and Additions to CppAD During 2010</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Changes and Additions to CppAD During 2010">
+<meta name="keywords" id="keywords" content=" changes additions to cppad during 2010 introduction 12-31 11-27 09-26 09-22 08-21 07-14 07-11 06-01 04-28 04-26 04-24 04-01 03-11 03-10 03-09 03-03 02-11 02-08 02-06 02-05 02-03 01-26 01-24 01-23 01-20 01-18 01-04 ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_whats_new_10_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://coin-or.github.io/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="whats_new_11.htm" target="_top">Prev</a>
+</td><td><a href="whats_new_09.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>Appendix</option>
+<option>whats_new</option>
+<option>whats_new_10</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>CppAD-&gt;</option>
+<option>Install</option>
+<option>Introduction</option>
+<option>AD</option>
+<option>ADFun</option>
+<option>preprocessor</option>
+<option>multi_thread</option>
+<option>utility</option>
+<option>ipopt_solve</option>
+<option>Example</option>
+<option>speed</option>
+<option>Appendix</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>Appendix-&gt;</option>
+<option>Faq</option>
+<option>directory</option>
+<option>Theory</option>
+<option>glossary</option>
+<option>Bib</option>
+<option>wish_list</option>
+<option>whats_new</option>
+<option>deprecated</option>
+<option>compare_c</option>
+<option>numeric_ad</option>
+<option>addon</option>
+<option>License</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>whats_new-&gt;</option>
+<option>whats_new_17</option>
+<option>whats_new_16</option>
+<option>whats_new_15</option>
+<option>whats_new_14</option>
+<option>whats_new_13</option>
+<option>whats_new_12</option>
+<option>whats_new_11</option>
+<option>whats_new_10</option>
+<option>whats_new_09</option>
+<option>whats_new_08</option>
+<option>whats_new_07</option>
+<option>whats_new_06</option>
+<option>whats_new_05</option>
+<option>whats_new_04</option>
+<option>whats_new_03</option>
+</select>
+</td>
+<td>whats_new_10</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Introduction</option>
+<option>12-31</option>
+<option>11-27</option>
+<option>09-26</option>
+<option>09-22</option>
+<option>08-21</option>
+<option>07-14</option>
+<option>07-11</option>
+<option>06-01</option>
+<option>04-28</option>
+<option>04-26</option>
+<option>04-24</option>
+<option>04-01</option>
+<option>03-11</option>
+<option>03-10</option>
+<option>03-09</option>
+<option>03-03</option>
+<option>02-11</option>
+<option>02-08</option>
+<option>02-06</option>
+<option>02-05</option>
+<option>02-03</option>
+<option>01-26</option>
+<option>01-24</option>
+<option>01-23</option>
+<option>01-20</option>
+<option>01-18</option>
+<option>01-04</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@
+
+
+<center><b><big><big>Changes and Additions to CppAD During 2010</big></big></b></center>
+<br>
+<b><big><a name="Introduction" id="Introduction">Introduction</a></big></b>
+<br>
+This section contains a list of the changes to CppAD during 2010
+(in reverse order by date).
+The purpose of this section is to
+assist you in learning about changes between various versions of CppAD.
+
+<br>
+<br>
+<b><big><a name="12-31" id="12-31">12-31</a></big></b>
+
+<ol type="1"><li>
+Add specifications for the CppAD <a href="pkgconfig.htm" target="_top"><span style='white-space: nowrap'>pkgconfig</span></a>
+ files.
+</li><li>
+
+Update the CppAD README file.
+</li><li>
+
+Move most all CppAD development shell scripts to the <code><font color="blue">bin</font></code>
+subdirectory of the distribution directory.
+</li><li>
+
+Fix warnings generated by the <code><font color="blue">g++</font></code> compiler option <code><font color="blue">-Wshadow</font></code>;
+for example,
+<code><font color="blue">
+sparse_pack.hpp:101:2: warning: declaration of 'end' shadows a member of 'this'
+</font></code>
+</li></ol>
+
+
+<br>
+<br>
+<b><big><a name="11-27" id="11-27">11-27</a></big></b>
+<br>
+If <code><font color="blue">NDEBUB</font></code> was defined,
+the default CppAD <a href="errorhandler.htm" target="_top"><span style='white-space: nowrap'>error&nbsp;handler</span></a>
+ would return
+because its <code><font color="blue">assert</font></code> had no effect in this case.
+This has been fixed by placing a call to <code><font color="blue">std::exit(1)</font></code>
+after its assert.
+
+<br>
+<br>
+<b><big><a name="09-26" id="09-26">09-26</a></big></b>
+<br>
+There was a bug
+(introduced on 09-22)
+in <code><font color="blue">make test</font></code>
+when the <code><font color="blue">configure</font></code> command was executed from a directory
+other than the distribution directory
+(the <a href="cppad_ipopt_nlp.htm" target="_top"><span style='white-space: nowrap'>cppad_ipopt_nlp</span></a>
+ did not build).
+This has been fixed.
+
+
+<br>
+<br>
+<b><big><a name="09-22" id="09-22">09-22</a></big></b>
+<br>
+Promote <a href="cppad_ipopt_nlp.htm" target="_top"><span style='white-space: nowrap'>cppad_ipopt_nlp</span></a>
+ from an example to a library
+that gets installed
+(provided that the <a href="autotools.htm#ipopt_dir" target="_top"><span style='white-space: nowrap'>ipopt_dir</span></a>
+
+is specified on the <code><font color="blue">configure</font></code> command line).
+
+<br>
+<br>
+<b><big><a name="08-21" id="08-21">08-21</a></big></b>
+<br>
+Fix problems with linking of <a href="cppad_ipopt_nlp.htm" target="_top"><span style='white-space: nowrap'>cppad_ipopt_nlp</span></a>
+ test with
+both older and newer versions of <code><font color="blue">ipopt</font></code>.
+
+<br>
+<br>
+<b><big><a name="07-14" id="07-14">07-14</a></big></b>
+<br>
+The new versions of ipopt use <code><font color="blue">pkg-config</font></code> to record the location
+where its necessary libraries are stored on the system.
+The cppad <a href="autotools.htm#Configure" target="_top"><span style='white-space: nowrap'>configure</span></a>
+ command has
+been improved so that it can work both with versions of ipopt that use
+<code><font color="blue">pkg-config</font></code> and ones that don't.
+
+<br>
+<br>
+<b><big><a name="07-11" id="07-11">07-11</a></big></b>
+<br>
+Old versions of the ipopt library were located in
+
+<code><i><font color="black"><span style='white-space: nowrap'>ipopt_dir</span></font></i><font color="blue"><span style='white-space: nowrap'>/lib/libipopt.</span></font><i><font color="black"><span style='white-space: nowrap'>*</span></font></i></code>
+
+(see <a href="autotools.htm#ipopt_dir" target="_top"><span style='white-space: nowrap'>ipopt_dir</span></a>
+),
+but newer versions will be located in
+
+<code><i><font color="black"><span style='white-space: nowrap'>ipopt_dir</span></font></i><font color="blue"><span style='white-space: nowrap'>/lib/coin/libipopt.</span></font><i><font color="black"><span style='white-space: nowrap'>*</span></font></i></code>
+.
+The directory 
+<code><i><font color="black"><span style='white-space: nowrap'>ipopt_dir</span></font></i><font color="blue"><span style='white-space: nowrap'>/lib/coin</span></font></code>
+ has been added to the library
+search path so that the
+<a href="cppad_ipopt_nlp.htm#Example" target="_top"><span style='white-space: nowrap'>cppad_ipopt_nlp&nbsp;examples</span></a>
+
+work with both old and new versions of ipopt.
+
+<br>
+<br>
+<b><big><a name="06-01" id="06-01">06-01</a></big></b>
+<br>
+In the case where the preprocessor symbol <code><font color="blue">NDEBUG</font></code> was defined
+(see <a href="faq.htm#Speed" target="_top"><span style='white-space: nowrap'>speed</span></a>
+),
+the function
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CheckSimpleVector(const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Scalar</span></font></i><font color="blue"><span style='white-space: nowrap'>&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Scalar</span></font></i><font color="blue"><span style='white-space: nowrap'>&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+was not defined; see
+<a href="http://list.coin-or.org/pipermail/cppad/2010q2/000166.html" target="_top"><span style='white-space: nowrap'>bug&nbsp;report</span></a>
+.
+This has been fixed.
+
+<br>
+<br>
+<b><big><a name="04-28" id="04-28">04-28</a></big></b>
+<br>
+Change the multi-level taping examples
+<a href="mul_level.cpp.htm" target="_top"><span style='white-space: nowrap'>mul_level.cpp</span></a>
+ and <a href="mul_level_adolc.cpp.htm" target="_top"><span style='white-space: nowrap'>mul_level_adolc.cpp</span></a>
+
+to be more efficient.
+
+<br>
+<br>
+<b><big><a name="04-26" id="04-26">04-26</a></big></b>
+<br>
+Include Blas and Linpack libraries in makefile links for
+<a href="cppad_ipopt_nlp.htm" target="_top"><span style='white-space: nowrap'>cppad_ipopt_nlp</span></a>
+ examples.
+This removes the need to use get.Blas when building Ipopt.
+<code><span style='white-space: nowrap'><br>
+<br>
+</span></code>The speed test in <code><font color="blue">cppad_ipopt/speed</font></code> was missing
+a link to the library <code><font color="blue">../src/libcppad_ipopt.a</font></code>.
+This has been fixed.
+
+<br>
+<br>
+<b><big><a name="04-24" id="04-24">04-24</a></big></b>
+<br>
+There was a bug in the error checking done by <code><font color="blue">cppad/local/sub_op.hpp</font></code>
+that caused the following improper abort:
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+Error&nbsp;detected&nbsp;by&nbsp;false&nbsp;result&nbsp;for<br>
+&nbsp;&nbsp;&nbsp;&nbsp;arg[1]&nbsp;&lt;&nbsp;i_z<br>
+at&nbsp;line&nbsp;337&nbsp;in&nbsp;the&nbsp;file<br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>...</span></font></i><font color="blue"><span style='white-space: nowrap'>/include/cppad/local/sub_op.hpp<br>
+</span></font></code>
+This was fixed in the trunk.
+It was also fixed in the release with version number <code><font color="blue">20100101.3</font></code>
+which can be downloaded from the CppAD
+<a href="http://coin-or.github.io/download/source/CppAD/" target="_top"><span style='white-space: nowrap'>download&nbsp;directory</span></a>
+.
+
+
+<br>
+<br>
+<b><big><a name="04-01" id="04-01">04-01</a></big></b>
+<br>
+Some of the <a href="speed_utility.htm" target="_top"><span style='white-space: nowrap'>speed_utility</span></a>
+ library
+(in <code><font color="blue">speed/src</font></code>) was being compiled for debugging.
+This has been changed and they are now compiled with debugging off
+and optimization on.
+
+<br>
+<br>
+<b><big><a name="03-11" id="03-11">03-11</a></big></b>
+<br>
+The old <a href="reverse_any.htm" target="_top"><span style='white-space: nowrap'>reverse_any</span></a>
+ example was moved to <a href="reverse_three.cpp.htm" target="_top"><span style='white-space: nowrap'>reverse_three.cpp</span></a>
+,
+the old checkpoint example is now the general case reverse example,
+and a better <code><font color="blue">checkpoint.cpp/</font></code> example was created.
+
+<br>
+<br>
+<b><big><a name="03-10" id="03-10">03-10</a></big></b>
+<br>
+The <a href="optimize.htm" target="_top"><span style='white-space: nowrap'>optimize</span></a>
+ routine would mistakenly remove some
+expressions that depended on the independent variables and that
+affected the result of certain <a href="condexp.htm" target="_top"><span style='white-space: nowrap'>CondExp</span></a>
+ operations.
+This has been fixed.
+
+<br>
+<br>
+<b><big><a name="03-09" id="03-09">03-09</a></big></b>
+<br>
+Extend <a href="reverse_any.htm" target="_top"><span style='white-space: nowrap'>reverse_any</span></a>
+ so that it can be used for
+<a href="checkpoint.htm" target="_top"><span style='white-space: nowrap'>checkpointing</span></a>
+; i.e.,
+splitting reverse mode calculations at function composition points.
+
+<br>
+<br>
+<b><big><a name="03-03" id="03-03">03-03</a></big></b>
+<br>
+Fixed a bug in handling
+<a href="glossary.htm#Sparsity Pattern.Boolean Vector" target="_top"><span style='white-space: nowrap'>vector&nbsp;of&nbsp;boolean</span></a>
+
+sparsity patterns.
+(when the number of elements per set was a multiple of
+<code><font color="blue">sizeof(size_t))</font></code>.
+
+<br>
+<br>
+<b><big><a name="02-11" id="02-11">02-11</a></big></b>
+<br>
+The <code><font color="blue">speed</font></code> directory has been reorganized and the
+common part of the <a href="speed_main.htm#Link Functions" target="_top"><span style='white-space: nowrap'>link&nbsp;functions</span></a>
+,
+as well as the <a href="microsoft_timer.htm" target="_top"><span style='white-space: nowrap'>microsoft_timer</span></a>
+,
+have been moved to the subdirectory <code><font color="blue">speed/src</font></code>
+where a library is built.
+
+<br>
+<br>
+<b><big><a name="02-08" id="02-08">02-08</a></big></b>
+<br>
+A bug was introduced in the <a href="whats_new_10.htm#02-05" target="_top"><span style='white-space: nowrap'>02-05</span></a>
+
+change whereby the <code><font color="blue">make</font></code> command tried to build the
+<code><font color="blue">libcppad_ipopt.a</font></code> library even if <code><font color="blue">IPOPT_DIR</font></code> was
+not specified on the <a href="autotools.htm#Configure" target="_top"><span style='white-space: nowrap'>configure</span></a>
+ command line.
+This has been fixed.
+
+<br>
+<br>
+<b><big><a name="02-06" id="02-06">02-06</a></big></b>
+<br>
+The Microsoft project files for the speed tests were extended
+so that the worked properly for the Release (as well as the Debug)
+configuration.
+(This required conversion from Visual Studio Version 7 to Visual Studio 2008
+format.)
+<code><span style='white-space: nowrap'><br>
+<br>
+</span></code>Add an automated check for <a href="optimize.htm" target="_top"><span style='white-space: nowrap'>optimize</span></a>
+ bug
+fixed on <code><font color="blue">02-05</font></code>.
+(Automatic checking for <a href="printfor.htm" target="_top"><span style='white-space: nowrap'>PrintFor</span></a>
+ bug was added on <code><font color="blue">02-05</font></code>.)
+
+<br>
+<br>
+<b><big><a name="02-05" id="02-05">02-05</a></big></b>
+
+<ol type="1"><li>
+Simplify running all the tests by adding the
+<code><font color="blue">make test</font></code> command.
+</li><li>
+
+Simplify the <a href="autotools.htm#Configure" target="_top"><span style='white-space: nowrap'>configure</span></a>
+ command by removing
+need for:
+<code><font color="blue">--with-Speed</font></code>,
+<code><font color="blue">--with-Introduction</font></code>,
+<code><font color="blue">--with-Example</font></code>,
+<code><font color="blue">--with-TestMore</font></code>,
+and <code><font color="blue">--with-PrintFor</font></code>.
+</li><li>
+
+Add files that were missing in the Microsoft Visual Studio
+projects.
+</li><li>
+
+Fix two significant bugs. One in the <a href="optimize.htm" target="_top"><span style='white-space: nowrap'>optimize</span></a>
+ command
+and the other in the <a href="printfor.htm" target="_top"><span style='white-space: nowrap'>PrintFor</span></a>
+ command.
+</li></ol>
+
+
+<br>
+<br>
+<b><big><a name="02-03" id="02-03">02-03</a></big></b>
+<br>
+Fix a mistakes in the test <a href="bender_quad.cpp.htm" target="_top"><span style='white-space: nowrap'>bender_quad.cpp</span></a>
+.
+In addition, the <a href="optimize.htm" target="_top"><span style='white-space: nowrap'>optimize</span></a>
+ routine was used to reduce the
+tape before doing the calculations.
+<code><span style='white-space: nowrap'><br>
+<br>
+</span></code>The routine <a href="opt_val_hes.htm" target="_top"><span style='white-space: nowrap'>opt_val_hes</span></a>
+ was added as an alternative to
+<a href="benderquad.htm" target="_top"><span style='white-space: nowrap'>BenderQuad</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="01-26" id="01-26">01-26</a></big></b>
+<br>
+Another speed improvement was made to <a href="cppad_ipopt_nlp.htm" target="_top"><span style='white-space: nowrap'>cppad_ipopt_nlp</span></a>
+.
+To be specific, the Lagragian multipliers where checked and components
+that were zero were excluded form the Hessian evaluation.
+
+<br>
+<br>
+<b><big><a name="01-24" id="01-24">01-24</a></big></b>
+<br>
+It appears that in <a href="cppad_ipopt_nlp.htm" target="_top"><span style='white-space: nowrap'>cppad_ipopt_nlp</span></a>
+, when <code><font color="blue">retape[k]</font></code> was true,
+and <code><font color="blue">L[k] &gt; 1</font></code>, it was possible to use the wrong operation sequence
+in the calculations (though a test case that demonstrated this could not be
+produced). This is because the argument value to <small>@(@
+r_k (u)
+@)@</small> depends
+on the value of <small>@(@
+\ell
+@)@</small> in the expression
+<small>@[@
+
+	r_k \circ [ J_{k, \ell} \otimes n ] (x)
+
+@]@</small>
+(even when the value of <small>@(@
+x
+@)@</small> does not change).
+<code><span style='white-space: nowrap'><br>
+<br>
+</span></code>There was a bug in the <a href="ipopt_nlp_ode_check.cpp.htm" target="_top"><span style='white-space: nowrap'>ipopt_nlp_ode_check.cpp</span></a>
+ program,
+for a long time,  that did not show up until now. Basically,
+the check had code of the was using an undefined value.
+This has been fixed.
+
+<br>
+<br>
+<b><big><a name="01-23" id="01-23">01-23</a></big></b>
+<br>
+Improve the sparsity patterns and reduce the amount of memory
+required for large sparse problems using <a href="cppad_ipopt_nlp.htm" target="_top"><span style='white-space: nowrap'>cppad_ipopt_nlp</span></a>
+.
+The speed test <code><font color="blue">cppad_ipopt/speed</font></code> showed significant improvement.
+
+
+<br>
+<br>
+<b><big><a name="01-20" id="01-20">01-20</a></big></b>
+<br>
+We plan to split up the
+<code><font color="blue">ipopt_cppad/src/ipopt_cppad_nlp.hpp</font></code> include file.
+In preparation,
+the example <code><font color="blue">ipopt_cppad</font></code> has been changed to <code><font color="blue">cppad_ipopt</font></code>.
+This will facilitate using <code><font color="blue">CPPAD_IPOPT_*</font></code> for the
+<code><font color="blue"># ifdef</font></code> commands in the new include files
+(note that they must begin with <code><font color="blue">CPPAD</font></code>).
+
+
+<br>
+<br>
+<b><big><a name="01-18" id="01-18">01-18</a></big></b>
+<br>
+The <code><font color="blue">ipopt_cppad</font></code> subdirectory of the distribution
+has been split into an <code><font color="blue">src</font></code>, <code><font color="blue">example</font></code>, and <code><font color="blue">speed</font></code>
+subdirectories.
+The <code><font color="blue">example</font></code> (<code><font color="blue">speed</font></code>)
+subdirectory is where one builds the <a href="cppad_ipopt_nlp.htm" target="_top"><span style='white-space: nowrap'>ipopt_cppad_nlp</span></a>
+ examples
+(<a href="ipopt_ode_speed.cpp.htm" target="_top"><span style='white-space: nowrap'>speed&nbsp;tests</span></a>
+).
+
+<br>
+<br>
+<b><big><a name="01-04" id="01-04">01-04</a></big></b>
+<br>
+The following items have been fulfilled and
+hence were removed for the <a href="wish_list.htm" target="_top"><span style='white-space: nowrap'>wish_list</span></a>
+:
+<ol type="1"><li>
+If an exception occurs before the call to the corresponding
+<a href="adfun.htm" target="_top"><span style='white-space: nowrap'>ADFun</span></a>
+ constructor or <a href="dependent.htm" target="_top"><span style='white-space: nowrap'>Dependent</span></a>
+,
+the tape recording can be stopped using <a href="abort_recording.htm" target="_top"><span style='white-space: nowrap'>abort_recording</span></a>
+.
+
+</li><li>
+
+A speed test for <a href="cppad_ipopt_nlp.htm" target="_top"><span style='white-space: nowrap'>ipopt_cppad_nlp</span></a>
+ was added; see
+<a href="ipopt_ode_speed.cpp.htm" target="_top"><span style='white-space: nowrap'>ipopt_ode_speed.cpp</span></a>
+.
+
+</li><li>
+
+The <a href="optimize.htm" target="_top"><span style='white-space: nowrap'>optimize</span></a>
+ command uses hash coding to check
+when an expression is already in the tape and can be reused.
+
+</li><li>
+
+The <a href="optimize.htm" target="_top"><span style='white-space: nowrap'>optimize</span></a>
+ command removes operations that
+are not used by any of the dependent variables.
+
+</li><li>
+
+The <a href="ad_in_c.cpp.htm" target="_top"><span style='white-space: nowrap'>ad_in_c.cpp</span></a>
+ example demonstrates how to connect
+CppAD to an arbitrary scripting language.
+
+</li><li>
+
+The vector of sets option has been added to sparsity calculations;
+see <a href="glossary.htm#Sparsity Pattern" target="_top"><span style='white-space: nowrap'>sparsity&nbsp;pattern</span></a>
+.
+
+</li></ol>
+
+
+
+
+<hr>Input File: omh/appendix/whats_new/whats_new_10.omh
+
+</body>
+</html>

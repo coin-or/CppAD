@@ -1,0 +1,532 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>Definition of a Simple Vector</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Definition of a Simple Vector">
+<meta name="keywords" id="keywords" content=" definition simple vector value_type [] Ndebug template class requirements elements specified type default constructor sizing copy element destructor assignment size resize value access using example exercise ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_simplevector_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://coin-or.github.io/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="check_numeric_type.cpp.htm" target="_top">Prev</a>
+</td><td><a href="simple_vector.cpp.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>utility</option>
+<option>SimpleVector</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>CppAD-&gt;</option>
+<option>Install</option>
+<option>Introduction</option>
+<option>AD</option>
+<option>ADFun</option>
+<option>preprocessor</option>
+<option>multi_thread</option>
+<option>utility</option>
+<option>ipopt_solve</option>
+<option>Example</option>
+<option>speed</option>
+<option>Appendix</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>utility-&gt;</option>
+<option>ErrorHandler</option>
+<option>NearEqual</option>
+<option>speed_test</option>
+<option>SpeedTest</option>
+<option>time_test</option>
+<option>test_boolofvoid</option>
+<option>NumericType</option>
+<option>CheckNumericType</option>
+<option>SimpleVector</option>
+<option>CheckSimpleVector</option>
+<option>nan</option>
+<option>pow_int</option>
+<option>Poly</option>
+<option>LuDetAndSolve</option>
+<option>RombergOne</option>
+<option>RombergMul</option>
+<option>Runge45</option>
+<option>Rosen34</option>
+<option>OdeErrControl</option>
+<option>OdeGear</option>
+<option>OdeGearControl</option>
+<option>CppAD_vector</option>
+<option>thread_alloc</option>
+<option>index_sort</option>
+<option>to_string</option>
+<option>set_union</option>
+<option>sparse_rc</option>
+<option>sparse_rcv</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down0(this)'>
+<option>SimpleVector-&gt;</option>
+<option>simple_vector.cpp</option>
+</select>
+</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Template Class Requirements</option>
+<option>Elements of Specified Type</option>
+<option>Default Constructor</option>
+<option>Sizing Constructor</option>
+<option>Copy Constructor</option>
+<option>Element Constructor and Destructor</option>
+<option>Assignment</option>
+<option>Size</option>
+<option>Resize</option>
+<option>Value Type</option>
+<option>Element Access</option>
+<option>---..Using Value</option>
+<option>---..Assignment</option>
+<option>Example</option>
+<option>Exercise</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>Definition of a Simple Vector</big></big></b></center>
+<br>
+<b><big><a name="Template Class Requirements" id="Template Class Requirements">Template Class Requirements</a></big></b>
+<br>
+A simple vector template class 
+<code><i><font color="black"><span style='white-space: nowrap'>SimpleVector</span></font></i></code>
+,
+is any template class
+that satisfies the requirements below.
+The following is a list of some simple vector template classes:
+<table><tr><td align='left'  valign='top'>
+
+<b>Name</b> </td><td align='left'  valign='top'>
+ <b>Documentation</b>   </td></tr><tr><td align='left'  valign='top'>
+
+<code><font color="blue">std::vector</font></code>      </td><td align='left'  valign='top'>
+ Section 16.3 of
+<a href="bib.htm#The C++ Programming Language" target="_top"><span style='white-space: nowrap'>The&nbsp;C++&nbsp;Programming&nbsp;Language</span></a>
+
+</td></tr><tr><td align='left'  valign='top'>
+
+<code><font color="blue">std::valarray</font></code>    </td><td align='left'  valign='top'>
+ Section 22.4 of
+<a href="bib.htm#The C++ Programming Language" target="_top"><span style='white-space: nowrap'>The&nbsp;C++&nbsp;Programming&nbsp;Language</span></a>
+
+</td></tr><tr><td align='left'  valign='top'>
+
+<code><font color="blue">CppAD::vector</font></code>    </td><td align='left'  valign='top'>
+ <a href="cppad_vector.htm" target="_top">The CppAD::vector Template Class</a>
+</td></tr>
+</table>
+<br>
+<b><big><a name="Elements of Specified Type" id="Elements of Specified Type">Elements of Specified Type</a></big></b>
+<br>
+A simple vector class with elements of type 
+<code><i><font color="black"><span style='white-space: nowrap'>Scalar</span></font></i></code>
+,
+is any class that satisfies the requirements for a class of the form
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>SimpleVector</span></font></i><font color="blue"><span style='white-space: nowrap'>&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Scalar</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;<br>
+</span></font></code>
+The routine <a href="checksimplevector.htm" target="_top"><span style='white-space: nowrap'>CheckSimpleVector</span></a>
+ can be used to check
+that a class is a simple vector class with a specified element type.
+
+<br>
+<br>
+<b><big><a name="Default Constructor" id="Default Constructor">Default Constructor</a></big></b>
+<br>
+The syntax
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>SimpleVector</span></font></i><font color="blue"><span style='white-space: nowrap'>&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Scalar</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>;<br>
+</span></font></code>
+creates an empty vector 
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+ (
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>.size()</span></font></code>
+ is zero)
+that can later contain elements of the specified type
+(see <a href="simplevector.htm#Resize" target="_top"><span style='white-space: nowrap'>resize</span></a>
+ below).
+
+<br>
+<br>
+<b><big><a name="Sizing Constructor" id="Sizing Constructor">Sizing Constructor</a></big></b>
+<br>
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>n</span></font></i></code>
+ has type <code><font color="blue">size_t</font></code>,
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>SimpleVector</span></font></i><font color="blue"><span style='white-space: nowrap'>&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Scalar</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>(</span></font><i><font color="black"><span style='white-space: nowrap'>n</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+creates a vector 
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+ with 
+<code><i><font color="black"><span style='white-space: nowrap'>n</span></font></i></code>
+ elements
+each of the specified type.
+
+<br>
+<br>
+<b><big><a name="Copy Constructor" id="Copy Constructor">Copy Constructor</a></big></b>
+<br>
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+ is a 
+<code><i><font color="black"><span style='white-space: nowrap'>SimpleVector</span></font></i><font color="blue"><span style='white-space: nowrap'>&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Scalar</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code>
+ object,
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>SimpleVector</span></font></i><font color="blue"><span style='white-space: nowrap'>&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Scalar</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'>(</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+creates a vector with the same type and number of elements
+as 
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+.
+The 
+<code><i><font color="black"><span style='white-space: nowrap'>Scalar</span></font></i></code>
+ assignment operator ( <code><font color="blue">=</font></code> )
+is used to set each element of 
+<code><i><font color="black"><span style='white-space: nowrap'>y</span></font></i></code>
+
+equal to the corresponding element of 
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+.
+This is a `deep copy' in that the values of the elements
+of 
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+ and 
+<code><i><font color="black"><span style='white-space: nowrap'>y</span></font></i></code>
+ can be set independently after the copy.
+The argument 
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+ is passed by reference
+and may be <code><font color="blue">const</font></code>.
+
+<br>
+<br>
+<b><big><a name="Element Constructor and Destructor" id="Element Constructor and Destructor">Element Constructor and Destructor</a></big></b>
+<br>
+The default constructor for type 
+<code><i><font color="black"><span style='white-space: nowrap'>Scalar</span></font></i></code>
+ is called
+for every element in a vector when the vector element is created.
+The 
+<code><i><font color="black"><span style='white-space: nowrap'>Scalar</span></font></i></code>
+ destructor is called when it is removed
+from the vector (this includes when the vector is destroyed).
+
+<br>
+<br>
+<b><big><a name="Assignment" id="Assignment">Assignment</a></big></b>
+<br>
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+ and 
+<code><i><font color="black"><span style='white-space: nowrap'>y</span></font></i></code>
+ are
+
+<code><i><font color="black"><span style='white-space: nowrap'>SimpleVector</span></font></i><font color="blue"><span style='white-space: nowrap'>&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Scalar</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code>
+ objects,
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+uses the 
+<code><i><font color="black"><span style='white-space: nowrap'>Scalar</span></font></i></code>
+ assignment operator ( <code><font color="blue">=</font></code> )
+to set each element of 
+<code><i><font color="black"><span style='white-space: nowrap'>y</span></font></i></code>
+ equal to
+the corresponding element of 
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+.
+This is a `deep assignment' in that the values of the elements
+of 
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+ and 
+<code><i><font color="black"><span style='white-space: nowrap'>y</span></font></i></code>
+ can be set independently after the assignment.
+The vectors 
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+ and 
+<code><i><font color="black"><span style='white-space: nowrap'>y</span></font></i></code>
+ must have
+the same number of elements.
+The argument 
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+ is passed by reference
+and may be <code><font color="blue">const</font></code>.
+<code><span style='white-space: nowrap'><br>
+<br>
+</span></code>The type returned by this assignment is unspecified; for example,
+it might be void in which case the syntax
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>z</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+would not be valid.
+
+<br>
+<br>
+<b><big><a name="Size" id="Size">Size</a></big></b>
+<br>
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+ is a 
+<code><i><font color="black"><span style='white-space: nowrap'>SimpleVector</span></font></i><font color="blue"><span style='white-space: nowrap'>&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Scalar</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code>
+ object
+and <code><font color="blue">n</font></code> has type <code><font color="blue">size_t</font></code>,
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;size_t(&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>.size()&nbsp;)<br>
+</span></font></code>
+sets 
+<code><i><font color="black"><span style='white-space: nowrap'>n</span></font></i></code>
+ to the number of elements in the vector 
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+.
+The object 
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+ may be <code><font color="blue">const</font></code>.
+
+<br>
+<br>
+<b><big><a name="Resize" id="Resize">Resize</a></big></b>
+<br>
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+ is a 
+<code><i><font color="black"><span style='white-space: nowrap'>SimpleVector</span></font></i><font color="blue"><span style='white-space: nowrap'>&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Scalar</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code>
+ object
+and <code><font color="blue">n</font></code> has type <code><font color="blue">size_t</font></code>,
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>.resize(</span></font><i><font color="black"><span style='white-space: nowrap'>n</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+changes the number of elements contained in the vector 
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+
+to be 
+<code><i><font color="black"><span style='white-space: nowrap'>n</span></font></i></code>
+.
+The value of the elements of 
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+
+are not specified after this operation; i.e.,
+any values previously stored in 
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+ are lost.
+(The object 
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+ can not be <code><font color="blue">const</font></code>.)
+
+<br>
+<br>
+<b><big><a name="Value Type" id="Value Type">Value Type</a></big></b>
+<br>
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>Vector</span></font></i></code>
+ is any simple vector class,
+the syntax
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Vector</span></font></i><font color="blue"><span style='white-space: nowrap'>::value_type<br>
+</span></font></code>
+is the type of the elements corresponding to the vector class; i.e.,
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>SimpleVector</span></font></i><font color="blue"><span style='white-space: nowrap'>&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Scalar</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;::value_type<br>
+</span></font></code>
+is equal to 
+<code><i><font color="black"><span style='white-space: nowrap'>Scalar</span></font></i></code>
+.
+
+<br>
+<br>
+<b><big><a name="Element Access" id="Element Access">Element Access</a></big></b>
+<br>
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+ is a 
+<code><i><font color="black"><span style='white-space: nowrap'>SimpleVector</span></font></i><font color="blue"><span style='white-space: nowrap'>&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Scalar</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code>
+ object
+and 
+<code><i><font color="black"><span style='white-space: nowrap'>i</span></font></i></code>
+ has type <code><font color="blue">size_t</font></code>,
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>]<br>
+</span></font></code>
+returns an object of an unspecified type,
+referred to here as 
+<code><i><font color="black"><span style='white-space: nowrap'>elementType</span></font></i></code>
+.
+
+<br>
+<br>
+<b><a name="Element Access.Using Value" id="Element Access.Using Value">Using Value</a></b>
+<br>
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>elementType</span></font></i></code>
+ is not the same as 
+<code><i><font color="black"><span style='white-space: nowrap'>Scalar</span></font></i></code>
+,
+the conversion operator
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;static_cast&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Scalar</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;(</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>])<br>
+</span></font></code>
+is used implicitly when 
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>]</span></font></code>
+ is used in an expression
+with values of type 
+<code><i><font color="black"><span style='white-space: nowrap'>Scalar</span></font></i></code>
+.
+For this type of usage, the object 
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+ may be <code><font color="blue">const</font></code>.
+
+<br>
+<br>
+<b><a name="Element Access.Assignment" id="Element Access.Assignment">Assignment</a></b>
+<br>
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>y</span></font></i></code>
+ is an object of type 
+<code><i><font color="black"><span style='white-space: nowrap'>Scalar</span></font></i></code>
+,
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>]&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+assigns the <code><i>i</i></code>-th element of 
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+ to have value 
+<code><i><font color="black"><span style='white-space: nowrap'>y</span></font></i></code>
+.
+For this type of usage, the object 
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+ can not be <code><font color="blue">const</font></code>.
+The type returned by this assignment is unspecified; for example,
+it might be void in which case the syntax
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>z</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>]&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+would not be valid.
+
+<br>
+<br>
+<b><big><a name="Example" id="Example">Example</a></big></b>
+
+<br>
+The file
+<a href="simple_vector.cpp.htm" target="_top"><span style='white-space: nowrap'>simple_vector.cpp</span></a>
+
+contains an example and test of a Simple template class.
+It returns true if it succeeds and false otherwise.
+(It is easy to modify to test additional simple vector template classes.)
+
+<br>
+<br>
+<b><big><a name="Exercise" id="Exercise">Exercise</a></big></b>
+
+<ol type="1"><li>
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>Vector</span></font></i></code>
+ is a simple vector template class,
+the following code may not be valid:
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Vector</span></font></i><font color="blue"><span style='white-space: nowrap'>&lt;double&gt;&nbsp;x(2);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;x[2]&nbsp;=&nbsp;1.;<br>
+</span></font></code>
+Create and run a program that executes the code segment
+above where 
+<code><i><font color="black"><span style='white-space: nowrap'>Vector</span></font></i></code>
+ is each of the following cases:
+<code><font color="blue">std::vector</font></code>,
+<code><font color="blue">CppAD::vector</font></code>.
+Do this both where the compiler option
+<code><font color="blue">-DNDEBUG</font></code> is and is not present on the compilation command line.
+</li><li>
+
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>Vector</span></font></i></code>
+ is a simple vector template class,
+the following code may not be valid:
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Vector</span></font></i><font color="blue"><span style='white-space: nowrap'>&lt;int&gt;&nbsp;x(2);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Vector</span></font></i><font color="blue"><span style='white-space: nowrap'>&lt;int&gt;&nbsp;y(1);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;x[0]&nbsp;=&nbsp;0;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;x[1]&nbsp;=&nbsp;1;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;y&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;x;<br>
+</span></font></code>
+Create and run a program that executes the code segment
+above where 
+<code><i><font color="black"><span style='white-space: nowrap'>Vector</span></font></i></code>
+ is each of the following cases:
+<code><font color="blue">std::valarray</font></code>,
+<code><font color="blue">CppAD::vector</font></code>.
+Do this both where the compiler option
+<code><font color="blue">-DNDEBUG</font></code> is and is not present on the compilation command line.
+</li></ol>
+
+
+
+
+<hr>Input File: omh/simple_vector.omh
+
+</body>
+</html>

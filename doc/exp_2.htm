@@ -1,0 +1,353 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>Second Order Exponential Approximation</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Second Order Exponential Approximation">
+<meta name="keywords" id="keywords" content=" second order exponential approximation exp_2 example algorithm syntax purpose mathematical form include x y type implementation test exercises ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_exp_2_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://coin-or.github.io/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="introduction.htm" target="_top">Prev</a>
+</td><td><a href="exp_2.hpp.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>Introduction</option>
+<option>exp_2</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>CppAD-&gt;</option>
+<option>Install</option>
+<option>Introduction</option>
+<option>AD</option>
+<option>ADFun</option>
+<option>preprocessor</option>
+<option>multi_thread</option>
+<option>utility</option>
+<option>ipopt_solve</option>
+<option>Example</option>
+<option>speed</option>
+<option>Appendix</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>Introduction-&gt;</option>
+<option>exp_2</option>
+<option>exp_eps</option>
+<option>exp_apx.cpp</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down0(this)'>
+<option>exp_2-&gt;</option>
+<option>exp_2.hpp</option>
+<option>exp_2.cpp</option>
+<option>exp_2_for0</option>
+<option>exp_2_for1</option>
+<option>exp_2_rev1</option>
+<option>exp_2_for2</option>
+<option>exp_2_rev2</option>
+<option>exp_2_cppad</option>
+</select>
+</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Syntax</option>
+<option>Purpose</option>
+<option>Mathematical Form</option>
+<option>include</option>
+<option>x</option>
+<option>y</option>
+<option>Type</option>
+<option>Contents</option>
+<option>Implementation</option>
+<option>Test</option>
+<option>Exercises</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>Second Order Exponential Approximation</big></big></b></center>
+<br>
+<b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
+
+<br>
+
+<code><font color="blue"><span style='white-space: nowrap'>#&nbsp;include&nbsp;&quot;exp_2.hpp&quot;</span></font></code>
+
+<code><span style='white-space: nowrap'><br>
+</span></code>
+<code><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;exp_2(</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+
+
+
+<br>
+<br>
+<b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
+<br>
+This is a simple example algorithm that is used to demonstrate
+Algorithmic Differentiation
+(see <a href="exp_eps.htm" target="_top"><span style='white-space: nowrap'>exp_eps</span></a>
+ for a more complex example).
+
+<br>
+<br>
+<b><big><a name="Mathematical Form" id="Mathematical Form">Mathematical Form</a></big></b>
+<br>
+The exponential function can be defined by
+<small>@[@
+
+	\exp (x) = 1 + x^1 / 1 ! + x^2 / 2 ! + \cdots
+
+@]@</small>
+The second order approximation for the exponential function is
+<small>@[@
+
+{\rm exp\_2} (x) =  1 + x + x^2 / 2
+
+@]@</small>
+
+
+<br>
+<br>
+<b><big><a name="include" id="include">include</a></big></b>
+<br>
+The include command in the syntax is relative to
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cppad-</span></font><i><font color="black"><span style='white-space: nowrap'>yyyymmdd</span></font></i><font color="blue"><span style='white-space: nowrap'>/introduction/exp_apx<br>
+</span></font></code>
+where 
+<code><font color="blue"><span style='white-space: nowrap'>cppad-</span></font><i><font color="black"><span style='white-space: nowrap'>yyyymmdd</span></font></i></code>
+ is the distribution directory
+created during the beginning steps of the
+<a href="install.htm" target="_top"><span style='white-space: nowrap'>installation</span></a>
+ of CppAD.
+
+<br>
+<br>
+<b><big><a name="x" id="x">x</a></big></b>
+<br>
+The argument 
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Type</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+(see 
+<code><i><font color="black"><span style='white-space: nowrap'>Type</span></font></i></code>
+ below).
+It specifies the point at which to evaluate the
+approximation for the second order exponential approximation.
+
+<br>
+<br>
+<b><big><a name="y" id="y">y</a></big></b>
+<br>
+The result 
+<code><i><font color="black"><span style='white-space: nowrap'>y</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Type</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+It is the value of the exponential function
+approximation defined above.
+
+<br>
+<br>
+<b><big><a name="Type" id="Type">Type</a></big></b>
+<br>
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>u</span></font></i></code>
+ and 
+<code><i><font color="black"><span style='white-space: nowrap'>v</span></font></i></code>
+ are 
+<code><i><font color="black"><span style='white-space: nowrap'>Type</span></font></i></code>
+ objects and 
+<code><i><font color="black"><span style='white-space: nowrap'>i</span></font></i></code>
+
+is an <code><font color="blue">int</font></code>:
+
+<table><tr><td align='left'  valign='top'>
+
+<b>Operation</b>  </td><td align='left'  valign='top'>
+ <b>Result Type</b> </td><td align='left'  valign='top'>
+ <b>Description</b>
+</td></tr><tr><td align='left'  valign='top'>
+
+
+<code><i><font color="black"><span style='white-space: nowrap'>Type</span></font></i><font color="blue"><span style='white-space: nowrap'>(</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+
+	</td><td align='left'  valign='top'>
+ 
+<code><i><font color="black"><span style='white-space: nowrap'>Type</span></font></i></code>
+
+	</td><td align='left'  valign='top'>
+ construct object with value equal to 
+<code><i><font color="black"><span style='white-space: nowrap'>i</span></font></i></code>
+
+</td></tr><tr><td align='left'  valign='top'>
+
+
+<code><i><font color="black"><span style='white-space: nowrap'>Type&nbsp;u&nbsp;</span></font></i><font color="blue"><span style='white-space: nowrap'>=</span></font><i><font color="black"><span style='white-space: nowrap'>&nbsp;v</span></font></i></code>
+
+	</td><td align='left'  valign='top'>
+ 
+<code><i><font color="black"><span style='white-space: nowrap'>Type</span></font></i></code>
+
+	</td><td align='left'  valign='top'>
+ construct 
+<code><i><font color="black"><span style='white-space: nowrap'>u</span></font></i></code>
+ with value equal to 
+<code><i><font color="black"><span style='white-space: nowrap'>v</span></font></i></code>
+
+</td></tr><tr><td align='left'  valign='top'>
+
+
+<code><i><font color="black"><span style='white-space: nowrap'>u</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;*&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>v</span></font></i></code>
+
+	</td><td align='left'  valign='top'>
+ 
+<code><i><font color="black"><span style='white-space: nowrap'>Type</span></font></i></code>
+
+	</td><td align='left'  valign='top'>
+ result is value of <small>@(@
+u * v
+@)@</small>
+</td></tr><tr><td align='left'  valign='top'>
+
+
+<code><i><font color="black"><span style='white-space: nowrap'>u</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;/&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>v</span></font></i></code>
+
+	</td><td align='left'  valign='top'>
+ 
+<code><i><font color="black"><span style='white-space: nowrap'>Type</span></font></i></code>
+
+	</td><td align='left'  valign='top'>
+ result is value of <small>@(@
+u / v
+@)@</small>
+</td></tr><tr><td align='left'  valign='top'>
+
+
+<code><i><font color="black"><span style='white-space: nowrap'>u</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;+&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>v</span></font></i></code>
+
+	</td><td align='left'  valign='top'>
+ 
+<code><i><font color="black"><span style='white-space: nowrap'>Type</span></font></i></code>
+
+	</td><td align='left'  valign='top'>
+ result is value of <small>@(@
+u + v
+@)@</small>
+</td></tr>
+</table>
+<br>
+<b><big><a name="Contents" id="Contents">Contents</a></big></b>
+<br>
+<table>
+<tr><td><a href="exp_2.hpp.htm" target="_top">exp_2.hpp</a></td><td>exp_2:&nbsp;Implementation</td></tr><tr><td><a href="exp_2.cpp.htm" target="_top">exp_2.cpp</a></td><td>exp_2:&nbsp;Test</td></tr><tr><td><a href="exp_2_for0.htm" target="_top">exp_2_for0</a></td><td>exp_2:&nbsp;Operation&nbsp;Sequence&nbsp;and&nbsp;Zero&nbsp;Order&nbsp;Forward&nbsp;Mode</td></tr><tr><td><a href="exp_2_for1.htm" target="_top">exp_2_for1</a></td><td>exp_2:&nbsp;First&nbsp;Order&nbsp;Forward&nbsp;Mode</td></tr><tr><td><a href="exp_2_rev1.htm" target="_top">exp_2_rev1</a></td><td>exp_2:&nbsp;First&nbsp;Order&nbsp;Reverse&nbsp;Mode</td></tr><tr><td><a href="exp_2_for2.htm" target="_top">exp_2_for2</a></td><td>exp_2:&nbsp;Second&nbsp;Order&nbsp;Forward&nbsp;Mode</td></tr><tr><td><a href="exp_2_rev2.htm" target="_top">exp_2_rev2</a></td><td>exp_2:&nbsp;Second&nbsp;Order&nbsp;Reverse&nbsp;Mode</td></tr><tr><td><a href="exp_2_cppad.htm" target="_top">exp_2_cppad</a></td><td>exp_2:&nbsp;CppAD&nbsp;Forward&nbsp;and&nbsp;Reverse&nbsp;Sweeps</td></tr></table><br>
+<b><big><a name="Implementation" id="Implementation">Implementation</a></big></b>
+<br>
+The file <a href="exp_2.hpp.htm" target="_top"><span style='white-space: nowrap'>exp_2.hpp</span></a>
+
+contains a C++ implementation of this function.
+
+<br>
+<br>
+<b><big><a name="Test" id="Test">Test</a></big></b>
+<br>
+The file <a href="exp_2.cpp.htm" target="_top"><span style='white-space: nowrap'>exp_2.cpp</span></a>
+
+contains a test of this implementation.
+It returns true for success and false for failure.
+
+
+<br>
+<br>
+<b><big><a name="Exercises" id="Exercises">Exercises</a></big></b>
+
+<ol type="1"><li>
+Suppose that we make the call
+<code><font color='blue'><pre style='display:inline'> 
+     double x = .1;
+     double y = exp_2(x);
+</pre></font></code>
+What is the value assigned to
+<code><font color="blue">v1</font></code>, <code><font color="blue">v2</font></code>, ... ,<code><font color="blue">v5</font></code> in <a href="exp_2.hpp.htm" target="_top"><span style='white-space: nowrap'>exp_2.hpp</span></a>
+ ?
+</li><li>
+
+Extend the routine <code><font color="blue">exp_2.hpp</font></code> to
+a routine <code><font color="blue">exp_3.hpp</font></code> that computes
+<small>@[@
+
+	1 + x^2 / 2 ! + x^3 / 3 !
+
+@]@</small>
+Do this in a way that only assigns one value to each variable
+(as <code><font color="blue">exp_2</font></code> does).
+</li><li>
+
+Suppose that we make the call
+<code><font color='blue'><pre style='display:inline'> 
+     double x = .5;
+     double y = exp_3(x);
+</pre></font></code>
+using <code><font color="blue">exp_3</font></code> created in the previous problem.
+What is the value assigned to the new variables in <code><font color="blue">exp_3</font></code>
+(variables that are in <code><font color="blue">exp_3</font></code> and not in <code><font color="blue">exp_2</font></code>) ?
+</li></ol>
+
+
+
+<hr>Input File: introduction/exp_2.hpp
+
+</body>
+</html>

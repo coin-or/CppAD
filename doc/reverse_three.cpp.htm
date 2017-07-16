@@ -1,0 +1,235 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>Third Order Reverse Mode: Example and Test</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Third Order Reverse Mode: Example and Test">
+<meta name="keywords" id="keywords" content=" third order reverse mode: example test taylor coefficients ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_reverse_three.cpp_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://coin-or.github.io/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="reverse_any.htm" target="_top">Prev</a>
+</td><td><a href="reverse_checkpoint.cpp.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>ADFun</option>
+<option>Reverse</option>
+<option>reverse_any</option>
+<option>reverse_three.cpp</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>ADFun-&gt;</option>
+<option>record_adfun</option>
+<option>drivers</option>
+<option>Forward</option>
+<option>Reverse</option>
+<option>sparsity_pattern</option>
+<option>sparse_derivative</option>
+<option>optimize</option>
+<option>abs_normal</option>
+<option>FunCheck</option>
+<option>check_for_nan</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>Reverse-&gt;</option>
+<option>reverse_one</option>
+<option>reverse_two</option>
+<option>reverse_any</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>reverse_any-&gt;</option>
+<option>reverse_three.cpp</option>
+<option>reverse_checkpoint.cpp</option>
+</select>
+</td>
+<td>reverse_three.cpp</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Taylor Coefficients</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@
+
+
+<center><b><big><big>Third Order Reverse Mode: Example and Test</big></big></b></center>
+<br>
+<b><big><a name="Taylor Coefficients" id="Taylor Coefficients">Taylor Coefficients</a></big></b>
+
+<br>
+<small>@[@
+
+\begin{array}{rcl}
+	X(t) & = & x^{(0)} + x^{(1)} t + x^{(2)} t^2
+	\\
+	X^{(1)} (t) & = &  x^{(1)} + 2 x^{(2)} t
+	\\
+	X^{(2)} (t) & = &   2 x^{(2)}
+\end{array}
+
+@]@</small>Thus, we need to be careful to properly account for the fact that
+<small>@(@
+X^{(2)} (0) = 2 x^{(2)}
+@)@</small>
+(and similarly <small>@(@
+Y^{(2)} (0) = 2 y^{(2)}
+@)@</small>).
+
+<code><font color="blue">
+<pre><tt><b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/cppad.hpp&gt;</font>
+<b><font color="#0000FF">namespace</font></b> <font color="#FF0000">{</font> <i><font color="#9A1900">// ----------------------------------------------------------</font></i>
+<i><font color="#9A1900">// define the template function cases&lt;Vector&gt; in empty namespace</font></i>
+<b><font color="#0000FF">template</font></b> <font color="#990000">&lt;</font><b><font color="#0000FF">typename</font></b> <font color="#008080">Vector</font><font color="#990000">&gt;</font>
+<font color="#009900">bool</font> <b><font color="#000000">cases</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
+<font color="#FF0000">{</font>    <font color="#009900">bool</font> ok    <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
+     <font color="#009900">double</font> eps <font color="#990000">=</font> <font color="#993399">10</font><font color="#990000">.</font> <font color="#990000">*</font> CppAD<font color="#990000">::</font>numeric_limits<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;::</font><b><font color="#000000">epsilon</font></b><font color="#990000">();</font>
+     <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>AD<font color="#990000">;</font>
+     <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>NearEqual<font color="#990000">;</font>
+
+     <i><font color="#9A1900">// domain space vector</font></i>
+     <font color="#008080">size_t</font> n <font color="#990000">=</font> <font color="#993399">2</font><font color="#990000">;</font>
+     <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font>AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;)</font> <b><font color="#000000">X</font></b><font color="#990000">(</font>n<font color="#990000">);</font>
+     X<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">.;</font>
+     X<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">.;</font>
+
+     <i><font color="#9A1900">// declare independent variables and start recording</font></i>
+     CppAD<font color="#990000">::</font><b><font color="#000000">Independent</font></b><font color="#990000">(</font>X<font color="#990000">);</font>
+
+     <i><font color="#9A1900">// range space vector</font></i>
+     <font color="#008080">size_t</font> m <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font>
+     <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font>AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;)</font> <b><font color="#000000">Y</font></b><font color="#990000">(</font>m<font color="#990000">);</font>
+     Y<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> X<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">*</font> X<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">];</font>
+
+     <i><font color="#9A1900">// create f : X -&gt; Y and stop recording</font></i>
+     CppAD<font color="#990000">::</font><font color="#008080">ADFun&lt;double&gt;</font> <b><font color="#000000">f</font></b><font color="#990000">(</font>X<font color="#990000">,</font> Y<font color="#990000">);</font>
+
+     <i><font color="#9A1900">// define x^0 and compute y^0 using user zero order forward</font></i>
+     <font color="#008080">Vector</font> <b><font color="#000000">x0</font></b><font color="#990000">(</font>n<font color="#990000">),</font> <b><font color="#000000">y0</font></b><font color="#990000">(</font>m<font color="#990000">);</font>
+     x0<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font>    <font color="#990000">=</font> <font color="#993399">2</font><font color="#990000">.;</font>
+     x0<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font>    <font color="#990000">=</font> <font color="#993399">3</font><font color="#990000">.;</font>
+     y0       <font color="#990000">=</font> f<font color="#990000">.</font><b><font color="#000000">Forward</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">,</font> x0<font color="#990000">);</font>
+
+     <i><font color="#9A1900">// y^0 = F(x^0)</font></i>
+     <font color="#009900">double</font> check<font color="#990000">;</font>
+     check    <font color="#990000">=</font>  x0<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">*</font> x0<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">];</font>
+     ok      <font color="#990000">&amp;=</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>y0<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">,</font> check<font color="#990000">,</font> eps<font color="#990000">,</font> eps<font color="#990000">);</font>
+
+     <i><font color="#9A1900">// define x^1 and compute y^1 using first order forward mode</font></i>
+     <font color="#008080">Vector</font> <b><font color="#000000">x1</font></b><font color="#990000">(</font>n<font color="#990000">),</font> <b><font color="#000000">y1</font></b><font color="#990000">(</font>m<font color="#990000">);</font>
+     x1<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">4</font><font color="#990000">.;</font>
+     x1<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">5</font><font color="#990000">.;</font>
+     y1    <font color="#990000">=</font> f<font color="#990000">.</font><b><font color="#000000">Forward</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">,</font> x1<font color="#990000">);</font>
+
+     <i><font color="#9A1900">// Y^1 (x) = partial_t F( x^0 + x^1 * t )</font></i>
+     <i><font color="#9A1900">// y^1     = Y^1 (0)</font></i>
+     check <font color="#990000">=</font> x1<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">*</font> x0<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">+</font> x0<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">*</font> x1<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">];</font>
+     ok   <font color="#990000">&amp;=</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>y1<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">],</font> check<font color="#990000">,</font> eps<font color="#990000">,</font> eps<font color="#990000">);</font>
+
+     <i><font color="#9A1900">// define x^2 and compute y^2 using second order forward mode</font></i>
+     <font color="#008080">Vector</font> <b><font color="#000000">x2</font></b><font color="#990000">(</font>n<font color="#990000">),</font> <b><font color="#000000">y2</font></b><font color="#990000">(</font>m<font color="#990000">);</font>
+     x2<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">6</font><font color="#990000">.;</font>
+     x2<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">7</font><font color="#990000">.;</font>
+     y2    <font color="#990000">=</font> f<font color="#990000">.</font><b><font color="#000000">Forward</font></b><font color="#990000">(</font><font color="#993399">2</font><font color="#990000">,</font> x2<font color="#990000">);</font>
+
+     <i><font color="#9A1900">// Y^2 (x) = partial_tt F( x^0 + x^1 * t + x^2 * t^2 )</font></i>
+     <i><font color="#9A1900">// y^2     = (1/2) *  Y^2 (0)</font></i>
+     check  <font color="#990000">=</font> x2<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">*</font> x0<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">+</font> x1<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">*</font> x1<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">+</font> x0<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">*</font> x2<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">];</font>
+     ok    <font color="#990000">&amp;=</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>y2<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">],</font> check<font color="#990000">,</font> eps<font color="#990000">,</font> eps<font color="#990000">);</font>
+
+     <i><font color="#9A1900">// W(x)  = Y^0 (x) + 2 * Y^1 (x) + 3 * (1/2) * Y^2 (x)</font></i>
+     <font color="#008080">size_t</font> p <font color="#990000">=</font> <font color="#993399">3</font><font color="#990000">;</font>
+     <font color="#008080">Vector</font> <b><font color="#000000">dw</font></b><font color="#990000">(</font>n<font color="#990000">*</font>p<font color="#990000">),</font> <b><font color="#000000">w</font></b><font color="#990000">(</font>m<font color="#990000">*</font>p<font color="#990000">);</font>
+     w<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">.;</font>
+     w<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">2</font><font color="#990000">.;</font>
+     w<font color="#990000">[</font><font color="#993399">2</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">3</font><font color="#990000">.;</font>
+     dw   <font color="#990000">=</font> f<font color="#990000">.</font><b><font color="#000000">Reverse</font></b><font color="#990000">(</font>p<font color="#990000">,</font> w<font color="#990000">);</font>
+
+     <i><font color="#9A1900">// check partial w.r.t x^0_0 of W(x)</font></i>
+     check <font color="#990000">=</font> x0<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">+</font> <font color="#993399">2</font><font color="#990000">.</font> <font color="#990000">*</font> x1<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">+</font> <font color="#993399">3</font><font color="#990000">.</font> <font color="#990000">*</font> x2<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">];</font>
+     ok   <font color="#990000">&amp;=</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>dw<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">*</font>p<font color="#990000">+</font><font color="#993399">0</font><font color="#990000">],</font> check<font color="#990000">,</font> eps<font color="#990000">,</font> eps<font color="#990000">);</font>
+
+     <i><font color="#9A1900">// check partial w.r.t x^0_1 of W(x)</font></i>
+     check <font color="#990000">=</font> x0<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">+</font> <font color="#993399">2</font><font color="#990000">.</font> <font color="#990000">*</font> x1<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">+</font> <font color="#993399">3</font><font color="#990000">.</font> <font color="#990000">*</font> x2<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">];</font>
+     ok   <font color="#990000">&amp;=</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>dw<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">*</font>p<font color="#990000">+</font><font color="#993399">0</font><font color="#990000">],</font> check<font color="#990000">,</font> eps<font color="#990000">,</font> eps<font color="#990000">);</font>
+
+     <i><font color="#9A1900">// check partial w.r.t x^1_0 of W(x)</font></i>
+     check <font color="#990000">=</font> <font color="#993399">2</font><font color="#990000">.</font> <font color="#990000">*</font> x0<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">+</font> <font color="#993399">3</font><font color="#990000">.</font> <font color="#990000">*</font> x1<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">];</font>
+     ok   <font color="#990000">&amp;=</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>dw<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">*</font>p<font color="#990000">+</font><font color="#993399">1</font><font color="#990000">],</font> check<font color="#990000">,</font> eps<font color="#990000">,</font> eps<font color="#990000">);</font>
+
+     <i><font color="#9A1900">// check partial w.r.t x^1_1 of W(x)</font></i>
+     check <font color="#990000">=</font> <font color="#993399">2</font><font color="#990000">.</font> <font color="#990000">*</font> x0<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">+</font> <font color="#993399">3</font><font color="#990000">.</font> <font color="#990000">*</font> x1<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">];</font>
+     ok   <font color="#990000">&amp;=</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>dw<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">*</font>p<font color="#990000">+</font><font color="#993399">1</font><font color="#990000">],</font> check<font color="#990000">,</font> eps<font color="#990000">,</font> eps<font color="#990000">);</font>
+
+     <i><font color="#9A1900">// check partial w.r.t x^2_0 of W(x)</font></i>
+     check <font color="#990000">=</font> <font color="#993399">3</font><font color="#990000">.</font> <font color="#990000">*</font> x0<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">];</font>
+     ok   <font color="#990000">&amp;=</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>dw<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">*</font>p<font color="#990000">+</font><font color="#993399">2</font><font color="#990000">],</font> check<font color="#990000">,</font> eps<font color="#990000">,</font> eps<font color="#990000">);</font>
+
+     <i><font color="#9A1900">// check partial w.r.t x^2_1 of W(x)</font></i>
+     check <font color="#990000">=</font> <font color="#993399">3</font><font color="#990000">.</font> <font color="#990000">*</font> x0<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">];</font>
+     ok   <font color="#990000">&amp;=</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>dw<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">*</font>p<font color="#990000">+</font><font color="#993399">2</font><font color="#990000">],</font> check<font color="#990000">,</font> eps<font color="#990000">,</font> eps<font color="#990000">);</font>
+
+     <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
+<font color="#FF0000">}</font>
+<font color="#FF0000">}</font> <i><font color="#9A1900">// End empty namespace</font></i>
+<b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;vector&gt;</font>
+<b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;valarray&gt;</font>
+<font color="#009900">bool</font> <b><font color="#000000">reverse_three</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
+<font color="#FF0000">{</font>    <font color="#009900">bool</font> ok <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
+     ok <font color="#990000">&amp;=</font> cases<font color="#990000">&lt;</font> CppAD<font color="#990000">::</font>vector  <font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;</font> <font color="#990000">&gt;();</font>
+     ok <font color="#990000">&amp;=</font> cases<font color="#990000">&lt;</font> std<font color="#990000">::</font>vector    <font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;</font> <font color="#990000">&gt;();</font>
+     ok <font color="#990000">&amp;=</font> cases<font color="#990000">&lt;</font> std<font color="#990000">::</font>valarray  <font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;</font> <font color="#990000">&gt;();</font>
+     <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
+<font color="#FF0000">}</font></tt></pre>
+</font></code>
+<hr>Input File: example/general/reverse_three.cpp
+
+</body>
+</html>

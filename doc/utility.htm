@@ -1,0 +1,342 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>Some General Purpose Utilities</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Some General Purpose Utilities">
+<meta name="keywords" id="keywords" content=" some general purpose utilities testing c++ concepts numerical routines miscellaneous error handler the cppad vector template class multi-threading memory allocation sorting indices to_string set_union sparse matrices ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_utility_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://coin-or.github.io/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="team_pthread.cpp.htm" target="_top">Prev</a>
+</td><td><a href="errorhandler.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>utility</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>CppAD-&gt;</option>
+<option>Install</option>
+<option>Introduction</option>
+<option>AD</option>
+<option>ADFun</option>
+<option>preprocessor</option>
+<option>multi_thread</option>
+<option>utility</option>
+<option>ipopt_solve</option>
+<option>Example</option>
+<option>speed</option>
+<option>Appendix</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down0(this)'>
+<option>utility-&gt;</option>
+<option>ErrorHandler</option>
+<option>NearEqual</option>
+<option>speed_test</option>
+<option>SpeedTest</option>
+<option>time_test</option>
+<option>test_boolofvoid</option>
+<option>NumericType</option>
+<option>CheckNumericType</option>
+<option>SimpleVector</option>
+<option>CheckSimpleVector</option>
+<option>nan</option>
+<option>pow_int</option>
+<option>Poly</option>
+<option>LuDetAndSolve</option>
+<option>RombergOne</option>
+<option>RombergMul</option>
+<option>Runge45</option>
+<option>Rosen34</option>
+<option>OdeErrControl</option>
+<option>OdeGear</option>
+<option>OdeGearControl</option>
+<option>CppAD_vector</option>
+<option>thread_alloc</option>
+<option>index_sort</option>
+<option>to_string</option>
+<option>set_union</option>
+<option>sparse_rc</option>
+<option>sparse_rcv</option>
+</select>
+</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Testing</option>
+<option>C++ Concepts</option>
+<option>General Numerical Routines</option>
+<option>Miscellaneous</option>
+<option>---..Error Handler</option>
+<option>---..The CppAD Vector Template Class</option>
+<option>---..Multi-Threading Memory Allocation</option>
+<option>---..Sorting Indices</option>
+<option>---..to_string</option>
+<option>---..set_union</option>
+<option>---..Sparse Matrices</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>Some General Purpose Utilities</big></big></b></center>
+These routines can be include individually; for example,
+<code><font color='blue'><pre style='display:inline'> 
+     # include &lt;cppad/utility/vector.hpp&gt;
+</pre></font></code>
+only includes the definitions necessary for the <code><font color="blue">CppAD::vector</font></code> class.
+They can also be included as a group, separate from the rest of CppAD, using
+<code><font color='blue'><pre style='display:inline'> 
+     # include &lt;cppad/utility.hpp&gt;
+</pre></font></code>
+They will also be included, along with the rest of CppAD, using
+<code><font color='blue'><pre style='display:inline'> 
+     # include &lt;cppad/cppad.hpp&gt;
+</pre></font></code>
+<br>
+<b><big><a name="Testing" id="Testing">Testing</a></big></b>
+<br>
+The routines listed below support numerical correctness and speed testing:
+<table><tr><td align='left'  valign='top'>
+
+<a href="nearequal.htm" target="_top">NearEqual</a></td><td>
+Determine if Two Values Are Nearly Equal</td></tr>
+<tr><td>
+
+<a href="time_test.htm" target="_top">time_test</a></td><td>
+Determine Amount of Time to Execute a Test</td></tr>
+<tr><td>
+
+<a href="speed_test.htm" target="_top">speed_test</a></td><td>
+Run One Speed Test and Return Results</td></tr>
+<tr><td>
+
+<a href="speedtest.htm" target="_top">SpeedTest</a></td><td>
+Run One Speed Test and Print Results</td></tr>
+<tr><td>
+
+<a href="test_boolofvoid.htm" target="_top">test_boolofvoid</a></td><td>
+Object that Runs a Group of Tests</td></tr>
+<tr><td>
+
+</td></tr>
+</table>
+<br>
+<b><big><a name="C++ Concepts" id="C++ Concepts">C++ Concepts</a></big></b>
+<br>
+We refer to a the set of classes that satisfy certain conditions
+as a C++ concept.
+The following concepts are used by the CppAD Template library:
+<table><tr><td align='left'  valign='top'>
+
+<a href="numerictype.htm" target="_top">NumericType</a></td><td>
+Definition of a Numeric Type</td></tr>
+<tr><td>
+
+<a href="checknumerictype.htm" target="_top">CheckNumericType</a></td><td>
+Check NumericType Class Concept</td></tr>
+<tr><td>
+
+<a href="simplevector.htm" target="_top">SimpleVector</a></td><td>
+Definition of a Simple Vector</td></tr>
+<tr><td>
+
+<a href="checksimplevector.htm" target="_top">CheckSimpleVector</a></td><td>
+Check Simple Vector Concept</td></tr>
+<tr><td>
+
+</td></tr>
+</table>
+<br>
+<b><big><a name="General Numerical Routines" id="General Numerical Routines">General Numerical Routines</a></big></b>
+<br>
+The routines listed below are general purpose numerical routines
+written with the floating point type a C++ template parameter.
+This enables them to be used with algorithmic differentiation types,
+as well as for other purposes.
+<table><tr><td align='left'  valign='top'>
+
+<a href="nan.htm" target="_top">nan</a></td><td>
+Obtain Nan or Determine if a Value is Nan</td></tr>
+<tr><td>
+
+<a href="pow_int.htm" target="_top">pow_int</a></td><td>
+The Integer Power Function</td></tr>
+<tr><td>
+
+<a href="poly.htm" target="_top">Poly</a></td><td>
+Evaluate a Polynomial or its Derivative</td></tr>
+<tr><td>
+
+<a href="ludetandsolve.htm" target="_top">LuDetAndSolve</a></td><td>
+Compute Determinants and Solve Equations by LU Factorization</td></tr>
+<tr><td>
+
+<a href="rombergone.htm" target="_top">RombergOne</a></td><td>
+One DimensionalRomberg Integration</td></tr>
+<tr><td>
+
+<a href="rombergmul.htm" target="_top">RombergMul</a></td><td>
+Multi-dimensional Romberg Integration</td></tr>
+<tr><td>
+
+<a href="runge45.htm" target="_top">Runge45</a></td><td>
+An Embedded 4th and 5th Order Runge-Kutta ODE Solver</td></tr>
+<tr><td>
+
+<a href="rosen34.htm" target="_top">Rosen34</a></td><td>
+A 3rd and 4th Order Rosenbrock ODE Solver</td></tr>
+<tr><td>
+
+<a href="odeerrcontrol.htm" target="_top">OdeErrControl</a></td><td>
+An Error Controller for ODE Solvers</td></tr>
+<tr><td>
+
+<a href="odegear.htm" target="_top">OdeGear</a></td><td>
+An Arbitrary Order Gear Method</td></tr>
+<tr><td>
+
+<a href="odegearcontrol.htm" target="_top">OdeGearControl</a></td><td>
+An Error Controller for Gear's Ode Solvers</td></tr>
+<tr><td>
+
+</td></tr>
+</table>
+<br>
+<b><big><a name="Miscellaneous" id="Miscellaneous">Miscellaneous</a></big></b>
+
+
+<br>
+<br>
+<b><a name="Miscellaneous.Error Handler" id="Miscellaneous.Error Handler">Error Handler</a></b>
+<br>
+All of the routines in the CppAD namespace use the following
+general purpose error handler:
+<table><tr><td align='left'  valign='top'>
+
+<a href="errorhandler.htm" target="_top">ErrorHandler</a></td><td>
+Replacing the CppAD Error Handler</td></tr>
+<tr><td>
+
+</td></tr>
+</table>
+<br>
+<b><a name="Miscellaneous.The CppAD Vector Template Class" id="Miscellaneous.The CppAD Vector Template Class">The CppAD Vector Template Class</a></b>
+<br>
+This is a simple implementation of a template vector class
+(that is easy to view in a C++ debugger):
+<table><tr><td align='left'  valign='top'>
+
+<a href="cppad_vector.htm" target="_top">CppAD_vector</a></td><td>
+The CppAD::vector Template Class</td></tr>
+<tr><td>
+
+</td></tr>
+</table>
+<br>
+<b><a name="Miscellaneous.Multi-Threading Memory Allocation" id="Miscellaneous.Multi-Threading Memory Allocation">Multi-Threading Memory Allocation</a></b>
+
+<table><tr><td align='left'  valign='top'>
+
+<a href="thread_alloc.htm" target="_top">thread_alloc</a></td><td>
+A Fast Multi-Threading Memory Allocator</td></tr>
+<tr><td>
+
+</td></tr>
+</table>
+<br>
+<b><a name="Miscellaneous.Sorting Indices" id="Miscellaneous.Sorting Indices">Sorting Indices</a></b>
+
+<table><tr><td align='left'  valign='top'>
+
+<a href="index_sort.htm" target="_top">index_sort</a></td><td>
+Returns Indices that Sort a Vector</td></tr>
+<tr><td>
+
+</td></tr>
+</table>
+<br>
+<b><a name="Miscellaneous.to_string" id="Miscellaneous.to_string">to_string</a></b>
+
+<table><tr><td align='left'  valign='top'>
+
+<a href="to_string.htm" target="_top">to_string</a></td><td>
+Convert Certain Types to a String</td></tr>
+<tr><td>
+
+</td></tr>
+</table>
+<br>
+<b><a name="Miscellaneous.set_union" id="Miscellaneous.set_union">set_union</a></b>
+
+<table><tr><td align='left'  valign='top'>
+
+<a href="set_union.htm" target="_top">set_union</a></td><td>
+Union of Standard Sets</td></tr>
+<tr><td>
+
+</td></tr>
+</table>
+<br>
+<b><a name="Miscellaneous.Sparse Matrices" id="Miscellaneous.Sparse Matrices">Sparse Matrices</a></b>
+
+<table><tr><td align='left'  valign='top'>
+
+<a href="sparse_rc.htm" target="_top">sparse_rc</a></td><td>
+Row and Column Index Sparsity Patterns</td></tr>
+<tr><td>
+
+<a href="sparse_rcv.htm" target="_top">sparse_rcv</a></td><td>
+Sparse Matrix Row, Column, Value Representation</td></tr>
+<tr><td>
+
+</td></tr>
+</table>
+
+<hr>Input File: omh/utility.omh
+
+</body>
+</html>

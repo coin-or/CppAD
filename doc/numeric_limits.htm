@@ -1,0 +1,321 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>Numeric Limits For an AD and Base Types</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Numeric Limits For an AD and Base Types">
+<meta name="keywords" id="keywords" content=" numeric limits ad base types syntax cppad::numeric_limits std::numeric_limits float epsilon min max quiet_nan digits10 example ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_numeric_limits_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://coin-or.github.io/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="interp_retape.cpp.htm" target="_top">Prev</a>
+</td><td><a href="num_limits.cpp.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>AD</option>
+<option>ADValued</option>
+<option>numeric_limits</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>CppAD-&gt;</option>
+<option>Install</option>
+<option>Introduction</option>
+<option>AD</option>
+<option>ADFun</option>
+<option>preprocessor</option>
+<option>multi_thread</option>
+<option>utility</option>
+<option>ipopt_solve</option>
+<option>Example</option>
+<option>speed</option>
+<option>Appendix</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>AD-&gt;</option>
+<option>ad_ctor</option>
+<option>ad_assign</option>
+<option>Convert</option>
+<option>ADValued</option>
+<option>BoolValued</option>
+<option>VecAD</option>
+<option>base_require</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>ADValued-&gt;</option>
+<option>Arithmetic</option>
+<option>unary_standard_math</option>
+<option>binary_math</option>
+<option>CondExp</option>
+<option>Discrete</option>
+<option>numeric_limits</option>
+<option>atomic</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down0(this)'>
+<option>numeric_limits-&gt;</option>
+<option>num_limits.cpp</option>
+</select>
+</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Syntax</option>
+<option>CppAD::numeric_limits</option>
+<option>std::numeric_limits</option>
+<option>Float</option>
+<option>epsilon</option>
+<option>min</option>
+<option>max</option>
+<option>quiet_NaN</option>
+<option>digits10</option>
+<option>Example</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>Numeric Limits For an AD and Base Types</big></big></b></center>
+<br>
+<b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
+
+<br>
+
+<code><i><font color="black"><span style='white-space: nowrap'>eps</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;numeric_limits&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Float</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;::epsilon()<br>
+</span></font></code>
+
+<code><i><font color="black"><span style='white-space: nowrap'>min</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;numeric_limits&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Float</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;::min()<br>
+</span></font></code>
+
+<code><i><font color="black"><span style='white-space: nowrap'>max</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;numeric_limits&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Float</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;::max()<br>
+</span></font></code>
+
+<code><i><font color="black"><span style='white-space: nowrap'>nan</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;numeric_limits&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Float</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;::quiet_NaN()<br>
+</span></font></code>
+
+<code><font color="blue"><span style='white-space: nowrap'>numeric_limits&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Float</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;::digits10</span></font></code>
+
+
+<br>
+<br>
+<b><big><a name="CppAD::numeric_limits" id="CppAD::numeric_limits">CppAD::numeric_limits</a></big></b>
+<br>
+These functions and have the prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;static&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Float</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;CppAD::numeric_limits&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Float</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;::</span></font><i><font color="black"><span style='white-space: nowrap'>fun</span></font></i><font color="blue"><span style='white-space: nowrap'>(</span></font><i><font color="black"><span style='white-space: nowrap'>void</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+where 
+<code><i><font color="black"><span style='white-space: nowrap'>fun</span></font></i></code>
+ is
+<code><font color="blue">epsilon</font></code>, <code><font color="blue">min</font></code>, <code><font color="blue">max</font></code>, and <code><font color="blue">quiet_NaN</font></code>.
+(Note that <code><font color="blue">digits10</font></code> is member variable and not a function.)
+
+<br>
+<br>
+<b><big><a name="std::numeric_limits" id="std::numeric_limits">std::numeric_limits</a></big></b>
+<br>
+CppAD does not use a specialization of <code><font color="blue">std::numeric_limits</font></code>
+because this would be to restrictive.
+The C++ standard specifies that Non-fundamental standard
+types, such as
+<a href="base_complex.hpp.htm" target="_top"><span style='white-space: nowrap'>std::complex&lt;double&gt;</span></a>
+ shall not have specializations
+of <code><font color="blue">std::numeric_limits</font></code>; see Section 18.2 of
+ISO/IEC 14882:1998(E).
+In addition, since C++11, a only literal types can have a specialization
+of <code><font color="blue">std::numeric_limits</font></code>.
+
+<br>
+<br>
+<b><big><a name="Float" id="Float">Float</a></big></b>
+<br>
+These functions are defined for all 
+<code><font color="blue"><span style='white-space: nowrap'>AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code>
+,
+and for all corresponding 
+<code><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i></code>
+ types;
+see 
+<code><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i></code>
+ type <a href="base_limits.htm" target="_top"><span style='white-space: nowrap'>base_limits</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="epsilon" id="epsilon">epsilon</a></big></b>
+<br>
+The result 
+<code><i><font color="black"><span style='white-space: nowrap'>eps</span></font></i></code>
+ is equal to machine epsilon and has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Float</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>eps</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+The file <a href="num_limits.cpp.htm" target="_top"><span style='white-space: nowrap'>num_limits.cpp</span></a>
+
+tests the value 
+<code><i><font color="black"><span style='white-space: nowrap'>eps</span></font></i></code>
+ by checking that the following are true
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1&nbsp;!=&nbsp;1&nbsp;+&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>eps</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1&nbsp;==&nbsp;1&nbsp;+&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>eps</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;/&nbsp;2<br>
+</span></font></code>
+where all the values, and calculations, are done with the precision
+corresponding to 
+<code><i><font color="black"><span style='white-space: nowrap'>Float</span></font></i></code>
+.
+
+<br>
+<br>
+<b><big><a name="min" id="min">min</a></big></b>
+<br>
+The result 
+<code><i><font color="black"><span style='white-space: nowrap'>min</span></font></i></code>
+ is equal to
+the minimum positive normalized value and has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Float</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>min</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+The file <a href="num_limits.cpp.htm" target="_top"><span style='white-space: nowrap'>num_limits.cpp</span></a>
+
+tests the value 
+<code><i><font color="black"><span style='white-space: nowrap'>min</span></font></i></code>
+ by checking that the following are true
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;abs(&nbsp;((</span></font><i><font color="black"><span style='white-space: nowrap'>min</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;/&nbsp;100)&nbsp;*&nbsp;100)&nbsp;/&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>min</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;-&nbsp;1&nbsp;)&nbsp;&gt;&nbsp;3&nbsp;*&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>eps</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;abs(&nbsp;((</span></font><i><font color="black"><span style='white-space: nowrap'>min</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;*&nbsp;100)&nbsp;/&nbsp;100)&nbsp;/&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>min</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;-&nbsp;1&nbsp;)&nbsp;&lt;&nbsp;3&nbsp;*&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>eps</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+where all the values, and calculations, are done with the precision
+corresponding to 
+<code><i><font color="black"><span style='white-space: nowrap'>Float</span></font></i></code>
+.
+
+<br>
+<br>
+<b><big><a name="max" id="max">max</a></big></b>
+<br>
+The result 
+<code><i><font color="black"><span style='white-space: nowrap'>max</span></font></i></code>
+ is equal to
+the maximum finite value and has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Float</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>max</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+The file <a href="num_limits.cpp.htm" target="_top"><span style='white-space: nowrap'>num_limits.cpp</span></a>
+
+tests the value 
+<code><i><font color="black"><span style='white-space: nowrap'>max</span></font></i></code>
+ by checking that the following are true
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;abs(&nbsp;((</span></font><i><font color="black"><span style='white-space: nowrap'>max</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;*&nbsp;100)&nbsp;/&nbsp;100)&nbsp;/&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>max</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;-&nbsp;1&nbsp;)&nbsp;&gt;&nbsp;3&nbsp;*&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>eps</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;abs(&nbsp;((</span></font><i><font color="black"><span style='white-space: nowrap'>max</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;/&nbsp;100)&nbsp;*&nbsp;100)&nbsp;/&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>max</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;-&nbsp;1&nbsp;)&nbsp;&lt;&nbsp;3&nbsp;*&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>eps</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+where all the values, and calculations, are done with the precision
+corresponding to 
+<code><i><font color="black"><span style='white-space: nowrap'>Float</span></font></i></code>
+.
+
+<br>
+<br>
+<b><big><a name="quiet_NaN" id="quiet_NaN">quiet_NaN</a></big></b>
+<br>
+The result 
+<code><i><font color="black"><span style='white-space: nowrap'>nan</span></font></i></code>
+ is not a number and has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Float</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>nan</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+The file <a href="num_limits.cpp.htm" target="_top"><span style='white-space: nowrap'>num_limits.cpp</span></a>
+
+tests the value 
+<code><i><font color="black"><span style='white-space: nowrap'>nan</span></font></i></code>
+ by checking that the following is true
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>nan</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;!=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>nan</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+<br>
+<b><big><a name="digits10" id="digits10">digits10</a></big></b>
+<br>
+The member variable <code><font color="blue">digits10</font></code> has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;static&nbsp;const&nbsp;int&nbsp;numeric_limits&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Float</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;::digits10<br>
+</span></font></code>
+It is the number of decimal digits that can be represented by a
+
+<code><i><font color="black"><span style='white-space: nowrap'>Float</span></font></i></code>
+ value.  A number with this many decimal digits can be
+converted to 
+<code><i><font color="black"><span style='white-space: nowrap'>Float</span></font></i></code>
+ and back to a string,
+without change due to rounding or overflow.
+
+
+<br>
+<br>
+<b><big><a name="Example" id="Example">Example</a></big></b>
+
+<br>
+The file
+<a href="num_limits.cpp.htm" target="_top"><span style='white-space: nowrap'>num_limits.cpp</span></a>
+
+contains an example and test of these functions.
+
+
+<hr>Input File: cppad/core/numeric_limits.hpp
+
+</body>
+</html>

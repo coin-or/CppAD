@@ -1,0 +1,165 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>Calculating Sparsity Patterns</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Calculating Sparsity Patterns">
+<meta name="keywords" id="keywords" content=" calculating sparsity patterns preferred old ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_sparsity_pattern_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://coin-or.github.io/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="reverse_checkpoint.cpp.htm" target="_top">Prev</a>
+</td><td><a href="for_jac_sparsity.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>ADFun</option>
+<option>sparsity_pattern</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>CppAD-&gt;</option>
+<option>Install</option>
+<option>Introduction</option>
+<option>AD</option>
+<option>ADFun</option>
+<option>preprocessor</option>
+<option>multi_thread</option>
+<option>utility</option>
+<option>ipopt_solve</option>
+<option>Example</option>
+<option>speed</option>
+<option>Appendix</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>ADFun-&gt;</option>
+<option>record_adfun</option>
+<option>drivers</option>
+<option>Forward</option>
+<option>Reverse</option>
+<option>sparsity_pattern</option>
+<option>sparse_derivative</option>
+<option>optimize</option>
+<option>abs_normal</option>
+<option>FunCheck</option>
+<option>check_for_nan</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down0(this)'>
+<option>sparsity_pattern-&gt;</option>
+<option>for_jac_sparsity</option>
+<option>ForSparseJac</option>
+<option>rev_jac_sparsity</option>
+<option>RevSparseJac</option>
+<option>rev_hes_sparsity</option>
+<option>RevSparseHes</option>
+<option>for_hes_sparsity</option>
+<option>ForSparseHes</option>
+<option>dependency.cpp</option>
+<option>rc_sparsity.cpp</option>
+</select>
+</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Preferred Sparsity Patterns</option>
+<option>Old Sparsity Patterns</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>Calculating Sparsity Patterns</big></big></b></center>
+<br>
+<b><big><a name="Preferred Sparsity Patterns" id="Preferred Sparsity Patterns">Preferred Sparsity Patterns</a></big></b>
+
+<table><tr><td align='left'  valign='top'>
+
+<a href="for_jac_sparsity.htm" target="_top">for_jac_sparsity</a></td><td>
+Forward Mode Jacobian Sparsity Patterns</td></tr>
+<tr><td>
+
+<a href="rev_jac_sparsity.htm" target="_top">rev_jac_sparsity</a></td><td>
+Reverse Mode Jacobian Sparsity Patterns</td></tr>
+<tr><td>
+
+<a href="for_hes_sparsity.htm" target="_top">for_hes_sparsity</a></td><td>
+Forward Mode Hessian Sparsity Patterns</td></tr>
+<tr><td>
+
+<a href="rev_hes_sparsity.htm" target="_top">rev_hes_sparsity</a></td><td>
+Reverse Mode Hessian Sparsity Patterns</td></tr>
+<tr><td>
+
+</td></tr>
+</table>
+<br>
+<b><big><a name="Old Sparsity Patterns" id="Old Sparsity Patterns">Old Sparsity Patterns</a></big></b>
+
+<table><tr><td align='left'  valign='top'>
+
+<a href="forsparsejac.htm" target="_top">ForSparseJac</a></td><td>
+Jacobian Sparsity Pattern: Forward Mode</td></tr>
+<tr><td>
+
+<a href="revsparsejac.htm" target="_top">RevSparseJac</a></td><td>
+Jacobian Sparsity Pattern: Reverse Mode</td></tr>
+<tr><td>
+
+<a href="forsparsehes.htm" target="_top">ForSparseHes</a></td><td>
+Hessian Sparsity Pattern: Forward Mode</td></tr>
+<tr><td>
+
+<a href="revsparsehes.htm" target="_top">RevSparseHes</a></td><td>
+Hessian Sparsity Pattern: Reverse Mode</td></tr>
+<tr><td>
+
+</td></tr>
+</table>
+
+<hr>Input File: omh/adfun.omh
+
+</body>
+</html>

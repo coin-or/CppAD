@@ -1,0 +1,737 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>AD Theory for Cholesky Factorization</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="AD Theory for Cholesky Factorization">
+<meta name="keywords" id="keywords" content=" ad theory cholesky factorization reference notation factor taylor coefficient lower triangular part forward mode lemma 1 proof 2 reverse case k = 0 &gt; ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_cholesky_theory_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://coin-or.github.io/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="atomic_eigen_cholesky.cpp.htm" target="_top">Prev</a>
+</td><td><a href="atomic_eigen_cholesky.hpp.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>AD</option>
+<option>ADValued</option>
+<option>atomic</option>
+<option>atomic_base</option>
+<option>atomic_eigen_cholesky.cpp</option>
+<option>cholesky_theory</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>atomic-&gt;</option>
+<option>checkpoint</option>
+<option>atomic_base</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>atomic_base-&gt;</option>
+<option>atomic_ctor</option>
+<option>atomic_option</option>
+<option>atomic_afun</option>
+<option>atomic_forward</option>
+<option>atomic_reverse</option>
+<option>atomic_for_sparse_jac</option>
+<option>atomic_rev_sparse_jac</option>
+<option>atomic_for_sparse_hes</option>
+<option>atomic_rev_sparse_hes</option>
+<option>atomic_base_clear</option>
+<option>atomic_get_started.cpp</option>
+<option>atomic_norm_sq.cpp</option>
+<option>atomic_reciprocal.cpp</option>
+<option>atomic_set_sparsity.cpp</option>
+<option>atomic_tangent.cpp</option>
+<option>atomic_eigen_mat_mul.cpp</option>
+<option>atomic_eigen_mat_inv.cpp</option>
+<option>atomic_eigen_cholesky.cpp</option>
+<option>atomic_mat_mul.cpp</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>atomic_eigen_cholesky.cpp-&gt;</option>
+<option>cholesky_theory</option>
+<option>atomic_eigen_cholesky.hpp</option>
+</select>
+</td>
+<td>cholesky_theory</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Reference</option>
+<option>Notation</option>
+<option>---..Cholesky Factor</option>
+<option>---..Taylor Coefficient</option>
+<option>---..Lower Triangular Part</option>
+<option>Forward Mode</option>
+<option>Lemma 1</option>
+<option>---..Proof</option>
+<option>Lemma 2</option>
+<option>Reverse Mode</option>
+<option>---..Case k = 0</option>
+<option>---..Case k &gt; 0</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>AD Theory for Cholesky Factorization</big></big></b></center>
+<br>
+<b><big><a name="Reference" id="Reference">Reference</a></big></b>
+<br>
+See section 3.6 of
+Sebastian F. Walter's Ph.D. thesis,
+<i>
+Structured Higher-Order Algorithmic Differentiation
+in the Forward and Reverse Mode
+with Application in Optimum Experimental Design
+</i>,
+Humboldt-Universitat zu Berlin,
+2011.
+
+
+<br>
+<br>
+<b><big><a name="Notation" id="Notation">Notation</a></big></b>
+
+
+<br>
+<br>
+<b><a name="Notation.Cholesky Factor" id="Notation.Cholesky Factor">Cholesky Factor</a></b>
+<br>
+We are given a positive definite symmetric matrix
+<small>@(@
+A \in \B{R}^{n \times n}
+@)@</small>
+and a Cholesky factorization
+<small>@[@
+
+	A = L L^\R{T}
+
+@]@</small>
+where <small>@(@
+L \in \B{R}^{n \times n}
+@)@</small> is lower triangular.
+
+<br>
+<br>
+<b><a name="Notation.Taylor Coefficient" id="Notation.Taylor Coefficient">Taylor Coefficient</a></b>
+<br>
+The matrix <small>@(@
+A
+@)@</small> is a function of a scalar argument
+<small>@(@
+t
+@)@</small>.
+For <small>@(@
+k = 0 , \ldots , K
+@)@</small>, we use <small>@(@
+A_k
+@)@</small> for the
+corresponding Taylor coefficients; i.e.,
+<small>@[@
+
+	A(t) = o( t^K ) + \sum_{k = 0}^K A_k t^k
+
+@]@</small>
+where <small>@(@
+o( t^K ) / t^K \rightarrow 0
+@)@</small> as <small>@(@
+t \rightarrow 0
+@)@</small>.
+We use a similar notation for <small>@(@
+L(t)
+@)@</small>.
+
+<br>
+<br>
+<b><a name="Notation.Lower Triangular Part" id="Notation.Lower Triangular Part">Lower Triangular Part</a></b>
+<br>
+For a square matrix <small>@(@
+C
+@)@</small>,
+<small>@(@
+\R{lower} (C)
+@)@</small> is the lower triangular part of <small>@(@
+C
+@)@</small>,
+<small>@(@
+\R{diag} (C)
+@)@</small> is the diagonal matrix with the same diagonal as
+<small>@(@
+C
+@)@</small> and
+<small>@[@
+
+	\R{low} ( C ) = \R{lower} (C) - \frac{1}{2} \R{diag} (C)
+
+@]@</small>
+
+
+
+<br>
+<br>
+<b><big><a name="Forward Mode" id="Forward Mode">Forward Mode</a></big></b>
+<br>
+For Taylor coefficient order <small>@(@
+k = 0 , \ldots , K
+@)@</small>
+the coefficients
+<small>@(@
+A_k \in \B{R}^{n \times n}
+@)@</small>, and
+satisfy the equation
+<small>@[@
+
+	A_k = \sum_{\ell=0}^k L_\ell L_{k-\ell}^\R{T}
+
+@]@</small>
+In the case where <small>@(@
+k=0
+@)@</small>, the
+<small>@[@
+
+	A_0 = L_0 L_0^\R{T}
+
+@]@</small>
+The value of <small>@(@
+L_0
+@)@</small> can be computed using the Cholesky factorization.
+In the case where <small>@(@
+k > 0
+@)@</small>,
+<small>@[@
+
+	A_k = L_k L_0^\R{T}  + L_0 L_k^\R{T}  + B_k
+
+@]@</small>
+where
+<small>@[@
+
+	B_k = \sum_{\ell=1}^{k-1} L_\ell L_{k-\ell}^\R{T}
+
+@]@</small>
+Note that <small>@(@
+B_k
+@)@</small> is defined in terms of Taylor coefficients
+of <small>@(@
+L(t)
+@)@</small> that have order less than <small>@(@
+k
+@)@</small>.
+We also note that
+<small>@[@
+
+	L_0^{-1} ( A_k - B_k ) L_0^\R{-T}
+	=
+	L_0^{-1} L_k + L_k^\R{T} L_0^\R{-T}
+
+@]@</small>
+The first matrix on the right hand side is lower triangular,
+the second is upper triangular,
+and the diagonals are equal.
+It follows that
+<small>@[@
+
+	L_0^{-1} L_k
+	=
+	\R{low} [ L_0^{-1} ( A_k - B_k ) L_0^\R{-T} ]
+
+@]@</small>
+<small>@[@
+
+	L_k
+	=
+	L_0 \R{low} [ L_0^{-1} ( A_k - B_k ) L_0^\R{-T} ]
+
+@]@</small>
+This expresses <small>@(@
+L_k
+@)@</small> in term of the
+Taylor coefficients of <small>@(@
+A(t)
+@)@</small> and the lower order coefficients
+of <small>@(@
+L(t)
+@)@</small>.
+
+<br>
+<br>
+<b><big><a name="Lemma 1" id="Lemma 1">Lemma 1</a></big></b>
+<br>
+We use the notation <small>@(@
+\dot{C}
+@)@</small> for the derivative of a matrix
+valued function <small>@(@
+C(s)
+@)@</small> with respect to a scalar argument <small>@(@
+s
+@)@</small>.
+We use the notation <small>@(@
+\bar{S}
+@)@</small> and <small>@(@
+\bar{L}
+@)@</small> for the
+partial derivative of a scalar value function <small>@(@
+\bar{F}( S, L)
+@)@</small>
+with respect to a symmetric matrix <small>@(@
+S
+@)@</small> and
+an lower triangular matrix <small>@(@
+L
+@)@</small>.
+Define the scalar valued function
+<small>@[@
+
+	\hat{F}( C ) = \bar{F} [ S , \hat{L} (S) ]
+
+@]@</small>
+We use <small>@(@
+\hat{S}
+@)@</small> for the total derivative of <small>@(@
+\hat{F}
+@)@</small> with
+respect to <small>@(@
+S
+@)@</small>.
+Suppose that <small>@(@
+\hat{L} ( S )
+@)@</small> is such that
+<small>@[@
+
+	\dot{L} = L_0 \R{low} ( L_0^{-1} \dot{S} L_0^\R{-T} )
+
+@]@</small>
+for any <small>@(@
+S(s)
+@)@</small>. It follows that
+<small>@[@
+
+	\hat{S} = \bar{S} + \frac{1}{2} ( M + M^\R{T} )
+
+@]@</small>
+where
+<small>@[@
+
+	M = L_0^\R{-T} \R{low}( L_0^\R{T} \bar{L} )^\R{T} L_0^{-1}
+
+@]@</small>
+
+<br>
+<br>
+<b><a name="Lemma 1.Proof" id="Lemma 1.Proof">Proof</a></b>
+
+<br>
+<small>@[@
+
+	\partial_s \hat{F} [ S(s) , L(s) ]
+	=
+	\R{tr} ( \bar{S}^\R{T} \dot{S} )
+	+
+	\R{tr} ( \bar{L}^\R{T} \dot{L} )
+
+@]@</small><small>@[@
+
+	\R{tr} ( \bar{L}^\R{T} \dot{L} )
+	=
+	\R{tr} [
+		\bar{L}^\R{T} L_0
+		\R{low} ( L_0^{-1} \dot{S} L_0^\R{-T} )
+	]
+
+@]@</small><small>@[@
+
+	=
+	\R{tr} [
+		\R{low} ( L_0^{-1} \dot{S} L_0^\R{-T} )^\R{T}
+		L_0^\R{T} \bar{L}
+	]
+
+@]@</small><small>@[@
+
+	=
+	\R{tr} [
+		L_0^{-1} \dot{S} L_0^\R{-T}
+		\R{low}( L_0^\R{T} \bar{L} )
+	]
+
+@]@</small><small>@[@
+
+	=
+	\R{tr} [
+		L_0^\R{-T} \R{low}( L_0^\R{T} \bar{L} ) L_0^{-1} \dot{S}
+	]
+
+@]@</small><small>@[@
+
+	\partial_s \hat{F} [ S(s) , L(s) ]
+	=
+	\R{tr} ( \bar{S}^\R{T} \dot{S} )
+	+
+	\R{tr} [
+		L_0^\R{-T} \R{low}( L_0^\R{T} \bar{L} ) L_0^{-1} \dot{S}
+	]
+
+@]@</small>We now consider the <small>@(@
+(i, j)
+@)@</small> component function,
+for a symmetric matrix <small>@(@
+S(s)
+@)@</small>,
+defined by
+<small>@[@
+
+	S_{k, \ell} (s) = \left\{ \begin{array}{ll}
+		1 & \R{if} \; k = i \; \R{and} \; \ell = j \\
+		1 & \R{if} \; k = j \; \R{and} \; \ell = i \\
+		0 & \R{otherwise}
+	\end{array} \right\}
+
+@]@</small>
+This shows that the formula in the lemma is correct for
+<small>@(@
+\hat{S}_{i,j}
+@)@</small> and <small>@(@
+\hat{S}_{j,i}
+@)@</small>.
+This completes the proof because the component <small>@(@
+(i, j)
+@)@</small> was arbitrary.
+
+<br>
+<br>
+<b><big><a name="Lemma 2" id="Lemma 2">Lemma 2</a></big></b>
+<br>
+We use the same assumptions as in Lemma 1 except that the
+matrix <small>@(@
+S
+@)@</small> is lower triangular (instead of symmetric).
+It follows that
+<small>@[@
+
+	\hat{S} = \bar{S} + \R{lower}(M)
+
+@]@</small>
+where
+<small>@[@
+
+	M = L_0^\R{-T} \R{low}( L_0^\R{T} \bar{L} )^\R{T} L_0^{-1}
+
+@]@</small>
+The proof of this lemma is identical to Lemma 2 except that component function
+is defined by
+<small>@[@
+
+	S_{k, \ell} (s) = \left\{ \begin{array}{ll}
+		1 & \R{if} \; k = i \; \R{and} \; \ell = j \\
+		0 & \R{otherwise}
+	\end{array} \right\}
+
+@]@</small>
+
+<br>
+<br>
+<b><big><a name="Reverse Mode" id="Reverse Mode">Reverse Mode</a></big></b>
+
+
+<br>
+<br>
+<b><a name="Reverse Mode.Case k = 0" id="Reverse Mode.Case k = 0">Case k = 0</a></b>
+<br>
+For the case <small>@(@
+k = 0
+@)@</small>,
+<small>@[@
+
+	\dot{A}_0
+	=
+	\dot{L}_0 L_0^\R{T}
+	+
+	L_0  \dot{L}_0^\R{T}
+
+@]@</small>
+<small>@[@
+
+	L_0^{-1} \dot{A}_0 L_0^\R{-T}
+	=
+	L_0^{-1} \dot{L}_0
+	+
+	\dot{L}_0^\R{T} L_0^\R{-T}
+
+@]@</small>
+<small>@[@
+
+	\R{low} ( L_0^{-1} \dot{A}_0 L_0^\R{-T} )
+	=
+	L_0^{-1} \dot{L}_0
+
+@]@</small>
+<small>@[@
+
+	\dot{L}_0
+	=
+	L_0 \R{low} ( L_0^{-1} \dot{A}_0 L_0^\R{-T} )
+
+@]@</small>
+It follows from Lemma 1 that
+<small>@[@
+
+	\bar{A}_0 \stackrel{+}{=} \frac{1}{2} ( M + M^\R{T} )
+
+@]@</small>
+where
+<small>@[@
+
+	M = L_0^\R{-T} \R{low} ( L_0^\R{T} \bar{L}_0 )^\R{T} L_0^{-1}
+
+@]@</small>
+and <small>@(@
+\bar{A}_0
+@)@</small> is the partial before and after
+is before and after <small>@(@
+L_0
+@)@</small> is removed from the scalar function
+dependency.
+
+<br>
+<br>
+<b><a name="Reverse Mode.Case k &gt; 0" id="Reverse Mode.Case k &gt; 0">Case k &gt; 0</a></b>
+<br>
+In the case where <small>@(@
+k > 0
+@)@</small>,
+<small>@[@
+
+	A_k = L_k L_0^\R{T}  + L_0 L_k^\R{T}  + B_k
+
+@]@</small>
+where <small>@(@
+B_k
+@)@</small> is defined in terms of Taylor coefficients
+of <small>@(@
+L(t)
+@)@</small> that have order less than <small>@(@
+k
+@)@</small>.
+It follows that
+<small>@[@
+
+	\dot{L}_k L_0^\R{T}
+	+
+	L_0 \dot{L}_k^\R{T}
+	=
+	\dot{A}_k - \dot{B}_k  - \dot{L}_0 L_k^\R{T} -  L_k \dot{L}_0^\R{T}
+
+@]@</small>
+<small>@[@
+
+	L_0^{-1} \dot{L}_k
+	+
+	\dot{L}_k^\R{T} L_0^\R{-T}
+	=
+	L_0^{-1} (
+	\dot{A}_k - \dot{B}_k  - \dot{L}_0 L_k^\R{T} -  L_k \dot{L}_0^\R{T}
+	) L_0^\R{-T}
+
+@]@</small>
+<small>@[@
+
+	L_0^{-1} \dot{L}_k
+	=
+	\R{low} [ L_0^{-1} (
+	\dot{A}_k - \dot{B}_k  - \dot{L}_0 L_k^\R{T} -  L_k \dot{L}_0^\R{T}
+	) L_0^\R{-T} ]
+
+@]@</small>
+<small>@[@
+
+	\dot{L}_k
+	=
+	L_0 \R{low} [ L_0^{-1} (
+	\dot{A}_k - \dot{B}_k  - \dot{L}_0 L_k^\R{T} -  L_k \dot{L}_0^\R{T}
+	) L_0^\R{-T} ]
+
+@]@</small>
+The matrix <small>@(@
+A_k
+@)@</small> is symmetric, it follows that
+<small>@[@
+
+	\bar{A}_k \stackrel{+}{=} \frac{1}{2} ( M_k + M_k^\R{T} )
+
+@]@</small>
+where
+<small>@[@
+
+	M_k = L_0^\R{-T} \R{low} ( L_0^\R{T} \bar{L}_k )^\R{T} L_0^{-1}
+
+@]@</small>
+The matrix <small>@(@
+B_k
+@)@</small> is also symmetric, hence
+<small>@[@
+
+	\bar{B}_k = - \; \frac{1}{2} ( M_k + M_k^\R{T} )
+
+@]@</small>
+We define the symmetric matrix <small>@(@
+C_k (s)
+@)@</small> by
+<small>@[@
+
+	\dot{C}_k = \dot{L}_0 L_k^\R{T} +  L_k \dot{L}_0^\R{T}
+
+@]@</small>
+and remove the dependency on <small>@(@
+C_k
+@)@</small> with
+<small>@[@
+
+	\R{tr}( \bar{C}_k^\R{T} \dot{C}_k )
+	=
+	\R{tr}( \bar{B}_k^\R{T} \dot{C}_k )
+	=
+	\R{tr}( \bar{B}_k^\R{T} \dot{L}_0 L_k^\R{T}  )
+	+
+	\R{tr}( \bar{B}_k^\R{T}  L_k \dot{L}_0^\R{T} )
+
+@]@</small>
+<small>@[@
+
+	=
+	\R{tr}( L_k^\R{T} \bar{B}_k^\R{T} \dot{L}_0 )
+	+
+	\R{tr}( L_k^\R{T} \bar{B}_k \dot{L}_0 )
+
+@]@</small>
+<small>@[@
+
+	=
+	\R{tr}[ L_k^\R{T} ( \bar{B}_k + \bar{B}_k^\R{T} ) \dot{L}_0 ]
+
+@]@</small>
+Thus, removing <small>@(@
+C_k
+@)@</small> from the dependency results in the
+following update to <small>@(@
+\bar{L}_0
+@)@</small>:
+<small>@[@
+
+	\bar{L}_0 \stackrel{+}{=} \R{lower} [ ( \bar{B}_k + \bar{B}_k^\R{T} ) L_k ]
+
+@]@</small>
+which is the same as
+<small>@[@
+
+	\bar{L}_0 \stackrel{+}{=} 2 \; \R{lower} [ \bar{B}_k L_k ]
+
+@]@</small>
+
+We still need to remove <small>@(@
+B_k
+@)@</small> from the dependency.
+It follows from its definition that
+<small>@[@
+
+	\dot{B}_k = \sum_{\ell=1}^{k-1}
+		\dot{L}_\ell L_{k-\ell}^\R{T} + L_\ell \dot{L}_{k-\ell}^\R{T}
+
+@]@</small>
+<small>@[@
+
+	\R{tr}( \bar{B}_k^\R{T} \dot{B}_k )
+	=
+	\sum_{\ell=1}^{k-1}
+	\R{tr}( \bar{B}_k^\R{T} \dot{L}_\ell L_{k-\ell}^\R{T} )
+	+
+	\R{tr}( \bar{B}_k^\R{T} L_\ell \dot{L}_{k-\ell}^\R{T} )
+
+@]@</small>
+<small>@[@
+
+	=
+	\sum_{\ell=1}^{k-1}
+	\R{tr}( L_{k-\ell}^\R{T} \bar{B}_k^\R{T} \dot{L}_\ell )
+	+
+	\sum_{\ell=1}^{k-1}
+	\R{tr}( L_\ell^\R{T} \bar{B}_k \dot{L}_{k-\ell} )
+
+@]@</small>
+We now use the fact that <small>@(@
+\bar{B}_k
+@)@</small> is symmetric to conclude
+<small>@[@
+
+	\R{tr}( \bar{B}_k^\R{T} \dot{B}_k )
+	=
+	2 \sum_{\ell=1}^{k-1}
+	\R{tr}( L_{k-\ell}^\R{T} \bar{B}_k^\R{T} \dot{L}_\ell )
+
+@]@</small>
+Each of the <small>@(@
+\dot{L}_\ell
+@)@</small> matrices is lower triangular.
+Thus, removing <small>@(@
+B_k
+@)@</small> from the dependency results in the following
+update for <small>@(@
+\ell = 1 , \ldots , k-1
+@)@</small>:
+<small>@[@
+
+	\bar{L}_\ell
+	\stackrel{+}{=} 2 \; \R{lower}( \bar{B}_k L_{k-\ell} )
+
+@]@</small>
+
+
+
+<hr>Input File: omh/appendix/theory/cholesky.omh
+
+</body>
+</html>

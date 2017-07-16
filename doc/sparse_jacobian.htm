@@ -1,0 +1,597 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>Sparse Jacobian</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Sparse Jacobian">
+<meta name="keywords" id="keywords" content=" sparse jacobian syntax purpose f x p row col jac work color_method n_sweep vectorbase vectorset restrictions vectorsize uses forward example ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_sparse_jacobian_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://coin-or.github.io/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="sparse_jac_rev.cpp.htm" target="_top">Prev</a>
+</td><td><a href="sparse_jacobian.cpp.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>ADFun</option>
+<option>sparse_derivative</option>
+<option>sparse_jacobian</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>CppAD-&gt;</option>
+<option>Install</option>
+<option>Introduction</option>
+<option>AD</option>
+<option>ADFun</option>
+<option>preprocessor</option>
+<option>multi_thread</option>
+<option>utility</option>
+<option>ipopt_solve</option>
+<option>Example</option>
+<option>speed</option>
+<option>Appendix</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>ADFun-&gt;</option>
+<option>record_adfun</option>
+<option>drivers</option>
+<option>Forward</option>
+<option>Reverse</option>
+<option>sparsity_pattern</option>
+<option>sparse_derivative</option>
+<option>optimize</option>
+<option>abs_normal</option>
+<option>FunCheck</option>
+<option>check_for_nan</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>sparse_derivative-&gt;</option>
+<option>sparse_jac</option>
+<option>sparse_jacobian</option>
+<option>sparse_hes</option>
+<option>sparse_hessian</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down0(this)'>
+<option>sparse_jacobian-&gt;</option>
+<option>sparse_jacobian.cpp</option>
+</select>
+</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Syntax</option>
+<option>Purpose</option>
+<option>f</option>
+<option>x</option>
+<option>p</option>
+<option>row, col</option>
+<option>jac</option>
+<option>work</option>
+<option>---..color_method</option>
+<option>---..p</option>
+<option>n_sweep</option>
+<option>VectorBase</option>
+<option>VectorSet</option>
+<option>---..Restrictions</option>
+<option>VectorSize</option>
+<option>Uses Forward</option>
+<option>Example</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>Sparse Jacobian</big></big></b></center>
+<br>
+<b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
+
+<br>
+
+<code><i><font color="black"><span style='white-space: nowrap'>jac</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.SparseJacobian(</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font><i><font color="black"><span style='white-space: nowrap'>jac</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.SparseJacobian(</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>p</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font><i><font color="black"><span style='white-space: nowrap'>n_sweep</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.SparseJacobianForward(</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>p</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>row</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>col</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>jac</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>work</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font><i><font color="black"><span style='white-space: nowrap'>n_sweep</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.SparseJacobianReverse(</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>p</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>row</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>col</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>jac</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>work</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+<br>
+<b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
+<br>
+We use <small>@(@
+n
+@)@</small> for the <a href="seq_property.htm#Domain" target="_top"><span style='white-space: nowrap'>domain</span></a>
+ size,
+and <small>@(@
+m
+@)@</small> for the <a href="seq_property.htm#Range" target="_top"><span style='white-space: nowrap'>range</span></a>
+ size of 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+.
+We use <small>@(@
+F : \B{R}^n \rightarrow \B{R}^m
+@)@</small> do denote the
+<a href="glossary.htm#AD Function" target="_top"><span style='white-space: nowrap'>AD&nbsp;function</span></a>
+
+corresponding to 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+.
+The syntax above sets 
+<code><i><font color="black"><span style='white-space: nowrap'>jac</span></font></i></code>
+ to the Jacobian
+<small>@[@
+
+	jac = F^{(1)} (x)
+
+@]@</small>
+This routine takes advantage of the sparsity of the Jacobian
+in order to reduce the amount of computation necessary.
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>row</span></font></i></code>
+ and 
+<code><i><font color="black"><span style='white-space: nowrap'>col</span></font></i></code>
+ are present, it also takes
+advantage of the reduced set of elements of the Jacobian that
+need to be computed.
+One can use speed tests (e.g. <a href="speed_test.htm" target="_top"><span style='white-space: nowrap'>speed_test</span></a>
+)
+to verify that results are computed faster
+than when using the routine <a href="jacobian.htm" target="_top"><span style='white-space: nowrap'>Jacobian</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="f" id="f">f</a></big></b>
+<br>
+The object 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ADFun&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+Note that the <a href="adfun.htm" target="_top"><span style='white-space: nowrap'>ADFun</span></a>
+ object 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+ is not <code><font color="blue">const</font></code>
+(see <a href="sparse_jacobian.htm#Uses Forward" target="_top"><span style='white-space: nowrap'>Uses&nbsp;Forward</span></a>
+ below).
+
+<br>
+<br>
+<b><big><a name="x" id="x">x</a></big></b>
+<br>
+The argument 
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>VectorBase</span></font></i><font color="blue"><span style='white-space: nowrap'>&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+(see <a href="sparse_jacobian.htm#VectorBase" target="_top"><span style='white-space: nowrap'>VectorBase</span></a>
+ below)
+and its size
+must be equal to 
+<code><i><font color="black"><span style='white-space: nowrap'>n</span></font></i></code>
+, the dimension of the
+<a href="seq_property.htm#Domain" target="_top"><span style='white-space: nowrap'>domain</span></a>
+ space for 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+.
+It specifies
+that point at which to evaluate the Jacobian.
+
+<br>
+<br>
+<b><big><a name="p" id="p">p</a></big></b>
+<br>
+The argument 
+<code><i><font color="black"><span style='white-space: nowrap'>p</span></font></i></code>
+ is optional and has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>VectorSet</span></font></i><font color="blue"><span style='white-space: nowrap'>&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>p</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+(see <a href="sparse_jacobian.htm#VectorSet" target="_top"><span style='white-space: nowrap'>VectorSet</span></a>
+ below).
+If it has elements of type <code><font color="blue">bool</font></code>,
+its size is <small>@(@
+m * n
+@)@</small>.
+If it has elements of type <code><font color="blue">std::set&lt;size_t&gt;</font></code>,
+its size is <small>@(@
+m
+@)@</small> and all its set elements are between
+zero and <small>@(@
+n - 1
+@)@</small>.
+It specifies a
+<a href="glossary.htm#Sparsity Pattern" target="_top"><span style='white-space: nowrap'>sparsity&nbsp;pattern</span></a>
+
+for the Jacobian <small>@(@
+F^{(1)} (x)
+@)@</small>.
+<code><span style='white-space: nowrap'><br>
+<br>
+</span></code>If this sparsity pattern does not change between calls to
+
+<code><font color="blue"><span style='white-space: nowrap'>SparseJacobian</span></font></code>
+, it should be faster to calculate 
+<code><i><font color="black"><span style='white-space: nowrap'>p</span></font></i></code>
+ once
+(using <a href="forsparsejac.htm" target="_top"><span style='white-space: nowrap'>ForSparseJac</span></a>
+ or <a href="revsparsejac.htm" target="_top"><span style='white-space: nowrap'>RevSparseJac</span></a>
+)
+and then pass 
+<code><i><font color="black"><span style='white-space: nowrap'>p</span></font></i></code>
+ to 
+<code><font color="blue"><span style='white-space: nowrap'>SparseJacobian</span></font></code>
+.
+Furthermore, if you specify 
+<code><i><font color="black"><span style='white-space: nowrap'>work</span></font></i></code>
+ in the calling sequence,
+it is not necessary to keep the sparsity pattern; see the heading
+<a href="sparse_jacobian.htm#work.p" target="_top"><span style='white-space: nowrap'>p</span></a>
+ under the 
+<code><i><font color="black"><span style='white-space: nowrap'>work</span></font></i></code>
+ description.
+<code><span style='white-space: nowrap'><br>
+<br>
+</span></code>In addition,
+if you specify 
+<code><i><font color="black"><span style='white-space: nowrap'>p</span></font></i></code>
+, CppAD will use the same
+type of sparsity representation
+(vectors of <code><font color="blue">bool</font></code> or vectors of <code><font color="blue">std::set&lt;size_t&gt;</font></code>)
+for its internal calculations.
+Otherwise, the representation
+for the internal calculations is unspecified.
+
+<br>
+<br>
+<b><big><a name="row, col" id="row, col">row, col</a></big></b>
+<br>
+The arguments 
+<code><i><font color="black"><span style='white-space: nowrap'>row</span></font></i></code>
+ and 
+<code><i><font color="black"><span style='white-space: nowrap'>col</span></font></i></code>
+ are optional and have prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>VectorSize</span></font></i><font color="blue"><span style='white-space: nowrap'>&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>row</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>VectorSize</span></font></i><font color="blue"><span style='white-space: nowrap'>&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>col</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+(see <a href="sparse_jacobian.htm#VectorSize" target="_top"><span style='white-space: nowrap'>VectorSize</span></a>
+ below).
+They specify which rows and columns of <small>@(@
+F^{(1)} (x)
+@)@</small> are
+computes and in what order.
+Not all the non-zero entries in <small>@(@
+F^{(1)} (x)
+@)@</small> need be computed,
+but all the entries specified by 
+<code><i><font color="black"><span style='white-space: nowrap'>row</span></font></i></code>
+ and 
+<code><i><font color="black"><span style='white-space: nowrap'>col</span></font></i></code>
+
+must be possibly non-zero in the sparsity pattern.
+We use <small>@(@
+K
+@)@</small> to denote the value 
+<code><i><font color="black"><span style='white-space: nowrap'>jac</span></font></i><font color="blue"><span style='white-space: nowrap'>.size()</span></font></code>
+
+which must also equal the size of 
+<code><i><font color="black"><span style='white-space: nowrap'>row</span></font></i></code>
+ and 
+<code><i><font color="black"><span style='white-space: nowrap'>col</span></font></i></code>
+.
+Furthermore,
+for <small>@(@
+k = 0 , \ldots , K-1
+@)@</small>, it must hold that
+<small>@(@
+row[k] < m
+@)@</small> and <small>@(@
+col[k] < n
+@)@</small>.
+
+<br>
+<br>
+<b><big><a name="jac" id="jac">jac</a></big></b>
+<br>
+The result 
+<code><i><font color="black"><span style='white-space: nowrap'>jac</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>VectorBase</span></font></i><font color="blue"><span style='white-space: nowrap'>&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>jac</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+In the case where the arguments 
+<code><i><font color="black"><span style='white-space: nowrap'>row</span></font></i></code>
+ and 
+<code><i><font color="black"><span style='white-space: nowrap'>col</span></font></i></code>
+ are not present,
+the size of 
+<code><i><font color="black"><span style='white-space: nowrap'>jac</span></font></i></code>
+ is <small>@(@
+m * n
+@)@</small> and
+for <small>@(@
+i = 0 , \ldots , m-1
+@)@</small>,
+<small>@(@
+j = 0 , \ldots , n-1
+@)@</small>,
+<small>@[@
+
+	jac [ i * n + j ] = \D{ F_i }{ x_j } (x)
+
+@]@</small>
+<code><span style='white-space: nowrap'><br>
+<br>
+</span></code>In the case where the arguments 
+<code><i><font color="black"><span style='white-space: nowrap'>row</span></font></i></code>
+ and 
+<code><i><font color="black"><span style='white-space: nowrap'>col</span></font></i></code>
+ are present,
+we use <small>@(@
+K
+@)@</small> to denote the size of 
+<code><i><font color="black"><span style='white-space: nowrap'>jac</span></font></i></code>
+.
+The input value of its elements does not matter.
+Upon return, for <small>@(@
+k = 0 , \ldots , K - 1
+@)@</small>,
+<small>@[@
+
+	jac [ k ] = \D{ F_i }{ x_j } (x)
+	\; , \;
+	\; {\rm where} \;
+	i = row[k]
+	\; {\rm and } \;
+	j = col[k]
+
+@]@</small>
+
+<br>
+<br>
+<b><big><a name="work" id="work">work</a></big></b>
+<br>
+If this argument is present, it has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sparse_jacobian_work&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>work</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+This object can only be used with the routines
+<code><font color="blue">SparseJacobianForward</font></code> and <code><font color="blue">SparseJacobianReverse</font></code>.
+During its the first use, information is stored in 
+<code><i><font color="black"><span style='white-space: nowrap'>work</span></font></i></code>
+.
+This is used to reduce the work done by future calls to the same mode
+(forward or reverse),
+the same 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+, 
+<code><i><font color="black"><span style='white-space: nowrap'>p</span></font></i></code>
+, 
+<code><i><font color="black"><span style='white-space: nowrap'>row</span></font></i></code>
+, and 
+<code><i><font color="black"><span style='white-space: nowrap'>col</span></font></i></code>
+.
+If a future call is for a different mode,
+or any of these values have changed,
+you must first call 
+<code><i><font color="black"><span style='white-space: nowrap'>work</span></font></i><font color="blue"><span style='white-space: nowrap'>.clear()</span></font></code>
+
+to inform CppAD that this information needs to be recomputed.
+
+<br>
+<br>
+<b><a name="work.color_method" id="work.color_method">color_method</a></b>
+<br>
+The coloring algorithm determines which columns (forward mode)
+or rows (reverse mode) can be computed during the same sweep.
+This field has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;std::string&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>work</span></font></i><font color="blue"><span style='white-space: nowrap'>.color_method<br>
+</span></font></code>
+and its default value (after a constructor or <code><font color="blue">clear()</font></code>)
+is <code><font color="blue">&quot;cppad&quot;</font></code>.
+If <a href="colpack_prefix.htm" target="_top"><span style='white-space: nowrap'>colpack_prefix</span></a>
+ is specified on the
+<a href="cmake.htm#CMake Command" target="_top"><span style='white-space: nowrap'>cmake&nbsp;command</span></a>
+ line,
+you can set this method to <code><font color="blue">&quot;colpack&quot;</font></code>.
+This value only matters on the first call to <code><font color="blue">sparse_jacobian</font></code>
+that follows the 
+<code><i><font color="black"><span style='white-space: nowrap'>work</span></font></i></code>
+ constructor or a call to
+
+<code><i><font color="black"><span style='white-space: nowrap'>work</span></font></i><font color="blue"><span style='white-space: nowrap'>.clear()</span></font></code>
+.
+
+<br>
+<br>
+<b><a name="work.p" id="work.p">p</a></b>
+<br>
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>work</span></font></i></code>
+ is present, and it is not the first call after
+its construction or a clear,
+the sparsity pattern 
+<code><i><font color="black"><span style='white-space: nowrap'>p</span></font></i></code>
+ is not used.
+This enables one to free the sparsity pattern
+and still compute corresponding sparse Jacobians.
+
+<br>
+<br>
+<b><big><a name="n_sweep" id="n_sweep">n_sweep</a></big></b>
+<br>
+The return value 
+<code><i><font color="black"><span style='white-space: nowrap'>n_sweep</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n_sweep</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+If <code><font color="blue">SparseJacobianForward</font></code> (<code><font color="blue">SparseJacobianReverse</font></code>) is used,
+
+<code><i><font color="black"><span style='white-space: nowrap'>n_sweep</span></font></i></code>
+ is the number of first order forward (reverse) sweeps
+used to compute the requested Jacobian values.
+(This is also the number of colors determined by the coloring method
+mentioned above).
+This is proportional to the total work that <code><font color="blue">SparseJacobian</font></code> does,
+not counting the zero order forward sweep,
+or the work to combine multiple columns (rows) into a single sweep.
+
+<br>
+<br>
+<b><big><a name="VectorBase" id="VectorBase">VectorBase</a></big></b>
+<br>
+The type 
+<code><i><font color="black"><span style='white-space: nowrap'>VectorBase</span></font></i></code>
+ must be a <a href="simplevector.htm" target="_top"><span style='white-space: nowrap'>SimpleVector</span></a>
+ class with
+<a href="simplevector.htm#Elements of Specified Type" target="_top"><span style='white-space: nowrap'>elements&nbsp;of&nbsp;type</span></a>
+
+
+<code><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i></code>
+.
+The routine <a href="checksimplevector.htm" target="_top"><span style='white-space: nowrap'>CheckSimpleVector</span></a>
+ will generate an error message
+if this is not the case.
+
+<br>
+<br>
+<b><big><a name="VectorSet" id="VectorSet">VectorSet</a></big></b>
+<br>
+The type 
+<code><i><font color="black"><span style='white-space: nowrap'>VectorSet</span></font></i></code>
+ must be a <a href="simplevector.htm" target="_top"><span style='white-space: nowrap'>SimpleVector</span></a>
+ class with
+<a href="simplevector.htm#Elements of Specified Type" target="_top"><span style='white-space: nowrap'>elements&nbsp;of&nbsp;type</span></a>
+
+<code><font color="blue">bool</font></code> or <code><font color="blue">std::set&lt;size_t&gt;</font></code>;
+see <a href="glossary.htm#Sparsity Pattern" target="_top"><span style='white-space: nowrap'>sparsity&nbsp;pattern</span></a>
+ for a discussion
+of the difference.
+The routine <a href="checksimplevector.htm" target="_top"><span style='white-space: nowrap'>CheckSimpleVector</span></a>
+ will generate an error message
+if this is not the case.
+
+<br>
+<br>
+<b><a name="VectorSet.Restrictions" id="VectorSet.Restrictions">Restrictions</a></b>
+<br>
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>VectorSet</span></font></i></code>
+ has elements of <code><font color="blue">std::set&lt;size_t&gt;</font></code>,
+then 
+<code><i><font color="black"><span style='white-space: nowrap'>p</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>]</span></font></code>
+ must return a reference (not a copy) to the
+corresponding set.
+According to section 26.3.2.3 of the 1998 C++ standard,
+<code><font color="blue">std::valarray&lt; std::set&lt;size_t&gt; &gt;</font></code> does not satisfy
+this condition.
+
+<br>
+<br>
+<b><big><a name="VectorSize" id="VectorSize">VectorSize</a></big></b>
+<br>
+The type 
+<code><i><font color="black"><span style='white-space: nowrap'>VectorSize</span></font></i></code>
+ must be a <a href="simplevector.htm" target="_top"><span style='white-space: nowrap'>SimpleVector</span></a>
+ class with
+<a href="simplevector.htm#Elements of Specified Type" target="_top"><span style='white-space: nowrap'>elements&nbsp;of&nbsp;type</span></a>
+
+<code><font color="blue">size_t</font></code>.
+The routine <a href="checksimplevector.htm" target="_top"><span style='white-space: nowrap'>CheckSimpleVector</span></a>
+ will generate an error message
+if this is not the case.
+
+<br>
+<br>
+<b><big><a name="Uses Forward" id="Uses Forward">Uses Forward</a></big></b>
+<br>
+After each call to <a href="forward.htm" target="_top"><span style='white-space: nowrap'>Forward</span></a>
+,
+the object 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+ contains the corresponding
+<a href="glossary.htm#Taylor Coefficient" target="_top"><span style='white-space: nowrap'>Taylor&nbsp;coefficients</span></a>
+.
+After a call to any of the sparse Jacobian routines,
+the zero order Taylor coefficients correspond to
+
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.Forward(0,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+
+and the other coefficients are unspecified.
+
+After <code><font color="blue">SparseJacobian</font></code>,
+the previous calls to <a href="forward.htm" target="_top"><span style='white-space: nowrap'>Forward</span></a>
+ are undefined.
+
+<br>
+<br>
+<b><big><a name="Example" id="Example">Example</a></big></b>
+
+<br>
+The routine
+<a href="sparse_jacobian.cpp.htm" target="_top"><span style='white-space: nowrap'>sparse_jacobian.cpp</span></a>
+
+is examples and tests of <code><font color="blue">sparse_jacobian</font></code>.
+It return <code><font color="blue">true</font></code>, if it succeeds and <code><font color="blue">false</font></code> otherwise.
+
+
+<hr>Input File: cppad/core/sparse_jacobian.hpp
+
+</body>
+</html>

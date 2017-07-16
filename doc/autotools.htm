@@ -1,0 +1,732 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>Autotools Unix Test and Installation</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Autotools Unix Test and Installation">
+<meta name="keywords" id="keywords" content=" autotools unix test installation deprecated 2012-12-26 distribution directory build configure make examples tests profiling cppad prefix_dir --with-documentation --with-testvector max_num_threads cxx_flags openmp_flags postfix_dir adolc_dir linux cygwin boost_dir eigen_dir fadbad_dir ipopt_dir sacado_dir tape_addr_type tape_id_type install ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_autotools_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://coin-or.github.io/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="zdouble.cpp.htm" target="_top">Prev</a>
+</td><td><a href="compare_c.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>Appendix</option>
+<option>deprecated</option>
+<option>autotools</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>CppAD-&gt;</option>
+<option>Install</option>
+<option>Introduction</option>
+<option>AD</option>
+<option>ADFun</option>
+<option>preprocessor</option>
+<option>multi_thread</option>
+<option>utility</option>
+<option>ipopt_solve</option>
+<option>Example</option>
+<option>speed</option>
+<option>Appendix</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>Appendix-&gt;</option>
+<option>Faq</option>
+<option>directory</option>
+<option>Theory</option>
+<option>glossary</option>
+<option>Bib</option>
+<option>wish_list</option>
+<option>whats_new</option>
+<option>deprecated</option>
+<option>compare_c</option>
+<option>numeric_ad</option>
+<option>addon</option>
+<option>License</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>deprecated-&gt;</option>
+<option>include_deprecated</option>
+<option>FunDeprecated</option>
+<option>CompareChange</option>
+<option>omp_max_thread</option>
+<option>TrackNewDel</option>
+<option>omp_alloc</option>
+<option>memory_leak</option>
+<option>epsilon</option>
+<option>test_vector</option>
+<option>cppad_ipopt_nlp</option>
+<option>old_atomic</option>
+<option>zdouble</option>
+<option>autotools</option>
+</select>
+</td>
+<td>autotools</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Deprecated 2012-12-26</option>
+<option>Distribution Directory</option>
+<option>Build Directory</option>
+<option>Configure</option>
+<option>make</option>
+<option>---..Examples and Tests</option>
+<option>Profiling CppAD</option>
+<option>prefix_dir</option>
+<option>--with-Documentation</option>
+<option>--with-testvector</option>
+<option>max_num_threads</option>
+<option>cxx_flags</option>
+<option>openmp_flags</option>
+<option>postfix_dir</option>
+<option>adolc_dir</option>
+<option>---..Linux</option>
+<option>---..Cygwin</option>
+<option>boost_dir</option>
+<option>eigen_dir</option>
+<option>fadbad_dir</option>
+<option>ipopt_dir</option>
+<option>sacado_dir</option>
+<option>tape_addr_type</option>
+<option>tape_id_type</option>
+<option>make install</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>Autotools Unix Test and Installation</big></big></b></center>
+<br>
+<b><big><a name="Deprecated 2012-12-26" id="Deprecated 2012-12-26">Deprecated 2012-12-26</a></big></b>
+<br>
+This install procedure has been deprecated and no improvements
+have been added since 2012.
+For example, this install procedure will not detect any of the
+<code><font color="blue">c++11</font></code> extensions.
+You should use the <a href="cmake.htm" target="_top"><span style='white-space: nowrap'>cmake</span></a>
+ instructions to install CppAD.
+
+<br>
+<br>
+<b><big><a name="Distribution Directory" id="Distribution Directory">Distribution Directory</a></big></b>
+<br>
+You must first obtain a copy of the CppAD distribution directory
+using the <a href="download.htm" target="_top"><span style='white-space: nowrap'>download</span></a>
+ instructions.
+The install instructions below correspond to the
+<a href="download.htm#Current Version" target="_top"><span style='white-space: nowrap'>current&nbsp;version</span></a>
+.
+We refer to the corresponding
+<a href="download.htm#Distribution Directory" target="_top"><span style='white-space: nowrap'>distribution&nbsp;directory</span></a>
+ as
+
+<code><i><font color="black"><span style='white-space: nowrap'>dist_dir</span></font></i></code>
+.
+
+<br>
+<br>
+<b><big><a name="Build Directory" id="Build Directory">Build Directory</a></big></b>
+<br>
+Create the directory 
+<code><i><font color="black"><span style='white-space: nowrap'>dist_dir</span></font></i><font color="blue"><span style='white-space: nowrap'>/build</span></font></code>
+,
+which will be referred to as the build directory below.
+
+<br>
+<br>
+<b><big><a name="Configure" id="Configure">Configure</a></big></b>
+<br>
+Execute the following command in the build directory:
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+./configure&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;--prefix=</span></font><i><font color="black"><span style='white-space: nowrap'>prefix_dir</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;--with-Documentation&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;--with-</span></font><i><font color="black"><span style='white-space: nowrap'>test</span></font></i><font color="blue"><span style='white-space: nowrap'>vector&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;MAX_NUM_THREADS=</span></font><i><font color="black"><span style='white-space: nowrap'>max_num_threads</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CXX_FLAGS=</span></font><i><font color="black"><span style='white-space: nowrap'>cxx_flags</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OPENMP_FLAGS=</span></font><i><font color="black"><span style='white-space: nowrap'>openmp_flags</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;POSTFIX_DIR=</span></font><i><font color="black"><span style='white-space: nowrap'>postfix_dir</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ADOLC_DIR=</span></font><i><font color="black"><span style='white-space: nowrap'>adolc_dir</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;BOOST_DIR=</span></font><i><font color="black"><span style='white-space: nowrap'>boost_dir</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;EIGEN_DIR=</span></font><i><font color="black"><span style='white-space: nowrap'>eigen_dir</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FADBAD_DIR=</span></font><i><font color="black"><span style='white-space: nowrap'>fadbad_dir</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SADADO_DIR=</span></font><i><font color="black"><span style='white-space: nowrap'>sacado_dir</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;IPOPT_DIR=</span></font><i><font color="black"><span style='white-space: nowrap'>ipopt_dir</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TAPE_ADDR_TYPE=</span></font><i><font color="black"><span style='white-space: nowrap'>tape_addr_type</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TAPE_ID_TYPE=</span></font><i><font color="black"><span style='white-space: nowrap'>tape_id_type</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+where only the <code><font color="blue">configure</font></code> line need appear; i.e.,
+the entries in all of the other lines are optional.
+The text in italic above is replaced values that you choose
+(see discussion below).
+
+<br>
+<br>
+<b><big><a name="make" id="make">make</a></big></b>
+<br>
+The following command, in the build directory,
+copies the file <code><font color="blue">configure.hpp</font></code> from
+the build to the source directory and then builds
+some object libraries that are used by the tests:
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;make<br>
+</span></font></code>
+<br>
+<b><a name="make.Examples and Tests" id="make.Examples and Tests">Examples and Tests</a></b>
+<br>
+Once you have executed the <code><font color="blue">make</font></code> command,
+you can run the correctness and speed tests.
+The following command will build and run all the correctness and speed tests.
+<code><font color='blue'><pre style='display:inline'> 
+     make test
+</pre></font></code>
+<br>
+<b><big><a name="Profiling CppAD" id="Profiling CppAD">Profiling CppAD</a></big></b>
+<br>
+The CppAD derivative speed tests mentioned above can be profiled.
+You can test that the results computed during this profiling are correct
+by executing the following commands starting in the build directory:
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cd&nbsp;speed/profile<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;make&nbsp;test<br>
+</span></font></code>
+After executing <code><font color="blue">make test</font></code>, you can run a profile speed test
+by executing the command
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;./speed_profile&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>test</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>seed</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>option_list</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+see <a href="speed_main.htm" target="_top"><span style='white-space: nowrap'>speed_main</span></a>
+ for the meaning of the command line
+arguments to this program.
+After you have run a profiling speed test,
+you can then obtain the profiling results with
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;gprof&nbsp;-b&nbsp;speed_profile<br>
+</span></font></code>
+In C++, template parameters and argument types become part of a
+routines's name.
+This can make the <code><font color="blue">gprof</font></code> output hard to read
+(the routine names can be very long).
+You can remove the template parameters and argument types from the
+routine names by executing the following command
+<code><font color='blue'><pre style='display:inline'> 
+     gprof -b speed_profile | sed -f gprof.sed
+</pre></font></code>
+<br>
+<b><big><a name="prefix_dir" id="prefix_dir">prefix_dir</a></big></b>
+<br>
+The default value for prefix directory is <code><font color="blue">$HOME</font></code>
+i.e., by default the CppAD include files
+will <a href="autotools.htm#make install" target="_top"><span style='white-space: nowrap'>install</span></a>
+ below <code><font color="blue">$HOME</font></code>.
+If you want to install elsewhere, you will have to use this option.
+As an example of using the 
+<code><font color="blue"><span style='white-space: nowrap'>--prefix=</span></font><i><font color="black"><span style='white-space: nowrap'>prefix_dir</span></font></i></code>
+ option,
+if you specify
+<code><font color='blue'><pre style='display:inline'> 
+     ./configure --prefix=/usr/local
+</pre></font></code>
+the CppAD include files will be installed in the directory
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/usr/local/include/cppad<br>
+</span></font></code>
+If <a href="autotools.htm#--with-Documentation" target="_top"><span style='white-space: nowrap'>--with-Documentation</span></a>
+
+is specified, the CppAD documentation files will be installed in the directory
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/usr/local/share/doc/cppad-</span></font><i><font color="black"><span style='white-space: nowrap'>yyyymmdd</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+where 
+<code><i><font color="black"><span style='white-space: nowrap'>yyyymmdd</span></font></i></code>
+ is the year, month, and day corresponding
+to the version of CppAD.
+
+<br>
+<br>
+<b><big><a name="--with-Documentation" id="--with-Documentation">--with-Documentation</a></big></b>
+<br>
+If the command line argument <code><font color="blue">--with-Documentation</font></code> is specified,
+the CppAD documentation HTML and XML files are copied to the directory
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>prefix_dir</span></font></i><font color="blue"><span style='white-space: nowrap'>/share/doc/</span></font><i><font color="black"><span style='white-space: nowrap'>postfix_dir</span></font></i><font color="blue"><span style='white-space: nowrap'>/cppad-</span></font><i><font color="black"><span style='white-space: nowrap'>yyyymmdd</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+(see <a href="autotools.htm#postfix_dir" target="_top"><span style='white-space: nowrap'>postfix_dir</span></a>
+).
+The top of the CppAD HTML documentation tree
+(with mathematics displayed as LaTex command) will be located at
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>prefix_dir</span></font></i><font color="blue"><span style='white-space: nowrap'>/share/doc/</span></font><i><font color="black"><span style='white-space: nowrap'>postfix_dir</span></font></i><font color="blue"><span style='white-space: nowrap'>/cppad-</span></font><i><font color="black"><span style='white-space: nowrap'>yyyymmdd</span></font></i><font color="blue"><span style='white-space: nowrap'>/cppad.htm<br>
+</span></font></code>
+<br>
+<b><big><a name="--with-testvector" id="--with-testvector">--with-testvector</a></big></b>
+<br>
+The <a href="testvector.htm" target="_top"><span style='white-space: nowrap'>CPPAD_TESTVECTOR</span></a>
+
+template class is used for many of the CppAD examples and tests.
+The default for this template class is 
+<code><font color="blue"><span style='white-space: nowrap'>CppAD::vector&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Scalar</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code>
+.
+If one, and only one, of the following command line arguments is specified:
+<code><font color='blue'><pre style='display:inline'> 
+     --with-stdvector
+     --with-boostvector
+     --with-eigenvector
+</pre></font></code>
+the corresponding of the following template classes is used
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;std::vector&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Scalar</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;boost::numeric::ublas::vector&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Scalar</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Eigen::matrix&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Scalar</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;Eigen::Dynamic,&nbsp;1&gt;<br>
+</span></font></code>
+See also,
+<a href="autotools.htm#boost_dir" target="_top"><span style='white-space: nowrap'>boost_dir</span></a>
+
+and
+<a href="autotools.htm#eigen_dir" target="_top"><span style='white-space: nowrap'>eigen_dir</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="max_num_threads" id="max_num_threads">max_num_threads</a></big></b>
+<br>
+this specifies the value for the default value for the preprocessor symbol
+<a href="multi_thread.htm#CPPAD_MAX_NUM_THREADS" target="_top"><span style='white-space: nowrap'>CPPAD_MAX_NUM_THREADS</span></a>
+.
+It must be greater than or equal to four; i.e.,
+
+<code><i><font color="black"><span style='white-space: nowrap'>max_num_threads</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&gt;=&nbsp;4</span></font></code>
+.
+
+<br>
+<br>
+<b><big><a name="cxx_flags" id="cxx_flags">cxx_flags</a></big></b>
+<br>
+If the command line argument 
+<code><i><font color="black"><span style='white-space: nowrap'>CompilerFlags</span></font></i></code>
+ is present,
+it specifies compiler flags.
+For example,
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CXX_FLAGS=&quot;-Wall&nbsp;-ansi&quot;<br>
+</span></font></code>
+would specify that warning flags <code><font color="blue">-Wall</font></code>
+and <code><font color="blue">-ansi</font></code> should be included
+in all the C++ compile commands.
+The error and warning flags chosen must be valid options
+for the C++ compiler.
+The default value for 
+<code><i><font color="black"><span style='white-space: nowrap'>CompilerFlags</span></font></i></code>
+ is the
+empty string.
+
+<br>
+<br>
+<b><big><a name="openmp_flags" id="openmp_flags">openmp_flags</a></big></b>
+<br>
+If the command line argument 
+<code><i><font color="black"><span style='white-space: nowrap'>OpenmpFlags</span></font></i></code>
+ is present,
+it specifies the necessary flags so that the compiler will
+properly interpret OpenMP directives.
+For example, when using the GNU <code><font color="blue">g++</font></code> compiler,
+the following setting includes the OpenMP tests:
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OPENMP_FLAGS=-fopenmp<br>
+</span></font></code>
+If you specify configure command,
+the CppAD OpenMP correctness and speed tests will be built; see
+<a href="thread_test.cpp.htm#threading" target="_top"><span style='white-space: nowrap'>threading</span></a>
+
+multi-threading tests.
+
+<br>
+<br>
+<b><big><a name="postfix_dir" id="postfix_dir">postfix_dir</a></big></b>
+<br>
+By default, the postfix directory is empty; i.e., there
+is no postfix directory.
+As an example of using the 
+<code><font color="blue"><span style='white-space: nowrap'>POSTFIX_DIR=</span></font><i><font color="black"><span style='white-space: nowrap'>postfix_dir</span></font></i></code>
+ option,
+if you specify
+<code><font color='blue'><pre style='display:inline'> 
+     ./configure --prefix=/usr/local POSTFIX_DIR=coin
+</pre></font></code>
+the CppAD include files will be
+<a href="autotools.htm#make install" target="_top"><span style='white-space: nowrap'>installed</span></a>
+ in the directory
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/usr/local/include/coin/cppad<br>
+</span></font></code>
+If <a href="autotools.htm#--with-Documentation" target="_top"><span style='white-space: nowrap'>--with-Documentation</span></a>
+
+is specified, the CppAD documentation files will be installed in the directory
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/usr/local/share/doc/coin/cppad-</span></font><i><font color="black"><span style='white-space: nowrap'>yyyymmdd</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+<br>
+<b><big><a name="adolc_dir" id="adolc_dir">adolc_dir</a></big></b>
+<br>
+If you have
+<a href="https://projects.coin-or.org/ADOL-C" target="_top"><span style='white-space: nowrap'>ADOL-C</span></a>
+
+installed on your system, you can
+specify a value for 
+<code><i><font color="black"><span style='white-space: nowrap'>adolc_dir</span></font></i></code>
+ in the
+<a href="autotools.htm#Configure" target="_top"><span style='white-space: nowrap'>configure</span></a>
+ command line.
+The value of 
+<code><i><font color="black"><span style='white-space: nowrap'>adolc_dir</span></font></i></code>
+ must be such that
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>adolc_dir</span></font></i><font color="blue"><span style='white-space: nowrap'>/include/adolc/adouble.h<br>
+</span></font></code>
+is a valid way to reference <code><font color="blue">adouble.h</font></code>.
+In this case, you can run the Adolc speed correctness tests
+by executing the following commands starting in the build directory:
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cd&nbsp;speed/adolc<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;make&nbsp;test<br>
+</span></font></code>
+After executing <code><font color="blue">make test</font></code>, you can run an Adolc speed tests
+by executing the command <code><font color="blue">./adolc</font></code>;
+see <a href="speed_main.htm" target="_top"><span style='white-space: nowrap'>speed_main</span></a>
+ for the meaning of the command line
+options to this program.
+Note that these speed tests assume Adolc has been configure with
+its sparse matrix computations enabled using
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;--with-colpack=</span></font><i><font color="black"><span style='white-space: nowrap'>colpack_dir</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+<br>
+<b><a name="adolc_dir.Linux" id="adolc_dir.Linux">Linux</a></b>
+<br>
+If you are using Linux,
+you will have to add 
+<code><i><font color="black"><span style='white-space: nowrap'>adolc_dir</span></font></i><font color="blue"><span style='white-space: nowrap'>/lib</span></font></code>
+ to <code><font color="blue">LD_LIBRARY_PATH</font></code>.
+For example, if you use the <code><font color="blue">bash</font></code> shell to run your programs,
+you could include
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;LD_LIBRARY_PATH=</span></font><i><font color="black"><span style='white-space: nowrap'>adolc_dir</span></font></i><font color="blue"><span style='white-space: nowrap'>/lib:${LD_LIBRARY_PATH}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;export&nbsp;LD_LIBRARY_PATH<br>
+</span></font></code>
+in your <code><font color="blue">$HOME/.bash_profile</font></code> file.
+
+<br>
+<br>
+<b><a name="adolc_dir.Cygwin" id="adolc_dir.Cygwin">Cygwin</a></b>
+<br>
+If you are using Cygwin,
+you will have to add to following lines to the file
+<code><font color="blue">.bash_profile</font></code> in your home directory:
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PATH=</span></font><i><font color="black"><span style='white-space: nowrap'>adolc_dir</span></font></i><font color="blue"><span style='white-space: nowrap'>/bin:${PATH}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;export&nbsp;PATH<br>
+</span></font></code>
+in order for Adolc to run properly.
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>adolc_dir</span></font></i></code>
+ begins with a disk specification,
+you must use the Cygwin format for the disk specification.
+For example,
+if <code><font color="blue">d:/adolc_base</font></code> is the proper directory,
+<code><font color="blue">/cygdrive/d/adolc_base</font></code> should be used for 
+<code><i><font color="black"><span style='white-space: nowrap'>adolc_dir</span></font></i></code>
+.
+
+<br>
+<br>
+<b><big><a name="boost_dir" id="boost_dir">boost_dir</a></big></b>
+<br>
+If the command line argument
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;BOOST_DIR=</span></font><i><font color="black"><span style='white-space: nowrap'>boost_dir</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+is present, it must be such that files
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>boost_dir</span></font></i><font color="blue"><span style='white-space: nowrap'>/include/boost/numeric/ublas/vector.hpp<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>boost_dir</span></font></i><font color="blue"><span style='white-space: nowrap'>/include/boost/thread.hpp<br>
+</span></font></code>
+are present.
+In this case, these files will be used by CppAD.
+See also, <a href="autotools.htm#--with-testvector" target="_top"><span style='white-space: nowrap'>--with-boostvector</span></a>
+
+
+<br>
+<br>
+<b><big><a name="eigen_dir" id="eigen_dir">eigen_dir</a></big></b>
+<br>
+If you have
+<a href="http://eigen.tuxfamily.org" target="_top"><span style='white-space: nowrap'>Eigen</span></a>
+
+installed on your system, you can
+specify a value for 
+<code><i><font color="black"><span style='white-space: nowrap'>eigen_dir</span></font></i></code>
+.
+It must be such that
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>eigen_dir</span></font></i><font color="blue"><span style='white-space: nowrap'>/include/Eigen/Core<br>
+</span></font></code>
+is a valid include file.
+In this case CppAD will compile and test the Eigen examples; e.g.,
+<a href="eigen_array.cpp.htm" target="_top"><span style='white-space: nowrap'>eigen_array.cpp</span></a>
+.
+See also, <a href="autotools.htm#--with-testvector" target="_top"><span style='white-space: nowrap'>--with-eigenvector</span></a>
+
+
+<br>
+<br>
+<b><big><a name="fadbad_dir" id="fadbad_dir">fadbad_dir</a></big></b>
+<br>
+If you have
+<a href="http://www.fadbad.com/" target="_top"><span style='white-space: nowrap'>Fadbad&nbsp;2.1</span></a>
+
+installed on your system, you can
+specify a value for 
+<code><i><font color="black"><span style='white-space: nowrap'>fadbad_dir</span></font></i></code>
+.
+It must be such that
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>fadbad_dir</span></font></i><font color="blue"><span style='white-space: nowrap'>/include/FADBAD++/badiff.h<br>
+</span></font></code>
+is a valid reference to <code><font color="blue">badiff.h</font></code>.
+In this case, you can run the Fadbad speed correctness tests
+by executing the following commands starting in the build directory:
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cd&nbsp;speed/fadbad<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;make&nbsp;test<br>
+</span></font></code>
+After executing <code><font color="blue">make test</font></code>, you can run a Fadbad speed tests
+by executing the command <code><font color="blue">./fadbad</font></code>;
+see <a href="speed_main.htm" target="_top"><span style='white-space: nowrap'>speed_main</span></a>
+ for the meaning of the command line
+options to this program.
+
+<br>
+<br>
+<b><big><a name="ipopt_dir" id="ipopt_dir">ipopt_dir</a></big></b>
+<br>
+If you have
+<a href="http://coin-or.github.io/projects/Ipopt.xml" target="_top"><span style='white-space: nowrap'>Ipopt</span></a>
+
+installed on your system, you can
+specify a value for 
+<code><i><font color="black"><span style='white-space: nowrap'>ipopt_dir</span></font></i></code>
+.
+It must be such that
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ipopt_dir</span></font></i><font color="blue"><span style='white-space: nowrap'>/include/coin/IpIpoptApplication.hpp<br>
+</span></font></code>
+is a valid reference to <code><font color="blue">IpIpoptApplication.hpp</font></code>.
+In this case, the CppAD interface to Ipopt
+<a href="cppad_ipopt_nlp.htm#Example" target="_top"><span style='white-space: nowrap'>examples</span></a>
+ can be built and tested
+by executing the following commands starting in the build directory:
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;make<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cd&nbsp;cppad_ipopt/example<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;make&nbsp;test<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cd&nbsp;../test<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;make&nbsp;test<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cd&nbsp;../speed<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;make&nbsp;test<br>
+</span></font></code>
+Once this has been done, you can execute the program
+<code><font color="blue">./speed</font></code> in the <code><font color="blue">build/cppad_ipopt/speed</font></code> directory;
+see <a href="ipopt_ode_speed.cpp.htm" target="_top"><span style='white-space: nowrap'>ipopt_ode_speed.cpp</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="sacado_dir" id="sacado_dir">sacado_dir</a></big></b>
+<br>
+If you have
+<a href="http://trilinos.sandia.gov/packages/sacado/" target="_top"><span style='white-space: nowrap'>Sacado</span></a>
+
+installed on your system, you can
+specify a value for 
+<code><i><font color="black"><span style='white-space: nowrap'>sacado_dir</span></font></i></code>
+.
+It must be such that
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>sacado_dir</span></font></i><font color="blue"><span style='white-space: nowrap'>/include/Sacado.hpp<br>
+</span></font></code>
+is a valid reference to <code><font color="blue">Sacado.hpp</font></code>.
+In this case, you can run the Sacado speed correctness tests
+by executing the following commands starting in the build directory:
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cd&nbsp;speed/sacado<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;make&nbsp;test<br>
+</span></font></code>
+After executing <code><font color="blue">make test</font></code>, you can run a Sacado speed tests
+by executing the command <code><font color="blue">./sacado</font></code>;
+see <a href="speed_main.htm" target="_top"><span style='white-space: nowrap'>speed_main</span></a>
+ for the meaning of the command line
+options to this program.
+
+
+<br>
+<br>
+<b><big><a name="tape_addr_type" id="tape_addr_type">tape_addr_type</a></big></b>
+<br>
+If the command line argument 
+<code><i><font color="black"><span style='white-space: nowrap'>tape_addr_type</span></font></i></code>
+ is present,
+it specifies the type used for address in the AD recordings (tapes).
+The valid values for this argument are
+<code><font color="blue">unsigned short int</font></code>,
+<code><font color="blue">unsigned int</font></code>,
+<code><font color="blue">size_t</font></code>.
+The smaller the value of 
+<code><i><font color="black"><span style='white-space: nowrap'>sizeof(</span></font></i><font color="blue"><span style='white-space: nowrap'>tape_addr_type</span></font><i><font color="black"><span style='white-space: nowrap'>)</span></font></i></code>
+,
+the less memory is used.
+On the other hand, the value
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;std::numeric_limits&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>tape_addr_type</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;::max()<br>
+</span></font></code>
+must be larger than any of the following:
+<a href="seq_property.htm#size_op" target="_top"><span style='white-space: nowrap'>size_op</span></a>
+,
+<a href="seq_property.htm#size_op_arg" target="_top"><span style='white-space: nowrap'>size_op_arg</span></a>
+,
+<a href="seq_property.htm#size_text" target="_top"><span style='white-space: nowrap'>size_par</span></a>
+,
+<a href="seq_property.htm#size_par" target="_top"><span style='white-space: nowrap'>size_par</span></a>
+,
+<a href="seq_property.htm#size_VecAD" target="_top"><span style='white-space: nowrap'>size_par</span></a>
+.
+
+
+<br>
+<br>
+<b><big><a name="tape_id_type" id="tape_id_type">tape_id_type</a></big></b>
+<br>
+If the command line argument 
+<code><i><font color="black"><span style='white-space: nowrap'>tape_id_type</span></font></i></code>
+ is present,
+it specifies the type used for identifying tapes.
+The valid values for this argument are
+<code><font color="blue">unsigned short int</font></code>,
+<code><font color="blue">unsigned int</font></code>,
+<code><font color="blue">size_t</font></code>.
+The smaller the value of 
+<code><i><font color="black"><span style='white-space: nowrap'>sizeof(</span></font></i><font color="blue"><span style='white-space: nowrap'>tape_id_type</span></font><i><font color="black"><span style='white-space: nowrap'>)</span></font></i></code>
+,
+the less memory is used.
+On the other hand, the value
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;std::numeric_limits&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>tape_id_type</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;::max()<br>
+</span></font></code>
+must be larger than the maximum number of tapes per thread
+times <a href="autotools.htm#max_num_threads" target="_top"><span style='white-space: nowrap'>max_num_threads</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="make install" id="make install">make install</a></big></b>
+<br>
+Once you are satisfied that the tests are giving correct results,
+you can install CppAD into easy to use directories by executing the command
+<code><font color='blue'><pre style='display:inline'> 
+     make install
+</pre></font></code>
+This will install CppAD in the location specified by
+<a href="autotools.htm#prefix_dir" target="_top"><span style='white-space: nowrap'>prefix_dir</span></a>
+.
+You must have permission to write in the 
+<code><i><font color="black"><span style='white-space: nowrap'>prefix_dir</span></font></i></code>
+
+directory to execute this command.
+You may optionally specify a destination directory for the install; i.e.,
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;make&nbsp;install&nbsp;DESTDIR=</span></font><i><font color="black"><span style='white-space: nowrap'>DestinationDirectory</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+
+<hr>Input File: omh/install/autotools.omh
+
+</body>
+</html>

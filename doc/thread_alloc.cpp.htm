@@ -1,0 +1,347 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>Fast Multi-Threading Memory Allocator: Example and Test</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Fast Multi-Threading Memory Allocator: Example and Test">
+<meta name="keywords" id="keywords" content=" fast multi-threading memory allocator: example test openmp allocation pthread boost multi-thread ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_thread_alloc.cpp_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://coin-or.github.io/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="thread_alloc.htm" target="_top">Prev</a>
+</td><td><a href="ta_parallel_setup.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>utility</option>
+<option>thread_alloc</option>
+<option>thread_alloc.cpp</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>CppAD-&gt;</option>
+<option>Install</option>
+<option>Introduction</option>
+<option>AD</option>
+<option>ADFun</option>
+<option>preprocessor</option>
+<option>multi_thread</option>
+<option>utility</option>
+<option>ipopt_solve</option>
+<option>Example</option>
+<option>speed</option>
+<option>Appendix</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>utility-&gt;</option>
+<option>ErrorHandler</option>
+<option>NearEqual</option>
+<option>speed_test</option>
+<option>SpeedTest</option>
+<option>time_test</option>
+<option>test_boolofvoid</option>
+<option>NumericType</option>
+<option>CheckNumericType</option>
+<option>SimpleVector</option>
+<option>CheckSimpleVector</option>
+<option>nan</option>
+<option>pow_int</option>
+<option>Poly</option>
+<option>LuDetAndSolve</option>
+<option>RombergOne</option>
+<option>RombergMul</option>
+<option>Runge45</option>
+<option>Rosen34</option>
+<option>OdeErrControl</option>
+<option>OdeGear</option>
+<option>OdeGearControl</option>
+<option>CppAD_vector</option>
+<option>thread_alloc</option>
+<option>index_sort</option>
+<option>to_string</option>
+<option>set_union</option>
+<option>sparse_rc</option>
+<option>sparse_rcv</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>thread_alloc-&gt;</option>
+<option>thread_alloc.cpp</option>
+<option>ta_parallel_setup</option>
+<option>ta_num_threads</option>
+<option>ta_in_parallel</option>
+<option>ta_thread_num</option>
+<option>ta_get_memory</option>
+<option>ta_return_memory</option>
+<option>ta_free_available</option>
+<option>ta_hold_memory</option>
+<option>ta_inuse</option>
+<option>ta_available</option>
+<option>ta_create_array</option>
+<option>ta_delete_array</option>
+<option>ta_free_all</option>
+</select>
+</td>
+<td>thread_alloc.cpp</td>
+<td>Headings</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>Fast Multi-Threading Memory Allocator: Example and Test</big></big></b></center>
+<code><font color="blue"><pre><tt><b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/utility/thread_alloc.hpp&gt;</font>
+<b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;vector&gt;</font>
+<b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;limits&gt;</font>
+
+
+<b><font color="#0000FF">namespace</font></b> <font color="#FF0000">{</font> <i><font color="#9A1900">// Begin empty namespace</font></i>
+
+
+
+<font color="#009900">bool</font> <b><font color="#000000">raw_allocate</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
+<font color="#FF0000">{</font>    <font color="#009900">bool</font> ok <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
+     <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>thread_alloc<font color="#990000">;</font>
+     <font color="#008080">size_t</font> thread<font color="#990000">;</font>
+
+     <i><font color="#9A1900">// check that no memory is initilaly inuse</font></i>
+     ok <font color="#990000">&amp;=</font> thread_alloc<font color="#990000">::</font><b><font color="#000000">free_all</font></b><font color="#990000">();</font>
+
+     <i><font color="#9A1900">// amount of static memory used by thread zero</font></i>
+     <font color="#008080">size_t</font> static_inuse <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
+
+     <i><font color="#9A1900">// repeatedly allocate enough memory for at least two size_t values.</font></i>
+     <font color="#008080">size_t</font> min_size_t <font color="#990000">=</font> <font color="#993399">2</font><font color="#990000">;</font>
+     <font color="#008080">size_t</font> min_bytes  <font color="#990000">=</font> min_size_t <font color="#990000">*</font> <b><font color="#0000FF">sizeof</font></b><font color="#990000">(</font>size_t<font color="#990000">);</font>
+     <font color="#008080">size_t</font> n_outter   <font color="#990000">=</font> <font color="#993399">10</font><font color="#990000">;</font>
+     <font color="#008080">size_t</font> n_inner    <font color="#990000">=</font> <font color="#993399">5</font><font color="#990000">;</font>
+     <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> n_outter<font color="#990000">;</font> i<font color="#990000">++)</font>
+     <font color="#FF0000">{</font>    <i><font color="#9A1900">// Do not use CppAD::vector here because its use of thread_alloc</font></i>
+          <i><font color="#9A1900">// complicates the inuse and avaialble results.</font></i>
+          std<font color="#990000">::</font><font color="#008080">vector&lt;void*&gt;</font> <b><font color="#000000">v_ptr</font></b><font color="#990000">(</font>n_inner<font color="#990000">);</font>
+          <i><font color="#9A1900">// cap_bytes will be set by get_memory</font></i>
+          <font color="#008080">size_t</font> cap_bytes <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> <i><font color="#9A1900">// set here to avoid MSC warning</font></i>
+          <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> n_inner<font color="#990000">;</font> j<font color="#990000">++)</font>
+          <font color="#FF0000">{</font>    <i><font color="#9A1900">// allocate enough memory for min_size_t size_t objects</font></i>
+               v_ptr<font color="#990000">[</font>j<font color="#990000">]</font>    <font color="#990000">=</font> thread_alloc<font color="#990000">::</font><b><font color="#000000">get_memory</font></b><font color="#990000">(</font>min_bytes<font color="#990000">,</font> cap_bytes<font color="#990000">);</font>
+               size_t<font color="#990000">*</font> ptr <font color="#990000">=</font> <b><font color="#0000FF">reinterpret_cast</font></b><font color="#990000">&lt;</font>size_t<font color="#990000">*&gt;(</font>v_ptr<font color="#990000">[</font>j<font color="#990000">]);</font>
+               <i><font color="#9A1900">// determine the number of size_t values we have obtained</font></i>
+               <font color="#008080">size_t</font>  cap_size_t <font color="#990000">=</font> cap_bytes <font color="#990000">/</font> <b><font color="#0000FF">sizeof</font></b><font color="#990000">(</font>size_t<font color="#990000">);</font>
+               ok                <font color="#990000">&amp;=</font> min_size_t <font color="#990000">&lt;=</font> cap_size_t<font color="#990000">;</font>
+               <i><font color="#9A1900">// use placement new to call the size_t copy constructor</font></i>
+               <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> k <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> k <font color="#990000">&lt;</font> cap_size_t<font color="#990000">;</font> k<font color="#990000">++)</font>
+                    <b><font color="#0000FF">new</font></b><font color="#990000">(</font>ptr <font color="#990000">+</font> k<font color="#990000">)</font> <b><font color="#000000">size_t</font></b><font color="#990000">(</font>i <font color="#990000">+</font> j <font color="#990000">+</font> k<font color="#990000">);</font>
+               <i><font color="#9A1900">// check that the constructor worked</font></i>
+               <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> k <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> k <font color="#990000">&lt;</font> cap_size_t<font color="#990000">;</font> k<font color="#990000">++)</font>
+                    ok <font color="#990000">&amp;=</font> ptr<font color="#990000">[</font>k<font color="#990000">]</font> <font color="#990000">==</font> <font color="#990000">(</font>i <font color="#990000">+</font> j <font color="#990000">+</font> k<font color="#990000">);</font>
+          <font color="#FF0000">}</font>
+          <i><font color="#9A1900">// check that n_inner * cap_bytes are inuse and none are available</font></i>
+          thread <font color="#990000">=</font> thread_alloc<font color="#990000">::</font><b><font color="#000000">thread_num</font></b><font color="#990000">();</font>
+          ok <font color="#990000">&amp;=</font> thread_alloc<font color="#990000">::</font><b><font color="#000000">inuse</font></b><font color="#990000">(</font>thread<font color="#990000">)</font> <font color="#990000">==</font> n_inner<font color="#990000">*</font>cap_bytes <font color="#990000">+</font> static_inuse<font color="#990000">;</font>
+          ok <font color="#990000">&amp;=</font> thread_alloc<font color="#990000">::</font><b><font color="#000000">available</font></b><font color="#990000">(</font>thread<font color="#990000">)</font> <font color="#990000">==</font> <font color="#993399">0</font><font color="#990000">;</font>
+          <i><font color="#9A1900">// return the memrory to thread_alloc</font></i>
+          <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> n_inner<font color="#990000">;</font> j<font color="#990000">++)</font>
+               thread_alloc<font color="#990000">::</font><b><font color="#000000">return_memory</font></b><font color="#990000">(</font>v_ptr<font color="#990000">[</font>j<font color="#990000">]);</font>
+          <i><font color="#9A1900">// check that now n_inner * cap_bytes are now available</font></i>
+          <i><font color="#9A1900">// and none are in use</font></i>
+          ok <font color="#990000">&amp;=</font> thread_alloc<font color="#990000">::</font><b><font color="#000000">inuse</font></b><font color="#990000">(</font>thread<font color="#990000">)</font> <font color="#990000">==</font> static_inuse<font color="#990000">;</font>
+          ok <font color="#990000">&amp;=</font> thread_alloc<font color="#990000">::</font><b><font color="#000000">available</font></b><font color="#990000">(</font>thread<font color="#990000">)</font> <font color="#990000">==</font> n_inner <font color="#990000">*</font> cap_bytes<font color="#990000">;</font>
+     <font color="#FF0000">}</font>
+     thread_alloc<font color="#990000">::</font><b><font color="#000000">free_available</font></b><font color="#990000">(</font>thread<font color="#990000">);</font>
+
+     <i><font color="#9A1900">// check that the tests have not held onto memory</font></i>
+     ok <font color="#990000">&amp;=</font> thread_alloc<font color="#990000">::</font><b><font color="#000000">free_all</font></b><font color="#990000">();</font>
+
+     <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
+<font color="#FF0000">}</font>
+
+<b><font color="#0000FF">class</font></b> <font color="#008080">my_char</font> <font color="#FF0000">{</font>
+<b><font color="#0000FF">public</font></b><font color="#990000">:</font>
+     <font color="#009900">char</font> ch_ <font color="#990000">;</font>
+     <b><font color="#000000">my_char</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font> <font color="#990000">:</font> <b><font color="#000000">ch_</font></b><font color="#990000">(</font><font color="#FF0000">' '</font><font color="#990000">)</font>
+     <font color="#FF0000">{</font> <font color="#FF0000">}</font>
+     <b><font color="#000000">my_char</font></b><font color="#990000">(</font><b><font color="#0000FF">const</font></b> my_char<font color="#990000">&amp;</font> my_ch<font color="#990000">)</font> <font color="#990000">:</font> <b><font color="#000000">ch_</font></b><font color="#990000">(</font>my_ch<font color="#990000">.</font>ch_<font color="#990000">)</font>
+     <font color="#FF0000">{</font> <font color="#FF0000">}</font>
+<font color="#FF0000">}</font><font color="#990000">;</font>
+
+<font color="#009900">bool</font> <b><font color="#000000">type_allocate</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
+<font color="#FF0000">{</font>    <font color="#009900">bool</font> ok <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
+     <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>thread_alloc<font color="#990000">;</font>
+     <font color="#008080">size_t</font> i<font color="#990000">;</font>
+
+     <i><font color="#9A1900">// check initial memory values</font></i>
+     <font color="#008080">size_t</font> thread <font color="#990000">=</font> thread_alloc<font color="#990000">::</font><b><font color="#000000">thread_num</font></b><font color="#990000">();</font>
+     ok <font color="#990000">&amp;=</font> thread <font color="#990000">==</font> <font color="#993399">0</font><font color="#990000">;</font>
+     ok <font color="#990000">&amp;=</font> thread_alloc<font color="#990000">::</font><b><font color="#000000">free_all</font></b><font color="#990000">();</font>
+     <font color="#008080">size_t</font> static_inuse <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
+
+     <i><font color="#9A1900">// initial allocation of an array</font></i>
+     <font color="#008080">size_t</font>  size_min  <font color="#990000">=</font> <font color="#993399">3</font><font color="#990000">;</font>
+     <font color="#008080">size_t</font>  size_one<font color="#990000">;</font>
+     <font color="#008080">my_char</font> <font color="#990000">*</font>array_one  <font color="#990000">=</font>
+          thread_alloc<font color="#990000">::</font>create_array<font color="#990000">&lt;</font>my_char<font color="#990000">&gt;(</font>size_min<font color="#990000">,</font> size_one<font color="#990000">);</font>
+
+     <i><font color="#9A1900">// check the values and change them to null 'x'</font></i>
+     <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> size_one<font color="#990000">;</font> i<font color="#990000">++)</font>
+     <font color="#FF0000">{</font>    ok <font color="#990000">&amp;=</font> array_one<font color="#990000">[</font>i<font color="#990000">].</font>ch_ <font color="#990000">==</font> <font color="#FF0000">' '</font><font color="#990000">;</font>
+          array_one<font color="#990000">[</font>i<font color="#990000">].</font>ch_ <font color="#990000">=</font> <font color="#FF0000">'x'</font><font color="#990000">;</font>
+     <font color="#FF0000">}</font>
+
+     <i><font color="#9A1900">// now create a longer array</font></i>
+     <font color="#008080">size_t</font> size_two<font color="#990000">;</font>
+     <font color="#008080">my_char</font> <font color="#990000">*</font>array_two <font color="#990000">=</font>
+          thread_alloc<font color="#990000">::</font>create_array<font color="#990000">&lt;</font>my_char<font color="#990000">&gt;(</font><font color="#993399">2</font> <font color="#990000">*</font> size_min<font color="#990000">,</font> size_two<font color="#990000">);</font>
+
+     <i><font color="#9A1900">// check the values in array one</font></i>
+     <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> size_one<font color="#990000">;</font> i<font color="#990000">++)</font>
+          ok <font color="#990000">&amp;=</font> array_one<font color="#990000">[</font>i<font color="#990000">].</font>ch_ <font color="#990000">==</font> <font color="#FF0000">'x'</font><font color="#990000">;</font>
+
+     <i><font color="#9A1900">// check the values in array two</font></i>
+     <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> size_two<font color="#990000">;</font> i<font color="#990000">++)</font>
+          ok <font color="#990000">&amp;=</font> array_two<font color="#990000">[</font>i<font color="#990000">].</font>ch_ <font color="#990000">==</font> <font color="#FF0000">' '</font><font color="#990000">;</font>
+
+     <i><font color="#9A1900">// check the amount of inuse and available memory</font></i>
+     <i><font color="#9A1900">// (an extra size_t value is used for each memory block).</font></i>
+     <font color="#008080">size_t</font> check <font color="#990000">=</font> static_inuse <font color="#990000">+</font> <b><font color="#0000FF">sizeof</font></b><font color="#990000">(</font>my_char<font color="#990000">)*(</font>size_one <font color="#990000">+</font> size_two<font color="#990000">);</font>
+     ok   <font color="#990000">&amp;=</font> thread_alloc<font color="#990000">::</font><b><font color="#000000">inuse</font></b><font color="#990000">(</font>thread<font color="#990000">)</font> <font color="#990000">-</font> check <font color="#990000">&lt;</font> <b><font color="#0000FF">sizeof</font></b><font color="#990000">(</font>my_char<font color="#990000">);</font>
+     ok   <font color="#990000">&amp;=</font> thread_alloc<font color="#990000">::</font><b><font color="#000000">available</font></b><font color="#990000">(</font>thread<font color="#990000">)</font> <font color="#990000">==</font> <font color="#993399">0</font><font color="#990000">;</font>
+
+     <i><font color="#9A1900">// delete the arrays</font></i>
+     thread_alloc<font color="#990000">::</font><b><font color="#000000">delete_array</font></b><font color="#990000">(</font>array_one<font color="#990000">);</font>
+     thread_alloc<font color="#990000">::</font><b><font color="#000000">delete_array</font></b><font color="#990000">(</font>array_two<font color="#990000">);</font>
+     ok   <font color="#990000">&amp;=</font> thread_alloc<font color="#990000">::</font><b><font color="#000000">inuse</font></b><font color="#990000">(</font>thread<font color="#990000">)</font> <font color="#990000">==</font> static_inuse<font color="#990000">;</font>
+     check <font color="#990000">=</font> <b><font color="#0000FF">sizeof</font></b><font color="#990000">(</font>my_char<font color="#990000">)*(</font>size_one <font color="#990000">+</font> size_two<font color="#990000">);</font>
+     ok   <font color="#990000">&amp;=</font> thread_alloc<font color="#990000">::</font><b><font color="#000000">available</font></b><font color="#990000">(</font>thread<font color="#990000">)</font> <font color="#990000">-</font> check <font color="#990000">&lt;</font> <b><font color="#0000FF">sizeof</font></b><font color="#990000">(</font>my_char<font color="#990000">);</font>
+
+     <i><font color="#9A1900">// free the memory for use by this thread</font></i>
+     thread_alloc<font color="#990000">::</font><b><font color="#000000">free_available</font></b><font color="#990000">(</font>thread<font color="#990000">);</font>
+
+     <i><font color="#9A1900">// check that the tests have not held onto memory</font></i>
+     ok <font color="#990000">&amp;=</font> thread_alloc<font color="#990000">::</font><b><font color="#000000">free_all</font></b><font color="#990000">();</font>
+
+     <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
+<font color="#FF0000">}</font>
+
+<font color="#FF0000">}</font> <i><font color="#9A1900">// End empty namespace</font></i>
+
+<font color="#009900">bool</font> <b><font color="#000000">check_alignment</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
+<font color="#FF0000">{</font>    <font color="#009900">bool</font> ok <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
+     <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>thread_alloc<font color="#990000">;</font>
+
+     <i><font color="#9A1900">// number of binary digits in a size_t value</font></i>
+     <font color="#008080">size_t</font> n_digit <font color="#990000">=</font> std<font color="#990000">::</font>numeric_limits<font color="#990000">&lt;</font>size_t<font color="#990000">&gt;::</font>digits<font color="#990000">;</font>
+
+     <i><font color="#9A1900">// must be a multiple of 8</font></i>
+     ok <font color="#990000">&amp;=</font> <font color="#990000">(</font>n_digit <font color="#990000">%</font> <font color="#993399">8</font><font color="#990000">)</font> <font color="#990000">==</font> <font color="#993399">0</font><font color="#990000">;</font>
+
+     <i><font color="#9A1900">// number of bytes in a size_t value</font></i>
+     <font color="#008080">size_t</font> n_byte  <font color="#990000">=</font> n_digit <font color="#990000">/</font> <font color="#993399">8</font><font color="#990000">;</font>
+
+     <i><font color="#9A1900">// check raw allocation -------------------------------------------------</font></i>
+     <font color="#008080">size_t</font> min_bytes <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font>
+     <font color="#008080">size_t</font> cap_bytes<font color="#990000">;</font>
+     <font color="#009900">void</font><font color="#990000">*</font> v_ptr <font color="#990000">=</font> thread_alloc<font color="#990000">::</font><b><font color="#000000">get_memory</font></b><font color="#990000">(</font>min_bytes<font color="#990000">,</font> cap_bytes<font color="#990000">);</font>
+
+     <i><font color="#9A1900">// convert to a size_t value</font></i>
+     <font color="#008080">size_t</font> v_size_t <font color="#990000">=</font> <b><font color="#0000FF">reinterpret_cast</font></b><font color="#990000">&lt;</font>size_t<font color="#990000">&gt;(</font>v_ptr<font color="#990000">);</font>
+
+     <i><font color="#9A1900">// check that it is aligned</font></i>
+     ok <font color="#990000">&amp;=</font> <font color="#990000">(</font>v_size_t <font color="#990000">%</font> n_byte<font color="#990000">)</font> <font color="#990000">==</font> <font color="#993399">0</font><font color="#990000">;</font>
+
+     <i><font color="#9A1900">// return memory to available pool</font></i>
+     thread_alloc<font color="#990000">::</font><b><font color="#000000">return_memory</font></b><font color="#990000">(</font>v_ptr<font color="#990000">);</font>
+
+     <i><font color="#9A1900">// check array allocation ----------------------------------------------</font></i>
+     <font color="#008080">size_t</font> size_min <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font>
+     <font color="#008080">size_t</font> size_out<font color="#990000">;</font>
+     <font color="#008080">my_char</font> <font color="#990000">*</font>array_ptr <font color="#990000">=</font>
+          thread_alloc<font color="#990000">::</font>create_array<font color="#990000">&lt;</font>my_char<font color="#990000">&gt;(</font>size_min<font color="#990000">,</font> size_out<font color="#990000">);</font>
+
+     <i><font color="#9A1900">// convert to a size_t value</font></i>
+     <font color="#008080">size_t</font> array_size_t <font color="#990000">=</font> <b><font color="#0000FF">reinterpret_cast</font></b><font color="#990000">&lt;</font>size_t<font color="#990000">&gt;(</font>array_ptr<font color="#990000">);</font>
+
+     <i><font color="#9A1900">// check that it is aligned</font></i>
+     ok <font color="#990000">&amp;=</font> <font color="#990000">(</font>array_size_t <font color="#990000">%</font> n_byte<font color="#990000">)</font> <font color="#990000">==</font> <font color="#993399">0</font><font color="#990000">;</font>
+
+     <i><font color="#9A1900">// return memory to avialable pool</font></i>
+     thread_alloc<font color="#990000">::</font><b><font color="#000000">delete_array</font></b><font color="#990000">(</font>array_ptr<font color="#990000">);</font>
+
+     <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
+<font color="#FF0000">}</font>
+
+
+<font color="#009900">bool</font> <b><font color="#000000">thread_alloc</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
+<font color="#FF0000">{</font>    <font color="#009900">bool</font> ok  <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
+     <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>thread_alloc<font color="#990000">;</font>
+
+     <i><font color="#9A1900">// check that there is only on thread</font></i>
+     ok  <font color="#990000">&amp;=</font> thread_alloc<font color="#990000">::</font><b><font color="#000000">num_threads</font></b><font color="#990000">()</font> <font color="#990000">==</font> <font color="#993399">1</font><font color="#990000">;</font>
+     <i><font color="#9A1900">// so thread number must be zero</font></i>
+     ok  <font color="#990000">&amp;=</font> thread_alloc<font color="#990000">::</font><b><font color="#000000">thread_num</font></b><font color="#990000">()</font> <font color="#990000">==</font> <font color="#993399">0</font><font color="#990000">;</font>
+     <i><font color="#9A1900">// and we are in sequential execution mode</font></i>
+     ok  <font color="#990000">&amp;=</font> thread_alloc<font color="#990000">::</font><b><font color="#000000">in_parallel</font></b><font color="#990000">()</font> <font color="#990000">==</font> <b><font color="#0000FF">false</font></b><font color="#990000">;</font>
+
+     <i><font color="#9A1900">// Instruct thread_alloc to hold onto memory.  This makes memory</font></i>
+     <i><font color="#9A1900">// allocation faster (especially when there are multiple threads).</font></i>
+     thread_alloc<font color="#990000">::</font><b><font color="#000000">hold_memory</font></b><font color="#990000">(</font><b><font color="#0000FF">true</font></b><font color="#990000">);</font>
+
+     <i><font color="#9A1900">// run raw allocation tests</font></i>
+     ok <font color="#990000">&amp;=</font> <b><font color="#000000">raw_allocate</font></b><font color="#990000">();</font>
+
+     <i><font color="#9A1900">// run typed allocation tests</font></i>
+     ok <font color="#990000">&amp;=</font> <b><font color="#000000">type_allocate</font></b><font color="#990000">();</font>
+
+     <i><font color="#9A1900">// check alignment</font></i>
+     ok <font color="#990000">&amp;=</font> <b><font color="#000000">check_alignment</font></b><font color="#990000">();</font>
+
+     <i><font color="#9A1900">// return allocator to its default mode</font></i>
+     thread_alloc<font color="#990000">::</font><b><font color="#000000">hold_memory</font></b><font color="#990000">(</font><b><font color="#0000FF">false</font></b><font color="#990000">);</font>
+     <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
+<font color="#FF0000">}</font>
+
+</tt></pre>
+</font></code>
+<hr>Input File: example/utility/thread_alloc.cpp
+
+</body>
+</html>

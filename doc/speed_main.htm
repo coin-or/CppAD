@@ -1,0 +1,564 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>Running the Speed Test Program</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Running the Speed Test Program">
+<meta name="keywords" id="keywords" content=" running the speed test program cppad uniform_01 syntax purpose package ad double profile correct seed global options onetape optimize atomic memory sparsity boolsparsity revsparsity colpack correctness results n_sweep link functions ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_speed_main_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://coin-or.github.io/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="speed.htm" target="_top">Prev</a>
+</td><td><a href="link_det_lu.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>speed</option>
+<option>speed_main</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>CppAD-&gt;</option>
+<option>Install</option>
+<option>Introduction</option>
+<option>AD</option>
+<option>ADFun</option>
+<option>preprocessor</option>
+<option>multi_thread</option>
+<option>utility</option>
+<option>ipopt_solve</option>
+<option>Example</option>
+<option>speed</option>
+<option>Appendix</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>speed-&gt;</option>
+<option>speed_main</option>
+<option>speed_utility</option>
+<option>speed_double</option>
+<option>speed_adolc</option>
+<option>speed_cppad</option>
+<option>speed_fadbad</option>
+<option>speed_sacado</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down0(this)'>
+<option>speed_main-&gt;</option>
+<option>link_det_lu</option>
+<option>link_det_minor</option>
+<option>link_mat_mul</option>
+<option>link_ode</option>
+<option>link_poly</option>
+<option>link_sparse_hessian</option>
+<option>link_sparse_jacobian</option>
+<option>microsoft_timer</option>
+</select>
+</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Syntax</option>
+<option>Purpose</option>
+<option>package</option>
+<option>---..AD Package</option>
+<option>---..double</option>
+<option>---..profile</option>
+<option>test</option>
+<option>---..correct</option>
+<option>---..speed</option>
+<option>seed</option>
+<option>Global Options</option>
+<option>---..onetape</option>
+<option>---..optimize</option>
+<option>---..atomic</option>
+<option>---..memory</option>
+<option>Sparsity Options</option>
+<option>---..boolsparsity</option>
+<option>---..revsparsity</option>
+<option>---..colpack</option>
+<option>Correctness Results</option>
+<option>Speed Results</option>
+<option>---..n_sweep</option>
+<option>Link Functions</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>Running the Speed Test Program</big></big></b></center>
+<br>
+<b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
+
+<br>
+
+<code><font color="blue"><span style='white-space: nowrap'>speed/</span></font><i><font color="black"><span style='white-space: nowrap'>package</span></font></i><font color="blue"><span style='white-space: nowrap'>/speed_</span></font><i><font color="black"><span style='white-space: nowrap'>package</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>test</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>seed</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>option_list</span></font></i></code>
+
+
+<br>
+<br>
+<b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
+<br>
+A version of this program runs the correctness tests
+or the speed tests for one AD package identified by 
+<code><i><font color="black"><span style='white-space: nowrap'>package</span></font></i></code>
+.
+
+<br>
+<br>
+<b><big><a name="package" id="package">package</a></big></b>
+
+
+<br>
+<br>
+<b><a name="package.AD Package" id="package.AD Package">AD Package</a></b>
+<br>
+The command line argument
+
+<code><i><font color="black"><span style='white-space: nowrap'>package</span></font></i></code>
+ specifies one of the AD package.
+The CppAD distribution comes with support for the following packages:
+<a href="speed_adolc.htm" target="_top"><span style='white-space: nowrap'>adolc</span></a>
+,
+<a href="speed_cppad.htm" target="_top"><span style='white-space: nowrap'>cppad</span></a>
+,
+<a href="speed_fadbad.htm" target="_top"><span style='white-space: nowrap'>fadbad</span></a>
+,
+<a href="speed_sacado.htm" target="_top"><span style='white-space: nowrap'>sacado</span></a>
+.
+You can extend this program to include other package.
+Such an extension need not include all the tests.
+For example,
+<a href="link_sparse_hessian.htm" target="_top"><span style='white-space: nowrap'>link_sparse_hessian</span></a>
+ just returns <code><font color="blue">false</font></code> for the
+<a href="fadbad_sparse_hessian.cpp.htm" target="_top"><span style='white-space: nowrap'>fadbad</span></a>
+ and
+<a href="sacado_sparse_hessian.cpp.htm" target="_top"><span style='white-space: nowrap'>sacado</span></a>
+ packages.
+
+
+<br>
+<br>
+<b><a name="package.double" id="package.double">double</a></b>
+<br>
+The value
+
+<code><i><font color="black"><span style='white-space: nowrap'>package</span></font></i></code>
+ can be <code><font color="blue">double</font></code> in which case
+the function values (instead of derivatives) are computed
+using double precision operations.
+This enables one to compare the speed of computing function
+values in <code><font color="blue">double</font></code> to the speed of the derivative computations.
+(It is often useful to divide the speed of the derivative computation by
+the speed of the function evaluation in <code><font color="blue">double</font></code>.)
+
+<br>
+<br>
+<b><a name="package.profile" id="package.profile">profile</a></b>
+<br>
+In the special case where 
+<code><i><font color="black"><span style='white-space: nowrap'>package</span></font></i></code>
+ is <code><font color="blue">profile</font></code>,
+the CppAD package is compiled and run with profiling to aid in determining
+where it is spending most of its time.
+
+<br>
+<br>
+<b><big><a name="test" id="test">test</a></big></b>
+<br>
+It the argument 
+<code><i><font color="black"><span style='white-space: nowrap'>test</span></font></i></code>
+ specifies which test to run
+and has the following possible values:
+<a href="speed_main.htm#test.correct" target="_top"><span style='white-space: nowrap'>correct</span></a>
+,
+<a href="speed_main.htm#test.speed" target="_top"><span style='white-space: nowrap'>speed</span></a>
+,
+<a href="link_det_minor.htm" target="_top"><span style='white-space: nowrap'>det_minor</span></a>
+,
+<a href="link_det_lu.htm" target="_top"><span style='white-space: nowrap'>det_lu</span></a>
+,
+<a href="link_mat_mul.htm" target="_top"><span style='white-space: nowrap'>mat_mul</span></a>
+,
+<a href="link_ode.htm" target="_top"><span style='white-space: nowrap'>ode</span></a>
+,
+<a href="link_poly.htm" target="_top"><span style='white-space: nowrap'>poly</span></a>
+,
+<a href="link_sparse_hessian.htm" target="_top"><span style='white-space: nowrap'>sparse_hessian</span></a>
+,
+<a href="link_sparse_jacobian.htm" target="_top"><span style='white-space: nowrap'>sparse_jacobian</span></a>
+.
+You can experiment with changing the implementation of a
+particular test for a particular package.
+
+<br>
+<br>
+<b><a name="test.correct" id="test.correct">correct</a></b>
+<br>
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>test</span></font></i></code>
+ is equal to <code><font color="blue">correct</font></code>,
+all of the correctness tests are run.
+
+<br>
+<br>
+<b><a name="test.speed" id="test.speed">speed</a></b>
+<br>
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>test</span></font></i></code>
+ is equal to <code><font color="blue">speed</font></code>,
+all of the speed tests are run.
+
+<br>
+<br>
+<b><big><a name="seed" id="seed">seed</a></big></b>
+<br>
+The command line argument 
+<code><i><font color="black"><span style='white-space: nowrap'>seed</span></font></i></code>
+ is a positive integer.
+The random number simulator <a href="uniform_01.htm" target="_top"><span style='white-space: nowrap'>uniform_01</span></a>
+ is initialized with
+the call
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;uniform_01(</span></font><i><font color="black"><span style='white-space: nowrap'>seed</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+before any of the testing routines (listed above) are called.
+
+<br>
+<br>
+<b><big><a name="Global Options" id="Global Options">Global Options</a></big></b>
+<br>
+This global variable has prototype
+<pre style='display:inline'><tt>
+     <b><font color="#0000FF">extern</font></b> std<font color="#990000">::</font><font color="#008080">map&lt;std::string, bool&gt;</font> global_option<font color="#990000">;</font>
+</tt></pre>
+This is true for each option that follows 
+<code><i><font color="black"><span style='white-space: nowrap'>seed</span></font></i></code>
+.
+The order of the options does not matter and the list can be empty.
+Each option, must be separate
+command line argument to the main program.
+The documentation below specifics how CppAD uses these options,
+see the examples in <a href="speed_adolc.htm" target="_top"><span style='white-space: nowrap'>speed_adolc</span></a>
+ for how another package might
+uses these options.
+
+<br>
+<br>
+<b><a name="Global Options.onetape" id="Global Options.onetape">onetape</a></b>
+<br>
+If the option <code><font color="blue">onetape</font></code> is present,
+<code><font color='blue'><pre style='display:inline'> 
+     global_option[&quot;onetape&quot;]
+</pre></font></code>
+is true and otherwise it is false.
+If this external symbol is true,
+CppAD will use one taping of the operation
+sequence for all the repetitions of that speed test.
+Otherwise, the
+<a href="glossary.htm#Operation.Sequence" target="_top"><span style='white-space: nowrap'>operation&nbsp;sequence</span></a>
+
+will be retaped for each test repetition.
+<code><span style='white-space: nowrap'><br>
+<br>
+</span></code>All of the tests, except <a href="link_det_lu.htm" target="_top"><span style='white-space: nowrap'>det_lu</span></a>
+,
+have a fixed operations sequence.
+The operation sequence for <code><font color="blue">det_lu</font></code>
+may be different for each repetition of the test because it
+depends on the matrix for which the determinant is being calculated.
+For this reason, the CppAD test
+<a href="cppad_det_lu.cpp.htm" target="_top"><span style='white-space: nowrap'>cppad_det_lu.cpp</span></a>
+ returns false
+(indicating that the test not implemented)
+when <code><font color="blue">global_onetape</font></code> is true.
+
+<br>
+<br>
+<b><a name="Global Options.optimize" id="Global Options.optimize">optimize</a></b>
+<br>
+If the option <code><font color="blue">optimize</font></code> is present,
+<code><font color='blue'><pre style='display:inline'> 
+     global_option[&quot;optimize&quot;]
+</pre></font></code>
+is true and otherwise it is false.
+If this external symbol is true,
+CppAD will optimize the operation sequence before doing computations.
+If it is false, this optimization will not be done.
+
+<br>
+<br>
+<b><a name="Global Options.atomic" id="Global Options.atomic">atomic</a></b>
+<br>
+If the option <code><font color="blue">atomic</font></code> is present,
+<code><font color='blue'><pre style='display:inline'> 
+     global_option[&quot;atomic&quot;]
+</pre></font></code>
+is true and otherwise it is false.
+If this external symbol is true, CppAD will use its user defined
+<a href="atomic_base.htm" target="_top"><span style='white-space: nowrap'>atomic</span></a>
+ operation is used for the test.
+If no such atomic operation exists,
+and atomic is chosen, CppAD returns false for the test.
+
+<br>
+<br>
+<b><a name="Global Options.memory" id="Global Options.memory">memory</a></b>
+<br>
+If the option <code><font color="blue">memory</font></code> is present,
+<code><font color='blue'><pre style='display:inline'> 
+     global_option[&quot;memory&quot;]
+</pre></font></code>
+is true and otherwise it is false.
+If it is true, the CppAD
+<a href="ta_hold_memory.htm" target="_top"><span style='white-space: nowrap'>hold_memory</span></a>
+ routine will be called by
+the main program before any of the tests are executed.
+This should make the CppAD <code><font color="blue">thread_alloc</font></code> allocator faster.
+If it is false, CppAD will used standard memory allocation.
+
+<br>
+<br>
+<b><big><a name="Sparsity Options" id="Sparsity Options">Sparsity Options</a></big></b>
+<br>
+The following options only apply to the
+<a href="link_sparse_jacobian.htm" target="_top"><span style='white-space: nowrap'>sparse_jacobian</span></a>
+ and
+<a href="link_sparse_hessian.htm" target="_top"><span style='white-space: nowrap'>sparse_hessian</span></a>
+ tests.
+The other tests will ignore these options:
+
+<br>
+<br>
+<b><a name="Sparsity Options.boolsparsity" id="Sparsity Options.boolsparsity">boolsparsity</a></b>
+<br>
+If the option <code><font color="blue">boolsparsity</font></code> is present,
+<code><font color='blue'><pre style='display:inline'> 
+     global_option[&quot;boolsparsity&quot;]
+</pre></font></code>
+is true and otherwise it is false.
+If it is true, CppAD will use a
+<a href="glossary.htm#Sparsity Pattern.Boolean Vector" target="_top"><span style='white-space: nowrap'>vector&nbsp;of&nbsp;bool</span></a>
+
+for its sparsity patterns.
+Otherwise it will use a
+<a href="glossary.htm#Sparsity Pattern.Vector of Sets" target="_top"><span style='white-space: nowrap'>vector&nbsp;of&nbsp;sets</span></a>
+.
+
+<br>
+<br>
+<b><a name="Sparsity Options.revsparsity" id="Sparsity Options.revsparsity">revsparsity</a></b>
+<br>
+If the option <code><font color="blue">revsparsity</font></code> is present,
+<code><font color='blue'><pre style='display:inline'> 
+     global_option[&quot;revsparsity&quot;]
+</pre></font></code>
+is true and otherwise it is false.
+If it is true, CppAD will use a
+<a href="forsparsejac.htm" target="_top"><span style='white-space: nowrap'>ForSparseJac</span></a>
+ and <a href="forsparsehes.htm" target="_top"><span style='white-space: nowrap'>ForSparseHes</span></a>
+ where possible
+for its sparsity patterns.
+Otherwise it will use <a href="revsparsejac.htm" target="_top"><span style='white-space: nowrap'>RevSparseJac</span></a>
+ and <a href="revsparsehes.htm" target="_top"><span style='white-space: nowrap'>RevSparseHes</span></a>
+.
+
+<br>
+<br>
+<b><a name="Sparsity Options.colpack" id="Sparsity Options.colpack">colpack</a></b>
+<br>
+If the option <code><font color="blue">colpack</font></code> is present,
+<code><font color='blue'><pre style='display:inline'> 
+     global_option[&quot;colpack&quot;]
+</pre></font></code>
+is true and otherwise it is false.
+If this external symbol is true,
+CppAD will use <a href="colpack_prefix.htm" target="_top"><span style='white-space: nowrap'>colpack</span></a>
+ to do the coloring
+for its
+Otherwise, it will use it's own coloring algorithm.
+
+<br>
+<br>
+<b><big><a name="Correctness Results" id="Correctness Results">Correctness Results</a></big></b>
+<br>
+One, but not both, of the following two output lines
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>package</span></font></i><font color="blue"><span style='white-space: nowrap'>_</span></font><i><font color="black"><span style='white-space: nowrap'>test</span></font></i><font color="blue"><span style='white-space: nowrap'>_</span></font><i><font color="black"><span style='white-space: nowrap'>optionlist</span></font></i><font color="blue"><span style='white-space: nowrap'>_available&nbsp;=&nbsp;false<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>package</span></font></i><font color="blue"><span style='white-space: nowrap'>_</span></font><i><font color="black"><span style='white-space: nowrap'>test</span></font></i><font color="blue"><span style='white-space: nowrap'>_</span></font><i><font color="black"><span style='white-space: nowrap'>optionlist</span></font></i><font color="blue"><span style='white-space: nowrap'>_ok&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>flag</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+is generated for each correctness test where
+
+<code><i><font color="black"><span style='white-space: nowrap'>package</span></font></i></code>
+ and 
+<code><i><font color="black"><span style='white-space: nowrap'>test</span></font></i></code>
+ are as above,
+
+<code><i><font color="black"><span style='white-space: nowrap'>optionlist</span></font></i></code>
+ are the options (in 
+<code><i><font color="black"><span style='white-space: nowrap'>option_list</span></font></i></code>
+)
+separated by the underbar <code><font color="blue">_</font></code> character
+(whereas they are separated by spaces in 
+<code><i><font color="black"><span style='white-space: nowrap'>option_list</span></font></i></code>
+),
+and 
+<code><i><font color="black"><span style='white-space: nowrap'>flag</span></font></i></code>
+ is <code><font color="blue">true</font></code> or <code><font color="blue">false</font></code>.
+
+<br>
+<br>
+<b><big><a name="Speed Results" id="Speed Results">Speed Results</a></big></b>
+<br>
+For each speed test, corresponds to three lines of the
+following form are generated:
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>package</span></font></i><font color="blue"><span style='white-space: nowrap'>_</span></font><i><font color="black"><span style='white-space: nowrap'>test</span></font></i><font color="blue"><span style='white-space: nowrap'>_</span></font><i><font color="black"><span style='white-space: nowrap'>optionlist</span></font></i><font color="blue"><span style='white-space: nowrap'>_ok&nbsp;&nbsp;&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>flag</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>package</span></font></i><font color="blue"><span style='white-space: nowrap'>_</span></font><i><font color="black"><span style='white-space: nowrap'>test</span></font></i><font color="blue"><span style='white-space: nowrap'>_size&nbsp;=&nbsp;[&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>size_1</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>...</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>size_n</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>package</span></font></i><font color="blue"><span style='white-space: nowrap'>_</span></font><i><font color="black"><span style='white-space: nowrap'>test</span></font></i><font color="blue"><span style='white-space: nowrap'>_rate&nbsp;=&nbsp;[&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>rate_1</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>...</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>rate_n</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;]<br>
+</span></font></code>
+The values 
+<code><i><font color="black"><span style='white-space: nowrap'>package</span></font></i></code>
+, 
+<code><i><font color="black"><span style='white-space: nowrap'>test</span></font></i></code>
+, 
+<code><i><font color="black"><span style='white-space: nowrap'>optionlist</span></font></i></code>
+,
+and 
+<code><i><font color="black"><span style='white-space: nowrap'>flag</span></font></i></code>
+ are as in the correctness results above.
+The values 
+<code><i><font color="black"><span style='white-space: nowrap'>size_1</span></font></i></code>
+, ..., 
+<code><i><font color="black"><span style='white-space: nowrap'>size_n</span></font></i></code>
+ are the
+size arguments used for the corresponding tests.
+The values 
+<code><i><font color="black"><span style='white-space: nowrap'>rate_1</span></font></i></code>
+, ..., 
+<code><i><font color="black"><span style='white-space: nowrap'>rate_n</span></font></i></code>
+ are the number of times
+per second that the corresponding size problem executed.
+
+<br>
+<br>
+<b><a name="Speed Results.n_sweep" id="Speed Results.n_sweep">n_sweep</a></b>
+<br>
+The <a href="link_sparse_jacobian.htm" target="_top"><span style='white-space: nowrap'>sparse_jacobian</span></a>
+
+and <a href="link_sparse_hessian.htm" target="_top"><span style='white-space: nowrap'>sparse_hessian</span></a>
+ tests has an extra output
+line with the following form
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>package</span></font></i><font color="blue"><span style='white-space: nowrap'>_sparse_</span></font><i><font color="black"><span style='white-space: nowrap'>test</span></font></i><font color="blue"><span style='white-space: nowrap'>_n_sweep&nbsp;=&nbsp;[&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n_sweep_1</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>...</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n_sweep_n</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;]<br>
+</span></font></code>
+were 
+<code><i><font color="black"><span style='white-space: nowrap'>test</span></font></i></code>
+ is <code><font color="blue">jacobian</font></code> (<code><font color="blue">hessian</font></code>).
+The values 
+<code><i><font color="black"><span style='white-space: nowrap'>n_sweep_1</span></font></i></code>
+, ..., 
+<code><i><font color="black"><span style='white-space: nowrap'>n_sweep_n</span></font></i></code>
+ are the number of
+sweeps (colors) used for each sparse Jacobian (Hessian) calculation; see
+
+<code><i><font color="black"><span style='white-space: nowrap'>n_sweep</span></font></i></code>
+ for
+<a href="sparse_jacobian.htm#n_sweep" target="_top"><span style='white-space: nowrap'>sparse_jacobian</span></a>
+ and
+<a href="sparse_hessian.htm#n_sweep" target="_top"><span style='white-space: nowrap'>sparse_hessian</span></a>
+.
+
+
+
+
+<br>
+<br>
+<b><big><a name="Link Functions" id="Link Functions">Link Functions</a></big></b>
+<br>
+Each <a href="speed_main.htm#package" target="_top"><span style='white-space: nowrap'>package</span></a>
+
+defines it's own version of one of the link functions listed below.
+Each of these functions links this main program to the corresponding test:
+<table><tr><td align='left'  valign='top'>
+
+<a href="link_det_lu.htm" target="_top">link_det_lu</a></td><td>
+Speed Testing Gradient of Determinant Using Lu Factorization</td></tr>
+<tr><td>
+
+<a href="link_det_minor.htm" target="_top">link_det_minor</a></td><td>
+Speed Testing Gradient of Determinant by Minor Expansion</td></tr>
+<tr><td>
+
+<a href="link_mat_mul.htm" target="_top">link_mat_mul</a></td><td>
+Speed Testing Derivative of Matrix Multiply</td></tr>
+<tr><td>
+
+<a href="link_ode.htm" target="_top">link_ode</a></td><td>
+Speed Testing the Jacobian of Ode Solution</td></tr>
+<tr><td>
+
+<a href="link_poly.htm" target="_top">link_poly</a></td><td>
+Speed Testing Second Derivative of a Polynomial</td></tr>
+<tr><td>
+
+<a href="link_sparse_hessian.htm" target="_top">link_sparse_hessian</a></td><td>
+Speed Testing Sparse Hessian</td></tr>
+<tr><td>
+
+<a href="link_sparse_jacobian.htm" target="_top">link_sparse_jacobian</a></td><td>
+Speed Testing Sparse Jacobian</td></tr>
+<tr><td>
+
+</td></tr>
+</table>
+
+<hr>Input File: speed/main.cpp
+
+</body>
+</html>

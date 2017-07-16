@@ -1,0 +1,764 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>Use Ipopt to Solve a Nonlinear Programming Problem</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Use Ipopt to Solve a Nonlinear Programming Problem">
+<meta name="keywords" id="keywords" content=" use ipopt to solve nonlinear programming problem syntax purpose include file bvector dvector options retape sparse string numeric integer xi xl xu gl gu fg_eval advector x fg solution status zl zu g lambda obj_value example get_started ode_inverse ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_ipopt_solve_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://coin-or.github.io/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="sparse_rcv.cpp.htm" target="_top">Prev</a>
+</td><td><a href="ipopt_solve_get_started.cpp.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>ipopt_solve</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>CppAD-&gt;</option>
+<option>Install</option>
+<option>Introduction</option>
+<option>AD</option>
+<option>ADFun</option>
+<option>preprocessor</option>
+<option>multi_thread</option>
+<option>utility</option>
+<option>ipopt_solve</option>
+<option>Example</option>
+<option>speed</option>
+<option>Appendix</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down0(this)'>
+<option>ipopt_solve-&gt;</option>
+<option>ipopt_solve_get_started.cpp</option>
+<option>ipopt_solve_retape.cpp</option>
+<option>ipopt_solve_ode_inverse.cpp</option>
+</select>
+</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Syntax</option>
+<option>Purpose</option>
+<option>Include File</option>
+<option>Bvector</option>
+<option>Dvector</option>
+<option>options</option>
+<option>---..Retape</option>
+<option>---..Sparse</option>
+<option>---..String</option>
+<option>---..Numeric</option>
+<option>---..Integer</option>
+<option>xi</option>
+<option>xl</option>
+<option>xu</option>
+<option>gl</option>
+<option>gu</option>
+<option>fg_eval</option>
+<option>---..ADvector</option>
+<option>---..x</option>
+<option>---..fg</option>
+<option>solution</option>
+<option>---..status</option>
+<option>---..x</option>
+<option>---..zl</option>
+<option>---..zu</option>
+<option>---..g</option>
+<option>---..lambda</option>
+<option>---..obj_value</option>
+<option>Example</option>
+<option>---..get_started</option>
+<option>---..retape</option>
+<option>---..ode_inverse</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>Use Ipopt to Solve a Nonlinear Programming Problem</big></big></b></center>
+<br>
+<b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
+
+<br>
+
+<code><font color="blue"><span style='white-space: nowrap'>#&nbsp;include&nbsp;&lt;cppad/ipopt/solve.hpp&gt;<br>
+</span></font></code>
+
+<code><font color="blue"><span style='white-space: nowrap'>ipopt::solve(<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>options</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>xi</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>xl</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>xu</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>gl</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>gu</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>fg_eval</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>solution</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+)</span></font></code>
+
+
+<br>
+<br>
+<b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
+<br>
+The function <code><font color="blue">ipopt::solve</font></code> solves nonlinear programming
+problems of the form
+<small>@[@
+
+\begin{array}{rll}
+{\rm minimize}      & f (x)
+\\
+{\rm subject \; to} & gl \leq g(x) \leq gu
+\\
+                    & xl  \leq x   \leq xu
+\end{array}
+
+@]@</small>
+This is done using
+<a href="http://coin-or.github.io/projects/Ipopt.xml" target="_top"><span style='white-space: nowrap'>Ipopt</span></a>
+
+optimizer and CppAD for the derivative and sparsity calculations.
+
+<br>
+<br>
+<b><big><a name="Include File" id="Include File">Include File</a></big></b>
+<br>
+Currently, this routine
+<a href="ipopt_solve.htm" target="_top"><span style='white-space: nowrap'>ipopt::solve</span></a>
+ is not included by the command
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#&nbsp;include&nbsp;&lt;cppad/cppad.hpp&gt;<br>
+</span></font></code>
+(Doing so would require the ipopt library to link
+the corresponding program (even if <code><font color="blue">ipopt::solve</font></code>) was not used.)
+For this reason,
+if you are using <code><font color="blue">ipopt::solve</font></code> you should use
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#&nbsp;include&nbsp;&lt;cppad/ipopt/solve.hpp&gt;<br>
+</span></font></code>
+which in turn will also include <code><font color="blue">&lt;cppad/cppad.hpp&gt;</font></code>.
+
+<br>
+<br>
+<b><big><a name="Bvector" id="Bvector">Bvector</a></big></b>
+<br>
+The type 
+<code><i><font color="black"><span style='white-space: nowrap'>Bvector</span></font></i></code>
+ must be a <a href="simplevector.htm" target="_top"><span style='white-space: nowrap'>SimpleVector</span></a>
+ class with
+<a href="simplevector.htm#Elements of Specified Type" target="_top"><span style='white-space: nowrap'>elements&nbsp;of&nbsp;type</span></a>
+
+<code><font color="blue">bool</font></code>.
+
+<br>
+<br>
+<b><big><a name="Dvector" id="Dvector">Dvector</a></big></b>
+<br>
+The type 
+<code><i><font color="black"><span style='white-space: nowrap'>DVector</span></font></i></code>
+ must be a <a href="simplevector.htm" target="_top"><span style='white-space: nowrap'>SimpleVector</span></a>
+ class with
+<a href="simplevector.htm#Elements of Specified Type" target="_top"><span style='white-space: nowrap'>elements&nbsp;of&nbsp;type</span></a>
+
+<code><font color="blue">double</font></code>.
+
+<br>
+<br>
+<b><big><a name="options" id="options">options</a></big></b>
+<br>
+The argument 
+<code><i><font color="black"><span style='white-space: nowrap'>options</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;std::string&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>options</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+It contains a list of options.
+Each option, including the last option,
+is terminated by the <code><font color="blue">'\n'</font></code> character.
+Each line consists of two or three tokens separated by one or more spaces.
+
+<br>
+<br>
+<b><a name="options.Retape" id="options.Retape">Retape</a></b>
+<br>
+You can set the retape flag with the following syntax:
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Retape&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>value</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+If the value is <code><font color="blue">true</font></code>, <code><font color="blue">ipopt::solve</font></code> with retape the
+<a href="glossary.htm#Operation.Sequence" target="_top"><span style='white-space: nowrap'>operation&nbsp;sequence</span></a>
+ for each
+new value of 
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+.
+If the value is <code><font color="blue">false</font></code>, <code><font color="blue">ipopt::solve</font></code>
+will tape the operation sequence at the value
+of 
+<code><i><font color="black"><span style='white-space: nowrap'>xi</span></font></i></code>
+ and use that sequence for the entire optimization process.
+The default value is <code><font color="blue">false</font></code>.
+
+<br>
+<br>
+<b><a name="options.Sparse" id="options.Sparse">Sparse</a></b>
+<br>
+You can set the sparse Jacobian and Hessian flag with the following syntax:
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Sparse&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>value</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>direction</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+If the value is <code><font color="blue">true</font></code>, <code><font color="blue">ipopt::solve</font></code> will use a sparse
+matrix representation for the computation of Jacobians and Hessians.
+Otherwise, it will use a full matrix representation for
+these calculations.
+The default for 
+<code><i><font color="black"><span style='white-space: nowrap'>value</span></font></i></code>
+ is <code><font color="blue">false</font></code>.
+If sparse is true, retape must be false.
+<code><span style='white-space: nowrap'><br>
+<br>
+</span></code>It is unclear if <a href="sparse_jacobian.htm" target="_top"><span style='white-space: nowrap'>sparse_jacobian</span></a>
+ would be faster user
+forward or reverse mode so you are able to choose the direction.
+If
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>value</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;==&nbsp;true&nbsp;&amp;&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>direction</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;==&nbsp;forward<br>
+</span></font></code>
+the Jacobians will be calculated using <code><font color="blue">SparseJacobianForward</font></code>.
+If
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>value</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;==&nbsp;true&nbsp;&amp;&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>direction</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;==&nbsp;reverse<br>
+</span></font></code>
+the Jacobians will be calculated using <code><font color="blue">SparseJacobianReverse</font></code>.
+
+<br>
+<br>
+<b><a name="options.String" id="options.String">String</a></b>
+<br>
+You can set any Ipopt string option using a line with the following syntax:
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;String&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>name</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>value</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+Here 
+<code><i><font color="black"><span style='white-space: nowrap'>name</span></font></i></code>
+ is any valid Ipopt string option
+and 
+<code><i><font color="black"><span style='white-space: nowrap'>value</span></font></i></code>
+ is its setting.
+
+<br>
+<br>
+<b><a name="options.Numeric" id="options.Numeric">Numeric</a></b>
+<br>
+You can set any Ipopt numeric option using a line with the following syntax:
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Numeric&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>name</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>value</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+Here 
+<code><i><font color="black"><span style='white-space: nowrap'>name</span></font></i></code>
+ is any valid Ipopt numeric option
+and 
+<code><i><font color="black"><span style='white-space: nowrap'>value</span></font></i></code>
+ is its setting.
+
+<br>
+<br>
+<b><a name="options.Integer" id="options.Integer">Integer</a></b>
+<br>
+You can set any Ipopt integer option using a line with the following syntax:
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Integer&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>name</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>value</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+Here 
+<code><i><font color="black"><span style='white-space: nowrap'>name</span></font></i></code>
+ is any valid Ipopt integer option
+and 
+<code><i><font color="black"><span style='white-space: nowrap'>value</span></font></i></code>
+ is its setting.
+
+<br>
+<br>
+<b><big><a name="xi" id="xi">xi</a></big></b>
+<br>
+The argument 
+<code><i><font color="black"><span style='white-space: nowrap'>xi</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Vector</span></font></i><font color="blue"><span style='white-space: nowrap'>&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>xi</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+and its size is equal to 
+<code><i><font color="black"><span style='white-space: nowrap'>nx</span></font></i></code>
+.
+It specifies the initial point where Ipopt starts the optimization process.
+
+<br>
+<br>
+<b><big><a name="xl" id="xl">xl</a></big></b>
+<br>
+The argument 
+<code><i><font color="black"><span style='white-space: nowrap'>xl</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Vector</span></font></i><font color="blue"><span style='white-space: nowrap'>&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>xl</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+and its size is equal to 
+<code><i><font color="black"><span style='white-space: nowrap'>nx</span></font></i></code>
+.
+It specifies the lower limits for the argument in the optimization problem.
+
+<br>
+<br>
+<b><big><a name="xu" id="xu">xu</a></big></b>
+<br>
+The argument 
+<code><i><font color="black"><span style='white-space: nowrap'>xu</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Vector</span></font></i><font color="blue"><span style='white-space: nowrap'>&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>xu</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+and its size is equal to 
+<code><i><font color="black"><span style='white-space: nowrap'>nx</span></font></i></code>
+.
+It specifies the upper limits for the argument in the optimization problem.
+
+<br>
+<br>
+<b><big><a name="gl" id="gl">gl</a></big></b>
+<br>
+The argument 
+<code><i><font color="black"><span style='white-space: nowrap'>gl</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Vector</span></font></i><font color="blue"><span style='white-space: nowrap'>&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>gl</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+and its size is equal to 
+<code><i><font color="black"><span style='white-space: nowrap'>ng</span></font></i></code>
+.
+It specifies the lower limits for the constraints in the optimization problem.
+
+<br>
+<br>
+<b><big><a name="gu" id="gu">gu</a></big></b>
+<br>
+The argument 
+<code><i><font color="black"><span style='white-space: nowrap'>gu</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Vector</span></font></i><font color="blue"><span style='white-space: nowrap'>&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>gu</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+and its size is equal to 
+<code><i><font color="black"><span style='white-space: nowrap'>ng</span></font></i></code>
+.
+It specifies the upper limits for the constraints in the optimization problem.
+
+<br>
+<br>
+<b><big><a name="fg_eval" id="fg_eval">fg_eval</a></big></b>
+<br>
+The argument 
+<code><i><font color="black"><span style='white-space: nowrap'>fg_eval</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>FG_eval</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>fg_eval</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+where the class 
+<code><i><font color="black"><span style='white-space: nowrap'>FG_eval</span></font></i></code>
+ is unspecified except for the fact that
+it supports the syntax
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>FG_eval</span></font></i><font color="blue"><span style='white-space: nowrap'>::ADvector<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>fg_eval</span></font></i><font color="blue"><span style='white-space: nowrap'>(</span></font><i><font color="black"><span style='white-space: nowrap'>fg</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+The type 
+<code><i><font color="black"><span style='white-space: nowrap'>ADvector</span></font></i></code>
+
+and the arguments to 
+<code><i><font color="black"><span style='white-space: nowrap'>fg</span></font></i></code>
+, 
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+ have the following meaning:
+
+<br>
+<br>
+<b><a name="fg_eval.ADvector" id="fg_eval.ADvector">ADvector</a></b>
+<br>
+The type 
+<code><i><font color="black"><span style='white-space: nowrap'>FG_eval</span></font></i><font color="blue"><span style='white-space: nowrap'>::ADvector</span></font></code>
+ must be a <a href="simplevector.htm" target="_top"><span style='white-space: nowrap'>SimpleVector</span></a>
+ class with
+<a href="simplevector.htm#Elements of Specified Type" target="_top"><span style='white-space: nowrap'>elements&nbsp;of&nbsp;type</span></a>
+
+<code><font color="blue">AD&lt;double&gt;</font></code>.
+
+<br>
+<br>
+<b><a name="fg_eval.x" id="fg_eval.x">x</a></b>
+<br>
+The 
+<code><i><font color="black"><span style='white-space: nowrap'>fg_eval</span></font></i></code>
+ argument 
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ADvector</span></font></i><font color="blue"><span style='white-space: nowrap'>&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+where 
+<code><i><font color="black"><span style='white-space: nowrap'>nx</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>.size()</span></font></code>
+.
+
+<br>
+<br>
+<b><a name="fg_eval.fg" id="fg_eval.fg">fg</a></b>
+<br>
+The 
+<code><i><font color="black"><span style='white-space: nowrap'>fg_eval</span></font></i></code>
+ argument 
+<code><i><font color="black"><span style='white-space: nowrap'>fg</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ADvector</span></font></i><font color="blue"><span style='white-space: nowrap'>&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>fg</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+where 
+<code><font color="blue"><span style='white-space: nowrap'>1&nbsp;+&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ng</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>fg</span></font></i><font color="blue"><span style='white-space: nowrap'>.size()</span></font></code>
+.
+The input value of the elements of 
+<code><i><font color="black"><span style='white-space: nowrap'>fg</span></font></i></code>
+ does not matter.
+Upon return from 
+<code><i><font color="black"><span style='white-space: nowrap'>fg_eval</span></font></i></code>
+,
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>fg</span></font></i><font color="blue"><span style='white-space: nowrap'>[0]&nbsp;=</span></font></code>
+ <small>@(@
+f (x)
+@)@</small> 
+<code><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+and   for <small>@(@
+i = 0, \ldots , ng-1
+@)@</small>,
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>fg</span></font></i><font color="blue"><span style='white-space: nowrap'>[1&nbsp;+&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>]&nbsp;=</span></font></code>
+ <small>@(@
+g_i (x)
+@)@</small>
+
+<br>
+<br>
+<b><big><a name="solution" id="solution">solution</a></big></b>
+<br>
+The argument 
+<code><i><font color="black"><span style='white-space: nowrap'>solution</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ipopt::solve_result&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Dvector</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>solution</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+After the optimization process is completed, 
+<code><i><font color="black"><span style='white-space: nowrap'>solution</span></font></i></code>
+ contains
+the following information:
+
+<br>
+<br>
+<b><a name="solution.status" id="solution.status">status</a></b>
+<br>
+The 
+<code><i><font color="black"><span style='white-space: nowrap'>status</span></font></i></code>
+ field of 
+<code><i><font color="black"><span style='white-space: nowrap'>solution</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ipopt::solve_result&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Dvector</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;::status_type&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>solution</span></font></i><font color="blue"><span style='white-space: nowrap'>.status<br>
+</span></font></code>
+It is the final Ipopt status for the optimizer.
+Here is a list of the possible values for the status:
+
+<table><tr><td align='left'  valign='top'>
+
+
+<code><i><font color="black"><span style='white-space: nowrap'>status</span></font></i></code>
+ </td><td align='left'  valign='top'>
+ Meaning
+</td></tr><tr><td align='left'  valign='top'>
+
+not_defined </td><td align='left'  valign='top'>
+
+The optimizer did not return a final status for this problem.
+</td></tr><tr><td align='left'  valign='top'>
+
+unknown </td><td align='left'  valign='top'>
+
+The status returned by the optimizer is not defined in the Ipopt
+documentation for <code><font color="blue">finalize_solution</font></code>.
+</td></tr><tr><td align='left'  valign='top'>
+
+success </td><td align='left'  valign='top'>
+
+Algorithm terminated successfully at a point satisfying the convergence
+tolerances (see Ipopt options).
+</td></tr><tr><td align='left'  valign='top'>
+
+maxiter_exceeded </td><td align='left'  valign='top'>
+
+The maximum number of iterations was exceeded (see Ipopt options).
+</td></tr><tr><td align='left'  valign='top'>
+
+stop_at_tiny_step </td><td align='left'  valign='top'>
+
+Algorithm terminated because progress was very slow.
+</td></tr><tr><td align='left'  valign='top'>
+
+stop_at_acceptable_point </td><td align='left'  valign='top'>
+
+Algorithm stopped at a point that was converged,
+not to the 'desired' tolerances, but to 'acceptable' tolerances
+(see Ipopt options).
+</td></tr><tr><td align='left'  valign='top'>
+
+local_infeasibility </td><td align='left'  valign='top'>
+
+Algorithm converged to a non-feasible point
+(problem may have no solution).
+</td></tr><tr><td align='left'  valign='top'>
+
+user_requested_stop </td><td align='left'  valign='top'>
+
+This return value should not happen.
+</td></tr><tr><td align='left'  valign='top'>
+
+diverging_iterates </td><td align='left'  valign='top'>
+
+It the iterates are diverging.
+</td></tr><tr><td align='left'  valign='top'>
+
+restoration_failure </td><td align='left'  valign='top'>
+
+Restoration phase failed, algorithm doesn't know how to proceed.
+</td></tr><tr><td align='left'  valign='top'>
+
+error_in_step_computation </td><td align='left'  valign='top'>
+
+An unrecoverable error occurred while Ipopt tried to
+compute the search direction.
+</td></tr><tr><td align='left'  valign='top'>
+
+invalid_number_detected </td><td align='left'  valign='top'>
+
+Algorithm received an invalid number (such as <code><font color="blue">nan</font></code> or <code><font color="blue">inf</font></code>)
+from the users function 
+<code><i><font color="black"><span style='white-space: nowrap'>fg_info</span></font></i><font color="blue"><span style='white-space: nowrap'>.eval</span></font></code>
+ or from the CppAD evaluations
+of its derivatives
+(see the Ipopt option <code><font color="blue">check_derivatives_for_naninf</font></code>).
+</td></tr><tr><td align='left'  valign='top'>
+
+internal_error </td><td align='left'  valign='top'>
+
+An unknown Ipopt internal error occurred.
+Contact the Ipopt authors through the mailing list.
+</td></tr>
+</table>
+<br>
+<b><a name="solution.x" id="solution.x">x</a></b>
+<br>
+The <code><font color="blue">x</font></code> field of 
+<code><i><font color="black"><span style='white-space: nowrap'>solution</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Vector</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>solution</span></font></i><font color="blue"><span style='white-space: nowrap'>.x<br>
+</span></font></code>
+and its size is equal to 
+<code><i><font color="black"><span style='white-space: nowrap'>nx</span></font></i></code>
+.
+It is the final <small>@(@
+x
+@)@</small> value for the optimizer.
+
+<br>
+<br>
+<b><a name="solution.zl" id="solution.zl">zl</a></b>
+<br>
+The <code><font color="blue">zl</font></code> field of 
+<code><i><font color="black"><span style='white-space: nowrap'>solution</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Vector</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>solution</span></font></i><font color="blue"><span style='white-space: nowrap'>.zl<br>
+</span></font></code>
+and its size is equal to 
+<code><i><font color="black"><span style='white-space: nowrap'>nx</span></font></i></code>
+.
+It is the final Lagrange multipliers for the
+lower bounds on <small>@(@
+x
+@)@</small>.
+
+<br>
+<br>
+<b><a name="solution.zu" id="solution.zu">zu</a></b>
+<br>
+The <code><font color="blue">zu</font></code> field of 
+<code><i><font color="black"><span style='white-space: nowrap'>solution</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Vector</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>solution</span></font></i><font color="blue"><span style='white-space: nowrap'>.zu<br>
+</span></font></code>
+and its size is equal to 
+<code><i><font color="black"><span style='white-space: nowrap'>nx</span></font></i></code>
+.
+It is the final Lagrange multipliers for the
+upper bounds on <small>@(@
+x
+@)@</small>.
+
+<br>
+<br>
+<b><a name="solution.g" id="solution.g">g</a></b>
+<br>
+The <code><font color="blue">g</font></code> field of 
+<code><i><font color="black"><span style='white-space: nowrap'>solution</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Vector</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>solution</span></font></i><font color="blue"><span style='white-space: nowrap'>.g<br>
+</span></font></code>
+and its size is equal to 
+<code><i><font color="black"><span style='white-space: nowrap'>ng</span></font></i></code>
+.
+It is the final value for the constraint function <small>@(@
+g(x)
+@)@</small>.
+
+<br>
+<br>
+<b><a name="solution.lambda" id="solution.lambda">lambda</a></b>
+<br>
+The <code><font color="blue">lambda</font></code> field of 
+<code><i><font color="black"><span style='white-space: nowrap'>solution</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Vector</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>solution</span></font></i><font color="blue"><span style='white-space: nowrap'>.lambda<br>
+</span></font></code>
+and its size is equal to 
+<code><i><font color="black"><span style='white-space: nowrap'>ng</span></font></i></code>
+.
+It is the final value for the
+Lagrange multipliers corresponding to the constraint function.
+
+<br>
+<br>
+<b><a name="solution.obj_value" id="solution.obj_value">obj_value</a></b>
+<br>
+The <code><font color="blue">obj_value</font></code> field of 
+<code><i><font color="black"><span style='white-space: nowrap'>solution</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;double&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>solution</span></font></i><font color="blue"><span style='white-space: nowrap'>.obj_value<br>
+</span></font></code>
+It is the final value of the objective function <small>@(@
+f(x)
+@)@</small>.
+
+
+<br>
+<br>
+<b><big><a name="Example" id="Example">Example</a></big></b>
+<br>
+All the examples return true if it succeeds and false otherwise.
+
+<br>
+<br>
+<b><a name="Example.get_started" id="Example.get_started">get_started</a></b>
+<br>
+The file
+<a href="ipopt_solve_get_started.cpp.htm" target="_top"><span style='white-space: nowrap'>example/ipopt_solve/get_started.cpp</span></a>
+
+is an example and test of <code><font color="blue">ipopt::solve</font></code>
+taken from the Ipopt manual.
+
+<br>
+<br>
+<b><a name="Example.retape" id="Example.retape">retape</a></b>
+<br>
+The file
+<a href="ipopt_solve_retape.cpp.htm" target="_top"><span style='white-space: nowrap'>example/ipopt_solve/retape.cpp</span></a>
+
+demonstrates when it is necessary to specify
+<a href="ipopt_solve.htm#options.Retape" target="_top"><span style='white-space: nowrap'>retape</span></a>
+ as true.
+
+<br>
+<br>
+<b><a name="Example.ode_inverse" id="Example.ode_inverse">ode_inverse</a></b>
+<br>
+The file
+<a href="ipopt_solve_ode_inverse.cpp.htm" target="_top"><span style='white-space: nowrap'>example/ipopt_solve/ode_inverse.cpp</span></a>
+
+demonstrates using Ipopt to solve for parameters in an ODE model.
+
+
+<hr>Input File: cppad/ipopt/solve.hpp
+
+</body>
+</html>

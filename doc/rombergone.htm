@@ -1,0 +1,357 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>One DimensionalRomberg Integration</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="One DimensionalRomberg Integration">
+<meta name="keywords" id="keywords" content=" one dimensionalromberg integration integrate Romberg syntax description include r f b n p e float example source code ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_rombergone_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://coin-or.github.io/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="lu_invert.hpp.htm" target="_top">Prev</a>
+</td><td><a href="romberg_one.cpp.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>utility</option>
+<option>RombergOne</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>CppAD-&gt;</option>
+<option>Install</option>
+<option>Introduction</option>
+<option>AD</option>
+<option>ADFun</option>
+<option>preprocessor</option>
+<option>multi_thread</option>
+<option>utility</option>
+<option>ipopt_solve</option>
+<option>Example</option>
+<option>speed</option>
+<option>Appendix</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>utility-&gt;</option>
+<option>ErrorHandler</option>
+<option>NearEqual</option>
+<option>speed_test</option>
+<option>SpeedTest</option>
+<option>time_test</option>
+<option>test_boolofvoid</option>
+<option>NumericType</option>
+<option>CheckNumericType</option>
+<option>SimpleVector</option>
+<option>CheckSimpleVector</option>
+<option>nan</option>
+<option>pow_int</option>
+<option>Poly</option>
+<option>LuDetAndSolve</option>
+<option>RombergOne</option>
+<option>RombergMul</option>
+<option>Runge45</option>
+<option>Rosen34</option>
+<option>OdeErrControl</option>
+<option>OdeGear</option>
+<option>OdeGearControl</option>
+<option>CppAD_vector</option>
+<option>thread_alloc</option>
+<option>index_sort</option>
+<option>to_string</option>
+<option>set_union</option>
+<option>sparse_rc</option>
+<option>sparse_rcv</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down0(this)'>
+<option>RombergOne-&gt;</option>
+<option>romberg_one.cpp</option>
+</select>
+</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Syntax</option>
+<option>Description</option>
+<option>Include</option>
+<option>r</option>
+<option>F</option>
+<option>a</option>
+<option>b</option>
+<option>n</option>
+<option>p</option>
+<option>e</option>
+<option>Float</option>
+<option>Example</option>
+<option>Source Code</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@
+
+
+<center><b><big><big>One DimensionalRomberg Integration</big></big></b></center>
+<br>
+<b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
+
+<br>
+
+<code><font color="blue"><span style='white-space: nowrap'>#&nbsp;include&nbsp;&lt;cppad/utility/romberg_one.hpp&gt;<br>
+</span></font></code>
+
+<code><i><font color="black"><span style='white-space: nowrap'>r</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;RombergOne(</span></font><i><font color="black"><span style='white-space: nowrap'>F</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>a</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>b</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>e</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+
+
+
+<br>
+<br>
+<b><big><a name="Description" id="Description">Description</a></big></b>
+<br>
+Returns the Romberg integration estimate
+<small>@(@
+r
+@)@</small> for a one dimensional integral
+<small>@[@
+
+r = \int_a^b F(x) {\bf d} x + O \left[ (b - a) / 2^{n-1} \right]^{2(p+1)}
+
+@]@</small>
+
+<br>
+<br>
+<b><big><a name="Include" id="Include">Include</a></big></b>
+<br>
+The file <code><font color="blue">cppad/romberg_one.hpp</font></code> is included by <code><font color="blue">cppad/cppad.hpp</font></code>
+but it can also be included separately with out the rest of
+the <code><font color="blue">CppAD</font></code> routines.
+
+<br>
+<br>
+<b><big><a name="r" id="r">r</a></big></b>
+<br>
+The return value 
+<code><i><font color="black"><span style='white-space: nowrap'>r</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Float</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>r</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+It is the estimate computed by <code><font color="blue">RombergOne</font></code> for the integral above.
+
+<br>
+<br>
+<b><big><a name="F" id="F">F</a></big></b>
+<br>
+The object 
+<code><i><font color="black"><span style='white-space: nowrap'>F</span></font></i></code>
+ can be of any type, but it must support
+the operation
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>F</span></font></i><font color="blue"><span style='white-space: nowrap'>(</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+The argument 
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+ to 
+<code><i><font color="black"><span style='white-space: nowrap'>F</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Float</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+The return value of 
+<code><i><font color="black"><span style='white-space: nowrap'>F</span></font></i></code>
+ is a 
+<code><i><font color="black"><span style='white-space: nowrap'>Float</span></font></i></code>
+ object
+(see description of <a href="rombergone.htm#Float" target="_top"><span style='white-space: nowrap'>Float</span></a>
+ below).
+
+<br>
+<br>
+<b><big><a name="a" id="a">a</a></big></b>
+<br>
+The argument 
+<code><i><font color="black"><span style='white-space: nowrap'>a</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Float</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>a</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+It specifies the lower limit for the integration.
+
+<br>
+<br>
+<b><big><a name="b" id="b">b</a></big></b>
+<br>
+The argument 
+<code><i><font color="black"><span style='white-space: nowrap'>b</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Float</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>b</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+It specifies the upper limit for the integration.
+
+<br>
+<br>
+<b><big><a name="n" id="n">n</a></big></b>
+<br>
+The argument 
+<code><i><font color="black"><span style='white-space: nowrap'>n</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+A total number of <small>@(@
+2^{n-1} + 1
+@)@</small> evaluations of 
+<code><i><font color="black"><span style='white-space: nowrap'>F</span></font></i><font color="blue"><span style='white-space: nowrap'>(</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+
+are used to estimate the integral.
+
+<br>
+<br>
+<b><big><a name="p" id="p">p</a></big></b>
+<br>
+The argument 
+<code><i><font color="black"><span style='white-space: nowrap'>p</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>p</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+It must be less than or equal <small>@(@
+n
+@)@</small>
+and determines the accuracy order in the approximation for the integral
+that is returned by <code><font color="blue">RombergOne</font></code>.
+To be specific
+<small>@[@
+
+r = \int_a^b F(x) {\bf d} x + O \left[ (b - a) / 2^{n-1} \right]^{2(p+1)}
+
+@]@</small>
+
+
+<br>
+<br>
+<b><big><a name="e" id="e">e</a></big></b>
+<br>
+The argument 
+<code><i><font color="black"><span style='white-space: nowrap'>e</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Float</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>e</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+The input value of 
+<code><i><font color="black"><span style='white-space: nowrap'>e</span></font></i></code>
+ does not matter
+and its output value is an approximation for the error in
+the integral estimates; i.e.,
+<small>@[@
+
+	e \approx \left| r - \int_a^b F(x) {\bf d} x \right|
+
+@]@</small>
+
+<br>
+<br>
+<b><big><a name="Float" id="Float">Float</a></big></b>
+<br>
+The type 
+<code><i><font color="black"><span style='white-space: nowrap'>Float</span></font></i></code>
+ must satisfy the conditions
+for a <a href="numerictype.htm" target="_top"><span style='white-space: nowrap'>NumericType</span></a>
+ type.
+The routine <a href="checknumerictype.htm" target="_top"><span style='white-space: nowrap'>CheckNumericType</span></a>
+ will generate an error message
+if this is not the case.
+In addition, if 
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+ and 
+<code><i><font color="black"><span style='white-space: nowrap'>y</span></font></i></code>
+ are 
+<code><i><font color="black"><span style='white-space: nowrap'>Float</span></font></i></code>
+ objects,
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&lt;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+returns the <code><font color="blue">bool</font></code> value true if 
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+ is less than
+
+<code><i><font color="black"><span style='white-space: nowrap'>y</span></font></i></code>
+ and false otherwise.
+
+
+<br>
+<br>
+<b><big><a name="Example" id="Example">Example</a></big></b>
+
+<br>
+The file
+<a href="romberg_one.cpp.htm" target="_top"><span style='white-space: nowrap'>romberg_one.cpp</span></a>
+
+contains an example and test a test of using this routine.
+It returns true if it succeeds and false otherwise.
+
+<br>
+<br>
+<b><big><a name="Source Code" id="Source Code">Source Code</a></big></b>
+<br>
+The source code for this routine is in the file
+<code><font color="blue">cppad/romberg_one.hpp</font></code>.
+
+
+<hr>Input File: cppad/utility/romberg_one.hpp
+
+</body>
+</html>

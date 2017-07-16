@@ -1,0 +1,397 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>Comparison Changes Between Taping and Zero Order Forward</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Comparison Changes Between Taping and Zero Order Forward">
+<meta name="keywords" id="keywords" content=" comparison changes between taping zero order forward Adfun compare_change syntax purpose f count speed number discussion op_index example ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_compare_change_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://coin-or.github.io/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="size_order.htm" target="_top">Prev</a>
+</td><td><a href="compare_change.cpp.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>ADFun</option>
+<option>Forward</option>
+<option>compare_change</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>CppAD-&gt;</option>
+<option>Install</option>
+<option>Introduction</option>
+<option>AD</option>
+<option>ADFun</option>
+<option>preprocessor</option>
+<option>multi_thread</option>
+<option>utility</option>
+<option>ipopt_solve</option>
+<option>Example</option>
+<option>speed</option>
+<option>Appendix</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>ADFun-&gt;</option>
+<option>record_adfun</option>
+<option>drivers</option>
+<option>Forward</option>
+<option>Reverse</option>
+<option>sparsity_pattern</option>
+<option>sparse_derivative</option>
+<option>optimize</option>
+<option>abs_normal</option>
+<option>FunCheck</option>
+<option>check_for_nan</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>Forward-&gt;</option>
+<option>forward_zero</option>
+<option>forward_one</option>
+<option>forward_two</option>
+<option>forward_order</option>
+<option>forward_dir</option>
+<option>size_order</option>
+<option>compare_change</option>
+<option>capacity_order</option>
+<option>number_skip</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down0(this)'>
+<option>compare_change-&gt;</option>
+<option>compare_change.cpp</option>
+</select>
+</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Syntax</option>
+<option>Purpose</option>
+<option>f</option>
+<option>count</option>
+<option>---..Speed</option>
+<option>number</option>
+<option>---..Discussion</option>
+<option>op_index</option>
+<option>---..Purpose</option>
+<option>Example</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@
+
+
+<center><b><big><big>Comparison Changes Between Taping and Zero Order Forward</big></big></b></center>
+<br>
+<b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
+
+<br>
+
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.compare_change_count(</span></font><i><font color="black"><span style='white-space: nowrap'>count</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+
+<code><i><font color="black"><span style='white-space: nowrap'>number</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.compare_change_number()<br>
+</span></font></code>
+
+<code><i><font color="black"><span style='white-space: nowrap'>op_index</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.compare_change_op_index()<br>
+<br>
+</span></font></code>
+<b>See Also</b>
+<a href="funcheck.htm" target="_top"><span style='white-space: nowrap'>FunCheck</span></a>
+
+
+
+<br>
+<br>
+<b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
+<br>
+We use <small>@(@
+F : B^n \rightarrow B^m
+@)@</small> to denote the
+<a href="glossary.htm#AD Function" target="_top"><span style='white-space: nowrap'>AD&nbsp;function</span></a>
+ corresponding to 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+; i.e,
+given <small>@(@
+x \in B^n
+@)@</small>, <small>@(@
+F(x)
+@)@</small> is defined by
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>F</span></font></i><font color="blue"><span style='white-space: nowrap'>(</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>)&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.Forward(0,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+see <a href="forward_zero.htm" target="_top"><span style='white-space: nowrap'>forward_zero</span></a>
+.
+If <small>@(@
+x
+@)@</small> is such that
+all the algorithm <a href="compare.htm" target="_top"><span style='white-space: nowrap'>comparison</span></a>
+ operations
+have the same result as when the algorithm was taped,
+The function <small>@(@
+F(x)
+@)@</small> and the algorithm will have the same values.
+(This is a sufficient, but not necessary condition).
+
+
+
+
+
+<br>
+<br>
+<b><big><a name="f" id="f">f</a></big></b>
+<br>
+In the <code><font color="blue">compare_change_number</font></code> and <code><font color="blue">compare_change_op_index</font></code>
+syntax, the object 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;ADFun&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+In the <code><font color="blue">compare_change_count</font></code>
+syntax, the object 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ADFun&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+<br>
+<b><big><a name="count" id="count">count</a></big></b>
+<br>
+The argument 
+<code><i><font color="black"><span style='white-space: nowrap'>count</span></font></i></code>
+ has prototype
+
+<code><i><font color="black"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font></i><font color="blue"><span style='white-space: nowrap'>count</span></font><i><font color="black"><span style='white-space: nowrap'><br>
+</span></font></i></code>
+It specifies which comparison change should correspond to the
+information stored in 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+ during subsequent calls to
+<a href="forward_zero.htm" target="_top"><span style='white-space: nowrap'>forward_zero</span></a>
+; i.e.,
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.Forward(0,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+For example, if 
+<code><i><font color="black"><span style='white-space: nowrap'>count</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;==&nbsp;1</span></font></code>
+,
+the operator index corresponding to the first comparison change
+will be stored.
+This is the default value used if 
+<code><i><font color="black"><span style='white-space: nowrap'>count</span></font></i></code>
+ is not specified.
+
+<br>
+<br>
+<b><a name="count.Speed" id="count.Speed">Speed</a></b>
+<br>
+The special case where 
+<code><i><font color="black"><span style='white-space: nowrap'>count&nbsp;==&nbsp;0</span></font></i></code>
+, should be faster because
+the comparisons are not checked during
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.Forward(0,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+<br>
+<b><big><a name="number" id="number">number</a></big></b>
+<br>
+The return value 
+<code><i><font color="black"><span style='white-space: nowrap'>number</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>number</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>count</span></font></i></code>
+ is non-zero,
+
+<code><i><font color="black"><span style='white-space: nowrap'>number</span></font></i></code>
+ is the number of
+
+<code><font color="blue"><span style='white-space: nowrap'>AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code>
+ <a href="compare.htm" target="_top"><span style='white-space: nowrap'>comparison</span></a>
+ operations,
+corresponding to the previous call to
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.Forward(0,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+that have a different result for this value of 
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+
+than the value used when 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+ was created by taping an algorithm.
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>count</span></font></i></code>
+ is zero,
+or if no calls to 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.Forward(0,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+ follow the previous
+setting of 
+<code><i><font color="black"><span style='white-space: nowrap'>count</span></font></i></code>
+,
+
+<code><i><font color="black"><span style='white-space: nowrap'>number</span></font></i></code>
+ is zero.
+
+<br>
+<br>
+<b><a name="number.Discussion" id="number.Discussion">Discussion</a></b>
+<br>
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>count</span></font></i></code>
+ and 
+<code><i><font color="black"><span style='white-space: nowrap'>number</span></font></i></code>
+ are non-zero,
+you may want to re-tape the algorithm with the
+<a href="glossary.htm#Tape.Independent Variable" target="_top"><span style='white-space: nowrap'>independent&nbsp;variables</span></a>
+
+equal to the values in 
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+,
+so the AD operation sequence properly represents the algorithm
+for this value of independent variables.
+On the other hand, re-taping the AD operation sequence usually takes
+significantly more time than evaluation using <a href="forward_zero.htm" target="_top"><span style='white-space: nowrap'>forward_zero</span></a>
+.
+If the functions values have not changed (see <a href="funcheck.htm" target="_top"><span style='white-space: nowrap'>FunCheck</span></a>
+)
+it may not be worth re-taping a new AD operation sequence.
+
+<br>
+<br>
+<b><big><a name="op_index" id="op_index">op_index</a></big></b>
+<br>
+The return value 
+<code><i><font color="black"><span style='white-space: nowrap'>op_index</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>op_index</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>count</span></font></i></code>
+ is non-zero,
+
+<code><i><font color="black"><span style='white-space: nowrap'>op_index</span></font></i></code>
+ is the operator index corresponding the
+
+<code><i><font color="black"><span style='white-space: nowrap'>count</span></font></i></code>
+-th comparison change during the previous call to
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.Forward(0,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>count</span></font></i></code>
+ is greater than the corresponding
+
+<code><i><font color="black"><span style='white-space: nowrap'>number</span></font></i></code>
+, there is no such comparison change and 
+<code><i><font color="black"><span style='white-space: nowrap'>op_index</span></font></i></code>
+
+will also be zero.
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>count</span></font></i></code>
+ is zero,
+if the function 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+ has been <a href="optimize.htm" target="_top"><span style='white-space: nowrap'>optimized</span></a>
+,
+or if no calls to 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.Forward(0,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+ follow the previous
+setting of 
+<code><i><font color="black"><span style='white-space: nowrap'>count</span></font></i></code>
+,
+
+<code><i><font color="black"><span style='white-space: nowrap'>op_index</span></font></i></code>
+ is zero.
+
+<br>
+<br>
+<b><a name="op_index.Purpose" id="op_index.Purpose">Purpose</a></b>
+<br>
+The operator index can be used to generate an error during the taping
+process so that the corresponding algorithm can be inspected.
+In some cases, it is possible to re-design this part of the
+algorithm to avoid the particular comparison operation.
+For example, using an <a href="condexp.htm" target="_top"><span style='white-space: nowrap'>conditional&nbsp;expression</span></a>
+
+may be appropriate in some cases.
+See <a href="independent.htm#abort_op_index" target="_top"><span style='white-space: nowrap'>abort_op_index</span></a>
+ in the syntax
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Independent(</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>abort_op_index</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+<br>
+<b><big><a name="Example" id="Example">Example</a></big></b>
+
+<br>
+<a href="compare_change.cpp.htm" target="_top"><span style='white-space: nowrap'>compare_change.cpp</span></a>
+
+contains an example and test of this operation.
+It returns true if they succeed and false otherwise.
+
+
+<hr>Input File: omh/forward/compare_change.omh
+
+</body>
+</html>

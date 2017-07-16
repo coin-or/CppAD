@@ -1,0 +1,202 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>Source: LuInvert</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Source: LuInvert">
+<meta name="keywords" id="keywords" content=" source: luinvert source ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_lu_invert.hpp_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://coin-or.github.io/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="lu_invert.cpp.htm" target="_top">Prev</a>
+</td><td><a href="rombergone.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>utility</option>
+<option>LuDetAndSolve</option>
+<option>LuInvert</option>
+<option>lu_invert.hpp</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>utility-&gt;</option>
+<option>ErrorHandler</option>
+<option>NearEqual</option>
+<option>speed_test</option>
+<option>SpeedTest</option>
+<option>time_test</option>
+<option>test_boolofvoid</option>
+<option>NumericType</option>
+<option>CheckNumericType</option>
+<option>SimpleVector</option>
+<option>CheckSimpleVector</option>
+<option>nan</option>
+<option>pow_int</option>
+<option>Poly</option>
+<option>LuDetAndSolve</option>
+<option>RombergOne</option>
+<option>RombergMul</option>
+<option>Runge45</option>
+<option>Rosen34</option>
+<option>OdeErrControl</option>
+<option>OdeGear</option>
+<option>OdeGearControl</option>
+<option>CppAD_vector</option>
+<option>thread_alloc</option>
+<option>index_sort</option>
+<option>to_string</option>
+<option>set_union</option>
+<option>sparse_rc</option>
+<option>sparse_rcv</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>LuDetAndSolve-&gt;</option>
+<option>LuSolve</option>
+<option>LuFactor</option>
+<option>LuInvert</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>LuInvert-&gt;</option>
+<option>lu_invert.cpp</option>
+<option>lu_invert.hpp</option>
+</select>
+</td>
+<td>lu_invert.hpp</td>
+<td>Headings</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>Source: LuInvert</big></big></b></center>
+<code><font color="blue"># ifndef CPPAD_LU_INVERT_HPP
+<code><span style='white-space: nowrap'><br>
+</span></code># define CPPAD_LU_INVERT_HPP
+
+<pre><tt><b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/core/cppad_assert.hpp&gt;</font>
+<b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/utility/check_simple_vector.hpp&gt;</font>
+<b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/utility/check_numeric_type.hpp&gt;</font>
+
+<b><font color="#0000FF">namespace</font></b> CppAD <font color="#FF0000">{</font> <i><font color="#9A1900">// BEGIN CppAD namespace</font></i>
+
+<i><font color="#9A1900">// LuInvert</font></i>
+<b><font color="#0000FF">template</font></b> <font color="#990000">&lt;</font><b><font color="#0000FF">typename</font></b> <font color="#008080">SizeVector</font><font color="#990000">,</font> <b><font color="#0000FF">typename</font></b> <font color="#008080">FloatVector</font><font color="#990000">&gt;</font>
+<font color="#009900">void</font> <b><font color="#000000">LuInvert</font></b><font color="#990000">(</font>
+     <b><font color="#0000FF">const</font></b> <font color="#008080">SizeVector</font>  <font color="#990000">&amp;</font>ip<font color="#990000">,</font>
+     <b><font color="#0000FF">const</font></b> <font color="#008080">SizeVector</font>  <font color="#990000">&amp;</font>jp<font color="#990000">,</font>
+     <b><font color="#0000FF">const</font></b> <font color="#008080">FloatVector</font> <font color="#990000">&amp;</font>LU<font color="#990000">,</font>
+     <font color="#008080">FloatVector</font>       <font color="#990000">&amp;</font>B <font color="#990000">)</font>
+<font color="#FF0000">{</font>    <font color="#008080">size_t</font> k<font color="#990000">;</font> <i><font color="#9A1900">// column index in X</font></i>
+     <font color="#008080">size_t</font> p<font color="#990000">;</font> <i><font color="#9A1900">// index along diagonal in LU</font></i>
+     <font color="#008080">size_t</font> i<font color="#990000">;</font> <i><font color="#9A1900">// row index in LU and X</font></i>
+
+     <b><font color="#0000FF">typedef</font></b> <b><font color="#0000FF">typename</font></b> <font color="#008080">FloatVector</font><font color="#990000">::</font><font color="#008080">value_type</font> Float<font color="#990000">;</font>
+
+     <i><font color="#9A1900">// check numeric type specifications</font></i>
+     CheckNumericType<font color="#990000">&lt;</font>Float<font color="#990000">&gt;();</font>
+
+     <i><font color="#9A1900">// check simple vector class specifications</font></i>
+     CheckSimpleVector<font color="#990000">&lt;</font>Float<font color="#990000">,</font> FloatVector<font color="#990000">&gt;();</font>
+     CheckSimpleVector<font color="#990000">&lt;</font>size_t<font color="#990000">,</font> SizeVector<font color="#990000">&gt;();</font>
+
+     <font color="#008080">Float</font> etmp<font color="#990000">;</font>
+
+     <font color="#008080">size_t</font> n <font color="#990000">=</font> ip<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">();</font>
+     <b><font color="#000000">CPPAD_ASSERT_KNOWN</font></b><font color="#990000">(</font>
+          <b><font color="#000000">size_t</font></b><font color="#990000">(</font>jp<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">())</font> <font color="#990000">==</font> n<font color="#990000">,</font>
+          <font color="#FF0000">"Error in LuInvert: jp must have size equal to n * n"</font>
+     <font color="#990000">);</font>
+     <b><font color="#000000">CPPAD_ASSERT_KNOWN</font></b><font color="#990000">(</font>
+          <b><font color="#000000">size_t</font></b><font color="#990000">(</font>LU<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">())</font> <font color="#990000">==</font> n <font color="#990000">*</font> n<font color="#990000">,</font>
+          <font color="#FF0000">"Error in LuInvert: Lu must have size equal to n * m"</font>
+     <font color="#990000">);</font>
+     <font color="#008080">size_t</font> m <font color="#990000">=</font> <b><font color="#000000">size_t</font></b><font color="#990000">(</font>B<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">())</font> <font color="#990000">/</font> n<font color="#990000">;</font>
+     <b><font color="#000000">CPPAD_ASSERT_KNOWN</font></b><font color="#990000">(</font>
+          <b><font color="#000000">size_t</font></b><font color="#990000">(</font>B<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">())</font> <font color="#990000">==</font> n <font color="#990000">*</font> m<font color="#990000">,</font>
+          <font color="#FF0000">"Error in LuSolve: B must have size equal to a multiple of n"</font>
+     <font color="#990000">);</font>
+
+     <i><font color="#9A1900">// temporary storage for reordered solution</font></i>
+     <font color="#008080">FloatVector</font> <b><font color="#000000">x</font></b><font color="#990000">(</font>n<font color="#990000">);</font>
+
+     <i><font color="#9A1900">// loop over equations</font></i>
+     <b><font color="#0000FF">for</font></b><font color="#990000">(</font>k <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> k <font color="#990000">&lt;</font> m<font color="#990000">;</font> k<font color="#990000">++)</font>
+     <font color="#FF0000">{</font>    <i><font color="#9A1900">// invert the equation c = L * b</font></i>
+          <b><font color="#0000FF">for</font></b><font color="#990000">(</font>p <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> p <font color="#990000">&lt;</font> n<font color="#990000">;</font> p<font color="#990000">++)</font>
+          <font color="#FF0000">{</font>    <i><font color="#9A1900">// solve for c[p]</font></i>
+               etmp <font color="#990000">=</font> B<font color="#990000">[</font> ip<font color="#990000">[</font>p<font color="#990000">]</font> <font color="#990000">*</font> m <font color="#990000">+</font> k <font color="#990000">]</font> <font color="#990000">/</font> LU<font color="#990000">[</font> ip<font color="#990000">[</font>p<font color="#990000">]</font> <font color="#990000">*</font> n <font color="#990000">+</font> jp<font color="#990000">[</font>p<font color="#990000">]</font> <font color="#990000">];</font>
+               B<font color="#990000">[</font> ip<font color="#990000">[</font>p<font color="#990000">]</font> <font color="#990000">*</font> m <font color="#990000">+</font> k <font color="#990000">]</font> <font color="#990000">=</font> etmp<font color="#990000">;</font>
+               <i><font color="#9A1900">// subtract off effect on other variables</font></i>
+               <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font> p<font color="#990000">+</font><font color="#993399">1</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> n<font color="#990000">;</font> i<font color="#990000">++)</font>
+                    B<font color="#990000">[</font> ip<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">*</font> m <font color="#990000">+</font> k <font color="#990000">]</font> <font color="#990000">-=</font>
+                         etmp <font color="#990000">*</font> LU<font color="#990000">[</font> ip<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">*</font> n <font color="#990000">+</font> jp<font color="#990000">[</font>p<font color="#990000">]</font> <font color="#990000">];</font>
+          <font color="#FF0000">}</font>
+
+          <i><font color="#9A1900">// invert the equation x = U * c</font></i>
+          p <font color="#990000">=</font> n<font color="#990000">;</font>
+          <b><font color="#0000FF">while</font></b><font color="#990000">(</font> p <font color="#990000">&gt;</font> <font color="#993399">0</font> <font color="#990000">)</font>
+          <font color="#FF0000">{</font>    <font color="#990000">--</font>p<font color="#990000">;</font>
+               etmp       <font color="#990000">=</font> B<font color="#990000">[</font> ip<font color="#990000">[</font>p<font color="#990000">]</font> <font color="#990000">*</font> m <font color="#990000">+</font> k <font color="#990000">];</font>
+               x<font color="#990000">[</font> jp<font color="#990000">[</font>p<font color="#990000">]</font> <font color="#990000">]</font> <font color="#990000">=</font> etmp<font color="#990000">;</font>
+               <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> p<font color="#990000">;</font> i<font color="#990000">++</font> <font color="#990000">)</font>
+                    B<font color="#990000">[</font> ip<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">*</font> m <font color="#990000">+</font> k <font color="#990000">]</font> <font color="#990000">-=</font>
+                         etmp <font color="#990000">*</font> LU<font color="#990000">[</font> ip<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">*</font> n <font color="#990000">+</font> jp<font color="#990000">[</font>p<font color="#990000">]</font> <font color="#990000">];</font>
+          <font color="#FF0000">}</font>
+
+          <i><font color="#9A1900">// copy reordered solution into B</font></i>
+          <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> n<font color="#990000">;</font> i<font color="#990000">++)</font>
+               B<font color="#990000">[</font>i <font color="#990000">*</font> m <font color="#990000">+</font> k<font color="#990000">]</font> <font color="#990000">=</font> x<font color="#990000">[</font>i<font color="#990000">];</font>
+     <font color="#FF0000">}</font>
+     <b><font color="#0000FF">return</font></b><font color="#990000">;</font>
+<font color="#FF0000">}</font>
+<font color="#FF0000">}</font> <i><font color="#9A1900">// END CppAD namespace</font></i></tt></pre>
+# endif
+</font></code>
+
+
+<hr>Input File: omh/lu_invert_hpp.omh
+
+</body>
+</html>

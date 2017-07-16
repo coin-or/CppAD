@@ -1,0 +1,203 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>Including the ColPack Sparsity Calculations</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Including the ColPack Sparsity Calculations">
+<meta name="keywords" id="keywords" content=" including the colpack sparsity calculations prefix get purpose colpack_prefix cppad_lib example get_colpack ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_colpack_prefix_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://coin-or.github.io/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="get_adolc.sh.htm" target="_top">Prev</a>
+</td><td><a href="colpack_jac.cpp.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>Install</option>
+<option>cmake</option>
+<option>colpack_prefix</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>CppAD-&gt;</option>
+<option>Install</option>
+<option>Introduction</option>
+<option>AD</option>
+<option>ADFun</option>
+<option>preprocessor</option>
+<option>multi_thread</option>
+<option>utility</option>
+<option>ipopt_solve</option>
+<option>Example</option>
+<option>speed</option>
+<option>Appendix</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>Install-&gt;</option>
+<option>download</option>
+<option>cmake</option>
+<option>cmake_check</option>
+<option>pkgconfig</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>cmake-&gt;</option>
+<option>adolc_prefix</option>
+<option>colpack_prefix</option>
+<option>eigen_prefix</option>
+<option>fadbad_prefix</option>
+<option>ipopt_prefix</option>
+<option>sacado_prefix</option>
+<option>cppad_testvector</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down0(this)'>
+<option>colpack_prefix-&gt;</option>
+<option>colpack_jac.cpp</option>
+<option>colpack_jacobian.cpp</option>
+<option>colpack_hes.cpp</option>
+<option>colpack_hessian.cpp</option>
+<option>get_colpack.sh</option>
+</select>
+</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Purpose</option>
+<option>colpack_prefix</option>
+<option>cppad_lib</option>
+<option>Example</option>
+<option>get_colpack</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@
+
+
+
+<center><b><big><big>Including the ColPack Sparsity Calculations</big></big></b></center>
+<br>
+<b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
+<br>
+If you specify a 
+<code><i><font color="black"><span style='white-space: nowrap'>colpack_prefix</span></font></i></code>
+ on the
+<a href="cmake.htm#CMake Command" target="_top"><span style='white-space: nowrap'>cmake&nbsp;command</span></a>
+ line,
+the CppAD <a href="sparse_jacobian.htm" target="_top"><span style='white-space: nowrap'>sparse_jacobian</span></a>
+ calculations use the
+<a href="http://cscapes.cs.purdue.edu/dox/ColPack/html" target="_top"><span style='white-space: nowrap'>ColPack</span></a>
+ package.
+
+<br>
+<br>
+<b><big><a name="colpack_prefix" id="colpack_prefix">colpack_prefix</a></big></b>
+<br>
+If ColPack is installed on your system, you can
+specify a value for its install 
+<code><i><font color="black"><span style='white-space: nowrap'>colpack_prefix</span></font></i></code>
+ on the
+<a href="cmake.htm" target="_top"><span style='white-space: nowrap'>cmake</span></a>
+ command line.
+The value of 
+<code><i><font color="black"><span style='white-space: nowrap'>colpack_prefix</span></font></i></code>
+ must be such that,
+for one of the directories 
+<code><i><font color="black"><span style='white-space: nowrap'>dir</span></font></i></code>
+ in
+<a href="cmake.htm#cmake_install_includedirs" target="_top"><span style='white-space: nowrap'>cmake_install_includedirs</span></a>
+,
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>colpack_prefix</span></font></i><font color="blue"><span style='white-space: nowrap'>/</span></font><i><font color="black"><span style='white-space: nowrap'>dir</span></font></i><font color="blue"><span style='white-space: nowrap'>/ColPack/ColPackHeaders.h<br>
+</span></font></code>
+is a valid way to reference to the include file <code><font color="blue">ColPackHeaders.h</font></code>.
+
+<br>
+<br>
+<b><big><a name="cppad_lib" id="cppad_lib">cppad_lib</a></big></b>
+<br>
+The ColPack header files has a
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;using&nbsp;namespace&nbsp;std<br>
+</span></font></code>
+at the global level.
+For this reason, CppAD does not include these files.
+It is therefore necessary to link the object library <code><font color="blue">cppad_lib</font></code>
+when using ColPack.
+
+
+<br>
+<br>
+<b><big><a name="Example" id="Example">Example</a></big></b>
+<br>
+The file <a href="colpack_jac.cpp.htm" target="_top"><span style='white-space: nowrap'>colpack_jac.cpp</span></a>
+ (<a href="colpack_hes.cpp.htm" target="_top"><span style='white-space: nowrap'>colpack_hes.cpp</span></a>
+)
+contains an example and test of using ColPack to compute the coloring for
+sparse Jacobians (Hessians).
+It returns true, if it succeeds and false otherwise.
+
+<br>
+<br>
+<b><big><a name="get_colpack" id="get_colpack">get_colpack</a></big></b>
+<br>
+If you are using Unix, you can download and install
+a copy of ColPack using <a href="get_colpack.sh.htm" target="_top"><span style='white-space: nowrap'>get_colpack.sh</span></a>
+.
+The corresponding 
+<code><i><font color="black"><span style='white-space: nowrap'>colpack_prefix</span></font></i></code>
+ would be
+<code><font color="blue">build/prefix</font></code>.
+
+
+<hr>Input File: omh/install/colpack_prefix.omh
+
+</body>
+</html>

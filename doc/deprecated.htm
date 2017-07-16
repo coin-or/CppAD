@@ -1,0 +1,181 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>CppAD Deprecated API Features</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="CppAD Deprecated API Features">
+<meta name="keywords" id="keywords" content=" cppad deprecated api features name changes atomic functions ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_deprecated_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://coin-or.github.io/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="whats_new_03.htm" target="_top">Prev</a>
+</td><td><a href="include_deprecated.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>Appendix</option>
+<option>deprecated</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>CppAD-&gt;</option>
+<option>Install</option>
+<option>Introduction</option>
+<option>AD</option>
+<option>ADFun</option>
+<option>preprocessor</option>
+<option>multi_thread</option>
+<option>utility</option>
+<option>ipopt_solve</option>
+<option>Example</option>
+<option>speed</option>
+<option>Appendix</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>Appendix-&gt;</option>
+<option>Faq</option>
+<option>directory</option>
+<option>Theory</option>
+<option>glossary</option>
+<option>Bib</option>
+<option>wish_list</option>
+<option>whats_new</option>
+<option>deprecated</option>
+<option>compare_c</option>
+<option>numeric_ad</option>
+<option>addon</option>
+<option>License</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down0(this)'>
+<option>deprecated-&gt;</option>
+<option>include_deprecated</option>
+<option>FunDeprecated</option>
+<option>CompareChange</option>
+<option>omp_max_thread</option>
+<option>TrackNewDel</option>
+<option>omp_alloc</option>
+<option>memory_leak</option>
+<option>epsilon</option>
+<option>test_vector</option>
+<option>cppad_ipopt_nlp</option>
+<option>old_atomic</option>
+<option>zdouble</option>
+<option>autotools</option>
+</select>
+</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Contents</option>
+<option>Name Changes</option>
+<option>Atomic Functions</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@
+
+
+<center><b><big><big>CppAD Deprecated API Features</big></big></b></center>
+<br>
+<b><big><a name="Contents" id="Contents">Contents</a></big></b>
+<br>
+<table>
+<tr><td><a href="include_deprecated.htm" target="_top">include_deprecated</a></td><td>Deprecated&nbsp;Include&nbsp;Files</td></tr><tr><td><a href="fundeprecated.htm" target="_top">FunDeprecated</a></td><td>ADFun&nbsp;Object&nbsp;Deprecated&nbsp;Member&nbsp;Functions</td></tr><tr><td><a href="comparechange.htm" target="_top">CompareChange</a></td><td>Comparison&nbsp;Changes&nbsp;During&nbsp;Zero&nbsp;Order&nbsp;Forward&nbsp;Mode</td></tr><tr><td><a href="omp_max_thread.htm" target="_top">omp_max_thread</a></td><td>OpenMP&nbsp;Parallel&nbsp;Setup</td></tr><tr><td><a href="tracknewdel.htm" target="_top">TrackNewDel</a></td><td>Routines&nbsp;That&nbsp;Track&nbsp;Use&nbsp;of&nbsp;New&nbsp;and&nbsp;Delete</td></tr><tr><td><a href="omp_alloc.htm" target="_top">omp_alloc</a></td><td>A&nbsp;Quick&nbsp;OpenMP&nbsp;Memory&nbsp;Allocator&nbsp;Used&nbsp;by&nbsp;CppAD</td></tr><tr><td><a href="memory_leak.htm" target="_top">memory_leak</a></td><td>Memory&nbsp;Leak&nbsp;Detection</td></tr><tr><td><a href="epsilon.htm" target="_top">epsilon</a></td><td>Machine&nbsp;Epsilon&nbsp;For&nbsp;AD&nbsp;Types</td></tr><tr><td><a href="test_vector.htm" target="_top">test_vector</a></td><td>Choosing&nbsp;The&nbsp;Vector&nbsp;Testing&nbsp;Template&nbsp;Class</td></tr><tr><td><a href="cppad_ipopt_nlp.htm" target="_top">cppad_ipopt_nlp</a></td><td>Nonlinear&nbsp;Programming&nbsp;Using&nbsp;the&nbsp;CppAD&nbsp;Interface&nbsp;to&nbsp;Ipopt</td></tr><tr><td><a href="old_atomic.htm" target="_top">old_atomic</a></td><td>User&nbsp;Defined&nbsp;Atomic&nbsp;AD&nbsp;Functions</td></tr><tr><td><a href="zdouble.htm" target="_top">zdouble</a></td><td>zdouble:&nbsp;An&nbsp;AD&nbsp;Base&nbsp;Type&nbsp;With&nbsp;Absolute&nbsp;Zero</td></tr><tr><td><a href="autotools.htm" target="_top">autotools</a></td><td>Autotools&nbsp;Unix&nbsp;Test&nbsp;and&nbsp;Installation</td></tr></table><br>
+<b><big><a name="Name Changes" id="Name Changes">Name Changes</a></big></b>
+
+<table><tr><td align='left'  valign='top'>
+
+<a href="boolfun.htm#Deprecated 2007-07-31" target="_top"><span style='white-space: nowrap'>CppADCreateUnaryBool</span></a>
+  </td><td align='left'  valign='top'>
+
+	AD Boolean Functions
+</td></tr><tr><td align='left'  valign='top'>
+
+<a href="discrete.htm#CppADCreateDiscrete Deprecated 2007-07-28" target="_top"><span style='white-space: nowrap'>CppADCreateDiscrete</span></a>
+  </td><td align='left'  valign='top'>
+
+	Discrete AD Functions
+</td></tr><tr><td align='left'  valign='top'>
+
+<a href="nan.htm#nan(zero)" target="_top"><span style='white-space: nowrap'>nan(zero)</span></a>
+ </td><td align='left'  valign='top'>
+ 
+<code><font color="blue"><span style='white-space: nowrap'>nan(</span></font><i><font color="black"><span style='white-space: nowrap'>zero</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+
+</td></tr><tr><td align='left'  valign='top'>
+
+<code><font color="blue">colpack.star</font></code> coloring </td><td align='left'  valign='top'>
+ see
+<a href="sparse_hes.htm#coloring.colpack.star Deprecated 2017-06-01" target="_top"><span style='white-space: nowrap'>sparse_hes</span></a>
+
+and
+<a href="sparse_hessian.htm#work.colpack.star Deprecated 2017-06-01" target="_top"><span style='white-space: nowrap'>sparse_hessian</span></a>
+
+
+</td></tr>
+</table>
+<br>
+<b><big><a name="Atomic Functions" id="Atomic Functions">Atomic Functions</a></big></b>
+<br>
+The following are links to deprecated <a href="atomic_base.htm" target="_top"><span style='white-space: nowrap'>atomic_base</span></a>
+ interfaces:
+<a href="atomic_for_sparse_jac.htm#Deprecated 2016-06-27" target="_top"><span style='white-space: nowrap'>for_sparse_jac</span></a>
+,
+<a href="atomic_rev_sparse_jac.htm#Deprecated 2016-06-27" target="_top"><span style='white-space: nowrap'>rev_sparse_jac</span></a>
+,
+<a href="atomic_for_sparse_hes.htm#Deprecated 2016-06-27" target="_top"><span style='white-space: nowrap'>for_sparse_hes</span></a>
+,
+<a href="atomic_rev_sparse_hes.htm#Deprecated 2016-06-27" target="_top"><span style='white-space: nowrap'>rev_sparse_hes</span></a>
+.
+
+
+
+<hr>Input File: omh/appendix/deprecated/deprecated.omh
+
+</body>
+</html>

@@ -1,0 +1,232 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>Compute Determinant using Expansion by Minors</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Compute Determinant using Expansion by Minors">
+<meta name="keywords" id="keywords" content=" compute determinant using expansion minors syntax purpose m source code ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_det_by_minor_c_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://coin-or.github.io/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="det_of_minor_c.htm" target="_top">Prev</a>
+</td><td><a href="uniform_01_c.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>Appendix</option>
+<option>compare_c</option>
+<option>det_by_minor_c</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>CppAD-&gt;</option>
+<option>Install</option>
+<option>Introduction</option>
+<option>AD</option>
+<option>ADFun</option>
+<option>preprocessor</option>
+<option>multi_thread</option>
+<option>utility</option>
+<option>ipopt_solve</option>
+<option>Example</option>
+<option>speed</option>
+<option>Appendix</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>Appendix-&gt;</option>
+<option>Faq</option>
+<option>directory</option>
+<option>Theory</option>
+<option>glossary</option>
+<option>Bib</option>
+<option>wish_list</option>
+<option>whats_new</option>
+<option>deprecated</option>
+<option>compare_c</option>
+<option>numeric_ad</option>
+<option>addon</option>
+<option>License</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>compare_c-&gt;</option>
+<option>det_of_minor_c</option>
+<option>det_by_minor_c</option>
+<option>uniform_01_c</option>
+<option>correct_det_by_minor_c</option>
+<option>repeat_det_by_minor_c</option>
+<option>elapsed_seconds_c</option>
+<option>time_det_by_minor_c</option>
+<option>main_compare_c</option>
+</select>
+</td>
+<td>det_by_minor_c</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Syntax</option>
+<option>Purpose</option>
+<option>a</option>
+<option>m</option>
+<option>Source Code</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>Compute Determinant using Expansion by Minors</big></big></b></center>
+<br>
+<b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
+
+<br>
+
+<code><i><font color="black"><span style='white-space: nowrap'>d</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;det_by_minor(</span></font><i><font color="black"><span style='white-space: nowrap'>a</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+
+
+<br>
+<br>
+<b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
+<br>
+returns the determinant of the matrix <small>@(@
+A
+@)@</small>
+using expansion by minors.
+The elements of the <small>@(@
+n \times n
+@)@</small> minor <small>@(@
+M
+@)@</small>
+of the matrix <small>@(@
+A
+@)@</small> are defined,
+for <small>@(@
+i = 0 , \ldots , n-1
+@)@</small> and <small>@(@
+j = 0 , \ldots , n-1
+@)@</small>, by
+<small>@[@
+
+	M_{i,j} = A_{i, j}
+
+@]@</small>
+
+<br>
+<br>
+<b><big><a name="a" id="a">a</a></big></b>
+<br>
+The argument 
+<code><i><font color="black"><span style='white-space: nowrap'>a</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;double*&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>a</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+and is a vector with size <small>@(@
+m * m
+@)@</small>.
+The elements of the <small>@(@
+m \times m
+@)@</small> matrix <small>@(@
+A
+@)@</small> are defined,
+for <small>@(@
+i = 0 , \ldots , m-1
+@)@</small> and <small>@(@
+j = 0 , \ldots , m-1
+@)@</small>, by
+<small>@[@
+
+	A_{i,j} = a[ i * m + j]
+
+@]@</small>
+
+<br>
+<br>
+<b><big><a name="m" id="m">m</a></big></b>
+<br>
+The argument 
+<code><i><font color="black"><span style='white-space: nowrap'>m</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>m</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+and is the number of rows (and columns) in the square matrix <small>@(@
+A
+@)@</small>.
+
+
+
+
+<br>
+<br>
+<b><big><a name="Source Code" id="Source Code">Source Code</a></big></b>
+
+<pre><tt><font color="#009900">double</font> <b><font color="#000000">det_by_minor</font></b><font color="#990000">(</font><font color="#009900">double</font><font color="#990000">*</font> a<font color="#990000">,</font> <font color="#008080">size_t</font> m<font color="#990000">)</font>
+<font color="#FF0000">{</font>    <font color="#008080">size_t</font> <font color="#990000">*</font>r<font color="#990000">,</font> <font color="#990000">*</font>c<font color="#990000">,</font> i<font color="#990000">;</font>
+     <font color="#009900">double</font> value<font color="#990000">;</font>
+
+     r <font color="#990000">=</font> <font color="#990000">(</font>size_t<font color="#990000">*)</font> <b><font color="#000000">malloc</font></b><font color="#990000">(</font> <font color="#990000">(</font>m<font color="#990000">+</font><font color="#993399">1</font><font color="#990000">)</font> <font color="#990000">*</font> <b><font color="#0000FF">sizeof</font></b><font color="#990000">(</font>size_t<font color="#990000">)</font> <font color="#990000">);</font>
+     c <font color="#990000">=</font> <font color="#990000">(</font>size_t<font color="#990000">*)</font> <b><font color="#000000">malloc</font></b><font color="#990000">(</font> <font color="#990000">(</font>m<font color="#990000">+</font><font color="#993399">1</font><font color="#990000">)</font> <font color="#990000">*</font> <b><font color="#0000FF">sizeof</font></b><font color="#990000">(</font>size_t<font color="#990000">)</font> <font color="#990000">);</font>
+
+     <b><font color="#000000">assert</font></b><font color="#990000">(</font>m <font color="#990000">&lt;=</font> <font color="#993399">100</font><font color="#990000">);</font>
+     <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> m<font color="#990000">;</font> i<font color="#990000">++)</font>
+     <font color="#FF0000">{</font>    r<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> i<font color="#990000">+</font><font color="#993399">1</font><font color="#990000">;</font>
+          c<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> i<font color="#990000">+</font><font color="#993399">1</font><font color="#990000">;</font>
+     <font color="#FF0000">}</font>
+     r<font color="#990000">[</font>m<font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
+     c<font color="#990000">[</font>m<font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
+
+     value <font color="#990000">=</font> <b><font color="#000000">det_of_minor</font></b><font color="#990000">(</font>a<font color="#990000">,</font> m<font color="#990000">,</font> m<font color="#990000">,</font> r<font color="#990000">,</font> c<font color="#990000">);</font>
+
+     <b><font color="#000000">free</font></b><font color="#990000">(</font>r<font color="#990000">);</font>
+     <b><font color="#000000">free</font></b><font color="#990000">(</font>c<font color="#990000">);</font>
+     <b><font color="#0000FF">return</font></b> value<font color="#990000">;</font>
+<font color="#FF0000">}</font></tt></pre>
+
+<hr>Input File: test_more/compare_c/det_by_minor.c
+
+</body>
+</html>

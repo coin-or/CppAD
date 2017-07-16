@@ -1,0 +1,161 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>CppAD Download, Test, and Install Instructions</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="CppAD Download, Test, and Install Instructions">
+<meta name="keywords" id="keywords" content=" cppad download test install instructions step 1: 2: cmake 3: check 4: installation deprecated ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_install_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://coin-or.github.io/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="_contents.htm" target="_top">Prev</a>
+</td><td><a href="download.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>Install</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>CppAD-&gt;</option>
+<option>Install</option>
+<option>Introduction</option>
+<option>AD</option>
+<option>ADFun</option>
+<option>preprocessor</option>
+<option>multi_thread</option>
+<option>utility</option>
+<option>ipopt_solve</option>
+<option>Example</option>
+<option>speed</option>
+<option>Appendix</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down0(this)'>
+<option>Install-&gt;</option>
+<option>download</option>
+<option>cmake</option>
+<option>cmake_check</option>
+<option>pkgconfig</option>
+</select>
+</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Instructions</option>
+<option>---..Step 1: Download</option>
+<option>---..Step 2: Cmake</option>
+<option>---..Step 3: Check</option>
+<option>---..Step 4: Installation</option>
+<option>Contents</option>
+<option>Deprecated</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>CppAD Download, Test, and Install Instructions</big></big></b></center>
+<br>
+<b><big><a name="Instructions" id="Instructions">Instructions</a></big></b>
+
+
+<br>
+<br>
+<b><a name="Instructions.Step 1: Download" id="Instructions.Step 1: Download">Step 1: Download</a></b>
+<br>
+Use the <a href="download.htm" target="_top"><span style='white-space: nowrap'>download</span></a>
+ instructions to obtain a copy or CppAD.
+
+<br>
+<br>
+<b><a name="Instructions.Step 2: Cmake" id="Instructions.Step 2: Cmake">Step 2: Cmake</a></b>
+<br>
+Use the <a href="cmake.htm" target="_top"><span style='white-space: nowrap'>cmake</span></a>
+ instructions to configure CppAD.
+
+<br>
+<br>
+<b><a name="Instructions.Step 3: Check" id="Instructions.Step 3: Check">Step 3: Check</a></b>
+<br>
+Use the <a href="cmake_check.htm" target="_top"><span style='white-space: nowrap'>cmake_check</span></a>
+ instructions to check the
+CppAD examples and tests.
+
+<br>
+<br>
+<b><a name="Instructions.Step 4: Installation" id="Instructions.Step 4: Installation">Step 4: Installation</a></b>
+<br>
+Use the command
+<code><font color='blue'><pre style='display:inline'> 
+     make install
+</pre></font></code>
+to install CppAD.
+If you created <code><font color="blue">nmake</font></code> makefiles, you will have
+to use
+<code><font color='blue'><pre style='display:inline'> 
+     nmake install
+</pre></font></code>
+see the
+<a href="cmake.htm#generator" target="_top"><span style='white-space: nowrap'>generator</span></a>
+ option for the <code><font color="blue">cmake</font></code> command.
+
+
+<br>
+<br>
+<b><big><a name="Contents" id="Contents">Contents</a></big></b>
+<br>
+<table>
+<tr><td><a href="download.htm" target="_top">download</a></td><td>Download&nbsp;The&nbsp;CppAD&nbsp;Source&nbsp;Code</td></tr><tr><td><a href="cmake.htm" target="_top">cmake</a></td><td>Using&nbsp;CMake&nbsp;to&nbsp;Configure&nbsp;CppAD</td></tr><tr><td><a href="cmake_check.htm" target="_top">cmake_check</a></td><td>Checking&nbsp;the&nbsp;CppAD&nbsp;Examples&nbsp;and&nbsp;Tests</td></tr><tr><td><a href="pkgconfig.htm" target="_top">pkgconfig</a></td><td>CppAD&nbsp;pkg-config&nbsp;Files</td></tr></table><br>
+<b><big><a name="Deprecated" id="Deprecated">Deprecated</a></big></b>
+
+<br>
+<a href="autotools.htm" target="_top"><span style='white-space: nowrap'>autotools</span></a>
+
+
+
+
+
+<hr>Input File: omh/install/install.omh
+
+</body>
+</html>

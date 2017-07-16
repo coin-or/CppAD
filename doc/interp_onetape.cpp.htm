@@ -1,0 +1,235 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>Interpolation With Out Retaping: Example and Test</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Interpolation With Out Retaping: Example and Test">
+<meta name="keywords" id="keywords" content=" interpolation with out retaping: example test interpolate tape retape see also ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_interp_onetape.cpp_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://coin-or.github.io/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="tape_index.cpp.htm" target="_top">Prev</a>
+</td><td><a href="interp_retape.cpp.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>AD</option>
+<option>ADValued</option>
+<option>Discrete</option>
+<option>interp_onetape.cpp</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>AD-&gt;</option>
+<option>ad_ctor</option>
+<option>ad_assign</option>
+<option>Convert</option>
+<option>ADValued</option>
+<option>BoolValued</option>
+<option>VecAD</option>
+<option>base_require</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>ADValued-&gt;</option>
+<option>Arithmetic</option>
+<option>unary_standard_math</option>
+<option>binary_math</option>
+<option>CondExp</option>
+<option>Discrete</option>
+<option>numeric_limits</option>
+<option>atomic</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>Discrete-&gt;</option>
+<option>tape_index.cpp</option>
+<option>interp_onetape.cpp</option>
+<option>interp_retape.cpp</option>
+</select>
+</td>
+<td>interp_onetape.cpp</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>See Also</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>Interpolation With Out Retaping: Example and Test</big></big></b></center>
+<br>
+<b><big><a name="See Also" id="See Also">See Also</a></big></b>
+
+<br>
+<a href="interp_retape.cpp.htm" target="_top"><span style='white-space: nowrap'>interp_retape.cpp</span></a>
+
+<code><span style='white-space: nowrap'><br>
+<br>
+</span></code><code><font color="blue"><pre><tt><b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/cppad.hpp&gt;</font>
+<b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cassert&gt;</font>
+<b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cmath&gt;</font>
+
+<b><font color="#0000FF">namespace</font></b> <font color="#FF0000">{</font>
+     <font color="#009900">double</font> ArgumentValue<font color="#990000">[]</font> <font color="#990000">=</font> <font color="#FF0000">{</font>
+          <font color="#990000">.</font><font color="#993399">0</font> <font color="#990000">,</font>
+          <font color="#990000">.</font><font color="#993399">2</font> <font color="#990000">,</font>
+          <font color="#990000">.</font><font color="#993399">4</font> <font color="#990000">,</font>
+          <font color="#990000">.</font><font color="#993399">8</font> <font color="#990000">,</font>
+          <font color="#993399">1</font><font color="#990000">.</font>
+     <font color="#FF0000">}</font><font color="#990000">;</font>
+     <font color="#009900">double</font> FunctionValue<font color="#990000">[]</font> <font color="#990000">=</font> <font color="#FF0000">{</font>
+          std<font color="#990000">::</font><b><font color="#000000">sin</font></b><font color="#990000">(</font> ArgumentValue<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">)</font> <font color="#990000">,</font>
+          std<font color="#990000">::</font><b><font color="#000000">sin</font></b><font color="#990000">(</font> ArgumentValue<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">)</font> <font color="#990000">,</font>
+          std<font color="#990000">::</font><b><font color="#000000">sin</font></b><font color="#990000">(</font> ArgumentValue<font color="#990000">[</font><font color="#993399">2</font><font color="#990000">]</font> <font color="#990000">)</font> <font color="#990000">,</font>
+          std<font color="#990000">::</font><b><font color="#000000">sin</font></b><font color="#990000">(</font> ArgumentValue<font color="#990000">[</font><font color="#993399">3</font><font color="#990000">]</font> <font color="#990000">)</font> <font color="#990000">,</font>
+          std<font color="#990000">::</font><b><font color="#000000">sin</font></b><font color="#990000">(</font> ArgumentValue<font color="#990000">[</font><font color="#993399">4</font><font color="#990000">]</font> <font color="#990000">)</font>
+     <font color="#FF0000">}</font><font color="#990000">;</font>
+     <font color="#008080">size_t</font> TableLength <font color="#990000">=</font> <font color="#993399">5</font><font color="#990000">;</font>
+
+     <font color="#008080">size_t</font> <b><font color="#000000">Index</font></b><font color="#990000">(</font><b><font color="#0000FF">const</font></b> <font color="#009900">double</font> <font color="#990000">&amp;</font>x<font color="#990000">)</font>
+     <font color="#FF0000">{</font>    <i><font color="#9A1900">// determine the index j such that x is between</font></i>
+          <i><font color="#9A1900">// ArgumentValue[j] and ArgumentValue[j+1]</font></i>
+          <b><font color="#0000FF">static</font></b> <font color="#008080">size_t</font> j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
+          <b><font color="#0000FF">while</font></b> <font color="#990000">(</font> x <font color="#990000">&lt;</font> ArgumentValue<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">&amp;&amp;</font> j <font color="#990000">&gt;</font> <font color="#993399">0</font> <font color="#990000">)</font>
+               j<font color="#990000">--;</font>
+          <b><font color="#0000FF">while</font></b> <font color="#990000">(</font> x <font color="#990000">&gt;</font> ArgumentValue<font color="#990000">[</font>j<font color="#990000">+</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">&amp;&amp;</font> j <font color="#990000">&lt;</font> TableLength <font color="#990000">-</font> <font color="#993399">2</font><font color="#990000">)</font>
+               j<font color="#990000">++;</font>
+          <i><font color="#9A1900">// assert conditions that must be true given logic above</font></i>
+          <b><font color="#000000">assert</font></b><font color="#990000">(</font> j <font color="#990000">&gt;=</font> <font color="#993399">0</font> <font color="#990000">&amp;&amp;</font> j <font color="#990000">&lt;</font> TableLength <font color="#990000">-</font> <font color="#993399">1</font> <font color="#990000">);</font>
+          <b><font color="#0000FF">return</font></b> j<font color="#990000">;</font>
+     <font color="#FF0000">}</font>
+
+     <font color="#009900">double</font> <b><font color="#000000">Argument</font></b><font color="#990000">(</font><b><font color="#0000FF">const</font></b> <font color="#009900">double</font> <font color="#990000">&amp;</font>x<font color="#990000">)</font>
+     <font color="#FF0000">{</font>    <font color="#008080">size_t</font> j <font color="#990000">=</font> <b><font color="#000000">Index</font></b><font color="#990000">(</font>x<font color="#990000">);</font>
+          <b><font color="#0000FF">return</font></b> ArgumentValue<font color="#990000">[</font>j<font color="#990000">];</font>
+     <font color="#FF0000">}</font>
+     <font color="#009900">double</font> <b><font color="#000000">Function</font></b><font color="#990000">(</font><b><font color="#0000FF">const</font></b> <font color="#009900">double</font> <font color="#990000">&amp;</font>x<font color="#990000">)</font>
+     <font color="#FF0000">{</font>    <font color="#008080">size_t</font> j <font color="#990000">=</font> <b><font color="#000000">Index</font></b><font color="#990000">(</font>x<font color="#990000">);</font>
+          <b><font color="#0000FF">return</font></b> FunctionValue<font color="#990000">[</font>j<font color="#990000">];</font>
+     <font color="#FF0000">}</font>
+
+     <font color="#009900">double</font> <b><font color="#000000">Slope</font></b><font color="#990000">(</font><b><font color="#0000FF">const</font></b> <font color="#009900">double</font> <font color="#990000">&amp;</font>x<font color="#990000">)</font>
+     <font color="#FF0000">{</font>    <font color="#008080">size_t</font> j  <font color="#990000">=</font> <b><font color="#000000">Index</font></b><font color="#990000">(</font>x<font color="#990000">);</font>
+          <font color="#009900">double</font> dx <font color="#990000">=</font> ArgumentValue<font color="#990000">[</font>j<font color="#990000">+</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">-</font> ArgumentValue<font color="#990000">[</font>j<font color="#990000">];</font>
+          <font color="#009900">double</font> dy <font color="#990000">=</font> FunctionValue<font color="#990000">[</font>j<font color="#990000">+</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">-</font> FunctionValue<font color="#990000">[</font>j<font color="#990000">];</font>
+          <b><font color="#0000FF">return</font></b> dy <font color="#990000">/</font> dx<font color="#990000">;</font>
+     <font color="#FF0000">}</font>
+     <b><font color="#000000">CPPAD_DISCRETE_FUNCTION</font></b><font color="#990000">(</font><font color="#009900">double</font><font color="#990000">,</font> Argument<font color="#990000">)</font>
+     <b><font color="#000000">CPPAD_DISCRETE_FUNCTION</font></b><font color="#990000">(</font><font color="#009900">double</font><font color="#990000">,</font> Function<font color="#990000">)</font>
+     <b><font color="#000000">CPPAD_DISCRETE_FUNCTION</font></b><font color="#990000">(</font><font color="#009900">double</font><font color="#990000">,</font> Slope<font color="#990000">)</font>
+<font color="#FF0000">}</font>
+
+
+<font color="#009900">bool</font> <b><font color="#000000">interp_onetape</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
+<font color="#FF0000">{</font>    <font color="#009900">bool</font> ok <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
+
+     <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>AD<font color="#990000">;</font>
+     <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>NearEqual<font color="#990000">;</font>
+     <font color="#009900">double</font> eps99 <font color="#990000">=</font> <font color="#993399">99.0</font> <font color="#990000">*</font> std<font color="#990000">::</font>numeric_limits<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;::</font><b><font color="#000000">epsilon</font></b><font color="#990000">();</font>
+
+     <i><font color="#9A1900">// domain space vector</font></i>
+     <font color="#008080">size_t</font> n <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font>
+     <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font>AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;)</font> <b><font color="#000000">X</font></b><font color="#990000">(</font>n<font color="#990000">);</font>
+     X<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#990000">.</font><font color="#993399">4</font> <font color="#990000">*</font> ArgumentValue<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">+</font> <font color="#990000">.</font><font color="#993399">6</font> <font color="#990000">*</font> ArgumentValue<font color="#990000">[</font><font color="#993399">2</font><font color="#990000">];</font>
+
+     <i><font color="#9A1900">// declare independent variables and start tape recording</font></i>
+     CppAD<font color="#990000">::</font><b><font color="#000000">Independent</font></b><font color="#990000">(</font>X<font color="#990000">);</font>
+
+     <i><font color="#9A1900">// evaluate piecewise linear interpolant at X[0]</font></i>
+     <font color="#008080">AD&lt;double&gt;</font> A <font color="#990000">=</font> <b><font color="#000000">Argument</font></b><font color="#990000">(</font>X<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]);</font>
+     <font color="#008080">AD&lt;double&gt;</font> F <font color="#990000">=</font> <b><font color="#000000">Function</font></b><font color="#990000">(</font>X<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]);</font>
+     <font color="#008080">AD&lt;double&gt;</font> S <font color="#990000">=</font> <b><font color="#000000">Slope</font></b><font color="#990000">(</font>X<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]);</font>
+     <font color="#008080">AD&lt;double&gt;</font> I <font color="#990000">=</font> F <font color="#990000">+</font> <font color="#990000">(</font>X<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">-</font> A<font color="#990000">)</font> <font color="#990000">*</font> S<font color="#990000">;</font>
+
+     <i><font color="#9A1900">// range space vector</font></i>
+     <font color="#008080">size_t</font> m <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font>
+     <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font>AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;)</font> <b><font color="#000000">Y</font></b><font color="#990000">(</font>m<font color="#990000">);</font>
+     Y<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> I<font color="#990000">;</font>
+
+     <i><font color="#9A1900">// create f: X -&gt; Y and stop tape recording</font></i>
+     CppAD<font color="#990000">::</font><font color="#008080">ADFun&lt;double&gt;</font> <b><font color="#000000">f</font></b><font color="#990000">(</font>X<font color="#990000">,</font> Y<font color="#990000">);</font>
+
+     <i><font color="#9A1900">// vectors for arguments to the function object f</font></i>
+     <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font><font color="#009900">double</font><font color="#990000">)</font> <b><font color="#000000">x</font></b><font color="#990000">(</font>n<font color="#990000">);</font>   <i><font color="#9A1900">// argument values</font></i>
+     <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font><font color="#009900">double</font><font color="#990000">)</font> <b><font color="#000000">y</font></b><font color="#990000">(</font>m<font color="#990000">);</font>   <i><font color="#9A1900">// function values</font></i>
+     <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font><font color="#009900">double</font><font color="#990000">)</font> <b><font color="#000000">dx</font></b><font color="#990000">(</font>n<font color="#990000">);</font>  <i><font color="#9A1900">// differentials in x space</font></i>
+     <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font><font color="#009900">double</font><font color="#990000">)</font> <b><font color="#000000">dy</font></b><font color="#990000">(</font>m<font color="#990000">);</font>  <i><font color="#9A1900">// differentials in y space</font></i>
+
+     <i><font color="#9A1900">// to check function value we use the fact that X[0] is between</font></i>
+     <i><font color="#9A1900">// ArgumentValue[1] and ArgumentValue[2]</font></i>
+     x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font>          <font color="#990000">=</font> <b><font color="#000000">Value</font></b><font color="#990000">(</font>X<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]);</font>
+     <font color="#009900">double</font> delta  <font color="#990000">=</font> ArgumentValue<font color="#990000">[</font><font color="#993399">2</font><font color="#990000">]</font> <font color="#990000">-</font> ArgumentValue<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">];</font>
+     <font color="#009900">double</font> check  <font color="#990000">=</font> FunctionValue<font color="#990000">[</font><font color="#993399">2</font><font color="#990000">]</font> <font color="#990000">*</font> <font color="#990000">(</font>x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">-</font> ArgumentValue<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">])</font> <font color="#990000">/</font> delta
+                   <font color="#990000">+</font> FunctionValue<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">*</font> <font color="#990000">(</font>ArgumentValue<font color="#990000">[</font><font color="#993399">2</font><font color="#990000">]</font> <font color="#990000">-</font> x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">])</font> <font color="#990000">/</font> delta<font color="#990000">;</font>
+     ok  <font color="#990000">&amp;=</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>Y<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">],</font> check<font color="#990000">,</font> eps99<font color="#990000">,</font> eps99<font color="#990000">);</font>
+
+     <i><font color="#9A1900">// evaluate f where x has different value</font></i>
+     x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font>   <font color="#990000">=</font> <font color="#990000">.</font><font color="#993399">7</font> <font color="#990000">*</font> ArgumentValue<font color="#990000">[</font><font color="#993399">2</font><font color="#990000">]</font> <font color="#990000">+</font> <font color="#990000">.</font><font color="#993399">3</font> <font color="#990000">*</font> ArgumentValue<font color="#990000">[</font><font color="#993399">3</font><font color="#990000">];</font>
+     y      <font color="#990000">=</font> f<font color="#990000">.</font><b><font color="#000000">Forward</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">,</font> x<font color="#990000">);</font>
+
+     <i><font color="#9A1900">// check function value</font></i>
+     delta  <font color="#990000">=</font> ArgumentValue<font color="#990000">[</font><font color="#993399">3</font><font color="#990000">]</font> <font color="#990000">-</font> ArgumentValue<font color="#990000">[</font><font color="#993399">2</font><font color="#990000">];</font>
+     check  <font color="#990000">=</font> FunctionValue<font color="#990000">[</font><font color="#993399">3</font><font color="#990000">]</font> <font color="#990000">*</font> <font color="#990000">(</font>x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">-</font> ArgumentValue<font color="#990000">[</font><font color="#993399">2</font><font color="#990000">])</font> <font color="#990000">/</font> delta
+                   <font color="#990000">+</font> FunctionValue<font color="#990000">[</font><font color="#993399">2</font><font color="#990000">]</font> <font color="#990000">*</font> <font color="#990000">(</font>ArgumentValue<font color="#990000">[</font><font color="#993399">3</font><font color="#990000">]</font> <font color="#990000">-</font> x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">])</font> <font color="#990000">/</font> delta<font color="#990000">;</font>
+     ok  <font color="#990000">&amp;=</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>y<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">],</font> check<font color="#990000">,</font> eps99<font color="#990000">,</font> eps99<font color="#990000">);</font>
+
+     <i><font color="#9A1900">// evaluate partials w.r.t. x[0]</font></i>
+     dx<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">.;</font>
+     dy    <font color="#990000">=</font> f<font color="#990000">.</font><b><font color="#000000">Forward</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">,</font> dx<font color="#990000">);</font>
+
+     <i><font color="#9A1900">// check that the derivative is the slope</font></i>
+     check <font color="#990000">=</font> <font color="#990000">(</font>FunctionValue<font color="#990000">[</font><font color="#993399">3</font><font color="#990000">]</font> <font color="#990000">-</font> FunctionValue<font color="#990000">[</font><font color="#993399">2</font><font color="#990000">])</font>
+           <font color="#990000">/</font> <font color="#990000">(</font>ArgumentValue<font color="#990000">[</font><font color="#993399">3</font><font color="#990000">]</font> <font color="#990000">-</font> ArgumentValue<font color="#990000">[</font><font color="#993399">2</font><font color="#990000">]);</font>
+     ok   <font color="#990000">&amp;=</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>dy<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">],</font> check<font color="#990000">,</font> eps99<font color="#990000">,</font> eps99<font color="#990000">);</font>
+
+     <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
+<font color="#FF0000">}</font>
+</tt></pre>
+</font></code>
+<hr>Input File: example/general/interp_onetape.cpp
+
+</body>
+</html>

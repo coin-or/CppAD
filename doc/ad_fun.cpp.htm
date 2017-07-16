@@ -1,0 +1,217 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>Creating Your Own Interface to an ADFun Object</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Creating Your Own Interface to an ADFun Object">
+<meta name="keywords" id="keywords" content=" creating your own interface to adfun object example test ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_ad_fun.cpp_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://coin-or.github.io/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="general.htm" target="_top">Prev</a>
+</td><td><a href="ad_in_c.cpp.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>Example</option>
+<option>General</option>
+<option>ad_fun.cpp</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>CppAD-&gt;</option>
+<option>Install</option>
+<option>Introduction</option>
+<option>AD</option>
+<option>ADFun</option>
+<option>preprocessor</option>
+<option>multi_thread</option>
+<option>utility</option>
+<option>ipopt_solve</option>
+<option>Example</option>
+<option>speed</option>
+<option>Appendix</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>Example-&gt;</option>
+<option>get_started.cpp</option>
+<option>General</option>
+<option>ExampleUtility</option>
+<option>ListAllExamples</option>
+<option>testvector</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>General-&gt;</option>
+<option>ad_fun.cpp</option>
+<option>ad_in_c.cpp</option>
+<option>conj_grad.cpp</option>
+<option>cppad_eigen.hpp</option>
+<option>hes_minor_det.cpp</option>
+<option>hes_lu_det.cpp</option>
+<option>interface2c.cpp</option>
+<option>jac_minor_det.cpp</option>
+<option>jac_lu_det.cpp</option>
+<option>mul_level</option>
+<option>ode_stiff.cpp</option>
+<option>mul_level_ode.cpp</option>
+<option>mul_level_adolc_ode.cpp</option>
+<option>ode_taylor.cpp</option>
+<option>stack_machine.cpp</option>
+</select>
+</td>
+<td>ad_fun.cpp</td>
+<td>Headings</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>Creating Your Own Interface to an ADFun Object</big></big></b></center>
+<code><font color="blue"><pre><tt>
+<b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/cppad.hpp&gt;</font>
+
+<b><font color="#0000FF">namespace</font></b> <font color="#FF0000">{</font>
+
+     <i><font color="#9A1900">// This class is an example of a different interface to an AD function object</font></i>
+     <b><font color="#0000FF">template</font></b> <font color="#990000">&lt;</font><b><font color="#0000FF">class</font></b> <font color="#008080">Base</font><font color="#990000">&gt;</font>
+     <b><font color="#0000FF">class</font></b> <font color="#008080">my_ad_fun</font> <font color="#FF0000">{</font>
+
+     <b><font color="#0000FF">private</font></b><font color="#990000">:</font>
+          CppAD<font color="#990000">::</font><font color="#008080">ADFun&lt;Base&gt;</font> f<font color="#990000">;</font>
+
+     <b><font color="#0000FF">public</font></b><font color="#990000">:</font>
+          <i><font color="#9A1900">// default constructor</font></i>
+          <b><font color="#000000">my_ad_fun</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
+          <font color="#FF0000">{</font> <font color="#FF0000">}</font>
+
+          <i><font color="#9A1900">// destructor</font></i>
+          <font color="#990000">~</font> <b><font color="#000000">my_ad_fun</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
+          <font color="#FF0000">{</font> <font color="#FF0000">}</font>
+
+          <i><font color="#9A1900">// Construct an my_ad_fun object with an operation sequence.</font></i>
+          <i><font color="#9A1900">// This is the same as for ADFun&lt;Base&gt; except that no zero</font></i>
+          <i><font color="#9A1900">// order forward sweep is done. Note Hessian and Jacobian do</font></i>
+          <i><font color="#9A1900">// their own zero order forward mode sweep.</font></i>
+          <b><font color="#0000FF">template</font></b> <font color="#990000">&lt;</font><b><font color="#0000FF">class</font></b> <font color="#008080">ADvector</font><font color="#990000">&gt;</font>
+          <b><font color="#000000">my_ad_fun</font></b><font color="#990000">(</font><b><font color="#0000FF">const</font></b> ADvector<font color="#990000">&amp;</font> x<font color="#990000">,</font> <b><font color="#0000FF">const</font></b> ADvector<font color="#990000">&amp;</font> y<font color="#990000">)</font>
+          <font color="#FF0000">{</font>    f<font color="#990000">.</font><b><font color="#000000">Dependent</font></b><font color="#990000">(</font>x<font color="#990000">,</font> y<font color="#990000">);</font> <font color="#FF0000">}</font>
+
+          <i><font color="#9A1900">// same as ADFun&lt;Base&gt;::Jacobian</font></i>
+          <b><font color="#0000FF">template</font></b> <font color="#990000">&lt;</font><b><font color="#0000FF">class</font></b> <font color="#008080">VectorBase</font><font color="#990000">&gt;</font>
+          <font color="#008080">VectorBase</font> <b><font color="#000000">jacobian</font></b><font color="#990000">(</font><b><font color="#0000FF">const</font></b> VectorBase<font color="#990000">&amp;</font> x<font color="#990000">)</font>
+          <font color="#FF0000">{</font>    <b><font color="#0000FF">return</font></b> f<font color="#990000">.</font><b><font color="#000000">Jacobian</font></b><font color="#990000">(</font>x<font color="#990000">);</font> <font color="#FF0000">}</font>
+
+          <i><font color="#9A1900">// same as ADFun&lt;Base&gt;::Hessian</font></i>
+             <b><font color="#0000FF">template</font></b> <font color="#990000">&lt;</font><b><font color="#0000FF">typename</font></b> <font color="#008080">VectorBase</font><font color="#990000">&gt;</font>
+          <font color="#008080">VectorBase</font> <b><font color="#000000">hessian</font></b><font color="#990000">(</font><b><font color="#0000FF">const</font></b> <font color="#008080">VectorBase</font> <font color="#990000">&amp;</font>x<font color="#990000">,</font> <b><font color="#0000FF">const</font></b> <font color="#008080">VectorBase</font> <font color="#990000">&amp;</font>w<font color="#990000">)</font>
+          <font color="#FF0000">{</font>    <b><font color="#0000FF">return</font></b> f<font color="#990000">.</font><b><font color="#000000">Hessian</font></b><font color="#990000">(</font>x<font color="#990000">,</font> w<font color="#990000">);</font> <font color="#FF0000">}</font>
+     <font color="#FF0000">}</font><font color="#990000">;</font>
+
+<font color="#FF0000">}</font> <i><font color="#9A1900">// End empty namespace</font></i>
+
+<font color="#009900">bool</font> <b><font color="#000000">ad_fun</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
+<font color="#FF0000">{</font>    <i><font color="#9A1900">// This example is similar to example/jacobian.cpp, except that it</font></i>
+     <i><font color="#9A1900">// uses my_ad_fun instead of ADFun.</font></i>
+
+     <font color="#009900">bool</font> ok <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
+     <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>AD<font color="#990000">;</font>
+     <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>NearEqual<font color="#990000">;</font>
+     <font color="#009900">double</font> eps99 <font color="#990000">=</font> <font color="#993399">99.0</font> <font color="#990000">*</font> std<font color="#990000">::</font>numeric_limits<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;::</font><b><font color="#000000">epsilon</font></b><font color="#990000">();</font>
+     <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>exp<font color="#990000">;</font>
+     <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>sin<font color="#990000">;</font>
+     <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>cos<font color="#990000">;</font>
+
+     <i><font color="#9A1900">// domain space vector</font></i>
+     <font color="#008080">size_t</font> n <font color="#990000">=</font> <font color="#993399">2</font><font color="#990000">;</font>
+     <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font>AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;)</font>  <b><font color="#000000">X</font></b><font color="#990000">(</font>n<font color="#990000">);</font>
+     X<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">.;</font>
+     X<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">2</font><font color="#990000">.;</font>
+
+     <i><font color="#9A1900">// declare independent variables and starting recording</font></i>
+     CppAD<font color="#990000">::</font><b><font color="#000000">Independent</font></b><font color="#990000">(</font>X<font color="#990000">);</font>
+
+     <i><font color="#9A1900">// a calculation between the domain and range values</font></i>
+     <font color="#008080">AD&lt;double&gt;</font> Square <font color="#990000">=</font> X<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">*</font> X<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">];</font>
+
+     <i><font color="#9A1900">// range space vector</font></i>
+     <font color="#008080">size_t</font> m <font color="#990000">=</font> <font color="#993399">3</font><font color="#990000">;</font>
+     <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font>AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;)</font>  <b><font color="#000000">Y</font></b><font color="#990000">(</font>m<font color="#990000">);</font>
+     Y<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> Square <font color="#990000">*</font> <b><font color="#000000">exp</font></b><font color="#990000">(</font> X<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">);</font>
+     Y<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">=</font> Square <font color="#990000">*</font> <b><font color="#000000">sin</font></b><font color="#990000">(</font> X<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">);</font>
+     Y<font color="#990000">[</font><font color="#993399">2</font><font color="#990000">]</font> <font color="#990000">=</font> Square <font color="#990000">*</font> <b><font color="#000000">cos</font></b><font color="#990000">(</font> X<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">);</font>
+
+     <i><font color="#9A1900">// create f: X -&gt; Y and stop tape recording</font></i>
+     <font color="#008080">my_ad_fun&lt;double&gt;</font> <b><font color="#000000">f</font></b><font color="#990000">(</font>X<font color="#990000">,</font> Y<font color="#990000">);</font>
+
+     <i><font color="#9A1900">// new value for the independent variable vector</font></i>
+     <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font><font color="#009900">double</font><font color="#990000">)</font> <b><font color="#000000">x</font></b><font color="#990000">(</font>n<font color="#990000">);</font>
+     x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">2</font><font color="#990000">.;</font>
+     x<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">.;</font>
+
+     <i><font color="#9A1900">// compute the derivative at this x</font></i>
+     <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font><font color="#009900">double</font><font color="#990000">)</font> <b><font color="#000000">jac</font></b><font color="#990000">(</font> m <font color="#990000">*</font> n <font color="#990000">);</font>
+     jac <font color="#990000">=</font> f<font color="#990000">.</font><b><font color="#000000">jacobian</font></b><font color="#990000">(</font>x<font color="#990000">);</font>
+
+     <i><font color="#9A1900">/*</font></i>
+<i><font color="#9A1900">     F'(x) = [ 2 * x[0] * exp(x[1]) ,  x[0] * x[0] * exp(x[1]) ]</font></i>
+<i><font color="#9A1900">             [ 2 * x[0] * sin(x[1]) ,  x[0] * x[0] * cos(x[1]) ]</font></i>
+<i><font color="#9A1900">             [ 2 * x[0] * cos(x[1]) , -x[0] * x[0] * sin(x[i]) ]</font></i>
+<i><font color="#9A1900">     */</font></i>
+     ok <font color="#990000">&amp;=</font>  <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font> <font color="#993399">2</font><font color="#990000">.*</font>x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]*</font><b><font color="#000000">exp</font></b><font color="#990000">(</font>x<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]),</font> jac<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">*</font>n<font color="#990000">+</font><font color="#993399">0</font><font color="#990000">],</font> eps99<font color="#990000">,</font> eps99<font color="#990000">);</font>
+     ok <font color="#990000">&amp;=</font>  <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font> <font color="#993399">2</font><font color="#990000">.*</font>x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]*</font><b><font color="#000000">sin</font></b><font color="#990000">(</font>x<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]),</font> jac<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">*</font>n<font color="#990000">+</font><font color="#993399">0</font><font color="#990000">],</font> eps99<font color="#990000">,</font> eps99<font color="#990000">);</font>
+     ok <font color="#990000">&amp;=</font>  <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font> <font color="#993399">2</font><font color="#990000">.*</font>x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]*</font><b><font color="#000000">cos</font></b><font color="#990000">(</font>x<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]),</font> jac<font color="#990000">[</font><font color="#993399">2</font><font color="#990000">*</font>n<font color="#990000">+</font><font color="#993399">0</font><font color="#990000">],</font> eps99<font color="#990000">,</font> eps99<font color="#990000">);</font>
+
+     ok <font color="#990000">&amp;=</font>  <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font> x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">*</font> x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">*</font><b><font color="#000000">exp</font></b><font color="#990000">(</font>x<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]),</font> jac<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">*</font>n<font color="#990000">+</font><font color="#993399">1</font><font color="#990000">],</font> eps99<font color="#990000">,</font> eps99<font color="#990000">);</font>
+     ok <font color="#990000">&amp;=</font>  <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font> x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">*</font> x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">*</font><b><font color="#000000">cos</font></b><font color="#990000">(</font>x<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]),</font> jac<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">*</font>n<font color="#990000">+</font><font color="#993399">1</font><font color="#990000">],</font> eps99<font color="#990000">,</font> eps99<font color="#990000">);</font>
+     ok <font color="#990000">&amp;=</font>  <b><font color="#000000">NearEqual</font></b><font color="#990000">(-</font>x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">*</font> x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">*</font><b><font color="#000000">sin</font></b><font color="#990000">(</font>x<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]),</font> jac<font color="#990000">[</font><font color="#993399">2</font><font color="#990000">*</font>n<font color="#990000">+</font><font color="#993399">1</font><font color="#990000">],</font> eps99<font color="#990000">,</font> eps99<font color="#990000">);</font>
+
+     <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
+<font color="#FF0000">}</font>
+
+</tt></pre>
+</font></code>
+<hr>Input File: example/general/ad_fun.cpp
+
+</body>
+</html>

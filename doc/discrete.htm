@@ -1,0 +1,355 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>Discrete AD Functions</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Discrete AD Functions">
+<meta name="keywords" id="keywords" content=" discrete ad functions Cppad_discrete_function syntax purpose base name x y ax ay create version operation sequence derivatives parallel mode example cppadcreatediscrete deprecated 2007-07-28 ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_discrete_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://coin-or.github.io/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="cond_exp.cpp.htm" target="_top">Prev</a>
+</td><td><a href="tape_index.cpp.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>AD</option>
+<option>ADValued</option>
+<option>Discrete</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>CppAD-&gt;</option>
+<option>Install</option>
+<option>Introduction</option>
+<option>AD</option>
+<option>ADFun</option>
+<option>preprocessor</option>
+<option>multi_thread</option>
+<option>utility</option>
+<option>ipopt_solve</option>
+<option>Example</option>
+<option>speed</option>
+<option>Appendix</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>AD-&gt;</option>
+<option>ad_ctor</option>
+<option>ad_assign</option>
+<option>Convert</option>
+<option>ADValued</option>
+<option>BoolValued</option>
+<option>VecAD</option>
+<option>base_require</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>ADValued-&gt;</option>
+<option>Arithmetic</option>
+<option>unary_standard_math</option>
+<option>binary_math</option>
+<option>CondExp</option>
+<option>Discrete</option>
+<option>numeric_limits</option>
+<option>atomic</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down0(this)'>
+<option>Discrete-&gt;</option>
+<option>tape_index.cpp</option>
+<option>interp_onetape.cpp</option>
+<option>interp_retape.cpp</option>
+</select>
+</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Syntax</option>
+<option>Purpose</option>
+<option>Base</option>
+<option>name</option>
+<option>x</option>
+<option>y</option>
+<option>ax</option>
+<option>ay</option>
+<option>Create AD Version</option>
+<option>Operation Sequence</option>
+<option>Derivatives</option>
+<option>Parallel Mode</option>
+<option>Example</option>
+<option>CppADCreateDiscrete Deprecated 2007-07-28</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>Discrete AD Functions</big></big></b></center>
+<br>
+<b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
+
+<br>
+
+<code><font color="blue"><span style='white-space: nowrap'>CPPAD_DISCRETE_FUNCTION(</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>name</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+
+<code><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>name</span></font></i><font color="blue"><span style='white-space: nowrap'>(</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+
+<code><i><font color="black"><span style='white-space: nowrap'>ay</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>name</span></font></i><font color="blue"><span style='white-space: nowrap'>(</span></font><i><font color="black"><span style='white-space: nowrap'>ax</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+<br>
+<b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
+<br>
+Record the evaluation of a discrete function as part
+of an 
+<code><font color="blue"><span style='white-space: nowrap'>AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code>
+
+<a href="glossary.htm#Operation.Sequence" target="_top"><span style='white-space: nowrap'>operation&nbsp;sequence</span></a>
+.
+The value of a discrete function can depend on the
+<a href="glossary.htm#Tape.Independent Variable" target="_top"><span style='white-space: nowrap'>independent&nbsp;variables</span></a>
+,
+but its derivative is identically zero.
+For example, suppose that the integer part of
+a <a href="glossary.htm#Variable" target="_top"><span style='white-space: nowrap'>variable</span></a>
+ 
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+ is the
+index into an array of values.
+
+<br>
+<br>
+<b><big><a name="Base" id="Base">Base</a></big></b>
+<br>
+This is the
+<a href="base_require.htm" target="_top"><span style='white-space: nowrap'>base&nbsp;type</span></a>
+
+corresponding to the operations sequence;
+i.e., use of the 
+<code><i><font color="black"><span style='white-space: nowrap'>name</span></font></i></code>
+ with arguments of type
+
+<code><font color="blue"><span style='white-space: nowrap'>AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code>
+ can be recorded in an operation sequence.
+
+<br>
+<br>
+<b><big><a name="name" id="name">name</a></big></b>
+<br>
+This is the name of the function (as it is used in the source code).
+The user must provide a version of 
+<code><i><font color="black"><span style='white-space: nowrap'>name</span></font></i></code>
+
+where the argument has type 
+<code><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i></code>
+.
+CppAD uses this to create a version of 
+<code><i><font color="black"><span style='white-space: nowrap'>name</span></font></i></code>
+
+where the argument has type 
+<code><font color="blue"><span style='white-space: nowrap'>AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code>
+.
+
+<br>
+<br>
+<b><big><a name="x" id="x">x</a></big></b>
+<br>
+The argument 
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+It is the value at which the user provided version of 
+<code><i><font color="black"><span style='white-space: nowrap'>name</span></font></i></code>
+
+is to be evaluated.
+
+<br>
+<br>
+<b><big><a name="y" id="y">y</a></big></b>
+<br>
+The result 
+<code><i><font color="black"><span style='white-space: nowrap'>y</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+It is the return value for the user provided version of 
+<code><i><font color="black"><span style='white-space: nowrap'>name</span></font></i></code>
+.
+
+<br>
+<br>
+<b><big><a name="ax" id="ax">ax</a></big></b>
+<br>
+The argument 
+<code><i><font color="black"><span style='white-space: nowrap'>ax</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ax</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+It is the value at which the CppAD provided version of 
+<code><i><font color="black"><span style='white-space: nowrap'>name</span></font></i></code>
+
+is to be evaluated.
+
+<br>
+<br>
+<b><big><a name="ay" id="ay">ay</a></big></b>
+<br>
+The result 
+<code><i><font color="black"><span style='white-space: nowrap'>ay</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ay</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+It is the return value for the CppAD provided version of 
+<code><i><font color="black"><span style='white-space: nowrap'>name</span></font></i></code>
+.
+
+
+<br>
+<br>
+<b><big><a name="Create AD Version" id="Create AD Version">Create AD Version</a></big></b>
+<br>
+The preprocessor macro invocation
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CPPAD_DISCRETE_FUNCTION(</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>name</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+defines the 
+<code><font color="blue"><span style='white-space: nowrap'>AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code>
+ version of 
+<code><i><font color="black"><span style='white-space: nowrap'>name</span></font></i></code>
+.
+This can be with in a namespace (not the <code><font color="blue">CppAD</font></code> namespace)
+but must be outside of any routine.
+
+<br>
+<br>
+<b><big><a name="Operation Sequence" id="Operation Sequence">Operation Sequence</a></big></b>
+<br>
+This is an AD of 
+<code><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i></code>
+
+<a href="glossary.htm#Operation.Atomic" target="_top"><span style='white-space: nowrap'>atomic&nbsp;operation</span></a>
+
+and hence is part of the current
+AD of 
+<code><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i></code>
+
+<a href="glossary.htm#Operation.Sequence" target="_top"><span style='white-space: nowrap'>operation&nbsp;sequence</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="Derivatives" id="Derivatives">Derivatives</a></big></b>
+<br>
+During a zero order <a href="forward.htm" target="_top"><span style='white-space: nowrap'>Forward</span></a>
+ operation,
+an <a href="adfun.htm" target="_top"><span style='white-space: nowrap'>ADFun</span></a>
+ object will compute the value of 
+<code><i><font color="black"><span style='white-space: nowrap'>name</span></font></i></code>
+
+using the user provided 
+<code><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i></code>
+ version of this routine.
+All the derivatives of 
+<code><i><font color="black"><span style='white-space: nowrap'>name</span></font></i></code>
+ will be evaluated as zero.
+
+<br>
+<br>
+<b><big><a name="Parallel Mode" id="Parallel Mode">Parallel Mode</a></big></b>
+<br>
+The first call to
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ay</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>name</span></font></i><font color="blue"><span style='white-space: nowrap'>(</span></font><i><font color="black"><span style='white-space: nowrap'>ax</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+must not be in <a href="ta_in_parallel.htm" target="_top"><span style='white-space: nowrap'>parallel</span></a>
+ execution mode.
+
+
+<br>
+<br>
+<b><big><a name="Example" id="Example">Example</a></big></b>
+
+<br>
+The file
+<a href="tape_index.cpp.htm" target="_top"><span style='white-space: nowrap'>tape_index.cpp</span></a>
+
+contains an example and test that uses a discrete function
+to vary an array index during <a href="forward.htm" target="_top"><span style='white-space: nowrap'>Forward</span></a>
+ mode calculations.
+The file
+<a href="interp_onetape.cpp.htm" target="_top"><span style='white-space: nowrap'>interp_onetape.cpp</span></a>
+
+contains an example and test that uses discrete
+functions to avoid retaping a calculation that requires interpolation.
+(The file
+<a href="interp_retape.cpp.htm" target="_top"><span style='white-space: nowrap'>interp_retape.cpp</span></a>
+
+shows how interpolation can be done with retaping.)
+
+<br>
+<br>
+<b><big><a name="CppADCreateDiscrete Deprecated 2007-07-28" id="CppADCreateDiscrete Deprecated 2007-07-28">CppADCreateDiscrete Deprecated 2007-07-28</a></big></b>
+<br>
+The preprocessor symbol <code><font color="blue">CppADCreateDiscrete</font></code>
+is defined to be the same as <code><font color="blue">CPPAD_DISCRETE_FUNCTION</font></code>
+but its use is deprecated.
+
+
+<hr>Input File: cppad/core/discrete.hpp
+
+</body>
+</html>

@@ -1,0 +1,411 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>The CppAD Wish List</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="The CppAD Wish List">
+<meta name="keywords" id="keywords" content=" the cppad wish list eigen const adfun atomic element-wise operations sparsity example optimization taping special operators checkpoint retape testing check_finite compilation speed base requirements adolc forward mode recomputation iterator interface operation sequence software guidelines tracing atan2 benderquad ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_wish_list_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://coin-or.github.io/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="bib.htm" target="_top">Prev</a>
+</td><td><a href="whats_new.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>Appendix</option>
+<option>wish_list</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>CppAD-&gt;</option>
+<option>Install</option>
+<option>Introduction</option>
+<option>AD</option>
+<option>ADFun</option>
+<option>preprocessor</option>
+<option>multi_thread</option>
+<option>utility</option>
+<option>ipopt_solve</option>
+<option>Example</option>
+<option>speed</option>
+<option>Appendix</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>Appendix-&gt;</option>
+<option>Faq</option>
+<option>directory</option>
+<option>Theory</option>
+<option>glossary</option>
+<option>Bib</option>
+<option>wish_list</option>
+<option>whats_new</option>
+<option>deprecated</option>
+<option>compare_c</option>
+<option>numeric_ad</option>
+<option>addon</option>
+<option>License</option>
+</select>
+</td>
+<td>wish_list</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Eigen</option>
+<option>const ADFun</option>
+<option>Atomic</option>
+<option>---..Element-wise Operations</option>
+<option>---..Sparsity</option>
+<option>Example</option>
+<option>Optimization</option>
+<option>---..Taping</option>
+<option>---..Special Operators</option>
+<option>checkpoint</option>
+<option>---..Retape</option>
+<option>---..Testing</option>
+<option>check_finite</option>
+<option>Compilation Speed</option>
+<option>Base Requirements</option>
+<option>Adolc</option>
+<option>Forward Mode Recomputation</option>
+<option>Iterator Interface</option>
+<option>Operation Sequence</option>
+<option>Software Guidelines</option>
+<option>Tracing</option>
+<option>atan2</option>
+<option>BenderQuad</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@
+
+
+<center><b><big><big>The CppAD Wish List</big></big></b></center>
+<br>
+<b><big><a name="Eigen" id="Eigen">Eigen</a></big></b>
+<br>
+Use a wrapper class for
+<a href="testvector.htm#Eigen Vectors" target="_top"><span style='white-space: nowrap'>eigen&nbsp;vectors</span></a>
+ so that the
+<code><font color="blue">size</font></code> member function returns a
+<code><font color="blue">size_t</font></code> instead of an <code><font color="blue">int</font></code>.
+This would allow <a href="testvector.htm" target="_top"><span style='white-space: nowrap'>TESTVECTOR</span></a>
+ to be a true template class; i.e.,
+to use the syntax
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TESTVECTOR&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Scalar</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;<br>
+</span></font></code>
+<br>
+<b><big><a name="const ADFun" id="const ADFun">const ADFun</a></big></b>
+<br>
+Currently the structure that iterates through the operations sequence
+in an <a href="adfun.htm" target="_top"><span style='white-space: nowrap'>ADFun</span></a>
+ object is part of the function object.
+There should be a separate constant iterator so that
+<code><font color="blue">ADFun</font></code> object could be <code><font color="blue">const</font></code> when they are not affected
+by this.
+
+<br>
+<br>
+<b><big><a name="Atomic" id="Atomic">Atomic</a></big></b>
+
+
+<br>
+<br>
+<b><a name="Atomic.Element-wise Operations" id="Atomic.Element-wise Operations">Element-wise Operations</a></b>
+<br>
+Add user atomic functions for element-wise addition, subtraction,
+multiplication, and division.
+Where the operands are <a href="simplevector.htm" target="_top"><span style='white-space: nowrap'>simple&nbsp;vectors</span></a>
+
+with elements of type 
+<code><font color="blue"><span style='white-space: nowrap'>AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code>
+.
+
+<br>
+<br>
+<b><a name="Atomic.Sparsity" id="Atomic.Sparsity">Sparsity</a></b>
+<br>
+Add an <a href="atomic_option.htm" target="_top"><span style='white-space: nowrap'>atomic_option</span></a>
+ that checks if the sparsity patterns calculated
+by user atomic functions have
+elements for arguments that are know to be parameters and
+could be more efficient.
+For example, the user's version of <code><font color="blue">for_sparse_jac</font></code> could check
+<a href="atomic_for_sparse_jac.htm#Implementation.x" target="_top"><span style='white-space: nowrap'>x</span></a>
+ to see for which components
+are variables;
+i.e., <a href="nan.htm#isnan" target="_top"><span style='white-space: nowrap'>isnan(x[j])</span></a>
+ is true for a particular call.
+Note that
+<a href="atomic_for_sparse_hes.htm#Implementation.vx" target="_top"><span style='white-space: nowrap'>vx</span></a>
+ should be removed,
+because the method above can be used to determine this information.
+
+<br>
+<br>
+<b><big><a name="Example" id="Example">Example</a></big></b>
+<br>
+Split the <a href="listallexamples.htm" target="_top"><span style='white-space: nowrap'>example&nbsp;list</span></a>
+
+into separate groups by the corresponding example subdirectory.
+
+
+<br>
+<br>
+<b><big><a name="Optimization" id="Optimization">Optimization</a></big></b>
+
+
+<br>
+<br>
+<b><a name="Optimization.Taping" id="Optimization.Taping">Taping</a></b>
+<br>
+Perhaps some of the optimization done while taping forward mode
+should be delayed to the <code><font color="blue">optimization</font></code> step.
+
+<br>
+<br>
+<b><a name="Optimization.Special Operators" id="Optimization.Special Operators">Special Operators</a></b>
+<br>
+Add special operators that can be implemented more efficiently, e.g.,
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;square(</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>)&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;*&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+and have the optimizer recognize when they should be used.
+(They could also be in the user API, but it would not be expected
+that the user would use them.)
+
+
+<br>
+<br>
+<b><big><a name="checkpoint" id="checkpoint">checkpoint</a></big></b>
+
+
+<br>
+<br>
+<b><a name="checkpoint.Retape" id="checkpoint.Retape">Retape</a></b>
+<br>
+Perhaps there should be a version of the
+<a href="checkpoint.htm" target="_top"><span style='white-space: nowrap'>checkpoint</span></a>
+ class that uses a tapeless AD package to compute
+the derivative values.
+This would allow for algorithms where the operations sequence
+depends on the independent variable values.
+There is a question as to how sparsity patterns would be determined
+in this case.
+Perhaps they would be passed into the constructor.
+If it was known to be constant,
+the user could compute the pattern using CppAD.
+Otherwise, the user could input
+a conservative estimate of the pattern that would be correct.
+
+<br>
+<br>
+<b><a name="checkpoint.Testing" id="checkpoint.Testing">Testing</a></b>
+<br>
+There should be some examples and tests for both speed and memory use
+that demonstrate that checkpointing is useful.
+
+
+
+<br>
+<br>
+<b><big><a name="check_finite" id="check_finite">check_finite</a></big></b>
+<br>
+Sometimes one only gets infinite value during zero order forward
+and nan when computing corresponding derivatives.
+Change <a href="check_for_nan.htm" target="_top"><span style='white-space: nowrap'>check_for_nan</span></a>
+ to <code><font color="blue">check_finite</font></code>
+(not infinite or nan) so that error detection happens during zero
+order forward instead of later.
+
+<br>
+<br>
+<b><big><a name="Compilation Speed" id="Compilation Speed">Compilation Speed</a></big></b>
+<br>
+Create a library corresponding to <code><font color="blue">AD&lt;double&gt;</font></code> so that
+one does not need to re-compile all the header files every time.
+
+<br>
+<br>
+<b><big><a name="Base Requirements" id="Base Requirements">Base Requirements</a></big></b>
+<br>
+Change the <a href="base_require.htm" target="_top"><span style='white-space: nowrap'>Base&nbsp;requirements</span></a>
+ to use template
+specialization instead of functions so that there is a default value
+for each function. The default would result in a
+<a href="cppad_assert.htm#Known" target="_top"><span style='white-space: nowrap'>known</span></a>
+ assert when the operation is used and not
+defined by the base class.
+An example of this type of template specialization can be found in
+the implementation of <a href="to_string.htm" target="_top"><span style='white-space: nowrap'>to_string</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="Adolc" id="Adolc">Adolc</a></big></b>
+<br>
+Create a documentation page that shows how to convert Adolc commands to
+CppAD commands.
+
+<br>
+<br>
+<b><big><a name="Forward Mode Recomputation" id="Forward Mode Recomputation">Forward Mode Recomputation</a></big></b>
+<br>
+If the results of <a href="forward_order.htm" target="_top"><span style='white-space: nowrap'>forward_order</span></a>
+ have already been computed and are still
+stored in the <a href="adfun.htm" target="_top"><span style='white-space: nowrap'>ADFun</span></a>
+ object (see <a href="size_order.htm" target="_top"><span style='white-space: nowrap'>size_order</span></a>
+),
+then they do not need to be recomputed and the results can just be returned.
+
+<br>
+<br>
+<b><big><a name="Iterator Interface" id="Iterator Interface">Iterator Interface</a></big></b>
+<br>
+All of the CppAD simple vector interfaces should also have an
+iterator version for the following reasons:
+<ol type="1"><li>
+It would not be necessary to copy information to simple vectors
+when it was originally stored in a different type of container.
+</li><li>
+
+It would not be necessary to reallocate memory for a result that is
+repeatedly calculated
+(because an iterator for the result container would be passed in).
+</li></ol>
+
+
+
+<br>
+<br>
+<b><big><a name="Operation Sequence" id="Operation Sequence">Operation Sequence</a></big></b>
+<br>
+It is possible to detect if the
+AD of 
+<code><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i></code>
+
+<a href="glossary.htm#Operation.Sequence" target="_top"><span style='white-space: nowrap'>operation&nbsp;sequence</span></a>
+
+does not depend on any of the
+<a href="glossary.htm#Tape.Independent Variable" target="_top"><span style='white-space: nowrap'>independent&nbsp;variable</span></a>
+ values.
+This could be returned as an extra
+<a href="seq_property.htm" target="_top"><span style='white-space: nowrap'>seq_property</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="Software Guidelines" id="Software Guidelines">Software Guidelines</a></big></b>
+<br>
+The following is a list of some software guidelines taken from
+<a href="http://www.boost.org/development/requirements.html#Guidelines" target="_top"><span style='white-space: nowrap'>boost</span></a>
+.
+These guidelines are not followed by the current CppAD source code,
+but perhaps they should be:
+
+<ol type="1"><li>
+Names (except as noted below)
+should be all lowercase, with words separated by underscores.
+For example, acronyms should be treated as ordinary names
+(xml_parser instead of XML_parser).
+
+</li><li>
+
+Template parameter names should begin with an uppercase letter.
+
+</li><li>
+
+Use spaces rather than tabs.
+Currently, CppAD uses a tabs stops at column multiples of 5.
+Five columns were chosen to avoid high levels of indenting and to allow for
+<code><font color='blue'><pre style='display:inline'> 
+     if( expression )
+          statement
+     else statement
+</pre></font></code>
+with a tab after the else.
+Automatic conversion to actual spaces should be easy.
+
+</li></ol>
+
+
+<br>
+<br>
+<b><big><a name="Tracing" id="Tracing">Tracing</a></big></b>
+<br>
+Add tracing the operation sequence to the user API and documentation.
+Tracing the operation sequence is currently done by changing the CppAD
+source code. Use the command
+<code><font color='blue'><pre style='display:inline'> 
+     grep '^# *define *CPPAD_.*_TRACE' cppad/local/*.hpp
+</pre></font></code>
+to find all the possible tracing flags.
+
+
+<br>
+<br>
+<b><big><a name="atan2" id="atan2">atan2</a></big></b>
+<br>
+The <a href="atan2.htm" target="_top"><span style='white-space: nowrap'>atan2</span></a>
+ function could be made faster by adding
+a special operator for it.
+
+<br>
+<br>
+<b><big><a name="BenderQuad" id="BenderQuad">BenderQuad</a></big></b>
+<br>
+See the <a href="benderquad.htm#Problem" target="_top"><span style='white-space: nowrap'>problem</span></a>
+ with the
+current <code><font color="blue">BenderQuad</font></code> specifications.
+
+
+<hr>Input File: omh/appendix/wish_list.omh
+
+</body>
+</html>

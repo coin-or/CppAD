@@ -1,0 +1,346 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>abs_min_linear Source Code</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="abs_min_linear Source Code">
+<meta name="keywords" id="keywords" content=" abs_min_linear source code ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_abs_min_linear.hpp_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://coin-or.github.io/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="abs_min_linear.cpp.htm" target="_top">Prev</a>
+</td><td><a href="min_nso_linear.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>ADFun</option>
+<option>abs_normal</option>
+<option>abs_min_linear</option>
+<option>abs_min_linear.hpp</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>ADFun-&gt;</option>
+<option>record_adfun</option>
+<option>drivers</option>
+<option>Forward</option>
+<option>Reverse</option>
+<option>sparsity_pattern</option>
+<option>sparse_derivative</option>
+<option>optimize</option>
+<option>abs_normal</option>
+<option>FunCheck</option>
+<option>check_for_nan</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>abs_normal-&gt;</option>
+<option>abs_normal_fun</option>
+<option>abs_print_mat</option>
+<option>abs_eval</option>
+<option>simplex_method</option>
+<option>lp_box</option>
+<option>abs_min_linear</option>
+<option>min_nso_linear</option>
+<option>qp_interior</option>
+<option>qp_box</option>
+<option>abs_min_quad</option>
+<option>min_nso_quad</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>abs_min_linear-&gt;</option>
+<option>abs_min_linear.cpp</option>
+<option>abs_min_linear.hpp</option>
+</select>
+</td>
+<td>abs_min_linear.hpp</td>
+<td>Headings</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>abs_min_linear Source Code</big></big></b></center>
+<pre><tt><b><font color="#0000FF">namespace</font></b> CppAD <font color="#FF0000">{</font> <i><font color="#9A1900">// BEGIN_CPPAD_NAMESPACE</font></i>
+
+<i><font color="#9A1900">// BEGIN PROTOTYPE</font></i>
+<b><font color="#0000FF">template</font></b> <font color="#990000">&lt;</font><b><font color="#0000FF">class</font></b> <font color="#008080">DblVector</font><font color="#990000">,</font> <b><font color="#0000FF">class</font></b> <font color="#008080">SizeVector</font><font color="#990000">&gt;</font>
+<font color="#009900">bool</font> <b><font color="#000000">abs_min_linear</font></b><font color="#990000">(</font>
+     <font color="#008080">size_t</font>            level   <font color="#990000">,</font>
+     <font color="#008080">size_t</font>            n       <font color="#990000">,</font>
+     <font color="#008080">size_t</font>            m       <font color="#990000">,</font>
+     <font color="#008080">size_t</font>            s       <font color="#990000">,</font>
+     <b><font color="#0000FF">const</font></b> DblVector<font color="#990000">&amp;</font>  g_hat   <font color="#990000">,</font>
+     <b><font color="#0000FF">const</font></b> DblVector<font color="#990000">&amp;</font>  g_jac   <font color="#990000">,</font>
+     <b><font color="#0000FF">const</font></b> DblVector<font color="#990000">&amp;</font>  bound   <font color="#990000">,</font>
+     <b><font color="#0000FF">const</font></b> DblVector<font color="#990000">&amp;</font>  epsilon <font color="#990000">,</font>
+     <b><font color="#0000FF">const</font></b> SizeVector<font color="#990000">&amp;</font> maxitr  <font color="#990000">,</font>
+     DblVector<font color="#990000">&amp;</font>        delta_x <font color="#990000">)</font>
+<i><font color="#9A1900">// END PROTOTYPE</font></i>
+<font color="#FF0000">{</font>    <b><font color="#0000FF">using</font></b> std<font color="#990000">::</font>fabs<font color="#990000">;</font>
+     <font color="#009900">bool</font> ok    <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
+     <font color="#009900">double</font> inf <font color="#990000">=</font> std<font color="#990000">::</font>numeric_limits<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;::</font><b><font color="#000000">infinity</font></b><font color="#990000">();</font>
+     <i><font color="#9A1900">//</font></i>
+     <b><font color="#000000">CPPAD_ASSERT_KNOWN</font></b><font color="#990000">(</font>
+          level <font color="#990000">&lt;=</font> <font color="#993399">4</font><font color="#990000">,</font>
+          <font color="#FF0000">"abs_min_linear: level is not less that or equal 4"</font>
+     <font color="#990000">);</font>
+     <b><font color="#000000">CPPAD_ASSERT_KNOWN</font></b><font color="#990000">(</font>
+          <b><font color="#000000">size_t</font></b><font color="#990000">(</font>epsilon<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">())</font> <font color="#990000">==</font> <font color="#993399">2</font><font color="#990000">,</font>
+          <font color="#FF0000">"abs_min_linear: size of epsilon not equal to 2"</font>
+     <font color="#990000">);</font>
+     <b><font color="#000000">CPPAD_ASSERT_KNOWN</font></b><font color="#990000">(</font>
+          <b><font color="#000000">size_t</font></b><font color="#990000">(</font>maxitr<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">())</font> <font color="#990000">==</font> <font color="#993399">2</font><font color="#990000">,</font>
+          <font color="#FF0000">"abs_min_linear: size of maxitr not equal to 2"</font>
+     <font color="#990000">);</font>
+     <b><font color="#000000">CPPAD_ASSERT_KNOWN</font></b><font color="#990000">(</font>
+          m <font color="#990000">==</font> <font color="#993399">1</font><font color="#990000">,</font>
+          <font color="#FF0000">"abs_min_linear: m is not equal to 1"</font>
+     <font color="#990000">);</font>
+     <b><font color="#000000">CPPAD_ASSERT_KNOWN</font></b><font color="#990000">(</font>
+          <b><font color="#000000">size_t</font></b><font color="#990000">(</font>delta_x<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">())</font> <font color="#990000">==</font> n<font color="#990000">,</font>
+          <font color="#FF0000">"abs_min_linear: size of delta_x not equal to n"</font>
+     <font color="#990000">);</font>
+     <b><font color="#000000">CPPAD_ASSERT_KNOWN</font></b><font color="#990000">(</font>
+          <b><font color="#000000">size_t</font></b><font color="#990000">(</font>bound<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">())</font> <font color="#990000">==</font> n<font color="#990000">,</font>
+          <font color="#FF0000">"abs_min_linear: size of bound not equal to n"</font>
+     <font color="#990000">);</font>
+     <b><font color="#000000">CPPAD_ASSERT_KNOWN</font></b><font color="#990000">(</font>
+          <b><font color="#000000">size_t</font></b><font color="#990000">(</font>g_hat<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">())</font> <font color="#990000">==</font> m <font color="#990000">+</font> s<font color="#990000">,</font>
+          <font color="#FF0000">"abs_min_linear: size of g_hat not equal to m + s"</font>
+     <font color="#990000">);</font>
+     <b><font color="#000000">CPPAD_ASSERT_KNOWN</font></b><font color="#990000">(</font>
+          <b><font color="#000000">size_t</font></b><font color="#990000">(</font>g_jac<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">())</font> <font color="#990000">==</font> <font color="#990000">(</font>m <font color="#990000">+</font> s<font color="#990000">)</font> <font color="#990000">*</font> <font color="#990000">(</font>n <font color="#990000">+</font> s<font color="#990000">),</font>
+          <font color="#FF0000">"abs_min_linear: size of g_jac not equal to (m + s)*(n + s)"</font>
+     <font color="#990000">);</font>
+     <b><font color="#000000">CPPAD_ASSERT_KNOWN</font></b><font color="#990000">(</font>
+          <b><font color="#000000">size_t</font></b><font color="#990000">(</font>bound<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">())</font> <font color="#990000">==</font> n<font color="#990000">,</font>
+          <font color="#FF0000">"abs_min_linear: size of bound is not equal to n"</font>
+     <font color="#990000">);</font>
+     <b><font color="#0000FF">if</font></b><font color="#990000">(</font> level <font color="#990000">&gt;</font> <font color="#993399">0</font> <font color="#990000">)</font>
+     <font color="#FF0000">{</font>    std<font color="#990000">::</font>cout <font color="#990000">&lt;&lt;</font> <font color="#FF0000">"start abs_min_linear</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font><font color="#990000">;</font>
+          CppAD<font color="#990000">::</font><b><font color="#000000">abs_print_mat</font></b><font color="#990000">(</font><font color="#FF0000">"bound"</font><font color="#990000">,</font> n<font color="#990000">,</font> <font color="#993399">1</font><font color="#990000">,</font> bound<font color="#990000">);</font>
+          CppAD<font color="#990000">::</font><b><font color="#000000">abs_print_mat</font></b><font color="#990000">(</font><font color="#FF0000">"g_hat"</font><font color="#990000">,</font> m <font color="#990000">+</font> s<font color="#990000">,</font> <font color="#993399">1</font><font color="#990000">,</font> g_hat<font color="#990000">);</font>
+          CppAD<font color="#990000">::</font><b><font color="#000000">abs_print_mat</font></b><font color="#990000">(</font><font color="#FF0000">"g_jac"</font><font color="#990000">,</font> m <font color="#990000">+</font> s<font color="#990000">,</font> n <font color="#990000">+</font> s<font color="#990000">,</font> g_jac<font color="#990000">);</font>
+
+     <font color="#FF0000">}</font>
+     <i><font color="#9A1900">// partial y(x, u) w.r.t x (J in reference)</font></i>
+     <font color="#008080">DblVector</font> <b><font color="#000000">py_px</font></b><font color="#990000">(</font>n<font color="#990000">);</font>
+     <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> n<font color="#990000">;</font> j<font color="#990000">++)</font>
+          py_px<font color="#990000">[</font> j <font color="#990000">]</font> <font color="#990000">=</font> g_jac<font color="#990000">[</font> j <font color="#990000">];</font>
+     <i><font color="#9A1900">//</font></i>
+     <i><font color="#9A1900">// partial y(x, u) w.r.t u (Y in reference)</font></i>
+     <font color="#008080">DblVector</font> <b><font color="#000000">py_pu</font></b><font color="#990000">(</font>s<font color="#990000">);</font>
+     <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> s<font color="#990000">;</font> j<font color="#990000">++)</font>
+          py_pu<font color="#990000">[</font> j <font color="#990000">]</font> <font color="#990000">=</font> g_jac<font color="#990000">[</font> n <font color="#990000">+</font> j <font color="#990000">];</font>
+     <i><font color="#9A1900">//</font></i>
+     <i><font color="#9A1900">// partial z(x, u) w.r.t x (Z in reference)</font></i>
+     <font color="#008080">DblVector</font> <b><font color="#000000">pz_px</font></b><font color="#990000">(</font>s <font color="#990000">*</font> n<font color="#990000">);</font>
+     <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> s<font color="#990000">;</font> i<font color="#990000">++)</font>
+     <font color="#FF0000">{</font>    <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> n<font color="#990000">;</font> j<font color="#990000">++)</font>
+          <font color="#FF0000">{</font>    pz_px<font color="#990000">[</font> i <font color="#990000">*</font> n <font color="#990000">+</font> j <font color="#990000">]</font> <font color="#990000">=</font> g_jac<font color="#990000">[</font> <font color="#990000">(</font>n <font color="#990000">+</font> s<font color="#990000">)</font> <font color="#990000">*</font> <font color="#990000">(</font>i <font color="#990000">+</font> m<font color="#990000">)</font> <font color="#990000">+</font> j <font color="#990000">];</font>
+          <font color="#FF0000">}</font>
+     <font color="#FF0000">}</font>
+     <i><font color="#9A1900">// partial z(x, u) w.r.t u (L in reference)</font></i>
+     <font color="#008080">DblVector</font> <b><font color="#000000">pz_pu</font></b><font color="#990000">(</font>s <font color="#990000">*</font> s<font color="#990000">);</font>
+     <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> s<font color="#990000">;</font> i<font color="#990000">++)</font>
+     <font color="#FF0000">{</font>    <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> s<font color="#990000">;</font> j<font color="#990000">++)</font>
+          <font color="#FF0000">{</font>    pz_pu<font color="#990000">[</font> i <font color="#990000">*</font> s <font color="#990000">+</font> j <font color="#990000">]</font> <font color="#990000">=</font> g_jac<font color="#990000">[</font> <font color="#990000">(</font>n <font color="#990000">+</font> s<font color="#990000">)</font> <font color="#990000">*</font> <font color="#990000">(</font>i <font color="#990000">+</font> m<font color="#990000">)</font> <font color="#990000">+</font> n <font color="#990000">+</font> j <font color="#990000">];</font>
+          <font color="#FF0000">}</font>
+     <font color="#FF0000">}</font>
+     <i><font color="#9A1900">// initailize delta_x</font></i>
+     <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> n<font color="#990000">;</font> j<font color="#990000">++)</font>
+          delta_x<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">0.0</font><font color="#990000">;</font>
+     <i><font color="#9A1900">//</font></i>
+     <i><font color="#9A1900">// value of approximation for g(x, u) at current delta_x</font></i>
+     <font color="#008080">DblVector</font> g_tilde <font color="#990000">=</font> CppAD<font color="#990000">::</font><b><font color="#000000">abs_eval</font></b><font color="#990000">(</font>n<font color="#990000">,</font> m<font color="#990000">,</font> s<font color="#990000">,</font> g_hat<font color="#990000">,</font> g_jac<font color="#990000">,</font> delta_x<font color="#990000">);</font>
+     <i><font color="#9A1900">//</font></i>
+     <i><font color="#9A1900">// value of sigma at delta_x = 0; i.e., sign( z(x, u) )</font></i>
+     CppAD<font color="#990000">::</font><font color="#008080">vector&lt;int&gt;</font> <b><font color="#000000">sigma</font></b><font color="#990000">(</font>s<font color="#990000">);</font>
+     <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> s<font color="#990000">;</font> i<font color="#990000">++)</font>
+          sigma<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> CppAD<font color="#990000">::</font><b><font color="#000000">sign</font></b><font color="#990000">(</font> g_tilde<font color="#990000">[</font>m <font color="#990000">+</font> i<font color="#990000">]</font> <font color="#990000">);</font>
+     <i><font color="#9A1900">//</font></i>
+     <i><font color="#9A1900">// current set of cutting planes</font></i>
+     <font color="#008080">DblVector</font> <b><font color="#000000">C</font></b><font color="#990000">(</font>maxitr<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">*</font> n<font color="#990000">),</font> <b><font color="#000000">c</font></b><font color="#990000">(</font>maxitr<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]);</font>
+     <i><font color="#9A1900">//</font></i>
+     <i><font color="#9A1900">//</font></i>
+     <font color="#008080">size_t</font> n_plane <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
+     <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> itr <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> itr <font color="#990000">&lt;</font> maxitr<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">];</font> itr<font color="#990000">++)</font>
+     <font color="#FF0000">{</font>
+          <i><font color="#9A1900">// Equation (5), Propostion 3.1 of reference</font></i>
+          <i><font color="#9A1900">// dy_dx = py_px + py_pu * Sigma * (I - pz_pu * Sigma)^-1 * pz_px</font></i>
+          <i><font color="#9A1900">//</font></i>
+          <i><font color="#9A1900">// tmp_ss = I - pz_pu * Sigma</font></i>
+          <font color="#008080">DblVector</font> <b><font color="#000000">tmp_ss</font></b><font color="#990000">(</font>s <font color="#990000">*</font> s<font color="#990000">);</font>
+          <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> s<font color="#990000">;</font> i<font color="#990000">++)</font>
+          <font color="#FF0000">{</font>    <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> s<font color="#990000">;</font> j<font color="#990000">++)</font>
+                    tmp_ss<font color="#990000">[</font>i <font color="#990000">*</font> s <font color="#990000">+</font> j<font color="#990000">]</font> <font color="#990000">=</font> <font color="#990000">-</font> pz_pu<font color="#990000">[</font>i <font color="#990000">*</font> s <font color="#990000">+</font> j<font color="#990000">]</font> <font color="#990000">*</font> sigma<font color="#990000">[</font>j<font color="#990000">];</font>
+               tmp_ss<font color="#990000">[</font>i <font color="#990000">*</font> s <font color="#990000">+</font> i<font color="#990000">]</font> <font color="#990000">+=</font> <font color="#993399">1.0</font><font color="#990000">;</font>
+          <font color="#FF0000">}</font>
+          <i><font color="#9A1900">// tmp_sn = (I - pz_pu * Sigma)^-1 * pz_px</font></i>
+          <font color="#009900">double</font> logdet<font color="#990000">;</font>
+          <font color="#008080">DblVector</font> <b><font color="#000000">tmp_sn</font></b><font color="#990000">(</font>s <font color="#990000">*</font> n<font color="#990000">);</font>
+          <b><font color="#000000">LuSolve</font></b><font color="#990000">(</font>s<font color="#990000">,</font> n<font color="#990000">,</font> tmp_ss<font color="#990000">,</font> pz_px<font color="#990000">,</font> tmp_sn<font color="#990000">,</font> logdet<font color="#990000">);</font>
+          <i><font color="#9A1900">//</font></i>
+          <i><font color="#9A1900">// tmp_sn = Sigma * (I - pz_pu * Sigma)^-1 * pz_px</font></i>
+          <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> s<font color="#990000">;</font> i<font color="#990000">++)</font>
+          <font color="#FF0000">{</font>    <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> n<font color="#990000">;</font> j<font color="#990000">++)</font>
+                    tmp_sn<font color="#990000">[</font>i <font color="#990000">*</font> n <font color="#990000">+</font> j<font color="#990000">]</font> <font color="#990000">*=</font> sigma<font color="#990000">[</font>i<font color="#990000">];</font>
+          <font color="#FF0000">}</font>
+          <i><font color="#9A1900">// dy_dx = py_px + py_pu * Sigma * (I - pz_pu * Sigma)^-1 * pz_px</font></i>
+          <font color="#008080">DblVector</font> <b><font color="#000000">dy_dx</font></b><font color="#990000">(</font>n<font color="#990000">);</font>
+          <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> n<font color="#990000">;</font> j<font color="#990000">++)</font>
+          <font color="#FF0000">{</font>    dy_dx<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">=</font> py_px<font color="#990000">[</font>j<font color="#990000">];</font>
+               <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> k <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> k <font color="#990000">&lt;</font> s<font color="#990000">;</font> k<font color="#990000">++)</font>
+                    dy_dx<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">+=</font> py_pu<font color="#990000">[</font>k<font color="#990000">]</font> <font color="#990000">*</font> tmp_sn<font color="#990000">[</font> k <font color="#990000">*</font> n <font color="#990000">+</font> j<font color="#990000">];</font>
+          <font color="#FF0000">}</font>
+          <i><font color="#9A1900">//</font></i>
+          <i><font color="#9A1900">// check for case where derivative of hyperplane is zero</font></i>
+          <i><font color="#9A1900">// (in convex case, this is the minimizer)</font></i>
+          <font color="#009900">bool</font> near_zero <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
+          <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> n<font color="#990000">;</font> j<font color="#990000">++)</font>
+               near_zero <font color="#990000">&amp;=</font> std<font color="#990000">::</font><b><font color="#000000">fabs</font></b><font color="#990000">(</font> dy_dx<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">)</font> <font color="#990000">&lt;</font> epsilon<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">];</font>
+          <b><font color="#0000FF">if</font></b><font color="#990000">(</font> near_zero <font color="#990000">)</font>
+          <font color="#FF0000">{</font>    <b><font color="#0000FF">if</font></b><font color="#990000">(</font> level <font color="#990000">&gt;</font> <font color="#993399">0</font> <font color="#990000">)</font>
+                    std<font color="#990000">::</font>cout <font color="#990000">&lt;&lt;</font> <font color="#FF0000">"end abs_min_linear: local derivative near zero</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font><font color="#990000">;</font>
+               <b><font color="#0000FF">return</font></b> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
+          <font color="#FF0000">}</font>
+
+          <i><font color="#9A1900">// value of hyperplane at delta_x</font></i>
+          <font color="#009900">double</font> plane_at_zero <font color="#990000">=</font> g_tilde<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">];</font>
+          <i><font color="#9A1900">// value of hyperplane at 0</font></i>
+          <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> n<font color="#990000">;</font> j<font color="#990000">++)</font>
+               plane_at_zero <font color="#990000">-=</font> dy_dx<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">*</font> delta_x<font color="#990000">[</font>j<font color="#990000">];</font>
+          <i><font color="#9A1900">//</font></i>
+          <i><font color="#9A1900">// add a cutting plane with value g_tilde[0] at delta_x</font></i>
+          <i><font color="#9A1900">// and derivative dy_dx</font></i>
+          c<font color="#990000">[</font>n_plane<font color="#990000">]</font> <font color="#990000">=</font> plane_at_zero<font color="#990000">;</font>
+          <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> n<font color="#990000">;</font> j<font color="#990000">++)</font>
+               C<font color="#990000">[</font>n_plane <font color="#990000">*</font> n <font color="#990000">+</font> j<font color="#990000">]</font> <font color="#990000">=</font> dy_dx<font color="#990000">[</font>j<font color="#990000">];</font>
+          <font color="#990000">++</font>n_plane<font color="#990000">;</font>
+          <i><font color="#9A1900">//</font></i>
+          <i><font color="#9A1900">// variables for cutting plane problem are (dx, w)</font></i>
+          <i><font color="#9A1900">// c[i] + C[i,:]*dx &lt;= w</font></i>
+          <font color="#008080">DblVector</font> <b><font color="#000000">b_box</font></b><font color="#990000">(</font>n_plane<font color="#990000">),</font> <b><font color="#000000">A_box</font></b><font color="#990000">(</font>n_plane <font color="#990000">*</font> <font color="#990000">(</font>n <font color="#990000">+</font> <font color="#993399">1</font><font color="#990000">));</font>
+          <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> n_plane<font color="#990000">;</font> i<font color="#990000">++)</font>
+          <font color="#FF0000">{</font>    b_box<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> c<font color="#990000">[</font>i<font color="#990000">];</font>
+               <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> n<font color="#990000">;</font> j<font color="#990000">++)</font>
+                    A_box<font color="#990000">[</font>i <font color="#990000">*</font> <font color="#990000">(</font>n<font color="#990000">+</font><font color="#993399">1</font><font color="#990000">)</font> <font color="#990000">+</font> j<font color="#990000">]</font> <font color="#990000">=</font> C<font color="#990000">[</font>i <font color="#990000">*</font> n <font color="#990000">+</font> j<font color="#990000">];</font>
+               A_box<font color="#990000">[</font>i <font color="#990000">*(</font>n<font color="#990000">+</font><font color="#993399">1</font><font color="#990000">)</font> <font color="#990000">+</font> n<font color="#990000">]</font> <font color="#990000">=</font> <font color="#990000">-</font><font color="#993399">1.0</font><font color="#990000">;</font>
+          <font color="#FF0000">}</font>
+          <i><font color="#9A1900">// w is the objective</font></i>
+          <font color="#008080">DblVector</font> <b><font color="#000000">c_box</font></b><font color="#990000">(</font>n <font color="#990000">+</font> <font color="#993399">1</font><font color="#990000">);</font>
+          <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> <b><font color="#000000">size_t</font></b><font color="#990000">(</font>c_box<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">());</font> i<font color="#990000">++)</font>
+               c_box<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">0.0</font><font color="#990000">;</font>
+          c_box<font color="#990000">[</font>n<font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">1.0</font><font color="#990000">;</font>
+          <i><font color="#9A1900">//</font></i>
+          <i><font color="#9A1900">// d_box</font></i>
+          <font color="#008080">DblVector</font> <b><font color="#000000">d_box</font></b><font color="#990000">(</font>n<font color="#990000">+</font><font color="#993399">1</font><font color="#990000">);</font>
+          <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> n<font color="#990000">;</font> j<font color="#990000">++)</font>
+               d_box<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">=</font> bound<font color="#990000">[</font>j<font color="#990000">];</font>
+          d_box<font color="#990000">[</font>n<font color="#990000">]</font> <font color="#990000">=</font> inf<font color="#990000">;</font>
+          <i><font color="#9A1900">//</font></i>
+          <i><font color="#9A1900">// solve the cutting plane problem</font></i>
+          <font color="#008080">DblVector</font> <b><font color="#000000">xout_box</font></b><font color="#990000">(</font>n <font color="#990000">+</font> <font color="#993399">1</font><font color="#990000">);</font>
+          <font color="#008080">size_t</font> level_box <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
+          <b><font color="#0000FF">if</font></b><font color="#990000">(</font> level <font color="#990000">&gt;</font> <font color="#993399">0</font> <font color="#990000">)</font>
+               level_box <font color="#990000">=</font> level <font color="#990000">-</font> <font color="#993399">1</font><font color="#990000">;</font>
+          ok <font color="#990000">&amp;=</font> CppAD<font color="#990000">::</font><b><font color="#000000">lp_box</font></b><font color="#990000">(</font>
+               level_box<font color="#990000">,</font>
+               A_box<font color="#990000">,</font>
+               b_box<font color="#990000">,</font>
+               c_box<font color="#990000">,</font>
+               d_box<font color="#990000">,</font>
+               maxitr<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">],</font>
+               xout_box
+          <font color="#990000">);</font>
+          <b><font color="#0000FF">if</font></b><font color="#990000">(</font> <font color="#990000">!</font> ok <font color="#990000">)</font>
+          <font color="#FF0000">{</font>    <b><font color="#0000FF">if</font></b><font color="#990000">(</font> level <font color="#990000">&gt;</font> <font color="#993399">0</font> <font color="#990000">)</font>
+               <font color="#FF0000">{</font>    CppAD<font color="#990000">::</font><b><font color="#000000">abs_print_mat</font></b><font color="#990000">(</font><font color="#FF0000">"delta_x"</font><font color="#990000">,</font> n<font color="#990000">,</font> <font color="#993399">1</font><font color="#990000">,</font> delta_x<font color="#990000">);</font>
+                    std<font color="#990000">::</font>cout <font color="#990000">&lt;&lt;</font> <font color="#FF0000">"end abs_min_linear: lp_box failed</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font><font color="#990000">;</font>
+               <font color="#FF0000">}</font>
+               <b><font color="#0000FF">return</font></b> <b><font color="#0000FF">false</font></b><font color="#990000">;</font>
+          <font color="#FF0000">}</font>
+          <i><font color="#9A1900">//</font></i>
+          <i><font color="#9A1900">// check for convergence</font></i>
+          <font color="#009900">double</font> max_diff <font color="#990000">=</font> <font color="#993399">0.0</font><font color="#990000">;</font>
+          <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> n<font color="#990000">;</font> j<font color="#990000">++)</font>
+          <font color="#FF0000">{</font>    <font color="#009900">double</font> diff <font color="#990000">=</font> delta_x<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">-</font> xout_box<font color="#990000">[</font>j<font color="#990000">];</font>
+               max_diff    <font color="#990000">=</font> std<font color="#990000">::</font><b><font color="#000000">max</font></b><font color="#990000">(</font> max_diff<font color="#990000">,</font> std<font color="#990000">::</font><b><font color="#000000">fabs</font></b><font color="#990000">(</font>diff<font color="#990000">)</font> <font color="#990000">);</font>
+          <font color="#FF0000">}</font>
+          <i><font color="#9A1900">//</font></i>
+          <i><font color="#9A1900">// check for descent in value of approximation objective</font></i>
+          <font color="#008080">DblVector</font> <b><font color="#000000">delta_new</font></b><font color="#990000">(</font>n<font color="#990000">);</font>
+          <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> n<font color="#990000">;</font> j<font color="#990000">++)</font>
+               delta_new<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">=</font> xout_box<font color="#990000">[</font>j<font color="#990000">];</font>
+          <font color="#008080">DblVector</font> g_new <font color="#990000">=</font> CppAD<font color="#990000">::</font><b><font color="#000000">abs_eval</font></b><font color="#990000">(</font>n<font color="#990000">,</font> m<font color="#990000">,</font> s<font color="#990000">,</font> g_hat<font color="#990000">,</font> g_jac<font color="#990000">,</font> delta_new<font color="#990000">);</font>
+          <b><font color="#0000FF">if</font></b><font color="#990000">(</font> level <font color="#990000">&gt;</font> <font color="#993399">0</font> <font color="#990000">)</font>
+          <font color="#FF0000">{</font>    std<font color="#990000">::</font>cout <font color="#990000">&lt;&lt;</font> <font color="#FF0000">"itr = "</font> <font color="#990000">&lt;&lt;</font> itr <font color="#990000">&lt;&lt;</font> <font color="#FF0000">", max_diff = "</font> <font color="#990000">&lt;&lt;</font> max_diff
+                    <font color="#990000">&lt;&lt;</font> <font color="#FF0000">", y_cur = "</font> <font color="#990000">&lt;&lt;</font> g_tilde<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">&lt;&lt;</font> <font color="#FF0000">", y_new = "</font> <font color="#990000">&lt;&lt;</font> g_new<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font>
+                    <font color="#990000">&lt;&lt;</font> <font color="#FF0000">"</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font><font color="#990000">;</font>
+               CppAD<font color="#990000">::</font><b><font color="#000000">abs_print_mat</font></b><font color="#990000">(</font><font color="#FF0000">"delta_new"</font><font color="#990000">,</font> n<font color="#990000">,</font> <font color="#993399">1</font><font color="#990000">,</font> delta_new<font color="#990000">);</font>
+          <font color="#FF0000">}</font>
+          <i><font color="#9A1900">//</font></i>
+          g_tilde <font color="#990000">=</font> g_new<font color="#990000">;</font>
+          delta_x <font color="#990000">=</font> delta_new<font color="#990000">;</font>
+          <i><font color="#9A1900">//</font></i>
+          <i><font color="#9A1900">// value of sigma at new delta_x; i.e., sign( z(x, u) )</font></i>
+          <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> s<font color="#990000">;</font> i<font color="#990000">++)</font>
+               sigma<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> CppAD<font color="#990000">::</font><b><font color="#000000">sign</font></b><font color="#990000">(</font> g_tilde<font color="#990000">[</font>m <font color="#990000">+</font> i<font color="#990000">]</font> <font color="#990000">);</font>
+          <i><font color="#9A1900">//</font></i>
+          <b><font color="#0000FF">if</font></b><font color="#990000">(</font> max_diff <font color="#990000">&lt;</font> epsilon<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">)</font>
+          <font color="#FF0000">{</font>    <b><font color="#0000FF">if</font></b><font color="#990000">(</font> level <font color="#990000">&gt;</font> <font color="#993399">0</font> <font color="#990000">)</font>
+                    std<font color="#990000">::</font>cout <font color="#990000">&lt;&lt;</font> <font color="#FF0000">"end abs_min_linear: change in delta_x near zero</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font><font color="#990000">;</font>
+               <b><font color="#0000FF">return</font></b> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
+          <font color="#FF0000">}</font>
+     <font color="#FF0000">}</font>
+     <b><font color="#0000FF">if</font></b><font color="#990000">(</font> level <font color="#990000">&gt;</font> <font color="#993399">0</font> <font color="#990000">)</font>
+          std<font color="#990000">::</font>cout <font color="#990000">&lt;&lt;</font> <font color="#FF0000">"end abs_min_linear: maximum number of iterations exceeded</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font><font color="#990000">;</font>
+     <b><font color="#0000FF">return</font></b> <b><font color="#0000FF">false</font></b><font color="#990000">;</font>
+<font color="#FF0000">}</font>
+<font color="#FF0000">}</font> <i><font color="#9A1900">// END_CPPAD_NAMESPACE</font></i></tt></pre>
+
+<hr>Input File: example/abs_normal/abs_min_linear.omh
+
+</body>
+</html>

@@ -1,0 +1,236 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>Get At Least A Specified Amount of Memory</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Get At Least A Specified Amount of Memory">
+<meta name="keywords" id="keywords" content=" get least specified amount memory deprecated 2011-08-31 syntax purpose min_bytes cap_bytes v_ptr allocation speed example ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_omp_get_memory_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://coin-or.github.io/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="omp_get_thread_num.htm" target="_top">Prev</a>
+</td><td><a href="omp_return_memory.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>Appendix</option>
+<option>deprecated</option>
+<option>omp_alloc</option>
+<option>omp_get_memory</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>Appendix-&gt;</option>
+<option>Faq</option>
+<option>directory</option>
+<option>Theory</option>
+<option>glossary</option>
+<option>Bib</option>
+<option>wish_list</option>
+<option>whats_new</option>
+<option>deprecated</option>
+<option>compare_c</option>
+<option>numeric_ad</option>
+<option>addon</option>
+<option>License</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>deprecated-&gt;</option>
+<option>include_deprecated</option>
+<option>FunDeprecated</option>
+<option>CompareChange</option>
+<option>omp_max_thread</option>
+<option>TrackNewDel</option>
+<option>omp_alloc</option>
+<option>memory_leak</option>
+<option>epsilon</option>
+<option>test_vector</option>
+<option>cppad_ipopt_nlp</option>
+<option>old_atomic</option>
+<option>zdouble</option>
+<option>autotools</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>omp_alloc-&gt;</option>
+<option>omp_max_num_threads</option>
+<option>omp_in_parallel</option>
+<option>omp_get_thread_num</option>
+<option>omp_get_memory</option>
+<option>omp_return_memory</option>
+<option>omp_free_available</option>
+<option>omp_inuse</option>
+<option>omp_available</option>
+<option>omp_create_array</option>
+<option>omp_delete_array</option>
+<option>omp_efficient</option>
+<option>old_max_num_threads</option>
+<option>omp_alloc.cpp</option>
+</select>
+</td>
+<td>omp_get_memory</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Deprecated 2011-08-31</option>
+<option>Syntax</option>
+<option>Purpose</option>
+<option>min_bytes</option>
+<option>cap_bytes</option>
+<option>v_ptr</option>
+<option>Allocation Speed</option>
+<option>Example</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@
+
+
+<center><b><big><big>Get At Least A Specified Amount of Memory</big></big></b></center>
+<br>
+<b><big><a name="Deprecated 2011-08-31" id="Deprecated 2011-08-31">Deprecated 2011-08-31</a></big></b>
+<br>
+Use the function <a href="ta_get_memory.htm" target="_top"><span style='white-space: nowrap'>thread_alloc::get_memory</span></a>
+ instead.
+
+<br>
+<br>
+<b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
+
+<br>
+
+<code><font color="blue"><span style='white-space: nowrap'>#&nbsp;include&nbsp;&lt;cppad/utility/omp_alloc.hpp&gt;<br>
+</span></font></code>
+
+<code><i><font color="black"><span style='white-space: nowrap'>v_ptr</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;omp_alloc::get_memory(</span></font><i><font color="black"><span style='white-space: nowrap'>min_bytes</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>cap_bytes</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+
+
+<br>
+<br>
+<b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
+<br>
+Use <a href="omp_alloc.htm" target="_top"><span style='white-space: nowrap'>omp_alloc</span></a>
+ to obtain a minimum number of bytes of memory
+(for use by the <a href="omp_get_thread_num.htm" target="_top"><span style='white-space: nowrap'>current&nbsp;thread</span></a>
+).
+
+<br>
+<br>
+<b><big><a name="min_bytes" id="min_bytes">min_bytes</a></big></b>
+<br>
+This argument has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>min_bytes</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+It specifies the minimum number of bytes to allocate.
+
+<br>
+<br>
+<b><big><a name="cap_bytes" id="cap_bytes">cap_bytes</a></big></b>
+<br>
+This argument has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>cap_bytes</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+It's input value does not matter.
+Upon return, it is the actual number of bytes (capacity)
+that have been allocated for use,
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>min_bytes</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&lt;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>cap_bytes</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+<br>
+<b><big><a name="v_ptr" id="v_ptr">v_ptr</a></big></b>
+<br>
+The return value 
+<code><i><font color="black"><span style='white-space: nowrap'>v_ptr</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;void*&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>v_ptr</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+It is the location where the 
+<code><i><font color="black"><span style='white-space: nowrap'>cap_bytes</span></font></i></code>
+ of memory
+that have been allocated for use begins.
+
+<br>
+<br>
+<b><big><a name="Allocation Speed" id="Allocation Speed">Allocation Speed</a></big></b>
+<br>
+This allocation should be faster if the following conditions hold:
+<ol type="1"><li>
+The memory allocated by a previous call to <code><font color="blue">get_memory</font></code>
+is currently available for use.
+</li><li>
+
+The current 
+<code><i><font color="black"><span style='white-space: nowrap'>min_bytes</span></font></i></code>
+ is between
+the previous 
+<code><i><font color="black"><span style='white-space: nowrap'>min_bytes</span></font></i></code>
+ and previous 
+<code><i><font color="black"><span style='white-space: nowrap'>cap_bytes</span></font></i></code>
+.
+</li></ol>
+
+
+<br>
+<br>
+<b><big><a name="Example" id="Example">Example</a></big></b>
+
+<br>
+<a href="omp_alloc.cpp.htm" target="_top"><span style='white-space: nowrap'>omp_alloc.cpp</span></a>
+
+
+
+<hr>Input File: cppad/utility/omp_alloc.hpp
+
+</body>
+</html>

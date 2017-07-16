@@ -1,0 +1,403 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>The Theory of Reverse Mode</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="The Theory of Reverse Mode">
+<meta name="keywords" id="keywords" content=" the theory reverse mode taylor notation binary operators addition subtraction multiplication division standard math functions ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_reversetheory_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://coin-or.github.io/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="erf_forward.htm" target="_top">Prev</a>
+</td><td><a href="exp_reverse.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>Appendix</option>
+<option>Theory</option>
+<option>ReverseTheory</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>CppAD-&gt;</option>
+<option>Install</option>
+<option>Introduction</option>
+<option>AD</option>
+<option>ADFun</option>
+<option>preprocessor</option>
+<option>multi_thread</option>
+<option>utility</option>
+<option>ipopt_solve</option>
+<option>Example</option>
+<option>speed</option>
+<option>Appendix</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>Appendix-&gt;</option>
+<option>Faq</option>
+<option>directory</option>
+<option>Theory</option>
+<option>glossary</option>
+<option>Bib</option>
+<option>wish_list</option>
+<option>whats_new</option>
+<option>deprecated</option>
+<option>compare_c</option>
+<option>numeric_ad</option>
+<option>addon</option>
+<option>License</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>Theory-&gt;</option>
+<option>ForwardTheory</option>
+<option>ReverseTheory</option>
+<option>reverse_identity</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down0(this)'>
+<option>ReverseTheory-&gt;</option>
+<option>exp_reverse</option>
+<option>log_reverse</option>
+<option>sqrt_reverse</option>
+<option>sin_cos_reverse</option>
+<option>atan_reverse</option>
+<option>asin_reverse</option>
+<option>acos_reverse</option>
+<option>tan_reverse</option>
+<option>erf_reverse</option>
+</select>
+</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Taylor Notation</option>
+<option>Binary Operators</option>
+<option>---..Addition</option>
+<option>---..Subtraction</option>
+<option>---..Multiplication</option>
+<option>---..Division</option>
+<option>Standard Math Functions</option>
+<option>Contents</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@
+
+
+<center><b><big><big>The Theory of Reverse Mode</big></big></b></center>
+<br>
+<b><big><a name="Taylor Notation" id="Taylor Notation">Taylor Notation</a></big></b>
+<br>
+In Taylor notation, each variable corresponds to
+a function of a single argument which we denote by 
+<code><i><font color="black"><span style='white-space: nowrap'>t</span></font></i></code>
+
+(see Section 10.2 of
+<a href="bib.htm#Evaluating Derivatives" target="_top"><span style='white-space: nowrap'>Evaluating&nbsp;Derivatives</span></a>
+).
+Here and below
+<small>@(@
+X(t)
+@)@</small>, <small>@(@
+Y(t)
+@)@</small>, and 
+<code><i><font color="black"><span style='white-space: nowrap'>Z(t)</span></font></i></code>
+ are scalar valued functions
+and the corresponding <code><i>p</i></code>-th order Taylor coefficients row vectors are
+<small>@(@
+x
+@)@</small>, <small>@(@
+y
+@)@</small> and <small>@(@
+z
+@)@</small>; i.e.,
+<small>@[@
+
+\begin{array}{lcr}
+X(t) & = & x^{(0)} + x^{(1)} * t + \cdots + x^{(p)} * t^p + O( t^{p+1} ) \\
+Y(t) & = & y^{(0)} + y^{(1)} * t + \cdots + y^{(p)} * t^p + O( t^{p+1} ) \\
+Z(t) & = & z^{(0)} + z^{(1)} * t + \cdots + z^{(p)} * t^p + O( t^{p+1} )
+\end{array}
+
+@]@</small>
+For the purposes of this discussion,
+we are given the <code><i>p</i></code>-th order Taylor coefficient row vectors
+<small>@(@
+x
+@)@</small>, <small>@(@
+y
+@)@</small>, and  <small>@(@
+z
+@)@</small>.
+In addition, we are given the partial derivatives of a scalar valued function
+<small>@[@
+
+	G ( z^{(j)} , \ldots , z^{(0)}, x, y)
+
+@]@</small>
+We need to compute the partial derivatives of the scalar valued function
+<small>@[@
+
+	H ( z^{(j-1)} , \ldots , z^{(0)}, x, y)  =
+	G ( z^{(j)}, z^{(j-1)} , \ldots , z^{(0)}, x , y )
+
+@]@</small>
+where <small>@(@
+z^{(j)}
+@)@</small> is expressed as a function of the
+<code><i>j-1</i></code>-th order Taylor coefficient row
+vector for <small>@(@
+Z
+@)@</small> and the vectors <small>@(@
+x
+@)@</small>, <small>@(@
+y
+@)@</small>; i.e.,
+<small>@(@
+z^{(j)}
+@)@</small> above is a shorthand for
+<small>@[@
+
+	z^{(j)} ( z^{(j-1)} , \ldots , z^{(0)}, x, y )
+
+@]@</small>
+If we do not provide a formula for
+a partial derivative of <small>@(@
+H
+@)@</small>, then that partial derivative
+has the same value as for the function <small>@(@
+G
+@)@</small>.
+
+<br>
+<br>
+<b><big><a name="Binary Operators" id="Binary Operators">Binary Operators</a></big></b>
+
+
+<br>
+<br>
+<b><a name="Binary Operators.Addition" id="Binary Operators.Addition">Addition</a></b>
+<br>
+The forward mode formula for
+<a href="forwardtheory.htm#Binary Operators.Addition" target="_top"><span style='white-space: nowrap'>addition</span></a>
+ is
+<small>@[@
+
+	z^{(j)} =  x^{(j)} + y^{(j)}
+
+@]@</small>
+If follows that for <small>@(@
+k = 0 , \ldots , j
+@)@</small>
+and <small>@(@
+l = 0 , \ldots , j-1
+@)@</small>
+<small>@[@
+
+\begin{array}{rcl}
+\D{H}{ x^{(k)} } & = &
+\D{G}{ x^{(k)} }  + \D{G}{ z^{(k)} } \\
+\\
+\D{H}{ y^{(k)} } & = &
+\D{G}{ y^{(k)} }  + \D{G}{ z^{(k)} }
+\\
+\D{H}{ z^{(l)} } & = & \D{G}{ z^{(l)} }
+\end{array}
+
+@]@</small>
+
+<br>
+<br>
+<b><a name="Binary Operators.Subtraction" id="Binary Operators.Subtraction">Subtraction</a></b>
+<br>
+The forward mode formula for
+<a href="forwardtheory.htm#Binary Operators.Subtraction" target="_top"><span style='white-space: nowrap'>subtraction</span></a>
+ is
+<small>@[@
+
+	z^{(j)} =  x^{(j)} - y^{(j)}
+
+@]@</small>
+If follows that for <small>@(@
+k = 0 , \ldots , j
+@)@</small>
+<small>@[@
+
+\begin{array}{rcl}
+\D{H}{ x^{(k)} } & = &
+\D{G}{ x^{(k)} }  - \D{G}{ z^{(k)} } \\
+\\
+\D{H}{ y^{(k)} } & = &
+\D{G}{ y^{(k)} }  - \D{G}{ z^{(k)} }
+\end{array}
+
+@]@</small>
+
+<br>
+<br>
+<b><a name="Binary Operators.Multiplication" id="Binary Operators.Multiplication">Multiplication</a></b>
+<br>
+The forward mode formula for
+<a href="forwardtheory.htm#Binary Operators.Multiplication" target="_top"><span style='white-space: nowrap'>multiplication</span></a>
+ is
+<small>@[@
+
+	z^{(j)} = \sum_{k=0}^j x^{(j-k)} * y^{(k)}
+
+@]@</small>
+If follows that for <small>@(@
+k = 0 , \ldots , j
+@)@</small>
+and <small>@(@
+l = 0 , \ldots , j-1
+@)@</small>
+<small>@[@
+
+\begin{array}{rcl}
+\D{H}{ x^{(j-k)} } & = &
+\D{G}{ x^{(j-k)} }  +
+\sum_{k=0}^j \D{G}{ z^{(j)} } y^{(k)}
+\\
+\D{H}{ y^{(k)} } & = &
+\D{G}{ y^{(k)} }  +
+\sum_{k=0}^j \D{G}{ z^{(j)} } x^{(j-k)}
+\end{array}
+
+@]@</small>
+
+<br>
+<br>
+<b><a name="Binary Operators.Division" id="Binary Operators.Division">Division</a></b>
+<br>
+The forward mode formula for
+<a href="forwardtheory.htm#Binary Operators.Division" target="_top"><span style='white-space: nowrap'>division</span></a>
+ is
+<small>@[@
+
+z^{(j)} =
+\frac{1}{y^{(0)}}
+\left(
+	x^{(j)} - \sum_{k=1}^j z^{(j-k)} y^{(k)}
+\right)
+
+@]@</small>
+If follows that for <small>@(@
+k = 1 , \ldots , j
+@)@</small>
+<small>@[@
+
+\begin{array}{rcl}
+\D{H}{ x^{(j)} } & = &
+\D{G}{ x^{(j)} }  + \D{G}{ z^{(j)} } \frac{1}{y^{(0)}}
+\\
+\D{H}{ z^{(j-k)} } & = &
+\D{G}{ z^{(j-k)} }  - \D{G}{ z^{(j)} } \frac{1}{y^{(0)}} y^{(k)}
+\\
+\D{H}{ y^{(k)} } & = &
+\D{G}{ y^{(k)} }  - \D{G}{ z^{(j)} } \frac{1}{y^{(0)}} z^{(j-k)}
+\\
+\D{H}{ y^{(0)} } & = &
+\D{G}{ y^{(0)} }  - \D{G}{ z^{(j)} } \frac{1}{y^{(0)}} \frac{1}{y^{(0)}}
+\left(
+	x^{(j)} - \sum_{k=1}^j z^{(j-k)} y^{(k)}
+\right)
+\\
+& = &
+\D{G}{ y^{(0)} }  - \D{G}{ z^{(j)} } \frac{1}{y^{(0)}} z^{(j)}
+\end{array}
+
+@]@</small>
+
+<br>
+<br>
+<b><big><a name="Standard Math Functions" id="Standard Math Functions">Standard Math Functions</a></big></b>
+<br>
+The standard math functions have only one argument.
+Hence we are given the partial derivatives of a scalar valued function
+<small>@[@
+
+	G ( z^{(j)} , \ldots , z^{(0)}, x)
+
+@]@</small>
+We need to compute the partial derivatives of the scalar valued function
+<small>@[@
+
+	H ( z^{(j-1)} , \ldots , z^{(0)}, x)  =
+	G ( z^{(j)}, z^{(j-1)} , \ldots , z^{(0)}, x)
+
+@]@</small>
+where <small>@(@
+z^{(j)}
+@)@</small> is expressed as a function of the
+<code><i>j-1</i></code>-th order Taylor coefficient row
+vector for <small>@(@
+Z
+@)@</small> and the vector <small>@(@
+x
+@)@</small>; i.e.,
+<small>@(@
+z^{(j)}
+@)@</small> above is a shorthand for
+<small>@[@
+
+	z^{(j)} ( z^{(j-1)} , \ldots , z^{(0)}, x )
+
+@]@</small>
+
+
+<br>
+<br>
+<b><big><a name="Contents" id="Contents">Contents</a></big></b>
+<br>
+<table>
+<tr><td><a href="exp_reverse.htm" target="_top">exp_reverse</a></td><td>Exponential&nbsp;Function&nbsp;Reverse&nbsp;Mode&nbsp;Theory</td></tr><tr><td><a href="log_reverse.htm" target="_top">log_reverse</a></td><td>Logarithm&nbsp;Function&nbsp;Reverse&nbsp;Mode&nbsp;Theory</td></tr><tr><td><a href="sqrt_reverse.htm" target="_top">sqrt_reverse</a></td><td>Square&nbsp;Root&nbsp;Function&nbsp;Reverse&nbsp;Mode&nbsp;Theory</td></tr><tr><td><a href="sin_cos_reverse.htm" target="_top">sin_cos_reverse</a></td><td>Trigonometric&nbsp;and&nbsp;Hyperbolic&nbsp;Sine&nbsp;and&nbsp;Cosine&nbsp;Reverse&nbsp;Theory</td></tr><tr><td><a href="atan_reverse.htm" target="_top">atan_reverse</a></td><td>Inverse&nbsp;Tangent&nbsp;and&nbsp;Hyperbolic&nbsp;Tangent&nbsp;Reverse&nbsp;Mode&nbsp;Theory</td></tr><tr><td><a href="asin_reverse.htm" target="_top">asin_reverse</a></td><td>Inverse&nbsp;Sine&nbsp;and&nbsp;Hyperbolic&nbsp;Sine&nbsp;Reverse&nbsp;Mode&nbsp;Theory</td></tr><tr><td><a href="acos_reverse.htm" target="_top">acos_reverse</a></td><td>Inverse&nbsp;Cosine&nbsp;and&nbsp;Hyperbolic&nbsp;Cosine&nbsp;Reverse&nbsp;Mode&nbsp;Theory</td></tr><tr><td><a href="tan_reverse.htm" target="_top">tan_reverse</a></td><td>Tangent&nbsp;and&nbsp;Hyperbolic&nbsp;Tangent&nbsp;Reverse&nbsp;Mode&nbsp;Theory</td></tr><tr><td><a href="erf_reverse.htm" target="_top">erf_reverse</a></td><td>Error&nbsp;Function&nbsp;Reverse&nbsp;Mode&nbsp;Theory</td></tr></table>
+<hr>Input File: omh/appendix/theory/reverse_theory.omh
+
+</body>
+</html>

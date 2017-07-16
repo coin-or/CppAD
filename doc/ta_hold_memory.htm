@@ -1,0 +1,197 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>Control When Thread Alloc Retains Memory For Future Use</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Control When Thread Alloc Retains Memory For Future Use">
+<meta name="keywords" id="keywords" content=" control when thread alloc retains memory future use hold syntax purpose value free_available ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_ta_hold_memory_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://coin-or.github.io/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="ta_free_available.htm" target="_top">Prev</a>
+</td><td><a href="ta_inuse.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>utility</option>
+<option>thread_alloc</option>
+<option>ta_hold_memory</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>CppAD-&gt;</option>
+<option>Install</option>
+<option>Introduction</option>
+<option>AD</option>
+<option>ADFun</option>
+<option>preprocessor</option>
+<option>multi_thread</option>
+<option>utility</option>
+<option>ipopt_solve</option>
+<option>Example</option>
+<option>speed</option>
+<option>Appendix</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>utility-&gt;</option>
+<option>ErrorHandler</option>
+<option>NearEqual</option>
+<option>speed_test</option>
+<option>SpeedTest</option>
+<option>time_test</option>
+<option>test_boolofvoid</option>
+<option>NumericType</option>
+<option>CheckNumericType</option>
+<option>SimpleVector</option>
+<option>CheckSimpleVector</option>
+<option>nan</option>
+<option>pow_int</option>
+<option>Poly</option>
+<option>LuDetAndSolve</option>
+<option>RombergOne</option>
+<option>RombergMul</option>
+<option>Runge45</option>
+<option>Rosen34</option>
+<option>OdeErrControl</option>
+<option>OdeGear</option>
+<option>OdeGearControl</option>
+<option>CppAD_vector</option>
+<option>thread_alloc</option>
+<option>index_sort</option>
+<option>to_string</option>
+<option>set_union</option>
+<option>sparse_rc</option>
+<option>sparse_rcv</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>thread_alloc-&gt;</option>
+<option>thread_alloc.cpp</option>
+<option>ta_parallel_setup</option>
+<option>ta_num_threads</option>
+<option>ta_in_parallel</option>
+<option>ta_thread_num</option>
+<option>ta_get_memory</option>
+<option>ta_return_memory</option>
+<option>ta_free_available</option>
+<option>ta_hold_memory</option>
+<option>ta_inuse</option>
+<option>ta_available</option>
+<option>ta_create_array</option>
+<option>ta_delete_array</option>
+<option>ta_free_all</option>
+</select>
+</td>
+<td>ta_hold_memory</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Syntax</option>
+<option>Purpose</option>
+<option>value</option>
+<option>free_available</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@
+
+
+<center><b><big><big>Control When Thread Alloc Retains Memory For Future Use</big></big></b></center>
+<br>
+<b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
+
+<br>
+
+<code><font color="blue"><span style='white-space: nowrap'>thread_alloc::hold_memory(</span></font><i><font color="black"><span style='white-space: nowrap'>value</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+
+
+<br>
+<br>
+<b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
+<br>
+It should be faster, even when 
+<code><i><font color="black"><span style='white-space: nowrap'>num_thread</span></font></i></code>
+ is equal to one,
+for <code><font color="blue">thread_alloc</font></code> to hold onto memory.
+Calling 
+<code><i><font color="black"><span style='white-space: nowrap'>hold_memory</span></font></i></code>
+ with 
+<code><i><font color="black"><span style='white-space: nowrap'>value</span></font></i></code>
+ equal to true,
+instructs <code><font color="blue">thread_alloc</font></code> to hold onto memory,
+and put it in the <a href="ta_available.htm" target="_top"><span style='white-space: nowrap'>available</span></a>
+ pool,
+after each call to <a href="ta_return_memory.htm" target="_top"><span style='white-space: nowrap'>return_memory</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="value" id="value">value</a></big></b>
+<br>
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>value</span></font></i></code>
+ is true,
+<code><font color="blue">thread_alloc</font></code> with hold onto memory for future quick use.
+If it is false, future calls to <a href="ta_return_memory.htm" target="_top"><span style='white-space: nowrap'>return_memory</span></a>
+
+will return the corresponding memory to the system.
+By default (when <code><font color="blue">hold_memory</font></code> has not been called)
+<code><font color="blue">thread_alloc</font></code> does not hold onto memory.
+
+<br>
+<br>
+<b><big><a name="free_available" id="free_available">free_available</a></big></b>
+<br>
+Memory that is being held by <code><font color="blue">thread_alloc</font></code> can be returned
+to the system using <a href="ta_free_available.htm" target="_top"><span style='white-space: nowrap'>free_available</span></a>
+.
+
+
+<hr>Input File: cppad/utility/thread_alloc.hpp
+
+</body>
+</html>

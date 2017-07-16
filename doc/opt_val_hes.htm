@@ -1,0 +1,551 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>Jacobian and Hessian of Optimal Values</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Jacobian and Hessian of Optimal Values">
+<meta name="keywords" id="keywords" content=" jacobian hessian optimal values opt_val_hes syntax see also reference purpose basevector x y fun fun::ad_vector fun.ell fun.s fun.sy jac hes signdet example ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_opt_val_hes_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://coin-or.github.io/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="bender_quad.cpp.htm" target="_top">Prev</a>
+</td><td><a href="opt_val_hes.cpp.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>Appendix</option>
+<option>numeric_ad</option>
+<option>opt_val_hes</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>CppAD-&gt;</option>
+<option>Install</option>
+<option>Introduction</option>
+<option>AD</option>
+<option>ADFun</option>
+<option>preprocessor</option>
+<option>multi_thread</option>
+<option>utility</option>
+<option>ipopt_solve</option>
+<option>Example</option>
+<option>speed</option>
+<option>Appendix</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>Appendix-&gt;</option>
+<option>Faq</option>
+<option>directory</option>
+<option>Theory</option>
+<option>glossary</option>
+<option>Bib</option>
+<option>wish_list</option>
+<option>whats_new</option>
+<option>deprecated</option>
+<option>compare_c</option>
+<option>numeric_ad</option>
+<option>addon</option>
+<option>License</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>numeric_ad-&gt;</option>
+<option>BenderQuad</option>
+<option>opt_val_hes</option>
+<option>LuRatio</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down0(this)'>
+<option>opt_val_hes-&gt;</option>
+<option>opt_val_hes.cpp</option>
+</select>
+</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Syntax</option>
+<option>See Also</option>
+<option>Reference</option>
+<option>Purpose</option>
+<option>BaseVector</option>
+<option>x</option>
+<option>y</option>
+<option>Fun</option>
+<option>---..Fun::ad_vector</option>
+<option>---..fun.ell</option>
+<option>---..fun.s</option>
+<option>---..fun.sy</option>
+<option>jac</option>
+<option>hes</option>
+<option>signdet</option>
+<option>Example</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>Jacobian and Hessian of Optimal Values</big></big></b></center>
+<br>
+<b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
+
+<br>
+
+<code><i><font color="black"><span style='white-space: nowrap'>signdet</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;opt_val_hes(</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>fun</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>jac</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>hes</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+
+
+<br>
+<br>
+<b><big><a name="See Also" id="See Also">See Also</a></big></b>
+
+<br>
+<a href="benderquad.htm" target="_top"><span style='white-space: nowrap'>BenderQuad</span></a>
+
+
+<br>
+<br>
+<b><big><a name="Reference" id="Reference">Reference</a></big></b>
+<br>
+Algorithmic differentiation of implicit functions and optimal values,
+Bradley M. Bell and James V. Burke, Advances in Automatic Differentiation,
+2008, Springer.
+
+<br>
+<br>
+<b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
+<br>
+We are given a function
+<small>@(@
+S : \B{R}^n \times \B{R}^m \rightarrow \B{R}^\ell
+@)@</small>
+and we define <small>@(@
+F : \B{R}^n \times \B{R}^m \rightarrow \B{R}
+@)@</small>
+and <small>@(@
+V : \B{R}^n \rightarrow \B{R}
+@)@</small> by
+<small>@[@
+
+\begin{array}{rcl}
+	F(x, y) & = & \sum_{k=0}^{\ell-1} S_k ( x , y)
+	\\
+	V(x)    & = & F [ x , Y(x) ]
+	\\
+	0       & = & \partial_y F [x , Y(x) ]
+\end{array}
+
+@]@</small>
+We wish to compute the Jacobian
+and possibly also the Hessian, of <small>@(@
+V (x)
+@)@</small>.
+
+<br>
+<br>
+<b><big><a name="BaseVector" id="BaseVector">BaseVector</a></big></b>
+<br>
+The type 
+<code><i><font color="black"><span style='white-space: nowrap'>BaseVector</span></font></i></code>
+ must be a
+<a href="simplevector.htm" target="_top"><span style='white-space: nowrap'>SimpleVector</span></a>
+ class.
+We use 
+<code><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i></code>
+ to refer to the type of the elements of
+
+<code><i><font color="black"><span style='white-space: nowrap'>BaseVector</span></font></i></code>
+; i.e.,
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>BaseVector</span></font></i><font color="blue"><span style='white-space: nowrap'>::value_type<br>
+</span></font></code>
+<br>
+<b><big><a name="x" id="x">x</a></big></b>
+<br>
+The argument 
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>BaseVector</span></font></i><font color="blue"><span style='white-space: nowrap'>&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+and its size must be equal to 
+<code><i><font color="black"><span style='white-space: nowrap'>n</span></font></i></code>
+.
+It specifies the point at which we evaluating
+the Jacobian <small>@(@
+V^{(1)} (x)
+@)@</small>
+(and possibly the Hessian <small>@(@
+V^{(2)} (x)
+@)@</small>).
+
+
+<br>
+<br>
+<b><big><a name="y" id="y">y</a></big></b>
+<br>
+The argument 
+<code><i><font color="black"><span style='white-space: nowrap'>y</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>BaseVector</span></font></i><font color="blue"><span style='white-space: nowrap'>&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+and its size must be equal to 
+<code><i><font color="black"><span style='white-space: nowrap'>m</span></font></i></code>
+.
+It must be equal to <small>@(@
+Y(x)
+@)@</small>; i.e.,
+it must solve the implicit equation
+<small>@[@
+
+	0 = \partial_y F ( x , y)
+
+@]@</small>
+
+<br>
+<br>
+<b><big><a name="Fun" id="Fun">Fun</a></big></b>
+<br>
+The argument 
+<code><i><font color="black"><span style='white-space: nowrap'>fun</span></font></i></code>
+ is an object of type 
+<code><i><font color="black"><span style='white-space: nowrap'>Fun</span></font></i></code>
+
+which must support the member functions listed below.
+CppAD will may be recording operations of the type 
+<code><font color="blue"><span style='white-space: nowrap'>AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code>
+
+when these member functions are called.
+These member functions must not stop such a recording; e.g.,
+they must not call <a href="abort_recording.htm" target="_top"><span style='white-space: nowrap'>AD&lt;Base&gt;::abort_recording</span></a>
+.
+
+<br>
+<br>
+<b><a name="Fun.Fun::ad_vector" id="Fun.Fun::ad_vector">Fun::ad_vector</a></b>
+<br>
+The type 
+<code><i><font color="black"><span style='white-space: nowrap'>Fun</span></font></i><font color="blue"><span style='white-space: nowrap'>::ad_vector</span></font></code>
+ must be a
+<a href="simplevector.htm" target="_top"><span style='white-space: nowrap'>SimpleVector</span></a>
+ class with elements of type 
+<code><font color="blue"><span style='white-space: nowrap'>AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code>
+; i.e.
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Fun</span></font></i><font color="blue"><span style='white-space: nowrap'>::ad_vector::value_type<br>
+</span></font></code>
+is equal to 
+<code><font color="blue"><span style='white-space: nowrap'>AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code>
+.
+
+<br>
+<br>
+<b><a name="Fun.fun.ell" id="Fun.fun.ell">fun.ell</a></b>
+<br>
+The type 
+<code><i><font color="black"><span style='white-space: nowrap'>Fun</span></font></i></code>
+ must support the syntax
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ell</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>fun</span></font></i><font color="blue"><span style='white-space: nowrap'>.ell()<br>
+</span></font></code>
+where 
+<code><i><font color="black"><span style='white-space: nowrap'>ell</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ell</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+and is the value of <small>@(@
+\ell
+@)@</small>; i.e.,
+the number of terms in the summation.
+<code><span style='white-space: nowrap'><br>
+<br>
+</span></code>One can choose 
+<code><i><font color="black"><span style='white-space: nowrap'>ell</span></font></i></code>
+ equal to one, and have
+<small>@(@
+S(x,y)
+@)@</small> the same as <small>@(@
+F(x, y)
+@)@</small>.
+Each of the functions <small>@(@
+S_k (x , y)
+@)@</small>,
+(in the summation defining <small>@(@
+F(x, y)
+@)@</small>)
+is differentiated separately using AD.
+For very large problems, breaking <small>@(@
+F(x, y)
+@)@</small> into the sum
+of separate simpler functions may reduce the amount of memory necessary for
+algorithmic differentiation and there by speed up the process.
+
+<br>
+<br>
+<b><a name="Fun.fun.s" id="Fun.fun.s">fun.s</a></b>
+<br>
+The type 
+<code><i><font color="black"><span style='white-space: nowrap'>Fun</span></font></i></code>
+ must support the syntax
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>s_k</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>fun</span></font></i><font color="blue"><span style='white-space: nowrap'>.s(</span></font><i><font color="black"><span style='white-space: nowrap'>k</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+The 
+<code><i><font color="black"><span style='white-space: nowrap'>fun</span></font></i><font color="blue"><span style='white-space: nowrap'>.s</span></font></code>
+ argument 
+<code><i><font color="black"><span style='white-space: nowrap'>k</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>k</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+and is between zero and 
+<code><i><font color="black"><span style='white-space: nowrap'>ell</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;-&nbsp;1</span></font></code>
+.
+The argument 
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+ to 
+<code><i><font color="black"><span style='white-space: nowrap'>fun</span></font></i><font color="blue"><span style='white-space: nowrap'>.s</span></font></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Fun</span></font></i><font color="blue"><span style='white-space: nowrap'>::ad_vector&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+and its size must be equal to 
+<code><i><font color="black"><span style='white-space: nowrap'>n</span></font></i></code>
+.
+The argument 
+<code><i><font color="black"><span style='white-space: nowrap'>y</span></font></i></code>
+ to 
+<code><i><font color="black"><span style='white-space: nowrap'>fun</span></font></i><font color="blue"><span style='white-space: nowrap'>.s</span></font></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Fun</span></font></i><font color="blue"><span style='white-space: nowrap'>::ad_vector&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+and its size must be equal to 
+<code><i><font color="black"><span style='white-space: nowrap'>m</span></font></i></code>
+.
+The 
+<code><i><font color="black"><span style='white-space: nowrap'>fun</span></font></i><font color="blue"><span style='white-space: nowrap'>.s</span></font></code>
+ result 
+<code><i><font color="black"><span style='white-space: nowrap'>s_k</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>s_k</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+and its value must be given by <small>@(@
+s_k = S_k ( x , y )
+@)@</small>.
+
+<br>
+<br>
+<b><a name="Fun.fun.sy" id="Fun.fun.sy">fun.sy</a></b>
+<br>
+The type 
+<code><i><font color="black"><span style='white-space: nowrap'>Fun</span></font></i></code>
+ must support the syntax
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>sy_k</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>fun</span></font></i><font color="blue"><span style='white-space: nowrap'>.sy(</span></font><i><font color="black"><span style='white-space: nowrap'>k</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+The  argument 
+<code><i><font color="black"><span style='white-space: nowrap'>k</span></font></i></code>
+ to 
+<code><i><font color="black"><span style='white-space: nowrap'>fun</span></font></i><font color="blue"><span style='white-space: nowrap'>.sy</span></font></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>k</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+The  argument 
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+ to 
+<code><i><font color="black"><span style='white-space: nowrap'>fun</span></font></i><font color="blue"><span style='white-space: nowrap'>.sy</span></font></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Fun</span></font></i><font color="blue"><span style='white-space: nowrap'>::ad_vector&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+and its size must be equal to 
+<code><i><font color="black"><span style='white-space: nowrap'>n</span></font></i></code>
+.
+The  argument 
+<code><i><font color="black"><span style='white-space: nowrap'>y</span></font></i></code>
+ to 
+<code><i><font color="black"><span style='white-space: nowrap'>fun</span></font></i><font color="blue"><span style='white-space: nowrap'>.sy</span></font></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Fun</span></font></i><font color="blue"><span style='white-space: nowrap'>::ad_vector&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+and its size must be equal to 
+<code><i><font color="black"><span style='white-space: nowrap'>m</span></font></i></code>
+.
+The 
+<code><i><font color="black"><span style='white-space: nowrap'>fun</span></font></i><font color="blue"><span style='white-space: nowrap'>.sy</span></font></code>
+ result 
+<code><i><font color="black"><span style='white-space: nowrap'>sy_k</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Fun</span></font></i><font color="blue"><span style='white-space: nowrap'>::ad_vector&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>sy_k</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+its size must be equal to 
+<code><i><font color="black"><span style='white-space: nowrap'>m</span></font></i></code>
+,
+and its value must be given by <small>@(@
+sy_k = \partial_y S_k ( x , y )
+@)@</small>.
+
+<br>
+<br>
+<b><big><a name="jac" id="jac">jac</a></big></b>
+<br>
+The argument 
+<code><i><font color="black"><span style='white-space: nowrap'>jac</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>BaseVector</span></font></i><font color="blue"><span style='white-space: nowrap'>&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>jac</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+and has size 
+<code><i><font color="black"><span style='white-space: nowrap'>n</span></font></i></code>
+ or zero.
+The input values of its elements do not matter.
+If it has size zero, it is not affected. Otherwise, on output
+it contains the Jacobian of <small>@(@
+V (x)
+@)@</small>; i.e.,
+for <small>@(@
+j = 0 , \ldots , n-1
+@)@</small>,
+<small>@[@
+
+	jac[ j ] = V^{(1)} (x)_j
+
+@]@</small>
+where 
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+ is the first argument to <code><font color="blue">opt_val_hes</font></code>.
+
+<br>
+<br>
+<b><big><a name="hes" id="hes">hes</a></big></b>
+<br>
+The argument 
+<code><i><font color="black"><span style='white-space: nowrap'>hes</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>BaseVector</span></font></i><font color="blue"><span style='white-space: nowrap'>&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>hes</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+and has size 
+<code><i><font color="black"><span style='white-space: nowrap'>n</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;*&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n</span></font></i></code>
+ or zero.
+The input values of its elements do not matter.
+If it has size zero, it is not affected. Otherwise, on output
+it contains the Hessian of <small>@(@
+V (x)
+@)@</small>; i.e.,
+for <small>@(@
+i = 0 , \ldots , n-1
+@)@</small>, and
+<small>@(@
+j = 0 , \ldots , n-1
+@)@</small>,
+<small>@[@
+
+	hes[ i * n + j ] = V^{(2)} (x)_{i,j}
+
+@]@</small>
+
+
+<br>
+<br>
+<b><big><a name="signdet" id="signdet">signdet</a></big></b>
+<br>
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>hes</span></font></i></code>
+ has size zero, 
+<code><i><font color="black"><span style='white-space: nowrap'>signdet</span></font></i></code>
+ is not defined.
+Otherwise
+the return value 
+<code><i><font color="black"><span style='white-space: nowrap'>signdet</span></font></i></code>
+ is the sign of the determinant for
+<small>@(@
+\partial_{yy}^2 F(x , y)
+@)@</small>.
+If it is zero, then the matrix is singular and
+the Hessian is not computed (
+<code><i><font color="black"><span style='white-space: nowrap'>hes</span></font></i></code>
+ is not changed).
+
+<br>
+<br>
+<b><big><a name="Example" id="Example">Example</a></big></b>
+
+<br>
+The file
+<a href="opt_val_hes.cpp.htm" target="_top"><span style='white-space: nowrap'>opt_val_hes.cpp</span></a>
+
+contains an example and test of this operation.
+It returns true if it succeeds and false otherwise.
+
+
+<hr>Input File: cppad/core/opt_val_hes.hpp
+
+</body>
+</html>

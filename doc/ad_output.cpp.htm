@@ -1,0 +1,145 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>AD Output Operator: Example and Test</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="AD Output Operator: Example and Test">
+<meta name="keywords" id="keywords" content=" ad output operator: example test &lt;&lt; ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_ad_output.cpp_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://coin-or.github.io/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="ad_output.htm" target="_top">Prev</a>
+</td><td><a href="printfor.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>AD</option>
+<option>Convert</option>
+<option>ad_output</option>
+<option>ad_output.cpp</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>AD-&gt;</option>
+<option>ad_ctor</option>
+<option>ad_assign</option>
+<option>Convert</option>
+<option>ADValued</option>
+<option>BoolValued</option>
+<option>VecAD</option>
+<option>base_require</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>Convert-&gt;</option>
+<option>Value</option>
+<option>Integer</option>
+<option>ad_to_string</option>
+<option>ad_input</option>
+<option>ad_output</option>
+<option>PrintFor</option>
+<option>Var2Par</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>ad_output-&gt;</option>
+<option>ad_output.cpp</option>
+</select>
+</td>
+<td>ad_output.cpp</td>
+<td>Headings</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>AD Output Operator: Example and Test</big></big></b></center>
+<code><font color="blue"><pre><tt>
+<b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/cppad.hpp&gt;</font>
+
+<b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;sstream&gt;</font>  <i><font color="#9A1900">// std::ostringstream</font></i>
+<b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;string&gt;</font>   <i><font color="#9A1900">// std::string</font></i>
+<b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;iomanip&gt;</font>  <i><font color="#9A1900">// std::setprecision, setw, setfill, right</font></i>
+
+<b><font color="#0000FF">namespace</font></b> <font color="#FF0000">{</font>
+     <b><font color="#0000FF">template</font></b> <font color="#990000">&lt;</font><b><font color="#0000FF">class</font></b> <font color="#008080">S</font><font color="#990000">&gt;</font>
+     <font color="#009900">void</font> <b><font color="#000000">set_ostream</font></b><font color="#990000">(</font><font color="#008080">S</font> <font color="#990000">&amp;</font>os<font color="#990000">)</font>
+     <font color="#FF0000">{</font>    os
+          <font color="#990000">&lt;&lt;</font> std<font color="#990000">::</font><b><font color="#000000">setprecision</font></b><font color="#990000">(</font><font color="#993399">4</font><font color="#990000">)</font> <i><font color="#9A1900">// 4 digits of precision</font></i>
+          <font color="#990000">&lt;&lt;</font> std<font color="#990000">::</font><b><font color="#000000">setw</font></b><font color="#990000">(</font><font color="#993399">6</font><font color="#990000">)</font>         <i><font color="#9A1900">// 6 characters per field</font></i>
+          <font color="#990000">&lt;&lt;</font> std<font color="#990000">::</font><b><font color="#000000">setfill</font></b><font color="#990000">(</font><font color="#FF0000">' '</font><font color="#990000">)</font>    <i><font color="#9A1900">// fill with spaces</font></i>
+          <font color="#990000">&lt;&lt;</font> std<font color="#990000">::</font>right<font color="#990000">;</font>          <i><font color="#9A1900">// adjust value to the right</font></i>
+     <font color="#FF0000">}</font>
+<font color="#FF0000">}</font>
+
+<font color="#009900">bool</font> <b><font color="#000000">ad_output</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
+<font color="#FF0000">{</font>    <font color="#009900">bool</font> ok <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
+
+     <i><font color="#9A1900">// This output stream is an ostringstream for testing purposes.</font></i>
+     <i><font color="#9A1900">// You can use &lt;&lt; with other types of streams; i.e., std::cout.</font></i>
+     std<font color="#990000">::</font><font color="#008080">ostringstream</font> stream<font color="#990000">;</font>
+
+     <i><font color="#9A1900">// ouput an AD&lt;double&gt; object</font></i>
+     CppAD<font color="#990000">::</font><font color="#008080">AD&lt;double&gt;</font>  pi <font color="#990000">=</font> <font color="#993399">4</font><font color="#990000">.</font> <font color="#990000">*</font> <b><font color="#000000">atan</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">.);</font> <i><font color="#9A1900">// 3.1415926536</font></i>
+     <b><font color="#000000">set_ostream</font></b><font color="#990000">(</font>stream<font color="#990000">);</font>
+     stream <font color="#990000">&lt;&lt;</font> pi<font color="#990000">;</font>
+
+     <i><font color="#9A1900">// ouput a VecAD&lt;double&gt;::reference object</font></i>
+     CppAD<font color="#990000">::</font><font color="#008080">VecAD&lt;double&gt;</font> <b><font color="#000000">v</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">);</font>
+     CppAD<font color="#990000">::</font><font color="#008080">AD&lt;double&gt;</font> <b><font color="#000000">zero</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">);</font>
+     v<font color="#990000">[</font>zero<font color="#990000">]</font>   <font color="#990000">=</font> <b><font color="#000000">exp</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">.);</font>                  <i><font color="#9A1900">// 2.7182818285</font></i>
+     <b><font color="#000000">set_ostream</font></b><font color="#990000">(</font>stream<font color="#990000">);</font>
+     stream <font color="#990000">&lt;&lt;</font> v<font color="#990000">[</font>zero<font color="#990000">];</font>
+
+     <i><font color="#9A1900">// convert output from stream to string</font></i>
+     std<font color="#990000">::</font><font color="#008080">string</font> str <font color="#990000">=</font> stream<font color="#990000">.</font><b><font color="#000000">str</font></b><font color="#990000">();</font>
+
+     <i><font color="#9A1900">// check the output</font></i>
+     ok      <font color="#990000">&amp;=</font> <font color="#990000">(</font>str <font color="#990000">==</font> <font color="#FF0000">" 3.142 2.718"</font><font color="#990000">);</font>
+
+     <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
+<font color="#FF0000">}</font></tt></pre>
+</font></code>
+<hr>Input File: example/general/ad_output.cpp
+
+</body>
+</html>

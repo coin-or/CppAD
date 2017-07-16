@@ -1,0 +1,205 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>Simulate a [0,1] Uniform Random Variate</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Simulate a [0,1] Uniform Random Variate">
+<meta name="keywords" id="keywords" content=" simulate [01] uniform random variate syntax purpose seed n source code ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_uniform_01_c_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://coin-or.github.io/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="det_by_minor_c.htm" target="_top">Prev</a>
+</td><td><a href="correct_det_by_minor_c.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>Appendix</option>
+<option>compare_c</option>
+<option>uniform_01_c</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>CppAD-&gt;</option>
+<option>Install</option>
+<option>Introduction</option>
+<option>AD</option>
+<option>ADFun</option>
+<option>preprocessor</option>
+<option>multi_thread</option>
+<option>utility</option>
+<option>ipopt_solve</option>
+<option>Example</option>
+<option>speed</option>
+<option>Appendix</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>Appendix-&gt;</option>
+<option>Faq</option>
+<option>directory</option>
+<option>Theory</option>
+<option>glossary</option>
+<option>Bib</option>
+<option>wish_list</option>
+<option>whats_new</option>
+<option>deprecated</option>
+<option>compare_c</option>
+<option>numeric_ad</option>
+<option>addon</option>
+<option>License</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>compare_c-&gt;</option>
+<option>det_of_minor_c</option>
+<option>det_by_minor_c</option>
+<option>uniform_01_c</option>
+<option>correct_det_by_minor_c</option>
+<option>repeat_det_by_minor_c</option>
+<option>elapsed_seconds_c</option>
+<option>time_det_by_minor_c</option>
+<option>main_compare_c</option>
+</select>
+</td>
+<td>uniform_01_c</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Syntax</option>
+<option>Purpose</option>
+<option>seed</option>
+<option>n</option>
+<option>a</option>
+<option>Source Code</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>Simulate a [0,1] Uniform Random Variate</big></big></b></center>
+<br>
+<b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
+
+<br>
+
+<code><font color="blue"><span style='white-space: nowrap'>random_seed(</span></font><i><font color="black"><span style='white-space: nowrap'>seed</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+
+<code><font color="blue"><span style='white-space: nowrap'>uniform_01(</span></font><i><font color="black"><span style='white-space: nowrap'>n</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>a</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+
+
+<br>
+<br>
+<b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
+<br>
+This routine is used to create random values for speed testing purposes.
+
+<br>
+<br>
+<b><big><a name="seed" id="seed">seed</a></big></b>
+<br>
+The argument 
+<code><i><font color="black"><span style='white-space: nowrap'>seed</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>seed</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+It specifies a seed
+for the uniform random number generator.
+
+<br>
+<br>
+<b><big><a name="n" id="n">n</a></big></b>
+<br>
+The argument 
+<code><i><font color="black"><span style='white-space: nowrap'>n</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+It specifies the number of elements in the random vector 
+<code><i><font color="black"><span style='white-space: nowrap'>a</span></font></i></code>
+.
+
+<br>
+<br>
+<b><big><a name="a" id="a">a</a></big></b>
+<br>
+The argument 
+<code><i><font color="black"><span style='white-space: nowrap'>a</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;double*&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>a</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+.
+The input value of the elements of 
+<code><i><font color="black"><span style='white-space: nowrap'>a</span></font></i></code>
+ does not matter.
+Upon return, the elements of 
+<code><i><font color="black"><span style='white-space: nowrap'>a</span></font></i></code>
+ are set to values
+randomly sampled over the interval [0,1].
+
+
+
+
+<br>
+<br>
+<b><big><a name="Source Code" id="Source Code">Source Code</a></big></b>
+
+<pre><tt><font color="#009900">void</font> <b><font color="#000000">random_seed</font></b><font color="#990000">(</font><font color="#008080">size_t</font> seed<font color="#990000">)</font>
+<font color="#FF0000">{</font>    <b><font color="#000000">srand</font></b><font color="#990000">(</font>seed<font color="#990000">);</font> <font color="#FF0000">}</font>
+<font color="#009900">void</font> <b><font color="#000000">uniform_01</font></b><font color="#990000">(</font><font color="#009900">unsigned</font> n<font color="#990000">,</font> <font color="#009900">double</font><font color="#990000">*</font> a<font color="#990000">)</font>
+<font color="#FF0000">{</font>    <b><font color="#0000FF">static</font></b> <font color="#009900">double</font> factor <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">.</font> <font color="#990000">/</font> <font color="#990000">(</font><font color="#009900">double</font><font color="#990000">)</font> RAND_MAX<font color="#990000">;</font>
+     <b><font color="#0000FF">while</font></b><font color="#990000">(</font>n<font color="#990000">--)</font>
+          a<font color="#990000">[</font>n<font color="#990000">]</font> <font color="#990000">=</font> <b><font color="#000000">rand</font></b><font color="#990000">()</font> <font color="#990000">*</font> factor<font color="#990000">;</font>
+<font color="#FF0000">}</font></tt></pre>
+
+<hr>Input File: test_more/compare_c/det_by_minor.c
+
+</body>
+</html>

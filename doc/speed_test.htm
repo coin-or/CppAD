@@ -1,0 +1,328 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>Run One Speed Test and Return Results</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Run One Speed Test and Return Results">
+<meta name="keywords" id="keywords" content=" run one speed test return results speed_test syntax purpose motivation include vector size repeat size_vec time_min rate_vec timing example ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_speed_test_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://coin-or.github.io/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="near_equal.cpp.htm" target="_top">Prev</a>
+</td><td><a href="speed_test.cpp.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>utility</option>
+<option>speed_test</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>CppAD-&gt;</option>
+<option>Install</option>
+<option>Introduction</option>
+<option>AD</option>
+<option>ADFun</option>
+<option>preprocessor</option>
+<option>multi_thread</option>
+<option>utility</option>
+<option>ipopt_solve</option>
+<option>Example</option>
+<option>speed</option>
+<option>Appendix</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>utility-&gt;</option>
+<option>ErrorHandler</option>
+<option>NearEqual</option>
+<option>speed_test</option>
+<option>SpeedTest</option>
+<option>time_test</option>
+<option>test_boolofvoid</option>
+<option>NumericType</option>
+<option>CheckNumericType</option>
+<option>SimpleVector</option>
+<option>CheckSimpleVector</option>
+<option>nan</option>
+<option>pow_int</option>
+<option>Poly</option>
+<option>LuDetAndSolve</option>
+<option>RombergOne</option>
+<option>RombergMul</option>
+<option>Runge45</option>
+<option>Rosen34</option>
+<option>OdeErrControl</option>
+<option>OdeGear</option>
+<option>OdeGearControl</option>
+<option>CppAD_vector</option>
+<option>thread_alloc</option>
+<option>index_sort</option>
+<option>to_string</option>
+<option>set_union</option>
+<option>sparse_rc</option>
+<option>sparse_rcv</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down0(this)'>
+<option>speed_test-&gt;</option>
+<option>speed_test.cpp</option>
+</select>
+</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Syntax</option>
+<option>Purpose</option>
+<option>Motivation</option>
+<option>Include</option>
+<option>Vector</option>
+<option>test</option>
+<option>---..size</option>
+<option>---..repeat</option>
+<option>size_vec</option>
+<option>time_min</option>
+<option>rate_vec</option>
+<option>Timing</option>
+<option>Example</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>Run One Speed Test and Return Results</big></big></b></center>
+<br>
+<b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
+
+<br>
+
+<code><font color="blue"><span style='white-space: nowrap'>#&nbsp;include&nbsp;&lt;cppad/utility/speed_test.hpp&gt;<br>
+</span></font></code>
+
+<code><i><font color="black"><span style='white-space: nowrap'>rate_vec</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;speed_test(</span></font><i><font color="black"><span style='white-space: nowrap'>test</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>size_vec</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>time_min</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+
+
+<br>
+<br>
+<b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
+<br>
+The <code><font color="blue">speed_test</font></code> function executes a speed test
+for various sized problems
+and reports the rate of execution.
+
+<br>
+<br>
+<b><big><a name="Motivation" id="Motivation">Motivation</a></big></b>
+<br>
+It is important to separate small calculation units
+and test them individually.
+This way individual changes can be tested in the context of the
+routine that they are in.
+On many machines, accurate timing of a very short execution
+sequences is not possible.
+In addition,
+there may be set up and tear down time for a test that
+we do not really want included in the timing.
+For this reason <code><font color="blue">speed_test</font></code>
+automatically determines how many times to
+repeat the section of the test that we wish to time.
+
+
+<br>
+<br>
+<b><big><a name="Include" id="Include">Include</a></big></b>
+<br>
+The file <code><font color="blue">cppad/speed_test.hpp</font></code> defines the
+<code><font color="blue">speed_test</font></code> function.
+This file is included by <code><font color="blue">cppad/cppad.hpp</font></code>
+and it can also be included separately with out the rest of
+the <code><font color="blue">CppAD</font></code> routines.
+
+<br>
+<br>
+<b><big><a name="Vector" id="Vector">Vector</a></big></b>
+<br>
+We use 
+<code><i><font color="black"><span style='white-space: nowrap'>Vector</span></font></i></code>
+ to denote a
+<a href="simplevector.htm" target="_top"><span style='white-space: nowrap'>simple&nbsp;vector&nbsp;class</span></a>
+ with elements
+of type <code><font color="blue">size_t</font></code>.
+
+<br>
+<br>
+<b><big><a name="test" id="test">test</a></big></b>
+<br>
+The <code><font color="blue">speed_test</font></code> argument 
+<code><i><font color="black"><span style='white-space: nowrap'>test</span></font></i></code>
+ is a function with the syntax
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>test</span></font></i><font color="blue"><span style='white-space: nowrap'>(</span></font><i><font color="black"><span style='white-space: nowrap'>size</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>repeat</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+and its return value is <code><font color="blue">void</font></code>.
+
+<br>
+<br>
+<b><a name="test.size" id="test.size">size</a></b>
+<br>
+The 
+<code><i><font color="black"><span style='white-space: nowrap'>test</span></font></i></code>
+ argument 
+<code><i><font color="black"><span style='white-space: nowrap'>size</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>size</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+It specifies the size for this test.
+
+<br>
+<br>
+<b><a name="test.repeat" id="test.repeat">repeat</a></b>
+<br>
+The 
+<code><i><font color="black"><span style='white-space: nowrap'>test</span></font></i></code>
+ argument 
+<code><i><font color="black"><span style='white-space: nowrap'>repeat</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>repeat</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+It specifies the number of times to repeat the test.
+
+<br>
+<br>
+<b><big><a name="size_vec" id="size_vec">size_vec</a></big></b>
+<br>
+The <code><font color="blue">speed_test</font></code> argument 
+<code><i><font color="black"><span style='white-space: nowrap'>size_vec</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Vector</span></font></i><font color="blue"><span style='white-space: nowrap'>&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>size_vec</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+This vector determines the size for each of the tests problems.
+
+<br>
+<br>
+<b><big><a name="time_min" id="time_min">time_min</a></big></b>
+<br>
+The argument 
+<code><i><font color="black"><span style='white-space: nowrap'>time_min</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;double&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>time_min</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+It specifies the minimum amount of time in seconds
+that the 
+<code><i><font color="black"><span style='white-space: nowrap'>test</span></font></i></code>
+ routine should take.
+The 
+<code><i><font color="black"><span style='white-space: nowrap'>repeat</span></font></i></code>
+ argument to 
+<code><i><font color="black"><span style='white-space: nowrap'>test</span></font></i></code>
+ is increased
+until this amount of execution time is reached.
+
+<br>
+<br>
+<b><big><a name="rate_vec" id="rate_vec">rate_vec</a></big></b>
+<br>
+The return value 
+<code><i><font color="black"><span style='white-space: nowrap'>rate_vec</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Vector</span></font></i><font color="blue"><span style='white-space: nowrap'>&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>rate_vec</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+We use <small>@(@
+n
+@)@</small> to denote its size which is the same as
+the vector 
+<code><i><font color="black"><span style='white-space: nowrap'>size_vec</span></font></i></code>
+.
+For <small>@(@
+i = 0 , \ldots , n-1
+@)@</small>,
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>rate_vec</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>]<br>
+</span></font></code>
+is the ratio of 
+<code><i><font color="black"><span style='white-space: nowrap'>repeat</span></font></i></code>
+ divided by time in seconds
+for the problem with size 
+<code><i><font color="black"><span style='white-space: nowrap'>size_vec</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>]</span></font></code>
+.
+
+<br>
+<br>
+<b><big><a name="Timing" id="Timing">Timing</a></big></b>
+<br>
+If your system supports the unix <code><font color="blue">gettimeofday</font></code> function,
+it will be used to measure time.
+Otherwise,
+time is measured by the difference in
+<code><font color='blue'><pre style='display:inline'> 
+     (double) clock() / (double) CLOCKS_PER_SEC
+</pre></font></code>
+in the context of the standard <code><font color="blue">&lt;ctime&gt;</font></code> definitions.
+
+
+<br>
+<br>
+<b><big><a name="Example" id="Example">Example</a></big></b>
+<br>
+The routine <a href="speed_test.cpp.htm" target="_top"><span style='white-space: nowrap'>speed_test.cpp</span></a>
+ is an example and test
+of <code><font color="blue">speed_test</font></code>.
+
+
+<hr>Input File: cppad/utility/speed_test.hpp
+
+</body>
+</html>

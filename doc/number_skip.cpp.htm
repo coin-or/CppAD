@@ -1,0 +1,161 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>Number of Variables That Can be Skipped: Example and Test</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Number of Variables That Can be Skipped: Example and Test">
+<meta name="keywords" id="keywords" content=" number variables that can be skipped: example test number_skip optimize conditional expression condition ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_number_skip.cpp_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://coin-or.github.io/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="number_skip.htm" target="_top">Prev</a>
+</td><td><a href="reverse.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>ADFun</option>
+<option>Forward</option>
+<option>number_skip</option>
+<option>number_skip.cpp</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>ADFun-&gt;</option>
+<option>record_adfun</option>
+<option>drivers</option>
+<option>Forward</option>
+<option>Reverse</option>
+<option>sparsity_pattern</option>
+<option>sparse_derivative</option>
+<option>optimize</option>
+<option>abs_normal</option>
+<option>FunCheck</option>
+<option>check_for_nan</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>Forward-&gt;</option>
+<option>forward_zero</option>
+<option>forward_one</option>
+<option>forward_two</option>
+<option>forward_order</option>
+<option>forward_dir</option>
+<option>size_order</option>
+<option>compare_change</option>
+<option>capacity_order</option>
+<option>number_skip</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>number_skip-&gt;</option>
+<option>number_skip.cpp</option>
+</select>
+</td>
+<td>number_skip.cpp</td>
+<td>Headings</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@
+
+
+<center><b><big><big>Number of Variables That Can be Skipped: Example and Test</big></big></b></center>
+<code><font color="blue"><pre><tt><b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/cppad.hpp&gt;</font>
+<font color="#009900">bool</font> <b><font color="#000000">number_skip</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
+<font color="#FF0000">{</font>    <font color="#009900">bool</font> ok <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
+     <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>AD<font color="#990000">;</font>
+
+     <i><font color="#9A1900">// independent variable vector</font></i>
+     CppAD<font color="#990000">::</font><font color="#008080">vector&lt; AD&lt;double&gt; &gt;</font> <b><font color="#000000">ax</font></b><font color="#990000">(</font><font color="#993399">2</font><font color="#990000">);</font>
+     ax<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">.;</font>
+     ax<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">.;</font>
+     <b><font color="#000000">Independent</font></b><font color="#990000">(</font>ax<font color="#990000">);</font>
+
+     <i><font color="#9A1900">// Use a conditional expression</font></i>
+     CppAD<font color="#990000">::</font><font color="#008080">vector&lt; AD&lt;double&gt; &gt;</font> <b><font color="#000000">ay</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">);</font>
+
+     <i><font color="#9A1900">// variable that gets optimized out</font></i>
+     <font color="#008080">AD&lt;double&gt;</font> az <font color="#990000">=</font> ax<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">*</font> ax<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">];</font>
+
+
+     <i><font color="#9A1900">// conditional expression</font></i>
+     ay<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <b><font color="#000000">CondExpLt</font></b><font color="#990000">(</font>ax<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">],</font> ax<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">],</font> ax<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">+</font> ax<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">],</font> ax<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">-</font> ax<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]);</font>
+
+     <i><font color="#9A1900">// create function object F : x -&gt; ay</font></i>
+     CppAD<font color="#990000">::</font><font color="#008080">ADFun&lt;double&gt;</font> f<font color="#990000">;</font>
+     f<font color="#990000">.</font><b><font color="#000000">Dependent</font></b><font color="#990000">(</font>ax<font color="#990000">,</font> ay<font color="#990000">);</font>
+
+     <i><font color="#9A1900">// use zero order to evaluate F[ (3, 4) ]</font></i>
+     CppAD<font color="#990000">::</font><font color="#008080">vector&lt;double&gt;</font>  <b><font color="#000000">x</font></b><font color="#990000">(</font> f<font color="#990000">.</font><b><font color="#000000">Domain</font></b><font color="#990000">()</font> <font color="#990000">);</font>
+     CppAD<font color="#990000">::</font><font color="#008080">vector&lt;double&gt;</font>  <b><font color="#000000">y</font></b><font color="#990000">(</font> f<font color="#990000">.</font><b><font color="#000000">Range</font></b><font color="#990000">()</font> <font color="#990000">);</font>
+     x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font>    <font color="#990000">=</font> <font color="#993399">3</font><font color="#990000">.;</font>
+     x<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font>    <font color="#990000">=</font> <font color="#993399">4</font><font color="#990000">.;</font>
+     y   <font color="#990000">=</font> f<font color="#990000">.</font><b><font color="#000000">Forward</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">,</font> x<font color="#990000">);</font>
+     ok <font color="#990000">&amp;=</font> <font color="#990000">(</font>y<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">==</font> x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">+</font> x<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]);</font>
+
+     <i><font color="#9A1900">// before call to optimize</font></i>
+     ok <font color="#990000">&amp;=</font> f<font color="#990000">.</font><b><font color="#000000">number_skip</font></b><font color="#990000">()</font> <font color="#990000">==</font> <font color="#993399">0</font><font color="#990000">;</font>
+     <font color="#008080">size_t</font> n_var <font color="#990000">=</font> f<font color="#990000">.</font><b><font color="#000000">size_var</font></b><font color="#990000">();</font>
+
+     <i><font color="#9A1900">// now optimize the operation sequence</font></i>
+     f<font color="#990000">.</font><b><font color="#000000">optimize</font></b><font color="#990000">();</font>
+
+     <i><font color="#9A1900">// after optimize, check forward mode result</font></i>
+     x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font>    <font color="#990000">=</font> <font color="#993399">4</font><font color="#990000">.;</font>
+     x<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font>    <font color="#990000">=</font> <font color="#993399">3</font><font color="#990000">.;</font>
+     y   <font color="#990000">=</font> f<font color="#990000">.</font><b><font color="#000000">Forward</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">,</font> x<font color="#990000">);</font>
+     ok <font color="#990000">&amp;=</font> <font color="#990000">(</font>y<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">==</font> x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">-</font> x<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]);</font>
+
+     <i><font color="#9A1900">// after optimize, check amount of optimization</font></i>
+     ok <font color="#990000">&amp;=</font> f<font color="#990000">.</font><b><font color="#000000">size_var</font></b><font color="#990000">()</font> <font color="#990000">==</font> n_var <font color="#990000">-</font> <font color="#993399">1</font><font color="#990000">;</font>
+     ok <font color="#990000">&amp;=</font> f<font color="#990000">.</font><b><font color="#000000">number_skip</font></b><font color="#990000">()</font> <font color="#990000">==</font> <font color="#993399">1</font><font color="#990000">;</font>
+
+     <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
+<font color="#FF0000">}</font>
+</tt></pre>
+</font></code>
+<hr>Input File: example/general/number_skip.cpp
+
+</body>
+</html>

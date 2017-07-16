@@ -1,0 +1,263 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>Trigonometric and Hyperbolic Sine and Cosine Reverse Theory</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Trigonometric and Hyperbolic Sine and Cosine Reverse Theory">
+<meta name="keywords" id="keywords" content=" trigonometric hyperbolic sine cosine reverse theory sin sinh cos cosh ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_sin_cos_reverse_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://coin-or.github.io/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="sqrt_reverse.htm" target="_top">Prev</a>
+</td><td><a href="atan_reverse.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>Appendix</option>
+<option>Theory</option>
+<option>ReverseTheory</option>
+<option>sin_cos_reverse</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>Appendix-&gt;</option>
+<option>Faq</option>
+<option>directory</option>
+<option>Theory</option>
+<option>glossary</option>
+<option>Bib</option>
+<option>wish_list</option>
+<option>whats_new</option>
+<option>deprecated</option>
+<option>compare_c</option>
+<option>numeric_ad</option>
+<option>addon</option>
+<option>License</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>Theory-&gt;</option>
+<option>ForwardTheory</option>
+<option>ReverseTheory</option>
+<option>reverse_identity</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>ReverseTheory-&gt;</option>
+<option>exp_reverse</option>
+<option>log_reverse</option>
+<option>sqrt_reverse</option>
+<option>sin_cos_reverse</option>
+<option>atan_reverse</option>
+<option>asin_reverse</option>
+<option>acos_reverse</option>
+<option>tan_reverse</option>
+<option>erf_reverse</option>
+</select>
+</td>
+<td>sin_cos_reverse</td>
+<td>Headings</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@
+
+
+<center><b><big><big>Trigonometric and Hyperbolic Sine and Cosine Reverse Theory</big></big></b></center>
+We use the reverse theory
+<a href="reversetheory.htm#Standard Math Functions" target="_top"><span style='white-space: nowrap'>standard&nbsp;math&nbsp;function</span></a>
+
+definition for the functions <small>@(@
+H
+@)@</small> and <small>@(@
+G
+@)@</small>.
+In addition,
+we use the following definitions for <small>@(@
+s
+@)@</small> and <small>@(@
+c
+@)@</small>
+and the integer <small>@(@
+\ell
+@)@</small>
+
+<table><tr><td align='left'  valign='top'>
+
+Coefficients
+	</td><td align='left'  valign='top'>
+ </td><td align='left'  valign='top'>
+ <small>@(@
+s
+@)@</small>
+	</td><td align='left'  valign='top'>
+ </td><td align='left'  valign='top'>
+ <small>@(@
+c
+@)@</small>
+	</td><td align='left'  valign='top'>
+ </td><td align='left'  valign='top'>
+ <small>@(@
+\ell
+@)@</small>
+</td></tr><tr><td align='left'  valign='top'>
+
+Trigonometric Case
+	</td><td align='left'  valign='top'>
+ </td><td align='left'  valign='top'>
+ <small>@(@
+\sin [ X(t) ]
+@)@</small>
+	</td><td align='left'  valign='top'>
+ </td><td align='left'  valign='top'>
+ <small>@(@
+\cos [ X(t) ]
+@)@</small>
+	</td><td align='left'  valign='top'>
+ </td><td align='left'  valign='top'>
+ 1
+</td></tr><tr><td align='left'  valign='top'>
+
+Hyperbolic Case
+	</td><td align='left'  valign='top'>
+ </td><td align='left'  valign='top'>
+ <small>@(@
+\sinh [ X(t) ]
+@)@</small>
+	</td><td align='left'  valign='top'>
+ </td><td align='left'  valign='top'>
+ <small>@(@
+\cosh [ X(t) ]
+@)@</small>
+	</td><td align='left'  valign='top'>
+ </td><td align='left'  valign='top'>
+ -1
+</td></tr>
+</table>
+We use the value
+<small>@[@
+
+	z^{(j)} = ( s^{(j)} , c^{(j)} )
+
+@]@</small>
+in the definition for <small>@(@
+G
+@)@</small> and <small>@(@
+H
+@)@</small>.
+The forward mode formulas for the
+<a href="sin_cos_forward.htm" target="_top"><span style='white-space: nowrap'>sine&nbsp;and&nbsp;cosine</span></a>
+ functions are
+<small>@[@
+
+\begin{array}{rcl}
+s^{(j)}  & = & \frac{1 + \ell}{2} \sin ( x^{(0)} )
+           +   \frac{1 - \ell}{2} \sinh ( x^{(0)} )
+\\
+c^{(j)}  & = & \frac{1 + \ell}{2} \cos ( x^{(0)} )
+           +   \frac{1 - \ell}{2} \cosh ( x^{(0)} )
+\end{array}
+
+@]@</small>
+
+for the case <small>@(@
+j = 0
+@)@</small>, and for <small>@(@
+j > 0
+@)@</small>,
+
+<small>@[@
+
+\begin{array}{rcl}
+s^{(j)} & = & \frac{1}{j}
+	\sum_{k=1}^{j} k x^{(k)} c^{(j-k)}  \\
+c^{(j)} & = & \ell \frac{1}{j}
+	\sum_{k=1}^{j} k x^{(k)} s^{(j-k)}
+\end{array}
+
+@]@</small>
+
+If <small>@(@
+j = 0
+@)@</small>, we have the relation
+
+<small>@[@
+
+\begin{array}{rcl}
+\D{H}{ x^{(j)} } & = &
+\D{G}{ x^{(j)} }
++ \D{G}{ s^{(j)} } c^{(0)}
++ \ell \D{G}{ c^{(j)} } s^{(0)}
+\end{array}
+
+@]@</small>
+
+If <small>@(@
+j > 0
+@)@</small>, then for <small>@(@
+k = 1, \ldots , j-1
+@)@</small>
+
+<small>@[@
+
+\begin{array}{rcl}
+\D{H}{ x^{(k)} } & = &
+\D{G}{ x^{(k)} }
++ \D{G}{ s^{(j)} } \frac{1}{j} k c^{(j-k)}
++ \ell \D{G}{ c^{(j)} } \frac{1}{j} k s^{(j-k)}
+\\
+\D{H}{ s^{(j-k)} } & = &
+\D{G}{ s^{(j-k)} } + \ell \D{G}{ c^{(j)} } k x^{(k)}
+\\
+\D{H}{ c^{(j-k)} } & = &
+\D{G}{ c^{(j-k)} } + \D{G}{ s^{(j)} } k x^{(k)}
+\end{array}
+
+@]@</small>
+
+
+<hr>Input File: omh/appendix/theory/sin_cos_reverse.omh
+
+</body>
+</html>

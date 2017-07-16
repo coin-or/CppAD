@@ -1,0 +1,185 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>Sacado Speed: Second Derivative of a Polynomial</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Sacado Speed: Second Derivative of a Polynomial">
+<meta name="keywords" id="keywords" content=" sacado speed: second derivative polynomial link_poly speed specifications implementation ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_sacado_poly.cpp_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://coin-or.github.io/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="sacado_ode.cpp.htm" target="_top">Prev</a>
+</td><td><a href="sacado_sparse_hessian.cpp.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>speed</option>
+<option>speed_sacado</option>
+<option>sacado_poly.cpp</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>CppAD-&gt;</option>
+<option>Install</option>
+<option>Introduction</option>
+<option>AD</option>
+<option>ADFun</option>
+<option>preprocessor</option>
+<option>multi_thread</option>
+<option>utility</option>
+<option>ipopt_solve</option>
+<option>Example</option>
+<option>speed</option>
+<option>Appendix</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>speed-&gt;</option>
+<option>speed_main</option>
+<option>speed_utility</option>
+<option>speed_double</option>
+<option>speed_adolc</option>
+<option>speed_cppad</option>
+<option>speed_fadbad</option>
+<option>speed_sacado</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>speed_sacado-&gt;</option>
+<option>sacado_det_minor.cpp</option>
+<option>sacado_det_lu.cpp</option>
+<option>sacado_mat_mul.cpp</option>
+<option>sacado_ode.cpp</option>
+<option>sacado_poly.cpp</option>
+<option>sacado_sparse_hessian.cpp</option>
+<option>sacado_sparse_jacobian.cpp</option>
+</select>
+</td>
+<td>sacado_poly.cpp</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Specifications</option>
+<option>Implementation</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>Sacado Speed: Second Derivative of a Polynomial</big></big></b></center>
+<br>
+<b><big><a name="Specifications" id="Specifications">Specifications</a></big></b>
+<br>
+See <a href="link_poly.htm" target="_top"><span style='white-space: nowrap'>link_poly</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="Implementation" id="Implementation">Implementation</a></big></b>
+
+
+
+<pre><tt><b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/utility/vector.hpp&gt;</font>
+<b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/utility/poly.hpp&gt;</font>
+<b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/speed/uniform_01.hpp&gt;</font>
+<b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;Sacado.hpp&gt;</font>
+
+<i><font color="#9A1900">// list of possible options</font></i>
+<b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;map&gt;</font>
+<b><font color="#0000FF">extern</font></b> std<font color="#990000">::</font><font color="#008080">map&lt;std::string, bool&gt;</font> global_option<font color="#990000">;</font>
+
+<font color="#009900">bool</font> <b><font color="#000000">link_poly</font></b><font color="#990000">(</font>
+     <font color="#008080">size_t</font>                     size     <font color="#990000">,</font>
+     <font color="#008080">size_t</font>                     repeat   <font color="#990000">,</font>
+     CppAD<font color="#990000">::</font><font color="#008080">vector&lt;double&gt;</font>     <font color="#990000">&amp;</font>a        <font color="#990000">,</font>  <i><font color="#9A1900">// coefficients of polynomial</font></i>
+     CppAD<font color="#990000">::</font><font color="#008080">vector&lt;double&gt;</font>     <font color="#990000">&amp;</font>z        <font color="#990000">,</font>  <i><font color="#9A1900">// polynomial argument value</font></i>
+     CppAD<font color="#990000">::</font><font color="#008080">vector&lt;double&gt;</font>     <font color="#990000">&amp;</font>ddp      <font color="#990000">)</font>  <i><font color="#9A1900">// second derivative w.r.t z</font></i>
+<font color="#FF0000">{</font>
+     <b><font color="#0000FF">if</font></b><font color="#990000">(</font> global_option<font color="#990000">[</font><font color="#FF0000">"atomic"</font><font color="#990000">]</font> <font color="#990000">)</font>
+          <b><font color="#0000FF">return</font></b> <b><font color="#0000FF">false</font></b><font color="#990000">;</font>
+     <b><font color="#0000FF">if</font></b><font color="#990000">(</font> global_option<font color="#990000">[</font><font color="#FF0000">"memory"</font><font color="#990000">]</font> <font color="#990000">||</font> global_option<font color="#990000">[</font><font color="#FF0000">"onetape"</font><font color="#990000">]</font> <font color="#990000">||</font> global_option<font color="#990000">[</font><font color="#FF0000">"optimize"</font><font color="#990000">]</font> <font color="#990000">)</font>
+          <b><font color="#0000FF">return</font></b> <b><font color="#0000FF">false</font></b><font color="#990000">;</font>
+     <i><font color="#9A1900">// -----------------------------------------------------</font></i>
+     <i><font color="#9A1900">// setup</font></i>
+     <b><font color="#0000FF">typedef</font></b> Sacado<font color="#990000">::</font>Tay<font color="#990000">::</font><font color="#008080">Taylor&lt;double&gt;</font>  ADScalar<font color="#990000">;</font>
+     CppAD<font color="#990000">::</font><font color="#008080">vector&lt;ADScalar&gt;</font>              <b><font color="#000000">A</font></b><font color="#990000">(</font>size<font color="#990000">);</font>
+
+     <font color="#008080">size_t</font> i<font color="#990000">;</font>               <i><font color="#9A1900">// temporary index</font></i>
+     <font color="#008080">ADScalar</font>   Z<font color="#990000">;</font>           <i><font color="#9A1900">// domain space AD value</font></i>
+     <font color="#008080">ADScalar</font>   P<font color="#990000">;</font>           <i><font color="#9A1900">// range space AD value</font></i>
+     <font color="#009900">unsigned</font> <font color="#009900">int</font> order <font color="#990000">=</font> <font color="#993399">2</font><font color="#990000">;</font> <i><font color="#9A1900">// order of Taylor coefficients</font></i>
+     Z<font color="#990000">.</font><b><font color="#000000">resize</font></b><font color="#990000">(</font>order<font color="#990000">+</font><font color="#993399">1</font><font color="#990000">,</font> <b><font color="#0000FF">false</font></b><font color="#990000">);</font>
+     P<font color="#990000">.</font><b><font color="#000000">resize</font></b><font color="#990000">(</font>order<font color="#990000">+</font><font color="#993399">1</font><font color="#990000">,</font> <b><font color="#0000FF">false</font></b><font color="#990000">);</font>
+
+     <i><font color="#9A1900">// choose the polynomial coefficients</font></i>
+     CppAD<font color="#990000">::</font><b><font color="#000000">uniform_01</font></b><font color="#990000">(</font>size<font color="#990000">,</font> a<font color="#990000">);</font>
+
+     <i><font color="#9A1900">// AD copy of the polynomial coefficients</font></i>
+     <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> size<font color="#990000">;</font> i<font color="#990000">++)</font>
+          A<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> a<font color="#990000">[</font>i<font color="#990000">];</font>
+
+     <i><font color="#9A1900">// ------------------------------------------------------</font></i>
+     <b><font color="#0000FF">while</font></b><font color="#990000">(</font>repeat<font color="#990000">--)</font>
+     <font color="#FF0000">{</font>    <i><font color="#9A1900">// get the next argument value</font></i>
+          CppAD<font color="#990000">::</font><b><font color="#000000">uniform_01</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">,</font> z<font color="#990000">);</font>
+
+          <i><font color="#9A1900">// independent variable value</font></i>
+          Z<font color="#990000">.</font><b><font color="#000000">fastAccessCoeff</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">)</font>   <font color="#990000">=</font> z<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">];</font> <i><font color="#9A1900">// argument value</font></i>
+          Z<font color="#990000">.</font><b><font color="#000000">fastAccessCoeff</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">)</font>   <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">.;</font>   <i><font color="#9A1900">// first order coefficient</font></i>
+          Z<font color="#990000">.</font><b><font color="#000000">fastAccessCoeff</font></b><font color="#990000">(</font><font color="#993399">2</font><font color="#990000">)</font>   <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">.;</font>   <i><font color="#9A1900">// second order coefficient</font></i>
+
+          <i><font color="#9A1900">// AD computation of the dependent variable</font></i>
+          P <font color="#990000">=</font> CppAD<font color="#990000">::</font><b><font color="#000000">Poly</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">,</font> A<font color="#990000">,</font> Z<font color="#990000">);</font>
+
+          <i><font color="#9A1900">// second derivative is twice second order Taylor coefficient</font></i>
+          ddp<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">2</font><font color="#990000">.</font> <font color="#990000">*</font> P<font color="#990000">.</font><b><font color="#000000">fastAccessCoeff</font></b><font color="#990000">(</font><font color="#993399">2</font><font color="#990000">);</font>
+     <font color="#FF0000">}</font>
+     <i><font color="#9A1900">// ------------------------------------------------------</font></i>
+     <b><font color="#0000FF">return</font></b> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
+<font color="#FF0000">}</font></tt></pre>
+
+<hr>Input File: speed/sacado/poly.cpp
+
+</body>
+</html>

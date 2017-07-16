@@ -1,0 +1,192 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>Number of Variables that Can be Skipped</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Number of Variables that Can be Skipped">
+<meta name="keywords" id="keywords" content=" number variables that can be skipped number_skip syntax see also purpose n f example ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_number_skip_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://coin-or.github.io/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="capacity_order.cpp.htm" target="_top">Prev</a>
+</td><td><a href="number_skip.cpp.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>ADFun</option>
+<option>Forward</option>
+<option>number_skip</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>CppAD-&gt;</option>
+<option>Install</option>
+<option>Introduction</option>
+<option>AD</option>
+<option>ADFun</option>
+<option>preprocessor</option>
+<option>multi_thread</option>
+<option>utility</option>
+<option>ipopt_solve</option>
+<option>Example</option>
+<option>speed</option>
+<option>Appendix</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>ADFun-&gt;</option>
+<option>record_adfun</option>
+<option>drivers</option>
+<option>Forward</option>
+<option>Reverse</option>
+<option>sparsity_pattern</option>
+<option>sparse_derivative</option>
+<option>optimize</option>
+<option>abs_normal</option>
+<option>FunCheck</option>
+<option>check_for_nan</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>Forward-&gt;</option>
+<option>forward_zero</option>
+<option>forward_one</option>
+<option>forward_two</option>
+<option>forward_order</option>
+<option>forward_dir</option>
+<option>size_order</option>
+<option>compare_change</option>
+<option>capacity_order</option>
+<option>number_skip</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down0(this)'>
+<option>number_skip-&gt;</option>
+<option>number_skip.cpp</option>
+</select>
+</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Syntax</option>
+<option>---..See Also</option>
+<option>Purpose</option>
+<option>n</option>
+<option>f</option>
+<option>Example</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>Number of Variables that Can be Skipped</big></big></b></center>
+<br>
+<b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
+
+<br>
+
+<code><i><font color="black"><span style='white-space: nowrap'>n</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.number_skip()</span></font></code>
+
+
+<br>
+<br>
+<b><a name="Syntax.See Also" id="Syntax.See Also">See Also</a></b>
+
+<br>
+<a href="seq_property.htm" target="_top"><span style='white-space: nowrap'>seq_property</span></a>
+
+
+<br>
+<br>
+<b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
+<br>
+The <a href="condexp.htm" target="_top"><span style='white-space: nowrap'>conditional&nbsp;expressions</span></a>
+ use either the
+<a href="condexp.htm" target="_top"><span style='white-space: nowrap'>if_true</span></a>
+ or <a href="condexp.htm" target="_top"><span style='white-space: nowrap'>if_false</span></a>
+.
+Hence, some terms only need to be evaluated
+depending on the value of the comparison in the conditional expression.
+The <a href="optimize.htm" target="_top"><span style='white-space: nowrap'>optimize</span></a>
+ option is capable of detecting some of these
+case and determining variables that can be skipped.
+This routine returns the number such variables.
+
+<br>
+<br>
+<b><big><a name="n" id="n">n</a></big></b>
+<br>
+The return value 
+<code><i><font color="black"><span style='white-space: nowrap'>n</span></font></i></code>
+ has type <code><font color="blue">size_t</font></code>
+is the number of variables that the optimizer has determined can be skipped
+(given the independent variable values specified by the previous call to
+<a href="forward.htm" target="_top"><span style='white-space: nowrap'>f.Forward</span></a>
+ for order zero).
+
+<br>
+<br>
+<b><big><a name="f" id="f">f</a></big></b>
+<br>
+The object 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ADFun&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+<br>
+<b><big><a name="Example" id="Example">Example</a></big></b>
+<br>
+The file <a href="number_skip.cpp.htm" target="_top"><span style='white-space: nowrap'>number_skip.cpp</span></a>
+
+contains an example and test of this function.
+It returns true if it succeeds and false otherwise.
+
+
+<hr>Input File: cppad/core/num_skip.hpp
+
+</body>
+</html>

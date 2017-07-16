@@ -1,0 +1,997 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>Changes and Additions to CppAD During 2009</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Changes and Additions to CppAD During 2009">
+<meta name="keywords" id="keywords" content=" changes additions to cppad during 2009 introduction 12-23 12-22 12-18 12-12 12-04 12-02 11-28 11-27 11-26 10-30 10-29 10-28 10-27 10-24 10-23 10-21 10-16 10-14 10-03 09-30 09-29 09-28 09-26 09-20 09-19 09-18 08-25 08-14 08_13 08-13 08-11 08-10 08-09 08-06 08-02 08-01 07-31 07-26 07-25 07-24 07-23 07-06 07-04 07-03 07-02 07-01 06-30 06-29 06-28 06-25 06-22 06-21 06-20 06-06 05-20 03-24 02-20 02-15 02-01 01-31 01-18 01-06 ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_whats_new_09_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://coin-or.github.io/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="whats_new_10.htm" target="_top">Prev</a>
+</td><td><a href="whats_new_08.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>Appendix</option>
+<option>whats_new</option>
+<option>whats_new_09</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>CppAD-&gt;</option>
+<option>Install</option>
+<option>Introduction</option>
+<option>AD</option>
+<option>ADFun</option>
+<option>preprocessor</option>
+<option>multi_thread</option>
+<option>utility</option>
+<option>ipopt_solve</option>
+<option>Example</option>
+<option>speed</option>
+<option>Appendix</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>Appendix-&gt;</option>
+<option>Faq</option>
+<option>directory</option>
+<option>Theory</option>
+<option>glossary</option>
+<option>Bib</option>
+<option>wish_list</option>
+<option>whats_new</option>
+<option>deprecated</option>
+<option>compare_c</option>
+<option>numeric_ad</option>
+<option>addon</option>
+<option>License</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>whats_new-&gt;</option>
+<option>whats_new_17</option>
+<option>whats_new_16</option>
+<option>whats_new_15</option>
+<option>whats_new_14</option>
+<option>whats_new_13</option>
+<option>whats_new_12</option>
+<option>whats_new_11</option>
+<option>whats_new_10</option>
+<option>whats_new_09</option>
+<option>whats_new_08</option>
+<option>whats_new_07</option>
+<option>whats_new_06</option>
+<option>whats_new_05</option>
+<option>whats_new_04</option>
+<option>whats_new_03</option>
+</select>
+</td>
+<td>whats_new_09</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Introduction</option>
+<option>12-23</option>
+<option>12-22</option>
+<option>12-18</option>
+<option>12-12</option>
+<option>12-04</option>
+<option>12-02</option>
+<option>11-28</option>
+<option>11-27</option>
+<option>11-26</option>
+<option>10-30</option>
+<option>10-29</option>
+<option>10-28</option>
+<option>10-27</option>
+<option>10-24</option>
+<option>10-23</option>
+<option>10-21</option>
+<option>10-16</option>
+<option>10-14</option>
+<option>10-03</option>
+<option>09-30</option>
+<option>09-29</option>
+<option>09-28</option>
+<option>09-26</option>
+<option>09-20</option>
+<option>09-19</option>
+<option>09-18</option>
+<option>08-25</option>
+<option>08-14</option>
+<option>08_13</option>
+<option>08_13.08-13</option>
+<option>08_13.08-11</option>
+<option>08_13.08-10</option>
+<option>08_13.08-09</option>
+<option>08-06</option>
+<option>08-02</option>
+<option>08-01</option>
+<option>07-31</option>
+<option>07-26</option>
+<option>07-25</option>
+<option>07-24</option>
+<option>07-23</option>
+<option>07-23.07-06</option>
+<option>07-04</option>
+<option>07-04.07-04</option>
+<option>07-04.07-03</option>
+<option>07-04.07-02</option>
+<option>07-04.07-01</option>
+<option>07-04.06-30</option>
+<option>07-04.06-29</option>
+<option>07-04.06-28</option>
+<option>06-25</option>
+<option>06-22</option>
+<option>06-21</option>
+<option>06-20</option>
+<option>06-06</option>
+<option>05-20</option>
+<option>03-24</option>
+<option>02-20</option>
+<option>02-15</option>
+<option>02-01</option>
+<option>01-31</option>
+<option>01-18</option>
+<option>01-06</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@
+
+
+<center><b><big><big>Changes and Additions to CppAD During 2009</big></big></b></center>
+<br>
+<b><big><a name="Introduction" id="Introduction">Introduction</a></big></b>
+<br>
+This section contains a list of the changes to CppAD during 2009
+(in reverse order by date).
+The purpose of this section is to
+assist you in learning about changes between various versions of CppAD.
+(Comments about developer documentation are only important if you are
+trying to read and understand the CppAD source code.)
+
+<br>
+<br>
+<b><big><a name="12-23" id="12-23">12-23</a></big></b>
+<br>
+The
+<code><font color="blue">ADFun</font></code> <a href="funconstruct.htm#Assignment Operator" target="_top"><span style='white-space: nowrap'>assignment&nbsp;operator</span></a>
+
+was changed so that it now copies forward mode
+Taylor coefficients and sparsity pattern information.
+(This assignment operator was added on <a href="whats_new_09.htm#10-24" target="_top"><span style='white-space: nowrap'>10-24</span></a>
+.)
+You can use <a href="capacity_order.htm" target="_top"><span style='white-space: nowrap'>capacity_order</span></a>
+ to delete the Taylor coefficients
+before copying them.
+Two new functions were added so that you can query and delete the
+forward mode sparsity information;
+see
+<a href="forsparsejac.htm#f.size_forward_bool" target="_top"><span style='white-space: nowrap'>size_forward_bool</span></a>
+ and
+<a href="forsparsejac.htm#f.size_forward_set" target="_top"><span style='white-space: nowrap'>size_forward_set</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="12-22" id="12-22">12-22</a></big></b>
+<br>
+Convert the optimization of a sequence of additions from multiple operators
+to one operator with a varying number of arguments. This improved the speed
+for forward and reverse mode computations of an optimized tape.
+
+<br>
+<br>
+<b><big><a name="12-18" id="12-18">12-18</a></big></b>
+<br>
+It turns out that detection of a sequence of additions makes the optimization
+longer. This was simplified and makes slightly faster by converting two
+jointly recursive routines to one non-recursive routine that uses a
+stack for the necessary information.
+More work is planned to make this optimization faster.
+
+<br>
+<br>
+<b><big><a name="12-12" id="12-12">12-12</a></big></b>
+<br>
+Detection of a sequence of additions that can be converted to one variable
+during the <a href="optimize.htm" target="_top"><span style='white-space: nowrap'>optimize</span></a>
+ process.
+This leads to a significant improvement in the tape size and speed.
+
+<br>
+<br>
+<b><big><a name="12-04" id="12-04">12-04</a></big></b>
+<br>
+Change hash coding of parameter values as part of operators
+during the <a href="optimize.htm" target="_top"><span style='white-space: nowrap'>optimize</span></a>
+ process.
+This should leads to more detection and removal of duplicate operations.
+
+<br>
+<br>
+<b><big><a name="12-02" id="12-02">12-02</a></big></b>
+<br>
+Fix minor grammatical error in the Purpose heading
+for <a href="condexp.htm#Purpose" target="_top"><span style='white-space: nowrap'>conditional&nbsp;expressions</span></a>
+.
+<code><span style='white-space: nowrap'><br>
+<br>
+</span></code>Add the following functions:
+<a href="seq_property.htm#size_op" target="_top"><span style='white-space: nowrap'>size_op</span></a>
+,
+<a href="seq_property.htm#size_op_arg" target="_top"><span style='white-space: nowrap'>size_op_arg</span></a>
+,
+and
+<a href="seq_property.htm#size_op_seq" target="_top"><span style='white-space: nowrap'>size_op_seq</span></a>
+.
+In addition, improve and extend the
+<a href="seq_property.cpp.htm" target="_top"><span style='white-space: nowrap'>seq_property.cpp</span></a>
+ example.
+
+<br>
+<br>
+<b><big><a name="11-28" id="11-28">11-28</a></big></b>
+<br>
+Fix bug in tape optimization with <a href="vecad.htm" target="_top"><span style='white-space: nowrap'>VecAD</span></a>
+ objects.
+
+<br>
+<br>
+<b><big><a name="11-27" id="11-27">11-27</a></big></b>
+<br>
+Remove duplicate expressions for the commutative binary operators; i.e.,
+addition and multiplication.
+
+<br>
+<br>
+<b><big><a name="11-26" id="11-26">11-26</a></big></b>
+<br>
+Improve <a href="optimize.htm" target="_top"><span style='white-space: nowrap'>optimize</span></a>
+ command so that it removes some duplicate
+expressions from the tape (more of this is planned).
+
+<br>
+<br>
+<b><big><a name="10-30" id="10-30">10-30</a></big></b>
+<br>
+Make program that check Ipopt ODE example correctness
+a separate file <a href="ipopt_nlp_ode_check.cpp.htm" target="_top"><span style='white-space: nowrap'>ipopt_nlp_ode_check.cpp</span></a>
+
+Split out Ipopt driver for ODE example <a href="ipopt_nlp_ode_run.hpp.htm" target="_top"><span style='white-space: nowrap'>ipopt_nlp_ode_run.hpp</span></a>
+.
+Add the speed testing problem <code><font color="blue">ipopt_cppad/ipopt_ode_speed.cpp</font></code>.
+
+<br>
+<br>
+<b><big><a name="10-29" id="10-29">10-29</a></big></b>
+<br>
+Split out the
+<a href="ipopt_nlp_ode_problem.htm" target="_top"><span style='white-space: nowrap'>ode&nbsp;inverse&nbsp;problem</span></a>
+,
+<a href="ipopt_nlp_ode_simple.htm" target="_top"><span style='white-space: nowrap'>its&nbsp;simple&nbsp;representation</span></a>
+,
+and
+<a href="ipopt_nlp_ode_fast.htm" target="_top"><span style='white-space: nowrap'>its&nbsp;fast&nbsp;representation</span></a>
+,
+as a separate files; to be specific,
+<a href="ipopt_nlp_ode_problem.hpp.htm" target="_top"><span style='white-space: nowrap'>ipopt_nlp_ode_problem.hpp</span></a>
+,
+<a href="ipopt_nlp_ode_simple.hpp.htm" target="_top"><span style='white-space: nowrap'>ipopt_nlp_ode_simple.hpp</span></a>
+,
+<a href="ipopt_nlp_ode_fast.hpp.htm" target="_top"><span style='white-space: nowrap'>ipopt_nlp_ode_fast.hpp</span></a>
+,
+and
+<a href="ipopt_nlp_ode_check.cpp.htm" target="_top"><span style='white-space: nowrap'>ipopt_nlp_ode_check.cpp</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="10-28" id="10-28">10-28</a></big></b>
+<br>
+Improve the documentation for <a href="ipopt_nlp_ode_simple.htm" target="_top"><span style='white-space: nowrap'>ipopt_nlp_ode_simple</span></a>
+ and
+<a href="ipopt_nlp_ode_fast.htm" target="_top"><span style='white-space: nowrap'>ipopt_nlp_ode_fast</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="10-27" id="10-27">10-27</a></big></b>
+<br>
+Moved old <code><font color="blue">ipopt_cppad_simple.cpp</font></code> to <a href="ipopt_nlp_get_started.cpp.htm" target="_top"><span style='white-space: nowrap'>ipopt_nlp_get_started.cpp</span></a>
+,
+created the example <a href="ipopt_nlp_ode_simple.hpp.htm" target="_top"><span style='white-space: nowrap'>ipopt_nlp_ode_simple.hpp</span></a>
+,
+and split and <code><font color="blue">ipopt_cppad_ode.cpp</font></code>
+into <a href="ipopt_nlp_ode_fast.hpp.htm" target="_top"><span style='white-space: nowrap'>ipopt_nlp_ode_fast.hpp</span></a>
+ and <a href="ipopt_nlp_ode_check.cpp.htm" target="_top"><span style='white-space: nowrap'>ipopt_nlp_ode_check.cpp</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="10-24" id="10-24">10-24</a></big></b>
+<br>
+Added the <a href="funconstruct.htm#Assignment Operator" target="_top"><span style='white-space: nowrap'>assignment&nbsp;operator</span></a>
+
+to the <code><font color="blue">ADFun</font></code> object class.
+This makes a copy of the entire operation sequence in another
+function object.
+The intention is that the two functions objects can do calculations in
+parallel.
+In addition,
+CppAD now check for the <code><font color="blue">ADFun</font></code>
+<a href="funconstruct.htm#Copy Constructor" target="_top"><span style='white-space: nowrap'>copy&nbsp;constructor</span></a>
+
+and generates an error message if it is used.
+
+<br>
+<br>
+<b><big><a name="10-23" id="10-23">10-23</a></big></b>
+<br>
+The <a href="sparse_hessian.htm" target="_top"><span style='white-space: nowrap'>sparse_hessian</span></a>
+ routine was extended so the user can now choose
+between vectors of sets and boolean vectors for representing
+<a href="glossary.htm#Sparsity Pattern" target="_top"><span style='white-space: nowrap'>sparsity&nbsp;patterns</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="10-21" id="10-21">10-21</a></big></b>
+<br>
+The <a href="checksimplevector.htm" target="_top"><span style='white-space: nowrap'>CheckSimpleVector</span></a>
+ function was extended so that
+it can check simple vectors where the elements of the vector
+can not be assigned to integer values.
+This was done by adding the <a href="checksimplevector.htm#x, y" target="_top"><span style='white-space: nowrap'>x,&nbsp;y</span></a>
+
+arguments to <code><font color="blue">CheckSimpleVector</font></code>.
+
+<br>
+<br>
+<b><big><a name="10-16" id="10-16">10-16</a></big></b>
+<br>
+The <a href="sparse_jacobian.htm" target="_top"><span style='white-space: nowrap'>sparse_jacobian</span></a>
+ routine was extended so the user can now choose
+between vectors of sets and boolean vectors for representing
+<a href="glossary.htm#Sparsity Pattern" target="_top"><span style='white-space: nowrap'>sparsity&nbsp;patterns</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="10-14" id="10-14">10-14</a></big></b>
+<br>
+The 
+<code><i><font color="black"><span style='white-space: nowrap'>packed</span></font></i></code>
+ parameter for the sparsity routines
+<a href="forsparsejac.htm" target="_top"><span style='white-space: nowrap'>ForSparseJac</span></a>
+, <a href="revsparsejac.htm" target="_top"><span style='white-space: nowrap'>RevSparseJac</span></a>
+, and <a href="revsparsehes.htm" target="_top"><span style='white-space: nowrap'>RevSparseHes</span></a>
+
+(introduced on <a href="whats_new_09.htm#09-26" target="_top"><span style='white-space: nowrap'>09-26</span></a>
+) has been removed.
+It has been replaced by changing the argument and return values
+to be more versatile.
+To be specific, they can now represent sparsity
+using vectors of <code><font color="blue">std::set&lt;size_t&gt;</font></code>
+instead of just as vectors of <code><font color="blue">bool</font></code>
+(see <a href="glossary.htm#Sparsity Pattern" target="_top"><span style='white-space: nowrap'>sparsity&nbsp;patterns</span></a>
+).
+
+<br>
+<br>
+<b><big><a name="10-03" id="10-03">10-03</a></big></b>
+<br>
+The Microsoft Visual Studio project files for
+examples and testing
+and for
+more correctness testing
+were not including some new tests in their builds.
+This has been fixed.
+
+<br>
+<br>
+<b><big><a name="09-30" id="09-30">09-30</a></big></b>
+<br>
+Added the <a href="cppad_sparse_jacobian.cpp.htm" target="_top"><span style='white-space: nowrap'>cppad_sparse_jacobian.cpp</span></a>
+ speed test
+and increased the sizes used by <a href="link_sparse_hessian.htm" target="_top"><span style='white-space: nowrap'>link_sparse_hessian</span></a>
+.
+Some mistakes were fixed in the documentation for speed tests
+<a href="link_sparse_hessian.htm" target="_top"><span style='white-space: nowrap'>link_sparse_hessian</span></a>
+ and <a href="sparse_hes_fun.htm" target="_top"><span style='white-space: nowrap'>sparse_hes_fun</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="09-29" id="09-29">09-29</a></big></b>
+<br>
+The documentation definition of the function <small>@(@
+H(x)
+@)@</small> in
+<a href="revsparsehes.htm" target="_top"><span style='white-space: nowrap'>RevSparseHes</span></a>
+ was missing a factor of <small>@(@
+R
+@)@</small>.
+This has been fixed.
+
+<br>
+<br>
+<b><big><a name="09-28" id="09-28">09-28</a></big></b>
+<br>
+Changed <a href="revsparsehes.htm" target="_top"><span style='white-space: nowrap'>RevSparseHes</span></a>
+ so that it uses a sparse
+representation when the corresponding call to
+<a href="forsparsejac.htm" target="_top"><span style='white-space: nowrap'>ForSparseJac</span></a>
+ used a sparse representation.
+This should have been included with the change on 09-26
+because Hessian sparsity patters after <code><font color="blue">ForSparseJac</font></code>
+with 
+<code><i><font color="black"><span style='white-space: nowrap'>packed</span></font></i></code>
+ did not work.
+Thus, this could be considered a bug fix.
+
+<br>
+<br>
+<b><big><a name="09-26" id="09-26">09-26</a></big></b>
+<br>
+Added the <code><font color="blue">packed</font></code> parameter to
+<a href="forsparsejac.htm" target="_top"><span style='white-space: nowrap'>ForSparseJac</span></a>
+ and <a href="revsparsejac.htm" target="_top"><span style='white-space: nowrap'>RevSparseJac</span></a>
+.
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>packed</span></font></i></code>
+ is false,
+a sparse instead of packed representation is used
+during the calculations of sparsity patterns.
+The sparse representation
+should be faster, and use less memory, for very large sparse Jacobians.
+The functions <code><font color="blue">ForSparseJac</font></code> and <code><font color="blue">RevSparseJac</font></code>
+return packed representations.
+The plan is to eventually provide new member functions that return
+sparse representations.
+
+<br>
+<br>
+<b><big><a name="09-20" id="09-20">09-20</a></big></b>
+<br>
+Fixed a bug in the <a href="revsparsehes.htm" target="_top"><span style='white-space: nowrap'>Hessian&nbsp;Sparsity</span></a>
+ calculations
+that included use of <a href="vecad.htm" target="_top"><span style='white-space: nowrap'>VecAD</span></a>
+ objects.
+
+<br>
+<br>
+<b><big><a name="09-19" id="09-19">09-19</a></big></b>
+<br>
+Some more memory allocation improvements (related to those
+on 09-18) were made.
+
+<br>
+<br>
+<b><big><a name="09-18" id="09-18">09-18</a></big></b>
+<br>
+A bug was found in all the <a href="sparsity_pattern.htm" target="_top"><span style='white-space: nowrap'>sparsity_pattern</span></a>
+ calculations.
+The result was that eight times the necessary memory was being used
+during these calculations.  This has been fixed.
+
+
+<br>
+<br>
+<b><big><a name="08-25" id="08-25">08-25</a></big></b>
+<br>
+Add <a href="ad_fun.cpp.htm" target="_top"><span style='white-space: nowrap'>ad_fun.cpp</span></a>
+
+an example of how to create your own interface to an <a href="adfun.htm" target="_top"><span style='white-space: nowrap'>ADFun</span></a>
+ object.
+
+<br>
+<br>
+<b><big><a name="08-14" id="08-14">08-14</a></big></b>
+<br>
+Add <a href="ad_in_c.cpp.htm" target="_top"><span style='white-space: nowrap'>ad_in_c.cpp</span></a>
+
+an example of how to link CppAD to other languages.
+
+<br>
+<br>
+<b><big><a name="08_13" id="08_13">08_13</a></big></b>
+<br>
+Add an option to <a href="optimize.htm" target="_top"><span style='white-space: nowrap'>optimize</span></a>
+ an operation sequence.
+<code><span style='white-space: nowrap'><br>
+<br>
+</span></code><b>Begin Merge</b>
+<code><span style='white-space: nowrap'><br>
+</span></code>of changes from the directory <code><font color="blue">branches/optimize</font></code>
+in the CppAD subversion repository.
+The subheading dates below represent when the correspond change was made in
+<code><font color="blue">branches/optimize</font></code>.
+
+<br>
+<br>
+<b><a name="08_13.08-13" id="08_13.08-13">08-13</a></b>
+<br>
+An automatic check of the <a href="forward_zero.htm" target="_top"><span style='white-space: nowrap'>forward_zero</span></a>
+ results was added
+after each call to <a href="optimize.htm" target="_top"><span style='white-space: nowrap'>f.optimize()</span></a>
+
+(this <a href="optimize.htm#Checking Optimization" target="_top"><span style='white-space: nowrap'>check</span></a>
+
+is skipped when <code><font color="blue">NDEBUG</font></code> is defined).
+In addition, all of the 
+<code><font color="blue"><span style='white-space: nowrap'>speed/cppad/</span></font><i><font color="black"><span style='white-space: nowrap'>*</span></font></i><font color="blue"><span style='white-space: nowrap'>.cpp</span></font></code>
+ tests
+now check and use the speed test
+<a href="speed_main.htm#Global Options.optimize" target="_top"><span style='white-space: nowrap'>optimize</span></a>
+ flag.
+
+<br>
+<br>
+<b><a name="08_13.08-11" id="08_13.08-11">08-11</a></b>
+<br>
+Change the speed test <a href="speed_main.htm" target="_top"><span style='white-space: nowrap'>main&nbsp;program</span></a>
+ so
+that it uses a list of options instead of a boolean flag for each option.
+This will make it possible to add options in the future with out
+having to change all the existing tests because the options are now
+global variables instead of arguments to the speed test routines; for example,
+see <code><font color="blue">retape</font></code> speed test option.
+
+<br>
+<br>
+<b><a name="08_13.08-10" id="08_13.08-10">08-10</a></b>
+<br>
+The routine for <a href="optimize.htm" target="_top"><span style='white-space: nowrap'>optimizing</span></a>
+ the operation sequence
+has been added has been further tested using <code><font color="blue">test_more/optimize.cpp</font></code>.
+Some bugs have been fix and the routine can
+now be trusted to work correctly.
+<code><span style='white-space: nowrap'><br>
+<br>
+</span></code>The function
+<a href="seq_property.htm#size_VecAD" target="_top"><span style='white-space: nowrap'>size_VecAD</span></a>
+ function was added
+so that the user could see the <code><font color="blue">VecAD</font></code> vectors
+and elements corresponding to an operation sequence.
+
+<br>
+<br>
+<b><a name="08_13.08-09" id="08_13.08-09">08-09</a></b>
+<br>
+A routine for <a href="optimize.htm" target="_top"><span style='white-space: nowrap'>optimizing</span></a>
+ the operation sequence
+has been added.
+This is a preliminary version and needs more testing before it can
+be trusted to work correctly.
+<code><span style='white-space: nowrap'><br>
+</span></code><b>End Merge</b>
+
+
+<br>
+<br>
+<b><big><a name="08-06" id="08-06">08-06</a></big></b>
+<br>
+Add hash table coding to reduce the number of copies of the same
+parameter value necessary in a tape recording.
+In addition, add the function
+<a href="seq_property.htm#size_par" target="_top"><span style='white-space: nowrap'>size_par</span></a>
+ was added
+so that the user could see the number of parameters
+corresponding to an operation sequence.
+
+<br>
+<br>
+<b><big><a name="08-02" id="08-02">08-02</a></big></b>
+<br>
+Fix bug in new version of how <a href="forsparsejac.htm" target="_top"><span style='white-space: nowrap'>ForSparseJac</span></a>
+ handles
+<a href="vecad.htm" target="_top"><span style='white-space: nowrap'>VecAD</span></a>
+ objects.
+<code><span style='white-space: nowrap'><br>
+<br>
+</span></code>Fix bug in overnight build where HTML version and entire documentation
+as one page versions of documentation were not being built.
+<code><span style='white-space: nowrap'><br>
+<br>
+</span></code>Fix missing new line under
+<a href="simplevector.htm#Element Access.Using Value" target="_top"><span style='white-space: nowrap'>Using&nbsp;Value</span></a>
+
+heading for simple vector documentation.
+
+<br>
+<br>
+<b><big><a name="08-01" id="08-01">08-01</a></big></b>
+<br>
+Fix bug in reverse mode Jacobian <a href="revsparsejac.htm" target="_top"><span style='white-space: nowrap'>sparsity</span></a>
+
+for <a href="vecad.htm" target="_top"><span style='white-space: nowrap'>VecAD</span></a>
+ objects.
+
+<br>
+<br>
+<b><big><a name="07-31" id="07-31">07-31</a></big></b>
+<br>
+The <a href="forsparsejac.htm" target="_top"><span style='white-space: nowrap'>forward</span></a>
+ and <a href="revsparsejac.htm" target="_top"><span style='white-space: nowrap'>reverse</span></a>
+
+sparse Jacobian routines have been improved so the resulting sparsity
+patterns are valid for all values of the independent variables
+(even if you use <a href="condexp.htm" target="_top"><span style='white-space: nowrap'>CondExp</span></a>
+ or <a href="vecad.htm" target="_top"><span style='white-space: nowrap'>VecAD</span></a>
+).
+
+<br>
+<br>
+<b><big><a name="07-26" id="07-26">07-26</a></big></b>
+<br>
+Convert developer documentation from
+forward and reverse mode sweep routines from OMhelp to doxygen.
+
+<br>
+<br>
+<b><big><a name="07-25" id="07-25">07-25</a></big></b>
+<br>
+Add developer documentation for <a href="printfor.htm" target="_top"><span style='white-space: nowrap'>PrintFor</span></a>
+ operations.
+
+<br>
+<br>
+<b><big><a name="07-24" id="07-24">07-24</a></big></b>
+<br>
+Add developer documentation for <a href="discrete.htm" target="_top"><span style='white-space: nowrap'>Discrete</span></a>
+ operations.
+
+<br>
+<br>
+<b><big><a name="07-23" id="07-23">07-23</a></big></b>
+<br>
+Add developer documentation for tape evaluation of <a href="vecad.htm" target="_top"><span style='white-space: nowrap'>VecAD</span></a>
+ store
+operations. (a store operation changes the value of a VecAD element).
+<code><span style='white-space: nowrap'><br>
+<br>
+</span></code>Improve the <a href="vec_ad.cpp.htm" target="_top"><span style='white-space: nowrap'>vec_ad.cpp</span></a>
+ user example.
+
+<br>
+<br>
+<b><a name="07-23.07-06" id="07-23.07-06">07-06</a></b>
+<br>
+Fixed a bug in second or higher order reverse mode calculations
+that used <a href="vecad.htm" target="_top"><span style='white-space: nowrap'>VecAD</span></a>
+.
+This bug was demonstrated by the test case <code><font color="blue">SecondOrderReverse</font></code>
+in the file <code><font color="blue">test_more/vec_ad.cpp</font></code>.
+<code><span style='white-space: nowrap'><br>
+<br>
+</span></code>Add developer documentation for tape evaluation of the
+VecAD load operations
+(a load operation accesses an element of the vector but
+does not change it.)
+<code><span style='white-space: nowrap'><br>
+<br>
+</span></code>Fix <code><font color="blue">isnan</font></code> undefined in <code><font color="blue">example/cond_exp.cpp</font></code> error
+introduced on 07-04 change.
+
+<br>
+<br>
+<b><big><a name="07-04" id="07-04">07-04</a></big></b>
+<br>
+Add developer documentation for the
+<a href="comparechange.htm" target="_top"><span style='white-space: nowrap'>CompareChange</span></a>
+ operations during tape evaluation.
+<code><span style='white-space: nowrap'><br>
+<br>
+</span></code><b>Begin Merge</b>
+<code><span style='white-space: nowrap'><br>
+</span></code>of changes from the directory <code><font color="blue">branches/sweep</font></code>
+in the CppAD subversion repository.
+The subheading dates below represent when the correspond change was made in
+<code><font color="blue">branches/sweep</font></code>.
+
+<br>
+<br>
+<b><a name="07-04.07-04" id="07-04.07-04">07-04</a></b>
+<br>
+Fixed a bug in second or higher order reverse mode calculations
+that included <a href="condexp.htm" target="_top"><span style='white-space: nowrap'>conditional&nbsp;expressions</span></a>
+.
+This bug was demonstrated by the test case <code><font color="blue">SecondOrderReverse</font></code>
+in the file <code><font color="blue">test_more/cond_exp.cpp</font></code>.
+<code><span style='white-space: nowrap'><br>
+<br>
+</span></code>A simpler and useful example was provided for
+<a href="condexp.htm" target="_top"><span style='white-space: nowrap'>conditional&nbsp;expressions</span></a>
+;
+see <a href="cond_exp.cpp.htm" target="_top"><span style='white-space: nowrap'>cond_exp.cpp</span></a>
+.
+
+
+<br>
+<br>
+<b><a name="07-04.07-03" id="07-04.07-03">07-03</a></b>
+<br>
+Some minor improvements were made to the documentation for
+<a href="condexp.htm" target="_top"><span style='white-space: nowrap'>CondExp</span></a>
+.
+To be specific, a newer OMhelp option was used to change the formatting
+of the syntax, some of the argument names were changed to be more descriptive.
+
+<br>
+<br>
+<b><a name="07-04.07-02" id="07-04.07-02">07-02</a></b>
+<br>
+Add developer doxygen documentation of
+tape evaluation for power (exponentiation) operators.
+
+<br>
+<br>
+<b><a name="07-04.07-01" id="07-04.07-01">07-01</a></b>
+<br>
+Fix an example indexing error in
+<code><font color="blue">introduction/exp_apx/exp_eps_for2.cpp</font></code> (found by valgrind).
+<code><span style='white-space: nowrap'><br>
+<br>
+</span></code>Add developer doxygen documentation of
+tape evaluation for multiplication and division operators.
+
+<br>
+<br>
+<b><a name="07-04.06-30" id="07-04.06-30">06-30</a></b>
+<br>
+Add developer doxygen documentation of
+tape evaluation for addition and subtraction operators.
+
+<br>
+<br>
+<b><a name="07-04.06-29" id="07-04.06-29">06-29</a></b>
+<br>
+Add developer doxygen documentation of
+tape evaluation for sin, sinh, cos, and cosh.
+
+<br>
+<br>
+<b><a name="07-04.06-28" id="07-04.06-28">06-28</a></b>
+<br>
+Add developer doxygen documentation of
+tape evaluation for atan, asin, acos, sqrt, log.
+<code><span style='white-space: nowrap'><br>
+</span></code><b>End Merge</b>
+
+<br>
+<br>
+<b><big><a name="06-25" id="06-25">06-25</a></big></b>
+<br>
+The tarball for most recent release (of the subversion trunk for CppAD)
+was not being placed in the
+<a href="http://coin-or.github.io/download/source/CppAD/" target="_top"><span style='white-space: nowrap'>download</span></a>
+
+directory.
+This has been fixed.
+
+<br>
+<br>
+<b><big><a name="06-22" id="06-22">06-22</a></big></b>
+<br>
+Fix compiler warnings during the <code><font color="blue">openmp/run.sh</font></code> test.
+<code><span style='white-space: nowrap'><br>
+<br>
+</span></code>Changed <a href="speed_example.cpp.htm" target="_top"><span style='white-space: nowrap'>speed_example.cpp</span></a>
+ to omit the <code><font color="blue">speed_test</font></code> from
+the correctness result.
+In stead, a message is printed explaining that timing tests need
+to be run without a lot of other demands on the system.
+
+<br>
+<br>
+<b><big><a name="06-21" id="06-21">06-21</a></big></b>
+<br>
+The configure instructions for <a href="autotools.htm#ipopt_dir" target="_top"><span style='white-space: nowrap'>ipopt_dir</span></a>
+
+had the wrong path for <code><font color="blue">IpIpoptApplication.hpp</font></code>.
+This has been fixed.
+
+<br>
+<br>
+<b><big><a name="06-20" id="06-20">06-20</a></big></b>
+<br>
+Upgrade to from autoconf 2.61 to 2.63,
+and from automake 1.10.1 to 1.11.
+<code><span style='white-space: nowrap'><br>
+<br>
+</span></code>Fix conflict between CppAD's use of config.h preprocessor symbols
+and other packages use of the same symbol names.
+
+<br>
+<br>
+<b><big><a name="06-06" id="06-06">06-06</a></big></b>
+
+<ol type="1"><li>
+Using complex of an AD type (instead of AD of complex) was not working
+correctly in <code><font color="blue">not_complex_ad.cpp</font></code> because the
+<a href="ad_ctor.htm" target="_top"><span style='white-space: nowrap'>default&nbsp;constructor</span></a>
+ for an AD object has an unspecified value.
+This has been fixed for the complex type by changing the default constructor
+to use value zero.
+(The <code><font color="blue">not_complex_ad.cpp</font></code> example has been removed;
+see <a href="faq.htm#Complex Types" target="_top"><span style='white-space: nowrap'>complex&nbsp;FAQ</span></a>
+.)
+</li><li>
+
+Fixing the <code><font color="blue">not_complex_ad.cpp</font></code> problem above also fixed a warning
+generated by <a href="http://valgrind.org/" target="_top"><span style='white-space: nowrap'>valgrind</span></a>
+.
+Now <code><font color="blue">valgrind</font></code> runs the CppAD <code><font color="blue">example/example</font></code> program
+with out any warning or error messages.
+In addition, a minor initialization error was fixed in the
+<code><font color="blue">test_more/jacobian.cpp</font></code> routine so now
+<code><font color="blue">valgrind</font></code> also runs the CppAD <code><font color="blue">test_more/test_more</font></code> program
+with out any warnings or error messages.
+</li></ol>
+
+
+<br>
+<br>
+<b><big><a name="05-20" id="05-20">05-20</a></big></b>
+<br>
+A change was make to the trunk on 05-19 (svn revision 1361) that broke the
+<a href="autotools.htm" target="_top"><span style='white-space: nowrap'>Unix&nbsp;install</span></a>
+ procedure.
+This was has been fixed (revision 1362).
+
+<br>
+<br>
+<b><big><a name="03-24" id="03-24">03-24</a></big></b>
+<br>
+Added cross references in
+the <a href="listallexamples.htm" target="_top"><span style='white-space: nowrap'>examples</span></a>
+ to occurrence of the following tokens:
+<a href="ad.htm" target="_top"><span style='white-space: nowrap'>AD</span></a>
+,
+<a href="funconstruct.htm" target="_top"><span style='white-space: nowrap'>ADFun</span></a>
+,
+<a href="test_vector.htm" target="_top"><span style='white-space: nowrap'>CPPAD_TEST_VECTOR</span></a>
+,
+<a href="forward.htm" target="_top"><span style='white-space: nowrap'>Forward</span></a>
+,
+<a href="independent.htm" target="_top"><span style='white-space: nowrap'>Independent</span></a>
+,
+<a href="jacobian.htm" target="_top"><span style='white-space: nowrap'>Jacobian</span></a>
+
+<a href="nearequal.htm" target="_top"><span style='white-space: nowrap'>NearEqual</span></a>
+,
+<a href="reverse.htm" target="_top"><span style='white-space: nowrap'>Reverse</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="02-20" id="02-20">02-20</a></big></b>
+<br>
+Demonstrate using AD to compute the derivative
+of the solution of an ODE with respect to a parameter
+(in the <a href="runge45_2.cpp.htm" target="_top"><span style='white-space: nowrap'>runge45_2.cpp</span></a>
+ example).
+
+<br>
+<br>
+<b><big><a name="02-15" id="02-15">02-15</a></big></b>
+<br>
+Change the distribution
+<a href="download.htm#Compressed Archives" target="_top"><span style='white-space: nowrap'>compressed&nbsp;tar&nbsp;file</span></a>
+
+to only contain one copy of the documentation.
+Link to the current Internet documentation for the other three copies.
+
+
+<br>
+<br>
+<b><big><a name="02-01" id="02-01">02-01</a></big></b>
+<br>
+Move the <code><font color="blue">Prev</font></code> and <code><font color="blue">Next</font></code> buttons at the top of the documentation
+to the beginning so that their position does not change between sections.
+This makes it easier to repeatedly select this links.
+
+
+<br>
+<br>
+<b><big><a name="01-31" id="01-31">01-31</a></big></b>
+<br>
+Modify <code><font color="blue">cppad/local/op_code.hpp</font></code> to avoid incorrect warning by
+g++ version 4.3.2 when building <code><font color="blue">pycppad</font></code> (a python interface to CppAD).
+
+<br>
+<br>
+<b><big><a name="01-18" id="01-18">01-18</a></big></b>
+<br>
+Sometimes an error occurs while taping AD operations.
+The <a href="abort_recording.htm" target="_top"><span style='white-space: nowrap'>abort_recording</span></a>
+ function has been added
+to make it easier to recover in such cases.
+<code><span style='white-space: nowrap'><br>
+<br>
+</span></code>Previously, CppAD speed and comparison tests used Adolc-1.10.2.
+The version used in the tests has been upgraded to
+<a href="https://projects.coin-or.org/ADOL-C" target="_top"><span style='white-space: nowrap'>Adolc-2.0.0.</span></a>
+
+<code><span style='white-space: nowrap'><br>
+<br>
+</span></code>A discussion has been added to the documentation for <a href="jacobian.htm" target="_top"><span style='white-space: nowrap'>Jacobian</span></a>
+
+about its use of
+<a href="jacobian.htm#Forward or Reverse" target="_top"><span style='white-space: nowrap'>forward&nbsp;or&nbsp;reverse</span></a>
+
+mode depending on which it estimates is more efficient.
+<code><span style='white-space: nowrap'><br>
+<br>
+</span></code>A minor typo has been fixed in the description of
+<code><font color="blue">W(t, u)</font></code> in <a href="reverse_any.htm" target="_top"><span style='white-space: nowrap'>reverse_any</span></a>
+.
+To be specific,
+<small>@(@
+o ( t^{p-1} ) * t^{1-p} \rightarrow 0
+@)@</small>
+has been replaced by
+<small>@(@
+o ( t^{p-1} ) / t^{1-p} \rightarrow 0
+@)@</small>.
+
+<br>
+<br>
+<b><big><a name="01-06" id="01-06">01-06</a></big></b>
+<br>
+Made some minor improvements to the documentation in
+<a href="funconstruct.htm" target="_top"><span style='white-space: nowrap'>FunConstruct</span></a>
+.
+
+
+<hr>Input File: omh/appendix/whats_new/whats_new_09.omh
+
+</body>
+</html>

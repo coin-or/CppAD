@@ -1,0 +1,471 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>The Theory of Forward Mode</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="The Theory of Forward Mode">
+<meta name="keywords" id="keywords" content=" the theory forward mode taylor notation binary operators addition subtraction multiplication division standard math functions differential equation coefficients recursion formula cases that apply above special ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_forwardtheory_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://coin-or.github.io/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="theory.htm" target="_top">Prev</a>
+</td><td><a href="exp_forward.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>Appendix</option>
+<option>Theory</option>
+<option>ForwardTheory</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>CppAD-&gt;</option>
+<option>Install</option>
+<option>Introduction</option>
+<option>AD</option>
+<option>ADFun</option>
+<option>preprocessor</option>
+<option>multi_thread</option>
+<option>utility</option>
+<option>ipopt_solve</option>
+<option>Example</option>
+<option>speed</option>
+<option>Appendix</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>Appendix-&gt;</option>
+<option>Faq</option>
+<option>directory</option>
+<option>Theory</option>
+<option>glossary</option>
+<option>Bib</option>
+<option>wish_list</option>
+<option>whats_new</option>
+<option>deprecated</option>
+<option>compare_c</option>
+<option>numeric_ad</option>
+<option>addon</option>
+<option>License</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>Theory-&gt;</option>
+<option>ForwardTheory</option>
+<option>ReverseTheory</option>
+<option>reverse_identity</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down0(this)'>
+<option>ForwardTheory-&gt;</option>
+<option>exp_forward</option>
+<option>log_forward</option>
+<option>sqrt_forward</option>
+<option>sin_cos_forward</option>
+<option>atan_forward</option>
+<option>asin_forward</option>
+<option>acos_forward</option>
+<option>tan_forward</option>
+<option>erf_forward</option>
+</select>
+</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Taylor Notation</option>
+<option>Binary Operators</option>
+<option>---..Addition</option>
+<option>---..Subtraction</option>
+<option>---..Multiplication</option>
+<option>---..Division</option>
+<option>Standard Math Functions</option>
+<option>---..Differential Equation</option>
+<option>---..Taylor Coefficients Recursion Formula</option>
+<option>---..Cases that Apply Recursion Above</option>
+<option>---..Special Cases</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>The Theory of Forward Mode</big></big></b></center>
+<br>
+<b><big><a name="Taylor Notation" id="Taylor Notation">Taylor Notation</a></big></b>
+<br>
+In Taylor notation, each variable corresponds to
+a function of a single argument which we denote by 
+<code><i><font color="black"><span style='white-space: nowrap'>t</span></font></i></code>
+
+(see Section 10.2 of
+<a href="bib.htm#Evaluating Derivatives" target="_top"><span style='white-space: nowrap'>Evaluating&nbsp;Derivatives</span></a>
+).
+Here and below
+<small>@(@
+X(t)
+@)@</small>, <small>@(@
+Y(t)
+@)@</small>, and 
+<code><i><font color="black"><span style='white-space: nowrap'>Z(t)</span></font></i></code>
+ are scalar valued functions
+and the corresponding <code><i>p</i></code>-th order Taylor coefficients row vectors are
+<small>@(@
+x
+@)@</small>, <small>@(@
+y
+@)@</small> and <small>@(@
+z
+@)@</small>; i.e.,
+<small>@[@
+
+\begin{array}{lcr}
+X(t) & = & x^{(0)} + x^{(1)} * t + \cdots + x^{(p)} * t^p + o( t^p ) \\
+Y(t) & = & y^{(0)} + y^{(1)} * t + \cdots + y^{(p)} * t^p + o( t^p ) \\
+Z(t) & = & z^{(0)} + z^{(1)} * t + \cdots + z^{(p)} * t^p + o( t^p )
+\end{array}
+
+@]@</small>
+For the purposes of this section, we are given <small>@(@
+x
+@)@</small> and <small>@(@
+y
+@)@</small>
+and need to determine <small>@(@
+z
+@)@</small>.
+
+<br>
+<br>
+<b><big><a name="Binary Operators" id="Binary Operators">Binary Operators</a></big></b>
+
+
+<br>
+<br>
+<b><a name="Binary Operators.Addition" id="Binary Operators.Addition">Addition</a></b>
+
+<br>
+<small>@[@
+
+\begin{array}{rcl}
+Z(t)
+& = & X(t)   + Y(t)
+\\
+\sum_{j=0}^p z^{(j)} * t^j
+& = & \sum_{j=0}^p x^{(j)} * t^j + \sum_{j=0}^p y^{(j)} * t^j  + o( t^p )
+\\
+z^{(j)} & = & x^{(j)} + y^{(j)}
+\end{array}
+
+@]@</small><br>
+<b><a name="Binary Operators.Subtraction" id="Binary Operators.Subtraction">Subtraction</a></b>
+
+<br>
+<small>@[@
+
+\begin{array}{rcl}
+Z(t)
+& = & X(t) - Y(t)
+\\
+\sum_{j=0}^p z^{(j)} * t^j
+& = & \sum_{j=0}^p x^{(j)} * t^j - \sum_{j=0}^p y^{(j)} * t^j  + o( t^p )
+\\
+z^{(j)} & = & x^{(j)} - y^{(j)}
+\end{array}
+
+@]@</small><br>
+<b><a name="Binary Operators.Multiplication" id="Binary Operators.Multiplication">Multiplication</a></b>
+
+<br>
+<small>@[@
+
+\begin{array}{rcl}
+Z(t)
+& = & X(t) * Y(t)
+\\
+\sum_{j=0}^p z^{(j)} * t^j
+& = & \left( \sum_{j=0}^p x^{(j)} * t^j \right)
+*
+\left( \sum_{j=0}^p y^{(j)} * t^j \right) + o( t^p )
+\\
+z^{(j)} & = & \sum_{k=0}^j x^{(j-k)} * y^{(k)}
+\end{array}
+
+@]@</small><br>
+<b><a name="Binary Operators.Division" id="Binary Operators.Division">Division</a></b>
+
+<br>
+<small>@[@
+
+\begin{array}{rcl}
+Z(t)
+& = & X(t) / Y(t)
+\\
+x
+& = & z * y
+\\
+\sum_{j=0}^p x^{(j)} * t^j
+& = &
+\left( \sum_{j=0}^p z^{(j)} * t^j \right)
+*
+\left( \sum_{j=0}^p y^{(j)} * t^j \right)
++
+o( t^p )
+\\
+x^{(j)} & = & \sum_{k=0}^j z^{(j-k)} y^{(k)}
+\\
+z^{(j)} & = & \frac{1}{y^{(0)}} \left( x^{(j)} - \sum_{k=1}^j z^{(j-k)} y^{(k)} \right)
+\end{array}
+
+
+@]@</small><br>
+<b><big><a name="Standard Math Functions" id="Standard Math Functions">Standard Math Functions</a></big></b>
+<br>
+Suppose that <small>@(@
+F
+@)@</small> is a standard math function and
+<small>@[@
+
+	Z(t) = F[ X(t) ]
+
+@]@</small>
+
+<br>
+<br>
+<b><a name="Standard Math Functions.Differential Equation" id="Standard Math Functions.Differential Equation">Differential Equation</a></b>
+<br>
+All of the standard math functions
+satisfy a differential equation of the form
+<small>@[@
+
+	B(u) * F^{(1)} (u) - A(u) * F (u)  = D(u)
+
+@]@</small>
+We use <small>@(@
+a
+@)@</small>, <small>@(@
+b
+@)@</small> and <small>@(@
+d
+@)@</small> to denote the
+<code><i>p</i></code>-th order Taylor coefficient row vectors for
+<small>@(@
+A [ X (t) ]
+@)@</small>, <small>@(@
+B [ X (t) ]
+@)@</small> and <small>@(@
+D [ X (t) ]
+@)@</small>
+respectively.
+We assume that these coefficients are known functions of <small>@(@
+x
+@)@</small>,
+the <code><i>p</i></code>-th order Taylor coefficients for <small>@(@
+X(t)
+@)@</small>.
+
+<br>
+<br>
+<b><a name="Standard Math Functions.Taylor Coefficients Recursion Formula" id="Standard Math Functions.Taylor Coefficients Recursion Formula">Taylor Coefficients Recursion Formula</a></b>
+<br>
+Our problem here is to express <small>@(@
+z
+@)@</small>,
+the <code><i>p</i></code>-th order Taylor coefficient row vector for <small>@(@
+Z(t)
+@)@</small>,
+in terms of these other known coefficients.
+It follows from the formulas above that
+<small>@[@
+
+\begin{array}{rcl}
+Z^{(1)} (t)
+& = & F^{(1)} [ X(t) ] * X^{(1)} (t)
+\\
+B[ X(t) ] * Z^{(1)} (t)
+& = & \{ D[ X(t) ] + A[ X(t) ] * Z(t) \} * X^{(1)} (t)
+\\
+B[ X(t) ] * Z^{(1)} (t) & = & E(t) * X^{(1)} (t)
+\end{array}
+
+@]@</small>
+where we define
+<small>@[@
+
+E(t) =  D[X(t)] + A[X(t)] * Z(t)
+
+@]@</small>
+
+We can compute the value of <small>@(@
+z^{(0)}
+@)@</small> using the formula
+<small>@[@
+
+	z^{(0)} = F ( x^{(0)} )
+
+@]@</small>
+Suppose by induction (on <small>@(@
+j
+@)@</small>) that we are given the
+Taylor coefficients of <small>@(@
+E(t)
+@)@</small> up to order <small>@(@
+j-1
+@)@</small>; i.e.,
+<small>@(@
+e^{(k)}
+@)@</small> for <small>@(@
+k = 0 , \ldots , j-1
+@)@</small>
+and the coefficients
+<small>@(@
+z^{(k)}
+@)@</small> for <small>@(@
+k = 0 , \ldots , j
+@)@</small>.
+We can compute <small>@(@
+e^{(j)}
+@)@</small> using the formula
+<small>@[@
+
+	e^{(j)} = d^{(j)} + \sum_{k=0}^j a^{(j-k)} * z^{(k)}
+
+@]@</small>
+We need to complete the induction by finding formulas for <small>@(@
+z^{(j+1)}
+@)@</small>.
+It follows for the formula for the
+<a href="forwardtheory.htm#Binary Operators.Multiplication" target="_top"><span style='white-space: nowrap'>multiplication</span></a>
+
+operator that
+<small>@[@
+
+\begin{array}{rcl}
+\left( \sum_{k=0}^j b^{(k)} t^k \right)
+*
+\left( \sum_{k=1}^{j+1} k z^{(k)} * t^{k-1} \right)
+& = &
+\left( \sum_{k=0}^j e^{(k)} * t^k \right)
+*
+\left( \sum_{k=1}^{j+1} k x^{(k)} * t^{k-1} \right)
++
+o( t^p )
+\\
+z^{(j+1)} & = & \frac{1}{j+1} \frac{1}{ b^{(0)} }
+\left(
+	\sum_{k=0}^j e^{(k)} (j+1-k) x^{(j+1-k)}
+	- \sum_{k=1}^j b^{(k)} (j+1-k) z^{(j+1-k)}
+\right)
+\\
+z^{(j+1)} & = & \frac{1}{j+1} \frac{1}{ b^{(0)} }
+\left(
+	\sum_{k=1}^{j+1} k x^{(k)} e^{(j+1-k)}
+	- \sum_{k=1}^j k z^{(k)}  b^{(j+1-k)}
+\right)
+\end{array}
+
+@]@</small>
+This completes the induction that computes <small>@(@
+e^{(j)}
+@)@</small>
+and <small>@(@
+z^{(j+1)}
+@)@</small>.
+
+
+
+
+
+
+<br>
+<br>
+<b><a name="Standard Math Functions.Cases that Apply Recursion Above" id="Standard Math Functions.Cases that Apply Recursion Above">Cases that Apply Recursion Above</a></b>
+
+<table><tr><td align='left'  valign='top'>
+
+<a href="exp_forward.htm" target="_top">exp_forward</a></td><td>
+Exponential Function Forward Mode Theory</td></tr>
+<tr><td>
+
+<a href="log_forward.htm" target="_top">log_forward</a></td><td>
+Logarithm Function Forward Mode Theory</td></tr>
+<tr><td>
+
+<a href="sqrt_forward.htm" target="_top">sqrt_forward</a></td><td>
+Square Root Function Forward Mode Theory</td></tr>
+<tr><td>
+
+<a href="sin_cos_forward.htm" target="_top">sin_cos_forward</a></td><td>
+Trigonometric and Hyperbolic Sine and Cosine Forward Theory</td></tr>
+<tr><td>
+
+<a href="atan_forward.htm" target="_top">atan_forward</a></td><td>
+Inverse Tangent and Hyperbolic Tangent Forward Mode Theory</td></tr>
+<tr><td>
+
+<a href="asin_forward.htm" target="_top">asin_forward</a></td><td>
+Inverse Sine and Hyperbolic Sine Forward Mode Theory</td></tr>
+<tr><td>
+
+<a href="acos_forward.htm" target="_top">acos_forward</a></td><td>
+Inverse Cosine and Hyperbolic Cosine Forward Mode Theory</td></tr>
+<tr><td>
+
+</td></tr>
+</table>
+<br>
+<b><a name="Standard Math Functions.Special Cases" id="Standard Math Functions.Special Cases">Special Cases</a></b>
+
+<table><tr><td align='left'  valign='top'>
+
+<a href="tan_forward.htm" target="_top">tan_forward</a></td><td>
+Tangent and Hyperbolic Tangent Forward Taylor Polynomial Theory</td></tr>
+<tr><td>
+
+</td></tr>
+</table>
+
+<hr>Input File: omh/appendix/theory/forward_theory.omh
+
+</body>
+</html>

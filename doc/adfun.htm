@@ -1,0 +1,121 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>ADFun Objects</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="ADFun Objects">
+<meta name="keywords" id="keywords" content=" adfun objects purpose ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_adfun_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://coin-or.github.io/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="complex_poly.cpp.htm" target="_top">Prev</a>
+</td><td><a href="record_adfun.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>ADFun</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>CppAD-&gt;</option>
+<option>Install</option>
+<option>Introduction</option>
+<option>AD</option>
+<option>ADFun</option>
+<option>preprocessor</option>
+<option>multi_thread</option>
+<option>utility</option>
+<option>ipopt_solve</option>
+<option>Example</option>
+<option>speed</option>
+<option>Appendix</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down0(this)'>
+<option>ADFun-&gt;</option>
+<option>record_adfun</option>
+<option>drivers</option>
+<option>Forward</option>
+<option>Reverse</option>
+<option>sparsity_pattern</option>
+<option>sparse_derivative</option>
+<option>optimize</option>
+<option>abs_normal</option>
+<option>FunCheck</option>
+<option>check_for_nan</option>
+</select>
+</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Purpose</option>
+<option>Contents</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>ADFun Objects</big></big></b></center>
+<br>
+<b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
+<br>
+An AD of 
+<code><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i></code>
+
+<a href="glossary.htm#Operation.Sequence" target="_top"><span style='white-space: nowrap'>operation&nbsp;sequence</span></a>
+
+is stored in an <code><font color="blue">ADFun</font></code> object by its <a href="funconstruct.htm" target="_top"><span style='white-space: nowrap'>FunConstruct</span></a>
+.
+The <code><font color="blue">ADFun</font></code> object can then be used to calculate function values,
+derivative values, and other values related to the corresponding function.
+
+<br>
+<br>
+<b><big><a name="Contents" id="Contents">Contents</a></big></b>
+<br>
+<table>
+<tr><td><a href="record_adfun.htm" target="_top">record_adfun</a></td><td>Create&nbsp;an&nbsp;ADFun&nbsp;Object&nbsp;(Record&nbsp;an&nbsp;Operation&nbsp;Sequence)</td></tr><tr><td><a href="drivers.htm" target="_top">drivers</a></td><td>First&nbsp;and&nbsp;Second&nbsp;Order&nbsp;Derivatives:&nbsp;Easy&nbsp;Drivers</td></tr><tr><td><a href="forward.htm" target="_top">Forward</a></td><td>Forward&nbsp;Mode</td></tr><tr><td><a href="reverse.htm" target="_top">Reverse</a></td><td>Reverse&nbsp;Mode</td></tr><tr><td><a href="sparsity_pattern.htm" target="_top">sparsity_pattern</a></td><td>Calculating&nbsp;Sparsity&nbsp;Patterns</td></tr><tr><td><a href="sparse_derivative.htm" target="_top">sparse_derivative</a></td><td>Calculating&nbsp;Sparse&nbsp;Derivatives</td></tr><tr><td><a href="optimize.htm" target="_top">optimize</a></td><td>Optimize&nbsp;an&nbsp;ADFun&nbsp;Object&nbsp;Tape</td></tr><tr><td><a href="abs_normal.htm" target="_top">abs_normal</a></td><td>Abs-normal&nbsp;Representation&nbsp;of&nbsp;Non-Smooth&nbsp;Functions</td></tr><tr><td><a href="funcheck.htm" target="_top">FunCheck</a></td><td>Check&nbsp;an&nbsp;ADFun&nbsp;Sequence&nbsp;of&nbsp;Operations</td></tr><tr><td><a href="check_for_nan.htm" target="_top">check_for_nan</a></td><td>Check&nbsp;an&nbsp;ADFun&nbsp;Object&nbsp;For&nbsp;Nan&nbsp;Results</td></tr></table>
+<hr>Input File: cppad/core/ad_fun.hpp
+
+</body>
+</html>

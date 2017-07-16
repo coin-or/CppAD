@@ -1,0 +1,206 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>Determine Amount of Time to Execute det_by_minor</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Determine Amount of Time to Execute det_by_minor">
+<meta name="keywords" id="keywords" content=" determine amount time to execute det_by_minor syntax purpose time_min source code ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_time_det_by_minor_c_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://coin-or.github.io/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="elapsed_seconds_c.htm" target="_top">Prev</a>
+</td><td><a href="main_compare_c.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>Appendix</option>
+<option>compare_c</option>
+<option>time_det_by_minor_c</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>CppAD-&gt;</option>
+<option>Install</option>
+<option>Introduction</option>
+<option>AD</option>
+<option>ADFun</option>
+<option>preprocessor</option>
+<option>multi_thread</option>
+<option>utility</option>
+<option>ipopt_solve</option>
+<option>Example</option>
+<option>speed</option>
+<option>Appendix</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>Appendix-&gt;</option>
+<option>Faq</option>
+<option>directory</option>
+<option>Theory</option>
+<option>glossary</option>
+<option>Bib</option>
+<option>wish_list</option>
+<option>whats_new</option>
+<option>deprecated</option>
+<option>compare_c</option>
+<option>numeric_ad</option>
+<option>addon</option>
+<option>License</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>compare_c-&gt;</option>
+<option>det_of_minor_c</option>
+<option>det_by_minor_c</option>
+<option>uniform_01_c</option>
+<option>correct_det_by_minor_c</option>
+<option>repeat_det_by_minor_c</option>
+<option>elapsed_seconds_c</option>
+<option>time_det_by_minor_c</option>
+<option>main_compare_c</option>
+</select>
+</td>
+<td>time_det_by_minor_c</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Syntax</option>
+<option>Purpose</option>
+<option>time_min</option>
+<option>time</option>
+<option>Source Code</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>Determine Amount of Time to Execute det_by_minor</big></big></b></center>
+<br>
+<b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
+
+<br>
+
+<code><i><font color="black"><span style='white-space: nowrap'>time</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;time_test(</span></font><i><font color="black"><span style='white-space: nowrap'>size</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>time_min</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+
+
+<br>
+<br>
+<b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
+<br>
+reports the amount of wall clock time for <code><font color="blue">det_by_minor</font></code>
+to compute the determinant of a square matrix.
+
+The 
+<code><i><font color="black"><span style='white-space: nowrap'>size</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>size</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+It specifies the number of rows (and columns) in the square matrix
+that the determinant is being calculated for.
+
+<br>
+<br>
+<b><big><a name="time_min" id="time_min">time_min</a></big></b>
+<br>
+The argument 
+<code><i><font color="black"><span style='white-space: nowrap'>time_min</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;double&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>time_min</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+It specifies the minimum amount of time in seconds
+that the 
+<code><i><font color="black"><span style='white-space: nowrap'>test</span></font></i></code>
+ routine should take.
+The calculations is repeated the necessary number of times so that
+this amount of execution time (or more) is reached.
+
+<br>
+<br>
+<b><big><a name="time" id="time">time</a></big></b>
+<br>
+The return value 
+<code><i><font color="black"><span style='white-space: nowrap'>time</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;double&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>time</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+and is the number of wall clock seconds that it took for
+<code><font color="blue">det_by_minor</font></code> to compute its determinant
+(plus overhead which includes choosing a random matrix).
+
+
+
+
+<br>
+<br>
+<b><big><a name="Source Code" id="Source Code">Source Code</a></big></b>
+
+<pre><tt><font color="#009900">double</font> <b><font color="#000000">time_det_by_minor</font></b><font color="#990000">(</font><font color="#008080">size_t</font> size<font color="#990000">,</font> <font color="#009900">double</font> time_min<font color="#990000">)</font>
+<font color="#FF0000">{</font>    <font color="#008080">size_t</font> repeat<font color="#990000">;</font>
+     <font color="#009900">double</font> s0<font color="#990000">,</font> s1<font color="#990000">,</font> time<font color="#990000">;</font>
+     repeat <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
+     s0     <font color="#990000">=</font> <b><font color="#000000">elapsed_seconds</font></b><font color="#990000">();</font>
+     s1     <font color="#990000">=</font> s0<font color="#990000">;</font>
+     <b><font color="#0000FF">while</font></b><font color="#990000">(</font> s1 <font color="#990000">-</font> s0 <font color="#990000">&lt;</font> time_min <font color="#990000">)</font>
+     <font color="#FF0000">{</font>    <b><font color="#0000FF">if</font></b><font color="#990000">(</font> repeat <font color="#990000">==</font> <font color="#993399">0</font> <font color="#990000">)</font>
+               repeat <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font>
+          <b><font color="#0000FF">else</font></b> repeat <font color="#990000">=</font> <font color="#993399">2</font> <font color="#990000">*</font> repeat<font color="#990000">;</font>
+          s0     <font color="#990000">=</font> <b><font color="#000000">elapsed_seconds</font></b><font color="#990000">();</font>
+          <b><font color="#000000">repeat_det_by_minor</font></b><font color="#990000">(</font>repeat<font color="#990000">,</font> size<font color="#990000">);</font>
+          s1     <font color="#990000">=</font> <b><font color="#000000">elapsed_seconds</font></b><font color="#990000">();</font>
+     <font color="#FF0000">}</font>
+     time <font color="#990000">=</font> <font color="#990000">(</font>s1 <font color="#990000">-</font> s0<font color="#990000">)</font> <font color="#990000">/</font> <font color="#990000">(</font><font color="#009900">double</font><font color="#990000">)</font> repeat<font color="#990000">;</font>
+     <b><font color="#0000FF">return</font></b> time<font color="#990000">;</font>
+<font color="#FF0000">}</font></tt></pre>
+
+<hr>Input File: test_more/compare_c/det_by_minor.c
+
+</body>
+</html>

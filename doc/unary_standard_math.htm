@@ -1,0 +1,325 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>The Unary Standard Math Functions</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="The Unary Standard Math Functions">
+<meta name="keywords" id="keywords" content=" the unary standard math functions syntax purpose possible types base ad&lt;base&gt; vecad&lt;base&gt; fun ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_unary_standard_math_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://coin-or.github.io/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="div_eq.cpp.htm" target="_top">Prev</a>
+</td><td><a href="acos.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>AD</option>
+<option>ADValued</option>
+<option>unary_standard_math</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>CppAD-&gt;</option>
+<option>Install</option>
+<option>Introduction</option>
+<option>AD</option>
+<option>ADFun</option>
+<option>preprocessor</option>
+<option>multi_thread</option>
+<option>utility</option>
+<option>ipopt_solve</option>
+<option>Example</option>
+<option>speed</option>
+<option>Appendix</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>AD-&gt;</option>
+<option>ad_ctor</option>
+<option>ad_assign</option>
+<option>Convert</option>
+<option>ADValued</option>
+<option>BoolValued</option>
+<option>VecAD</option>
+<option>base_require</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>ADValued-&gt;</option>
+<option>Arithmetic</option>
+<option>unary_standard_math</option>
+<option>binary_math</option>
+<option>CondExp</option>
+<option>Discrete</option>
+<option>numeric_limits</option>
+<option>atomic</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down0(this)'>
+<option>unary_standard_math-&gt;</option>
+<option>acos</option>
+<option>asin</option>
+<option>atan</option>
+<option>cos</option>
+<option>cosh</option>
+<option>exp</option>
+<option>log</option>
+<option>log10</option>
+<option>sin</option>
+<option>sinh</option>
+<option>sqrt</option>
+<option>tan</option>
+<option>tanh</option>
+<option>abs</option>
+<option>acosh</option>
+<option>asinh</option>
+<option>atanh</option>
+<option>erf</option>
+<option>expm1</option>
+<option>log1p</option>
+<option>sign</option>
+</select>
+</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Syntax</option>
+<option>Purpose</option>
+<option>Possible Types</option>
+<option>---..Base</option>
+<option>---..AD&lt;Base&gt;</option>
+<option>---..VecAD&lt;Base&gt;</option>
+<option>fun</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>The Unary Standard Math Functions</big></big></b></center>
+<br>
+<b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
+
+<br>
+
+<code><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>fun</span></font></i><font color="blue"><span style='white-space: nowrap'>(</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+
+
+<br>
+<br>
+<b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
+<br>
+Evaluates the standard math function 
+<code><i><font color="black"><span style='white-space: nowrap'>fun</span></font></i></code>
+.
+
+<br>
+<br>
+<b><big><a name="Possible Types" id="Possible Types">Possible Types</a></big></b>
+
+
+<br>
+<br>
+<b><a name="Possible Types.Base" id="Possible Types.Base">Base</a></b>
+<br>
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i></code>
+ satisfies the
+<a href="base_require.htm" target="_top"><span style='white-space: nowrap'>base&nbsp;type&nbsp;requirements</span></a>
+
+and argument 
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+then the result 
+<code><i><font color="black"><span style='white-space: nowrap'>y</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+<br>
+<b><a name="Possible Types.AD&lt;Base&gt;" id="Possible Types.AD&lt;Base&gt;">AD&lt;Base&gt;</a></b>
+<br>
+If the argument 
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+then the result 
+<code><i><font color="black"><span style='white-space: nowrap'>y</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+<br>
+<b><a name="Possible Types.VecAD&lt;Base&gt;" id="Possible Types.VecAD&lt;Base&gt;">VecAD&lt;Base&gt;</a></b>
+<br>
+If the argument 
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;VecAD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;::reference&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+then the result 
+<code><i><font color="black"><span style='white-space: nowrap'>y</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+<br>
+<b><big><a name="fun" id="fun">fun</a></big></b>
+<br>
+The possible values for 
+<code><i><font color="black"><span style='white-space: nowrap'>fun</span></font></i></code>
+ are
+<table><tr><td align='left'  valign='top'>
+
+
+<code><i><font color="black"><span style='white-space: nowrap'>&nbsp;fun</span></font></i></code>
+ <code><span style='white-space: nowrap'>&nbsp;&nbsp;</span></code> </td><td align='left'  valign='top'>
+ Description        </td></tr><tr><td align='left'  valign='top'>
+
+<a href="abs.htm" target="_top"><span style='white-space: nowrap'>abs</span></a>
+            </td><td align='left'  valign='top'>
+ AD Absolute Value Functions: abs, fabs       </td></tr><tr><td align='left'  valign='top'>
+
+<a href="acos.htm" target="_top"><span style='white-space: nowrap'>acos</span></a>
+           </td><td align='left'  valign='top'>
+ Inverse Sine Function: acos      </td></tr><tr><td align='left'  valign='top'>
+
+<a href="acosh.htm" target="_top"><span style='white-space: nowrap'>acosh</span></a>
+          </td><td align='left'  valign='top'>
+ The Inverse Hyperbolic Cosine Function: acosh     </td></tr><tr><td align='left'  valign='top'>
+
+<a href="asin.htm" target="_top"><span style='white-space: nowrap'>asin</span></a>
+           </td><td align='left'  valign='top'>
+ Inverse Sine Function: asin      </td></tr><tr><td align='left'  valign='top'>
+
+<a href="asinh.htm" target="_top"><span style='white-space: nowrap'>asinh</span></a>
+          </td><td align='left'  valign='top'>
+ The Inverse Hyperbolic Sine Function: asinh     </td></tr><tr><td align='left'  valign='top'>
+
+<a href="atan.htm" target="_top"><span style='white-space: nowrap'>atan</span></a>
+           </td><td align='left'  valign='top'>
+ Inverse Tangent Function: atan      </td></tr><tr><td align='left'  valign='top'>
+
+<a href="atanh.htm" target="_top"><span style='white-space: nowrap'>atanh</span></a>
+          </td><td align='left'  valign='top'>
+ The Inverse Hyperbolic Tangent Function: atanh     </td></tr><tr><td align='left'  valign='top'>
+
+<a href="cos.htm" target="_top"><span style='white-space: nowrap'>cos</span></a>
+            </td><td align='left'  valign='top'>
+ The Cosine Function: cos       </td></tr><tr><td align='left'  valign='top'>
+
+<a href="cosh.htm" target="_top"><span style='white-space: nowrap'>cosh</span></a>
+           </td><td align='left'  valign='top'>
+ The Hyperbolic Cosine Function: cosh      </td></tr><tr><td align='left'  valign='top'>
+
+<a href="erf.htm" target="_top"><span style='white-space: nowrap'>erf</span></a>
+            </td><td align='left'  valign='top'>
+ The Error Function       </td></tr><tr><td align='left'  valign='top'>
+
+<a href="exp.htm" target="_top"><span style='white-space: nowrap'>exp</span></a>
+            </td><td align='left'  valign='top'>
+ The Exponential Function: exp       </td></tr><tr><td align='left'  valign='top'>
+
+<a href="expm1.htm" target="_top"><span style='white-space: nowrap'>expm1</span></a>
+          </td><td align='left'  valign='top'>
+ The Exponential Function Minus One: expm1     </td></tr><tr><td align='left'  valign='top'>
+
+<a href="abs.htm" target="_top"><span style='white-space: nowrap'>fabs</span></a>
+      </td><td align='left'  valign='top'>
+ AD Absolute Value Functions: abs, fabs       </td></tr><tr><td align='left'  valign='top'>
+
+<a href="log10.htm" target="_top"><span style='white-space: nowrap'>log10</span></a>
+          </td><td align='left'  valign='top'>
+ The Base 10 Logarithm Function: log10     </td></tr><tr><td align='left'  valign='top'>
+
+<a href="log1p.htm" target="_top"><span style='white-space: nowrap'>log1p</span></a>
+          </td><td align='left'  valign='top'>
+ The Logarithm of One Plus Argument: log1p     </td></tr><tr><td align='left'  valign='top'>
+
+<a href="log.htm" target="_top"><span style='white-space: nowrap'>log</span></a>
+            </td><td align='left'  valign='top'>
+ The Exponential Function: log       </td></tr><tr><td align='left'  valign='top'>
+
+<a href="sign.htm" target="_top"><span style='white-space: nowrap'>sign</span></a>
+           </td><td align='left'  valign='top'>
+ The Sign: sign      </td></tr><tr><td align='left'  valign='top'>
+
+<a href="sin.htm" target="_top"><span style='white-space: nowrap'>sin</span></a>
+            </td><td align='left'  valign='top'>
+ The Sine Function: sin       </td></tr><tr><td align='left'  valign='top'>
+
+<a href="sinh.htm" target="_top"><span style='white-space: nowrap'>sinh</span></a>
+           </td><td align='left'  valign='top'>
+ The Hyperbolic Sine Function: sinh      </td></tr><tr><td align='left'  valign='top'>
+
+<a href="sqrt.htm" target="_top"><span style='white-space: nowrap'>sqrt</span></a>
+           </td><td align='left'  valign='top'>
+ The Square Root Function: sqrt      </td></tr><tr><td align='left'  valign='top'>
+
+<a href="tan.htm" target="_top"><span style='white-space: nowrap'>tan</span></a>
+            </td><td align='left'  valign='top'>
+ The Tangent Function: tan       </td></tr><tr><td align='left'  valign='top'>
+
+<a href="tanh.htm" target="_top"><span style='white-space: nowrap'>tanh</span></a>
+           </td><td align='left'  valign='top'>
+ The Hyperbolic Tangent Function: tanh
+</td></tr>
+</table>
+
+<hr>Input File: cppad/core/standard_math.hpp
+
+</body>
+</html>

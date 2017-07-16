@@ -1,0 +1,276 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>Allocate An Array and Call Default Constructor for its Elements</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Allocate An Array and Call Default Constructor for its Elements">
+<meta name="keywords" id="keywords" content=" allocate array call default constructor its elements create_array syntax purpose type size_min size_out delta alignment example ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_ta_create_array_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://coin-or.github.io/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="ta_available.htm" target="_top">Prev</a>
+</td><td><a href="ta_delete_array.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>utility</option>
+<option>thread_alloc</option>
+<option>ta_create_array</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>CppAD-&gt;</option>
+<option>Install</option>
+<option>Introduction</option>
+<option>AD</option>
+<option>ADFun</option>
+<option>preprocessor</option>
+<option>multi_thread</option>
+<option>utility</option>
+<option>ipopt_solve</option>
+<option>Example</option>
+<option>speed</option>
+<option>Appendix</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>utility-&gt;</option>
+<option>ErrorHandler</option>
+<option>NearEqual</option>
+<option>speed_test</option>
+<option>SpeedTest</option>
+<option>time_test</option>
+<option>test_boolofvoid</option>
+<option>NumericType</option>
+<option>CheckNumericType</option>
+<option>SimpleVector</option>
+<option>CheckSimpleVector</option>
+<option>nan</option>
+<option>pow_int</option>
+<option>Poly</option>
+<option>LuDetAndSolve</option>
+<option>RombergOne</option>
+<option>RombergMul</option>
+<option>Runge45</option>
+<option>Rosen34</option>
+<option>OdeErrControl</option>
+<option>OdeGear</option>
+<option>OdeGearControl</option>
+<option>CppAD_vector</option>
+<option>thread_alloc</option>
+<option>index_sort</option>
+<option>to_string</option>
+<option>set_union</option>
+<option>sparse_rc</option>
+<option>sparse_rcv</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>thread_alloc-&gt;</option>
+<option>thread_alloc.cpp</option>
+<option>ta_parallel_setup</option>
+<option>ta_num_threads</option>
+<option>ta_in_parallel</option>
+<option>ta_thread_num</option>
+<option>ta_get_memory</option>
+<option>ta_return_memory</option>
+<option>ta_free_available</option>
+<option>ta_hold_memory</option>
+<option>ta_inuse</option>
+<option>ta_available</option>
+<option>ta_create_array</option>
+<option>ta_delete_array</option>
+<option>ta_free_all</option>
+</select>
+</td>
+<td>ta_create_array</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Syntax</option>
+<option>Purpose</option>
+<option>Type</option>
+<option>size_min</option>
+<option>size_out</option>
+<option>array</option>
+<option>Delta</option>
+<option>Alignment</option>
+<option>Example</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@
+
+
+<center><b><big><big>Allocate An Array and Call Default Constructor for its Elements</big></big></b></center>
+<br>
+<b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
+
+<br>
+
+<code><i><font color="black"><span style='white-space: nowrap'>array</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;thread_alloc::create_array&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Type</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;(</span></font><i><font color="black"><span style='white-space: nowrap'>size_min</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>size_out</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+.
+
+<br>
+<br>
+<b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
+<br>
+Create a new raw array using <a href="thread_alloc.htm" target="_top"><span style='white-space: nowrap'>thread_alloc</span></a>
+ memory allocator
+(works well in a multi-threading environment)
+and call default constructor for each element.
+
+<br>
+<br>
+<b><big><a name="Type" id="Type">Type</a></big></b>
+<br>
+The type of the elements of the array.
+
+<br>
+<br>
+<b><big><a name="size_min" id="size_min">size_min</a></big></b>
+<br>
+This argument has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>size_min</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+This is the minimum number of elements that there can be
+in the resulting 
+<code><i><font color="black"><span style='white-space: nowrap'>array</span></font></i></code>
+.
+
+<br>
+<br>
+<b><big><a name="size_out" id="size_out">size_out</a></big></b>
+<br>
+This argument has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>size_out</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+The input value of this argument does not matter.
+Upon return, it is the actual number of elements
+in 
+<code><i><font color="black"><span style='white-space: nowrap'>array</span></font></i></code>
+
+(
+<code><i><font color="black"><span style='white-space: nowrap'>&nbsp;size_min&nbsp;</span></font></i><font color="blue"><span style='white-space: nowrap'>&lt;=</span></font><i><font color="black"><span style='white-space: nowrap'>&nbsp;size_out</span></font></i></code>
+).
+
+<br>
+<br>
+<b><big><a name="array" id="array">array</a></big></b>
+<br>
+The return value 
+<code><i><font color="black"><span style='white-space: nowrap'>array</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Type</span></font></i><font color="blue"><span style='white-space: nowrap'>*&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>array</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+It is array with 
+<code><i><font color="black"><span style='white-space: nowrap'>size_out</span></font></i></code>
+ elements.
+The default constructor for 
+<code><i><font color="black"><span style='white-space: nowrap'>Type</span></font></i></code>
+ is used to initialize the
+elements of 
+<code><i><font color="black"><span style='white-space: nowrap'>array</span></font></i></code>
+.
+Note that <a href="ta_delete_array.htm" target="_top"><span style='white-space: nowrap'>delete_array</span></a>
+
+should be used to destroy the array when it is no longer needed.
+
+<br>
+<br>
+<b><big><a name="Delta" id="Delta">Delta</a></big></b>
+<br>
+The amount of memory <a href="ta_inuse.htm" target="_top"><span style='white-space: nowrap'>inuse</span></a>
+ by the current thread,
+will increase 
+<code><i><font color="black"><span style='white-space: nowrap'>delta</span></font></i></code>
+ where
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sizeof(</span></font><i><font color="black"><span style='white-space: nowrap'>Type</span></font></i><font color="blue"><span style='white-space: nowrap'>)&nbsp;*&nbsp;(</span></font><i><font color="black"><span style='white-space: nowrap'>size_out</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;+&nbsp;1)&nbsp;&gt;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>delta</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&gt;=&nbsp;sizeof(</span></font><i><font color="black"><span style='white-space: nowrap'>Type</span></font></i><font color="blue"><span style='white-space: nowrap'>)&nbsp;*&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>size_out</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+The <a href="ta_available.htm" target="_top"><span style='white-space: nowrap'>available</span></a>
+ memory will decrease by 
+<code><i><font color="black"><span style='white-space: nowrap'>delta</span></font></i></code>
+,
+(and the allocation will be faster)
+if a previous allocation with 
+<code><i><font color="black"><span style='white-space: nowrap'>size_min</span></font></i></code>
+ between its current value
+and 
+<code><i><font color="black"><span style='white-space: nowrap'>size_out</span></font></i></code>
+ is available.
+
+<br>
+<br>
+<b><big><a name="Alignment" id="Alignment">Alignment</a></big></b>
+<br>
+We call a memory allocation aligned if the address is a multiple
+of the number of bytes in a <code><font color="blue">size_t</font></code> value.
+If the system <code><font color="blue">new</font></code> allocator is aligned, then 
+<code><i><font color="black"><span style='white-space: nowrap'>array</span></font></i></code>
+
+pointer is also aligned.
+
+<br>
+<br>
+<b><big><a name="Example" id="Example">Example</a></big></b>
+
+<br>
+<a href="thread_alloc.cpp.htm" target="_top"><span style='white-space: nowrap'>thread_alloc.cpp</span></a>
+
+
+
+<hr>Input File: cppad/utility/thread_alloc.hpp
+
+</body>
+</html>

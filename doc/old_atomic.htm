@@ -1,0 +1,1640 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>User Defined Atomic AD Functions</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="User Defined Atomic AD Functions">
+<meta name="keywords" id="keywords" content=" user defined atomic ad functions operation old_atomic deprecated 2013-05-27 syntax function use callback routines free static memory purpose partial implementation cppad_user_atomic tvector base ok id k n m tx ty forward reverse afun ax ay parallel mode usage vx vy py px for_jac_sparse q r s rev_jac_sparse rev_hes_sparse t u v clear restriction example simple tangent matrix multiplication ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_old_atomic_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://coin-or.github.io/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="ipopt_ode_speed.cpp.htm" target="_top">Prev</a>
+</td><td><a href="old_reciprocal.cpp.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>Appendix</option>
+<option>deprecated</option>
+<option>old_atomic</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>CppAD-&gt;</option>
+<option>Install</option>
+<option>Introduction</option>
+<option>AD</option>
+<option>ADFun</option>
+<option>preprocessor</option>
+<option>multi_thread</option>
+<option>utility</option>
+<option>ipopt_solve</option>
+<option>Example</option>
+<option>speed</option>
+<option>Appendix</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>Appendix-&gt;</option>
+<option>Faq</option>
+<option>directory</option>
+<option>Theory</option>
+<option>glossary</option>
+<option>Bib</option>
+<option>wish_list</option>
+<option>whats_new</option>
+<option>deprecated</option>
+<option>compare_c</option>
+<option>numeric_ad</option>
+<option>addon</option>
+<option>License</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>deprecated-&gt;</option>
+<option>include_deprecated</option>
+<option>FunDeprecated</option>
+<option>CompareChange</option>
+<option>omp_max_thread</option>
+<option>TrackNewDel</option>
+<option>omp_alloc</option>
+<option>memory_leak</option>
+<option>epsilon</option>
+<option>test_vector</option>
+<option>cppad_ipopt_nlp</option>
+<option>old_atomic</option>
+<option>zdouble</option>
+<option>autotools</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down0(this)'>
+<option>old_atomic-&gt;</option>
+<option>old_reciprocal.cpp</option>
+<option>old_usead_1.cpp</option>
+<option>old_usead_2.cpp</option>
+<option>old_tan.cpp</option>
+<option>old_mat_mul.cpp</option>
+</select>
+</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Deprecated 2013-05-27</option>
+<option>Syntax Function</option>
+<option>---..Use Function</option>
+<option>---..Callback Routines</option>
+<option>---..Free Static Memory</option>
+<option>Purpose</option>
+<option>Partial Implementation</option>
+<option>CPPAD_USER_ATOMIC</option>
+<option>---..Tvector</option>
+<option>---..Base</option>
+<option>ok</option>
+<option>id</option>
+<option>k</option>
+<option>n</option>
+<option>m</option>
+<option>tx</option>
+<option>ty</option>
+<option>---..forward</option>
+<option>---..reverse</option>
+<option>afun</option>
+<option>---..ax</option>
+<option>---..ay</option>
+<option>---..Parallel Mode</option>
+<option>forward</option>
+<option>---..Usage</option>
+<option>---..vx</option>
+<option>---..vy</option>
+<option>reverse</option>
+<option>---..Usage</option>
+<option>---..py</option>
+<option>---..px</option>
+<option>for_jac_sparse</option>
+<option>---..Usage</option>
+<option>---..q</option>
+<option>---..r</option>
+<option>---..s</option>
+<option>rev_jac_sparse</option>
+<option>---..Usage</option>
+<option>---..q</option>
+<option>---..s</option>
+<option>---..r</option>
+<option>rev_hes_sparse</option>
+<option>---..Usage</option>
+<option>---..q</option>
+<option>---..r</option>
+<option>---..s</option>
+<option>---..t</option>
+<option>---..u</option>
+<option>---..v</option>
+<option>clear</option>
+<option>---..Restriction</option>
+<option>Example</option>
+<option>---..Simple</option>
+<option>---..Use AD</option>
+<option>---..Tangent Function</option>
+<option>---..Matrix Multiplication</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>User Defined Atomic AD Functions</big></big></b></center>
+<br>
+<b><big><a name="Deprecated 2013-05-27" id="Deprecated 2013-05-27">Deprecated 2013-05-27</a></big></b>
+<br>
+Using <code><font color="blue">CPPAD_USER_ATOMIC</font></code> has been deprecated.
+Use <a href="atomic_base.htm" target="_top"><span style='white-space: nowrap'>atomic_base</span></a>
+ instead.
+
+<br>
+<br>
+<b><big><a name="Syntax Function" id="Syntax Function">Syntax Function</a></big></b>
+
+<br>
+
+<code><font color="blue"><span style='white-space: nowrap'>CPPAD_USER_ATOMIC(</span></font><i><font color="black"><span style='white-space: nowrap'>afun</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Tvector</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>forward</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>reverse</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>for_jac_sparse</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>rev_jac_sparse</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>rev_hes_sparse</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+)<br>
+</span></font></code>
+<br>
+<b><a name="Syntax Function.Use Function" id="Syntax Function.Use Function">Use Function</a></b>
+
+<br>
+
+<code><i><font color="black"><span style='white-space: nowrap'>afun</span></font></i><font color="blue"><span style='white-space: nowrap'>(</span></font><i><font color="black"><span style='white-space: nowrap'>id</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ax</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ay</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+<br>
+<b><a name="Syntax Function.Callback Routines" id="Syntax Function.Callback Routines">Callback Routines</a></b>
+
+<br>
+
+<code><i><font color="black"><span style='white-space: nowrap'>ok</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>forward</span></font></i><font color="blue"><span style='white-space: nowrap'>(</span></font><i><font color="black"><span style='white-space: nowrap'>id</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>k</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>m</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>vx</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>vy</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>tx</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ty</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+
+<code><i><font color="black"><span style='white-space: nowrap'>ok</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>reverse</span></font></i><font color="blue"><span style='white-space: nowrap'>(</span></font><i><font color="black"><span style='white-space: nowrap'>id</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>k</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>m</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>tx</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ty</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>px</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>py</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+
+<code><i><font color="black"><span style='white-space: nowrap'>ok</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>for_jac_sparse</span></font></i><font color="blue"><span style='white-space: nowrap'>(</span></font><i><font color="black"><span style='white-space: nowrap'>id</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>m</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>q</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>r</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>s</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+
+<code><i><font color="black"><span style='white-space: nowrap'>ok</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>rev_jac_sparse</span></font></i><font color="blue"><span style='white-space: nowrap'>(</span></font><i><font color="black"><span style='white-space: nowrap'>id</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>m</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>q</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>r</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>s</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+
+<code><i><font color="black"><span style='white-space: nowrap'>ok</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>rev_hes_sparse</span></font></i><font color="blue"><span style='white-space: nowrap'>(</span></font><i><font color="black"><span style='white-space: nowrap'>id</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>m</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>q</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>r</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>s</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>t</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>u</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>v</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+<br>
+<b><a name="Syntax Function.Free Static Memory" id="Syntax Function.Free Static Memory">Free Static Memory</a></b>
+
+<br>
+
+<code><font color="blue"><span style='white-space: nowrap'>user_atomic&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;::clear()</span></font></code>
+
+
+<br>
+<br>
+<b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
+<br>
+In some cases, the user knows how to compute the derivative
+of a function
+<small>@[@
+
+	y = f(x) \; {\rm where} \; f : B^n \rightarrow B^m
+
+@]@</small>
+more efficiently than by coding it using 
+<code><font color="blue"><span style='white-space: nowrap'>AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code>
+
+<a href="glossary.htm#Operation.Atomic" target="_top"><span style='white-space: nowrap'>atomic</span></a>
+ operations
+and letting CppAD do the rest.
+In this case, <code><font color="blue">CPPAD_USER_ATOMIC</font></code> can be used
+add the user code for <small>@(@
+f(x)
+@)@</small>, and its derivatives,
+to the set of 
+<code><font color="blue"><span style='white-space: nowrap'>AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code>
+ atomic operations.
+<code><span style='white-space: nowrap'><br>
+<br>
+</span></code>Another possible purpose is to reduce the size of the tape;
+see <a href="old_atomic.htm#Example.Use AD" target="_top"><span style='white-space: nowrap'>use&nbsp;AD</span></a>
+
+
+<br>
+<br>
+<b><big><a name="Partial Implementation" id="Partial Implementation">Partial Implementation</a></big></b>
+<br>
+The routines
+<a href="old_atomic.htm#forward" target="_top"><span style='white-space: nowrap'>forward</span></a>
+,
+<a href="old_atomic.htm#reverse" target="_top"><span style='white-space: nowrap'>reverse</span></a>
+,
+<a href="old_atomic.htm#for_jac_sparse" target="_top"><span style='white-space: nowrap'>for_jac_sparse</span></a>
+,
+<a href="old_atomic.htm#rev_jac_sparse" target="_top"><span style='white-space: nowrap'>rev_jac_sparse</span></a>
+, and
+<a href="old_atomic.htm#rev_hes_sparse" target="_top"><span style='white-space: nowrap'>rev_hes_sparse</span></a>
+,
+must be defined by the user.
+The 
+<code><i><font color="black"><span style='white-space: nowrap'>forward</span></font></i></code>
+ the routine,
+for the case 
+<code><i><font color="black"><span style='white-space: nowrap'>k</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;0</span></font></code>
+, must be implemented.
+Functions with the correct prototype,
+that just return <code><font color="blue">false</font></code>,
+can be used for the other cases
+(unless they are required by your calculations).
+For example, you need not implement
+
+<code><i><font color="black"><span style='white-space: nowrap'>forward</span></font></i></code>
+ for the case 
+<code><i><font color="black"><span style='white-space: nowrap'>k</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;==&nbsp;2</span></font></code>
+ until you require
+forward mode calculation of second derivatives.
+
+<br>
+<br>
+<b><big><a name="CPPAD_USER_ATOMIC" id="CPPAD_USER_ATOMIC">CPPAD_USER_ATOMIC</a></big></b>
+<br>
+The macro
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+CPPAD_USER_ATOMIC(</span></font><i><font color="black"><span style='white-space: nowrap'>afun</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Tvector</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>forward</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>reverse</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>for_jac_sparse</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>rev_jac_sparse</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>rev_hes_sparse</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+)<br>
+</span></font></code>
+defines the 
+<code><font color="blue"><span style='white-space: nowrap'>AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code>
+ routine 
+<code><i><font color="black"><span style='white-space: nowrap'>afun</span></font></i></code>
+.
+This macro can be placed within a namespace
+(not the <code><font color="blue">CppAD</font></code> namespace)
+but must be outside of any routine.
+
+<br>
+<br>
+<b><a name="CPPAD_USER_ATOMIC.Tvector" id="CPPAD_USER_ATOMIC.Tvector">Tvector</a></b>
+<br>
+The macro argument 
+<code><i><font color="black"><span style='white-space: nowrap'>Tvector</span></font></i></code>
+ must be a
+<a href="simplevector.htm" target="_top"><span style='white-space: nowrap'>simple&nbsp;vector&nbsp;template&nbsp;class</span></a>
+.
+It determines the type of vectors used as arguments to the routine
+
+<code><i><font color="black"><span style='white-space: nowrap'>afun</span></font></i></code>
+.
+
+<br>
+<br>
+<b><a name="CPPAD_USER_ATOMIC.Base" id="CPPAD_USER_ATOMIC.Base">Base</a></b>
+<br>
+The macro argument 
+<code><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i></code>
+ specifies the
+<a href="base_require.htm" target="_top"><span style='white-space: nowrap'>base&nbsp;type</span></a>
+
+corresponding to 
+<code><font color="blue"><span style='white-space: nowrap'>AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base&gt;</span></font></i></code>
+ operation sequences.
+Calling the routine 
+<code><i><font color="black"><span style='white-space: nowrap'>afun</span></font></i></code>
+ will add the operator defined
+by this macro to an 
+<code><font color="blue"><span style='white-space: nowrap'>AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base&gt;</span></font></i></code>
+ operation sequence.
+
+<br>
+<br>
+<b><big><a name="ok" id="ok">ok</a></big></b>
+<br>
+For all routines documented below,
+the return value 
+<code><i><font color="black"><span style='white-space: nowrap'>ok</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bool&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ok</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+If it is <code><font color="blue">true</font></code>, the corresponding evaluation succeeded,
+otherwise it failed.
+
+<br>
+<br>
+<b><big><a name="id" id="id">id</a></big></b>
+<br>
+For all routines documented below,
+the argument 
+<code><i><font color="black"><span style='white-space: nowrap'>id</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>id</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+Its value in all other calls is the same as in the corresponding
+call to 
+<code><i><font color="black"><span style='white-space: nowrap'>afun</span></font></i></code>
+.
+It can be used to store and retrieve extra information about
+a specific call to 
+<code><i><font color="black"><span style='white-space: nowrap'>afun</span></font></i></code>
+.
+
+<br>
+<br>
+<b><big><a name="k" id="k">k</a></big></b>
+<br>
+For all routines documented below, the argument 
+<code><i><font color="black"><span style='white-space: nowrap'>k</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>k</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+The value 
+<code><i><font color="black"><span style='white-space: nowrap'>k</span></font></i></code>
+ is the order of the Taylor coefficient that
+we are evaluating (<a href="old_atomic.htm#forward" target="_top"><span style='white-space: nowrap'>forward</span></a>
+)
+or taking the derivative of (<a href="old_atomic.htm#reverse" target="_top"><span style='white-space: nowrap'>reverse</span></a>
+).
+
+<br>
+<br>
+<b><big><a name="n" id="n">n</a></big></b>
+<br>
+For all routines documented below,
+the argument 
+<code><i><font color="black"><span style='white-space: nowrap'>n</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+It is the size of the vector 
+<code><i><font color="black"><span style='white-space: nowrap'>ax</span></font></i></code>
+ in the corresponding call to
+
+<code><i><font color="black"><span style='white-space: nowrap'>afun</span></font></i><font color="blue"><span style='white-space: nowrap'>(</span></font><i><font color="black"><span style='white-space: nowrap'>id</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ax</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ay</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+; i.e.,
+the dimension of the domain space for <small>@(@
+y = f(x)
+@)@</small>.
+
+<br>
+<br>
+<b><big><a name="m" id="m">m</a></big></b>
+<br>
+For all routines documented below, the argument 
+<code><i><font color="black"><span style='white-space: nowrap'>m</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>m</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+It is the size of the vector 
+<code><i><font color="black"><span style='white-space: nowrap'>ay</span></font></i></code>
+ in the corresponding call to
+
+<code><i><font color="black"><span style='white-space: nowrap'>afun</span></font></i><font color="blue"><span style='white-space: nowrap'>(</span></font><i><font color="black"><span style='white-space: nowrap'>id</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ax</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ay</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+; i.e.,
+the dimension of the range space for <small>@(@
+y = f(x)
+@)@</small>.
+
+<br>
+<br>
+<b><big><a name="tx" id="tx">tx</a></big></b>
+<br>
+For all routines documented below,
+the argument 
+<code><i><font color="black"><span style='white-space: nowrap'>tx</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;CppAD::vector&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>tx</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+and 
+<code><i><font color="black"><span style='white-space: nowrap'>tx</span></font></i><font color="blue"><span style='white-space: nowrap'>.size()&nbsp;&gt;=&nbsp;(</span></font><i><font color="black"><span style='white-space: nowrap'>k</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;+&nbsp;1)&nbsp;*&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n</span></font></i></code>
+.
+For <small>@(@
+j = 0 , \ldots , n-1
+@)@</small> and <small>@(@
+\ell = 0 , \ldots , k
+@)@</small>,
+we use the Taylor coefficient notation
+<small>@[@
+
+\begin{array}{rcl}
+	x_j^\ell & = & tx [ j * ( k + 1 ) + \ell ]
+	\\
+	X_j (t) & = & x_j^0 + x_j^1 t^1 + \cdots + x_j^k t^k
+\end{array}
+
+@]@</small>
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>tx</span></font></i><font color="blue"><span style='white-space: nowrap'>.size()&nbsp;&gt;&nbsp;(</span></font><i><font color="black"><span style='white-space: nowrap'>k</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;+&nbsp;1)&nbsp;*&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n</span></font></i></code>
+,
+the other components of 
+<code><i><font color="black"><span style='white-space: nowrap'>tx</span></font></i></code>
+ are not specified and should not be used.
+Note that superscripts represent an index for <small>@(@
+x_j^\ell
+@)@</small>
+and an exponent for <small>@(@
+t^\ell
+@)@</small>.
+Also note that the Taylor coefficients for <small>@(@
+X(t)
+@)@</small> correspond
+to the derivatives of <small>@(@
+X(t)
+@)@</small> at <small>@(@
+t = 0
+@)@</small> in the following way:
+<small>@[@
+
+	x_j^\ell = \frac{1}{ \ell ! } X_j^{(\ell)} (0)
+
+@]@</small>
+
+<br>
+<br>
+<b><big><a name="ty" id="ty">ty</a></big></b>
+<br>
+In calls to <a href="old_atomic.htm#forward" target="_top"><span style='white-space: nowrap'>forward</span></a>
+,
+the argument 
+<code><i><font color="black"><span style='white-space: nowrap'>ty</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CppAD::vector&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ty</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+while in calls to <a href="old_atomic.htm#reverse" target="_top"><span style='white-space: nowrap'>reverse</span></a>
+ it has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;CppAD::vector&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ty</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+For all calls, 
+<code><i><font color="black"><span style='white-space: nowrap'>tx</span></font></i><font color="blue"><span style='white-space: nowrap'>.size()&nbsp;&gt;=&nbsp;(</span></font><i><font color="black"><span style='white-space: nowrap'>k</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;+&nbsp;1)&nbsp;*&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>m</span></font></i></code>
+.
+For <small>@(@
+i = 0 , \ldots , m-1
+@)@</small> and <small>@(@
+\ell = 0 , \ldots , k
+@)@</small>,
+we use the Taylor coefficient notation
+<small>@[@
+
+\begin{array}{rcl}
+	y_i^\ell & = & ty [ i * ( k + 1 ) + \ell ]
+	\\
+	Y_i (t)  & = & y_i^0 + y_i^1 t^1 + \cdots + y_i^k t^k + o ( t^k )
+\end{array}
+
+@]@</small>
+where <small>@(@
+o( t^k ) / t^k \rightarrow 0
+@)@</small> as <small>@(@
+t \rightarrow 0
+@)@</small>.
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>ty</span></font></i><font color="blue"><span style='white-space: nowrap'>.size()&nbsp;&gt;&nbsp;(</span></font><i><font color="black"><span style='white-space: nowrap'>k</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;+&nbsp;1)&nbsp;*&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>m</span></font></i></code>
+,
+the other components of 
+<code><i><font color="black"><span style='white-space: nowrap'>ty</span></font></i></code>
+ are not specified and should not be used.
+Note that superscripts represent an index for <small>@(@
+y_j^\ell
+@)@</small>
+and an exponent for <small>@(@
+t^\ell
+@)@</small>.
+Also note that the Taylor coefficients for <small>@(@
+Y(t)
+@)@</small> correspond
+to the derivatives of <small>@(@
+Y(t)
+@)@</small> at <small>@(@
+t = 0
+@)@</small> in the following way:
+<small>@[@
+
+	y_j^\ell = \frac{1}{ \ell ! } Y_j^{(\ell)} (0)
+
+@]@</small>
+
+<br>
+<br>
+<b><a name="ty.forward" id="ty.forward">forward</a></b>
+<br>
+In the case of 
+<code><i><font color="black"><span style='white-space: nowrap'>forward</span></font></i></code>
+,
+for <small>@(@
+i = 0 , \ldots , m-1
+@)@</small>, <small>@(@
+ty[ i *( k  + 1) + k ]
+@)@</small> is an output
+and all the other components of 
+<code><i><font color="black"><span style='white-space: nowrap'>ty</span></font></i></code>
+ are inputs.
+
+<br>
+<br>
+<b><a name="ty.reverse" id="ty.reverse">reverse</a></b>
+<br>
+In the case of 
+<code><i><font color="black"><span style='white-space: nowrap'>reverse</span></font></i></code>
+,
+all the components of 
+<code><i><font color="black"><span style='white-space: nowrap'>ty</span></font></i></code>
+ are inputs.
+
+<br>
+<br>
+<b><big><a name="afun" id="afun">afun</a></big></b>
+<br>
+The macro argument 
+<code><i><font color="black"><span style='white-space: nowrap'>afun</span></font></i></code>
+,
+is the name of the AD function corresponding to this atomic
+operation (as it is used in the source code).
+CppAD uses the other functions,
+where the arguments are vectors with elements of type 
+<code><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i></code>
+,
+to implement the function
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>afun</span></font></i><font color="blue"><span style='white-space: nowrap'>(</span></font><i><font color="black"><span style='white-space: nowrap'>id</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ax</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ay</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+where the argument are vectors with elements of type 
+<code><font color="blue"><span style='white-space: nowrap'>AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code>
+.
+
+<br>
+<br>
+<b><a name="afun.ax" id="afun.ax">ax</a></b>
+<br>
+The 
+<code><i><font color="black"><span style='white-space: nowrap'>afun</span></font></i></code>
+ argument 
+<code><i><font color="black"><span style='white-space: nowrap'>ax</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Tvector</span></font></i><font color="blue"><span style='white-space: nowrap'>&lt;&nbsp;AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;&gt;&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ax</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+It is the argument vector <small>@(@
+x \in B^n
+@)@</small>
+at which the 
+<code><font color="blue"><span style='white-space: nowrap'>AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code>
+ version of
+<small>@(@
+y = f(x)
+@)@</small> is to be evaluated.
+The dimension of the domain space for <small>@(@
+y = f (x)
+@)@</small>
+is specified by <a href="old_atomic.htm#n" target="_top"><span style='white-space: nowrap'>n</span></a>
+ 
+<code><font color="blue"><span style='white-space: nowrap'>=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ax</span></font></i><font color="blue"><span style='white-space: nowrap'>.size()</span></font></code>
+,
+which must be greater than zero.
+
+<br>
+<br>
+<b><a name="afun.ay" id="afun.ay">ay</a></b>
+<br>
+The 
+<code><i><font color="black"><span style='white-space: nowrap'>afun</span></font></i></code>
+ result 
+<code><i><font color="black"><span style='white-space: nowrap'>ay</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Tvector</span></font></i><font color="blue"><span style='white-space: nowrap'>&lt;&nbsp;AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;&gt;&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ay</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+The input values of its elements
+are not specified (must not matter).
+Upon return, it is the 
+<code><font color="blue"><span style='white-space: nowrap'>AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code>
+ version of the
+result vector <small>@(@
+y = f(x)
+@)@</small>.
+The dimension of the range space for <small>@(@
+y = f (x)
+@)@</small>
+is specified by <a href="old_atomic.htm#m" target="_top"><span style='white-space: nowrap'>m</span></a>
+ 
+<code><font color="blue"><span style='white-space: nowrap'>=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ay</span></font></i><font color="blue"><span style='white-space: nowrap'>.size()</span></font></code>
+,
+which must be greater than zero.
+
+<br>
+<br>
+<b><a name="afun.Parallel Mode" id="afun.Parallel Mode">Parallel Mode</a></b>
+<br>
+The first call to
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>afun</span></font></i><font color="blue"><span style='white-space: nowrap'>(</span></font><i><font color="black"><span style='white-space: nowrap'>id</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ax</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ay</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+must not be in <a href="ta_in_parallel.htm" target="_top"><span style='white-space: nowrap'>parallel</span></a>
+ mode.
+In addition, the
+<a href="old_atomic.htm#clear" target="_top"><span style='white-space: nowrap'>old_atomic&nbsp;clear</span></a>
+
+routine cannot be called while in parallel mode.
+
+<br>
+<br>
+<b><big><a name="forward" id="forward">forward</a></big></b>
+<br>
+The macro argument 
+<code><i><font color="black"><span style='white-space: nowrap'>forward</span></font></i></code>
+ is a
+user defined function
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ok</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>forward</span></font></i><font color="blue"><span style='white-space: nowrap'>(</span></font><i><font color="black"><span style='white-space: nowrap'>id</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>k</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>m</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>vx</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>vy</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>tx</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ty</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+that computes results during a <a href="forward.htm" target="_top"><span style='white-space: nowrap'>forward</span></a>
+ mode sweep.
+For this call, we are given the Taylor coefficients in 
+<code><i><font color="black"><span style='white-space: nowrap'>tx</span></font></i></code>
+
+form order zero through 
+<code><i><font color="black"><span style='white-space: nowrap'>k</span></font></i></code>
+,
+and the Taylor coefficients in  
+<code><i><font color="black"><span style='white-space: nowrap'>ty</span></font></i></code>
+ with order less than 
+<code><i><font color="black"><span style='white-space: nowrap'>k</span></font></i></code>
+.
+The 
+<code><i><font color="black"><span style='white-space: nowrap'>forward</span></font></i></code>
+ routine computes the
+
+<code><i><font color="black"><span style='white-space: nowrap'>k</span></font></i></code>
+ order Taylor coefficients for <small>@(@
+y
+@)@</small> using the definition
+<small>@(@
+Y(t) = f[ X(t) ]
+@)@</small>.
+For example, for <small>@(@
+i = 0 , \ldots , m-1
+@)@</small>,
+<small>@[@
+
+\begin{array}{rcl}
+y_i^0 & = & Y(0)
+        = f_i ( x^0 )
+\\
+y_i^1 & = & Y^{(1)} ( 0 )
+        = f_i^{(1)} ( x^0 ) X^{(1)} ( 0 )
+        = f_i^{(1)} ( x^0 ) x^1
+\\
+y_i^2
+& = & \frac{1}{2 !} Y^{(2)} (0)
+\\
+& = & \frac{1}{2} X^{(1)} (0)^\R{T} f_i^{(2)} ( x^0 ) X^{(1)} ( 0 )
+  +   \frac{1}{2} f_i^{(1)} ( x^0 ) X^{(2)} ( 0 )
+\\
+& = & \frac{1}{2} (x^1)^\R{T} f_i^{(2)} ( x^0 ) x^1
+  +    f_i^{(1)} ( x^0 ) x^2
+\end{array}
+
+@]@</small>
+Then, for <small>@(@
+i = 0 , \ldots , m-1
+@)@</small>, it sets
+<small>@[@
+
+	ty [ i * (k + 1) + k ] = y_i^k
+
+@]@</small>
+The other components of 
+<code><i><font color="black"><span style='white-space: nowrap'>ty</span></font></i></code>
+ must be left unchanged.
+
+<br>
+<br>
+<b><a name="forward.Usage" id="forward.Usage">Usage</a></b>
+<br>
+This routine is used,
+with 
+<code><i><font color="black"><span style='white-space: nowrap'>vx</span></font></i><font color="blue"><span style='white-space: nowrap'>.size()&nbsp;&gt;&nbsp;0</span></font></code>
+ and 
+<code><i><font color="black"><span style='white-space: nowrap'>k</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;==&nbsp;0</span></font></code>
+,
+by calls to 
+<code><i><font color="black"><span style='white-space: nowrap'>afun</span></font></i></code>
+.
+It is used,
+with 
+<code><i><font color="black"><span style='white-space: nowrap'>vx</span></font></i><font color="blue"><span style='white-space: nowrap'>.size()&nbsp;=&nbsp;0</span></font></code>
+ and
+
+<code><i><font color="black"><span style='white-space: nowrap'>k</span></font></i></code>
+ equal to the order of the derivative begin computed,
+by calls to <a href="forward_order.htm" target="_top"><span style='white-space: nowrap'>forward</span></a>
+.
+
+<br>
+<br>
+<b><a name="forward.vx" id="forward.vx">vx</a></b>
+<br>
+The 
+<code><i><font color="black"><span style='white-space: nowrap'>forward</span></font></i></code>
+ argument 
+<code><i><font color="black"><span style='white-space: nowrap'>vx</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;CppAD::vector&lt;bool&gt;&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>vx</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+The case 
+<code><i><font color="black"><span style='white-space: nowrap'>vx</span></font></i><font color="blue"><span style='white-space: nowrap'>.size()&nbsp;&gt;&nbsp;0</span></font></code>
+ occurs
+once for each call to 
+<code><i><font color="black"><span style='white-space: nowrap'>afun</span></font></i></code>
+,
+during the call,
+and before any of the other callbacks corresponding to that call.
+Hence such a call can be used to cache information attached to
+the corresponding 
+<code><i><font color="black"><span style='white-space: nowrap'>id</span></font></i></code>
+
+(such as the elements of 
+<code><i><font color="black"><span style='white-space: nowrap'>vx</span></font></i></code>
+).
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>vx</span></font></i><font color="blue"><span style='white-space: nowrap'>.size()&nbsp;&gt;&nbsp;0</span></font></code>
+ then
+
+<code><i><font color="black"><span style='white-space: nowrap'>k</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;==&nbsp;0</span></font></code>
+,
+
+<code><i><font color="black"><span style='white-space: nowrap'>vx</span></font></i><font color="blue"><span style='white-space: nowrap'>.size()&nbsp;&gt;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n</span></font></i></code>
+, and
+for <small>@(@
+j = 0 , \ldots , n-1
+@)@</small>,
+
+<code><i><font color="black"><span style='white-space: nowrap'>vx</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>j</span></font></i><font color="blue"><span style='white-space: nowrap'>]</span></font></code>
+ is true if and only if
+
+<code><i><font color="black"><span style='white-space: nowrap'>ax</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>j</span></font></i><font color="blue"><span style='white-space: nowrap'>]</span></font></code>
+ is a <a href="glossary.htm#Variable" target="_top"><span style='white-space: nowrap'>variable</span></a>
+.
+<code><span style='white-space: nowrap'><br>
+<br>
+</span></code>If 
+<code><i><font color="black"><span style='white-space: nowrap'>vx</span></font></i><font color="blue"><span style='white-space: nowrap'>.size()&nbsp;==&nbsp;0</span></font></code>
+,
+then 
+<code><i><font color="black"><span style='white-space: nowrap'>vy</span></font></i><font color="blue"><span style='white-space: nowrap'>.size()&nbsp;==&nbsp;0</span></font></code>
+ and neither of these vectors
+should be used.
+
+<br>
+<br>
+<b><a name="forward.vy" id="forward.vy">vy</a></b>
+<br>
+The 
+<code><i><font color="black"><span style='white-space: nowrap'>forward</span></font></i></code>
+ argument 
+<code><i><font color="black"><span style='white-space: nowrap'>vy</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CppAD::vector&lt;bool&gt;&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>vy</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>vy</span></font></i><font color="blue"><span style='white-space: nowrap'>.size()&nbsp;==&nbsp;0</span></font></code>
+, it should not be used.
+Otherwise,
+
+<code><i><font color="black"><span style='white-space: nowrap'>k</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;==&nbsp;0</span></font></code>
+ and 
+<code><i><font color="black"><span style='white-space: nowrap'>vy</span></font></i><font color="blue"><span style='white-space: nowrap'>.size()&nbsp;&gt;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>m</span></font></i></code>
+.
+The input values of the elements of 
+<code><i><font color="black"><span style='white-space: nowrap'>vy</span></font></i></code>
+
+are not specified (must not matter).
+Upon return, for <small>@(@
+j = 0 , \ldots , m-1
+@)@</small>,
+
+<code><i><font color="black"><span style='white-space: nowrap'>vy</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>]</span></font></code>
+ is true if and only if
+
+<code><i><font color="black"><span style='white-space: nowrap'>ay</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>j</span></font></i><font color="blue"><span style='white-space: nowrap'>]</span></font></code>
+ is a variable.
+(CppAD uses 
+<code><i><font color="black"><span style='white-space: nowrap'>vy</span></font></i></code>
+ to reduce the necessary computations.)
+
+<br>
+<br>
+<b><big><a name="reverse" id="reverse">reverse</a></big></b>
+<br>
+The macro argument 
+<code><i><font color="black"><span style='white-space: nowrap'>reverse</span></font></i></code>
+
+is a user defined function
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ok</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>reverse</span></font></i><font color="blue"><span style='white-space: nowrap'>(</span></font><i><font color="black"><span style='white-space: nowrap'>id</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>k</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>m</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>tx</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ty</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>px</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>py</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+that computes results during a <a href="reverse.htm" target="_top"><span style='white-space: nowrap'>reverse</span></a>
+ mode sweep.
+The input value of the vectors 
+<code><i><font color="black"><span style='white-space: nowrap'>tx</span></font></i></code>
+ and 
+<code><i><font color="black"><span style='white-space: nowrap'>ty</span></font></i></code>
+
+contain Taylor coefficient, up to order 
+<code><i><font color="black"><span style='white-space: nowrap'>k</span></font></i></code>
+,
+for <small>@(@
+X(t)
+@)@</small> and <small>@(@
+Y(t)
+@)@</small> respectively.
+We use the <small>@(@
+\{ x_j^\ell \}
+@)@</small> and <small>@(@
+\{ y_i^\ell \}
+@)@</small>
+to denote these Taylor coefficients where the implicit range indices are
+<small>@(@
+i = 0 , \ldots , m-1
+@)@</small>,
+<small>@(@
+j = 0 , \ldots , n-1
+@)@</small>,
+<small>@(@
+\ell = 0 , \ldots , k
+@)@</small>.
+Using the calculations done by <a href="old_atomic.htm#forward" target="_top"><span style='white-space: nowrap'>forward</span></a>
+,
+the Taylor coefficients <small>@(@
+\{ y_i^\ell \}
+@)@</small> are a function of the Taylor
+coefficients for <small>@(@
+\{ x_j^\ell \}
+@)@</small>; i.e., given <small>@(@
+y = f(x)
+@)@</small>
+we define the function
+<small>@(@
+F : B^{n \times (k+1)} \rightarrow B^{m \times (k+1)}
+@)@</small> by
+<small>@[@
+
+y_i^\ell =  F_i^\ell ( \{ x_j^\ell \} )
+
+@]@</small>
+We use <small>@(@
+G : B^{m \times (k+1)} \rightarrow B
+@)@</small>
+to denote an arbitrary scalar valued function of the Taylor coefficients for
+<small>@(@
+Y(t)
+@)@</small> and write  <small>@(@
+z = G( \{ y_i^\ell \} )
+@)@</small>.
+The <code><font color="blue">reverse</font></code> routine
+is given the derivative of <small>@(@
+z
+@)@</small> with respect to
+<small>@(@
+\{ y_i^\ell \}
+@)@</small> and computes its derivative with respect
+to <small>@(@
+\{ x_j^\ell \}
+@)@</small>.
+
+<br>
+<br>
+<b><a name="reverse.Usage" id="reverse.Usage">Usage</a></b>
+<br>
+This routine is used,
+with 
+<code><i><font color="black"><span style='white-space: nowrap'>k</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;+&nbsp;1</span></font></code>
+ equal to the order of the derivative being calculated,
+by calls to <a href="reverse_any.htm" target="_top"><span style='white-space: nowrap'>reverse</span></a>
+.
+
+<br>
+<br>
+<b><a name="reverse.py" id="reverse.py">py</a></b>
+<br>
+The 
+<code><i><font color="black"><span style='white-space: nowrap'>reverse</span></font></i></code>
+ argument 
+<code><i><font color="black"><span style='white-space: nowrap'>py</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;CppAD::vector&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>py</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+and 
+<code><i><font color="black"><span style='white-space: nowrap'>py</span></font></i><font color="blue"><span style='white-space: nowrap'>.size()&nbsp;&gt;=&nbsp;(</span></font><i><font color="black"><span style='white-space: nowrap'>k</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;+&nbsp;1)&nbsp;*&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>m</span></font></i></code>
+.
+For <small>@(@
+i = 0 , \ldots , m-1
+@)@</small> and <small>@(@
+\ell = 0 , \ldots , k
+@)@</small>,
+<small>@[@
+
+	py[ i * (k + 1 ) + \ell ] = \partial G / \partial y_i^\ell
+
+@]@</small>
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>py</span></font></i><font color="blue"><span style='white-space: nowrap'>.size()&nbsp;&gt;&nbsp;(</span></font><i><font color="black"><span style='white-space: nowrap'>k</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;+&nbsp;1)&nbsp;*&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>m</span></font></i></code>
+,
+the other components of 
+<code><i><font color="black"><span style='white-space: nowrap'>py</span></font></i></code>
+ are not specified and should not be used.
+
+<br>
+<br>
+<b><a name="reverse.px" id="reverse.px">px</a></b>
+<br>
+We define the function
+<small>@[@
+
+H ( \{ x_j^\ell \} ) = G[ F( \{ x_j^\ell \} ) ]
+
+@]@</small>
+The 
+<code><i><font color="black"><span style='white-space: nowrap'>reverse</span></font></i></code>
+ argument 
+<code><i><font color="black"><span style='white-space: nowrap'>px</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CppAD::vector&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>px</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+and 
+<code><i><font color="black"><span style='white-space: nowrap'>px</span></font></i><font color="blue"><span style='white-space: nowrap'>.size()&nbsp;&gt;=&nbsp;(</span></font><i><font color="black"><span style='white-space: nowrap'>k</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;+&nbsp;1)&nbsp;*&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n</span></font></i></code>
+.
+The input values of the elements of 
+<code><i><font color="black"><span style='white-space: nowrap'>px</span></font></i></code>
+
+are not specified (must not matter).
+Upon return,
+for <small>@(@
+j = 0 , \ldots , n-1
+@)@</small> and <small>@(@
+p = 0 , \ldots , k
+@)@</small>,
+<small>@[@
+
+\begin{array}{rcl}
+px [ j * (k + 1) + p ] & = & \partial H / \partial x_j^p
+\\
+& = &
+( \partial G / \partial \{ y_i^\ell \} )
+	( \partial \{ y_i^\ell \} / \partial x_j^p )
+\\
+& = &
+\sum_{i=0}^{m-1} \sum_{\ell=0}^k
+( \partial G / \partial y_i^\ell ) ( \partial y_i^\ell / \partial x_j^p )
+\\
+& = &
+\sum_{i=0}^{m-1} \sum_{\ell=p}^k
+py[ i * (k + 1 ) + \ell ] ( \partial F_i^\ell / \partial x_j^p )
+\end{array}
+
+@]@</small>
+Note that we have used the fact that for <small>@(@
+\ell < p
+@)@</small>,
+<small>@(@
+\partial F_i^\ell / \partial x_j^p = 0
+@)@</small>.
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>px</span></font></i><font color="blue"><span style='white-space: nowrap'>.size()&nbsp;&gt;&nbsp;(</span></font><i><font color="black"><span style='white-space: nowrap'>k</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;+&nbsp;1)&nbsp;*&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n</span></font></i></code>
+,
+the other components of 
+<code><i><font color="black"><span style='white-space: nowrap'>px</span></font></i></code>
+ are not specified and should not be used.
+
+<br>
+<br>
+<b><big><a name="for_jac_sparse" id="for_jac_sparse">for_jac_sparse</a></big></b>
+<br>
+The macro argument 
+<code><i><font color="black"><span style='white-space: nowrap'>for_jac_sparse</span></font></i></code>
+
+is a user defined function
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ok</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>for_jac_sparse</span></font></i><font color="blue"><span style='white-space: nowrap'>(</span></font><i><font color="black"><span style='white-space: nowrap'>id</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>m</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>q</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>r</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>s</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+that is used to compute results during a forward Jacobian sparsity sweep.
+For a fixed <small>@(@
+n \times q
+@)@</small> matrix <small>@(@
+R
+@)@</small>,
+the Jacobian of <small>@(@
+f( x + R * u)
+@)@</small> with respect to <small>@(@
+u \in B^q
+@)@</small> is
+<small>@[@
+
+	S(x) = f^{(1)} (x) * R
+
+@]@</small>
+Given a <a href="glossary.htm#Sparsity Pattern" target="_top"><span style='white-space: nowrap'>sparsity&nbsp;pattern</span></a>
+ for <small>@(@
+R
+@)@</small>,
+
+<code><i><font color="black"><span style='white-space: nowrap'>for_jac_sparse</span></font></i></code>
+ computes a sparsity pattern for <small>@(@
+S(x)
+@)@</small>.
+
+<br>
+<br>
+<b><a name="for_jac_sparse.Usage" id="for_jac_sparse.Usage">Usage</a></b>
+<br>
+This routine is used by calls to <a href="forsparsejac.htm" target="_top"><span style='white-space: nowrap'>ForSparseJac</span></a>
+.
+
+<br>
+<br>
+<b><a name="for_jac_sparse.q" id="for_jac_sparse.q">q</a></b>
+<br>
+The 
+<code><i><font color="black"><span style='white-space: nowrap'>for_jac_sparse</span></font></i></code>
+ argument 
+<code><i><font color="black"><span style='white-space: nowrap'>q</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>q</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+It specifies the number of columns in
+<small>@(@
+R \in B^{n \times q}
+@)@</small> and the Jacobian
+<small>@(@
+S(x) \in B^{m \times q}
+@)@</small>.
+
+<br>
+<br>
+<b><a name="for_jac_sparse.r" id="for_jac_sparse.r">r</a></b>
+<br>
+The 
+<code><i><font color="black"><span style='white-space: nowrap'>for_jac_sparse</span></font></i></code>
+ argument 
+<code><i><font color="black"><span style='white-space: nowrap'>r</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;CppAD::vector&lt;&nbsp;std::set&lt;size_t&gt;&nbsp;&gt;&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>r</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+and 
+<code><i><font color="black"><span style='white-space: nowrap'>r</span></font></i><font color="blue"><span style='white-space: nowrap'>.size()&nbsp;&gt;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n</span></font></i></code>
+.
+For <small>@(@
+j = 0 , \ldots , n-1
+@)@</small>,
+all the elements of 
+<code><i><font color="black"><span style='white-space: nowrap'>r</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>j</span></font></i><font color="blue"><span style='white-space: nowrap'>]</span></font></code>
+ are between
+zero and 
+<code><i><font color="black"><span style='white-space: nowrap'>q</span></font></i><font color="blue"><span style='white-space: nowrap'>-1</span></font></code>
+ inclusive.
+This specifies a sparsity pattern for the matrix <small>@(@
+R
+@)@</small>.
+
+<br>
+<br>
+<b><a name="for_jac_sparse.s" id="for_jac_sparse.s">s</a></b>
+<br>
+The 
+<code><i><font color="black"><span style='white-space: nowrap'>for_jac_sparse</span></font></i></code>
+ return value 
+<code><i><font color="black"><span style='white-space: nowrap'>s</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CppAD::vector&lt;&nbsp;std::set&lt;size_t&gt;&nbsp;&gt;&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>s</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+and 
+<code><i><font color="black"><span style='white-space: nowrap'>s</span></font></i><font color="blue"><span style='white-space: nowrap'>.size()&nbsp;&gt;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>m</span></font></i><font color="blue"></font></code>
+.
+The input values of its sets
+are not specified (must not matter). Upon return
+for <small>@(@
+i = 0 , \ldots , m-1
+@)@</small>,
+all the elements of 
+<code><i><font color="black"><span style='white-space: nowrap'>s</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>]</span></font></code>
+ are between
+zero and 
+<code><i><font color="black"><span style='white-space: nowrap'>q</span></font></i><font color="blue"><span style='white-space: nowrap'>-1</span></font></code>
+ inclusive.
+This represents a sparsity pattern for the matrix <small>@(@
+S(x)
+@)@</small>.
+
+<br>
+<br>
+<b><big><a name="rev_jac_sparse" id="rev_jac_sparse">rev_jac_sparse</a></big></b>
+<br>
+The macro argument 
+<code><i><font color="black"><span style='white-space: nowrap'>rev_jac_sparse</span></font></i></code>
+
+is a user defined function
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ok</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>rev_jac_sparse</span></font></i><font color="blue"><span style='white-space: nowrap'>(</span></font><i><font color="black"><span style='white-space: nowrap'>id</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>m</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>q</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>r</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>s</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+that is used to compute results during a reverse Jacobian sparsity sweep.
+For a fixed <small>@(@
+q \times m
+@)@</small> matrix <small>@(@
+S
+@)@</small>,
+the Jacobian of <small>@(@
+S * f( x )
+@)@</small> with respect to <small>@(@
+x \in B^n
+@)@</small> is
+<small>@[@
+
+	R(x) = S * f^{(1)} (x)
+
+@]@</small>
+Given a <a href="glossary.htm#Sparsity Pattern" target="_top"><span style='white-space: nowrap'>sparsity&nbsp;pattern</span></a>
+ for <small>@(@
+S
+@)@</small>,
+
+<code><i><font color="black"><span style='white-space: nowrap'>rev_jac_sparse</span></font></i></code>
+ computes a sparsity pattern for <small>@(@
+R(x)
+@)@</small>.
+
+<br>
+<br>
+<b><a name="rev_jac_sparse.Usage" id="rev_jac_sparse.Usage">Usage</a></b>
+<br>
+This routine is used by calls to <a href="revsparsejac.htm" target="_top"><span style='white-space: nowrap'>RevSparseJac</span></a>
+
+and to <a href="optimize.htm" target="_top"><span style='white-space: nowrap'>optimize</span></a>
+.
+
+
+<br>
+<br>
+<b><a name="rev_jac_sparse.q" id="rev_jac_sparse.q">q</a></b>
+<br>
+The 
+<code><i><font color="black"><span style='white-space: nowrap'>rev_jac_sparse</span></font></i></code>
+ argument 
+<code><i><font color="black"><span style='white-space: nowrap'>q</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>q</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+It specifies the number of rows in
+<small>@(@
+S \in B^{q \times m}
+@)@</small> and the Jacobian
+<small>@(@
+R(x) \in B^{q \times n}
+@)@</small>.
+
+<br>
+<br>
+<b><a name="rev_jac_sparse.s" id="rev_jac_sparse.s">s</a></b>
+<br>
+The 
+<code><i><font color="black"><span style='white-space: nowrap'>rev_jac_sparse</span></font></i></code>
+ argument 
+<code><i><font color="black"><span style='white-space: nowrap'>s</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;CppAD::vector&lt;&nbsp;std::set&lt;size_t&gt;&nbsp;&gt;&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>s</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+and 
+<code><i><font color="black"><span style='white-space: nowrap'>s</span></font></i><font color="blue"><span style='white-space: nowrap'>.size()&nbsp;&gt;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>m</span></font></i></code>
+.
+For <small>@(@
+i = 0 , \ldots , m-1
+@)@</small>,
+all the elements of 
+<code><i><font color="black"><span style='white-space: nowrap'>s</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>]</span></font></code>
+
+are between zero and 
+<code><i><font color="black"><span style='white-space: nowrap'>q</span></font></i><font color="blue"><span style='white-space: nowrap'>-1</span></font></code>
+ inclusive.
+This specifies a sparsity pattern for the matrix <small>@(@
+S^\R{T}
+@)@</small>.
+
+<br>
+<br>
+<b><a name="rev_jac_sparse.r" id="rev_jac_sparse.r">r</a></b>
+<br>
+The 
+<code><i><font color="black"><span style='white-space: nowrap'>rev_jac_sparse</span></font></i></code>
+ return value 
+<code><i><font color="black"><span style='white-space: nowrap'>r</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CppAD::vector&lt;&nbsp;std::set&lt;size_t&gt;&nbsp;&gt;&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>r</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+and 
+<code><i><font color="black"><span style='white-space: nowrap'>r</span></font></i><font color="blue"><span style='white-space: nowrap'>.size()&nbsp;&gt;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n</span></font></i></code>
+.
+The input values of its sets
+are not specified (must not matter).
+Upon return for <small>@(@
+j = 0 , \ldots , n-1
+@)@</small>,
+all the elements of 
+<code><i><font color="black"><span style='white-space: nowrap'>r</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>j</span></font></i><font color="blue"><span style='white-space: nowrap'>]</span></font></code>
+
+are between zero and 
+<code><i><font color="black"><span style='white-space: nowrap'>q</span></font></i><font color="blue"><span style='white-space: nowrap'>-1</span></font></code>
+ inclusive.
+This represents a sparsity pattern for the matrix <small>@(@
+R(x)^\R{T}
+@)@</small>.
+
+<br>
+<br>
+<b><big><a name="rev_hes_sparse" id="rev_hes_sparse">rev_hes_sparse</a></big></b>
+<br>
+The macro argument 
+<code><i><font color="black"><span style='white-space: nowrap'>rev_hes_sparse</span></font></i></code>
+
+is a user defined function
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ok</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>rev_hes_sparse</span></font></i><font color="blue"><span style='white-space: nowrap'>(</span></font><i><font color="black"><span style='white-space: nowrap'>id</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>m</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>q</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>r</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>s</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>t</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>u</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>v</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+There is an unspecified scalar valued function
+<small>@(@
+g : B^m \rightarrow B
+@)@</small>.
+Given a sparsity pattern for <small>@(@
+R
+@)@</small>
+and information about the function <small>@(@
+z = g(y)
+@)@</small>,
+this routine computes the sparsity pattern for
+<small>@[@
+
+	V(x) = (g \circ f)^{(2)}( x ) R
+
+@]@</small>
+
+<br>
+<br>
+<b><a name="rev_hes_sparse.Usage" id="rev_hes_sparse.Usage">Usage</a></b>
+<br>
+This routine is used by calls to <a href="revsparsehes.htm" target="_top"><span style='white-space: nowrap'>RevSparseHes</span></a>
+.
+
+<br>
+<br>
+<b><a name="rev_hes_sparse.q" id="rev_hes_sparse.q">q</a></b>
+<br>
+The 
+<code><i><font color="black"><span style='white-space: nowrap'>rev_hes_sparse</span></font></i></code>
+ argument 
+<code><i><font color="black"><span style='white-space: nowrap'>q</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>q</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+It specifies the number of columns in the sparsity patterns.
+
+<br>
+<br>
+<b><a name="rev_hes_sparse.r" id="rev_hes_sparse.r">r</a></b>
+<br>
+The 
+<code><i><font color="black"><span style='white-space: nowrap'>rev_hes_sparse</span></font></i></code>
+ argument 
+<code><i><font color="black"><span style='white-space: nowrap'>r</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;CppAD::vector&lt;&nbsp;std::set&lt;size_t&gt;&nbsp;&gt;&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>r</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+and 
+<code><i><font color="black"><span style='white-space: nowrap'>r</span></font></i><font color="blue"><span style='white-space: nowrap'>.size()&nbsp;&gt;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n</span></font></i></code>
+.
+For <small>@(@
+j = 0 , \ldots , n-1
+@)@</small>,
+all the elements of 
+<code><i><font color="black"><span style='white-space: nowrap'>r</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>j</span></font></i><font color="blue"><span style='white-space: nowrap'>]</span></font></code>
+ are between
+zero and 
+<code><i><font color="black"><span style='white-space: nowrap'>q</span></font></i><font color="blue"><span style='white-space: nowrap'>-1</span></font></code>
+ inclusive.
+This specifies a sparsity pattern for the matrix <small>@(@
+R \in B^{n \times q}
+@)@</small>.
+
+<br>
+<br>
+<b><a name="rev_hes_sparse.s" id="rev_hes_sparse.s">s</a></b>
+<br>
+The 
+<code><i><font color="black"><span style='white-space: nowrap'>rev_hes_sparse</span></font></i></code>
+ argument 
+<code><i><font color="black"><span style='white-space: nowrap'>s</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;CppAD::vector&lt;bool&gt;&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>s</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+and 
+<code><i><font color="black"><span style='white-space: nowrap'>s</span></font></i><font color="blue"><span style='white-space: nowrap'>.size()&nbsp;&gt;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>m</span></font></i></code>
+.
+This specifies a sparsity pattern for the matrix
+<small>@(@
+S(x) = g^{(1)} (y) \in B^{1 \times m}
+@)@</small>.
+
+<br>
+<br>
+<b><a name="rev_hes_sparse.t" id="rev_hes_sparse.t">t</a></b>
+<br>
+The 
+<code><i><font color="black"><span style='white-space: nowrap'>rev_hes_sparse</span></font></i></code>
+ argument 
+<code><i><font color="black"><span style='white-space: nowrap'>t</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CppAD::vector&lt;bool&gt;&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>t</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+and 
+<code><i><font color="black"><span style='white-space: nowrap'>t</span></font></i><font color="blue"><span style='white-space: nowrap'>.size()&nbsp;&gt;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n</span></font></i></code>
+.
+The input values of its elements
+are not specified (must not matter).
+Upon return it represents a sparsity pattern for the matrix
+<small>@(@
+T(x) \in B^{1 \times n}
+@)@</small> defined by
+<small>@[@
+
+T(x)  =  (g \circ f)^{(1)} (x) =  S(x) * f^{(1)} (x)
+
+@]@</small>
+
+<br>
+<br>
+<b><a name="rev_hes_sparse.u" id="rev_hes_sparse.u">u</a></b>
+<br>
+The 
+<code><i><font color="black"><span style='white-space: nowrap'>rev_hes_sparse</span></font></i></code>
+ argument 
+<code><i><font color="black"><span style='white-space: nowrap'>u</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;CppAD::vector&lt;&nbsp;std::set&lt;size_t&gt;&nbsp;&gt;&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>u</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+and 
+<code><i><font color="black"><span style='white-space: nowrap'>u</span></font></i><font color="blue"><span style='white-space: nowrap'>.size()&nbsp;&gt;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>m</span></font></i></code>
+.
+For <small>@(@
+i = 0 , \ldots , m-1
+@)@</small>,
+all the elements of 
+<code><i><font color="black"><span style='white-space: nowrap'>u</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>]</span></font></code>
+
+are between zero and 
+<code><i><font color="black"><span style='white-space: nowrap'>q</span></font></i><font color="blue"><span style='white-space: nowrap'>-1</span></font></code>
+ inclusive.
+This specifies a sparsity pattern
+for the matrix <small>@(@
+U(x) \in B^{m \times q}
+@)@</small> defined by
+<small>@[@
+
+\begin{array}{rcl}
+U(x)
+& = &
+\partial_u \{ \partial_y g[ y + f^{(1)} (x) R u ] \}_{u=0}
+\\
+& = &
+\partial_u \{ g^{(1)} [ y + f^{(1)} (x) R u ] \}_{u=0}
+\\
+& = &
+g^{(2)} (y) f^{(1)} (x) R
+\end{array}
+
+@]@</small>
+
+<br>
+<br>
+<b><a name="rev_hes_sparse.v" id="rev_hes_sparse.v">v</a></b>
+<br>
+The 
+<code><i><font color="black"><span style='white-space: nowrap'>rev_hes_sparse</span></font></i></code>
+ argument 
+<code><i><font color="black"><span style='white-space: nowrap'>v</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CppAD::vector&lt;&nbsp;std::set&lt;size_t&gt;&nbsp;&gt;&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>v</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+and 
+<code><i><font color="black"><span style='white-space: nowrap'>v</span></font></i><font color="blue"><span style='white-space: nowrap'>.size()&nbsp;&gt;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n</span></font></i></code>
+.
+The input values of its elements
+are not specified (must not matter).
+Upon return, for <small>@(@
+j = 0, \ldots , n-1
+@)@</small>,
+all the elements of 
+<code><i><font color="black"><span style='white-space: nowrap'>v</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>j</span></font></i><font color="blue"><span style='white-space: nowrap'>]</span></font></code>
+
+are between zero and 
+<code><i><font color="black"><span style='white-space: nowrap'>q</span></font></i><font color="blue"><span style='white-space: nowrap'>-1</span></font></code>
+ inclusive.
+This represents a sparsity pattern for the matrix
+<small>@(@
+V(x) \in B^{n \times q}
+@)@</small> defined by
+<small>@[@
+
+\begin{array}{rcl}
+V(x)
+& = &
+\partial_u [ \partial_x (g \circ f) ( x + R u )  ]_{u=0}
+\\
+& = &
+\partial_u [ (g \circ f)^{(1)}( x + R u )  ]_{u=0}
+\\
+& = &
+(g \circ f)^{(2)}( x ) R
+\\
+& = &
+f^{(1)} (x)^\R{T} g^{(2)} ( y ) f^{(1)} (x)  R
++
+\sum_{i=1}^m [ g^{(1)} (y) ]_i \; f_i^{(2)} (x) R
+\\
+& = &
+f^{(1)} (x)^\R{T} U(x)
++
+\sum_{i=1}^m S(x)_i \; f_i^{(2)} (x) R
+\end{array}
+
+@]@</small>
+
+<br>
+<br>
+<b><big><a name="clear" id="clear">clear</a></big></b>
+<br>
+User atomic functions hold onto static work space in order to
+increase speed by avoiding system memory allocation calls.
+The function call 
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;user_atomic&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;::clear()<br>
+</span></font></code>
+makes to work space <a href="ta_available.htm" target="_top"><span style='white-space: nowrap'>available</span></a>
+ to
+for other uses by the same thread.
+This should be called when you are done using the
+user atomic functions for a specific value of 
+<code><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i></code>
+.
+
+<br>
+<br>
+<b><a name="clear.Restriction" id="clear.Restriction">Restriction</a></b>
+<br>
+The user atomic <code><font color="blue">clear</font></code> routine cannot be called
+while in <a href="ta_in_parallel.htm" target="_top"><span style='white-space: nowrap'>parallel</span></a>
+ execution mode.
+
+
+<br>
+<br>
+<b><big><a name="Example" id="Example">Example</a></big></b>
+
+
+<br>
+<br>
+<b><a name="Example.Simple" id="Example.Simple">Simple</a></b>
+<br>
+The file <a href="old_reciprocal.cpp.htm" target="_top"><span style='white-space: nowrap'>old_reciprocal.cpp</span></a>
+ contains the simplest example and test
+of a user atomic operation.
+
+<br>
+<br>
+<b><a name="Example.Use AD" id="Example.Use AD">Use AD</a></b>
+<br>
+The examples
+<a href="old_usead_1.cpp.htm" target="_top"><span style='white-space: nowrap'>old_usead_1.cpp</span></a>
+ and <a href="old_usead_2.cpp.htm" target="_top"><span style='white-space: nowrap'>old_usead_2.cpp</span></a>
+
+use AD to compute the derivatives
+inside a user defined atomic function.
+This may have the advantage of reducing the size of the tape, because
+a repeated section of code would only be taped once.
+
+<br>
+<br>
+<b><a name="Example.Tangent Function" id="Example.Tangent Function">Tangent Function</a></b>
+<br>
+The file <a href="old_tan.cpp.htm" target="_top"><span style='white-space: nowrap'>old_tan.cpp</span></a>
+ contains an example and test
+implementation of the tangent function as a user atomic operation.
+
+<br>
+<br>
+<b><a name="Example.Matrix Multiplication" id="Example.Matrix Multiplication">Matrix Multiplication</a></b>
+<br>
+The file  <a href="old_mat_mul.cpp.htm" target="_top"><span style='white-space: nowrap'>old_mat_mul.cpp</span></a>
+ contains an example and test
+implementation of matrix multiplication a a user atomic operation.
+
+
+<hr>Input File: cppad/core/old_atomic.hpp
+
+</body>
+</html>

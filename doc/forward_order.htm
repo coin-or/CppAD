@@ -1,0 +1,612 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>Multiple Order Forward Mode</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Multiple Order Forward Mode">
+<meta name="keywords" id="keywords" content=" multiple order forward mode any syntax purpose function values derivative notation n m f one q xq orders restrictions s x(t) y(t) yq vector zero first second example ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_forward_order_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://coin-or.github.io/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="forward_two.htm" target="_top">Prev</a>
+</td><td><a href="forward.cpp.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>ADFun</option>
+<option>Forward</option>
+<option>forward_order</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>CppAD-&gt;</option>
+<option>Install</option>
+<option>Introduction</option>
+<option>AD</option>
+<option>ADFun</option>
+<option>preprocessor</option>
+<option>multi_thread</option>
+<option>utility</option>
+<option>ipopt_solve</option>
+<option>Example</option>
+<option>speed</option>
+<option>Appendix</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>ADFun-&gt;</option>
+<option>record_adfun</option>
+<option>drivers</option>
+<option>Forward</option>
+<option>Reverse</option>
+<option>sparsity_pattern</option>
+<option>sparse_derivative</option>
+<option>optimize</option>
+<option>abs_normal</option>
+<option>FunCheck</option>
+<option>check_for_nan</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>Forward-&gt;</option>
+<option>forward_zero</option>
+<option>forward_one</option>
+<option>forward_two</option>
+<option>forward_order</option>
+<option>forward_dir</option>
+<option>size_order</option>
+<option>compare_change</option>
+<option>capacity_order</option>
+<option>number_skip</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down0(this)'>
+<option>forward_order-&gt;</option>
+<option>forward.cpp</option>
+<option>forward_order.cpp</option>
+</select>
+</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Syntax</option>
+<option>Purpose</option>
+<option>---..Function Values</option>
+<option>---..Derivative Values</option>
+<option>Notation</option>
+<option>---..n</option>
+<option>---..m</option>
+<option>f</option>
+<option>One Order</option>
+<option>q</option>
+<option>xq</option>
+<option>---..One Order</option>
+<option>---..Multiple Orders</option>
+<option>---..Restrictions</option>
+<option>s</option>
+<option>X(t)</option>
+<option>Y(t)</option>
+<option>yq</option>
+<option>---..One Order</option>
+<option>---..Multiple Orders</option>
+<option>Vector</option>
+<option>Zero Order</option>
+<option>First Order</option>
+<option>Second Order</option>
+<option>Example</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@
+
+
+<center><b><big><big>Multiple Order Forward Mode</big></big></b></center>
+<br>
+<b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
+
+<br>
+
+<code><i><font color="black"><span style='white-space: nowrap'>yq</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.Forward(</span></font><i><font color="black"><span style='white-space: nowrap'>q</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>xq</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;)<br>
+</span></font></code>
+
+<code><i><font color="black"><span style='white-space: nowrap'>yq</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.Forward(</span></font><i><font color="black"><span style='white-space: nowrap'>q</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>xq</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>s</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+<br>
+<b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
+<br>
+We use <small>@(@
+F : B^n \rightarrow B^m
+@)@</small> to denote the
+<a href="glossary.htm#AD Function" target="_top"><span style='white-space: nowrap'>AD&nbsp;function</span></a>
+ corresponding to 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+.
+Given a function <small>@(@
+X : B \rightarrow B^n
+@)@</small>,
+defined by its
+<a href="glossary.htm#Taylor Coefficient" target="_top"><span style='white-space: nowrap'>Taylor&nbsp;coefficients</span></a>
+,
+forward mode computes the Taylor coefficients for the function
+<small>@[@
+
+	Y (t) = F [ X(t) ]
+
+@]@</small>
+
+<br>
+<br>
+<b><a name="Purpose.Function Values" id="Purpose.Function Values">Function Values</a></b>
+<br>
+If you are using forward mode to compute values for <small>@(@
+F(x)
+@)@</small>,
+<a href="forward_zero.htm" target="_top"><span style='white-space: nowrap'>forward_zero</span></a>
+ is simpler to understand
+than this explanation of the general case.
+
+<br>
+<br>
+<b><a name="Purpose.Derivative Values" id="Purpose.Derivative Values">Derivative Values</a></b>
+<br>
+If you are using forward mode to compute values for <small>@(@
+F^{(1)} (x) * dx
+@)@</small>,
+<a href="forward_one.htm" target="_top"><span style='white-space: nowrap'>forward_one</span></a>
+ is simpler to understand
+than this explanation of the general case.
+
+<br>
+<br>
+<b><big><a name="Notation" id="Notation">Notation</a></big></b>
+
+
+<br>
+<br>
+<b><a name="Notation.n" id="Notation.n">n</a></b>
+<br>
+We use 
+<code><i><font color="black"><span style='white-space: nowrap'>n</span></font></i></code>
+ to denote the dimension of the
+<a href="seq_property.htm#Domain" target="_top"><span style='white-space: nowrap'>domain</span></a>
+ space for 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+.
+
+<br>
+<br>
+<b><a name="Notation.m" id="Notation.m">m</a></b>
+<br>
+We use 
+<code><i><font color="black"><span style='white-space: nowrap'>m</span></font></i></code>
+ to denote the dimension of the
+<a href="seq_property.htm#Range" target="_top"><span style='white-space: nowrap'>range</span></a>
+ space for 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+.
+
+
+<br>
+<br>
+<b><big><a name="f" id="f">f</a></big></b>
+<br>
+The <a href="adfun.htm" target="_top"><span style='white-space: nowrap'>ADFun</span></a>
+ object 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ADFun&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+Note that the <a href="adfun.htm" target="_top"><span style='white-space: nowrap'>ADFun</span></a>
+ object 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+ is not <code><font color="blue">const</font></code>.
+After this call we will have
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.size_order()&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;==&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>q</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;+&nbsp;1<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.size_direction()&nbsp;==&nbsp;1<br>
+</span></font></code>
+<br>
+<b><big><a name="One Order" id="One Order">One Order</a></big></b>
+<br>
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>xq</span></font></i><font color="blue"><span style='white-space: nowrap'>.size()&nbsp;==&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n</span></font></i></code>
+,
+then we are only computing one order.
+In this case, before this call we must have
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.size_order()&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&gt;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>q</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.size_direction()&nbsp;==&nbsp;1<br>
+</span></font></code>
+<br>
+<b><big><a name="q" id="q">q</a></big></b>
+<br>
+The argument 
+<code><i><font color="black"><span style='white-space: nowrap'>q</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>q</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+and specifies the highest order of the Taylor coefficients to be calculated.
+
+<br>
+<br>
+<b><big><a name="xq" id="xq">xq</a></big></b>
+<br>
+The argument 
+<code><i><font color="black"><span style='white-space: nowrap'>xq</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Vector</span></font></i><font color="blue"><span style='white-space: nowrap'>&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>xq</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+(see <a href="forward_order.htm#Vector" target="_top"><span style='white-space: nowrap'>Vector</span></a>
+ below).
+As above, we use 
+<code><i><font color="black"><span style='white-space: nowrap'>n</span></font></i></code>
+ to denote the dimension of the
+<a href="seq_property.htm#Domain" target="_top"><span style='white-space: nowrap'>domain</span></a>
+ space for 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+.
+The size of 
+<code><i><font color="black"><span style='white-space: nowrap'>xq</span></font></i></code>
+ must be either 
+<code><i><font color="black"><span style='white-space: nowrap'>n</span></font></i></code>
+ or
+
+<code><i><font color="black"><span style='white-space: nowrap'>n</span></font></i><font color="blue"><span style='white-space: nowrap'>*(</span></font><i><font color="black"><span style='white-space: nowrap'>q</span></font></i><font color="blue"><span style='white-space: nowrap'>+1)</span></font></code>
+.
+After this call we will have
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.size_order()&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;==&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>q</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;+&nbsp;1<br>
+</span></font></code>
+<br>
+<b><a name="xq.One Order" id="xq.One Order">One Order</a></b>
+<br>
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>xq</span></font></i><font color="blue"><span style='white-space: nowrap'>.size()&nbsp;==&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n</span></font></i></code>
+,
+the <code><i>q</i></code>-th order Taylor coefficient for <small>@(@
+X(t)
+@)@</small>
+is defined by
+<code><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></code> <small>@(@
+x^{(q)} =
+@)@</small> 
+<code><i><font color="black"><span style='white-space: nowrap'>xq</span></font></i></code>
+.
+For <small>@(@
+k = 0 , \ldots , q-1
+@)@</small>,
+the Taylor coefficient <small>@(@
+x^{(k)}
+@)@</small>
+is defined by 
+<code><i><font color="black"><span style='white-space: nowrap'>xk</span></font></i></code>
+ in the previous call to
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.Forward(</span></font><i><font color="black"><span style='white-space: nowrap'>k</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>xk</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+<br>
+<b><a name="xq.Multiple Orders" id="xq.Multiple Orders">Multiple Orders</a></b>
+<br>
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>xq</span></font></i><font color="blue"><span style='white-space: nowrap'>.size()&nbsp;==&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n</span></font></i><font color="blue"><span style='white-space: nowrap'>*(</span></font><i><font color="black"><span style='white-space: nowrap'>q</span></font></i><font color="blue"><span style='white-space: nowrap'>+1)</span></font></code>
+,
+For <small>@(@
+k = 0 , \ldots , q
+@)@</small>,
+<small>@(@
+j = 0 , \ldots , n-1
+@)@</small>,
+the <code><i>j</i></code>-th component of the <code><i>k</i></code>-th order Taylor coefficient
+for <small>@(@
+X(t)
+@)@</small> is defined by
+<code><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></code> <small>@(@
+x_j^{(k)} =
+@)@</small> 
+<code><i><font color="black"></font></i><font color="blue"><span style='white-space: nowrap'>xq</span></font><i><font color="black"><span style='white-space: nowrap'>[&nbsp;(</span></font></i><font color="blue"><span style='white-space: nowrap'>q</span></font><i><font color="black"><span style='white-space: nowrap'>+1)&nbsp;*&nbsp;</span></font></i><font color="blue"><span style='white-space: nowrap'>j</span></font><i><font color="black"><span style='white-space: nowrap'>&nbsp;+&nbsp;</span></font></i><font color="blue"><span style='white-space: nowrap'>k</span></font><i><font color="black"><span style='white-space: nowrap'>&nbsp;]</span></font></i></code>
+
+
+<br>
+<br>
+<b><a name="xq.Restrictions" id="xq.Restrictions">Restrictions</a></b>
+<br>
+Note if 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+ uses <a href="old_atomic.htm" target="_top"><span style='white-space: nowrap'>old_atomic</span></a>
+ functions,
+the size of 
+<code><i><font color="black"><span style='white-space: nowrap'>xq</span></font></i></code>
+ must be 
+<code><i><font color="black"><span style='white-space: nowrap'>n</span></font></i></code>
+.
+
+<br>
+<br>
+<b><big><a name="s" id="s">s</a></big></b>
+<br>
+If the argument 
+<code><i><font color="black"><span style='white-space: nowrap'>s</span></font></i></code>
+ is not present, <code><font color="blue">std::cout</font></code>
+is used in its place.
+Otherwise, this argument has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;std::ostream&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>s</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+If order zero is begin calculated,
+
+<code><i><font color="black"><span style='white-space: nowrap'>s</span></font></i></code>
+ specifies where the output corresponding to <a href="printfor.htm" target="_top"><span style='white-space: nowrap'>PrintFor</span></a>
+
+will be written.
+If order zero is not being calculated,
+
+<code><i><font color="black"><span style='white-space: nowrap'>s</span></font></i></code>
+ is not used
+
+<br>
+<br>
+<b><big><a name="X(t)" id="X(t)">X(t)</a></big></b>
+<br>
+The function
+<small>@(@
+X : B \rightarrow B^n
+@)@</small> is defined using
+the Taylor coefficients <small>@(@
+x^{(k)} \in B^n
+@)@</small>:
+<small>@[@
+
+	X(t) = x^{(0)} * t^0 + x^{(1)} * t^1 + \cdots + x^{(q)} * t^q
+
+@]@</small>
+Note that for <small>@(@
+k = 0 , \ldots , q
+@)@</small>,
+the <code><i>k</i></code>-th derivative of <small>@(@
+X(t)
+@)@</small> is related to the
+Taylor coefficients by the equation
+<small>@[@
+
+	x^{(k)} = \frac{1}{k !} X^{(k)} (0)
+
+@]@</small>
+
+<br>
+<br>
+<b><big><a name="Y(t)" id="Y(t)">Y(t)</a></big></b>
+<br>
+The function
+<small>@(@
+Y : B \rightarrow B^m
+@)@</small> is defined by
+<small>@(@
+Y(t) = F[ X(t) ]
+@)@</small>.
+We use <small>@(@
+y^{(k)} \in B^m
+@)@</small>
+to denote the <code><i>k</i></code>-th order Taylor coefficient of <small>@(@
+Y(t)
+@)@</small>; i.e.,
+<small>@[@
+
+	Y(t) = y^{(0)} * t^0 + y^{(1)} * t^1 + \cdots + y^{(q)} * t^q + o( t^q )
+
+@]@</small>
+where <small>@(@
+o( t^q ) * t^{-q} \rightarrow 0
+@)@</small> as <small>@(@
+t \rightarrow 0
+@)@</small>.
+Note that <small>@(@
+y^{(k)}
+@)@</small> is related to
+the <code><i>k</i></code>-th derivative of <small>@(@
+Y(t)
+@)@</small> by the equation
+<small>@[@
+
+	y^{(k)} = \frac{1}{k !} Y^{(k)} (0)
+
+@]@</small>
+
+<br>
+<br>
+<b><big><a name="yq" id="yq">yq</a></big></b>
+<br>
+The return value 
+<code><i><font color="black"><span style='white-space: nowrap'>yq</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Vector</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>yq</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+(see <a href="forward_order.htm#Vector" target="_top"><span style='white-space: nowrap'>Vector</span></a>
+ below).
+
+<br>
+<br>
+<b><a name="yq.One Order" id="yq.One Order">One Order</a></b>
+<br>
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>xq</span></font></i><font color="blue"><span style='white-space: nowrap'>.size()&nbsp;==&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n</span></font></i></code>
+,
+the vector 
+<code><i><font color="black"><span style='white-space: nowrap'>yq</span></font></i></code>
+ has size 
+<code><i><font color="black"><span style='white-space: nowrap'>m</span></font></i></code>
+.
+The <code><i>q</i></code>-th order Taylor coefficient for <small>@(@
+Y(t)
+@)@</small>
+is returned as
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>yq</span></font></i></code>
+ <small>@(@
+= y^{(q)}
+@)@</small>.
+
+<br>
+<br>
+<b><a name="yq.Multiple Orders" id="yq.Multiple Orders">Multiple Orders</a></b>
+<br>
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>xq</span></font></i><font color="blue"><span style='white-space: nowrap'>.size()&nbsp;==&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n</span></font></i><font color="blue"><span style='white-space: nowrap'>*(</span></font><i><font color="black"><span style='white-space: nowrap'>q</span></font></i><font color="blue"><span style='white-space: nowrap'>+1)</span></font></code>
+,
+the vector 
+<code><i><font color="black"><span style='white-space: nowrap'>yq</span></font></i></code>
+ has size 
+<code><i><font color="black"><span style='white-space: nowrap'>m</span></font></i><font color="blue"><span style='white-space: nowrap'>*(</span></font><i><font color="black"><span style='white-space: nowrap'>q</span></font></i><font color="blue"><span style='white-space: nowrap'>+1)</span></font></code>
+.
+For <small>@(@
+k = 0 , \ldots , q
+@)@</small>,
+for <small>@(@
+i = 0 , \ldots , m-1
+@)@</small>,
+the <code><i>i</i></code>-th component of the <code><i>k</i></code>-th order Taylor coefficient
+for <small>@(@
+Y(t)
+@)@</small> is returned as
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>yq</span></font></i><font color="blue"><span style='white-space: nowrap'>[&nbsp;(</span></font><i><font color="black"><span style='white-space: nowrap'>q</span></font></i><font color="blue"><span style='white-space: nowrap'>+1)&nbsp;*&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;+&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>k</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;]</span></font></code>
+ <small>@(@
+= y_i^{(k)}
+@)@</small>
+
+<br>
+<br>
+<b><big><a name="Vector" id="Vector">Vector</a></big></b>
+<br>
+The type 
+<code><i><font color="black"><span style='white-space: nowrap'>Vector</span></font></i></code>
+ must be a <a href="simplevector.htm" target="_top"><span style='white-space: nowrap'>SimpleVector</span></a>
+ class with
+<a href="simplevector.htm#Elements of Specified Type" target="_top"><span style='white-space: nowrap'>elements&nbsp;of&nbsp;type</span></a>
+
+
+<code><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i></code>
+.
+The routine <a href="checksimplevector.htm" target="_top"><span style='white-space: nowrap'>CheckSimpleVector</span></a>
+ will generate an error message
+if this is not the case.
+
+<br>
+<br>
+<b><big><a name="Zero Order" id="Zero Order">Zero Order</a></big></b>
+<br>
+The case where
+<small>@(@
+q = 0
+@)@</small> and 
+<code><i><font color="black"><span style='white-space: nowrap'>xq</span></font></i><font color="blue"><span style='white-space: nowrap'>.size()&nbsp;==&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n</span></font></i></code>
+,
+corresponds to the zero order
+<a href="forward_zero.htm#Special Case" target="_top"><span style='white-space: nowrap'>special&nbsp;case</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="First Order" id="First Order">First Order</a></big></b>
+<br>
+The case where
+<small>@(@
+q = 1
+@)@</small> and 
+<code><i><font color="black"><span style='white-space: nowrap'>xq</span></font></i><font color="blue"><span style='white-space: nowrap'>.size()&nbsp;==&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n</span></font></i></code>
+,
+corresponds to the first order
+<a href="forward_one.htm#Special Case" target="_top"><span style='white-space: nowrap'>special&nbsp;case</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="Second Order" id="Second Order">Second Order</a></big></b>
+<br>
+The case where
+<small>@(@
+q = 2
+@)@</small> and 
+<code><i><font color="black"><span style='white-space: nowrap'>xq</span></font></i><font color="blue"><span style='white-space: nowrap'>.size()&nbsp;==&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n</span></font></i></code>
+,
+corresponds to the second order
+<a href="forward_two.htm#Special Case" target="_top"><span style='white-space: nowrap'>special&nbsp;case</span></a>
+.
+
+
+<br>
+<br>
+<b><big><a name="Example" id="Example">Example</a></big></b>
+<br>
+The file
+<a href="forward.cpp.htm" target="_top"><span style='white-space: nowrap'>forward.cpp</span></a>
+ ( <a href="forward_order.cpp.htm" target="_top"><span style='white-space: nowrap'>forward_order.cpp</span></a>
+ )
+contains an example and test using one order (multiple orders).
+They return true if they succeed and false otherwise.
+
+
+<hr>Input File: omh/forward/forward_order.omh
+
+</body>
+</html>

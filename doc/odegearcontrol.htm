@@ -1,0 +1,822 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>An Error Controller for Gear's Ode Solvers</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="An Error Controller for Gear's Ode Solvers">
+<meta name="keywords" id="keywords" content=" error controller gear's ode solvers Odegearcontrol Gear differential equation syntax purpose include notation xf fun t x f f_x warning m ti tf xi smin smax sini eabs erel ef maxabs nstep criteria discussion scalar vector example theory source code ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_odegearcontrol_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://coin-or.github.io/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="ode_gear.cpp.htm" target="_top">Prev</a>
+</td><td><a href="ode_gear_control.cpp.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>utility</option>
+<option>OdeGearControl</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>CppAD-&gt;</option>
+<option>Install</option>
+<option>Introduction</option>
+<option>AD</option>
+<option>ADFun</option>
+<option>preprocessor</option>
+<option>multi_thread</option>
+<option>utility</option>
+<option>ipopt_solve</option>
+<option>Example</option>
+<option>speed</option>
+<option>Appendix</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>utility-&gt;</option>
+<option>ErrorHandler</option>
+<option>NearEqual</option>
+<option>speed_test</option>
+<option>SpeedTest</option>
+<option>time_test</option>
+<option>test_boolofvoid</option>
+<option>NumericType</option>
+<option>CheckNumericType</option>
+<option>SimpleVector</option>
+<option>CheckSimpleVector</option>
+<option>nan</option>
+<option>pow_int</option>
+<option>Poly</option>
+<option>LuDetAndSolve</option>
+<option>RombergOne</option>
+<option>RombergMul</option>
+<option>Runge45</option>
+<option>Rosen34</option>
+<option>OdeErrControl</option>
+<option>OdeGear</option>
+<option>OdeGearControl</option>
+<option>CppAD_vector</option>
+<option>thread_alloc</option>
+<option>index_sort</option>
+<option>to_string</option>
+<option>set_union</option>
+<option>sparse_rc</option>
+<option>sparse_rcv</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down0(this)'>
+<option>OdeGearControl-&gt;</option>
+<option>ode_gear_control.cpp</option>
+</select>
+</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Syntax</option>
+<option>Purpose</option>
+<option>Include</option>
+<option>Notation</option>
+<option>xf</option>
+<option>Fun</option>
+<option>---..t</option>
+<option>---..x</option>
+<option>---..f</option>
+<option>---..f_x</option>
+<option>---..Warning</option>
+<option>M</option>
+<option>ti</option>
+<option>tf</option>
+<option>xi</option>
+<option>smin</option>
+<option>smax</option>
+<option>sini</option>
+<option>eabs</option>
+<option>erel</option>
+<option>ef</option>
+<option>maxabs</option>
+<option>nstep</option>
+<option>Error Criteria Discussion</option>
+<option>Scalar</option>
+<option>Vector</option>
+<option>Example</option>
+<option>Theory</option>
+<option>Source Code</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>An Error Controller for Gear's Ode Solvers</big></big></b></center>
+<br>
+<b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
+
+<br>
+
+<code><font color="blue"><span style='white-space: nowrap'>#&nbsp;include&nbsp;&lt;cppad/utility/ode_gear_control.hpp&gt;<br>
+</span></font></code>
+
+<code><i><font color="black"><span style='white-space: nowrap'>xf</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;OdeGearControl(</span></font><i><font color="black"><span style='white-space: nowrap'>F</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>M</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ti</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>tf</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>xi</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>smin</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>smax</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>sini</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>eabs</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>erel</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ef</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>maxabs</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>nstep</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;)</span></font></code>
+
+
+
+<br>
+<br>
+<b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
+<br>
+Let <small>@(@
+\B{R}
+@)@</small> denote the real numbers
+and let <small>@(@
+f : \B{R} \times \B{R}^n \rightarrow \B{R}^n
+@)@</small> be a smooth function.
+We define <small>@(@
+X : [ti , tf] \rightarrow \B{R}^n
+@)@</small> by
+the following initial value problem:
+<small>@[@
+
+\begin{array}{rcl}
+	X(ti)  & = & xi    \\
+	X'(t)  & = & f[t , X(t)]
+\end{array}
+
+@]@</small>
+The routine <a href="odegear.htm" target="_top"><span style='white-space: nowrap'>OdeGear</span></a>
+ is a stiff multi-step method that
+can be used to approximate the solution to this equation.
+The routine <code><font color="blue">OdeGearControl</font></code> sets up this multi-step method
+and controls the error during such an approximation.
+
+<br>
+<br>
+<b><big><a name="Include" id="Include">Include</a></big></b>
+<br>
+The file <code><font color="blue">cppad/ode_gear_control.hpp</font></code>
+is included by <code><font color="blue">cppad/cppad.hpp</font></code>
+but it can also be included separately with out the rest of
+the <code><font color="blue">CppAD</font></code> routines.
+
+<br>
+<br>
+<b><big><a name="Notation" id="Notation">Notation</a></big></b>
+<br>
+The template parameter types <a href="odegearcontrol.htm#Scalar" target="_top"><span style='white-space: nowrap'>Scalar</span></a>
+ and
+<a href="odegearcontrol.htm#Vector" target="_top"><span style='white-space: nowrap'>Vector</span></a>
+ are documented below.
+
+<br>
+<br>
+<b><big><a name="xf" id="xf">xf</a></big></b>
+<br>
+The return value 
+<code><i><font color="black"><span style='white-space: nowrap'>xf</span></font></i></code>
+ has the prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Vector</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>xf</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+and the size of 
+<code><i><font color="black"><span style='white-space: nowrap'>xf</span></font></i></code>
+ is equal to 
+<code><i><font color="black"><span style='white-space: nowrap'>n</span></font></i></code>
+
+(see description of <a href="odegear.htm#Vector" target="_top"><span style='white-space: nowrap'>Vector</span></a>
+ below).
+It is the approximation for <small>@(@
+X(tf)
+@)@</small>.
+
+<br>
+<br>
+<b><big><a name="Fun" id="Fun">Fun</a></big></b>
+<br>
+The class 
+<code><i><font color="black"><span style='white-space: nowrap'>Fun</span></font></i></code>
+
+and the object 
+<code><i><font color="black"><span style='white-space: nowrap'>F</span></font></i></code>
+ satisfy the prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Fun</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>F</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+This must support the following set of calls
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>F</span></font></i><font color="blue"><span style='white-space: nowrap'>.Ode(</span></font><i><font color="black"><span style='white-space: nowrap'>t</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>F</span></font></i><font color="blue"><span style='white-space: nowrap'>.Ode_dep(</span></font><i><font color="black"><span style='white-space: nowrap'>t</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f_x</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+<br>
+<b><a name="Fun.t" id="Fun.t">t</a></b>
+<br>
+The argument 
+<code><i><font color="black"><span style='white-space: nowrap'>t</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Scalar</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>t</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+(see description of <a href="odegear.htm#Scalar" target="_top"><span style='white-space: nowrap'>Scalar</span></a>
+ below).
+
+<br>
+<br>
+<b><a name="Fun.x" id="Fun.x">x</a></b>
+<br>
+The argument 
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Vector</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+and has size 
+<code><i><font color="black"><span style='white-space: nowrap'>N</span></font></i></code>
+
+(see description of <a href="odegear.htm#Vector" target="_top"><span style='white-space: nowrap'>Vector</span></a>
+ below).
+
+<br>
+<br>
+<b><a name="Fun.f" id="Fun.f">f</a></b>
+<br>
+The argument 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+ to 
+<code><i><font color="black"><span style='white-space: nowrap'>F</span></font></i><font color="blue"><span style='white-space: nowrap'>.Ode</span></font></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Vector</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+On input and output, 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+ is a vector of size 
+<code><i><font color="black"><span style='white-space: nowrap'>N</span></font></i></code>
+
+and the input values of the elements of 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+ do not matter.
+On output,
+
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+ is set equal to <small>@(@
+f(t, x)
+@)@</small>
+(see 
+<code><i><font color="black"><span style='white-space: nowrap'>f(t,&nbsp;x)</span></font></i></code>
+ in <a href="odegear.htm#Purpose" target="_top"><span style='white-space: nowrap'>Purpose</span></a>
+).
+
+<br>
+<br>
+<b><a name="Fun.f_x" id="Fun.f_x">f_x</a></b>
+<br>
+The argument 
+<code><i><font color="black"><span style='white-space: nowrap'>f_x</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Vector</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>f_x</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+On input and output, 
+<code><i><font color="black"><span style='white-space: nowrap'>f_x</span></font></i></code>
+ is a vector of size <small>@(@
+N * N
+@)@</small>
+and the input values of the elements of 
+<code><i><font color="black"><span style='white-space: nowrap'>f_x</span></font></i></code>
+ do not matter.
+On output,
+<small>@[@
+
+	f\_x [i * n + j] = \partial_{x(j)} f_i ( t , x )
+
+@]@</small>
+
+<br>
+<br>
+<b><a name="Fun.Warning" id="Fun.Warning">Warning</a></b>
+<br>
+The arguments 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+, and 
+<code><i><font color="black"><span style='white-space: nowrap'>f_x</span></font></i></code>
+
+must have a call by reference in their prototypes; i.e.,
+do not forget the <code><font color="blue">&amp;</font></code> in the prototype for
+
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+ and 
+<code><i><font color="black"><span style='white-space: nowrap'>f_x</span></font></i></code>
+.
+
+<br>
+<br>
+<b><big><a name="M" id="M">M</a></big></b>
+<br>
+The argument 
+<code><i><font color="black"><span style='white-space: nowrap'>M</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>M</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+It specifies the order of the multi-step method; i.e.,
+the order of the approximating polynomial
+(after the initialization process).
+The argument 
+<code><i><font color="black"><span style='white-space: nowrap'>M</span></font></i></code>
+ must greater than or equal one.
+
+<br>
+<br>
+<b><big><a name="ti" id="ti">ti</a></big></b>
+<br>
+The argument 
+<code><i><font color="black"><span style='white-space: nowrap'>ti</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Scalar</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>ti</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+It specifies the initial time for the integration of
+the differential equation.
+
+<br>
+<br>
+<b><big><a name="tf" id="tf">tf</a></big></b>
+<br>
+The argument 
+<code><i><font color="black"><span style='white-space: nowrap'>tf</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Scalar</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>tf</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+It specifies the final time for the integration of
+the differential equation.
+
+<br>
+<br>
+<b><big><a name="xi" id="xi">xi</a></big></b>
+<br>
+The argument 
+<code><i><font color="black"><span style='white-space: nowrap'>xi</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Vector</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>xi</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+and size 
+<code><i><font color="black"><span style='white-space: nowrap'>n</span></font></i></code>
+.
+It specifies value of <small>@(@
+X(ti)
+@)@</small>.
+
+<br>
+<br>
+<b><big><a name="smin" id="smin">smin</a></big></b>
+<br>
+The argument 
+<code><i><font color="black"><span style='white-space: nowrap'>smin</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Scalar</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>smin</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+The minimum value of <small>@(@
+T[M] -  T[M-1]
+@)@</small> in a call to <code><font color="blue">OdeGear</font></code>
+will be <small>@(@
+smin
+@)@</small> except for the last two calls where it may be
+as small as <small>@(@
+smin / 2
+@)@</small>.
+The value of 
+<code><i><font color="black"><span style='white-space: nowrap'>smin</span></font></i></code>
+ must be less than or equal 
+<code><i><font color="black"><span style='white-space: nowrap'>smax</span></font></i></code>
+.
+
+<br>
+<br>
+<b><big><a name="smax" id="smax">smax</a></big></b>
+<br>
+The argument 
+<code><i><font color="black"><span style='white-space: nowrap'>smax</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Scalar</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>smax</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+It specifies the maximum step size to use during the integration;
+i.e., the maximum value for <small>@(@
+T[M] - T[M-1]
+@)@</small>
+in a call to <code><font color="blue">OdeGear</font></code>.
+
+<br>
+<br>
+<b><big><a name="sini" id="sini">sini</a></big></b>
+<br>
+The argument 
+<code><i><font color="black"><span style='white-space: nowrap'>sini</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Scalar</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>sini</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+The value of 
+<code><i><font color="black"><span style='white-space: nowrap'>sini</span></font></i></code>
+ is the minimum
+step size to use during initialization of the multi-step method; i.e.,
+for calls to <code><font color="blue">OdeGear</font></code> where <small>@(@
+m < M
+@)@</small>.
+The value of 
+<code><i><font color="black"><span style='white-space: nowrap'>sini</span></font></i></code>
+ must be less than or equal 
+<code><i><font color="black"><span style='white-space: nowrap'>smax</span></font></i></code>
+
+(and can also be less than 
+<code><i><font color="black"><span style='white-space: nowrap'>smin</span></font></i></code>
+).
+
+<br>
+<br>
+<b><big><a name="eabs" id="eabs">eabs</a></big></b>
+<br>
+The argument 
+<code><i><font color="black"><span style='white-space: nowrap'>eabs</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Vector</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>eabs</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+and size 
+<code><i><font color="black"><span style='white-space: nowrap'>n</span></font></i></code>
+.
+Each of the elements of 
+<code><i><font color="black"><span style='white-space: nowrap'>eabs</span></font></i></code>
+ must be
+greater than or equal zero.
+It specifies a bound for the absolute
+error in the return value 
+<code><i><font color="black"><span style='white-space: nowrap'>xf</span></font></i></code>
+ as an approximation for <small>@(@
+X(tf)
+@)@</small>.
+(see the
+<a href="odegearcontrol.htm#Error Criteria Discussion" target="_top"><span style='white-space: nowrap'>error&nbsp;criteria&nbsp;discussion</span></a>
+
+below).
+
+<br>
+<br>
+<b><big><a name="erel" id="erel">erel</a></big></b>
+<br>
+The argument 
+<code><i><font color="black"><span style='white-space: nowrap'>erel</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Scalar</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>erel</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+and is greater than or equal zero.
+It specifies a bound for the relative
+error in the return value 
+<code><i><font color="black"><span style='white-space: nowrap'>xf</span></font></i></code>
+ as an approximation for <small>@(@
+X(tf)
+@)@</small>
+(see the
+<a href="odegearcontrol.htm#Error Criteria Discussion" target="_top"><span style='white-space: nowrap'>error&nbsp;criteria&nbsp;discussion</span></a>
+
+below).
+
+<br>
+<br>
+<b><big><a name="ef" id="ef">ef</a></big></b>
+<br>
+The argument value 
+<code><i><font color="black"><span style='white-space: nowrap'>ef</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Vector</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>ef</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+and size 
+<code><i><font color="black"><span style='white-space: nowrap'>n</span></font></i></code>
+.
+The input value of its elements does not matter.
+On output,
+it contains an estimated bound for the
+absolute error in the approximation 
+<code><i><font color="black"><span style='white-space: nowrap'>xf</span></font></i></code>
+; i.e.,
+<small>@[@
+
+	ef_i > | X( tf )_i - xf_i |
+
+@]@</small>
+
+<br>
+<br>
+<b><big><a name="maxabs" id="maxabs">maxabs</a></big></b>
+<br>
+The argument 
+<code><i><font color="black"><span style='white-space: nowrap'>maxabs</span></font></i></code>
+ is optional in the call to <code><font color="blue">OdeGearControl</font></code>.
+If it is present, it has the prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Vector</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>maxabs</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+and size 
+<code><i><font color="black"><span style='white-space: nowrap'>n</span></font></i></code>
+.
+The input value of its elements does not matter.
+On output,
+it contains an estimate for the
+maximum absolute value of <small>@(@
+X(t)
+@)@</small>; i.e.,
+<small>@[@
+
+	maxabs[i] \approx \max \left\{
+		| X( t )_i | \; : \;  t \in [ti, tf]
+	\right\}
+
+@]@</small>
+
+<br>
+<br>
+<b><big><a name="nstep" id="nstep">nstep</a></big></b>
+<br>
+The argument 
+<code><i><font color="black"><span style='white-space: nowrap'>nstep</span></font></i></code>
+ has the prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>size_t</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>nstep</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+Its input value does not matter and its output value
+is the number of calls to <a href="odegear.htm" target="_top"><span style='white-space: nowrap'>OdeGear</span></a>
+
+used by <code><font color="blue">OdeGearControl</font></code>.
+
+<br>
+<br>
+<b><big><a name="Error Criteria Discussion" id="Error Criteria Discussion">Error Criteria Discussion</a></big></b>
+<br>
+The relative error criteria 
+<code><i><font color="black"><span style='white-space: nowrap'>erel</span></font></i></code>
+ and
+absolute error criteria 
+<code><i><font color="black"><span style='white-space: nowrap'>eabs</span></font></i></code>
+ are enforced during each step of the
+integration of the ordinary differential equations.
+In addition, they are inversely scaled by the step size so that
+the total error bound is less than the sum of the error bounds.
+To be specific, if <small>@(@
+\tilde{X} (t)
+@)@</small> is the approximate solution
+at time <small>@(@
+t
+@)@</small>,
+
+<code><i><font color="black"><span style='white-space: nowrap'>ta</span></font></i></code>
+ is the initial step time,
+and 
+<code><i><font color="black"><span style='white-space: nowrap'>tb</span></font></i></code>
+ is the final step time,
+<small>@[@
+
+\left| \tilde{X} (tb)_j  - X (tb)_j \right|
+\leq
+\frac{tf - ti}{tb - ta}
+\left[ eabs[j] + erel \;  | \tilde{X} (tb)_j | \right]
+
+@]@</small>
+If <small>@(@
+X(tb)_j
+@)@</small> is near zero for some <small>@(@
+tb \in [ti , tf]
+@)@</small>,
+and one uses an absolute error criteria <small>@(@
+eabs[j]
+@)@</small> of zero,
+the error criteria above will force <code><font color="blue">OdeGearControl</font></code>
+to use step sizes equal to
+<a href="odegearcontrol.htm#smin" target="_top"><span style='white-space: nowrap'>smin</span></a>
+
+for steps ending near <small>@(@
+tb
+@)@</small>.
+In this case, the error relative to 
+<code><i><font color="black"><span style='white-space: nowrap'>maxabs</span></font></i></code>
+ can be judged after
+<code><font color="blue">OdeGearControl</font></code> returns.
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>ef</span></font></i></code>
+ is to large relative to 
+<code><i><font color="black"><span style='white-space: nowrap'>maxabs</span></font></i></code>
+,
+<code><font color="blue">OdeGearControl</font></code> can be called again
+with a smaller value of 
+<code><i><font color="black"><span style='white-space: nowrap'>smin</span></font></i></code>
+.
+
+<br>
+<br>
+<b><big><a name="Scalar" id="Scalar">Scalar</a></big></b>
+<br>
+The type 
+<code><i><font color="black"><span style='white-space: nowrap'>Scalar</span></font></i></code>
+ must satisfy the conditions
+for a <a href="numerictype.htm" target="_top"><span style='white-space: nowrap'>NumericType</span></a>
+ type.
+The routine <a href="checknumerictype.htm" target="_top"><span style='white-space: nowrap'>CheckNumericType</span></a>
+ will generate an error message
+if this is not the case.
+In addition, the following operations must be defined for
+
+<code><i><font color="black"><span style='white-space: nowrap'>Scalar</span></font></i></code>
+ objects 
+<code><i><font color="black"><span style='white-space: nowrap'>a</span></font></i></code>
+ and 
+<code><i><font color="black"><span style='white-space: nowrap'>b</span></font></i></code>
+:
+
+<table><tr><td align='left'  valign='top'>
+
+<b>Operation</b> </td><td align='left'  valign='top'>
+ <b>Description</b>  </td></tr><tr><td align='left'  valign='top'>
+
+
+<code><i><font color="black"><span style='white-space: nowrap'>a</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&lt;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>b</span></font></i></code>
+ </td><td align='left'  valign='top'>
+
+	returns true (false) if 
+<code><i><font color="black"><span style='white-space: nowrap'>a</span></font></i></code>
+ is less than or equal
+	(greater than) 
+<code><i><font color="black"><span style='white-space: nowrap'>b</span></font></i></code>
+.
+</td></tr><tr><td align='left'  valign='top'>
+
+
+<code><i><font color="black"><span style='white-space: nowrap'>a</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;==&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>b</span></font></i></code>
+ </td><td align='left'  valign='top'>
+
+	returns true (false) if 
+<code><i><font color="black"><span style='white-space: nowrap'>a</span></font></i></code>
+ is equal to 
+<code><i><font color="black"><span style='white-space: nowrap'>b</span></font></i></code>
+.
+</td></tr><tr><td align='left'  valign='top'>
+
+
+<code><font color="blue"><span style='white-space: nowrap'>log(</span></font><i><font color="black"><span style='white-space: nowrap'>a</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+ </td><td align='left'  valign='top'>
+
+	returns a 
+<code><i><font color="black"><span style='white-space: nowrap'>Scalar</span></font></i></code>
+ equal to the logarithm of 
+<code><i><font color="black"><span style='white-space: nowrap'>a</span></font></i></code>
+
+</td></tr><tr><td align='left'  valign='top'>
+
+
+<code><font color="blue"><span style='white-space: nowrap'>exp(</span></font><i><font color="black"><span style='white-space: nowrap'>a</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+ </td><td align='left'  valign='top'>
+
+	returns a 
+<code><i><font color="black"><span style='white-space: nowrap'>Scalar</span></font></i></code>
+ equal to the exponential of 
+<code><i><font color="black"><span style='white-space: nowrap'>a</span></font></i></code>
+
+</td></tr>
+</table>
+<br>
+<b><big><a name="Vector" id="Vector">Vector</a></big></b>
+<br>
+The type 
+<code><i><font color="black"><span style='white-space: nowrap'>Vector</span></font></i></code>
+ must be a <a href="simplevector.htm" target="_top"><span style='white-space: nowrap'>SimpleVector</span></a>
+ class with
+<a href="simplevector.htm#Elements of Specified Type" target="_top"><span style='white-space: nowrap'>elements&nbsp;of&nbsp;type&nbsp;Scalar</span></a>
+.
+The routine <a href="checksimplevector.htm" target="_top"><span style='white-space: nowrap'>CheckSimpleVector</span></a>
+ will generate an error message
+if this is not the case.
+
+<br>
+<br>
+<b><big><a name="Example" id="Example">Example</a></big></b>
+
+<br>
+The file
+<a href="ode_gear_control.cpp.htm" target="_top"><span style='white-space: nowrap'>ode_gear_control.cpp</span></a>
+
+contains an example and test a test of using this routine.
+It returns true if it succeeds and false otherwise.
+
+<br>
+<br>
+<b><big><a name="Theory" id="Theory">Theory</a></big></b>
+<br>
+Let <small>@(@
+e(s)
+@)@</small> be the error as a function of the
+step size <small>@(@
+s
+@)@</small> and suppose that there is a constant
+<small>@(@
+K
+@)@</small> such that <small>@(@
+e(s) = K s^m
+@)@</small>.
+Let <small>@(@
+a
+@)@</small> be our error bound.
+Given the value of <small>@(@
+e(s)
+@)@</small>, a step of size <small>@(@
+\lambda s
+@)@</small>
+would be ok provided that
+<small>@[@
+
+\begin{array}{rcl}
+	a  & \geq & e( \lambda s ) (tf - ti) / ( \lambda s ) \\
+	a  & \geq & K \lambda^m s^m (tf - ti) / ( \lambda s ) \\
+	a  & \geq & \lambda^{m-1} s^{m-1} (tf - ti) e(s) / s^m \\
+	a  & \geq & \lambda^{m-1} (tf - ti) e(s) / s           \\
+	\lambda^{m-1} & \leq & \frac{a}{e(s)} \frac{s}{tf - ti}
+\end{array}
+
+@]@</small>
+Thus if the right hand side of the last inequality is greater
+than or equal to one, the step of size <small>@(@
+s
+@)@</small> is ok.
+
+<br>
+<br>
+<b><big><a name="Source Code" id="Source Code">Source Code</a></big></b>
+<br>
+The source code for this routine is in the file
+<code><font color="blue">cppad/ode_gear_control.hpp</font></code>.
+
+
+<hr>Input File: cppad/utility/ode_gear_control.hpp
+
+</body>
+</html>

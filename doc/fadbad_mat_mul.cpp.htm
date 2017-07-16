@@ -1,0 +1,187 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>Fadbad Speed: Matrix Multiplication</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Fadbad Speed: Matrix Multiplication">
+<meta name="keywords" id="keywords" content=" fadbad speed: matrix multiplication link_mat_mul speed multiply specifications implementation ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_fadbad_mat_mul.cpp_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://coin-or.github.io/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="fadbad_det_lu.cpp.htm" target="_top">Prev</a>
+</td><td><a href="fadbad_ode.cpp.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>speed</option>
+<option>speed_fadbad</option>
+<option>fadbad_mat_mul.cpp</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>CppAD-&gt;</option>
+<option>Install</option>
+<option>Introduction</option>
+<option>AD</option>
+<option>ADFun</option>
+<option>preprocessor</option>
+<option>multi_thread</option>
+<option>utility</option>
+<option>ipopt_solve</option>
+<option>Example</option>
+<option>speed</option>
+<option>Appendix</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>speed-&gt;</option>
+<option>speed_main</option>
+<option>speed_utility</option>
+<option>speed_double</option>
+<option>speed_adolc</option>
+<option>speed_cppad</option>
+<option>speed_fadbad</option>
+<option>speed_sacado</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>speed_fadbad-&gt;</option>
+<option>fadbad_det_minor.cpp</option>
+<option>fadbad_det_lu.cpp</option>
+<option>fadbad_mat_mul.cpp</option>
+<option>fadbad_ode.cpp</option>
+<option>fadbad_poly.cpp</option>
+<option>fadbad_sparse_hessian.cpp</option>
+<option>fadbad_sparse_jacobian.cpp</option>
+</select>
+</td>
+<td>fadbad_mat_mul.cpp</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Specifications</option>
+<option>Implementation</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>Fadbad Speed: Matrix Multiplication</big></big></b></center>
+<br>
+<b><big><a name="Specifications" id="Specifications">Specifications</a></big></b>
+<br>
+See <a href="link_mat_mul.htm" target="_top"><span style='white-space: nowrap'>link_mat_mul</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="Implementation" id="Implementation">Implementation</a></big></b>
+
+
+<pre><tt><b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;FADBAD++/badiff.h&gt;</font>
+<b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/speed/mat_sum_sq.hpp&gt;</font>
+<b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/speed/uniform_01.hpp&gt;</font>
+<b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/utility/vector.hpp&gt;</font>
+
+<i><font color="#9A1900">// list of possible options</font></i>
+<b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;map&gt;</font>
+<b><font color="#0000FF">extern</font></b> std<font color="#990000">::</font><font color="#008080">map&lt;std::string, bool&gt;</font> global_option<font color="#990000">;</font>
+
+<font color="#009900">bool</font> <b><font color="#000000">link_mat_mul</font></b><font color="#990000">(</font>
+     <font color="#008080">size_t</font>                           size     <font color="#990000">,</font>
+     <font color="#008080">size_t</font>                           repeat   <font color="#990000">,</font>
+     CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;&amp;</font>           x        <font color="#990000">,</font>
+     CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;&amp;</font>           z        <font color="#990000">,</font>
+     CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;&amp;</font>           dz       <font color="#990000">)</font>
+<font color="#FF0000">{</font>
+     <i><font color="#9A1900">// speed test global option values</font></i>
+     <b><font color="#0000FF">if</font></b><font color="#990000">(</font> global_option<font color="#990000">[</font><font color="#FF0000">"memory"</font><font color="#990000">]</font> <font color="#990000">||</font> global_option<font color="#990000">[</font><font color="#FF0000">"onetape"</font><font color="#990000">]</font> <font color="#990000">||</font> global_option<font color="#990000">[</font><font color="#FF0000">"atomic"</font><font color="#990000">]</font> <font color="#990000">||</font> global_option<font color="#990000">[</font><font color="#FF0000">"optimize"</font><font color="#990000">]</font> <font color="#990000">)</font>
+          <b><font color="#0000FF">return</font></b> <b><font color="#0000FF">false</font></b><font color="#990000">;</font>
+     <i><font color="#9A1900">// The correctness check for this test is failing, so abort (for now).</font></i>
+     <b><font color="#0000FF">return</font></b> <b><font color="#0000FF">false</font></b><font color="#990000">;</font>
+
+     <i><font color="#9A1900">// -----------------------------------------------------</font></i>
+     <i><font color="#9A1900">// setup</font></i>
+
+     <i><font color="#9A1900">// object for computing determinant</font></i>
+     <b><font color="#0000FF">typedef</font></b> fadbad<font color="#990000">::</font><font color="#008080">B&lt;double&gt;</font>       ADScalar<font color="#990000">;</font>
+     <b><font color="#0000FF">typedef</font></b> CppAD<font color="#990000">::</font><font color="#008080">vector&lt;ADScalar&gt;</font> ADVector<font color="#990000">;</font>
+
+     <font color="#008080">size_t</font> j<font color="#990000">;</font>                <i><font color="#9A1900">// temporary index</font></i>
+     <font color="#008080">size_t</font> m <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font>            <i><font color="#9A1900">// number of dependent variables</font></i>
+     <font color="#008080">size_t</font> n <font color="#990000">=</font> size <font color="#990000">*</font> size<font color="#990000">;</font>  <i><font color="#9A1900">// number of independent variables</font></i>
+     <font color="#008080">ADVector</font>   <b><font color="#000000">X</font></b><font color="#990000">(</font>n<font color="#990000">);</font>         <i><font color="#9A1900">// AD domain space vector</font></i>
+     <font color="#008080">ADVector</font>   <b><font color="#000000">Y</font></b><font color="#990000">(</font>n<font color="#990000">);</font>         <i><font color="#9A1900">// Store product matrix</font></i>
+     <font color="#008080">ADVector</font>   <b><font color="#000000">Z</font></b><font color="#990000">(</font>m<font color="#990000">);</font>         <i><font color="#9A1900">// AD range space vector</font></i>
+
+     <i><font color="#9A1900">// ------------------------------------------------------</font></i>
+     <b><font color="#0000FF">while</font></b><font color="#990000">(</font>repeat<font color="#990000">--)</font>
+     <font color="#FF0000">{</font>    <i><font color="#9A1900">// get the next matrix</font></i>
+          CppAD<font color="#990000">::</font><b><font color="#000000">uniform_01</font></b><font color="#990000">(</font>n<font color="#990000">,</font> x<font color="#990000">);</font>
+
+          <i><font color="#9A1900">// set independent variable values</font></i>
+          <b><font color="#0000FF">for</font></b><font color="#990000">(</font>j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> n<font color="#990000">;</font> j<font color="#990000">++)</font>
+               X<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">=</font> x<font color="#990000">[</font>j<font color="#990000">];</font>
+
+          <i><font color="#9A1900">// do the computation</font></i>
+          <b><font color="#000000">mat_sum_sq</font></b><font color="#990000">(</font>size<font color="#990000">,</font> X<font color="#990000">,</font> Y<font color="#990000">,</font> Z<font color="#990000">);</font>
+
+          <i><font color="#9A1900">// create function object f : X -&gt; Z</font></i>
+          Z<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">].</font><b><font color="#000000">diff</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">,</font> m<font color="#990000">);</font>  <i><font color="#9A1900">// index 0 of m dependent variables</font></i>
+
+          <i><font color="#9A1900">// evaluate and return gradient using reverse mode</font></i>
+          <b><font color="#0000FF">for</font></b><font color="#990000">(</font>j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> n<font color="#990000">;</font> j<font color="#990000">++)</font>
+               dz<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">=</font> X<font color="#990000">[</font>j<font color="#990000">].</font><b><font color="#000000">d</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">);</font> <i><font color="#9A1900">// partial Z[0] w.r.t X[j]</font></i>
+     <font color="#FF0000">}</font>
+     <i><font color="#9A1900">// return function value</font></i>
+     z<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> Z<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">].</font><b><font color="#000000">x</font></b><font color="#990000">();</font>
+
+     <i><font color="#9A1900">// ---------------------------------------------------------</font></i>
+     <b><font color="#0000FF">return</font></b> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
+<font color="#FF0000">}</font></tt></pre>
+
+<hr>Input File: speed/fadbad/mat_mul.cpp
+
+</body>
+</html>

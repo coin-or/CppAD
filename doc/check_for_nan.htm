@@ -1,0 +1,310 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>Check an ADFun Object For Nan Results</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Check an ADFun Object For Nan Results">
+<meta name="keywords" id="keywords" content=" check adfun object nan results syntax debugging f b default error message vector_size file_name index get_check_for_nan vec file example ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_check_for_nan_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://coin-or.github.io/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="fun_check.cpp.htm" target="_top">Prev</a>
+</td><td><a href="check_for_nan.cpp.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>ADFun</option>
+<option>check_for_nan</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>CppAD-&gt;</option>
+<option>Install</option>
+<option>Introduction</option>
+<option>AD</option>
+<option>ADFun</option>
+<option>preprocessor</option>
+<option>multi_thread</option>
+<option>utility</option>
+<option>ipopt_solve</option>
+<option>Example</option>
+<option>speed</option>
+<option>Appendix</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>ADFun-&gt;</option>
+<option>record_adfun</option>
+<option>drivers</option>
+<option>Forward</option>
+<option>Reverse</option>
+<option>sparsity_pattern</option>
+<option>sparse_derivative</option>
+<option>optimize</option>
+<option>abs_normal</option>
+<option>FunCheck</option>
+<option>check_for_nan</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down0(this)'>
+<option>check_for_nan-&gt;</option>
+<option>check_for_nan.cpp</option>
+</select>
+</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Syntax</option>
+<option>Debugging</option>
+<option>f</option>
+<option>b</option>
+<option>Default</option>
+<option>Error Message</option>
+<option>---..vector_size</option>
+<option>---..file_name</option>
+<option>---..index</option>
+<option>get_check_for_nan</option>
+<option>---..vec</option>
+<option>---..file</option>
+<option>Example</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>Check an ADFun Object For Nan Results</big></big></b></center>
+<br>
+<b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
+
+<br>
+
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.check_for_nan(</span></font><i><font color="black"><span style='white-space: nowrap'>b</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+
+<code><i><font color="black"><span style='white-space: nowrap'>b</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.check_for_nan()<br>
+</span></font></code>
+
+<code><font color="blue"><span style='white-space: nowrap'>get_check_for_nan(</span></font><i><font color="black"><span style='white-space: nowrap'>vec</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>file</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+<br>
+<b><big><a name="Debugging" id="Debugging">Debugging</a></big></b>
+<br>
+If <code><font color="blue">NDEBUG</font></code> is not defined, and
+the result of a <a href="forward_order.htm" target="_top"><span style='white-space: nowrap'>forward</span></a>
+ or <a href="reverse_any.htm" target="_top"><span style='white-space: nowrap'>reverse</span></a>
+
+calculation contains a  <a href="nan.htm" target="_top"><span style='white-space: nowrap'>nan</span></a>
+,
+CppAD can halt with an error message.
+
+<br>
+<br>
+<b><big><a name="f" id="f">f</a></big></b>
+<br>
+For the syntax where 
+<code><i><font color="black"><span style='white-space: nowrap'>b</span></font></i></code>
+ is an argument,
+
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ADFun&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+(see 
+<code><font color="blue"><span style='white-space: nowrap'>ADFun&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code>
+ <a href="funconstruct.htm" target="_top"><span style='white-space: nowrap'>constructor</span></a>
+).
+For the syntax where 
+<code><i><font color="black"><span style='white-space: nowrap'>b</span></font></i></code>
+ is the result,
+
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;ADFun&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+<br>
+<b><big><a name="b" id="b">b</a></big></b>
+<br>
+This argument or result has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bool&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>b</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+Future calls to 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.Forward</span></font></code>
+ will (will not) check for <code><font color="blue">nan</font></code>.
+depending on if 
+<code><i><font color="black"><span style='white-space: nowrap'>b</span></font></i></code>
+ is true (false).
+
+<br>
+<br>
+<b><big><a name="Default" id="Default">Default</a></big></b>
+<br>
+The value for this setting after construction of 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+) is true.
+The value of this setting is not affected by calling
+<a href="dependent.htm" target="_top"><span style='white-space: nowrap'>Dependent</span></a>
+ for this function object.
+
+<br>
+<br>
+<b><big><a name="Error Message" id="Error Message">Error Message</a></big></b>
+<br>
+If this error is detected during zero order forward mode,
+the values of the independent variables that resulted in the <code><font color="blue">nan</font></code>
+are written to a temporary binary file.
+This is so that you can run the original source code with those values
+to see what is causing the <code><font color="blue">nan</font></code>.
+
+<br>
+<br>
+<b><a name="Error Message.vector_size" id="Error Message.vector_size">vector_size</a></b>
+<br>
+The error message with contain the text
+
+<code><font color="blue"><span style='white-space: nowrap'>vector_size&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>vector_size</span></font></i></code>
+ followed the newline character
+<code><font color="blue">'\n'</font></code>.
+The value of 
+<code><i><font color="black"><span style='white-space: nowrap'>vector_size</span></font></i></code>
+ is the number of elements
+in the independent vector.
+
+<br>
+<br>
+<b><a name="Error Message.file_name" id="Error Message.file_name">file_name</a></b>
+<br>
+The error message with contain the text
+
+<code><font color="blue"><span style='white-space: nowrap'>file_name&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>file_name</span></font></i></code>
+ followed the newline character
+<code><font color="blue">'\n'</font></code>.
+The value of 
+<code><i><font color="black"><span style='white-space: nowrap'>file_name</span></font></i></code>
+ is the name of the temporary file
+that contains the dependent variable values.
+
+<br>
+<br>
+<b><a name="Error Message.index" id="Error Message.index">index</a></b>
+<br>
+The error message will contain the text
+
+<code><font color="blue"><span style='white-space: nowrap'>index&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>index</span></font></i></code>
+ followed by the newline character <code><font color="blue">'\n'</font></code>.
+The value of 
+<code><i><font color="black"><span style='white-space: nowrap'>index</span></font></i></code>
+ is the lowest dependent variable index
+that has the value <code><font color="blue">nan</font></code>.
+
+<br>
+<br>
+<b><big><a name="get_check_for_nan" id="get_check_for_nan">get_check_for_nan</a></big></b>
+<br>
+This routine can be used to get the independent variable
+values that result in a <code><font color="blue">nan</font></code>.
+
+<br>
+<br>
+<b><a name="get_check_for_nan.vec" id="get_check_for_nan.vec">vec</a></b>
+<br>
+This argument has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CppAD::vector&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>vec</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+It size must be equal to the corresponding value of
+<a href="check_for_nan.htm#Error Message.vector_size" target="_top"><span style='white-space: nowrap'>vector_size</span></a>
+
+in the corresponding error message.
+The input value of its elements does not matter.
+Upon return, it will contain the values for the independent variables,
+in the corresponding call to <a href="independent.htm" target="_top"><span style='white-space: nowrap'>Independent</span></a>
+,
+that resulted in the <code><font color="blue">nan</font></code>.
+(Note that the call to <code><font color="blue">Independent</font></code> uses an vector with elements
+of type 
+<code><font color="blue"><span style='white-space: nowrap'>AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code>
+ and 
+<code><i><font color="black"><span style='white-space: nowrap'>vec</span></font></i></code>
+ has elements of type
+
+<code><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i></code>
+.)
+
+<br>
+<br>
+<b><a name="get_check_for_nan.file" id="get_check_for_nan.file">file</a></b>
+<br>
+This argument has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;std::string&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>file</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+It must be the value of
+<a href="check_for_nan.htm#Error Message.file_name" target="_top"><span style='white-space: nowrap'>file_name</span></a>
+
+in the corresponding error message.
+
+<br>
+<br>
+<b><big><a name="Example" id="Example">Example</a></big></b>
+
+<br>
+The file
+<a href="check_for_nan.cpp.htm" target="_top"><span style='white-space: nowrap'>check_for_nan.cpp</span></a>
+
+contains an example and test of these operations.
+It returns true if it succeeds and false otherwise.
+
+
+<hr>Input File: cppad/core/check_for_nan.hpp
+
+</body>
+</html>

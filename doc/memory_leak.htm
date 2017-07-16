@@ -1,0 +1,276 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>Memory Leak Detection</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Memory Leak Detection">
+<meta name="keywords" id="keywords" content=" memory leak detection memory_leak check static deprecated 2012-04-06 syntax purpose thread add_static flag inuse available track_count error message ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_memory_leak_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://coin-or.github.io/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="omp_alloc.cpp.htm" target="_top">Prev</a>
+</td><td><a href="epsilon.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>Appendix</option>
+<option>deprecated</option>
+<option>memory_leak</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>CppAD-&gt;</option>
+<option>Install</option>
+<option>Introduction</option>
+<option>AD</option>
+<option>ADFun</option>
+<option>preprocessor</option>
+<option>multi_thread</option>
+<option>utility</option>
+<option>ipopt_solve</option>
+<option>Example</option>
+<option>speed</option>
+<option>Appendix</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>Appendix-&gt;</option>
+<option>Faq</option>
+<option>directory</option>
+<option>Theory</option>
+<option>glossary</option>
+<option>Bib</option>
+<option>wish_list</option>
+<option>whats_new</option>
+<option>deprecated</option>
+<option>compare_c</option>
+<option>numeric_ad</option>
+<option>addon</option>
+<option>License</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>deprecated-&gt;</option>
+<option>include_deprecated</option>
+<option>FunDeprecated</option>
+<option>CompareChange</option>
+<option>omp_max_thread</option>
+<option>TrackNewDel</option>
+<option>omp_alloc</option>
+<option>memory_leak</option>
+<option>epsilon</option>
+<option>test_vector</option>
+<option>cppad_ipopt_nlp</option>
+<option>old_atomic</option>
+<option>zdouble</option>
+<option>autotools</option>
+</select>
+</td>
+<td>memory_leak</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Deprecated 2012-04-06</option>
+<option>Syntax</option>
+<option>Purpose</option>
+<option>thread</option>
+<option>add_static</option>
+<option>flag</option>
+<option>inuse</option>
+<option>available</option>
+<option>TRACK_COUNT</option>
+<option>Error Message</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>Memory Leak Detection</big></big></b></center>
+<br>
+<b><big><a name="Deprecated 2012-04-06" id="Deprecated 2012-04-06">Deprecated 2012-04-06</a></big></b>
+<br>
+This routine has been deprecated.
+You should instead use the routine <a href="ta_free_all.htm" target="_top"><span style='white-space: nowrap'>ta_free_all</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
+
+<br>
+
+<code><font color="blue"><span style='white-space: nowrap'>#&nbsp;include&nbsp;&lt;cppad/utility/memory_leak.hpp&gt;<br>
+</span></font></code>
+
+<code><i><font color="black"><span style='white-space: nowrap'>flag</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>memory_leak()<br>
+</span></font></i></code>
+
+<code><i><font color="black"><span style='white-space: nowrap'>flag</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>memory_leak</span></font></i><font color="blue"><span style='white-space: nowrap'>(</span></font><i><font color="black"><span style='white-space: nowrap'>add_static</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+
+
+<br>
+<br>
+<b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
+<br>
+This routine checks that the are no memory leaks
+caused by improper use of <a href="thread_alloc.htm" target="_top"><span style='white-space: nowrap'>thread_alloc</span></a>
+ memory allocator.
+The deprecated memory allocator <a href="tracknewdel.htm" target="_top"><span style='white-space: nowrap'>TrackNewDel</span></a>
+ is also checked.
+Memory errors in the deprecated <a href="omp_alloc.htm" target="_top"><span style='white-space: nowrap'>omp_alloc</span></a>
+ allocator are
+reported as being in <code><font color="blue">thread_alloc</font></code>.
+
+<br>
+<br>
+<b><big><a name="thread" id="thread">thread</a></big></b>
+<br>
+It is assumed that <a href="ta_in_parallel.htm" target="_top"><span style='white-space: nowrap'>in_parallel()</span></a>
+ is false
+and <a href="ta_thread_num.htm" target="_top"><span style='white-space: nowrap'>thread_num</span></a>
+ is zero when
+<code><font color="blue">memory_leak</font></code> is called.
+
+<br>
+<br>
+<b><big><a name="add_static" id="add_static">add_static</a></big></b>
+<br>
+This argument has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>add_static</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+and its default value is zero.
+Static variables hold onto memory forever.
+If the argument 
+<code><i><font color="black"><span style='white-space: nowrap'>add_static</span></font></i></code>
+ is present (and non-zero),
+<code><font color="blue">memory_leak</font></code> adds this amount of memory to the
+<a href="ta_inuse.htm" target="_top"><span style='white-space: nowrap'>inuse</span></a>
+ sum that corresponds to
+static variables in the program.
+A call with 
+<code><i><font color="black"><span style='white-space: nowrap'>add_static</span></font></i></code>
+ should be make after
+a routine that has static variables which
+use <a href="ta_get_memory.htm" target="_top"><span style='white-space: nowrap'>get_memory</span></a>
+ to allocate memory.
+The value of 
+<code><i><font color="black"><span style='white-space: nowrap'>add_static</span></font></i></code>
+ should be the difference of
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;thread_alloc::inuse(0)<br>
+</span></font></code>
+before and after the call.
+Since multiple statics may be allocated in different places in the program,
+it is expected that there will be multiple calls
+that use this option.
+
+<br>
+<br>
+<b><big><a name="flag" id="flag">flag</a></big></b>
+<br>
+The return value 
+<code><i><font color="black"><span style='white-space: nowrap'>flag</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bool&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>flag</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>add_static</span></font></i></code>
+ is non-zero,
+the return value for <code><font color="blue">memory_leak</font></code> is false.
+Otherwise, the return value for <code><font color="blue">memory_leak</font></code> should be false
+(indicating that the only allocated memory corresponds to static variables).
+
+<br>
+<br>
+<b><big><a name="inuse" id="inuse">inuse</a></big></b>
+<br>
+It is assumed that, when <code><font color="blue">memory_leak</font></code> is called,
+there should not be any memory
+<a href="ta_inuse.htm" target="_top"><span style='white-space: nowrap'>inuse</span></a>
+ or <a href="omp_inuse.htm" target="_top"><span style='white-space: nowrap'>omp_inuse</span></a>
+ for any thread
+(except for inuse memory corresponding to static variables).
+If there is, a message is printed and <code><font color="blue">memory_leak</font></code> returns false.
+
+<br>
+<br>
+<b><big><a name="available" id="available">available</a></big></b>
+<br>
+It is assumed that, when <code><font color="blue">memory_leak</font></code> is called,
+there should not be any memory
+<a href="ta_available.htm" target="_top"><span style='white-space: nowrap'>available</span></a>
+ or <a href="omp_available.htm" target="_top"><span style='white-space: nowrap'>omp_available</span></a>
+ for any thread;
+i.e., it all has been returned to the system.
+If there is memory still available for any thread,
+<code><font color="blue">memory_leak</font></code> returns false.
+
+<br>
+<br>
+<b><big><a name="TRACK_COUNT" id="TRACK_COUNT">TRACK_COUNT</a></big></b>
+<br>
+It is assumed that, when <code><font color="blue">memory_leak</font></code> is called,
+<a href="tracknewdel.htm#TrackCount" target="_top"><span style='white-space: nowrap'>TrackCount</span></a>
+ will return a zero value.
+If it returns a non-zero value,
+<code><font color="blue">memory_leak</font></code> returns false.
+
+<br>
+<br>
+<b><big><a name="Error Message" id="Error Message">Error Message</a></big></b>
+<br>
+If this is the first call to <code><font color="blue">memory_leak</font></code>, no message is printed.
+Otherwise, if it returns true, an error message is printed
+to standard output describing the memory leak that was detected.
+
+
+<hr>Input File: cppad/utility/memory_leak.hpp
+
+</body>
+</html>

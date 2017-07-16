@@ -1,0 +1,391 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>AD Conditional Expressions</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="AD Conditional Expressions">
+<meta name="keywords" id="keywords" content=" ad conditional expressions assign syntax purpose rel type left right if_true if_false result optimize deprecate 2005-08-07 operation sequence example test atan2 ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_condexp_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://coin-or.github.io/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="azmul.cpp.htm" target="_top">Prev</a>
+</td><td><a href="cond_exp.cpp.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>AD</option>
+<option>ADValued</option>
+<option>CondExp</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>CppAD-&gt;</option>
+<option>Install</option>
+<option>Introduction</option>
+<option>AD</option>
+<option>ADFun</option>
+<option>preprocessor</option>
+<option>multi_thread</option>
+<option>utility</option>
+<option>ipopt_solve</option>
+<option>Example</option>
+<option>speed</option>
+<option>Appendix</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>AD-&gt;</option>
+<option>ad_ctor</option>
+<option>ad_assign</option>
+<option>Convert</option>
+<option>ADValued</option>
+<option>BoolValued</option>
+<option>VecAD</option>
+<option>base_require</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>ADValued-&gt;</option>
+<option>Arithmetic</option>
+<option>unary_standard_math</option>
+<option>binary_math</option>
+<option>CondExp</option>
+<option>Discrete</option>
+<option>numeric_limits</option>
+<option>atomic</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down0(this)'>
+<option>CondExp-&gt;</option>
+<option>cond_exp.cpp</option>
+</select>
+</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Syntax</option>
+<option>Purpose</option>
+<option>Rel</option>
+<option>Type</option>
+<option>left</option>
+<option>right</option>
+<option>if_true</option>
+<option>if_false</option>
+<option>result</option>
+<option>Optimize</option>
+<option>Deprecate 2005-08-07</option>
+<option>Operation Sequence</option>
+<option>Example</option>
+<option>Test</option>
+<option>Atan2</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>AD Conditional Expressions</big></big></b></center>
+<br>
+<b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
+
+<br>
+
+<code><i><font color="black"><span style='white-space: nowrap'>result</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;CondExp</span></font><i><font color="black"><span style='white-space: nowrap'>Rel</span></font></i><font color="blue"><span style='white-space: nowrap'>(</span></font><i><font color="black"><span style='white-space: nowrap'>left</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>right</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>if_true</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>if_false</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+
+
+
+<br>
+<br>
+<b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
+<br>
+Record,
+as part of an AD of 
+<code><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i></code>
+
+<a href="glossary.htm#Operation.Sequence" target="_top"><span style='white-space: nowrap'>operation&nbsp;sequence</span></a>
+,
+the conditional result
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>left</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Cop</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>right</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>result</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>if_true</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>result</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>if_false</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+The relational 
+<code><i><font color="black"><span style='white-space: nowrap'>Rel</span></font></i></code>
+ and comparison operator 
+<code><i><font color="black"><span style='white-space: nowrap'>Cop</span></font></i></code>
+
+above have the following correspondence:
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Rel</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&nbsp;&nbsp;Lt&nbsp;&nbsp;&nbsp;Le&nbsp;&nbsp;&nbsp;Eq&nbsp;&nbsp;&nbsp;Ge&nbsp;&nbsp;&nbsp;Gt<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Cop</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&nbsp;&nbsp;&nbsp;&lt;&nbsp;&nbsp;&nbsp;&lt;=&nbsp;&nbsp;&nbsp;==&nbsp;&nbsp;&nbsp;&gt;=&nbsp;&nbsp;&nbsp;&gt;<br>
+</span></font></code>
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+ is the <a href="adfun.htm" target="_top"><span style='white-space: nowrap'>ADFun</span></a>
+ object corresponding to the
+AD operation sequence,
+the assignment choice for 
+<code><i><font color="black"><span style='white-space: nowrap'>result</span></font></i></code>
+
+in an AD conditional expression is made each time
+<a href="forward.htm" target="_top"><span style='white-space: nowrap'>f.Forward</span></a>
+ is used to evaluate the zero order Taylor
+coefficients with new values for the
+<a href="glossary.htm#Tape.Independent Variable" target="_top"><span style='white-space: nowrap'>independent&nbsp;variables</span></a>
+.
+This is in contrast to the <a href="compare.htm" target="_top"><span style='white-space: nowrap'>AD&nbsp;comparison&nbsp;operators</span></a>
+
+which are boolean valued and not included in the AD operation sequence.
+
+<br>
+<br>
+<b><big><a name="Rel" id="Rel">Rel</a></big></b>
+<br>
+In the syntax above, the relation 
+<code><i><font color="black"><span style='white-space: nowrap'>Rel</span></font></i></code>
+ represents one of the following
+two characters: <code><font color="blue">Lt</font></code>, <code><font color="blue">Le</font></code>, <code><font color="blue">Eq</font></code>, <code><font color="blue">Ge</font></code>, <code><font color="blue">Gt</font></code>.
+As in the table above,
+
+<code><i><font color="black"><span style='white-space: nowrap'>Rel</span></font></i></code>
+ determines which comparison operator 
+<code><i><font color="black"><span style='white-space: nowrap'>Cop</span></font></i></code>
+ is used
+when comparing 
+<code><i><font color="black"><span style='white-space: nowrap'>left</span></font></i></code>
+ and 
+<code><i><font color="black"><span style='white-space: nowrap'>right</span></font></i></code>
+.
+
+<br>
+<br>
+<b><big><a name="Type" id="Type">Type</a></big></b>
+<br>
+These functions are defined in the CppAD namespace for arguments of
+
+<code><i><font color="black"><span style='white-space: nowrap'>Type</span></font></i></code>
+ is <code><font color="blue">float</font></code> , <code><font color="blue">double</font></code>, or any type of the form
+
+<code><font color="blue"><span style='white-space: nowrap'>AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code>
+.
+(Note that all four arguments must have the same type.)
+
+<br>
+<br>
+<b><big><a name="left" id="left">left</a></big></b>
+<br>
+The argument 
+<code><i><font color="black"><span style='white-space: nowrap'>left</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Type</span></font></i><font color="blue"><span style='white-space: nowrap'>&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>left</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+It specifies the value for the left side of the comparison operator.
+
+<br>
+<br>
+<b><big><a name="right" id="right">right</a></big></b>
+<br>
+The argument 
+<code><i><font color="black"><span style='white-space: nowrap'>right</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Type</span></font></i><font color="blue"><span style='white-space: nowrap'>&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>right</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+It specifies the value for the right side of the comparison operator.
+
+<br>
+<br>
+<b><big><a name="if_true" id="if_true">if_true</a></big></b>
+<br>
+The argument 
+<code><i><font color="black"><span style='white-space: nowrap'>if_true</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Type</span></font></i><font color="blue"><span style='white-space: nowrap'>&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>if_true</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+It specifies the return value if the result of the comparison is true.
+
+<br>
+<br>
+<b><big><a name="if_false" id="if_false">if_false</a></big></b>
+<br>
+The argument 
+<code><i><font color="black"><span style='white-space: nowrap'>if_false</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Type</span></font></i><font color="blue"><span style='white-space: nowrap'>&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>if_false</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+It specifies the return value if the result of the comparison is false.
+
+<br>
+<br>
+<b><big><a name="result" id="result">result</a></big></b>
+<br>
+The 
+<code><i><font color="black"><span style='white-space: nowrap'>result</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Type</span></font></i><font color="blue"><span style='white-space: nowrap'>&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>if_false</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+<br>
+<b><big><a name="Optimize" id="Optimize">Optimize</a></big></b>
+<br>
+The <a href="optimize.htm" target="_top"><span style='white-space: nowrap'>optimize</span></a>
+ method will optimize conditional expressions
+in the following way:
+During <a href="forward_zero.htm" target="_top"><span style='white-space: nowrap'>zero&nbsp;order&nbsp;forward&nbsp;mode</span></a>
+,
+once the value of the 
+<code><i><font color="black"><span style='white-space: nowrap'>left</span></font></i></code>
+ and 
+<code><i><font color="black"><span style='white-space: nowrap'>right</span></font></i></code>
+ have been determined,
+it is known if the true or false case is required.
+From this point on, values corresponding to the case that is not required
+are not computed.
+This optimization is done for the rest of zero order forward mode
+as well as forward and reverse derivatives calculations.
+
+<br>
+<br>
+<b><big><a name="Deprecate 2005-08-07" id="Deprecate 2005-08-07">Deprecate 2005-08-07</a></big></b>
+<br>
+Previous versions of CppAD used
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CondExp(</span></font><i><font color="black"><span style='white-space: nowrap'>flag</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>if_true</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>if_false</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+for the same meaning as
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CondExpGt(</span></font><i><font color="black"><span style='white-space: nowrap'>flag</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Type</span></font></i><font color="blue"><span style='white-space: nowrap'>(0),&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>if_true</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>if_false</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+Use of <code><font color="blue">CondExp</font></code> is deprecated, but continues to be supported.
+
+<br>
+<br>
+<b><big><a name="Operation Sequence" id="Operation Sequence">Operation Sequence</a></big></b>
+<br>
+This is an AD of 
+<code><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i></code>
+
+<a href="glossary.htm#Operation.Atomic" target="_top"><span style='white-space: nowrap'>atomic&nbsp;operation</span></a>
+
+and hence is part of the current
+AD of 
+<code><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i></code>
+
+<a href="glossary.htm#Operation.Sequence" target="_top"><span style='white-space: nowrap'>operation&nbsp;sequence</span></a>
+.
+
+
+<br>
+<br>
+<b><big><a name="Example" id="Example">Example</a></big></b>
+
+
+<br>
+<br>
+<b><big><a name="Test" id="Test">Test</a></big></b>
+
+<br>
+The file
+<a href="cond_exp.cpp.htm" target="_top"><span style='white-space: nowrap'>cond_exp.cpp</span></a>
+
+contains an example and test of this function.
+It returns true if it succeeds and false otherwise.
+
+<br>
+<br>
+<b><big><a name="Atan2" id="Atan2">Atan2</a></big></b>
+<br>
+The following implementation of the
+AD <a href="atan2.htm" target="_top"><span style='white-space: nowrap'>atan2</span></a>
+ function is a more complex
+example of using conditional expressions:
+<code><font color="blue">
+<pre><tt><b><font color="#0000FF">template</font></b> <font color="#990000">&lt;</font><b><font color="#0000FF">class</font></b> <font color="#008080">Base</font><font color="#990000">&gt;</font>
+<font color="#008080">AD&lt;Base&gt; atan2 (const AD&lt;Base&gt; &amp;y, const AD&lt;Base&gt;</font> <font color="#990000">&amp;</font>x<font color="#990000">)</font>
+<font color="#FF0000">{</font>    <font color="#008080">AD&lt;Base&gt;</font> alpha<font color="#990000">;</font>
+     <font color="#008080">AD&lt;Base&gt;</font> beta<font color="#990000">;</font>
+     <font color="#008080">AD&lt;Base&gt;</font> theta<font color="#990000">;</font>
+
+     <font color="#008080">AD&lt;Base&gt;</font> <b><font color="#000000">zero</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">.);</font>
+     <font color="#008080">AD&lt;Base&gt;</font> <b><font color="#000000">pi2</font></b><font color="#990000">(</font><font color="#993399">2</font><font color="#990000">.</font> <font color="#990000">*</font> <b><font color="#000000">atan</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">.));</font>
+     <font color="#008080">AD&lt;Base&gt;</font> <b><font color="#000000">pi</font></b><font color="#990000">(</font><font color="#993399">2</font><font color="#990000">.</font> <font color="#990000">*</font> pi2<font color="#990000">);</font>
+
+     <font color="#008080">AD&lt;Base&gt;</font> ax <font color="#990000">=</font> <b><font color="#000000">fabs</font></b><font color="#990000">(</font>x<font color="#990000">);</font>
+     <font color="#008080">AD&lt;Base&gt;</font> ay <font color="#990000">=</font> <b><font color="#000000">fabs</font></b><font color="#990000">(</font>y<font color="#990000">);</font>
+
+     <i><font color="#9A1900">// if( ax &gt; ay )</font></i>
+     <i><font color="#9A1900">//   theta = atan(ay / ax);</font></i>
+     <i><font color="#9A1900">// else   theta = pi2 - atan(ax / ay);</font></i>
+     alpha <font color="#990000">=</font> <b><font color="#000000">atan</font></b><font color="#990000">(</font>ay <font color="#990000">/</font> ax<font color="#990000">);</font>
+     beta  <font color="#990000">=</font> pi2 <font color="#990000">-</font> <b><font color="#000000">atan</font></b><font color="#990000">(</font>ax <font color="#990000">/</font> ay<font color="#990000">);</font>
+     theta <font color="#990000">=</font> <b><font color="#000000">CondExpGt</font></b><font color="#990000">(</font>ax<font color="#990000">,</font> ay<font color="#990000">,</font> alpha<font color="#990000">,</font> beta<font color="#990000">);</font>         <i><font color="#9A1900">// use of CondExp</font></i>
+
+     <i><font color="#9A1900">// if( x &lt;= 0 )</font></i>
+     <i><font color="#9A1900">//   theta = pi - theta;</font></i>
+     theta <font color="#990000">=</font> <b><font color="#000000">CondExpLe</font></b><font color="#990000">(</font>x<font color="#990000">,</font> zero<font color="#990000">,</font> pi <font color="#990000">-</font> theta<font color="#990000">,</font> theta<font color="#990000">);</font>  <i><font color="#9A1900">// use of CondExp</font></i>
+
+     <i><font color="#9A1900">// if( y &lt;= 0 )</font></i>
+     <i><font color="#9A1900">//   theta = - theta;</font></i>
+     theta <font color="#990000">=</font> <b><font color="#000000">CondExpLe</font></b><font color="#990000">(</font>y<font color="#990000">,</font> zero<font color="#990000">,</font> <font color="#990000">-</font>theta<font color="#990000">,</font> theta<font color="#990000">);</font>      <i><font color="#9A1900">// use of CondExp</font></i>
+
+     <b><font color="#0000FF">return</font></b> theta<font color="#990000">;</font>
+<font color="#FF0000">}</font></tt></pre>
+</font></code>
+<hr>Input File: cppad/core/cond_exp.hpp
+
+</body>
+</html>

@@ -1,0 +1,617 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>AD Vectors that Record Index Operations</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="AD Vectors that Record Index Operations">
+<meta name="keywords" id="keywords" content=" ad vectors that record index operations Vecad tape reference Vecad&lt;base&gt; syntax purpose alternatives vecad&lt;base&gt;::reference exceptions constructor v n size size_t indexing i b x r example speed memory ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_vecad_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://coin-or.github.io/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="equal_op_seq.cpp.htm" target="_top">Prev</a>
+</td><td><a href="vec_ad.cpp.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>AD</option>
+<option>VecAD</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>CppAD-&gt;</option>
+<option>Install</option>
+<option>Introduction</option>
+<option>AD</option>
+<option>ADFun</option>
+<option>preprocessor</option>
+<option>multi_thread</option>
+<option>utility</option>
+<option>ipopt_solve</option>
+<option>Example</option>
+<option>speed</option>
+<option>Appendix</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>AD-&gt;</option>
+<option>ad_ctor</option>
+<option>ad_assign</option>
+<option>Convert</option>
+<option>ADValued</option>
+<option>BoolValued</option>
+<option>VecAD</option>
+<option>base_require</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down0(this)'>
+<option>VecAD-&gt;</option>
+<option>vec_ad.cpp</option>
+</select>
+</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Syntax</option>
+<option>Purpose</option>
+<option>Alternatives</option>
+<option>VecAD&lt;Base&gt;::reference</option>
+<option>---..Exceptions</option>
+<option>Constructor</option>
+<option>---..v</option>
+<option>n</option>
+<option>size</option>
+<option>size_t Indexing</option>
+<option>---..i</option>
+<option>---..b</option>
+<option>AD Indexing</option>
+<option>---..x</option>
+<option>---..r</option>
+<option>Example</option>
+<option>Speed and Memory</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>AD Vectors that Record Index Operations</big></big></b></center>
+<br>
+<b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
+
+<br>
+
+<code><font color="blue"><span style='white-space: nowrap'>VecAD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>v</span></font></i><font color="blue"><span style='white-space: nowrap'>(</span></font><i><font color="black"><span style='white-space: nowrap'>n</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+
+<code><span style='white-space: nowrap'><br>
+</span></code>
+<code><i><font color="black"><span style='white-space: nowrap'>v</span></font></i><font color="blue"><span style='white-space: nowrap'>.size()</span></font></code>
+
+<code><span style='white-space: nowrap'><br>
+</span></code>
+<code><i><font color="black"><span style='white-space: nowrap'>b</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>v</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>]</span></font></code>
+
+<code><span style='white-space: nowrap'><br>
+</span></code>
+<code><i><font color="black"><span style='white-space: nowrap'>r</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>v</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>]</span></font></code>
+
+
+<br>
+<br>
+<b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
+<br>
+If either 
+<code><i><font color="black"><span style='white-space: nowrap'>v</span></font></i></code>
+ or 
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+ is a
+<a href="glossary.htm#Variable" target="_top"><span style='white-space: nowrap'>variable</span></a>
+,
+the indexing operation
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>r</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>v</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>]<br>
+</span></font></code>
+is recorded in the corresponding
+AD of 
+<code><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i></code>
+
+<a href="glossary.htm#Operation.Sequence" target="_top"><span style='white-space: nowrap'>operation&nbsp;sequence</span></a>
+ and
+transferred to the corresponding <a href="adfun.htm" target="_top"><span style='white-space: nowrap'>ADFun</span></a>
+ object 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+.
+Such an index can change each time
+zero order <a href="forward.htm" target="_top"><span style='white-space: nowrap'>f.Forward</span></a>
+ is used; i.e.,
+
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+ is evaluated with new value for the
+<a href="glossary.htm#Tape.Independent Variable" target="_top"><span style='white-space: nowrap'>independent&nbsp;variables</span></a>
+.
+Note that the value of 
+<code><i><font color="black"><span style='white-space: nowrap'>y</span></font></i></code>
+ depends on the value of 
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+
+in a discrete fashion and CppAD computes its partial derivative with
+respect to 
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+ as zero.
+
+<br>
+<br>
+<b><big><a name="Alternatives" id="Alternatives">Alternatives</a></big></b>
+<br>
+If only the values in the vector,
+and not the indices,
+depend on the independent variables,
+the class 
+<code><i><font color="black"><span style='white-space: nowrap'>Vector</span></font></i><font color="blue"><span style='white-space: nowrap'>&lt;&nbsp;AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;&gt;</span></font></code>
+ is much more efficient for
+storing AD values where 
+<code><i><font color="black"><span style='white-space: nowrap'>Vector</span></font></i></code>
+ is any
+<a href="simplevector.htm" target="_top"><span style='white-space: nowrap'>SimpleVector</span></a>
+ template class,
+If only the indices,
+and not the values in the vector,
+depend on the independent variables,
+The <a href="discrete.htm" target="_top"><span style='white-space: nowrap'>Discrete</span></a>
+ functions are a much more efficient
+way to represent these vectors.
+
+<br>
+<br>
+<b><big><a name="VecAD&lt;Base&gt;::reference" id="VecAD&lt;Base&gt;::reference">VecAD&lt;Base&gt;::reference</a></big></b>
+<br>
+The result 
+<code><i><font color="black"><span style='white-space: nowrap'>r</span></font></i></code>
+ has type
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;VecAD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;::reference<br>
+</span></font></code>
+which is very much like the 
+<code><font color="blue"><span style='white-space: nowrap'>AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code>
+ type
+with some notable exceptions:
+
+<br>
+<br>
+<b><a name="VecAD&lt;Base&gt;::reference.Exceptions" id="VecAD&lt;Base&gt;::reference.Exceptions">Exceptions</a></b>
+
+<ol type="1"><li>
+The object 
+<code><i><font color="black"><span style='white-space: nowrap'>r</span></font></i></code>
+ cannot be used with the
+<a href="value.htm" target="_top"><span style='white-space: nowrap'>Value</span></a>
+ function to compute the corresponding 
+<code><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i></code>
+ value.
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>v</span></font></i></code>
+ and 
+<code><i><font color="black"><span style='white-space: nowrap'>i</span></font></i></code>
+ are not <a href="glossary.htm#Variable" target="_top"><span style='white-space: nowrap'>variables</span></a>
+
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>b</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;v[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>]<br>
+</span></font></code>
+can be used to compute the corresponding 
+<code><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i></code>
+ value.
+
+</li><li>
+
+The object 
+<code><i><font color="black"><span style='white-space: nowrap'>r</span></font></i></code>
+ cannot be used
+with the <a href="arithmetic.htm" target="_top"><span style='white-space: nowrap'>compound&nbsp;assignments&nbsp;operators</span></a>
+
+<code><font color="blue">+=</font></code>,
+<code><font color="blue">-=</font></code>,
+<code><font color="blue">*=</font></code>, or
+<code><font color="blue">/=</font></code>.
+For example, the following syntax is not valid:
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>v</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>]&nbsp;+=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>z</span></font></i><font color="blue"><span style='white-space: nowrap'>;<br>
+</span></font></code>
+no matter what the types of 
+<code><i><font color="black"><span style='white-space: nowrap'>z</span></font></i></code>
+.
+
+</li><li>
+
+Assignment to 
+<code><i><font color="black"><span style='white-space: nowrap'>r</span></font></i></code>
+ returns a <code><font color="blue">void</font></code>.
+For example, the following syntax is not valid:
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>z</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>v</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>]&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>u</span></font></i><font color="blue"><span style='white-space: nowrap'>;<br>
+</span></font></code>
+no matter what the types of 
+<code><i><font color="black"><span style='white-space: nowrap'>z</span></font></i></code>
+, and 
+<code><i><font color="black"><span style='white-space: nowrap'>u</span></font></i></code>
+.
+
+</li><li>
+
+The <a href="condexp.htm" target="_top"><span style='white-space: nowrap'>CondExp</span></a>
+ functions do not accept
+
+<code><font color="blue"><span style='white-space: nowrap'>VecAD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;::reference</span></font></code>
+ arguments.
+For example, the following syntax is not valid:
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CondExpGt(</span></font><i><font color="black"><span style='white-space: nowrap'>v</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>],&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>z</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>u</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>v</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+no matter what the types of 
+<code><i><font color="black"><span style='white-space: nowrap'>z</span></font></i></code>
+, 
+<code><i><font color="black"><span style='white-space: nowrap'>u</span></font></i></code>
+, and 
+<code><i><font color="black"><span style='white-space: nowrap'>v</span></font></i></code>
+.
+
+</li><li>
+
+The <a href="parvar.htm" target="_top"><span style='white-space: nowrap'>Parameter&nbsp;and&nbsp;Variable</span></a>
+ functions cannot be used with
+
+<code><font color="blue"><span style='white-space: nowrap'>VecAD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;::reference</span></font></code>
+ arguments like 
+<code><i><font color="black"><span style='white-space: nowrap'>r</span></font></i></code>
+,
+use the entire 
+<code><font color="blue"><span style='white-space: nowrap'>VecAD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code>
+ vector instead; i.e. 
+<code><i><font color="black"><span style='white-space: nowrap'>v</span></font></i></code>
+.
+
+</li><li>
+
+The vectors passed to <a href="independent.htm" target="_top"><span style='white-space: nowrap'>Independent</span></a>
+ must have elements
+of type 
+<code><font color="blue"><span style='white-space: nowrap'>AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code>
+; i.e., <a href="vecad.htm" target="_top"><span style='white-space: nowrap'>VecAD</span></a>
+ vectors
+cannot be passed to <code><font color="blue">Independent</font></code>.
+
+</li><li>
+
+If one uses this type in a
+AD of 
+<code><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i></code>
+
+<a href="glossary.htm#Operation.Sequence" target="_top"><span style='white-space: nowrap'>operation&nbsp;sequence</span></a>
+,
+<a href="glossary.htm#Sparsity Pattern" target="_top"><span style='white-space: nowrap'>sparsity&nbsp;pattern</span></a>
+ calculations
+(<a href="sparsity_pattern.htm" target="_top"><span style='white-space: nowrap'>sparsity_pattern</span></a>
+)
+are less efficient because the dependence of different
+elements of the vector cannot be separated.
+
+</li></ol>
+
+
+<br>
+<br>
+<b><big><a name="Constructor" id="Constructor">Constructor</a></big></b>
+
+
+<br>
+<br>
+<b><a name="Constructor.v" id="Constructor.v">v</a></b>
+<br>
+The syntax
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;VecAD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>v</span></font></i><font color="blue"><span style='white-space: nowrap'>(</span></font><i><font color="black"><span style='white-space: nowrap'>n</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+creates an <code><font color="blue">VecAD</font></code> object 
+<code><i><font color="black"><span style='white-space: nowrap'>v</span></font></i></code>
+ with
+
+<code><i><font color="black"><span style='white-space: nowrap'>n</span></font></i></code>
+ elements.
+The initial value of the elements of 
+<code><i><font color="black"><span style='white-space: nowrap'>v</span></font></i></code>
+ is unspecified.
+
+<br>
+<br>
+<b><big><a name="n" id="n">n</a></big></b>
+<br>
+The argument 
+<code><i><font color="black"><span style='white-space: nowrap'>n</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+<br>
+<b><big><a name="size" id="size">size</a></big></b>
+<br>
+The syntax
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>v</span></font></i><font color="blue"><span style='white-space: nowrap'>.size()<br>
+</span></font></code>
+returns the number of elements in the vector 
+<code><i><font color="black"><span style='white-space: nowrap'>v</span></font></i></code>
+;
+i.e., the value of 
+<code><i><font color="black"><span style='white-space: nowrap'>n</span></font></i></code>
+ when it was constructed.
+
+<br>
+<br>
+<b><big><a name="size_t Indexing" id="size_t Indexing">size_t Indexing</a></big></b>
+<br>
+We refer to the syntax
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>b</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>v</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>]<br>
+</span></font></code>
+as <code><font color="blue">size_t</font></code> indexing of a <code><font color="blue">VecAD</font></code> object.
+This indexing is only valid if the vector 
+<code><i><font color="black"><span style='white-space: nowrap'>v</span></font></i></code>
+ is a
+<a href="parvar.htm" target="_top"><span style='white-space: nowrap'>parameter</span></a>
+; i.e.,
+it does not depend on the independent variables.
+
+<br>
+<br>
+<b><a name="size_t Indexing.i" id="size_t Indexing.i">i</a></b>
+<br>
+The operand 
+<code><i><font color="black"><span style='white-space: nowrap'>i</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+It must be greater than or equal zero
+and less than 
+<code><i><font color="black"><span style='white-space: nowrap'>n</span></font></i></code>
+; i.e., less than
+the number of elements in 
+<code><i><font color="black"><span style='white-space: nowrap'>v</span></font></i></code>
+.
+
+<br>
+<br>
+<b><a name="size_t Indexing.b" id="size_t Indexing.b">b</a></b>
+<br>
+The result 
+<code><i><font color="black"><span style='white-space: nowrap'>b</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>b</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+and is a reference to the <code><i>i</i></code>-th element in the vector 
+<code><i><font color="black"><span style='white-space: nowrap'>v</span></font></i></code>
+.
+It can be used to change the element value;
+for example,
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>v</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>]&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>c</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+is valid where 
+<code><i><font color="black"><span style='white-space: nowrap'>c</span></font></i></code>
+ is a 
+<code><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i></code>
+ object.
+The reference 
+<code><i><font color="black"><span style='white-space: nowrap'>b</span></font></i></code>
+ is no longer valid once the
+destructor for 
+<code><i><font color="black"><span style='white-space: nowrap'>v</span></font></i></code>
+ is called; for example,
+when 
+<code><i><font color="black"><span style='white-space: nowrap'>v</span></font></i></code>
+ falls out of scope.
+
+<br>
+<br>
+<b><big><a name="AD Indexing" id="AD Indexing">AD Indexing</a></big></b>
+<br>
+We refer to the syntax
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>r</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>v</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>]<br>
+</span></font></code>
+as AD indexing of a <code><font color="blue">VecAD</font></code> object.
+
+<br>
+<br>
+<b><a name="AD Indexing.x" id="AD Indexing.x">x</a></b>
+<br>
+The argument 
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+The value of 
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+ must be greater than or equal zero
+and less than 
+<code><i><font color="black"><span style='white-space: nowrap'>n</span></font></i></code>
+; i.e., less than
+the number of elements in 
+<code><i><font color="black"><span style='white-space: nowrap'>v</span></font></i></code>
+.
+
+<br>
+<br>
+<b><a name="AD Indexing.r" id="AD Indexing.r">r</a></b>
+<br>
+The result 
+<code><i><font color="black"><span style='white-space: nowrap'>r</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;VecAD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;::reference&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>r</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+The object 
+<code><i><font color="black"><span style='white-space: nowrap'>r</span></font></i></code>
+ has an AD type and its
+operations are recorded as part of the same
+AD of 
+<code><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i></code>
+
+<a href="glossary.htm#Operation.Sequence" target="_top"><span style='white-space: nowrap'>operation&nbsp;sequence</span></a>
+ as
+for 
+<code><font color="blue"><span style='white-space: nowrap'>AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code>
+ objects.
+It acts as a reference to the
+element with index <small>@(@
+{\rm floor} (x)
+@)@</small> in the vector 
+<code><i><font color="black"><span style='white-space: nowrap'>v</span></font></i></code>
+
+(<small>@(@
+{\rm floor} (x)
+@)@</small> is
+the greatest integer less than or equal 
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+).
+Because it is a reference, it can be used to change the element value;
+for example,
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>v</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>]&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>z</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+is valid where 
+<code><i><font color="black"><span style='white-space: nowrap'>z</span></font></i></code>
+ is an
+
+<code><font color="blue"><span style='white-space: nowrap'>VecAD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;::reference</span></font></code>
+ object.
+As a reference, 
+<code><i><font color="black"><span style='white-space: nowrap'>r</span></font></i></code>
+ is no longer valid once the
+destructor for 
+<code><i><font color="black"><span style='white-space: nowrap'>v</span></font></i></code>
+ is called; for example,
+when 
+<code><i><font color="black"><span style='white-space: nowrap'>v</span></font></i></code>
+ falls out of scope.
+
+<br>
+<br>
+<b><big><a name="Example" id="Example">Example</a></big></b>
+
+<br>
+The file
+<a href="vec_ad.cpp.htm" target="_top"><span style='white-space: nowrap'>vec_ad.cpp</span></a>
+
+contains an example and test using <code><font color="blue">VecAD</font></code> vectors.
+It returns true if it succeeds and false otherwise.
+
+
+<br>
+<br>
+<b><big><a name="Speed and Memory" id="Speed and Memory">Speed and Memory</a></big></b>
+<br>
+The <a href="vecad.htm" target="_top"><span style='white-space: nowrap'>VecAD</span></a>
+ vector type is inefficient because every
+time an element of a vector is accessed, a new CppAD
+<a href="glossary.htm#Variable" target="_top"><span style='white-space: nowrap'>variable</span></a>
+ is created on the tape
+using either the <code><font color="blue">Ldp</font></code> or <code><font color="blue">Ldv</font></code> operation
+(unless all of the elements of the vector are
+<a href="glossary.htm#Parameter" target="_top"><span style='white-space: nowrap'>parameters</span></a>
+).
+The effect of this can be seen by executing the following steps:
+
+<ol type="1"><li>
+In the file <code><font color="blue">cppad/local/forward1sweep.h</font></code>,
+change the definition of <code><font color="blue">CPPAD_FORWARD1SWEEP_TRACE</font></code> to
+<code><font color='blue'><pre style='display:inline'> 
+     # define CPPAD_FORWARD1SWEEP_TRACE 1
+</pre></font></code>
+</li><li>
+In the <code><font color="blue">Example</font></code> directory, execute the command
+<code><font color='blue'><pre style='display:inline'> 
+     ./test_one.sh lu_vec_ad_ok.cpp lu_vec_ad.cpp -DNDEBUG &gt; lu_vec_ad_ok.log
+</pre></font></code>
+This will write a trace of all the forward tape operations,
+for the test case <a href="lu_vec_ad_ok.cpp.htm" target="_top"><span style='white-space: nowrap'>lu_vec_ad_ok.cpp</span></a>
+,
+to the file <code><font color="blue">lu_vec_ad_ok.log</font></code>.
+</li><li>
+
+In the <code><font color="blue">Example</font></code> directory execute the commands
+<code><font color='blue'><pre style='display:inline'> 
+     grep &quot;op=&quot;           lu_vec_ad_ok.log | wc -l
+     grep &quot;op=Ld[vp]&quot;     lu_vec_ad_ok.log | wc -l
+     grep &quot;op=St[vp][vp]&quot; lu_vec_ad_ok.log | wc -l
+</pre></font></code>
+The first command counts the number of operators in the tracing,
+the second counts the number of VecAD load operations,
+and the third counts the number of VecAD store operations.
+(For CppAD version 05-11-20 these counts were 956, 348, and 118
+respectively.)
+</li></ol>
+
+
+
+<hr>Input File: cppad/core/vec_ad.hpp
+
+</body>
+</html>

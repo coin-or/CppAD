@@ -1,0 +1,251 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>Enable Use of Eigen Linear Algebra Package with CppAD</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Enable Use of Eigen Linear Algebra Package with CppAD">
+<meta name="keywords" id="keywords" content=" enable use eigen linear algebra package with cppad syntax purpose example include files numtraits namespace ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_cppad_eigen.hpp_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://coin-or.github.io/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="conj_grad.cpp.htm" target="_top">Prev</a>
+</td><td><a href="eigen_array.cpp.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>Example</option>
+<option>General</option>
+<option>cppad_eigen.hpp</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>CppAD-&gt;</option>
+<option>Install</option>
+<option>Introduction</option>
+<option>AD</option>
+<option>ADFun</option>
+<option>preprocessor</option>
+<option>multi_thread</option>
+<option>utility</option>
+<option>ipopt_solve</option>
+<option>Example</option>
+<option>speed</option>
+<option>Appendix</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>Example-&gt;</option>
+<option>get_started.cpp</option>
+<option>General</option>
+<option>ExampleUtility</option>
+<option>ListAllExamples</option>
+<option>testvector</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>General-&gt;</option>
+<option>ad_fun.cpp</option>
+<option>ad_in_c.cpp</option>
+<option>conj_grad.cpp</option>
+<option>cppad_eigen.hpp</option>
+<option>hes_minor_det.cpp</option>
+<option>hes_lu_det.cpp</option>
+<option>interface2c.cpp</option>
+<option>jac_minor_det.cpp</option>
+<option>jac_lu_det.cpp</option>
+<option>mul_level</option>
+<option>ode_stiff.cpp</option>
+<option>mul_level_ode.cpp</option>
+<option>mul_level_adolc_ode.cpp</option>
+<option>ode_taylor.cpp</option>
+<option>stack_machine.cpp</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down0(this)'>
+<option>cppad_eigen.hpp-&gt;</option>
+<option>eigen_array.cpp</option>
+<option>eigen_det.cpp</option>
+</select>
+</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Syntax</option>
+<option>Purpose</option>
+<option>Example</option>
+<option>Include Files</option>
+<option>Eigen NumTraits</option>
+<option>CppAD Namespace</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>Enable Use of Eigen Linear Algebra Package with CppAD</big></big></b></center>
+<br>
+<b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
+
+<br>
+
+<code><font color="blue"><span style='white-space: nowrap'>#&nbsp;include&nbsp;&lt;cppad/example/cppad_eigen.hpp&gt;</span></font></code>
+
+
+
+<br>
+<br>
+<b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
+<br>
+Enables the use of the <a href="eigen_prefix.htm" target="_top"><span style='white-space: nowrap'>eigen</span></a>
+
+linear algebra package with the type 
+<code><i><font color="black"><span style='white-space: nowrap'>AD&lt;</span></font></i><font color="blue"><span style='white-space: nowrap'>Base</span></font><i><font color="black"><span style='white-space: nowrap'>&gt;</span></font></i></code>
+; see
+<a href="https://eigen.tuxfamily.org/dox/TopicCustomizing_CustomScalar.html" target="_top"><span style='white-space: nowrap'>custom&nbsp;scalar&nbsp;types</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="Example" id="Example">Example</a></big></b>
+<br>
+The files <a href="eigen_array.cpp.htm" target="_top"><span style='white-space: nowrap'>eigen_array.cpp</span></a>
+ and <a href="eigen_det.cpp.htm" target="_top"><span style='white-space: nowrap'>eigen_det.cpp</span></a>
+
+contain an example and test of this include file.
+They return true if they succeed and false otherwise.
+
+<br>
+<br>
+<b><big><a name="Include Files" id="Include Files">Include Files</a></big></b>
+<br>
+The file <code><font color="blue">cppad_eigen.hpp</font></code> includes both
+<code><font color="blue">&lt;cppad/cppad.hpp&gt;</font></code> and <code><font color="blue">&lt;Eigen/Core&gt;</font></code>.
+<pre style='display:inline'><tt>
+<b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;Eigen/Core&gt;</font>
+<b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/cppad.hpp&gt;</font>
+</tt></pre>
+<br>
+<b><big><a name="Eigen NumTraits" id="Eigen NumTraits">Eigen NumTraits</a></big></b>
+<br>
+Eigen needs the following definitions to work properly
+with 
+<code><font color="blue"><span style='white-space: nowrap'>AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code>
+ scalars:
+<pre><tt><b><font color="#0000FF">namespace</font></b> Eigen <font color="#FF0000">{</font>
+     <b><font color="#0000FF">template</font></b> <font color="#990000">&lt;</font><b><font color="#0000FF">class</font></b> <font color="#008080">Base</font><font color="#990000">&gt;</font> <b><font color="#0000FF">struct</font></b> <font color="#008080">NumTraits</font><font color="#990000">&lt;</font> CppAD<font color="#990000">::</font>AD<font color="#990000">&lt;</font>Base<font color="#990000">&gt;</font> <font color="#990000">&gt;</font>
+     <font color="#FF0000">{</font>    <i><font color="#9A1900">// type that corresponds to the real part of an AD&lt;Base&gt; value</font></i>
+          <b><font color="#0000FF">typedef</font></b> CppAD<font color="#990000">::</font><font color="#008080">AD&lt;Base&gt;</font>   Real<font color="#990000">;</font>
+          <i><font color="#9A1900">// type for AD&lt;Base&gt; operations that result in non-integer values</font></i>
+          <b><font color="#0000FF">typedef</font></b> CppAD<font color="#990000">::</font><font color="#008080">AD&lt;Base&gt;</font>   NonInteger<font color="#990000">;</font>
+          <i><font color="#9A1900">//  type to use for numeric literals such as "2" or "0.5".</font></i>
+          <b><font color="#0000FF">typedef</font></b> CppAD<font color="#990000">::</font><font color="#008080">AD&lt;Base&gt;</font>   Literal<font color="#990000">;</font>
+          <i><font color="#9A1900">// type for nested value inside an AD&lt;Base&gt; expression tree</font></i>
+          <b><font color="#0000FF">typedef</font></b> CppAD<font color="#990000">::</font><font color="#008080">AD&lt;Base&gt;</font>   Nested<font color="#990000">;</font>
+
+          <b><font color="#0000FF">enum</font></b> <font color="#FF0000">{</font>
+               <i><font color="#9A1900">// does not support complex Base types</font></i>
+               IsComplex             <font color="#990000">=</font> <font color="#993399">0</font> <font color="#990000">,</font>
+               <i><font color="#9A1900">// does not support integer Base types</font></i>
+               IsInteger             <font color="#990000">=</font> <font color="#993399">0</font> <font color="#990000">,</font>
+               <i><font color="#9A1900">// only support signed Base types</font></i>
+               IsSigned              <font color="#990000">=</font> <font color="#993399">1</font> <font color="#990000">,</font>
+               <i><font color="#9A1900">// must initialize an AD&lt;Base&gt; object</font></i>
+               RequireInitialization <font color="#990000">=</font> <font color="#993399">1</font> <font color="#990000">,</font>
+               <i><font color="#9A1900">// computational cost of the corresponding operations</font></i>
+               ReadCost              <font color="#990000">=</font> <font color="#993399">1</font> <font color="#990000">,</font>
+               AddCost               <font color="#990000">=</font> <font color="#993399">2</font> <font color="#990000">,</font>
+               MulCost               <font color="#990000">=</font> <font color="#993399">2</font>
+          <font color="#FF0000">}</font><font color="#990000">;</font>
+
+          <i><font color="#9A1900">// machine epsilon with type of real part of x</font></i>
+          <i><font color="#9A1900">// (use assumption that Base is not complex)</font></i>
+          <b><font color="#0000FF">static</font></b> CppAD<font color="#990000">::</font><font color="#008080">AD&lt;Base&gt;</font> <b><font color="#000000">epsilon</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
+          <font color="#FF0000">{</font>    <b><font color="#0000FF">return</font></b> CppAD<font color="#990000">::</font>numeric_limits<font color="#990000">&lt;</font> CppAD<font color="#990000">::</font>AD<font color="#990000">&lt;</font>Base<font color="#990000">&gt;</font> <font color="#990000">&gt;::</font><b><font color="#000000">epsilon</font></b><font color="#990000">();</font> <font color="#FF0000">}</font>
+
+          <i><font color="#9A1900">// relaxed version of machine epsilon for comparison of different</font></i>
+          <i><font color="#9A1900">// operations that should result in the same value</font></i>
+          <b><font color="#0000FF">static</font></b> CppAD<font color="#990000">::</font><font color="#008080">AD&lt;Base&gt;</font> <b><font color="#000000">dummy_precision</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
+          <font color="#FF0000">{</font>    <b><font color="#0000FF">return</font></b> <font color="#993399">100</font><font color="#990000">.</font> <font color="#990000">*</font>
+                    CppAD<font color="#990000">::</font>numeric_limits<font color="#990000">&lt;</font> CppAD<font color="#990000">::</font>AD<font color="#990000">&lt;</font>Base<font color="#990000">&gt;</font> <font color="#990000">&gt;::</font><b><font color="#000000">epsilon</font></b><font color="#990000">();</font>
+          <font color="#FF0000">}</font>
+
+          <i><font color="#9A1900">// minimum normalized positive value</font></i>
+          <b><font color="#0000FF">static</font></b> CppAD<font color="#990000">::</font><font color="#008080">AD&lt;Base&gt;</font> <b><font color="#000000">lowest</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
+          <font color="#FF0000">{</font>    <b><font color="#0000FF">return</font></b> CppAD<font color="#990000">::</font>numeric_limits<font color="#990000">&lt;</font> CppAD<font color="#990000">::</font>AD<font color="#990000">&lt;</font>Base<font color="#990000">&gt;</font> <font color="#990000">&gt;::</font><b><font color="#000000">min</font></b><font color="#990000">();</font> <font color="#FF0000">}</font>
+
+          <i><font color="#9A1900">// maximum finite value</font></i>
+          <b><font color="#0000FF">static</font></b> CppAD<font color="#990000">::</font><font color="#008080">AD&lt;Base&gt;</font> <b><font color="#000000">highest</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
+          <font color="#FF0000">{</font>    <b><font color="#0000FF">return</font></b> CppAD<font color="#990000">::</font>numeric_limits<font color="#990000">&lt;</font> CppAD<font color="#990000">::</font>AD<font color="#990000">&lt;</font>Base<font color="#990000">&gt;</font> <font color="#990000">&gt;::</font><b><font color="#000000">max</font></b><font color="#990000">();</font> <font color="#FF0000">}</font>
+
+          <i><font color="#9A1900">// number of decimal digits that can be represented without change.</font></i>
+          <b><font color="#0000FF">static</font></b> <font color="#009900">int</font> <b><font color="#000000">digits10</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
+          <font color="#FF0000">{</font>    <b><font color="#0000FF">return</font></b> CppAD<font color="#990000">::</font>numeric_limits<font color="#990000">&lt;</font> CppAD<font color="#990000">::</font>AD<font color="#990000">&lt;</font>Base<font color="#990000">&gt;</font> <font color="#990000">&gt;::</font>digits10<font color="#990000">;</font> <font color="#FF0000">}</font>
+     <font color="#FF0000">}</font><font color="#990000">;</font>
+<font color="#FF0000">}</font></tt></pre>
+<br>
+<b><big><a name="CppAD Namespace" id="CppAD Namespace">CppAD Namespace</a></big></b>
+<br>
+Eigen also needs the following definitions to work properly
+with 
+<code><font color="blue"><span style='white-space: nowrap'>AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code>
+ scalars:
+<pre><tt><b><font color="#0000FF">namespace</font></b> CppAD <font color="#FF0000">{</font>
+          <i><font color="#9A1900">// functions that return references</font></i>
+          <b><font color="#0000FF">template</font></b> <font color="#990000">&lt;</font><b><font color="#0000FF">class</font></b> <font color="#008080">Base</font><font color="#990000">&gt;</font> <b><font color="#0000FF">const</font></b> AD<font color="#990000">&lt;</font>Base<font color="#990000">&gt;&amp;</font> <b><font color="#000000">conj</font></b><font color="#990000">(</font><b><font color="#0000FF">const</font></b> AD<font color="#990000">&lt;</font>Base<font color="#990000">&gt;&amp;</font> x<font color="#990000">)</font>
+          <font color="#FF0000">{</font>    <b><font color="#0000FF">return</font></b> x<font color="#990000">;</font> <font color="#FF0000">}</font>
+          <b><font color="#0000FF">template</font></b> <font color="#990000">&lt;</font><b><font color="#0000FF">class</font></b> <font color="#008080">Base</font><font color="#990000">&gt;</font> <b><font color="#0000FF">const</font></b> AD<font color="#990000">&lt;</font>Base<font color="#990000">&gt;&amp;</font> <b><font color="#000000">real</font></b><font color="#990000">(</font><b><font color="#0000FF">const</font></b> AD<font color="#990000">&lt;</font>Base<font color="#990000">&gt;&amp;</font> x<font color="#990000">)</font>
+          <font color="#FF0000">{</font>    <b><font color="#0000FF">return</font></b> x<font color="#990000">;</font> <font color="#FF0000">}</font>
+
+          <i><font color="#9A1900">// functions that return values (note abs is defined by cppad.hpp)</font></i>
+          <b><font color="#0000FF">template</font></b> <font color="#990000">&lt;</font><b><font color="#0000FF">class</font></b> <font color="#008080">Base</font><font color="#990000">&gt;</font> <font color="#008080">AD&lt;Base&gt;</font> <b><font color="#000000">imag</font></b><font color="#990000">(</font><b><font color="#0000FF">const</font></b> AD<font color="#990000">&lt;</font>Base<font color="#990000">&gt;&amp;</font> x<font color="#990000">)</font>
+          <font color="#FF0000">{</font>    <b><font color="#0000FF">return</font></b> CppAD<font color="#990000">::</font>AD<font color="#990000">&lt;</font>Base<font color="#990000">&gt;(</font><font color="#993399">0</font><font color="#990000">.);</font> <font color="#FF0000">}</font>
+          <b><font color="#0000FF">template</font></b> <font color="#990000">&lt;</font><b><font color="#0000FF">class</font></b> <font color="#008080">Base</font><font color="#990000">&gt;</font> <font color="#008080">AD&lt;Base&gt;</font> <b><font color="#000000">abs2</font></b><font color="#990000">(</font><b><font color="#0000FF">const</font></b> AD<font color="#990000">&lt;</font>Base<font color="#990000">&gt;&amp;</font> x<font color="#990000">)</font>
+          <font color="#FF0000">{</font>    <b><font color="#0000FF">return</font></b> x <font color="#990000">*</font> x<font color="#990000">;</font> <font color="#FF0000">}</font>
+<font color="#FF0000">}</font>
+</tt></pre>
+
+<hr>Input File: cppad/example/cppad_eigen.hpp
+
+</body>
+</html>

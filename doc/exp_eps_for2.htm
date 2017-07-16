@@ -1,0 +1,571 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>exp_eps: Second Order Forward Mode</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="exp_eps: Second Order Forward Mode">
+<meta name="keywords" id="keywords" content=" exp_eps: second order forward mode expansion purpose mathematical form operation sequence index zero first derivative sweep return value verification exercises ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_exp_eps_for2_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://coin-or.github.io/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="exp_eps_rev1.cpp.htm" target="_top">Prev</a>
+</td><td><a href="exp_eps_for2.cpp.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>Introduction</option>
+<option>exp_eps</option>
+<option>exp_eps_for2</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>CppAD-&gt;</option>
+<option>Install</option>
+<option>Introduction</option>
+<option>AD</option>
+<option>ADFun</option>
+<option>preprocessor</option>
+<option>multi_thread</option>
+<option>utility</option>
+<option>ipopt_solve</option>
+<option>Example</option>
+<option>speed</option>
+<option>Appendix</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>Introduction-&gt;</option>
+<option>exp_2</option>
+<option>exp_eps</option>
+<option>exp_apx.cpp</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>exp_eps-&gt;</option>
+<option>exp_eps.hpp</option>
+<option>exp_eps.cpp</option>
+<option>exp_eps_for0</option>
+<option>exp_eps_for1</option>
+<option>exp_eps_rev1</option>
+<option>exp_eps_for2</option>
+<option>exp_eps_rev2</option>
+<option>exp_eps_cppad</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down0(this)'>
+<option>exp_eps_for2-&gt;</option>
+<option>exp_eps_for2.cpp</option>
+</select>
+</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Second Order Expansion</option>
+<option>Purpose</option>
+<option>Mathematical Form</option>
+<option>Operation Sequence</option>
+<option>---..Index</option>
+<option>---..Zero</option>
+<option>---..Operation</option>
+<option>---..First</option>
+<option>---..Derivative</option>
+<option>---..Second</option>
+<option>---..Sweep</option>
+<option>Return Value</option>
+<option>Verification</option>
+<option>Exercises</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@
+
+
+<center><b><big><big>exp_eps: Second Order Forward Mode</big></big></b></center>
+<br>
+<b><big><a name="Second Order Expansion" id="Second Order Expansion">Second Order Expansion</a></big></b>
+<br>
+We define <small>@(@
+x(t)
+@)@</small> and <small>@(@
+\varepsilon(t) ]
+@)@</small> near <small>@(@
+t = 0
+@)@</small>
+by the second order expansions
+<small>@[@
+
+\begin{array}{rcl}
+	x(t) & = & x^{(0)} + x^{(1)} * t  + x^{(2)} * t^2 / 2
+	\\
+	\varepsilon(t) & = & \varepsilon^{(0)} + \varepsilon^{(1)} * t
+	                 +   \varepsilon^{(2)} * t^2 / 2
+\end{array}
+
+@]@</small>
+It follows that for <small>@(@
+k = 0 , 1 , 2
+@)@</small>,
+<small>@[@
+
+\begin{array}{rcl}
+	x^{(k)}  & = & \dpow{k}{t} x (0)
+	\\
+	\varepsilon^{(k)}  & = & \dpow{k}{t} \varepsilon (0)
+\end{array}
+
+@]@</small>
+
+<br>
+<br>
+<b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
+<br>
+In general, a second order forward sweep is given the
+<a href="exp_2_for1.htm#First Order Expansion" target="_top"><span style='white-space: nowrap'>first&nbsp;order&nbsp;expansion</span></a>
+
+for all of the variables in an operation sequence,
+and the second order derivatives for the independent variables.
+It uses these to compute the second order derivative,
+and thereby obtain the second order expansion,
+for all the variables in the operation sequence.
+
+<br>
+<br>
+<b><big><a name="Mathematical Form" id="Mathematical Form">Mathematical Form</a></big></b>
+<br>
+Suppose that we use the algorithm <a href="exp_eps.hpp.htm" target="_top"><span style='white-space: nowrap'>exp_eps.hpp</span></a>
+
+to compute 
+<code><font color="blue"><span style='white-space: nowrap'>exp_eps(</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>epsilon</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+
+with 
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+ is equal to .5
+and 
+<code><i><font color="black"><span style='white-space: nowrap'>epsilon</span></font></i></code>
+ is equal to .2.
+For this case, the mathematical function for the operation sequence
+corresponding to <code><font color="blue">exp_eps</font></code> is
+<small>@[@
+
+f ( x , \varepsilon ) =   1 + x + x^2 / 2
+
+@]@</small>
+The corresponding second partial derivative with respect to <small>@(@
+x
+@)@</small>,
+and the value of the derivative, are
+<small>@[@
+
+\Dpow{2}{x} f ( x , \varepsilon ) =   1.
+
+@]@</small>
+
+<br>
+<br>
+<b><big><a name="Operation Sequence" id="Operation Sequence">Operation Sequence</a></big></b>
+
+
+<br>
+<br>
+<b><a name="Operation Sequence.Index" id="Operation Sequence.Index">Index</a></b>
+<br>
+The Index column contains the index in the operation sequence
+of the corresponding atomic operation.
+A Forward sweep starts with the first operation
+and ends with the last.
+
+<br>
+<br>
+<b><a name="Operation Sequence.Zero" id="Operation Sequence.Zero">Zero</a></b>
+<br>
+The Zero column contains the zero order sweep results
+for the corresponding variable in the operation sequence
+(see <a href="exp_2_for0.htm#Operation Sequence.Sweep" target="_top"><span style='white-space: nowrap'>zero&nbsp;order&nbsp;sweep</span></a>
+).
+
+<br>
+<br>
+<b><a name="Operation Sequence.Operation" id="Operation Sequence.Operation">Operation</a></b>
+<br>
+The Operation column contains the
+first order sweep operation for this variable.
+
+<br>
+<br>
+<b><a name="Operation Sequence.First" id="Operation Sequence.First">First</a></b>
+<br>
+The First column contains the first order sweep results
+for the corresponding variable in the operation sequence
+(see <a href="exp_2_for1.htm#Operation Sequence.Sweep" target="_top"><span style='white-space: nowrap'>first&nbsp;order&nbsp;sweep</span></a>
+).
+
+<br>
+<br>
+<b><a name="Operation Sequence.Derivative" id="Operation Sequence.Derivative">Derivative</a></b>
+<br>
+The Derivative column contains the
+mathematical function corresponding to the second derivative
+with respect to <small>@(@
+t
+@)@</small>,
+at <small>@(@
+t = 0
+@)@</small>, for each variable in the sequence.
+
+<br>
+<br>
+<b><a name="Operation Sequence.Second" id="Operation Sequence.Second">Second</a></b>
+<br>
+The Second column contains the second order derivatives
+for the corresponding variable in the operation sequence; i.e.,
+the second order expansion for the <code><i>i</i></code>-th variable is given by
+<small>@[@
+
+	v_i (t) = v_i^{(0)} + v_i^{(1)} * t +  v_i^{(2)} * t^2 / 2
+
+@]@</small>
+We use <small>@(@
+x^{(1)} = 1
+@)@</small>, <small>@(@
+x^{(2)} = 0
+@)@</small>,
+use <small>@(@
+\varepsilon^{(1)} = 1
+@)@</small>, and <small>@(@
+\varepsilon^{(2)} = 0
+@)@</small>
+so that second order differentiation
+with respect to <small>@(@
+t
+@)@</small>, at <small>@(@
+t = 0
+@)@</small>,
+is the same as the second partial differentiation
+with respect to <small>@(@
+x
+@)@</small> at <small>@(@
+x = x^{(0)}
+@)@</small>.
+
+
+<br>
+<br>
+<b><a name="Operation Sequence.Sweep" id="Operation Sequence.Sweep">Sweep</a></b>
+
+
+<center>
+<table><tr><td align='left'  valign='top'>
+
+<b>Index</b>
+	</td><td align='left'  valign='top'>
+ <code><span style='white-space: nowrap'>&nbsp;&nbsp;</span></code> </td><td align='left'  valign='top'>
+ <b>Zero</b>
+	</td><td align='left'  valign='top'>
+ <code><span style='white-space: nowrap'>&nbsp;&nbsp;</span></code> </td><td align='left'  valign='top'>
+ <b>Operation</b>
+	</td><td align='left'  valign='top'>
+ <code><span style='white-space: nowrap'>&nbsp;&nbsp;</span></code> </td><td align='left'  valign='top'>
+ <b>First</b>
+	</td><td align='left'  valign='top'>
+ <code><span style='white-space: nowrap'>&nbsp;&nbsp;</span></code> </td><td align='left'  valign='top'>
+ <b>Derivative</b>
+	</td><td align='left'  valign='top'>
+ <code><span style='white-space: nowrap'>&nbsp;&nbsp;</span></code> </td><td align='left'  valign='top'>
+ <b>Second</b>
+</td></tr><tr><td align='left'  valign='top'>
+
+1
+	</td><td align='left'  valign='top'>
+ </td><td align='left'  valign='top'>
+ 0.5
+	</td><td align='left'  valign='top'>
+ </td><td align='left'  valign='top'>
+
+	<small>@(@
+v_1^{(1)} = x^{(1)}
+@)@</small>
+	</td><td align='left'  valign='top'>
+ </td><td align='left'  valign='top'>
+ 1
+	</td><td align='left'  valign='top'>
+ </td><td align='left'  valign='top'>
+
+	<small>@(@
+v_2^{(2)} = x^{(2)}
+@)@</small>
+	</td><td align='left'  valign='top'>
+ </td><td align='left'  valign='top'>
+ 0
+</td></tr><tr><td align='left'  valign='top'>
+
+2
+	</td><td align='left'  valign='top'>
+ </td><td align='left'  valign='top'>
+ 0.5
+	</td><td align='left'  valign='top'>
+ </td><td align='left'  valign='top'>
+
+	<small>@(@
+v_2^{(1)} = 1 * v_1^{(1)}
+@)@</small>
+	</td><td align='left'  valign='top'>
+ </td><td align='left'  valign='top'>
+ 1
+	</td><td align='left'  valign='top'>
+ </td><td align='left'  valign='top'>
+
+	<small>@(@
+v_2^{(2)} = 1 * v_1^{(2)}
+@)@</small>
+	</td><td align='left'  valign='top'>
+ </td><td align='left'  valign='top'>
+ 0
+</td></tr><tr><td align='left'  valign='top'>
+
+3
+	</td><td align='left'  valign='top'>
+ </td><td align='left'  valign='top'>
+ 0.5
+	</td><td align='left'  valign='top'>
+ </td><td align='left'  valign='top'>
+
+	<small>@(@
+v_3^{(1)} = v_2^{(1)} / 1
+@)@</small>
+	</td><td align='left'  valign='top'>
+ </td><td align='left'  valign='top'>
+ 1
+	</td><td align='left'  valign='top'>
+ </td><td align='left'  valign='top'>
+
+	<small>@(@
+v_3^{(2)} = v_2^{(2)} / 1
+@)@</small>
+	</td><td align='left'  valign='top'>
+ </td><td align='left'  valign='top'>
+ 0
+</td></tr><tr><td align='left'  valign='top'>
+
+4
+	</td><td align='left'  valign='top'>
+ </td><td align='left'  valign='top'>
+ 1.5
+	</td><td align='left'  valign='top'>
+ </td><td align='left'  valign='top'>
+
+	<small>@(@
+v_4^{(1)} = v_3^{(1)}
+@)@</small>
+	</td><td align='left'  valign='top'>
+ </td><td align='left'  valign='top'>
+ 1
+	</td><td align='left'  valign='top'>
+ </td><td align='left'  valign='top'>
+
+	<small>@(@
+v_4^{(2)} = v_3^{(2)}
+@)@</small>
+	</td><td align='left'  valign='top'>
+ </td><td align='left'  valign='top'>
+ 0
+</td></tr><tr><td align='left'  valign='top'>
+
+5
+	</td><td align='left'  valign='top'>
+ </td><td align='left'  valign='top'>
+ 0.25
+	</td><td align='left'  valign='top'>
+ </td><td align='left'  valign='top'>
+
+	<small>@(@
+v_5^{(1)} = v_3^{(1)} * v_1^{(0)} + v_3^{(0)} * v_1^{(1)}
+@)@</small>
+	</td><td align='left'  valign='top'>
+ </td><td align='left'  valign='top'>
+ 1
+	</td><td align='left'  valign='top'>
+ </td><td align='left'  valign='top'>
+
+	<small>@(@
+v_5^{(2)} = v_3^{(2)} * v_1^{(0)} + 2 * v_3^{(1)} * v_1^{(1)}
+	                 + v_3^{(0)} * v_1^{(2)}
+@)@</small>
+	</td><td align='left'  valign='top'>
+ </td><td align='left'  valign='top'>
+ 2
+</td></tr><tr><td align='left'  valign='top'>
+
+6
+	</td><td align='left'  valign='top'>
+ </td><td align='left'  valign='top'>
+ 0.125
+	</td><td align='left'  valign='top'>
+ </td><td align='left'  valign='top'>
+
+	<small>@(@
+v_6^{(1)} = v_5^{(1)} / 2
+@)@</small>
+	</td><td align='left'  valign='top'>
+ </td><td align='left'  valign='top'>
+ 0.5
+	</td><td align='left'  valign='top'>
+ </td><td align='left'  valign='top'>
+
+	<small>@(@
+v_6^{(2)} = v_5^{(2)} / 2
+@)@</small>
+	</td><td align='left'  valign='top'>
+ </td><td align='left'  valign='top'>
+ 1
+</td></tr><tr><td align='left'  valign='top'>
+
+7
+	</td><td align='left'  valign='top'>
+ </td><td align='left'  valign='top'>
+ 1.625
+	</td><td align='left'  valign='top'>
+ </td><td align='left'  valign='top'>
+
+	<small>@(@
+v_7^{(1)} = v_4^{(1)} + v_6^{(1)}
+@)@</small>
+	</td><td align='left'  valign='top'>
+ </td><td align='left'  valign='top'>
+ 1.5
+	</td><td align='left'  valign='top'>
+ </td><td align='left'  valign='top'>
+
+	<small>@(@
+v_7^{(2)} = v_4^{(2)} + v_6^{(2)}
+@)@</small>
+	</td><td align='left'  valign='top'>
+ </td><td align='left'  valign='top'>
+ 1
+</td></tr>
+</table>
+</center><b><big><a name="Return Value" id="Return Value">Return Value</a></big></b>
+<br>
+The second derivative of the return value for this case is
+<small>@[@
+
+\begin{array}{rcl}
+1
+& = &
+v_7^{(2)} =
+\left[ \Dpow{2}{t} v_7 \right]_{t=0} =
+\left[ \Dpow{2}{t} f( x^{(0)} + x^{(1)} * t , \varepsilon^{(0)} ) \right]_{t=0}
+\\
+& = &
+x^{(1)} * \Dpow{2}{x} f ( x^{(0)} ,  \varepsilon^{(0)} ) * x^{(1)} =
+\Dpow{2}{x} f ( x^{(0)} ,  \varepsilon^{(0)} )
+\end{array}
+
+@]@</small>
+(We have used the fact that
+<small>@(@
+x^{(1)} = 1
+@)@</small>, <small>@(@
+x^{(2)} = 0
+@)@</small>,
+<small>@(@
+\varepsilon^{(1)} = 1
+@)@</small>, and <small>@(@
+\varepsilon^{(2)} = 0
+@)@</small>.)
+
+
+<br>
+<br>
+<b><big><a name="Verification" id="Verification">Verification</a></big></b>
+<br>
+The file <a href="exp_eps_for2.cpp.htm" target="_top"><span style='white-space: nowrap'>exp_eps_for2.cpp</span></a>
+ contains a routine
+which verifies the values computed above.
+It returns true for success and false for failure.
+
+<br>
+<br>
+<b><big><a name="Exercises" id="Exercises">Exercises</a></big></b>
+
+<ol type="1"><li>
+Which statement in the routine defined by <a href="exp_eps_for2.cpp.htm" target="_top"><span style='white-space: nowrap'>exp_eps_for2.cpp</span></a>
+ uses
+the values that are calculated by the routine
+defined by <a href="exp_eps_for1.cpp.htm" target="_top"><span style='white-space: nowrap'>exp_eps_for1.cpp</span></a>
+ ?
+</li><li>
+
+Suppose that <small>@(@
+x = .1
+@)@</small>,
+what are the results of a zero, first, and second order forward sweep for
+the operation sequence above;
+i.e., what are the corresponding values for
+<small>@(@
+v_i^{(k)}
+@)@</small> for <small>@(@
+i = 1, \ldots , 7
+@)@</small> and <small>@(@
+k = 0, 1, 2
+@)@</small>.
+</li><li>
+
+Create a modified version of <a href="exp_eps_for2.cpp.htm" target="_top"><span style='white-space: nowrap'>exp_eps_for2.cpp</span></a>
+ that verifies
+the derivative values from the previous exercise.
+Also create and run a main program that reports the result
+of calling the modified version of
+<a href="exp_eps_for2.cpp.htm" target="_top"><span style='white-space: nowrap'>exp_eps_for2.cpp</span></a>
+.
+</li></ol>
+
+
+
+<hr>Input File: introduction/exp_eps.omh
+
+</body>
+</html>

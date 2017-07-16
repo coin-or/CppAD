@@ -1,0 +1,150 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>AD Parameter and Variable Functions: Example and Test</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="AD Parameter and Variable Functions: Example and Test">
+<meta name="keywords" id="keywords" content=" ad parameter variable functions: example test ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_par_var.cpp_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://coin-or.github.io/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="parvar.htm" target="_top">Prev</a>
+</td><td><a href="equalopseq.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>AD</option>
+<option>BoolValued</option>
+<option>ParVar</option>
+<option>par_var.cpp</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>AD-&gt;</option>
+<option>ad_ctor</option>
+<option>ad_assign</option>
+<option>Convert</option>
+<option>ADValued</option>
+<option>BoolValued</option>
+<option>VecAD</option>
+<option>base_require</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>BoolValued-&gt;</option>
+<option>Compare</option>
+<option>NearEqualExt</option>
+<option>BoolFun</option>
+<option>ParVar</option>
+<option>EqualOpSeq</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>ParVar-&gt;</option>
+<option>par_var.cpp</option>
+</select>
+</td>
+<td>par_var.cpp</td>
+<td>Headings</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@
+
+<center><b><big><big>AD Parameter and Variable Functions: Example and Test</big></big></b></center>
+<code><font color="blue"><pre><tt>
+<b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/cppad.hpp&gt;</font>
+
+<font color="#009900">bool</font> <b><font color="#000000">ParVar</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
+<font color="#FF0000">{</font>    <font color="#009900">bool</font> ok <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
+
+     <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>AD<font color="#990000">;</font>
+     <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>VecAD<font color="#990000">;</font>
+     <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>Parameter<font color="#990000">;</font>
+     <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>Variable<font color="#990000">;</font>
+
+     <i><font color="#9A1900">// declare independent variables and start tape recording</font></i>
+     <font color="#008080">size_t</font> n <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font>
+     <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font>AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;)</font> <b><font color="#000000">x</font></b><font color="#990000">(</font>n<font color="#990000">);</font>
+     x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font>     <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">.;</font>
+     ok <font color="#990000">&amp;=</font> <b><font color="#000000">Parameter</font></b><font color="#990000">(</font>x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]);</font>     <i><font color="#9A1900">// x[0] is a paraemter here</font></i>
+     CppAD<font color="#990000">::</font><b><font color="#000000">Independent</font></b><font color="#990000">(</font>x<font color="#990000">);</font>
+     ok <font color="#990000">&amp;=</font> <b><font color="#000000">Variable</font></b><font color="#990000">(</font>x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]);</font>      <i><font color="#9A1900">// now x[0] is a variable</font></i>
+
+     <i><font color="#9A1900">// dependent variable vector</font></i>
+     <font color="#008080">size_t</font> m <font color="#990000">=</font> <font color="#993399">2</font><font color="#990000">;</font>
+     <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font>AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;)</font> <b><font color="#000000">y</font></b><font color="#990000">(</font>m<font color="#990000">);</font>
+     y<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">2</font><font color="#990000">.;</font>
+     ok  <font color="#990000">&amp;=</font> <b><font color="#000000">Parameter</font></b><font color="#990000">(</font>y<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]);</font>    <i><font color="#9A1900">// y[0] does not depend on x[0]</font></i>
+     y<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">=</font> <b><font color="#000000">fabs</font></b><font color="#990000">(</font>x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]);</font>
+     ok  <font color="#990000">&amp;=</font> <b><font color="#000000">Variable</font></b><font color="#990000">(</font>y<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]);</font>     <i><font color="#9A1900">// y[1] does depends on x[0]</font></i>
+
+     <i><font color="#9A1900">// VecAD objects</font></i>
+     <font color="#008080">VecAD&lt;double&gt;</font> <b><font color="#000000">z</font></b><font color="#990000">(</font><font color="#993399">2</font><font color="#990000">);</font>
+     z<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">.;</font>
+     z<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">.;</font>
+     ok  <font color="#990000">&amp;=</font> <b><font color="#000000">Parameter</font></b><font color="#990000">(</font>z<font color="#990000">);</font>      <i><font color="#9A1900">// z does not depend on x[0]</font></i>
+     z<font color="#990000">[</font>x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]]</font> <font color="#990000">=</font> <font color="#993399">2</font><font color="#990000">.;</font>
+     ok  <font color="#990000">&amp;=</font> <b><font color="#000000">Variable</font></b><font color="#990000">(</font>z<font color="#990000">);</font>       <i><font color="#9A1900">// z depends on x[0]</font></i>
+
+
+     <i><font color="#9A1900">// create f: x -&gt; y and stop tape recording</font></i>
+     CppAD<font color="#990000">::</font><font color="#008080">ADFun&lt;double&gt;</font> <b><font color="#000000">f</font></b><font color="#990000">(</font>x<font color="#990000">,</font> y<font color="#990000">);</font>
+
+     <i><font color="#9A1900">// check that now all AD&lt;double&gt; objects are parameters</font></i>
+     ok <font color="#990000">&amp;=</font> <b><font color="#000000">Parameter</font></b><font color="#990000">(</font>x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]);</font> ok <font color="#990000">&amp;=</font> <font color="#990000">!</font> <b><font color="#000000">Variable</font></b><font color="#990000">(</font>x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]);</font>
+     ok <font color="#990000">&amp;=</font> <b><font color="#000000">Parameter</font></b><font color="#990000">(</font>y<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]);</font> ok <font color="#990000">&amp;=</font> <font color="#990000">!</font> <b><font color="#000000">Variable</font></b><font color="#990000">(</font>y<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]);</font>
+     ok <font color="#990000">&amp;=</font> <b><font color="#000000">Parameter</font></b><font color="#990000">(</font>y<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]);</font> ok <font color="#990000">&amp;=</font> <font color="#990000">!</font> <b><font color="#000000">Variable</font></b><font color="#990000">(</font>y<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]);</font>
+
+     <i><font color="#9A1900">// check that the VecAD&lt;double&gt; object is a parameter</font></i>
+     ok <font color="#990000">&amp;=</font> <b><font color="#000000">Parameter</font></b><font color="#990000">(</font>z<font color="#990000">);</font>
+
+     <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
+<font color="#FF0000">}</font>
+</tt></pre>
+</font></code>
+<hr>Input File: example/general/par_var.cpp
+
+</body>
+</html>

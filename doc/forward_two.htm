@@ -1,0 +1,397 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>Second Order Forward Mode: Derivative Values</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Second Order Forward Mode: Derivative Values">
+<meta name="keywords" id="keywords" content=" second order forward mode: derivative values two syntax purpose f x0 x1 x2 y2 vector example special case ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_forward_two_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://coin-or.github.io/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="forward_one.htm" target="_top">Prev</a>
+</td><td><a href="forward_order.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>ADFun</option>
+<option>Forward</option>
+<option>forward_two</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>CppAD-&gt;</option>
+<option>Install</option>
+<option>Introduction</option>
+<option>AD</option>
+<option>ADFun</option>
+<option>preprocessor</option>
+<option>multi_thread</option>
+<option>utility</option>
+<option>ipopt_solve</option>
+<option>Example</option>
+<option>speed</option>
+<option>Appendix</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>ADFun-&gt;</option>
+<option>record_adfun</option>
+<option>drivers</option>
+<option>Forward</option>
+<option>Reverse</option>
+<option>sparsity_pattern</option>
+<option>sparse_derivative</option>
+<option>optimize</option>
+<option>abs_normal</option>
+<option>FunCheck</option>
+<option>check_for_nan</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>Forward-&gt;</option>
+<option>forward_zero</option>
+<option>forward_one</option>
+<option>forward_two</option>
+<option>forward_order</option>
+<option>forward_dir</option>
+<option>size_order</option>
+<option>compare_change</option>
+<option>capacity_order</option>
+<option>number_skip</option>
+</select>
+</td>
+<td>forward_two</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Syntax</option>
+<option>Purpose</option>
+<option>f</option>
+<option>x0</option>
+<option>x1</option>
+<option>x2</option>
+<option>y2</option>
+<option>Vector</option>
+<option>Example</option>
+<option>Special Case</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@
+
+
+<center><b><big><big>Second Order Forward Mode: Derivative Values</big></big></b></center>
+<br>
+<b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
+
+<br>
+
+<code><i><font color="black"><span style='white-space: nowrap'>y2</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.Forward(1,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x2</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+
+
+<br>
+<br>
+<b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
+<br>
+We use <small>@(@
+F : B^n \rightarrow B^m
+@)@</small> to denote the
+<a href="glossary.htm#AD Function" target="_top"><span style='white-space: nowrap'>AD&nbsp;function</span></a>
+ corresponding to 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+.
+The result of the syntax above is that for
+
+<code><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;0&nbsp;,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>...</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>m</span></font></i><font color="blue"><span style='white-space: nowrap'>-1</span></font></code>
+,
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>y2</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>]</span></font></code>
+
+	<small>@(@
+= F_i^{(1)} (x0) * x2 + \frac{1}{2} x1^T * F_i^{(2)} (x0) * x1
+@)@</small>
+<code><span style='white-space: nowrap'><br>
+</span></code>where
+<small>@(@
+F^{(1)} (x0)
+@)@</small> is the Jacobian of <small>@(@
+F
+@)@</small>, and
+<small>@(@
+F_i^{(2)} (x0)
+@)@</small> is the Hessian of th <code><i>i</i></code>-th component of <small>@(@
+F
+@)@</small>,
+evaluated at 
+<code><i><font color="black"><span style='white-space: nowrap'>x0</span></font></i></code>
+.
+
+<br>
+<br>
+<b><big><a name="f" id="f">f</a></big></b>
+<br>
+The object 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ADFun&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+Note that the <a href="adfun.htm" target="_top"><span style='white-space: nowrap'>ADFun</span></a>
+ object 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+ is not <code><font color="blue">const</font></code>.
+Before this call to <code><font color="blue">Forward</font></code>, the value returned by
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.size_order()<br>
+</span></font></code>
+must be greater than or equal two.
+After this call it will be will be three (see <a href="size_order.htm" target="_top"><span style='white-space: nowrap'>size_order</span></a>
+).
+
+<br>
+<br>
+<b><big><a name="x0" id="x0">x0</a></big></b>
+<br>
+The vector 
+<code><i><font color="black"><span style='white-space: nowrap'>x0</span></font></i></code>
+ in the formula for 
+<code><i><font color="black"><span style='white-space: nowrap'>y2</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>]</span></font></code>
+
+corresponds to the previous call to <a href="forward_zero.htm" target="_top"><span style='white-space: nowrap'>forward_zero</span></a>
+
+using this ADFun object 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+; i.e.,
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.Forward(0,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x0</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+If there is no previous call with the first argument zero,
+the value of the <a href="independent.htm" target="_top"><span style='white-space: nowrap'>independent</span></a>
+ variables
+during the recording of the AD sequence of operations is used
+for 
+<code><i><font color="black"><span style='white-space: nowrap'>x0</span></font></i></code>
+.
+
+<br>
+<br>
+<b><big><a name="x1" id="x1">x1</a></big></b>
+<br>
+The vector 
+<code><i><font color="black"><span style='white-space: nowrap'>x1</span></font></i></code>
+ in the formula for 
+<code><i><font color="black"><span style='white-space: nowrap'>y2</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>]</span></font></code>
+
+corresponds to the previous call to <a href="forward_one.htm" target="_top"><span style='white-space: nowrap'>forward_one</span></a>
+
+using this ADFun object 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+; i.e.,
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.Forward(1,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x1</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+<br>
+<b><big><a name="x2" id="x2">x2</a></big></b>
+<br>
+The argument 
+<code><i><font color="black"><span style='white-space: nowrap'>x2</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Vector</span></font></i><font color="blue"><span style='white-space: nowrap'>&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x2</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+(see <a href="forward_two.htm#Vector" target="_top"><span style='white-space: nowrap'>Vector</span></a>
+ below)
+and its size must be equal to 
+<code><i><font color="black"><span style='white-space: nowrap'>n</span></font></i></code>
+, the dimension of the
+<a href="seq_property.htm#Domain" target="_top"><span style='white-space: nowrap'>domain</span></a>
+ space for 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+.
+
+<br>
+<br>
+<b><big><a name="y2" id="y2">y2</a></big></b>
+<br>
+The result 
+<code><i><font color="black"><span style='white-space: nowrap'>y2</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Vector</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>y2</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+(see <a href="forward_two.htm#Vector" target="_top"><span style='white-space: nowrap'>Vector</span></a>
+ below)
+The size of 
+<code><i><font color="black"><span style='white-space: nowrap'>y1</span></font></i></code>
+ is equal to 
+<code><i><font color="black"><span style='white-space: nowrap'>m</span></font></i></code>
+, the dimension of the
+<a href="seq_property.htm#Range" target="_top"><span style='white-space: nowrap'>range</span></a>
+ space for 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+.
+Its value is given element-wise by the formula in the
+<a href="forward_two.htm#Purpose" target="_top"><span style='white-space: nowrap'>purpose</span></a>
+ above.
+
+<br>
+<br>
+<b><big><a name="Vector" id="Vector">Vector</a></big></b>
+<br>
+The type 
+<code><i><font color="black"><span style='white-space: nowrap'>Vector</span></font></i></code>
+ must be a <a href="simplevector.htm" target="_top"><span style='white-space: nowrap'>SimpleVector</span></a>
+ class with
+<a href="simplevector.htm#Elements of Specified Type" target="_top"><span style='white-space: nowrap'>elements&nbsp;of&nbsp;type</span></a>
+
+
+<code><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i></code>
+.
+The routine <a href="checksimplevector.htm" target="_top"><span style='white-space: nowrap'>CheckSimpleVector</span></a>
+ will generate an error message
+if this is not the case.
+
+<br>
+<br>
+<b><big><a name="Example" id="Example">Example</a></big></b>
+<br>
+The file
+<a href="forward.cpp.htm" target="_top"><span style='white-space: nowrap'>forward.cpp</span></a>
+
+contains an example and test of this operation.
+It returns true if it succeeds and false otherwise.
+
+<br>
+<br>
+<b><big><a name="Special Case" id="Special Case">Special Case</a></big></b>
+<br>
+This is special case of <a href="forward_order.htm" target="_top"><span style='white-space: nowrap'>forward_order</span></a>
+ where
+<small>@[@
+
+\begin{array}{rcl}
+Y(t) & = F[ X(t) ]
+\\
+X(t) & = & x^{(0)} t^0 + x^{(1)} * t^1 + \cdots, + x^{(q)} * t^q + o( t^q )
+\\
+Y(t) & = & y^{(0)} t^0 + y^{(1)} * t^1 + \cdots, + y^{(q)} * t^q + o( t^q )
+\end{array}
+
+@]@</small>
+and <small>@(@
+o( t^q ) * t^{-q} \rightarrow 0
+@)@</small> as <small>@(@
+t \rightarrow 0
+@)@</small>.
+For this special case, <small>@(@
+q = 2
+@)@</small>,
+<small>@(@
+x^{(0)}
+@)@</small> 
+<code><font color="blue"><span style='white-space: nowrap'>=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x0</span></font></i></code>
+,
+<small>@(@
+x^{(1)}
+@)@</small> 
+<code><font color="blue"><span style='white-space: nowrap'>=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x1</span></font></i></code>
+,
+<small>@(@
+X(t) = x^{(0)} + x^{(1)} t + x^{(2)} t^2
+@)@</small>, and
+<small>@[@
+
+y^{(0)} + y^{(1)} t  + y^{(2)} t^2
+=
+F [ x^{(0)} + x^{(1)} t + x^{(2)} t^2 ] + o(t^2)
+
+@]@</small>
+Restricting our attention to the <code><i>i</i></code>-th component, and
+taking the derivative with respect to <small>@(@
+t
+@)@</small>, we obtain
+<small>@[@
+
+y_i^{(1)} + 2 y_i^{(2)} t
+=
+F_i^{(1)} [ x^{(0)} + x^{(1)} t + x^{(2)} t^2 ] [ x^{(1)} + 2 x^{(2)} t ]
++
+o(t)
+
+@]@</small>
+Taking a second derivative with respect to <small>@(@
+t
+@)@</small>,
+and evaluating at <small>@(@
+t = 0
+@)@</small>, we obtain
+<small>@[@
+
+2 y_i^{(2)}
+=
+[ x^{(1)} ]^T F_i^{(2)} [ x^{(0)} ] x^{(1)}
++
+F_i^{(1)} [ x^{(0)} ] 2 x^{(2)}
+
+@]@</small>
+which agrees with the specification for 
+<code><i><font color="black"><span style='white-space: nowrap'>y2</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>]</span></font></code>
+ in the
+<a href="forward_two.htm#Purpose" target="_top"><span style='white-space: nowrap'>purpose</span></a>
+ above.
+
+
+<hr>Input File: omh/forward/forward_two.omh
+
+</body>
+</html>

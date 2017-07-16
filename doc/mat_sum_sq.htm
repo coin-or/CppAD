@@ -1,0 +1,293 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>Sum Elements of a Matrix Times Itself</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Sum Elements of a Matrix Times Itself">
+<meta name="keywords" id="keywords" content=" sum elements matrix times itself mat_sum_sq multiply speed test syntax purpose inclusion n x y z vector example source code ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_mat_sum_sq_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://coin-or.github.io/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="det_grad_33.hpp.htm" target="_top">Prev</a>
+</td><td><a href="mat_sum_sq.cpp.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>speed</option>
+<option>speed_utility</option>
+<option>mat_sum_sq</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>CppAD-&gt;</option>
+<option>Install</option>
+<option>Introduction</option>
+<option>AD</option>
+<option>ADFun</option>
+<option>preprocessor</option>
+<option>multi_thread</option>
+<option>utility</option>
+<option>ipopt_solve</option>
+<option>Example</option>
+<option>speed</option>
+<option>Appendix</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>speed-&gt;</option>
+<option>speed_main</option>
+<option>speed_utility</option>
+<option>speed_double</option>
+<option>speed_adolc</option>
+<option>speed_cppad</option>
+<option>speed_fadbad</option>
+<option>speed_sacado</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>speed_utility-&gt;</option>
+<option>det_by_lu</option>
+<option>det_of_minor</option>
+<option>det_by_minor</option>
+<option>det_33</option>
+<option>det_grad_33</option>
+<option>mat_sum_sq</option>
+<option>ode_evaluate</option>
+<option>sparse_jac_fun</option>
+<option>sparse_hes_fun</option>
+<option>uniform_01</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down0(this)'>
+<option>mat_sum_sq-&gt;</option>
+<option>mat_sum_sq.cpp</option>
+<option>mat_sum_sq.hpp</option>
+</select>
+</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Syntax</option>
+<option>Purpose</option>
+<option>Inclusion</option>
+<option>n</option>
+<option>x</option>
+<option>y</option>
+<option>z</option>
+<option>Vector</option>
+<option>Example</option>
+<option>Source Code</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@
+
+
+<center><b><big><big>Sum Elements of a Matrix Times Itself</big></big></b></center>
+<br>
+<b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
+
+<br>
+
+<code><font color="blue"><span style='white-space: nowrap'>#&nbsp;include&nbsp;&lt;cppad/speed/mat_sum_sq.hpp&gt;<br>
+</span></font></code>
+
+<code><i><font color="black"><span style='white-space: nowrap'>mat_sum_sq(</span></font></i><font color="blue"><span style='white-space: nowrap'>n</span></font><i><font color="black"><span style='white-space: nowrap'>,&nbsp;</span></font></i><font color="blue"><span style='white-space: nowrap'>x</span></font><i><font color="black"><span style='white-space: nowrap'>,&nbsp;</span></font></i><font color="blue"><span style='white-space: nowrap'>y</span></font><i><font color="black"><span style='white-space: nowrap'>,&nbsp;</span></font></i><font color="blue"><span style='white-space: nowrap'>z</span></font><i><font color="black"><span style='white-space: nowrap'>)</span></font></i></code>
+
+
+<br>
+<br>
+<b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
+<br>
+This routine is intended for use with the matrix multiply speed tests;
+to be specific, it computes
+<small>@[@
+
+\begin{array}{rcl}
+	y_{i,j} & = & \sum_{k=0}^{n-1} x_{i,k} x_{k,j}
+	\\
+	z_0     & = & \sum_{i=0}^{n-1} \sum_{j=0}^{n-1} y_{i,j}
+\end{array}
+
+@]@</small>
+see <a href="link_mat_mul.htm" target="_top"><span style='white-space: nowrap'>link_mat_mul</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="Inclusion" id="Inclusion">Inclusion</a></big></b>
+<br>
+The template function <code><font color="blue">mat_sum_sq</font></code> is defined in the <code><font color="blue">CppAD</font></code>
+namespace by including
+the file <code><font color="blue">cppad/speed/mat_sum_sq.hpp</font></code>
+(relative to the CppAD distribution directory).
+
+<br>
+<br>
+<b><big><a name="n" id="n">n</a></big></b>
+<br>
+This argument has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+It specifies the size of the matrices.
+
+<br>
+<br>
+<b><big><a name="x" id="x">x</a></big></b>
+<br>
+The argument 
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Vector</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+and 
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>.size()&nbsp;==&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;*&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n</span></font></i></code>
+.
+It contains the elements of <small>@(@
+x
+@)@</small> in row major order; i.e.,
+<small>@[@
+
+	x_{i,j} = x [ i * n + j ]
+
+@]@</small>
+
+<br>
+<br>
+<b><big><a name="y" id="y">y</a></big></b>
+<br>
+The argument 
+<code><i><font color="black"><span style='white-space: nowrap'>y</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Vector</span></font></i><font color="blue"><span style='white-space: nowrap'>&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+and 
+<code><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'>.size()&nbsp;==&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;*&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n</span></font></i></code>
+.
+The input value of its elements does not matter.
+Upon return,
+<small>@[@
+
+\begin{array}{rcl}
+	y_{i,j}        & = & \sum_{k=0}^{n-1} x_{i,k} x_{k,j}
+	\\
+	y[ i * n + j ] & = & y_{i,j}
+\end{array}
+
+@]@</small>
+
+
+<br>
+<br>
+<b><big><a name="z" id="z">z</a></big></b>
+<br>
+The argument 
+<code><i><font color="black"><span style='white-space: nowrap'>d</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Vector</span></font></i><font color="blue"><span style='white-space: nowrap'>&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>z</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+.
+The input value of its element does not matter.
+Upon return
+<small>@[@
+
+\begin{array}{rcl}
+	z_0 & = & \sum_{i=0}^{n-1} \sum_{j=0}^n y_{i,j}
+	\\
+	z[0] & = & z_0
+\end{array}
+
+@]@</small>
+
+<br>
+<br>
+<b><big><a name="Vector" id="Vector">Vector</a></big></b>
+<br>
+The type 
+<code><i><font color="black"><span style='white-space: nowrap'>Vector</span></font></i></code>
+ is any
+<a href="simplevector.htm" target="_top"><span style='white-space: nowrap'>SimpleVector</span></a>
+, or it can be a raw pointer to the vector elements.
+The element type must support
+addition, multiplication, and assignment to both its own type
+and to a double value.
+
+
+
+
+<br>
+<br>
+<b><big><a name="Example" id="Example">Example</a></big></b>
+<br>
+The file
+<a href="mat_sum_sq.cpp.htm" target="_top"><span style='white-space: nowrap'>mat_sum_sq.cpp</span></a>
+
+contains an example and test of <code><font color="blue">mat_sum_sq.hpp</font></code>.
+It returns true if it succeeds and false otherwise.
+
+<br>
+<br>
+<b><big><a name="Source Code" id="Source Code">Source Code</a></big></b>
+<br>
+The file
+<a href="mat_sum_sq.hpp.htm" target="_top"><span style='white-space: nowrap'>mat_sum_sq.hpp</span></a>
+
+contains the source for this template function.
+
+
+<hr>Input File: cppad/speed/mat_sum_sq.hpp
+
+</body>
+</html>

@@ -1,0 +1,143 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>Compare Speed of C and C++</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Compare Speed of C and C++">
+<meta name="keywords" id="keywords" content=" compare speed c c++ C and C++ with syntax purpose ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_compare_c_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://coin-or.github.io/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="autotools.htm" target="_top">Prev</a>
+</td><td><a href="det_of_minor_c.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>Appendix</option>
+<option>compare_c</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>CppAD-&gt;</option>
+<option>Install</option>
+<option>Introduction</option>
+<option>AD</option>
+<option>ADFun</option>
+<option>preprocessor</option>
+<option>multi_thread</option>
+<option>utility</option>
+<option>ipopt_solve</option>
+<option>Example</option>
+<option>speed</option>
+<option>Appendix</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>Appendix-&gt;</option>
+<option>Faq</option>
+<option>directory</option>
+<option>Theory</option>
+<option>glossary</option>
+<option>Bib</option>
+<option>wish_list</option>
+<option>whats_new</option>
+<option>deprecated</option>
+<option>compare_c</option>
+<option>numeric_ad</option>
+<option>addon</option>
+<option>License</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down0(this)'>
+<option>compare_c-&gt;</option>
+<option>det_of_minor_c</option>
+<option>det_by_minor_c</option>
+<option>uniform_01_c</option>
+<option>correct_det_by_minor_c</option>
+<option>repeat_det_by_minor_c</option>
+<option>elapsed_seconds_c</option>
+<option>time_det_by_minor_c</option>
+<option>main_compare_c</option>
+</select>
+</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Syntax</option>
+<option>Purpose</option>
+<option>Contents</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>Compare Speed of C and C++</big></big></b></center>
+<br>
+<b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
+
+<br>
+
+<code><font color="blue"><span style='white-space: nowrap'>test_more/compare_c/det_by_minor_c<br>
+</span></font></code>
+
+<code><font color="blue"><span style='white-space: nowrap'>test_more/compare_c/det_by_minor_cpp</span></font></code>
+
+
+<br>
+<br>
+<b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
+<br>
+Compares the speed of the exact same source code compiled
+using C versus C++.
+
+<br>
+<br>
+<b><big><a name="Contents" id="Contents">Contents</a></big></b>
+<br>
+<table>
+<tr><td><a href="det_of_minor_c.htm" target="_top">det_of_minor_c</a></td><td>Determinant&nbsp;of&nbsp;a&nbsp;Minor</td></tr><tr><td><a href="det_by_minor_c.htm" target="_top">det_by_minor_c</a></td><td>Compute&nbsp;Determinant&nbsp;using&nbsp;Expansion&nbsp;by&nbsp;Minors</td></tr><tr><td><a href="uniform_01_c.htm" target="_top">uniform_01_c</a></td><td>Simulate&nbsp;a&nbsp;[0,1]&nbsp;Uniform&nbsp;Random&nbsp;Variate</td></tr><tr><td><a href="correct_det_by_minor_c.htm" target="_top">correct_det_by_minor_c</a></td><td>Correctness&nbsp;Test&nbsp;of&nbsp;det_by_minor&nbsp;Routine</td></tr><tr><td><a href="repeat_det_by_minor_c.htm" target="_top">repeat_det_by_minor_c</a></td><td>Repeat&nbsp;det_by_minor&nbsp;Routine&nbsp;A&nbsp;Specified&nbsp;Number&nbsp;of&nbsp;Times</td></tr><tr><td><a href="elapsed_seconds_c.htm" target="_top">elapsed_seconds_c</a></td><td>Returns&nbsp;Elapsed&nbsp;Number&nbsp;of&nbsp;Seconds</td></tr><tr><td><a href="time_det_by_minor_c.htm" target="_top">time_det_by_minor_c</a></td><td>Determine&nbsp;Amount&nbsp;of&nbsp;Time&nbsp;to&nbsp;Execute&nbsp;det_by_minor</td></tr><tr><td><a href="main_compare_c.htm" target="_top">main_compare_c</a></td><td>Main&nbsp;Program&nbsp;For&nbsp;Comparing&nbsp;C&nbsp;and&nbsp;C++&nbsp;Speed</td></tr></table>
+<hr>Input File: test_more/compare_c/CMakeLists.txt
+
+</body>
+</html>

@@ -1,0 +1,276 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>Speed Testing the Jacobian of Ode Solution</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Speed Testing the Jacobian of Ode Solution">
+<meta name="keywords" id="keywords" content=" speed testing the jacobian ode solution link_ode test prototype purpose method f return value size repeat x double ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_link_ode_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://coin-or.github.io/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="link_mat_mul.htm" target="_top">Prev</a>
+</td><td><a href="link_poly.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>speed</option>
+<option>speed_main</option>
+<option>link_ode</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>CppAD-&gt;</option>
+<option>Install</option>
+<option>Introduction</option>
+<option>AD</option>
+<option>ADFun</option>
+<option>preprocessor</option>
+<option>multi_thread</option>
+<option>utility</option>
+<option>ipopt_solve</option>
+<option>Example</option>
+<option>speed</option>
+<option>Appendix</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>speed-&gt;</option>
+<option>speed_main</option>
+<option>speed_utility</option>
+<option>speed_double</option>
+<option>speed_adolc</option>
+<option>speed_cppad</option>
+<option>speed_fadbad</option>
+<option>speed_sacado</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>speed_main-&gt;</option>
+<option>link_det_lu</option>
+<option>link_det_minor</option>
+<option>link_mat_mul</option>
+<option>link_ode</option>
+<option>link_poly</option>
+<option>link_sparse_hessian</option>
+<option>link_sparse_jacobian</option>
+<option>microsoft_timer</option>
+</select>
+</td>
+<td>link_ode</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Prototype</option>
+<option>Purpose</option>
+<option>Method</option>
+<option>f</option>
+<option>Return Value</option>
+<option>size</option>
+<option>repeat</option>
+<option>x</option>
+<option>jacobian</option>
+<option>---..double</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@
+
+
+
+<center><b><big><big>Speed Testing the Jacobian of Ode Solution</big></big></b></center>
+<br>
+<b><big><a name="Prototype" id="Prototype">Prototype</a></big></b>
+
+<br>
+
+<code><font color="blue"><span style='white-space: nowrap'>extern&nbsp;bool&nbsp;link_ode(<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>size</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>repeat</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&nbsp;&nbsp;&nbsp;,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CppAD::vector&lt;double&gt;&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CppAD::vector&lt;double&gt;&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>jacobian</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+);<br>
+</span></font></code>
+<br>
+<b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
+<br>
+Each <a href="speed_main.htm#package" target="_top"><span style='white-space: nowrap'>package</span></a>
+
+must define a version of this routine as specified below.
+This is used by the <a href="speed_main.htm" target="_top"><span style='white-space: nowrap'>speed_main</span></a>
+ program
+to run the corresponding speed and correctness tests.
+
+<br>
+<br>
+<b><big><a name="Method" id="Method">Method</a></big></b>
+<br>
+The same template routine <a href="ode_evaluate.htm" target="_top"><span style='white-space: nowrap'>ode_evaluate</span></a>
+ is used
+by th different AD packages.
+
+<br>
+<br>
+<b><big><a name="f" id="f">f</a></big></b>
+<br>
+The function
+<small>@(@
+f : \B{R}^n \rightarrow \B{R}^n
+@)@</small> that is defined and computed by
+evaluating <a href="ode_evaluate.htm" target="_top"><span style='white-space: nowrap'>ode_evaluate</span></a>
+ with a call of the form
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ode_evaluate(</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>p</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>fp</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+with 
+<code><i><font color="black"><span style='white-space: nowrap'>p</span></font></i></code>
+ equal to zero.
+Calls with the value 
+<code><i><font color="black"><span style='white-space: nowrap'>p</span></font></i></code>
+ equal to one are used to check
+the derivative values.
+
+<br>
+<br>
+<b><big><a name="Return Value" id="Return Value">Return Value</a></big></b>
+<br>
+If this speed test is not yet
+supported by a particular 
+<code><i><font color="black"><span style='white-space: nowrap'>package</span></font></i></code>
+,
+the corresponding return value for <code><font color="blue">link_ode</font></code>
+should be <code><font color="blue">false</font></code>.
+
+<br>
+<br>
+<b><big><a name="size" id="size">size</a></big></b>
+<br>
+The argument 
+<code><i><font color="black"><span style='white-space: nowrap'>size</span></font></i></code>
+
+is the number of variables in the ordinary differential equations
+which is also equal to <small>@(@
+n
+@)@</small>.
+
+<br>
+<br>
+<b><big><a name="repeat" id="repeat">repeat</a></big></b>
+<br>
+The argument 
+<code><i><font color="black"><span style='white-space: nowrap'>repeat</span></font></i></code>
+ is the number of times the
+Jacobian is computed.
+
+<br>
+<br>
+<b><big><a name="x" id="x">x</a></big></b>
+<br>
+The argument 
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+ is a vector with <small>@(@
+n
+@)@</small> elements.
+The input value of the elements of 
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+ does not matter.
+On output, it has been set to the
+argument value for which the function,
+or its derivative, is being evaluated.
+The value of this vector must change with each repetition.
+
+<br>
+<br>
+<b><big><a name="jacobian" id="jacobian">jacobian</a></big></b>
+<br>
+The argument 
+<code><i><font color="black"><span style='white-space: nowrap'>jacobian</span></font></i></code>
+ is a vector with <small>@(@
+n^2
+@)@</small> elements.
+The input value of its elements does not matter.
+The output value of its elements is the Jacobian of the function <small>@(@
+f(x)
+@)@</small>
+that corresponds to output value of 
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+.
+To be more specific, for
+<small>@(@
+i = 0 , \ldots , n-1
+@)@</small> and <small>@(@
+j = 0 , \ldots , n-1
+@)@</small>,
+<small>@[@
+
+	\D{f[i]}{x[j]} (x) = jacobian [ i \cdot n + j ]
+
+@]@</small>
+
+<br>
+<br>
+<b><a name="jacobian.double" id="jacobian.double">double</a></b>
+<br>
+In the case where 
+<code><i><font color="black"><span style='white-space: nowrap'>package</span></font></i></code>
+ is <code><font color="blue">double</font></code>,
+only the first <small>@(@
+n
+@)@</small> element of 
+<code><i><font color="black"><span style='white-space: nowrap'>jacobian</span></font></i></code>
+
+are modified and they are to the function value
+<small>@(@
+f(x)
+@)@</small> corresponding to the output value of 
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+.
+
+
+<hr>Input File: speed/src/link_ode.cpp
+
+</body>
+</html>

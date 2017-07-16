@@ -1,0 +1,176 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>The Base 10 Logarithm Function: log10</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="The Base 10 Logarithm Function: log10">
+<meta name="keywords" id="keywords" content=" the base 10 logarithm function: log10 syntax x y method example ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_log10_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://coin-or.github.io/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="log.cpp.htm" target="_top">Prev</a>
+</td><td><a href="log10.cpp.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>AD</option>
+<option>ADValued</option>
+<option>unary_standard_math</option>
+<option>log10</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>AD-&gt;</option>
+<option>ad_ctor</option>
+<option>ad_assign</option>
+<option>Convert</option>
+<option>ADValued</option>
+<option>BoolValued</option>
+<option>VecAD</option>
+<option>base_require</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>ADValued-&gt;</option>
+<option>Arithmetic</option>
+<option>unary_standard_math</option>
+<option>binary_math</option>
+<option>CondExp</option>
+<option>Discrete</option>
+<option>numeric_limits</option>
+<option>atomic</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>unary_standard_math-&gt;</option>
+<option>acos</option>
+<option>asin</option>
+<option>atan</option>
+<option>cos</option>
+<option>cosh</option>
+<option>exp</option>
+<option>log</option>
+<option>log10</option>
+<option>sin</option>
+<option>sinh</option>
+<option>sqrt</option>
+<option>tan</option>
+<option>tanh</option>
+<option>abs</option>
+<option>acosh</option>
+<option>asinh</option>
+<option>atanh</option>
+<option>erf</option>
+<option>expm1</option>
+<option>log1p</option>
+<option>sign</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down0(this)'>
+<option>log10-&gt;</option>
+<option>log10.cpp</option>
+</select>
+</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Syntax</option>
+<option>x, y</option>
+<option>Method</option>
+<option>Example</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@
+
+
+<center><b><big><big>The Base 10 Logarithm Function: log10</big></big></b></center>
+<br>
+<b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
+
+<br>
+
+<code><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;log10(</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+
+
+<br>
+<br>
+<b><big><a name="x, y" id="x, y">x, y</a></big></b>
+<br>
+See the <a href="unary_standard_math.htm#Possible Types" target="_top"><span style='white-space: nowrap'>possible&nbsp;types</span></a>
+
+for a unary standard math function.
+
+<br>
+<br>
+<b><big><a name="Method" id="Method">Method</a></big></b>
+<br>
+CppAD uses the representation
+<small>@[@
+
+\begin{array}{lcr}
+        {\rm log10} (x) & = & \log(x) / \log(10)
+\end{array}
+
+@]@</small>
+
+<br>
+<br>
+<b><big><a name="Example" id="Example">Example</a></big></b>
+
+<br>
+The file
+<a href="log10.cpp.htm" target="_top"><span style='white-space: nowrap'>log10.cpp</span></a>
+
+contains an example and test of this function.
+It returns true if it succeeds and false otherwise.
+
+
+<hr>Input File: cppad/core/std_math_98.hpp
+
+</body>
+</html>

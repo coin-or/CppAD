@@ -1,0 +1,245 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>CppAD API Preprocessor Symbols</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="CppAD API Preprocessor Symbols">
+<meta name="keywords" id="keywords" content=" cppad api preprocessor symbols Cppad_ Null pointer purpose documented here cppad_debug_and_release cppad_null cppad_package_string cppad_use_cplusplus_2011 elsewhere deprecated ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_preprocessor_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://coin-or.github.io/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="check_for_nan.cpp.htm" target="_top">Prev</a>
+</td><td><a href="multi_thread.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>preprocessor</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>CppAD-&gt;</option>
+<option>Install</option>
+<option>Introduction</option>
+<option>AD</option>
+<option>ADFun</option>
+<option>preprocessor</option>
+<option>multi_thread</option>
+<option>utility</option>
+<option>ipopt_solve</option>
+<option>Example</option>
+<option>speed</option>
+<option>Appendix</option>
+</select>
+</td>
+<td>preprocessor</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Purpose</option>
+<option>Documented Here</option>
+<option>---..CPPAD_DEBUG_AND_RELEASE</option>
+<option>---..CPPAD_NULL</option>
+<option>---..CPPAD_PACKAGE_STRING</option>
+<option>---..CPPAD_USE_CPLUSPLUS_2011</option>
+<option>Documented Elsewhere</option>
+<option>Deprecated</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>CppAD API Preprocessor Symbols</big></big></b></center>
+<br>
+<b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
+<br>
+The CppAD include files defines preprocessor symbols all of which begin
+with <code><font color="blue">CPPAD_</font></code>.
+Note that there are some old, deprecated preprocessor symbols that
+begin with <code><font color="blue">CppAD</font></code>.
+In this section we list all of the CppAD preprocessor symbols that
+are part of the CppAD Application Interface (API).
+
+<br>
+<br>
+<b><big><a name="Documented Here" id="Documented Here">Documented Here</a></big></b>
+
+
+<br>
+<br>
+<b><a name="Documented Here.CPPAD_DEBUG_AND_RELEASE" id="Documented Here.CPPAD_DEBUG_AND_RELEASE">CPPAD_DEBUG_AND_RELEASE</a></b>
+<br>
+This flag is an exception because it is defined (or not) by the user when
+compiling programs that include CppAD source code.
+If it is defined, less error checking is done and the
+debug and release versions of CppAD can be mixed in the same program.
+Of particular note is that <a href="thread_alloc.htm" target="_top"><span style='white-space: nowrap'>thread_alloc</span></a>
+ does less error checking.
+For programs that do a lot of memory allocation,
+this can be a significant time savings when <code><font color="blue">NDEBUG</font></code> is defined.
+
+<br>
+<br>
+<b><a name="Documented Here.CPPAD_NULL" id="Documented Here.CPPAD_NULL">CPPAD_NULL</a></b>
+<br>
+Is a null pointer used by CppAD,
+instead of just using the value zero which was often done in C++98,
+which has been replaced by the value <code><font color="blue">nullptr</font></code> in C++11.
+
+<br>
+<br>
+<b><a name="Documented Here.CPPAD_PACKAGE_STRING" id="Documented Here.CPPAD_PACKAGE_STRING">CPPAD_PACKAGE_STRING</a></b>
+<br>
+Is a <code><font color="blue">const char*</font></code> representation of this version of CppAD.
+
+<br>
+<br>
+<b><a name="Documented Here.CPPAD_USE_CPLUSPLUS_2011" id="Documented Here.CPPAD_USE_CPLUSPLUS_2011">CPPAD_USE_CPLUSPLUS_2011</a></b>
+<br>
+This preprocessor symbol has the value has the value <code><font color="blue">1</font></code>
+if C++11 features are being used by CppAD.
+Otherwise it has the value zero.
+
+
+<br>
+<br>
+<b><big><a name="Documented Elsewhere" id="Documented Elsewhere">Documented Elsewhere</a></big></b>
+
+<table><tr><td align='left'  valign='top'>
+
+<a href="boolfun.htm#Create Binary" target="_top"><span style='white-space: nowrap'>CPPAD_BOOL_BINARY</span></a>
+
+</td></tr><tr><td align='left'  valign='top'>
+
+<a href="boolfun.htm#Create Unary" target="_top"><span style='white-space: nowrap'>CPPAD_BOOL_UNARY</span></a>
+
+</td></tr><tr><td align='left'  valign='top'>
+
+<a href="discrete.htm" target="_top"><span style='white-space: nowrap'>CPPAD_DISCRETE_FUNCTION</span></a>
+
+</td></tr><tr><td align='left'  valign='top'>
+
+<a href="multi_thread.htm#CPPAD_MAX_NUM_THREADS" target="_top"><span style='white-space: nowrap'>CPPAD_MAX_NUM_THREADS</span></a>
+
+</td></tr><tr><td align='left'  valign='top'>
+
+<a href="base_limits.htm#CPPAD_NUMERIC_LIMITS" target="_top"><span style='white-space: nowrap'>CPPAD_NUMERIC_LIMITS</span></a>
+
+</td></tr><tr><td align='left'  valign='top'>
+
+<a href="base_std_math.htm#CPPAD_STANDARD_MATH_UNARY" target="_top"><span style='white-space: nowrap'>CPPAD_STANDARD_MATH_UNARY</span></a>
+
+</td></tr><tr><td align='left'  valign='top'>
+
+<a href="cmake.htm#cppad_tape_addr_type" target="_top"><span style='white-space: nowrap'>CPPAD_TAPE_ADDR_TYPE</span></a>
+
+</td></tr><tr><td align='left'  valign='top'>
+
+<a href="cmake.htm#cppad_tape_id_type" target="_top"><span style='white-space: nowrap'>CPPAD_TAPE_ID_TYPE</span></a>
+
+</td></tr><tr><td align='left'  valign='top'>
+
+<a href="testvector.htm" target="_top"><span style='white-space: nowrap'>CPPAD_TESTVECTOR</span></a>
+
+</td></tr><tr><td align='left'  valign='top'>
+
+<a href="base_to_string.htm#CPPAD_TO_STRING" target="_top"><span style='white-space: nowrap'>CPPAD_TO_STRING</span></a>
+
+</td></tr>
+</table>
+<br>
+<b><big><a name="Deprecated" id="Deprecated">Deprecated</a></big></b>
+
+<table><tr><td align='left'  valign='top'>
+
+<a href="discrete.htm#CppADCreateDiscrete Deprecated 2007-07-28" target="_top"><span style='white-space: nowrap'>CppADCreateDiscrete</span></a>
+
+</td></tr><tr><td align='left'  valign='top'>
+
+<a href="test_vector.htm#Deprecated 2012-07-03" target="_top"><span style='white-space: nowrap'>CppADvector</span></a>
+
+</td></tr><tr><td align='left'  valign='top'>
+
+<a href="test_vector.htm" target="_top"><span style='white-space: nowrap'>CPPAD_TEST_VECTOR</span></a>
+
+</td></tr><tr><td align='left'  valign='top'>
+
+<a href="tracknewdel.htm#TrackNewVec.Macro" target="_top"><span style='white-space: nowrap'>CPPAD_TRACK_NEW_VEC</span></a>
+
+</td></tr><tr><td align='left'  valign='top'>
+
+<a href="tracknewdel.htm#TrackDelVec.Macro" target="_top"><span style='white-space: nowrap'>CPPAD_TRACK_DEL_VEC</span></a>
+
+</td></tr><tr><td align='left'  valign='top'>
+
+<a href="tracknewdel.htm#TrackExtend.Macro" target="_top"><span style='white-space: nowrap'>CPPAD_TRACK_EXTEND</span></a>
+
+</td></tr><tr><td align='left'  valign='top'>
+
+<a href="tracknewdel.htm#TrackCount.Macro" target="_top"><span style='white-space: nowrap'>CPPAD_TRACK_COUNT</span></a>
+
+</td></tr><tr><td align='left'  valign='top'>
+
+<a href="old_atomic.htm" target="_top"><span style='white-space: nowrap'>CPPAD_USER_ATOMIC</span></a>
+
+</td></tr><tr><td align='left'  valign='top'>
+
+<a href="tracknewdel.htm#TrackNewVec.Previously Deprecated" target="_top"><span style='white-space: nowrap'>CppADTrackNewVec</span></a>
+
+</td></tr><tr><td align='left'  valign='top'>
+
+<a href="tracknewdel.htm#TrackDelVec.Previously Deprecated" target="_top"><span style='white-space: nowrap'>CppADTrackDelVec</span></a>
+
+</td></tr><tr><td align='left'  valign='top'>
+
+<a href="tracknewdel.htm#TrackExtend.Previously Deprecated" target="_top"><span style='white-space: nowrap'>CppADTrackExtend</span></a>
+
+</td></tr><tr><td align='left'  valign='top'>
+
+<a href="tracknewdel.htm#TrackCount.Previously Deprecated" target="_top"><span style='white-space: nowrap'>CppADTrackCount</span></a>
+
+</td></tr>
+</table>
+
+<hr>Input File: omh/preprocessor.omh
+
+</body>
+</html>

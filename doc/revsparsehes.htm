@@ -1,0 +1,453 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>Hessian Sparsity Pattern: Reverse Mode</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Hessian Sparsity Pattern: Reverse Mode">
+<meta name="keywords" id="keywords" content=" hessian sparsity pattern: reverse mode syntax purpose f x q transpose r s h false true vectorset entire pattern example ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_revsparsehes_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://coin-or.github.io/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="rev_hes_sparsity.cpp.htm" target="_top">Prev</a>
+</td><td><a href="rev_sparse_hes.cpp.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>ADFun</option>
+<option>sparsity_pattern</option>
+<option>RevSparseHes</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>CppAD-&gt;</option>
+<option>Install</option>
+<option>Introduction</option>
+<option>AD</option>
+<option>ADFun</option>
+<option>preprocessor</option>
+<option>multi_thread</option>
+<option>utility</option>
+<option>ipopt_solve</option>
+<option>Example</option>
+<option>speed</option>
+<option>Appendix</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>ADFun-&gt;</option>
+<option>record_adfun</option>
+<option>drivers</option>
+<option>Forward</option>
+<option>Reverse</option>
+<option>sparsity_pattern</option>
+<option>sparse_derivative</option>
+<option>optimize</option>
+<option>abs_normal</option>
+<option>FunCheck</option>
+<option>check_for_nan</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>sparsity_pattern-&gt;</option>
+<option>for_jac_sparsity</option>
+<option>ForSparseJac</option>
+<option>rev_jac_sparsity</option>
+<option>RevSparseJac</option>
+<option>rev_hes_sparsity</option>
+<option>RevSparseHes</option>
+<option>for_hes_sparsity</option>
+<option>ForSparseHes</option>
+<option>dependency.cpp</option>
+<option>rc_sparsity.cpp</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down0(this)'>
+<option>RevSparseHes-&gt;</option>
+<option>rev_sparse_hes.cpp</option>
+<option>sparsity_sub.cpp</option>
+</select>
+</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Syntax</option>
+<option>Purpose</option>
+<option>f</option>
+<option>x</option>
+<option>q</option>
+<option>transpose</option>
+<option>r</option>
+<option>s</option>
+<option>h</option>
+<option>---..transpose false</option>
+<option>---..transpose true</option>
+<option>VectorSet</option>
+<option>Entire Sparsity Pattern</option>
+<option>Example</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>Hessian Sparsity Pattern: Reverse Mode</big></big></b></center>
+<br>
+<b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
+
+<br>
+
+<code><i><font color="black"><span style='white-space: nowrap'>h</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.RevSparseHes(</span></font><i><font color="black"><span style='white-space: nowrap'>q</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>s</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+
+<code><i><font color="black"><span style='white-space: nowrap'>h</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.RevSparseHes(</span></font><i><font color="black"><span style='white-space: nowrap'>q</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>s</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>transpose</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+
+
+<br>
+<br>
+<b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
+<br>
+We use <small>@(@
+F : \B{R}^n \rightarrow \B{R}^m
+@)@</small> to denote the
+<a href="glossary.htm#AD Function" target="_top"><span style='white-space: nowrap'>AD&nbsp;function</span></a>
+ corresponding to 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+.
+For a fixed matrix <small>@(@
+R \in \B{R}^{n \times q}
+@)@</small>
+and a fixed vector <small>@(@
+S \in \B{R}^{1 \times m}
+@)@</small>,
+we define
+<small>@[@
+
+\begin{array}{rcl}
+H(x)
+& = & \partial_x \left[ \partial_u S * F[ x + R * u ] \right]_{u=0}
+\\
+& = & R^\R{T} * (S * F)^{(2)} ( x )
+\\
+H(x)^\R{T}
+& = & (S * F)^{(2)} ( x ) * R
+\end{array}
+
+@]@</small>
+Given a
+<a href="glossary.htm#Sparsity Pattern" target="_top"><span style='white-space: nowrap'>sparsity&nbsp;pattern</span></a>
+
+for the matrix <small>@(@
+R
+@)@</small> and the vector <small>@(@
+S
+@)@</small>,
+<code><font color="blue">RevSparseHes</font></code> returns a sparsity pattern for the <small>@(@
+H(x)
+@)@</small>.
+
+<br>
+<br>
+<b><big><a name="f" id="f">f</a></big></b>
+<br>
+The object 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;ADFun&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+<br>
+<b><big><a name="x" id="x">x</a></big></b>
+<br>
+If the operation sequence in 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+ is
+<a href="glossary.htm#Operation.Independent" target="_top"><span style='white-space: nowrap'>independent</span></a>
+ of
+the independent variables in <small>@(@
+x \in B^n
+@)@</small>,
+the sparsity pattern is valid for all values of
+(even if it has <a href="condexp.htm" target="_top"><span style='white-space: nowrap'>CondExp</span></a>
+ or <a href="vecad.htm" target="_top"><span style='white-space: nowrap'>VecAD</span></a>
+ operations).
+
+<br>
+<br>
+<b><big><a name="q" id="q">q</a></big></b>
+<br>
+The argument 
+<code><i><font color="black"><span style='white-space: nowrap'>q</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>q</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+It specifies the number of columns in <small>@(@
+R \in \B{R}^{n \times q}
+@)@</small>
+and the number of rows in <small>@(@
+H(x) \in \B{R}^{q \times n}
+@)@</small>.
+It must be the same value as in the previous <a href="forsparsejac.htm" target="_top"><span style='white-space: nowrap'>ForSparseJac</span></a>
+ call
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.ForSparseJac(</span></font><i><font color="black"><span style='white-space: nowrap'>q</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>r</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>r_transpose</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+Note that if 
+<code><i><font color="black"><span style='white-space: nowrap'>r_transpose</span></font></i></code>
+ is true, 
+<code><i><font color="black"><span style='white-space: nowrap'>r</span></font></i></code>
+ in the call above
+corresponding to <small>@(@
+R^\R{T} \in \B{R}^{q \times n}
+@)@</small>
+
+<br>
+<br>
+<b><big><a name="transpose" id="transpose">transpose</a></big></b>
+<br>
+The argument 
+<code><i><font color="black"><span style='white-space: nowrap'>transpose</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bool&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>transpose</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+The default value <code><font color="blue">false</font></code> is used when 
+<code><i><font color="black"><span style='white-space: nowrap'>transpose</span></font></i></code>
+ is not present.
+
+
+<br>
+<br>
+<b><big><a name="r" id="r">r</a></big></b>
+<br>
+The matrix <small>@(@
+R
+@)@</small> is specified by the previous call
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.ForSparseJac(</span></font><i><font color="black"><span style='white-space: nowrap'>q</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>r</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>transpose</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+see <a href="forsparsejac.htm#r" target="_top"><span style='white-space: nowrap'>r</span></a>
+.
+The type of the elements of
+<a href="revsparsehes.htm#VectorSet" target="_top"><span style='white-space: nowrap'>VectorSet</span></a>
+ must be the
+same as the type of the elements of 
+<code><i><font color="black"><span style='white-space: nowrap'>r</span></font></i></code>
+.
+
+<br>
+<br>
+<b><big><a name="s" id="s">s</a></big></b>
+<br>
+The argument 
+<code><i><font color="black"><span style='white-space: nowrap'>s</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>VectorSet</span></font></i><font color="blue"><span style='white-space: nowrap'>&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>s</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+(see <a href="revsparsehes.htm#VectorSet" target="_top"><span style='white-space: nowrap'>VectorSet</span></a>
+ below)
+If it has elements of type <code><font color="blue">bool</font></code>,
+its size is <small>@(@
+m
+@)@</small>.
+If it has elements of type <code><font color="blue">std::set&lt;size_t&gt;</font></code>,
+its size is one and all the elements of 
+<code><i><font color="black"><span style='white-space: nowrap'>s</span></font></i><font color="blue"><span style='white-space: nowrap'>[0]</span></font></code>
+
+are between zero and <small>@(@
+m - 1
+@)@</small>.
+It specifies a
+<a href="glossary.htm#Sparsity Pattern" target="_top"><span style='white-space: nowrap'>sparsity&nbsp;pattern</span></a>
+
+for the vector 
+<code><i><font color="black"><span style='white-space: nowrap'>S</span></font></i></code>
+.
+
+<br>
+<br>
+<b><big><a name="h" id="h">h</a></big></b>
+<br>
+The result 
+<code><i><font color="black"><span style='white-space: nowrap'>h</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>VectorSet</span></font></i><font color="blue"><span style='white-space: nowrap'>&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>h</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+(see <a href="revsparsehes.htm#VectorSet" target="_top"><span style='white-space: nowrap'>VectorSet</span></a>
+ below).
+
+<br>
+<br>
+<b><a name="h.transpose false" id="h.transpose false">transpose false</a></b>
+<br>
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>h</span></font></i></code>
+ has elements of type <code><font color="blue">bool</font></code>,
+its size is <small>@(@
+q * n
+@)@</small>.
+If it has elements of type <code><font color="blue">std::set&lt;size_t&gt;</font></code>,
+its size is <small>@(@
+q
+@)@</small> and all the set elements are between
+zero and 
+<code><i><font color="black"><span style='white-space: nowrap'>n</span></font></i><font color="blue"><span style='white-space: nowrap'>-1</span></font></code>
+ inclusive.
+It specifies a
+<a href="glossary.htm#Sparsity Pattern" target="_top"><span style='white-space: nowrap'>sparsity&nbsp;pattern</span></a>
+
+for the matrix <small>@(@
+H(x)
+@)@</small>.
+
+<br>
+<br>
+<b><a name="h.transpose true" id="h.transpose true">transpose true</a></b>
+<br>
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>h</span></font></i></code>
+ has elements of type <code><font color="blue">bool</font></code>,
+its size is <small>@(@
+n * q
+@)@</small>.
+If it has elements of type <code><font color="blue">std::set&lt;size_t&gt;</font></code>,
+its size is <small>@(@
+n
+@)@</small> and all the set elements are between
+zero and 
+<code><i><font color="black"><span style='white-space: nowrap'>q</span></font></i><font color="blue"><span style='white-space: nowrap'>-1</span></font></code>
+ inclusive.
+It specifies a
+<a href="glossary.htm#Sparsity Pattern" target="_top"><span style='white-space: nowrap'>sparsity&nbsp;pattern</span></a>
+
+for the matrix <small>@(@
+H(x)^\R{T}
+@)@</small>.
+
+<br>
+<br>
+<b><big><a name="VectorSet" id="VectorSet">VectorSet</a></big></b>
+<br>
+The type 
+<code><i><font color="black"><span style='white-space: nowrap'>VectorSet</span></font></i></code>
+ must be a <a href="simplevector.htm" target="_top"><span style='white-space: nowrap'>SimpleVector</span></a>
+ class with
+<a href="simplevector.htm#Elements of Specified Type" target="_top"><span style='white-space: nowrap'>elements&nbsp;of&nbsp;type</span></a>
+
+<code><font color="blue">bool</font></code> or <code><font color="blue">std::set&lt;size_t&gt;</font></code>;
+see <a href="glossary.htm#Sparsity Pattern" target="_top"><span style='white-space: nowrap'>sparsity&nbsp;pattern</span></a>
+ for a discussion
+of the difference.
+The type of the elements of
+<a href="revsparsehes.htm#VectorSet" target="_top"><span style='white-space: nowrap'>VectorSet</span></a>
+ must be the
+same as the type of the elements of 
+<code><i><font color="black"><span style='white-space: nowrap'>r</span></font></i></code>
+.
+
+<br>
+<br>
+<b><big><a name="Entire Sparsity Pattern" id="Entire Sparsity Pattern">Entire Sparsity Pattern</a></big></b>
+<br>
+Suppose that <small>@(@
+q = n
+@)@</small> and
+<small>@(@
+R \in \B{R}^{n \times n}
+@)@</small> is the <small>@(@
+n \times n
+@)@</small> identity matrix.
+Further suppose that the <small>@(@
+S
+@)@</small> is the <code><i>k</i></code>-th
+<a href="glossary.htm#Elementary Vector" target="_top"><span style='white-space: nowrap'>elementary&nbsp;vector</span></a>
+; i.e.
+<small>@[@
+
+S_j = \left\{ \begin{array}{ll}
+	1  & {\rm if} \; j = k
+	\\
+	0  & {\rm otherwise}
+\end{array} \right.
+
+@]@</small>
+In this case,
+the corresponding value 
+<code><i><font color="black"><span style='white-space: nowrap'>h</span></font></i></code>
+ is a
+sparsity pattern for the Hessian matrix
+<small>@(@
+F_k^{(2)} (x) \in \B{R}^{n \times n}
+@)@</small>.
+
+<br>
+<br>
+<b><big><a name="Example" id="Example">Example</a></big></b>
+
+<br>
+The file
+<a href="rev_sparse_hes.cpp.htm" target="_top"><span style='white-space: nowrap'>rev_sparse_hes.cpp</span></a>
+
+contains an example and test of this operation.
+It returns true if it succeeds and false otherwise.
+The file
+<a href="sparsity_sub.cpp.htm#RevSparseHes" target="_top"><span style='white-space: nowrap'>sparsity_sub.cpp</span></a>
+
+contains an example and test of using <code><font color="blue">RevSparseHes</font></code>
+to compute the sparsity pattern for a subset of the Hessian.
+
+
+<hr>Input File: cppad/core/rev_sparse_hes.hpp
+
+</body>
+</html>

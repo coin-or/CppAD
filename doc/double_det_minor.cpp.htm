@@ -1,0 +1,157 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>Double Speed: Determinant by Minor Expansion</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Double Speed: Determinant by Minor Expansion">
+<meta name="keywords" id="keywords" content=" double speed: determinant minor expansion link_det_minor speed specifications implementation ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_double_det_minor.cpp_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://coin-or.github.io/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="speed_double.htm" target="_top">Prev</a>
+</td><td><a href="double_det_lu.cpp.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>speed</option>
+<option>speed_double</option>
+<option>double_det_minor.cpp</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>CppAD-&gt;</option>
+<option>Install</option>
+<option>Introduction</option>
+<option>AD</option>
+<option>ADFun</option>
+<option>preprocessor</option>
+<option>multi_thread</option>
+<option>utility</option>
+<option>ipopt_solve</option>
+<option>Example</option>
+<option>speed</option>
+<option>Appendix</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>speed-&gt;</option>
+<option>speed_main</option>
+<option>speed_utility</option>
+<option>speed_double</option>
+<option>speed_adolc</option>
+<option>speed_cppad</option>
+<option>speed_fadbad</option>
+<option>speed_sacado</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>speed_double-&gt;</option>
+<option>double_det_minor.cpp</option>
+<option>double_det_lu.cpp</option>
+<option>double_mat_mul.cpp</option>
+<option>double_ode.cpp</option>
+<option>double_poly.cpp</option>
+<option>double_sparse_hessian.cpp</option>
+<option>double_sparse_jacobian.cpp</option>
+</select>
+</td>
+<td>double_det_minor.cpp</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Specifications</option>
+<option>Implementation</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>Double Speed: Determinant by Minor Expansion</big></big></b></center>
+<br>
+<b><big><a name="Specifications" id="Specifications">Specifications</a></big></b>
+<br>
+See <a href="link_det_minor.htm" target="_top"><span style='white-space: nowrap'>link_det_minor</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="Implementation" id="Implementation">Implementation</a></big></b>
+
+
+<pre><tt><b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/utility/vector.hpp&gt;</font>
+<b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/speed/det_by_minor.hpp&gt;</font>
+<b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/speed/uniform_01.hpp&gt;</font>
+
+<i><font color="#9A1900">// Note that CppAD uses global_option["memory"] at the main program level</font></i>
+<b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;map&gt;</font>
+<b><font color="#0000FF">extern</font></b> std<font color="#990000">::</font><font color="#008080">map&lt;std::string, bool&gt;</font> global_option<font color="#990000">;</font>
+
+<font color="#009900">bool</font> <b><font color="#000000">link_det_minor</font></b><font color="#990000">(</font>
+     <font color="#008080">size_t</font>                     size     <font color="#990000">,</font>
+     <font color="#008080">size_t</font>                     repeat   <font color="#990000">,</font>
+     CppAD<font color="#990000">::</font><font color="#008080">vector&lt;double&gt;</font>     <font color="#990000">&amp;</font>matrix   <font color="#990000">,</font>
+     CppAD<font color="#990000">::</font><font color="#008080">vector&lt;double&gt;</font>     <font color="#990000">&amp;</font>det      <font color="#990000">)</font>
+<font color="#FF0000">{</font>
+     <b><font color="#0000FF">if</font></b><font color="#990000">(</font>global_option<font color="#990000">[</font><font color="#FF0000">"onetape"</font><font color="#990000">]||</font>global_option<font color="#990000">[</font><font color="#FF0000">"atomic"</font><font color="#990000">]||</font>global_option<font color="#990000">[</font><font color="#FF0000">"optimize"</font><font color="#990000">])</font>
+          <b><font color="#0000FF">return</font></b> <b><font color="#0000FF">false</font></b><font color="#990000">;</font>
+     <i><font color="#9A1900">// -----------------------------------------------------</font></i>
+     <i><font color="#9A1900">// setup</font></i>
+     CppAD<font color="#990000">::</font><font color="#008080">det_by_minor&lt;double&gt;</font>   <b><font color="#000000">Det</font></b><font color="#990000">(</font>size<font color="#990000">);</font>
+     <font color="#008080">size_t</font> n <font color="#990000">=</font> size <font color="#990000">*</font> size<font color="#990000">;</font> <i><font color="#9A1900">// number of independent variables</font></i>
+
+     <i><font color="#9A1900">// ------------------------------------------------------</font></i>
+     <b><font color="#0000FF">while</font></b><font color="#990000">(</font>repeat<font color="#990000">--)</font>
+     <font color="#FF0000">{</font>    <i><font color="#9A1900">// get the next matrix</font></i>
+          CppAD<font color="#990000">::</font><b><font color="#000000">uniform_01</font></b><font color="#990000">(</font>n<font color="#990000">,</font> matrix<font color="#990000">);</font>
+
+          <i><font color="#9A1900">// computation of the determinant</font></i>
+          det<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <b><font color="#000000">Det</font></b><font color="#990000">(</font>matrix<font color="#990000">);</font>
+     <font color="#FF0000">}</font>
+     <b><font color="#0000FF">return</font></b> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
+<font color="#FF0000">}</font></tt></pre>
+
+<hr>Input File: speed/double/det_minor.cpp
+
+</body>
+</html>

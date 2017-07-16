@@ -1,0 +1,241 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>Check If A Memory Allocation is Efficient for Another Use</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Check If A Memory Allocation is Efficient for Another Use">
+<meta name="keywords" id="keywords" content=" check if memory allocation is efficient another use removed syntax purpose v_ptr num_bytes flag thread ndebug ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_omp_efficient_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://coin-or.github.io/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="omp_delete_array.htm" target="_top">Prev</a>
+</td><td><a href="old_max_num_threads.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>Appendix</option>
+<option>deprecated</option>
+<option>omp_alloc</option>
+<option>omp_efficient</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>Appendix-&gt;</option>
+<option>Faq</option>
+<option>directory</option>
+<option>Theory</option>
+<option>glossary</option>
+<option>Bib</option>
+<option>wish_list</option>
+<option>whats_new</option>
+<option>deprecated</option>
+<option>compare_c</option>
+<option>numeric_ad</option>
+<option>addon</option>
+<option>License</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>deprecated-&gt;</option>
+<option>include_deprecated</option>
+<option>FunDeprecated</option>
+<option>CompareChange</option>
+<option>omp_max_thread</option>
+<option>TrackNewDel</option>
+<option>omp_alloc</option>
+<option>memory_leak</option>
+<option>epsilon</option>
+<option>test_vector</option>
+<option>cppad_ipopt_nlp</option>
+<option>old_atomic</option>
+<option>zdouble</option>
+<option>autotools</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>omp_alloc-&gt;</option>
+<option>omp_max_num_threads</option>
+<option>omp_in_parallel</option>
+<option>omp_get_thread_num</option>
+<option>omp_get_memory</option>
+<option>omp_return_memory</option>
+<option>omp_free_available</option>
+<option>omp_inuse</option>
+<option>omp_available</option>
+<option>omp_create_array</option>
+<option>omp_delete_array</option>
+<option>omp_efficient</option>
+<option>old_max_num_threads</option>
+<option>omp_alloc.cpp</option>
+</select>
+</td>
+<td>omp_efficient</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Removed</option>
+<option>Syntax</option>
+<option>Purpose</option>
+<option>v_ptr</option>
+<option>num_bytes</option>
+<option>flag</option>
+<option>Thread</option>
+<option>NDEBUG</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@
+
+
+<center><b><big><big>Check If A Memory Allocation is Efficient for Another Use</big></big></b></center>
+<br>
+<b><big><a name="Removed" id="Removed">Removed</a></big></b>
+<br>
+This function has been removed because speed tests seem to indicate
+it is just as fast, or faster, to free and then reallocate the memory.
+
+<br>
+<br>
+<b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
+
+<br>
+
+<code><font color="blue"><span style='white-space: nowrap'>#&nbsp;include&nbsp;&lt;cppad/utility/omp_alloc.hpp&gt;<br>
+</span></font></code>
+
+<code><i><font color="black"><span style='white-space: nowrap'>flag</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;omp_alloc::efficient(</span></font><i><font color="black"><span style='white-space: nowrap'>v_ptr</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>num_bytes</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+
+
+<br>
+<br>
+<b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
+<br>
+Check if memory that is currently in use is an efficient
+allocation for a specified number of bytes.
+
+<br>
+<br>
+<b><big><a name="v_ptr" id="v_ptr">v_ptr</a></big></b>
+<br>
+This argument has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;void*&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>v_ptr</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+.
+It must be a pointer to memory that is currently in use; i.e.
+obtained by a previous call to <a href="omp_get_memory.htm" target="_top"><span style='white-space: nowrap'>omp_get_memory</span></a>
+ and not yet returned.
+
+<br>
+<br>
+<b><big><a name="num_bytes" id="num_bytes">num_bytes</a></big></b>
+<br>
+This argument has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>num_bytes</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+It specifies the number of bytes of the memory allocated by 
+<code><i><font color="black"><span style='white-space: nowrap'>v_ptr</span></font></i></code>
+
+that we want to use.
+
+<br>
+<br>
+<b><big><a name="flag" id="flag">flag</a></big></b>
+<br>
+The return value has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bool&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>flag</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+It is true,
+a call to <code><font color="blue">get_memory</font></code> with
+<a href="omp_get_memory.htm#min_bytes" target="_top"><span style='white-space: nowrap'>min_bytes</span></a>
+
+equal to 
+<code><i><font color="black"><span style='white-space: nowrap'>num_bytes</span></font></i></code>
+ would result in a value for
+<a href="omp_get_memory.htm#cap_bytes" target="_top"><span style='white-space: nowrap'>cap_bytes</span></a>
+ that is the same as when <code><font color="blue">v_ptr</font></code>
+was returned by <code><font color="blue">get_memory</font></code>; i.e.,
+
+<code><i><font color="black"><span style='white-space: nowrap'>v_ptr</span></font></i></code>
+ is an efficient memory block for 
+<code><i><font color="black"><span style='white-space: nowrap'>num_bytes</span></font></i></code>
+
+bytes of information.
+
+<br>
+<br>
+<b><big><a name="Thread" id="Thread">Thread</a></big></b>
+<br>
+Either the <a href="omp_get_thread_num.htm" target="_top"><span style='white-space: nowrap'>current&nbsp;thread</span></a>
+ must be the same as during
+the corresponding call to <a href="omp_get_memory.htm" target="_top"><span style='white-space: nowrap'>omp_get_memory</span></a>
+,
+or the current execution mode must be sequential
+(not <a href="omp_in_parallel.htm" target="_top"><span style='white-space: nowrap'>parallel</span></a>
+).
+
+<br>
+<br>
+<b><big><a name="NDEBUG" id="NDEBUG">NDEBUG</a></big></b>
+<br>
+If <code><font color="blue">NDEBUG</font></code> is defined, 
+<code><i><font color="black"><span style='white-space: nowrap'>v_ptr</span></font></i></code>
+ is not checked (this is faster).
+Otherwise, a list of in use pointers is searched to make sure
+that 
+<code><i><font color="black"><span style='white-space: nowrap'>v_ptr</span></font></i></code>
+ is in the list.
+
+
+<hr>Input File: cppad/utility/omp_alloc.hpp
+
+</body>
+</html>

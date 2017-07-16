@@ -1,0 +1,209 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>Base Type Requirements for Hash Coding Values</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Base Type Requirements for Hash Coding Values">
+<meta name="keywords" id="keywords" content=" base type requirements hash coding values syntax purpose default x code inline example ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_base_hash_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://coin-or.github.io/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="base_to_string.htm" target="_top">Prev</a>
+</td><td><a href="base_example.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>AD</option>
+<option>base_require</option>
+<option>base_hash</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>CppAD-&gt;</option>
+<option>Install</option>
+<option>Introduction</option>
+<option>AD</option>
+<option>ADFun</option>
+<option>preprocessor</option>
+<option>multi_thread</option>
+<option>utility</option>
+<option>ipopt_solve</option>
+<option>Example</option>
+<option>speed</option>
+<option>Appendix</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>AD-&gt;</option>
+<option>ad_ctor</option>
+<option>ad_assign</option>
+<option>Convert</option>
+<option>ADValued</option>
+<option>BoolValued</option>
+<option>VecAD</option>
+<option>base_require</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>base_require-&gt;</option>
+<option>base_member</option>
+<option>base_cond_exp</option>
+<option>base_identical</option>
+<option>base_ordered</option>
+<option>base_std_math</option>
+<option>base_limits</option>
+<option>base_to_string</option>
+<option>base_hash</option>
+<option>base_example</option>
+</select>
+</td>
+<td>base_hash</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Syntax</option>
+<option>Purpose</option>
+<option>Default</option>
+<option>x</option>
+<option>code</option>
+<option>inline</option>
+<option>Example</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>Base Type Requirements for Hash Coding Values</big></big></b></center>
+<br>
+<b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
+
+<br>
+
+<code><i><font color="black"><span style='white-space: nowrap'>code</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;hash_code(</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+
+
+<br>
+<br>
+<b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
+<br>
+CppAD uses a table of 
+<code><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i></code>
+ type values when recording
+
+<code><font color="blue"><span style='white-space: nowrap'>AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code>
+ operations.
+A hashing function is used to reduce number of values stored in this table;
+for example, it is not necessary to store the value 3.0 every
+time it is used as a <a href="parvar.htm" target="_top"><span style='white-space: nowrap'>parameter</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="Default" id="Default">Default</a></big></b>
+<br>
+The default hashing function works with the set of bits that correspond
+to a 
+<code><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i></code>
+ value.
+In most cases this works well, but in some cases
+it does not. For example, in the
+<a href="base_adolc.hpp.htm" target="_top"><span style='white-space: nowrap'>base_adolc.hpp</span></a>
+ case, an <code><font color="blue">adouble</font></code> value can have
+fields that are not initialized and <code><font color="blue">valgrind</font></code> reported an error
+when these are used to form the hash code.
+
+<br>
+<br>
+<b><big><a name="x" id="x">x</a></big></b>
+<br>
+This argument has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x<br>
+</span></font></i></code>
+It is the value we are forming a hash code for.
+
+<br>
+<br>
+<b><big><a name="code" id="code">code</a></big></b>
+<br>
+The return value 
+<code><i><font color="black"><span style='white-space: nowrap'>code</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;unsigned&nbsp;short&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>code</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+It is the hash code corresponding to 
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+. This intention is the
+commonly used values will have different hash codes.
+The hash code must satisfy
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>code</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&lt;&nbsp;CPPAD_HASH_TABLE_SIZE<br>
+</span></font></code>
+so that it is a valid index into the hash code table.
+
+<br>
+<br>
+<b><big><a name="inline" id="inline">inline</a></big></b>
+<br>
+If you define this function, it should declare it to be <code><font color="blue">inline</font></code>,
+so that you do not get multiple definitions from different compilation units.
+
+<br>
+<br>
+<b><big><a name="Example" id="Example">Example</a></big></b>
+<br>
+See the <code><font color="blue">base_alloc</font></code> <a href="base_alloc.hpp.htm#hash_code" target="_top"><span style='white-space: nowrap'>hash_code</span></a>
+
+and the <code><font color="blue">adouble</font></code> <a href="base_adolc.hpp.htm#hash_code" target="_top"><span style='white-space: nowrap'>hash_code</span></a>
+.
+
+
+<hr>Input File: cppad/core/base_hash.hpp
+
+</body>
+</html>

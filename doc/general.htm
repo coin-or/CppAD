@@ -1,0 +1,138 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>General Examples</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="General Examples">
+<meta name="keywords" id="keywords" content=" general examples realistic description ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_general_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://coin-or.github.io/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="get_started.cpp.htm" target="_top">Prev</a>
+</td><td><a href="ad_fun.cpp.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>Example</option>
+<option>General</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>CppAD-&gt;</option>
+<option>Install</option>
+<option>Introduction</option>
+<option>AD</option>
+<option>ADFun</option>
+<option>preprocessor</option>
+<option>multi_thread</option>
+<option>utility</option>
+<option>ipopt_solve</option>
+<option>Example</option>
+<option>speed</option>
+<option>Appendix</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>Example-&gt;</option>
+<option>get_started.cpp</option>
+<option>General</option>
+<option>ExampleUtility</option>
+<option>ListAllExamples</option>
+<option>testvector</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down0(this)'>
+<option>General-&gt;</option>
+<option>ad_fun.cpp</option>
+<option>ad_in_c.cpp</option>
+<option>conj_grad.cpp</option>
+<option>cppad_eigen.hpp</option>
+<option>hes_minor_det.cpp</option>
+<option>hes_lu_det.cpp</option>
+<option>interface2c.cpp</option>
+<option>jac_minor_det.cpp</option>
+<option>jac_lu_det.cpp</option>
+<option>mul_level</option>
+<option>ode_stiff.cpp</option>
+<option>mul_level_ode.cpp</option>
+<option>mul_level_adolc_ode.cpp</option>
+<option>ode_taylor.cpp</option>
+<option>stack_machine.cpp</option>
+</select>
+</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Description</option>
+<option>Contents</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@
+
+
+
+<center><b><big><big>General Examples</big></big></b></center>
+<br>
+<b><big><a name="Description" id="Description">Description</a></big></b>
+<br>
+Most of the examples in CppAD are part of the documentation
+for a specific feature; for example, <a href="add.cpp.htm" target="_top"><span style='white-space: nowrap'>add.cpp</span></a>
+ is an
+example using the <a href="ad_binary.htm" target="_top"><span style='white-space: nowrap'>addition&nbsp;operator</span></a>
+.
+The examples list in this section are of a more general nature.
+
+<br>
+<br>
+<b><big><a name="Contents" id="Contents">Contents</a></big></b>
+<br>
+<table>
+<tr><td><a href="ad_fun.cpp.htm" target="_top">ad_fun.cpp</a></td><td>Creating&nbsp;Your&nbsp;Own&nbsp;Interface&nbsp;to&nbsp;an&nbsp;ADFun&nbsp;Object</td></tr><tr><td><a href="ad_in_c.cpp.htm" target="_top">ad_in_c.cpp</a></td><td>Example&nbsp;and&nbsp;Test&nbsp;Linking&nbsp;CppAD&nbsp;to&nbsp;Languages&nbsp;Other&nbsp;than&nbsp;C++</td></tr><tr><td><a href="conj_grad.cpp.htm" target="_top">conj_grad.cpp</a></td><td>Differentiate&nbsp;Conjugate&nbsp;Gradient&nbsp;Algorithm:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="cppad_eigen.hpp.htm" target="_top">cppad_eigen.hpp</a></td><td>Enable&nbsp;Use&nbsp;of&nbsp;Eigen&nbsp;Linear&nbsp;Algebra&nbsp;Package&nbsp;with&nbsp;CppAD</td></tr><tr><td><a href="hes_minor_det.cpp.htm" target="_top">hes_minor_det.cpp</a></td><td>Gradient&nbsp;of&nbsp;Determinant&nbsp;Using&nbsp;Expansion&nbsp;by&nbsp;Minors:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="hes_lu_det.cpp.htm" target="_top">hes_lu_det.cpp</a></td><td>Gradient&nbsp;of&nbsp;Determinant&nbsp;Using&nbsp;LU&nbsp;Factorization:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="interface2c.cpp.htm" target="_top">interface2c.cpp</a></td><td>Interfacing&nbsp;to&nbsp;C:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="jac_minor_det.cpp.htm" target="_top">jac_minor_det.cpp</a></td><td>Gradient&nbsp;of&nbsp;Determinant&nbsp;Using&nbsp;Expansion&nbsp;by&nbsp;Minors:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="jac_lu_det.cpp.htm" target="_top">jac_lu_det.cpp</a></td><td>Gradient&nbsp;of&nbsp;Determinant&nbsp;Using&nbsp;Lu&nbsp;Factorization:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="mul_level.htm" target="_top">mul_level</a></td><td>Using&nbsp;Multiple&nbsp;Levels&nbsp;of&nbsp;AD</td></tr><tr><td><a href="ode_stiff.cpp.htm" target="_top">ode_stiff.cpp</a></td><td>A&nbsp;Stiff&nbsp;Ode:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="mul_level_ode.cpp.htm" target="_top">mul_level_ode.cpp</a></td><td>Taylor's&nbsp;Ode&nbsp;Solver:&nbsp;A&nbsp;Multi-Level&nbsp;AD&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="mul_level_adolc_ode.cpp.htm" target="_top">mul_level_adolc_ode.cpp</a></td><td>Taylor's&nbsp;Ode&nbsp;Solver:&nbsp;A&nbsp;Multi-Level&nbsp;Adolc&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="ode_taylor.cpp.htm" target="_top">ode_taylor.cpp</a></td><td>Taylor's&nbsp;Ode&nbsp;Solver:&nbsp;An&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="stack_machine.cpp.htm" target="_top">stack_machine.cpp</a></td><td>Example&nbsp;Differentiating&nbsp;a&nbsp;Stack&nbsp;Machine&nbsp;Interpreter</td></tr></table>
+<hr>Input File: omh/example_list.omh
+
+</body>
+</html>

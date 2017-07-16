@@ -1,0 +1,1261 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>Nonlinear Programming Using the CppAD Interface to Ipopt</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Nonlinear Programming Using the CppAD Interface to Ipopt">
+<meta name="keywords" id="keywords" content=" nonlinear programming using the cppad interface to ipopt Ad deprecated 2012-11-28 syntax purpose cppad_ipopt namespace ipopt_library_paths fg(x) index vector projection injection representation simple sizevector numbervector adnumber advector n m x_i x_l x_u g_l g_u fg_info fg_info.number_functions fg_info.eval_r fg_info.retape fg_info.domain_size fg_info.range_size fg_info.number_terms fg_info.index solution status x z_l z_u g lambda obj_value example wish list ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_cppad_ipopt_nlp_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://coin-or.github.io/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="test_vector.htm" target="_top">Prev</a>
+</td><td><a href="ipopt_nlp_get_started.cpp.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>Appendix</option>
+<option>deprecated</option>
+<option>cppad_ipopt_nlp</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>CppAD-&gt;</option>
+<option>Install</option>
+<option>Introduction</option>
+<option>AD</option>
+<option>ADFun</option>
+<option>preprocessor</option>
+<option>multi_thread</option>
+<option>utility</option>
+<option>ipopt_solve</option>
+<option>Example</option>
+<option>speed</option>
+<option>Appendix</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>Appendix-&gt;</option>
+<option>Faq</option>
+<option>directory</option>
+<option>Theory</option>
+<option>glossary</option>
+<option>Bib</option>
+<option>wish_list</option>
+<option>whats_new</option>
+<option>deprecated</option>
+<option>compare_c</option>
+<option>numeric_ad</option>
+<option>addon</option>
+<option>License</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>deprecated-&gt;</option>
+<option>include_deprecated</option>
+<option>FunDeprecated</option>
+<option>CompareChange</option>
+<option>omp_max_thread</option>
+<option>TrackNewDel</option>
+<option>omp_alloc</option>
+<option>memory_leak</option>
+<option>epsilon</option>
+<option>test_vector</option>
+<option>cppad_ipopt_nlp</option>
+<option>old_atomic</option>
+<option>zdouble</option>
+<option>autotools</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down0(this)'>
+<option>cppad_ipopt_nlp-&gt;</option>
+<option>ipopt_nlp_get_started.cpp</option>
+<option>ipopt_nlp_ode</option>
+<option>ipopt_ode_speed.cpp</option>
+</select>
+</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Deprecated 2012-11-28</option>
+<option>Syntax</option>
+<option>Purpose</option>
+<option>cppad_ipopt namespace</option>
+<option>ipopt_library_paths</option>
+<option>fg(x)</option>
+<option>---..Index Vector</option>
+<option>---..Projection</option>
+<option>---..Injection</option>
+<option>---..Representation</option>
+<option>Simple Representation</option>
+<option>SizeVector</option>
+<option>NumberVector</option>
+<option>ADNumber</option>
+<option>ADVector</option>
+<option>n</option>
+<option>m</option>
+<option>x_i</option>
+<option>x_l</option>
+<option>x_u</option>
+<option>g_l</option>
+<option>g_u</option>
+<option>fg_info</option>
+<option>---..fg_info.number_functions</option>
+<option>---..fg_info.eval_r</option>
+<option>---..fg_info.retape</option>
+<option>---..fg_info.domain_size</option>
+<option>---..fg_info.range_size</option>
+<option>---..fg_info.number_terms</option>
+<option>---..fg_info.index</option>
+<option>solution</option>
+<option>---..status</option>
+<option>---..x</option>
+<option>---..z_l</option>
+<option>---..z_u</option>
+<option>---..g</option>
+<option>---..lambda</option>
+<option>---..obj_value</option>
+<option>Example</option>
+<option>Wish List</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>Nonlinear Programming Using the CppAD Interface to Ipopt</big></big></b></center>
+<br>
+<b><big><a name="Deprecated 2012-11-28" id="Deprecated 2012-11-28">Deprecated 2012-11-28</a></big></b>
+<br>
+This interface to Ipopt is deprecated, use <a href="ipopt_solve.htm" target="_top"><span style='white-space: nowrap'>ipopt_solve</span></a>
+ instead.
+
+<br>
+<br>
+<b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
+
+<br>
+
+<code><font color="blue"><span style='white-space: nowrap'>#&nbsp;include&nbsp;&quot;cppad_ipopt_nlp.hpp&quot;<br>
+</span></font></code>
+
+<code><font color="blue"><span style='white-space: nowrap'>cppad_ipopt_solution&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>solution</span></font></i><font color="blue"><span style='white-space: nowrap'>;<br>
+</span></font></code>
+
+<code><font color="blue"><span style='white-space: nowrap'>cppad_ipopt_nlp&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>cppad_nlp</span></font></i><font color="blue"><span style='white-space: nowrap'>(<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>m</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x_i</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x_l</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x_u</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>g_l</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>g_u</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>fg_info</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>solution</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+)</span></font></code>
+
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+export&nbsp;LD_LIBRARY_PATH=$LD_LIBRARY_PATH:</span></font><i><font color="black"><span style='white-space: nowrap'>ipopt_library_paths</span></font></i></code>
+
+
+<br>
+<br>
+<b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
+<br>
+The class <code><font color="blue">cppad_ipopt_nlp</font></code> is used to solve nonlinear programming
+problems of the form
+<small>@[@
+
+\begin{array}{rll}
+{\rm minimize}      & f(x)
+\\
+{\rm subject \; to} & g^l \leq g(x) \leq g^u
+\\
+                    & x^l  \leq x   \leq x^u
+\end{array}
+
+@]@</small>
+This is done using
+<a href="http://coin-or.github.io/projects/Ipopt.xml" target="_top"><span style='white-space: nowrap'>Ipopt</span></a>
+
+optimizer and
+<a href="http://coin-or.github.io/CppAD/" target="_top"><span style='white-space: nowrap'>CppAD</span></a>
+
+Algorithmic Differentiation package.
+
+<br>
+<br>
+<b><big><a name="cppad_ipopt namespace" id="cppad_ipopt namespace">cppad_ipopt namespace</a></big></b>
+<br>
+All of the declarations for these routines
+are in the <code><font color="blue">cppad_ipopt</font></code> namespace
+(not the <code><font color="blue">CppAD</font></code> namespace).
+For example; <a href="cppad_ipopt_nlp.htm#SizeVector" target="_top"><span style='white-space: nowrap'>SizeVector</span></a>
+ below
+actually denotes the type <code><font color="blue">cppad_ipopt::SizeVector</font></code>.
+
+<br>
+<br>
+<b><big><a name="ipopt_library_paths" id="ipopt_library_paths">ipopt_library_paths</a></big></b>
+<br>
+If you are linking to a shared version of the Ipopt library,
+you may have to add some paths the <code><font color="blue">LD_LIBRARY_PATH</font></code>
+shell variable using the <code><font color="blue">export</font></code> command in the syntax above.
+For example, if the file the ipopt library is
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ipopt_prefix</span></font></i><font color="blue"><span style='white-space: nowrap'>/lib64/libipopt.a<br>
+</span></font></code>
+you will need to add the corresponding directory; e.g.,
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;export&nbsp;LD_LIBRARY_PATH=&quot;</span></font><i><font color="black"><span style='white-space: nowrap'>ipopt_prefix</span></font></i><font color="blue"><span style='white-space: nowrap'>/lib64</span></font><i><font color="black"><span style='white-space: nowrap'>:$LD_LIBRARY_PATH&quot;<br>
+</span></font></i></code>
+see <a href="ipopt_prefix.htm" target="_top"><span style='white-space: nowrap'>ipopt_prefix</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="fg(x)" id="fg(x)">fg(x)</a></big></b>
+<br>
+The function <small>@(@
+fg : \B{R}^n \rightarrow \B{R}^{m+1}
+@)@</small> is defined by
+<small>@[@
+
+\begin{array}{rcl}
+	fg_0 (x)     & = & f(x)         \\
+	fg_1 (x)     & = & g_0 (x)      \\
+	             & \vdots &         \\
+	fg_m (x)     & = & g_{m-1} (x)
+	\end{array}
+
+@]@</small>
+
+<br>
+<br>
+<b><a name="fg(x).Index Vector" id="fg(x).Index Vector">Index Vector</a></b>
+<br>
+We define an 
+<code><i><font color="black"><span style='white-space: nowrap'>index&nbsp;vector</span></font></i></code>
+ as a vector of non-negative integers
+for which none of the values are equal; i.e.,
+it is both a vector and a set.
+If <small>@(@
+I
+@)@</small> is an index vector <small>@(@
+|I|
+@)@</small> is used to denote the
+number of elements in <small>@(@
+I
+@)@</small> and <small>@(@
+\| I \|
+@)@</small> is used
+to denote the value of the maximum element in <small>@(@
+I
+@)@</small>.
+
+<br>
+<br>
+<b><a name="fg(x).Projection" id="fg(x).Projection">Projection</a></b>
+<br>
+Given an index vector <small>@(@
+J
+@)@</small> and a positive integer <small>@(@
+n
+@)@</small>
+where <small>@(@
+n > \| J \|
+@)@</small>, we use <small>@(@
+J \otimes n
+@)@</small> for
+the mapping <small>@(@
+( J \otimes n ) : \B{R}^n \rightarrow \B{R}^{|J|}
+@)@</small> defined by
+<small>@[@
+
+	[ J \otimes n ] (x)_j = x_{J(j)}
+
+@]@</small>
+for <small>@(@
+j = 0 , \ldots |J| - 1
+@)@</small>.
+
+<br>
+<br>
+<b><a name="fg(x).Injection" id="fg(x).Injection">Injection</a></b>
+<br>
+Given an index vector <small>@(@
+I
+@)@</small> and a positive integer <small>@(@
+m
+@)@</small>
+where <small>@(@
+m > \| I \|
+@)@</small>, we use <small>@(@
+m \otimes I
+@)@</small> for
+the mapping <small>@(@
+( m \otimes I ): \B{R}^{|I|} \rightarrow \B{R}^m
+@)@</small> defined by
+<small>@[@
+
+[ m \otimes I ] (y)_i = \left\{ \begin{array}{ll}
+y_k & {\rm if} \; i = I(k) \; {\rm for \; some} \;
+	k \in \{ 0 , \cdots, |I|-1 \}
+\\
+0   & {\rm otherwise}
+\end{array} \right.
+
+@]@</small>
+
+<br>
+<br>
+<b><a name="fg(x).Representation" id="fg(x).Representation">Representation</a></b>
+<br>
+In many applications, each of the component functions of <small>@(@
+fg(x)
+@)@</small>
+only depend on a few of the components of <small>@(@
+x
+@)@</small>.
+In this case, expressing <small>@(@
+fg(x)
+@)@</small> in terms of simpler functions
+with fewer arguments can greatly reduce the amount of work required
+to compute its derivatives.
+<code><span style='white-space: nowrap'><br>
+<br>
+</span></code>We use the functions
+<small>@(@
+r_k : \B{R}^{q(k)} \rightarrow \B{R}^{p(k)}
+@)@</small>
+for <small>@(@
+k = 0 , \ldots , K
+@)@</small> to express our
+representation of <small>@(@
+fg(x)
+@)@</small> in terms of simpler functions
+as follows
+<small>@[@
+
+fg(x) = \sum_{k=0}^{K-1} \; \sum_{\ell=0}^{L(k) - 1}
+[ (m+1) \otimes I_{k,\ell} ] \; \circ
+	 \; r_k \; \circ \; [ J_{k,\ell} \otimes n ] \; (x)
+
+@]@</small>
+where <small>@(@
+\circ
+@)@</small> represents function composition,
+for <small>@(@
+k = 0 , \ldots , K - 1
+@)@</small>, and <small>@(@
+\ell = 0 , \ldots , L(k)
+@)@</small>,
+<small>@(@
+I_{k,\ell}
+@)@</small> and  <small>@(@
+J_{k,\ell}
+@)@</small> are index vectors with
+<small>@(@
+| J_{k,\ell} | = q(k)
+@)@</small>,
+<small>@(@
+\| J_{k,\ell} \| < n
+@)@</small>,
+<small>@(@
+| I_{k,\ell} | = p(k)
+@)@</small>, and
+<small>@(@
+\| I_{k,\ell} \| \leq m
+@)@</small>.
+
+<br>
+<br>
+<b><big><a name="Simple Representation" id="Simple Representation">Simple Representation</a></big></b>
+<br>
+In the simple representation,
+<small>@(@
+r_0 (x) = fg(x)
+@)@</small>,
+<small>@(@
+K = 1
+@)@</small>,
+<small>@(@
+q(0) = n
+@)@</small>,
+<small>@(@
+p(0) = m+1
+@)@</small>,
+<small>@(@
+L(0) = 1
+@)@</small>,
+<small>@(@
+I_{0,0} = (0 , \ldots , m)
+@)@</small>,
+and <small>@(@
+J_{0,0} = (0 , \ldots , n-1)
+@)@</small>.
+
+<br>
+<br>
+<b><big><a name="SizeVector" id="SizeVector">SizeVector</a></big></b>
+<br>
+The type 
+<code><font color="blue"><span style='white-space: nowrap'>SizeVector</span></font></code>
+ is defined by the
+
+<code><font color="blue"><span style='white-space: nowrap'>cppad_ipopt_nlp.hpp</span></font></code>
+ include file to be a
+<a href="simplevector.htm" target="_top"><span style='white-space: nowrap'>SimpleVector</span></a>
+ class with elements of type
+<code><font color="blue">size_t</font></code>.
+
+<br>
+<br>
+<b><big><a name="NumberVector" id="NumberVector">NumberVector</a></big></b>
+<br>
+The type 
+<code><font color="blue"><span style='white-space: nowrap'>NumberVector</span></font></code>
+ is defined by the
+
+<code><font color="blue"><span style='white-space: nowrap'>cppad_ipopt_nlp.hpp</span></font></code>
+ include file to be a
+<a href="simplevector.htm" target="_top"><span style='white-space: nowrap'>SimpleVector</span></a>
+ class with elements of type
+<code><font color="blue">Ipopt::Number</font></code>.
+
+<br>
+<br>
+<b><big><a name="ADNumber" id="ADNumber">ADNumber</a></big></b>
+<br>
+The type 
+<code><font color="blue"><span style='white-space: nowrap'>ADNumber</span></font></code>
+ is defined by the
+
+<code><font color="blue"><span style='white-space: nowrap'>cppad_ipopt_nlp.hpp</span></font></code>
+ include file to be a
+an AD type that can be used to compute derivatives.
+
+<br>
+<br>
+<b><big><a name="ADVector" id="ADVector">ADVector</a></big></b>
+<br>
+The type 
+<code><font color="blue"><span style='white-space: nowrap'>ADVector</span></font></code>
+ is defined by the
+
+<code><font color="blue"><span style='white-space: nowrap'>cppad_ipopt_nlp.hpp</span></font></code>
+ include file to be a
+<a href="simplevector.htm" target="_top"><span style='white-space: nowrap'>SimpleVector</span></a>
+ class with elements of type
+<code><font color="blue">ADNumber</font></code>.
+
+<br>
+<br>
+<b><big><a name="n" id="n">n</a></big></b>
+<br>
+The argument 
+<code><i><font color="black"><span style='white-space: nowrap'>n</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+It specifies the dimension of the argument space;
+i.e., <small>@(@
+x \in \B{R}^n
+@)@</small>.
+
+<br>
+<br>
+<b><big><a name="m" id="m">m</a></big></b>
+<br>
+The argument 
+<code><i><font color="black"><span style='white-space: nowrap'>m</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>m</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+It specifies the dimension of the range space for <small>@(@
+g
+@)@</small>;
+i.e., <small>@(@
+g : \B{R}^n \rightarrow \B{R}^m
+@)@</small>.
+
+<br>
+<br>
+<b><big><a name="x_i" id="x_i">x_i</a></big></b>
+<br>
+The argument 
+<code><i><font color="black"><span style='white-space: nowrap'>x_i</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;NumberVector&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x_i</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+and its size is equal to <small>@(@
+n
+@)@</small>.
+It specifies the initial point where Ipopt starts the optimization process.
+
+<br>
+<br>
+<b><big><a name="x_l" id="x_l">x_l</a></big></b>
+<br>
+The argument 
+<code><i><font color="black"><span style='white-space: nowrap'>x_l</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;NumberVector&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x_l</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+and its size is equal to <small>@(@
+n
+@)@</small>.
+It specifies the lower limits for the argument in the optimization problem;
+i.e., <small>@(@
+x^l
+@)@</small>.
+
+<br>
+<br>
+<b><big><a name="x_u" id="x_u">x_u</a></big></b>
+<br>
+The argument 
+<code><i><font color="black"><span style='white-space: nowrap'>x_u</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;NumberVector&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x_u</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+and its size is equal to <small>@(@
+n
+@)@</small>.
+It specifies the upper limits for the argument in the optimization problem;
+i.e., <small>@(@
+x^u
+@)@</small>.
+
+<br>
+<br>
+<b><big><a name="g_l" id="g_l">g_l</a></big></b>
+<br>
+The argument 
+<code><i><font color="black"><span style='white-space: nowrap'>g_l</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;NumberVector&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>g_l</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+and its size is equal to <small>@(@
+m
+@)@</small>.
+It specifies the lower limits for the constraints in the optimization problem;
+i.e., <small>@(@
+g^l
+@)@</small>.
+
+<br>
+<br>
+<b><big><a name="g_u" id="g_u">g_u</a></big></b>
+<br>
+The argument 
+<code><i><font color="black"><span style='white-space: nowrap'>g_u</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;NumberVector&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>g_u</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+and its size is equal to <small>@(@
+n
+@)@</small>.
+It specifies the upper limits for the constraints in the optimization problem;
+i.e., <small>@(@
+g^u
+@)@</small>.
+
+<br>
+<br>
+<b><big><a name="fg_info" id="fg_info">fg_info</a></big></b>
+<br>
+The argument 
+<code><i><font color="black"><span style='white-space: nowrap'>fg_info</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>FG_info&nbsp;fg_info</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+where the class 
+<code><i><font color="black"><span style='white-space: nowrap'>FG_info</span></font></i></code>
+ is derived from the
+base class <code><font color="blue">cppad_ipopt_fg_info</font></code>.
+Certain virtual member functions of 
+<code><i><font color="black"><span style='white-space: nowrap'>fg_info</span></font></i></code>
+ are used to
+compute the value of <small>@(@
+fg(x)
+@)@</small>.
+The specifications for these member functions are given below:
+
+<br>
+<br>
+<b><a name="fg_info.fg_info.number_functions" id="fg_info.fg_info.number_functions">fg_info.number_functions</a></b>
+<br>
+This member function has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;virtual&nbsp;size_t&nbsp;cppad_ipopt_fg_info::number_functions(void)<br>
+</span></font></code>
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>K</span></font></i></code>
+ has type <code><font color="blue">size_t</font></code>, the syntax
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>K</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>fg_info</span></font></i><font color="blue"><span style='white-space: nowrap'>.number_functions()<br>
+</span></font></code>
+sets 
+<code><i><font color="black"><span style='white-space: nowrap'>K</span></font></i></code>
+ to the number of functions used in the
+representation of <small>@(@
+fg(x)
+@)@</small>; i.e., <small>@(@
+K
+@)@</small> in
+the <a href="cppad_ipopt_nlp.htm#fg(x).Representation" target="_top"><span style='white-space: nowrap'>representation</span></a>
+ above.
+<code><span style='white-space: nowrap'><br>
+<br>
+</span></code>The <code><font color="blue">cppad_ipopt_fg_info</font></code> implementation of this function
+corresponds to the simple representation mentioned above; i.e.
+
+<code><i><font color="black"><span style='white-space: nowrap'>K</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;1</span></font></code>
+.
+
+<br>
+<br>
+<b><a name="fg_info.fg_info.eval_r" id="fg_info.fg_info.eval_r">fg_info.eval_r</a></b>
+<br>
+This member function has the prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+virtual&nbsp;ADVector&nbsp;cppad_ipopt_fg_info::eval_r(size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>k</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;const&nbsp;ADVector&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>u</span></font></i><font color="blue"><span style='white-space: nowrap'>)&nbsp;=&nbsp;0;<br>
+</span></font></code>
+Thus it is a pure virtual function and must be defined in the
+derived class 
+<code><i><font color="black"><span style='white-space: nowrap'>FG_info</span></font></i></code>
+.
+<code><span style='white-space: nowrap'><br>
+<br>
+</span></code>This function computes the value of <small>@(@
+r_k (u)
+@)@</small>
+used in the <a href="cppad_ipopt_nlp.htm#fg(x).Representation" target="_top"><span style='white-space: nowrap'>representation</span></a>
+
+for <small>@(@
+fg(x)
+@)@</small>.
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>k</span></font></i></code>
+ in <small>@(@
+\{0 , \ldots , K-1 \}
+@)@</small> has type <code><font color="blue">size_t</font></code>,
+
+<code><i><font color="black"><span style='white-space: nowrap'>u</span></font></i></code>
+ is an <code><font color="blue">ADVector</font></code> of size 
+<code><i><font color="black"><span style='white-space: nowrap'>q(k)</span></font></i></code>
+
+and 
+<code><i><font color="black"><span style='white-space: nowrap'>r</span></font></i></code>
+ is an <code><font color="blue">ADVector</font></code> of size 
+<code><i><font color="black"><span style='white-space: nowrap'>p(k)</span></font></i></code>
+
+the syntax
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>r</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>fg_info</span></font></i><font color="blue"><span style='white-space: nowrap'>.eval_r(</span></font><i><font color="black"><span style='white-space: nowrap'>k</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>u</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+set 
+<code><i><font color="black"><span style='white-space: nowrap'>r</span></font></i></code>
+ to the vector <small>@(@
+r_k (u)
+@)@</small>.
+
+<br>
+<br>
+<b><a name="fg_info.fg_info.retape" id="fg_info.fg_info.retape">fg_info.retape</a></b>
+<br>
+This member function has the prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;virtual&nbsp;bool&nbsp;cppad_ipopt_fg_info::retape(size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>k</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>k</span></font></i></code>
+ in <small>@(@
+\{0 , \ldots , K-1 \}
+@)@</small> has type <code><font color="blue">size_t</font></code>,
+and 
+<code><i><font color="black"><span style='white-space: nowrap'>retape</span></font></i></code>
+ has type <code><font color="blue">bool</font></code>,
+the syntax
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>retape</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>fg_info</span></font></i><font color="blue"><span style='white-space: nowrap'>.retape(</span></font><i><font color="black"><span style='white-space: nowrap'>k</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+sets 
+<code><i><font color="black"><span style='white-space: nowrap'>retape</span></font></i></code>
+ to true or false.
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>retape</span></font></i></code>
+ is true,
+<code><font color="blue">cppad_ipopt_nlp</font></code> will retape the operation sequence
+corresponding to <small>@(@
+r_k (u)
+@)@</small> for
+every value of 
+<code><i><font color="black"><span style='white-space: nowrap'>u</span></font></i></code>
+.
+An <code><font color="blue">cppad_ipopt_nlp</font></code> object
+should use much less memory and run faster if 
+<code><i><font color="black"><span style='white-space: nowrap'>retape</span></font></i></code>
+ is false.
+You can test both the true and false cases to make sure
+the operation sequence does not depend on 
+<code><i><font color="black"><span style='white-space: nowrap'>u</span></font></i></code>
+.
+<code><span style='white-space: nowrap'><br>
+<br>
+</span></code>The <code><font color="blue">cppad_ipopt_fg_info</font></code> implementation of this function
+sets 
+<code><i><font color="black"><span style='white-space: nowrap'>retape</span></font></i></code>
+ to true
+(while slower it is also safer to always retape).
+
+<br>
+<br>
+<b><a name="fg_info.fg_info.domain_size" id="fg_info.fg_info.domain_size">fg_info.domain_size</a></b>
+<br>
+This member function has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;virtual&nbsp;size_t&nbsp;cppad_ipopt_fg_info::domain_size(size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>k</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>k</span></font></i></code>
+ in <small>@(@
+\{0 , \ldots , K-1 \}
+@)@</small> has type <code><font color="blue">size_t</font></code>,
+and 
+<code><i><font color="black"><span style='white-space: nowrap'>q</span></font></i></code>
+ has type <code><font color="blue">size_t</font></code>, the syntax
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>q</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>fg_info</span></font></i><font color="blue"><span style='white-space: nowrap'>.domain_size(</span></font><i><font color="black"><span style='white-space: nowrap'>k</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+sets 
+<code><i><font color="black"><span style='white-space: nowrap'>q</span></font></i></code>
+ to the dimension of the domain space for <small>@(@
+r_k (u)
+@)@</small>;
+i.e., <small>@(@
+q(k)
+@)@</small> in
+the <a href="cppad_ipopt_nlp.htm#fg(x).Representation" target="_top"><span style='white-space: nowrap'>representation</span></a>
+ above.
+
+<code><span style='white-space: nowrap'><br>
+<br>
+</span></code>The <code><font color="blue">cppad_ipopt_h_base</font></code> implementation of this function
+corresponds to the simple representation mentioned above; i.e.,
+<small>@(@
+q = n
+@)@</small>.
+
+<br>
+<br>
+<b><a name="fg_info.fg_info.range_size" id="fg_info.fg_info.range_size">fg_info.range_size</a></b>
+<br>
+This member function has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;virtual&nbsp;size_t&nbsp;cppad_ipopt_fg_info::range_size(size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>k</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>k</span></font></i></code>
+ in <small>@(@
+\{0 , \ldots , K-1 \}
+@)@</small> has type <code><font color="blue">size_t</font></code>,
+and 
+<code><i><font color="black"><span style='white-space: nowrap'>p</span></font></i></code>
+ has type <code><font color="blue">size_t</font></code>, the syntax
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>p</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>fg_info</span></font></i><font color="blue"><span style='white-space: nowrap'>.range_size(</span></font><i><font color="black"><span style='white-space: nowrap'>k</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+sets 
+<code><i><font color="black"><span style='white-space: nowrap'>p</span></font></i></code>
+ to the dimension of the range space for <small>@(@
+r_k (u)
+@)@</small>;
+i.e., <small>@(@
+p(k)
+@)@</small> in
+the <a href="cppad_ipopt_nlp.htm#fg(x).Representation" target="_top"><span style='white-space: nowrap'>representation</span></a>
+ above.
+<code><span style='white-space: nowrap'><br>
+<br>
+</span></code>The <code><font color="blue">cppad_ipopt_h_base</font></code> implementation of this function
+corresponds to the simple representation mentioned above; i.e.,
+<small>@(@
+p = m+1
+@)@</small>.
+
+<br>
+<br>
+<b><a name="fg_info.fg_info.number_terms" id="fg_info.fg_info.number_terms">fg_info.number_terms</a></b>
+<br>
+This member function has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;virtual&nbsp;size_t&nbsp;cppad_ipopt_fg_info::number_terms(size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>k</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>k</span></font></i></code>
+ in <small>@(@
+\{0 , \ldots , K-1 \}
+@)@</small> has type <code><font color="blue">size_t</font></code>,
+and 
+<code><i><font color="black"><span style='white-space: nowrap'>L</span></font></i></code>
+ has type <code><font color="blue">size_t</font></code>, the syntax
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>L</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>fg_info</span></font></i><font color="blue"><span style='white-space: nowrap'>.number_terms(</span></font><i><font color="black"><span style='white-space: nowrap'>k</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+sets 
+<code><i><font color="black"><span style='white-space: nowrap'>L</span></font></i></code>
+ to the number of terms in representation
+for this value of 
+<code><i><font color="black"><span style='white-space: nowrap'>k</span></font></i></code>
+;
+i.e., <small>@(@
+L(k)
+@)@</small> in
+the <a href="cppad_ipopt_nlp.htm#fg(x).Representation" target="_top"><span style='white-space: nowrap'>representation</span></a>
+ above.
+<code><span style='white-space: nowrap'><br>
+<br>
+</span></code>The <code><font color="blue">cppad_ipopt_h_base</font></code> implementation of this function
+corresponds to the simple representation mentioned above; i.e.,
+<small>@(@
+L = 1
+@)@</small>.
+
+<br>
+<br>
+<b><a name="fg_info.fg_info.index" id="fg_info.fg_info.index">fg_info.index</a></b>
+<br>
+This member function has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;virtual&nbsp;void&nbsp;cppad_ipopt_fg_info::index(<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>k</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ell</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;SizeVector&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>I</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;SizeVector&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>J</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;)<br>
+</span></font></code>
+The argument
+
+<code><i><font color="black"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;k<br>
+</span></font></i></code>
+has type 
+<code><font color="blue"><span style='white-space: nowrap'>size_t</span></font></code>
+
+and is a value between zero and <small>@(@
+K-1
+@)@</small> inclusive.
+The argument
+
+<code><i><font color="black"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ell<br>
+</span></font></i></code>
+has type 
+<code><font color="blue"><span style='white-space: nowrap'>size_t</span></font></code>
+
+and is a value between zero and <small>@(@
+L(k)-1
+@)@</small> inclusive.
+The argument
+
+<code><i><font color="black"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;I<br>
+</span></font></i></code>
+is a <a href="simplevector.htm" target="_top"><span style='white-space: nowrap'>SimpleVector</span></a>
+ with elements
+of type <code><font color="blue">size_t</font></code> and size greater than or equal to <small>@(@
+p(k)
+@)@</small>.
+The input value of the elements of 
+<code><i><font color="black"><span style='white-space: nowrap'>I</span></font></i></code>
+ does not matter.
+The output value of
+the first <small>@(@
+p(k)
+@)@</small> elements of 
+<code><i><font color="black"><span style='white-space: nowrap'>I</span></font></i></code>
+
+must be the corresponding elements of <small>@(@
+I_{k,ell}
+@)@</small>
+in the <a href="cppad_ipopt_nlp.htm#fg(x).Representation" target="_top"><span style='white-space: nowrap'>representation</span></a>
+ above.
+The argument
+
+<code><i><font color="black"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;J<br>
+</span></font></i></code>
+is a <a href="simplevector.htm" target="_top"><span style='white-space: nowrap'>SimpleVector</span></a>
+ with elements
+of type <code><font color="blue">size_t</font></code> and size greater than or equal to <small>@(@
+q(k)
+@)@</small>.
+The input value of the elements of 
+<code><i><font color="black"><span style='white-space: nowrap'>J</span></font></i></code>
+ does not matter.
+The output value of
+the first <small>@(@
+q(k)
+@)@</small> elements of 
+<code><i><font color="black"><span style='white-space: nowrap'>J</span></font></i></code>
+
+must be the corresponding elements of <small>@(@
+J_{k,ell}
+@)@</small>
+in the <a href="cppad_ipopt_nlp.htm#fg(x).Representation" target="_top"><span style='white-space: nowrap'>representation</span></a>
+ above.
+<code><span style='white-space: nowrap'><br>
+<br>
+</span></code>The <code><font color="blue">cppad_ipopt_h_base</font></code> implementation of this function
+corresponds to the simple representation mentioned above; i.e.,
+for <small>@(@
+i = 0 , \ldots , m
+@)@</small>,
+
+<code><i><font color="black"><span style='white-space: nowrap'>I</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>]&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i></code>
+,
+and  for <small>@(@
+j = 0 , \ldots , n-1
+@)@</small>,
+
+<code><i><font color="black"><span style='white-space: nowrap'>J</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>j</span></font></i><font color="blue"><span style='white-space: nowrap'>]&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>j</span></font></i></code>
+.
+
+<br>
+<br>
+<b><big><a name="solution" id="solution">solution</a></big></b>
+<br>
+After the optimization process is completed, 
+<code><i><font color="black"><span style='white-space: nowrap'>solution</span></font></i></code>
+ contains
+the following information:
+
+<br>
+<br>
+<b><a name="solution.status" id="solution.status">status</a></b>
+<br>
+The 
+<code><i><font color="black"><span style='white-space: nowrap'>status</span></font></i></code>
+ field of 
+<code><i><font color="black"><span style='white-space: nowrap'>solution</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cppad_ipopt_solution::solution_status&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>solution</span></font></i><font color="blue"><span style='white-space: nowrap'>.status<br>
+</span></font></code>
+It is the final Ipopt status for the optimizer.
+Here is a list of the possible values for the status:
+
+<table><tr><td align='left'  valign='top'>
+
+
+<code><i><font color="black"><span style='white-space: nowrap'>status</span></font></i></code>
+ </td><td align='left'  valign='top'>
+ Meaning
+</td></tr><tr><td align='left'  valign='top'>
+
+not_defined </td><td align='left'  valign='top'>
+
+The optimizer did not return a final status to this <code><font color="blue">cppad_ipopt_nlp</font></code>
+object.
+</td></tr><tr><td align='left'  valign='top'>
+
+unknown </td><td align='left'  valign='top'>
+
+The status returned by the optimizer is not defined in the Ipopt
+documentation for <code><font color="blue">finalize_solution</font></code>.
+</td></tr><tr><td align='left'  valign='top'>
+
+success </td><td align='left'  valign='top'>
+
+Algorithm terminated successfully at a point satisfying the convergence
+tolerances (see Ipopt options).
+</td></tr><tr><td align='left'  valign='top'>
+
+maxiter_exceeded </td><td align='left'  valign='top'>
+
+The maximum number of iterations was exceeded (see Ipopt options).
+</td></tr><tr><td align='left'  valign='top'>
+
+stop_at_tiny_step </td><td align='left'  valign='top'>
+
+Algorithm terminated because progress was very slow.
+</td></tr><tr><td align='left'  valign='top'>
+
+stop_at_acceptable_point </td><td align='left'  valign='top'>
+
+Algorithm stopped at a point that was converged,
+not to the 'desired' tolerances, but to 'acceptable' tolerances
+(see Ipopt options).
+</td></tr><tr><td align='left'  valign='top'>
+
+local_infeasibility </td><td align='left'  valign='top'>
+
+Algorithm converged to a non-feasible point
+(problem may have no solution).
+</td></tr><tr><td align='left'  valign='top'>
+
+user_requested_stop </td><td align='left'  valign='top'>
+
+This return value should not happen.
+</td></tr><tr><td align='left'  valign='top'>
+
+diverging_iterates </td><td align='left'  valign='top'>
+
+It the iterates are diverging.
+</td></tr><tr><td align='left'  valign='top'>
+
+restoration_failure </td><td align='left'  valign='top'>
+
+Restoration phase failed, algorithm doesn't know how to proceed.
+</td></tr><tr><td align='left'  valign='top'>
+
+error_in_step_computation </td><td align='left'  valign='top'>
+
+An unrecoverable error occurred while Ipopt tried to
+compute the search direction.
+</td></tr><tr><td align='left'  valign='top'>
+
+invalid_number_detected </td><td align='left'  valign='top'>
+
+Algorithm received an invalid number (such as <code><font color="blue">nan</font></code> or <code><font color="blue">inf</font></code>)
+from the users function 
+<code><i><font color="black"><span style='white-space: nowrap'>fg_info</span></font></i><font color="blue"><span style='white-space: nowrap'>.eval</span></font></code>
+ or from the CppAD evaluations
+of its derivatives
+(see the Ipopt option <code><font color="blue">check_derivatives_for_naninf</font></code>).
+</td></tr><tr><td align='left'  valign='top'>
+
+internal_error </td><td align='left'  valign='top'>
+
+An unknown Ipopt internal error occurred.
+Contact the Ipopt authors through the mailing list.
+</td></tr>
+</table>
+<br>
+<b><a name="solution.x" id="solution.x">x</a></b>
+<br>
+The <code><font color="blue">x</font></code> field of 
+<code><i><font color="black"><span style='white-space: nowrap'>solution</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NumberVector&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>solution</span></font></i><font color="blue"><span style='white-space: nowrap'>.x<br>
+</span></font></code>
+and its size is equal to <small>@(@
+n
+@)@</small>.
+It is the final <small>@(@
+x
+@)@</small> value for the optimizer.
+
+<br>
+<br>
+<b><a name="solution.z_l" id="solution.z_l">z_l</a></b>
+<br>
+The <code><font color="blue">z_l</font></code> field of 
+<code><i><font color="black"><span style='white-space: nowrap'>solution</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NumberVector&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>solution</span></font></i><font color="blue"><span style='white-space: nowrap'>.z_l<br>
+</span></font></code>
+and its size is equal to <small>@(@
+n
+@)@</small>.
+It is the final Lagrange multipliers for the
+lower bounds on <small>@(@
+x
+@)@</small>.
+
+<br>
+<br>
+<b><a name="solution.z_u" id="solution.z_u">z_u</a></b>
+<br>
+The <code><font color="blue">z_u</font></code> field of 
+<code><i><font color="black"><span style='white-space: nowrap'>solution</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NumberVector&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>solution</span></font></i><font color="blue"><span style='white-space: nowrap'>.z_u<br>
+</span></font></code>
+and its size is equal to <small>@(@
+n
+@)@</small>.
+It is the final Lagrange multipliers for the
+upper bounds on <small>@(@
+x
+@)@</small>.
+
+<br>
+<br>
+<b><a name="solution.g" id="solution.g">g</a></b>
+<br>
+The <code><font color="blue">g</font></code> field of 
+<code><i><font color="black"><span style='white-space: nowrap'>solution</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NumberVector&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>solution</span></font></i><font color="blue"><span style='white-space: nowrap'>.g<br>
+</span></font></code>
+and its size is equal to <small>@(@
+m
+@)@</small>.
+It is the final value for the constraint function <small>@(@
+g(x)
+@)@</small>.
+
+<br>
+<br>
+<b><a name="solution.lambda" id="solution.lambda">lambda</a></b>
+<br>
+The <code><font color="blue">lambda</font></code> field of 
+<code><i><font color="black"><span style='white-space: nowrap'>solution</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NumberVector&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>solution</span></font></i><font color="blue"><span style='white-space: nowrap'>.lambda<br>
+</span></font></code>
+and its size is equal to <small>@(@
+m
+@)@</small>.
+It is the final value for the
+Lagrange multipliers corresponding to the constraint function.
+
+<br>
+<br>
+<b><a name="solution.obj_value" id="solution.obj_value">obj_value</a></b>
+<br>
+The <code><font color="blue">obj_value</font></code> field of 
+<code><i><font color="black"><span style='white-space: nowrap'>solution</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Number&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>solution</span></font></i><font color="blue"><span style='white-space: nowrap'>.obj_value<br>
+</span></font></code>
+It is the final value of the objective function <small>@(@
+f(x)
+@)@</small>.
+
+
+
+
+<br>
+<br>
+<b><big><a name="Example" id="Example">Example</a></big></b>
+<br>
+The file
+<a href="ipopt_nlp_get_started.cpp.htm" target="_top"><span style='white-space: nowrap'>ipopt_nlp_get_started.cpp</span></a>
+ is an example and test of
+<code><font color="blue">cppad_ipopt_nlp</font></code>  that uses the
+<a href="cppad_ipopt_nlp.htm#Simple Representation" target="_top"><span style='white-space: nowrap'>simple&nbsp;representation</span></a>
+.
+It returns true if it succeeds and false otherwise.
+The section <a href="ipopt_nlp_ode.htm" target="_top"><span style='white-space: nowrap'>ipopt_nlp_ode</span></a>
+ discusses an example that
+uses a more complex representation.
+
+<br>
+<br>
+<b><big><a name="Wish List" id="Wish List">Wish List</a></big></b>
+<br>
+This is a list of possible future improvements to
+<code><font color="blue">cppad_ipopt_nlp</font></code> that would require changed to the user interface:
+<ol type="1"><li>
+The routine 
+<code><font color="blue"><span style='white-space: nowrap'>fg_info.eval_r(</span></font><i><font color="black"><span style='white-space: nowrap'>k</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>u</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+ should also support
+
+<code><font color="blue"><span style='white-space: nowrap'>NumberVector</span></font></code>
+ for the type of the argument <code><font color="blue">u</font></code>
+(this would certainly be more efficient when
+
+<code><font color="blue"><span style='white-space: nowrap'>fg_info.retape(</span></font><i><font color="black"><span style='white-space: nowrap'>k</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+ is true and <small>@(@
+L(k) > 1
+@)@</small>).
+It could be an option for the user to provide this as well as
+the necessary <code><font color="blue">ADVector</font></code> definition.
+</li><li>
+
+There should a <a href="discrete.htm" target="_top"><span style='white-space: nowrap'>Discrete</span></a>
+ routine that the user can call
+to determine the value of <small>@(@
+\ell
+@)@</small> during the evaluation of
+
+<code><font color="blue"><span style='white-space: nowrap'>fg_info.eval_r(</span></font><i><font color="black"><span style='white-space: nowrap'>k</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>u</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+.
+This way data, which does not affect the derivative values,
+can be included in the function recording and evaluation.
+</li></ol>
+
+
+
+<hr>Input File: cppad_ipopt/src/cppad_ipopt_nlp.hpp
+
+</body>
+</html>

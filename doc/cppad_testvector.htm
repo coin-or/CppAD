@@ -1,0 +1,192 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>Choosing the CppAD Test Vector Template Class</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Choosing the CppAD Test Vector Template Class">
+<meta name="keywords" id="keywords" content=" choosing the cppad test vector template class purpose std boost eigen ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_cppad_testvector_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://coin-or.github.io/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="get_sacado.sh.htm" target="_top">Prev</a>
+</td><td><a href="cmake_check.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>Install</option>
+<option>cmake</option>
+<option>cppad_testvector</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>CppAD-&gt;</option>
+<option>Install</option>
+<option>Introduction</option>
+<option>AD</option>
+<option>ADFun</option>
+<option>preprocessor</option>
+<option>multi_thread</option>
+<option>utility</option>
+<option>ipopt_solve</option>
+<option>Example</option>
+<option>speed</option>
+<option>Appendix</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>Install-&gt;</option>
+<option>download</option>
+<option>cmake</option>
+<option>cmake_check</option>
+<option>pkgconfig</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>cmake-&gt;</option>
+<option>adolc_prefix</option>
+<option>colpack_prefix</option>
+<option>eigen_prefix</option>
+<option>fadbad_prefix</option>
+<option>ipopt_prefix</option>
+<option>sacado_prefix</option>
+<option>cppad_testvector</option>
+</select>
+</td>
+<td>cppad_testvector</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Purpose</option>
+<option>std</option>
+<option>cppad</option>
+<option>boost</option>
+<option>eigen</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@
+
+
+<center><b><big><big>Choosing the CppAD Test Vector Template Class</big></big></b></center>
+<br>
+<b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
+<br>
+The value 
+<code><i><font color="black"><span style='white-space: nowrap'>cppad_testvector</span></font></i></code>
+
+in the <a href="cmake.htm#CMake Command" target="_top"><span style='white-space: nowrap'>cmake&nbsp;command</span></a>
+ must be one of the
+following:
+<code><font color="blue">boost</font></code>, <code><font color="blue">cppad</font></code>, <code><font color="blue">eigen</font></code>, or <code><font color="blue">std</font></code>.
+It specifies which type of vector is corresponds to the template class
+<a href="testvector.htm" target="_top"><span style='white-space: nowrap'>CPPAD_TESTVECTOR</span></a>
+
+which is used for many of the CppAD examples and tests.
+
+<br>
+<br>
+<b><big><a name="std" id="std">std</a></big></b>
+<br>
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>cppad_testvector</span></font></i></code>
+ is 
+<code><i><font color="black"><span style='white-space: nowrap'>std</span></font></i></code>
+,
+the <code><font color="blue">std::vector</font></code> template class is used to define
+<code><font color="blue">CPPAD_TESTVECTOR</font></code>.
+
+<br>
+<br>
+<b><big><a name="cppad" id="cppad">cppad</a></big></b>
+<br>
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>cppad_testvector</span></font></i></code>
+ is 
+<code><i><font color="black"><span style='white-space: nowrap'>cppad</span></font></i></code>
+,
+the <a href="cppad_vector.htm" target="_top"><span style='white-space: nowrap'>cppad_vector</span></a>
+ template class is used to define
+<code><font color="blue">CPPAD_TESTVECTOR</font></code>.
+
+<br>
+<br>
+<b><big><a name="boost" id="boost">boost</a></big></b>
+<br>
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>cppad_testvector</span></font></i></code>
+ is 
+<code><i><font color="black"><span style='white-space: nowrap'>boost</span></font></i></code>
+,
+<a href="http://www.boost.org/doc/libs/1_52_0/libs/numeric/ublas/doc/vector.htm" target="_top"><span style='white-space: nowrap'>boost&nbsp;ublas&nbsp;vector</span></a>
+
+template class is used to define
+<code><font color="blue">CPPAD_TESTVECTOR</font></code>.
+In this case, the
+<a href="http://www.cmake.org/cmake/help/cmake2.6docs.html#module:FindBoost" target="_top"><span style='white-space: nowrap'>cmake&nbsp;FindBoost</span></a>
+
+module must be able to automatically figure out where Boost is installed.
+
+<br>
+<br>
+<b><big><a name="eigen" id="eigen">eigen</a></big></b>
+<br>
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>cppad_testvector</span></font></i></code>
+ is 
+<code><i><font color="black"><span style='white-space: nowrap'>eigen</span></font></i></code>
+,
+one of the eigen template classes is used to define
+<code><font color="blue">CPPAD_TESTVECTOR</font></code>.
+In this case,
+<a href="eigen_prefix.htm" target="_top"><span style='white-space: nowrap'>eigen_prefix</span></a>
+ must be specified on the <code><font color="blue">cmake</font></code> command line.
+
+
+
+<hr>Input File: omh/install/testvector.omh
+
+</body>
+</html>

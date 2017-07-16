@@ -1,0 +1,184 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>Set Maximum Number of Threads for omp_alloc Allocator</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Set Maximum Number of Threads for omp_alloc Allocator">
+<meta name="keywords" id="keywords" content=" set maximum number threads omp_alloc allocator max_num_threads removed syntax purpose restrictions ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_old_max_num_threads_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://coin-or.github.io/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="omp_efficient.htm" target="_top">Prev</a>
+</td><td><a href="omp_alloc.cpp.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>Appendix</option>
+<option>deprecated</option>
+<option>omp_alloc</option>
+<option>old_max_num_threads</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>Appendix-&gt;</option>
+<option>Faq</option>
+<option>directory</option>
+<option>Theory</option>
+<option>glossary</option>
+<option>Bib</option>
+<option>wish_list</option>
+<option>whats_new</option>
+<option>deprecated</option>
+<option>compare_c</option>
+<option>numeric_ad</option>
+<option>addon</option>
+<option>License</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>deprecated-&gt;</option>
+<option>include_deprecated</option>
+<option>FunDeprecated</option>
+<option>CompareChange</option>
+<option>omp_max_thread</option>
+<option>TrackNewDel</option>
+<option>omp_alloc</option>
+<option>memory_leak</option>
+<option>epsilon</option>
+<option>test_vector</option>
+<option>cppad_ipopt_nlp</option>
+<option>old_atomic</option>
+<option>zdouble</option>
+<option>autotools</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>omp_alloc-&gt;</option>
+<option>omp_max_num_threads</option>
+<option>omp_in_parallel</option>
+<option>omp_get_thread_num</option>
+<option>omp_get_memory</option>
+<option>omp_return_memory</option>
+<option>omp_free_available</option>
+<option>omp_inuse</option>
+<option>omp_available</option>
+<option>omp_create_array</option>
+<option>omp_delete_array</option>
+<option>omp_efficient</option>
+<option>old_max_num_threads</option>
+<option>omp_alloc.cpp</option>
+</select>
+</td>
+<td>old_max_num_threads</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Removed</option>
+<option>Syntax</option>
+<option>Purpose</option>
+<option>number</option>
+<option>Restrictions</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@
+
+<center><b><big><big>Set Maximum Number of Threads for omp_alloc Allocator</big></big></b></center>
+<br>
+<b><big><a name="Removed" id="Removed">Removed</a></big></b>
+<br>
+This function has been removed from the CppAD API.
+Use the function <a href="ta_parallel_setup.htm" target="_top"><span style='white-space: nowrap'>thread_alloc::parallel_setup</span></a>
+
+in its place.
+
+<br>
+<br>
+<b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
+
+<br>
+
+<code><font color="blue"><span style='white-space: nowrap'>#&nbsp;include&nbsp;&lt;cppad/utility/omp_alloc.hpp&gt;<br>
+</span></font></code>
+
+<code><font color="blue"><span style='white-space: nowrap'>omp_alloc::max_num_threads(</span></font><i><font color="black"><span style='white-space: nowrap'>number</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+
+
+<br>
+<br>
+<b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
+<br>
+By default there is only one thread and all execution is in sequential mode
+(not <a href="omp_in_parallel.htm" target="_top"><span style='white-space: nowrap'>parallel</span></a>
+).
+
+<br>
+<br>
+<b><big><a name="number" id="number">number</a></big></b>
+<br>
+The argument 
+<code><i><font color="black"><span style='white-space: nowrap'>number</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>number</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+It must be greater than zero and specifies the maximum number of
+OpenMP threads that will be active at one time.
+
+<br>
+<br>
+<b><big><a name="Restrictions" id="Restrictions">Restrictions</a></big></b>
+<br>
+This function must be called before the program enters
+<a href="omp_in_parallel.htm" target="_top"><span style='white-space: nowrap'>parallel</span></a>
+ execution mode.
+
+
+<hr>Input File: cppad/utility/omp_alloc.hpp
+
+</body>
+</html>

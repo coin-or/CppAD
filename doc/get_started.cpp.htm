@@ -1,0 +1,288 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>Getting Started Using CppAD to Compute Derivatives</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Getting Started Using CppAD to Compute Derivatives">
+<meta name="keywords" id="keywords" content=" getting started using cppad to compute derivatives simple example start purpose function derivative value poly exercises program output running ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_get_started.cpp_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://coin-or.github.io/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="example.htm" target="_top">Prev</a>
+</td><td><a href="general.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>Example</option>
+<option>get_started.cpp</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>CppAD-&gt;</option>
+<option>Install</option>
+<option>Introduction</option>
+<option>AD</option>
+<option>ADFun</option>
+<option>preprocessor</option>
+<option>multi_thread</option>
+<option>utility</option>
+<option>ipopt_solve</option>
+<option>Example</option>
+<option>speed</option>
+<option>Appendix</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>Example-&gt;</option>
+<option>get_started.cpp</option>
+<option>General</option>
+<option>ExampleUtility</option>
+<option>ListAllExamples</option>
+<option>testvector</option>
+</select>
+</td>
+<td>get_started.cpp</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Purpose</option>
+<option>Function</option>
+<option>Derivative</option>
+<option>Value</option>
+<option>Poly</option>
+<option>Exercises</option>
+<option>Program</option>
+<option>Output</option>
+<option>Running</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>Getting Started Using CppAD to Compute Derivatives</big></big></b></center>
+<br>
+<b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
+<br>
+Demonstrate the use of CppAD by computing the derivative
+of a simple example function.
+
+<br>
+<br>
+<b><big><a name="Function" id="Function">Function</a></big></b>
+<br>
+The example function <small>@(@
+f : \B{R} \rightarrow \B{R}
+@)@</small> is defined by
+<small>@[@
+
+      f(x) = a_0 + a_1 * x^1 + \cdots + a_{k-1} * x^{k-1}
+
+@]@</small>
+where 
+<code><i><font color="black"><span style='white-space: nowrap'>a</span></font></i></code>
+ is a fixed vector of length 
+<code><i><font color="black"><span style='white-space: nowrap'>k</span></font></i></code>
+.
+
+<br>
+<br>
+<b><big><a name="Derivative" id="Derivative">Derivative</a></big></b>
+<br>
+The derivative of <small>@(@
+f(x)
+@)@</small> is given by
+<small>@[@
+
+      f' (x) = a_1 + 2 * a_2 * x +  \cdots + (k-1) * a_{k-1} * x^{k-2}
+
+@]@</small>
+
+<br>
+<br>
+<b><big><a name="Value" id="Value">Value</a></big></b>
+<br>
+For the particular case in this example,
+<small>@(@
+k
+@)@</small> is equal to 5,
+<small>@(@
+a = (1, 1, 1, 1, 1)
+@)@</small>, and
+<small>@(@
+x = 3
+@)@</small>.
+If follows that
+<small>@[@
+
+      f' ( 3 ) = 1 + 2 * 3 + 3 * 3^2 + 4 * 3^3 = 142
+
+@]@</small>
+
+<br>
+<br>
+<b><big><a name="Poly" id="Poly">Poly</a></big></b>
+<br>
+The routine <code><font color="blue">Poly</font></code> is defined below for this particular application.
+A general purpose polynomial evaluation routine is documented and
+distributed with CppAD (see <a href="poly.htm" target="_top"><span style='white-space: nowrap'>Poly</span></a>
+).
+
+<br>
+<br>
+<b><big><a name="Exercises" id="Exercises">Exercises</a></big></b>
+<br>
+Modify the program below to accomplish the following tasks
+using CppAD:
+<ol type="1"><li>
+Compute and print the derivative of <small>@(@
+f(x) = 1 + x + x^2 + x^3 + x^4
+@)@</small>
+at the point <small>@(@
+x = 2
+@)@</small>.
+</li><li>
+
+Compute and print the derivative of <small>@(@
+f(x) = 1 + x + x^2 / 2
+@)@</small>
+at the point <small>@(@
+x = .5
+@)@</small>.
+</li><li>
+
+Compute and print the derivative of <small>@(@
+f(x) = \exp (x) - 1 - x - x^2 / 2
+@)@</small>
+at the point <small>@(@
+x = .5
+@)@</small>.
+</li></ol>
+
+
+
+<br>
+<br>
+<b><big><a name="Program" id="Program">Program</a></big></b>
+
+<pre><tt><b><font color="#000080">#include</font></b> <font color="#FF0000">&lt;iostream&gt;</font>      <i><font color="#9A1900">// standard input/output</font></i>
+<b><font color="#000080">#include</font></b> <font color="#FF0000">&lt;vector&gt;</font>        <i><font color="#9A1900">// standard vector</font></i>
+<b><font color="#000080">#include</font></b> <font color="#FF0000">&lt;cppad/cppad.hpp&gt;</font> <i><font color="#9A1900">// the CppAD package http://coin-or.github.io/CppAD/</font></i>
+
+<b><font color="#0000FF">namespace</font></b> <font color="#FF0000">{</font>
+      <i><font color="#9A1900">// define y(x) = Poly(a, x) in the empty namespace</font></i>
+      <b><font color="#0000FF">template</font></b> <font color="#990000">&lt;</font><b><font color="#0000FF">class</font></b> <font color="#008080">Type</font><font color="#990000">&gt;</font>
+      <font color="#008080">Type</font> <b><font color="#000000">Poly</font></b><font color="#990000">(</font><b><font color="#0000FF">const</font></b> std<font color="#990000">::</font><font color="#008080">vector&lt;double&gt;</font> <font color="#990000">&amp;</font>a<font color="#990000">,</font> <b><font color="#0000FF">const</font></b> <font color="#008080">Type</font> <font color="#990000">&amp;</font>x<font color="#990000">)</font>
+      <font color="#FF0000">{</font>     <font color="#008080">size_t</font> k  <font color="#990000">=</font> a<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">();</font>
+            <font color="#008080">Type</font> y   <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">.;</font>  <i><font color="#9A1900">// initialize summation</font></i>
+            <font color="#008080">Type</font> x_i <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">.;</font>  <i><font color="#9A1900">// initialize x^i</font></i>
+            <font color="#008080">size_t</font> i<font color="#990000">;</font>
+            <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> k<font color="#990000">;</font> i<font color="#990000">++)</font>
+            <font color="#FF0000">{</font>     y   <font color="#990000">+=</font> a<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">*</font> x_i<font color="#990000">;</font>  <i><font color="#9A1900">// y   = y + a_i * x^i</font></i>
+                  x_i <font color="#990000">*=</font> x<font color="#990000">;</font>           <i><font color="#9A1900">// x_i = x_i * x</font></i>
+            <font color="#FF0000">}</font>
+            <b><font color="#0000FF">return</font></b> y<font color="#990000">;</font>
+      <font color="#FF0000">}</font>
+<font color="#FF0000">}</font>
+<i><font color="#9A1900">// main program</font></i>
+<font color="#009900">int</font> <b><font color="#000000">main</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
+<font color="#FF0000">{</font>     <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>AD<font color="#990000">;</font>           <i><font color="#9A1900">// use AD as abbreviation for CppAD::AD</font></i>
+      <b><font color="#0000FF">using</font></b> std<font color="#990000">::</font>vector<font color="#990000">;</font>         <i><font color="#9A1900">// use vector as abbreviation for std::vector</font></i>
+      <font color="#008080">size_t</font> i<font color="#990000">;</font>                  <i><font color="#9A1900">// a temporary index</font></i>
+
+      <i><font color="#9A1900">// vector of polynomial coefficients</font></i>
+      <font color="#008080">size_t</font> k <font color="#990000">=</font> <font color="#993399">5</font><font color="#990000">;</font>              <i><font color="#9A1900">// number of polynomial coefficients</font></i>
+      <font color="#008080">vector&lt;double&gt;</font> <b><font color="#000000">a</font></b><font color="#990000">(</font>k<font color="#990000">);</font>       <i><font color="#9A1900">// vector of polynomial coefficients</font></i>
+      <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> k<font color="#990000">;</font> i<font color="#990000">++)</font>
+            a<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">.;</font>           <i><font color="#9A1900">// value of polynomial coefficients</font></i>
+
+      <i><font color="#9A1900">// domain space vector</font></i>
+      <font color="#008080">size_t</font> n <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font>              <i><font color="#9A1900">// number of domain space variables</font></i>
+      <font color="#008080">vector&lt; AD&lt;double&gt; &gt;</font> <b><font color="#000000">X</font></b><font color="#990000">(</font>n<font color="#990000">);</font> <i><font color="#9A1900">// vector of domain space variables</font></i>
+      X<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">3</font><font color="#990000">.;</font>                 <i><font color="#9A1900">// value corresponding to operation sequence</font></i>
+
+      <i><font color="#9A1900">// declare independent variables and start recording operation sequence</font></i>
+      CppAD<font color="#990000">::</font><b><font color="#000000">Independent</font></b><font color="#990000">(</font>X<font color="#990000">);</font>
+
+      <i><font color="#9A1900">// range space vector</font></i>
+      <font color="#008080">size_t</font> m <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font>              <i><font color="#9A1900">// number of ranges space variables</font></i>
+      <font color="#008080">vector&lt; AD&lt;double&gt; &gt;</font> <b><font color="#000000">Y</font></b><font color="#990000">(</font>m<font color="#990000">);</font> <i><font color="#9A1900">// vector of ranges space variables</font></i>
+      Y<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <b><font color="#000000">Poly</font></b><font color="#990000">(</font>a<font color="#990000">,</font> X<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]);</font>      <i><font color="#9A1900">// value during recording of operations</font></i>
+
+      <i><font color="#9A1900">// store operation sequence in f: X -&gt; Y and stop recording</font></i>
+      CppAD<font color="#990000">::</font><font color="#008080">ADFun&lt;double&gt;</font> <b><font color="#000000">f</font></b><font color="#990000">(</font>X<font color="#990000">,</font> Y<font color="#990000">);</font>
+
+      <i><font color="#9A1900">// compute derivative using operation sequence stored in f</font></i>
+      <font color="#008080">vector&lt;double&gt;</font> <b><font color="#000000">jac</font></b><font color="#990000">(</font>m <font color="#990000">*</font> n<font color="#990000">);</font> <i><font color="#9A1900">// Jacobian of f (m by n matrix)</font></i>
+      <font color="#008080">vector&lt;double&gt;</font> <b><font color="#000000">x</font></b><font color="#990000">(</font>n<font color="#990000">);</font>       <i><font color="#9A1900">// domain space vector</font></i>
+      x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">3</font><font color="#990000">.;</font>                 <i><font color="#9A1900">// argument value for derivative</font></i>
+      jac  <font color="#990000">=</font> f<font color="#990000">.</font><b><font color="#000000">Jacobian</font></b><font color="#990000">(</font>x<font color="#990000">);</font>      <i><font color="#9A1900">// Jacobian for operation sequence</font></i>
+
+      <i><font color="#9A1900">// print the results</font></i>
+      std<font color="#990000">::</font>cout <font color="#990000">&lt;&lt;</font> <font color="#FF0000">"f'(3) computed by CppAD = "</font> <font color="#990000">&lt;&lt;</font> jac<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">&lt;&lt;</font> std<font color="#990000">::</font>endl<font color="#990000">;</font>
+
+      <i><font color="#9A1900">// check if the derivative is correct</font></i>
+      <font color="#009900">int</font> error_code<font color="#990000">;</font>
+      <b><font color="#0000FF">if</font></b><font color="#990000">(</font> jac<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">==</font> <font color="#993399">142</font><font color="#990000">.</font> <font color="#990000">)</font>
+            error_code <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>      <i><font color="#9A1900">// return code for correct case</font></i>
+      <b><font color="#0000FF">else</font></b>  error_code <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font>      <i><font color="#9A1900">// return code for incorrect case</font></i>
+
+      <b><font color="#0000FF">return</font></b> error_code<font color="#990000">;</font>
+<font color="#FF0000">}</font></tt></pre>
+<br>
+<b><big><a name="Output" id="Output">Output</a></big></b>
+<br>
+Executing the program above will generate the following output:
+<code><font color='blue'><pre style='display:inline'> 
+     f'(3) computed by CppAD = 142
+</pre></font></code>
+<br>
+<b><big><a name="Running" id="Running">Running</a></big></b>
+<br>
+To build and run this program see <a href="cmake_check.htm" target="_top"><span style='white-space: nowrap'>cmake_check</span></a>
+.
+
+
+<hr>Input File: example/get_started/get_started.cpp
+
+</body>
+</html>

@@ -1,0 +1,215 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>A Simple Boost Thread Example and Test</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="A Simple Boost Thread Example and Test">
+<meta name="keywords" id="keywords" content=" simple boost thread example test A.1.1c purpose source code ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_a11c_bthread.cpp_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://coin-or.github.io/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="a11c_openmp.cpp.htm" target="_top">Prev</a>
+</td><td><a href="a11c_pthread.cpp.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>multi_thread</option>
+<option>thread_test.cpp</option>
+<option>a11c_bthread.cpp</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>CppAD-&gt;</option>
+<option>Install</option>
+<option>Introduction</option>
+<option>AD</option>
+<option>ADFun</option>
+<option>preprocessor</option>
+<option>multi_thread</option>
+<option>utility</option>
+<option>ipopt_solve</option>
+<option>Example</option>
+<option>speed</option>
+<option>Appendix</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>multi_thread-&gt;</option>
+<option>parallel_ad</option>
+<option>thread_test.cpp</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>thread_test.cpp-&gt;</option>
+<option>a11c_openmp.cpp</option>
+<option>a11c_bthread.cpp</option>
+<option>a11c_pthread.cpp</option>
+<option>simple_ad_openmp.cpp</option>
+<option>simple_ad_bthread.cpp</option>
+<option>simple_ad_pthread.cpp</option>
+<option>team_example.cpp</option>
+<option>harmonic.cpp</option>
+<option>multi_atomic.cpp</option>
+<option>multi_newton.cpp</option>
+<option>team_thread.hpp</option>
+</select>
+</td>
+<td>a11c_bthread.cpp</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Purpose</option>
+<option>Source Code</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>A Simple Boost Thread Example and Test</big></big></b></center>
+<br>
+<b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
+<br>
+This example just demonstrates Boost threads and does not use CppAD at all.
+
+<br>
+<br>
+<b><big><a name="Source Code" id="Source Code">Source Code</a></big></b>
+
+<code><font color="blue">
+<pre><tt>
+<b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;boost/thread.hpp&gt;</font>
+<b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;limits&gt;</font>
+<b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cmath&gt;</font>
+<b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cassert&gt;</font>
+<b><font color="#000080"># define</font></b> NUMBER_THREADS <font color="#993399">4</font>
+
+<b><font color="#0000FF">namespace</font></b> <font color="#FF0000">{</font> <i><font color="#9A1900">// Begin empty namespace</font></i>
+     <b><font color="#0000FF">class</font></b> <font color="#008080">worker_t</font>
+     <font color="#FF0000">{</font>
+     <b><font color="#0000FF">private</font></b><font color="#990000">:</font>
+          <font color="#009900">int</font>    n_<font color="#990000">;</font>
+          <font color="#009900">float</font><font color="#990000">*</font> a_<font color="#990000">;</font>
+          <font color="#009900">float</font><font color="#990000">*</font> b_<font color="#990000">;</font>
+     <b><font color="#0000FF">public</font></b><font color="#990000">:</font>
+          <font color="#009900">void</font> <b><font color="#000000">setup</font></b><font color="#990000">(</font><font color="#008080">size_t</font> n<font color="#990000">,</font> <font color="#009900">float</font><font color="#990000">*</font> a<font color="#990000">,</font> <font color="#009900">float</font><font color="#990000">*</font> b<font color="#990000">)</font>
+          <font color="#FF0000">{</font>    n_ <font color="#990000">=</font> <b><font color="#0000FF">static_cast</font></b><font color="#990000">&lt;</font><font color="#009900">int</font><font color="#990000">&gt;(</font>n<font color="#990000">);</font>
+               a_ <font color="#990000">=</font> a<font color="#990000">;</font>
+               b_ <font color="#990000">=</font> b<font color="#990000">;</font>
+          <font color="#FF0000">}</font>
+          <i><font color="#9A1900">// Beginning of Example A.1.1.1c of OpenMP 2.5 standard document</font></i>
+          <font color="#009900">void</font> <b><font color="#000000">a1</font></b><font color="#990000">(</font><font color="#009900">int</font> n<font color="#990000">,</font> <font color="#009900">float</font> <font color="#990000">*</font>a<font color="#990000">,</font> <font color="#009900">float</font> <font color="#990000">*</font>b<font color="#990000">)</font>
+          <font color="#FF0000">{</font>    <font color="#009900">int</font> i<font color="#990000">;</font>
+               <i><font color="#9A1900">// for some reason this function is missing on some systems</font></i>
+               <i><font color="#9A1900">// assert( bthread_is_multithreaded_np() &gt; 0 );</font></i>
+               <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> n<font color="#990000">;</font> i<font color="#990000">++)</font>
+                    b<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> <font color="#990000">(</font>a<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">+</font> a<font color="#990000">[</font>i<font color="#990000">-</font><font color="#993399">1</font><font color="#990000">])</font> <font color="#990000">/</font> <font color="#993399">2.0</font><font color="#990000">;</font>
+               <b><font color="#0000FF">return</font></b><font color="#990000">;</font>
+          <font color="#FF0000">}</font>
+          <i><font color="#9A1900">// End of Example A.1.1.1c of OpenMP 2.5 standard document</font></i>
+          <font color="#009900">void</font> <b><font color="#0000FF">operator</font></b><font color="#990000">()()</font>
+          <font color="#FF0000">{</font>    <b><font color="#000000">a1</font></b><font color="#990000">(</font>n_<font color="#990000">,</font> a_<font color="#990000">,</font> b_<font color="#990000">);</font> <font color="#FF0000">}</font>
+     <font color="#FF0000">}</font><font color="#990000">;</font>
+<font color="#FF0000">}</font>
+
+<font color="#009900">bool</font> <b><font color="#000000">a11c</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
+<font color="#FF0000">{</font>    <font color="#009900">bool</font> ok <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
+
+     <i><font color="#9A1900">// Test setup</font></i>
+     <font color="#008080">size_t</font> i<font color="#990000">,</font> j<font color="#990000">,</font> n_total <font color="#990000">=</font> <font color="#993399">10</font><font color="#990000">;</font>
+     <font color="#009900">float</font> <font color="#990000">*</font>a <font color="#990000">=</font> <b><font color="#0000FF">new</font></b> <font color="#009900">float</font><font color="#990000">[</font>n_total<font color="#990000">];</font>
+     <font color="#009900">float</font> <font color="#990000">*</font>b <font color="#990000">=</font> <b><font color="#0000FF">new</font></b> <font color="#009900">float</font><font color="#990000">[</font>n_total<font color="#990000">];</font>
+     <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> n_total<font color="#990000">;</font> i<font color="#990000">++)</font>
+          a<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> <font color="#009900">float</font><font color="#990000">(</font>i<font color="#990000">);</font>
+
+     <i><font color="#9A1900">// number of threads</font></i>
+     <font color="#008080">size_t</font> number_threads <font color="#990000">=</font> NUMBER_THREADS<font color="#990000">;</font>
+
+     <i><font color="#9A1900">// set of workers</font></i>
+     <font color="#008080">worker_t</font> worker<font color="#990000">[</font>NUMBER_THREADS<font color="#990000">];</font>
+     <i><font color="#9A1900">// threads for each worker</font></i>
+     boost<font color="#990000">::</font>thread<font color="#990000">*</font> bthread<font color="#990000">[</font>NUMBER_THREADS<font color="#990000">];</font>
+
+     <i><font color="#9A1900">// Break the work up into sub work for each thread</font></i>
+     <font color="#008080">size_t</font>  n     <font color="#990000">=</font> n_total <font color="#990000">/</font> number_threads<font color="#990000">;</font>
+     <font color="#008080">size_t</font>  n_tmp <font color="#990000">=</font> n<font color="#990000">;</font>
+     <font color="#009900">float</font><font color="#990000">*</font>  a_tmp <font color="#990000">=</font> a<font color="#990000">;</font>
+     <font color="#009900">float</font><font color="#990000">*</font>  b_tmp <font color="#990000">=</font> b<font color="#990000">;</font>
+     worker<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">].</font><b><font color="#000000">setup</font></b><font color="#990000">(</font>n_tmp<font color="#990000">,</font> a_tmp<font color="#990000">,</font> b_tmp<font color="#990000">);</font>
+     <b><font color="#0000FF">for</font></b><font color="#990000">(</font>j <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> number_threads<font color="#990000">;</font> j<font color="#990000">++)</font>
+     <font color="#FF0000">{</font>    n_tmp <font color="#990000">=</font> n <font color="#990000">+</font> <font color="#993399">1</font><font color="#990000">;</font>
+          a_tmp <font color="#990000">=</font> a_tmp <font color="#990000">+</font> n <font color="#990000">-</font> <font color="#993399">1</font><font color="#990000">;</font>
+          b_tmp <font color="#990000">=</font> b_tmp <font color="#990000">+</font> n <font color="#990000">-</font> <font color="#993399">1</font><font color="#990000">;</font>
+          <b><font color="#0000FF">if</font></b><font color="#990000">(</font> j <font color="#990000">==</font> <font color="#990000">(</font>number_threads <font color="#990000">-</font> <font color="#993399">1</font><font color="#990000">)</font> <font color="#990000">)</font>
+               n_tmp <font color="#990000">=</font> n_total <font color="#990000">-</font> j <font color="#990000">*</font> n <font color="#990000">+</font> <font color="#993399">1</font><font color="#990000">;</font>
+
+          worker<font color="#990000">[</font>j<font color="#990000">].</font><b><font color="#000000">setup</font></b><font color="#990000">(</font>n_tmp<font color="#990000">,</font> a_tmp<font color="#990000">,</font> b_tmp<font color="#990000">);</font>
+
+          <i><font color="#9A1900">// create this thread</font></i>
+          bthread<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">=</font> <b><font color="#0000FF">new</font></b> boost<font color="#990000">::</font><b><font color="#000000">thread</font></b><font color="#990000">(</font>worker<font color="#990000">[</font>j<font color="#990000">]);</font>
+     <font color="#FF0000">}</font>
+
+     <i><font color="#9A1900">// do this threads protion of the work</font></i>
+     worker<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]();</font>
+
+     <i><font color="#9A1900">// wait for other threads to finish</font></i>
+     <b><font color="#0000FF">for</font></b><font color="#990000">(</font>j <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> number_threads<font color="#990000">;</font> j<font color="#990000">++)</font>
+     <font color="#FF0000">{</font>    bthread<font color="#990000">[</font>j<font color="#990000">]-&gt;</font><b><font color="#000000">join</font></b><font color="#990000">();</font>
+          <b><font color="#0000FF">delete</font></b> bthread<font color="#990000">[</font>j<font color="#990000">];</font>
+     <font color="#FF0000">}</font>
+
+     <i><font color="#9A1900">// check the result</font></i>
+     <font color="#009900">float</font> eps <font color="#990000">=</font> <font color="#993399">100</font><font color="#990000">.</font> <font color="#990000">*</font> std<font color="#990000">::</font>numeric_limits<font color="#990000">&lt;</font><font color="#009900">float</font><font color="#990000">&gt;::</font><b><font color="#000000">epsilon</font></b><font color="#990000">();</font>
+     <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> n <font color="#990000">;</font> i<font color="#990000">++)</font>
+          ok <font color="#990000">&amp;=</font> std<font color="#990000">::</font><b><font color="#000000">fabs</font></b><font color="#990000">(</font> <font color="#990000">(</font><font color="#993399">2</font><font color="#990000">.</font> <font color="#990000">*</font> b<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">-</font> a<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">-</font> a<font color="#990000">[</font>i<font color="#990000">-</font><font color="#993399">1</font><font color="#990000">])</font> <font color="#990000">/</font> b<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">)</font> <font color="#990000">&lt;=</font> eps<font color="#990000">;</font>
+
+     <b><font color="#0000FF">delete</font></b> <font color="#990000">[]</font> a<font color="#990000">;</font>
+     <b><font color="#0000FF">delete</font></b> <font color="#990000">[]</font> b<font color="#990000">;</font>
+
+     <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
+<font color="#FF0000">}</font></tt></pre>
+</font></code>
+<hr>Input File: example/multi_thread/bthread/a11c_bthread.cpp
+
+</body>
+</html>

@@ -1,0 +1,344 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>zdouble: An AD Base Type With Absolute Zero</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="zdouble: An AD Base Type With Absolute Zero">
+<meta name="keywords" id="keywords" content=" zdouble: ad base type with absolute zero deprecated 2015-09-26 syntax constructor assignment comparison operators arithmetic standard math nan motivation general cppad requirements example ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_zdouble_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://coin-or.github.io/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="old_mat_mul.hpp.htm" target="_top">Prev</a>
+</td><td><a href="zdouble.cpp.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>Appendix</option>
+<option>deprecated</option>
+<option>zdouble</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>CppAD-&gt;</option>
+<option>Install</option>
+<option>Introduction</option>
+<option>AD</option>
+<option>ADFun</option>
+<option>preprocessor</option>
+<option>multi_thread</option>
+<option>utility</option>
+<option>ipopt_solve</option>
+<option>Example</option>
+<option>speed</option>
+<option>Appendix</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>Appendix-&gt;</option>
+<option>Faq</option>
+<option>directory</option>
+<option>Theory</option>
+<option>glossary</option>
+<option>Bib</option>
+<option>wish_list</option>
+<option>whats_new</option>
+<option>deprecated</option>
+<option>compare_c</option>
+<option>numeric_ad</option>
+<option>addon</option>
+<option>License</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>deprecated-&gt;</option>
+<option>include_deprecated</option>
+<option>FunDeprecated</option>
+<option>CompareChange</option>
+<option>omp_max_thread</option>
+<option>TrackNewDel</option>
+<option>omp_alloc</option>
+<option>memory_leak</option>
+<option>epsilon</option>
+<option>test_vector</option>
+<option>cppad_ipopt_nlp</option>
+<option>old_atomic</option>
+<option>zdouble</option>
+<option>autotools</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down0(this)'>
+<option>zdouble-&gt;</option>
+<option>zdouble.cpp</option>
+</select>
+</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Deprecated 2015-09-26</option>
+<option>Absolute Zero</option>
+<option>Syntax</option>
+<option>---..Constructor and Assignment</option>
+<option>---..Comparison Operators</option>
+<option>---..Arithmetic Operators</option>
+<option>---..Standard Math</option>
+<option>---..Nan</option>
+<option>Motivation</option>
+<option>---..General</option>
+<option>---..CppAD</option>
+<option>Base Type Requirements</option>
+<option>Example</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>zdouble: An AD Base Type With Absolute Zero</big></big></b></center>
+<br>
+<b><big><a name="Deprecated 2015-09-26" id="Deprecated 2015-09-26">Deprecated 2015-09-26</a></big></b>
+<br>
+Use the function <a href="azmul.htm" target="_top"><span style='white-space: nowrap'>azmul</span></a>
+ instead.
+
+<br>
+<br>
+<b><big><a name="Absolute Zero" id="Absolute Zero">Absolute Zero</a></big></b>
+<br>
+The <code><font color="blue">zdouble</font></code> class acts like the <code><font color="blue">double</font></code> type
+with the added property that zero times any value is zero.
+This includes zero time <a href="nan.htm" target="_top"><span style='white-space: nowrap'>nan</span></a>
+ and zero times infinity.
+In addition, zero divided by any value and any value times zero
+are also zero.
+
+<br>
+<br>
+<b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
+
+
+<br>
+<br>
+<b><a name="Syntax.Constructor and Assignment" id="Syntax.Constructor and Assignment">Constructor and Assignment</a></b>
+
+<br>
+
+<code><font color="blue"><span style='white-space: nowrap'>&nbsp;&nbsp;&nbsp;&nbsp;zdouble&nbsp;z<br>
+</span></font></code>
+
+<code><font color="blue"><span style='white-space: nowrap'>&nbsp;&nbsp;&nbsp;&nbsp;zdouble&nbsp;z(x)<br>
+</span></font></code>
+
+<code><i><font color="black"><span style='white-space: nowrap'>&nbsp;&nbsp;&nbsp;&nbsp;z1</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>op</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+where 
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+ is a <code><font color="blue">double</font></code> or <code><font color="blue">zdouble</font></code> object
+and 
+<code><i><font color="black"><span style='white-space: nowrap'>op</span></font></i></code>
+ is <code><font color="blue">=</font></code>, <code><font color="blue">+=</font></code>, <code><font color="blue">-=</font></code>, <code><font color="blue">*=</font></code>
+or <code><font color="blue">/=-</font></code>.
+
+<br>
+<br>
+<b><a name="Syntax.Comparison Operators" id="Syntax.Comparison Operators">Comparison Operators</a></b>
+
+<br>
+
+<code><i><font color="black"><span style='white-space: nowrap'>&nbsp;&nbsp;&nbsp;&nbsp;b</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>z</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>op</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+
+<code><i><font color="black"><span style='white-space: nowrap'>&nbsp;&nbsp;&nbsp;&nbsp;b</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>op</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>z</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+where 
+<code><i><font color="black"><span style='white-space: nowrap'>b</span></font></i></code>
+ is a <code><font color="blue">bool</font></code> object,
+
+<code><i><font color="black"><span style='white-space: nowrap'>z</span></font></i></code>
+ is a <code><font color="blue">zdouble</font></code> object,
+
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+ is a <code><font color="blue">double</font></code> or <code><font color="blue">zdouble</font></code> object, and
+
+<code><i><font color="black"><span style='white-space: nowrap'>op</span></font></i></code>
+ is <code><font color="blue">==</font></code>, <code><font color="blue">!=</font></code>, <code><font color="blue">&lt;=</font></code>, <code><font color="blue">&gt;=</font></code>,
+<code><font color="blue">&lt;</font></code> or <code><font color="blue">&gt;</font></code>.
+
+<br>
+<br>
+<b><a name="Syntax.Arithmetic Operators" id="Syntax.Arithmetic Operators">Arithmetic Operators</a></b>
+
+<br>
+
+<code><i><font color="black"><span style='white-space: nowrap'>&nbsp;&nbsp;&nbsp;&nbsp;z2</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>z1</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>op</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+
+<code><i><font color="black"><span style='white-space: nowrap'>&nbsp;&nbsp;&nbsp;&nbsp;z2</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>op</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>z1</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+where 
+<code><i><font color="black"><span style='white-space: nowrap'>z1</span></font></i></code>
+, 
+<code><i><font color="black"><span style='white-space: nowrap'>z2</span></font></i></code>
+ are <code><font color="blue">zdouble</font></code> objects,
+
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+ is a <code><font color="blue">double</font></code> or <code><font color="blue">zdouble</font></code> object, and
+
+<code><i><font color="black"><span style='white-space: nowrap'>op</span></font></i></code>
+ is <code><font color="blue">+</font></code>, <code><font color="blue">-</font></code>, <code><font color="blue">*</font></code> or <code><font color="blue">/</font></code>.
+
+
+<br>
+<br>
+<b><a name="Syntax.Standard Math" id="Syntax.Standard Math">Standard Math</a></b>
+
+<br>
+
+<code><i><font color="black"><span style='white-space: nowrap'>&nbsp;&nbsp;&nbsp;&nbsp;z2</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>fun</span></font></i><font color="blue"><span style='white-space: nowrap'>(</span></font><i><font color="black"><span style='white-space: nowrap'>z1</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+
+<code><i><font color="black"><span style='white-space: nowrap'>&nbsp;&nbsp;&nbsp;&nbsp;z3</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;pow(</span></font><i><font color="black"><span style='white-space: nowrap'>z1</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>z2</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+where 
+<code><i><font color="black"><span style='white-space: nowrap'>z1</span></font></i></code>
+, 
+<code><i><font color="black"><span style='white-space: nowrap'>z2</span></font></i></code>
+, 
+<code><i><font color="black"><span style='white-space: nowrap'>z3</span></font></i></code>
+ are <code><font color="blue">zdouble</font></code> objects and
+
+<code><i><font color="black"><span style='white-space: nowrap'>fun</span></font></i></code>
+ is a <a href="unary_standard_math.htm" target="_top"><span style='white-space: nowrap'>unary_standard_math</span></a>
+ function.
+
+<br>
+<br>
+<b><a name="Syntax.Nan" id="Syntax.Nan">Nan</a></b>
+<br>
+There is a specialization of <a href="nan.htm" target="_top"><span style='white-space: nowrap'>nan</span></a>
+ so that
+
+<code><i><font color="black"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;z2</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;nan(</span></font><i><font color="black"><span style='white-space: nowrap'>z1</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+returns 'not a number' when 
+<code><i><font color="black"><span style='white-space: nowrap'>z1</span></font></i></code>
+ has type <code><font color="blue">zdouble</font></code>.
+Note that this template function needs to be specialized because
+
+<code><font color="blue"><span style='white-space: nowrap'>&nbsp;zdouble(0.0)&nbsp;==&nbsp;&nbsp;zdouble(0.0)&nbsp;/&nbsp;zdouble(0.0)<br>
+</span></font></code>
+<br>
+<b><big><a name="Motivation" id="Motivation">Motivation</a></big></b>
+
+
+<br>
+<br>
+<b><a name="Motivation.General" id="Motivation.General">General</a></b>
+<br>
+Often during computing (and more so in parallel computing) alternative
+values for an expression are computed and one of the alternatives
+is chosen using some boolean variable.
+This is often represented by
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>result</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>flag</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;*&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>value_if_true</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;+&nbsp;(1&nbsp;-&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>flag</span></font></i><font color="blue"><span style='white-space: nowrap'>)&nbsp;*&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>value_if_false</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+where 
+<code><i><font color="black"><span style='white-space: nowrap'>flag</span></font></i></code>
+ is one for true and zero for false.
+This representation does not work for <code><font color="blue">double</font></code> when the value
+being multiplied by zero is <code><font color="blue">+inf</font></code>, <code><font color="blue">-inf</font></code>, or <code><font color="blue">nan</font></code>.
+
+<br>
+<br>
+<b><a name="Motivation.CppAD" id="Motivation.CppAD">CppAD</a></b>
+<br>
+In CppAD one can use
+<a href="condexp.htm" target="_top"><span style='white-space: nowrap'>conditional&nbsp;expressions</span></a>
+ to achieve the representation
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>result</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>flag</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;*&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>value_if_true</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;+&nbsp;(1&nbsp;-&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>flag</span></font></i><font color="blue"><span style='white-space: nowrap'>)&nbsp;*&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>value_if_false</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+This works fine except when there are
+<a href="mul_level.htm" target="_top"><span style='white-space: nowrap'>multiple&nbsp;levels&nbsp;of&nbsp;AD</span></a>
+; e.g.,
+when using 
+<code><font color="blue"><span style='white-space: nowrap'>AD&lt;&nbsp;AD&lt;double&gt;&nbsp;&gt;</span></font></code>
+.
+In this case the corresponding AD function objects have type
+<a href="funconstruct.htm" target="_top"><span style='white-space: nowrap'>ADFun&lt;&nbsp;AD&lt;double&gt;&nbsp;&gt;</span></a>
+.
+When these AD function objects compute derivatives using
+<a href="reverse.htm" target="_top"><span style='white-space: nowrap'>reverse</span></a>
+ mode, the conditional expressions are represented use
+zeros to multiply the expression that is not used.
+Using 
+<code><font color="blue"><span style='white-space: nowrap'>AD&lt;&nbsp;AD&lt;zdouble&gt;&nbsp;&gt;</span></font></code>
+ instead of <code><font color="blue">AD&lt; AD&lt;double&gt; &gt;</font></code>
+makes this representation work and fixes the problem.
+
+<br>
+<br>
+<b><big><a name="Base Type Requirements" id="Base Type Requirements">Base Type Requirements</a></big></b>
+<br>
+The type <code><font color="blue">zdouble</font></code> satisfies all of the CppAD
+<a href="base_require.htm" target="_top"><span style='white-space: nowrap'>base&nbsp;type&nbsp;requirements</span></a>
+.
+
+
+<br>
+<br>
+<b><big><a name="Example" id="Example">Example</a></big></b>
+<br>
+The file <a href="zdouble.cpp.htm" target="_top"><span style='white-space: nowrap'>zdouble.cpp</span></a>
+
+contains an example and test of this class.
+It returns true if it succeeds and false otherwise.
+
+
+<hr>Input File: cppad/core/zdouble.hpp
+
+</body>
+</html>

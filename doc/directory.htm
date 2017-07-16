@@ -1,0 +1,259 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>Directory Structure</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Directory Structure">
+<meta name="keywords" id="keywords" content=" directory structure distribution example ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_directory_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://coin-or.github.io/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="faq.htm" target="_top">Prev</a>
+</td><td><a href="theory.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>Appendix</option>
+<option>directory</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>CppAD-&gt;</option>
+<option>Install</option>
+<option>Introduction</option>
+<option>AD</option>
+<option>ADFun</option>
+<option>preprocessor</option>
+<option>multi_thread</option>
+<option>utility</option>
+<option>ipopt_solve</option>
+<option>Example</option>
+<option>speed</option>
+<option>Appendix</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>Appendix-&gt;</option>
+<option>Faq</option>
+<option>directory</option>
+<option>Theory</option>
+<option>glossary</option>
+<option>Bib</option>
+<option>wish_list</option>
+<option>whats_new</option>
+<option>deprecated</option>
+<option>compare_c</option>
+<option>numeric_ad</option>
+<option>addon</option>
+<option>License</option>
+</select>
+</td>
+<td>directory</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Distribution Directory</option>
+<option>Example Directory</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@
+
+
+<center><b><big><big>Directory Structure</big></big></b></center>
+A brief description of each of the CppAD directories is provided below:
+
+<br>
+<br>
+<b><big><a name="Distribution Directory" id="Distribution Directory">Distribution Directory</a></big></b>
+<br>
+The following table lists the sub-directories of the
+<a href="download.htm#Distribution Directory" target="_top"><span style='white-space: nowrap'>distribution&nbsp;directory</span></a>
+:
+<table><tr><td align='left'  valign='top'>
+
+<code><font color="blue">bin</font></code> </td><td align='left'  valign='top'>
+
+	Scripts used for CppAD development.
+</td></tr><tr><td align='left'  valign='top'>
+
+<code><font color="blue">bug</font></code> </td><td align='left'  valign='top'>
+
+	Used to create a simple CppAD bug report or test.
+</td></tr><tr><td align='left'  valign='top'>
+
+<code><font color="blue">build</font></code> </td><td align='left'  valign='top'>
+
+	Used to build the libraries, examples, and tests.
+</td></tr><tr><td align='left'  valign='top'>
+
+<code><font color="blue">cppad</font></code> </td><td align='left'  valign='top'>
+
+	The CppAD include directory.
+</td></tr><tr><td align='left'  valign='top'>
+
+<code><font color="blue">cppad_ipopt</font></code> </td><td align='left'  valign='top'>
+
+	Example and tests for the deprecated cppad_ipopt library.
+</td></tr><tr><td align='left'  valign='top'>
+
+<code><font color="blue">cppad_lib</font></code> </td><td align='left'  valign='top'>
+
+	Source code corresponding to the CppAD library.
+</td></tr><tr><td align='left'  valign='top'>
+
+<code><font color="blue">doc</font></code> </td><td align='left'  valign='top'>
+
+	The program bin/run_omhelp.sh puts the user documentation here.
+</td></tr><tr><td align='left'  valign='top'>
+
+<code><font color="blue">doxydoc</font></code> </td><td align='left'  valign='top'>
+
+	The program bin/run_doxygen.sh puts its developer documentation here.
+</td></tr><tr><td align='left'  valign='top'>
+
+<code><font color="blue">example</font></code> </td><td align='left'  valign='top'>
+
+	Source code for the CppAD examples.
+</td></tr><tr><td align='left'  valign='top'>
+
+<code><font color="blue">introduction</font></code> </td><td align='left'  valign='top'>
+
+	Source code for the CppAD introduction.
+</td></tr><tr><td align='left'  valign='top'>
+
+<code><font color="blue">omh</font></code> </td><td align='left'  valign='top'>
+
+	Contains files that are only used for documentation.
+</td></tr><tr><td align='left'  valign='top'>
+
+<code><font color="blue">pkgconfig</font></code> </td><td align='left'  valign='top'>
+
+	Contains the CppAD pkg-config information.
+</td></tr><tr><td align='left'  valign='top'>
+
+<code><font color="blue">speed</font></code> </td><td align='left'  valign='top'>
+
+	The CppAD speed tests.
+</td></tr><tr><td align='left'  valign='top'>
+
+<code><font color="blue">test_more</font></code> </td><td align='left'  valign='top'>
+
+	Tests that are not part of the documentation.
+</td></tr>
+</table>
+<br>
+<b><big><a name="Example Directory" id="Example Directory">Example Directory</a></big></b>
+<br>
+The following table lists the sub-directories of the <code><font color="blue">example</font></code>
+directory.
+
+<table><tr><td align='left'  valign='top'>
+
+<code><font color="blue">atomic</font></code> </td><td align='left'  valign='top'>
+
+	<a href="atomic.htm" target="_top"><span style='white-space: nowrap'>atomic</span></a>
+ function examples.
+</td></tr><tr><td align='left'  valign='top'>
+
+<code><font color="blue">deprecated</font></code> </td><td align='left'  valign='top'>
+
+	examples for functions that have been <a href="deprecated.htm" target="_top"><span style='white-space: nowrap'>deprecated</span></a>
+.
+</td></tr><tr><td align='left'  valign='top'>
+
+<code><font color="blue">general</font></code> </td><td align='left'  valign='top'>
+
+	general purpose examples.
+</td></tr><tr><td align='left'  valign='top'>
+
+<code><font color="blue">get_started</font></code> </td><td align='left'  valign='top'>
+
+	a good place to get started using CppAD.
+</td></tr><tr><td align='left'  valign='top'>
+
+<code><font color="blue">ipopt_solve</font></code> </td><td align='left'  valign='top'>
+
+	examples using the <a href="ipopt_solve.htm" target="_top"><span style='white-space: nowrap'>ipopt_solve</span></a>
+ interface to CppAD.
+</td></tr><tr><td align='left'  valign='top'>
+
+<code><font color="blue">multi_thread</font></code> </td><td align='left'  valign='top'>
+
+	CppAD <a href="multi_thread.htm" target="_top"><span style='white-space: nowrap'>multi_threading</span></a>
+ examples.
+</td></tr><tr><td align='left'  valign='top'>
+
+<code><font color="blue">optimize</font></code> </td><td align='left'  valign='top'>
+
+	examples using the <a href="optimize.htm" target="_top"><span style='white-space: nowrap'>optimize</span></a>
+ operation.
+</td></tr><tr><td align='left'  valign='top'>
+
+<code><font color="blue">print_for</font></code> </td><td align='left'  valign='top'>
+
+	examples that used the <a href="printfor.htm" target="_top"><span style='white-space: nowrap'>PrintFor</span></a>
+ operation.
+</td></tr><tr><td align='left'  valign='top'>
+
+<code><font color="blue">sparse</font></code> </td><td align='left'  valign='top'>
+
+	examples using <a href="sparsity_pattern.htm" target="_top"><span style='white-space: nowrap'>sparsity_patterns</span></a>
+ and
+	<a href="sparse_derivative.htm" target="_top"><span style='white-space: nowrap'>sparse_derivatives</span></a>
+.
+</td></tr><tr><td align='left'  valign='top'>
+
+<code><font color="blue">utility</font></code> </td><td align='left'  valign='top'>
+
+	example using the CppAD <a href="utility.htm" target="_top"><span style='white-space: nowrap'>utilities</span></a>
+.
+</td></tr>
+</table>
+
+<hr>Input File: omh/appendix/directory.omh
+
+</body>
+</html>

@@ -1,0 +1,178 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>Using Eigen To Compute Determinant: Example and Test</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Using Eigen To Compute Determinant: Example and Test">
+<meta name="keywords" id="keywords" content=" using eigen to compute determinant: example test determinant ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_eigen_det.cpp_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://coin-or.github.io/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="eigen_array.cpp.htm" target="_top">Prev</a>
+</td><td><a href="hes_minor_det.cpp.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>Example</option>
+<option>General</option>
+<option>cppad_eigen.hpp</option>
+<option>eigen_det.cpp</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>Example-&gt;</option>
+<option>get_started.cpp</option>
+<option>General</option>
+<option>ExampleUtility</option>
+<option>ListAllExamples</option>
+<option>testvector</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>General-&gt;</option>
+<option>ad_fun.cpp</option>
+<option>ad_in_c.cpp</option>
+<option>conj_grad.cpp</option>
+<option>cppad_eigen.hpp</option>
+<option>hes_minor_det.cpp</option>
+<option>hes_lu_det.cpp</option>
+<option>interface2c.cpp</option>
+<option>jac_minor_det.cpp</option>
+<option>jac_lu_det.cpp</option>
+<option>mul_level</option>
+<option>ode_stiff.cpp</option>
+<option>mul_level_ode.cpp</option>
+<option>mul_level_adolc_ode.cpp</option>
+<option>ode_taylor.cpp</option>
+<option>stack_machine.cpp</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>cppad_eigen.hpp-&gt;</option>
+<option>eigen_array.cpp</option>
+<option>eigen_det.cpp</option>
+</select>
+</td>
+<td>eigen_det.cpp</td>
+<td>Headings</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>Using Eigen To Compute Determinant: Example and Test</big></big></b></center>
+<code><font color="blue"><pre><tt><b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/example/cppad_eigen.hpp&gt;</font>
+<b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/speed/det_by_minor.hpp&gt;</font>
+<b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;Eigen/Dense&gt;</font>
+
+<font color="#009900">bool</font> <b><font color="#000000">eigen_det</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
+<font color="#FF0000">{</font>    <font color="#009900">bool</font> ok <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
+     <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>AD<font color="#990000">;</font>
+     <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>NearEqual<font color="#990000">;</font>
+     <b><font color="#0000FF">using</font></b> Eigen<font color="#990000">::</font>Matrix<font color="#990000">;</font>
+     <b><font color="#0000FF">using</font></b> Eigen<font color="#990000">::</font>Dynamic<font color="#990000">;</font>
+     <i><font color="#9A1900">//</font></i>
+     <b><font color="#0000FF">typedef</font></b> <font color="#008080">Matrix&lt; double     , Dynamic, Dynamic &gt;</font> matrix<font color="#990000">;</font>
+     <b><font color="#0000FF">typedef</font></b> <font color="#008080">Matrix&lt; AD&lt;double&gt; , Dynamic, Dynamic &gt;</font> a_matrix<font color="#990000">;</font>
+     <i><font color="#9A1900">//</font></i>
+     <b><font color="#0000FF">typedef</font></b> <font color="#008080">Matrix&lt; double ,     Dynamic , 1&gt;</font>       vector<font color="#990000">;</font>
+     <b><font color="#0000FF">typedef</font></b> <font color="#008080">Matrix&lt; AD&lt;double&gt; , Dynamic , 1&gt;</font>       a_vector<font color="#990000">;</font>
+     <i><font color="#9A1900">// some temporary indices</font></i>
+     <font color="#008080">size_t</font> i<font color="#990000">,</font> j<font color="#990000">;</font>
+
+     <i><font color="#9A1900">// domain and range space vectors</font></i>
+     <font color="#008080">size_t</font> size <font color="#990000">=</font> <font color="#993399">3</font><font color="#990000">,</font> n  <font color="#990000">=</font> size <font color="#990000">*</font> size<font color="#990000">,</font> m <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font>
+     <font color="#008080">a_vector</font> <b><font color="#000000">a_x</font></b><font color="#990000">(</font>n<font color="#990000">),</font> <b><font color="#000000">a_y</font></b><font color="#990000">(</font>m<font color="#990000">);</font>
+     <font color="#008080">vector</font> <b><font color="#000000">x</font></b><font color="#990000">(</font>n<font color="#990000">);</font>
+
+     <i><font color="#9A1900">// set and declare independent variables and start tape recording</font></i>
+     <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> size<font color="#990000">;</font> i<font color="#990000">++)</font>
+     <font color="#FF0000">{</font>    <b><font color="#0000FF">for</font></b><font color="#990000">(</font>j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> size<font color="#990000">;</font> j<font color="#990000">++)</font>
+          <font color="#FF0000">{</font>    <i><font color="#9A1900">// lower triangular matrix</font></i>
+               a_x<font color="#990000">[</font>i <font color="#990000">*</font> size <font color="#990000">+</font> j<font color="#990000">]</font> <font color="#990000">=</font> x<font color="#990000">[</font>i <font color="#990000">*</font> size <font color="#990000">+</font> j<font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">0.0</font><font color="#990000">;</font>
+               <b><font color="#0000FF">if</font></b><font color="#990000">(</font> j <font color="#990000">&lt;=</font> i <font color="#990000">)</font>
+                    a_x<font color="#990000">[</font>i <font color="#990000">*</font> size <font color="#990000">+</font> j<font color="#990000">]</font> <font color="#990000">=</font> x<font color="#990000">[</font>i <font color="#990000">*</font> size <font color="#990000">+</font> j<font color="#990000">]</font> <font color="#990000">=</font> <font color="#009900">double</font><font color="#990000">(</font><font color="#993399">1</font> <font color="#990000">+</font> i <font color="#990000">+</font> j<font color="#990000">);</font>
+          <font color="#FF0000">}</font>
+     <font color="#FF0000">}</font>
+     CppAD<font color="#990000">::</font><b><font color="#000000">Independent</font></b><font color="#990000">(</font>a_x<font color="#990000">);</font>
+
+     <i><font color="#9A1900">// copy independent variable vector to a matrix</font></i>
+     <font color="#008080">a_matrix</font> <b><font color="#000000">a_X</font></b><font color="#990000">(</font>size<font color="#990000">,</font> size<font color="#990000">);</font>
+     <font color="#008080">matrix</font> <b><font color="#000000">X</font></b><font color="#990000">(</font>size<font color="#990000">,</font> size<font color="#990000">);</font>
+     <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> size<font color="#990000">;</font> i<font color="#990000">++)</font>
+     <font color="#FF0000">{</font>    <b><font color="#0000FF">for</font></b><font color="#990000">(</font>j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> size<font color="#990000">;</font> j<font color="#990000">++)</font>
+          <font color="#FF0000">{</font>    <b><font color="#000000">X</font></b><font color="#990000">(</font>i<font color="#990000">,</font> j<font color="#990000">)</font>   <font color="#990000">=</font> x<font color="#990000">[</font>i <font color="#990000">*</font> size <font color="#990000">+</font> j<font color="#990000">];</font>
+               <i><font color="#9A1900">// If we used a_X(i, j) = X(i, j), a_X would not depend on a_x.</font></i>
+               <b><font color="#000000">a_X</font></b><font color="#990000">(</font>i<font color="#990000">,</font> j<font color="#990000">)</font> <font color="#990000">=</font> a_x<font color="#990000">[</font>i <font color="#990000">*</font> size <font color="#990000">+</font> j<font color="#990000">];</font>
+          <font color="#FF0000">}</font>
+     <font color="#FF0000">}</font>
+
+     <i><font color="#9A1900">// Compute the log of determinant of X</font></i>
+     a_y<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <b><font color="#000000">log</font></b><font color="#990000">(</font> a_X<font color="#990000">.</font><b><font color="#000000">determinant</font></b><font color="#990000">()</font> <font color="#990000">);</font>
+
+     <i><font color="#9A1900">// create f: x -&gt; y and stop tape recording</font></i>
+     CppAD<font color="#990000">::</font><font color="#008080">ADFun&lt;double&gt;</font> <b><font color="#000000">f</font></b><font color="#990000">(</font>a_x<font color="#990000">,</font> a_y<font color="#990000">);</font>
+
+     <i><font color="#9A1900">// check function value</font></i>
+     <font color="#009900">double</font> eps <font color="#990000">=</font> <font color="#993399">100</font><font color="#990000">.</font> <font color="#990000">*</font> CppAD<font color="#990000">::</font>numeric_limits<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;::</font><b><font color="#000000">epsilon</font></b><font color="#990000">();</font>
+     CppAD<font color="#990000">::</font><font color="#008080">det_by_minor&lt;double&gt;</font> <b><font color="#000000">det</font></b><font color="#990000">(</font>size<font color="#990000">);</font>
+     ok <font color="#990000">&amp;=</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font><b><font color="#000000">Value</font></b><font color="#990000">(</font>a_y<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">])</font> <font color="#990000">,</font> <b><font color="#000000">log</font></b><font color="#990000">(</font><b><font color="#000000">det</font></b><font color="#990000">(</font>x<font color="#990000">)),</font> eps<font color="#990000">,</font> eps<font color="#990000">);</font>
+
+     <i><font color="#9A1900">// compute the derivative of y w.r.t x using CppAD</font></i>
+     <font color="#008080">vector</font> jac <font color="#990000">=</font> f<font color="#990000">.</font><b><font color="#000000">Jacobian</font></b><font color="#990000">(</font>x<font color="#990000">);</font>
+
+     <i><font color="#9A1900">// check the derivative using the formula</font></i>
+     <i><font color="#9A1900">// d/dX log(det(X)) = transpose( inv(X) )</font></i>
+     <font color="#008080">matrix</font> inv_X <font color="#990000">=</font> X<font color="#990000">.</font><b><font color="#000000">inverse</font></b><font color="#990000">();</font>
+     <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> size<font color="#990000">;</font> i<font color="#990000">++)</font>
+     <font color="#FF0000">{</font>    <b><font color="#0000FF">for</font></b><font color="#990000">(</font>j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> size<font color="#990000">;</font> j<font color="#990000">++)</font>
+               ok <font color="#990000">&amp;=</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>jac<font color="#990000">[</font>i <font color="#990000">*</font> size <font color="#990000">+</font> j<font color="#990000">],</font> <b><font color="#000000">inv_X</font></b><font color="#990000">(</font>j<font color="#990000">,</font> i<font color="#990000">),</font> eps<font color="#990000">,</font> eps<font color="#990000">);</font>
+     <font color="#FF0000">}</font>
+
+     <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
+<font color="#FF0000">}</font>
+</tt></pre>
+</font></code>
+<hr>Input File: example/general/eigen_det.cpp
+
+</body>
+</html>

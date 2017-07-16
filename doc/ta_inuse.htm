@@ -1,0 +1,203 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>Amount of Memory a Thread is Currently Using</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Amount of Memory a Thread is Currently Using">
+<meta name="keywords" id="keywords" content=" amount memory thread is currently using inuse syntax purpose num_bytes example ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_ta_inuse_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://coin-or.github.io/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="ta_hold_memory.htm" target="_top">Prev</a>
+</td><td><a href="ta_available.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>utility</option>
+<option>thread_alloc</option>
+<option>ta_inuse</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>CppAD-&gt;</option>
+<option>Install</option>
+<option>Introduction</option>
+<option>AD</option>
+<option>ADFun</option>
+<option>preprocessor</option>
+<option>multi_thread</option>
+<option>utility</option>
+<option>ipopt_solve</option>
+<option>Example</option>
+<option>speed</option>
+<option>Appendix</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>utility-&gt;</option>
+<option>ErrorHandler</option>
+<option>NearEqual</option>
+<option>speed_test</option>
+<option>SpeedTest</option>
+<option>time_test</option>
+<option>test_boolofvoid</option>
+<option>NumericType</option>
+<option>CheckNumericType</option>
+<option>SimpleVector</option>
+<option>CheckSimpleVector</option>
+<option>nan</option>
+<option>pow_int</option>
+<option>Poly</option>
+<option>LuDetAndSolve</option>
+<option>RombergOne</option>
+<option>RombergMul</option>
+<option>Runge45</option>
+<option>Rosen34</option>
+<option>OdeErrControl</option>
+<option>OdeGear</option>
+<option>OdeGearControl</option>
+<option>CppAD_vector</option>
+<option>thread_alloc</option>
+<option>index_sort</option>
+<option>to_string</option>
+<option>set_union</option>
+<option>sparse_rc</option>
+<option>sparse_rcv</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>thread_alloc-&gt;</option>
+<option>thread_alloc.cpp</option>
+<option>ta_parallel_setup</option>
+<option>ta_num_threads</option>
+<option>ta_in_parallel</option>
+<option>ta_thread_num</option>
+<option>ta_get_memory</option>
+<option>ta_return_memory</option>
+<option>ta_free_available</option>
+<option>ta_hold_memory</option>
+<option>ta_inuse</option>
+<option>ta_available</option>
+<option>ta_create_array</option>
+<option>ta_delete_array</option>
+<option>ta_free_all</option>
+</select>
+</td>
+<td>ta_inuse</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Syntax</option>
+<option>Purpose</option>
+<option>thread</option>
+<option>num_bytes</option>
+<option>Example</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@
+
+
+<center><b><big><big>Amount of Memory a Thread is Currently Using</big></big></b></center>
+<br>
+<b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
+
+<br>
+
+<code><i><font color="black"><span style='white-space: nowrap'>num_bytes</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;thread_alloc::inuse(</span></font><i><font color="black"><span style='white-space: nowrap'>thread</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+
+
+<br>
+<br>
+<b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
+<br>
+Memory being managed by <a href="thread_alloc.htm" target="_top"><span style='white-space: nowrap'>thread_alloc</span></a>
+ has two states,
+currently in use by the specified thread,
+and quickly available for future use by the specified thread.
+This function informs the program how much memory is in use.
+
+<br>
+<br>
+<b><big><a name="thread" id="thread">thread</a></big></b>
+<br>
+This argument has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>thread</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+Either <a href="ta_thread_num.htm" target="_top"><span style='white-space: nowrap'>thread_num</span></a>
+ must be the same as 
+<code><i><font color="black"><span style='white-space: nowrap'>thread</span></font></i></code>
+,
+or the current execution mode must be sequential
+(not <a href="ta_in_parallel.htm" target="_top"><span style='white-space: nowrap'>parallel</span></a>
+).
+
+<br>
+<br>
+<b><big><a name="num_bytes" id="num_bytes">num_bytes</a></big></b>
+<br>
+The return value has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>num_bytes</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+It is the number of bytes currently in use by the specified thread.
+
+<br>
+<br>
+<b><big><a name="Example" id="Example">Example</a></big></b>
+
+<br>
+<a href="thread_alloc.cpp.htm" target="_top"><span style='white-space: nowrap'>thread_alloc.cpp</span></a>
+
+
+
+<hr>Input File: cppad/utility/thread_alloc.hpp
+
+</body>
+</html>

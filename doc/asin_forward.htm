@@ -1,0 +1,259 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>Inverse Sine and Hyperbolic Sine Forward Mode Theory</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Inverse Sine and Hyperbolic Sine Forward Mode Theory">
+<meta name="keywords" id="keywords" content=" inverse sine hyperbolic forward mode theory asin asinh derivatives taylor coefficients recursion ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_asin_forward_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://coin-or.github.io/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="atan_forward.htm" target="_top">Prev</a>
+</td><td><a href="acos_forward.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>Appendix</option>
+<option>Theory</option>
+<option>ForwardTheory</option>
+<option>asin_forward</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>Appendix-&gt;</option>
+<option>Faq</option>
+<option>directory</option>
+<option>Theory</option>
+<option>glossary</option>
+<option>Bib</option>
+<option>wish_list</option>
+<option>whats_new</option>
+<option>deprecated</option>
+<option>compare_c</option>
+<option>numeric_ad</option>
+<option>addon</option>
+<option>License</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>Theory-&gt;</option>
+<option>ForwardTheory</option>
+<option>ReverseTheory</option>
+<option>reverse_identity</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>ForwardTheory-&gt;</option>
+<option>exp_forward</option>
+<option>log_forward</option>
+<option>sqrt_forward</option>
+<option>sin_cos_forward</option>
+<option>atan_forward</option>
+<option>asin_forward</option>
+<option>acos_forward</option>
+<option>tan_forward</option>
+<option>erf_forward</option>
+</select>
+</td>
+<td>asin_forward</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Derivatives</option>
+<option>Taylor Coefficients Recursion</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@
+
+
+<center><b><big><big>Inverse Sine and Hyperbolic Sine Forward Mode Theory</big></big></b></center>
+<br>
+<b><big><a name="Derivatives" id="Derivatives">Derivatives</a></big></b>
+
+<br>
+<small>@[@
+
+\begin{array}{rcl}
+\R{asin}^{(1)} (x)  & = & 1 / \sqrt{ 1 - x * x }
+\\
+\R{asinh}^{(1)} (x) & = & 1 / \sqrt{ 1 + x * x }
+\end{array}
+
+@]@</small>If <small>@(@
+F(x)
+@)@</small> is <small>@(@
+\R{asin} (x)
+@)@</small> or <small>@(@
+\R{asinh} (x)
+@)@</small>
+the corresponding derivative satisfies the equation
+<small>@[@
+
+	\sqrt{ 1 \mp x * x } * F^{(1)} (x) - 0 * F (u)  = 1
+
+@]@</small>
+and in the
+<a href="forwardtheory.htm#Standard Math Functions.Differential Equation" target="_top"><span style='white-space: nowrap'>standard&nbsp;math&nbsp;function&nbsp;differential&nbsp;equation</span></a>
+,
+<small>@(@
+A(x) = 0
+@)@</small>,
+<small>@(@
+B(x) = \sqrt{1 \mp x * x }
+@)@</small>,
+and <small>@(@
+D(x) = 1
+@)@</small>.
+We use <small>@(@
+a
+@)@</small>, <small>@(@
+b
+@)@</small>, <small>@(@
+d
+@)@</small> and <small>@(@
+z
+@)@</small> to denote the
+Taylor coefficients for
+<small>@(@
+A [ X (t) ]
+@)@</small>,
+<small>@(@
+B [ X (t) ]
+@)@</small>,
+<small>@(@
+D [ X (t) ]
+@)@</small>,
+and <small>@(@
+F [ X(t) ]
+@)@</small> respectively.
+
+<br>
+<br>
+<b><big><a name="Taylor Coefficients Recursion" id="Taylor Coefficients Recursion">Taylor Coefficients Recursion</a></big></b>
+<br>
+We define <small>@(@
+Q(x) = 1 \mp x * x
+@)@</small>
+and let <small>@(@
+q
+@)@</small> be the corresponding Taylor coefficients for
+<small>@(@
+Q[ X(t) ]
+@)@</small>.
+It follows that
+<small>@[@
+
+q^{(j)} = \left\{ \begin{array}{ll}
+	1 \mp x^{(0)} * x^{(0)}            & {\rm if} \; j = 0 \\
+	\mp \sum_{k=0}^j x^{(k)} x^{(j-k)} & {\rm otherwise}
+\end{array} \right.
+
+@]@</small>
+It follows that
+<small>@(@
+B[ X(t) ] = \sqrt{ Q[ X(t) ] }
+@)@</small> and
+from the equations for the
+<a href="sqrt_forward.htm" target="_top"><span style='white-space: nowrap'>square&nbsp;root</span></a>
+
+that for <small>@(@
+j = 0 , 1, \ldots
+@)@</small>,
+<small>@[@
+
+\begin{array}{rcl}
+b^{(0)}   & = & \sqrt{ q^{(0)} }
+\\
+b^{(j+1)} & = &
+	\frac{1}{j+1} \frac{1}{ b^{(0)} }
+	\left(
+		\frac{j+1}{2} q^{(j+1) }
+		- \sum_{k=1}^j k b^{(k)} b^{(j+1-k)}
+	\right)
+\end{array}
+
+@]@</small>
+It now follows from the general
+<a href="forwardtheory.htm#Standard Math Functions.Taylor Coefficients Recursion Formula" target="_top"><span style='white-space: nowrap'>Taylor&nbsp;coefficients&nbsp;recursion&nbsp;formula</span></a>
+
+that for <small>@(@
+j = 0 , 1, \ldots
+@)@</small>,
+<small>@[@
+
+\begin{array}{rcl}
+z^{(0)} & = & F ( x^{(0)} )
+\\
+e^{(j)}
+& = & d^{(j)} + \sum_{k=0}^{j} a^{(j-k)} * z^{(k)}
+\\
+& = & \left\{ \begin{array}{ll}
+	1 & {\rm if} \; j = 0 \\
+	0 & {\rm otherwise}
+\end{array} \right.
+\\
+z^{(j+1)} & = & \frac{1}{j+1} \frac{1}{ b^{(0)} }
+\left(
+	\sum_{k=0}^j e^{(k)} (j+1-k) x^{(j+1-k)}
+	- \sum_{k=1}^j b^{(k)} (j+1-k) z^{(j+1-k)}
+\right)
+\\
+z^{(j+1)} & = & \frac{1}{j+1} \frac{1}{ b^{(0)} }
+\left(
+	(j+1) x^{(j+1)}
+	- \sum_{k=1}^j k z^{(k)}  b^{(j+1-k)}
+\right)
+\end{array}
+
+@]@</small>
+
+
+
+<hr>Input File: omh/appendix/theory/asin_forward.omh
+
+</body>
+</html>

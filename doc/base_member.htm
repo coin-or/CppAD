@@ -1,0 +1,282 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>Required Base Class Member Functions</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Required Base Class Member Functions">
+<meta name="keywords" id="keywords" content=" required base class member functions notation default constructor double copy unary operators assignment binary bool example ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_base_member_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://coin-or.github.io/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="base_require.htm" target="_top">Prev</a>
+</td><td><a href="base_cond_exp.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>AD</option>
+<option>base_require</option>
+<option>base_member</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>CppAD-&gt;</option>
+<option>Install</option>
+<option>Introduction</option>
+<option>AD</option>
+<option>ADFun</option>
+<option>preprocessor</option>
+<option>multi_thread</option>
+<option>utility</option>
+<option>ipopt_solve</option>
+<option>Example</option>
+<option>speed</option>
+<option>Appendix</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>AD-&gt;</option>
+<option>ad_ctor</option>
+<option>ad_assign</option>
+<option>Convert</option>
+<option>ADValued</option>
+<option>BoolValued</option>
+<option>VecAD</option>
+<option>base_require</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>base_require-&gt;</option>
+<option>base_member</option>
+<option>base_cond_exp</option>
+<option>base_identical</option>
+<option>base_ordered</option>
+<option>base_std_math</option>
+<option>base_limits</option>
+<option>base_to_string</option>
+<option>base_hash</option>
+<option>base_example</option>
+</select>
+</td>
+<td>base_member</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Notation</option>
+<option>Default Constructor</option>
+<option>Double Constructor</option>
+<option>Copy Constructor</option>
+<option>Unary Operators</option>
+<option>Assignment Operators</option>
+<option>Binary Operators</option>
+<option>Bool Operators</option>
+<option>Example</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>Required Base Class Member Functions</big></big></b></center>
+<br>
+<b><big><a name="Notation" id="Notation">Notation</a></big></b>
+
+<table><tr><td align='left'  valign='top'>
+
+<b>Symbol</b> </td><td align='left'  valign='top'>
+ <b>Meaning</b> </td></tr><tr><td align='left'  valign='top'>
+
+
+<code><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i></code>
+  </td><td align='left'  valign='top'>
+
+	The base type corresponding to 
+<code><font color="blue"><span style='white-space: nowrap'>AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code>
+
+</td></tr><tr><td align='left'  valign='top'>
+
+
+<code><i><font color="black"><span style='white-space: nowrap'>b</span></font></i></code>
+     </td><td align='left'  valign='top'>
+
+	An object of type <code><font color="blue">bool</font></code>
+</td></tr><tr><td align='left'  valign='top'>
+
+
+<code><i><font color="black"><span style='white-space: nowrap'>d</span></font></i></code>
+     </td><td align='left'  valign='top'>
+
+	An object of type <code><font color="blue">double</font></code>
+</td></tr><tr><td align='left'  valign='top'>
+
+
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+     </td><td align='left'  valign='top'>
+
+	An object of type 
+<code><font color="blue"><span style='white-space: nowrap'>const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&amp;</span></font></code>
+
+</td></tr><tr><td align='left'  valign='top'>
+
+
+<code><i><font color="black"><span style='white-space: nowrap'>y</span></font></i></code>
+     </td><td align='left'  valign='top'>
+
+	An object of type 
+<code><font color="blue"><span style='white-space: nowrap'>const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&amp;</span></font></code>
+
+</td></tr><tr><td align='left'  valign='top'>
+
+
+<code><i><font color="black"><span style='white-space: nowrap'>z</span></font></i></code>
+     </td><td align='left'  valign='top'>
+
+	An object of type 
+<code><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i></code>
+
+</td></tr><tr><td align='left'  valign='top'>
+
+</td></tr>
+</table>
+<br>
+<b><big><a name="Default Constructor" id="Default Constructor">Default Constructor</a></big></b>
+
+<br>
+
+<code><i><font color="black"><span style='white-space: nowrap'>Base&nbsp;z</span></font></i></code>
+
+
+<br>
+<br>
+<b><big><a name="Double Constructor" id="Double Constructor">Double Constructor</a></big></b>
+
+<br>
+
+<code><i><font color="black"><span style='white-space: nowrap'>Base&nbsp;z</span></font></i><font color="blue"><span style='white-space: nowrap'>(</span></font><i><font color="black"><span style='white-space: nowrap'>d</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+
+
+<br>
+<br>
+<b><big><a name="Copy Constructor" id="Copy Constructor">Copy Constructor</a></big></b>
+
+<br>
+
+<code><i><font color="black"><span style='white-space: nowrap'>Base&nbsp;z</span></font></i><font color="blue"><span style='white-space: nowrap'>(</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+
+
+<br>
+<br>
+<b><big><a name="Unary Operators" id="Unary Operators">Unary Operators</a></big></b>
+<br>
+For <code><font color="blue">op</font></code> equal to
+<code><font color="blue">+</font></code>,
+<code><font color="blue">-</font></code>
+the following operation must be supported:
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>z</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>op</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+
+
+<br>
+<br>
+<b><big><a name="Assignment Operators" id="Assignment Operators">Assignment Operators</a></big></b>
+<br>
+For 
+<code><i><font color="black"><span style='white-space: nowrap'>op</span></font></i></code>
+ equal to
+
+<code><i><font color="black"><span style='white-space: nowrap'>=</span></font></i></code>
+,
+<code><font color="blue">+=</font></code>,
+<code><font color="blue">-=</font></code>,
+<code><font color="blue">*=</font></code>, and
+<code><font color="blue">/=</font></code> the following operation must be supported:
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>z</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>op</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+
+
+<br>
+<br>
+<b><big><a name="Binary Operators" id="Binary Operators">Binary Operators</a></big></b>
+<br>
+For 
+<code><i><font color="black"><span style='white-space: nowrap'>op</span></font></i></code>
+ equal to
+<code><font color="blue">+</font></code>,
+<code><font color="blue">-</font></code>,
+<code><font color="blue">*</font></code>, and
+<code><font color="blue">/</font></code> the following operation must be supported:
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>z</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>op</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>y</span></font></i></code>
+
+
+<br>
+<br>
+<b><big><a name="Bool Operators" id="Bool Operators">Bool Operators</a></big></b>
+<br>
+For 
+<code><i><font color="black"><span style='white-space: nowrap'>op</span></font></i></code>
+ equal to
+<code><font color="blue">==</font></code>,
+<code><font color="blue">!=</font></code>,
+<code><font color="blue">&lt;=</font></code>,
+the following operation must be supported:
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>b</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>op</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>y</span></font></i></code>
+
+
+<br>
+<br>
+<b><big><a name="Example" id="Example">Example</a></big></b>
+<br>
+See the heading Class Definition in
+<a href="base_alloc.hpp.htm#Class Definition" target="_top"><span style='white-space: nowrap'>base_alloc</span></a>
+.
+
+
+<hr>Input File: omh/base_require/base_member.omh
+
+</body>
+</html>

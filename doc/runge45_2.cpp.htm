@@ -1,0 +1,267 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>Runge45: Example and Test</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Runge45: Example and Test">
+<meta name="keywords" id="keywords" content=" runge45: example test Runge45 ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_runge45_2.cpp_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://coin-or.github.io/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="runge45_1.cpp.htm" target="_top">Prev</a>
+</td><td><a href="rosen34.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>utility</option>
+<option>Runge45</option>
+<option>runge45_2.cpp</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>CppAD-&gt;</option>
+<option>Install</option>
+<option>Introduction</option>
+<option>AD</option>
+<option>ADFun</option>
+<option>preprocessor</option>
+<option>multi_thread</option>
+<option>utility</option>
+<option>ipopt_solve</option>
+<option>Example</option>
+<option>speed</option>
+<option>Appendix</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>utility-&gt;</option>
+<option>ErrorHandler</option>
+<option>NearEqual</option>
+<option>speed_test</option>
+<option>SpeedTest</option>
+<option>time_test</option>
+<option>test_boolofvoid</option>
+<option>NumericType</option>
+<option>CheckNumericType</option>
+<option>SimpleVector</option>
+<option>CheckSimpleVector</option>
+<option>nan</option>
+<option>pow_int</option>
+<option>Poly</option>
+<option>LuDetAndSolve</option>
+<option>RombergOne</option>
+<option>RombergMul</option>
+<option>Runge45</option>
+<option>Rosen34</option>
+<option>OdeErrControl</option>
+<option>OdeGear</option>
+<option>OdeGearControl</option>
+<option>CppAD_vector</option>
+<option>thread_alloc</option>
+<option>index_sort</option>
+<option>to_string</option>
+<option>set_union</option>
+<option>sparse_rc</option>
+<option>sparse_rcv</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>Runge45-&gt;</option>
+<option>runge45_1.cpp</option>
+<option>runge45_2.cpp</option>
+</select>
+</td>
+<td>runge45_2.cpp</td>
+<td>Headings</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>Runge45: Example and Test</big></big></b></center>
+Define
+<small>@(@
+X : \B{R} \times \B{R} \rightarrow \B{R}^n
+@)@</small> by
+<small>@[@
+
+	X_j (b, t) =  b \left( \sum_{k=0}^j t^k / k ! \right)
+
+@]@</small>
+for <small>@(@
+j = 0 , \ldots , n-1
+@)@</small>.
+It follows that
+<small>@[@
+
+\begin{array}{rcl}
+X_j  (b, 0)   & = & b                                                     \\
+\partial_t X_j (b, t)   & = & b \left( \sum_{k=0}^{j-1} t^k / k ! \right) \\
+\partial_t X_j (b, t)   & = & \left\{ \begin{array}{ll}
+	0               & {\rm if} \; j = 0  \\
+	X_{j-1} (b, t)  & {\rm otherwise}
+\end{array} \right.
+\end{array}
+
+@]@</small>
+For a fixed <small>@(@
+t_f
+@)@</small>,
+we can use <a href="runge45.htm" target="_top"><span style='white-space: nowrap'>Runge45</span></a>
+ to define
+<small>@(@
+f : \B{R} \rightarrow \B{R}^n
+@)@</small> as an approximation for
+<small>@(@
+f(b) = X(b, t_f )
+@)@</small>.
+We can then compute <small>@(@
+f^{(1)} (b)
+@)@</small> which is an approximation for
+<small>@[@
+
+	\partial_b X(b, t_f ) =  \sum_{k=0}^j t_f^k / k !
+
+@]@</small>
+
+<code><font color="blue">
+<pre><tt>
+<b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cstddef&gt;</font>              <i><font color="#9A1900">// for size_t</font></i>
+<b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;limits&gt;</font>               <i><font color="#9A1900">// for machine epsilon</font></i>
+<b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/cppad.hpp&gt;</font>      <i><font color="#9A1900">// for all of CppAD</font></i>
+
+<b><font color="#0000FF">namespace</font></b> <font color="#FF0000">{</font>
+
+     <b><font color="#0000FF">template</font></b> <font color="#990000">&lt;</font><b><font color="#0000FF">class</font></b> <font color="#008080">Scalar</font><font color="#990000">&gt;</font>
+     <b><font color="#0000FF">class</font></b> <font color="#008080">Fun</font> <font color="#FF0000">{</font>
+     <b><font color="#0000FF">public</font></b><font color="#990000">:</font>
+          <i><font color="#9A1900">// constructor</font></i>
+          <b><font color="#000000">Fun</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
+          <font color="#FF0000">{</font> <font color="#FF0000">}</font>
+
+          <i><font color="#9A1900">// set return value to X'(t)</font></i>
+          <font color="#009900">void</font> <b><font color="#000000">Ode</font></b><font color="#990000">(</font>
+               <b><font color="#0000FF">const</font></b> <font color="#008080">Scalar</font>                    <font color="#990000">&amp;</font>t<font color="#990000">,</font>
+               <b><font color="#0000FF">const</font></b> <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font>Scalar<font color="#990000">)</font> <font color="#990000">&amp;</font>x<font color="#990000">,</font>
+               <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font>Scalar<font color="#990000">)</font>       <font color="#990000">&amp;</font>f<font color="#990000">)</font>
+          <font color="#FF0000">{</font>    <font color="#008080">size_t</font> n  <font color="#990000">=</font> x<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">();</font>
+               f<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font>      <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">.;</font>
+               <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> k <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font> k <font color="#990000">&lt;</font> n<font color="#990000">;</font> k<font color="#990000">++)</font>
+                    f<font color="#990000">[</font>k<font color="#990000">]</font> <font color="#990000">=</font> x<font color="#990000">[</font>k<font color="#990000">-</font><font color="#993399">1</font><font color="#990000">];</font>
+          <font color="#FF0000">}</font>
+     <font color="#FF0000">}</font><font color="#990000">;</font>
+<font color="#FF0000">}</font>
+
+<font color="#009900">bool</font> <b><font color="#000000">runge_45_2</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
+<font color="#FF0000">{</font>    <b><font color="#0000FF">typedef</font></b> CppAD<font color="#990000">::</font><font color="#008080">AD&lt;double&gt;</font> Scalar<font color="#990000">;</font>
+     <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>NearEqual<font color="#990000">;</font>
+
+     <font color="#009900">bool</font> ok <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>     <i><font color="#9A1900">// initial return value</font></i>
+     <font color="#008080">size_t</font> j<font color="#990000">;</font>           <i><font color="#9A1900">// temporary indices</font></i>
+
+     <font color="#008080">size_t</font>     n <font color="#990000">=</font> <font color="#993399">5</font><font color="#990000">;</font>   <i><font color="#9A1900">// number components in X(t) and order of method</font></i>
+     <font color="#008080">size_t</font>     M <font color="#990000">=</font> <font color="#993399">2</font><font color="#990000">;</font>   <i><font color="#9A1900">// number of Runge45 steps in [ti, tf]</font></i>
+     <font color="#008080">Scalar</font> ad_ti <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">.;</font>  <i><font color="#9A1900">// initial time</font></i>
+     <font color="#008080">Scalar</font> ad_tf <font color="#990000">=</font> <font color="#993399">2</font><font color="#990000">.;</font>  <i><font color="#9A1900">// final time</font></i>
+
+     <i><font color="#9A1900">// value of independent variable at which to record operations</font></i>
+     <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font>Scalar<font color="#990000">)</font> <b><font color="#000000">ad_b</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">);</font>
+     ad_b<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">.;</font>
+
+     <i><font color="#9A1900">// declare b to be the independent variable</font></i>
+     <b><font color="#000000">Independent</font></b><font color="#990000">(</font>ad_b<font color="#990000">);</font>
+
+     <i><font color="#9A1900">// object to evaluate ODE</font></i>
+     <font color="#008080">Fun&lt;Scalar&gt;</font> ad_F<font color="#990000">;</font>
+
+     <i><font color="#9A1900">// xi = X(0)</font></i>
+     <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font>Scalar<font color="#990000">)</font> <b><font color="#000000">ad_xi</font></b><font color="#990000">(</font>n<font color="#990000">);</font>
+     <b><font color="#0000FF">for</font></b><font color="#990000">(</font>j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> n<font color="#990000">;</font> j<font color="#990000">++)</font>
+          ad_xi<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">=</font> ad_b<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">];</font>
+
+     <i><font color="#9A1900">// compute Runge45 approximation for X(tf)</font></i>
+     <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font>Scalar<font color="#990000">)</font> <b><font color="#000000">ad_xf</font></b><font color="#990000">(</font>n<font color="#990000">),</font> <b><font color="#000000">ad_e</font></b><font color="#990000">(</font>n<font color="#990000">);</font>
+     ad_xf <font color="#990000">=</font> CppAD<font color="#990000">::</font><b><font color="#000000">Runge45</font></b><font color="#990000">(</font>ad_F<font color="#990000">,</font> M<font color="#990000">,</font> ad_ti<font color="#990000">,</font> ad_tf<font color="#990000">,</font> ad_xi<font color="#990000">,</font> ad_e<font color="#990000">);</font>
+
+     <i><font color="#9A1900">// stop recording and use it to create f : b -&gt; xf</font></i>
+     CppAD<font color="#990000">::</font><font color="#008080">ADFun&lt;double&gt;</font> <b><font color="#000000">f</font></b><font color="#990000">(</font>ad_b<font color="#990000">,</font> ad_xf<font color="#990000">);</font>
+
+     <i><font color="#9A1900">// evaluate f(b)</font></i>
+     <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font><font color="#009900">double</font><font color="#990000">)</font>  <b><font color="#000000">b</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">);</font>
+     <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font><font color="#009900">double</font><font color="#990000">)</font> <b><font color="#000000">xf</font></b><font color="#990000">(</font>n<font color="#990000">);</font>
+     b<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">.;</font>
+     xf   <font color="#990000">=</font> f<font color="#990000">.</font><b><font color="#000000">Forward</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">,</font> b<font color="#990000">);</font>
+
+     <i><font color="#9A1900">// check that f(b) = X(b, tf)</font></i>
+     <font color="#009900">double</font> tf    <font color="#990000">=</font> <b><font color="#000000">Value</font></b><font color="#990000">(</font>ad_tf<font color="#990000">);</font>
+     <font color="#009900">double</font> term  <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font>
+     <font color="#009900">double</font> sum   <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
+     <font color="#009900">double</font> eps   <font color="#990000">=</font> <font color="#993399">10</font><font color="#990000">.</font> <font color="#990000">*</font> CppAD<font color="#990000">::</font>numeric_limits<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;::</font><b><font color="#000000">epsilon</font></b><font color="#990000">();</font>
+     <b><font color="#0000FF">for</font></b><font color="#990000">(</font>j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> n<font color="#990000">;</font> j<font color="#990000">++)</font>
+     <font color="#FF0000">{</font>    sum <font color="#990000">+=</font> term<font color="#990000">;</font>
+          ok <font color="#990000">&amp;=</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>xf<font color="#990000">[</font>j<font color="#990000">],</font> b<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">*</font> sum<font color="#990000">,</font> eps<font color="#990000">,</font> eps<font color="#990000">);</font>
+          term <font color="#990000">*=</font> tf<font color="#990000">;</font>
+          term <font color="#990000">/=</font> <font color="#009900">double</font><font color="#990000">(</font>j<font color="#990000">+</font><font color="#993399">1</font><font color="#990000">);</font>
+     <font color="#FF0000">}</font>
+
+     <i><font color="#9A1900">// evalute f'(b)</font></i>
+     <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font><font color="#009900">double</font><font color="#990000">)</font> <b><font color="#000000">d_xf</font></b><font color="#990000">(</font>n<font color="#990000">);</font>
+     d_xf <font color="#990000">=</font> f<font color="#990000">.</font><b><font color="#000000">Jacobian</font></b><font color="#990000">(</font>b<font color="#990000">);</font>
+
+     <i><font color="#9A1900">// check that f'(b) = partial of X(b, tf) w.r.t b</font></i>
+     term  <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font>
+     sum   <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
+     <b><font color="#0000FF">for</font></b><font color="#990000">(</font>j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> n<font color="#990000">;</font> j<font color="#990000">++)</font>
+     <font color="#FF0000">{</font>    sum <font color="#990000">+=</font> term<font color="#990000">;</font>
+          ok <font color="#990000">&amp;=</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>d_xf<font color="#990000">[</font>j<font color="#990000">],</font> sum<font color="#990000">,</font> eps<font color="#990000">,</font> eps<font color="#990000">);</font>
+          term <font color="#990000">*=</font> tf<font color="#990000">;</font>
+          term <font color="#990000">/=</font> <font color="#009900">double</font><font color="#990000">(</font>j<font color="#990000">+</font><font color="#993399">1</font><font color="#990000">);</font>
+     <font color="#FF0000">}</font>
+
+     <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
+<font color="#FF0000">}</font>
+</tt></pre>
+</font></code>
+<hr>Input File: example/general/runge45_2.cpp
+
+</body>
+</html>

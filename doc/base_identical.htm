@@ -1,0 +1,363 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>Base Type Requirements for Identically Equal Comparisons</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Base Type Requirements for Identically Equal Comparisons">
+<meta name="keywords" id="keywords" content=" base type requirements identically equal comparisons require equalopseq the simple case more complicated cases identical identicalpar prototypes functions examples ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_base_identical_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://coin-or.github.io/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="base_cond_exp.htm" target="_top">Prev</a>
+</td><td><a href="base_ordered.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>AD</option>
+<option>base_require</option>
+<option>base_identical</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>CppAD-&gt;</option>
+<option>Install</option>
+<option>Introduction</option>
+<option>AD</option>
+<option>ADFun</option>
+<option>preprocessor</option>
+<option>multi_thread</option>
+<option>utility</option>
+<option>ipopt_solve</option>
+<option>Example</option>
+<option>speed</option>
+<option>Appendix</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>AD-&gt;</option>
+<option>ad_ctor</option>
+<option>ad_assign</option>
+<option>Convert</option>
+<option>ADValued</option>
+<option>BoolValued</option>
+<option>VecAD</option>
+<option>base_require</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>base_require-&gt;</option>
+<option>base_member</option>
+<option>base_cond_exp</option>
+<option>base_identical</option>
+<option>base_ordered</option>
+<option>base_std_math</option>
+<option>base_limits</option>
+<option>base_to_string</option>
+<option>base_hash</option>
+<option>base_example</option>
+</select>
+</td>
+<td>base_identical</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>EqualOpSeq</option>
+<option>---..The Simple Case</option>
+<option>---..More Complicated Cases</option>
+<option>Identical</option>
+<option>---..IdenticalPar</option>
+<option>---..Prototypes</option>
+<option>---..Identical Functions</option>
+<option>---..Examples</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@
+
+
+<center><b><big><big>Base Type Requirements for Identically Equal Comparisons</big></big></b></center>
+<br>
+<b><big><a name="EqualOpSeq" id="EqualOpSeq">EqualOpSeq</a></big></b>
+<br>
+If function <a href="equalopseq.htm" target="_top"><span style='white-space: nowrap'>EqualOpSeq</span></a>
+ is used with
+arguments of type 
+<code><font color="blue"><span style='white-space: nowrap'>AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code>
+,
+the type 
+<code><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i></code>
+ must support the syntax
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>b</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;CppAD::EqualOpSeq(</span></font><i><font color="black"><span style='white-space: nowrap'>u</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>v</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+This should return true if and only if
+
+<code><i><font color="black"><span style='white-space: nowrap'>u</span></font></i></code>
+ is identically equal to 
+<code><i><font color="black"><span style='white-space: nowrap'>v</span></font></i></code>
+
+and it makes no different which one is used.
+The arguments 
+<code><i><font color="black"><span style='white-space: nowrap'>u</span></font></i></code>
+ and 
+<code><i><font color="black"><span style='white-space: nowrap'>v</span></font></i></code>
+ have prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>u</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>v</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+The return value 
+<code><i><font color="black"><span style='white-space: nowrap'>b</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bool&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>b</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+<br>
+<b><a name="EqualOpSeq.The Simple Case" id="EqualOpSeq.The Simple Case">The Simple Case</a></b>
+<br>
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i></code>
+ is a relatively simple type,
+the <code><font color="blue">EqualOpSeq</font></code> function can be defined by
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+namespace&nbsp;CppAD&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;inline&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;EqualOpSeq(const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&amp;&nbsp;u,&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&amp;&nbsp;v)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;u&nbsp;==&nbsp;v;&nbsp;}<br>
+}<br>
+</span></font></code>
+For example, see
+<a href="base_alloc.hpp.htm#EqualOpSeq" target="_top"><span style='white-space: nowrap'>base_alloc</span></a>
+.
+
+<br>
+<br>
+<b><a name="EqualOpSeq.More Complicated Cases" id="EqualOpSeq.More Complicated Cases">More Complicated Cases</a></b>
+<br>
+The variables
+
+<code><i><font color="black"><span style='white-space: nowrap'>u</span></font></i></code>
+ and 
+<code><i><font color="black"><span style='white-space: nowrap'>v</span></font></i></code>
+ are not identically equal in the following case
+(which CppAD automatically defines <code><font color="blue">EqualOpSeq</font></code> for):
+The type 
+<code><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i></code>
+ is 
+<code><font color="blue"><span style='white-space: nowrap'>AD&lt;double&gt;</span></font></code>
+,
+
+<code><i><font color="black"><span style='white-space: nowrap'>x[0]&nbsp;=&nbsp;x[1]&nbsp;=&nbsp;1.</span></font></i></code>
+,
+then <a href="independent.htm" target="_top"><span style='white-space: nowrap'>independent</span></a>
+ is used to make 
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+ the independent
+variable vector,
+and then 
+<code><i><font color="black"><span style='white-space: nowrap'>u&nbsp;=&nbsp;x[0]</span></font></i></code>
+, 
+<code><i><font color="black"><span style='white-space: nowrap'>v&nbsp;=&nbsp;x[1]</span></font></i></code>
+,
+Note that during a future <a href="forward.htm" target="_top"><span style='white-space: nowrap'>Forward</span></a>
+ calculation,
+
+<code><i><font color="black"><span style='white-space: nowrap'>u</span></font></i></code>
+ and 
+<code><i><font color="black"><span style='white-space: nowrap'>v</span></font></i></code>
+ could correspond to different values.
+For example, see
+<a href="base_adolc.hpp.htm#EqualOpSeq" target="_top"><span style='white-space: nowrap'>adolc&nbsp;EqualOpSeq</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="Identical" id="Identical">Identical</a></big></b>
+
+
+<br>
+<br>
+<b><a name="Identical.IdenticalPar" id="Identical.IdenticalPar">IdenticalPar</a></b>
+<br>
+A 
+<code><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i></code>
+ is a <a href="glossary.htm#Parameter" target="_top"><span style='white-space: nowrap'>parameter</span></a>
+
+when used in an 
+<code><font color="blue"><span style='white-space: nowrap'>AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code>
+ operation sequence.
+It is however still possible for a parameter to change its value.
+For example,
+the 
+<code><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i></code>
+ value 
+<code><i><font color="black"><span style='white-space: nowrap'>u</span></font></i></code>
+ is not identically a parameter
+equal in the following case
+(which CppAD automatically defines <code><font color="blue">IdenticalPar</font></code> for):
+The type 
+<code><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i></code>
+ is 
+<code><font color="blue"><span style='white-space: nowrap'>AD&lt;double&gt;</span></font></code>
+,
+
+<code><i><font color="black"><span style='white-space: nowrap'>x[0]&nbsp;=&nbsp;1.</span></font></i></code>
+,
+then <a href="independent.htm" target="_top"><span style='white-space: nowrap'>independent</span></a>
+ is used to make 
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+ the independent
+variable vector,
+and then 
+<code><i><font color="black"><span style='white-space: nowrap'>u&nbsp;=&nbsp;x[0]</span></font></i></code>
+,
+Note that during a future <a href="forward.htm" target="_top"><span style='white-space: nowrap'>Forward</span></a>
+ calculation,
+
+<code><i><font color="black"><span style='white-space: nowrap'>u</span></font></i></code>
+ could correspond to different values.
+
+<br>
+<br>
+<b><a name="Identical.Prototypes" id="Identical.Prototypes">Prototypes</a></b>
+<br>
+The argument 
+<code><i><font color="black"><span style='white-space: nowrap'>u</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>u</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+If it is present, the argument 
+<code><i><font color="black"><span style='white-space: nowrap'>v</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>v</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+The result 
+<code><i><font color="black"><span style='white-space: nowrap'>b</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bool&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>b</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+<br>
+<b><a name="Identical.Identical Functions" id="Identical.Identical Functions">Identical Functions</a></b>
+<br>
+The type 
+<code><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i></code>
+ must support the following functions
+(in the CppAD namespace):
+<table><tr><td align='left'  valign='top'>
+
+<b>Syntax</b> </td><td align='left'  valign='top'>
+ <b>Result</b>
+</td></tr><tr><td align='left'  valign='top'>
+
+
+<code><i><font color="black"><span style='white-space: nowrap'>b</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;IdenticalPar(</span></font><i><font color="black"><span style='white-space: nowrap'>u</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+ <code><span style='white-space: nowrap'>&nbsp;&nbsp;</span></code>
+	</td><td align='left'  valign='top'>
+ the 
+<code><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i></code>
+ value will always be the same
+</td></tr><tr><td align='left'  valign='top'>
+
+
+<code><i><font color="black"><span style='white-space: nowrap'>b</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;IdenticalZero(</span></font><i><font color="black"><span style='white-space: nowrap'>u</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+ <code><span style='white-space: nowrap'>&nbsp;&nbsp;</span></code>
+	</td><td align='left'  valign='top'>
+ 
+<code><i><font color="black"><span style='white-space: nowrap'>u</span></font></i></code>
+ equals zero and 
+<code><font color="blue"><span style='white-space: nowrap'>IdenticalPar(</span></font><i><font color="black"><span style='white-space: nowrap'>u</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+
+</td></tr><tr><td align='left'  valign='top'>
+
+
+<code><i><font color="black"><span style='white-space: nowrap'>b</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;IdenticalOne(</span></font><i><font color="black"><span style='white-space: nowrap'>u</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+ <code><span style='white-space: nowrap'>&nbsp;&nbsp;</span></code>
+	</td><td align='left'  valign='top'>
+ 
+<code><i><font color="black"><span style='white-space: nowrap'>u</span></font></i></code>
+ equals one and 
+<code><font color="blue"><span style='white-space: nowrap'>IdenticalPar(</span></font><i><font color="black"><span style='white-space: nowrap'>u</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+
+</td></tr><tr><td align='left'  valign='top'>
+
+
+<code><i><font color="black"><span style='white-space: nowrap'>b</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;IdenticalEqualPar(</span></font><i><font color="black"><span style='white-space: nowrap'>u</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>v</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+ <code><span style='white-space: nowrap'>&nbsp;&nbsp;</span></code>
+	</td><td align='left'  valign='top'>
+ 
+<code><i><font color="black"><span style='white-space: nowrap'>u</span></font></i></code>
+ equals 
+<code><i><font color="black"><span style='white-space: nowrap'>v</span></font></i></code>
+,
+	
+<code><font color="blue"><span style='white-space: nowrap'>IdenticalPar(</span></font><i><font color="black"><span style='white-space: nowrap'>u</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+ and
+	
+<code><font color="blue"><span style='white-space: nowrap'>IdenticalPar(</span></font><i><font color="black"><span style='white-space: nowrap'>v</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+
+</td></tr>
+</table>
+<br>
+<b><a name="Identical.Examples" id="Identical.Examples">Examples</a></b>
+<br>
+See
+<a href="base_alloc.hpp.htm#Identical" target="_top"><span style='white-space: nowrap'>base_alloc</span></a>
+.
+
+
+<hr>Input File: omh/base_require/base_identical.omh
+
+</body>
+</html>

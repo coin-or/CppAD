@@ -1,0 +1,150 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>Convert an AD Variable to a Parameter: Example and Test</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Convert an AD Variable to a Parameter: Example and Test">
+<meta name="keywords" id="keywords" content=" convert ad variable to parameter: example test Var2par Value during taping ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_var2par.cpp_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://coin-or.github.io/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="var2par.htm" target="_top">Prev</a>
+</td><td><a href="advalued.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>AD</option>
+<option>Convert</option>
+<option>Var2Par</option>
+<option>var2par.cpp</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>AD-&gt;</option>
+<option>ad_ctor</option>
+<option>ad_assign</option>
+<option>Convert</option>
+<option>ADValued</option>
+<option>BoolValued</option>
+<option>VecAD</option>
+<option>base_require</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>Convert-&gt;</option>
+<option>Value</option>
+<option>Integer</option>
+<option>ad_to_string</option>
+<option>ad_input</option>
+<option>ad_output</option>
+<option>PrintFor</option>
+<option>Var2Par</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>Var2Par-&gt;</option>
+<option>var2par.cpp</option>
+</select>
+</td>
+<td>var2par.cpp</td>
+<td>Headings</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@
+
+
+<center><b><big><big>Convert an AD Variable to a Parameter: Example and Test</big></big></b></center>
+<code><font color="blue"><pre><tt>
+<b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/cppad.hpp&gt;</font>
+
+
+<font color="#009900">bool</font> <b><font color="#000000">Var2Par</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
+<font color="#FF0000">{</font>    <font color="#009900">bool</font> ok <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
+     <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>AD<font color="#990000">;</font>
+     <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>Value<font color="#990000">;</font>
+     <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>Var2Par<font color="#990000">;</font>
+
+     <i><font color="#9A1900">// domain space vector</font></i>
+     <font color="#008080">size_t</font> n <font color="#990000">=</font> <font color="#993399">2</font><font color="#990000">;</font>
+     <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font>AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;)</font> <b><font color="#000000">x</font></b><font color="#990000">(</font>n<font color="#990000">);</font>
+     x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">3</font><font color="#990000">.;</font>
+     x<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">4</font><font color="#990000">.;</font>
+
+     <i><font color="#9A1900">// declare independent variables and start tape recording</font></i>
+     CppAD<font color="#990000">::</font><b><font color="#000000">Independent</font></b><font color="#990000">(</font>x<font color="#990000">);</font>
+
+     <i><font color="#9A1900">// range space vector</font></i>
+     <font color="#008080">size_t</font> m <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font>
+     <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font>AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;)</font> <b><font color="#000000">y</font></b><font color="#990000">(</font>m<font color="#990000">);</font>
+     y<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#990000">-</font> x<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">*</font> <b><font color="#000000">Var2Par</font></b><font color="#990000">(</font>x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]);</font>    <i><font color="#9A1900">// same as y[0] = -x[1] * 3.;</font></i>
+
+     <i><font color="#9A1900">// cannot call Value(x[j]) or Value(y[0]) here (currently variables)</font></i>
+     ok <font color="#990000">&amp;=</font> <font color="#990000">(</font> <b><font color="#000000">Value</font></b><font color="#990000">(</font> <b><font color="#000000">Var2Par</font></b><font color="#990000">(</font>x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">])</font> <font color="#990000">)</font> <font color="#990000">==</font> <font color="#993399">3</font><font color="#990000">.</font> <font color="#990000">);</font>
+     ok <font color="#990000">&amp;=</font> <font color="#990000">(</font> <b><font color="#000000">Value</font></b><font color="#990000">(</font> <b><font color="#000000">Var2Par</font></b><font color="#990000">(</font>x<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">])</font> <font color="#990000">)</font> <font color="#990000">==</font> <font color="#993399">4</font><font color="#990000">.</font> <font color="#990000">);</font>
+     ok <font color="#990000">&amp;=</font> <font color="#990000">(</font> <b><font color="#000000">Value</font></b><font color="#990000">(</font> <b><font color="#000000">Var2Par</font></b><font color="#990000">(</font>y<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">])</font> <font color="#990000">)</font> <font color="#990000">==</font> <font color="#990000">-</font><font color="#993399">12</font><font color="#990000">.</font> <font color="#990000">);</font>
+
+     <i><font color="#9A1900">// create f: x -&gt; y and stop tape recording</font></i>
+     CppAD<font color="#990000">::</font><font color="#008080">ADFun&lt;double&gt;</font> <b><font color="#000000">f</font></b><font color="#990000">(</font>x<font color="#990000">,</font> y<font color="#990000">);</font>
+
+     <i><font color="#9A1900">// can call Value(x[j]) or Value(y[0]) here (currently parameters)</font></i>
+     ok <font color="#990000">&amp;=</font> <font color="#990000">(</font><b><font color="#000000">Value</font></b><font color="#990000">(</font>x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">])</font> <font color="#990000">==</font>  <font color="#993399">3</font><font color="#990000">.);</font>
+     ok <font color="#990000">&amp;=</font> <font color="#990000">(</font><b><font color="#000000">Value</font></b><font color="#990000">(</font>x<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">])</font> <font color="#990000">==</font>  <font color="#993399">4</font><font color="#990000">.);</font>
+     ok <font color="#990000">&amp;=</font> <font color="#990000">(</font><b><font color="#000000">Value</font></b><font color="#990000">(</font>y<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">])</font> <font color="#990000">==</font> <font color="#990000">-</font><font color="#993399">12</font><font color="#990000">.);</font>
+
+     <i><font color="#9A1900">// evaluate derivative of y w.r.t x</font></i>
+     <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font><font color="#009900">double</font><font color="#990000">)</font> <b><font color="#000000">w</font></b><font color="#990000">(</font>m<font color="#990000">);</font>
+     <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font><font color="#009900">double</font><font color="#990000">)</font> <b><font color="#000000">dw</font></b><font color="#990000">(</font>n<font color="#990000">);</font>
+     w<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">.;</font>
+     dw   <font color="#990000">=</font> f<font color="#990000">.</font><b><font color="#000000">Reverse</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">,</font> w<font color="#990000">);</font>
+     ok  <font color="#990000">&amp;=</font> <font color="#990000">(</font>dw<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">==</font> <font color="#993399">0</font><font color="#990000">.);</font>  <i><font color="#9A1900">// derivative of y[0] w.r.t x[0] is zero</font></i>
+     ok  <font color="#990000">&amp;=</font> <font color="#990000">(</font>dw<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">==</font> <font color="#990000">-</font><font color="#993399">3</font><font color="#990000">.);</font> <i><font color="#9A1900">// derivative of y[0] w.r.t x[1] is 3</font></i>
+
+     <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
+<font color="#FF0000">}</font></tt></pre>
+</font></code>
+<hr>Input File: example/general/var2par.cpp
+
+</body>
+</html>

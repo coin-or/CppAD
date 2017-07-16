@@ -1,0 +1,540 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>Determinant of a Minor</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Determinant of a Minor">
+<meta name="keywords" id="keywords" content=" determinant minor det_of_minor matrix syntax inclusion purpose m n r c d scalar example source code ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_det_of_minor_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://coin-or.github.io/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="det_by_lu.hpp.htm" target="_top">Prev</a>
+</td><td><a href="det_of_minor.cpp.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>speed</option>
+<option>speed_utility</option>
+<option>det_of_minor</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>CppAD-&gt;</option>
+<option>Install</option>
+<option>Introduction</option>
+<option>AD</option>
+<option>ADFun</option>
+<option>preprocessor</option>
+<option>multi_thread</option>
+<option>utility</option>
+<option>ipopt_solve</option>
+<option>Example</option>
+<option>speed</option>
+<option>Appendix</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>speed-&gt;</option>
+<option>speed_main</option>
+<option>speed_utility</option>
+<option>speed_double</option>
+<option>speed_adolc</option>
+<option>speed_cppad</option>
+<option>speed_fadbad</option>
+<option>speed_sacado</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>speed_utility-&gt;</option>
+<option>det_by_lu</option>
+<option>det_of_minor</option>
+<option>det_by_minor</option>
+<option>det_33</option>
+<option>det_grad_33</option>
+<option>mat_sum_sq</option>
+<option>ode_evaluate</option>
+<option>sparse_jac_fun</option>
+<option>sparse_hes_fun</option>
+<option>uniform_01</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down0(this)'>
+<option>det_of_minor-&gt;</option>
+<option>det_of_minor.cpp</option>
+<option>det_of_minor.hpp</option>
+</select>
+</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Syntax</option>
+<option>Inclusion</option>
+<option>Purpose</option>
+<option>Determinant of A</option>
+<option>a</option>
+<option>m</option>
+<option>n</option>
+<option>r</option>
+<option>c</option>
+<option>d</option>
+<option>Scalar</option>
+<option>Example</option>
+<option>Source Code</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@
+
+
+
+<center><b><big><big>Determinant of a Minor</big></big></b></center>
+<br>
+<b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
+
+<br>
+
+<code><font color="blue"><span style='white-space: nowrap'>#&nbsp;include&nbsp;&lt;cppad/speed/det_of_minor.hpp&gt;<br>
+</span></font></code>
+
+<code><i><font color="black"><span style='white-space: nowrap'>d</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;det_of_minor(</span></font><i><font color="black"><span style='white-space: nowrap'>a</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>m</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>r</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>c</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+
+
+
+<br>
+<br>
+<b><big><a name="Inclusion" id="Inclusion">Inclusion</a></big></b>
+<br>
+The template function <code><font color="blue">det_of_minor</font></code> is defined in the <code><font color="blue">CppAD</font></code>
+namespace by including
+the file <code><font color="blue">cppad/speed/det_of_minor.hpp</font></code>
+(relative to the CppAD distribution directory).
+
+<br>
+<br>
+<b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
+<br>
+This template function
+returns the determinant of a minor of the matrix <small>@(@
+A
+@)@</small>
+using expansion by minors.
+The elements of the <small>@(@
+n \times n
+@)@</small> minor <small>@(@
+M
+@)@</small>
+of the matrix <small>@(@
+A
+@)@</small> are defined,
+for <small>@(@
+i = 0 , \ldots , n-1
+@)@</small> and <small>@(@
+j = 0 , \ldots , n-1
+@)@</small>, by
+<small>@[@
+
+	M_{i,j} = A_{R(i), C(j)}
+
+@]@</small>
+where the functions
+<small>@(@
+R(i)
+@)@</small> is defined by the <a href="det_of_minor.htm#r" target="_top"><span style='white-space: nowrap'>argument&nbsp;r</span></a>
+ and
+<small>@(@
+C(j)
+@)@</small> is defined by the <a href="det_of_minor.htm#c" target="_top"><span style='white-space: nowrap'>argument&nbsp;c</span></a>
+.
+<code><span style='white-space: nowrap'><br>
+<br>
+</span></code>This template function
+is for example and testing purposes only.
+Expansion by minors is chosen as an example because it uses
+a lot of floating point operations yet does not require much source code
+(on the order of 
+<code><i><font color="black"><span style='white-space: nowrap'>m</span></font></i></code>
+ factorial floating point operations and
+about 70 lines of source code including comments).
+This is not an efficient method for computing a determinant;
+for example, using an LU factorization would be better.
+
+<br>
+<br>
+<b><big><a name="Determinant of A" id="Determinant of A">Determinant of A</a></big></b>
+<br>
+If the following conditions hold, the minor is the
+entire matrix <small>@(@
+A
+@)@</small> and hence <code><font color="blue">det_of_minor</font></code>
+will return the determinant of <small>@(@
+A
+@)@</small>:
+
+<ol type="1"><li>
+<small>@(@
+n = m
+@)@</small>.
+</li><li>
+
+for <small>@(@
+i = 0 , \ldots , m-1
+@)@</small>, <small>@(@
+r[i] = i+1
+@)@</small>,
+and <small>@(@
+r[m] = 0
+@)@</small>.
+</li><li>
+
+for <small>@(@
+j = 0 , \ldots , m-1
+@)@</small>, <small>@(@
+c[j] = j+1
+@)@</small>,
+and <small>@(@
+c[m] = 0
+@)@</small>.
+</li></ol>
+
+
+<br>
+<br>
+<b><big><a name="a" id="a">a</a></big></b>
+<br>
+The argument 
+<code><i><font color="black"><span style='white-space: nowrap'>a</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;std::vector&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Scalar</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>a</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+and is a vector with size <small>@(@
+m * m
+@)@</small>
+(see description of <a href="det_of_minor.htm#Scalar" target="_top"><span style='white-space: nowrap'>Scalar</span></a>
+ below).
+The elements of the <small>@(@
+m \times m
+@)@</small> matrix <small>@(@
+A
+@)@</small> are defined,
+for <small>@(@
+i = 0 , \ldots , m-1
+@)@</small> and <small>@(@
+j = 0 , \ldots , m-1
+@)@</small>, by
+<small>@[@
+
+	A_{i,j} = a[ i * m + j]
+
+@]@</small>
+
+<br>
+<br>
+<b><big><a name="m" id="m">m</a></big></b>
+<br>
+The argument 
+<code><i><font color="black"><span style='white-space: nowrap'>m</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>m</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+and is the number of rows (and columns) in the square matrix <small>@(@
+A
+@)@</small>.
+
+<br>
+<br>
+<b><big><a name="n" id="n">n</a></big></b>
+<br>
+The argument 
+<code><i><font color="black"><span style='white-space: nowrap'>n</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+and is the number of rows (and columns) in the square minor <small>@(@
+M
+@)@</small>.
+
+<br>
+<br>
+<b><big><a name="r" id="r">r</a></big></b>
+<br>
+The argument 
+<code><i><font color="black"><span style='white-space: nowrap'>r</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;std::vector&lt;size_t&gt;&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>r</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+and is a vector with <small>@(@
+m + 1
+@)@</small> elements.
+This vector defines the function <small>@(@
+R(i)
+@)@</small>
+which specifies the rows of the minor <small>@(@
+M
+@)@</small>.
+To be specific, the function <small>@(@
+R(i)
+@)@</small>
+for <small>@(@
+i = 0, \ldots , n-1
+@)@</small> is defined by
+<small>@[@
+
+\begin{array}{rcl}
+	R(0)   & = & r[m]
+	\\
+	R(i+1) & = & r[ R(i) ]
+\end{array}
+
+@]@</small>
+All the elements of 
+<code><i><font color="black"><span style='white-space: nowrap'>r</span></font></i></code>
+ must have value
+less than or equal 
+<code><i><font color="black"><span style='white-space: nowrap'>m</span></font></i></code>
+.
+The elements of vector 
+<code><i><font color="black"><span style='white-space: nowrap'>r</span></font></i></code>
+ are modified during the computation,
+and restored to their original value before the return from
+<code><font color="blue">det_of_minor</font></code>.
+
+<br>
+<br>
+<b><big><a name="c" id="c">c</a></big></b>
+<br>
+The argument 
+<code><i><font color="black"><span style='white-space: nowrap'>c</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;std::vector&lt;size_t&gt;&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>c</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+and is a vector with <small>@(@
+m + 1
+@)@</small> elements
+This vector defines the function <small>@(@
+C(i)
+@)@</small>
+which specifies the rows of the minor <small>@(@
+M
+@)@</small>.
+To be specific, the function <small>@(@
+C(i)
+@)@</small>
+for <small>@(@
+j = 0, \ldots , n-1
+@)@</small> is defined by
+<small>@[@
+
+\begin{array}{rcl}
+	C(0)   & = & c[m]
+	\\
+	C(j+1) & = & c[ C(j) ]
+\end{array}
+
+@]@</small>
+All the elements of 
+<code><i><font color="black"><span style='white-space: nowrap'>c</span></font></i></code>
+ must have value
+less than or equal 
+<code><i><font color="black"><span style='white-space: nowrap'>m</span></font></i></code>
+.
+The elements of vector 
+<code><i><font color="black"><span style='white-space: nowrap'>c</span></font></i></code>
+ are modified during the computation,
+and restored to their original value before the return from
+<code><font color="blue">det_of_minor</font></code>.
+
+<br>
+<br>
+<b><big><a name="d" id="d">d</a></big></b>
+<br>
+The result 
+<code><i><font color="black"><span style='white-space: nowrap'>d</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Scalar</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>d</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+and is equal to the determinant of the minor <small>@(@
+M
+@)@</small>.
+
+<br>
+<br>
+<b><big><a name="Scalar" id="Scalar">Scalar</a></big></b>
+<br>
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+ and 
+<code><i><font color="black"><span style='white-space: nowrap'>y</span></font></i></code>
+ are objects of type 
+<code><i><font color="black"><span style='white-space: nowrap'>Scalar</span></font></i></code>
+
+and 
+<code><i><font color="black"><span style='white-space: nowrap'>i</span></font></i></code>
+ is an object of type <code><font color="blue">int</font></code>,
+the 
+<code><i><font color="black"><span style='white-space: nowrap'>Scalar</span></font></i></code>
+ must support the following operations:
+<table><tr><td align='left'  valign='top'>
+
+<b>Syntax</b>
+	</td><td align='left'  valign='top'>
+ <b>Description</b>
+	</td><td align='left'  valign='top'>
+ <b>Result Type</b>
+</td></tr><tr><td align='left'  valign='top'>
+
+
+<code><i><font color="black"><span style='white-space: nowrap'>Scalar</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+
+	</td><td align='left'  valign='top'>
+ default constructor for 
+<code><i><font color="black"><span style='white-space: nowrap'>Scalar</span></font></i></code>
+ object.
+</td></tr><tr><td align='left'  valign='top'>
+
+
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i></code>
+
+	</td><td align='left'  valign='top'>
+ set value of 
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+ to current value of 
+<code><i><font color="black"><span style='white-space: nowrap'>i</span></font></i></code>
+
+</td></tr><tr><td align='left'  valign='top'>
+
+
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>y</span></font></i></code>
+
+	</td><td align='left'  valign='top'>
+ set value of 
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+ to current value of 
+<code><i><font color="black"><span style='white-space: nowrap'>y</span></font></i></code>
+
+</td></tr><tr><td align='left'  valign='top'>
+
+
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;+&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>y</span></font></i></code>
+
+	</td><td align='left'  valign='top'>
+ value of 
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+ plus 
+<code><i><font color="black"><span style='white-space: nowrap'>y</span></font></i></code>
+
+	</td><td align='left'  valign='top'>
+ 
+<code><i><font color="black"><span style='white-space: nowrap'>Scalar</span></font></i></code>
+
+</td></tr><tr><td align='left'  valign='top'>
+
+
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;-&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>y</span></font></i></code>
+
+	</td><td align='left'  valign='top'>
+ value of 
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+ minus 
+<code><i><font color="black"><span style='white-space: nowrap'>y</span></font></i></code>
+
+	</td><td align='left'  valign='top'>
+ 
+<code><i><font color="black"><span style='white-space: nowrap'>Scalar</span></font></i></code>
+
+</td></tr><tr><td align='left'  valign='top'>
+
+
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;*&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>y</span></font></i></code>
+
+	</td><td align='left'  valign='top'>
+ value of 
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+ times value of 
+<code><i><font color="black"><span style='white-space: nowrap'>y</span></font></i></code>
+
+	</td><td align='left'  valign='top'>
+ 
+<code><i><font color="black"><span style='white-space: nowrap'>Scalar</span></font></i></code>
+
+</td></tr>
+</table>
+<br>
+<b><big><a name="Example" id="Example">Example</a></big></b>
+<br>
+The file
+<a href="det_of_minor.cpp.htm" target="_top"><span style='white-space: nowrap'>det_of_minor.cpp</span></a>
+
+contains an example and test of <code><font color="blue">det_of_minor.hpp</font></code>.
+It returns true if it succeeds and false otherwise.
+
+<br>
+<br>
+<b><big><a name="Source Code" id="Source Code">Source Code</a></big></b>
+<br>
+The file
+<a href="det_of_minor.hpp.htm" target="_top"><span style='white-space: nowrap'>det_of_minor.hpp</span></a>
+
+contains the source for this template function.
+
+
+
+<hr>Input File: cppad/speed/det_of_minor.hpp
+
+</body>
+</html>

@@ -1,0 +1,220 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>ADFun Check and Re-Tape: Example and Test</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="ADFun Check and Re-Tape: Example and Test">
+<meta name="keywords" id="keywords" content=" adfun check re-tape: example test Funcheck Dependent ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_fun_check.cpp_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://coin-or.github.io/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="funcheck.htm" target="_top">Prev</a>
+</td><td><a href="check_for_nan.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>ADFun</option>
+<option>FunCheck</option>
+<option>fun_check.cpp</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>CppAD-&gt;</option>
+<option>Install</option>
+<option>Introduction</option>
+<option>AD</option>
+<option>ADFun</option>
+<option>preprocessor</option>
+<option>multi_thread</option>
+<option>utility</option>
+<option>ipopt_solve</option>
+<option>Example</option>
+<option>speed</option>
+<option>Appendix</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>ADFun-&gt;</option>
+<option>record_adfun</option>
+<option>drivers</option>
+<option>Forward</option>
+<option>Reverse</option>
+<option>sparsity_pattern</option>
+<option>sparse_derivative</option>
+<option>optimize</option>
+<option>abs_normal</option>
+<option>FunCheck</option>
+<option>check_for_nan</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>FunCheck-&gt;</option>
+<option>fun_check.cpp</option>
+</select>
+</td>
+<td>fun_check.cpp</td>
+<td>Headings</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@
+
+
+<center><b><big><big>ADFun Check and Re-Tape: Example and Test</big></big></b></center>
+<code><font color="blue"><pre><tt><b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/cppad.hpp&gt;</font>
+
+<b><font color="#0000FF">namespace</font></b> <font color="#FF0000">{</font> <i><font color="#9A1900">// -----------------------------------------------------------</font></i>
+<i><font color="#9A1900">// define the template function object Fun&lt;Type,Vector&gt; in empty namespace</font></i>
+<b><font color="#0000FF">template</font></b> <font color="#990000">&lt;</font><b><font color="#0000FF">class</font></b> <font color="#008080">Type</font><font color="#990000">,</font> <b><font color="#0000FF">class</font></b> <font color="#008080">Vector</font><font color="#990000">&gt;</font>
+<b><font color="#0000FF">class</font></b> <font color="#008080">Fun</font> <font color="#FF0000">{</font>
+<b><font color="#0000FF">private</font></b><font color="#990000">:</font>
+     <font color="#008080">size_t</font> n<font color="#990000">;</font>
+<b><font color="#0000FF">public</font></b><font color="#990000">:</font>
+     <i><font color="#9A1900">// function constructor</font></i>
+     <b><font color="#000000">Fun</font></b><font color="#990000">(</font><font color="#008080">size_t</font> n_<font color="#990000">)</font> <font color="#990000">:</font> <b><font color="#000000">n</font></b><font color="#990000">(</font>n_<font color="#990000">)</font>
+     <font color="#FF0000">{</font> <font color="#FF0000">}</font>
+     <i><font color="#9A1900">// function evaluator</font></i>
+     <font color="#008080">Vector</font> <b><font color="#0000FF">operator</font></b><font color="#990000">()</font> <font color="#990000">(</font><b><font color="#0000FF">const</font></b> <font color="#008080">Vector</font> <font color="#990000">&amp;</font>x<font color="#990000">)</font>
+     <font color="#FF0000">{</font>    <font color="#008080">Vector</font> <b><font color="#000000">y</font></b><font color="#990000">(</font>n<font color="#990000">);</font>
+          <font color="#008080">size_t</font> i<font color="#990000">;</font>
+          <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> n<font color="#990000">;</font> i<font color="#990000">++)</font>
+          <font color="#FF0000">{</font>    <i><font color="#9A1900">// This operaiton sequence depends on x</font></i>
+               <b><font color="#0000FF">if</font></b><font color="#990000">(</font> x<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">&gt;=</font> <font color="#993399">0</font> <font color="#990000">)</font>
+                    y<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> <b><font color="#000000">exp</font></b><font color="#990000">(</font>x<font color="#990000">[</font>i<font color="#990000">]);</font>
+               <b><font color="#0000FF">else</font></b> y<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> <b><font color="#000000">exp</font></b><font color="#990000">(-</font>x<font color="#990000">[</font>i<font color="#990000">]);</font>
+          <font color="#FF0000">}</font>
+          <b><font color="#0000FF">return</font></b> y<font color="#990000">;</font>
+     <font color="#FF0000">}</font>
+<font color="#FF0000">}</font><font color="#990000">;</font>
+<i><font color="#9A1900">// template function FunCheckCases&lt;Vector, ADVector&gt; in empty namespace</font></i>
+<b><font color="#0000FF">template</font></b> <font color="#990000">&lt;</font><b><font color="#0000FF">class</font></b> <font color="#008080">Vector</font><font color="#990000">,</font> <b><font color="#0000FF">class</font></b> <font color="#008080">ADVector</font><font color="#990000">&gt;</font>
+<font color="#009900">bool</font> <b><font color="#000000">FunCheckCases</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
+<font color="#FF0000">{</font>    <font color="#009900">bool</font> ok <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
+     <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>AD<font color="#990000">;</font>
+     <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>ADFun<font color="#990000">;</font>
+     <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>Independent<font color="#990000">;</font>
+     <font color="#009900">double</font> eps99 <font color="#990000">=</font> <font color="#993399">99.0</font> <font color="#990000">*</font> std<font color="#990000">::</font>numeric_limits<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;::</font><b><font color="#000000">epsilon</font></b><font color="#990000">();</font>
+
+     <i><font color="#9A1900">// use the ADFun default constructor</font></i>
+     <font color="#008080">ADFun&lt;double&gt;</font> f<font color="#990000">;</font>
+
+     <i><font color="#9A1900">// domain space vector</font></i>
+     <font color="#008080">size_t</font> n <font color="#990000">=</font> <font color="#993399">2</font><font color="#990000">;</font>
+     <font color="#008080">ADVector</font> <b><font color="#000000">X</font></b><font color="#990000">(</font>n<font color="#990000">);</font>
+     X<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#990000">-</font><font color="#993399">1</font><font color="#990000">.;</font>
+     X<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">.;</font>
+
+     <i><font color="#9A1900">// declare independent variables and starting recording</font></i>
+     <b><font color="#000000">Independent</font></b><font color="#990000">(</font>X<font color="#990000">);</font>
+
+     <i><font color="#9A1900">// create function object to use with AD&lt;double&gt;</font></i>
+     <font color="#008080">Fun&lt; AD&lt;double&gt;, ADVector &gt;</font> <b><font color="#000000">G</font></b><font color="#990000">(</font>n<font color="#990000">);</font>
+
+     <i><font color="#9A1900">// range space vector</font></i>
+     <font color="#008080">size_t</font> m <font color="#990000">=</font> n<font color="#990000">;</font>
+     <font color="#008080">ADVector</font> <b><font color="#000000">Y</font></b><font color="#990000">(</font>m<font color="#990000">);</font>
+     Y <font color="#990000">=</font> <b><font color="#000000">G</font></b><font color="#990000">(</font>X<font color="#990000">);</font>
+
+     <i><font color="#9A1900">// stop tape and store operation sequence in f : X -&gt; Y</font></i>
+     f<font color="#990000">.</font><b><font color="#000000">Dependent</font></b><font color="#990000">(</font>X<font color="#990000">,</font> Y<font color="#990000">);</font>
+     ok <font color="#990000">&amp;=</font> <font color="#990000">(</font>f<font color="#990000">.</font><b><font color="#000000">size_order</font></b><font color="#990000">()</font> <font color="#990000">==</font> <font color="#993399">0</font><font color="#990000">);</font>  <i><font color="#9A1900">// no implicit forward operation</font></i>
+
+     <i><font color="#9A1900">// create function object to use with double</font></i>
+     <font color="#008080">Fun&lt;double, Vector&gt;</font> <b><font color="#000000">g</font></b><font color="#990000">(</font>n<font color="#990000">);</font>
+
+     <i><font color="#9A1900">// function values should agree when the independent variable</font></i>
+     <i><font color="#9A1900">// values are the same as during recording</font></i>
+     <font color="#008080">Vector</font> <b><font color="#000000">x</font></b><font color="#990000">(</font>n<font color="#990000">);</font>
+     <font color="#008080">size_t</font> j<font color="#990000">;</font>
+     <b><font color="#0000FF">for</font></b><font color="#990000">(</font>j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> n<font color="#990000">;</font> j<font color="#990000">++)</font>
+          x<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">=</font> <b><font color="#000000">Value</font></b><font color="#990000">(</font>X<font color="#990000">[</font>j<font color="#990000">]);</font>
+     <font color="#009900">double</font> r <font color="#990000">=</font> eps99<font color="#990000">;</font>
+     <font color="#009900">double</font> a <font color="#990000">=</font> eps99<font color="#990000">;</font>
+     ok      <font color="#990000">&amp;=</font> <b><font color="#000000">FunCheck</font></b><font color="#990000">(</font>f<font color="#990000">,</font> g<font color="#990000">,</font> x<font color="#990000">,</font> a<font color="#990000">,</font> r<font color="#990000">);</font>
+
+     <i><font color="#9A1900">// function values should not agree when the independent variable</font></i>
+     <i><font color="#9A1900">// values are the negative of values during recording</font></i>
+     <b><font color="#0000FF">for</font></b><font color="#990000">(</font>j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> n<font color="#990000">;</font> j<font color="#990000">++)</font>
+          x<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">=</font> <font color="#990000">-</font> <b><font color="#000000">Value</font></b><font color="#990000">(</font>X<font color="#990000">[</font>j<font color="#990000">]);</font>
+     ok      <font color="#990000">&amp;=</font> <font color="#990000">!</font> <b><font color="#000000">FunCheck</font></b><font color="#990000">(</font>f<font color="#990000">,</font> g<font color="#990000">,</font> x<font color="#990000">,</font> a<font color="#990000">,</font> r<font color="#990000">);</font>
+
+     <i><font color="#9A1900">// re-tape to obtain the new AD of double operation sequence</font></i>
+     <b><font color="#0000FF">for</font></b><font color="#990000">(</font>j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> n<font color="#990000">;</font> j<font color="#990000">++)</font>
+          X<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">=</font> x<font color="#990000">[</font>j<font color="#990000">];</font>
+     <b><font color="#000000">Independent</font></b><font color="#990000">(</font>X<font color="#990000">);</font>
+     Y <font color="#990000">=</font> <b><font color="#000000">G</font></b><font color="#990000">(</font>X<font color="#990000">);</font>
+
+     <i><font color="#9A1900">// stop tape and store operation sequence in f : X -&gt; Y</font></i>
+     f<font color="#990000">.</font><b><font color="#000000">Dependent</font></b><font color="#990000">(</font>X<font color="#990000">,</font> Y<font color="#990000">);</font>
+     ok <font color="#990000">&amp;=</font> <font color="#990000">(</font>f<font color="#990000">.</font><b><font color="#000000">size_order</font></b><font color="#990000">()</font> <font color="#990000">==</font> <font color="#993399">0</font><font color="#990000">);</font>  <i><font color="#9A1900">// no implicit forward with this x</font></i>
+
+     <i><font color="#9A1900">// function values should agree now</font></i>
+     ok      <font color="#990000">&amp;=</font> <b><font color="#000000">FunCheck</font></b><font color="#990000">(</font>f<font color="#990000">,</font> g<font color="#990000">,</font> x<font color="#990000">,</font> a<font color="#990000">,</font> r<font color="#990000">);</font>
+
+     <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
+<font color="#FF0000">}</font>
+<font color="#FF0000">}</font> <i><font color="#9A1900">// End empty namespace</font></i>
+<b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;vector&gt;</font>
+<b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;valarray&gt;</font>
+<font color="#009900">bool</font> <b><font color="#000000">FunCheck</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
+<font color="#FF0000">{</font>    <font color="#009900">bool</font> ok <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
+     <b><font color="#0000FF">typedef</font></b> CppAD<font color="#990000">::</font><font color="#008080">vector&lt;double&gt;</font>                Vector1<font color="#990000">;</font>
+     <b><font color="#0000FF">typedef</font></b> CppAD<font color="#990000">::</font><font color="#008080">vector&lt; CppAD::AD&lt;double&gt; &gt;</font> ADVector1<font color="#990000">;</font>
+     <b><font color="#0000FF">typedef</font></b>   std<font color="#990000">::</font><font color="#008080">vector&lt;double&gt;</font>                Vector2<font color="#990000">;</font>
+     <b><font color="#0000FF">typedef</font></b>   std<font color="#990000">::</font><font color="#008080">vector&lt; CppAD::AD&lt;double&gt; &gt;</font> ADVector2<font color="#990000">;</font>
+     <b><font color="#0000FF">typedef</font></b> std<font color="#990000">::</font><font color="#008080">valarray&lt;double&gt;</font>                Vector3<font color="#990000">;</font>
+     <b><font color="#0000FF">typedef</font></b> std<font color="#990000">::</font><font color="#008080">valarray&lt; CppAD::AD&lt;double&gt; &gt;</font> ADVector3<font color="#990000">;</font>
+     <i><font color="#9A1900">// Run with Vector and ADVector equal to three different cases</font></i>
+     <i><font color="#9A1900">// all of which are Simple Vectors with elements of type</font></i>
+     <i><font color="#9A1900">// double and AD&lt;double&gt; respectively.</font></i>
+     ok <font color="#990000">&amp;=</font> FunCheckCases<font color="#990000">&lt;</font> Vector1<font color="#990000">,</font> ADVector2 <font color="#990000">&gt;();</font>
+     ok <font color="#990000">&amp;=</font> FunCheckCases<font color="#990000">&lt;</font> Vector2<font color="#990000">,</font> ADVector3 <font color="#990000">&gt;();</font>
+     ok <font color="#990000">&amp;=</font> FunCheckCases<font color="#990000">&lt;</font> Vector3<font color="#990000">,</font> ADVector1 <font color="#990000">&gt;();</font>
+     <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
+<font color="#FF0000">}</font></tt></pre>
+</font></code>
+<hr>Input File: example/general/fun_check.cpp
+
+</body>
+</html>

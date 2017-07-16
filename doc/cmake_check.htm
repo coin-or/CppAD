@@ -1,0 +1,202 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>Checking the CppAD Examples and Tests</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Checking the CppAD Examples and Tests">
+<meta name="keywords" id="keywords" content=" checking the cppad examples tests purpose check all windows subsets make first level ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_cmake_check_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://coin-or.github.io/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="cppad_testvector.htm" target="_top">Prev</a>
+</td><td><a href="pkgconfig.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>Install</option>
+<option>cmake_check</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>CppAD-&gt;</option>
+<option>Install</option>
+<option>Introduction</option>
+<option>AD</option>
+<option>ADFun</option>
+<option>preprocessor</option>
+<option>multi_thread</option>
+<option>utility</option>
+<option>ipopt_solve</option>
+<option>Example</option>
+<option>speed</option>
+<option>Appendix</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>Install-&gt;</option>
+<option>download</option>
+<option>cmake</option>
+<option>cmake_check</option>
+<option>pkgconfig</option>
+</select>
+</td>
+<td>cmake_check</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Purpose</option>
+<option>Check All</option>
+<option>---..Windows</option>
+<option>Subsets of make check</option>
+<option>First Level</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@
+
+
+<center><b><big><big>Checking the CppAD Examples and Tests</big></big></b></center>
+<br>
+<b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
+<br>
+After you configure your system with the
+<a href="cmake.htm#CMake Command" target="_top"><span style='white-space: nowrap'>cmake&nbsp;command</span></a>
+ you
+can run the CppAD example and tests to make sure that
+CppAD functions properly on your system.
+
+
+<br>
+<br>
+<b><big><a name="Check All" id="Check All">Check All</a></big></b>
+<br>
+In the <code><font color="blue">build</font></code> subdirectory of the
+<a href="download.htm#Distribution Directory" target="_top"><span style='white-space: nowrap'>distribution&nbsp;directory</span></a>
+
+execute the command
+<code><font color='blue'><pre style='display:inline'> 
+     make check
+</pre></font></code>
+This will build and run all of the tests that are support
+by your system and the <a href="cmake.htm" target="_top"><span style='white-space: nowrap'>cmake</span></a>
+ command options.
+
+<br>
+<br>
+<b><a name="Check All.Windows" id="Check All.Windows">Windows</a></b>
+<br>
+If you created <code><font color="blue">nmake</font></code> makefiles, you will have
+to use <code><font color="blue">nmake</font></code> instead of <code><font color="blue">make</font></code> in the commands
+above and below; see
+<a href="download.htm#Windows File Extraction and Testing" target="_top"><span style='white-space: nowrap'>windows&nbsp;file&nbsp;extraction&nbsp;and&nbsp;testing</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="Subsets of make check" id="Subsets of make check">Subsets of make check</a></big></b>
+<br>
+In unix, you can determine which subsets of <code><font color="blue">make check</font></code> are available
+by putting the output of the <a href="cmake.htm#CMake Command" target="_top"><span style='white-space: nowrap'>cmake&nbsp;command</span></a>
+
+in a file (called 
+<code><i><font color="black"><span style='white-space: nowrap'>cmake.out</span></font></i></code>
+ below) and executing:
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;grep&nbsp;'make&nbsp;check.*available'&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>cmake.out</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+<br>
+<b><big><a name="First Level" id="First Level">First Level</a></big></b>
+<br>
+The first level of subsets of <code><font color="blue">make check</font></code> are described below:
+<table><tr><td align='left'  valign='top'>
+
+Command </td><td align='left'  valign='top'>
+
+	Description
+</td></tr><tr><td align='left'  valign='top'>
+
+<code><font color="blue">make check_introduction</font></code>   </td><td align='left'  valign='top'>
+
+	the <a href="introduction.htm" target="_top"><span style='white-space: nowrap'>Introduction</span></a>
+ functions
+</td></tr><tr><td align='left'  valign='top'>
+
+<code><font color="blue">make check_example</font></code>   </td><td align='left'  valign='top'>
+
+	the normal <a href="listallexamples.htm" target="_top"><span style='white-space: nowrap'>example</span></a>
+ functions plus some deprecated
+	examples.
+</td></tr><tr><td align='left'  valign='top'>
+
+<code><font color="blue">make check_test_more</font></code> </td><td align='left'  valign='top'>
+
+	correctness tests that are not examples
+</td></tr><tr><td align='left'  valign='top'>
+
+<code><font color="blue">make check_speed</font></code> </td><td align='left'  valign='top'>
+
+	correctness for single thread <a href="speed.htm" target="_top"><span style='white-space: nowrap'>speed</span></a>
+ tests
+</td></tr><tr><td align='left'  valign='top'>
+
+<code><font color="blue">make check_cppad_ipopt</font></code> </td><td align='left'  valign='top'>
+
+	the deprecated <a href="cppad_ipopt_nlp.htm" target="_top"><span style='white-space: nowrap'>cppad_ipopt_nlp</span></a>
+ speed and correctness tests
+</td></tr><tr><td align='left'  valign='top'>
+
+</td></tr>
+</table>
+Note that <code><font color="blue">make check_example_multi_thread</font></code> is used for the
+<a href="multi_thread.htm" target="_top"><span style='white-space: nowrap'>multi-threading</span></a>
+ speed tests.
+
+
+
+<hr>Input File: omh/install/cmake_check.omh
+
+</body>
+</html>

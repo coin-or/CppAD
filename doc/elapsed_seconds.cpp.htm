@@ -1,0 +1,147 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>Elapsed Seconds: Example and Test</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Elapsed Seconds: Example and Test">
+<meta name="keywords" id="keywords" content=" elapsed seconds: example test seconds timer ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_elapsed_seconds.cpp_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://coin-or.github.io/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="elapsed_seconds.htm" target="_top">Prev</a>
+</td><td><a href="time_test.cpp.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>utility</option>
+<option>time_test</option>
+<option>elapsed_seconds</option>
+<option>elapsed_seconds.cpp</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>utility-&gt;</option>
+<option>ErrorHandler</option>
+<option>NearEqual</option>
+<option>speed_test</option>
+<option>SpeedTest</option>
+<option>time_test</option>
+<option>test_boolofvoid</option>
+<option>NumericType</option>
+<option>CheckNumericType</option>
+<option>SimpleVector</option>
+<option>CheckSimpleVector</option>
+<option>nan</option>
+<option>pow_int</option>
+<option>Poly</option>
+<option>LuDetAndSolve</option>
+<option>RombergOne</option>
+<option>RombergMul</option>
+<option>Runge45</option>
+<option>Rosen34</option>
+<option>OdeErrControl</option>
+<option>OdeGear</option>
+<option>OdeGearControl</option>
+<option>CppAD_vector</option>
+<option>thread_alloc</option>
+<option>index_sort</option>
+<option>to_string</option>
+<option>set_union</option>
+<option>sparse_rc</option>
+<option>sparse_rcv</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>time_test-&gt;</option>
+<option>elapsed_seconds</option>
+<option>time_test.cpp</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>elapsed_seconds-&gt;</option>
+<option>elapsed_seconds.cpp</option>
+</select>
+</td>
+<td>elapsed_seconds.cpp</td>
+<td>Headings</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@
+
+
+<center><b><big><big>Elapsed Seconds: Example and Test</big></big></b></center>
+<code><font color="blue"><pre><tt><b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/utility/elapsed_seconds.hpp&gt;</font>
+
+<b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;iostream&gt;</font>
+<b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;algorithm&gt;</font>
+<b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cmath&gt;</font>
+
+<b><font color="#000080"># define</font></b> CPPAD_DEBUG_ELAPSED_SECONDS <font color="#993399">0</font>
+
+<font color="#009900">bool</font> <b><font color="#000000">elapsed_seconds</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
+<font color="#FF0000">{</font>    <font color="#009900">bool</font> ok <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
+
+     <font color="#009900">double</font> max_diff <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">.;</font>
+     <font color="#009900">double</font> s0 <font color="#990000">=</font> CppAD<font color="#990000">::</font><b><font color="#000000">elapsed_seconds</font></b><font color="#990000">();</font>
+     <font color="#009900">double</font> s1 <font color="#990000">=</font> CppAD<font color="#990000">::</font><b><font color="#000000">elapsed_seconds</font></b><font color="#990000">();</font>
+     <font color="#009900">double</font> s2 <font color="#990000">=</font> CppAD<font color="#990000">::</font><b><font color="#000000">elapsed_seconds</font></b><font color="#990000">();</font>
+     <b><font color="#0000FF">while</font></b><font color="#990000">(</font>s2 <font color="#990000">-</font> s0 <font color="#990000">&lt;</font> <font color="#993399">1</font><font color="#990000">.)</font>
+     <font color="#FF0000">{</font>    max_diff <font color="#990000">=</font> std<font color="#990000">::</font><b><font color="#000000">max</font></b><font color="#990000">(</font>s2 <font color="#990000">-</font> s1<font color="#990000">,</font> max_diff<font color="#990000">);</font>
+          s1 <font color="#990000">=</font> s2<font color="#990000">;</font>
+          s2 <font color="#990000">=</font> CppAD<font color="#990000">::</font><b><font color="#000000">elapsed_seconds</font></b><font color="#990000">();</font>
+
+     <font color="#FF0000">}</font>
+<b><font color="#000080"># if</font></b> CPPAD_DEBUG_ELAPSED_SECONDS
+     std<font color="#990000">::</font>cout <font color="#990000">&lt;&lt;</font> <font color="#FF0000">"max_diff = "</font> <font color="#990000">&lt;&lt;</font> max_diff <font color="#990000">&lt;&lt;</font> std<font color="#990000">::</font>endl<font color="#990000">;</font>
+<b><font color="#000080"># endif</font></b>
+     ok <font color="#990000">&amp;=</font> <font color="#993399">0</font><font color="#990000">.</font> <font color="#990000">&lt;</font> max_diff <font color="#990000">&amp;&amp;</font> max_diff <font color="#990000">&lt;</font> <font color="#990000">.</font><font color="#993399">04</font><font color="#990000">;</font>
+     <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
+<font color="#FF0000">}</font>
+</tt></pre>
+</font></code>
+<hr>Input File: speed/example/elapsed_seconds.cpp
+
+</body>
+</html>

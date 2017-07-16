@@ -1,0 +1,376 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>Using Multiple Levels of AD</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Using Multiple Levels of AD">
+<meta name="keywords" id="keywords" content=" using multiple levels ad background motivation procedure first start ad&lt;double&gt; ad&lt; &gt; recording inner function second outer derivatives example ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_mul_level_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://coin-or.github.io/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="jac_lu_det.cpp.htm" target="_top">Prev</a>
+</td><td><a href="mul_level.cpp.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>Example</option>
+<option>General</option>
+<option>mul_level</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>CppAD-&gt;</option>
+<option>Install</option>
+<option>Introduction</option>
+<option>AD</option>
+<option>ADFun</option>
+<option>preprocessor</option>
+<option>multi_thread</option>
+<option>utility</option>
+<option>ipopt_solve</option>
+<option>Example</option>
+<option>speed</option>
+<option>Appendix</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>Example-&gt;</option>
+<option>get_started.cpp</option>
+<option>General</option>
+<option>ExampleUtility</option>
+<option>ListAllExamples</option>
+<option>testvector</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>General-&gt;</option>
+<option>ad_fun.cpp</option>
+<option>ad_in_c.cpp</option>
+<option>conj_grad.cpp</option>
+<option>cppad_eigen.hpp</option>
+<option>hes_minor_det.cpp</option>
+<option>hes_lu_det.cpp</option>
+<option>interface2c.cpp</option>
+<option>jac_minor_det.cpp</option>
+<option>jac_lu_det.cpp</option>
+<option>mul_level</option>
+<option>ode_stiff.cpp</option>
+<option>mul_level_ode.cpp</option>
+<option>mul_level_adolc_ode.cpp</option>
+<option>ode_taylor.cpp</option>
+<option>stack_machine.cpp</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down0(this)'>
+<option>mul_level-&gt;</option>
+<option>mul_level.cpp</option>
+<option>change_param.cpp</option>
+</select>
+</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Background</option>
+<option>Motivation</option>
+<option>Procedure</option>
+<option>---..First Start AD&lt;double&gt;</option>
+<option>---..Start AD&lt; AD&lt;double&gt; &gt; Recording</option>
+<option>---..Inner Function</option>
+<option>---..Second Start AD&lt; AD&lt;double&gt; &gt;</option>
+<option>---..Outer Function</option>
+<option>---..Derivatives of Outer Function</option>
+<option>Example</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>Using Multiple Levels of AD</big></big></b></center>
+<br>
+<b><big><a name="Background" id="Background">Background</a></big></b>
+<br>
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+ is an 
+<code><font color="blue"><span style='white-space: nowrap'>ADFun&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code>
+ object,
+the vectors returned by
+<a href="forward.htm" target="_top"><span style='white-space: nowrap'>f.Forward</span></a>
+,
+and
+<a href="reverse.htm" target="_top"><span style='white-space: nowrap'>f.Reverse</span></a>
+,
+have values of type 
+<code><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i></code>
+ and not
+
+<code><font color="blue"><span style='white-space: nowrap'>AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code>
+.
+This reflects the fact that operations used to calculate
+these function values are not recorded by the tape corresponding to
+
+<code><font color="blue"><span style='white-space: nowrap'>AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code>
+ operations.
+
+<br>
+<br>
+<b><big><a name="Motivation" id="Motivation">Motivation</a></big></b>
+<br>
+Suppose that you use derivatives of one or more inner functions
+as part of the operations
+needed to compute an outer function.
+For example,
+the derivatives returned by 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.Forward</span></font></code>
+
+might be used as part of
+Taylor's method for solving ordinary
+differential equations.
+In addition, we might want to differentiate the
+solution of a differential equation with respect to parameters
+in the equation.
+This can be accomplished in the following way:
+
+<ol type="1"><li>
+The function defining the
+differential equation could be calculated using the class
+
+<code><font color="blue"><span style='white-space: nowrap'>AD&lt;&nbsp;AD&lt;double&gt;&nbsp;&gt;</span></font></code>
+.
+
+</li><li>
+
+The operations during the calculation of Taylor's method
+could be done using the 
+<code><font color="blue"><span style='white-space: nowrap'>AD&lt;double&gt;</span></font></code>
+ class.
+
+</li><li>
+
+Derivatives of the solution of the differential equation
+could then be calculated using the <code><font color="blue">double</font></code> class.
+
+</li></ol>
+
+
+<br>
+<br>
+<b><big><a name="Procedure" id="Procedure">Procedure</a></big></b>
+
+
+<br>
+<br>
+<b><a name="Procedure.First Start AD&lt;double&gt;" id="Procedure.First Start AD&lt;double&gt;">First Start AD&lt;double&gt;</a></b>
+<br>
+If some of the <a href="glossary.htm#Parameter" target="_top"><span style='white-space: nowrap'>parameters</span></a>
+
+in the 
+<code><font color="blue"><span style='white-space: nowrap'>AD&lt;&nbsp;AD&lt;double&gt;&nbsp;&gt;</span></font></code>
+ recording depend on the
+<a href="glossary.htm#Variable" target="_top"><span style='white-space: nowrap'>variables</span></a>
+
+in the 
+<code><font color="blue"><span style='white-space: nowrap'>AD&lt;double&gt;</span></font></code>
+ recording,
+we must first declaring these variables; i.e.,
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Independent(</span></font><i><font color="black"><span style='white-space: nowrap'>a1x</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+where 
+<code><i><font color="black"><span style='white-space: nowrap'>a1x</span></font></i></code>
+ is
+a <a href="simplevector.htm" target="_top"><span style='white-space: nowrap'>SimpleVector</span></a>
+ with elements of type 
+<code><font color="blue"><span style='white-space: nowrap'>AD&lt;double&gt;</span></font></code>
+.
+This will start recording a new tape of
+operations performed using 
+<code><font color="blue"><span style='white-space: nowrap'>AD&lt;double&gt;</span></font></code>
+ class objects.
+
+<br>
+<br>
+<b><a name="Procedure.Start AD&lt; AD&lt;double&gt; &gt; Recording" id="Procedure.Start AD&lt; AD&lt;double&gt; &gt; Recording">Start AD&lt; AD&lt;double&gt; &gt; Recording</a></b>
+<br>
+The next step is to declare the independent variables using
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Independent(</span></font><i><font color="black"><span style='white-space: nowrap'>a2x</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+where 
+<code><i><font color="black"><span style='white-space: nowrap'>a2x</span></font></i></code>
+ is
+a <a href="simplevector.htm" target="_top"><span style='white-space: nowrap'>SimpleVector</span></a>
+ with elements of type
+
+<code><font color="blue"><span style='white-space: nowrap'>AD&lt;&nbsp;AD&lt;double&gt;&nbsp;&gt;</span></font></code>
+.
+This will start recording a new tape of
+operations performed using 
+<code><font color="blue"><span style='white-space: nowrap'>AD&lt;&nbsp;AD&lt;double&gt;&nbsp;&gt;</span></font></code>
+ class objects.
+
+<br>
+<br>
+<b><a name="Procedure.Inner Function" id="Procedure.Inner Function">Inner Function</a></b>
+<br>
+The next step is to calculate the inner function
+using 
+<code><font color="blue"><span style='white-space: nowrap'>AD&lt;&nbsp;AD&lt;double&gt;&nbsp;&gt;</span></font></code>
+ class objects.
+We then stop the recording using
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>a1f</span></font></i><font color="blue"><span style='white-space: nowrap'>.Dependent(</span></font><i><font color="black"><span style='white-space: nowrap'>a2x</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>a2y</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+where 
+<code><i><font color="black"><span style='white-space: nowrap'>a2y</span></font></i></code>
+ is
+a <a href="simplevector.htm" target="_top"><span style='white-space: nowrap'>SimpleVector</span></a>
+ with elements of type
+
+<code><font color="blue"><span style='white-space: nowrap'>AD&lt;&nbsp;AD&lt;double&gt;&nbsp;&gt;</span></font></code>
+
+and 
+<code><i><font color="black"><span style='white-space: nowrap'>a1f</span></font></i></code>
+ is an 
+<code><font color="blue"><span style='white-space: nowrap'>ADFun&lt;&nbsp;AD&lt;double&gt;&nbsp;&gt;</span></font></code>
+ object.
+
+<br>
+<br>
+<b><a name="Procedure.Second Start AD&lt; AD&lt;double&gt; &gt;" id="Procedure.Second Start AD&lt; AD&lt;double&gt; &gt;">Second Start AD&lt; AD&lt;double&gt; &gt;</a></b>
+<br>
+If none of the <a href="glossary.htm#Parameter" target="_top"><span style='white-space: nowrap'>parameters</span></a>
+
+in the 
+<code><font color="blue"><span style='white-space: nowrap'>AD&lt;&nbsp;AD&lt;double&gt;&nbsp;&gt;</span></font></code>
+ recording depend on the
+<a href="glossary.htm#Variable" target="_top"><span style='white-space: nowrap'>variables</span></a>
+
+in the 
+<code><font color="blue"><span style='white-space: nowrap'>AD&lt;double&gt;</span></font></code>
+ recording,
+it is preferred to delay declaring these variables to this point; i.e.,
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Independent(</span></font><i><font color="black"><span style='white-space: nowrap'>a1x</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+where 
+<code><i><font color="black"><span style='white-space: nowrap'>a1x</span></font></i></code>
+ is
+a <a href="simplevector.htm" target="_top"><span style='white-space: nowrap'>SimpleVector</span></a>
+ with elements of type 
+<code><font color="blue"><span style='white-space: nowrap'>AD&lt;double&gt;</span></font></code>
+.
+This will start recording a new tape of
+operations performed using 
+<code><font color="blue"><span style='white-space: nowrap'>AD&lt;double&gt;</span></font></code>
+ class objects.
+
+<br>
+<br>
+<b><a name="Procedure.Outer Function" id="Procedure.Outer Function">Outer Function</a></b>
+<br>
+The next step is to calculate the outer function
+using 
+<code><font color="blue"><span style='white-space: nowrap'>AD&lt;double&gt;</span></font></code>
+ class objects.
+Note that derivatives of the inner function can be included
+in the calculation of the outer function using 
+<code><i><font color="black"><span style='white-space: nowrap'>a1f</span></font></i></code>
+.
+We then stop the recording of 
+<code><font color="blue"><span style='white-space: nowrap'>AD&lt;double&gt;</span></font></code>
+ operations using
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>g</span></font></i><font color="blue"><span style='white-space: nowrap'>.Dependent(</span></font><i><font color="black"><span style='white-space: nowrap'>a1x</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>a1y</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+where 
+<code><i><font color="black"><span style='white-space: nowrap'>a1y</span></font></i></code>
+ is
+a <a href="simplevector.htm" target="_top"><span style='white-space: nowrap'>SimpleVector</span></a>
+ with elements of type
+
+<code><font color="blue"><span style='white-space: nowrap'>AD&lt;double&gt;</span></font></code>
+
+and 
+<code><i><font color="black"><span style='white-space: nowrap'>g</span></font></i></code>
+ is an 
+<code><font color="blue"><span style='white-space: nowrap'>ADFun&lt;double&gt;</span></font></code>
+ object.
+
+<br>
+<br>
+<b><a name="Procedure.Derivatives of Outer Function" id="Procedure.Derivatives of Outer Function">Derivatives of Outer Function</a></b>
+<br>
+The AD function object 
+<code><i><font color="black"><span style='white-space: nowrap'>g</span></font></i></code>
+ can then be used to calculate
+the derivatives of the outer function.
+
+
+
+<br>
+<br>
+<b><big><a name="Example" id="Example">Example</a></big></b>
+<br>
+The files
+<a href="mul_level.cpp.htm" target="_top"><span style='white-space: nowrap'>mul_level.cpp</span></a>
+ and <a href="change_param.cpp.htm" target="_top"><span style='white-space: nowrap'>change_param.cpp</span></a>
+
+contain an examples and tests of this procedure.
+They return true if they succeed and false otherwise.
+The file <a href="mul_level_ode.cpp.htm" target="_top"><span style='white-space: nowrap'>mul_level_ode.cpp</span></a>
+ is a more complex example
+use of multiple tapes.
+
+
+<hr>Input File: omh/mul_level.omh
+
+</body>
+</html>

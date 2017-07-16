@@ -1,0 +1,253 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>Get At Least A Specified Amount of Memory</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Get At Least A Specified Amount of Memory">
+<meta name="keywords" id="keywords" content=" get least specified amount memory allocate syntax purpose min_bytes cap_bytes v_ptr allocation speed alignment example ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_ta_get_memory_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://coin-or.github.io/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="ta_thread_num.htm" target="_top">Prev</a>
+</td><td><a href="ta_return_memory.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>utility</option>
+<option>thread_alloc</option>
+<option>ta_get_memory</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>CppAD-&gt;</option>
+<option>Install</option>
+<option>Introduction</option>
+<option>AD</option>
+<option>ADFun</option>
+<option>preprocessor</option>
+<option>multi_thread</option>
+<option>utility</option>
+<option>ipopt_solve</option>
+<option>Example</option>
+<option>speed</option>
+<option>Appendix</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>utility-&gt;</option>
+<option>ErrorHandler</option>
+<option>NearEqual</option>
+<option>speed_test</option>
+<option>SpeedTest</option>
+<option>time_test</option>
+<option>test_boolofvoid</option>
+<option>NumericType</option>
+<option>CheckNumericType</option>
+<option>SimpleVector</option>
+<option>CheckSimpleVector</option>
+<option>nan</option>
+<option>pow_int</option>
+<option>Poly</option>
+<option>LuDetAndSolve</option>
+<option>RombergOne</option>
+<option>RombergMul</option>
+<option>Runge45</option>
+<option>Rosen34</option>
+<option>OdeErrControl</option>
+<option>OdeGear</option>
+<option>OdeGearControl</option>
+<option>CppAD_vector</option>
+<option>thread_alloc</option>
+<option>index_sort</option>
+<option>to_string</option>
+<option>set_union</option>
+<option>sparse_rc</option>
+<option>sparse_rcv</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>thread_alloc-&gt;</option>
+<option>thread_alloc.cpp</option>
+<option>ta_parallel_setup</option>
+<option>ta_num_threads</option>
+<option>ta_in_parallel</option>
+<option>ta_thread_num</option>
+<option>ta_get_memory</option>
+<option>ta_return_memory</option>
+<option>ta_free_available</option>
+<option>ta_hold_memory</option>
+<option>ta_inuse</option>
+<option>ta_available</option>
+<option>ta_create_array</option>
+<option>ta_delete_array</option>
+<option>ta_free_all</option>
+</select>
+</td>
+<td>ta_get_memory</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Syntax</option>
+<option>Purpose</option>
+<option>min_bytes</option>
+<option>cap_bytes</option>
+<option>v_ptr</option>
+<option>Allocation Speed</option>
+<option>Alignment</option>
+<option>Example</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@
+
+
+<center><b><big><big>Get At Least A Specified Amount of Memory</big></big></b></center>
+<br>
+<b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
+
+<br>
+
+<code><i><font color="black"><span style='white-space: nowrap'>v_ptr</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;thread_alloc::get_memory(</span></font><i><font color="black"><span style='white-space: nowrap'>min_bytes</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>cap_bytes</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+
+
+<br>
+<br>
+<b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
+<br>
+Use <a href="thread_alloc.htm" target="_top"><span style='white-space: nowrap'>thread_alloc</span></a>
+ to obtain a minimum number of bytes of memory
+(for use by the <a href="ta_thread_num.htm" target="_top"><span style='white-space: nowrap'>current&nbsp;thread</span></a>
+).
+
+<br>
+<br>
+<b><big><a name="min_bytes" id="min_bytes">min_bytes</a></big></b>
+<br>
+This argument has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>min_bytes</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+It specifies the minimum number of bytes to allocate.
+This value must be less than
+<code><font color='blue'><pre style='display:inline'> 
+     std::numeric_limits&lt;size_t&gt;::max() / 2
+</pre></font></code>
+<br>
+<b><big><a name="cap_bytes" id="cap_bytes">cap_bytes</a></big></b>
+<br>
+This argument has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>cap_bytes</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+It's input value does not matter.
+Upon return, it is the actual number of bytes (capacity)
+that have been allocated for use,
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>min_bytes</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&lt;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>cap_bytes</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+<br>
+<b><big><a name="v_ptr" id="v_ptr">v_ptr</a></big></b>
+<br>
+The return value 
+<code><i><font color="black"><span style='white-space: nowrap'>v_ptr</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;void*&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>v_ptr</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+It is the location where the 
+<code><i><font color="black"><span style='white-space: nowrap'>cap_bytes</span></font></i></code>
+ of memory
+that have been allocated for use begins.
+
+<br>
+<br>
+<b><big><a name="Allocation Speed" id="Allocation Speed">Allocation Speed</a></big></b>
+<br>
+This allocation should be faster if the following conditions hold:
+<ol type="1"><li>
+The memory allocated by a previous call to <code><font color="blue">get_memory</font></code>
+is currently available for use.
+</li><li>
+
+The current 
+<code><i><font color="black"><span style='white-space: nowrap'>min_bytes</span></font></i></code>
+ is between
+the previous 
+<code><i><font color="black"><span style='white-space: nowrap'>min_bytes</span></font></i></code>
+ and previous 
+<code><i><font color="black"><span style='white-space: nowrap'>cap_bytes</span></font></i></code>
+.
+</li></ol>
+
+
+<br>
+<br>
+<b><big><a name="Alignment" id="Alignment">Alignment</a></big></b>
+<br>
+We call a memory allocation aligned if the address is a multiple
+of the number of bytes in a <code><font color="blue">size_t</font></code> value.
+If the system <code><font color="blue">new</font></code> allocator is aligned, then 
+<code><i><font color="black"><span style='white-space: nowrap'>v_ptr</span></font></i></code>
+
+pointer is also aligned.
+
+<br>
+<br>
+<b><big><a name="Example" id="Example">Example</a></big></b>
+
+<br>
+<a href="thread_alloc.cpp.htm" target="_top"><span style='white-space: nowrap'>thread_alloc.cpp</span></a>
+
+
+
+<hr>Input File: cppad/utility/thread_alloc.hpp
+
+</body>
+</html>

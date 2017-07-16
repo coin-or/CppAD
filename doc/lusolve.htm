@@ -1,0 +1,580 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>Compute Determinant and Solve Linear Equations</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Compute Determinant and Solve Linear Equations">
+<meta name="keywords" id="keywords" content=" compute determinant solve linear equations Lusolve Lu syntax description include factor invert matrix storage signdet n m b x logdet float floatvector leqzero absgeq example source ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_lusolve_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://coin-or.github.io/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="ludetandsolve.htm" target="_top">Prev</a>
+</td><td><a href="lu_solve.cpp.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>utility</option>
+<option>LuDetAndSolve</option>
+<option>LuSolve</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>CppAD-&gt;</option>
+<option>Install</option>
+<option>Introduction</option>
+<option>AD</option>
+<option>ADFun</option>
+<option>preprocessor</option>
+<option>multi_thread</option>
+<option>utility</option>
+<option>ipopt_solve</option>
+<option>Example</option>
+<option>speed</option>
+<option>Appendix</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>utility-&gt;</option>
+<option>ErrorHandler</option>
+<option>NearEqual</option>
+<option>speed_test</option>
+<option>SpeedTest</option>
+<option>time_test</option>
+<option>test_boolofvoid</option>
+<option>NumericType</option>
+<option>CheckNumericType</option>
+<option>SimpleVector</option>
+<option>CheckSimpleVector</option>
+<option>nan</option>
+<option>pow_int</option>
+<option>Poly</option>
+<option>LuDetAndSolve</option>
+<option>RombergOne</option>
+<option>RombergMul</option>
+<option>Runge45</option>
+<option>Rosen34</option>
+<option>OdeErrControl</option>
+<option>OdeGear</option>
+<option>OdeGearControl</option>
+<option>CppAD_vector</option>
+<option>thread_alloc</option>
+<option>index_sort</option>
+<option>to_string</option>
+<option>set_union</option>
+<option>sparse_rc</option>
+<option>sparse_rcv</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>LuDetAndSolve-&gt;</option>
+<option>LuSolve</option>
+<option>LuFactor</option>
+<option>LuInvert</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down0(this)'>
+<option>LuSolve-&gt;</option>
+<option>lu_solve.cpp</option>
+<option>lu_solve.hpp</option>
+</select>
+</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Syntax</option>
+<option>Description</option>
+<option>Include</option>
+<option>Factor and Invert</option>
+<option>Matrix Storage</option>
+<option>signdet</option>
+<option>n</option>
+<option>m</option>
+<option>A</option>
+<option>B</option>
+<option>X</option>
+<option>logdet</option>
+<option>Float</option>
+<option>FloatVector</option>
+<option>LeqZero</option>
+<option>AbsGeq</option>
+<option>Example</option>
+<option>Source</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>Compute Determinant and Solve Linear Equations</big></big></b></center>
+<code><span style='white-space: nowrap'><br>
+</span></code><b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
+ <br>
+
+<code><font color="blue"><span style='white-space: nowrap'>&nbsp;include&nbsp;&lt;cppad/utility/lu_solve.hpp&gt;<br>
+</span></font></code>
+
+<code><i><font color="black"><span style='white-space: nowrap'>signdet</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;LuSolve(</span></font><i><font color="black"><span style='white-space: nowrap'>n</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>m</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>A</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>B</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>X</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>logdet</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+
+
+
+<br>
+<br>
+<b><big><a name="Description" id="Description">Description</a></big></b>
+<br>
+Use an LU factorization of the matrix 
+<code><i><font color="black"><span style='white-space: nowrap'>A</span></font></i></code>
+ to
+compute its determinant
+and solve for 
+<code><i><font color="black"><span style='white-space: nowrap'>X</span></font></i></code>
+ in the linear of equation
+<small>@[@
+
+	A * X = B
+
+@]@</small>
+where 
+<code><i><font color="black"><span style='white-space: nowrap'>A</span></font></i></code>
+ is an
+
+<code><i><font color="black"><span style='white-space: nowrap'>n</span></font></i></code>
+ by 
+<code><i><font color="black"><span style='white-space: nowrap'>n</span></font></i></code>
+ matrix,
+
+<code><i><font color="black"><span style='white-space: nowrap'>X</span></font></i></code>
+ is an
+
+<code><i><font color="black"><span style='white-space: nowrap'>n</span></font></i></code>
+ by 
+<code><i><font color="black"><span style='white-space: nowrap'>m</span></font></i></code>
+ matrix, and
+
+<code><i><font color="black"><span style='white-space: nowrap'>B</span></font></i></code>
+ is an <small>@(@
+n x m
+@)@</small> matrix.
+
+<br>
+<br>
+<b><big><a name="Include" id="Include">Include</a></big></b>
+<br>
+The file <code><font color="blue">cppad/lu_solve.hpp</font></code> is included by <code><font color="blue">cppad/cppad.hpp</font></code>
+but it can also be included separately with out the rest of
+the <code><font color="blue">CppAD</font></code> routines.
+
+<br>
+<br>
+<b><big><a name="Factor and Invert" id="Factor and Invert">Factor and Invert</a></big></b>
+<br>
+This routine is an easy to user interface to
+<a href="lufactor.htm" target="_top"><span style='white-space: nowrap'>LuFactor</span></a>
+ and <a href="luinvert.htm" target="_top"><span style='white-space: nowrap'>LuInvert</span></a>
+ for computing determinants and
+solutions of linear equations.
+These separate routines should be used if
+one right hand side 
+<code><i><font color="black"><span style='white-space: nowrap'>B</span></font></i></code>
+
+depends on the solution corresponding to another
+right hand side (with the same value of 
+<code><i><font color="black"><span style='white-space: nowrap'>A</span></font></i></code>
+).
+In this case only one call to <code><font color="blue">LuFactor</font></code> is required
+but there will be multiple calls to <code><font color="blue">LuInvert</font></code>.
+
+
+<br>
+<br>
+<b><big><a name="Matrix Storage" id="Matrix Storage">Matrix Storage</a></big></b>
+<br>
+All matrices are stored in row major order.
+To be specific, if <small>@(@
+Y
+@)@</small> is a vector
+that contains a <small>@(@
+p
+@)@</small> by <small>@(@
+q
+@)@</small> matrix,
+the size of <small>@(@
+Y
+@)@</small> must be equal to <small>@(@
+p * q
+@)@</small> and for
+<small>@(@
+i = 0 , \ldots , p-1
+@)@</small>,
+<small>@(@
+j = 0 , \ldots , q-1
+@)@</small>,
+<small>@[@
+
+	Y_{i,j} = Y[ i * q + j ]
+
+@]@</small>
+
+<br>
+<br>
+<b><big><a name="signdet" id="signdet">signdet</a></big></b>
+<br>
+The return value 
+<code><i><font color="black"><span style='white-space: nowrap'>signdet</span></font></i></code>
+ is a <code><font color="blue">int</font></code> value
+that specifies the sign factor for the determinant of 
+<code><i><font color="black"><span style='white-space: nowrap'>A</span></font></i></code>
+.
+This determinant of 
+<code><i><font color="black"><span style='white-space: nowrap'>A</span></font></i></code>
+ is zero if and only if 
+<code><i><font color="black"><span style='white-space: nowrap'>signdet</span></font></i></code>
+
+is zero.
+
+<br>
+<br>
+<b><big><a name="n" id="n">n</a></big></b>
+<br>
+The argument 
+<code><i><font color="black"><span style='white-space: nowrap'>n</span></font></i></code>
+ has type <code><font color="blue">size_t</font></code>
+and specifies the number of rows in the matrices
+
+<code><i><font color="black"><span style='white-space: nowrap'>A</span></font></i></code>
+,
+
+<code><i><font color="black"><span style='white-space: nowrap'>X</span></font></i></code>
+,
+and 
+<code><i><font color="black"><span style='white-space: nowrap'>B</span></font></i></code>
+.
+The number of columns in 
+<code><i><font color="black"><span style='white-space: nowrap'>A</span></font></i></code>
+ is also equal to 
+<code><i><font color="black"><span style='white-space: nowrap'>n</span></font></i></code>
+.
+
+<br>
+<br>
+<b><big><a name="m" id="m">m</a></big></b>
+<br>
+The argument 
+<code><i><font color="black"><span style='white-space: nowrap'>m</span></font></i></code>
+ has type <code><font color="blue">size_t</font></code>
+and specifies the number of columns in the matrices
+
+<code><i><font color="black"><span style='white-space: nowrap'>X</span></font></i></code>
+
+and 
+<code><i><font color="black"><span style='white-space: nowrap'>B</span></font></i></code>
+.
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>m</span></font></i></code>
+ is zero,
+only the determinant of 
+<code><i><font color="black"><span style='white-space: nowrap'>A</span></font></i></code>
+ is computed and
+the matrices 
+<code><i><font color="black"><span style='white-space: nowrap'>X</span></font></i></code>
+ and 
+<code><i><font color="black"><span style='white-space: nowrap'>B</span></font></i></code>
+ are not used.
+
+<br>
+<br>
+<b><big><a name="A" id="A">A</a></big></b>
+<br>
+The argument 
+<code><i><font color="black"><span style='white-space: nowrap'>A</span></font></i></code>
+ has the prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>FloatVector</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>A</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+and the size of 
+<code><i><font color="black"><span style='white-space: nowrap'>A</span></font></i></code>
+ must equal <small>@(@
+n * n
+@)@</small>
+(see description of <a href="lusolve.htm#FloatVector" target="_top"><span style='white-space: nowrap'>FloatVector</span></a>
+ below).
+This is the <small>@(@
+n
+@)@</small> by 
+<code><i><font color="black"><span style='white-space: nowrap'>n</span></font></i></code>
+ matrix that
+we are computing the determinant of
+and that defines the linear equation.
+
+<br>
+<br>
+<b><big><a name="B" id="B">B</a></big></b>
+<br>
+The argument 
+<code><i><font color="black"><span style='white-space: nowrap'>B</span></font></i></code>
+ has the prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>FloatVector</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>B</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+and the size of 
+<code><i><font color="black"><span style='white-space: nowrap'>B</span></font></i></code>
+ must equal <small>@(@
+n * m
+@)@</small>
+(see description of <a href="lusolve.htm#FloatVector" target="_top"><span style='white-space: nowrap'>FloatVector</span></a>
+ below).
+This is the <small>@(@
+n
+@)@</small> by 
+<code><i><font color="black"><span style='white-space: nowrap'>m</span></font></i></code>
+ matrix that
+defines the right hand side of the linear equations.
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>m</span></font></i></code>
+ is zero, 
+<code><i><font color="black"><span style='white-space: nowrap'>B</span></font></i></code>
+ is not used.
+
+<br>
+<br>
+<b><big><a name="X" id="X">X</a></big></b>
+<br>
+The argument 
+<code><i><font color="black"><span style='white-space: nowrap'>X</span></font></i></code>
+ has the prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>FloatVector</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>X</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+and the size of 
+<code><i><font color="black"><span style='white-space: nowrap'>X</span></font></i></code>
+ must equal <small>@(@
+n * m
+@)@</small>
+(see description of <a href="lusolve.htm#FloatVector" target="_top"><span style='white-space: nowrap'>FloatVector</span></a>
+ below).
+The input value of 
+<code><i><font color="black"><span style='white-space: nowrap'>X</span></font></i></code>
+ does not matter.
+On output, the elements of 
+<code><i><font color="black"><span style='white-space: nowrap'>X</span></font></i></code>
+ contain the solution
+of the equation we wish to solve
+(unless 
+<code><i><font color="black"><span style='white-space: nowrap'>signdet</span></font></i></code>
+ is equal to zero).
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>m</span></font></i></code>
+ is zero, 
+<code><i><font color="black"><span style='white-space: nowrap'>X</span></font></i></code>
+ is not used.
+
+<br>
+<br>
+<b><big><a name="logdet" id="logdet">logdet</a></big></b>
+<br>
+The argument 
+<code><i><font color="black"><span style='white-space: nowrap'>logdet</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Float</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>logdet</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+On input, the value of 
+<code><i><font color="black"><span style='white-space: nowrap'>logdet</span></font></i></code>
+ does not matter.
+On output, it has been set to the
+log of the determinant of 
+<code><i><font color="black"><span style='white-space: nowrap'>A</span></font></i></code>
+
+(but not quite).
+To be more specific,
+the determinant of 
+<code><i><font color="black"><span style='white-space: nowrap'>A</span></font></i></code>
+ is given by the formula
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>det</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>signdet</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;*&nbsp;exp(&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>logdet</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;)<br>
+</span></font></code>
+This enables <code><font color="blue">LuSolve</font></code> to use logs of absolute values
+in the case where 
+<code><i><font color="black"><span style='white-space: nowrap'>Float</span></font></i></code>
+ corresponds to a real number.
+
+<br>
+<br>
+<b><big><a name="Float" id="Float">Float</a></big></b>
+<br>
+The type 
+<code><i><font color="black"><span style='white-space: nowrap'>Float</span></font></i></code>
+ must satisfy the conditions
+for a <a href="numerictype.htm" target="_top"><span style='white-space: nowrap'>NumericType</span></a>
+ type.
+The routine <a href="checknumerictype.htm" target="_top"><span style='white-space: nowrap'>CheckNumericType</span></a>
+ will generate an error message
+if this is not the case.
+In addition, the following operations must be defined for any pair
+of 
+<code><i><font color="black"><span style='white-space: nowrap'>Float</span></font></i></code>
+ objects 
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+ and 
+<code><i><font color="black"><span style='white-space: nowrap'>y</span></font></i></code>
+:
+
+<table><tr><td align='left'  valign='top'>
+
+<b>Operation</b> </td><td align='left'  valign='top'>
+ <b>Description</b>  </td></tr><tr><td align='left'  valign='top'>
+
+
+<code><font color="blue"><span style='white-space: nowrap'>log(</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+ </td><td align='left'  valign='top'>
+
+	returns the logarithm of 
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+ as a 
+<code><i><font color="black"><span style='white-space: nowrap'>Float</span></font></i></code>
+ object
+</td></tr>
+</table>
+<br>
+<b><big><a name="FloatVector" id="FloatVector">FloatVector</a></big></b>
+<br>
+The type 
+<code><i><font color="black"><span style='white-space: nowrap'>FloatVector</span></font></i></code>
+ must be a <a href="simplevector.htm" target="_top"><span style='white-space: nowrap'>SimpleVector</span></a>
+ class with
+<a href="simplevector.htm#Elements of Specified Type" target="_top"><span style='white-space: nowrap'>elements&nbsp;of&nbsp;type&nbsp;Float</span></a>
+.
+The routine <a href="checksimplevector.htm" target="_top"><span style='white-space: nowrap'>CheckSimpleVector</span></a>
+ will generate an error message
+if this is not the case.
+
+<br>
+<br>
+<b><big><a name="LeqZero" id="LeqZero">LeqZero</a></big></b>
+<br>
+Including the file <code><font color="blue">lu_solve.hpp</font></code> defines the template function
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;template&nbsp;&lt;typename&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Float</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bool&nbsp;LeqZero&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Float</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;(const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Float</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+in the <code><font color="blue">CppAD</font></code> namespace.
+This function returns true if 
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+ is less than or equal to zero
+and false otherwise.
+It is used by <code><font color="blue">LuSolve</font></code> to avoid taking the log of
+zero (or a negative number if 
+<code><i><font color="black"><span style='white-space: nowrap'>Float</span></font></i></code>
+ corresponds to real numbers).
+This template function definition assumes that the operator
+<code><font color="blue">&lt;=</font></code> is defined for 
+<code><i><font color="black"><span style='white-space: nowrap'>Float</span></font></i></code>
+ objects.
+If this operator is not defined for your use of 
+<code><i><font color="black"><span style='white-space: nowrap'>Float</span></font></i></code>
+,
+you will need to specialize this template so that it works for your
+use of <code><font color="blue">LuSolve</font></code>.
+<code><span style='white-space: nowrap'><br>
+<br>
+</span></code>Complex numbers do not have the operation or <code><font color="blue">&lt;=</font></code> defined.
+In addition, in the complex case,
+one can take the log of a negative number.
+The specializations
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bool&nbsp;LeqZero&lt;&nbsp;std::complex&lt;float&gt;&nbsp;&gt;&nbsp;(const&nbsp;std::complex&lt;float&gt;&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bool&nbsp;LeqZero&lt;&nbsp;std::complex&lt;double&gt;&nbsp;&gt;(const&nbsp;std::complex&lt;double&gt;&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+are defined by including <code><font color="blue">lu_solve.hpp</font></code>.
+These return true if 
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+ is zero and false otherwise.
+
+<br>
+<br>
+<b><big><a name="AbsGeq" id="AbsGeq">AbsGeq</a></big></b>
+<br>
+Including the file <code><font color="blue">lu_solve.hpp</font></code> defines the template function
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;template&nbsp;&lt;typename&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Float</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bool&nbsp;AbsGeq&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Float</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;(const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Float</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Float</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+If the type 
+<code><i><font color="black"><span style='white-space: nowrap'>Float</span></font></i></code>
+ does not support the <code><font color="blue">&lt;=</font></code> operation
+and it is not <code><font color="blue">std::complex&lt;float&gt;</font></code> or <code><font color="blue">std::complex&lt;double&gt;</font></code>,
+see the documentation for <code><font color="blue">AbsGeq</font></code> in <a href="lufactor.htm#AbsGeq" target="_top"><span style='white-space: nowrap'>LuFactor</span></a>
+.
+
+
+<br>
+<br>
+<b><big><a name="Example" id="Example">Example</a></big></b>
+<br>
+The file
+<a href="lu_solve.cpp.htm" target="_top"><span style='white-space: nowrap'>lu_solve.cpp</span></a>
+
+contains an example and test of using this routine.
+It returns true if it succeeds and false otherwise.
+
+<br>
+<br>
+<b><big><a name="Source" id="Source">Source</a></big></b>
+<br>
+The file <a href="lu_solve.hpp.htm" target="_top"><span style='white-space: nowrap'>lu_solve.hpp</span></a>
+ contains the
+current source code that implements these specifications.
+
+
+<hr>Input File: cppad/utility/lu_solve.hpp
+
+</body>
+</html>

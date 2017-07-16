@@ -1,0 +1,209 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>AD Absolute Value Functions: abs, fabs</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="AD Absolute Value Functions: abs, fabs">
+<meta name="keywords" id="keywords" content=" ad absolute value functions: abs fabs syntax x y atomic complex types derivative example ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_abs_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://coin-or.github.io/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="tanh.cpp.htm" target="_top">Prev</a>
+</td><td><a href="fabs.cpp.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>AD</option>
+<option>ADValued</option>
+<option>unary_standard_math</option>
+<option>abs</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>AD-&gt;</option>
+<option>ad_ctor</option>
+<option>ad_assign</option>
+<option>Convert</option>
+<option>ADValued</option>
+<option>BoolValued</option>
+<option>VecAD</option>
+<option>base_require</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>ADValued-&gt;</option>
+<option>Arithmetic</option>
+<option>unary_standard_math</option>
+<option>binary_math</option>
+<option>CondExp</option>
+<option>Discrete</option>
+<option>numeric_limits</option>
+<option>atomic</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>unary_standard_math-&gt;</option>
+<option>acos</option>
+<option>asin</option>
+<option>atan</option>
+<option>cos</option>
+<option>cosh</option>
+<option>exp</option>
+<option>log</option>
+<option>log10</option>
+<option>sin</option>
+<option>sinh</option>
+<option>sqrt</option>
+<option>tan</option>
+<option>tanh</option>
+<option>abs</option>
+<option>acosh</option>
+<option>asinh</option>
+<option>atanh</option>
+<option>erf</option>
+<option>expm1</option>
+<option>log1p</option>
+<option>sign</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down0(this)'>
+<option>abs-&gt;</option>
+<option>fabs.cpp</option>
+</select>
+</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Syntax</option>
+<option>x, y</option>
+<option>Atomic</option>
+<option>Complex Types</option>
+<option>Derivative</option>
+<option>Example</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>AD Absolute Value Functions: abs, fabs</big></big></b></center>
+<br>
+<b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
+
+<br>
+
+<code><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;abs(</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+
+<code><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;fabs(</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+
+
+<br>
+<br>
+<b><big><a name="x, y" id="x, y">x, y</a></big></b>
+<br>
+See the <a href="unary_standard_math.htm#Possible Types" target="_top"><span style='white-space: nowrap'>possible&nbsp;types</span></a>
+
+for a unary standard math function.
+
+<br>
+<br>
+<b><big><a name="Atomic" id="Atomic">Atomic</a></big></b>
+<br>
+In the case where 
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+ is an AD type,
+this is an <a href="glossary.htm#Operation.Atomic" target="_top"><span style='white-space: nowrap'>atomic&nbsp;operation</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="Complex Types" id="Complex Types">Complex Types</a></big></b>
+<br>
+The functions <code><font color="blue">abs</font></code> and 
+<code><i><font color="black"><span style='white-space: nowrap'>fabs</span></font></i></code>
+
+are not defined for the base types
+<code><font color="blue">std::complex&lt;float&gt;</font></code> or <code><font color="blue">std::complex&lt;double&gt;</font></code>
+because the complex <code><font color="blue">abs</font></code> function is not complex differentiable
+(see <a href="faq.htm#Complex Types" target="_top"><span style='white-space: nowrap'>complex&nbsp;types&nbsp;faq</span></a>
+).
+
+<br>
+<br>
+<b><big><a name="Derivative" id="Derivative">Derivative</a></big></b>
+<br>
+CppAD defines the derivative of the <code><font color="blue">abs</font></code> function is
+the <a href="sign.htm" target="_top"><span style='white-space: nowrap'>sign</span></a>
+ function; i.e.,
+<small>@[@
+
+{\rm abs}^{(1)} ( x ) = {\rm sign} (x ) =
+\left\{ \begin{array}{rl}
+	+1 & {\rm if} \; x > 0 \\
+	0  & {\rm if} \; x = 0 \\
+	-1 & {\rm if} \; x < 0
+\end{array} \right.
+
+@]@</small>
+The result for 
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;==&nbsp;0</span></font></code>
+ used to be a directional derivative.
+
+<br>
+<br>
+<b><big><a name="Example" id="Example">Example</a></big></b>
+
+<br>
+The file
+<a href="fabs.cpp.htm" target="_top"><span style='white-space: nowrap'>fabs.cpp</span></a>
+
+contains an example and test of this function.
+It returns true if it succeeds and false otherwise.
+
+
+<hr>Input File: cppad/core/abs.hpp
+
+</body>
+</html>

@@ -1,0 +1,184 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>NearEqual Function: Example and Test</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="NearEqual Function: Example and Test">
+<meta name="keywords" id="keywords" content=" nearequal function: example test file name ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_near_equal.cpp_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://coin-or.github.io/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="nearequal.htm" target="_top">Prev</a>
+</td><td><a href="speed_test.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>utility</option>
+<option>NearEqual</option>
+<option>near_equal.cpp</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>CppAD-&gt;</option>
+<option>Install</option>
+<option>Introduction</option>
+<option>AD</option>
+<option>ADFun</option>
+<option>preprocessor</option>
+<option>multi_thread</option>
+<option>utility</option>
+<option>ipopt_solve</option>
+<option>Example</option>
+<option>speed</option>
+<option>Appendix</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>utility-&gt;</option>
+<option>ErrorHandler</option>
+<option>NearEqual</option>
+<option>speed_test</option>
+<option>SpeedTest</option>
+<option>time_test</option>
+<option>test_boolofvoid</option>
+<option>NumericType</option>
+<option>CheckNumericType</option>
+<option>SimpleVector</option>
+<option>CheckSimpleVector</option>
+<option>nan</option>
+<option>pow_int</option>
+<option>Poly</option>
+<option>LuDetAndSolve</option>
+<option>RombergOne</option>
+<option>RombergMul</option>
+<option>Runge45</option>
+<option>Rosen34</option>
+<option>OdeErrControl</option>
+<option>OdeGear</option>
+<option>OdeGearControl</option>
+<option>CppAD_vector</option>
+<option>thread_alloc</option>
+<option>index_sort</option>
+<option>to_string</option>
+<option>set_union</option>
+<option>sparse_rc</option>
+<option>sparse_rcv</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>NearEqual-&gt;</option>
+<option>near_equal.cpp</option>
+</select>
+</td>
+<td>near_equal.cpp</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>File Name</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>NearEqual Function: Example and Test</big></big></b></center>
+<br>
+<b><big><a name="File Name" id="File Name">File Name</a></big></b>
+<br>
+This file is called <code><font color="blue">near_equal.cpp</font></code> instead of
+<code><font color="blue">NearEqual.cpp</font></code>
+to avoid a name conflict with <code><font color="blue">../lib/NearEqual.cpp</font></code>
+in the corresponding Microsoft project file.
+
+<code><font color="blue">
+<pre><tt>
+<b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/utility/near_equal.hpp&gt;</font>
+
+<b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;complex&gt;</font>
+
+<font color="#009900">bool</font> <b><font color="#000000">Near_Equal</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
+<font color="#FF0000">{</font>    <font color="#009900">bool</font> ok <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
+     <b><font color="#0000FF">typedef</font></b> std<font color="#990000">::</font><font color="#008080">complex&lt;double&gt;</font> Complex<font color="#990000">;</font>
+     <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>NearEqual<font color="#990000">;</font>
+
+     <i><font color="#9A1900">// double</font></i>
+     <font color="#009900">double</font> x    <font color="#990000">=</font> <font color="#993399">1.00000</font><font color="#990000">;</font>
+     <font color="#009900">double</font> y    <font color="#990000">=</font> <font color="#993399">1.00001</font><font color="#990000">;</font>
+     <font color="#009900">double</font> a    <font color="#990000">=</font>  <font color="#990000">.</font><font color="#993399">00003</font><font color="#990000">;</font>
+     <font color="#009900">double</font> r    <font color="#990000">=</font>  <font color="#990000">.</font><font color="#993399">00003</font><font color="#990000">;</font>
+     <font color="#009900">double</font> zero <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">.;</font>
+     <font color="#009900">double</font> inf  <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">.</font> <font color="#990000">/</font> zero<font color="#990000">;</font>
+     <font color="#009900">double</font> nan  <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">.</font> <font color="#990000">/</font> zero<font color="#990000">;</font>
+
+     ok <font color="#990000">&amp;=</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>x<font color="#990000">,</font> y<font color="#990000">,</font> zero<font color="#990000">,</font> a<font color="#990000">);</font>
+     ok <font color="#990000">&amp;=</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>x<font color="#990000">,</font> y<font color="#990000">,</font> r<font color="#990000">,</font> zero<font color="#990000">);</font>
+     ok <font color="#990000">&amp;=</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>x<font color="#990000">,</font> y<font color="#990000">,</font> r<font color="#990000">,</font> a<font color="#990000">);</font>
+
+     ok <font color="#990000">&amp;=</font> <font color="#990000">!</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>x<font color="#990000">,</font> y<font color="#990000">,</font> r <font color="#990000">/</font> <font color="#993399">10</font><font color="#990000">.,</font> a <font color="#990000">/</font> <font color="#993399">10</font><font color="#990000">.);</font>
+     ok <font color="#990000">&amp;=</font> <font color="#990000">!</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>inf<font color="#990000">,</font> inf<font color="#990000">,</font> r<font color="#990000">,</font> a<font color="#990000">);</font>
+     ok <font color="#990000">&amp;=</font> <font color="#990000">!</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(-</font>inf<font color="#990000">,</font> <font color="#990000">-</font>inf<font color="#990000">,</font> r<font color="#990000">,</font> a<font color="#990000">);</font>
+     ok <font color="#990000">&amp;=</font> <font color="#990000">!</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>nan<font color="#990000">,</font> nan<font color="#990000">,</font> r<font color="#990000">,</font> a<font color="#990000">);</font>
+
+     <i><font color="#9A1900">// complex</font></i>
+     <font color="#008080">Complex</font> <b><font color="#000000">X</font></b><font color="#990000">(</font>x<font color="#990000">,</font> x <font color="#990000">/</font> <font color="#993399">2</font><font color="#990000">.);</font>
+     <font color="#008080">Complex</font> <b><font color="#000000">Y</font></b><font color="#990000">(</font>y<font color="#990000">,</font> y <font color="#990000">/</font> <font color="#993399">2</font><font color="#990000">.);</font>
+     <font color="#008080">Complex</font> <b><font color="#000000">Inf</font></b><font color="#990000">(</font>inf<font color="#990000">,</font> zero<font color="#990000">);</font>
+     <font color="#008080">Complex</font> <b><font color="#000000">Nan</font></b><font color="#990000">(</font>zero<font color="#990000">,</font> nan<font color="#990000">);</font>
+
+     ok <font color="#990000">&amp;=</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>X<font color="#990000">,</font> Y<font color="#990000">,</font> zero<font color="#990000">,</font> a<font color="#990000">);</font>
+     ok <font color="#990000">&amp;=</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>X<font color="#990000">,</font> Y<font color="#990000">,</font> r<font color="#990000">,</font> zero<font color="#990000">);</font>
+     ok <font color="#990000">&amp;=</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>X<font color="#990000">,</font> Y<font color="#990000">,</font> r<font color="#990000">,</font> a<font color="#990000">);</font>
+
+     ok <font color="#990000">&amp;=</font> <font color="#990000">!</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>X<font color="#990000">,</font> Y<font color="#990000">,</font> r <font color="#990000">/</font> <font color="#993399">10</font><font color="#990000">.,</font> a <font color="#990000">/</font> <font color="#993399">10</font><font color="#990000">.);</font>
+     ok <font color="#990000">&amp;=</font> <font color="#990000">!</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>Inf<font color="#990000">,</font> Inf<font color="#990000">,</font> r<font color="#990000">,</font> a<font color="#990000">);</font>
+     ok <font color="#990000">&amp;=</font> <font color="#990000">!</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(-</font>Inf<font color="#990000">,</font> <font color="#990000">-</font>inf<font color="#990000">,</font> r<font color="#990000">,</font> a<font color="#990000">);</font>
+     ok <font color="#990000">&amp;=</font> <font color="#990000">!</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>Nan<font color="#990000">,</font> Nan<font color="#990000">,</font> r<font color="#990000">,</font> a<font color="#990000">);</font>
+
+     <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
+<font color="#FF0000">}</font>
+</tt></pre>
+</font></code>
+<hr>Input File: example/utility/near_equal.cpp
+
+</body>
+</html>

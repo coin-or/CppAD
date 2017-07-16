@@ -1,0 +1,168 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>Correctness Test of det_by_minor Routine</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Correctness Test of det_by_minor Routine">
+<meta name="keywords" id="keywords" content=" correctness test det_by_minor routine syntax flag source code ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_correct_det_by_minor_c_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://coin-or.github.io/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="uniform_01_c.htm" target="_top">Prev</a>
+</td><td><a href="repeat_det_by_minor_c.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>Appendix</option>
+<option>compare_c</option>
+<option>correct_det_by_minor_c</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>CppAD-&gt;</option>
+<option>Install</option>
+<option>Introduction</option>
+<option>AD</option>
+<option>ADFun</option>
+<option>preprocessor</option>
+<option>multi_thread</option>
+<option>utility</option>
+<option>ipopt_solve</option>
+<option>Example</option>
+<option>speed</option>
+<option>Appendix</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>Appendix-&gt;</option>
+<option>Faq</option>
+<option>directory</option>
+<option>Theory</option>
+<option>glossary</option>
+<option>Bib</option>
+<option>wish_list</option>
+<option>whats_new</option>
+<option>deprecated</option>
+<option>compare_c</option>
+<option>numeric_ad</option>
+<option>addon</option>
+<option>License</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>compare_c-&gt;</option>
+<option>det_of_minor_c</option>
+<option>det_by_minor_c</option>
+<option>uniform_01_c</option>
+<option>correct_det_by_minor_c</option>
+<option>repeat_det_by_minor_c</option>
+<option>elapsed_seconds_c</option>
+<option>time_det_by_minor_c</option>
+<option>main_compare_c</option>
+</select>
+</td>
+<td>correct_det_by_minor_c</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Syntax</option>
+<option>flag</option>
+<option>Source Code</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>Correctness Test of det_by_minor Routine</big></big></b></center>
+<br>
+<b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
+
+<br>
+
+<code><i><font color="black"><span style='white-space: nowrap'>flag</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;correct_det_by_minor()</span></font></code>
+
+
+<br>
+<br>
+<b><big><a name="flag" id="flag">flag</a></big></b>
+<br>
+The return value has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bool&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>flag</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+It value is <code><font color="blue">1</font></code> if the test passes and <code><font color="blue">0</font></code> otherwise.
+
+
+
+
+<br>
+<br>
+<b><big><a name="Source Code" id="Source Code">Source Code</a></big></b>
+
+<pre><tt><font color="#009900">bool</font> <b><font color="#000000">correct_det_by_minor</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
+<font color="#FF0000">{</font>    <font color="#009900">double</font> a<font color="#990000">[</font><font color="#993399">9</font><font color="#990000">],</font> det<font color="#990000">,</font> check<font color="#990000">;</font>
+
+     <b><font color="#000000">random_seed</font></b><font color="#990000">(</font><font color="#993399">123</font><font color="#990000">);</font>
+     <b><font color="#000000">uniform_01</font></b><font color="#990000">(</font><font color="#993399">9</font><font color="#990000">,</font> a<font color="#990000">);</font>
+
+     <i><font color="#9A1900">/* compute determinant using expansion by minors */</font></i>
+     det <font color="#990000">=</font> <b><font color="#000000">det_by_minor</font></b><font color="#990000">(</font>a<font color="#990000">,</font> <font color="#993399">3</font><font color="#990000">);</font>
+
+     <i><font color="#9A1900">/* use expansion by minors to hand code the determinant  */</font></i>
+     check <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">.;</font>
+     check <font color="#990000">+=</font> a<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">*</font> <font color="#990000">(</font> a<font color="#990000">[</font><font color="#993399">4</font><font color="#990000">]</font> <font color="#990000">*</font> a<font color="#990000">[</font><font color="#993399">8</font><font color="#990000">]</font> <font color="#990000">-</font> a<font color="#990000">[</font><font color="#993399">5</font><font color="#990000">]</font> <font color="#990000">*</font> a<font color="#990000">[</font><font color="#993399">7</font><font color="#990000">]</font> <font color="#990000">);</font>
+     check <font color="#990000">-=</font> a<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">*</font> <font color="#990000">(</font> a<font color="#990000">[</font><font color="#993399">3</font><font color="#990000">]</font> <font color="#990000">*</font> a<font color="#990000">[</font><font color="#993399">8</font><font color="#990000">]</font> <font color="#990000">-</font> a<font color="#990000">[</font><font color="#993399">5</font><font color="#990000">]</font> <font color="#990000">*</font> a<font color="#990000">[</font><font color="#993399">6</font><font color="#990000">]</font> <font color="#990000">);</font>
+     check <font color="#990000">+=</font> a<font color="#990000">[</font><font color="#993399">2</font><font color="#990000">]</font> <font color="#990000">*</font> <font color="#990000">(</font> a<font color="#990000">[</font><font color="#993399">3</font><font color="#990000">]</font> <font color="#990000">*</font> a<font color="#990000">[</font><font color="#993399">7</font><font color="#990000">]</font> <font color="#990000">-</font> a<font color="#990000">[</font><font color="#993399">4</font><font color="#990000">]</font> <font color="#990000">*</font> a<font color="#990000">[</font><font color="#993399">6</font><font color="#990000">]</font> <font color="#990000">);</font>
+
+     <font color="#009900">double</font> eps99 <font color="#990000">=</font> <font color="#993399">99.0</font> <font color="#990000">*</font> DBL_EPSILON<font color="#990000">;</font>
+     <b><font color="#0000FF">if</font></b><font color="#990000">(</font> <b><font color="#000000">fabs</font></b><font color="#990000">(</font>det <font color="#990000">/</font> check <font color="#990000">-</font> <font color="#993399">1.0</font><font color="#990000">)</font> <font color="#990000">&lt;</font> eps99 <font color="#990000">)</font>
+          <b><font color="#0000FF">return</font></b> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
+     <b><font color="#0000FF">return</font></b> <b><font color="#0000FF">false</font></b><font color="#990000">;</font>
+<font color="#FF0000">}</font></tt></pre>
+
+<hr>Input File: test_more/compare_c/det_by_minor.c
+
+</body>
+</html>

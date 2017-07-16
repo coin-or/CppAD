@@ -1,0 +1,405 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>Non-Smooth Optimization Using Abs-normal Quadratic Approximations</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Non-Smooth Optimization Using Abs-normal Quadratic Approximations">
+<meta name="keywords" id="keywords" content=" non-smooth optimization using abs-normal quadratic approximations syntax prototype source purpose dblvector sizevector level f n m s g epsilon maxitr b_in x_in x_out example ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_min_nso_quad_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://coin-or.github.io/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="abs_min_quad.hpp.htm" target="_top">Prev</a>
+</td><td><a href="min_nso_quad.cpp.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>ADFun</option>
+<option>abs_normal</option>
+<option>min_nso_quad</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>CppAD-&gt;</option>
+<option>Install</option>
+<option>Introduction</option>
+<option>AD</option>
+<option>ADFun</option>
+<option>preprocessor</option>
+<option>multi_thread</option>
+<option>utility</option>
+<option>ipopt_solve</option>
+<option>Example</option>
+<option>speed</option>
+<option>Appendix</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>ADFun-&gt;</option>
+<option>record_adfun</option>
+<option>drivers</option>
+<option>Forward</option>
+<option>Reverse</option>
+<option>sparsity_pattern</option>
+<option>sparse_derivative</option>
+<option>optimize</option>
+<option>abs_normal</option>
+<option>FunCheck</option>
+<option>check_for_nan</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>abs_normal-&gt;</option>
+<option>abs_normal_fun</option>
+<option>abs_print_mat</option>
+<option>abs_eval</option>
+<option>simplex_method</option>
+<option>lp_box</option>
+<option>abs_min_linear</option>
+<option>min_nso_linear</option>
+<option>qp_interior</option>
+<option>qp_box</option>
+<option>abs_min_quad</option>
+<option>min_nso_quad</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down0(this)'>
+<option>min_nso_quad-&gt;</option>
+<option>min_nso_quad.cpp</option>
+<option>min_nso_quad.hpp</option>
+</select>
+</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Syntax</option>
+<option>Prototype</option>
+<option>Source</option>
+<option>Purpose</option>
+<option>DblVector</option>
+<option>SizeVector</option>
+<option>level</option>
+<option>f</option>
+<option>---..n</option>
+<option>---..m</option>
+<option>---..s</option>
+<option>g</option>
+<option>a</option>
+<option>epsilon</option>
+<option>maxitr</option>
+<option>b_in</option>
+<option>x_in</option>
+<option>x_out</option>
+<option>Example</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>Non-Smooth Optimization Using Abs-normal Quadratic Approximations</big></big></b></center>
+<br>
+<b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
+
+<br>
+
+<code><i><font color="black"><span style='white-space: nowrap'>ok</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;min_nso_quad(<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>level</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>g</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>a</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>epsilon</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>maxitr</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>b_in</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x_in</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x_out</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+)</span></font></code>
+
+
+<br>
+<br>
+<b><big><a name="Prototype" id="Prototype">Prototype</a></big></b>
+
+<pre><tt>
+<b><font color="#0000FF">template</font></b> <font color="#990000">&lt;</font><b><font color="#0000FF">class</font></b> <font color="#008080">DblVector</font><font color="#990000">,</font> <b><font color="#0000FF">class</font></b> <font color="#008080">SizeVector</font><font color="#990000">&gt;</font>
+<font color="#009900">bool</font> <b><font color="#000000">min_nso_quad</font></b><font color="#990000">(</font>
+     <font color="#008080">size_t</font>           level     <font color="#990000">,</font>
+     ADFun<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;&amp;</font>   f         <font color="#990000">,</font>
+     ADFun<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;&amp;</font>   g         <font color="#990000">,</font>
+     ADFun<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;&amp;</font>   a         <font color="#990000">,</font>
+     <b><font color="#0000FF">const</font></b> DblVector<font color="#990000">&amp;</font> epsilon   <font color="#990000">,</font>
+     <font color="#008080">SizeVector</font>       maxitr    <font color="#990000">,</font>
+     <font color="#009900">double</font>           b_in      <font color="#990000">,</font>
+     <b><font color="#0000FF">const</font></b> DblVector<font color="#990000">&amp;</font> x_in      <font color="#990000">,</font>
+     DblVector<font color="#990000">&amp;</font>       x_out     <font color="#990000">)</font></tt></pre>
+<br>
+<b><big><a name="Source" id="Source">Source</a></big></b>
+<br>
+This following is a link to the source code for this example:
+<a href="min_nso_quad.hpp.htm" target="_top"><span style='white-space: nowrap'>min_nso_quad.hpp</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
+<br>
+Given a current that abs-normal representation
+<a href="abs_normal_fun.htm#g" target="_top"><span style='white-space: nowrap'>g</span></a>
+, <a href="abs_normal_fun.htm#a" target="_top"><span style='white-space: nowrap'>a</span></a>
+,
+for a function <small>@(@
+f(x)
+@)@</small>,
+this routine minimizes <small>@(@
+f(x)
+@)@</small>.
+
+<br>
+<br>
+<b><big><a name="DblVector" id="DblVector">DblVector</a></big></b>
+<br>
+is a <a href="simplevector.htm" target="_top"><span style='white-space: nowrap'>SimpleVector</span></a>
+ class with elements of type <code><font color="blue">double</font></code>.
+
+<br>
+<br>
+<b><big><a name="SizeVector" id="SizeVector">SizeVector</a></big></b>
+<br>
+is a <a href="simplevector.htm" target="_top"><span style='white-space: nowrap'>SimpleVector</span></a>
+ class with elements of type <code><font color="blue">size_t</font></code>.
+
+<br>
+<br>
+<b><big><a name="level" id="level">level</a></big></b>
+<br>
+This value is less that or equal 5.
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>level</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;==&nbsp;0</span></font></code>
+,
+no tracing of the optimization is printed.
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>level</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&gt;=&nbsp;1</span></font></code>
+,
+a trace of each iteration of <code><font color="blue">min_nso_quad</font></code> is printed.
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>level</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&gt;=&nbsp;2</span></font></code>
+,
+a trace of each iteration of the <code><font color="blue">abs_min_quad</font></code> sub-problem is printed.
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>level</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&gt;=&nbsp;3</span></font></code>
+,
+a trace of the <a href="qp_box.htm" target="_top"><span style='white-space: nowrap'>qp_box</span></a>
+ sub-problem is printed.
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>level</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&gt;=&nbsp;4</span></font></code>
+,
+a trace of the <a href="qp_interior.htm" target="_top"><span style='white-space: nowrap'>qp_interior</span></a>
+ sub-problem is printed.
+
+<br>
+<br>
+<b><big><a name="f" id="f">f</a></big></b>
+<br>
+This is the original function for the abs-normal form; see
+<a href="abs_normal_fun.htm#f" target="_top"><span style='white-space: nowrap'>f</span></a>
+.
+
+<br>
+<br>
+<b><a name="f.n" id="f.n">n</a></b>
+<br>
+We use 
+<code><i><font color="black"><span style='white-space: nowrap'>n</span></font></i></code>
+ to denote the dimension of the domain for 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+; i.e.,
+
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.Domain()</span></font></code>
+.
+
+<br>
+<br>
+<b><a name="f.m" id="f.m">m</a></b>
+<br>
+We use 
+<code><i><font color="black"><span style='white-space: nowrap'>m</span></font></i></code>
+ to denote the dimension of the range for 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+; i.e.,
+
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.Range()</span></font></code>
+.
+This must be equal to one.
+
+<br>
+<br>
+<b><a name="f.s" id="f.s">s</a></b>
+<br>
+We use
+<a href="abs_normal_fun.htm#f.s" target="_top"><span style='white-space: nowrap'>s</span></a>
+ to denote the number absolute terms in 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+.
+
+<br>
+<br>
+<b><big><a name="g" id="g">g</a></big></b>
+<br>
+This is the function <a href="abs_normal_fun.htm#g" target="_top"><span style='white-space: nowrap'>g</span></a>
+
+in the abs-normal representation of 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+.
+
+<br>
+<br>
+<b><big><a name="a" id="a">a</a></big></b>
+<br>
+This is the function <a href="abs_normal_fun.htm#a" target="_top"><span style='white-space: nowrap'>a</span></a>
+
+in the abs-normal representation of 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+.
+
+<br>
+<br>
+<b><big><a name="epsilon" id="epsilon">epsilon</a></big></b>
+<br>
+This is a vector with size 2.
+The value 
+<code><i><font color="black"><span style='white-space: nowrap'>epsilon</span></font></i><font color="blue"><span style='white-space: nowrap'>[0]</span></font></code>
+ is convergence criteria in terms
+of the infinity norm of the difference of 
+<code><i><font color="black"><span style='white-space: nowrap'>x_out</span></font></i></code>
+
+between iterations.
+The value 
+<code><i><font color="black"><span style='white-space: nowrap'>epsilon</span></font></i><font color="blue"><span style='white-space: nowrap'>[1]</span></font></code>
+ is convergence criteria in terms
+of the derivative of <small>@(@
+f(x)
+@)@</small>.
+This derivative is actually the average of the directional derivative
+in the direction of the sub-problem minimizer.
+
+<br>
+<br>
+<b><big><a name="maxitr" id="maxitr">maxitr</a></big></b>
+<br>
+This is a vector with size 3.
+The value 
+<code><i><font color="black"><span style='white-space: nowrap'>maxitr</span></font></i><font color="blue"><span style='white-space: nowrap'>[0]</span></font></code>
+ is the maximum number of
+<code><font color="blue">min_nso_quad</font></code> iterations to try before giving up on convergence.
+The value 
+<code><i><font color="black"><span style='white-space: nowrap'>maxitr</span></font></i><font color="blue"><span style='white-space: nowrap'>[1]</span></font></code>
+ is the maximum number of iterations in the
+<code><font color="blue">abs_min_quad</font></code> sub-problem.
+The value 
+<code><i><font color="black"><span style='white-space: nowrap'>maxitr</span></font></i><font color="blue"><span style='white-space: nowrap'>[2]</span></font></code>
+ is the maximum number of iterations in
+the <a href="qp_interior.htm#maxitr" target="_top"><span style='white-space: nowrap'>qp_interior</span></a>
+ sub-problems.
+
+<br>
+<br>
+<b><big><a name="b_in" id="b_in">b_in</a></big></b>
+<br>
+This the initial bound on the trust region size.
+To be specific, if <small>@(@
+b
+@)@</small> is the current trust region size,
+at each iteration affine approximation is minimized with respect to
+<small>@(@
+\Delta x
+@)@</small> and subject to
+<small>@[@
+
+	-b \leq \Delta x_j \leq b
+
+@]@</small>
+for 
+<code><i><font color="black"><span style='white-space: nowrap'>j</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;0&nbsp;,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>...</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n</span></font></i><font color="blue"><span style='white-space: nowrap'>-1</span></font></code>
+.
+It must hold that 
+<code><i><font color="black"><span style='white-space: nowrap'>b_in</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&gt;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>epsilon</span></font></i><font color="blue"><span style='white-space: nowrap'>[0]</span></font></code>
+.
+
+<br>
+<br>
+<b><big><a name="x_in" id="x_in">x_in</a></big></b>
+<br>
+This vector 
+<code><i><font color="black"><span style='white-space: nowrap'>x_out</span></font></i></code>
+ has size 
+<code><i><font color="black"><span style='white-space: nowrap'>n</span></font></i></code>
+.
+It is the starting point for the optimization procedure; i.e.,
+the <code><font color="blue">min_nso_quad</font></code> iterations.
+
+<br>
+<br>
+<b><big><a name="x_out" id="x_out">x_out</a></big></b>
+<br>
+This vector 
+<code><i><font color="black"><span style='white-space: nowrap'>x_out</span></font></i></code>
+ has size 
+<code><i><font color="black"><span style='white-space: nowrap'>n</span></font></i></code>
+.
+The input value of its elements does not matter.
+Upon return,
+it is the approximate minimizer
+of the abs-normal approximation for <small>@(@
+f(x)
+@)@</small> over the trust region
+is <small>@(@
+x = \hat{x} + \Delta x
+@)@</small>.
+
+
+<br>
+<br>
+<b><big><a name="Example" id="Example">Example</a></big></b>
+<br>
+The file <a href="min_nso_quad.cpp.htm" target="_top"><span style='white-space: nowrap'>min_nso_quad.cpp</span></a>
+ contains an example and test of
+<code><font color="blue">min_nso_quad</font></code>.
+It returns true if the test passes and false otherwise.
+
+
+<hr>Input File: example/abs_normal/min_nso_quad.hpp
+
+</body>
+</html>

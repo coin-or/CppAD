@@ -1,0 +1,874 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>CppAD Changes and Additions During 2014</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="CppAD Changes and Additions During 2014">
+<meta name="keywords" id="keywords" content=" cppad changes additions during 2014 introduction 12-30 12-29 12-28 12-27 12-26 12-25 12-23 12-22 12-17 12-16 12-15 11-28 11-27 09-28 09-27 09-25 09-21 05-28 05-27 05-23 05-22 05-20 05-19 05-16 05-14 03-18 03-17 03-09 03-05 03-02 03-01 02-28 02-27 02-26 02-23 02-22 02-17 02-15 01-26 01-21 01-10 ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_whats_new_14_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://coin-or.github.io/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="whats_new_15.htm" target="_top">Prev</a>
+</td><td><a href="whats_new_13.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>Appendix</option>
+<option>whats_new</option>
+<option>whats_new_14</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>CppAD-&gt;</option>
+<option>Install</option>
+<option>Introduction</option>
+<option>AD</option>
+<option>ADFun</option>
+<option>preprocessor</option>
+<option>multi_thread</option>
+<option>utility</option>
+<option>ipopt_solve</option>
+<option>Example</option>
+<option>speed</option>
+<option>Appendix</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>Appendix-&gt;</option>
+<option>Faq</option>
+<option>directory</option>
+<option>Theory</option>
+<option>glossary</option>
+<option>Bib</option>
+<option>wish_list</option>
+<option>whats_new</option>
+<option>deprecated</option>
+<option>compare_c</option>
+<option>numeric_ad</option>
+<option>addon</option>
+<option>License</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>whats_new-&gt;</option>
+<option>whats_new_17</option>
+<option>whats_new_16</option>
+<option>whats_new_15</option>
+<option>whats_new_14</option>
+<option>whats_new_13</option>
+<option>whats_new_12</option>
+<option>whats_new_11</option>
+<option>whats_new_10</option>
+<option>whats_new_09</option>
+<option>whats_new_08</option>
+<option>whats_new_07</option>
+<option>whats_new_06</option>
+<option>whats_new_05</option>
+<option>whats_new_04</option>
+<option>whats_new_03</option>
+</select>
+</td>
+<td>whats_new_14</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Introduction</option>
+<option>12-30</option>
+<option>12-29</option>
+<option>12-28</option>
+<option>12-27</option>
+<option>12-26</option>
+<option>12-25</option>
+<option>12-23</option>
+<option>12-22</option>
+<option>12-17</option>
+<option>12-16</option>
+<option>12-15</option>
+<option>11-28</option>
+<option>11-27</option>
+<option>09-28</option>
+<option>09-27</option>
+<option>09-25</option>
+<option>09-21</option>
+<option>05-28</option>
+<option>05-27</option>
+<option>05-23</option>
+<option>05-22</option>
+<option>05-20</option>
+<option>05-19</option>
+<option>05-16</option>
+<option>05-14</option>
+<option>03-18</option>
+<option>03-17</option>
+<option>03-09</option>
+<option>03-05</option>
+<option>03-02</option>
+<option>03-01</option>
+<option>02-28</option>
+<option>02-27</option>
+<option>02-26</option>
+<option>02-23</option>
+<option>02-22</option>
+<option>02-17</option>
+<option>02-15</option>
+<option>01-26</option>
+<option>01-21</option>
+<option>01-10</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@
+
+
+
+<center><b><big><big>CppAD Changes and Additions During 2014</big></big></b></center>
+<br>
+<b><big><a name="Introduction" id="Introduction">Introduction</a></big></b>
+<br>
+This section contains a list of the changes to CppAD during 2014
+(in reverse order by date).
+The purpose of this section is to
+assist you in learning about changes between various versions of CppAD.
+
+<br>
+<br>
+<b><big><a name="12-30" id="12-30">12-30</a></big></b>
+<br>
+There was a bug in the <a href="cmake.htm" target="_top"><span style='white-space: nowrap'>cmake</span></a>
+ whereby it would sometimes mistakenly
+exit with the error message
+<code><font color='blue'><pre style='display:inline'> 
+     cppad_max_num_threads is not an integer greater than or equal 4
+</pre></font></code>
+This has been fixed.
+
+<br>
+<br>
+<b><big><a name="12-29" id="12-29">12-29</a></big></b>
+<br>
+The example <code><font color="blue">not_complex_ad.cpp</font></code> was using the type
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;std::complex&lt;&nbsp;CppAD::AD&lt;double&gt;&nbsp;&gt;<br>
+</span></font></code>
+and was failing to compile with the <code><font color="blue">clang</font></code> complier.
+This example has been removed because it is not consistent with the
+C++ standard; see
+<a href="faq.htm#Complex Types" target="_top"><span style='white-space: nowrap'>complex&nbsp;FAQ</span></a>
+.
+
+
+<br>
+<br>
+<b><big><a name="12-28" id="12-28">12-28</a></big></b>
+
+<ol type="1"><li>
+Fix some warnings generated by clang 3.5 about local functions
+that were not being used; e.g., sub-tests that were not being executed.
+</li><li>
+
+Fix <code><font color="blue">cmake</font></code> setting
+<code><font color="blue">cppad_implicit_ctor_from_any_type</font></code>
+Note that this cmake option has since been replaced by
+<a href="cmake.htm#cppad_deprecated" target="_top"><span style='white-space: nowrap'>cppad_deprecated</span></a>
+.
+</li><li>
+
+The <code><font color="blue">clang++</font></code> compiler was optimizing out the calculations
+in the <a href="time_test.cpp.htm" target="_top"><span style='white-space: nowrap'>time_test.cpp</span></a>
+ and <a href="speed_test.cpp.htm" target="_top"><span style='white-space: nowrap'>speed_test.cpp</span></a>
+ examples.
+This caused these tests to hang while trying to determine how
+many times to repeat the test.
+This has been fixed.
+</li></ol>
+
+
+<br>
+<br>
+<b><big><a name="12-27" id="12-27">12-27</a></big></b>
+<br>
+More work on the bug in
+<a href="condexp.htm#Optimize" target="_top"><span style='white-space: nowrap'>optimizing</span></a>
+
+conditional expressions.
+
+<br>
+<br>
+<b><big><a name="12-26" id="12-26">12-26</a></big></b>
+<br>
+A minimal example for computing cross terms in atomic operation
+Hessian sparsity patterns <a href="atomic_rev_sparse_hes.cpp.htm" target="_top"><span style='white-space: nowrap'>atomic_rev_sparse_hes.cpp</span></a>
+ was added.
+
+<br>
+<br>
+<b><big><a name="12-25" id="12-25">12-25</a></big></b>
+<br>
+More work on the bug in
+<a href="condexp.htm#Optimize" target="_top"><span style='white-space: nowrap'>optimizing</span></a>
+
+conditional expressions.
+
+<br>
+<br>
+<b><big><a name="12-23" id="12-23">12-23</a></big></b>
+<br>
+The c++11 standard includes the error function <a href="erf.htm" target="_top"><span style='white-space: nowrap'>erf</span></a>
+ in
+<code><font color="blue">cmath</font></code>.
+If the c++ compiler has the error function defined in <code><font color="blue">cmath</font></code>,
+the complier version of the error function is used and it corresponds to an
+atomic operation.
+<code><span style='white-space: nowrap'><br>
+<br>
+</span></code>Fix typo in tangent reverse mode theory for
+<a href="tan_reverse.htm#Positive Orders Z(t)" target="_top"><span style='white-space: nowrap'>Positive&nbsp;Orders</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="12-22" id="12-22">12-22</a></big></b>
+<br>
+There was a bug related to
+<a href="condexp.htm#Optimize" target="_top"><span style='white-space: nowrap'>optimizing</span></a>
+
+conditional expressions.
+This has been fixed.
+
+<br>
+<br>
+<b><big><a name="12-17" id="12-17">12-17</a></big></b>
+<br>
+Fix some compiler warnings and <a href="speed.htm" target="_top"><span style='white-space: nowrap'>speed</span></a>
+ program names
+when using the deprecated <a href="autotools.htm" target="_top"><span style='white-space: nowrap'>autotools</span></a>
+ install procedure.
+
+<br>
+<br>
+<b><big><a name="12-16" id="12-16">12-16</a></big></b>
+<br>
+If the <code><font color="blue">c++11</font></code> include file <code><font color="blue">&lt;cstdint&gt;</font></code>
+defines all the standard types, they can be used by to specify
+<a href="cmake.htm#cppad_tape_addr_type.cstdint" target="_top"><span style='white-space: nowrap'>cppad_tape_addr_type</span></a>
+ and
+<a href="cmake.htm#cppad_tape_id_type.cstdint" target="_top"><span style='white-space: nowrap'>cppad_tape_id_type</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="12-15" id="12-15">12-15</a></big></b>
+<br>
+Correct the title and <a href="_index.htm" target="_top"><span style='white-space: nowrap'>_index</span></a>
+ entries for <a href="forward_two.htm" target="_top"><span style='white-space: nowrap'>forward_two</span></a>
+
+from first to second order.
+
+<br>
+<br>
+<b><big><a name="11-28" id="11-28">11-28</a></big></b>
+<br>
+Improve the <a href="_index.htm" target="_top"><span style='white-space: nowrap'>index</span></a>
+ and <code><font color="blue">search</font></code> using
+a new version of the <code><font color="blue">omhelp</font></code> documentation tool.
+
+<br>
+<br>
+<b><big><a name="11-27" id="11-27">11-27</a></big></b>
+
+<ol type="1"><li>
+Add alignment to the
+<a href="ta_get_memory.htm#Alignment" target="_top"><span style='white-space: nowrap'>get_memory</span></a>
+ and
+<a href="ta_create_array.htm#Alignment" target="_top"><span style='white-space: nowrap'>create_array</span></a>
+ specifications
+and
+<a href="thread_alloc.cpp.htm" target="_top"><span style='white-space: nowrap'>thread_alloc&nbsp;example</span></a>
+.
+</li><li>
+
+Advance the deprecated <a href="autotools.htm" target="_top"><span style='white-space: nowrap'>unix&nbsp;install</span></a>
+ utilities to
+autoconf-2.69 and automake-1.13.4.
+</li></ol>
+
+
+<br>
+<br>
+<b><big><a name="09-28" id="09-28">09-28</a></big></b>
+<br>
+Fix more bugs related to optimizing condition conditional expressions.
+<ol type="1"><li>
+Using old instead of new operator indices.
+</li><li>
+
+Not properly following dependence back through atomic operations.
+</li><li>
+
+Aborting during forward order zero, when skipping computation for a variable
+that was already completed (the skip is still useful for higher orders
+and for reverse mode).
+</li><li>
+
+Reverse mode not properly handling the variable number of arguments in the
+conditional skip operation.
+</li><li>
+
+Reverse mode tracing not properly handling the variable number
+of argument operations; i.e., conditional skip and cumulative summation.
+</li></ol>
+
+
+<br>
+<br>
+<b><big><a name="09-27" id="09-27">09-27</a></big></b>
+<br>
+Fix a bug that occurred when
+<a href="optimize.htm" target="_top"><span style='white-space: nowrap'>f.optimize</span></a>
+ was used with a function 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+
+that contained calls to user defined <a href="atomic.htm" target="_top"><span style='white-space: nowrap'>atomic</span></a>
+ operations
+and <a href="condexp.htm" target="_top"><span style='white-space: nowrap'>conditional&nbsp;expressions</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="09-25" id="09-25">09-25</a></big></b>
+<br>
+Fix a bug that occurred when
+<a href="optimize.htm" target="_top"><span style='white-space: nowrap'>f.optimize</span></a>
+ was used with a function 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+
+that contained <a href="discrete.htm" target="_top"><span style='white-space: nowrap'>discrete</span></a>
+ functions.
+
+<br>
+<br>
+<b><big><a name="09-21" id="09-21">09-21</a></big></b>
+<br>
+Fix a typo in documentation for
+<a href="reverse_any.htm" target="_top"><span style='white-space: nowrap'>any&nbsp;order&nbsp;reverse</span></a>
+.
+To be specific, <small>@(@
+x^{(k)}
+@)@</small> was changed to be <small>@(@
+u^{(k)}
+@)@</small>.
+
+<br>
+<br>
+<b><big><a name="05-28" id="05-28">05-28</a></big></b>
+
+<ol type="1"><li>
+Change the <a href="speed_main.htm#Sparsity Options.boolsparsity" target="_top"><span style='white-space: nowrap'>boolsparsity</span></a>
+
+so that it only affects the sparsity speed tests
+<a href="link_sparse_jacobian.htm" target="_top"><span style='white-space: nowrap'>sparse_jacobian</span></a>
+ and
+<a href="link_sparse_hessian.htm" target="_top"><span style='white-space: nowrap'>sparse_hessian</span></a>
+;
+i.e., it is now ignored by the other tests.
+</li><li>
+
+Improve the <a href="speed.htm" target="_top"><span style='white-space: nowrap'>speed</span></a>
+ documentation page.
+</li></ol>
+
+
+<br>
+<br>
+<b><big><a name="05-27" id="05-27">05-27</a></big></b>
+
+<ol type="1"><li>
+The <code><font color="blue">cppad_colpack.cpp</font></code>
+file was not being copied to the specified directory.
+In addition, the specified directory was changed from an include
+directory to data directory because
+<code><font color="blue">cppad_colpack.cpp</font></code> is not an include file.
+</li><li>
+
+If <a href="colpack_prefix.htm" target="_top"><span style='white-space: nowrap'>colpack_prefix</span></a>
+  was specified, the CppAD
+<a href="pkgconfig.htm" target="_top"><span style='white-space: nowrap'>pkgconfig</span></a>
+ file was missing some information.
+This has been fixed.
+</li></ol>
+
+
+<br>
+<br>
+<b><big><a name="05-23" id="05-23">05-23</a></big></b>
+<br>
+The <a href="speed.htm" target="_top"><span style='white-space: nowrap'>speed</span></a>
+ test instructions were converted from using
+the old autotools <a href="autotools.htm" target="_top"><span style='white-space: nowrap'>unix&nbsp;install</span></a>
+ instructions
+to use the <a href="cmake.htm" target="_top"><span style='white-space: nowrap'>cmake</span></a>
+ install instructions.
+These instructions should work on any system, not just unix.
+
+<br>
+<br>
+<b><big><a name="05-22" id="05-22">05-22</a></big></b>
+
+<ol type="1"><li>
+Add multiple direction for mode
+<a href="forward_dir.htm" target="_top"><span style='white-space: nowrap'>forward_dir</span></a>
+ and use it to speed up the forward
+version of <a href="sparse_jacobian.htm" target="_top"><span style='white-space: nowrap'>sparse_jacobian</span></a>
+.
+Below is an example run of <a href="cppad_sparse_jacobian.cpp.htm" target="_top"><span style='white-space: nowrap'>cppad_sparse_jacobian.cpp</span></a>
+ results
+before this change:
+<code><font color='blue'><pre style='display:inline'> 
+     cppad_sparse_jacobian_size = [ 100, 400, 900, 1600, 2500 ]
+     cppad_sparse_jacobian_rate = [ 2973, 431.94, 142.25, 78.64, 26.87 ]
+</pre></font></code>
+and after this change:
+<code><font color='blue'><pre style='display:inline'> 
+     cppad_sparse_jacobian_size = [ 100, 400, 900, 1600, 2500 ]
+     cppad_sparse_jacobian_rate = [ 6389, 954.26, 314.04, 180.06, 56.95 ]
+</pre></font></code>
+Due to the success of this change,
+<code><font color="blue">multiple direction</font></code> items were added to the wish list
+(they were later removed).
+</li><li>
+
+Improve the  forward mode tracing of arguments to,
+and results from, user defined <a href="atomic.htm" target="_top"><span style='white-space: nowrap'>atomic</span></a>
+ operations.
+</li></ol>
+
+
+<br>
+<br>
+<b><big><a name="05-20" id="05-20">05-20</a></big></b>
+
+<ol type="1"><li>
+Move <code><font color="blue">speed/adolc/alloc_mat.hpp</font></code> to
+<code><font color="blue">speed/adolc/adolc_alloc_mat.hpp</font></code> so it has the
+same name is its <code><font color="blue"># ifndef</font></code> command.
+</li><li>
+
+Fix <code><font color="blue"># ifndef</font></code> command in
+<code><font color="blue">cppad/ipopt/solve_callback.hpp</font></code>.
+</li><li>
+
+Add <code><font color="blue"># ifndef</font></code> command to <code><font color="blue">test_more/extern_value.hpp</font></code>.
+</li></ol>
+
+
+
+<br>
+<br>
+<b><big><a name="05-19" id="05-19">05-19</a></big></b>
+<br>
+In the files
+<code><font color="blue">cppad/local/asin_op.hpp</font></code> and <code><font color="blue">cppad/local/acos_op.hpp</font></code>
+there were assignments of the form <code><font color="blue">uj = 0.</font></code> where <code><font color="blue">u_j</font></code>
+has type <a href="glossary.htm#Base Type" target="_top"><span style='white-space: nowrap'>Base</span></a>
+.
+These may have not be defined operations in certain cases and
+have been converted to <code><font color="blue">uj = Base(0)</font></code>.
+
+
+<br>
+<br>
+<b><big><a name="05-16" id="05-16">05-16</a></big></b>
+<br>
+There was a mistake in printing the arguments for
+<code><font color="blue">CSumOp</font></code> and <code><font color="blue">CSkipOp</font></code> when using the undocumented
+<code><font color="blue">TRACE</font></code> option during forward mode (available in files of the form
+
+<code><font color="blue"><span style='white-space: nowrap'>cppad/local/</span></font><i><font color="black"><span style='white-space: nowrap'>*</span></font></i><font color="blue"><span style='white-space: nowrap'>sweep.hpp/</span></font></code>
+).
+This has been fixed.
+
+<br>
+<br>
+<b><big><a name="05-14" id="05-14">05-14</a></big></b>
+
+<ol type="1"><li>
+There were some global variables in the file
+<code><font color="blue">cppad/local/op_code.hpp</font></code> that might have caused multiple definitions
+during link time for CppAD applications.
+These variables have been changed to be local so that this cannot happen.
+</li><li>
+
+There was a mistaken assert that the number of arguments for the
+<code><font color="blue">BeginOp</font></code> was zero that caused an abort when using the undocumented
+<code><font color="blue">TRACE</font></code> option available in files of the form
+
+<code><font color="blue"><span style='white-space: nowrap'>cppad/local/</span></font><i><font color="black"><span style='white-space: nowrap'>*</span></font></i><font color="blue"><span style='white-space: nowrap'>sweep.hpp/</span></font></code>
+.
+This has been fixed.
+</li></ol>
+
+
+<br>
+<br>
+<b><big><a name="03-18" id="03-18">03-18</a></big></b>
+
+<ol type="1"><li>
+The
+<a href="fundeprecated.htm#size_taylor" target="_top"><span style='white-space: nowrap'>size_taylor</span></a>
+
+and
+<a href="fundeprecated.htm#capacity_taylor" target="_top"><span style='white-space: nowrap'>capacity_taylor</span></a>
+
+functions were deprecated;
+use <a href="size_order.htm" target="_top"><span style='white-space: nowrap'>size_order</span></a>
+ and <a href="capacity_order.htm" target="_top"><span style='white-space: nowrap'>capacity_order</span></a>
+ instead.
+</li><li>
+
+The documentation for <a href="forward.htm" target="_top"><span style='white-space: nowrap'>forward</span></a>
+ and the examples
+<a href="forward.cpp.htm" target="_top"><span style='white-space: nowrap'>forward.cpp</span></a>
+, <a href="forward_order.cpp.htm" target="_top"><span style='white-space: nowrap'>forward_order.cpp</span></a>
+, have been improved.
+To be more specific, <a href="forward_order.htm" target="_top"><span style='white-space: nowrap'>forward_order</span></a>
+ now references the special
+cases <a href="forward_zero.htm" target="_top"><span style='white-space: nowrap'>forward_zero</span></a>
+, <a href="forward_one.htm" target="_top"><span style='white-space: nowrap'>forward_one</span></a>
+ and the new case
+<a href="forward_two.htm" target="_top"><span style='white-space: nowrap'>forward_two</span></a>
+.
+</li></ol>
+
+
+<br>
+<br>
+<b><big><a name="03-17" id="03-17">03-17</a></big></b>
+<br>
+The
+<a href="cppad_vector.htm#Assignment.Move Semantics" target="_top"><span style='white-space: nowrap'>move&nbsp;semantics</span></a>
+
+version of the <code><font color="blue">CppAD::vector</font></code> assignment statement
+was not checking vector sizes.
+This has been fixed so that things work the same with compilers
+that do not have move semantics.
+(Note that with move semantics, no extra memory allocation is done
+even if the target vector has a different size.)
+
+<br>
+<br>
+<b><big><a name="03-09" id="03-09">03-09</a></big></b>
+<br>
+The documentation links
+<code><font color="blue">forwardzero</font></code>, <code><font color="blue">forwardone</font></code>, and <code><font color="blue">forwardany</font></code>
+have been changed to
+<a href="forward_zero.htm" target="_top"><span style='white-space: nowrap'>forward_zero</span></a>
+, <a href="forward_one.htm" target="_top"><span style='white-space: nowrap'>forward_one</span></a>
+,
+and <a href="forward_order.htm" target="_top"><span style='white-space: nowrap'>forward_order</span></a>
+ respectively.
+This may affect links from other web pages to the CppAD documentation.
+
+<br>
+<br>
+<b><big><a name="03-05" id="03-05">03-05</a></big></b>
+<br>
+The names 
+<code><i><font color="black"><span style='white-space: nowrap'>p</span></font></i></code>
+ and 
+<code><i><font color="black"><span style='white-space: nowrap'>q</span></font></i></code>
+ in the
+<a href="forward_order.htm" target="_top"><span style='white-space: nowrap'>forward</span></a>
+,
+<a href="reverse_any.htm" target="_top"><span style='white-space: nowrap'>reverse</span></a>
+,
+<a href="atomic_forward.htm" target="_top"><span style='white-space: nowrap'>atomic_forward</span></a>
+, and
+<a href="atomic_reverse.htm" target="_top"><span style='white-space: nowrap'>atomic_reverse</span></a>
+ functions
+were reverse so that 
+<code><i><font color="black"><span style='white-space: nowrap'>p</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&lt;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>q</span></font></i></code>
+.
+This is only a notational change to make the arguments easier to remember.
+
+<br>
+<br>
+<b><big><a name="03-02" id="03-02">03-02</a></big></b>
+
+<ol type="1"><li>
+In the output for the speed
+<a href="speed_main.htm#test.correct" target="_top"><span style='white-space: nowrap'>correct</span></a>
+ test,
+mention which tests are not available.
+Note that the set of available tests can depend on the
+<a href="speed_main.htm#Global Options" target="_top"><span style='white-space: nowrap'>list&nbsp;of&nbsp;options</span></a>
+.
+</li><li>
+
+In the documentation for
+<a href="sparse_jacobian.htm#n_sweep" target="_top"><span style='white-space: nowrap'>n_sweep</span></a>
+,
+mention that it is equal to the number of colors determined by the
+<a href="sparse_jacobian.htm#work.color_method" target="_top"><span style='white-space: nowrap'>color_method</span></a>
+.
+</li><li>
+
+The <a href="speed_cppad.htm" target="_top"><span style='white-space: nowrap'>speed_cppad</span></a>
+ tests were simplified by removing the printing
+of auxillary information related to the
+<a href="speed_main.htm#Global Options.optimize" target="_top"><span style='white-space: nowrap'>optimize</span></a>
+ option.
+Future auxillary information will be passed back in a manner similar to
+<a href="link_sparse_jacobian.htm#n_sweep" target="_top"><span style='white-space: nowrap'>n_sweep</span></a>
+ for the sparse jacobian test.
+</li><li>
+
+<a href="cppad_vector.htm#Assignment.Move Semantics" target="_top"><span style='white-space: nowrap'>Move&nbsp;semantics</span></a>
+
+were added to the <code><font color="blue">CppAD::vector</font></code> assignment operator.
+</li></ol>
+
+
+<br>
+<br>
+<b><big><a name="03-01" id="03-01">03-01</a></big></b>
+
+<ol type="1"><li>
+Change the prototype for 
+<code><i><font color="black"><span style='white-space: nowrap'>row</span></font></i></code>
+ and 
+<code><i><font color="black"><span style='white-space: nowrap'>col</span></font></i></code>
+ in the
+<a href="link_sparse_jacobian.htm" target="_top"><span style='white-space: nowrap'>link_sparse_jacobian</span></a>
+ speed test to be <code><font color="blue">const</font></code>; i.e.,
+they are not changed.
+</li><li>
+
+Move 
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+ near end of <a href="link_sparse_hessian.htm" target="_top"><span style='white-space: nowrap'>link_sparse_hessian</span></a>
+ speed test
+parameter list,
+(as is the case for <a href="link_sparse_jacobian.htm" target="_top"><span style='white-space: nowrap'>link_sparse_jacobian</span></a>
+).
+</li></ol>
+
+
+<br>
+<br>
+<b><big><a name="02-28" id="02-28">02-28</a></big></b>
+<br>
+The <a href="cppad_vector.htm#data" target="_top"><span style='white-space: nowrap'>data</span></a>
+ function was added to the
+<code><font color="blue">CppAD::vector</font></code> template class.
+
+<br>
+<br>
+<b><big><a name="02-27" id="02-27">02-27</a></big></b>
+<br>
+The CppAD developer documentation for the subdirectory
+<code><font color="blue">cppad/ipopt</font></code> was not being built by the command
+<code><font color="blue">bin/run_doxygen.sh</font></code>.
+This has been fixed.
+
+<br>
+<br>
+<b><big><a name="02-26" id="02-26">02-26</a></big></b>
+
+<ol type="1"><li>
+The
+<a href="speed_adolc.htm" target="_top"><span style='white-space: nowrap'>adolc</span></a>
+ and
+<a href="speed_cppad.htm" target="_top"><span style='white-space: nowrap'>cppad</span></a>
+ sparse jacobian speed tests now print out
+<a href="sparse_jacobian.htm#n_sweep" target="_top"><span style='white-space: nowrap'>n_sweep</span></a>
+.
+</li><li>
+
+The size of some of the <a href="speed.htm" target="_top"><span style='white-space: nowrap'>speed</span></a>
+ test cases has been increased
+to test behavior for larger problems.
+</li><li>
+
+A link to <a href="ode_evaluate.htm" target="_top"><span style='white-space: nowrap'>ode_evaluate</span></a>
+ was missing in the
+<a href="speed_utility.htm#Speed Utility Routines" target="_top"><span style='white-space: nowrap'>Speed&nbsp;Utility&nbsp;Routines</span></a>
+ table.
+This has been fixed.
+</li></ol>
+
+
+
+<br>
+<br>
+<b><big><a name="02-23" id="02-23">02-23</a></big></b>
+<br>
+The <a href="sparse_jacobian.htm#work.color_method" target="_top"><span style='white-space: nowrap'>color_method</span></a>
+
+option was added to the sparse Jacobian calculations.
+This enables one to use <a href="colpack_prefix.htm" target="_top"><span style='white-space: nowrap'>ColPack</span></a>
+
+do color the rows or columns.
+The speed test <a href="speed_main.htm#Sparsity Options.colpack" target="_top"><span style='white-space: nowrap'>colpack</span></a>
+ option
+was also added (but not yet implemented for
+<a href="link_sparse_hessian.htm" target="_top"><span style='white-space: nowrap'>sparse_hessian</span></a>
+ speed tests).
+
+
+<br>
+<br>
+<b><big><a name="02-22" id="02-22">02-22</a></big></b>
+<br>
+The program names in
+<a href="thread_test.cpp.htm" target="_top"><span style='white-space: nowrap'>thread_test.cpp</span></a>
+ where changes from
+
+<code><i><font color="black"><span style='white-space: nowrap'>threading</span></font></i><font color="blue"><span style='white-space: nowrap'>_test</span></font></code>
+ to 
+<code><font color="blue"><span style='white-space: nowrap'>multi_thread_</span></font><i><font color="black"><span style='white-space: nowrap'>threading</span></font></i></code>
+
+where 
+<code><i><font color="black"><span style='white-space: nowrap'>threading</span></font></i></code>
+ is <code><font color="blue">openmp</font></code>, <code><font color="blue">pthread</font></code> or <code><font color="blue">bthread</font></code>.
+
+<br>
+<br>
+<b><big><a name="02-17" id="02-17">02-17</a></big></b>
+<br>
+Fix ambiguous call to <a href="nan.htm#isnan" target="_top"><span style='white-space: nowrap'>isnan</span></a>
+
+during MS Visual Studio 2012 compilation.
+
+<br>
+<br>
+<b><big><a name="02-15" id="02-15">02-15</a></big></b>
+
+<ol type="1"><li>
+The <a href="speed_main.htm#Sparsity Options.boolsparsity" target="_top"><span style='white-space: nowrap'>boolsparsity</span></a>
+ option
+was added to the <a href="speed_main.htm" target="_top"><span style='white-space: nowrap'>speed_main</span></a>
+ program.
+</li><li>
+
+The <code><font color="blue">retape</font></code> option what changed to
+<a href="speed_main.htm#Global Options.onetape" target="_top"><span style='white-space: nowrap'>onetape</span></a>
+ so that the default
+is to retape (option not present).
+This was done because
+<a href="fadbad_prefix.htm" target="_top"><span style='white-space: nowrap'>fadbad</span></a>
+ and
+<a href="sacado_prefix.htm" target="_top"><span style='white-space: nowrap'>sacado</span></a>
+ always retape.
+</li><li>
+
+The documentation, and example source code, for all the speed
+<a href="speed_main.htm#Global Options" target="_top"><span style='white-space: nowrap'>options</span></a>
+ was improved
+(made clearer).
+</li><li>
+
+Improve the success rate for
+<a href="speed_test.cpp.htm" target="_top"><span style='white-space: nowrap'>speed_test.cpp</span></a>
+ and <a href="time_test.cpp.htm" target="_top"><span style='white-space: nowrap'>time_test.cpp</span></a>
+.
+</li></ol>
+
+
+<br>
+<br>
+<b><big><a name="01-26" id="01-26">01-26</a></big></b>
+<br>
+The destination directory for the
+<a href="cmake.htm#cmake_install_docdir" target="_top"><span style='white-space: nowrap'>cppad&nbsp;documentation</span></a>
+
+is now set separately from the data directory
+using the <code><font color="blue">cmake</font></code> option
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-D&nbsp;cmake_install_docdir=</span></font><i><font color="black"><span style='white-space: nowrap'>cmake_install_docdir</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+This has increased the flexibility of the documentation installation
+and removed the need for the option
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-D&nbsp;cppad_documentation=</span></font><i><font color="black"><span style='white-space: nowrap'>yes_or_no</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+which has been removed.
+
+<br>
+<br>
+<b><big><a name="01-21" id="01-21">01-21</a></big></b>
+<br>
+The destination directory for the
+cppad documentation
+used to be one of the following:
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>prefix</span></font></i><font color="blue"><span style='white-space: nowrap'>/</span></font><i><font color="black"><span style='white-space: nowrap'>datadir</span></font></i><font color="blue"><span style='white-space: nowrap'>/doc/cppad-</span></font><i><font color="black"><span style='white-space: nowrap'>version</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>prefix</span></font></i><font color="blue"><span style='white-space: nowrap'>/</span></font><i><font color="black"><span style='white-space: nowrap'>datadir</span></font></i><font color="blue"><span style='white-space: nowrap'>/doc/</span></font><i><font color="black"><span style='white-space: nowrap'>postfix</span></font></i><font color="blue"><span style='white-space: nowrap'>cppad-</span></font><i><font color="black"><span style='white-space: nowrap'>version</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+This has been changed by dropping the 
+<code><i><font color="black"><span style='white-space: nowrap'>version</span></font></i></code>
+ number
+at the end of the directory name.
+
+<br>
+<br>
+<b><big><a name="01-10" id="01-10">01-10</a></big></b>
+<br>
+The change on <a href="whats_new_13.htm#12-27" target="_top"><span style='white-space: nowrap'>2013-12-27</span></a>
+
+caused a conversion error in <a href="atan2.htm" target="_top"><span style='white-space: nowrap'>atan2</span></a>
+ when it was used with
+<code><font color="blue">AD&lt; AD&lt;double&gt; &gt;</font></code> arguments (and other similar cases).
+This has been fixed.
+
+
+<hr>Input File: omh/appendix/whats_new/whats_new_14.omh
+
+</body>
+</html>

@@ -1,0 +1,178 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>A Fast Multi-Threading Memory Allocator</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="A Fast Multi-Threading Memory Allocator">
+<meta name="keywords" id="keywords" content=" fast multi-threading memory allocator allocation syntax purpose include ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_thread_alloc_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://coin-or.github.io/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="vector_bool.cpp.htm" target="_top">Prev</a>
+</td><td><a href="thread_alloc.cpp.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>utility</option>
+<option>thread_alloc</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>CppAD-&gt;</option>
+<option>Install</option>
+<option>Introduction</option>
+<option>AD</option>
+<option>ADFun</option>
+<option>preprocessor</option>
+<option>multi_thread</option>
+<option>utility</option>
+<option>ipopt_solve</option>
+<option>Example</option>
+<option>speed</option>
+<option>Appendix</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>utility-&gt;</option>
+<option>ErrorHandler</option>
+<option>NearEqual</option>
+<option>speed_test</option>
+<option>SpeedTest</option>
+<option>time_test</option>
+<option>test_boolofvoid</option>
+<option>NumericType</option>
+<option>CheckNumericType</option>
+<option>SimpleVector</option>
+<option>CheckSimpleVector</option>
+<option>nan</option>
+<option>pow_int</option>
+<option>Poly</option>
+<option>LuDetAndSolve</option>
+<option>RombergOne</option>
+<option>RombergMul</option>
+<option>Runge45</option>
+<option>Rosen34</option>
+<option>OdeErrControl</option>
+<option>OdeGear</option>
+<option>OdeGearControl</option>
+<option>CppAD_vector</option>
+<option>thread_alloc</option>
+<option>index_sort</option>
+<option>to_string</option>
+<option>set_union</option>
+<option>sparse_rc</option>
+<option>sparse_rcv</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down0(this)'>
+<option>thread_alloc-&gt;</option>
+<option>thread_alloc.cpp</option>
+<option>ta_parallel_setup</option>
+<option>ta_num_threads</option>
+<option>ta_in_parallel</option>
+<option>ta_thread_num</option>
+<option>ta_get_memory</option>
+<option>ta_return_memory</option>
+<option>ta_free_available</option>
+<option>ta_hold_memory</option>
+<option>ta_inuse</option>
+<option>ta_available</option>
+<option>ta_create_array</option>
+<option>ta_delete_array</option>
+<option>ta_free_all</option>
+</select>
+</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Syntax</option>
+<option>Purpose</option>
+<option>Include</option>
+<option>Contents</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>A Fast Multi-Threading Memory Allocator</big></big></b></center>
+<br>
+<b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
+
+<code><font color="blue"><br>
+# include &lt;cppad/thread_alloc.hpp&gt;</font></code>
+
+<br>
+<br>
+<b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
+<br>
+The C++ <code><font color="blue">new</font></code> and <code><font color="blue">delete</font></code> operators are thread safe,
+but this means that a thread may have to wait for a lock on these operations.
+Once memory is obtained for a thread, the <code><font color="blue">thread_alloc</font></code> memory
+allocator keeps that memory <a href="ta_available.htm" target="_top"><span style='white-space: nowrap'>available</span></a>
+ for the thread so that
+it can be re-used without waiting for a lock.
+All the CppAD memory allocations use this utility.
+The <a href="ta_free_available.htm" target="_top"><span style='white-space: nowrap'>free_available</span></a>
+ function should be used to return memory
+to the system (once it is no longer required by a thread).
+
+<br>
+<br>
+<b><big><a name="Include" id="Include">Include</a></big></b>
+<br>
+The routines in sections below are defined by <code><font color="blue">cppad/thread_alloc.hpp</font></code>.
+This file is included by
+<code><font color="blue">cppad/cppad.hpp</font></code>, but it can also be included separately with out
+the rest of the <code><font color="blue">CppAD</font></code>.
+
+<br>
+<br>
+<b><big><a name="Contents" id="Contents">Contents</a></big></b>
+<br>
+<table>
+<tr><td><a href="thread_alloc.cpp.htm" target="_top">thread_alloc.cpp</a></td><td>Fast&nbsp;Multi-Threading&nbsp;Memory&nbsp;Allocator:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="ta_parallel_setup.htm" target="_top">ta_parallel_setup</a></td><td>Setup&nbsp;thread_alloc&nbsp;For&nbsp;Use&nbsp;in&nbsp;Multi-Threading&nbsp;Environment</td></tr><tr><td><a href="ta_num_threads.htm" target="_top">ta_num_threads</a></td><td>Get&nbsp;Number&nbsp;of&nbsp;Threads</td></tr><tr><td><a href="ta_in_parallel.htm" target="_top">ta_in_parallel</a></td><td>Is&nbsp;The&nbsp;Current&nbsp;Execution&nbsp;in&nbsp;Parallel&nbsp;Mode</td></tr><tr><td><a href="ta_thread_num.htm" target="_top">ta_thread_num</a></td><td>Get&nbsp;the&nbsp;Current&nbsp;Thread&nbsp;Number</td></tr><tr><td><a href="ta_get_memory.htm" target="_top">ta_get_memory</a></td><td>Get&nbsp;At&nbsp;Least&nbsp;A&nbsp;Specified&nbsp;Amount&nbsp;of&nbsp;Memory</td></tr><tr><td><a href="ta_return_memory.htm" target="_top">ta_return_memory</a></td><td>Return&nbsp;Memory&nbsp;to&nbsp;thread_alloc</td></tr><tr><td><a href="ta_free_available.htm" target="_top">ta_free_available</a></td><td>Free&nbsp;Memory&nbsp;Currently&nbsp;Available&nbsp;for&nbsp;Quick&nbsp;Use&nbsp;by&nbsp;a&nbsp;Thread</td></tr><tr><td><a href="ta_hold_memory.htm" target="_top">ta_hold_memory</a></td><td>Control&nbsp;When&nbsp;Thread&nbsp;Alloc&nbsp;Retains&nbsp;Memory&nbsp;For&nbsp;Future&nbsp;Use</td></tr><tr><td><a href="ta_inuse.htm" target="_top">ta_inuse</a></td><td>Amount&nbsp;of&nbsp;Memory&nbsp;a&nbsp;Thread&nbsp;is&nbsp;Currently&nbsp;Using</td></tr><tr><td><a href="ta_available.htm" target="_top">ta_available</a></td><td>Amount&nbsp;of&nbsp;Memory&nbsp;Available&nbsp;for&nbsp;Quick&nbsp;Use&nbsp;by&nbsp;a&nbsp;Thread</td></tr><tr><td><a href="ta_create_array.htm" target="_top">ta_create_array</a></td><td>Allocate&nbsp;An&nbsp;Array&nbsp;and&nbsp;Call&nbsp;Default&nbsp;Constructor&nbsp;for&nbsp;its&nbsp;Elements</td></tr><tr><td><a href="ta_delete_array.htm" target="_top">ta_delete_array</a></td><td>Deallocate&nbsp;An&nbsp;Array&nbsp;and&nbsp;Call&nbsp;Destructor&nbsp;for&nbsp;its&nbsp;Elements</td></tr><tr><td><a href="ta_free_all.htm" target="_top">ta_free_all</a></td><td>Free&nbsp;All&nbsp;Memory&nbsp;That&nbsp;Was&nbsp;Allocated&nbsp;for&nbsp;Use&nbsp;by&nbsp;thread_alloc</td></tr></table>
+<hr>Input File: omh/thread_alloc.omh
+
+</body>
+</html>

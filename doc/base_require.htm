@@ -1,0 +1,294 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>AD&lt;Base&gt; Requirements for a CppAD Base Type</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="AD&lt;Base&gt; Requirements for a CppAD Base Type">
+<meta name="keywords" id="keywords" content=" ad&lt;base&gt; requirements cppad base type syntax purpose api warning standard types include order numeric output operator integer suggestion absolute zero azmul ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_base_require_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://coin-or.github.io/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="vec_ad.cpp.htm" target="_top">Prev</a>
+</td><td><a href="base_member.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>AD</option>
+<option>base_require</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>CppAD-&gt;</option>
+<option>Install</option>
+<option>Introduction</option>
+<option>AD</option>
+<option>ADFun</option>
+<option>preprocessor</option>
+<option>multi_thread</option>
+<option>utility</option>
+<option>ipopt_solve</option>
+<option>Example</option>
+<option>speed</option>
+<option>Appendix</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>AD-&gt;</option>
+<option>ad_ctor</option>
+<option>ad_assign</option>
+<option>Convert</option>
+<option>ADValued</option>
+<option>BoolValued</option>
+<option>VecAD</option>
+<option>base_require</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down0(this)'>
+<option>base_require-&gt;</option>
+<option>base_member</option>
+<option>base_cond_exp</option>
+<option>base_identical</option>
+<option>base_ordered</option>
+<option>base_std_math</option>
+<option>base_limits</option>
+<option>base_to_string</option>
+<option>base_hash</option>
+<option>base_example</option>
+</select>
+</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Syntax</option>
+<option>Purpose</option>
+<option>API Warning</option>
+<option>Standard Base Types</option>
+<option>Include Order</option>
+<option>Numeric Type</option>
+<option>Output Operator</option>
+<option>Integer</option>
+<option>---..Suggestion</option>
+<option>Absolute Zero, azmul</option>
+<option>Contents</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>AD&lt;Base&gt; Requirements for a CppAD Base Type</big></big></b></center>
+<br>
+<b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
+
+<code><font color="blue"><br>
+# include &lt;cppad/base_require.hpp&gt;</font></code>
+
+<br>
+<br>
+<b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
+<br>
+This section lists the requirements for the type
+
+<code><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i></code>
+ so that the type 
+<code><font color="blue"><span style='white-space: nowrap'>AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code>
+ can be used.
+
+<br>
+<br>
+<b><big><a name="API Warning" id="API Warning">API Warning</a></big></b>
+<br>
+Defining a CppAD 
+<code><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i></code>
+ type is an advanced use of CppAD.
+This part of the CppAD API changes with time. The most common change
+is adding more requirements.
+Search for <code><font color="blue">base_require</font></code> in the
+current <a href="whats_new.htm" target="_top"><span style='white-space: nowrap'>whats_new</span></a>
+ section for these changes.
+
+<br>
+<br>
+<b><big><a name="Standard Base Types" id="Standard Base Types">Standard Base Types</a></big></b>
+<br>
+In the case where 
+<code><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i></code>
+ is
+<code><font color="blue">float</font></code>,
+<code><font color="blue">double</font></code>,
+<code><font color="blue">std::complex&lt;float&gt;</font></code>,
+<code><font color="blue">std::complex&lt;double&gt;</font></code>,
+or 
+<code><font color="blue"><span style='white-space: nowrap'>AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Other</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code>
+,
+these requirements are provided by including the file
+<code><font color="blue">cppad/cppad.hpp</font></code>.
+
+<br>
+<br>
+<b><big><a name="Include Order" id="Include Order">Include Order</a></big></b>
+<br>
+If you are linking a non-standard base type to CppAD,
+you must first include the file <code><font color="blue">cppad/base_require.hpp</font></code>,
+then provide the specifications below,
+and then include the file <code><font color="blue">cppad/cppad.hpp</font></code>.
+
+<br>
+<br>
+<b><big><a name="Numeric Type" id="Numeric Type">Numeric Type</a></big></b>
+<br>
+The type 
+<code><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i></code>
+ must support all the operations for a
+<a href="numerictype.htm" target="_top"><span style='white-space: nowrap'>NumericType</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="Output Operator" id="Output Operator">Output Operator</a></big></b>
+<br>
+The type 
+<code><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i></code>
+ must support the syntax
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>os</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&lt;&lt;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+where 
+<code><i><font color="black"><span style='white-space: nowrap'>os</span></font></i></code>
+ is an <code><font color="blue">std::ostream&amp;</font></code>
+and 
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+ is a <code><font color="blue">const base_alloc&amp;</font></code>.
+For example, see
+<a href="base_alloc.hpp.htm#Output Operator" target="_top"><span style='white-space: nowrap'>base_alloc</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="Integer" id="Integer">Integer</a></big></b>
+<br>
+The type 
+<code><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i></code>
+ must support the syntax
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;CppAD::Integer(</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+which converts 
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+ to an <code><font color="blue">int</font></code>.
+The argument 
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+and the return value 
+<code><i><font color="black"><span style='white-space: nowrap'>i</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+<br>
+<b><a name="Integer.Suggestion" id="Integer.Suggestion">Suggestion</a></b>
+<br>
+In many cases, the 
+<code><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i></code>
+ version of the <code><font color="blue">Integer</font></code> function
+can be defined by
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+namespace&nbsp;CppAD&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;inline&nbsp;int&nbsp;Integer(const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&amp;&nbsp;x)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;static_cast&lt;int&gt;(x);&nbsp;}<br>
+}<br>
+</span></font></code>
+For example, see
+<a href="base_float.hpp.htm#Integer" target="_top"><span style='white-space: nowrap'>base_float</span></a>
+ and
+<a href="base_alloc.hpp.htm#Integer" target="_top"><span style='white-space: nowrap'>base_alloc</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="Absolute Zero, azmul" id="Absolute Zero, azmul">Absolute Zero, azmul</a></big></b>
+<br>
+The type 
+<code><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i></code>
+ must support the syntax
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>z</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;azmul(</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+see; <a href="azmul.htm" target="_top"><span style='white-space: nowrap'>azmul</span></a>
+.
+The following preprocessor macro invocation suffices
+(for most 
+<code><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i></code>
+ types):
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+namespace&nbsp;CppAD&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CPPAD_AZMUL(</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+}<br>
+</span></font></code>
+where the macro is defined by
+<pre><tt><b><font color="#000080"># define</font></b> <b><font color="#000000">CPPAD_AZMUL</font></b><font color="#990000">(</font>Base<font color="#990000">)</font> <font color="#990000">\</font>
+    <b><font color="#0000FF">inline</font></b> <font color="#008080">Base</font> <b><font color="#000000">azmul</font></b><font color="#990000">(</font><b><font color="#0000FF">const</font></b> Base<font color="#990000">&amp;</font> x<font color="#990000">,</font> <b><font color="#0000FF">const</font></b> Base<font color="#990000">&amp;</font> y<font color="#990000">)</font> <font color="#990000">\</font>
+    <font color="#FF0000">{</font>   <font color="#008080">Base</font> <b><font color="#000000">zero</font></b><font color="#990000">(</font><font color="#993399">0.0</font><font color="#990000">);</font>   <font color="#990000">\</font>
+        <b><font color="#0000FF">if</font></b><font color="#990000">(</font> x <font color="#990000">==</font> zero <font color="#990000">)</font> <font color="#990000">\</font>
+            <b><font color="#0000FF">return</font></b> zero<font color="#990000">;</font>  <font color="#990000">\</font>
+        <b><font color="#0000FF">return</font></b> x <font color="#990000">*</font> y<font color="#990000">;</font>     <font color="#990000">\</font>
+    <font color="#FF0000">}</font></tt></pre>
+<br>
+<b><big><a name="Contents" id="Contents">Contents</a></big></b>
+<br>
+<table>
+<tr><td><a href="base_member.htm" target="_top">base_member</a></td><td>Required&nbsp;Base&nbsp;Class&nbsp;Member&nbsp;Functions</td></tr><tr><td><a href="base_cond_exp.htm" target="_top">base_cond_exp</a></td><td>Base&nbsp;Type&nbsp;Requirements&nbsp;for&nbsp;Conditional&nbsp;Expressions</td></tr><tr><td><a href="base_identical.htm" target="_top">base_identical</a></td><td>Base&nbsp;Type&nbsp;Requirements&nbsp;for&nbsp;Identically&nbsp;Equal&nbsp;Comparisons</td></tr><tr><td><a href="base_ordered.htm" target="_top">base_ordered</a></td><td>Base&nbsp;Type&nbsp;Requirements&nbsp;for&nbsp;Ordered&nbsp;Comparisons</td></tr><tr><td><a href="base_std_math.htm" target="_top">base_std_math</a></td><td>Base&nbsp;Type&nbsp;Requirements&nbsp;for&nbsp;Standard&nbsp;Math&nbsp;Functions</td></tr><tr><td><a href="base_limits.htm" target="_top">base_limits</a></td><td>Base&nbsp;Type&nbsp;Requirements&nbsp;for&nbsp;Numeric&nbsp;Limits</td></tr><tr><td><a href="base_to_string.htm" target="_top">base_to_string</a></td><td>Extending&nbsp;to_string&nbsp;To&nbsp;Another&nbsp;Floating&nbsp;Point&nbsp;Type</td></tr><tr><td><a href="base_hash.htm" target="_top">base_hash</a></td><td>Base&nbsp;Type&nbsp;Requirements&nbsp;for&nbsp;Hash&nbsp;Coding&nbsp;Values</td></tr><tr><td><a href="base_example.htm" target="_top">base_example</a></td><td>Example&nbsp;AD&nbsp;Base&nbsp;Types&nbsp;That&nbsp;are&nbsp;not&nbsp;AD&lt;OtherBase&gt;</td></tr></table>
+<hr>Input File: cppad/base_require.hpp
+
+</body>
+</html>

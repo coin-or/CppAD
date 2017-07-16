@@ -1,0 +1,153 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>ode_evaluate: Example and test</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="ode_evaluate: Example and test">
+<meta name="keywords" id="keywords" content=" ode_evaluate: example test ode_evaluate ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_ode_evaluate.cpp_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://coin-or.github.io/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="ode_evaluate.htm" target="_top">Prev</a>
+</td><td><a href="ode_evaluate.hpp.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>speed</option>
+<option>speed_utility</option>
+<option>ode_evaluate</option>
+<option>ode_evaluate.cpp</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>speed-&gt;</option>
+<option>speed_main</option>
+<option>speed_utility</option>
+<option>speed_double</option>
+<option>speed_adolc</option>
+<option>speed_cppad</option>
+<option>speed_fadbad</option>
+<option>speed_sacado</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>speed_utility-&gt;</option>
+<option>det_by_lu</option>
+<option>det_of_minor</option>
+<option>det_by_minor</option>
+<option>det_33</option>
+<option>det_grad_33</option>
+<option>mat_sum_sq</option>
+<option>ode_evaluate</option>
+<option>sparse_jac_fun</option>
+<option>sparse_hes_fun</option>
+<option>uniform_01</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>ode_evaluate-&gt;</option>
+<option>ode_evaluate.cpp</option>
+<option>ode_evaluate.hpp</option>
+</select>
+</td>
+<td>ode_evaluate.cpp</td>
+<td>Headings</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@
+
+
+
+<center><b><big><big>ode_evaluate: Example and test</big></big></b></center>
+<code><font color="blue"><pre><tt><b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/speed/ode_evaluate.hpp&gt;</font>
+<b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/speed/uniform_01.hpp&gt;</font>
+<b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/cppad.hpp&gt;</font>
+
+<font color="#009900">bool</font> <b><font color="#000000">ode_evaluate</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
+<font color="#FF0000">{</font>    <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>NearEqual<font color="#990000">;</font>
+     <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>AD<font color="#990000">;</font>
+
+     <font color="#009900">bool</font> ok <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
+
+     <font color="#008080">size_t</font> n <font color="#990000">=</font> <font color="#993399">3</font><font color="#990000">;</font>
+     CppAD<font color="#990000">::</font><font color="#008080">vector&lt;double&gt;</font>       <b><font color="#000000">x</font></b><font color="#990000">(</font>n<font color="#990000">);</font>
+     CppAD<font color="#990000">::</font><font color="#008080">vector&lt;double&gt;</font>       <b><font color="#000000">ym</font></b><font color="#990000">(</font>n <font color="#990000">*</font> n<font color="#990000">);</font>
+     CppAD<font color="#990000">::</font><font color="#008080">vector&lt; AD&lt;double&gt; &gt;</font> <b><font color="#000000">X</font></b><font color="#990000">(</font>n<font color="#990000">);</font>
+     CppAD<font color="#990000">::</font><font color="#008080">vector&lt; AD&lt;double&gt; &gt;</font> <b><font color="#000000">Ym</font></b><font color="#990000">(</font>n<font color="#990000">);</font>
+
+     <i><font color="#9A1900">// choose x</font></i>
+     <font color="#008080">size_t</font> j<font color="#990000">;</font>
+     <b><font color="#0000FF">for</font></b><font color="#990000">(</font>j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> n<font color="#990000">;</font> j<font color="#990000">++)</font>
+     <font color="#FF0000">{</font>    x<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">=</font> <font color="#009900">double</font><font color="#990000">(</font>j <font color="#990000">+</font> <font color="#993399">1</font><font color="#990000">);</font>
+          X<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">=</font> x<font color="#990000">[</font>j<font color="#990000">];</font>
+     <font color="#FF0000">}</font>
+
+     <i><font color="#9A1900">// declare independent variables</font></i>
+     <b><font color="#000000">Independent</font></b><font color="#990000">(</font>X<font color="#990000">);</font>
+
+     <i><font color="#9A1900">// evaluate function</font></i>
+     <font color="#008080">size_t</font> m <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
+     CppAD<font color="#990000">::</font><b><font color="#000000">ode_evaluate</font></b><font color="#990000">(</font>X<font color="#990000">,</font> m<font color="#990000">,</font> Ym<font color="#990000">);</font>
+
+     <i><font color="#9A1900">// evaluate derivative</font></i>
+     m <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font>
+     CppAD<font color="#990000">::</font><b><font color="#000000">ode_evaluate</font></b><font color="#990000">(</font>x<font color="#990000">,</font> m<font color="#990000">,</font> ym<font color="#990000">);</font>
+
+     <i><font color="#9A1900">// use AD to evaluate derivative</font></i>
+     CppAD<font color="#990000">::</font><font color="#008080">ADFun&lt;double&gt;</font>   <b><font color="#000000">F</font></b><font color="#990000">(</font>X<font color="#990000">,</font> Ym<font color="#990000">);</font>
+     CppAD<font color="#990000">::</font><font color="#008080">vector&lt;double&gt;</font>  <b><font color="#000000">dy</font></b><font color="#990000">(</font>n <font color="#990000">*</font> n<font color="#990000">);</font>
+     dy <font color="#990000">=</font> F<font color="#990000">.</font><b><font color="#000000">Jacobian</font></b><font color="#990000">(</font>x<font color="#990000">);</font>
+
+     <font color="#008080">size_t</font> k<font color="#990000">;</font>
+     <b><font color="#0000FF">for</font></b><font color="#990000">(</font>k <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> k <font color="#990000">&lt;</font> n <font color="#990000">*</font> n<font color="#990000">;</font> k<font color="#990000">++)</font>
+          ok <font color="#990000">&amp;=</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>ym<font color="#990000">[</font>k<font color="#990000">],</font> dy<font color="#990000">[</font>k<font color="#990000">]</font> <font color="#990000">,</font> <font color="#993399">1e-7</font><font color="#990000">,</font> <font color="#993399">1e-7</font><font color="#990000">);</font>
+
+     <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
+<font color="#FF0000">}</font></tt></pre>
+</font></code>
+<hr>Input File: speed/example/ode_evaluate.cpp
+
+</body>
+</html>

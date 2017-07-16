@@ -1,0 +1,573 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>LU Factorization of A Square Matrix</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="LU Factorization of A Square Matrix">
+<meta name="keywords" id="keywords" content=" lu factorization square matrix Lufactor linear equation solve syntax description include storage sign ip jp p l u factor determinant sizevector floatvector float absgeq example source ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_lufactor_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://coin-or.github.io/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="lu_solve.hpp.htm" target="_top">Prev</a>
+</td><td><a href="lu_factor.cpp.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>utility</option>
+<option>LuDetAndSolve</option>
+<option>LuFactor</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>CppAD-&gt;</option>
+<option>Install</option>
+<option>Introduction</option>
+<option>AD</option>
+<option>ADFun</option>
+<option>preprocessor</option>
+<option>multi_thread</option>
+<option>utility</option>
+<option>ipopt_solve</option>
+<option>Example</option>
+<option>speed</option>
+<option>Appendix</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>utility-&gt;</option>
+<option>ErrorHandler</option>
+<option>NearEqual</option>
+<option>speed_test</option>
+<option>SpeedTest</option>
+<option>time_test</option>
+<option>test_boolofvoid</option>
+<option>NumericType</option>
+<option>CheckNumericType</option>
+<option>SimpleVector</option>
+<option>CheckSimpleVector</option>
+<option>nan</option>
+<option>pow_int</option>
+<option>Poly</option>
+<option>LuDetAndSolve</option>
+<option>RombergOne</option>
+<option>RombergMul</option>
+<option>Runge45</option>
+<option>Rosen34</option>
+<option>OdeErrControl</option>
+<option>OdeGear</option>
+<option>OdeGearControl</option>
+<option>CppAD_vector</option>
+<option>thread_alloc</option>
+<option>index_sort</option>
+<option>to_string</option>
+<option>set_union</option>
+<option>sparse_rc</option>
+<option>sparse_rcv</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>LuDetAndSolve-&gt;</option>
+<option>LuSolve</option>
+<option>LuFactor</option>
+<option>LuInvert</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down0(this)'>
+<option>LuFactor-&gt;</option>
+<option>lu_factor.cpp</option>
+<option>lu_factor.hpp</option>
+</select>
+</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Syntax</option>
+<option>Description</option>
+<option>Include</option>
+<option>Matrix Storage</option>
+<option>sign</option>
+<option>ip</option>
+<option>jp</option>
+<option>LU</option>
+<option>---..A</option>
+<option>---..P</option>
+<option>---..L</option>
+<option>---..U</option>
+<option>---..Factor</option>
+<option>---..Determinant</option>
+<option>SizeVector</option>
+<option>FloatVector</option>
+<option>Float</option>
+<option>AbsGeq</option>
+<option>Example</option>
+<option>Source</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@
+
+
+
+
+<center><b><big><big>LU Factorization of A Square Matrix</big></big></b></center>
+<code><span style='white-space: nowrap'><br>
+</span></code><b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
+ <br>
+
+<code><font color="blue"><span style='white-space: nowrap'>&nbsp;include&nbsp;&lt;cppad/utility/lu_factor.hpp&gt;<br>
+</span></font></code>
+
+<code><i><font color="black"><span style='white-space: nowrap'>sign</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;LuFactor(</span></font><i><font color="black"><span style='white-space: nowrap'>ip</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>jp</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>LU</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+
+
+
+<br>
+<br>
+<b><big><a name="Description" id="Description">Description</a></big></b>
+<br>
+Computes an LU factorization of the matrix 
+<code><i><font color="black"><span style='white-space: nowrap'>A</span></font></i></code>
+
+where 
+<code><i><font color="black"><span style='white-space: nowrap'>A</span></font></i></code>
+ is a square matrix.
+
+<br>
+<br>
+<b><big><a name="Include" id="Include">Include</a></big></b>
+<br>
+The file <code><font color="blue">cppad/lu_factor.hpp</font></code> is included by <code><font color="blue">cppad/cppad.hpp</font></code>
+but it can also be included separately with out the rest of
+the <code><font color="blue">CppAD</font></code> routines.
+
+<br>
+<br>
+<b><big><a name="Matrix Storage" id="Matrix Storage">Matrix Storage</a></big></b>
+<br>
+All matrices are stored in row major order.
+To be specific, if <small>@(@
+Y
+@)@</small> is a vector
+that contains a <small>@(@
+p
+@)@</small> by <small>@(@
+q
+@)@</small> matrix,
+the size of <small>@(@
+Y
+@)@</small> must be equal to <small>@(@
+p * q
+@)@</small> and for
+<small>@(@
+i = 0 , \ldots , p-1
+@)@</small>,
+<small>@(@
+j = 0 , \ldots , q-1
+@)@</small>,
+<small>@[@
+
+	Y_{i,j} = Y[ i * q + j ]
+
+@]@</small>
+
+<br>
+<br>
+<b><big><a name="sign" id="sign">sign</a></big></b>
+<br>
+The return value 
+<code><i><font color="black"><span style='white-space: nowrap'>sign</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>sign</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>A</span></font></i></code>
+ is invertible, 
+<code><i><font color="black"><span style='white-space: nowrap'>sign</span></font></i></code>
+ is plus or minus one
+and is the sign of the permutation corresponding to the row ordering
+
+<code><i><font color="black"><span style='white-space: nowrap'>ip</span></font></i></code>
+ and column ordering 
+<code><i><font color="black"><span style='white-space: nowrap'>jp</span></font></i></code>
+.
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>A</span></font></i></code>
+ is not invertible, 
+<code><i><font color="black"><span style='white-space: nowrap'>sign</span></font></i></code>
+ is zero.
+
+<br>
+<br>
+<b><big><a name="ip" id="ip">ip</a></big></b>
+<br>
+The argument 
+<code><i><font color="black"><span style='white-space: nowrap'>ip</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>SizeVector</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>ip</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+(see description of <a href="lufactor.htm#SizeVector" target="_top"><span style='white-space: nowrap'>SizeVector</span></a>
+ below).
+The size of 
+<code><i><font color="black"><span style='white-space: nowrap'>ip</span></font></i></code>
+ is referred to as 
+<code><i><font color="black"><span style='white-space: nowrap'>n</span></font></i></code>
+ in the
+specifications below.
+The input value of the elements of 
+<code><i><font color="black"><span style='white-space: nowrap'>ip</span></font></i></code>
+ does not matter.
+The output value of the elements of 
+<code><i><font color="black"><span style='white-space: nowrap'>ip</span></font></i></code>
+ determine
+the order of the rows in the permuted matrix.
+
+<br>
+<br>
+<b><big><a name="jp" id="jp">jp</a></big></b>
+<br>
+The argument 
+<code><i><font color="black"><span style='white-space: nowrap'>jp</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>SizeVector</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>jp</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+(see description of <a href="lufactor.htm#SizeVector" target="_top"><span style='white-space: nowrap'>SizeVector</span></a>
+ below).
+The size of 
+<code><i><font color="black"><span style='white-space: nowrap'>jp</span></font></i></code>
+ must be equal to 
+<code><i><font color="black"><span style='white-space: nowrap'>n</span></font></i></code>
+.
+The input value of the elements of 
+<code><i><font color="black"><span style='white-space: nowrap'>jp</span></font></i></code>
+ does not matter.
+The output value of the elements of 
+<code><i><font color="black"><span style='white-space: nowrap'>jp</span></font></i></code>
+ determine
+the order of the columns in the permuted matrix.
+
+<br>
+<br>
+<b><big><a name="LU" id="LU">LU</a></big></b>
+<br>
+The argument 
+<code><i><font color="black"><span style='white-space: nowrap'>LU</span></font></i></code>
+ has the prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>FloatVector</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>LU</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+and the size of 
+<code><i><font color="black"><span style='white-space: nowrap'>LU</span></font></i></code>
+ must equal <small>@(@
+n * n
+@)@</small>
+(see description of <a href="lufactor.htm#FloatVector" target="_top"><span style='white-space: nowrap'>FloatVector</span></a>
+ below).
+
+<br>
+<br>
+<b><a name="LU.A" id="LU.A">A</a></b>
+<br>
+We define 
+<code><i><font color="black"><span style='white-space: nowrap'>A</span></font></i></code>
+ as the matrix corresponding to the input
+value of 
+<code><i><font color="black"><span style='white-space: nowrap'>LU</span></font></i></code>
+.
+
+<br>
+<br>
+<b><a name="LU.P" id="LU.P">P</a></b>
+<br>
+We define the permuted matrix 
+<code><i><font color="black"><span style='white-space: nowrap'>P</span></font></i></code>
+ in terms of 
+<code><i><font color="black"><span style='white-space: nowrap'>A</span></font></i></code>
+ by
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>P</span></font></i><font color="blue"><span style='white-space: nowrap'>(</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>j</span></font></i><font color="blue"><span style='white-space: nowrap'>)&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>A</span></font></i><font color="blue"><span style='white-space: nowrap'>[&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ip</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>]&nbsp;*&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;+&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>jp</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>j</span></font></i><font color="blue"><span style='white-space: nowrap'>]&nbsp;]<br>
+</span></font></code>
+<br>
+<b><a name="LU.L" id="LU.L">L</a></b>
+<br>
+We define the lower triangular matrix 
+<code><i><font color="black"><span style='white-space: nowrap'>L</span></font></i></code>
+ in terms of the
+output value of 
+<code><i><font color="black"><span style='white-space: nowrap'>LU</span></font></i></code>
+.
+The matrix 
+<code><i><font color="black"><span style='white-space: nowrap'>L</span></font></i></code>
+ is zero above the diagonal
+and the rest of the elements are defined by
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>L</span></font></i><font color="blue"><span style='white-space: nowrap'>(</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>j</span></font></i><font color="blue"><span style='white-space: nowrap'>)&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>LU</span></font></i><font color="blue"><span style='white-space: nowrap'>[&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ip</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>]&nbsp;*&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;+&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>jp</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>j</span></font></i><font color="blue"><span style='white-space: nowrap'>]&nbsp;]<br>
+</span></font></code>
+for <small>@(@
+i = 0 , \ldots , n-1
+@)@</small> and <small>@(@
+j = 0 , \ldots , i
+@)@</small>.
+
+<br>
+<br>
+<b><a name="LU.U" id="LU.U">U</a></b>
+<br>
+We define the upper triangular matrix 
+<code><i><font color="black"><span style='white-space: nowrap'>U</span></font></i></code>
+ in terms of the
+output value of 
+<code><i><font color="black"><span style='white-space: nowrap'>LU</span></font></i></code>
+.
+The matrix 
+<code><i><font color="black"><span style='white-space: nowrap'>U</span></font></i></code>
+ is zero below the diagonal,
+one on the diagonal,
+and the rest of the elements are defined by
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>U</span></font></i><font color="blue"><span style='white-space: nowrap'>(</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>j</span></font></i><font color="blue"><span style='white-space: nowrap'>)&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>LU</span></font></i><font color="blue"><span style='white-space: nowrap'>[&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ip</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>]&nbsp;*&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;+&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>jp</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>j</span></font></i><font color="blue"><span style='white-space: nowrap'>]&nbsp;]<br>
+</span></font></code>
+for <small>@(@
+i = 0 , \ldots , n-2
+@)@</small> and <small>@(@
+j = i+1 , \ldots , n-1
+@)@</small>.
+
+<br>
+<br>
+<b><a name="LU.Factor" id="LU.Factor">Factor</a></b>
+<br>
+If the return value 
+<code><i><font color="black"><span style='white-space: nowrap'>sign</span></font></i></code>
+ is non-zero,
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>L</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;*&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>U</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>P</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+If the return value of 
+<code><i><font color="black"><span style='white-space: nowrap'>sign</span></font></i></code>
+ is zero,
+the contents of 
+<code><i><font color="black"><span style='white-space: nowrap'>L</span></font></i></code>
+ and 
+<code><i><font color="black"><span style='white-space: nowrap'>U</span></font></i></code>
+ are not defined.
+
+<br>
+<br>
+<b><a name="LU.Determinant" id="LU.Determinant">Determinant</a></b>
+<br>
+If the return value 
+<code><i><font color="black"><span style='white-space: nowrap'>sign</span></font></i></code>
+ is zero,
+the determinant of 
+<code><i><font color="black"><span style='white-space: nowrap'>A</span></font></i></code>
+ is zero.
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>sign</span></font></i></code>
+ is non-zero,
+using the output value of 
+<code><i><font color="black"><span style='white-space: nowrap'>LU</span></font></i></code>
+
+the determinant of the matrix 
+<code><i><font color="black"><span style='white-space: nowrap'>A</span></font></i></code>
+ is equal to
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+</span></font><i><font color="black"><span style='white-space: nowrap'>sign</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;*&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>LU</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>ip</span></font></i><font color="blue"><span style='white-space: nowrap'>[0],&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>jp</span></font></i><font color="blue"><span style='white-space: nowrap'>[0]]&nbsp;*&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>...</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;*&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>LU</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>ip</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>n</span></font></i><font color="blue"><span style='white-space: nowrap'>-1],&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>jp</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>n</span></font></i><font color="blue"><span style='white-space: nowrap'>-1]]<br>
+</span></font></code>
+<br>
+<b><big><a name="SizeVector" id="SizeVector">SizeVector</a></big></b>
+<br>
+The type 
+<code><i><font color="black"><span style='white-space: nowrap'>SizeVector</span></font></i></code>
+ must be a <a href="simplevector.htm" target="_top"><span style='white-space: nowrap'>SimpleVector</span></a>
+ class with
+<a href="simplevector.htm#Elements of Specified Type" target="_top"><span style='white-space: nowrap'>elements&nbsp;of&nbsp;type&nbsp;size_t</span></a>
+.
+The routine <a href="checksimplevector.htm" target="_top"><span style='white-space: nowrap'>CheckSimpleVector</span></a>
+ will generate an error message
+if this is not the case.
+
+<br>
+<br>
+<b><big><a name="FloatVector" id="FloatVector">FloatVector</a></big></b>
+<br>
+The type 
+<code><i><font color="black"><span style='white-space: nowrap'>FloatVector</span></font></i></code>
+ must be a
+<a href="simplevector.htm" target="_top"><span style='white-space: nowrap'>simple&nbsp;vector&nbsp;class</span></a>
+.
+The routine <a href="checksimplevector.htm" target="_top"><span style='white-space: nowrap'>CheckSimpleVector</span></a>
+ will generate an error message
+if this is not the case.
+
+<br>
+<br>
+<b><big><a name="Float" id="Float">Float</a></big></b>
+<br>
+This notation is used to denote the type corresponding
+to the elements of a 
+<code><i><font color="black"><span style='white-space: nowrap'>FloatVector</span></font></i></code>
+.
+The type 
+<code><i><font color="black"><span style='white-space: nowrap'>Float</span></font></i></code>
+ must satisfy the conditions
+for a <a href="numerictype.htm" target="_top"><span style='white-space: nowrap'>NumericType</span></a>
+ type.
+The routine <a href="checknumerictype.htm" target="_top"><span style='white-space: nowrap'>CheckNumericType</span></a>
+ will generate an error message
+if this is not the case.
+In addition, the following operations must be defined for any pair
+of 
+<code><i><font color="black"><span style='white-space: nowrap'>Float</span></font></i></code>
+ objects 
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+ and 
+<code><i><font color="black"><span style='white-space: nowrap'>y</span></font></i></code>
+:
+
+<table><tr><td align='left'  valign='top'>
+
+<b>Operation</b> </td><td align='left'  valign='top'>
+ <b>Description</b>  </td></tr><tr><td align='left'  valign='top'>
+
+
+<code><font color="blue"><span style='white-space: nowrap'>log(</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+ </td><td align='left'  valign='top'>
+
+	returns the logarithm of 
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+ as a 
+<code><i><font color="black"><span style='white-space: nowrap'>Float</span></font></i></code>
+ object
+</td></tr>
+</table>
+<br>
+<b><big><a name="AbsGeq" id="AbsGeq">AbsGeq</a></big></b>
+<br>
+Including the file <code><font color="blue">lu_factor.hpp</font></code> defines the template function
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;template&nbsp;&lt;typename&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Float</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bool&nbsp;AbsGeq&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Float</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;(const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Float</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Float</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+in the <code><font color="blue">CppAD</font></code> namespace.
+This function returns true if the absolute value of
+
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+ is greater than or equal the absolute value of 
+<code><i><font color="black"><span style='white-space: nowrap'>y</span></font></i></code>
+.
+It is used by <code><font color="blue">LuFactor</font></code> to choose the pivot elements.
+This template function definition uses the operator
+<code><font color="blue">&lt;=</font></code> to obtain the absolute value for 
+<code><i><font color="black"><span style='white-space: nowrap'>Float</span></font></i></code>
+ objects.
+If this operator is not defined for your use of 
+<code><i><font color="black"><span style='white-space: nowrap'>Float</span></font></i></code>
+,
+you will need to specialize this template so that it works for your
+use of <code><font color="blue">LuFactor</font></code>.
+<code><span style='white-space: nowrap'><br>
+<br>
+</span></code>Complex numbers do not have the operation <code><font color="blue">&lt;=</font></code> defined.
+The specializations
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+bool&nbsp;AbsGeq&lt;&nbsp;std::complex&lt;float&gt;&nbsp;&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(const&nbsp;std::complex&lt;float&gt;&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;const&nbsp;std::complex&lt;float&gt;&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+bool&nbsp;AbsGeq&lt;&nbsp;std::complex&lt;double&gt;&nbsp;&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(const&nbsp;std::complex&lt;double&gt;&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;const&nbsp;std::complex&lt;double&gt;&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+are define by including <code><font color="blue">lu_factor.hpp</font></code>
+These return true if the sum of the square of the real and imaginary parts
+of 
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+ is greater than or equal the
+sum of the square of the real and imaginary parts of 
+<code><i><font color="black"><span style='white-space: nowrap'>y</span></font></i></code>
+.
+
+
+<br>
+<br>
+<b><big><a name="Example" id="Example">Example</a></big></b>
+<br>
+The file
+<a href="lu_factor.cpp.htm" target="_top"><span style='white-space: nowrap'>lu_factor.cpp</span></a>
+
+contains an example and test of using <code><font color="blue">LuFactor</font></code> by itself.
+It returns true if it succeeds and false otherwise.
+<code><span style='white-space: nowrap'><br>
+<br>
+</span></code>The file <a href="lu_solve.hpp.htm" target="_top"><span style='white-space: nowrap'>lu_solve.hpp</span></a>
+ provides a useful example usage of
+<code><font color="blue">LuFactor</font></code> with <code><font color="blue">LuInvert</font></code>.
+
+<br>
+<br>
+<b><big><a name="Source" id="Source">Source</a></big></b>
+<br>
+The file <a href="lu_factor.hpp.htm" target="_top"><span style='white-space: nowrap'>lu_factor.hpp</span></a>
+ contains the
+current source code that implements these specifications.
+
+
+<hr>Input File: cppad/utility/lu_factor.hpp
+
+</body>
+</html>

@@ -1,0 +1,657 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>Computing Jacobian and Hessian of Bender's Reduced Objective</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Computing Jacobian and Hessian of Bender's Reduced Objective">
+<meta name="keywords" id="keywords" content=" computing jacobian hessian bender's reduced objective Benderquad syntax see also problem purpose x y fun fun.f fun.h fun.dy g gx gxx bavector advector example ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_benderquad_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://coin-or.github.io/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="numeric_ad.htm" target="_top">Prev</a>
+</td><td><a href="bender_quad.cpp.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>Appendix</option>
+<option>numeric_ad</option>
+<option>BenderQuad</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>CppAD-&gt;</option>
+<option>Install</option>
+<option>Introduction</option>
+<option>AD</option>
+<option>ADFun</option>
+<option>preprocessor</option>
+<option>multi_thread</option>
+<option>utility</option>
+<option>ipopt_solve</option>
+<option>Example</option>
+<option>speed</option>
+<option>Appendix</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>Appendix-&gt;</option>
+<option>Faq</option>
+<option>directory</option>
+<option>Theory</option>
+<option>glossary</option>
+<option>Bib</option>
+<option>wish_list</option>
+<option>whats_new</option>
+<option>deprecated</option>
+<option>compare_c</option>
+<option>numeric_ad</option>
+<option>addon</option>
+<option>License</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>numeric_ad-&gt;</option>
+<option>BenderQuad</option>
+<option>opt_val_hes</option>
+<option>LuRatio</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down0(this)'>
+<option>BenderQuad-&gt;</option>
+<option>bender_quad.cpp</option>
+</select>
+</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Syntax</option>
+<option>See Also</option>
+<option>Problem</option>
+<option>Purpose</option>
+<option>x</option>
+<option>y</option>
+<option>fun</option>
+<option>---..fun.f</option>
+<option>---..fun.h</option>
+<option>---..fun.dy</option>
+<option>g</option>
+<option>gx</option>
+<option>gxx</option>
+<option>BAvector</option>
+<option>ADvector</option>
+<option>Example</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>Computing Jacobian and Hessian of Bender's Reduced Objective</big></big></b></center>
+<br>
+<b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
+
+<br>
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+#&nbsp;include&nbsp;&lt;cppad/cppad.hpp&gt;<br>
+BenderQuad(</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>fun</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>g</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>gx</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>gxx</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+
+
+<br>
+<br>
+<b><big><a name="See Also" id="See Also">See Also</a></big></b>
+
+<br>
+<a href="opt_val_hes.htm" target="_top"><span style='white-space: nowrap'>opt_val_hes</span></a>
+
+
+<br>
+<br>
+<b><big><a name="Problem" id="Problem">Problem</a></big></b>
+<br>
+The type <a href="benderquad.htm#ADvector" target="_top"><span style='white-space: nowrap'>ADvector</span></a>
+ cannot be determined
+form the arguments above
+(currently the type 
+<code><i><font color="black"><span style='white-space: nowrap'>ADvector</span></font></i></code>
+ must be
+
+<code><font color="blue"><span style='white-space: nowrap'>CPPAD_TESTVECTOR(</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+.)
+This will be corrected in the future by requiring 
+<code><i><font color="black"><span style='white-space: nowrap'>Fun</span></font></i></code>
+
+to define 
+<code><i><font color="black"><span style='white-space: nowrap'>Fun</span></font></i><font color="blue"><span style='white-space: nowrap'>::vector_type</span></font></code>
+ which will specify the
+type 
+<code><i><font color="black"><span style='white-space: nowrap'>ADvector</span></font></i></code>
+.
+
+<br>
+<br>
+<b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
+<br>
+We are given the optimization problem
+<small>@[@
+
+\begin{array}{rcl}
+{\rm minimize} & F(x, y) & {\rm w.r.t.} \; (x, y) \in \B{R}^n \times \B{R}^m
+\end{array}
+
+@]@</small>
+that is convex with respect to <small>@(@
+y
+@)@</small>.
+In addition, we are given a set of equations <small>@(@
+H(x, y)
+@)@</small>
+such that
+<small>@[@
+
+	H[ x , Y(x) ] = 0 \;\; \Rightarrow \;\; F_y [ x , Y(x) ] = 0
+
+@]@</small>
+(In fact, it is often the case that <small>@(@
+H(x, y) = F_y (x, y)
+@)@</small>.)
+Furthermore, it is easy to calculate a Newton step for these equations; i.e.,
+<small>@[@
+
+	dy = - [ \partial_y H(x, y)]^{-1} H(x, y)
+
+@]@</small>
+The purpose of this routine is to compute the
+value, Jacobian, and Hessian of the reduced objective function
+<small>@[@
+
+	G(x) = F[ x , Y(x) ]
+
+@]@</small>
+Note that if only the value and Jacobian are needed, they can be
+computed more quickly using the relations
+<small>@[@
+
+	G^{(1)} (x) = \partial_x F [x, Y(x) ]
+
+@]@</small>
+
+<br>
+<br>
+<b><big><a name="x" id="x">x</a></big></b>
+<br>
+The <code><font color="blue">BenderQuad</font></code> argument 
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>BAvector</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+(see <a href="benderquad.htm#BAvector" target="_top"><span style='white-space: nowrap'>BAvector</span></a>
+ below)
+and its size must be equal to 
+<code><i><font color="black"><span style='white-space: nowrap'>n</span></font></i></code>
+.
+It specifies the point at which we evaluating
+the reduced objective function and its derivatives.
+
+
+<br>
+<br>
+<b><big><a name="y" id="y">y</a></big></b>
+<br>
+The <code><font color="blue">BenderQuad</font></code> argument 
+<code><i><font color="black"><span style='white-space: nowrap'>y</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>BAvector</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+and its size must be equal to 
+<code><i><font color="black"><span style='white-space: nowrap'>m</span></font></i></code>
+.
+It must be equal to <small>@(@
+Y(x)
+@)@</small>; i.e.,
+it must solve the problem in <small>@(@
+y
+@)@</small> for this given value of <small>@(@
+x
+@)@</small>
+<small>@[@
+
+\begin{array}{rcl}
+	{\rm minimize} & F(x, y) & {\rm w.r.t.} \; y \in \B{R}^m
+\end{array}
+
+@]@</small>
+
+<br>
+<br>
+<b><big><a name="fun" id="fun">fun</a></big></b>
+<br>
+The <code><font color="blue">BenderQuad</font></code> object 
+<code><i><font color="black"><span style='white-space: nowrap'>fun</span></font></i></code>
+
+must support the member functions listed below.
+The 
+<code><font color="blue"><span style='white-space: nowrap'>AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code>
+ arguments will be variables for
+a tape created by a call to <a href="independent.htm" target="_top"><span style='white-space: nowrap'>Independent</span></a>
+ from <code><font color="blue">BenderQuad</font></code>
+(hence they can not be combined with variables corresponding to a
+different tape).
+
+<br>
+<br>
+<b><a name="fun.fun.f" id="fun.fun.f">fun.f</a></b>
+<br>
+The <code><font color="blue">BenderQuad</font></code> argument 
+<code><i><font color="black"><span style='white-space: nowrap'>fun</span></font></i></code>
+ supports the syntax
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>fun</span></font></i><font color="blue"><span style='white-space: nowrap'>.f(</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+The 
+<code><i><font color="black"><span style='white-space: nowrap'>fun</span></font></i><font color="blue"><span style='white-space: nowrap'>.f</span></font></code>
+ argument 
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ADvector</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+(see <a href="benderquad.htm#ADvector" target="_top"><span style='white-space: nowrap'>ADvector</span></a>
+ below)
+and its size must be equal to 
+<code><i><font color="black"><span style='white-space: nowrap'>n</span></font></i></code>
+.
+The 
+<code><i><font color="black"><span style='white-space: nowrap'>fun</span></font></i><font color="blue"><span style='white-space: nowrap'>.f</span></font></code>
+ argument 
+<code><i><font color="black"><span style='white-space: nowrap'>y</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ADvector</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+and its size must be equal to 
+<code><i><font color="black"><span style='white-space: nowrap'>m</span></font></i></code>
+.
+The 
+<code><i><font color="black"><span style='white-space: nowrap'>fun</span></font></i><font color="blue"><span style='white-space: nowrap'>.f</span></font></code>
+ result 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ADvector</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+and its size must be equal to one.
+The value of 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+ is
+<small>@[@
+
+	f = F(x, y)
+
+@]@</small>.
+
+<br>
+<br>
+<b><a name="fun.fun.h" id="fun.fun.h">fun.h</a></b>
+<br>
+The <code><font color="blue">BenderQuad</font></code> argument 
+<code><i><font color="black"><span style='white-space: nowrap'>fun</span></font></i></code>
+ supports the syntax
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>h</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>fun</span></font></i><font color="blue"><span style='white-space: nowrap'>.h(</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+The 
+<code><i><font color="black"><span style='white-space: nowrap'>fun</span></font></i><font color="blue"><span style='white-space: nowrap'>.h</span></font></code>
+ argument 
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ADvector</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+and its size must be equal to 
+<code><i><font color="black"><span style='white-space: nowrap'>n</span></font></i></code>
+.
+The 
+<code><i><font color="black"><span style='white-space: nowrap'>fun</span></font></i><font color="blue"><span style='white-space: nowrap'>.h</span></font></code>
+ argument 
+<code><i><font color="black"><span style='white-space: nowrap'>y</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>BAvector</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+and its size must be equal to 
+<code><i><font color="black"><span style='white-space: nowrap'>m</span></font></i></code>
+.
+The 
+<code><i><font color="black"><span style='white-space: nowrap'>fun</span></font></i><font color="blue"><span style='white-space: nowrap'>.h</span></font></code>
+ result 
+<code><i><font color="black"><span style='white-space: nowrap'>h</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ADvector</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>h</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+and its size must be equal to 
+<code><i><font color="black"><span style='white-space: nowrap'>m</span></font></i></code>
+.
+The value of 
+<code><i><font color="black"><span style='white-space: nowrap'>h</span></font></i></code>
+ is
+<small>@[@
+
+	h = H(x, y)
+
+@]@</small>.
+
+<br>
+<br>
+<b><a name="fun.fun.dy" id="fun.fun.dy">fun.dy</a></b>
+<br>
+The <code><font color="blue">BenderQuad</font></code> argument 
+<code><i><font color="black"><span style='white-space: nowrap'>fun</span></font></i></code>
+ supports the syntax
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>dy</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>fun</span></font></i><font color="blue"><span style='white-space: nowrap'>.dy(</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>h</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+<br>
+</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+The 
+<code><i><font color="black"><span style='white-space: nowrap'>fun</span></font></i><font color="blue"><span style='white-space: nowrap'>.dy</span></font></code>
+ argument 
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>BAvector</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+and its size must be equal to 
+<code><i><font color="black"><span style='white-space: nowrap'>n</span></font></i></code>
+.
+Its value will be exactly equal to the <code><font color="blue">BenderQuad</font></code> argument
+
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+ and values depending on it can be stored as private objects
+in 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+ and need not be recalculated.
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+<br>
+</span></font><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+The 
+<code><i><font color="black"><span style='white-space: nowrap'>fun</span></font></i><font color="blue"><span style='white-space: nowrap'>.dy</span></font></code>
+ argument 
+<code><i><font color="black"><span style='white-space: nowrap'>y</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>BAvector</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+and its size must be equal to 
+<code><i><font color="black"><span style='white-space: nowrap'>m</span></font></i></code>
+.
+Its value will be exactly equal to the <code><font color="blue">BenderQuad</font></code> argument
+
+<code><i><font color="black"><span style='white-space: nowrap'>y</span></font></i></code>
+ and values depending on it can be stored as private objects
+in 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+ and need not be recalculated.
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+<br>
+</span></font><i><font color="black"><span style='white-space: nowrap'>h</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+The 
+<code><i><font color="black"><span style='white-space: nowrap'>fun</span></font></i><font color="blue"><span style='white-space: nowrap'>.dy</span></font></code>
+ argument 
+<code><i><font color="black"><span style='white-space: nowrap'>h</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ADvector</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>h</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+and its size must be equal to 
+<code><i><font color="black"><span style='white-space: nowrap'>m</span></font></i></code>
+.
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+<br>
+</span></font><i><font color="black"><span style='white-space: nowrap'>dy</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+The 
+<code><i><font color="black"><span style='white-space: nowrap'>fun</span></font></i><font color="blue"><span style='white-space: nowrap'>.dy</span></font></code>
+ result 
+<code><i><font color="black"><span style='white-space: nowrap'>dy</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ADvector</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>dy</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+and its size must be equal to 
+<code><i><font color="black"><span style='white-space: nowrap'>m</span></font></i></code>
+.
+The return value 
+<code><i><font color="black"><span style='white-space: nowrap'>dy</span></font></i></code>
+ is given by
+<small>@[@
+
+	dy = - [ \partial_y H (x , y) ]^{-1} h
+
+@]@</small>
+Note that if 
+<code><i><font color="black"><span style='white-space: nowrap'>h</span></font></i></code>
+ is equal to <small>@(@
+H(x, y)
+@)@</small>,
+<small>@(@
+dy
+@)@</small> is the Newton step for finding a zero
+of <small>@(@
+H(x, y)
+@)@</small> with respect to <small>@(@
+y
+@)@</small>;
+i.e.,
+<small>@(@
+y + dy
+@)@</small> is an approximate solution for the equation
+<small>@(@
+H (x, y + dy) = 0
+@)@</small>.
+
+<br>
+<br>
+<b><big><a name="g" id="g">g</a></big></b>
+<br>
+The argument 
+<code><i><font color="black"><span style='white-space: nowrap'>g</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>BAvector</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>g</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+and has size one.
+The input value of its element does not matter.
+On output,
+it contains the value of <small>@(@
+G (x)
+@)@</small>; i.e.,
+<small>@[@
+
+	g[0] = G (x)
+
+@]@</small>
+
+<br>
+<br>
+<b><big><a name="gx" id="gx">gx</a></big></b>
+<br>
+The argument 
+<code><i><font color="black"><span style='white-space: nowrap'>gx</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>BAvector</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>gx</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+and has size <small>@(@
+n
+@)@</small>.
+The input values of its elements do not matter.
+On output,
+it contains the Jacobian of <small>@(@
+G (x)
+@)@</small>; i.e.,
+for <small>@(@
+j = 0 , \ldots , n-1
+@)@</small>,
+<small>@[@
+
+	gx[ j ] = G^{(1)} (x)_j
+
+@]@</small>
+
+<br>
+<br>
+<b><big><a name="gxx" id="gxx">gxx</a></big></b>
+<br>
+The argument 
+<code><i><font color="black"><span style='white-space: nowrap'>gx</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>BAvector</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>gxx</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+and has size <small>@(@
+n \times n
+@)@</small>.
+The input values of its elements do not matter.
+On output,
+it contains the Hessian of <small>@(@
+G (x)
+@)@</small>; i.e.,
+for <small>@(@
+i = 0 , \ldots , n-1
+@)@</small>, and
+<small>@(@
+j = 0 , \ldots , n-1
+@)@</small>,
+<small>@[@
+
+	gxx[ i * n + j ] = G^{(2)} (x)_{i,j}
+
+@]@</small>
+
+<br>
+<br>
+<b><big><a name="BAvector" id="BAvector">BAvector</a></big></b>
+<br>
+The type 
+<code><i><font color="black"><span style='white-space: nowrap'>BAvector</span></font></i></code>
+ must be a
+<a href="simplevector.htm" target="_top"><span style='white-space: nowrap'>SimpleVector</span></a>
+ class.
+We use 
+<code><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i></code>
+ to refer to the type of the elements of
+
+<code><i><font color="black"><span style='white-space: nowrap'>BAvector</span></font></i></code>
+; i.e.,
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>BAvector</span></font></i><font color="blue"><span style='white-space: nowrap'>::value_type<br>
+</span></font></code>
+<br>
+<b><big><a name="ADvector" id="ADvector">ADvector</a></big></b>
+<br>
+The type 
+<code><i><font color="black"><span style='white-space: nowrap'>ADvector</span></font></i></code>
+ must be a
+<a href="simplevector.htm" target="_top"><span style='white-space: nowrap'>SimpleVector</span></a>
+ class with elements of type
+
+<code><font color="blue"><span style='white-space: nowrap'>AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code>
+; i.e.,
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ADvector</span></font></i><font color="blue"><span style='white-space: nowrap'>::value_type<br>
+</span></font></code>
+must be the same type as
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;AD&lt;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>BAvector</span></font></i><font color="blue"><span style='white-space: nowrap'>::value_type&nbsp;&gt;<br>
+</span></font></code>
+.
+
+
+<br>
+<br>
+<b><big><a name="Example" id="Example">Example</a></big></b>
+
+<br>
+The file
+<a href="bender_quad.cpp.htm" target="_top"><span style='white-space: nowrap'>bender_quad.cpp</span></a>
+
+contains an example and test of this operation.
+It returns true if it succeeds and false otherwise.
+
+
+
+<hr>Input File: cppad/core/bender_quad.hpp
+
+</body>
+</html>

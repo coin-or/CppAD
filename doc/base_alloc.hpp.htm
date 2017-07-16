@@ -1,0 +1,496 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>Example AD&lt;Base&gt; Where Base Constructor Allocates Memory</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Example AD&lt;Base&gt; Where Base Constructor Allocates Memory">
+<meta name="keywords" id="keywords" content=" example ad&lt;base&gt; where base constructor allocates memory purpose include file compound assignment macro binary operator boolean class definition condexpop condexprel equalopseq identical output integer azmul ordered unary standard math erf asinh acosh atanh expm1 log1p sign pow numeric_limits to_string hash_code ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_base_alloc.hpp_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://coin-or.github.io/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="base_example.htm" target="_top">Prev</a>
+</td><td><a href="base_require.cpp.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>AD</option>
+<option>base_require</option>
+<option>base_example</option>
+<option>base_alloc.hpp</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>AD-&gt;</option>
+<option>ad_ctor</option>
+<option>ad_assign</option>
+<option>Convert</option>
+<option>ADValued</option>
+<option>BoolValued</option>
+<option>VecAD</option>
+<option>base_require</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>base_require-&gt;</option>
+<option>base_member</option>
+<option>base_cond_exp</option>
+<option>base_identical</option>
+<option>base_ordered</option>
+<option>base_std_math</option>
+<option>base_limits</option>
+<option>base_to_string</option>
+<option>base_hash</option>
+<option>base_example</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>base_example-&gt;</option>
+<option>base_alloc.hpp</option>
+<option>base_require.cpp</option>
+<option>base_adolc.hpp</option>
+<option>base_float.hpp</option>
+<option>base_double.hpp</option>
+<option>base_complex.hpp</option>
+</select>
+</td>
+<td>base_alloc.hpp</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Purpose</option>
+<option>Include File</option>
+<option>Compound Assignment Macro</option>
+<option>Binary Operator Macro</option>
+<option>Boolean Operator Macro</option>
+<option>Class Definition</option>
+<option>CondExpOp</option>
+<option>CondExpRel</option>
+<option>EqualOpSeq</option>
+<option>Identical</option>
+<option>Output Operator</option>
+<option>Integer</option>
+<option>azmul</option>
+<option>Ordered</option>
+<option>Unary Standard Math</option>
+<option>erf, asinh, acosh, atanh, expm1, log1p</option>
+<option>sign</option>
+<option>pow</option>
+<option>numeric_limits</option>
+<option>to_string</option>
+<option>hash_code</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>Example AD&lt;Base&gt; Where Base Constructor Allocates Memory</big></big></b></center>
+<br>
+<b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
+<br>
+Demonstrate use of 
+<code><font color="blue"><span style='white-space: nowrap'>AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code>
+
+where memory is allocated for each element of the type 
+<code><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i></code>
+.
+In addition, this is a complete example where all the
+<a href="base_require.htm" target="_top"><span style='white-space: nowrap'>required&nbsp;Base</span></a>
+ type
+operations are defined (as apposed to other examples where
+some of the operations for the Base type are already defined).
+
+<br>
+<br>
+<b><big><a name="Include File" id="Include File">Include File</a></big></b>
+<br>
+This file uses some of the definitions in <a href="base_require.htm" target="_top"><span style='white-space: nowrap'>base_require</span></a>
+
+and <a href="thread_alloc.htm" target="_top"><span style='white-space: nowrap'>thread_alloc</span></a>
+.
+<pre style='display:inline'><tt>
+<b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/base_require.hpp&gt;</font>
+<b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/utility/thread_alloc.hpp&gt;</font>
+</tt></pre>
+<br>
+<b><big><a name="Compound Assignment Macro" id="Compound Assignment Macro">Compound Assignment Macro</a></big></b>
+<br>
+This macro is used for the
+<code><font color="blue">base_alloc</font></code> compound assignment operators; to be specific,
+used with 
+<code><i><font color="black"><span style='white-space: nowrap'>op&nbsp;</span></font></i></code>
+ equal to
+<code><font color="blue">+=</font></code>,
+<code><font color="blue">-=</font></code>,
+<code><font color="blue">*=</font></code>,
+<code><font color="blue">/=</font></code>.
+<pre style='display:inline'><tt>
+<b><font color="#000080"># define</font></b> <b><font color="#000000">BASE_ALLOC_ASSIGN_OPERATOR</font></b><font color="#990000">(</font>op<font color="#990000">)</font> <font color="#990000">\</font>
+     <font color="#009900">void</font> <b><font color="#0000FF">operator</font></b> <b><font color="#000000">op</font></b> <font color="#990000">(</font><b><font color="#0000FF">const</font></b> base_alloc<font color="#990000">&amp;</font> x<font color="#990000">)</font> <font color="#990000">\</font>
+     <font color="#FF0000">{</font>    <font color="#990000">*</font><font color="#008080">ptrdbl_</font> <font color="#008080">op</font> <font color="#990000">*</font>x<font color="#990000">.</font>ptrdbl_<font color="#990000">;</font> <font color="#FF0000">}</font>
+</tt></pre>
+<br>
+<b><big><a name="Binary Operator Macro" id="Binary Operator Macro">Binary Operator Macro</a></big></b>
+<br>
+This macro is used for the
+<code><font color="blue">base_alloc</font></code> binary operators (as member functions); to be specific,
+used with 
+<code><i><font color="black"><span style='white-space: nowrap'>op&nbsp;</span></font></i></code>
+ equal to
+<code><font color="blue">+</font></code>,
+<code><font color="blue">-</font></code>,
+<code><font color="blue">*</font></code>,
+<code><font color="blue">/</font></code>.
+<pre><tt><b><font color="#000080"># define</font></b> <b><font color="#000000">BASE_ALLOC_BINARY_OPERATOR</font></b><font color="#990000">(</font>op<font color="#990000">)</font> <b><font color="#0000FF">const</font></b> <font color="#990000">\</font>
+     base_alloc <font color="#008080">operator</font> <b><font color="#000000">op</font></b> <font color="#990000">(</font><b><font color="#0000FF">const</font></b> base_alloc<font color="#990000">&amp;</font> x<font color="#990000">)</font> <b><font color="#0000FF">const</font></b> <font color="#990000">\</font>
+     <font color="#FF0000">{</font>    <font color="#008080">base_alloc</font> result<font color="#990000">;</font> <font color="#990000">\</font>
+          <font color="#009900">double</font>   dbl <font color="#990000">=</font> <font color="#990000">*</font>ptrdbl_<font color="#990000">;</font> <font color="#990000">\</font>
+          <font color="#009900">double</font> x_dbl <font color="#990000">=</font> <font color="#990000">*</font>x<font color="#990000">.</font>ptrdbl_<font color="#990000">;</font> <font color="#990000">\</font>
+          <font color="#990000">*</font>result<font color="#990000">.</font>ptrdbl_ <font color="#990000">=</font> dbl <font color="#008080">op</font> x_dbl<font color="#990000">;</font> <font color="#990000">\</font>
+          <b><font color="#0000FF">return</font></b> result<font color="#990000">;</font> <font color="#990000">\</font>
+     <font color="#FF0000">}</font></tt></pre>
+<br>
+<b><big><a name="Boolean Operator Macro" id="Boolean Operator Macro">Boolean Operator Macro</a></big></b>
+<br>
+This macro can be used for the
+<code><font color="blue">base_alloc</font></code> binary operators that have a
+<code><font color="blue">bool</font></code> result; to be specific,
+used with 
+<code><i><font color="black"><span style='white-space: nowrap'>op&nbsp;</span></font></i></code>
+ equal to
+<code><font color="blue">==</font></code>,
+<code><font color="blue">!=</font></code>,
+<code><font color="blue">&lt;</font></code>,
+<code><font color="blue">&lt;=</font></code>,
+<code><font color="blue">&gt;=</font></code>, and
+<code><font color="blue">&gt;</font></code>,
+<pre><tt><b><font color="#000080"># define</font></b> <b><font color="#000000">BASE_ALLOC_BOOL_OPERATOR</font></b><font color="#990000">(</font>op<font color="#990000">)</font> <b><font color="#0000FF">const</font></b> <font color="#990000">\</font>
+     <font color="#009900">bool</font> <b><font color="#0000FF">operator</font></b> <b><font color="#000000">op</font></b> <font color="#990000">(</font><b><font color="#0000FF">const</font></b> base_alloc<font color="#990000">&amp;</font> x<font color="#990000">)</font> <b><font color="#0000FF">const</font></b> <font color="#990000">\</font>
+     <font color="#FF0000">{</font>    <font color="#009900">double</font>   dbl <font color="#990000">=</font> <font color="#990000">*</font>ptrdbl_<font color="#990000">;</font> <font color="#990000">\</font>
+          <font color="#009900">double</font> x_dbl <font color="#990000">=</font> <font color="#990000">*</font>x<font color="#990000">.</font>ptrdbl_<font color="#990000">;</font> <font color="#990000">\</font>
+          <b><font color="#0000FF">return</font></b> dbl <font color="#008080">op</font> x_dbl<font color="#990000">;</font> <font color="#990000">\</font>
+     <font color="#FF0000">}</font></tt></pre>
+<br>
+<b><big><a name="Class Definition" id="Class Definition">Class Definition</a></big></b>
+<br>
+The following example class
+defines the necessary <a href="base_member.htm" target="_top"><span style='white-space: nowrap'>base_member</span></a>
+ functions.
+It is made more complicated by storing a pointer to a <code><font color="blue">double</font></code>
+instead of the <code><font color="blue">double</font></code> value itself.
+<pre><tt>
+<b><font color="#0000FF">class</font></b> <font color="#008080">base_alloc</font> <font color="#FF0000">{</font>
+<b><font color="#0000FF">public</font></b><font color="#990000">:</font>
+     <font color="#009900">double</font><font color="#990000">*</font> ptrdbl_<font color="#990000">;</font>
+
+     <b><font color="#000000">base_alloc</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
+     <font color="#FF0000">{</font>    <font color="#008080">size_t</font> cap<font color="#990000">;</font>
+          <font color="#009900">void</font><font color="#990000">*</font> v  <font color="#990000">=</font> CppAD<font color="#990000">::</font>thread_alloc<font color="#990000">::</font><b><font color="#000000">get_memory</font></b><font color="#990000">(</font><b><font color="#0000FF">sizeof</font></b><font color="#990000">(</font><font color="#009900">double</font><font color="#990000">),</font> cap<font color="#990000">);</font>
+          ptrdbl_  <font color="#990000">=</font> <b><font color="#0000FF">static_cast</font></b><font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">*&gt;(</font>v<font color="#990000">);</font>
+     <font color="#FF0000">}</font>
+     <b><font color="#000000">base_alloc</font></b><font color="#990000">(</font><font color="#009900">double</font> dbl<font color="#990000">)</font>
+     <font color="#FF0000">{</font>    <font color="#008080">size_t</font> cap<font color="#990000">;</font>
+          <font color="#009900">void</font> <font color="#990000">*</font>v  <font color="#990000">=</font> CppAD<font color="#990000">::</font>thread_alloc<font color="#990000">::</font><b><font color="#000000">get_memory</font></b><font color="#990000">(</font><b><font color="#0000FF">sizeof</font></b><font color="#990000">(</font><font color="#009900">double</font><font color="#990000">),</font> cap<font color="#990000">);</font>
+          ptrdbl_  <font color="#990000">=</font> <b><font color="#0000FF">static_cast</font></b><font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">*&gt;(</font>v<font color="#990000">);</font>
+          <font color="#990000">*</font>ptrdbl_ <font color="#990000">=</font> dbl<font color="#990000">;</font>
+     <font color="#FF0000">}</font>
+     <b><font color="#000000">base_alloc</font></b><font color="#990000">(</font><b><font color="#0000FF">const</font></b> base_alloc<font color="#990000">&amp;</font> x<font color="#990000">)</font>
+     <font color="#FF0000">{</font>    <font color="#008080">size_t</font> cap<font color="#990000">;</font>
+          <font color="#009900">void</font> <font color="#990000">*</font>v  <font color="#990000">=</font> CppAD<font color="#990000">::</font>thread_alloc<font color="#990000">::</font><b><font color="#000000">get_memory</font></b><font color="#990000">(</font><b><font color="#0000FF">sizeof</font></b><font color="#990000">(</font><font color="#009900">double</font><font color="#990000">),</font> cap<font color="#990000">);</font>
+          ptrdbl_  <font color="#990000">=</font> <b><font color="#0000FF">static_cast</font></b><font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">*&gt;(</font>v<font color="#990000">);</font>
+          <font color="#990000">*</font>ptrdbl_ <font color="#990000">=</font> <font color="#990000">*</font>x<font color="#990000">.</font>ptrdbl_<font color="#990000">;</font>
+     <font color="#FF0000">}</font>
+     <font color="#990000">~</font><b><font color="#000000">base_alloc</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
+     <font color="#FF0000">{</font>    <font color="#009900">void</font><font color="#990000">*</font> v  <font color="#990000">=</font> <b><font color="#0000FF">static_cast</font></b><font color="#990000">&lt;</font><font color="#009900">void</font><font color="#990000">*&gt;(</font>ptrdbl_<font color="#990000">);</font>
+          CppAD<font color="#990000">::</font>thread_alloc<font color="#990000">::</font><b><font color="#000000">return_memory</font></b><font color="#990000">(</font>v<font color="#990000">);</font>
+     <font color="#FF0000">}</font>
+     <font color="#008080">base_alloc</font> <b><font color="#0000FF">operator</font></b><font color="#990000">-(</font><font color="#009900">void</font><font color="#990000">)</font> <b><font color="#0000FF">const</font></b>
+     <font color="#FF0000">{</font>    <font color="#008080">base_alloc</font> result<font color="#990000">;</font>
+          <font color="#990000">*</font>result<font color="#990000">.</font>ptrdbl_ <font color="#990000">=</font> <font color="#990000">-</font> <font color="#990000">*</font>ptrdbl_<font color="#990000">;</font>
+          <b><font color="#0000FF">return</font></b> result<font color="#990000">;</font>
+     <font color="#FF0000">}</font>
+     <font color="#008080">base_alloc</font> <b><font color="#0000FF">operator</font></b><font color="#990000">+(</font><font color="#009900">void</font><font color="#990000">)</font> <b><font color="#0000FF">const</font></b>
+     <font color="#FF0000">{</font>    <b><font color="#0000FF">return</font></b> <font color="#990000">*</font><b><font color="#0000FF">this</font></b><font color="#990000">;</font> <font color="#FF0000">}</font>
+     <font color="#009900">void</font> <b><font color="#0000FF">operator</font></b><font color="#990000">=(</font><b><font color="#0000FF">const</font></b> base_alloc<font color="#990000">&amp;</font> x<font color="#990000">)</font>
+     <font color="#FF0000">{</font>    <font color="#990000">*</font>ptrdbl_ <font color="#990000">=</font> <font color="#990000">*</font>x<font color="#990000">.</font>ptrdbl_<font color="#990000">;</font> <font color="#FF0000">}</font>
+     <b><font color="#000000">BASE_ALLOC_ASSIGN_OPERATOR</font></b><font color="#990000">(+=)</font>
+     <b><font color="#000000">BASE_ALLOC_ASSIGN_OPERATOR</font></b><font color="#990000">(-=)</font>
+     <b><font color="#000000">BASE_ALLOC_ASSIGN_OPERATOR</font></b><font color="#990000">(*=)</font>
+     <b><font color="#000000">BASE_ALLOC_ASSIGN_OPERATOR</font></b><font color="#990000">(/=)</font>
+     <b><font color="#000000">BASE_ALLOC_BINARY_OPERATOR</font></b><font color="#990000">(+)</font>
+     <b><font color="#000000">BASE_ALLOC_BINARY_OPERATOR</font></b><font color="#990000">(-)</font>
+     <b><font color="#000000">BASE_ALLOC_BINARY_OPERATOR</font></b><font color="#990000">(*)</font>
+     <b><font color="#000000">BASE_ALLOC_BINARY_OPERATOR</font></b><font color="#990000">(/)</font>
+     <b><font color="#000000">BASE_ALLOC_BOOL_OPERATOR</font></b><font color="#990000">(==)</font>
+     <b><font color="#000000">BASE_ALLOC_BOOL_OPERATOR</font></b><font color="#990000">(!=)</font>
+     <i><font color="#9A1900">// The &lt;= operator is not necessary for the base type requirements</font></i>
+     <i><font color="#9A1900">// (needed so we can use NearEqual with base_alloc arguments).</font></i>
+     <b><font color="#000000">BASE_ALLOC_BOOL_OPERATOR</font></b><font color="#990000">(&lt;=)</font>
+<font color="#FF0000">}</font><font color="#990000">;</font></tt></pre>
+<br>
+<b><big><a name="CondExpOp" id="CondExpOp">CondExpOp</a></big></b>
+<br>
+The type <code><font color="blue">base_alloc</font></code> does not use <a href="condexp.htm" target="_top"><span style='white-space: nowrap'>CondExp</span></a>
+ operations.
+Hence its <code><font color="blue">CondExpOp</font></code> function is defined by
+<pre><tt><b><font color="#0000FF">namespace</font></b> CppAD <font color="#FF0000">{</font>
+     <b><font color="#0000FF">inline</font></b> <font color="#008080">base_alloc</font> <b><font color="#000000">CondExpOp</font></b><font color="#990000">(</font>
+          <b><font color="#0000FF">enum</font></b> <font color="#008080">CompareOp</font>     cop          <font color="#990000">,</font>
+          <b><font color="#0000FF">const</font></b> base_alloc<font color="#990000">&amp;</font>       left         <font color="#990000">,</font>
+          <b><font color="#0000FF">const</font></b> base_alloc<font color="#990000">&amp;</font>       right        <font color="#990000">,</font>
+          <b><font color="#0000FF">const</font></b> base_alloc<font color="#990000">&amp;</font>       exp_if_true  <font color="#990000">,</font>
+          <b><font color="#0000FF">const</font></b> base_alloc<font color="#990000">&amp;</font>       exp_if_false <font color="#990000">)</font>
+     <font color="#FF0000">{</font>    <i><font color="#9A1900">// not used</font></i>
+          <b><font color="#000000">assert</font></b><font color="#990000">(</font><b><font color="#0000FF">false</font></b><font color="#990000">);</font>
+
+          <i><font color="#9A1900">// to void compiler error</font></i>
+          <b><font color="#0000FF">return</font></b> <b><font color="#000000">base_alloc</font></b><font color="#990000">();</font>
+     <font color="#FF0000">}</font>
+<font color="#FF0000">}</font></tt></pre>
+<br>
+<b><big><a name="CondExpRel" id="CondExpRel">CondExpRel</a></big></b>
+<br>
+The <a href="base_cond_exp.htm#CondExpRel" target="_top"><span style='white-space: nowrap'>CPPAD_COND_EXP_REL</span></a>
+ macro invocation
+<pre style='display:inline'><tt>
+<b><font color="#0000FF">namespace</font></b> CppAD <font color="#FF0000">{</font>
+     <b><font color="#000000">CPPAD_COND_EXP_REL</font></b><font color="#990000">(</font>base_alloc<font color="#990000">)</font>
+<font color="#FF0000">}</font>
+</tt></pre>
+uses <code><font color="blue">CondExpOp</font></code> above to
+define 
+<code><font color="blue"><span style='white-space: nowrap'>CondExp</span></font><i><font color="black"><span style='white-space: nowrap'>Rel</span></font></i></code>
+ for <code><font color="blue">base_alloc</font></code> arguments
+and 
+<code><i><font color="black"><span style='white-space: nowrap'>Rel</span></font></i></code>
+ equal to
+<code><font color="blue">Lt</font></code>, <code><font color="blue">Le</font></code>, <code><font color="blue">Eq</font></code>, <code><font color="blue">Ge</font></code>, and <code><font color="blue">Gt</font></code>.
+
+<br>
+<br>
+<b><big><a name="EqualOpSeq" id="EqualOpSeq">EqualOpSeq</a></big></b>
+<br>
+The type <code><font color="blue">base_alloc</font></code> is simple (in this respect) and so we define
+<pre><tt><b><font color="#0000FF">namespace</font></b> CppAD <font color="#FF0000">{</font>
+     <b><font color="#0000FF">inline</font></b> <font color="#009900">bool</font> <b><font color="#000000">EqualOpSeq</font></b><font color="#990000">(</font><b><font color="#0000FF">const</font></b> base_alloc<font color="#990000">&amp;</font> x<font color="#990000">,</font> <b><font color="#0000FF">const</font></b> base_alloc<font color="#990000">&amp;</font> y<font color="#990000">)</font>
+     <font color="#FF0000">{</font>    <b><font color="#0000FF">return</font></b> <font color="#990000">*</font>x<font color="#990000">.</font>ptrdbl_ <font color="#990000">==</font> <font color="#990000">*</font>y<font color="#990000">.</font>ptrdbl_<font color="#990000">;</font> <font color="#FF0000">}</font>
+<font color="#FF0000">}</font></tt></pre>
+<br>
+<b><big><a name="Identical" id="Identical">Identical</a></big></b>
+<br>
+The type <code><font color="blue">base_alloc</font></code> is simple (in this respect) and so we define
+<pre><tt><b><font color="#0000FF">namespace</font></b> CppAD <font color="#FF0000">{</font>
+     <b><font color="#0000FF">inline</font></b> <font color="#009900">bool</font> <b><font color="#000000">IdenticalPar</font></b><font color="#990000">(</font><b><font color="#0000FF">const</font></b> base_alloc<font color="#990000">&amp;</font> x<font color="#990000">)</font>
+     <font color="#FF0000">{</font>    <b><font color="#0000FF">return</font></b> <b><font color="#0000FF">true</font></b><font color="#990000">;</font> <font color="#FF0000">}</font>
+     <b><font color="#0000FF">inline</font></b> <font color="#009900">bool</font> <b><font color="#000000">IdenticalZero</font></b><font color="#990000">(</font><b><font color="#0000FF">const</font></b> base_alloc<font color="#990000">&amp;</font> x<font color="#990000">)</font>
+     <font color="#FF0000">{</font>    <b><font color="#0000FF">return</font></b> <font color="#990000">(*</font>x<font color="#990000">.</font>ptrdbl_ <font color="#990000">==</font> <font color="#993399">0.0</font><font color="#990000">);</font> <font color="#FF0000">}</font>
+     <b><font color="#0000FF">inline</font></b> <font color="#009900">bool</font> <b><font color="#000000">IdenticalOne</font></b><font color="#990000">(</font><b><font color="#0000FF">const</font></b> base_alloc<font color="#990000">&amp;</font> x<font color="#990000">)</font>
+     <font color="#FF0000">{</font>    <b><font color="#0000FF">return</font></b> <font color="#990000">(*</font>x<font color="#990000">.</font>ptrdbl_ <font color="#990000">==</font> <font color="#993399">1.0</font><font color="#990000">);</font> <font color="#FF0000">}</font>
+     <b><font color="#0000FF">inline</font></b> <font color="#009900">bool</font> <b><font color="#000000">IdenticalEqualPar</font></b><font color="#990000">(</font><b><font color="#0000FF">const</font></b> base_alloc<font color="#990000">&amp;</font> x<font color="#990000">,</font> <b><font color="#0000FF">const</font></b> base_alloc<font color="#990000">&amp;</font> y<font color="#990000">)</font>
+     <font color="#FF0000">{</font>    <b><font color="#0000FF">return</font></b> <font color="#990000">(*</font>x<font color="#990000">.</font>ptrdbl_ <font color="#990000">==</font> <font color="#990000">*</font>y<font color="#990000">.</font>ptrdbl_<font color="#990000">);</font> <font color="#FF0000">}</font>
+<font color="#FF0000">}</font></tt></pre>
+<br>
+<b><big><a name="Output Operator" id="Output Operator">Output Operator</a></big></b>
+
+<pre><tt><b><font color="#0000FF">namespace</font></b> CppAD <font color="#FF0000">{</font>
+     std<font color="#990000">::</font>ostream<font color="#990000">&amp;</font> <b><font color="#0000FF">operator</font></b> <font color="#990000">&lt;&lt;</font> <font color="#990000">(</font>std<font color="#990000">::</font><font color="#008080">ostream</font> <font color="#990000">&amp;</font>os<font color="#990000">,</font> <b><font color="#0000FF">const</font></b> base_alloc<font color="#990000">&amp;</font> x<font color="#990000">)</font>
+     <font color="#FF0000">{</font>    os <font color="#990000">&lt;&lt;</font> <font color="#990000">*</font>x<font color="#990000">.</font>ptrdbl_<font color="#990000">;</font>
+          <b><font color="#0000FF">return</font></b> os<font color="#990000">;</font>
+     <font color="#FF0000">}</font>
+<font color="#FF0000">}</font></tt></pre>
+<br>
+<b><big><a name="Integer" id="Integer">Integer</a></big></b>
+
+<pre><tt><b><font color="#0000FF">namespace</font></b> CppAD <font color="#FF0000">{</font>
+     <b><font color="#0000FF">inline</font></b> <font color="#009900">int</font> <b><font color="#000000">Integer</font></b><font color="#990000">(</font><b><font color="#0000FF">const</font></b> base_alloc<font color="#990000">&amp;</font> x<font color="#990000">)</font>
+     <font color="#FF0000">{</font>    <b><font color="#0000FF">return</font></b> <b><font color="#0000FF">static_cast</font></b><font color="#990000">&lt;</font><font color="#009900">int</font><font color="#990000">&gt;(*</font>x<font color="#990000">.</font>ptrdbl_<font color="#990000">);</font> <font color="#FF0000">}</font>
+<font color="#FF0000">}</font></tt></pre>
+<br>
+<b><big><a name="azmul" id="azmul">azmul</a></big></b>
+
+<pre style='display:inline'><tt>
+<b><font color="#0000FF">namespace</font></b> CppAD <font color="#FF0000">{</font>
+     <b><font color="#000000">CPPAD_AZMUL</font></b><font color="#990000">(</font> base_alloc <font color="#990000">)</font>
+<font color="#FF0000">}</font>
+</tt></pre>
+<br>
+<b><big><a name="Ordered" id="Ordered">Ordered</a></big></b>
+<br>
+The <code><font color="blue">base_alloc</font></code> type supports ordered comparisons
+<pre><tt><b><font color="#0000FF">namespace</font></b> CppAD <font color="#FF0000">{</font>
+     <b><font color="#0000FF">inline</font></b> <font color="#009900">bool</font> <b><font color="#000000">GreaterThanZero</font></b><font color="#990000">(</font><b><font color="#0000FF">const</font></b> base_alloc<font color="#990000">&amp;</font> x<font color="#990000">)</font>
+     <font color="#FF0000">{</font>    <b><font color="#0000FF">return</font></b> <font color="#990000">*</font>x<font color="#990000">.</font>ptrdbl_ <font color="#990000">&gt;</font> <font color="#993399">0.0</font><font color="#990000">;</font> <font color="#FF0000">}</font>
+     <b><font color="#0000FF">inline</font></b> <font color="#009900">bool</font> <b><font color="#000000">GreaterThanOrZero</font></b><font color="#990000">(</font><b><font color="#0000FF">const</font></b> base_alloc<font color="#990000">&amp;</font> x<font color="#990000">)</font>
+     <font color="#FF0000">{</font>    <b><font color="#0000FF">return</font></b> <font color="#990000">*</font>x<font color="#990000">.</font>ptrdbl_ <font color="#990000">&gt;=</font> <font color="#993399">0.0</font><font color="#990000">;</font> <font color="#FF0000">}</font>
+     <b><font color="#0000FF">inline</font></b> <font color="#009900">bool</font> <b><font color="#000000">LessThanZero</font></b><font color="#990000">(</font><b><font color="#0000FF">const</font></b> base_alloc<font color="#990000">&amp;</font> x<font color="#990000">)</font>
+     <font color="#FF0000">{</font>    <b><font color="#0000FF">return</font></b> <font color="#990000">*</font>x<font color="#990000">.</font>ptrdbl_ <font color="#990000">&lt;</font> <font color="#993399">0.0</font><font color="#990000">;</font> <font color="#FF0000">}</font>
+     <b><font color="#0000FF">inline</font></b> <font color="#009900">bool</font> <b><font color="#000000">LessThanOrZero</font></b><font color="#990000">(</font><b><font color="#0000FF">const</font></b> base_alloc<font color="#990000">&amp;</font> x<font color="#990000">)</font>
+     <font color="#FF0000">{</font>    <b><font color="#0000FF">return</font></b> <font color="#990000">*</font>x<font color="#990000">.</font>ptrdbl_ <font color="#990000">&lt;=</font> <font color="#993399">0</font><font color="#990000">.</font>f<font color="#990000">;</font> <font color="#FF0000">}</font>
+     <b><font color="#0000FF">inline</font></b> <font color="#009900">bool</font> <b><font color="#000000">abs_geq</font></b><font color="#990000">(</font><b><font color="#0000FF">const</font></b> base_alloc<font color="#990000">&amp;</font> x<font color="#990000">,</font> <b><font color="#0000FF">const</font></b> base_alloc<font color="#990000">&amp;</font> y<font color="#990000">)</font>
+     <font color="#FF0000">{</font>    <b><font color="#0000FF">return</font></b> std<font color="#990000">::</font><b><font color="#000000">fabs</font></b><font color="#990000">(*</font>x<font color="#990000">.</font>ptrdbl_<font color="#990000">)</font> <font color="#990000">&gt;=</font> std<font color="#990000">::</font><b><font color="#000000">fabs</font></b><font color="#990000">(*</font>y<font color="#990000">.</font>ptrdbl_<font color="#990000">);</font> <font color="#FF0000">}</font>
+<font color="#FF0000">}</font></tt></pre>
+<br>
+<b><big><a name="Unary Standard Math" id="Unary Standard Math">Unary Standard Math</a></big></b>
+<br>
+The macro
+<a href="base_std_math.htm#CPPAD_STANDARD_MATH_UNARY" target="_top"><span style='white-space: nowrap'>CPPAD_STANDARD_MATH_UNARY</span></a>
+
+would not work with the type <code><font color="blue">base_alloc</font></code> so we define
+a special macro for this type:
+<pre style='display:inline'><tt>
+<b><font color="#000080"># define</font></b> <b><font color="#000000">BASE_ALLOC_STD_MATH</font></b><font color="#990000">(</font>fun<font color="#990000">)</font> <font color="#990000">\</font>
+     <b><font color="#0000FF">inline</font></b> <font color="#008080">base_alloc</font> <b><font color="#000000">fun</font></b> <font color="#990000">(</font><b><font color="#0000FF">const</font></b> base_alloc<font color="#990000">&amp;</font> x<font color="#990000">)</font> <font color="#990000">\</font>
+     <font color="#FF0000">{</font> <b><font color="#0000FF">return</font></b>   std<font color="#990000">::</font><b><font color="#000000">fun</font></b><font color="#990000">(*</font>x<font color="#990000">.</font>ptrdbl_<font color="#990000">);</font> <font color="#FF0000">}</font>
+</tt></pre>
+The following invocations of the macro above define the
+<a href="base_std_math.htm#Unary Standard Math" target="_top"><span style='white-space: nowrap'>unary&nbsp;standard&nbsp;math</span></a>
+ functions
+(except for <code><font color="blue">abs</font></code>):
+<pre><tt><b><font color="#0000FF">namespace</font></b> CppAD <font color="#FF0000">{</font>
+     <b><font color="#000000">BASE_ALLOC_STD_MATH</font></b><font color="#990000">(</font>acos<font color="#990000">)</font>
+     <b><font color="#000000">BASE_ALLOC_STD_MATH</font></b><font color="#990000">(</font>asin<font color="#990000">)</font>
+     <b><font color="#000000">BASE_ALLOC_STD_MATH</font></b><font color="#990000">(</font>atan<font color="#990000">)</font>
+     <b><font color="#000000">BASE_ALLOC_STD_MATH</font></b><font color="#990000">(</font>cos<font color="#990000">)</font>
+     <b><font color="#000000">BASE_ALLOC_STD_MATH</font></b><font color="#990000">(</font>cosh<font color="#990000">)</font>
+     <b><font color="#000000">BASE_ALLOC_STD_MATH</font></b><font color="#990000">(</font>exp<font color="#990000">)</font>
+     <b><font color="#000000">BASE_ALLOC_STD_MATH</font></b><font color="#990000">(</font>fabs<font color="#990000">)</font>
+     <b><font color="#000000">BASE_ALLOC_STD_MATH</font></b><font color="#990000">(</font>log<font color="#990000">)</font>
+     <b><font color="#000000">BASE_ALLOC_STD_MATH</font></b><font color="#990000">(</font>log10<font color="#990000">)</font>
+     <b><font color="#000000">BASE_ALLOC_STD_MATH</font></b><font color="#990000">(</font>sin<font color="#990000">)</font>
+     <b><font color="#000000">BASE_ALLOC_STD_MATH</font></b><font color="#990000">(</font>sinh<font color="#990000">)</font>
+     <b><font color="#000000">BASE_ALLOC_STD_MATH</font></b><font color="#990000">(</font>sqrt<font color="#990000">)</font>
+     <b><font color="#000000">BASE_ALLOC_STD_MATH</font></b><font color="#990000">(</font>tan<font color="#990000">)</font>
+     <b><font color="#000000">BASE_ALLOC_STD_MATH</font></b><font color="#990000">(</font>tanh<font color="#990000">)</font>
+<font color="#FF0000">}</font></tt></pre>
+The absolute value function is special because it <code><font color="blue">std</font></code> name is
+<code><font color="blue">fabs</font></code>
+<pre><tt><b><font color="#0000FF">namespace</font></b> CppAD <font color="#FF0000">{</font>
+     <b><font color="#0000FF">inline</font></b> <font color="#008080">base_alloc</font> <b><font color="#000000">abs</font></b><font color="#990000">(</font><b><font color="#0000FF">const</font></b> base_alloc<font color="#990000">&amp;</font> x<font color="#990000">)</font>
+     <font color="#FF0000">{</font>    <b><font color="#0000FF">return</font></b> <b><font color="#000000">fabs</font></b><font color="#990000">(</font>x<font color="#990000">);</font> <font color="#FF0000">}</font>
+<font color="#FF0000">}</font></tt></pre>
+<br>
+<b><big><a name="erf, asinh, acosh, atanh, expm1, log1p" id="erf, asinh, acosh, atanh, expm1, log1p">erf, asinh, acosh, atanh, expm1, log1p</a></big></b>
+<br>
+The following defines the
+<a href="base_std_math.htm#erf, asinh, acosh, atanh, expm1, log1p" target="_top"><span style='white-space: nowrap'>erf,&nbsp;asinh,&nbsp;acosh,&nbsp;atanh,&nbsp;expm1,&nbsp;log1p</span></a>
+ functions
+required by <code><font color="blue">AD&lt;base_alloc&gt;</font></code>:
+<pre><tt><b><font color="#000080"># if</font></b> CPPAD_USE_CPLUSPLUS_2011
+     <b><font color="#000000">BASE_ALLOC_STD_MATH</font></b><font color="#990000">(</font>erf<font color="#990000">)</font>
+     <b><font color="#000000">BASE_ALLOC_STD_MATH</font></b><font color="#990000">(</font>asinh<font color="#990000">)</font>
+     <b><font color="#000000">BASE_ALLOC_STD_MATH</font></b><font color="#990000">(</font>acosh<font color="#990000">)</font>
+     <b><font color="#000000">BASE_ALLOC_STD_MATH</font></b><font color="#990000">(</font>atanh<font color="#990000">)</font>
+     <b><font color="#000000">BASE_ALLOC_STD_MATH</font></b><font color="#990000">(</font>expm1<font color="#990000">)</font>
+     <b><font color="#000000">BASE_ALLOC_STD_MATH</font></b><font color="#990000">(</font>log1p<font color="#990000">)</font>
+<b><font color="#000080"># endif</font></b></tt></pre>
+<br>
+<b><big><a name="sign" id="sign">sign</a></big></b>
+<br>
+The following defines the <code><font color="blue">CppAD::sign</font></code> function that
+is required to use <code><font color="blue">AD&lt;base_alloc&gt;</font></code>:
+<pre><tt><b><font color="#0000FF">namespace</font></b> CppAD <font color="#FF0000">{</font>
+     <b><font color="#0000FF">inline</font></b> <font color="#008080">base_alloc</font> <b><font color="#000000">sign</font></b><font color="#990000">(</font><b><font color="#0000FF">const</font></b> base_alloc<font color="#990000">&amp;</font> x<font color="#990000">)</font>
+     <font color="#FF0000">{</font>    <b><font color="#0000FF">if</font></b><font color="#990000">(</font> <font color="#990000">*</font>x<font color="#990000">.</font>ptrdbl_ <font color="#990000">&gt;</font> <font color="#993399">0.0</font> <font color="#990000">)</font>
+               <b><font color="#0000FF">return</font></b> <font color="#993399">1.0</font><font color="#990000">;</font>
+          <b><font color="#0000FF">if</font></b><font color="#990000">(</font> <font color="#990000">*</font>x<font color="#990000">.</font>ptrdbl_ <font color="#990000">==</font> <font color="#993399">0.0</font> <font color="#990000">)</font>
+               <b><font color="#0000FF">return</font></b> <font color="#993399">0.0</font><font color="#990000">;</font>
+          <b><font color="#0000FF">return</font></b> <font color="#990000">-</font><font color="#993399">1.0</font><font color="#990000">;</font>
+     <font color="#FF0000">}</font>
+<font color="#FF0000">}</font></tt></pre>
+<br>
+<b><big><a name="pow" id="pow">pow</a></big></b>
+<br>
+The following defines a <code><font color="blue">CppAD::pow</font></code> function that
+is required to use <code><font color="blue">AD&lt;base_alloc&gt;</font></code>:
+<pre><tt><b><font color="#0000FF">namespace</font></b> CppAD <font color="#FF0000">{</font>
+     <b><font color="#0000FF">inline</font></b> <font color="#008080">base_alloc</font> <b><font color="#000000">pow</font></b><font color="#990000">(</font><b><font color="#0000FF">const</font></b> base_alloc<font color="#990000">&amp;</font> x<font color="#990000">,</font> <b><font color="#0000FF">const</font></b> base_alloc<font color="#990000">&amp;</font> y<font color="#990000">)</font>
+     <font color="#FF0000">{</font> <b><font color="#0000FF">return</font></b> std<font color="#990000">::</font><b><font color="#000000">pow</font></b><font color="#990000">(*</font>x<font color="#990000">.</font>ptrdbl_<font color="#990000">,</font> <font color="#990000">*</font>y<font color="#990000">.</font>ptrdbl_<font color="#990000">);</font> <font color="#FF0000">}</font>
+<font color="#FF0000">}</font></tt></pre>
+<br>
+<b><big><a name="numeric_limits" id="numeric_limits">numeric_limits</a></big></b>
+<br>
+The following defines the CppAD <a href="numeric_limits.htm" target="_top"><span style='white-space: nowrap'>numeric_limits</span></a>
+
+for the type <code><font color="blue">base_alloc</font></code>:
+<pre style='display:inline'><tt>
+<b><font color="#0000FF">namespace</font></b> CppAD <font color="#FF0000">{</font>
+     <b><font color="#000000">CPPAD_NUMERIC_LIMITS</font></b><font color="#990000">(</font><font color="#009900">double</font><font color="#990000">,</font> base_alloc<font color="#990000">)</font>
+<font color="#FF0000">}</font>
+</tt></pre>
+<br>
+<b><big><a name="to_string" id="to_string">to_string</a></big></b>
+<br>
+The following defines the CppAD <a href="to_string.htm" target="_top"><span style='white-space: nowrap'>to_string</span></a>
+ function
+for the type <code><font color="blue">base_alloc</font></code>:
+<pre style='display:inline'><tt>
+<b><font color="#0000FF">namespace</font></b> CppAD <font color="#FF0000">{</font>
+     <b><font color="#000000">CPPAD_TO_STRING</font></b><font color="#990000">(</font>base_alloc<font color="#990000">)</font>
+<font color="#FF0000">}</font>
+</tt></pre>
+<br>
+<b><big><a name="hash_code" id="hash_code">hash_code</a></big></b>
+<br>
+The <a href="base_hash.htm#Default" target="_top"><span style='white-space: nowrap'>default</span></a>
+ hashing function does
+not work well for this case because two different pointers can
+have the same value.
+<pre><tt><b><font color="#0000FF">namespace</font></b> CppAD <font color="#FF0000">{</font>
+     <b><font color="#0000FF">inline</font></b> <font color="#009900">unsigned</font> <font color="#009900">short</font> <b><font color="#000000">hash_code</font></b><font color="#990000">(</font><b><font color="#0000FF">const</font></b> base_alloc<font color="#990000">&amp;</font> x<font color="#990000">)</font>
+     <font color="#FF0000">{</font>    <font color="#009900">unsigned</font> <font color="#009900">short</font> code <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
+          <b><font color="#0000FF">if</font></b><font color="#990000">(</font> <font color="#990000">*</font>x<font color="#990000">.</font>ptrdbl_ <font color="#990000">==</font> <font color="#993399">0.0</font> <font color="#990000">)</font>
+               <b><font color="#0000FF">return</font></b> code<font color="#990000">;</font>
+          <font color="#009900">double</font> log_x <font color="#990000">=</font> <b><font color="#000000">log</font></b><font color="#990000">(</font> std<font color="#990000">::</font><b><font color="#000000">fabs</font></b><font color="#990000">(</font> <font color="#990000">*</font>x<font color="#990000">.</font>ptrdbl_ <font color="#990000">)</font> <font color="#990000">);</font>
+          <i><font color="#9A1900">// assume log( std::numeric_limits&lt;double&gt;::max() ) is near 700</font></i>
+          code <font color="#990000">=</font> <b><font color="#0000FF">static_cast</font></b><font color="#990000">&lt;</font><font color="#009900">unsigned</font> <font color="#009900">short</font><font color="#990000">&gt;(</font>
+               <font color="#990000">(</font>CPPAD_HASH_TABLE_SIZE <font color="#990000">/</font> <font color="#993399">700</font> <font color="#990000">+</font> <font color="#993399">1</font><font color="#990000">)</font> <font color="#990000">*</font> log_x
+          <font color="#990000">);</font>
+          code <font color="#990000">=</font> code <font color="#990000">%</font> CPPAD_HASH_TABLE_SIZE<font color="#990000">;</font>
+          <b><font color="#0000FF">return</font></b> code<font color="#990000">;</font>
+     <font color="#FF0000">}</font>
+<font color="#FF0000">}</font></tt></pre>
+
+<hr>Input File: example/general/base_alloc.hpp
+
+</body>
+</html>

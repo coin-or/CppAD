@@ -1,0 +1,282 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>The CheckSimpleVector Function: Example and Test</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="The CheckSimpleVector Function: Example and Test">
+<meta name="keywords" id="keywords" content=" the checksimplevector function: example test check Simplevector ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_check_simple_vector.cpp_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://coin-or.github.io/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="checksimplevector.htm" target="_top">Prev</a>
+</td><td><a href="nan.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>utility</option>
+<option>CheckSimpleVector</option>
+<option>check_simple_vector.cpp</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>CppAD-&gt;</option>
+<option>Install</option>
+<option>Introduction</option>
+<option>AD</option>
+<option>ADFun</option>
+<option>preprocessor</option>
+<option>multi_thread</option>
+<option>utility</option>
+<option>ipopt_solve</option>
+<option>Example</option>
+<option>speed</option>
+<option>Appendix</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>utility-&gt;</option>
+<option>ErrorHandler</option>
+<option>NearEqual</option>
+<option>speed_test</option>
+<option>SpeedTest</option>
+<option>time_test</option>
+<option>test_boolofvoid</option>
+<option>NumericType</option>
+<option>CheckNumericType</option>
+<option>SimpleVector</option>
+<option>CheckSimpleVector</option>
+<option>nan</option>
+<option>pow_int</option>
+<option>Poly</option>
+<option>LuDetAndSolve</option>
+<option>RombergOne</option>
+<option>RombergMul</option>
+<option>Runge45</option>
+<option>Rosen34</option>
+<option>OdeErrControl</option>
+<option>OdeGear</option>
+<option>OdeGearControl</option>
+<option>CppAD_vector</option>
+<option>thread_alloc</option>
+<option>index_sort</option>
+<option>to_string</option>
+<option>set_union</option>
+<option>sparse_rc</option>
+<option>sparse_rcv</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>CheckSimpleVector-&gt;</option>
+<option>check_simple_vector.cpp</option>
+</select>
+</td>
+<td>check_simple_vector.cpp</td>
+<td>Headings</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@
+
+<center><b><big><big>The CheckSimpleVector Function: Example and Test</big></big></b></center>
+<code><font color="blue"><pre><tt>
+<b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/utility/vector.hpp&gt;</font>
+<b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/utility/check_simple_vector.hpp&gt;</font>
+<b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;iostream&gt;</font>
+
+
+<i><font color="#9A1900">// Chosing a value between 1 and 9 selects a simple vector properity to be</font></i>
+<i><font color="#9A1900">// omitted and result in an error message being generated</font></i>
+<b><font color="#000080"># define</font></b> CppADMyVectorOmit <font color="#993399">0</font>
+
+<i><font color="#9A1900">// -------------------------------------------------------------------------</font></i>
+
+<i><font color="#9A1900">// example class used for non-constant elements (different from Scalar)</font></i>
+<b><font color="#0000FF">template</font></b> <font color="#990000">&lt;</font><b><font color="#0000FF">class</font></b> <font color="#008080">Scalar</font><font color="#990000">&gt;</font>
+<b><font color="#0000FF">class</font></b> <font color="#008080">MyElement</font> <font color="#FF0000">{</font>
+<b><font color="#0000FF">private</font></b><font color="#990000">:</font>
+     <font color="#008080">Scalar</font> <font color="#990000">*</font>element<font color="#990000">;</font>
+<b><font color="#0000FF">public</font></b><font color="#990000">:</font>
+     <i><font color="#9A1900">// element constructor</font></i>
+     <b><font color="#000000">MyElement</font></b><font color="#990000">(</font><font color="#008080">Scalar</font> <font color="#990000">*</font>e<font color="#990000">)</font>
+     <font color="#FF0000">{</font>    element <font color="#990000">=</font> e<font color="#990000">;</font> <font color="#FF0000">}</font>
+     <i><font color="#9A1900">// an example element assignment that returns void</font></i>
+     <font color="#009900">void</font> <b><font color="#0000FF">operator</font></b> <font color="#990000">=</font> <font color="#990000">(</font><b><font color="#0000FF">const</font></b> <font color="#008080">Scalar</font> <font color="#990000">&amp;</font>s<font color="#990000">)</font>
+     <font color="#FF0000">{</font>    <font color="#990000">*</font>element <font color="#990000">=</font> s<font color="#990000">;</font> <font color="#FF0000">}</font>
+     <i><font color="#9A1900">// conversion to Scalar</font></i>
+     <b><font color="#0000FF">operator</font></b> <b><font color="#000000">Scalar</font></b><font color="#990000">()</font> <b><font color="#0000FF">const</font></b>
+     <font color="#FF0000">{</font>    <b><font color="#0000FF">return</font></b> <font color="#990000">*</font>element<font color="#990000">;</font> <font color="#FF0000">}</font>
+<font color="#FF0000">}</font><font color="#990000">;</font>
+
+
+<i><font color="#9A1900">// example simple vector class</font></i>
+<b><font color="#0000FF">template</font></b> <font color="#990000">&lt;</font><b><font color="#0000FF">class</font></b> <font color="#008080">Scalar</font><font color="#990000">&gt;</font>
+<b><font color="#0000FF">class</font></b> <font color="#008080">MyVector</font> <font color="#FF0000">{</font>
+<b><font color="#0000FF">private</font></b><font color="#990000">:</font>
+     <font color="#008080">size_t</font> length<font color="#990000">;</font>
+     Scalar <font color="#990000">*</font> data<font color="#990000">;</font>
+<b><font color="#0000FF">public</font></b><font color="#990000">:</font>
+
+<b><font color="#000080"># if</font></b> CppADMyVectorOmit <font color="#990000">!=</font> <font color="#993399">1</font>
+     <i><font color="#9A1900">// type of the elements in the vector</font></i>
+     <b><font color="#0000FF">typedef</font></b> <font color="#008080">Scalar</font> value_type<font color="#990000">;</font>
+<b><font color="#000080"># endif</font></b>
+<b><font color="#000080"># if</font></b> CppADMyVectorOmit <font color="#990000">!=</font> <font color="#993399">2</font>
+     <i><font color="#9A1900">// default constructor</font></i>
+     <b><font color="#0000FF">inline</font></b> <b><font color="#000000">MyVector</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font> <font color="#990000">:</font> <b><font color="#000000">length</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">)</font> <font color="#990000">,</font> <b><font color="#000000">data</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">)</font>
+     <font color="#FF0000">{</font> <font color="#FF0000">}</font>
+<b><font color="#000080"># endif</font></b>
+<b><font color="#000080"># if</font></b> CppADMyVectorOmit <font color="#990000">!=</font> <font color="#993399">3</font>
+     <i><font color="#9A1900">// constructor with a specified size</font></i>
+     <b><font color="#0000FF">inline</font></b> <b><font color="#000000">MyVector</font></b><font color="#990000">(</font><font color="#008080">size_t</font> n<font color="#990000">)</font> <font color="#990000">:</font> <b><font color="#000000">length</font></b><font color="#990000">(</font>n<font color="#990000">)</font>
+     <font color="#FF0000">{</font>    <b><font color="#0000FF">if</font></b><font color="#990000">(</font> length <font color="#990000">==</font> <font color="#993399">0</font> <font color="#990000">)</font>
+               data <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
+          <b><font color="#0000FF">else</font></b> data <font color="#990000">=</font> <b><font color="#0000FF">new</font></b> Scalar<font color="#990000">[</font>length<font color="#990000">];</font>
+     <font color="#FF0000">}</font>
+<b><font color="#000080"># endif</font></b>
+<b><font color="#000080"># if</font></b> CppADMyVectorOmit <font color="#990000">!=</font> <font color="#993399">4</font>
+     <i><font color="#9A1900">// copy constructor</font></i>
+     <b><font color="#0000FF">inline</font></b> <b><font color="#000000">MyVector</font></b><font color="#990000">(</font><b><font color="#0000FF">const</font></b> <font color="#008080">MyVector</font> <font color="#990000">&amp;</font>x<font color="#990000">)</font> <font color="#990000">:</font> <b><font color="#000000">length</font></b><font color="#990000">(</font>x<font color="#990000">.</font>length<font color="#990000">)</font>
+     <font color="#FF0000">{</font>    <font color="#008080">size_t</font> i<font color="#990000">;</font>
+          <b><font color="#0000FF">if</font></b><font color="#990000">(</font> length <font color="#990000">==</font> <font color="#993399">0</font> <font color="#990000">)</font>
+               data <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
+          <b><font color="#0000FF">else</font></b> data <font color="#990000">=</font> <b><font color="#0000FF">new</font></b> Scalar<font color="#990000">[</font>length<font color="#990000">];</font>
+
+          <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> length<font color="#990000">;</font> i<font color="#990000">++)</font>
+               data<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> x<font color="#990000">.</font>data<font color="#990000">[</font>i<font color="#990000">];</font>
+     <font color="#FF0000">}</font>
+<b><font color="#000080"># endif</font></b>
+<b><font color="#000080"># if</font></b> CppADMyVectorOmit <font color="#990000">!=</font> <font color="#993399">4</font>
+<b><font color="#000080"># if</font></b> CppADMyVectorOmit <font color="#990000">!=</font> <font color="#993399">7</font>
+     <i><font color="#9A1900">// destructor (it is not safe to delete the pointer in cases 4 and 7)</font></i>
+     <font color="#990000">~</font><b><font color="#000000">MyVector</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
+     <font color="#FF0000">{</font>    <b><font color="#0000FF">delete</font></b> <font color="#990000">[]</font> data<font color="#990000">;</font> <font color="#FF0000">}</font>
+<b><font color="#000080"># endif</font></b>
+<b><font color="#000080"># endif</font></b>
+<b><font color="#000080"># if</font></b> CppADMyVectorOmit <font color="#990000">!=</font> <font color="#993399">5</font>
+     <i><font color="#9A1900">// size function</font></i>
+     <b><font color="#0000FF">inline</font></b> <font color="#008080">size_t</font> <b><font color="#000000">size</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font> <b><font color="#0000FF">const</font></b>
+     <font color="#FF0000">{</font>    <b><font color="#0000FF">return</font></b> length<font color="#990000">;</font> <font color="#FF0000">}</font>
+<b><font color="#000080"># endif</font></b>
+<b><font color="#000080"># if</font></b> CppADMyVectorOmit <font color="#990000">!=</font> <font color="#993399">6</font>
+     <i><font color="#9A1900">// resize function</font></i>
+     <b><font color="#0000FF">inline</font></b> <font color="#009900">void</font> <b><font color="#000000">resize</font></b><font color="#990000">(</font><font color="#008080">size_t</font> n<font color="#990000">)</font>
+     <font color="#FF0000">{</font>    <b><font color="#0000FF">if</font></b><font color="#990000">(</font> length <font color="#990000">&gt;</font> <font color="#993399">0</font> <font color="#990000">)</font>
+               <b><font color="#0000FF">delete</font></b> <font color="#990000">[]</font> data<font color="#990000">;</font>
+          length <font color="#990000">=</font> n<font color="#990000">;</font>
+          <b><font color="#0000FF">if</font></b><font color="#990000">(</font> length <font color="#990000">&gt;</font> <font color="#993399">0</font> <font color="#990000">)</font>
+               data <font color="#990000">=</font> <b><font color="#0000FF">new</font></b> Scalar<font color="#990000">[</font>length<font color="#990000">];</font>
+          <b><font color="#0000FF">else</font></b> data <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
+     <font color="#FF0000">}</font>
+<b><font color="#000080"># endif</font></b>
+<b><font color="#000080"># if</font></b> CppADMyVectorOmit <font color="#990000">!=</font> <font color="#993399">7</font>
+     <i><font color="#9A1900">// assignment operator</font></i>
+     <b><font color="#0000FF">inline</font></b> MyVector <font color="#990000">&amp;</font> <b><font color="#0000FF">operator</font></b><font color="#990000">=(</font><b><font color="#0000FF">const</font></b> <font color="#008080">MyVector</font> <font color="#990000">&amp;</font>x<font color="#990000">)</font>
+     <font color="#FF0000">{</font>    <font color="#008080">size_t</font> i<font color="#990000">;</font>
+          <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> length<font color="#990000">;</font> i<font color="#990000">++)</font>
+               data<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> x<font color="#990000">.</font>data<font color="#990000">[</font>i<font color="#990000">];</font>
+          <b><font color="#0000FF">return</font></b> <font color="#990000">*</font><b><font color="#0000FF">this</font></b><font color="#990000">;</font>
+     <font color="#FF0000">}</font>
+<b><font color="#000080"># endif</font></b>
+<b><font color="#000080"># if</font></b> CppADMyVectorOmit <font color="#990000">!=</font> <font color="#993399">8</font>
+     <i><font color="#9A1900">// non-constant element access</font></i>
+     <font color="#008080">MyElement&lt;Scalar&gt;</font> <b><font color="#0000FF">operator</font></b><font color="#990000">[](</font><font color="#008080">size_t</font> i<font color="#990000">)</font>
+     <font color="#FF0000">{</font>    <b><font color="#0000FF">return</font></b> data <font color="#990000">+</font> i<font color="#990000">;</font> <font color="#FF0000">}</font>
+<b><font color="#000080"># endif</font></b>
+<b><font color="#000080"># if</font></b> CppADMyVectorOmit <font color="#990000">!=</font> <font color="#993399">9</font>
+     <i><font color="#9A1900">// constant element access</font></i>
+     <b><font color="#0000FF">const</font></b> Scalar <font color="#990000">&amp;</font> <b><font color="#0000FF">operator</font></b><font color="#990000">[](</font><font color="#008080">size_t</font> i<font color="#990000">)</font> <b><font color="#0000FF">const</font></b>
+     <font color="#FF0000">{</font>    <b><font color="#0000FF">return</font></b> data<font color="#990000">[</font>i<font color="#990000">];</font> <font color="#FF0000">}</font>
+<b><font color="#000080"># endif</font></b>
+<font color="#FF0000">}</font><font color="#990000">;</font>
+<i><font color="#9A1900">// -------------------------------------------------------------------------</font></i>
+
+<i><font color="#9A1900">/*</font></i>
+<i><font color="#9A1900">Compute r = a * v, where a is a scalar with same type as the elements of</font></i>
+<i><font color="#9A1900">the Simple Vector v. This routine uses the CheckSimpleVector function to ensure that</font></i>
+<i><font color="#9A1900">the types agree.</font></i>
+<i><font color="#9A1900">*/</font></i>
+<b><font color="#0000FF">namespace</font></b> <font color="#FF0000">{</font> <i><font color="#9A1900">// Empty namespace</font></i>
+     <b><font color="#0000FF">template</font></b> <font color="#990000">&lt;</font><b><font color="#0000FF">class</font></b> <font color="#008080">Scalar</font><font color="#990000">,</font> <b><font color="#0000FF">class</font></b> <font color="#008080">Vector</font><font color="#990000">&gt;</font>
+     <font color="#008080">Vector</font> <b><font color="#000000">Sscal</font></b><font color="#990000">(</font><b><font color="#0000FF">const</font></b> <font color="#008080">Scalar</font> <font color="#990000">&amp;</font>a<font color="#990000">,</font> <b><font color="#0000FF">const</font></b> <font color="#008080">Vector</font> <font color="#990000">&amp;</font>v<font color="#990000">)</font>
+     <font color="#FF0000">{</font>
+          <i><font color="#9A1900">// invoke CheckSimpleVector function</font></i>
+          CppAD<font color="#990000">::</font>CheckSimpleVector<font color="#990000">&lt;</font>Scalar<font color="#990000">,</font> Vector<font color="#990000">&gt;();</font>
+
+          <font color="#008080">size_t</font> n <font color="#990000">=</font> v<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">();</font>
+          <font color="#008080">Vector</font> <b><font color="#000000">r</font></b><font color="#990000">(</font>n<font color="#990000">);</font>
+
+          <font color="#008080">size_t</font> i<font color="#990000">;</font>
+          <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> n<font color="#990000">;</font> i<font color="#990000">++)</font>
+               r<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> a <font color="#990000">*</font> v<font color="#990000">[</font>i<font color="#990000">];</font>
+
+          <b><font color="#0000FF">return</font></b> r<font color="#990000">;</font>
+     <font color="#FF0000">}</font>
+<font color="#FF0000">}</font>
+
+<font color="#009900">bool</font> <b><font color="#000000">CheckSimpleVector</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
+<font color="#FF0000">{</font>    <font color="#009900">bool</font> ok  <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
+     <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">;</font>
+
+     <i><font color="#9A1900">// --------------------------------------------------------</font></i>
+     <i><font color="#9A1900">// If you change double to float in the next statement,</font></i>
+     <i><font color="#9A1900">// CheckSimpleVector will generate an error message at compile time.</font></i>
+     <font color="#009900">double</font> a <font color="#990000">=</font> <font color="#993399">3</font><font color="#990000">.;</font>
+     <i><font color="#9A1900">// --------------------------------------------------------</font></i>
+
+     <font color="#008080">size_t</font> n <font color="#990000">=</font> <font color="#993399">2</font><font color="#990000">;</font>
+     <font color="#008080">MyVector&lt;double&gt;</font> <b><font color="#000000">v</font></b><font color="#990000">(</font>n<font color="#990000">);</font>
+     v<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font>     <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">.;</font>
+     v<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font>     <font color="#990000">=</font> <font color="#993399">2</font><font color="#990000">.;</font>
+     <font color="#008080">MyVector&lt;double&gt;</font> r <font color="#990000">=</font> <b><font color="#000000">Sscal</font></b><font color="#990000">(</font>a<font color="#990000">,</font> v<font color="#990000">);</font>
+     ok      <font color="#990000">&amp;=</font> <font color="#990000">(</font>r<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">==</font> <font color="#993399">3</font><font color="#990000">.);</font>
+     ok      <font color="#990000">&amp;=</font> <font color="#990000">(</font>r<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">==</font> <font color="#993399">6</font><font color="#990000">.);</font>
+
+     <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
+<font color="#FF0000">}</font>
+</tt></pre>
+</font></code>
+<hr>Input File: example/utility/check_simple_vector.cpp
+
+</body>
+</html>

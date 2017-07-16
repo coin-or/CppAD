@@ -1,0 +1,540 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>ODE Inverse Problem Definitions: Source Code</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="ODE Inverse Problem Definitions: Source Code">
+<meta name="keywords" id="keywords" content=" ode inverse problem definitions: source code example purpose forward measurements simulation analytic solution parameter values simulated measurement trapezoidal approximation method ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_ipopt_solve_ode_inverse.cpp_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://coin-or.github.io/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="ipopt_solve_retape.cpp.htm" target="_top">Prev</a>
+</td><td><a href="example.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>ipopt_solve</option>
+<option>ipopt_solve_ode_inverse.cpp</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>CppAD-&gt;</option>
+<option>Install</option>
+<option>Introduction</option>
+<option>AD</option>
+<option>ADFun</option>
+<option>preprocessor</option>
+<option>multi_thread</option>
+<option>utility</option>
+<option>ipopt_solve</option>
+<option>Example</option>
+<option>speed</option>
+<option>Appendix</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>ipopt_solve-&gt;</option>
+<option>ipopt_solve_get_started.cpp</option>
+<option>ipopt_solve_retape.cpp</option>
+<option>ipopt_solve_ode_inverse.cpp</option>
+</select>
+</td>
+<td>ipopt_solve_ode_inverse.cpp</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Purpose</option>
+<option>Forward Problem</option>
+<option>Measurements</option>
+<option>---..Simulation Analytic Solution</option>
+<option>---..Simulation Parameter Values</option>
+<option>---..Simulated Measurement Values</option>
+<option>Inverse Problem</option>
+<option>Trapezoidal Approximation</option>
+<option>Solution Method</option>
+<option>Source</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>ODE Inverse Problem Definitions: Source Code</big></big></b></center>
+<br>
+<b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
+<br>
+This example demonstrates how to invert for parameters
+in a ODE where the solution of the ODE is numerically approximated.
+
+<br>
+<br>
+<b><big><a name="Forward Problem" id="Forward Problem">Forward Problem</a></big></b>
+<br>
+We consider the following ordinary differential equation:
+<small>@[@
+
+\begin{array}{rcl}
+	\partial_t y_0 ( t , a ) & = & - a_1 * y_0 (t, a )
+	\\
+	\partial_t y_1 (t , a )  & = & + a_1 * y_0 (t, a ) - a_2 * y_1 (t, a )
+\end{array}
+
+@]@</small>
+with the initial conditions
+<small>@[@
+
+	y_0 (0 , a) = ( a_0 , 0 )^\R{T}
+
+@]@</small>
+Our forward problem is stated as follows:
+Given <small>@(@
+a \in \B{R}^3
+@)@</small>
+determine the value of <small>@(@
+y ( t , a )
+@)@</small>,
+for <small>@(@
+t \in R
+@)@</small>, that solves the initial value problem above.
+
+<br>
+<br>
+<b><big><a name="Measurements" id="Measurements">Measurements</a></big></b>
+<br>
+Suppose we are also given measurement times <small>@(@
+s \in \B{R}^5
+@)@</small>
+and  a measurement vector <small>@(@
+z \in \B{R}^4
+@)@</small>
+and for <small>@(@
+i = 0, \ldots, 3
+@)@</small>, we model <small>@(@
+z_i
+@)@</small> by
+<small>@[@
+
+	z_i = y_1 ( s_{i+1} , a) + e_i
+
+@]@</small>
+where <small>@(@
+e_{i-1} \sim {\bf N} (0 , \sigma^2 )
+@)@</small>
+is the measurement noise,
+and <small>@(@
+\sigma > 0
+@)@</small> is the standard deviation of the noise.
+
+<br>
+<br>
+<b><a name="Measurements.Simulation Analytic Solution" id="Measurements.Simulation Analytic Solution">Simulation Analytic Solution</a></b>
+<br>
+The following analytic solution to the forward problem is used
+to simulate a data set:
+<small>@[@
+
+\begin{array}{rcl}
+	y_0 (t , a) & = & a_0 * \exp( - a_1 * t )
+	\\
+	y_1 (t , a) & = &
+	a_0 * a_1 * \frac{\exp( - a_2 * t ) - \exp( -a_1 * t )}{ a_1 - a_2 }
+\end{array}
+
+@]@</small>
+
+<br>
+<br>
+<b><a name="Measurements.Simulation Parameter Values" id="Measurements.Simulation Parameter Values">Simulation Parameter Values</a></b>
+
+<table><tr><td align='left'  valign='top'>
+
+<small>@(@
+\bar{a}_0 = 1
+@)@</small> <code><span style='white-space: nowrap'>&nbsp;</span></code> </td><td align='left'  valign='top'>
+
+	initial value of <small>@(@
+y_0 (t, a)
+@)@</small>
+</td></tr><tr><td align='left'  valign='top'>
+
+<small>@(@
+\bar{a}_1 = 2
+@)@</small> <code><span style='white-space: nowrap'>&nbsp;</span></code> </td><td align='left'  valign='top'>
+
+	transfer rate from compartment zero to compartment one
+</td></tr><tr><td align='left'  valign='top'>
+
+<small>@(@
+\bar{a}_2 = 1
+@)@</small> <code><span style='white-space: nowrap'>&nbsp;</span></code> </td><td align='left'  valign='top'>
+
+	transfer rate from compartment one to outside world
+</td></tr><tr><td align='left'  valign='top'>
+
+<small>@(@
+\sigma = 0
+@)@</small> <code><span style='white-space: nowrap'>&nbsp;</span></code> </td><td align='left'  valign='top'>
+
+	standard deviation of measurement noise
+</td></tr><tr><td align='left'  valign='top'>
+
+<small>@(@
+e_i = 0
+@)@</small> <code><span style='white-space: nowrap'>&nbsp;</span></code> </td><td align='left'  valign='top'>
+
+	simulated measurement noise, <small>@(@
+i = 1 , \ldots , Nz
+@)@</small>
+</td></tr><tr><td align='left'  valign='top'>
+
+<small>@(@
+s_i = i * .5
+@)@</small> <code><span style='white-space: nowrap'>&nbsp;</span></code> </td><td align='left'  valign='top'>
+
+	time corresponding to the <code><i>i</i></code>-th measurement,
+	<small>@(@
+i = 0 , \ldots , 3
+@)@</small>
+</td></tr>
+</table>
+<br>
+<b><a name="Measurements.Simulated Measurement Values" id="Measurements.Simulated Measurement Values">Simulated Measurement Values</a></b>
+<br>
+The simulated measurement values are given by the equation
+<small>@[@
+
+\begin{array}{rcl}
+z_i
+& = &  e_i + y_1 ( s_{i+1} , \bar{a} )
+\\
+& = &
+\bar{a}_0 * \bar{a}_1 *
+	\frac{\exp( - \bar{a}_2 * s_i ) - \exp( -\bar{a}_1 * s_i )}
+		{ \bar{a}_1 - \bar{a}_2 }
+\end{array}
+
+@]@</small>
+for <small>@(@
+i = 0, \ldots , 3
+@)@</small>.
+
+
+<br>
+<br>
+<b><big><a name="Inverse Problem" id="Inverse Problem">Inverse Problem</a></big></b>
+<br>
+The maximum likelihood estimate for <small>@(@
+a
+@)@</small> given <small>@(@
+z
+@)@</small>
+solves the following optimization problem
+<small>@[@
+
+\begin{array}{rcl}
+{\rm minimize} \;
+	& \sum_{i=0}^3 ( z_i - y_1 ( s_{i+1} , a ) )^2
+	& \;{\rm w.r.t} \; a \in \B{R}^3
+\end{array}
+
+@]@</small>
+
+<br>
+<br>
+<b><big><a name="Trapezoidal Approximation" id="Trapezoidal Approximation">Trapezoidal Approximation</a></big></b>
+<br>
+We are given a number of approximation points per measurement interval
+<small>@(@
+np
+@)@</small> and define the time grid <small>@(@
+t \in \B{R}^{4 \cdot np + 1}
+@)@</small>
+as follows:
+<small>@(@
+t_0 = s_0
+@)@</small> and
+for <small>@(@
+i = 0 , 1 , 2, 3
+@)@</small>, <small>@(@
+j = 1 , \ldots , np
+@)@</small>
+<small>@[@
+
+	t_{i \cdot np + j} = s_i + (s_{i+1} - s{i}) \frac{i}{np}
+
+@]@</small>
+We note that for <small>@(@
+i = 1 , \ldots , 4
+@)@</small>,
+<small>@(@
+t_{i \cdot np} = s_i
+@)@</small>.
+This example uses a trapezoidal approximation to solve the ODE.
+Given <small>@(@
+a \in \B{R}^3
+@)@</small> and <small>@(@
+y^{k-1} \approx y( t_{k-1} , a )
+@)@</small>,
+the a trapezoidal method approximates <small>@(@
+y ( t_j , a )
+@)@</small>
+by the value <small>@(@
+y^k \in \B{R}^2
+@)@</small> ) that solves the equation
+<small>@[@
+
+y^k  =  y^{k-1} + \frac{G( y^k , a ) + G( y^{k-1} , a ) }{2} * (t_k - t_{k-1})
+
+@]@</small>
+where <small>@(@
+G : \B{R}^2 \times \B{R}^3 \rightarrow \B{R}^2
+@)@</small> is defined by
+<small>@[@
+
+\begin{array}{rcl}
+	G_0 ( y , a ) & = & - a_1 * y_0
+	\\
+	G_1 ( y , a ) & = & + a_1 * y_0  - a_2 * y_1
+\end{array}
+
+@]@</small>
+
+<br>
+<br>
+<b><big><a name="Solution Method" id="Solution Method">Solution Method</a></big></b>
+<br>
+We use constraints to embed the
+forward problem in the inverse problem.
+To be specific, we solve the optimization problem
+<small>@[@
+
+\begin{array}{rcl}
+{\rm minimize}
+& \sum_{i=0}^3 ( z_i - y_1^{(i+1) \cdot np} )^2
+& \; {\rm w.r.t} \; a \in \B{R}^3
+	\; y^0 \in \B{R}^2 , \ldots , y^{3 \cdot np -1} \in \B{R}^2
+\\
+{\rm subject \; to}
+	0 = y^0 - ( a_0 , 0 )^\R{T}
+	\\
+	& 0 = y^k  -  y^{k-1} -
+	\frac{G( y^k , a ) + G( y^{k-1} , a ) }{2}  (t_k - t_{k-1})
+	& \; {\rm for} \; k = 1 , \ldots , 4 \cdot np
+\end{array}
+
+@]@</small>
+The code below we using the notation
+<small>@(@
+x \in \B{3 + (4 \cdot np + 1) \cdot 2}
+@)@</small> defined by
+<small>@[@
+
+	x = \left(
+		a_0, a_1, a_2 ,
+		y_0^0, y_1^0,
+		\ldots ,
+		y_0^{4 \cdot np}, y_1^{4 \cdots np}
+	\right)
+
+@]@</small>
+
+<br>
+<br>
+<b><big><a name="Source" id="Source">Source</a></big></b>
+<br>
+The following source code
+implements the ODE inversion method proposed above:
+<code><font color="blue">
+<pre><tt><b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/ipopt/solve.hpp&gt;</font>
+
+<b><font color="#0000FF">namespace</font></b> <font color="#FF0000">{</font>
+     <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>AD<font color="#990000">;</font>
+
+     <i><font color="#9A1900">// value of a during simulation a[0], a[1], a[2]</font></i>
+     <font color="#009900">double</font> a_<font color="#990000">[]</font> <font color="#990000">=</font>                   <font color="#FF0000">{</font><font color="#993399">2.0</font><font color="#990000">,</font>  <font color="#993399">1.0</font><font color="#990000">,</font> <font color="#993399">0.5</font><font color="#FF0000">}</font><font color="#990000">;</font>
+     <i><font color="#9A1900">// number of components in a</font></i>
+     <font color="#008080">size_t</font> na_ <font color="#990000">=</font> <b><font color="#0000FF">sizeof</font></b><font color="#990000">(</font>a_<font color="#990000">)</font> <font color="#990000">/</font> <b><font color="#0000FF">sizeof</font></b><font color="#990000">(</font>a_<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]);</font>
+
+     <i><font color="#9A1900">// function used to simulate data</font></i>
+     <font color="#009900">double</font> <b><font color="#000000">yone</font></b><font color="#990000">(</font><font color="#009900">double</font> t<font color="#990000">)</font>
+     <font color="#FF0000">{</font>    <b><font color="#0000FF">return</font></b>
+               a_<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]*</font>a_<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">*</font> <font color="#990000">(</font><b><font color="#000000">exp</font></b><font color="#990000">(-</font>a_<font color="#990000">[</font><font color="#993399">2</font><font color="#990000">]*</font>t<font color="#990000">)</font> <font color="#990000">-</font> <b><font color="#000000">exp</font></b><font color="#990000">(-</font>a_<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]*</font>t<font color="#990000">))</font> <font color="#990000">/</font> <font color="#990000">(</font>a_<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">-</font> a_<font color="#990000">[</font><font color="#993399">2</font><font color="#990000">]);</font>
+     <font color="#FF0000">}</font>
+
+     <i><font color="#9A1900">// time points were we have data (no data at first point)</font></i>
+     <font color="#009900">double</font> s_<font color="#990000">[]</font> <font color="#990000">=</font> <font color="#FF0000">{</font><font color="#993399">0.0</font><font color="#990000">,</font>   <font color="#993399">0.5</font><font color="#990000">,</font>        <font color="#993399">1.0</font><font color="#990000">,</font>          <font color="#993399">1.5</font><font color="#990000">,</font>         <font color="#993399">2.0</font> <font color="#FF0000">}</font><font color="#990000">;</font>
+
+     <i><font color="#9A1900">// Simulated data for case with no noise (first point is not used)</font></i>
+     <font color="#009900">double</font> z_<font color="#990000">[]</font> <font color="#990000">=</font> <font color="#FF0000">{</font><b><font color="#000000">yone</font></b><font color="#990000">(</font>s_<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]),</font> <b><font color="#000000">yone</font></b><font color="#990000">(</font>s_<font color="#990000">[</font><font color="#993399">2</font><font color="#990000">]),</font> <b><font color="#000000">yone</font></b><font color="#990000">(</font>s_<font color="#990000">[</font><font color="#993399">3</font><font color="#990000">]),</font> <b><font color="#000000">yone</font></b><font color="#990000">(</font>s_<font color="#990000">[</font><font color="#993399">4</font><font color="#990000">])</font><font color="#FF0000">}</font><font color="#990000">;</font>
+     <font color="#008080">size_t</font> nz_  <font color="#990000">=</font> <b><font color="#0000FF">sizeof</font></b><font color="#990000">(</font>z_<font color="#990000">)</font> <font color="#990000">/</font> <b><font color="#0000FF">sizeof</font></b><font color="#990000">(</font>z_<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]);</font>
+
+     <i><font color="#9A1900">// number of trapozoidal approximation points per measurement interval</font></i>
+     <font color="#008080">size_t</font> np_  <font color="#990000">=</font> <font color="#993399">40</font><font color="#990000">;</font>
+
+
+     <b><font color="#0000FF">class</font></b> <font color="#008080">FG_eval</font>
+     <font color="#FF0000">{</font>
+     <b><font color="#0000FF">private</font></b><font color="#990000">:</font>
+     <b><font color="#0000FF">public</font></b><font color="#990000">:</font>
+          <i><font color="#9A1900">// derived class part of constructor</font></i>
+          <b><font color="#0000FF">typedef</font></b> <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font> AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;</font> <font color="#990000">)</font> ADvector<font color="#990000">;</font>
+
+          <i><font color="#9A1900">// Evaluation of the objective f(x), and constraints g(x)</font></i>
+          <font color="#009900">void</font> <b><font color="#0000FF">operator</font></b><font color="#990000">()(</font>ADvector<font color="#990000">&amp;</font> fg<font color="#990000">,</font> <b><font color="#0000FF">const</font></b> ADvector<font color="#990000">&amp;</font> x<font color="#990000">)</font>
+          <font color="#FF0000">{</font>    <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font> AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;</font> <font color="#990000">)</font> <b><font color="#000000">a</font></b><font color="#990000">(</font>na_<font color="#990000">);</font>
+               <font color="#008080">size_t</font> i<font color="#990000">,</font> j<font color="#990000">,</font> k<font color="#990000">;</font>
+
+               <i><font color="#9A1900">// extract the vector a</font></i>
+               <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> na_<font color="#990000">;</font> i<font color="#990000">++)</font>
+                    a<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> x<font color="#990000">[</font>i<font color="#990000">];</font>
+
+               <i><font color="#9A1900">// compute the object f(x)</font></i>
+               fg<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">0.0</font><font color="#990000">;</font>
+               <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> nz_<font color="#990000">;</font> i<font color="#990000">++)</font>
+               <font color="#FF0000">{</font>    k <font color="#990000">=</font> <font color="#990000">(</font>i <font color="#990000">+</font> <font color="#993399">1</font><font color="#990000">)</font> <font color="#990000">*</font> np_<font color="#990000">;</font>
+                    <font color="#008080">AD&lt;double&gt;</font> y_1 <font color="#990000">=</font> x<font color="#990000">[</font>na_ <font color="#990000">+</font> <font color="#993399">2</font> <font color="#990000">*</font> k <font color="#990000">+</font> <font color="#993399">1</font><font color="#990000">];</font>
+                    <font color="#008080">AD&lt;double&gt;</font> dif <font color="#990000">=</font> z_<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">-</font> y_1<font color="#990000">;</font>
+                    fg<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font>         <font color="#990000">+=</font> dif <font color="#990000">*</font> dif<font color="#990000">;</font>
+               <font color="#FF0000">}</font>
+
+               <i><font color="#9A1900">// constraint corresponding to initial value y(0, a)</font></i>
+               <i><font color="#9A1900">// Note that this constraint is invariant with size of dt</font></i>
+               fg<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">=</font> x<font color="#990000">[</font>na_<font color="#990000">+</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">-</font> a<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">];</font>
+               fg<font color="#990000">[</font><font color="#993399">2</font><font color="#990000">]</font> <font color="#990000">=</font> x<font color="#990000">[</font>na_<font color="#990000">+</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">-</font> <font color="#993399">0.0</font><font color="#990000">;</font>
+
+               <i><font color="#9A1900">// constraints corresponding to trapozoidal approximation</font></i>
+               <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> nz_<font color="#990000">;</font> i<font color="#990000">++)</font>
+               <font color="#FF0000">{</font>    <i><font color="#9A1900">// spacing between grid point</font></i>
+                    <font color="#009900">double</font> dt <font color="#990000">=</font> <font color="#990000">(</font>s_<font color="#990000">[</font>i<font color="#990000">+</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">-</font> s_<font color="#990000">[</font>i<font color="#990000">])</font> <font color="#990000">/</font> <b><font color="#0000FF">static_cast</font></b><font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;(</font>np_<font color="#990000">);</font>
+                    <b><font color="#0000FF">for</font></b><font color="#990000">(</font>j <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font> j <font color="#990000">&lt;=</font> np_<font color="#990000">;</font> j<font color="#990000">++)</font>
+                    <font color="#FF0000">{</font>    k <font color="#990000">=</font> i <font color="#990000">*</font> np_ <font color="#990000">+</font> j<font color="#990000">;</font>
+                         <i><font color="#9A1900">// compute derivative at y^k</font></i>
+                         <font color="#008080">AD&lt;double&gt;</font> y_0  <font color="#990000">=</font> x<font color="#990000">[</font>na_ <font color="#990000">+</font> <font color="#993399">2</font> <font color="#990000">*</font> k <font color="#990000">+</font> <font color="#993399">0</font><font color="#990000">];</font>
+                         <font color="#008080">AD&lt;double&gt;</font> y_1  <font color="#990000">=</font> x<font color="#990000">[</font>na_ <font color="#990000">+</font> <font color="#993399">2</font> <font color="#990000">*</font> k <font color="#990000">+</font> <font color="#993399">1</font><font color="#990000">];</font>
+                         <font color="#008080">AD&lt;double&gt;</font> G_0  <font color="#990000">=</font> <font color="#990000">-</font> a<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">*</font> y_0<font color="#990000">;</font>
+                         <font color="#008080">AD&lt;double&gt;</font> G_1  <font color="#990000">=</font> <font color="#990000">+</font> a<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">*</font> y_0 <font color="#990000">-</font> a<font color="#990000">[</font><font color="#993399">2</font><font color="#990000">]</font> <font color="#990000">*</font> y_1<font color="#990000">;</font>
+
+                         <i><font color="#9A1900">// compute derivative at y^{k-1}</font></i>
+                         <font color="#008080">AD&lt;double&gt;</font> ym_0  <font color="#990000">=</font> x<font color="#990000">[</font>na_ <font color="#990000">+</font> <font color="#993399">2</font> <font color="#990000">*</font> <font color="#990000">(</font>k<font color="#990000">-</font><font color="#993399">1</font><font color="#990000">)</font> <font color="#990000">+</font> <font color="#993399">0</font><font color="#990000">];</font>
+                         <font color="#008080">AD&lt;double&gt;</font> ym_1  <font color="#990000">=</font> x<font color="#990000">[</font>na_ <font color="#990000">+</font> <font color="#993399">2</font> <font color="#990000">*</font> <font color="#990000">(</font>k<font color="#990000">-</font><font color="#993399">1</font><font color="#990000">)</font> <font color="#990000">+</font> <font color="#993399">1</font><font color="#990000">];</font>
+                         <font color="#008080">AD&lt;double&gt;</font> Gm_0  <font color="#990000">=</font> <font color="#990000">-</font> a<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">*</font> ym_0<font color="#990000">;</font>
+                         <font color="#008080">AD&lt;double&gt;</font> Gm_1  <font color="#990000">=</font> <font color="#990000">+</font> a<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">*</font> ym_0 <font color="#990000">-</font> a<font color="#990000">[</font><font color="#993399">2</font><font color="#990000">]</font> <font color="#990000">*</font> ym_1<font color="#990000">;</font>
+
+                         <i><font color="#9A1900">// constraint should be zero</font></i>
+                         fg<font color="#990000">[</font><font color="#993399">1</font> <font color="#990000">+</font> <font color="#993399">2</font><font color="#990000">*</font>k <font color="#990000">]</font> <font color="#990000">=</font> y_0  <font color="#990000">-</font> ym_0 <font color="#990000">-</font> dt<font color="#990000">*(</font>G_0 <font color="#990000">+</font> Gm_0<font color="#990000">)/</font><font color="#993399">2</font><font color="#990000">.;</font>
+                         fg<font color="#990000">[</font><font color="#993399">2</font> <font color="#990000">+</font> <font color="#993399">2</font><font color="#990000">*</font>k <font color="#990000">]</font> <font color="#990000">=</font> y_1  <font color="#990000">-</font> ym_1 <font color="#990000">-</font> dt<font color="#990000">*(</font>G_1 <font color="#990000">+</font> Gm_1<font color="#990000">)/</font><font color="#993399">2</font><font color="#990000">.;</font>
+
+                         <i><font color="#9A1900">// scale g(x) so it has similar size as f(x)</font></i>
+                         fg<font color="#990000">[</font><font color="#993399">1</font> <font color="#990000">+</font> <font color="#993399">2</font><font color="#990000">*</font>k <font color="#990000">]</font> <font color="#990000">/=</font> dt<font color="#990000">;</font>
+                         fg<font color="#990000">[</font><font color="#993399">2</font> <font color="#990000">+</font> <font color="#993399">2</font><font color="#990000">*</font>k <font color="#990000">]</font> <font color="#990000">/=</font> dt<font color="#990000">;</font>
+                    <font color="#FF0000">}</font>
+               <font color="#FF0000">}</font>
+          <font color="#FF0000">}</font>
+     <font color="#FF0000">}</font><font color="#990000">;</font>
+<font color="#FF0000">}</font>
+<font color="#009900">bool</font> <b><font color="#000000">ode_inverse</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
+<font color="#FF0000">{</font>    <font color="#009900">bool</font> ok <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
+     <font color="#008080">size_t</font> i<font color="#990000">;</font>
+     <b><font color="#0000FF">typedef</font></b> <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font> <font color="#009900">double</font> <font color="#990000">)</font> Dvector<font color="#990000">;</font>
+
+     <i><font color="#9A1900">// number of components in the function g</font></i>
+     <font color="#008080">size_t</font> ng <font color="#990000">=</font> <font color="#990000">(</font>np_ <font color="#990000">*</font> nz_ <font color="#990000">+</font> <font color="#993399">1</font><font color="#990000">)</font> <font color="#990000">*</font> <font color="#993399">2</font><font color="#990000">;</font>
+     <i><font color="#9A1900">// number of independent variables</font></i>
+     <font color="#008080">size_t</font> nx <font color="#990000">=</font> na_ <font color="#990000">+</font> ng<font color="#990000">;</font>
+     <i><font color="#9A1900">// initial vlaue for the variables we are optimizing w.r.t</font></i>
+     <font color="#008080">Dvector</font> <b><font color="#000000">xi</font></b><font color="#990000">(</font>nx<font color="#990000">),</font> <b><font color="#000000">xl</font></b><font color="#990000">(</font>nx<font color="#990000">),</font> <b><font color="#000000">xu</font></b><font color="#990000">(</font>nx<font color="#990000">);</font>
+     <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> nx<font color="#990000">;</font> i<font color="#990000">++)</font>
+     <font color="#FF0000">{</font>    xi<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font>   <font color="#993399">0.0</font><font color="#990000">;</font> <i><font color="#9A1900">// initial value</font></i>
+          xl<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> <font color="#990000">-</font><font color="#993399">1e19</font><font color="#990000">;</font> <i><font color="#9A1900">// no lower limit</font></i>
+          xu<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> <font color="#990000">+</font><font color="#993399">1e19</font><font color="#990000">;</font> <i><font color="#9A1900">// no upper limit</font></i>
+     <font color="#FF0000">}</font>
+     <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> na_<font color="#990000">;</font> i<font color="#990000">++)</font>
+          xi<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">1.5</font><font color="#990000">;</font>   <i><font color="#9A1900">// initial value for a</font></i>
+
+     <i><font color="#9A1900">// all the difference equations are constrainted to be zero</font></i>
+     <font color="#008080">Dvector</font> <b><font color="#000000">gl</font></b><font color="#990000">(</font>ng<font color="#990000">),</font> <b><font color="#000000">gu</font></b><font color="#990000">(</font>ng<font color="#990000">);</font>
+     <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> ng<font color="#990000">;</font> i<font color="#990000">++)</font>
+     <font color="#FF0000">{</font>    gl<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">0.0</font><font color="#990000">;</font>
+          gu<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">0.0</font><font color="#990000">;</font>
+     <font color="#FF0000">}</font>
+     <i><font color="#9A1900">// object defining both f(x) and g(x)</font></i>
+     <font color="#008080">FG_eval</font> fg_eval<font color="#990000">;</font>
+
+     <i><font color="#9A1900">// options</font></i>
+     std<font color="#990000">::</font><font color="#008080">string</font> options<font color="#990000">;</font>
+     <i><font color="#9A1900">// Use sparse matrices for calculation of Jacobians and Hessians</font></i>
+     <i><font color="#9A1900">// with forward mode for Jacobian (seems to be faster for this case).</font></i>
+     options <font color="#990000">+=</font> <font color="#FF0000">"Sparse  true        forward</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font><font color="#990000">;</font>
+     <i><font color="#9A1900">// turn off any printing</font></i>
+     options <font color="#990000">+=</font> <font color="#FF0000">"Integer print_level 0</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font><font color="#990000">;</font>
+     options <font color="#990000">+=</font> <font color="#FF0000">"String  sb        yes</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font><font color="#990000">;</font>
+     <i><font color="#9A1900">// maximum number of iterations</font></i>
+     options <font color="#990000">+=</font> <font color="#FF0000">"Integer max_iter    30</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font><font color="#990000">;</font>
+     <i><font color="#9A1900">// approximate accuracy in first order necessary conditions;</font></i>
+     <i><font color="#9A1900">// see Mathematical Programming, Volume 106, Number 1,</font></i>
+     <i><font color="#9A1900">// Pages 25-57, Equation (6)</font></i>
+     options <font color="#990000">+=</font> <font color="#FF0000">"Numeric tol         1e-6</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font><font color="#990000">;</font>
+
+     <i><font color="#9A1900">// place to return solution</font></i>
+     CppAD<font color="#990000">::</font>ipopt<font color="#990000">::</font><font color="#008080">solve_result&lt;Dvector&gt;</font> solution<font color="#990000">;</font>
+
+     <i><font color="#9A1900">// solve the problem</font></i>
+     CppAD<font color="#990000">::</font>ipopt<font color="#990000">::</font>solve<font color="#990000">&lt;</font>Dvector<font color="#990000">,</font> FG_eval<font color="#990000">&gt;(</font>
+          options<font color="#990000">,</font> xi<font color="#990000">,</font> xl<font color="#990000">,</font> xu<font color="#990000">,</font> gl<font color="#990000">,</font> gu<font color="#990000">,</font> fg_eval<font color="#990000">,</font> solution
+     <font color="#990000">);</font>
+     <i><font color="#9A1900">//</font></i>
+     <i><font color="#9A1900">// Check some of the solution values</font></i>
+     <i><font color="#9A1900">//</font></i>
+     ok <font color="#990000">&amp;=</font> solution<font color="#990000">.</font>status <font color="#990000">==</font> CppAD<font color="#990000">::</font>ipopt<font color="#990000">::</font>solve_result<font color="#990000">&lt;</font>Dvector<font color="#990000">&gt;::</font>success<font color="#990000">;</font>
+     <i><font color="#9A1900">//</font></i>
+     <font color="#009900">double</font> rel_tol    <font color="#990000">=</font> <font color="#993399">1e-4</font><font color="#990000">;</font>  <i><font color="#9A1900">// relative tolerance</font></i>
+     <font color="#009900">double</font> abs_tol    <font color="#990000">=</font> <font color="#993399">1e-4</font><font color="#990000">;</font>  <i><font color="#9A1900">// absolute tolerance</font></i>
+     <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> na_<font color="#990000">;</font> i<font color="#990000">++)</font>
+          ok <font color="#990000">&amp;=</font> CppAD<font color="#990000">::</font><b><font color="#000000">NearEqual</font></b><font color="#990000">(</font> a_<font color="#990000">[</font>i<font color="#990000">],</font>  solution<font color="#990000">.</font>x<font color="#990000">[</font>i<font color="#990000">],</font>   rel_tol<font color="#990000">,</font> abs_tol<font color="#990000">);</font>
+
+     <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
+<font color="#FF0000">}</font></tt></pre>
+</font></code>
+<hr>Input File: example/ipopt_solve/ode_inverse.cpp
+
+</body>
+</html>

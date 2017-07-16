@@ -1,0 +1,256 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>Speed Testing Utilities</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Speed Testing Utilities">
+<meta name="keywords" id="keywords" content=" speed testing utilities main program utility routines library source code ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_speed_utility_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://coin-or.github.io/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="microsoft_timer.htm" target="_top">Prev</a>
+</td><td><a href="det_by_lu.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>speed</option>
+<option>speed_utility</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>CppAD-&gt;</option>
+<option>Install</option>
+<option>Introduction</option>
+<option>AD</option>
+<option>ADFun</option>
+<option>preprocessor</option>
+<option>multi_thread</option>
+<option>utility</option>
+<option>ipopt_solve</option>
+<option>Example</option>
+<option>speed</option>
+<option>Appendix</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>speed-&gt;</option>
+<option>speed_main</option>
+<option>speed_utility</option>
+<option>speed_double</option>
+<option>speed_adolc</option>
+<option>speed_cppad</option>
+<option>speed_fadbad</option>
+<option>speed_sacado</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down0(this)'>
+<option>speed_utility-&gt;</option>
+<option>det_by_lu</option>
+<option>det_of_minor</option>
+<option>det_by_minor</option>
+<option>det_33</option>
+<option>det_grad_33</option>
+<option>mat_sum_sq</option>
+<option>ode_evaluate</option>
+<option>sparse_jac_fun</option>
+<option>sparse_hes_fun</option>
+<option>uniform_01</option>
+</select>
+</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Speed Main Program</option>
+<option>Speed Utility Routines</option>
+<option>Library Routines</option>
+<option>Source Code</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@
+
+<center><b><big><big>Speed Testing Utilities</big></big></b></center>
+<br>
+<b><big><a name="Speed Main Program" id="Speed Main Program">Speed Main Program</a></big></b>
+
+<table><tr><td align='left'  valign='top'>
+
+<a href="speed_main.htm" target="_top">speed_main</a></td><td>
+Running the Speed Test Program</td></tr>
+<tr><td>
+
+</td></tr>
+</table>
+<br>
+<b><big><a name="Speed Utility Routines" id="Speed Utility Routines">Speed Utility Routines</a></big></b>
+
+<table><tr><td align='left'  valign='top'>
+
+<a href="det_by_lu.htm" target="_top">det_by_lu</a></td><td>
+Determinant Using Expansion by Lu Factorization</td></tr>
+<tr><td>
+
+<a href="det_by_minor.htm" target="_top">det_by_minor</a></td><td>
+Determinant Using Expansion by Minors</td></tr>
+<tr><td>
+
+<a href="det_of_minor.htm" target="_top">det_of_minor</a></td><td>
+Determinant of a Minor</td></tr>
+<tr><td>
+
+<a href="det_33.htm" target="_top">det_33</a></td><td>
+Check Determinant of 3 by 3 matrix</td></tr>
+<tr><td>
+
+<a href="det_grad_33.htm" target="_top">det_grad_33</a></td><td>
+Check Gradient of Determinant of 3 by 3 matrix</td></tr>
+<tr><td>
+
+<a href="mat_sum_sq.htm" target="_top">mat_sum_sq</a></td><td>
+Sum Elements of a Matrix Times Itself</td></tr>
+<tr><td>
+
+<a href="ode_evaluate.htm" target="_top">ode_evaluate</a></td><td>
+Evaluate a Function Defined in Terms of an ODE</td></tr>
+<tr><td>
+
+<a href="sparse_jac_fun.htm" target="_top">sparse_jac_fun</a></td><td>
+Evaluate a Function That Has a Sparse Jacobian</td></tr>
+<tr><td>
+
+<a href="sparse_hes_fun.htm" target="_top">sparse_hes_fun</a></td><td>
+Evaluate a Function That Has a Sparse Hessian</td></tr>
+<tr><td>
+
+<a href="uniform_01.htm" target="_top">uniform_01</a></td><td>
+Simulate a [0,1] Uniform Random Variate</td></tr>
+<tr><td>
+
+</td></tr>
+</table>
+<br>
+<b><big><a name="Library Routines" id="Library Routines">Library Routines</a></big></b>
+
+<table><tr><td align='left'  valign='top'>
+
+<a href="lufactor.htm" target="_top">LuFactor</a></td><td>
+LU Factorization of A Square Matrix</td></tr>
+<tr><td>
+
+<a href="luinvert.htm" target="_top">LuInvert</a></td><td>
+Invert an LU Factored Equation</td></tr>
+<tr><td>
+
+<a href="lusolve.htm" target="_top">LuSolve</a></td><td>
+Compute Determinant and Solve Linear Equations</td></tr>
+<tr><td>
+
+<a href="poly.htm" target="_top">Poly</a></td><td>
+Evaluate a Polynomial or its Derivative</td></tr>
+<tr><td>
+
+</td></tr>
+</table>
+<br>
+<b><big><a name="Source Code" id="Source Code">Source Code</a></big></b>
+
+<table><tr><td align='left'  valign='top'>
+
+<a href="det_by_lu.hpp.htm" target="_top">det_by_lu.hpp</a></td><td>
+Source: det_by_lu</td></tr>
+<tr><td>
+
+<a href="det_by_minor.hpp.htm" target="_top">det_by_minor.hpp</a></td><td>
+Source: det_by_minor</td></tr>
+<tr><td>
+
+<a href="det_grad_33.hpp.htm" target="_top">det_grad_33.hpp</a></td><td>
+Source: det_grad_33</td></tr>
+<tr><td>
+
+<a href="det_of_minor.hpp.htm" target="_top">det_of_minor.hpp</a></td><td>
+Source: det_of_minor</td></tr>
+<tr><td>
+
+<a href="lu_factor.hpp.htm" target="_top">lu_factor.hpp</a></td><td>
+Source: LuFactor</td></tr>
+<tr><td>
+
+<a href="lu_invert.hpp.htm" target="_top">lu_invert.hpp</a></td><td>
+Source: LuInvert</td></tr>
+<tr><td>
+
+<a href="lu_solve.hpp.htm" target="_top">lu_solve.hpp</a></td><td>
+Source: LuSolve</td></tr>
+<tr><td>
+
+<a href="mat_sum_sq.hpp.htm" target="_top">mat_sum_sq.hpp</a></td><td>
+Source: mat_sum_sq</td></tr>
+<tr><td>
+
+<a href="poly.hpp.htm" target="_top">poly.hpp</a></td><td>
+Source: Poly</td></tr>
+<tr><td>
+
+<a href="sparse_jac_fun.hpp.htm" target="_top">sparse_jac_fun.hpp</a></td><td>
+Source: sparse_jac_fun</td></tr>
+<tr><td>
+
+<a href="sparse_hes_fun.hpp.htm" target="_top">sparse_hes_fun.hpp</a></td><td>
+Source: sparse_hes_fun</td></tr>
+<tr><td>
+
+<a href="uniform_01.hpp.htm" target="_top">uniform_01.hpp</a></td><td>
+Source: uniform_01</td></tr>
+<tr><td>
+
+</td></tr>
+</table>
+
+<hr>Input File: omh/speed/speed_utility.omh
+
+</body>
+</html>

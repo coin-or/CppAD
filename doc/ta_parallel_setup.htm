@@ -1,0 +1,270 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>Setup thread_alloc For Use in Multi-Threading Environment</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Setup thread_alloc For Use in Multi-Threading Environment">
+<meta name="keywords" id="keywords" content=" setup thread_alloc use multi-threading environment parallel initialize syntax purpose speed num_threads in_parallel thread_num restrictions example ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_ta_parallel_setup_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://coin-or.github.io/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="thread_alloc.cpp.htm" target="_top">Prev</a>
+</td><td><a href="ta_num_threads.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>utility</option>
+<option>thread_alloc</option>
+<option>ta_parallel_setup</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>CppAD-&gt;</option>
+<option>Install</option>
+<option>Introduction</option>
+<option>AD</option>
+<option>ADFun</option>
+<option>preprocessor</option>
+<option>multi_thread</option>
+<option>utility</option>
+<option>ipopt_solve</option>
+<option>Example</option>
+<option>speed</option>
+<option>Appendix</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>utility-&gt;</option>
+<option>ErrorHandler</option>
+<option>NearEqual</option>
+<option>speed_test</option>
+<option>SpeedTest</option>
+<option>time_test</option>
+<option>test_boolofvoid</option>
+<option>NumericType</option>
+<option>CheckNumericType</option>
+<option>SimpleVector</option>
+<option>CheckSimpleVector</option>
+<option>nan</option>
+<option>pow_int</option>
+<option>Poly</option>
+<option>LuDetAndSolve</option>
+<option>RombergOne</option>
+<option>RombergMul</option>
+<option>Runge45</option>
+<option>Rosen34</option>
+<option>OdeErrControl</option>
+<option>OdeGear</option>
+<option>OdeGearControl</option>
+<option>CppAD_vector</option>
+<option>thread_alloc</option>
+<option>index_sort</option>
+<option>to_string</option>
+<option>set_union</option>
+<option>sparse_rc</option>
+<option>sparse_rcv</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>thread_alloc-&gt;</option>
+<option>thread_alloc.cpp</option>
+<option>ta_parallel_setup</option>
+<option>ta_num_threads</option>
+<option>ta_in_parallel</option>
+<option>ta_thread_num</option>
+<option>ta_get_memory</option>
+<option>ta_return_memory</option>
+<option>ta_free_available</option>
+<option>ta_hold_memory</option>
+<option>ta_inuse</option>
+<option>ta_available</option>
+<option>ta_create_array</option>
+<option>ta_delete_array</option>
+<option>ta_free_all</option>
+</select>
+</td>
+<td>ta_parallel_setup</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Syntax</option>
+<option>Purpose</option>
+<option>Speed</option>
+<option>num_threads</option>
+<option>in_parallel</option>
+<option>thread_num</option>
+<option>Restrictions</option>
+<option>Example</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>Setup thread_alloc For Use in Multi-Threading Environment</big></big></b></center>
+<br>
+<b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
+
+<br>
+
+<code><font color="blue"><span style='white-space: nowrap'>thread_alloc::parallel_setup(</span></font><i><font color="black"><span style='white-space: nowrap'>num_threads</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>in_parallel</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>thread_num</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+<br>
+<b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
+<br>
+By default there is only one thread and all execution is in sequential mode,
+i.e., multiple threads are not sharing the same memory; i.e.
+not in parallel mode.
+
+<br>
+<br>
+<b><big><a name="Speed" id="Speed">Speed</a></big></b>
+<br>
+It should be faster, even when 
+<code><i><font color="black"><span style='white-space: nowrap'>num_thread</span></font></i></code>
+ is equal to one,
+for <code><font color="blue">thread_alloc</font></code> to hold onto memory.
+This can be accomplished using the function call
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;thread_alloc::hold_memory(true)<br>
+</span></font></code>
+see <a href="ta_hold_memory.htm" target="_top"><span style='white-space: nowrap'>hold_memory</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="num_threads" id="num_threads">num_threads</a></big></b>
+<br>
+This argument has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>num_threads</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+and must be greater than zero.
+It specifies the number of threads that are sharing memory.
+The case 
+<code><i><font color="black"><span style='white-space: nowrap'>num_threads</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;==&nbsp;1</span></font></code>
+ is a special case that is
+used to terminate a multi-threading environment.
+
+<br>
+<br>
+<b><big><a name="in_parallel" id="in_parallel">in_parallel</a></big></b>
+<br>
+This function has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bool&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>in_parallel</span></font></i><font color="blue"><span style='white-space: nowrap'>(void)<br>
+</span></font></code>
+It must return <code><font color="blue">true</font></code> if there is more than one thread
+currently executing.
+Otherwise it can return false.
+<code><span style='white-space: nowrap'><br>
+<br>
+</span></code>In the special case where 
+<code><i><font color="black"><span style='white-space: nowrap'>num_threads</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;==&nbsp;1</span></font></code>
+,
+the routine 
+<code><i><font color="black"><span style='white-space: nowrap'>in_parallel</span></font></i></code>
+ is not used.
+
+<br>
+<br>
+<b><big><a name="thread_num" id="thread_num">thread_num</a></big></b>
+<br>
+This function has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>thread_num</span></font></i><font color="blue"><span style='white-space: nowrap'>(void)<br>
+</span></font></code>
+It must return a thread number that uniquely identifies the
+currently executing thread.
+Furthermore
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0&nbsp;&lt;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>thread_num</span></font></i><font color="blue"><span style='white-space: nowrap'>()&nbsp;&lt;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>num_threads</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+.
+In the special case where 
+<code><i><font color="black"><span style='white-space: nowrap'>num_threads</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;==&nbsp;1</span></font></code>
+,
+the routine 
+<code><i><font color="black"><span style='white-space: nowrap'>thread_num</span></font></i></code>
+ is not used.
+<code><span style='white-space: nowrap'><br>
+<br>
+</span></code>Note that this function is called by other routines so,
+as soon as a new thread is executing,
+one must be certain that 
+<code><i><font color="black"><span style='white-space: nowrap'>thread_num()</span></font></i></code>
+ will
+work for that thread.
+
+<br>
+<br>
+<b><big><a name="Restrictions" id="Restrictions">Restrictions</a></big></b>
+<br>
+The function <code><font color="blue">parallel_setup</font></code> must be called before
+the program enters <a href="ta_in_parallel.htm" target="_top"><span style='white-space: nowrap'>parallel</span></a>
+ execution mode.
+In addition, this function cannot be called while in parallel mode.
+
+<br>
+<br>
+<b><big><a name="Example" id="Example">Example</a></big></b>
+<br>
+The files
+<a href="simple_ad_openmp.cpp.htm" target="_top"><span style='white-space: nowrap'>simple_ad_openmp.cpp</span></a>
+,
+<a href="simple_ad_bthread.cpp.htm" target="_top"><span style='white-space: nowrap'>simple_ad_bthread.cpp</span></a>
+, and
+<a href="simple_ad_pthread.cpp.htm" target="_top"><span style='white-space: nowrap'>simple_ad_pthread.cpp</span></a>
+,
+contain examples and tests that use this function.
+
+
+<hr>Input File: cppad/utility/thread_alloc.hpp
+
+</body>
+</html>

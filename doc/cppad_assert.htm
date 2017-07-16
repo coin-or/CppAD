@@ -1,0 +1,233 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>CppAD Assertions During Execution</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="CppAD Assertions During Execution">
+<meta name="keywords" id="keywords" content=" cppad assertions during execution assert macro Cppad_assert_known Cppad_assert_unknown syntax purpose ndebug restriction known unknown exp msg error handler ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_cppad_assert_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://coin-or.github.io/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="error_handler.cpp.htm" target="_top">Prev</a>
+</td><td><a href="nearequal.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>utility</option>
+<option>ErrorHandler</option>
+<option>cppad_assert</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>CppAD-&gt;</option>
+<option>Install</option>
+<option>Introduction</option>
+<option>AD</option>
+<option>ADFun</option>
+<option>preprocessor</option>
+<option>multi_thread</option>
+<option>utility</option>
+<option>ipopt_solve</option>
+<option>Example</option>
+<option>speed</option>
+<option>Appendix</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>utility-&gt;</option>
+<option>ErrorHandler</option>
+<option>NearEqual</option>
+<option>speed_test</option>
+<option>SpeedTest</option>
+<option>time_test</option>
+<option>test_boolofvoid</option>
+<option>NumericType</option>
+<option>CheckNumericType</option>
+<option>SimpleVector</option>
+<option>CheckSimpleVector</option>
+<option>nan</option>
+<option>pow_int</option>
+<option>Poly</option>
+<option>LuDetAndSolve</option>
+<option>RombergOne</option>
+<option>RombergMul</option>
+<option>Runge45</option>
+<option>Rosen34</option>
+<option>OdeErrControl</option>
+<option>OdeGear</option>
+<option>OdeGearControl</option>
+<option>CppAD_vector</option>
+<option>thread_alloc</option>
+<option>index_sort</option>
+<option>to_string</option>
+<option>set_union</option>
+<option>sparse_rc</option>
+<option>sparse_rcv</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>ErrorHandler-&gt;</option>
+<option>error_handler.cpp</option>
+<option>cppad_assert</option>
+</select>
+</td>
+<td>cppad_assert</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Syntax</option>
+<option>Purpose</option>
+<option>NDEBUG</option>
+<option>Restriction</option>
+<option>Known</option>
+<option>Unknown</option>
+<option>Exp</option>
+<option>Msg</option>
+<option>Error Handler</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>CppAD Assertions During Execution</big></big></b></center>
+<br>
+<b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
+
+<br>
+
+<code><font color="blue"><span style='white-space: nowrap'>CPPAD_ASSERT_KNOWN(</span></font><i><font color="black"><span style='white-space: nowrap'>exp</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>msg</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+
+<code><font color="blue"><span style='white-space: nowrap'>CPPAD_ASSERT_UNKNOWN(</span></font><i><font color="black"><span style='white-space: nowrap'>exp</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+
+
+
+<br>
+<br>
+<b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
+<br>
+These CppAD macros are used to detect and report errors.
+They are documented here because they correspond to the C++
+source code that the error is reported at.
+
+<br>
+<br>
+<b><big><a name="NDEBUG" id="NDEBUG">NDEBUG</a></big></b>
+<br>
+If the preprocessor symbol
+<a href="faq.htm#Speed.NDEBUG" target="_top"><span style='white-space: nowrap'>NDEBUG</span></a>
+ is defined,
+these macros do nothing; i.e., they are optimized out.
+
+<br>
+<br>
+<b><big><a name="Restriction" id="Restriction">Restriction</a></big></b>
+<br>
+The CppAD user should not uses these macros.
+You can however write your own macros that do not begin with <code><font color="blue">CPPAD</font></code>
+and that call the <a href="errorhandler.htm" target="_top"><span style='white-space: nowrap'>CppAD&nbsp;error&nbsp;handler</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="Known" id="Known">Known</a></big></b>
+<br>
+The <code><font color="blue">CPPAD_ASSERT_KNOWN</font></code> macro is used to check for an error
+with a known cause.
+For example, many CppAD routines uses these macros
+to make sure their arguments conform to their specifications.
+
+<br>
+<br>
+<b><big><a name="Unknown" id="Unknown">Unknown</a></big></b>
+<br>
+The <code><font color="blue">CPPAD_ASSERT_UNKNOWN</font></code> macro is used to check that the
+CppAD internal data structures conform as expected.
+If this is not the case, CppAD does not know why the error has
+occurred; for example, the user may have written past the end
+of an allocated array.
+
+<br>
+<br>
+<b><big><a name="Exp" id="Exp">Exp</a></big></b>
+<br>
+The argument 
+<code><i><font color="black"><span style='white-space: nowrap'>exp</span></font></i></code>
+ is a C++ source code expression
+that results in a <code><font color="blue">bool</font></code> value that should be true.
+If it is false, an error has occurred.
+This expression may be execute any number of times
+(including zero times) so it must have not side effects.
+
+<br>
+<br>
+<b><big><a name="Msg" id="Msg">Msg</a></big></b>
+<br>
+The argument 
+<code><i><font color="black"><span style='white-space: nowrap'>msg</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;char&nbsp;*</span></font><i><font color="black"><span style='white-space: nowrap'>msg</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+and contains a <code><font color="blue">'\0'</font></code> terminated character string.
+This string is a description of the error
+corresponding to 
+<code><i><font color="black"><span style='white-space: nowrap'>exp</span></font></i></code>
+ being false.
+
+<br>
+<br>
+<b><big><a name="Error Handler" id="Error Handler">Error Handler</a></big></b>
+<br>
+These macros use the
+<a href="errorhandler.htm" target="_top"><span style='white-space: nowrap'>CppAD&nbsp;error&nbsp;handler</span></a>
+ to report errors.
+This error handler can be replaced by the user.
+
+
+<hr>Input File: cppad/core/cppad_assert.hpp
+
+</body>
+</html>

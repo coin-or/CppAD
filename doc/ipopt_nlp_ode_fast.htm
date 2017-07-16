@@ -1,0 +1,462 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>ODE Fitting Using Fast Representation</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="ODE Fitting Using Fast Representation">
+<meta name="keywords" id="keywords" content=" ode fitting using fast representation purpose objective function range indices i(k0) domain j(k0) initial condition trapezoidal approximation source ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_ipopt_nlp_ode_fast_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://coin-or.github.io/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="ipopt_nlp_ode_simple.hpp.htm" target="_top">Prev</a>
+</td><td><a href="ipopt_nlp_ode_fast.hpp.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>Appendix</option>
+<option>deprecated</option>
+<option>cppad_ipopt_nlp</option>
+<option>ipopt_nlp_ode</option>
+<option>ipopt_nlp_ode_fast</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>deprecated-&gt;</option>
+<option>include_deprecated</option>
+<option>FunDeprecated</option>
+<option>CompareChange</option>
+<option>omp_max_thread</option>
+<option>TrackNewDel</option>
+<option>omp_alloc</option>
+<option>memory_leak</option>
+<option>epsilon</option>
+<option>test_vector</option>
+<option>cppad_ipopt_nlp</option>
+<option>old_atomic</option>
+<option>zdouble</option>
+<option>autotools</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>cppad_ipopt_nlp-&gt;</option>
+<option>ipopt_nlp_get_started.cpp</option>
+<option>ipopt_nlp_ode</option>
+<option>ipopt_ode_speed.cpp</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>ipopt_nlp_ode-&gt;</option>
+<option>ipopt_nlp_ode_problem</option>
+<option>ipopt_nlp_ode_simple</option>
+<option>ipopt_nlp_ode_fast</option>
+<option>ipopt_nlp_ode_run.hpp</option>
+<option>ipopt_nlp_ode_check.cpp</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down0(this)'>
+<option>ipopt_nlp_ode_fast-&gt;</option>
+<option>ipopt_nlp_ode_fast.hpp</option>
+</select>
+</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Purpose</option>
+<option>Objective Function</option>
+<option>---..Range Indices I(k,0)</option>
+<option>---..Domain Indices J(k,0)</option>
+<option>Initial Condition</option>
+<option>---..Range Indices I(k,0)</option>
+<option>---..Domain Indices J(k,0)</option>
+<option>Trapezoidal Approximation</option>
+<option>---..Range Indices I(k,0)</option>
+<option>---..Domain Indices J(k,0)</option>
+<option>Source</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@
+
+
+<center><b><big><big>ODE Fitting Using Fast Representation</big></big></b></center>
+<br>
+<b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
+<br>
+In this section we represent a more complex representation of the
+simultaneous forward and reverse ODE fitting problem (described above).
+The representation defines the problem using
+simpler functions that are faster to differentiate
+(either by hand coding or by using AD).
+
+<br>
+<br>
+<b><big><a name="Objective Function" id="Objective Function">Objective Function</a></big></b>
+<br>
+We use the following representation for the
+<a href="ipopt_nlp_ode_simple.htm#Objective Function" target="_top"><span style='white-space: nowrap'>objective&nbsp;function</span></a>
+:
+For <small>@(@
+k = 0 , \ldots , Nz - 1
+@)@</small>,
+we define the function <small>@(@
+r^k : \B{R}^{Ny+Na} \rightarrow \B{R}
+@)@</small>
+by
+<small>@[@
+
+\begin{array}{rcl}
+fg_0 (x) & = & \sum_{i=1}^{Nz} H_i ( y^{S(i)} , a )
+\\
+fg_0 (x) & = & \sum_{k=0}^{Nz-1} r^k ( u^{k,0} )
+\end{array}
+
+@]@</small>
+where for <small>@(@
+k = 0 , \ldots , Nz-1
+@)@</small>,
+<small>@(@
+u^{k,0} \in \B{R}^{Ny + Na}
+@)@</small> is defined by
+<small>@(@
+u^{k,0} =   ( y^{S(k+1)} , a )
+@)@</small>
+
+<br>
+<br>
+<b><a name="Objective Function.Range Indices I(k,0)" id="Objective Function.Range Indices I(k,0)">Range Indices I(k,0)</a></b>
+<br>
+For <small>@(@
+k = 0 , \ldots , Nz - 1
+@)@</small>,
+the range index in the vector <small>@(@
+fg (x)
+@)@</small>
+corresponding to <small>@(@
+r^k ( u^{k,0} )
+@)@</small> is 0.
+Thus, the range indices are given by
+<small>@(@
+I(k,0) = \{ 0 \}
+@)@</small> for <small>@(@
+k = 0 , \ldots , Nz-1
+@)@</small>.
+
+<br>
+<br>
+<b><a name="Objective Function.Domain Indices J(k,0)" id="Objective Function.Domain Indices J(k,0)">Domain Indices J(k,0)</a></b>
+<br>
+For <small>@(@
+k = 0 , \ldots , Nz - 1
+@)@</small>,
+the components of the vector <small>@(@
+x
+@)@</small>
+corresponding to the vector <small>@(@
+u^{k,0}
+@)@</small> are
+<small>@[@
+
+\begin{array}{rcl}
+u^{k,0} & = & ( y^{S(k+1} , a )
+\\
+& = &
+(	x_{Ny * S(k+1)} \; , \;
+	\ldots \; , \;
+	x_{Ny * S(k+1) + Ny - 1} \; , \;
+	x_{Ny * S(Nz) + Ny } \; , \;
+	\ldots \; , \;
+	x_{Ny * S(Nz) + Ny + Na - 1}
+)
+\end{array}
+
+@]@</small>
+Thus, the domain indices are given by
+<small>@[@
+
+J(k,0) = \{
+	Ny * S(k+1) \; , \;
+	\ldots  \; , \;
+	Ny * S(k+1) + Ny - 1 \; , \;
+	Ny * S(Nz) + Ny \; , \;
+	\ldots  \; , \;
+	Ny * S(Nz) + Ny + Na - 1
+\}
+
+@]@</small>
+
+<br>
+<br>
+<b><big><a name="Initial Condition" id="Initial Condition">Initial Condition</a></big></b>
+<br>
+We use the following representation for the
+<a href="ipopt_nlp_ode_simple.htm#Initial Condition Constraint" target="_top"><span style='white-space: nowrap'>initial&nbsp;condition&nbsp;constraint</span></a>
+:
+For <small>@(@
+k = Nz
+@)@</small> we define the function
+<small>@(@
+r^k : \B{R}^{Ny} \times \B{R}^{Na + Ny}
+@)@</small> by
+<small>@[@
+
+\begin{array}{rcl}
+	0 & = & fg_i ( x ) = y_i^0 - F_i (a)
+	\\
+	0 & = & r_{i-1}^k ( u^{k,0} ) = y_i^0 - F_i(a)
+\end{array}
+
+@]@</small>
+where <small>@(@
+i = 1 , \ldots , Ny
+@)@</small> and
+where <small>@(@
+u^{k,0} \in \B{R}^{Ny + Na}
+@)@</small> is defined by
+<small>@(@
+u^{k,0}  = ( y^0 , a)
+@)@</small>.
+
+<br>
+<br>
+<b><a name="Initial Condition.Range Indices I(k,0)" id="Initial Condition.Range Indices I(k,0)">Range Indices I(k,0)</a></b>
+<br>
+For <small>@(@
+k = Nz
+@)@</small>,
+the range index in the vector <small>@(@
+fg (x)
+@)@</small>
+corresponding to <small>@(@
+r^k ( u^{k,0} )
+@)@</small> are
+<small>@(@
+I(k,0) = \{ 1 , \ldots , Ny \}
+@)@</small>.
+
+<br>
+<br>
+<b><a name="Initial Condition.Domain Indices J(k,0)" id="Initial Condition.Domain Indices J(k,0)">Domain Indices J(k,0)</a></b>
+<br>
+For <small>@(@
+k = Nz
+@)@</small>,
+the components of the vector <small>@(@
+x
+@)@</small>
+corresponding to the vector <small>@(@
+u^{k,0}
+@)@</small> are
+<small>@[@
+
+\begin{array}{rcl}
+u^{k,0} & = & ( y^0 , a)
+\\
+& = &
+(	x_0 \; , \;
+	\ldots \; , \;
+	x_{Ny-1} \; , \;
+	x_{Ny * S(Nz) + Ny } \; , \;
+	\ldots \; , \;
+	x_{Ny * S(Nz) + Ny + Na - 1}
+)
+\end{array}
+
+@]@</small>
+Thus, the domain indices are given by
+<small>@[@
+
+J(k,0) = \{
+	0 \; , \;
+	\ldots  \; , \;
+	Ny - 1 \; , \;
+	Ny * S(Nz) + Ny \; , \;
+	\ldots  \; , \;
+	Ny * S(Nz) + Ny + Na - 1
+\}
+
+@]@</small>
+
+<br>
+<br>
+<b><big><a name="Trapezoidal Approximation" id="Trapezoidal Approximation">Trapezoidal Approximation</a></big></b>
+<br>
+We use the following representation for the
+<a href="ipopt_nlp_ode_simple.htm#Trapezoidal Approximation Constraint" target="_top"><span style='white-space: nowrap'>trapezoidal&nbsp;approximation&nbsp;constraint</span></a>
+:
+For <small>@(@
+k = 1 , \ldots , Nz
+@)@</small>,
+we define the function <small>@(@
+r^{Nz+k} : \B{R}^{2*Ny+Na} \rightarrow \B{R}^{Ny}
+@)@</small> by
+<small>@[@
+
+r^{Nz+k} ( y , w , a )
+=
+y - w -  [ G( y , a ) + G( w , a ) ] * \frac{ \Delta t_k }{ 2 }
+
+@]@</small>
+For <small>@(@
+\ell = 0 , \ldots , N(k)-1
+@)@</small>,
+using the notation <small>@(@
+i = Ny * S(k-1) + \ell + 1
+@)@</small>,
+the corresponding trapezoidal approximation is represented by
+<small>@[@
+
+\begin{array}{rcl}
+0 & = & fg_{Ny+i} (x)
+\\
+& = &
+y^i  -  y^{i-1} -
+\left[ G( y^i , a ) + G( y^{i-1} , a ) \right] * \frac{\Delta t_k }{ 2 }
+\\
+& = &
+r^{Nz+k} ( u^{Nz+k , \ell} )
+\end{array}
+
+@]@</small>
+where <small>@(@
+u^{Nz+k,\ell} \in \B{R}^{2*Ny + Na}
+@)@</small> is defined by
+<small>@(@
+u^{Nz+k,\ell}  = ( y^{i-1} , y^i , a)
+@)@</small>.
+
+<br>
+<br>
+<b><a name="Trapezoidal Approximation.Range Indices I(k,0)" id="Trapezoidal Approximation.Range Indices I(k,0)">Range Indices I(k,0)</a></b>
+<br>
+For <small>@(@
+k = Nz + 1, \ldots , 2*Nz
+@)@</small>,
+and <small>@(@
+\ell = 0 , \ldots , N(k)-1
+@)@</small>,
+the range index in the vector <small>@(@
+fg (x)
+@)@</small>
+corresponding to <small>@(@
+r^k ( u^{k,\ell} )
+@)@</small> are
+<small>@(@
+I(k,\ell) = \{ Ny + i , \ldots , 2*Ny + i - 1  \}
+@)@</small>
+where <small>@(@
+i = Ny * S(k-1) + \ell + 1
+@)@</small>.
+
+<br>
+<br>
+<b><a name="Trapezoidal Approximation.Domain Indices J(k,0)" id="Trapezoidal Approximation.Domain Indices J(k,0)">Domain Indices J(k,0)</a></b>
+<br>
+For <small>@(@
+k = Nz + 1, \ldots , 2*Nz
+@)@</small>,
+and <small>@(@
+\ell = 0 , \ldots , N(k)-1
+@)@</small>,
+define <small>@(@
+i = Ny * S(k-1) + \ell + 1
+@)@</small>.
+The components of the vector <small>@(@
+x
+@)@</small>
+corresponding to the vector <small>@(@
+u^{k,\ell}
+@)@</small> are
+(and the function <small>@(@
+fg (x)
+@)@</small> in <a href="cppad_ipopt_nlp.htm" target="_top"><span style='white-space: nowrap'>cppad_ipopt_nlp</span></a>
+ )
+<small>@[@
+
+\begin{array}{rcl}
+u^{k, \ell} & = & ( y^{i-1} , y^i , a )
+\\
+& = &
+(	x_{Ny * (i-1)} \; , \;
+	\ldots \; , \;
+	x_{Ny * (i+1) - 1} \; , \;
+	x_{Ny * S(Nz) + Ny } \; , \;
+	\ldots \; , \;
+	x_{Ny * S(Nz) + Ny + Na - 1}
+)
+\end{array}
+
+@]@</small>
+Thus, the domain indices are given by
+<small>@[@
+
+J(k,\ell) = \{
+	Ny * (i-1) \; , \;
+	\ldots  \; , \;
+	Ny * (i+1) - 1 \; , \;
+	Ny * S(Nz) + Ny \; , \;
+	\ldots  \; , \;
+	Ny * S(Nz) + Ny + Na - 1
+\}
+
+@]@</small>
+
+
+<br>
+<br>
+<b><big><a name="Source" id="Source">Source</a></big></b>
+<br>
+The file <a href="ipopt_nlp_ode_fast.hpp.htm" target="_top"><span style='white-space: nowrap'>ipopt_nlp_ode_fast.hpp</span></a>
+
+contains source code for this representation of the objective
+and constraints.
+
+
+
+<hr>Input File: cppad_ipopt/example/ode2.omh
+
+</body>
+</html>

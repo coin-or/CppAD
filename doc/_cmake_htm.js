@@ -1,0 +1,105 @@
+var list_across0 = [
+'_contents.htm',
+'_reference.htm',
+'_index.htm',
+'_search.htm',
+'_external.htm'
+];
+var list_up0 = [
+'cppad.htm',
+'install.htm',
+'cmake.htm'
+];
+var list_down2 = [
+'install.htm',
+'introduction.htm',
+'ad.htm',
+'adfun.htm',
+'preprocessor.htm',
+'multi_thread.htm',
+'utility.htm',
+'ipopt_solve.htm',
+'example.htm',
+'speed.htm',
+'appendix.htm'
+];
+var list_down1 = [
+'download.htm',
+'cmake.htm',
+'cmake_check.htm',
+'pkgconfig.htm'
+];
+var list_down0 = [
+'adolc_prefix.htm',
+'colpack_prefix.htm',
+'eigen_prefix.htm',
+'fadbad_prefix.htm',
+'ipopt_prefix.htm',
+'sacado_prefix.htm',
+'cppad_testvector.htm'
+];
+var list_current0 = [
+'cmake.htm#The CMake Program',
+'cmake.htm#CMake Command',
+'cmake.htm#CMake Command.Build Directory',
+'cmake.htm#make check',
+'cmake.htm#cmake_verbose_makefile',
+'cmake.htm#generator',
+'cmake.htm#cppad_prefix',
+'cmake.htm#cppad_postfix',
+'cmake.htm#cmake_install_includedirs',
+'cmake.htm#cmake_install_libdirs',
+'cmake.htm#cmake_install_datadir',
+'cmake.htm#cmake_install_docdir',
+'cmake.htm#package_prefix',
+'cmake.htm#cppad_cxx_flags',
+'cmake.htm#cppad_cxx_flags.C++11',
+'cmake.htm#cppad_cxx_flags.debug and release',
+'cmake.htm#cppad_profile_flag',
+'cmake.htm#cppad_profile_flag.Eigen and Fadbad',
+'cmake.htm#cppad_testvector',
+'cmake.htm#cppad_max_num_threads',
+'cmake.htm#cppad_tape_id_type',
+'cmake.htm#cppad_tape_id_type.cstdint',
+'cmake.htm#cppad_tape_addr_type',
+'cmake.htm#cppad_tape_addr_type.cstdint',
+'cmake.htm#cppad_debug_which',
+'cmake.htm#cppad_debug_which.Exception',
+'cmake.htm#cppad_deprecated'
+];
+function choose_across0(item)
+{	var index          = item.selectedIndex;
+	item.selectedIndex = 0;
+	if(index > 0)
+		document.location = list_across0[index-1];
+}
+function choose_up0(item)
+{	var index          = item.selectedIndex;
+	item.selectedIndex = 0;
+	if(index > 0)
+		document.location = list_up0[index-1];
+}
+function choose_down2(item)
+{	var index          = item.selectedIndex;
+	item.selectedIndex = 0;
+	if(index > 0)
+		document.location = list_down2[index-1];
+}
+function choose_down1(item)
+{	var index          = item.selectedIndex;
+	item.selectedIndex = 0;
+	if(index > 0)
+		document.location = list_down1[index-1];
+}
+function choose_down0(item)
+{	var index          = item.selectedIndex;
+	item.selectedIndex = 0;
+	if(index > 0)
+		document.location = list_down0[index-1];
+}
+function choose_current0(item)
+{	var index          = item.selectedIndex;
+	item.selectedIndex = 0;
+	if(index > 0)
+		document.location = list_current0[index-1];
+}

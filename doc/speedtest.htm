@@ -1,0 +1,371 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>Run One Speed Test and Print Results</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Run One Speed Test and Print Results">
+<meta name="keywords" id="keywords" content=" run one speed test print results Speedtest syntax purpose motivation include size repeat name first last inc rate errors example ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_speedtest_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://coin-or.github.io/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="speed_test.cpp.htm" target="_top">Prev</a>
+</td><td><a href="speed_program.cpp.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>utility</option>
+<option>SpeedTest</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>CppAD-&gt;</option>
+<option>Install</option>
+<option>Introduction</option>
+<option>AD</option>
+<option>ADFun</option>
+<option>preprocessor</option>
+<option>multi_thread</option>
+<option>utility</option>
+<option>ipopt_solve</option>
+<option>Example</option>
+<option>speed</option>
+<option>Appendix</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>utility-&gt;</option>
+<option>ErrorHandler</option>
+<option>NearEqual</option>
+<option>speed_test</option>
+<option>SpeedTest</option>
+<option>time_test</option>
+<option>test_boolofvoid</option>
+<option>NumericType</option>
+<option>CheckNumericType</option>
+<option>SimpleVector</option>
+<option>CheckSimpleVector</option>
+<option>nan</option>
+<option>pow_int</option>
+<option>Poly</option>
+<option>LuDetAndSolve</option>
+<option>RombergOne</option>
+<option>RombergMul</option>
+<option>Runge45</option>
+<option>Rosen34</option>
+<option>OdeErrControl</option>
+<option>OdeGear</option>
+<option>OdeGearControl</option>
+<option>CppAD_vector</option>
+<option>thread_alloc</option>
+<option>index_sort</option>
+<option>to_string</option>
+<option>set_union</option>
+<option>sparse_rc</option>
+<option>sparse_rcv</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down0(this)'>
+<option>SpeedTest-&gt;</option>
+<option>speed_program.cpp</option>
+</select>
+</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Syntax</option>
+<option>Purpose</option>
+<option>Motivation</option>
+<option>Include</option>
+<option>Test</option>
+<option>---..size</option>
+<option>---..repeat</option>
+<option>---..name</option>
+<option>first</option>
+<option>last</option>
+<option>inc</option>
+<option>rate</option>
+<option>Errors</option>
+<option>Example</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@
+
+
+
+<center><b><big><big>Run One Speed Test and Print Results</big></big></b></center>
+<br>
+<b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
+
+
+<br>
+
+<code><font color="blue"><span style='white-space: nowrap'>#&nbsp;include&nbsp;&lt;cppad/utility/speed_test.hpp&gt;<br>
+</span></font></code>
+
+<code><font color="blue"><span style='white-space: nowrap'>SpeedTest(</span></font><i><font color="black"><span style='white-space: nowrap'>Test</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>first</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>inc</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>last</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+
+
+
+<br>
+<br>
+<b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
+<br>
+The <code><font color="blue">SpeedTest</font></code> function executes a speed test
+for various sized problems
+and reports the results on standard output; i.e. <code><font color="blue">std::cout</font></code>.
+The size of each test problem is included in its report
+(unless 
+<code><i><font color="black"><span style='white-space: nowrap'>first</span></font></i></code>
+ is equal to 
+<code><i><font color="black"><span style='white-space: nowrap'>last</span></font></i></code>
+).
+
+<br>
+<br>
+<b><big><a name="Motivation" id="Motivation">Motivation</a></big></b>
+<br>
+It is important to separate small calculation units
+and test them individually.
+This way individual changes can be tested in the context of the
+routine that they are in.
+On many machines, accurate timing of a very short execution
+sequences is not possible.
+In addition,
+there may be set up time for a test that
+we do not really want included in the timing.
+For this reason <code><font color="blue">SpeedTest</font></code>
+automatically determines how many times to
+repeat the section of the test that we wish to time.
+
+
+<br>
+<br>
+<b><big><a name="Include" id="Include">Include</a></big></b>
+<br>
+The file <code><font color="blue">speed_test.hpp</font></code> contains the
+<code><font color="blue">SpeedTest</font></code> function.
+This file is included by <code><font color="blue">cppad/cppad.hpp</font></code>
+but it can also be included separately with out the rest of
+the <code><font color="blue">CppAD</font></code> routines.
+
+<br>
+<br>
+<b><big><a name="Test" id="Test">Test</a></big></b>
+<br>
+The <code><font color="blue">SpeedTest</font></code> argument 
+<code><i><font color="black"><span style='white-space: nowrap'>Test</span></font></i></code>
+ is a function with the syntax
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>name</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Test</span></font></i><font color="blue"><span style='white-space: nowrap'>(</span></font><i><font color="black"><span style='white-space: nowrap'>size</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>repeat</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+<br>
+<b><a name="Test.size" id="Test.size">size</a></b>
+<br>
+The 
+<code><i><font color="black"><span style='white-space: nowrap'>Test</span></font></i></code>
+ argument 
+<code><i><font color="black"><span style='white-space: nowrap'>size</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>size</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+It specifies the size for this test.
+
+<br>
+<br>
+<b><a name="Test.repeat" id="Test.repeat">repeat</a></b>
+<br>
+The 
+<code><i><font color="black"><span style='white-space: nowrap'>Test</span></font></i></code>
+ argument 
+<code><i><font color="black"><span style='white-space: nowrap'>repeat</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>repeat</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+It specifies the number of times to repeat the test.
+
+<br>
+<br>
+<b><a name="Test.name" id="Test.name">name</a></b>
+<br>
+The 
+<code><i><font color="black"><span style='white-space: nowrap'>Test</span></font></i></code>
+ result 
+<code><i><font color="black"><span style='white-space: nowrap'>name</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;std::string&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>name</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+The results for this test are reported on <code><font color="blue">std::cout</font></code>
+with 
+<code><i><font color="black"><span style='white-space: nowrap'>name</span></font></i></code>
+ as an identifier for the test.
+It is assumed that,
+for the duration of this call to <code><font color="blue">SpeedTest</font></code>,
+
+<code><i><font color="black"><span style='white-space: nowrap'>Test</span></font></i></code>
+ will always return
+the same value for 
+<code><i><font color="black"><span style='white-space: nowrap'>name</span></font></i></code>
+.
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>name</span></font></i></code>
+ is the empty string,
+no test name is reported by <code><font color="blue">SpeedTest</font></code>.
+
+<br>
+<br>
+<b><big><a name="first" id="first">first</a></big></b>
+<br>
+The <code><font color="blue">SpeedTest</font></code> argument 
+<code><i><font color="black"><span style='white-space: nowrap'>first</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>first</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+It specifies the size of the first test problem reported by this call to
+<code><font color="blue">SpeedTest</font></code>.
+
+<br>
+<br>
+<b><big><a name="last" id="last">last</a></big></b>
+<br>
+The <code><font color="blue">SpeedTest</font></code> argument 
+<code><i><font color="black"><span style='white-space: nowrap'>last</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>last</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+It specifies the size of the last test problem reported by this call to
+<code><font color="blue">SpeedTest</font></code>.
+
+<br>
+<br>
+<b><big><a name="inc" id="inc">inc</a></big></b>
+<br>
+The <code><font color="blue">SpeedTest</font></code> argument 
+<code><i><font color="black"><span style='white-space: nowrap'>inc</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>inc</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+It specifies the increment between problem sizes; i.e.,
+all values of 
+<code><i><font color="black"><span style='white-space: nowrap'>size</span></font></i></code>
+ in calls to 
+<code><i><font color="black"><span style='white-space: nowrap'>Test</span></font></i></code>
+ are given by
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>size</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>first</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;+&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>j</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;*&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>inc</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+where 
+<code><i><font color="black"><span style='white-space: nowrap'>j</span></font></i></code>
+ is a positive integer.
+The increment can be positive or negative but it cannot be zero.
+The values 
+<code><i><font color="black"><span style='white-space: nowrap'>first</span></font></i></code>
+, 
+<code><i><font color="black"><span style='white-space: nowrap'>last</span></font></i></code>
+ and 
+<code><i><font color="black"><span style='white-space: nowrap'>inc</span></font></i></code>
+ must
+satisfy the relation
+<small>@[@
+
+	inc * ( last - first ) \geq 0
+
+@]@</small>
+
+<br>
+<br>
+<b><big><a name="rate" id="rate">rate</a></big></b>
+<br>
+The value displayed in the <code><font color="blue">rate</font></code> column on <code><font color="blue">std::cout</font></code>
+is defined as the value of 
+<code><i><font color="black"><span style='white-space: nowrap'>repeat</span></font></i></code>
+ divided by the
+corresponding elapsed execution time in seconds.
+The elapsed execution time is measured by the difference in
+<code><font color='blue'><pre style='display:inline'> 
+     (double) clock() / (double) CLOCKS_PER_SEC
+</pre></font></code>
+in the context of the standard <code><font color="blue">&lt;ctime&gt;</font></code> definitions.
+
+
+<br>
+<br>
+<b><big><a name="Errors" id="Errors">Errors</a></big></b>
+<br>
+If one of the restrictions above is violated,
+the CppAD error handler is used to report the error.
+You can redefine this action using the instructions in
+<a href="errorhandler.htm" target="_top"><span style='white-space: nowrap'>ErrorHandler</span></a>
+
+
+<br>
+<br>
+<b><big><a name="Example" id="Example">Example</a></big></b>
+
+<br>
+The program <a href="speed_program.cpp.htm" target="_top"><span style='white-space: nowrap'>speed_program.cpp</span></a>
+ is an example usage
+of <code><font color="blue">SpeedTest</font></code>.
+
+
+<hr>Input File: cppad/utility/speed_test.hpp
+
+</body>
+</html>

@@ -1,0 +1,1557 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>Changes and Additions to CppAD During 2007</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Changes and Additions to CppAD During 2007">
+<meta name="keywords" id="keywords" content=" changes additions to cppad during 2007 introduction 12-29 12-25 12-21 12-08 12-05 12-04 12-03 12-02 11-29 11-23 11-18 11-06 11-05 11-04 11-03 11-02 11-01 10-30 10-27 10-23 10-22 10-16 10-13 10-05 10-02 09-06 08-09 08-07 07-30 07-29 07-28 07-26 07-25 07-23 07-22 07-21 07-20 07-19 07-18 07-14 07-13 06-22 06-20 06-14 05-26 05-25 05-24 05-22 05-08 05-05 04-19 04-17 04-14 04-11 04-10 04-07 04-06 04-05 03-31 03-30 03-29 03-20 03-15 03-14 03-13 03-09 03-28 02-27 02-22 02-17 02-16 02-15 02-06 02-04 02-03 02-02 02-01 01-29 ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_whats_new_07_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://coin-or.github.io/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="whats_new_08.htm" target="_top">Prev</a>
+</td><td><a href="whats_new_06.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>Appendix</option>
+<option>whats_new</option>
+<option>whats_new_07</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>CppAD-&gt;</option>
+<option>Install</option>
+<option>Introduction</option>
+<option>AD</option>
+<option>ADFun</option>
+<option>preprocessor</option>
+<option>multi_thread</option>
+<option>utility</option>
+<option>ipopt_solve</option>
+<option>Example</option>
+<option>speed</option>
+<option>Appendix</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>Appendix-&gt;</option>
+<option>Faq</option>
+<option>directory</option>
+<option>Theory</option>
+<option>glossary</option>
+<option>Bib</option>
+<option>wish_list</option>
+<option>whats_new</option>
+<option>deprecated</option>
+<option>compare_c</option>
+<option>numeric_ad</option>
+<option>addon</option>
+<option>License</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>whats_new-&gt;</option>
+<option>whats_new_17</option>
+<option>whats_new_16</option>
+<option>whats_new_15</option>
+<option>whats_new_14</option>
+<option>whats_new_13</option>
+<option>whats_new_12</option>
+<option>whats_new_11</option>
+<option>whats_new_10</option>
+<option>whats_new_09</option>
+<option>whats_new_08</option>
+<option>whats_new_07</option>
+<option>whats_new_06</option>
+<option>whats_new_05</option>
+<option>whats_new_04</option>
+<option>whats_new_03</option>
+</select>
+</td>
+<td>whats_new_07</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Introduction</option>
+<option>12-29</option>
+<option>12-25</option>
+<option>12-21</option>
+<option>12-08</option>
+<option>12-05</option>
+<option>12-04</option>
+<option>12-03</option>
+<option>12-02</option>
+<option>11-29</option>
+<option>11-23</option>
+<option>11-18</option>
+<option>11-06</option>
+<option>11-05</option>
+<option>11-04</option>
+<option>11-03</option>
+<option>11-02</option>
+<option>11-01</option>
+<option>10-30</option>
+<option>10-27</option>
+<option>10-23</option>
+<option>10-22</option>
+<option>10-16</option>
+<option>10-13</option>
+<option>10-05</option>
+<option>10-02</option>
+<option>09-06</option>
+<option>08-09</option>
+<option>08-07</option>
+<option>07-30</option>
+<option>07-29</option>
+<option>07-28</option>
+<option>07-26</option>
+<option>07-26.07-26</option>
+<option>07-26.07-25</option>
+<option>07-23</option>
+<option>07-22</option>
+<option>07-21</option>
+<option>07-20</option>
+<option>07-19</option>
+<option>07-18</option>
+<option>07-14</option>
+<option>07-13</option>
+<option>06-22</option>
+<option>06-20</option>
+<option>06-14</option>
+<option>05-26</option>
+<option>05-25</option>
+<option>05-24</option>
+<option>05-22</option>
+<option>05-08</option>
+<option>05-05</option>
+<option>04-19</option>
+<option>04-17</option>
+<option>04-14</option>
+<option>04-11</option>
+<option>04-11.04-11</option>
+<option>04-11.04-10</option>
+<option>04-11.04-07</option>
+<option>04-11.04-06</option>
+<option>04-11.04-05</option>
+<option>03-31</option>
+<option>03-31.03-31</option>
+<option>03-31.03-30</option>
+<option>03-29</option>
+<option>03-20</option>
+<option>03-15</option>
+<option>03-15.03-15</option>
+<option>03-15.03-14</option>
+<option>03-15.03-13</option>
+<option>03-09</option>
+<option>03-09.03-28</option>
+<option>03-09.02-27</option>
+<option>03-09.02-22</option>
+<option>03-09.02-17</option>
+<option>03-09.02-16</option>
+<option>03-09.02-15</option>
+<option>02-06</option>
+<option>02-04</option>
+<option>02-03</option>
+<option>02-02</option>
+<option>02-01</option>
+<option>01-29</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@
+
+
+<center><b><big><big>Changes and Additions to CppAD During 2007</big></big></b></center>
+<br>
+<b><big><a name="Introduction" id="Introduction">Introduction</a></big></b>
+<br>
+This section contains a list of the changes to CppAD during 2007
+(in reverse order by date).
+The purpose of this section is to
+assist you in learning about changes between various versions of CppAD.
+
+<br>
+<br>
+<b><big><a name="12-29" id="12-29">12-29</a></big></b>
+<br>
+License conversions missed the copyright message at the top
+in the following special cases:
+<code><font color="blue">makefile.am</font></code>, <code><font color="blue">makefile.in</font></code>, and
+<code><font color="blue">omh/appendix/license.omh</font></code>.
+
+
+<br>
+<br>
+<b><big><a name="12-25" id="12-25">12-25</a></big></b>
+<br>
+The <a href="install.htm" target="_top"><span style='white-space: nowrap'>install</span></a>
+ instructions have been improved.
+
+<br>
+<br>
+<b><big><a name="12-21" id="12-21">12-21</a></big></b>
+<br>
+The <a href="autotools.htm#--with-Documentation" target="_top"><span style='white-space: nowrap'>--with-Documentation</span></a>
+
+option on the <code><font color="blue">configure</font></code> command line caused an error on some
+systems because it attempted to copy to many files.
+This has been fixed by copying the directory instead of the individual files.
+
+<br>
+<br>
+<b><big><a name="12-08" id="12-08">12-08</a></big></b>
+<br>
+By mistake, the documentation <a href="license.htm" target="_top"><span style='white-space: nowrap'>License</span></a>
+ statement
+for the GPL distribution was the same as for the CPL distribution.
+This has been fixed.
+
+<br>
+<br>
+<b><big><a name="12-05" id="12-05">12-05</a></big></b>
+<br>
+Change the name of the spec file from
+
+<code><font color="blue"><span style='white-space: nowrap'>cppad-</span></font><i><font color="black"><span style='white-space: nowrap'>yyyymmdd</span></font></i><font color="blue"><span style='white-space: nowrap'>.spec</span></font></code>
+ to <code><font color="blue">cppad.spec</font></code>.
+
+<br>
+<br>
+<b><big><a name="12-04" id="12-04">12-04</a></big></b>
+<br>
+Add the capability for the RPM spec file to use a different
+prefix directory.
+
+<br>
+<br>
+<b><big><a name="12-03" id="12-03">12-03</a></big></b>
+<br>
+This is the first version with the rpm spec file
+<code><font color="blue">cppad.spec</font></code>.
+
+<br>
+<br>
+<b><big><a name="12-02" id="12-02">12-02</a></big></b>
+<br>
+Add the 
+<code><font color="blue"><span style='white-space: nowrap'>DESTDIR=</span></font><i><font color="black"><span style='white-space: nowrap'>directory</span></font></i></code>
+ option on the
+<a href="autotools.htm#make install" target="_top"><span style='white-space: nowrap'>make&nbsp;install</span></a>
+ command line.
+
+<br>
+<br>
+<b><big><a name="11-29" id="11-29">11-29</a></big></b>
+<br>
+The <a href="unary_standard_math.htm" target="_top"><span style='white-space: nowrap'>unary_standard_math</span></a>
+ function <code><font color="blue">sqrt</font></code> did not link properly
+when 
+<code><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i></code>
+ was <code><font color="blue">AD&lt;double&gt;</font></code>.
+This has been fixed.
+
+<br>
+<br>
+<b><big><a name="11-23" id="11-23">11-23</a></big></b>
+<br>
+The routines <code><font color="blue">nan</font></code> and <code><font color="blue">isnan</font></code> were failing
+for some systems because they use <code><font color="blue">nan</font></code> and or <code><font color="blue">isnan</font></code>
+as preprocessor symbols.
+This has been fixed; see <a href="nan.htm#Include.Macros" target="_top"><span style='white-space: nowrap'>macros</span></a>
+.
+In addition, the example and test <a href="nan.cpp.htm" target="_top"><span style='white-space: nowrap'>nan.cpp</span></a>
+ has been added.
+
+<br>
+<br>
+<b><big><a name="11-18" id="11-18">11-18</a></big></b>
+<br>
+Speed tests for <code><font color="blue">tape_values</font></code> branch were not better than trunk,
+so the good parts of that branch (but not all) were merged into the trunk.
+<code><span style='white-space: nowrap'><br>
+<br>
+</span></code>The interface specifications for
+<a href="base_require.htm" target="_top"><span style='white-space: nowrap'>base&nbsp;type&nbsp;requirements</span></a>
+ have been changed so that
+CppAD would compile with <code><font color="blue">gcc 4.1.1</font></code>
+(which requires more definitions before use in template functions).
+This changed of requirements is demonstrated by the
+<a href="base_complex.hpp.htm" target="_top"><span style='white-space: nowrap'>base_complex.hpp</span></a>
+ and <a href="base_adolc.hpp.htm" target="_top"><span style='white-space: nowrap'>base_adolc.hpp</span></a>
+ examples.
+<code><span style='white-space: nowrap'><br>
+<br>
+</span></code>The problem with newer C++ compilers requiring more definitions before use
+also required the user to know about <code><font color="blue">float</font></code> and <code><font color="blue">double</font></code>
+definitions for the standard math
+functions in the CppAD namespace;
+see <a href="base_std_math.htm" target="_top"><span style='white-space: nowrap'>base_std_math</span></a>
+.
+<code><span style='white-space: nowrap'><br>
+<br>
+</span></code>The <code><font color="blue">example/test_one.sh</font></code> and <code><font color="blue">test_more/test_one.sh</font></code>
+scripts were modified so that one only need specify the test file name
+(does not also need the test routine name). Some of the test routine
+declarations were changed from 
+<code><i><font color="black"><span style='white-space: nowrap'>name</span></font></i><font color="blue"><span style='white-space: nowrap'>()</span></font></code>
+ to
+
+<code><i><font color="black"><span style='white-space: nowrap'>name</span></font></i><font color="blue"><span style='white-space: nowrap'>(void)</span></font></code>
+ to make this possible.
+<code><span style='white-space: nowrap'><br>
+<br>
+</span></code>The program <code><font color="blue">test_more/test_more</font></code> was changed to always
+report the memory leak test results (same as <code><font color="blue">example/example</font></code>).
+<code><span style='white-space: nowrap'><br>
+<br>
+</span></code>The <a href="printfor.htm" target="_top"><span style='white-space: nowrap'>PrintFor</span></a>
+ function was putting an unused variable in the tape.
+This has been fixed.
+
+
+
+<br>
+<br>
+<b><big><a name="11-06" id="11-06">11-06</a></big></b>
+<br>
+Added the <code><font color="blue">-DRAD_EQ_ALIAS</font></code> compiler flag to the
+<a href="speed_sacado.htm" target="_top"><span style='white-space: nowrap'>Sacado&nbsp;speed&nbsp;tests</span></a>
+.
+In addition, compiler flag documentation was included for
+Sacado and all the other speed tests.
+
+<br>
+<br>
+<b><big><a name="11-05" id="11-05">11-05</a></big></b>
+<br>
+MS project files have been added for running the
+<a href="speed_cppad.htm" target="_top"><span style='white-space: nowrap'>cppad</span></a>
+ and
+<a href="speed_double.htm" target="_top"><span style='white-space: nowrap'>double</span></a>
+
+speed tests.
+
+<br>
+<br>
+<b><big><a name="11-04" id="11-04">11-04</a></big></b>
+<br>
+The <code><font color="blue">cppad/config.h</font></code> file was not compatible with the
+Windows install procedure and
+the Windows project's could not find a certain include file.
+This has been fixed.
+<code><span style='white-space: nowrap'><br>
+<br>
+</span></code>The <a href="autotools.htm" target="_top"><span style='white-space: nowrap'>unix&nbsp;install</span></a>
+ procedure has been modified
+so that the one configure flag
+<code><font color="blue">--with-Speed</font></code>
+builds all the possible executables related to the speed testing.
+
+<br>
+<br>
+<b><big><a name="11-03" id="11-03">11-03</a></big></b>
+<br>
+Improve the <a href="speed_main.htm" target="_top"><span style='white-space: nowrap'>speed_main</span></a>
+ documentation and output
+(as well as the title for other sections under <a href="speed.htm" target="_top"><span style='white-space: nowrap'>speed</span></a>
+).
+<code><span style='white-space: nowrap'><br>
+<br>
+</span></code>The subversion copy of the <a href="autotools.htm#Configure" target="_top"><span style='white-space: nowrap'>configure</span></a>
+ script
+was not executable.
+This has been fixed.
+
+<br>
+<br>
+<b><big><a name="11-02" id="11-02">11-02</a></big></b>
+<br>
+The instructions for downloading the current version using
+<code><font color="blue">subversion</font></code> have changed.
+The user should now directly edit the file
+<code><font color='blue'><pre style='display:inline'> 
+     trunk/configure
+</pre></font></code>
+in order to set the correct date for the installation
+and to build the corresponding documentation.
+<code><span style='white-space: nowrap'><br>
+<br>
+</span></code>The <a href="speed.htm" target="_top"><span style='white-space: nowrap'>speed</span></a>
+ section has been slightly reorganized
+(the main program and utilities have been separated).
+<code><span style='white-space: nowrap'><br>
+<br>
+</span></code>Add <a href="speed_double.htm" target="_top"><span style='white-space: nowrap'>speed_double</span></a>
+ for testing the speed of evaluating
+functions in <code><font color="blue">double</font></code> as apposed to gradients using AD types.
+
+<br>
+<br>
+<b><big><a name="11-01" id="11-01">11-01</a></big></b>
+<br>
+The instructions for downloading the current version using subversion
+have changed.
+The user must now execute the command
+<code><font color='blue'><pre style='display:inline'> 
+     ./build.sh version
+</pre></font></code>
+in order to set the correct version number for her (or his) installation.
+<code><span style='white-space: nowrap'><br>
+<br>
+</span></code>Add the return status for all the correctness tests
+to the documentation; see <code><font color="blue">make test</font></code>.
+
+<br>
+<br>
+<b><big><a name="10-30" id="10-30">10-30</a></big></b>
+<br>
+The download instructions did not update current version number
+and this broke the links to the current tarballs.
+This has been fixed.
+<code><span style='white-space: nowrap'><br>
+<br>
+</span></code>The documentation for <a href="det_by_minor.htm" target="_top"><span style='white-space: nowrap'>det_by_minor</span></a>
+ and <a href="det_by_lu.htm" target="_top"><span style='white-space: nowrap'>det_by_lu</span></a>
+
+has been improved.
+The order of the elements in <a href="det_of_minor.htm" target="_top"><span style='white-space: nowrap'>det_of_minor</span></a>
+ has been
+corrected (they were transposed but this did not really matter
+because determinants of transposes are equal).
+<code><span style='white-space: nowrap'><br>
+<br>
+</span></code>The makefiles in the distribution have been changed so that
+one can run configure from a directory other than the distribution directory.
+
+<br>
+<br>
+<b><big><a name="10-27" id="10-27">10-27</a></big></b>
+<br>
+A <code><font color="blue">subversion</font></code> method
+for downloading CppAD has been added.
+<code><span style='white-space: nowrap'><br>
+<br>
+</span></code>The installation was broken on some systems because the
+<a href="autotools.htm#Configure" target="_top"><span style='white-space: nowrap'>configure</span></a>
+ command tried to run
+the <code><font color="blue">autoconf</font></code> and <code><font color="blue">automake</font></code> programs.
+This has been fixed by adding
+<code><font color="blue">AM_MAINTAINER_MODE</font></code> to the <code><font color="blue">autoconf</font></code> input file.
+<code><span style='white-space: nowrap'><br>
+<br>
+</span></code>Extend the
+<code><font color="blue">subversion</font></code>
+methods to include a full installation and old versions.
+
+<br>
+<br>
+<b><big><a name="10-23" id="10-23">10-23</a></big></b>
+<br>
+The <a href="autotools.htm#cxx_flags" target="_top"><span style='white-space: nowrap'>cxx_flags</span></a>
+ environment variable
+has been changed from <code><font color="blue">CPP_ERROR_WARN</font></code> to <code><font color="blue">CXX_FLAGS</font></code>.
+<code><span style='white-space: nowrap'><br>
+<br>
+</span></code>The command <code><font color="blue">configure --help</font></code> now prints a description
+of the environment variables
+<code><font color="blue">ADOLC_DIR</font></code>,
+<code><font color="blue">FADBAD_DIR</font></code>,
+<code><font color="blue">SACADO_DIR</font></code>,
+<code><font color="blue">BOOST_DIR</font></code>,
+and
+<code><font color="blue">CXX_FLAGS</font></code>.
+In addition, if the environment variables
+<code><font color="blue">POSTFIX_DIR</font></code> or <code><font color="blue">CPP_ERROR_WARN</font></code> are used,
+an message is printed saying that are not longer valid.
+
+
+<br>
+<br>
+<b><big><a name="10-22" id="10-22">10-22</a></big></b>
+<br>
+The correctness checks and speed test wrappers were moved
+from the individual package directories to <a href="speed_main.htm" target="_top"><span style='white-space: nowrap'>speed_main</span></a>
+.
+This way they do not have to be reproduced for each package.
+This makes it easier to add a new package,
+but it requires the prototype for
+
+<code><font color="blue"><span style='white-space: nowrap'>compute_</span></font><i><font color="black"><span style='white-space: nowrap'>test_name</span></font></i></code>
+ to be the same for all packages.
+<code><span style='white-space: nowrap'><br>
+<br>
+</span></code>The <a href="http://trilinos.sandia.gov/packages/sacado/" target="_top"><span style='white-space: nowrap'>Sacado</span></a>
+
+package was added to the list of <a href="speed.htm" target="_top"><span style='white-space: nowrap'>speed</span></a>
+ tests.
+In addition, the discussion about how to run each of the
+speed tests was corrected to include the 
+<code><i><font color="black"><span style='white-space: nowrap'>seed</span></font></i></code>
+ argument.
+<code><span style='white-space: nowrap'><br>
+<br>
+</span></code>The 
+<code><i><font color="black"><span style='white-space: nowrap'>postfix_dir</span></font></i></code>
+ option
+was removed on <a href="whats_new_06.htm#12-05" target="_top"><span style='white-space: nowrap'>2006-12-05</span></a>
+ but
+it was not removed from the
+<a href="autotools.htm#Configure" target="_top"><span style='white-space: nowrap'>configure</span></a>
+
+documentation.
+This has been fixed.
+<code><span style='white-space: nowrap'><br>
+<br>
+</span></code>The routine <a href="checksimplevector.htm" target="_top"><span style='white-space: nowrap'>CheckSimpleVector</span></a>
+ was changed.
+It used to require conversion of the form
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Scalar</span></font></i><font color="blue"><span style='white-space: nowrap'>(</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+where 
+<code><i><font color="black"><span style='white-space: nowrap'>i</span></font></i></code>
+ was <code><font color="blue">0</font></code> or <code><font color="blue">1</font></code>.
+This does not work with when 
+<code><i><font color="black"><span style='white-space: nowrap'>Scalar</span></font></i></code>
+ is
+<code><font color="blue">Sacado::Tay::Taylor&lt;double&gt;</font></code>.
+This requirement has been changed
+(see <a href="checksimplevector.htm#Restrictions" target="_top"><span style='white-space: nowrap'>restrictions</span></a>
+)
+to support of
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+where 
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+ has type 
+<code><i><font color="black"><span style='white-space: nowrap'>Scalar</span></font></i></code>
+
+and 
+<code><i><font color="black"><span style='white-space: nowrap'>i</span></font></i></code>
+ has type <code><font color="blue">int</font></code>.
+<code><span style='white-space: nowrap'><br>
+<br>
+</span></code>Fix include directives in <a href="speed_fadbad.htm" target="_top"><span style='white-space: nowrap'>speed_fadbad</span></a>
+ programs
+<code><font color="blue">det_lu</font></code>, <code><font color="blue">det_minor</font></code>, and <code><font color="blue">poly</font></code>,
+to use <code><font color="blue">FADBAD++</font></code> instead of <code><font color="blue">Fadbad++</font></code> directory.
+<code><span style='white-space: nowrap'><br>
+<br>
+</span></code>Add <code><font color="blue">ADOLC_DIR</font></code>, <code><font color="blue">FADBAD_DIR</font></code>, <code><font color="blue">SACADO_DIR</font></code>,
+and <code><font color="blue">BOOST_DIR</font></code>
+to the <a href="autotools.htm#Configure" target="_top"><span style='white-space: nowrap'>configure</span></a>
+ help string.
+
+
+<br>
+<br>
+<b><big><a name="10-16" id="10-16">10-16</a></big></b>
+<br>
+Add 
+<code><i><font color="black"><span style='white-space: nowrap'>seed</span></font></i></code>
+ argument and
+improve <a href="speed_main.htm" target="_top"><span style='white-space: nowrap'>speed_main</span></a>
+ documentation.
+
+<br>
+<br>
+<b><big><a name="10-13" id="10-13">10-13</a></big></b>
+<br>
+Fix the title in <a href="adolc_det_lu.cpp.htm" target="_top"><span style='white-space: nowrap'>adolc_det_lu.cpp</span></a>
+.
+Add the package name to each test case result printed by
+<a href="speed_main.htm" target="_top"><span style='white-space: nowrap'>speed_main</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="10-05" id="10-05">10-05</a></big></b>
+<br>
+Added and example using complex calculations for a
+function that is not complex differentiable <code><font color="blue">not_complex_ad.cpp</font></code>.
+(This example has been removed; see <a href="faq.htm#Complex Types" target="_top"><span style='white-space: nowrap'>complex&nbsp;FAQ</span></a>
+.)
+
+<br>
+<br>
+<b><big><a name="10-02" id="10-02">10-02</a></big></b>
+<br>
+Extend the <a href="pow.htm" target="_top"><span style='white-space: nowrap'>pow</span></a>
+ function to work for any case where one argument
+is 
+<code><font color="blue"><span style='white-space: nowrap'>AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code>
+ and the other is <code><font color="blue">double</font></code>
+(as do the binary operators).
+
+<br>
+<br>
+<b><big><a name="09-06" id="09-06">09-06</a></big></b>
+<br>
+If the <a href="odeerrcontrol.htm#Method.step" target="_top"><span style='white-space: nowrap'>method.step</span></a>
+ function returned
+<code><font color="blue">nan</font></code> (not a number),
+it was possible for <a href="odeerrcontrol.htm" target="_top"><span style='white-space: nowrap'>OdeErrControl</span></a>
+ to drop into an infinite loop.
+This has been fixed.
+
+<br>
+<br>
+<b><big><a name="08-09" id="08-09">08-09</a></big></b>
+<br>
+Let user detect and handel the case where an ODE initial vector 
+<code><i><font color="black"><span style='white-space: nowrap'>xi</span></font></i></code>
+
+contains  not a number <code><font color="blue">nan</font></code>
+(see <a href="runge45.htm" target="_top"><span style='white-space: nowrap'>Runge45</span></a>
+, <a href="rosen34.htm" target="_top"><span style='white-space: nowrap'>Rosen34</span></a>
+, and <a href="odeerrcontrol.htm" target="_top"><span style='white-space: nowrap'>OdeErrControl</span></a>
+).
+<code><span style='white-space: nowrap'><br>
+<br>
+</span></code>Use the <code><font color="blue">||</font></code> operation instead of <code><font color="blue">|</font></code>
+operator in the <code><font color="blue">nan</font></code> function
+(The Ginac library seems to use an alias for the type <code><font color="blue">bool</font></code> and
+does not have <code><font color="blue">|</font></code> defined for this alias).
+<code><span style='white-space: nowrap'><br>
+<br>
+</span></code>The file <code><font color="blue">test_more/ode_err_control.cpp</font></code> was using the
+wrong include file name since the change on 08/07.
+This has been fixed.
+
+<br>
+<br>
+<b><big><a name="08-07" id="08-07">08-07</a></big></b>
+<br>
+Sometimes an ODE solver takes to large a step and this results
+in invalid values for the variables being integrated.
+The ODE solvers <a href="runge45.htm" target="_top"><span style='white-space: nowrap'>Runge45</span></a>
+ and <a href="rosen34.htm" target="_top"><span style='white-space: nowrap'>Rosen34</span></a>
+ have been
+modified to abort
+and return <a href="nan.htm" target="_top"><span style='white-space: nowrap'>nan</span></a>
+ when it is returned by the differential
+equation evaluation.
+The solver <a href="odeerrcontrol.htm" target="_top"><span style='white-space: nowrap'>OdeErrControl</span></a>
+ have been modified to try smaller steps
+when this happens.
+<code><span style='white-space: nowrap'><br>
+<br>
+</span></code>Fix an <a href="funconstruct.htm#Sequence Constructor" target="_top"><span style='white-space: nowrap'>Sequence&nbsp;Constructor</span></a>
+
+referenced to <code><font color="blue">Dependent</font></code> in documentation
+(was using the <a href="fundeprecated.htm" target="_top"><span style='white-space: nowrap'>FunDeprecated</span></a>
+ one argument syntax).
+<code><span style='white-space: nowrap'><br>
+<br>
+</span></code>Add comment about mixing debug and non-debug versions of
+CppAD in <a href="tracknewdel.htm#TrackDelVec" target="_top"><span style='white-space: nowrap'>TrackDelVec</span></a>
+ error message.
+
+
+<br>
+<br>
+<b><big><a name="07-30" id="07-30">07-30</a></big></b>
+
+<code><font color="blue"><br>
+CppADCreateBinaryBool</font></code> and <code><font color="blue">CppADCreateUnaryBool</font></code>
+have been replaced by <code><font color="blue">CPPAD_BOOL_BINARY</font></code> and
+<code><font color="blue">CPPAD_BOOL_UNARY</font></code> respectively.
+In addition, the <a href="wish_list.htm" target="_top"><span style='white-space: nowrap'>wish_list</span></a>
+ item for conversion
+of all preprocessor macros to upper case been completed and removed.
+
+<br>
+<br>
+<b><big><a name="07-29" id="07-29">07-29</a></big></b>
+<br>
+The preprocessor macros
+<code><font color="blue">CppADUsageError</font></code> and <code><font color="blue">CppADUnknownError</font></code>
+have been replaced by <code><font color="blue">CPPAD_ASSERT_KNOWN</font></code> and
+<code><font color="blue">CPPAD_ASSERT_UNKNOWN</font></code> respectively.
+The meaning for these macros
+has been included in the <a href="cppad_assert.htm" target="_top"><span style='white-space: nowrap'>cppad_assert</span></a>
+ section.
+In addition, the 
+<code><i><font color="black"><span style='white-space: nowrap'>known</span></font></i></code>
+ argument to <a href="errorhandler.htm" target="_top"><span style='white-space: nowrap'>ErrorHandler</span></a>
+
+was wrong for the unknown case.
+<code><span style='white-space: nowrap'><br>
+<br>
+</span></code>The <a href="wish_list.htm" target="_top"><span style='white-space: nowrap'>wish_list</span></a>
+ item
+for conversion of all preprocessor macros to upper case
+has been changes (to an item that was previous missing).
+
+<br>
+<br>
+<b><big><a name="07-28" id="07-28">07-28</a></big></b>
+<br>
+The preprocessor macro <code><font color="blue">CPPAD_DISCRETE_FUNCTIOIN</font></code> was defined
+as a replacement for <code><font color="blue">CppADCreateDiscrete</font></code>
+which has been deprecated.
+
+<br>
+<br>
+<b><big><a name="07-26" id="07-26">07-26</a></big></b>
+<br>
+Merge in changes made in <code><font color="blue">branches/test_vector</font></code>.
+
+<br>
+<br>
+<b><a name="07-26.07-26" id="07-26.07-26">07-26</a></b>
+<br>
+Change all occurrences of <code><font color="blue">CppADvector</font></code>,
+in the files 
+<code><font color="blue"><span style='white-space: nowrap'>test_more/</span></font><i><font color="black"><span style='white-space: nowrap'>*</span></font></i><font color="blue"><span style='white-space: nowrap'>.cpp</span></font></code>
+ and 
+<code><font color="blue"><span style='white-space: nowrap'>speed/</span></font><i><font color="black"><span style='white-space: nowrap'>*</span></font></i><font color="blue"><span style='white-space: nowrap'>/</span></font><i><font color="black"><span style='white-space: nowrap'>*</span></font></i><font color="blue"><span style='white-space: nowrap'>.cpp</span></font></code>
+,
+where changed to <code><font color="blue">CPPAD_TEST_VECTOR</font></code>.
+All occurrences of the <code><font color="blue">CppADvector</font></code> in the documentation
+were edited to reflect that fact that it has been deprecated.
+The documentation index and search for
+deprecated items has been improved.
+
+<br>
+<br>
+<b><a name="07-26.07-25" id="07-26.07-25">07-25</a></b>
+<br>
+Deprecate the preprocessor symbol <code><font color="blue">CppADvector</font></code>
+and start changing it to
+<small><a href="test_vector.htm" target="_top"><span style='white-space: nowrap'>CPPAD_TEST_VECTOR</span></a>
+ </small>.
+<code><span style='white-space: nowrap'><br>
+<br>
+</span></code>Change all occurrences of <code><font color="blue">CppADvector</font></code>,
+in the 
+<code><font color="blue"><span style='white-space: nowrap'>example/</span></font><i><font color="black"><span style='white-space: nowrap'>*</span></font></i><font color="blue"><span style='white-space: nowrap'>.cpp</span></font></code>
+ files,
+to <code><font color="blue">CPPAD_TEST_VECTOR</font></code>.
+
+<br>
+<br>
+<b><big><a name="07-23" id="07-23">07-23</a></big></b>
+<br>
+The <a href="tracknewdel.htm" target="_top"><span style='white-space: nowrap'>TrackNewDel</span></a>
+ macros
+<code><font color="blue">CppADTrackNewVec</font></code>,
+<code><font color="blue">CppADTrackDelVec</font></code>, and
+<code><font color="blue">CppADTrackExtend</font></code> have been deprecated.
+The new macros names to use are
+<code><font color="blue">CPPAD_TRACK_NEW_VEC</font></code>,
+<code><font color="blue">CPPAD_TRACK_DEL_VEC</font></code>, and
+<code><font color="blue">CPPAD_TRACK_EXTEND</font></code> respectively.
+This item has been removed from the
+<a href="wish_list.htm#Software Guidelines" target="_top"><span style='white-space: nowrap'>software&nbsp;guidelines</span></a>
+
+section of the wish list.
+<code><span style='white-space: nowrap'><br>
+<br>
+</span></code>The member variable
+<a href="wish_list.htm#Software Guidelines" target="_top"><span style='white-space: nowrap'>software&nbsp;guideline</span></a>
+
+wish list item has be brought up to date.
+
+<br>
+<br>
+<b><big><a name="07-22" id="07-22">07-22</a></big></b>
+<br>
+Minor improvements to the <a href="mul_level_adolc_ode.cpp.htm" target="_top"><span style='white-space: nowrap'>mul_level_adolc_ode.cpp</span></a>
+ example.
+
+<br>
+<br>
+<b><big><a name="07-21" id="07-21">07-21</a></big></b>
+
+<ol type="1"><li>
+The <code><font color="blue">openmp/run.sh</font></code> example programs
+<code><font color="blue">example_a11c.cpp</font></code>,
+<code><font color="blue">openmp_newton_example.cpp</font></code>, and
+<code><font color="blue">sum_i_inv.cpp</font></code>
+have been changed so that they run on more systems
+(are C++ standard compliant).
+</li><li>
+
+<a href="base_require.htm" target="_top"><span style='white-space: nowrap'>base_require</span></a>
+:
+The <code><font color="blue">IdenticalEqual</font></code> function,
+in the <a href="base_require.htm" target="_top"><span style='white-space: nowrap'>base_require</span></a>
+ specification,
+was changed to <code><font color="blue">IdenticalEqualPar</font></code>
+(note the <a href="base_require.htm#API Warning" target="_top"><span style='white-space: nowrap'>API&nbsp;warning</span></a>
+ in the
+
+<code><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i></code>
+ requirement specifications).
+</li><li>
+
+Implementation of the <a href="base_require.htm" target="_top"><span style='white-space: nowrap'>base&nbsp;requirements</span></a>
+ for complex types
+were moved into the <a href="base_complex.hpp.htm" target="_top"><span style='white-space: nowrap'>base_complex.hpp</span></a>
+ example.
+</li></ol>
+
+
+
+
+<br>
+<br>
+<b><big><a name="07-20" id="07-20">07-20</a></big></b>
+<br>
+The download for CppAD was still broken.
+It turned out that the copyright message was missing from the file
+<a href="base_adolc.hpp.htm" target="_top"><span style='white-space: nowrap'>base_adolc.hpp</span></a>
+ and this stopped the creation of the download files.
+This has been fixed.
+In addition, the automated testing procedure has been modified so
+that missing copyright messages and test program failures will
+be more obvious in the test log.
+
+<br>
+<br>
+<b><big><a name="07-19" id="07-19">07-19</a></big></b>
+<br>
+The download for CppAD has been broken since the example
+<code><font color="blue">mul_level_adolc_ode.cpp</font></code> was added because the
+<code><font color="blue">example/example</font></code> program was failing.
+This has been fixed.
+
+<br>
+<br>
+<b><big><a name="07-18" id="07-18">07-18</a></big></b>
+<br>
+A realistic example using Adolc with CppAD
+<a href="mul_level_adolc_ode.cpp.htm" target="_top"><span style='white-space: nowrap'>mul_level_adolc_ode.cpp</span></a>
+ was added.
+The documentation for <a href="tracknewdel.htm" target="_top"><span style='white-space: nowrap'>TrackNewDel</span></a>
+ was improved.
+
+<br>
+<br>
+<b><big><a name="07-14" id="07-14">07-14</a></big></b>
+<br>
+Add a discussion at the beginning of
+<a href="mul_level_ode.cpp.htm" target="_top"><span style='white-space: nowrap'>mul_level_ode.cpp</span></a>
+ example
+(and improve the notation used in the example).
+
+<br>
+<br>
+<b><big><a name="07-13" id="07-13">07-13</a></big></b>
+<br>
+Separate the include file
+<a href="base_adolc.hpp.htm" target="_top"><span style='white-space: nowrap'>base_adolc.hpp</span></a>
+
+from the <a href="mul_level_adolc.cpp.htm" target="_top"><span style='white-space: nowrap'>mul_level_adolc.cpp</span></a>
+ example
+so that it can be used by other examples.
+
+<br>
+<br>
+<b><big><a name="06-22" id="06-22">06-22</a></big></b>
+<br>
+Add <a href="mul_level_adolc.cpp.htm" target="_top"><span style='white-space: nowrap'>mul_level_adolc.cpp</span></a>
+, an example that demonstrates using
+<code><font color="blue">adouble</font></code> and for the <a href="base_require.htm" target="_top"><span style='white-space: nowrap'>Base</span></a>
+ type.
+<code><span style='white-space: nowrap'><br>
+<br>
+</span></code>The <a href="get_started.cpp.htm" target="_top"><span style='white-space: nowrap'>get_started.cpp</span></a>
+
+example did not build when
+the <code><font color="blue">--with-Introduction</font></code> and
+<code><font color="blue">BOOST_DIR</font></code> options were included on the
+<a href="autotools.htm#Configure" target="_top"><span style='white-space: nowrap'>configure</span></a>
+ command line.
+In fact, some of the <a href="speed.htm" target="_top"><span style='white-space: nowrap'>speed</span></a>
+ tests also had compilation errors
+when <code><font color="blue">BOOST_DIR</font></code> was include in the configure command.
+This has been fixed.
+<code><span style='white-space: nowrap'><br>
+<br>
+</span></code>There was a namespace reference missing in the files
+that could have caused compilation errors in the files
+<code><font color="blue">speed/cppad/det_minor.cpp</font></code> and
+<code><font color="blue">speed/cppad/det_lu.cpp</font></code>.
+This has been fixed.
+
+<br>
+<br>
+<b><big><a name="06-20" id="06-20">06-20</a></big></b>
+<br>
+The MS project
+<code><font color="blue">test_more/test_more.vcproj</font></code> would not build because
+the file <code><font color="blue">test_more/fun_check.cpp</font></code> was missing;
+this has been fixed.
+In addition,
+fix warnings generated by the MS compiler when compiling the
+<code><font color="blue">test_more/test_more.cpp</font></code> file.
+<code><span style='white-space: nowrap'><br>
+<br>
+</span></code>Add a section defining the <a href="base_require.htm" target="_top"><span style='white-space: nowrap'>Base&nbsp;type&nbsp;requirements</span></a>
+.
+Remove the 
+<code><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i></code>
+ type restrictions from the <a href="faq.htm" target="_top"><span style='white-space: nowrap'>Faq</span></a>
+.
+Make all the prototype for the default Base types agree with
+the specifications in the Base type requirements.
+<code><span style='white-space: nowrap'><br>
+<br>
+</span></code>Fix the description of the <code><font color="blue">tan</font></code> function in
+<a href="unary_standard_math.htm" target="_top"><span style='white-space: nowrap'>unary_standard_math</span></a>
+.
+
+
+<br>
+<br>
+<b><big><a name="06-14" id="06-14">06-14</a></big></b>
+<br>
+The routine <a href="rosen34.htm" target="_top"><span style='white-space: nowrap'>Rosen34</span></a>
+ ( <a href="runge45.htm" target="_top"><span style='white-space: nowrap'>Runge45</span></a>
+ ) had a division
+of a <code><font color="blue">size_t</font></code> ( <code><font color="blue">int</font></code> ) by a 
+<code><i><font color="black"><span style='white-space: nowrap'>Scalar</span></font></i></code>
+,
+where 
+<code><i><font color="black"><span style='white-space: nowrap'>Scalar</span></font></i></code>
+ was any <a href="numerictype.htm" target="_top"><span style='white-space: nowrap'>NumericType</span></a>
+.
+Such an operation may not be valid for a particular numeric type.
+This has been fixed by explicitly converting the
+<code><font color="blue">size_t</font></code> to an <code><font color="blue">int</font></code>,
+then converting the <code><font color="blue">int</font></code> to a 
+<code><i><font color="black"><span style='white-space: nowrap'>Scalar</span></font></i></code>
+,
+and then preforming the division.
+(The conversion of an <code><font color="blue">int</font></code> to any numeric type must be valid.)
+
+<br>
+<br>
+<b><big><a name="05-26" id="05-26">05-26</a></big></b>
+<br>
+If the 
+<code><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i></code>
+ type is not <code><font color="blue">double</font></code>,
+the <a href="compound_assign.htm" target="_top"><span style='white-space: nowrap'>compound&nbsp;assignment</span></a>
+ operators did not
+always allow for <code><font color="blue">double</font></code> operands. For example,
+if 
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+ had type <code><font color="blue">AD&lt; AD&lt;double&gt; &gt;</font></code>
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;+=&nbsp;.5;<br>
+</span></font></code>
+would slice the value <code><font color="blue">.5</font></code> to an <code><font color="blue">int</font></code>
+and then convert it to an <code><font color="blue">AD&lt; AD&lt;double&gt; &gt;</font></code>.
+This has been fixed.
+<code><span style='white-space: nowrap'><br>
+<br>
+</span></code>This slicing has also been fixed in the
+<a href="ad_assign.htm" target="_top"><span style='white-space: nowrap'>assignment</span></a>
+ operation.
+In addition, the assignment and copy operations
+have been grouped together in the documentation; see <a href="ad_ctor.htm" target="_top"><span style='white-space: nowrap'>ad_ctor</span></a>
+ and <a href="ad_assign.htm" target="_top"><span style='white-space: nowrap'>ad_assign</span></a>
+.
+
+
+<br>
+<br>
+<b><big><a name="05-25" id="05-25">05-25</a></big></b>
+<br>
+Document usage of <code><font color="blue">double</font></code> with
+binary arithmetic operators,
+and combine all those operators into one section (<a href="ad_binary.htm" target="_top"><span style='white-space: nowrap'>ad_binary</span></a>
+).
+<code><span style='white-space: nowrap'><br>
+<br>
+</span></code>The documentation for all the <a href="compound_assign.htm" target="_top"><span style='white-space: nowrap'>compound&nbsp;assignment</span></a>
+
+operators has been grouped together.
+In addition, a
+compound assignment wish list item has been added
+(it was completed and removed with the
+<a href="whats_new_07.htm#05-26" target="_top"><span style='white-space: nowrap'>05-26</span></a>
+ update.)
+
+
+<br>
+<br>
+<b><big><a name="05-24" id="05-24">05-24</a></big></b>
+<br>
+Suppose that 
+<code><i><font color="black"><span style='white-space: nowrap'>op</span></font></i></code>
+ is a binary operation and we have
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>left</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>op</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>right</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+where one of the operands was <code><font color="blue">AD&lt; AD&lt;double&gt; &gt;</font></code> and
+the other operand was <code><font color="blue">double</font></code>.
+There was a bug in this case that caused the <code><font color="blue">double</font></code>
+operand to be converted to <code><font color="blue">int</font></code> before
+being converted to <code><font color="blue">AD&lt; AD&lt;double&gt; &gt;</font></code>.
+This has been fixed.
+
+<br>
+<br>
+<b><big><a name="05-22" id="05-22">05-22</a></big></b>
+<br>
+The Microsoft
+examples and testing
+project file <code><font color="blue">example/example.vcproj</font></code>
+was missing a reference to the
+source code file <code><font color="blue">example/reverse_two.cpp</font></code>.
+This has been fixed.
+
+<br>
+<br>
+<b><big><a name="05-08" id="05-08">05-08</a></big></b>
+<br>
+Reverse mode does not work with the
+<a href="pow.htm" target="_top"><span style='white-space: nowrap'>pow</span></a>
+ function when the base is less than or equal zero
+and the exponent is an integer.
+For this reason, the <a href="pow_int.htm" target="_top"><span style='white-space: nowrap'>pow_int</span></a>
+ function
+is no longer deprecated (and is used by CppAD when the exponent
+has type <code><font color="blue">int</font></code>).
+
+
+<br>
+<br>
+<b><big><a name="05-05" id="05-05">05-05</a></big></b>
+<br>
+Third and fourth order derivatives were included in the
+routine <code><font color="blue">test_more/sqrt.cpp</font></code> that tests square roots.
+<code><span style='white-space: nowrap'><br>
+<br>
+</span></code>The return value descriptions were improved for the introduction
+examples:
+<a href="exp_2_for1.htm#Return Value" target="_top"><span style='white-space: nowrap'>exp_2_for1</span></a>
+,
+<a href="exp_2_for2.htm#Return Value" target="_top"><span style='white-space: nowrap'>exp_2_for2</span></a>
+,
+<a href="exp_eps_for1.htm#Return Value" target="_top"><span style='white-space: nowrap'>exp_eps_for1</span></a>
+, and
+<a href="exp_eps_for2.htm#Return Value" target="_top"><span style='white-space: nowrap'>exp_eps_for2</span></a>
+.
+<code><span style='white-space: nowrap'><br>
+<br>
+</span></code>The summation index in <a href="sqrt_reverse.htm" target="_top"><span style='white-space: nowrap'>sqrt_reverse</span></a>
+ was changed from
+<small>@(@
+k
+@)@</small> to <small>@(@
+\ell
+@)@</small> to make partial differentiation
+with respect to <small>@(@
+z^{(k)}
+@)@</small> easier to understand.
+In addition, a sign error was corrected near the end of
+<a href="sqrt_reverse.htm" target="_top"><span style='white-space: nowrap'>sqrt_reverse</span></a>
+.
+<code><span style='white-space: nowrap'><br>
+<br>
+</span></code>The dimension for the notation <small>@(@
+X
+@)@</small> in
+<a href="reverse_identity.htm" target="_top"><span style='white-space: nowrap'>reverse_identity</span></a>
+ was corrected.
+<code><span style='white-space: nowrap'><br>
+<br>
+</span></code>The word mega was added to the spelling exception list for
+<code><font color="blue">openmp/run.sh</font></code>.
+
+<br>
+<br>
+<b><big><a name="04-19" id="04-19">04-19</a></big></b>
+<br>
+Improve connection from <a href="reverse_identity.htm" target="_top"><span style='white-space: nowrap'>reverse_identity</span></a>
+ theorem
+to <a href="reverse_any.htm" target="_top"><span style='white-space: nowrap'>reverse_any</span></a>
+ calculations.
+<code><span style='white-space: nowrap'><br>
+<br>
+</span></code>Improve the <code><font color="blue">openmp/run.sh</font></code> script.
+It now runs all the test cases at once in addition
+to including multiple number of thread cases for each test.
+<code><span style='white-space: nowrap'><br>
+<br>
+</span></code>Add the <code><font color="blue">sum_i_inv_time.cpp</font></code> OpenMP example case.
+<code><span style='white-space: nowrap'><br>
+<br>
+</span></code>There was a typo in the
+<a href="forward_order.htm#Second Order" target="_top"><span style='white-space: nowrap'>second&nbsp;order</span></a>
+ discussion
+(found by Kipp Martin).
+It has been fixed.
+
+
+<br>
+<br>
+<b><big><a name="04-17" id="04-17">04-17</a></big></b>
+<br>
+Add a paragraph to <a href="reverse_identity.htm" target="_top"><span style='white-space: nowrap'>reverse_identity</span></a>
+ explaining
+how it relates to <a href="reverse_any.htm" target="_top"><span style='white-space: nowrap'>reverse_any</span></a>
+ calculations.
+Add description of
+<a href="reverse_any.htm#First Order" target="_top"><span style='white-space: nowrap'>first</span></a>
+ and
+<a href="reverse_any.htm#Second Order" target="_top"><span style='white-space: nowrap'>second&nbsp;order</span></a>
+
+results in <a href="reverse_any.htm" target="_top"><span style='white-space: nowrap'>reverse_any</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="04-14" id="04-14">04-14</a></big></b>
+<br>
+Simplify the <a href="reverse.htm" target="_top"><span style='white-space: nowrap'>Reverse</span></a>
+ mode documentation by creating
+a separate <a href="reverse_two.htm" target="_top"><span style='white-space: nowrap'>reverse_two</span></a>
+ section for second order reverse,
+making major changes to the description in <a href="reverse_any.htm" target="_top"><span style='white-space: nowrap'>reverse_any</span></a>
+,
+and creating a third order example <a href="reverse_checkpoint.cpp.htm" target="_top"><span style='white-space: nowrap'>reverse_checkpoint.cpp</span></a>
+ for
+reverse mode calculations.
+<code><span style='white-space: nowrap'><br>
+<br>
+</span></code>Improve the <a href="reverse_identity.htm" target="_top"><span style='white-space: nowrap'>reverse_identity</span></a>
+ proof.
+
+<br>
+<br>
+<b><big><a name="04-11" id="04-11">04-11</a></big></b>
+<br>
+Merge in changes made in <code><font color="blue">branches/intro</font></code>.
+
+<br>
+<br>
+<b><a name="04-11.04-11" id="04-11.04-11">04-11</a></b>
+<br>
+Add <a href="exp_eps_rev2.htm" target="_top"><span style='white-space: nowrap'>exp_eps_rev2</span></a>
+ and its verification routine
+<a href="exp_eps_rev2.cpp.htm" target="_top"><span style='white-space: nowrap'>exp_eps_rev2.cpp</span></a>
+.
+
+<br>
+<br>
+<b><a name="04-11.04-10" id="04-11.04-10">04-10</a></b>
+<br>
+Finished off <a href="exp_2_rev2.htm" target="_top"><span style='white-space: nowrap'>exp_2_rev2</span></a>
+ and
+added <a href="exp_2_rev2.cpp.htm" target="_top"><span style='white-space: nowrap'>exp_2_rev2.cpp</span></a>
+ which verifies its calculations.
+Added second order calculations to <a href="exp_2_cppad.htm" target="_top"><span style='white-space: nowrap'>exp_2_cppad</span></a>
+.
+Added <a href="exp_eps_for2.htm" target="_top"><span style='white-space: nowrap'>exp_eps_for2</span></a>
+ and its verification routine.
+
+
+<br>
+<br>
+<b><a name="04-11.04-07" id="04-11.04-07">04-07</a></b>
+<br>
+Added a preliminary version of <a href="exp_2_rev2.htm" target="_top"><span style='white-space: nowrap'>exp_2_rev2</span></a>
+
+(does not yet have verification or exercises).
+
+<br>
+<br>
+<b><a name="04-11.04-06" id="04-11.04-06">04-06</a></b>
+<br>
+Fixed a problem with the Microsoft Visual Studio project file
+<code><font color="blue">introduction/exp_apx/exp_apx.vcproj</font></code>
+(it did not track the file name changes of the form
+<code><font color="blue">exp_apx/exp_2_for</font></code> to <code><font color="blue">exp_apx/exp_2_for1</font></code>
+on 04-05).
+<code><span style='white-space: nowrap'><br>
+<br>
+</span></code>Added <a href="exp_2_for2.htm" target="_top"><span style='white-space: nowrap'>exp_2_for2</span></a>
+ to introduction.
+
+<br>
+<br>
+<b><a name="04-11.04-05" id="04-11.04-05">04-05</a></b>
+<br>
+Use order expansions in introduction; e.g., the
+<a href="exp_2_for2.htm#Second Order Expansion" target="_top"><span style='white-space: nowrap'>second&nbsp;order&nbsp;expansion</span></a>
+
+for the <a href="exp_2.htm" target="_top"><span style='white-space: nowrap'>exp_2</span></a>
+ example.
+
+<br>
+<br>
+<b><big><a name="03-31" id="03-31">03-31</a></big></b>
+<br>
+Merge in changes made in <code><font color="blue">branches/intro</font></code>
+and remove the corresponding Introduction item from the wish list:
+
+<br>
+<br>
+<b><a name="03-31.03-31" id="03-31.03-31">03-31</a></b>
+<br>
+Create the a simpler exponential approximation in the <a href="introduction.htm" target="_top"><span style='white-space: nowrap'>introduction</span></a>
+
+called <a href="exp_2.htm" target="_top"><span style='white-space: nowrap'>exp_2</span></a>
+ which has a different program
+variable for each variable in the operation sequence.
+<code><span style='white-space: nowrap'><br>
+<br>
+</span></code>Simplify the <a href="exp_eps.htm" target="_top"><span style='white-space: nowrap'>exp_eps</span></a>
+ approximation using the
+<small>@(@
+v_1 , \ldots , v_7
+@)@</small> notation so that variables directly
+correspond to index in operation sequence (as with the <a href="exp_2.htm" target="_top"><span style='white-space: nowrap'>exp_2</span></a>
+
+example).
+
+<br>
+<br>
+<b><a name="03-31.03-30" id="03-31.03-30">03-30</a></b>
+<br>
+The Microsoft project file <code><font color="blue">introduction/exp_apx/exp_apx.vcproj</font></code>
+was referencing <code><font color="blue">exp_apx_ad.cpp</font></code> which no longer exists.
+It has been changed to reference <code><font color="blue">exp_apx_cppad.cpp</font></code>
+which is the new name for that file.
+
+
+<br>
+<br>
+<b><big><a name="03-29" id="03-29">03-29</a></big></b>
+<br>
+Fixed entries in this file where the year was mistakenly used for the month.
+To be more specific, 
+<code><font color="blue"><span style='white-space: nowrap'>07-</span></font><i><font color="black"><span style='white-space: nowrap'>dd</span></font></i></code>
+ was changed to 
+<code><font color="blue"><span style='white-space: nowrap'>03-</span></font><i><font color="black"><span style='white-space: nowrap'>dd</span></font></i></code>
+
+for some of the entries directly below.
+<code><span style='white-space: nowrap'><br>
+<br>
+</span></code>Corrected some places where <code><font color="blue">CppAD</font></code> was used in stead of <code><font color="blue">Adolc</font></code>
+in the <a href="adolc_poly.cpp.htm" target="_top"><span style='white-space: nowrap'>adolc_poly.cpp</span></a>
+ documentation.
+<code><span style='white-space: nowrap'><br>
+<br>
+</span></code>Added an Introduction and
+<a href="wish_list.htm#Tracing" target="_top"><span style='white-space: nowrap'>Tracing</span></a>
+ entry to the wish list.
+(The Introduction item was completed on <a href="whats_new_07.htm#03-31" target="_top"><span style='white-space: nowrap'>03-31</span></a>
+.)
+
+<br>
+<br>
+<b><big><a name="03-20" id="03-20">03-20</a></big></b>
+<br>
+Example A.1.1c, <code><font color="blue">example_a11c.cpp</font></code>,
+from the OpenMP 2.5 standards document,
+was added to the tests that can be run using <code><font color="blue">openmp/run.sh</font></code>.
+
+<br>
+<br>
+<b><big><a name="03-15" id="03-15">03-15</a></big></b>
+<br>
+Included the changes from openmp branch
+so that so CppAD does not use the OpenMP <code><font color="blue">threadprivate</font></code> command
+(some systems do not support this command).
+
+<br>
+<br>
+<b><a name="03-15.03-15" id="03-15.03-15">03-15</a></b>
+<br>
+Add command line arguments to <code><font color="blue">openmp_newton_example.cpp</font></code>, and
+modified <code><font color="blue">openmp/run.sh</font></code> to allow for more flexible testing.
+
+<br>
+<br>
+<b><a name="03-15.03-14" id="03-15.03-14">03-14</a></b>
+<br>
+Fixed some Microsoft compiler warnings by explicitly converting from
+<code><font color="blue">size_t</font></code> to <code><font color="blue">int</font></code>.
+<code><span style='white-space: nowrap'><br>
+<br>
+</span></code>In the Microsoft compiler case, the <code><font color="blue">cppad/config.h</font></code> file had
+the wrong setting of <code><font color="blue">GETTIMEOFDAY</font></code>.
+The setting is now overridden (and always false) when the
+<code><font color="blue">_MSC_VER</font></code> preprocessor symbol is defined.
+<code><span style='white-space: nowrap'><br>
+<br>
+</span></code>Some minor changes were made in an effort to speed up the multi-threading case.
+
+<br>
+<br>
+<b><a name="03-15.03-13" id="03-15.03-13">03-13</a></b>
+<br>
+Started a new openmp branch and created a version of CppAD
+that does not use the OpenMP <code><font color="blue">threadprivate</font></code> command
+(not supported on some systems).
+
+<br>
+<br>
+<b><big><a name="03-09" id="03-09">03-09</a></big></b>
+<br>
+Included the changes from openmp branch
+so that OpenMP can be used with CppAD,
+see <a href="omp_max_thread.htm" target="_top"><span style='white-space: nowrap'>omp_max_thread</span></a>
+.
+The changes
+dated between <a href="whats_new_07.htm#03-09.02-15" target="_top"><span style='white-space: nowrap'>02-15</span></a>
+ and 03-28 below
+were made in the openmp branch and transferred to the trunk on 03-09.
+
+
+<br>
+<br>
+<b><a name="03-09.03-28" id="03-09.03-28">03-28</a></b>
+<br>
+The conditional include commands were missing on some include files;
+for example
+<code><font color='blue'><pre style='display:inline'> 
+     # ifndef CPPAD_BENDER_QUAD_HPP
+     # define CPPAD_BENDER_QUAD_HPP
+</pre></font></code>
+was missing at the beginning of the <a href="benderquad.htm" target="_top"><span style='white-space: nowrap'>BenderQuad</span></a>
+ include file.
+This has been fixed.
+<code><span style='white-space: nowrap'><br>
+<br>
+</span></code>The <code><font color="blue">speed_test</font></code> routines <a href="speed_test.htm#Timing" target="_top"><span style='white-space: nowrap'>timing</span></a>
+ was
+changed to use <code><font color="blue">gettimeofday</font></code> if it is available.
+(<code><font color="blue">gettimeofday</font></code> measures wall clock time
+which is better in a multi-threading environment).
+<code><span style='white-space: nowrap'><br>
+<br>
+</span></code>Added the user multi-threading interface
+<a href="omp_max_thread.htm" target="_top"><span style='white-space: nowrap'>omp_max_thread</span></a>
+ along with its examples
+which are distributed in the directory <code><font color="blue">openmp</font></code>.
+<code><span style='white-space: nowrap'><br>
+<br>
+</span></code>The 
+<code><font color="blue"><span style='white-space: nowrap'>speed/</span></font><i><font color="black"><span style='white-space: nowrap'>*</span></font></i><font color="blue"><span style='white-space: nowrap'>.hpp</span></font></code>
+ files have been moved to
+
+<code><font color="blue"><span style='white-space: nowrap'>cppad/speed/</span></font><i><font color="black"><span style='white-space: nowrap'>*</span></font></i><font color="blue"><span style='white-space: nowrap'>.hpp</span></font></code>
+ and the corresponding wish list
+item has been removed.
+<code><span style='white-space: nowrap'><br>
+<br>
+</span></code>The multiple tapes with the same base type wish list item
+have been removed (it's purpose was multi-threading which
+has been implemented).
+
+
+<br>
+<br>
+<b><a name="03-09.02-27" id="03-09.02-27">02-27</a></b>
+<br>
+The <a href="speed.htm" target="_top"><span style='white-space: nowrap'>speed</span></a>
+ include files are currently being distributed
+above the <code><font color="blue">cppad</font></code> include directory.
+A fix this wish list item has been added.
+<code><span style='white-space: nowrap'><br>
+<br>
+</span></code>Multiple active tapes required a lot of multi-threading access
+management for the tapes. This was made simpler (and faster)
+by having at most one tape per thread.
+
+
+<br>
+<br>
+<b><a name="03-09.02-22" id="03-09.02-22">02-22</a></b>
+<br>
+The include command in the <a href="speed_test.htm" target="_top"><span style='white-space: nowrap'>speed_test</span></a>
+ documentation was
+<code><font color='blue'><pre style='display:inline'> 
+     # include &lt;speed/speed_test.hpp&gt;
+</pre></font></code>
+but it should have been
+<code><font color='blue'><pre style='display:inline'> 
+     # include &lt;cppad/speed_test.hpp&gt;
+</pre></font></code>
+This has been fixed.
+
+<br>
+<br>
+<b><a name="03-09.02-17" id="03-09.02-17">02-17</a></b>
+<br>
+An entry about optimizing the operation
+sequence in an <a href="funconstruct.htm" target="_top"><span style='white-space: nowrap'>ADFun</span></a>
+ object was added to the
+<a href="wish_list.htm" target="_top"><span style='white-space: nowrap'>wish_list</span></a>
+.
+<code><span style='white-space: nowrap'><br>
+<br>
+</span></code>Change the argument syntax for <a href="dependent.htm" target="_top"><span style='white-space: nowrap'>Dependent</span></a>
+ and deprecate the
+<a href="fundeprecated.htm#Dependent" target="_top"><span style='white-space: nowrap'>old&nbsp;Dependent&nbsp;syntax</span></a>
+.
+
+
+<br>
+<br>
+<b><a name="03-09.02-16" id="03-09.02-16">02-16</a></b>
+<br>
+Added 
+<code><font color="blue"><span style='white-space: nowrap'>VecAD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code>
+ as a valid argument type for the
+<a href="parvar.htm" target="_top"><span style='white-space: nowrap'>Parameter&nbsp;and&nbsp;Variable</span></a>
+ functions.
+In addition, <a href="vecad.htm#size_t Indexing" target="_top"><span style='white-space: nowrap'>size_t&nbsp;indexing</span></a>
+
+is was extended to be allowed during taping so long as the
+VecAD object is a parameter.
+
+
+<br>
+<br>
+<b><a name="03-09.02-15" id="03-09.02-15">02-15</a></b>
+<br>
+Fixed the <code><font color="blue">example/test_one.sh</font></code> script
+(it was using its old name <code><font color="blue">one_test</font></code>).
+
+<br>
+<br>
+<b><big><a name="02-06" id="02-06">02-06</a></big></b>
+<br>
+The <a href="benderquad.htm" target="_top"><span style='white-space: nowrap'>BenderQuad</span></a>
+ documentation was improved by adding the fact
+that the 
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+ and 
+<code><i><font color="black"><span style='white-space: nowrap'>y</span></font></i></code>
+ arguments to the 
+<code><font color="blue"><span style='white-space: nowrap'>f</span></font><i><font color="black"><span style='white-space: nowrap'>.dy</span></font></i></code>
+
+member function are equal to the 
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+ and 
+<code><i><font color="black"><span style='white-space: nowrap'>y</span></font></i></code>
+ arguments
+to <code><font color="blue">BenderQuad</font></code>. Hence values depending on them can be stored
+as private objects in 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+ and need not be recalculated.
+
+<br>
+<br>
+<b><big><a name="02-04" id="02-04">02-04</a></big></b>
+<br>
+The method for distributing the documentation needed to be
+changed in the top level <code><font color="blue">makefile.am</font></code> in order to
+be compatible with automake version 1.10.
+
+<br>
+<br>
+<b><big><a name="02-03" id="02-03">02-03</a></big></b>
+<br>
+The change on <a href="whats_new_07.htm#02-01" target="_top"><span style='white-space: nowrap'>02-01</span></a>
+ had a new, saved as a static
+pointer, with no corresponding delete.
+This was not a bug, but it has been changed to avoid
+an error message when using CppAD with
+<a href="http://valgrind.org/" target="_top"><span style='white-space: nowrap'>valgrind</span></a>
+.
+<code><span style='white-space: nowrap'><br>
+<br>
+</span></code>The change to the <code><font color="blue">pow</font></code> function on
+<a href="whats_new_06.htm#12-10" target="_top"><span style='white-space: nowrap'>06-12-10</span></a>
+ did not include the
+necessary changes to the sparsity calculations.
+This has been fixed.
+
+<br>
+<br>
+<b><big><a name="02-02" id="02-02">02-02</a></big></b>
+<br>
+Fix minor errors and improve
+<a href="autotools.htm#Profiling CppAD" target="_top"><span style='white-space: nowrap'>profiling</span></a>
+ documentation.
+Also change the problem sizes used for the <a href="speed.htm" target="_top"><span style='white-space: nowrap'>speed</span></a>
+ tests.
+
+<br>
+<br>
+<b><big><a name="02-01" id="02-01">02-01</a></big></b>
+<br>
+There seems to be a bug in the cygwin version of g++ version 3.4.4
+with the -O2 flag whereby some static variables in static member functions
+sometimes do not get constructed before being used. This has been
+avoided by using a static pointer and the new operator in cppad/local/ad.hpp.
+
+<br>
+<br>
+<b><big><a name="01-29" id="01-29">01-29</a></big></b>
+<br>
+The copyright message was missing from some of the distribution files
+for some new files added on <a href="whats_new_06.htm#12-15" target="_top"><span style='white-space: nowrap'>06-12-15</span></a>
+.
+This resulted in the
+tarballs 
+<code><i><font color="black"><span style='white-space: nowrap'>*</span></font></i><font color="blue"><span style='white-space: nowrap'>.tgz</span></font></code>
+ and 
+<code><i><font color="black"><span style='white-space: nowrap'>*</span></font></i><font color="blue"><span style='white-space: nowrap'>.zip</span></font></code>
+
+not existing for a period of time.
+The automated tests have been extended so that this should not happen again.
+
+
+<hr>Input File: omh/appendix/whats_new/whats_new_07.omh
+
+</body>
+</html>

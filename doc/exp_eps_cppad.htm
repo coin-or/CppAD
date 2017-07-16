@@ -1,0 +1,252 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>exp_eps: CppAD Forward and Reverse Sweeps</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="exp_eps: CppAD Forward and Reverse Sweeps">
+<meta name="keywords" id="keywords" content=" exp_eps: cppad forward reverse sweeps purpose exercises ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_exp_eps_cppad_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://coin-or.github.io/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="exp_eps_rev2.cpp.htm" target="_top">Prev</a>
+</td><td><a href="exp_apx.cpp.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>Introduction</option>
+<option>exp_eps</option>
+<option>exp_eps_cppad</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>CppAD-&gt;</option>
+<option>Install</option>
+<option>Introduction</option>
+<option>AD</option>
+<option>ADFun</option>
+<option>preprocessor</option>
+<option>multi_thread</option>
+<option>utility</option>
+<option>ipopt_solve</option>
+<option>Example</option>
+<option>speed</option>
+<option>Appendix</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>Introduction-&gt;</option>
+<option>exp_2</option>
+<option>exp_eps</option>
+<option>exp_apx.cpp</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>exp_eps-&gt;</option>
+<option>exp_eps.hpp</option>
+<option>exp_eps.cpp</option>
+<option>exp_eps_for0</option>
+<option>exp_eps_for1</option>
+<option>exp_eps_rev1</option>
+<option>exp_eps_for2</option>
+<option>exp_eps_rev2</option>
+<option>exp_eps_cppad</option>
+</select>
+</td>
+<td>exp_eps_cppad</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Purpose</option>
+<option>Exercises</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>exp_eps: CppAD Forward and Reverse Sweeps</big></big></b></center>
+.
+
+<br>
+<br>
+<b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
+<br>
+Use CppAD forward and reverse modes to compute the
+partial derivative with respect to <small>@(@
+x
+@)@</small>,
+at the point <small>@(@
+x = .5
+@)@</small> and <small>@(@
+\varepsilon = .2
+@)@</small>,
+of the function
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exp_eps(</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>epsilon</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+as defined by the <a href="exp_eps.hpp.htm" target="_top"><span style='white-space: nowrap'>exp_eps.hpp</span></a>
+ include file.
+
+<br>
+<br>
+<b><big><a name="Exercises" id="Exercises">Exercises</a></big></b>
+
+<ol type="1"><li>
+Create and test a modified version of the routine below that computes
+the same order derivatives with respect to <small>@(@
+x
+@)@</small>,
+at the point <small>@(@
+x = .1
+@)@</small> and <small>@(@
+\varepsilon = .2
+@)@</small>,
+of the function
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exp_eps(</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>epsilon</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+</li><li>
+Create and test a modified version of the routine below that computes
+partial derivative with respect to <small>@(@
+x
+@)@</small>,
+at the point <small>@(@
+x = .1
+@)@</small> and <small>@(@
+\varepsilon = .2
+@)@</small>,
+of the function corresponding to the operation sequence
+for <small>@(@
+x = .5
+@)@</small> and <small>@(@
+\varepsilon = .2
+@)@</small>.
+Hint: you could define a vector u with two components and use
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.Forward(0,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>u</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+to run zero order forward mode at a point different
+form the point where the operation sequence corresponding to
+
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+ was recorded.
+</li></ol>
+
+<pre><tt><b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/cppad.hpp&gt;</font>  <i><font color="#9A1900">// http://coin-or.github.io/CppAD/</font></i>
+<b><font color="#000080"># include</font></b> <font color="#FF0000">"exp_eps.hpp"</font>      <i><font color="#9A1900">// our example exponential function approximation</font></i>
+<font color="#009900">bool</font> <b><font color="#000000">exp_eps_cppad</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
+<font color="#FF0000">{</font>    <font color="#009900">bool</font> ok <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
+     <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>AD<font color="#990000">;</font>
+     <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">;</font>    <i><font color="#9A1900">// can use any simple vector template class</font></i>
+     <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>NearEqual<font color="#990000">;</font> <i><font color="#9A1900">// checks if values are nearly equal</font></i>
+
+     <i><font color="#9A1900">// domain space vector</font></i>
+     <font color="#008080">size_t</font> n <font color="#990000">=</font> <font color="#993399">2</font><font color="#990000">;</font> <i><font color="#9A1900">// dimension of the domain space</font></i>
+     <font color="#008080">vector&lt; AD&lt;double&gt; &gt;</font> <b><font color="#000000">U</font></b><font color="#990000">(</font>n<font color="#990000">);</font>
+     U<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#990000">.</font><font color="#993399">5</font><font color="#990000">;</font>    <i><font color="#9A1900">// value of x for this operation sequence</font></i>
+     U<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#990000">.</font><font color="#993399">2</font><font color="#990000">;</font>    <i><font color="#9A1900">// value of e for this operation sequence</font></i>
+
+     <i><font color="#9A1900">// declare independent variables and start recording operation sequence</font></i>
+     CppAD<font color="#990000">::</font><b><font color="#000000">Independent</font></b><font color="#990000">(</font>U<font color="#990000">);</font>
+
+     <i><font color="#9A1900">// evaluate our exponential approximation</font></i>
+     <font color="#008080">AD&lt;double&gt;</font> x       <font color="#990000">=</font> U<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">];</font>
+     <font color="#008080">AD&lt;double&gt;</font> epsilon <font color="#990000">=</font> U<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">];</font>
+     <font color="#008080">AD&lt;double&gt;</font> apx <font color="#990000">=</font> <b><font color="#000000">exp_eps</font></b><font color="#990000">(</font>x<font color="#990000">,</font> epsilon<font color="#990000">);</font>
+
+     <i><font color="#9A1900">// range space vector</font></i>
+     <font color="#008080">size_t</font> m <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font>  <i><font color="#9A1900">// dimension of the range space</font></i>
+     <font color="#008080">vector&lt; AD&lt;double&gt; &gt;</font> <b><font color="#000000">Y</font></b><font color="#990000">(</font>m<font color="#990000">);</font>
+     Y<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> apx<font color="#990000">;</font>    <i><font color="#9A1900">// variable that represents only range space component</font></i>
+
+     <i><font color="#9A1900">// Create f: U -&gt; Y corresponding to this operation sequence</font></i>
+     <i><font color="#9A1900">// and stop recording. This also executes a zero order forward</font></i>
+     <i><font color="#9A1900">// mode sweep using values in U for x and e.</font></i>
+     CppAD<font color="#990000">::</font><font color="#008080">ADFun&lt;double&gt;</font> <b><font color="#000000">f</font></b><font color="#990000">(</font>U<font color="#990000">,</font> Y<font color="#990000">);</font>
+
+     <i><font color="#9A1900">// first order forward mode sweep that computes partial w.r.t x</font></i>
+     <font color="#008080">vector&lt;double&gt;</font> <b><font color="#000000">du</font></b><font color="#990000">(</font>n<font color="#990000">);</font>      <i><font color="#9A1900">// differential in domain space</font></i>
+     <font color="#008080">vector&lt;double&gt;</font> <b><font color="#000000">dy</font></b><font color="#990000">(</font>m<font color="#990000">);</font>      <i><font color="#9A1900">// differential in range space</font></i>
+     du<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">.;</font>                <i><font color="#9A1900">// x direction in domain space</font></i>
+     du<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">.;</font>
+     dy    <font color="#990000">=</font> f<font color="#990000">.</font><b><font color="#000000">Forward</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">,</font> du<font color="#990000">);</font>  <i><font color="#9A1900">// partial w.r.t. x</font></i>
+     <font color="#009900">double</font> check <font color="#990000">=</font> <font color="#993399">1.5</font><font color="#990000">;</font>
+     ok   <font color="#990000">&amp;=</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>dy<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">],</font> check<font color="#990000">,</font> <font color="#993399">1e-10</font><font color="#990000">,</font> <font color="#993399">1e-10</font><font color="#990000">);</font>
+
+     <i><font color="#9A1900">// first order reverse mode sweep that computes the derivative</font></i>
+     <font color="#008080">vector&lt;double&gt;</font>  <b><font color="#000000">w</font></b><font color="#990000">(</font>m<font color="#990000">);</font>     <i><font color="#9A1900">// weights for components of the range</font></i>
+     <font color="#008080">vector&lt;double&gt;</font> <b><font color="#000000">dw</font></b><font color="#990000">(</font>n<font color="#990000">);</font>     <i><font color="#9A1900">// derivative of the weighted function</font></i>
+     w<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">.;</font>                <i><font color="#9A1900">// there is only one weight</font></i>
+     dw   <font color="#990000">=</font> f<font color="#990000">.</font><b><font color="#000000">Reverse</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">,</font> w<font color="#990000">);</font>   <i><font color="#9A1900">// derivative of w[0] * exp_eps(x, epsilon)</font></i>
+     check <font color="#990000">=</font> <font color="#993399">1.5</font><font color="#990000">;</font>              <i><font color="#9A1900">// partial w.r.t. x</font></i>
+     ok   <font color="#990000">&amp;=</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>dw<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">],</font> check<font color="#990000">,</font> <font color="#993399">1e-10</font><font color="#990000">,</font> <font color="#993399">1e-10</font><font color="#990000">);</font>
+     check <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">.;</font>               <i><font color="#9A1900">// partial w.r.t. epsilon</font></i>
+     ok   <font color="#990000">&amp;=</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>dw<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">],</font> check<font color="#990000">,</font> <font color="#993399">1e-10</font><font color="#990000">,</font> <font color="#993399">1e-10</font><font color="#990000">);</font>
+
+     <i><font color="#9A1900">// second order forward sweep that computes</font></i>
+     <i><font color="#9A1900">// second partial of exp_eps(x, epsilon) w.r.t. x</font></i>
+     <font color="#008080">vector&lt;double&gt;</font> <b><font color="#000000">x2</font></b><font color="#990000">(</font>n<font color="#990000">);</font>     <i><font color="#9A1900">// second order Taylor coefficients</font></i>
+     <font color="#008080">vector&lt;double&gt;</font> <b><font color="#000000">y2</font></b><font color="#990000">(</font>m<font color="#990000">);</font>
+     x2<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">.;</font>               <i><font color="#9A1900">// evaluate partial w.r.t x</font></i>
+     x2<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">.;</font>
+     y2    <font color="#990000">=</font> f<font color="#990000">.</font><b><font color="#000000">Forward</font></b><font color="#990000">(</font><font color="#993399">2</font><font color="#990000">,</font> x2<font color="#990000">);</font>
+     check <font color="#990000">=</font> <font color="#993399">0.5</font> <font color="#990000">*</font> <font color="#993399">1</font><font color="#990000">.;</font>         <i><font color="#9A1900">// Taylor coef is 1/2 second derivative</font></i>
+     ok   <font color="#990000">&amp;=</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>y2<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">],</font> check<font color="#990000">,</font> <font color="#993399">1e-10</font><font color="#990000">,</font> <font color="#993399">1e-10</font><font color="#990000">);</font>
+
+     <i><font color="#9A1900">// second order reverse sweep that computes</font></i>
+     <i><font color="#9A1900">// derivative of partial of exp_eps(x, epsilon) w.r.t. x</font></i>
+     dw<font color="#990000">.</font><b><font color="#000000">resize</font></b><font color="#990000">(</font><font color="#993399">2</font> <font color="#990000">*</font> n<font color="#990000">);</font>         <i><font color="#9A1900">// space for first and second derivative</font></i>
+     dw    <font color="#990000">=</font> f<font color="#990000">.</font><b><font color="#000000">Reverse</font></b><font color="#990000">(</font><font color="#993399">2</font><font color="#990000">,</font> w<font color="#990000">);</font>
+     check <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">.;</font>               <i><font color="#9A1900">// result should be second derivative</font></i>
+     ok   <font color="#990000">&amp;=</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>dw<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">*</font><font color="#993399">2</font><font color="#990000">+</font><font color="#993399">1</font><font color="#990000">],</font> check<font color="#990000">,</font> <font color="#993399">1e-10</font><font color="#990000">,</font> <font color="#993399">1e-10</font><font color="#990000">);</font>
+
+     <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
+<font color="#FF0000">}</font></tt></pre>
+
+<hr>Input File: introduction/exp_eps_cppad.cpp
+
+</body>
+</html>

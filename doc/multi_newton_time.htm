@@ -1,0 +1,474 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>Timing Test of Multi-Threaded Newton Method</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Timing Test of Multi-Threaded Newton Method">
+<meta name="keywords" id="keywords" content=" timing test multi-threaded newton method syntax purpose thread ok time_out test_time num_threads num_zero num_sub num_sum use_ad source ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_multi_newton_time_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://coin-or.github.io/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="multi_newton_run.htm" target="_top">Prev</a>
+</td><td><a href="team_thread.hpp.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>multi_thread</option>
+<option>thread_test.cpp</option>
+<option>multi_newton.cpp</option>
+<option>multi_newton_time</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>multi_thread-&gt;</option>
+<option>parallel_ad</option>
+<option>thread_test.cpp</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>thread_test.cpp-&gt;</option>
+<option>a11c_openmp.cpp</option>
+<option>a11c_bthread.cpp</option>
+<option>a11c_pthread.cpp</option>
+<option>simple_ad_openmp.cpp</option>
+<option>simple_ad_bthread.cpp</option>
+<option>simple_ad_pthread.cpp</option>
+<option>team_example.cpp</option>
+<option>harmonic.cpp</option>
+<option>multi_atomic.cpp</option>
+<option>multi_newton.cpp</option>
+<option>team_thread.hpp</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>multi_newton.cpp-&gt;</option>
+<option>multi_newton_common</option>
+<option>multi_newton_setup</option>
+<option>multi_newton_worker</option>
+<option>multi_newton_takedown</option>
+<option>multi_newton_run</option>
+<option>multi_newton_time</option>
+</select>
+</td>
+<td>multi_newton_time</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Syntax</option>
+<option>Purpose</option>
+<option>Thread</option>
+<option>ok</option>
+<option>time_out</option>
+<option>test_time</option>
+<option>num_threads</option>
+<option>num_zero</option>
+<option>num_sub</option>
+<option>num_sum</option>
+<option>use_ad</option>
+<option>Source</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@.
+
+<center><b><big><big>Timing Test of Multi-Threaded Newton Method</big></big></b></center>
+<br>
+<b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
+
+<br>
+
+<code><i><font color="black"><span style='white-space: nowrap'>ok</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;multi_newton_time(</span></font><i><font color="black"><span style='white-space: nowrap'>time_out</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>test_time</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>num_threads</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>num_zero</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>num_sub</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>num_sum</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>use_ad</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+)</span></font></code>
+
+
+<br>
+<br>
+<b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
+<br>
+Runs correctness and timing test for a multi-threaded Newton method.
+This test uses Newton's method to determine all the zeros of the sine
+function on an interval.
+CppAD, or hand coded derivatives,
+can be used to calculate the derivatives used by Newton's method.
+The calculation can be done in parallel on the different sub-intervals.
+In addition, the calculation can be done without multi-threading.
+
+<br>
+<br>
+<b><big><a name="Thread" id="Thread">Thread</a></big></b>
+<br>
+It is assumed that this function is called by thread zero in sequential
+mode; i.e., not <a href="ta_in_parallel.htm" target="_top"><span style='white-space: nowrap'>in_parallel</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="ok" id="ok">ok</a></big></b>
+<br>
+This return value has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bool&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ok</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+If it is true,
+<code><font color="blue">multi_newton_time</font></code> passed the correctness test.
+Otherwise it is false.
+
+<br>
+<br>
+<b><big><a name="time_out" id="time_out">time_out</a></big></b>
+<br>
+This argument has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;double&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>time_out</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+The input value of the argument does not matter.
+Upon return it is the number of wall clock seconds required for
+the multi-threaded Newton method can compute all the zeros.
+
+<br>
+<br>
+<b><big><a name="test_time" id="test_time">test_time</a></big></b>
+<br>
+Is the minimum amount of wall clock time that the test should take.
+The number of repeats for the test will be increased until this time
+is reached.
+The reported 
+<code><i><font color="black"><span style='white-space: nowrap'>time_out</span></font></i></code>
+ is the total wall clock time divided by the
+number of repeats.
+
+<br>
+<br>
+<b><big><a name="num_threads" id="num_threads">num_threads</a></big></b>
+<br>
+This argument has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>num_threads</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+It specifies the number of threads that
+are available for this test.
+If it is zero, the test is run without multi-threading and
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1&nbsp;==&nbsp;thread_alloc::num_threads()<br>
+</span></font></code>
+when <code><font color="blue">multi_newton_time</font></code> is called.
+If it is non-zero, the test is run with multi-threading and
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>num_threads</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;==&nbsp;thread_alloc::num_threads()<br>
+</span></font></code>
+when <code><font color="blue">multi_newton_time</font></code> is called.
+
+<br>
+<br>
+<b><big><a name="num_zero" id="num_zero">num_zero</a></big></b>
+<br>
+This argument has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>num_zero</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+and it must be greater than one.
+It specifies the actual number of zeros in the test function
+<small>@(@
+\sin(x)
+@)@</small>.
+To be specific, <code><font color="blue">multi_newton_time</font></code> will attempt to determine
+all of the values of <small>@(@
+x
+@)@</small> for which <small>@(@
+\sin(x) = 0
+@)@</small> and
+<small>@(@
+x
+@)@</small> is in the interval
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[&nbsp;0&nbsp;,&nbsp;(</span></font><i><font color="black"><span style='white-space: nowrap'>num_zero</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;-&nbsp;1)&nbsp;*&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>pi</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;]<br>
+</span></font></code>
+.
+
+<br>
+<br>
+<b><big><a name="num_sub" id="num_sub">num_sub</a></big></b>
+<br>
+This argument has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>num_sub</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+It specifies the number of sub-intervals to divide the total interval into.
+It must be greater than 
+<code><i><font color="black"><span style='white-space: nowrap'>num_zero</span></font></i></code>
+
+(so that the correctness test can check we have found all the zeros).
+
+<br>
+<br>
+<b><big><a name="num_sum" id="num_sum">num_sum</a></big></b>
+<br>
+This argument has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>num_sum</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+and must be greater than zero.
+The actual function used by the Newton method is
+<small>@[@
+
+	f(x) = \frac{1}{n} \sum_{i=1}^{n} \sin (x)
+
+@]@</small>
+where <small>@(@
+n
+@)@</small> is equal to 
+<code><i><font color="black"><span style='white-space: nowrap'>num_sum</span></font></i></code>
+.
+Larger values of 
+<code><i><font color="black"><span style='white-space: nowrap'>num_sum</span></font></i></code>
+ simulate a case where the
+evaluation of the function <small>@(@
+f(x)
+@)@</small> takes more time.
+
+<br>
+<br>
+<b><big><a name="use_ad" id="use_ad">use_ad</a></big></b>
+<br>
+This argument has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bool&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>user_ad</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>use_ad</span></font></i></code>
+ is <code><font color="blue">true</font></code>,
+then derivatives will be computed using CppAD.
+Note that this derivative computation includes
+re-taping the function for each
+value of <small>@(@
+x
+@)@</small> (even though re-taping is not necessary).
+<code><span style='white-space: nowrap'><br>
+<br>
+</span></code>If 
+<code><i><font color="black"><span style='white-space: nowrap'>use_ad</span></font></i></code>
+ is <code><font color="blue">false</font></code>,
+derivatives will be computed using a hand coded routine.
+
+<br>
+<br>
+<b><big><a name="Source" id="Source">Source</a></big></b>
+
+<pre><tt>
+
+<b><font color="#0000FF">namespace</font></b> <font color="#FF0000">{</font> <i><font color="#9A1900">// empty namespace</font></i>
+
+     <i><font color="#9A1900">// values correspond to arguments in previous call to multi_newton_time</font></i>
+     <font color="#008080">size_t</font> num_zero_<font color="#990000">;</font>   <i><font color="#9A1900">// number of zeros of f(x) in the total interval</font></i>
+     <font color="#008080">size_t</font> num_sub_<font color="#990000">;</font>    <i><font color="#9A1900">// number of sub-intervals to split calculation into</font></i>
+     <font color="#008080">size_t</font> num_sum_<font color="#990000">;</font>    <i><font color="#9A1900">// larger values make f(x) take longer to calculate</font></i>
+
+     <i><font color="#9A1900">// value of xout corresponding to most recent call to test_once</font></i>
+     <font color="#008080">vector&lt;double&gt;</font> xout_<font color="#990000">;</font>
+
+     <i><font color="#9A1900">// A version of the sine function that can be made as slow as we like</font></i>
+     <b><font color="#0000FF">template</font></b> <font color="#990000">&lt;</font><b><font color="#0000FF">class</font></b> <font color="#008080">Float</font><font color="#990000">&gt;</font>
+     <font color="#008080">Float</font> <b><font color="#000000">f_eval</font></b><font color="#990000">(</font><font color="#008080">Float</font> x<font color="#990000">)</font>
+     <font color="#FF0000">{</font>    <font color="#008080">Float</font> sum <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">.;</font>
+          <font color="#008080">size_t</font> i<font color="#990000">;</font>
+          <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> num_sum_<font color="#990000">;</font> i<font color="#990000">++)</font>
+               sum <font color="#990000">+=</font> <b><font color="#000000">sin</font></b><font color="#990000">(</font>x<font color="#990000">);</font>
+
+          <b><font color="#0000FF">return</font></b> sum <font color="#990000">/</font> <b><font color="#000000">Float</font></b><font color="#990000">(</font>num_sum_<font color="#990000">);</font>
+     <font color="#FF0000">}</font>
+
+     <i><font color="#9A1900">// Direct calculation of derivative with same number of floating point</font></i>
+     <i><font color="#9A1900">// operations as for f_eval.</font></i>
+     <font color="#009900">double</font> <b><font color="#000000">df_direct</font></b><font color="#990000">(</font><font color="#009900">double</font> x<font color="#990000">)</font>
+     <font color="#FF0000">{</font>    <font color="#009900">double</font> sum <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">.;</font>
+          <font color="#008080">size_t</font> i<font color="#990000">;</font>
+          <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> num_sum_<font color="#990000">;</font> i<font color="#990000">++)</font>
+               sum <font color="#990000">+=</font> <b><font color="#000000">cos</font></b><font color="#990000">(</font>x<font color="#990000">);</font>
+
+          <b><font color="#0000FF">return</font></b> sum <font color="#990000">/</font> <font color="#009900">double</font><font color="#990000">(</font>num_sum_<font color="#990000">);</font>
+     <font color="#FF0000">}</font>
+
+     <i><font color="#9A1900">// AD calculation of detivative</font></i>
+     <font color="#009900">void</font> <b><font color="#000000">fun_ad</font></b><font color="#990000">(</font><font color="#009900">double</font> x<font color="#990000">,</font> <font color="#009900">double</font><font color="#990000">&amp;</font> f<font color="#990000">,</font> <font color="#009900">double</font><font color="#990000">&amp;</font> df<font color="#990000">)</font>
+     <font color="#FF0000">{</font>    <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>AD<font color="#990000">;</font>
+
+          <i><font color="#9A1900">// use vector because it uses fast multi-threaded memory alloc</font></i>
+          <font color="#008080">vector&lt; AD&lt;double&gt; &gt;</font> <b><font color="#000000">X</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">),</font> <b><font color="#000000">Y</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">);</font>
+          X<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> x<font color="#990000">;</font>
+          CppAD<font color="#990000">::</font><b><font color="#000000">Independent</font></b><font color="#990000">(</font>X<font color="#990000">);</font>
+          Y<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <b><font color="#000000">f_eval</font></b><font color="#990000">(</font>X<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]);</font>
+          CppAD<font color="#990000">::</font><font color="#008080">ADFun&lt;double&gt;</font> <b><font color="#000000">F</font></b><font color="#990000">(</font>X<font color="#990000">,</font> Y<font color="#990000">);</font>
+          <font color="#008080">vector&lt;double&gt;</font> <b><font color="#000000">dx</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">),</font> <b><font color="#000000">dy</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">);</font>
+          dx<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">.;</font>
+          dy    <font color="#990000">=</font> F<font color="#990000">.</font><b><font color="#000000">Forward</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">,</font> dx<font color="#990000">);</font>
+          f     <font color="#990000">=</font> <b><font color="#000000">Value</font></b><font color="#990000">(</font> Y<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">);</font>
+          df    <font color="#990000">=</font> dy<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">];</font>
+          <b><font color="#0000FF">return</font></b><font color="#990000">;</font>
+     <font color="#FF0000">}</font>
+
+     <i><font color="#9A1900">// evaulate the function and its derivative</font></i>
+     <font color="#009900">void</font> <b><font color="#000000">fun_no</font></b><font color="#990000">(</font><font color="#009900">double</font> x<font color="#990000">,</font> <font color="#009900">double</font><font color="#990000">&amp;</font> f<font color="#990000">,</font> <font color="#009900">double</font><font color="#990000">&amp;</font> df<font color="#990000">)</font>
+     <font color="#FF0000">{</font>    f  <font color="#990000">=</font> <b><font color="#000000">f_eval</font></b><font color="#990000">(</font>x<font color="#990000">);</font>
+          df <font color="#990000">=</font> <b><font color="#000000">df_direct</font></b><font color="#990000">(</font>x<font color="#990000">);</font>
+          <b><font color="#0000FF">return</font></b><font color="#990000">;</font>
+     <font color="#FF0000">}</font>
+
+
+     <i><font color="#9A1900">// Run computation of all the zeros once</font></i>
+     <font color="#009900">void</font> <b><font color="#000000">test_once</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
+     <font color="#FF0000">{</font>    <b><font color="#0000FF">if</font></b><font color="#990000">(</font>  num_zero_ <font color="#990000">==</font> <font color="#993399">0</font> <font color="#990000">)</font>
+          <font color="#FF0000">{</font>    std<font color="#990000">::</font>cerr <font color="#990000">&lt;&lt;</font> <font color="#FF0000">"multi_newton_time: num_zero == 0"</font> <font color="#990000">&lt;&lt;</font> std<font color="#990000">::</font>endl<font color="#990000">;</font>
+               <b><font color="#000000">exit</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">);</font>
+          <font color="#FF0000">}</font>
+          <font color="#009900">double</font> pi      <font color="#990000">=</font> <font color="#993399">4</font><font color="#990000">.</font> <font color="#990000">*</font> std<font color="#990000">::</font><b><font color="#000000">atan</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">.);</font>
+          <font color="#009900">double</font> xlow    <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">.;</font>
+          <font color="#009900">double</font> xup     <font color="#990000">=</font> <font color="#990000">(</font>num_zero_ <font color="#990000">-</font> <font color="#993399">1</font><font color="#990000">)</font> <font color="#990000">*</font> pi<font color="#990000">;</font>
+          <font color="#009900">double</font> eps     <font color="#990000">=</font>
+               xup <font color="#990000">*</font> <font color="#993399">100</font><font color="#990000">.</font> <font color="#990000">*</font> CppAD<font color="#990000">::</font>numeric_limits<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;::</font><b><font color="#000000">epsilon</font></b><font color="#990000">();</font>
+          <font color="#008080">size_t</font> max_itr <font color="#990000">=</font> <font color="#993399">20</font><font color="#990000">;</font>
+
+          <i><font color="#9A1900">// note that fun_ is set to fun_ad or fun_no by multi_newton_time</font></i>
+          <font color="#009900">bool</font> ok <font color="#990000">=</font> <b><font color="#000000">multi_newton_run</font></b><font color="#990000">(</font>
+               xout_       <font color="#990000">,</font>
+               fun_        <font color="#990000">,</font>
+               num_sub_    <font color="#990000">,</font>
+               xlow        <font color="#990000">,</font>
+               xup         <font color="#990000">,</font>
+               eps         <font color="#990000">,</font>
+               max_itr     <font color="#990000">,</font>
+               num_threads_
+          <font color="#990000">);</font>
+          <b><font color="#0000FF">if</font></b><font color="#990000">(</font> <font color="#990000">!</font> ok <font color="#990000">)</font>
+          <font color="#FF0000">{</font>    std<font color="#990000">::</font>cerr <font color="#990000">&lt;&lt;</font> <font color="#FF0000">"multi_newton: error"</font> <font color="#990000">&lt;&lt;</font> std<font color="#990000">::</font>endl<font color="#990000">;</font>
+               <b><font color="#000000">exit</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">);</font>
+          <font color="#FF0000">}</font>
+          <b><font color="#0000FF">return</font></b><font color="#990000">;</font>
+     <font color="#FF0000">}</font>
+
+     <i><font color="#9A1900">// Repeat computation of all the zeros a specied number of times</font></i>
+     <font color="#009900">void</font> <b><font color="#000000">test_repeat</font></b><font color="#990000">(</font><font color="#008080">size_t</font> repeat<font color="#990000">)</font>
+     <font color="#FF0000">{</font>    <font color="#008080">size_t</font> i<font color="#990000">;</font>
+          <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> repeat<font color="#990000">;</font> i<font color="#990000">++)</font>
+               <b><font color="#000000">test_once</font></b><font color="#990000">();</font>
+          <b><font color="#0000FF">return</font></b><font color="#990000">;</font>
+     <font color="#FF0000">}</font>
+<font color="#FF0000">}</font> <i><font color="#9A1900">// end empty namespace</font></i>
+
+
+<i><font color="#9A1900">// This is the only routine that is accessible outside of this file</font></i>
+<font color="#009900">bool</font> <b><font color="#000000">multi_newton_time</font></b><font color="#990000">(</font>
+     <font color="#009900">double</font><font color="#990000">&amp;</font> time_out      <font color="#990000">,</font>
+     <font color="#009900">double</font>  test_time     <font color="#990000">,</font>
+     <font color="#008080">size_t</font>  num_threads   <font color="#990000">,</font>
+     <font color="#008080">size_t</font>  num_zero      <font color="#990000">,</font>
+     <font color="#008080">size_t</font>  num_sub       <font color="#990000">,</font>
+     <font color="#008080">size_t</font>  num_sum       <font color="#990000">,</font>
+     <font color="#009900">bool</font>    use_ad
+<font color="#990000">)</font>
+<font color="#FF0000">{</font>
+     <font color="#009900">bool</font> ok <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
+     ok     <font color="#990000">&amp;=</font> thread_alloc<font color="#990000">::</font><b><font color="#000000">thread_num</font></b><font color="#990000">()</font> <font color="#990000">==</font> <font color="#993399">0</font><font color="#990000">;</font>
+     ok     <font color="#990000">&amp;=</font> num_sub <font color="#990000">&gt;</font> num_zero<font color="#990000">;</font>
+
+     <i><font color="#9A1900">// Set local namespace environment variables</font></i>
+     num_threads_  <font color="#990000">=</font> num_threads<font color="#990000">;</font>
+     <b><font color="#0000FF">if</font></b><font color="#990000">(</font> use_ad <font color="#990000">)</font>
+          fun_ <font color="#990000">=</font> fun_ad<font color="#990000">;</font>
+     <b><font color="#0000FF">else</font></b> fun_ <font color="#990000">=</font> fun_no<font color="#990000">;</font>
+     <i><font color="#9A1900">//</font></i>
+     num_zero_     <font color="#990000">=</font> num_zero<font color="#990000">;</font>
+     num_sub_      <font color="#990000">=</font> num_sub<font color="#990000">;</font>
+     num_sum_      <font color="#990000">=</font> num_sum<font color="#990000">;</font>
+
+     <i><font color="#9A1900">// create team of threads</font></i>
+     ok <font color="#990000">&amp;=</font> thread_alloc<font color="#990000">::</font><b><font color="#000000">in_parallel</font></b><font color="#990000">()</font> <font color="#990000">==</font> <b><font color="#0000FF">false</font></b><font color="#990000">;</font>
+     <b><font color="#0000FF">if</font></b><font color="#990000">(</font> num_threads <font color="#990000">&gt;</font> <font color="#993399">0</font> <font color="#990000">)</font>
+     <font color="#FF0000">{</font>    <b><font color="#000000">team_create</font></b><font color="#990000">(</font>num_threads<font color="#990000">);</font>
+          ok <font color="#990000">&amp;=</font> num_threads <font color="#990000">==</font> thread_alloc<font color="#990000">::</font><b><font color="#000000">num_threads</font></b><font color="#990000">();</font>
+     <font color="#FF0000">}</font>
+     <b><font color="#0000FF">else</font></b>
+     <font color="#FF0000">{</font>    ok <font color="#990000">&amp;=</font> <font color="#993399">1</font> <font color="#990000">==</font> thread_alloc<font color="#990000">::</font><b><font color="#000000">num_threads</font></b><font color="#990000">();</font>
+     <font color="#FF0000">}</font>
+
+     <i><font color="#9A1900">// run the test case and set time return value</font></i>
+     time_out <font color="#990000">=</font> CppAD<font color="#990000">::</font><b><font color="#000000">time_test</font></b><font color="#990000">(</font>test_repeat<font color="#990000">,</font> test_time<font color="#990000">);</font>
+
+     <i><font color="#9A1900">// destroy team of threads</font></i>
+     <b><font color="#0000FF">if</font></b><font color="#990000">(</font> num_threads <font color="#990000">&gt;</font> <font color="#993399">0</font> <font color="#990000">)</font>
+          <b><font color="#000000">team_destroy</font></b><font color="#990000">();</font>
+     ok <font color="#990000">&amp;=</font> thread_alloc<font color="#990000">::</font><b><font color="#000000">in_parallel</font></b><font color="#990000">()</font> <font color="#990000">==</font> <b><font color="#0000FF">false</font></b><font color="#990000">;</font>
+     <i><font color="#9A1900">//</font></i>
+     <i><font color="#9A1900">// correctness check</font></i>
+     <font color="#009900">double</font> pi      <font color="#990000">=</font> <font color="#993399">4</font><font color="#990000">.</font> <font color="#990000">*</font> std<font color="#990000">::</font><b><font color="#000000">atan</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">.);</font>
+     <font color="#009900">double</font> xup     <font color="#990000">=</font> <font color="#990000">(</font>num_zero_ <font color="#990000">-</font> <font color="#993399">1</font><font color="#990000">)</font> <font color="#990000">*</font> pi<font color="#990000">;</font>
+     <font color="#009900">double</font> eps     <font color="#990000">=</font> xup <font color="#990000">*</font> <font color="#993399">100</font><font color="#990000">.</font> <font color="#990000">*</font> CppAD<font color="#990000">::</font>numeric_limits<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;::</font><b><font color="#000000">epsilon</font></b><font color="#990000">();</font>
+     ok        <font color="#990000">&amp;=</font> <font color="#990000">(</font>xout_<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">==</font> num_zero<font color="#990000">);</font>
+     <font color="#008080">size_t</font> i   <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
+     <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> xout_<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">();</font> i<font color="#990000">++)</font>
+          ok <font color="#990000">&amp;=</font> std<font color="#990000">::</font><b><font color="#000000">fabs</font></b><font color="#990000">(</font> xout_<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">-</font> pi <font color="#990000">*</font> i<font color="#990000">)</font> <font color="#990000">&lt;=</font> <font color="#993399">2</font> <font color="#990000">*</font> eps<font color="#990000">;</font>
+
+     <i><font color="#9A1900">// xout_ is a static variable, so clear it to free its memory</font></i>
+     xout_<font color="#990000">.</font><b><font color="#000000">clear</font></b><font color="#990000">();</font>
+
+     <i><font color="#9A1900">// return correctness check result</font></i>
+     <b><font color="#0000FF">return</font></b>  ok<font color="#990000">;</font>
+<font color="#FF0000">}</font></tt></pre>
+
+<hr>Input File: example/multi_thread/multi_newton.cpp
+
+</body>
+</html>

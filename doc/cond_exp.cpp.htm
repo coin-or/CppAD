@@ -1,0 +1,228 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>Conditional Expressions: Example and Test</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Conditional Expressions: Example and Test">
+<meta name="keywords" id="keywords" content=" conditional expressions: example test see also description ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_cond_exp.cpp_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://coin-or.github.io/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="condexp.htm" target="_top">Prev</a>
+</td><td><a href="discrete.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>AD</option>
+<option>ADValued</option>
+<option>CondExp</option>
+<option>cond_exp.cpp</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>AD-&gt;</option>
+<option>ad_ctor</option>
+<option>ad_assign</option>
+<option>Convert</option>
+<option>ADValued</option>
+<option>BoolValued</option>
+<option>VecAD</option>
+<option>base_require</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>ADValued-&gt;</option>
+<option>Arithmetic</option>
+<option>unary_standard_math</option>
+<option>binary_math</option>
+<option>CondExp</option>
+<option>Discrete</option>
+<option>numeric_limits</option>
+<option>atomic</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>CondExp-&gt;</option>
+<option>cond_exp.cpp</option>
+</select>
+</td>
+<td>cond_exp.cpp</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>See Also</option>
+<option>Description</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>Conditional Expressions: Example and Test</big></big></b></center>
+<br>
+<b><big><a name="See Also" id="See Also">See Also</a></big></b>
+
+<br>
+<a href="optimize_conditional_skip.cpp.htm" target="_top"><span style='white-space: nowrap'>optimize_conditional_skip.cpp</span></a>
+
+
+
+<br>
+<br>
+<b><big><a name="Description" id="Description">Description</a></big></b>
+<br>
+Use <code><font color="blue">CondExp</font></code> to compute
+<small>@[@
+
+	f(x) = \sum_{j=0}^{m-1} x_j \log( x_j )
+
+@]@</small>
+and its derivative at various argument values
+( where <small>@(@
+x_j \geq 0
+@)@</small> )
+with out having to re-tape; i.e.,
+using only one <a href="adfun.htm" target="_top"><span style='white-space: nowrap'>ADFun</span></a>
+ object.
+Note that <small>@(@
+x_j \log ( x_j ) \rightarrow 0
+@)@</small>
+as <small>@(@
+x_j \downarrow 0
+@)@</small> and
+we need to handle the case <small>@(@
+x_j = 0
+@)@</small>
+in a special way to avoid multiplying zero by infinity.
+
+<code><font color="blue">
+<pre><tt>
+<b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/cppad.hpp&gt;</font>
+<b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;limits&gt;</font>
+
+<font color="#009900">bool</font> <b><font color="#000000">CondExp</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
+<font color="#FF0000">{</font>    <font color="#009900">bool</font> ok <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
+
+     <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>isnan<font color="#990000">;</font>
+     <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>AD<font color="#990000">;</font>
+     <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>NearEqual<font color="#990000">;</font>
+     <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>log<font color="#990000">;</font>
+     <font color="#009900">double</font> eps  <font color="#990000">=</font> <font color="#993399">100</font><font color="#990000">.</font> <font color="#990000">*</font> CppAD<font color="#990000">::</font>numeric_limits<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;::</font><b><font color="#000000">epsilon</font></b><font color="#990000">();</font>
+
+     <i><font color="#9A1900">// domain space vector</font></i>
+     <font color="#008080">size_t</font> n <font color="#990000">=</font> <font color="#993399">5</font><font color="#990000">;</font>
+     <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font>AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;)</font> <b><font color="#000000">ax</font></b><font color="#990000">(</font>n<font color="#990000">);</font>
+     <font color="#008080">size_t</font> j<font color="#990000">;</font>
+     <b><font color="#0000FF">for</font></b><font color="#990000">(</font>j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> n<font color="#990000">;</font> j<font color="#990000">++)</font>
+          ax<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">.;</font>
+
+     <i><font color="#9A1900">// declare independent variables and start tape recording</font></i>
+     CppAD<font color="#990000">::</font><b><font color="#000000">Independent</font></b><font color="#990000">(</font>ax<font color="#990000">);</font>
+
+     <font color="#008080">AD&lt;double&gt;</font> asum  <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">.;</font>
+     <font color="#008080">AD&lt;double&gt;</font> azero <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">.;</font>
+     <b><font color="#0000FF">for</font></b><font color="#990000">(</font>j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> n<font color="#990000">;</font> j<font color="#990000">++)</font>
+     <font color="#FF0000">{</font>    <i><font color="#9A1900">// if x_j &gt; 0, add x_j * log( x_j ) to the sum</font></i>
+          asum <font color="#990000">+=</font> CppAD<font color="#990000">::</font><b><font color="#000000">CondExpGt</font></b><font color="#990000">(</font>ax<font color="#990000">[</font>j<font color="#990000">],</font> azero<font color="#990000">,</font> ax<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">*</font> <b><font color="#000000">log</font></b><font color="#990000">(</font>ax<font color="#990000">[</font>j<font color="#990000">]),</font> azero<font color="#990000">);</font>
+     <font color="#FF0000">}</font>
+
+     <i><font color="#9A1900">// range space vector</font></i>
+     <font color="#008080">size_t</font> m <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font>
+     <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font>AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;)</font> <b><font color="#000000">ay</font></b><font color="#990000">(</font>m<font color="#990000">);</font>
+     ay<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> asum<font color="#990000">;</font>
+
+     <i><font color="#9A1900">// create f: x -&gt; ay and stop tape recording</font></i>
+     CppAD<font color="#990000">::</font><font color="#008080">ADFun&lt;double&gt;</font> <b><font color="#000000">f</font></b><font color="#990000">(</font>ax<font color="#990000">,</font> ay<font color="#990000">);</font>
+
+     <i><font color="#9A1900">// vectors for arguments to the function object f</font></i>
+     <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font><font color="#009900">double</font><font color="#990000">)</font> <b><font color="#000000">x</font></b><font color="#990000">(</font>n<font color="#990000">);</font>   <i><font color="#9A1900">// argument values</font></i>
+     <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font><font color="#009900">double</font><font color="#990000">)</font> <b><font color="#000000">y</font></b><font color="#990000">(</font>m<font color="#990000">);</font>   <i><font color="#9A1900">// function values</font></i>
+     <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font><font color="#009900">double</font><font color="#990000">)</font> <b><font color="#000000">w</font></b><font color="#990000">(</font>m<font color="#990000">);</font>   <i><font color="#9A1900">// function weights</font></i>
+     <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font><font color="#009900">double</font><font color="#990000">)</font> <b><font color="#000000">dw</font></b><font color="#990000">(</font>n<font color="#990000">);</font>  <i><font color="#9A1900">// derivative of weighted function</font></i>
+
+     <i><font color="#9A1900">// a case where x[j] &gt; 0 for all j</font></i>
+     <font color="#009900">double</font> check  <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">.;</font>
+     <b><font color="#0000FF">for</font></b><font color="#990000">(</font>j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> n<font color="#990000">;</font> j<font color="#990000">++)</font>
+     <font color="#FF0000">{</font>    x<font color="#990000">[</font>j<font color="#990000">]</font>   <font color="#990000">=</font> <font color="#009900">double</font><font color="#990000">(</font>j <font color="#990000">+</font> <font color="#993399">1</font><font color="#990000">);</font>
+          check <font color="#990000">+=</font> x<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">*</font> <b><font color="#000000">log</font></b><font color="#990000">(</font> x<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">);</font>
+     <font color="#FF0000">}</font>
+
+     <i><font color="#9A1900">// function value</font></i>
+     y  <font color="#990000">=</font> f<font color="#990000">.</font><b><font color="#000000">Forward</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">,</font> x<font color="#990000">);</font>
+     ok <font color="#990000">&amp;=</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>y<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">],</font> check<font color="#990000">,</font> eps<font color="#990000">,</font> eps<font color="#990000">);</font>
+
+     <i><font color="#9A1900">// compute derivative of y[0]</font></i>
+     w<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">.;</font>
+     dw   <font color="#990000">=</font> f<font color="#990000">.</font><b><font color="#000000">Reverse</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">,</font> w<font color="#990000">);</font>
+     <b><font color="#0000FF">for</font></b><font color="#990000">(</font>j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> n<font color="#990000">;</font> j<font color="#990000">++)</font>
+          ok <font color="#990000">&amp;=</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>dw<font color="#990000">[</font>j<font color="#990000">],</font> <b><font color="#000000">log</font></b><font color="#990000">(</font>x<font color="#990000">[</font>j<font color="#990000">])</font> <font color="#990000">+</font> <font color="#993399">1</font><font color="#990000">.,</font> eps<font color="#990000">,</font> eps<font color="#990000">);</font>
+
+     <i><font color="#9A1900">// a case where x[3] is equal to zero</font></i>
+     check <font color="#990000">-=</font> x<font color="#990000">[</font><font color="#993399">3</font><font color="#990000">]</font> <font color="#990000">*</font> <b><font color="#000000">log</font></b><font color="#990000">(</font> x<font color="#990000">[</font><font color="#993399">3</font><font color="#990000">]</font> <font color="#990000">);</font>
+     x<font color="#990000">[</font><font color="#993399">3</font><font color="#990000">]</font>   <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">.;</font>
+
+     <i><font color="#9A1900">// function value</font></i>
+     y   <font color="#990000">=</font> f<font color="#990000">.</font><b><font color="#000000">Forward</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">,</font> x<font color="#990000">);</font>
+     ok <font color="#990000">&amp;=</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>y<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">],</font> check<font color="#990000">,</font> eps<font color="#990000">,</font> eps<font color="#990000">);</font>
+
+     <i><font color="#9A1900">// check derivative of y[0]</font></i>
+     f<font color="#990000">.</font><b><font color="#000000">check_for_nan</font></b><font color="#990000">(</font><b><font color="#0000FF">false</font></b><font color="#990000">);</font>
+     w<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">.;</font>
+     dw   <font color="#990000">=</font> f<font color="#990000">.</font><b><font color="#000000">Reverse</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">,</font> w<font color="#990000">);</font>
+     <b><font color="#0000FF">for</font></b><font color="#990000">(</font>j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> n<font color="#990000">;</font> j<font color="#990000">++)</font>
+     <font color="#FF0000">{</font>    <b><font color="#0000FF">if</font></b><font color="#990000">(</font> x<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">&gt;</font> <font color="#993399">0</font> <font color="#990000">)</font>
+               ok <font color="#990000">&amp;=</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>dw<font color="#990000">[</font>j<font color="#990000">],</font> <b><font color="#000000">log</font></b><font color="#990000">(</font>x<font color="#990000">[</font>j<font color="#990000">])</font> <font color="#990000">+</font> <font color="#993399">1</font><font color="#990000">.,</font> eps<font color="#990000">,</font> eps<font color="#990000">);</font>
+          <b><font color="#0000FF">else</font></b>
+          <font color="#FF0000">{</font>    <i><font color="#9A1900">// Note that in case where dw has type AD&lt;double&gt; and is a variable</font></i>
+               <i><font color="#9A1900">// this dw[j] can be nan (zero times nan is not zero).</font></i>
+               ok <font color="#990000">&amp;=</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>dw<font color="#990000">[</font>j<font color="#990000">],</font> <font color="#993399">0.0</font><font color="#990000">,</font> eps<font color="#990000">,</font> eps<font color="#990000">);</font>
+          <font color="#FF0000">}</font>
+     <font color="#FF0000">}</font>
+
+     <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
+<font color="#FF0000">}</font></tt></pre>
+</font></code>
+<hr>Input File: example/general/cond_exp.cpp
+
+</body>
+</html>

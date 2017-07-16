@@ -1,0 +1,487 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>Routines That Track Use of New and Delete</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Routines That Track Use of New and Delete">
+<meta name="keywords" id="keywords" content=" routines that track use new delete memory Ndebug Cppad_track_new_vec Cppadtracknewvec Cppad_track_del_vec Cppadtrackdelvec Cppad_track_extend Cppadtrackextend Cppad_track_count thread multi deprecated 2007-07-23 syntax purpose include file line oldptr newlen head newptr ncopy tracknewvec macro previously trackdelvec trackextend trackcount multi-threading example ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_tracknewdel_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://coin-or.github.io/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="omp_max_thread.htm" target="_top">Prev</a>
+</td><td><a href="tracknewdel.cpp.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>Appendix</option>
+<option>deprecated</option>
+<option>TrackNewDel</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>CppAD-&gt;</option>
+<option>Install</option>
+<option>Introduction</option>
+<option>AD</option>
+<option>ADFun</option>
+<option>preprocessor</option>
+<option>multi_thread</option>
+<option>utility</option>
+<option>ipopt_solve</option>
+<option>Example</option>
+<option>speed</option>
+<option>Appendix</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>Appendix-&gt;</option>
+<option>Faq</option>
+<option>directory</option>
+<option>Theory</option>
+<option>glossary</option>
+<option>Bib</option>
+<option>wish_list</option>
+<option>whats_new</option>
+<option>deprecated</option>
+<option>compare_c</option>
+<option>numeric_ad</option>
+<option>addon</option>
+<option>License</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>deprecated-&gt;</option>
+<option>include_deprecated</option>
+<option>FunDeprecated</option>
+<option>CompareChange</option>
+<option>omp_max_thread</option>
+<option>TrackNewDel</option>
+<option>omp_alloc</option>
+<option>memory_leak</option>
+<option>epsilon</option>
+<option>test_vector</option>
+<option>cppad_ipopt_nlp</option>
+<option>old_atomic</option>
+<option>zdouble</option>
+<option>autotools</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down0(this)'>
+<option>TrackNewDel-&gt;</option>
+<option>TrackNewDel.cpp</option>
+</select>
+</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Deprecated 2007-07-23</option>
+<option>Syntax</option>
+<option>Purpose</option>
+<option>Include</option>
+<option>file</option>
+<option>line</option>
+<option>oldptr</option>
+<option>newlen</option>
+<option>head newptr</option>
+<option>ncopy</option>
+<option>TrackNewVec</option>
+<option>---..Macro</option>
+<option>---..Previously Deprecated</option>
+<option>TrackDelVec</option>
+<option>---..Macro</option>
+<option>---..Previously Deprecated</option>
+<option>TrackExtend</option>
+<option>---..Macro</option>
+<option>---..Previously Deprecated</option>
+<option>TrackCount</option>
+<option>---..Macro</option>
+<option>---..Previously Deprecated</option>
+<option>Multi-Threading</option>
+<option>Example</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@
+
+
+<center><b><big><big>Routines That Track Use of New and Delete</big></big></b></center>
+<br>
+<b><big><a name="Deprecated 2007-07-23" id="Deprecated 2007-07-23">Deprecated 2007-07-23</a></big></b>
+<br>
+All these routines have been deprecated.
+You should use the <a href="thread_alloc.htm" target="_top"><span style='white-space: nowrap'>thread_alloc</span></a>
+ memory allocator instead
+(which works better in both a single thread and
+properly in multi-threading environment).
+
+<br>
+<br>
+<b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
+
+<br>
+
+<code><font color="blue"><span style='white-space: nowrap'>#&nbsp;include&nbsp;&lt;cppad/utility/track_new_del.hpp&gt;<br>
+</span></font></code>
+
+<code><i><font color="black"><span style='white-space: nowrap'>newptr</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;TrackNewVec(</span></font><i><font color="black"><span style='white-space: nowrap'>file</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>line</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>newlen</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>oldptr</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+
+<code><font color="blue"><span style='white-space: nowrap'>TrackDelVec(</span></font><i><font color="black"><span style='white-space: nowrap'>file</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>line</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>oldptr</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+
+<code><i><font color="black"><span style='white-space: nowrap'>newptr</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;TrackExtend(</span></font><i><font color="black"><span style='white-space: nowrap'>file</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>line</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>newlen</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ncopy</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>oldptr</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+
+<code><i><font color="black"><span style='white-space: nowrap'>count</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;TrackCount(</span></font><i><font color="black"><span style='white-space: nowrap'>file</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>line</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+
+
+
+<br>
+<br>
+<b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
+<br>
+These routines
+aid in the use of <code><font color="blue">new[]</font></code> and  <code><font color="blue">delete[]</font></code>
+during the execution of a C++ program.
+
+<br>
+<br>
+<b><big><a name="Include" id="Include">Include</a></big></b>
+<br>
+The file <code><font color="blue">cppad/track_new_del.hpp</font></code> is included by
+<code><font color="blue">cppad/cppad.hpp</font></code>
+but it can also be included separately with out the rest of the
+CppAD include files.
+
+
+<br>
+<br>
+<b><big><a name="file" id="file">file</a></big></b>
+<br>
+The argument 
+<code><i><font color="black"><span style='white-space: nowrap'>file</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;char&nbsp;*</span></font><i><font color="black"><span style='white-space: nowrap'>file</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+It should be the source code file name
+where the call to <code><font color="blue">TrackNew</font></code> is located.
+The best way to accomplish this is the use the preprocessor symbol
+<code><font color="blue">__FILE__</font></code> for this argument.
+
+<br>
+<br>
+<b><big><a name="line" id="line">line</a></big></b>
+<br>
+The argument 
+<code><i><font color="black"><span style='white-space: nowrap'>line</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>line</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+It should be the source code file line number
+where the call to <code><font color="blue">TrackNew</font></code> is located.
+The best way to accomplish this is the use the preprocessor symbol
+<code><font color="blue">__LINE__</font></code> for this argument.
+
+<br>
+<br>
+<b><big><a name="oldptr" id="oldptr">oldptr</a></big></b>
+<br>
+The argument 
+<code><i><font color="black"><span style='white-space: nowrap'>oldptr</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Type</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;*</span></font><i><font color="black"><span style='white-space: nowrap'>oldptr</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+This argument is used to identify the type 
+<code><i><font color="black"><span style='white-space: nowrap'>Type</span></font></i></code>
+.
+
+<br>
+<br>
+<b><big><a name="newlen" id="newlen">newlen</a></big></b>
+<br>
+The argument 
+<code><i><font color="black"><span style='white-space: nowrap'>newlen</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>newlen</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+<br>
+<b><big><a name="head newptr" id="head newptr">head newptr</a></big></b>
+<br>
+The return value 
+<code><i><font color="black"><span style='white-space: nowrap'>newptr</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Type</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;*</span></font><i><font color="black"><span style='white-space: nowrap'>newptr</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+It points to the newly allocated vector of objects
+that were allocated using
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;new&nbsp;Type[</span></font><i><font color="black"><span style='white-space: nowrap'>newlen</span></font></i><font color="blue"><span style='white-space: nowrap'>]<br>
+</span></font></code>
+<br>
+<b><big><a name="ncopy" id="ncopy">ncopy</a></big></b>
+<br>
+The argument 
+<code><i><font color="black"><span style='white-space: nowrap'>ncopy</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ncopy</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+This specifies the number of elements that are copied from
+the old array to the new array.
+The value of 
+<code><i><font color="black"><span style='white-space: nowrap'>ncopy</span></font></i></code>
+
+must be less than or equal 
+<code><i><font color="black"><span style='white-space: nowrap'>newlen</span></font></i></code>
+.
+
+<br>
+<br>
+<b><big><a name="TrackNewVec" id="TrackNewVec">TrackNewVec</a></big></b>
+<br>
+If <code><font color="blue">NDEBUG</font></code> is defined, this routine only sets
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>newptr</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Type</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;new[</span></font><i><font color="black"><span style='white-space: nowrap'>newlen</span></font></i><font color="blue"><span style='white-space: nowrap'>]<br>
+</span></font></code>
+The value of 
+<code><i><font color="black"><span style='white-space: nowrap'>oldptr</span></font></i></code>
+ does not matter
+(except that it is used to identify 
+<code><i><font color="black"><span style='white-space: nowrap'>Type</span></font></i></code>
+).
+If <code><font color="blue">NDEBUG</font></code> is not defined, <code><font color="blue">TrackNewVec</font></code> also
+tracks the this memory allocation.
+In this case, if memory cannot be allocated
+<a href="errorhandler.htm" target="_top"><span style='white-space: nowrap'>ErrorHandler</span></a>
+ is used to generate a message
+stating that there was not sufficient memory.
+
+<br>
+<br>
+<b><a name="TrackNewVec.Macro" id="TrackNewVec.Macro">Macro</a></b>
+<br>
+The preprocessor macro call
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CPPAD_TRACK_NEW_VEC(</span></font><i><font color="black"><span style='white-space: nowrap'>newlen</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>oldptr</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+expands to
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CppAD::TrackNewVec(__FILE__,&nbsp;__LINE__,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>newlen</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>oldptr</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+<br>
+<b><a name="TrackNewVec.Previously Deprecated" id="TrackNewVec.Previously Deprecated">Previously Deprecated</a></b>
+<br>
+The preprocessor macro <code><font color="blue">CppADTrackNewVec</font></code> is the
+same as <code><font color="blue">CPPAD_TRACK_NEW_VEC</font></code> and was previously deprecated.
+
+<br>
+<br>
+<b><big><a name="TrackDelVec" id="TrackDelVec">TrackDelVec</a></big></b>
+<br>
+This routine is used to a vector of objects
+that have been allocated using <code><font color="blue">TrackNew</font></code> or <code><font color="blue">TrackExtend</font></code>.
+If <code><font color="blue">NDEBUG</font></code> is defined, this routine only frees memory with
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;delete&nbsp;[]&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>oldptr</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+If <code><font color="blue">NDEBUG</font></code> is not defined, <code><font color="blue">TrackDelete</font></code> also checks that
+
+<code><i><font color="black"><span style='white-space: nowrap'>oldptr</span></font></i></code>
+ was allocated by <code><font color="blue">TrackNew</font></code> or <code><font color="blue">TrackExtend</font></code>
+and has not yet been freed.
+If this is not the case,
+<a href="errorhandler.htm" target="_top"><span style='white-space: nowrap'>ErrorHandler</span></a>
+ is used to generate an error message.
+
+<br>
+<br>
+<b><a name="TrackDelVec.Macro" id="TrackDelVec.Macro">Macro</a></b>
+<br>
+The preprocessor macro call
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CPPAD_TRACK_DEL_VEC(</span></font><i><font color="black"><span style='white-space: nowrap'>oldptr</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+expands to
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CppAD::TrackDelVec(__FILE__,&nbsp;__LINE__,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>oldptr</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+<br>
+<b><a name="TrackDelVec.Previously Deprecated" id="TrackDelVec.Previously Deprecated">Previously Deprecated</a></b>
+<br>
+The preprocessor macro <code><font color="blue">CppADTrackDelVec</font></code> is the
+same as <code><font color="blue">CPPAD_TRACK_DEL_VEC</font></code> was previously deprecated.
+
+<br>
+<br>
+<b><big><a name="TrackExtend" id="TrackExtend">TrackExtend</a></big></b>
+<br>
+This routine is used to
+allocate a new vector (using <code><font color="blue">TrackNewVec</font></code>),
+copy 
+<code><i><font color="black"><span style='white-space: nowrap'>ncopy</span></font></i></code>
+ elements from the old vector to the new vector.
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>ncopy</span></font></i></code>
+ is greater than zero, 
+<code><i><font color="black"><span style='white-space: nowrap'>oldptr</span></font></i></code>
+
+must have been allocated using <code><font color="blue">TrackNewVec</font></code> or <code><font color="blue">TrackExtend</font></code>.
+In this case, the vector pointed to by 
+<code><i><font color="black"><span style='white-space: nowrap'>oldptr</span></font></i></code>
+
+must be have at least 
+<code><i><font color="black"><span style='white-space: nowrap'>ncopy</span></font></i></code>
+ elements
+and it will be deleted (using <code><font color="blue">TrackDelVec</font></code>).
+Note that the dependence of <code><font color="blue">TrackExtend</font></code> on <code><font color="blue">NDEBUG</font></code>
+is indirectly through the routines <code><font color="blue">TrackNewVec</font></code> and
+<code><font color="blue">TrackDelVec</font></code>.
+
+<br>
+<br>
+<b><a name="TrackExtend.Macro" id="TrackExtend.Macro">Macro</a></b>
+<br>
+The preprocessor macro call
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CPPAD_TRACK_EXTEND(</span></font><i><font color="black"><span style='white-space: nowrap'>newlen</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ncopy</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>oldptr</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+expands to
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CppAD::TrackExtend(__FILE__,&nbsp;__LINE__,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>newlen</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ncopy</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>oldptr</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+<br>
+<b><a name="TrackExtend.Previously Deprecated" id="TrackExtend.Previously Deprecated">Previously Deprecated</a></b>
+<br>
+The preprocessor macro <code><font color="blue">CppADTrackExtend</font></code> is the
+same as <code><font color="blue">CPPAD_TRACK_EXTEND</font></code> and was previously deprecated.
+
+<br>
+<br>
+<b><big><a name="TrackCount" id="TrackCount">TrackCount</a></big></b>
+<br>
+The return value 
+<code><i><font color="black"><span style='white-space: nowrap'>count</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>count</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+If <code><font color="blue">NDEBUG</font></code> is defined, 
+<code><i><font color="black"><span style='white-space: nowrap'>count</span></font></i></code>
+ will be zero.
+Otherwise, it will be
+the number of vectors that
+have been allocated
+(by <code><font color="blue">TrackNewVec</font></code> or <code><font color="blue">TrackExtend</font></code>)
+and not yet freed
+(by <code><font color="blue">TrackDelete</font></code>).
+
+<br>
+<br>
+<b><a name="TrackCount.Macro" id="TrackCount.Macro">Macro</a></b>
+<br>
+The preprocessor macro call
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CPPAD_TRACK_COUNT()<br>
+</span></font></code>
+expands to
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CppAD::TrackCount(__FILE__,&nbsp;__LINE__)<br>
+</span></font></code>
+<br>
+<b><a name="TrackCount.Previously Deprecated" id="TrackCount.Previously Deprecated">Previously Deprecated</a></b>
+<br>
+The preprocessor macro <code><font color="blue">CppADTrackCount</font></code> is the
+same as <code><font color="blue">CPPAD_TRACK_COUNT</font></code> and was previously deprecated.
+
+<br>
+<br>
+<b><big><a name="Multi-Threading" id="Multi-Threading">Multi-Threading</a></big></b>
+<br>
+These routines cannot be used <a href="ta_in_parallel.htm" target="_top"><span style='white-space: nowrap'>in_parallel</span></a>
+
+execution mode.
+Use the <a href="thread_alloc.htm" target="_top"><span style='white-space: nowrap'>thread_alloc</span></a>
+ routines instead.
+
+<br>
+<br>
+<b><big><a name="Example" id="Example">Example</a></big></b>
+
+<br>
+The file <a href="tracknewdel.cpp.htm" target="_top"><span style='white-space: nowrap'>TrackNewDel.cpp</span></a>
+
+contains an example and test of these functions.
+It returns true, if it succeeds, and false otherwise.
+
+
+<hr>Input File: cppad/utility/track_new_del.hpp
+
+</body>
+</html>

@@ -1,0 +1,437 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>exp_2: First Order Reverse Mode</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="exp_2: First Order Reverse Mode">
+<meta name="keywords" id="keywords" content=" exp_2: first order reverse mode purpose mathematical form f_5 index 5: f_4 4: f_3 3: f_2 2: f_1 verification exercises ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_exp_2_rev1_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://coin-or.github.io/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="exp_2_for1.cpp.htm" target="_top">Prev</a>
+</td><td><a href="exp_2_rev1.cpp.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>Introduction</option>
+<option>exp_2</option>
+<option>exp_2_rev1</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>CppAD-&gt;</option>
+<option>Install</option>
+<option>Introduction</option>
+<option>AD</option>
+<option>ADFun</option>
+<option>preprocessor</option>
+<option>multi_thread</option>
+<option>utility</option>
+<option>ipopt_solve</option>
+<option>Example</option>
+<option>speed</option>
+<option>Appendix</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>Introduction-&gt;</option>
+<option>exp_2</option>
+<option>exp_eps</option>
+<option>exp_apx.cpp</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>exp_2-&gt;</option>
+<option>exp_2.hpp</option>
+<option>exp_2.cpp</option>
+<option>exp_2_for0</option>
+<option>exp_2_for1</option>
+<option>exp_2_rev1</option>
+<option>exp_2_for2</option>
+<option>exp_2_rev2</option>
+<option>exp_2_cppad</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down0(this)'>
+<option>exp_2_rev1-&gt;</option>
+<option>exp_2_rev1.cpp</option>
+</select>
+</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Purpose</option>
+<option>Mathematical Form</option>
+<option>f_5</option>
+<option>Index 5: f_4</option>
+<option>Index 4: f_3</option>
+<option>Index 3: f_2</option>
+<option>Index 2: f_1</option>
+<option>Verification</option>
+<option>Exercises</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@
+
+
+<center><b><big><big>exp_2: First Order Reverse Mode</big></big></b></center>
+<br>
+<b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
+<br>
+First order reverse mode uses the
+<a href="exp_2_for0.htm#Operation Sequence" target="_top"><span style='white-space: nowrap'>operation&nbsp;sequence</span></a>
+,
+and zero order forward sweep values,
+to compute the first order derivative
+of one dependent variable with respect to all the independent variables.
+The computations are done in reverse
+of the order of the computations in the original algorithm.
+
+<br>
+<br>
+<b><big><a name="Mathematical Form" id="Mathematical Form">Mathematical Form</a></big></b>
+<br>
+Suppose that we use the algorithm <a href="exp_2.hpp.htm" target="_top"><span style='white-space: nowrap'>exp_2.hpp</span></a>
+ to compute
+<small>@[@
+
+	f(x) = 1 + x + x^2 / 2
+
+@]@</small>
+The corresponding derivative function is
+<small>@[@
+
+	\partial_x f (x) =   1 + x
+
+@]@</small>
+
+<br>
+<br>
+<b><big><a name="f_5" id="f_5">f_5</a></big></b>
+<br>
+For our example, we chose to compute the derivative
+of the value returned by <a href="exp_2.hpp.htm" target="_top"><span style='white-space: nowrap'>exp_2.hpp</span></a>
+
+which is equal to the symbol <small>@(@
+v_5
+@)@</small> in the
+<a href="exp_2_for0.htm#Operation Sequence" target="_top"><span style='white-space: nowrap'>exp_2&nbsp;operation&nbsp;sequence</span></a>
+.
+We begin with the function <small>@(@
+f_5
+@)@</small> where <small>@(@
+v_5
+@)@</small>
+is both an argument and the value of the function; i.e.,
+<small>@[@
+
+\begin{array}{rcl}
+f_5 ( v_1 , v_2 , v_3 , v_4 , v_5 ) & = & v_5
+\\
+\D{f_5}{v_5} & = & 1
+\end{array}
+
+@]@</small>
+All the other partial derivatives of <small>@(@
+f_5
+@)@</small> are zero.
+
+<br>
+<br>
+<b><big><a name="Index 5: f_4" id="Index 5: f_4">Index 5: f_4</a></big></b>
+<br>
+Reverse mode starts with the last operation in the sequence.
+For the case in question, this is the operation with index 5,
+<small>@[@
+
+	v_5 = v_2 + v_4
+
+@]@</small>
+We define the function
+<small>@(@
+f_4 ( v_1 , v_2 , v_3 , v_4 )
+@)@</small>
+as equal to <small>@(@
+f_5
+@)@</small>
+except that <small>@(@
+v_5
+@)@</small> is eliminated using
+this operation; i.e.
+<small>@[@
+
+f_4  =
+f_5 [  v_1 , v_2 , v_3 , v_4 , v_5 ( v_2 , v_4 ) ]
+
+@]@</small>
+It follows that
+<small>@[@
+
+\begin{array}{rcll}
+\D{f_4}{v_2}
+& = & \D{f_5}{v_2} +
+	\D{f_5}{v_5} * \D{v_5}{v_2}
+& = 1
+\\
+\D{f_4}{v_4}
+& = & \D{f_5}{v_4} +
+	\D{f_5}{v_5} * \D{v_5}{v_4}
+& = 1
+\end{array}
+
+@]@</small>
+All the other partial derivatives of <small>@(@
+f_4
+@)@</small> are zero.
+
+<br>
+<br>
+<b><big><a name="Index 4: f_3" id="Index 4: f_3">Index 4: f_3</a></big></b>
+<br>
+The next operation has index 4,
+<small>@[@
+
+	v_4 = v_3 / 2
+
+@]@</small>
+We define the function
+<small>@(@
+f_3 (  v_1 , v_2 , v_3 )
+@)@</small>
+as equal to <small>@(@
+f_4
+@)@</small>
+except that <small>@(@
+v_4
+@)@</small> is eliminated using this operation; i.e.,
+<small>@[@
+
+f_3 =
+f_4 [ v_1 , v_2 , v_3 , v_4 ( v_3 ) ]
+
+@]@</small>
+It follows that
+<small>@[@
+
+\begin{array}{rcll}
+\D{f_3}{v_1}
+& = & \D{f_4}{v_1}
+& = 0
+\\
+\D{f_3}{v_2}
+& = & \D{f_4}{v_2}
+& = 1
+\\
+\D{f_3}{v_3}
+& = & \D{f_4}{v_3} +
+	\D{f_4}{v_4} * \D{v_4}{v_3}
+& = 0.5
+\end{array}
+
+@]@</small>
+
+<br>
+<br>
+<b><big><a name="Index 3: f_2" id="Index 3: f_2">Index 3: f_2</a></big></b>
+<br>
+The next operation has index 3,
+<small>@[@
+
+	v_3 = v_1 * v_1
+
+@]@</small>
+We define the function
+<small>@(@
+f_2 ( v_1 , v_2 )
+@)@</small>
+as equal to <small>@(@
+f_3
+@)@</small>
+except that <small>@(@
+v_3
+@)@</small> is eliminated using this operation; i.e.,
+<small>@[@
+
+f_2 =
+f_3 [ v_1 , v_2 , v_3 ( v_1 ) ]
+
+@]@</small>
+Note that the value of <small>@(@
+v_1
+@)@</small> is equal to <small>@(@
+x
+@)@</small>
+which is .5 for this evaluation.
+It follows that
+<small>@[@
+
+\begin{array}{rcll}
+\D{f_2}{v_1}
+& = & \D{f_3}{v_1} +
+	\D{f_3}{v_3} * \D{v_3}{v_1}
+& = 0.5
+\\
+\D{f_2}{v_2}
+& = & \D{f_3}{v_2}
+& = 1
+\end{array}
+
+@]@</small>
+
+<br>
+<br>
+<b><big><a name="Index 2: f_1" id="Index 2: f_1">Index 2: f_1</a></big></b>
+<br>
+The next operation has index 2,
+<small>@[@
+
+	v_2 = 1 + v_1
+
+@]@</small>
+We define the function
+<small>@(@
+f_1 ( v_1 )
+@)@</small>
+as equal to <small>@(@
+f_2
+@)@</small>
+except that <small>@(@
+v_2
+@)@</small> is eliminated using this operation; i.e.,
+<small>@[@
+
+f_1 =
+f_2 [ v_1 , v_2 ( v_1 ) ]
+
+@]@</small>
+It follows that
+<small>@[@
+
+\begin{array}{rcll}
+\D{f_1}{v_1}
+& = & \D{f_2}{v_1} +
+	\D{f_2}{v_2} * \D{v_2}{v_1}
+& = 1.5
+\end{array}
+
+@]@</small>
+Note that <small>@(@
+v_1
+@)@</small> is equal to <small>@(@
+x
+@)@</small>,
+so the derivative of this is the derivative of
+the function defined by <a href="exp_2.hpp.htm" target="_top"><span style='white-space: nowrap'>exp_2.hpp</span></a>
+ at <small>@(@
+x = .5
+@)@</small>.
+
+
+<br>
+<br>
+<b><big><a name="Verification" id="Verification">Verification</a></big></b>
+<br>
+The file <a href="exp_2_rev1.cpp.htm" target="_top"><span style='white-space: nowrap'>exp_2_rev1.cpp</span></a>
+ contains a routine
+which verifies the values computed above.
+It returns true for success and false for failure.
+It only tests the partial derivatives of
+<small>@(@
+f_j
+@)@</small> that might not be equal to the corresponding
+partials of <small>@(@
+f_{j+1}
+@)@</small>; i.e., the
+other partials of <small>@(@
+f_j
+@)@</small> must be equal to the corresponding
+partials of <small>@(@
+f_{j+1}
+@)@</small>.
+
+<br>
+<br>
+<b><big><a name="Exercises" id="Exercises">Exercises</a></big></b>
+
+<ol type="1"><li>
+Which statement in the routine defined by <a href="exp_2_rev1.cpp.htm" target="_top"><span style='white-space: nowrap'>exp_2_rev1.cpp</span></a>
+ uses
+the values that are calculated by the routine
+defined by <a href="exp_2_for0.cpp.htm" target="_top"><span style='white-space: nowrap'>exp_2_for0.cpp</span></a>
+ ?
+</li><li>
+
+Consider the case where <small>@(@
+x = .1
+@)@</small>
+and we first preform a zero order forward sweep
+for the operation sequence used above.
+What are the results of a
+first order reverse sweep; i.e.,
+what are the corresponding derivatives of
+<small>@(@
+f_5 , f_4 , \ldots , f_1
+@)@</small>.
+</li><li>
+
+Create a modified version of
+<a href="exp_2_rev1.cpp.htm" target="_top"><span style='white-space: nowrap'>exp_2_rev1.cpp</span></a>
+
+that verifies the values you obtained for the previous exercise.
+Also create and run a main program that reports the result
+of calling the modified version of
+<a href="exp_2_rev1.cpp.htm" target="_top"><span style='white-space: nowrap'>exp_2_rev1.cpp</span></a>
+.
+</li></ol>
+
+
+
+<hr>Input File: introduction/exp_2.omh
+
+</body>
+</html>
