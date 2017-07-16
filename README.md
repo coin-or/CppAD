@@ -1,3 +1,3 @@
 CppAD gh-pages
 
-[user documentation] doc/index.html
+[user documentation] (doc/index.html)
