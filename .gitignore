@@ -1,1 +1,4 @@
+# script use to make git commits
 git_commit.sh
+# a name used for temporary files
+junk
