@@ -40,11 +40,20 @@ echo_eval chmod +x build.sh
 echo_eval rm -r doc
 echo_eval mv $temporary_dir/cppad.doc doc
 # need .nojekyll file because doc has files that begin with underbars
-echo_eval touch doc/.nojekyll
+echo_eval touch .nojekyll
 # change icon link to http://coin-or.github.io/CppAD/
 for file in doc/*.htm
 do
-	sed -i $file -e 's|/www\.coin-or\.org/|/coin-or.github.io/|'
+	sed $file > build.tmp \
+		-e 's|"https*://www\.coin-or\.org/CppAD/"|"../index.html"|' 
+	if diff build.tmp $file > /dev/null
+	then
+		rm build.tmp
+		echo "cannot change Home icon link in $file"
+		exit 1
+	fi
+	mv build.tmp $file
+#
 done
 # -----------------------------------------------------------------------------
 add_list=`git status -s | \
