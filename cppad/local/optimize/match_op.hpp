@@ -1,8 +1,7 @@
-// $Id$
 # ifndef CPPAD_LOCAL_OPTIMIZE_MATCH_OP_HPP
 # define CPPAD_LOCAL_OPTIMIZE_MATCH_OP_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -180,7 +179,7 @@ inline void match_op(
 			}
 		}
 	}
-	unsigned short code = optimize_hash_code(op, num_arg, arg_match);
+	size_t code = optimize_hash_code(op, num_arg, arg_match);
 	//
 	// iterator for the set with this hash code
 	sparse_list_const_iterator itr(hash_table_op, code);
