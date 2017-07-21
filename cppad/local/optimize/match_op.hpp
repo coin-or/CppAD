@@ -213,7 +213,7 @@ inline void match_op(
 			}
 		}
 		if( match )
-		{	op_info[current].previous = candidate;
+		{	op_info[current].previous = static_cast<addr_t>( candidate );
 			return;
 		}
 		++itr;
@@ -249,7 +249,7 @@ inline void match_op(
 				}
 			}
 			if( match )
-			{	op_info[current].previous = candidate;
+			{	op_info[current].previous = static_cast<addr_t>( candidate );
 				return;
 			}
 			++itr_swap;
