@@ -29,6 +29,7 @@ no_colpack='no'
 no_eigen='no'
 no_ipopt='no'
 no_documentation='no'
+warn_conversion='no'
 testvector='boost'
 debug_which='debug_all'
 while [ "$1" != "" ]
@@ -46,6 +47,7 @@ usage: bin/run_cmake.sh: \\
 	[--no_eigen] \\
 	[--no_ipopt] \\
 	[--no_documentation] \\
+	[--warn_conversion] \\
 	[--<package>_vector] \\
 	[--debug_<which>]
 The --help option just prints this message and exits.
@@ -87,6 +89,10 @@ EOF
 
 		--no_documentation)
 		no_documentation='yes'
+		;;
+
+		--warn_conversion)
+		warn_conversion='yes'
 		;;
 
 		--cppad_vector)
@@ -202,6 +208,10 @@ done
 #
 # cppad_cxx_flags
 cppad_cxx_flags="-Wall -pedantic-errors -std=$standard -Wshadow"
+if [ "$warn_conversion" == 'yes' ]
+then
+	cppad_cxx_flags="$cppad_cxx_flags -Wconversion"
+fi
 cmake_args="$cmake_args -D cppad_cxx_flags='$cppad_cxx_flags'"
 #
 # clang
