@@ -172,7 +172,7 @@ Type Poly(size_t k, const Vector &a, const Type &z)
 		Vector b(d - k + 1);
 		for(i = k; i <= d; i++)
 		{	factor   *= i;
-			tmp       = factor;
+			tmp       = double( factor );
 			b[i - k]  = a[i] * tmp;
 			factor   /= (i - k + 1);
 		}

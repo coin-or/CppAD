@@ -1,6 +1,5 @@
-// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -206,10 +205,11 @@ namespace {
 		vector<Key>   keys(K);
 		vector<size_t> ind(K);
 		for(k = 0; k < K; k++)
-		{	r = size_t( m * random[k] );
+		{	// avoid warning when converting double to size_t
+			r = size_t( float( double(m) * random[k] ) );
 			r = std::min(m-1, r);
 			//
-			c = size_t( n * random[k + K] );
+			c = size_t( float( double(n) * random[k + K] ) );
 			c = std::min(n-1, c);
 			//
 			keys[k] = Key(r, c);

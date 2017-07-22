@@ -221,7 +221,8 @@ namespace {
 			// set the indices for this row
 			size_t k_start = col.size();
 			for(ell = 0; ell < max_per_row; ell++)
-			{	j = std::min(i, size_t(random[ell] * i) );
+			{	// avoid warning when converting double to size_t
+				j = std::min(i, size_t( float(random[ell]) * double(i) ) );
 				bool ok = true;
 				for(k = k_start; k < col.size(); k++)
 					ok &= j != col[k];

@@ -1,6 +1,5 @@
-// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -50,8 +49,8 @@ namespace { // empty namespace
 		size_t i  = size;;
 		while(i)
 		{	--i;
-			a[i] = i;
-			b[i] = 2 * i;
+			a[i] = double(i);
+			b[i] = double(2 * i);
 			c[i] = 0.0;
 		}
 		// operations we are timing
