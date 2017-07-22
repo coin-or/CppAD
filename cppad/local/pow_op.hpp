@@ -1,4 +1,3 @@
-// $Id$
 # ifndef CPPAD_LOCAL_POW_OP_HPP
 # define CPPAD_LOCAL_POW_OP_HPP
 
@@ -48,13 +47,14 @@ inline void forward_powvv_op(
 	CPPAD_ASSERT_UNKNOWN( NumRes(PowvvOp) == 3 );
 	CPPAD_ASSERT_UNKNOWN( q < cap_order );
 	CPPAD_ASSERT_UNKNOWN( p <= q );
+	CPPAD_ASSERT_UNKNOWN( std::numeric_limits<addr_t>::max() >= i_z );
 
 	// z_0 = log(x)
 	forward_log_op(p, q, i_z, arg[0], cap_order, taylor);
 
 	// z_1 = z_0 * y
 	addr_t adr[2];
-	adr[0] = i_z;
+	adr[0] = addr_t( i_z );
 	adr[1] = arg[1];
 	forward_mulvv_op(p, q, i_z+1, adr, parameter, cap_order, taylor);
 
@@ -191,6 +191,7 @@ inline void reverse_powvv_op(
 	CPPAD_ASSERT_UNKNOWN( NumRes(PowvvOp) == 3 );
 	CPPAD_ASSERT_UNKNOWN( d < cap_order );
 	CPPAD_ASSERT_UNKNOWN( d < nc_partial );
+	CPPAD_ASSERT_UNKNOWN( std::numeric_limits<addr_t>::max() >= i_z );
 
 	// z_2 = exp(z_1)
 	reverse_exp_op(
@@ -199,7 +200,7 @@ inline void reverse_powvv_op(
 
 	// z_1 = z_0 * y
 	addr_t adr[2];
-	adr[0] = i_z;
+	adr[0] = addr_t( i_z );
 	adr[1] = arg[1];
 	reverse_mulvv_op(
 	d, i_z+1, adr, parameter, cap_order, taylor, nc_partial, partial
@@ -256,10 +257,17 @@ inline void forward_powpv_op(
 		else	z_0[d] = Base(0);
 	}
 
+	// 2DO: remove requirement that i_z * cap_order <= max addr_t value
+	CPPAD_ASSERT_KNOWN(
+		std::numeric_limits<addr_t>::max() >= i_z * cap_order,
+		"cppad_tape_addr_type maximum value has been exceeded\n"
+		"This is due to a kludge in the pow operation and should be fixed."
+	);
+
 	// z_1 = z_0 * y
 	addr_t adr[2];
 	// offset of z_i in taylor (as if it were a parameter); i.e., log(x)
-	adr[0] = i_z * cap_order;
+	adr[0] = addr_t( i_z * cap_order );
 	// offset of y in taylor (as a variable)
 	adr[1] = arg[1];
 
@@ -417,10 +425,17 @@ inline void reverse_powpv_op(
 		d, i_z+2, i_z+1, cap_order, taylor, nc_partial, partial
 	);
 
+	// 2DO: remove requirement that i_z * cap_order <= max addr_t value
+	CPPAD_ASSERT_KNOWN(
+		std::numeric_limits<addr_t>::max() >= i_z * cap_order,
+		"cppad_tape_addr_type maximum value has been exceeded\n"
+		"This is due to a kludge in the pow operation and should be fixed."
+	);
+
 	// z_1 = z_0 * y
 	addr_t adr[2];
-	adr[0] = i_z * cap_order; // offset of z_0[0] in taylor
-	adr[1] = arg[1];          // index of y in taylor and partial
+	adr[0] = addr_t( i_z * cap_order ); // offset of z_0[0] in taylor
+	adr[1] = arg[1];                    // index of y in taylor and partial
 	// use taylor both for parameter and variable values
 	reverse_mulpv_op(
 		d, i_z+1, adr, taylor, cap_order, taylor, nc_partial, partial
@@ -462,6 +477,7 @@ inline void forward_powvp_op(
 	CPPAD_ASSERT_UNKNOWN( NumRes(PowvpOp) == 3 );
 	CPPAD_ASSERT_UNKNOWN( q < cap_order );
 	CPPAD_ASSERT_UNKNOWN( p <= q );
+	CPPAD_ASSERT_UNKNOWN( std::numeric_limits<addr_t>::max() >= i_z );
 
 	// z_0 = log(x)
 	forward_log_op(p, q, i_z, arg[0], cap_order, taylor);
@@ -469,7 +485,7 @@ inline void forward_powvp_op(
 	// z_1 = y * z_0
 	addr_t adr[2];
 	adr[0] = arg[1];
-	adr[1] = i_z;
+	adr[1] = addr_t( i_z );
 	forward_mulpv_op(p, q, i_z+1, adr, parameter, cap_order, taylor);
 
 	// z_2 = exp(z_1)
@@ -609,6 +625,7 @@ inline void reverse_powvp_op(
 	CPPAD_ASSERT_UNKNOWN( NumRes(PowvpOp) == 3 );
 	CPPAD_ASSERT_UNKNOWN( d < cap_order );
 	CPPAD_ASSERT_UNKNOWN( d < nc_partial );
+	CPPAD_ASSERT_UNKNOWN( std::numeric_limits<addr_t>::max() >= i_z );
 
 	// z_2 = exp(z_1)
 	reverse_exp_op(
@@ -618,7 +635,7 @@ inline void reverse_powvp_op(
 	// z_1 = y * z_0
 	addr_t adr[2];
 	adr[0] = arg[1];
-	adr[1] = i_z;
+	adr[1] = addr_t( i_z );
 	reverse_mulpv_op(
 	d, i_z+1, adr, parameter, cap_order, taylor, nc_partial, partial
 	);

@@ -293,7 +293,8 @@ It increments by one for each call to PutVecInd..
 template <class Base>
 inline size_t recorder<Base>::PutVecInd(size_t vec_ind)
 {	size_t i          = vecad_ind_rec_.extend(1);
-	vecad_ind_rec_[i] = vec_ind;
+	CPPAD_ASSERT_UNKNOWN( std::numeric_limits<addr_t>::max() >= vec_ind );
+	vecad_ind_rec_[i] = addr_t( vec_ind );
 	CPPAD_ASSERT_UNKNOWN( vecad_ind_rec_.size() == i + 1 );
 
 	return i;

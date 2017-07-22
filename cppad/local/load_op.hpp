@@ -1,4 +1,3 @@
-// $Id$
 # ifndef CPPAD_LOCAL_LOAD_OP_HPP
 # define CPPAD_LOCAL_LOAD_OP_HPP
 
@@ -259,6 +258,7 @@ inline void forward_load_p_op_0(
 	CPPAD_ASSERT_UNKNOWN( NumRes(LdpOp) == 1 );
 	CPPAD_ASSERT_UNKNOWN( 0 < arg[0] );
 	CPPAD_ASSERT_UNKNOWN( size_t(arg[2]) < play->num_load_op_rec() );
+	CPPAD_ASSERT_UNKNOWN( std::numeric_limits<addr_t>::max() >= i_z );
 
 	// Because the index is a parameter, this indexing error should have been
 	// caught and reported to the user when the tape is recording.
@@ -270,7 +270,7 @@ inline void forward_load_p_op_0(
 	Base* z       = taylor + i_z * cap_order;
 	if( isvar_by_ind[ arg[0] + i_vec ]  )
 	{	CPPAD_ASSERT_UNKNOWN( i_v_x < i_z );
-		var_by_load_op[ arg[2] ] = i_v_x;
+		var_by_load_op[ arg[2] ] = addr_t( i_v_x );
 		Base* v_x = taylor + i_v_x * cap_order;
 		z[0]      = v_x[0];
 	}
@@ -302,6 +302,7 @@ inline void forward_load_v_op_0(
 	CPPAD_ASSERT_UNKNOWN( NumRes(LdvOp) == 1 );
 	CPPAD_ASSERT_UNKNOWN( 0 < arg[0] );
 	CPPAD_ASSERT_UNKNOWN( size_t(arg[2]) < play->num_load_op_rec() );
+	CPPAD_ASSERT_UNKNOWN( std::numeric_limits<addr_t>::max() >= i_z );
 
 	size_t i_vec = Integer( taylor[ arg[1] * cap_order + 0 ] );
 	CPPAD_ASSERT_KNOWN(
@@ -314,7 +315,7 @@ inline void forward_load_v_op_0(
 	Base* z       = taylor + i_z * cap_order;
 	if( isvar_by_ind[ arg[0] + i_vec ]  )
 	{	CPPAD_ASSERT_UNKNOWN( i_v_x < i_z );
-		var_by_load_op[ arg[2] ] = i_v_x;
+		var_by_load_op[ arg[2] ] = addr_t( i_v_x );
 		Base* v_x = taylor + i_v_x * cap_order;
 		z[0]      = v_x[0];
 	}
