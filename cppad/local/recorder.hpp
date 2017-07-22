@@ -1,8 +1,7 @@
-// $Id$
 # ifndef CPPAD_LOCAL_RECORDER_HPP
 # define CPPAD_LOCAL_RECORDER_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -107,7 +106,7 @@ public:
 		text_rec_.free();
 	}
 	/// Put next operator in the operation sequence.
-	inline size_t PutOp(OpCode op);
+	inline addr_t PutOp(OpCode op);
 	/// Put a vecad load operator in the operation sequence (special case)
 	inline size_t PutLoadOp(OpCode op);
 	/// Add a value to the end of the current vector of VecAD indices.
@@ -188,7 +187,7 @@ This index starts at zero after the default constructor
 and after each call to Erase.
 */
 template <class Base>
-inline size_t recorder<Base>::PutOp(OpCode op)
+inline addr_t recorder<Base>::PutOp(OpCode op)
 {	size_t i    = op_rec_.extend(1);
 	CPPAD_ASSERT_KNOWN(
 		(abort_op_index_ == 0) || (abort_op_index_ != i),
@@ -202,7 +201,13 @@ inline size_t recorder<Base>::PutOp(OpCode op)
 	num_var_rec_ += NumRes(op);
 	CPPAD_ASSERT_UNKNOWN( num_var_rec_ > 0 );
 
-	return num_var_rec_ - 1;
+	// index of parameter just stored
+	CPPAD_ASSERT_KNOWN(
+		(size_t) std::numeric_limits<addr_t>::max() >= num_var_rec_ - 1,
+		"cppad_tape_addr_type maximum value has been exceeded"
+	)
+
+	return static_cast<addr_t>( num_var_rec_ - 1 );
 }
 
 /*!
