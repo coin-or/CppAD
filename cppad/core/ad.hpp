@@ -257,7 +257,7 @@ private:
 	//
 	// Make this parameter a new variable
 	//
-	void make_variable(size_t id,  size_t taddr)
+	void make_variable(tape_id_t id,  addr_t taddr)
 	{	CPPAD_ASSERT_UNKNOWN( Parameter(*this) ); // currently a par
 		CPPAD_ASSERT_UNKNOWN( taddr > 0 );        // sure valid taddr
 

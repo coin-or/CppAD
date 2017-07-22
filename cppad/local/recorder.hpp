@@ -329,7 +329,12 @@ addr_t recorder<Base>::PutPar(const Base &par)
 	// If we have a match, return the parameter index
 	i = hash_table[code + thread_offset_];
 	if( i < par_rec_.size() && IdenticalEqualPar(par_rec_[i], par) )
-			return i;
+	{	CPPAD_ASSERT_KNOWN(
+			static_cast<size_t>( std::numeric_limits<addr_t>::max() ) >= i,
+			"cppad_tape_addr_type maximum value has been exceeded"
+		)
+		return static_cast<addr_t>( i );
+	}
 
 	// place a new value in the table
 	i           = par_rec_.extend(1);

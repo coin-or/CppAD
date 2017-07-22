@@ -1,9 +1,8 @@
-// $Id$
 # ifndef CPPAD_LOCAL_HASH_CODE_HPP
 # define CPPAD_LOCAL_HASH_CODE_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -51,18 +50,21 @@ unsigned short local_hash_code(const Value& value)
 	);
 	CPPAD_ASSERT_UNKNOWN( sizeof(unsigned short) == 2 );
 	CPPAD_ASSERT_UNKNOWN( sizeof(value) % 2  == 0 );
-	#
+	//
 	const unsigned short* v
 	         = reinterpret_cast<const unsigned short*>(& value);
-	#
+	//
 	size_t i = sizeof(value) / 2 - 1;
-	#
-	unsigned short code = v[i];
-	#
+	//
+	size_t sum = v[i];
+	//
 	while(i--)
-		code += v[i];
-
-	return code % CPPAD_HASH_TABLE_SIZE;
+		sum += v[i];
+	//
+	unsigned short code = static_cast<unsigned short>(
+		sum % CPPAD_HASH_TABLE_SIZE
+	);
+	return code;
 }
 
 /*!
