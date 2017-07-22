@@ -170,6 +170,11 @@ $end
 --------------------------------------------------------------------------
 */
 // BEGIN C++
+# include <cppad/configure.hpp>
+# if CPPAD_COMPILER_IS_GNUCXX
+# pragma GCC diagnostic ignored "-Wconversion"
+# endif
+
 # include <adolc/adouble.h>
 # include <adolc/taping.h>
 # include <adolc/drivers/drivers.h>

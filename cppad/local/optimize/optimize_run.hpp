@@ -293,6 +293,10 @@ void optimize_run(
 		}
 		size_t         previous;
 		//
+		CPPAD_ASSERT_UNKNOWN(
+			std::numeric_limits<addr_t>::max() >= rec->num_op_rec()
+		);
+		//
 		if( op_info[i_op].usage != yes_usage )
 		{	if( op == CExpOp )
 				++cexp_next;
@@ -302,7 +306,7 @@ void optimize_run(
 			case BeginOp:
 			CPPAD_ASSERT_NARG_NRES(op, 1, 1);
 			// Put BeginOp at beginning of recording
-			old2new[i_op].new_op  = rec->num_op_rec();
+			old2new[i_op].new_op  = addr_t( rec->num_op_rec() );
 			old2new[i_op].new_var = rec->PutOp(BeginOp);
 			rec->PutArg(arg[0]);
 			break;
@@ -339,7 +343,7 @@ void optimize_run(
 				new_arg[0]   = old2new[ var2op[arg[0]] ].new_var;
 				rec->PutArg( new_arg[0] );
 				//
-				old2new[i_op].new_op  = rec->num_op_rec();
+				old2new[i_op].new_op  = addr_t( rec->num_op_rec() );
 				old2new[i_op].new_var = rec->PutOp(op);
 				CPPAD_ASSERT_UNKNOWN(
 					new_arg[0] < old2new[var2op[i_var]].new_var
@@ -382,8 +386,8 @@ void optimize_run(
 					rec                 ,
 					csum_work
 				);
-				old2new[i_op].new_op  = size_pair.i_op;
-				old2new[i_op].new_var = size_pair.i_var;
+				old2new[i_op].new_op  = addr_t( size_pair.i_op );
+				old2new[i_op].new_var = addr_t( size_pair.i_var );
 				// abort rest of this case
 				break;
 			}
@@ -408,8 +412,8 @@ void optimize_run(
 					op                  ,
 					arg
 				);
-				old2new[i_op].new_op  = size_pair.i_op;
-				old2new[i_op].new_var = size_pair.i_var;
+				old2new[i_op].new_op  = addr_t( size_pair.i_op );
+				old2new[i_op].new_var = addr_t( size_pair.i_var );
 			}
 			break;
 			// ---------------------------------------------------
@@ -427,7 +431,7 @@ void optimize_run(
 				new_arg[1] = old2new[ var2op[arg[1]] ].new_var;
 				rec->PutArg( new_arg[0], new_arg[1] );
 				//
-				old2new[i_op].new_op  = rec->num_op_rec();
+				old2new[i_op].new_op  = addr_t( rec->num_op_rec() );
 				old2new[i_op].new_var = rec->PutOp(op);
 				CPPAD_ASSERT_UNKNOWN(
 					new_arg[1] < old2new[var2op[i_var]].new_var
@@ -455,8 +459,8 @@ void optimize_run(
 					rec                 ,
 					csum_work
 				);
-				old2new[i_op].new_op  = size_pair.i_op;
-				old2new[i_op].new_var = size_pair.i_var;
+				old2new[i_op].new_op  = addr_t( size_pair.i_op );
+				old2new[i_op].new_var = addr_t( size_pair.i_var );
 				// abort rest of this case
 				break;
 			}
@@ -482,8 +486,8 @@ void optimize_run(
 					op                  ,
 					arg
 				);
-				old2new[i_op].new_op  = size_pair.i_op;
-				old2new[i_op].new_var = size_pair.i_var;
+				old2new[i_op].new_op  = addr_t( size_pair.i_op );
+				old2new[i_op].new_var = addr_t( size_pair.i_var );
 			}
 			break;
 			// ---------------------------------------------------
@@ -509,8 +513,8 @@ void optimize_run(
 					rec                 ,
 					csum_work
 				);
-				old2new[i_op].new_op  = size_pair.i_op;
-				old2new[i_op].new_var = size_pair.i_var;
+				old2new[i_op].new_op  = addr_t( size_pair.i_op );
+				old2new[i_op].new_var = addr_t( size_pair.i_var );
 				// abort rest of this case
 				break;
 			}
@@ -536,8 +540,8 @@ void optimize_run(
 					op                  ,
 					arg
 				);
-				old2new[i_op].new_op  = size_pair.i_op;
-				old2new[i_op].new_var = size_pair.i_var;
+				old2new[i_op].new_op  = addr_t( size_pair.i_op );
+				old2new[i_op].new_var = addr_t( size_pair.i_var );
 			}
 			break;
 			// ---------------------------------------------------
@@ -567,7 +571,7 @@ void optimize_run(
 				new_arg[4] ,
 				new_arg[5]
 			);
-			old2new[i_op].new_op  = rec->num_op_rec();
+			old2new[i_op].new_op  = addr_t( rec->num_op_rec() );
 			old2new[i_op].new_var = rec->PutOp(op);
 			//
 			// The new addresses for left and right are used during
@@ -585,7 +589,7 @@ void optimize_run(
 			// Operations with no arguments and no results
 			case EndOp:
 			CPPAD_ASSERT_NARG_NRES(op, 0, 0);
-			old2new[i_op].new_op = rec->num_op_rec();
+			old2new[i_op].new_op = addr_t( rec->num_op_rec() );
 			rec->PutOp(op);
 			break;
 			// ---------------------------------------------------
@@ -598,7 +602,7 @@ void optimize_run(
 			new_arg[0] = rec->PutPar( play->GetPar(arg[0]) );
 			new_arg[1] = old2new[ var2op[arg[1]] ].new_var;
 			rec->PutArg(new_arg[0], new_arg[1]);
-			old2new[i_op].new_op = rec->num_op_rec();
+			old2new[i_op].new_op = addr_t( rec->num_op_rec() );
 			rec->PutOp(op);
 			break;
 			//
@@ -608,7 +612,7 @@ void optimize_run(
 			new_arg[0] = old2new[ var2op[arg[0]] ].new_var;
 			new_arg[1] = rec->PutPar( play->GetPar(arg[1]) );
 			rec->PutArg(new_arg[0], new_arg[1]);
-			old2new[i_op].new_op = rec->num_op_rec();
+			old2new[i_op].new_op = addr_t( rec->num_op_rec() );
 			rec->PutOp(op);
 			break;
 			//
@@ -620,7 +624,7 @@ void optimize_run(
 			new_arg[0] = old2new[ var2op[arg[0]] ].new_var;
 			new_arg[1] = old2new[ var2op[arg[1]] ].new_var;
 			rec->PutArg(new_arg[0], new_arg[1]);
-			old2new[i_op].new_op = rec->num_op_rec();
+			old2new[i_op].new_op = addr_t( rec->num_op_rec() );
 			rec->PutOp(op);
 			break;
 
@@ -628,7 +632,7 @@ void optimize_run(
 			// Operations with no arguments and one result
 			case InvOp:
 			CPPAD_ASSERT_NARG_NRES(op, 0, 1);
-			old2new[i_op].new_op  = rec->num_op_rec();
+			old2new[i_op].new_op  = addr_t( rec->num_op_rec() );
 			old2new[i_op].new_var = rec->PutOp(op);
 			break;
 
@@ -639,7 +643,7 @@ void optimize_run(
 			new_arg[0] = rec->PutPar( play->GetPar(arg[0] ) );
 			rec->PutArg( new_arg[0] );
 			//
-			old2new[i_op].new_op  = rec->num_op_rec();
+			old2new[i_op].new_op  = addr_t( rec->num_op_rec() );
 			old2new[i_op].new_var = rec->PutOp(op);
 			break;
 
@@ -678,7 +682,7 @@ void optimize_run(
 				new_arg[4]
 			);
 			// new operator
-			old2new[i_op].new_op  = rec->num_op_rec();
+			old2new[i_op].new_op  = addr_t( rec->num_op_rec() );
 			// no new variable
 			rec->PutOp(op);
 			break;
@@ -698,7 +702,7 @@ void optimize_run(
 				new_arg[1],
 				new_arg[2]
 			);
-			old2new[i_op].new_op  = rec->num_op_rec();
+			old2new[i_op].new_op  = addr_t( rec->num_op_rec() );
 			old2new[i_op].new_var = rec->PutLoadOp(op);
 			break;
 
@@ -715,7 +719,7 @@ void optimize_run(
 				new_arg[1],
 				new_arg[2]
 			);
-			old2new[i_op].new_op  = rec->num_op_rec();
+			old2new[i_op].new_op  = addr_t( rec->num_op_rec() );
 			old2new[i_op].new_var = rec->PutLoadOp(op);
 			break;
 
@@ -731,7 +735,7 @@ void optimize_run(
 				new_arg[1],
 				new_arg[2]
 			);
-			old2new[i_op].new_op = rec->num_op_rec();
+			old2new[i_op].new_op = addr_t( rec->num_op_rec() );
 			rec->PutOp(op);
 			break;
 
@@ -748,7 +752,7 @@ void optimize_run(
 				new_arg[1],
 				new_arg[2]
 			);
-			old2new[i_op].new_op = rec->num_op_rec();
+			old2new[i_op].new_op = addr_t( rec->num_op_rec() );
 			rec->PutOp(op);
 			break;
 
@@ -765,7 +769,7 @@ void optimize_run(
 				new_arg[1],
 				new_arg[2]
 			);
-			old2new[i_op].new_op = rec->num_op_rec();
+			old2new[i_op].new_op = addr_t( rec->num_op_rec() );
 			rec->PutOp(op);
 			break;
 
@@ -783,7 +787,7 @@ void optimize_run(
 				new_arg[1],
 				new_arg[2]
 			);
-			old2new[i_op].new_op = rec->num_op_rec();
+			old2new[i_op].new_op = addr_t( rec->num_op_rec() );
 			rec->PutOp(op);
 			break;
 
@@ -794,7 +798,7 @@ void optimize_run(
 			CPPAD_ASSERT_NARG_NRES(op, 4, 0);
 			// user_old, user_n, user_m
 			rec->PutArg(arg[0], arg[1], arg[2], arg[3]);
-			old2new[i_op].new_op = rec->num_op_rec();
+			old2new[i_op].new_op = addr_t( rec->num_op_rec() );
 			rec->PutOp(UserOp);
 			break;
 
@@ -802,7 +806,7 @@ void optimize_run(
 			CPPAD_ASSERT_NARG_NRES(op, 1, 0);
 			new_arg[0] = rec->PutPar( play->GetPar(arg[0]) );
 			rec->PutArg(new_arg[0]);
-			old2new[i_op].new_op = rec->num_op_rec();
+			old2new[i_op].new_op = addr_t( rec->num_op_rec() );
 			rec->PutOp(UsrapOp);
 			break;
 
@@ -811,7 +815,7 @@ void optimize_run(
 			new_arg[0] = old2new[ var2op[arg[0]] ].new_var;
 			if( size_t(new_arg[0]) < num_var )
 			{	rec->PutArg(new_arg[0]);
-				old2new[i_op].new_op = rec->num_op_rec();
+				old2new[i_op].new_op = addr_t( rec->num_op_rec() );
 				rec->PutOp(UsravOp);
 			}
 			else
@@ -819,7 +823,7 @@ void optimize_run(
 				// has been optimized out so use nan in its place.
 				new_arg[0] = rec->PutPar( base_nan );
 				rec->PutArg(new_arg[0]);
-				old2new[i_op].new_op = rec->num_op_rec();
+				old2new[i_op].new_op = addr_t( rec->num_op_rec() );
 				rec->PutOp(UsrapOp);
 			}
 			break;
@@ -828,13 +832,13 @@ void optimize_run(
 			CPPAD_ASSERT_NARG_NRES(op, 1, 0);
 			new_arg[0] = rec->PutPar( play->GetPar(arg[0]) );
 			rec->PutArg(new_arg[0]);
-			old2new[i_op].new_op = rec->num_op_rec();
+			old2new[i_op].new_op = addr_t( rec->num_op_rec() );
 			rec->PutOp(UsrrpOp);
 			break;
 
 			case UsrrvOp:
 			CPPAD_ASSERT_NARG_NRES(op, 0, 1);
-			old2new[i_op].new_op  = rec->num_op_rec();
+			old2new[i_op].new_op  = addr_t( rec->num_op_rec() );
 			old2new[i_op].new_var = rec->PutOp(UsrrvOp);
 			break;
 			// ---------------------------------------------------

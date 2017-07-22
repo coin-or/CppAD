@@ -34,6 +34,12 @@ Replacement for config.h so that all preprocessor symbols begin with CPPAD_
 */
 
 /*!
+\def CPPAD_COMPILER_IS_GNUCXX
+is the compiler a variant of g++
+*/
+# define CPPAD_COMPILER_IS_GNUCXX @cppad_compiler_is_gnucxx@
+
+/*!
 \def CPPAD_DISABLE_SOME_MICROSOFT_COMPILER_WARNINGS
 This macro is only used to document the pragmas that disables the
 follow warnings:

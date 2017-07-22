@@ -258,8 +258,8 @@ void local::ADTape<Base>::RecordCondExp(
 	const AD<Base> &right       ,
 	const AD<Base> &if_true     ,
 	const AD<Base> &if_false    )
-{	size_t   ind0, ind1, ind2, ind3, ind4, ind5;
-	size_t   returnValue_taddr;
+{	addr_t   ind0, ind1, ind2, ind3, ind4, ind5;
+	addr_t   returnValue_taddr;
 
 	// taddr_ of this variable
 	CPPAD_ASSERT_UNKNOWN( NumRes(CExpOp) == 1 );

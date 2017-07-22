@@ -21,6 +21,13 @@ MACRO(check_match match_variable match_constant output_variable)
 	print_variable(${output_variable})
 ENDMACRO(check_match)
 # -----------------------------------------------------------------------------
+# cppad_compiler_is_gnucxx
+IF( CMAKE_COMPILER_IS_GNUCXX )
+	SET( cppad_compiler_is_gnucxx 1 )
+ELSE( CMAKE_COMPILER_IS_GNUCXX )
+	SET( cppad_compiler_is_gnucxx 0 )
+ENDIF( CMAKE_COMPILER_IS_GNUCXX )
+# -----------------------------------------------------------------------------
 # cppad_boostvector, cppad_cppadvector, cppad_eigenvector, cppad_stdvector
 #
 check_match(cppad_testvector boost cppad_boostvector)
