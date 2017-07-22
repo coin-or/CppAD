@@ -417,7 +417,7 @@ public:
 
 				// put operand addresses in tape
 				tape->Rec_.PutArg(
-					vec_->offset_, i, load_op_index
+					(addr_t) vec_->offset_, (addr_t) i, (addr_t) load_op_index
 				);
 				// put operator in the tape, ind_ is a parameter
 				result.taddr_ = tape->Rec_.PutLoadOp(local::LdpOp);
@@ -442,7 +442,9 @@ public:
 				// put operand addresses in tape
 				// (value of third arugment does not matter)
 				tape->Rec_.PutArg(
-					vec_->offset_, ind_taddr, load_op_index
+					(addr_t) vec_->offset_,
+					(addr_t) ind_taddr,
+					(addr_t) load_op_index
 				);
 				// put operator in the tape, ind_ is a variable
 				result.taddr_ = tape->Rec_.PutLoadOp(local::LdvOp);
@@ -636,7 +638,7 @@ void VecAD_reference<Base>::operator=(const AD<Base> &y)
 		CPPAD_ASSERT_UNKNOWN( local::NumRes(local::StpvOp) == 0 );
 
 		// put operand addresses in tape
-		tape->Rec_.PutArg(vec_->offset_, i, y.taddr_);
+		tape->Rec_.PutArg((addr_t) vec_->offset_, (addr_t) i, y.taddr_);
 
 		// put operator in the tape, ind_ is parameter, y is variable
 		tape->Rec_.PutOp(local::StpvOp);
@@ -647,7 +649,7 @@ void VecAD_reference<Base>::operator=(const AD<Base> &y)
 		CPPAD_ASSERT_UNKNOWN( ind_.taddr_ > 0 );
 
 		// put operand addresses in tape
-		tape->Rec_.PutArg(vec_->offset_, ind_.taddr_, y.taddr_);
+		tape->Rec_.PutArg((addr_t) vec_->offset_, ind_.taddr_, y.taddr_);
 
 		// put operator in the tape, ind_ is variable, y is variable
 		tape->Rec_.PutOp(local::StvvOp);
@@ -687,7 +689,7 @@ void VecAD_reference<Base>::operator=(const Base &y)
 		CPPAD_ASSERT_UNKNOWN( local::NumRes(local::StppOp) == 0 );
 
 		// put operand addresses in tape
-		tape->Rec_.PutArg(vec_->offset_, i, p);
+		tape->Rec_.PutArg((addr_t) vec_->offset_, (addr_t) i, p);
 
 		// put operator in the tape, ind_ is parameter, y is parameter
 		tape->Rec_.PutOp(local::StppOp);
@@ -698,7 +700,7 @@ void VecAD_reference<Base>::operator=(const Base &y)
 		CPPAD_ASSERT_UNKNOWN( ind_.taddr_ > 0 );
 
 		// put operand addresses in tape
-		tape->Rec_.PutArg(vec_->offset_, ind_.taddr_, p);
+		tape->Rec_.PutArg((addr_t) vec_->offset_, ind_.taddr_, p);
 
 		// put operator in the tape, ind_ is variable, y is parameter
 		tape->Rec_.PutOp(local::StvpOp);
