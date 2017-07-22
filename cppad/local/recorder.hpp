@@ -112,7 +112,7 @@ public:
 	/// Add a value to the end of the current vector of VecAD indices.
 	inline size_t PutVecInd(size_t vec_ind);
 	/// Find or add a parameter to the current vector of parameters.
-	inline size_t PutPar(const Base &par);
+	inline addr_t PutPar(const Base &par);
 	/// Put one operation argument index in the recording
 	inline void PutArg(addr_t arg0);
 	/// Put two operation argument index in the recording
@@ -304,7 +304,7 @@ This value is not necessarily placed at the end of the vector
 (because values that are identically equal may be reused).
 */
 template <class Base>
-size_t recorder<Base>::PutPar(const Base &par)
+addr_t recorder<Base>::PutPar(const Base &par)
 {	static size_t   hash_table[CPPAD_HASH_TABLE_SIZE * CPPAD_MAX_NUM_THREADS];
 	size_t          i;
 	size_t          code;
@@ -333,7 +333,11 @@ size_t recorder<Base>::PutPar(const Base &par)
 	hash_table[code + thread_offset_] = i;
 
 	// return the parameter index
-	return i;
+	CPPAD_ASSERT_KNOWN(
+		static_cast<size_t>( std::numeric_limits<addr_t>::max() ) >= i,
+		"cppad_tape_addr_type maximum value has been exceeded"
+	)
+	return static_cast<addr_t>( i );
 }
 // -------------------------- PutArg --------------------------------------
 /*!
