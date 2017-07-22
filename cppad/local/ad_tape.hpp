@@ -1,9 +1,8 @@
-// $Id$
 # ifndef CPPAD_LOCAL_AD_TAPE_HPP
 # define CPPAD_LOCAL_AD_TAPE_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -109,7 +108,7 @@ private:
 	// private functions
 	//
 	// add a parameter to the tape
-	size_t RecordParOp(const Base &x);
+	addr_t RecordParOp(const Base &x);
 
 	// see CondExp.h
 	void RecordCondExp(
@@ -158,9 +157,9 @@ All these operates are preformed in \c Rec_, so we should
 move this routine from <tt>ADTape<Base></tt> to <tt>recorder<Base></tt>.
 */
 template <class Base>
-size_t ADTape<Base>::RecordParOp(const Base &z)
-{	size_t z_taddr;
-	size_t ind;
+addr_t ADTape<Base>::RecordParOp(const Base &z)
+{	addr_t z_taddr;
+	addr_t ind;
 	CPPAD_ASSERT_UNKNOWN( NumRes(ParOp) == 1 );
 	CPPAD_ASSERT_UNKNOWN( NumArg(ParOp) == 1 );
 	z_taddr = Rec_.PutOp(ParOp);

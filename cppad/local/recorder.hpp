@@ -108,7 +108,7 @@ public:
 	/// Put next operator in the operation sequence.
 	inline addr_t PutOp(OpCode op);
 	/// Put a vecad load operator in the operation sequence (special case)
-	inline size_t PutLoadOp(OpCode op);
+	inline addr_t PutLoadOp(OpCode op);
 	/// Add a value to the end of the current vector of VecAD indices.
 	inline size_t PutVecInd(size_t vec_ind);
 	/// Find or add a parameter to the current vector of parameters.
@@ -201,7 +201,8 @@ inline addr_t recorder<Base>::PutOp(OpCode op)
 	num_var_rec_ += NumRes(op);
 	CPPAD_ASSERT_UNKNOWN( num_var_rec_ > 0 );
 
-	// index of parameter just stored
+	// index of last variable corresponding to this operation
+	// (if NumRes(op) > 0)
 	CPPAD_ASSERT_KNOWN(
 		(size_t) std::numeric_limits<addr_t>::max() >= num_var_rec_ - 1,
 		"cppad_tape_addr_type maximum value has been exceeded"
@@ -244,7 +245,7 @@ increases by one after each call to this function
 (and starts at zero after the default constructor or Erase).
 */
 template <class Base>
-inline size_t recorder<Base>::PutLoadOp(OpCode op)
+inline addr_t recorder<Base>::PutLoadOp(OpCode op)
 {	size_t i    = op_rec_.extend(1);
 	CPPAD_ASSERT_KNOWN(
 		(abort_op_index_ == 0) || (abort_op_index_ != i),
@@ -262,7 +263,13 @@ inline size_t recorder<Base>::PutLoadOp(OpCode op)
 	// count this vecad load operation
 	num_load_op_rec_++;
 
-	return num_var_rec_ - 1;
+	// index of last variable corresponding to this operation
+	// (if NumRes(op) > 0)
+	CPPAD_ASSERT_KNOWN(
+		(size_t) std::numeric_limits<addr_t>::max() >= num_var_rec_ - 1,
+		"cppad_tape_addr_type maximum value has been exceeded"
+	)
+	return static_cast<addr_t>( num_var_rec_ - 1 );
 }
 
 /*!
