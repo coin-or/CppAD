@@ -58,7 +58,7 @@ bool LuSolve(void)
 	// set S to the solution of the equation we will solve
 	for(j = 0; j < n; j++)
 		for(k = 0; k < m; k++)
-			S[ j * m + k ] = Complex(j, j + k);
+			S[ j * m + k ] = Complex(double(j), double(j + k));
 
 	// set B = A * S
 	size_t ik;

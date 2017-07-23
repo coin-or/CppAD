@@ -277,7 +277,7 @@ public:
 		}
 		assert( Fm1.GetEcount() == (pow2+1) );
 
-		e = e + Fm1.GetEsum() * prod / Fm1.GetEcount();
+		e = e + Fm1.GetEsum() * prod / Float( double(Fm1.GetEcount()) );
 
 		return r;
 	}

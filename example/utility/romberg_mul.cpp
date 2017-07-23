@@ -94,20 +94,20 @@ bool RombergMul(void)
 	{	bpow *= b[0];
 		apow *= a[0];
 	}
-	double check = (bpow - apow) / (deg[0]+1);
+	double check = (bpow - apow) / double(deg[0]+1);
 	bpow = 1.;
 	apow = 1.;
 	for(i = 0; i <= deg[1]; i++)
 	{	bpow *= b[1];
 		apow *= a[1];
 	}
-	check *= (bpow - apow) / (deg[1]+1);
+	check *= (bpow - apow) / double(deg[1]+1);
 
-	double step = (b[1] - a[1]) / exp(log(2.)*(n[1]-1));
+	double step = (b[1] - a[1]) / exp(log(2.)*double(n[1]-1));
 	double spow = 1;
 	for(k = 0; k <= n[1]; k++)
 	{	spow = spow * step * step;
-		double bnd = 3 * (deg[1] + 1) * spow;
+		double bnd = 3 * double(deg[1] + 1) * spow;
 
 		for(i = 0; i < 2; i++)
 			p[i] = k;

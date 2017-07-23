@@ -463,11 +463,11 @@ Vector OdeErrControl(
 	Vector xa(n), xb(n), eb(n), nan_vec(n);
 
 	// initialization
-	Scalar zero(0);
-	Scalar one(1);
-	Scalar two(2);
-	Scalar three(3);
-	Scalar m1(m-1);
+	Scalar zero(0.0);
+	Scalar one(1.0);
+	Scalar two(2.0);
+	Scalar three(3.0);
+	Scalar m1(double(m-1));
 	Scalar ta = ti;
 	for(i = 0; i < n; i++)
 	{	nan_vec[i] = nan(zero);

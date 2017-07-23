@@ -182,7 +182,7 @@ Float RombergOne(
 		sum    = zero;
 		for(k = 1; k < ipow2; k += 2)
 		{	// start = a + (b-a)/pow2, increment = 2*(b-a)/pow2
-			x    = ( (pow2 - Float(int(k))) * a + k * b ) / pow2;
+			x    = ( (pow2 - Float(double(k))) * a + double(k) * b ) / pow2;
 			sum  = sum + F(x);
 		}
 		// combine function evaluations in sum with those in T[i-1]

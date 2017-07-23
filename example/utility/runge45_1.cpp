@@ -71,8 +71,8 @@ namespace {
 			for(i = 1; i < n; i++)
 			{	ti *= t;
 				if( use_x )
-					f[i] = (i+1) * x[i-1];
-				else	f[i] = (i+1) * ti;
+					f[i] = double(i+1) * x[i-1];
+				else	f[i] = double(i+1) * ti;
 			}
 		}
 	private:

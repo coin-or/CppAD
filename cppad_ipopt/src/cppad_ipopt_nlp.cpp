@@ -1,6 +1,5 @@
-// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -265,10 +264,10 @@ information passed to Ipopt.
 bool cppad_ipopt_nlp::get_nlp_info(Index& n, Index& m, Index& nnz_jac_g,
                          Index& nnz_h_lag, IndexStyleEnum& index_style)
 {
-	n = n_;
-	m = m_;
-	nnz_jac_g = nnz_jac_g_;
-	nnz_h_lag = nnz_h_lag_;
+	n = static_cast<Index>( n_ );
+	m = static_cast<Index>( m_ );
+	nnz_jac_g = static_cast<Index>( nnz_jac_g_ );
+	nnz_h_lag = static_cast<Index>( nnz_h_lag_ );
 
 	// use the fortran index style for row/col entries
 	index_style = C_STYLE;
@@ -715,8 +714,8 @@ bool cppad_ipopt_nlp::eval_jac_g(Index n, const Number* x, bool new_x,
 
 	if (values == NULL)
 	{	for(k = 0; k < nnz_jac_g_; k++)
-		{	iRow[k] = iRow_jac_g_[k];
-			jCol[k] = jCol_jac_g_[k];
+		{	iRow[k] = static_cast<Index>( iRow_jac_g_[k] );
+			jCol[k] = static_cast<Index>( jCol_jac_g_[k] );
 		}
 		return true;
 	}
@@ -870,8 +869,8 @@ bool cppad_ipopt_nlp::eval_h(Index n, const Number* x, bool new_x,
 
 	if (values == NULL)
 	{	for(k = 0; k < nnz_h_lag_; k++)
-		{	iRow[k] = iRow_h_lag_[k];
-			jCol[k] = jCol_h_lag_[k];
+		{	iRow[k] = static_cast<Index>( iRow_h_lag_[k] );
+			jCol[k] = static_cast<Index>( jCol_h_lag_[k] );
 		}
 		return true;
 	}

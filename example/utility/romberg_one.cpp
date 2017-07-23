@@ -72,10 +72,10 @@ bool RombergOne(void)
 	{	bpow *= b;
 		apow *= a;
 	}
-	double check = (bpow - apow) / (degree+1);
+	double check = (bpow - apow) / double(degree+1);
 
 	// step size corresponding to r
-	double step = (b - a) / exp(log(2.)*(n-1));
+	double step = (b - a) / exp(log(2.)*double(n-1));
 	// step size corresponding to error estimate
 	step *= 2.;
 	// step size raised to a power
@@ -86,7 +86,7 @@ bool RombergOne(void)
 
 		r = CppAD::RombergOne(F, a, b, n, p, e);
 
-		ok  &= e < (degree+1) * spow;
+		ok  &= e < double(degree+1) * spow;
 		ok  &= CppAD::NearEqual(check, r, 0., e);
 	}
 

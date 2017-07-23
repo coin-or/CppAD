@@ -1,6 +1,5 @@
-// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -34,10 +33,10 @@ bool ode_check(const SizeVector& N, const NumberVector& x)
 	// and the maximum step size for the trapezoidal approximation
 	SizeVector S(Nz+1);
 	S[0] = 0;
-	double max_step = 0.;
+	Number max_step = 0.;
 	for(i = 1; i <= Nz; i++)
 	{	S[i] = S[i-1] + N[i];
-		max_step = std::max(max_step, (s[i] - s[i-1]) / N[i] );
+		max_step = std::max(max_step, Number(s[i] - s[i-1]) / Number(N[i]) );
 	}
 
 	// split out return values
