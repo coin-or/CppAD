@@ -36,6 +36,7 @@ $spell
 	autotools
 	ipopt
 	colpack
+	Wconversion
 $$
 
 $section Changes and Additions to CppAD During 2017$$
@@ -49,6 +50,11 @@ $lnext
 Speed tests no longer automatically compile in release mode; see
 $cref/debug_which/speed/debug_which/$$
 $lend
+
+$head 07-23$$
+Fix warnings related to type conversions that
+occurred when one used $code -Wconversion$$ with
+$code g++$$ version 6.3.1.
 
 $head 07-03$$
 $list number$$
