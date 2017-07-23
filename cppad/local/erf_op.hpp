@@ -343,6 +343,7 @@ inline void forward_erf_op_dir(
 	CPPAD_ASSERT_UNKNOWN( NumRes(ErfOp) == 5 );
 	CPPAD_ASSERT_UNKNOWN( q < cap_order );
 	CPPAD_ASSERT_UNKNOWN( 0 < q );
+	CPPAD_ASSERT_UNKNOWN( std::numeric_limits<addr_t>::max() >= i_z + 2 );
 
 	// array used to pass parameter values for sub-operations
 	addr_t addr[2];
@@ -356,16 +357,16 @@ inline void forward_erf_op_dir(
 	forward_mulvv_op_dir(q, r, i_z+0, addr, parameter, cap_order, taylor);
 
 	// z_1 = - x * x
-	addr[0] = arg[1]; // zero
-	addr[1] = i_z;    // z_0
+	addr[0] = arg[1];         // zero
+	addr[1] = addr_t( i_z );  // z_0
 	forward_subpv_op_dir(q, r, i_z+1, addr, parameter, cap_order, taylor);
 
 	// z_2 = exp( - x * x )
 	forward_exp_op_dir(q, r, i_z+2, i_z+1, cap_order, taylor);
 
 	// z_3 = (2 / sqrt(pi)) * exp( - x * x )
-	addr[0] = arg[2];  // 2 / sqrt(pi)
-	addr[1] = i_z + 2; // z_2
+	addr[0] = arg[2];            // 2 / sqrt(pi)
+	addr[1] = addr_t( i_z + 2 ); // z_2
 	forward_mulpv_op_dir(q, r, i_z+3, addr, parameter, cap_order, taylor);
 
 	// pointers to taylor coefficients for x , z_3, and z_4

@@ -103,13 +103,14 @@ inline void forward_powvv_op_dir(
 	CPPAD_ASSERT_UNKNOWN( NumRes(PowvvOp) == 3 );
 	CPPAD_ASSERT_UNKNOWN( 0 < q );
 	CPPAD_ASSERT_UNKNOWN( q < cap_order );
+	CPPAD_ASSERT_UNKNOWN( std::numeric_limits<addr_t>::max() >= i_z );
 
 	// z_0 = log(x)
 	forward_log_op_dir(q, r, i_z, arg[0], cap_order, taylor);
 
 	// z_1 = y * z_0
 	addr_t adr[2];
-	adr[0] = i_z;
+	adr[0] = addr_t( i_z );
 	adr[1] = arg[1];
 	forward_mulvv_op_dir(q, r, i_z+1, adr, parameter, cap_order, taylor);
 
@@ -326,10 +327,17 @@ inline void forward_powpv_op_dir(
 	for(size_t ell = 0; ell < r; ell++)
 		z_0[m+ell] = Base(0);
 
+	// 2DO: remove requirement i_z * num_taylor_per_var <= max addr_t value
+	CPPAD_ASSERT_KNOWN(
+		std::numeric_limits<addr_t>::max() >= i_z * num_taylor_per_var,
+		"cppad_tape_addr_type maximum value has been exceeded\n"
+		"This is due to a kludge in the pow operation and should be fixed."
+	);
+
 	// z_1 = z_0 * y
 	addr_t adr[2];
 	// offset of z_0 in taylor (as if it were a parameter); i.e., log(x)
-	adr[0] = i_z * num_taylor_per_var;
+	adr[0] = addr_t( i_z * num_taylor_per_var );
 	// ofset of y in taylor (as a variable)
 	adr[1] = arg[1];
 
@@ -531,6 +539,7 @@ inline void forward_powvp_op_dir(
 	CPPAD_ASSERT_UNKNOWN( NumRes(PowvpOp) == 3 );
 	CPPAD_ASSERT_UNKNOWN( 0 < q );
 	CPPAD_ASSERT_UNKNOWN( q < cap_order );
+	CPPAD_ASSERT_UNKNOWN( std::numeric_limits<addr_t>::max() >= i_z );
 
 	// z_0 = log(x)
 	forward_log_op_dir(q, r, i_z, arg[0], cap_order, taylor);
@@ -538,7 +547,7 @@ inline void forward_powvp_op_dir(
 	// z_1 = y * z_0
 	addr_t adr[2];
 	adr[0] = arg[1];
-	adr[1] = i_z;
+	adr[1] = addr_t( i_z );
 	forward_mulpv_op_dir(q, r, i_z+1, adr, parameter, cap_order, taylor);
 
 	// z_2 = exp(z_1)

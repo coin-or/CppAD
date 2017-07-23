@@ -292,12 +292,21 @@ void color_symmetric_colpack(
 	size_t i_memory = 0;
 	for(i = 0; i < m; i++)
 	{	adolc_pattern[i]    = adolc_memory.data() + i_memory;
-		adolc_pattern[i][0] = n_nonzero[i];
+		CPPAD_ASSERT_KNOWN(
+			std::numeric_limits<unsigned int>::max() >= n_nonzero[i],
+			"Matrix is too large for colpack"
+		);
+		adolc_pattern[i][0] = static_cast<unsigned int>( n_nonzero[i] );
 		typename VectorSet::const_iterator pattern_itr(pattern, i);
 		j = *pattern_itr;
 		k = 1;
 		while(j != pattern.end() )
-		{	adolc_pattern[i][k++] = j;
+		{
+			CPPAD_ASSERT_KNOWN(
+				std::numeric_limits<unsigned int>::max() >= j,
+				"Matrix is too large for colpack"
+			);
+			adolc_pattern[i][k++] = static_cast<unsigned int>( j );
 			j = *(++pattern_itr);
 		}
 		CPPAD_ASSERT_UNKNOWN( k == 1 + n_nonzero[i] );
