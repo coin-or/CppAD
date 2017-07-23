@@ -1,8 +1,7 @@
-// $Id$
 # ifndef CPPAD_LOCAL_OPTIMIZE_RECORD_CSUM_HPP
 # define CPPAD_LOCAL_OPTIMIZE_RECORD_CSUM_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -217,16 +216,20 @@ struct_size_pair record_csum(
 	// number of variables to subtract in this cummulative sum operator
 	size_t n_sub = work.sub_stack.size();
 	//
-	rec->PutArg(n_add);                // arg[0]
-	rec->PutArg(n_sub);                // arg[1]
-	size_t new_arg = rec->PutPar(sum_par);
+	CPPAD_ASSERT_UNKNOWN(
+		std::numeric_limits<addr_t>::max() >= n_add + n_sub
+	);
+	//
+	rec->PutArg( addr_t(n_add) );                // arg[0]
+	rec->PutArg( addr_t(n_sub) );                // arg[1]
+	addr_t new_arg = rec->PutPar(sum_par);
 	rec->PutArg(new_arg);              // arg[2]
 	// addition arguments
 	for(i = 0; i < n_add; i++)
 	{	CPPAD_ASSERT_UNKNOWN( ! work.add_stack.empty() );
 		size_t old_arg = work.add_stack.top();
 		new_arg        = old2new[ var2op[old_arg] ].new_var;
-		CPPAD_ASSERT_UNKNOWN( 0 < new_arg && new_arg < current );
+		CPPAD_ASSERT_UNKNOWN( 0 < new_arg && size_t(new_arg) < current );
 		rec->PutArg(new_arg);         // arg[3+i]
 		work.add_stack.pop();
 	}
@@ -235,12 +238,12 @@ struct_size_pair record_csum(
 	{	CPPAD_ASSERT_UNKNOWN( ! work.sub_stack.empty() );
 		size_t old_arg = work.sub_stack.top();
 		new_arg        = old2new[ var2op[old_arg] ].new_var;
-		CPPAD_ASSERT_UNKNOWN( 0 < new_arg && new_arg < current );
+		CPPAD_ASSERT_UNKNOWN( 0 < new_arg && size_t(new_arg) < current );
 		rec->PutArg(new_arg);      // arg[3 + arg[0] + i]
 		work.sub_stack.pop();
 	}
 	// number of additions plus number of subtractions
-	rec->PutArg(n_add + n_sub);        // arg[3 + arg[0] + arg[1]]
+	rec->PutArg( addr_t(n_add + n_sub) );      // arg[3 + arg[0] + arg[1]]
 	//
 	// return value
 	struct_size_pair ret;

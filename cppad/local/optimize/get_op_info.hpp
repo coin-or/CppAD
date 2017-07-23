@@ -228,8 +228,11 @@ void get_op_info(
 	var2op.resize( num_var );
 	//
 	// initialize mapping from variable index to operator index
+	CPPAD_ASSERT_UNKNOWN(
+		std::numeric_limits<addr_t>::max() >= num_op
+	);
 	for(size_t i = 0; i < num_var; i++)
-		var2op[i] = num_op; // invalid (used for auxillary variables)
+		var2op[i] = addr_t( num_op ); // invalid (used for auxillary variables)
 	//
 	// information set by forward_user
 	size_t user_old=0, user_m=0, user_n=0, user_i=0, user_j=0;
@@ -251,12 +254,12 @@ void get_op_info(
 	CPPAD_ASSERT_UNKNOWN( i_var           == 0 );
 	op_info[i_op].op    = op;
 	op_info[i_op].arg   = arg;
-	op_info[i_op].i_var = i_var;
+	op_info[i_op].i_var = addr_t( i_var );
 	//
 	// This variaible index, 0, is automatically created, but it should
 	// not used because variable index 0 represents a paraemeter during
 	// the recording process. So we set
-	var2op[i_var] = num_op;
+	var2op[i_var] = addr_t( num_op );
 	//
 	size_t num_cexp_op = 0;
 	user_state = start_user;
@@ -266,15 +269,18 @@ void get_op_info(
 		CPPAD_ASSERT_UNKNOWN(
 			size_t( std::numeric_limits<addr_t>::max() ) > i_var
 		);
+		CPPAD_ASSERT_UNKNOWN(
+			size_t( std::numeric_limits<addr_t>::max() ) > i_op
+		);
 		//
 		// information for this operator
 		op_info[i_op].op    = op;
 		op_info[i_op].arg   = arg;
-		op_info[i_op].i_var = i_var;
+		op_info[i_op].i_var = addr_t( i_var );
 		//
 		// mapping from variable index to operator index
 		if( NumRes(op) > 0 )
-			var2op[i_var] = i_op;
+			var2op[i_var] = addr_t( i_op );
 		//
 		switch( op )
 		{	case CSumOp:
