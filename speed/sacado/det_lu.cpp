@@ -1,6 +1,5 @@
-// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -38,6 +37,12 @@ See $cref link_det_lu$$.
 
 $head Implementation$$
 $srccode%cpp% */
+# include <cppad/configure.hpp>
+# if CPPAD_COMPILER_IS_GNUCXX
+# pragma GCC diagnostic ignored "-Wfloat-conversion"
+# pragma GCC diagnostic ignored "-Wconversion"
+# endif
+
 # include <Sacado.hpp>
 # include <cppad/speed/det_by_lu.hpp>
 # include <cppad/speed/uniform_01.hpp>
