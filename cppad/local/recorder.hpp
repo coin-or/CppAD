@@ -110,7 +110,7 @@ public:
 	/// Put a vecad load operator in the operation sequence (special case)
 	inline addr_t PutLoadOp(OpCode op);
 	/// Add a value to the end of the current vector of VecAD indices.
-	inline size_t PutVecInd(size_t vec_ind);
+	inline addr_t PutVecInd(size_t vec_ind);
 	/// Find or add a parameter to the current vector of parameters.
 	inline addr_t PutPar(const Base &par);
 	/// Put one operation argument index in the recording
@@ -135,7 +135,7 @@ public:
 	void ReplaceArg(size_t i_arg, size_t value);
 
 	/// Put a character string in the text for this recording.
-	inline size_t PutTxt(const char *text);
+	inline addr_t PutTxt(const char *text);
 
 	/// Number of variables currently stored in the recording.
 	size_t num_var_rec(void) const
@@ -291,13 +291,17 @@ and after each call to Erase.
 It increments by one for each call to PutVecInd..
 */
 template <class Base>
-inline size_t recorder<Base>::PutVecInd(size_t vec_ind)
+inline addr_t recorder<Base>::PutVecInd(size_t vec_ind)
 {	size_t i          = vecad_ind_rec_.extend(1);
 	CPPAD_ASSERT_UNKNOWN( std::numeric_limits<addr_t>::max() >= vec_ind );
 	vecad_ind_rec_[i] = addr_t( vec_ind );
 	CPPAD_ASSERT_UNKNOWN( vecad_ind_rec_.size() == i + 1 );
 
-	return i;
+	CPPAD_ASSERT_KNOWN(
+		std::numeric_limits<addr_t>::max() >= i,
+		"cppad_tape_addr_type maximum value has been exceeded"
+	);
+	return static_cast<addr_t>( i );
 }
 
 /*!
@@ -583,7 +587,7 @@ is the offset with in the text vector for this recording at which
 the character string starts.
 */
 template <class Base>
-inline size_t recorder<Base>::PutTxt(const char *text)
+inline addr_t recorder<Base>::PutTxt(const char *text)
 {
 	// determine length of the text including terminating '\0'
 	size_t n = 0;
@@ -600,7 +604,12 @@ inline size_t recorder<Base>::PutTxt(const char *text)
 		text_rec_[i + j] = text[j];
 	CPPAD_ASSERT_UNKNOWN( text_rec_.size() == i + n );
 
-	return i;
+	CPPAD_ASSERT_KNOWN(
+		std::numeric_limits<addr_t>::max() >= i,
+		"cppad_tape_addr_type maximum value has been exceeded"
+	);
+	//
+	return static_cast<addr_t>( i );
 }
 // -------------------------------------------------------------------------
 

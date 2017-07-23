@@ -198,9 +198,12 @@ void optimize_run(
 	rec->free();
 
 	// initialize mapping from old VecAD index to new VecAD index
-	CppAD::vector<size_t> new_vecad_ind(num_vecad_ind);
+	CPPAD_ASSERT_UNKNOWN(
+		std::numeric_limits<addr_t>::max() >= num_vecad_ind
+	);
+	CppAD::vector<addr_t> new_vecad_ind(num_vecad_ind);
 	for(size_t i = 0; i < num_vecad_ind; i++)
-		new_vecad_ind[i] = num_vecad_ind; // invalid index
+		new_vecad_ind[i] = addr_t( num_vecad_ind ); // invalid index
 	{
 		size_t j = 0;     // index into the old set of indices
 		for(size_t i = 0; i < num_vecad_vec; i++)
@@ -695,7 +698,10 @@ void optimize_run(
 			CPPAD_ASSERT_NARG_NRES(op, 3, 1);
 			new_arg[0] = new_vecad_ind[ arg[0] ];
 			new_arg[1] = arg[1];
-			new_arg[2] = rec->num_load_op_rec();
+			CPPAD_ASSERT_UNKNOWN(
+				std::numeric_limits<addr_t>::max() >= rec->num_load_op_rec()
+			);
+			new_arg[2] = addr_t( rec->num_load_op_rec() );
 			CPPAD_ASSERT_UNKNOWN( size_t(new_arg[0]) < num_vecad_ind );
 			rec->PutArg(
 				new_arg[0],
@@ -711,7 +717,10 @@ void optimize_run(
 			CPPAD_ASSERT_NARG_NRES(op, 3, 1);
 			new_arg[0] = new_vecad_ind[ arg[0] ];
 			new_arg[1] = old2new[ var2op[arg[1]] ].new_var;
-			new_arg[2] = rec->num_load_op_rec();
+			CPPAD_ASSERT_UNKNOWN(
+				std::numeric_limits<addr_t>::max() >= rec->num_load_op_rec()
+			);
+			new_arg[2] = addr_t( rec->num_load_op_rec() );
 			CPPAD_ASSERT_UNKNOWN( size_t(new_arg[0]) < num_vecad_ind );
 			CPPAD_ASSERT_UNKNOWN( size_t(new_arg[1]) < num_var );
 			rec->PutArg(
