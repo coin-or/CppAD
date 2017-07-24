@@ -174,7 +174,7 @@ bool ode_taylor(void)
 	// Taylor's method should have no truncation error for this case
 	double eps   = 100. * std::numeric_limits<double>::epsilon();
 	double check = 1.;
-	double t     = n_step * dt;
+	double t     = double(n_step) * dt;
 	for(i = 0; i < n; i++)
 	{	check *= t / double(i + 1);
 		ok &= CppAD::NearEqual(z[i], check, eps, eps);

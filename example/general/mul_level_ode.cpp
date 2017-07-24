@@ -288,7 +288,7 @@ bool mul_level_ode(void)
 
 	// check function values
 	double check = 1.;
-	double t     = nstep * Value(a1dt);
+	double t     = double(nstep) * Value(a1dt);
 	for(i = 0; i < n; i++)
 	{	check *= x[i] * t / double(i + 1);
 		ok &= CppAD::NearEqual(Value(a1y_final[i]), check, eps, eps);

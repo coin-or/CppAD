@@ -151,7 +151,7 @@ namespace CppAD {
 			std::strlen(after) <= 1000 ,
 			"PrintFor: length of after is greater than 1000 characters"
 		);
-		size_t ind0, ind1, ind2, ind3, ind4;
+		addr_t ind0, ind1, ind2, ind3, ind4;
 
 		// ind[0] = base 2 representation of the value [Var(pos), Var(var)]
 		ind0 = 0;

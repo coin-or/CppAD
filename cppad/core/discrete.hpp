@@ -266,7 +266,11 @@ public:
 			CPPAD_ASSERT_UNKNOWN( local::NumArg(local::DisOp) == 2 );
 
 			// put operand addresses in the tape
-			tape->Rec_.PutArg(index_, ax.taddr_);
+			CPPAD_ASSERT_KNOWN(
+				std::numeric_limits<addr_t>::max() >= index_,
+				"discrete: cppad_tape_addr_type maximum not large enough"
+			);
+			tape->Rec_.PutArg(addr_t(index_), ax.taddr_);
 			// put operator in the tape
 			ay.taddr_ = tape->Rec_.PutOp(local::DisOp);
 			// make result a variable

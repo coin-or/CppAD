@@ -51,10 +51,17 @@ Speed tests no longer automatically compile in release mode; see
 $cref/debug_which/speed/debug_which/$$
 $lend
 
-$head 07-23$$
+$head 07-24$$
+$list number$$
 Fix warnings related to type conversions that
 occurred when one used $code -Wconversion$$ with
 $code g++$$ version 6.3.1.
+$lnext
+The warning were not fixed for complex AD types; e.g.,
+$cref complex_poly.cpp$$.
+The $cref wno_conversion$$ include file was added to deal with
+cases like this.
+$lend
 
 $head 07-03$$
 $list number$$

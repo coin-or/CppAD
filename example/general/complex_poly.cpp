@@ -29,6 +29,8 @@ $$
 $end
 */
 // BEGIN C++
+// Complex examples should supppress conversion warnings
+# include <cppad/wno_conversion.hpp>
 
 # include <cppad/cppad.hpp>
 # include <complex>
