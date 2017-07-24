@@ -562,7 +562,11 @@ void operator()(
 		// Operator that marks beginning of this atomic operation
 		CPPAD_ASSERT_UNKNOWN( local::NumRes(local::UserOp) == 0 );
 		CPPAD_ASSERT_UNKNOWN( local::NumArg(local::UserOp) == 4 );
-		tape->Rec_.PutArg(index_, id, n, m);
+		CPPAD_ASSERT_KNOWN( std::numeric_limits<addr_t>::max() >=
+			std::max( std::max( std::max(index_, id), n), m ),
+			"atomic_base: cppad_tape_addr_type maximum not large enough"
+		);
+		tape->Rec_.PutArg(addr_t(index_), addr_t(id), addr_t(n), addr_t(m));
 		tape->Rec_.PutOp(local::UserOp);
 
 		// Now put n operators, one for each element of argument vector
@@ -602,7 +606,11 @@ void operator()(
 		}
 
 		// Put a duplicate UserOp at end of UserOp sequence
-		tape->Rec_.PutArg(index_, id, n, m);
+		CPPAD_ASSERT_KNOWN( std::numeric_limits<addr_t>::max() >=
+			std::max( std::max( std::max(index_, id), n), m ),
+			"atomic_base: cppad_tape_addr_type maximum not large enough"
+		);
+		tape->Rec_.PutArg(addr_t(index_), addr_t(id), addr_t(n), addr_t(m));
 		tape->Rec_.PutOp(local::UserOp);
 	}
 	return;

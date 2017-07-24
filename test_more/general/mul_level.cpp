@@ -14,9 +14,9 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # include <cppad/configure.hpp>
 
 # if CPPAD_HAS_ADOLC
-# if CPPAD_COMPILER_IS_GNUCXX
-# pragma GCC diagnostic ignored "-Wconversion"
-# endif
+// adolc examples should supppress conversion warnings
+# include <cppad/wno_conversion.hpp>
+//
 # include <adolc/adouble.h>
 # include <adolc/taping.h>
 # include <adolc/interfaces.h>

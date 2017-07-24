@@ -113,11 +113,11 @@ bool VecADTestTwo(void)
 	double eps99 = 99.0 * std::numeric_limits<double>::epsilon();
 
 	double pi    = 4. * CppAD::atan(1.);
-	size_t nx    = 10;                       // number of x grid point
-	double xLow  = 0;                        // minimum value for x
-	double xUp   = 2 * pi;                   // maximum value for x
-	double xStep = (xUp - xLow) / (nx - 1);  // step size in x
-	double xCur;                             // current value for x
+	size_t nx    = 10;                             // number of x grid point
+	double xLow  = 0;                              // minimum value for x
+	double xUp   = 2 * pi;                         // maximum value for x
+	double xStep = (xUp - xLow) / double(nx - 1);  // step size in x
+	double xCur;                                   // current value for x
 
 	// fill in the data vector on a uniform grid
 	VecAD<double> Data(nx);

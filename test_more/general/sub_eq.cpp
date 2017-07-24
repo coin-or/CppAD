@@ -100,7 +100,7 @@ bool SubEqTestTwo(void)
 	double value = -1.;
 	v[0]         = 1.;
 	for(j = 1; j < p; j++)
-	{	jfac *= j;
+	{	jfac *= double(j);
 		w     = f.Forward(j, v);
 		ok &= NearEqual(w[0], value/jfac, eps99, eps99); // d^jz/du^j
 		v[0]  = 0.;
@@ -115,7 +115,7 @@ bool SubEqTestTwo(void)
 	value = -1.;
 	for(j = 0; j < p; j++)
 	{	ok &= NearEqual(r[j], value/jfac, eps99, eps99); // d^jz/du^j
-		jfac *= (j + 1);
+		jfac *= double(j + 1);
 		value = 0.;
 	}
 
