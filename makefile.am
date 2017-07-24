@@ -326,7 +326,8 @@ nobase_myinclude_HEADERS =  \
 	cppad/utility/time_test.hpp \
 	cppad/utility/to_string.hpp \
 	cppad/utility/track_new_del.hpp \
-	cppad/utility/vector.hpp
+	cppad/utility/vector.hpp \
+	cppad/wno_conversion.hpp
 # End nobase_myinclude_HEADERS (check_makefile.sh uses this comment)
 # ---------------------------------------------------------------
 #

@@ -31,10 +31,9 @@ The program below is an example use of $codei%AD<base_alloc>%$$.
 $end
 */
 // BEGIN C++
-# include <cppad/configure.hpp>
-# if CPPAD_COMPILER_IS_GNUCXX
-# pragma GCC diagnostic ignored "-Wconversion"
-# endif
+// suppress conversion warnings before other includes
+# include <cppad/wno_conversion.hpp>
+//
 # include "base_alloc.hpp"
 # include <cppad/cppad.hpp>
 

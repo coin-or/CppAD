@@ -23,13 +23,21 @@ spell_list='
 revert_list='
 '
 move_list='
-	example/abs_normal/quad_program.hpp
-	example/abs_normal/quad_program.cpp
 '
 move_sed='s|quad_program|qp_interior|'
 #
 cat << EOF > junk.sed
-s|quad_program|qp_interior|g
+/^# include <cppad\\/configure.hpp>/! b skip
+N
+/CPPAD_COMPILER_IS_GNUCXX/! b skip
+: loop
+N
+/\\n# endif\$/! b loop
+s|.*|// suppress conversion warnings before other includes\\
+# include <cppad/wno_conversion.hpp>\\
+//|
+#
+: skip
 EOF
 # -----------------------------------------------------------------------------
 if [ $0 != "bin/batch_edit.sh" ]

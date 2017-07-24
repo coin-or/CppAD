@@ -45,11 +45,9 @@ $head Implementation$$
 
 
 $srccode%cpp% */
-# include <cppad/configure.hpp>
-# if CPPAD_COMPILER_IS_GNUCXX
-# pragma GCC diagnostic ignored "-Wfloat-conversion"
-# pragma GCC diagnostic ignored "-Wconversion"
-# endif
+// suppress conversion warnings before other includes
+# include <cppad/wno_conversion.hpp>
+//
 # include <Sacado.hpp>
 # include <cppad/utility/vector.hpp>
 # include <cppad/utility/poly.hpp>

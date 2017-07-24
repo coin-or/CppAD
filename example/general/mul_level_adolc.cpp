@@ -63,10 +63,9 @@ $$
 $end
 */
 // BEGIN C++
-# include <cppad/configure.hpp>
-# if CPPAD_COMPILER_IS_GNUCXX
-# pragma GCC diagnostic ignored "-Wconversion"
-# endif
+// suppress conversion warnings before other includes
+# include <cppad/wno_conversion.hpp>
+//
 
 # include <adolc/adouble.h>
 # include <adolc/taping.h>

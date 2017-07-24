@@ -38,10 +38,9 @@ See $cref link_det_minor$$.
 
 $head Implementation$$
 $srccode%cpp% */
-# include <cppad/configure.hpp>
-# if CPPAD_COMPILER_IS_GNUCXX
-# pragma GCC diagnostic ignored "-Wconversion"
-# endif
+// suppress conversion warnings before other includes
+# include <cppad/wno_conversion.hpp>
+//
 # include <adolc/adolc.h>
 # include <cppad/utility/vector.hpp>
 # include <cppad/speed/det_by_minor.hpp>

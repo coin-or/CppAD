@@ -40,10 +40,9 @@ See $cref link_ode$$.
 $head Implementation$$
 
 $srccode%cpp% */
-# include <cppad/configure.hpp>
-# if CPPAD_COMPILER_IS_GNUCXX
-# pragma GCC diagnostic ignored "-Wconversion"
-# endif
+// suppress conversion warnings before other includes
+# include <cppad/wno_conversion.hpp>
+//
 # include <FADBAD++/fadiff.h>
 # include <algorithm>
 # include <cassert>
