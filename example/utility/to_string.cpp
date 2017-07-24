@@ -26,30 +26,50 @@ $end
 # include <cppad/utility/to_string.hpp>
 namespace {
 	template <class Integer>
-	Integer string2int(const std::string& s)
+	Integer string2signed(const std::string& s)
 	{	Integer result = 0;
 		size_t index   = 0;
 		if( s[0] == '-' )
 			++index;
 		while( index < s.size() )
-			result = 10 * result + Integer( s[index++] - '0');
+			result = Integer(10 * result + s[index++] - '0');
 		if( s[0] == '-' )
 			return - result;
 		return result;
 	}
 	template <class Integer>
-	bool integer(void)
+	Integer string2unsigned(const std::string& s)
+	{	Integer result = 0;
+		size_t index   = 0;
+		while( index < s.size() )
+			result = Integer(10 * result + s[index++] - '0');
+		return result;
+	}
+	template <class Integer>
+	bool signed_integer(void)
 	{	bool ok = true;
 		//
 		Integer max    = std::numeric_limits<Integer>::max();
 		std::string s  = CppAD::to_string(max);
-		Integer check  = string2int<Integer>(s);
+		Integer check  = string2signed<Integer>(s);
 		ok            &= max == check;
 		//
-		Integer min       = std::numeric_limits<Integer>::min();
+		Integer min    = std::numeric_limits<Integer>::min();
 		s              = CppAD::to_string(min);
-		check          = string2int<Integer>(s);
+		check          = string2signed<Integer>(s);
 		ok            &= min == check;
+		//
+		return ok;
+	}
+	template <class Integer>
+	bool unsigned_integer(void)
+	{	bool ok = true;
+		//
+		Integer max    = std::numeric_limits<Integer>::max();
+		std::string s  = CppAD::to_string(max);
+		Integer check  = string2unsigned<Integer>(s);
+		ok            &= max == check;
+		ok            &= std::numeric_limits<Integer>::min() == 0;
 		//
 		return ok;
 	}
@@ -57,10 +77,10 @@ namespace {
 	bool floating(void)
 	{	bool  ok  = true;
 		Float eps = std::numeric_limits<Float>::epsilon();
-		Float pi  = 4.0 * std::atan(1.);
+		Float pi  = Float( 4.0 * std::atan(1.0) );
 		//
 		std::string s = CppAD::to_string( pi );
-		Float check    = std::atof( s.c_str() );
+		Float check   = Float( std::atof( s.c_str() ) );
 		ok           &= std::fabs( check / pi - 1.0 ) <= 2.0 * eps;
 		//
 		return ok;
@@ -73,12 +93,12 @@ namespace {
 	template <class Base>
 	bool ad_floating(void)
 	{	bool  ok  = true;
-		Base eps = std::numeric_limits<Base>::epsilon();
-		Base pi  = 4.0 * std::atan(1.);
+		Base eps  = std::numeric_limits<Base>::epsilon();
+		Base pi   = Base( 4.0 * std::atan(1.0) );
 		//
 		std::string s = CppAD::to_string( CppAD::AD<Base>( pi ) );
-		Base check    = std::atof( s.c_str() );
-		ok           &= std::fabs( check / pi - 1.0 ) <= 2.0 * eps;
+		Base check    = Base( std::atof( s.c_str() ) );
+		ok           &= fabs( check / pi - Base(1.0) ) <= Base( 2.0 ) * eps;
 		//
 		return ok;
 	}
@@ -88,11 +108,14 @@ namespace {
 bool to_string(void)
 {	bool ok = true;
 
-	ok &= integer<unsigned short>();
-	ok &= integer<signed int>();
-	ok &= integer<unsigned long>();
+	ok &= unsigned_integer<unsigned short>();
+	ok &= signed_integer<signed int>();
+	//
+	ok &= unsigned_integer<unsigned long>();
+	ok &= signed_integer<signed long>();
 # if CPPAD_USE_CPLUSPLUS_2011
-	ok &= integer<signed long long>();
+	ok &= unsigned_integer<unsigned long long>();
+	ok &= signed_integer<signed long long>();
 # endif
 	//
 	ok &= floating<float>();

@@ -42,11 +42,11 @@ bool complex_poly(void)
 	typedef std::complex<double> Complex;
 
 	// polynomial coefficients
-	CPPAD_TESTVECTOR( Complex )     a   (deg + 1); // coefficients for p(z)
+	CPPAD_TESTVECTOR( Complex )   a   (deg + 1); // coefficients for p(z)
 	CPPAD_TESTVECTOR(AD<Complex>) A   (deg + 1);
 	size_t i;
 	for(i = 0; i <= deg; i++)
-		A[i] = a[i] = Complex(i, i);
+		A[i] = a[i] = Complex(double(i), double(i));
 
 	// independent variable vector
 	CPPAD_TESTVECTOR(AD<Complex>) Z(1);
