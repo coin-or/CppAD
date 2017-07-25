@@ -51,7 +51,7 @@ Speed tests no longer automatically compile in release mode; see
 $cref/debug_which/speed/debug_which/$$
 $lend
 
-$head 07-24$$
+$head 07-25$$
 $list number$$
 Fix warnings related to type conversions that
 occurred when one used $code -Wconversion$$ with
