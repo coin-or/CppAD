@@ -7,11 +7,17 @@ echo_eval() {
 	eval $*
 }
 # -----------------------------------------------------------------------------
+# make sure .nojekyll exists
+if [ ! -e .nojekyll ]
+then
+	echo 'gh-pages: .nojekyll should exist'
+	exit 1
+fi
 # make sure that build.sh is the only file that has changed
 list=`git status -s | sed -e '/ build.sh$/d' -e '/ .build.sh.swp$/d' `
 if [ "$list" != '' ]
 then
-	git status -s
+	git status -s | sed -e '/ build.sh$/d' -e '/ .build.sh.swp$/d'
 	echo 'build.sh: git files other thant build.sh have changed'
 	exit 1
 fi
@@ -22,9 +28,33 @@ echo_eval git checkout build.sh
 # -----------------------------------------------------------------------------
 # checkout master
 echo_eval git checkout master
+if [ -d doc ]
+then
+	echo 'master: doc directory should not exist after checkout from gh-pages'
+	exit 1
+fi
+#
+version=`bin/version.sh get`
+#
+# change icon link to http://coin-or.github.io/CppAD/
+sed bin/run_omhelp.sh \
+	-e 's|https*://www\.coin-or\.org/CppAD/|../index.html|' > build.tmp
+if diff build.tmp bin/run_omhelp.sh > /dev/null
+then
+	rm build.tmp
+	echo "cannot change Home icon link in master:bin/run_omhelp.sh"
+	exit 1
+fi
+mv build.tmp bin/run_omhelp.sh
+chmod +x bin/run_omhelp.sh
+#
 # build documentation
 echo_eval bin/run_omhelp.sh htm
-# copy documentation to temporary directory
+#
+# restore origina bin/run_omhelp.sh
+git checkout bin/run_omhelp.sh
+#
+# move documentation to temporary directory
 if [ -e $temporary_dir/cppad.doc ]
 then
 	echo_eval rm -r $temporary_dir/cppad.doc
@@ -33,49 +63,34 @@ echo_eval mv doc $temporary_dir/cppad.doc
 # -----------------------------------------------------------------------------
 # checkout gh-pages
 echo_eval git checkout gh-pages
+#
 # restore build.sh
 echo_eval cp $temporary_dir/cppad.build.sh build.sh
 echo_eval chmod +x build.sh
-# get temporary directory version of documentation
-echo_eval rm -r doc
-echo_eval mv $temporary_dir/cppad.doc doc
-# need .nojekyll file because doc has files that begin with underbars
-echo_eval touch .nojekyll
-# change icon link to http://coin-or.github.io/CppAD/
-for file in doc/*.htm
-do
-	sed $file > build.tmp \
-		-e 's|"https*://www\.coin-or\.org/CppAD/"|"../index.html"|' 
-	if diff build.tmp $file > /dev/null
-	then
-		rm build.tmp
-		echo "cannot change Home icon link in $file"
-		exit 1
-	fi
-	mv build.tmp $file
 #
+# determine which files to remove
+list=`ls -a doc`
+for file in $list
+do
+	if [ ! -e "$temporary_dir/cppad.doc/$file" ]
+	then
+		echo_eval git rm doc/$file
+	fi
 done
-# -----------------------------------------------------------------------------
-add_list=`git status -s | \
-	sed -n -e '/^?? /p' | sed -e '/^\.build.sh.swp/d' -e 's/^?? *//'`
-if [ "$add_list" != '' ]
-then
-	echo 'adding new files'
-	git add $add_list
-fi
-# -----------------------------------------------------------------------------
-mod_list=`git status -s | sed -n -e '/^ M /p' | sed -e 's/^ M *//'`
-if [ "$mod_list" != '' ]
-then
-	echo 'adding modified files'
-	git add $mod_list
-fi
-# -----------------------------------------------------------------------------
-del_list=`git status -s | sed -n -e '/^ D /p' | sed -e 's/^ D *//'`
-if [ "$del_list" != '' ]
-then
-	echo 'remove deleted files'
-	git add $del_list
-fi
+#
+# copy new version of files
+list=`ls $temporary_dir/cppad.doc`
+for file in $list
+do
+	if [ ! -e doc/$file ]
+	then
+		echo "git add doc/$file"
+	fi
+	cp $temporary_dir/cppad.doc/$file doc/$file
+done
+# stage all the changes
+git add doc/*
 # -----------------------------------------------------------------------------
 echo 'build.sh: OK'
+echo 'following will commit changes:'
+echo "git commit -m 'update gh-pages to cppad-$version'"
