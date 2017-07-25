@@ -40,7 +40,7 @@ namespace {
 		{	size_t i;
 			f[0] = 1.;
 			for(i = 1; i < n; i++)
-				f[i] = (i+1) * x[i-1];
+				f[i] = double(i+1) * x[i-1];
 		}
 	};
 
@@ -392,7 +392,7 @@ namespace {
 		{	size_t i;
 			f[0] = CppAD::nan(0.);
 			for(i = 1; i < n; i++)
-				f[i] = (i+1) * x[i-1];
+				f[i] = double(i+1) * x[i-1];
 		}
 	};
 

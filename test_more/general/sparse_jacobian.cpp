@@ -42,21 +42,21 @@ bool rc_tridiagonal(void)
 	size_t K = 0;
 	for(i = 0; i < n; i++)
 	{	ell        = i * n + i;
-		Y[i]       = (ell+1) * 0.5 * X[i] * X[i];
-		check[ell] = (ell+1) * x[i];
+		Y[i]       = double(ell+1) * 0.5 * X[i] * X[i];
+		check[ell] = double(ell+1) * x[i];
 		K++;
 		if( i < n-1 )
 		{	j          = i + 1;
 			ell        = i * n + j;
-			Y[i]      += (ell+1) * 0.5 * X[i+1] * X[i+1];
-			check[ell] = (ell+1) * x[i+1];
+			Y[i]      += double(ell+1) * 0.5 * X[i+1] * X[i+1];
+			check[ell] = double(ell+1) * x[i+1];
 			K++;
 		}
 		if(i > 0 )
 		{	j          = i - 1;
 			ell        = i * n + j;
-			Y[i]      += (ell+1) * 0.5 * X[i-1] * X[i-1];
-			check[ell] = (ell+1) * x[i-1];
+			Y[i]      += double(ell+1) * 0.5 * X[i-1] * X[i-1];
+			check[ell] = double(ell+1) * x[i-1];
 		}
 	}
 

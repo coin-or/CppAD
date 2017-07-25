@@ -36,6 +36,8 @@ $$
 $end
 */
 // BEGIN C++
+// Complex examples should supppress conversion warnings
+# include <cppad/wno_conversion.hpp>
 
 # ifdef _MSC_VER
 // Supress Microsoft compiler warning about possible loss of precision,

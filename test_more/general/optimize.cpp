@@ -1614,7 +1614,7 @@ namespace {
 		// now test that the optimized function gives same results
 		CppAD::vector<double> x(n), y(m);
 		for(j = 0; j < n; j++)
-			x[j] = (j + 1) * (j + 1);
+			x[j] = double( (j + 1) * (j + 1) );
 		y = g.Forward(0, x);
 		// y[0] = x[0] + x[1]
 		ok &= NearEqual(y[0], x[0] + x[1], eps10, eps10);

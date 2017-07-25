@@ -92,7 +92,7 @@ bool Rosen34(void)
 	// set independent variables
 	size_t i;
 	for(i = 0; i < n; i++)
-		w[i] = 100 * i + 1.;
+		w[i] = double(100 * i + 1);
 	Independent(w);
 
 	// construct the function object using the independent variables
@@ -115,10 +115,10 @@ bool Rosen34(void)
 
 	// check function values
 	AD<double> x0 = exp( - w[0] * t1 );
-	ok &= NearEqual(x[0], x0, 0., 1. / (nstep * nstep) );
+	ok &= NearEqual(x[0], x0, 0., 1. / double(nstep * nstep) );
 
 	AD<double> x1 = exp( - w[1] * t1 );
-	ok &= NearEqual(x[1],  x1, 0., 1. / (nstep * nstep) );
+	ok &= NearEqual(x[1],  x1, 0., 1. / double(nstep * nstep) );
 
 	AD<double> x2 = w[2] * t1 * t1 / 2.;
 	ok &= NearEqual(x[2],  x2, eps99, eps99);
@@ -128,13 +128,13 @@ bool Rosen34(void)
 		q[i] = 0.;
 	q[0] = 1.;
 	r    = f.Forward(1, q);
-	ok &= NearEqual(r[0], - w[0] * x0, 0., 1. / (nstep * nstep) );
+	ok &= NearEqual(r[0], - w[0] * x0, 0., 1. / double(nstep * nstep) );
 
 	// check dx[1] / dw[1]
 	q[0] = 0.;
 	q[1] = 1.;
 	r    = f.Forward(1, q);
-	ok &= NearEqual(r[1], - w[1] * x1, 0., 1. / (nstep * nstep) );
+	ok &= NearEqual(r[1], - w[1] * x1, 0., 1. / double(nstep * nstep) );
 
 	// check dx[2] / dw[2]
 	q[1] = 0.;

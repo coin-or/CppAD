@@ -17,7 +17,7 @@ usage: bin/test_one.sh dir/file [extra]
 
 dir:   directory in front of file name
 file:  name of *.cpp file, with extension, that contains the test
-extra: extra options for the g++ command
+extra: extra source files and/or options for the g++ command
 EOF
 	exit 1
 fi

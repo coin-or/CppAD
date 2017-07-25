@@ -105,7 +105,7 @@ bool Sin(void)
 		ok &= NearEqual(jfac*r[0+j], sinjp * yj * y, eps99 , eps99);
 
 		// derivative w.r.t y of sin^{(j)} (x * y) * y^j
-		double value = sinjp * yj * x + j * sinj * yj / y;
+		double value = sinjp * yj * x + double(j) * sinj * yj / y;
 		ok &= NearEqual(r[p+j], value/jfac, eps99, eps99);
 
 		jfac  *= double(j + 1);
@@ -202,7 +202,7 @@ bool Cos(void)
 		ok &= NearEqual(jfac*r[0+j], cosjp * yj * y, eps99 , eps99);
 
 		// derivative w.r.t y of cos^{(j)} (x * y) * y^j
-		double value = cosjp * yj * x + j * cosj * yj / y;
+		double value = cosjp * yj * x + double(j) * cosj * yj / y;
 		ok &= NearEqual(r[p+j], value/jfac, eps99, eps99);
 
 		jfac  *= double(j + 1);
@@ -291,7 +291,7 @@ bool Cosh(void)
 		ok &= NearEqual(jfac*r[0+j], coshjp * yj * y, eps99 , eps99);
 
 		// derivative w.r.t y of cosh^{(j)} (x * y) * y^j
-		double value = coshjp * yj * x + j * coshj * yj / y;
+		double value = coshjp * yj * x + double(j) * coshj * yj / y;
 		ok &= NearEqual(r[p+j], value/jfac, eps99, eps99);
 
 		jfac  *= double(j + 1);
@@ -380,7 +380,7 @@ bool Sinh(void)
 		ok &= NearEqual(jfac*r[0+j], sinhjp * yj * y, eps99 , eps99);
 
 		// derivative w.r.t y of sinh^{(j)} (x * y) * y^j
-		double value = sinhjp * yj * x + j * sinhj * yj / y;
+		double value = sinhjp * yj * x + double(j) * sinhj * yj / y;
 		ok &= NearEqual(r[p+j], value/jfac, eps99, eps99);
 
 		jfac  *= double(j + 1);

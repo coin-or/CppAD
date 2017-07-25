@@ -242,7 +242,7 @@ pow(const VecAD_reference<double>& x, const double& y)
 
 // =========================================================================
 // Fold operations for the cases where x is an int,
-// but let cppad/pow_int.hpp handle the cases where y is an int.
+// but let cppad/utility/pow_int.hpp handle the cases where y is an int.
 // -------------------------------------------------------------------------
 template <class Base> AD<Base> pow
 (const int& x, const VecAD_reference<Base>& y)

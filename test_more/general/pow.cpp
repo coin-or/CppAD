@@ -267,7 +267,7 @@ bool PowTestFour(void)
 	y[0] = pow(1., x[0]);
 	size_t i;
 	for(i = 1; i < m; i++)
-		y[i] = pow(x[0], i-1);   // pow(AD<double>, int)
+		y[i] = CppAD::pow(x[0], int(i-1) );   // pow(AD<double>, int)
 
 	// create f: x -> y and stop tape recording
 	CppAD::ADFun<double> f(x, y);

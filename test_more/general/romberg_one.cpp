@@ -89,7 +89,7 @@ namespace {
 
 			r = CppAD::RombergOne(F, a, b, n, p, e);
 
-			ok  &= e < (degree+1) * spow;
+			ok  &= e < double(degree+1) * spow;
 			ok  &= CppAD::NearEqual(check, r, Float(0.), e);
 		}
 
