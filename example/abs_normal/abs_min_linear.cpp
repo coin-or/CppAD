@@ -82,7 +82,7 @@ bool abs_min_linear(void)
 	// data points
 	d_vector  data(s);
 	for(size_t i = 0; i < s; i++)
-		data[i] = double(s - i) + 5.0 - (i % 2) / 2.0;
+		data[i] = double(s - i) + 5.0 - double(i % 2) / 2.0;
 	//
 	// record the function f(x)
 	ad_vector ad_x(n), ad_y(m);

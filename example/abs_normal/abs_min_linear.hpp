@@ -286,7 +286,7 @@ bool abs_min_linear(
 	DblVector g_tilde = CppAD::abs_eval(n, m, s, g_hat, g_jac, delta_x);
 	//
 	// value of sigma at delta_x = 0; i.e., sign( z(x, u) )
-	CppAD::vector<int> sigma(s);
+	CppAD::vector<double> sigma(s);
 	for(size_t i = 0; i < s; i++)
 		sigma[i] = CppAD::sign( g_tilde[m + i] );
 	//
