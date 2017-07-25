@@ -117,7 +117,7 @@ namespace {
 		CPPAD_TESTVECTOR(double) x_q(n*(q+1)), z_not(m*(q+1)), z_yes(m*(q+1));
 		for(j = 0; j < n; j++)
 		{	for(k = 0; k <= q; k++)
-				x_q[ j * (q+1) + k ] = 1.0 / (q + 1 - k);
+				x_q[ j * (q+1) + k ] = 1.0 / double(q + 1 - k);
 		}
 		z_not = check_not.Forward(q, x_q);
 		z_yes = check_yes.Forward(q, x_q);
@@ -132,7 +132,7 @@ namespace {
 		// compare reverse mode results
 		CPPAD_TESTVECTOR(double) w(m*(q+1)), dw_not(n*(q+1)), dw_yes(n*(q+1));
 		for(i = 0; i < m * (q + 1); i++)
-			w[i] = double( 1.0 / double(i + 1.0) );
+			w[i] = 1.0 / double(i + 1);
 		dw_not = check_not.Reverse(q+1, w);
 		dw_yes = check_yes.Reverse(q+1, w);
 		for(j = 0; j < n; j++)

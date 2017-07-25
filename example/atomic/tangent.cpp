@@ -1,6 +1,5 @@
-// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -84,8 +83,8 @@ $srccode%cpp% */
 		if( p == 0 )
 		{	// z^{(0)} = tan( x^{(0)} ) or tanh( x^{(0)} )
 			if( hyperbolic_ )
-				tzy[0] = tanh( tx[0] );
-			else	tzy[0] = tan( tx[0] );
+				tzy[0] = float( tanh( tx[0] ) );
+			else	tzy[0] = float( tan( tx[0] ) );
 
 			// y^{(0)} = z^{(0)} * z^{(0)}
 			tzy[q1 + 0] = tzy[0] * tzy[0];
@@ -100,7 +99,7 @@ $srccode%cpp% */
 			// z^{(j)} = x^{(j)} +- sum_{k=1}^j k x^{(k)} y^{(j-k)} / j
 			tzy[j] = tx[j];
 			for(k = 1; k <= j; k++)
-				tzy[j] += tx[k] * tzy[q1 + j-k] * k * j_inv;
+				tzy[j] += tx[k] * tzy[q1 + j-k] * float(k) * j_inv;
 
 			// y^{(j)} = sum_{k=0}^j z^{(k)} z^{(j-k)}
 			tzy[q1 + j] = 0.;
@@ -150,11 +149,11 @@ $srccode%cpp% */
 			// H_{x^{(k)}} += delta(j-k) +- H_{z^{(j)} y^{(j-k)} * k / j
 			px[j] += qzy[j];
 			for(k = 1; k <= j; k++)
-				px[k] += qzy[j] * tzy[q1 + j-k] * k * j_inv;
+				px[k] += qzy[j] * tzy[q1 + j-k] * float(k) * j_inv;
 
 			// H_{y^{j-k)} += +- H_{z^{(j)} x^{(k)} * k / j
 			for(k = 1; k <= j; k++)
-				qzy[q1 + j-k] += qzy[j] * tx[k] * k * j_inv;
+				qzy[q1 + j-k] += qzy[j] * tx[k] * float(k) * j_inv;
 
 			// H_{z^{(k)}} += H_{y^{(j-1)}} * z^{(j-k-1)} * 2.
 			for(k = 0; k < j; k++)

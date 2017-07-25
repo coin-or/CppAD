@@ -351,9 +351,12 @@ void ADFun<Base>::abs_normal_fun(ADFun<Base>& g, ADFun<Base>& a)
 	const size_t num_var = play_.num_var_rec();
 	//
 	// mapping from old variable index to new variable index
-	CppAD::vector<size_t> f2g_var(num_var);
+	CPPAD_ASSERT_UNKNOWN(
+		std::numeric_limits<addr_t>::max() >= num_var
+	);
+	CppAD::vector<addr_t> f2g_var(num_var);
 	for(i_var = 0; i_var < num_var; i_var++)
-		f2g_var[i_var] = num_var; // invalid value (should not be used)
+		f2g_var[i_var] = addr_t( num_var ); // invalid (should not be used)
 	//
 	// record the independent variables in f
 	play_.forward_start(op, arg, i_op, i_var);
@@ -453,7 +456,7 @@ void ADFun<Base>::abs_normal_fun(ADFun<Base>& g, ADFun<Base>& a)
 			// sine and cosine are computed togeather.
 			CPPAD_ASSERT_UNKNOWN( NumArg(op) ==  1 );
 			CPPAD_ASSERT_UNKNOWN( NumRes(op) == 1 || NumRes(op) == 2 );
-			CPPAD_ASSERT_UNKNOWN( f2g_var[ arg[0] ] < num_var );
+			CPPAD_ASSERT_UNKNOWN( size_t( f2g_var[ arg[0] ] ) < num_var );
 			new_arg[0] = f2g_var[ arg[0] ];
 			rec.PutArg( new_arg[0] );
 			f2g_var[i_var] = rec.PutOp( op );
@@ -461,7 +464,7 @@ void ADFun<Base>::abs_normal_fun(ADFun<Base>& g, ADFun<Base>& a)
 
 			case ErfOp:
 			CPPAD_ASSERT_NARG_NRES(op, 3, 5);
-			CPPAD_ASSERT_UNKNOWN( f2g_var[ arg[0] ] < num_var );
+			CPPAD_ASSERT_UNKNOWN( size_t( f2g_var[ arg[0] ] ) < num_var );
 			// Error function is a special case
 			// second argument is always the parameter 0
 			// third argument is always the parameter 2 / sqrt(pi)
@@ -478,7 +481,7 @@ void ADFun<Base>::abs_normal_fun(ADFun<Base>& g, ADFun<Base>& a)
 			case PowvpOp:
 			case ZmulvpOp:
 			CPPAD_ASSERT_NARG_NRES(op, 2, 1);
-			CPPAD_ASSERT_UNKNOWN( f2g_var[ arg[0] ] < num_var );
+			CPPAD_ASSERT_UNKNOWN( size_t( f2g_var[ arg[0] ] ) < num_var );
 			new_arg[0] = f2g_var[ arg[0] ];
 			new_arg[1] = rec.PutPar( f_parameter[ arg[1] ] );
 			rec.PutArg( new_arg[0], new_arg[1] );
@@ -487,7 +490,7 @@ void ADFun<Base>::abs_normal_fun(ADFun<Base>& g, ADFun<Base>& a)
 			// ---------------------------------------------------
 			// Binary operators, left index, right variable, one result
 			case DisOp:
-			CPPAD_ASSERT_UNKNOWN( f2g_var[ arg[1] ] < num_var );
+			CPPAD_ASSERT_UNKNOWN( size_t( f2g_var[ arg[1] ] ) < num_var );
 			new_arg[0] = arg[0];
 			new_arg[1] = f2g_var[ arg[1] ];
 			rec.PutArg( new_arg[0], new_arg[1] );
@@ -503,7 +506,7 @@ void ADFun<Base>::abs_normal_fun(ADFun<Base>& g, ADFun<Base>& a)
 			case PowpvOp:
 			case ZmulpvOp:
 			CPPAD_ASSERT_NARG_NRES(op, 2, 1);
-			CPPAD_ASSERT_UNKNOWN( f2g_var[ arg[1] ] < num_var );
+			CPPAD_ASSERT_UNKNOWN( size_t( f2g_var[ arg[1] ] ) < num_var );
 			new_arg[0] = rec.PutPar( f_parameter[ arg[0] ] );
 			new_arg[1] = f2g_var[ arg[1] ];
 			rec.PutArg( new_arg[0], new_arg[1] );
@@ -517,8 +520,8 @@ void ADFun<Base>::abs_normal_fun(ADFun<Base>& g, ADFun<Base>& a)
 			case DivvvOp:
 			case ZmulvvOp:
 			CPPAD_ASSERT_NARG_NRES(op, 2, 1);
-			CPPAD_ASSERT_UNKNOWN( f2g_var[ arg[0] ] < num_var );
-			CPPAD_ASSERT_UNKNOWN( f2g_var[ arg[1] ] < num_var );
+			CPPAD_ASSERT_UNKNOWN( size_t( f2g_var[ arg[0] ] ) < num_var );
+			CPPAD_ASSERT_UNKNOWN( size_t( f2g_var[ arg[1] ] ) < num_var );
 			new_arg[0] = f2g_var[ arg[0] ];
 			new_arg[1] = f2g_var[ arg[1] ];
 			rec.PutArg( new_arg[0], new_arg[1] );
@@ -533,7 +536,7 @@ void ADFun<Base>::abs_normal_fun(ADFun<Base>& g, ADFun<Base>& a)
 			mask = 1;
 			for(size_t i = 2; i < 6; i++)
 			{	if( arg[1] & mask )
-				{	CPPAD_ASSERT_UNKNOWN( f2g_var[ arg[i] ] < num_var );
+				{	CPPAD_ASSERT_UNKNOWN( size_t(f2g_var[arg[i]]) < num_var );
 					new_arg[i] = f2g_var[ arg[i] ];
 				}
 				else
@@ -603,7 +606,7 @@ void ADFun<Base>::abs_normal_fun(ADFun<Base>& g, ADFun<Base>& a)
 			// arg[1]
 			if( arg[0] & 1 )
 			{
-				CPPAD_ASSERT_UNKNOWN( f2g_var[ arg[1] ]  < num_var );
+				CPPAD_ASSERT_UNKNOWN( size_t( f2g_var[ arg[1] ] )  < num_var );
 				new_arg[1] = f2g_var[ arg[1] ];
 			}
 			else
@@ -613,7 +616,7 @@ void ADFun<Base>::abs_normal_fun(ADFun<Base>& g, ADFun<Base>& a)
 			// arg[3]
 			if( arg[0] & 2 )
 			{
-				CPPAD_ASSERT_UNKNOWN( f2g_var[ arg[3] ]  < num_var );
+				CPPAD_ASSERT_UNKNOWN( size_t( f2g_var[ arg[3] ] )  < num_var );
 				new_arg[3] = f2g_var[ arg[3] ];
 			}
 			else
@@ -653,7 +656,7 @@ void ADFun<Base>::abs_normal_fun(ADFun<Base>& g, ADFun<Base>& a)
 			// Load using a variable index
 			case LdvOp:
 			CPPAD_ASSERT_NARG_NRES(op, 3, 1);
-			CPPAD_ASSERT_UNKNOWN( f2g_var[ arg[1] ] < num_var );
+			CPPAD_ASSERT_UNKNOWN( size_t( f2g_var[ arg[1] ] ) < num_var );
 			new_arg[0] = arg[0];
 			new_arg[1] = f2g_var[ arg[1] ];
 			new_arg[2] = arg[2];
@@ -682,7 +685,7 @@ void ADFun<Base>::abs_normal_fun(ADFun<Base>& g, ADFun<Base>& a)
 			// Store a parameter using a variable index
 			case StvpOp:
 			CPPAD_ASSERT_NARG_NRES(op, 3, 0);
-			CPPAD_ASSERT_UNKNOWN( f2g_var[ arg[1] ] < num_var );
+			CPPAD_ASSERT_UNKNOWN( size_t( f2g_var[ arg[1] ] ) < num_var );
 			new_arg[0] = arg[0];
 			new_arg[1] = f2g_var[ arg[1] ];
 			new_arg[2] = rec.PutPar( f_parameter[ arg[2] ] );
@@ -697,7 +700,7 @@ void ADFun<Base>::abs_normal_fun(ADFun<Base>& g, ADFun<Base>& a)
 			// Store a variable using a parameter index
 			case StpvOp:
 			CPPAD_ASSERT_NARG_NRES(op, 3, 0);
-			CPPAD_ASSERT_UNKNOWN( f2g_var[ arg[2] ] < num_var );
+			CPPAD_ASSERT_UNKNOWN( size_t( f2g_var[ arg[2] ] ) < num_var );
 			new_arg[0] = arg[0];
 			new_arg[1] = rec.PutPar( f_parameter[ arg[1] ] );
 			new_arg[2] = f2g_var[ arg[2] ];
@@ -712,8 +715,8 @@ void ADFun<Base>::abs_normal_fun(ADFun<Base>& g, ADFun<Base>& a)
 			// Store a variable using a variable index
 			case StvvOp:
 			CPPAD_ASSERT_NARG_NRES(op, 3, 0);
-			CPPAD_ASSERT_UNKNOWN( f2g_var[ arg[1] ] < num_var );
-			CPPAD_ASSERT_UNKNOWN( f2g_var[ arg[2] ] < num_var );
+			CPPAD_ASSERT_UNKNOWN( size_t( f2g_var[ arg[1] ] ) < num_var );
+			CPPAD_ASSERT_UNKNOWN( size_t( f2g_var[ arg[2] ] ) < num_var );
 			new_arg[0] = arg[0];
 			new_arg[1] = f2g_var[ arg[1] ];
 			new_arg[2] = f2g_var[ arg[2] ];
@@ -743,7 +746,7 @@ void ADFun<Base>::abs_normal_fun(ADFun<Base>& g, ADFun<Base>& a)
 
 			case UsravOp:
 			CPPAD_ASSERT_NARG_NRES(op, 1, 0);
-			CPPAD_ASSERT_UNKNOWN( f2g_var[arg[0]] < num_var );
+			CPPAD_ASSERT_UNKNOWN( size_t( f2g_var[arg[0]] ) < num_var );
 			new_arg[0] = f2g_var[ arg[0] ];
 			rec.PutArg(new_arg[0]);
 			rec.PutOp(UsravOp);

@@ -77,8 +77,8 @@ namespace { // Begin empty namespace
 		if( j == 0 )
 		{	// z^{(0)} = tan( x^{(0)} ) or tanh( x^{(0)} )
 			if( id == 0 )
-				tzy[0] = tan( tx[0] );
-			else	tzy[0] = tanh( tx[0] );
+				tzy[0] = float( tan( tx[0] ) );
+			else	tzy[0] = float( tanh( tx[0] ) );
 
 			// y^{(0)} = z^{(0)} * z^{(0)}
 			tzy[n_order + 0] = tzy[0] * tzy[0];
@@ -91,7 +91,7 @@ namespace { // Begin empty namespace
 			// z^{(j)} = x^{(j)} +- sum_{k=1}^j k x^{(k)} y^{(j-k)} / j
 			tzy[j] = tx[j];
 			for(k = 1; k <= j; k++)
-				tzy[j] += tx[k] * tzy[n_order + j-k] * k * j_inv;
+				tzy[j] += tx[k] * tzy[n_order + j-k] * float(k) * j_inv;
 
 			// y^{(j)} = sum_{k=0}^j z^{(k)} z^{(j-k)}
 			tzy[n_order + j] = 0.;
@@ -142,11 +142,11 @@ namespace { // Begin empty namespace
 			// H_{x^{(k)}} += delta(j-k) +- H_{z^{(j)} y^{(j-k)} * k / j
 			px[j] += qzy[j];
 			for(k = 1; k <= j; k++)
-				px[k] += qzy[j] * tzy[n_order + j-k] * k * j_inv;
+				px[k] += qzy[j] * tzy[n_order + j-k] * float(k) * j_inv;
 
 			// H_{y^{j-k)} += +- H_{z^{(j)} x^{(k)} * k / j
 			for(k = 1; k <= j; k++)
-				qzy[n_order + j-k] += qzy[j] * tx[k] * k * j_inv;
+				qzy[n_order + j-k] += qzy[j] * tx[k] * float(k) * j_inv;
 
 			// H_{z^{(k)}} += H_{y^{(j-1)}} * z^{(j-k-1)} * 2.
 			for(k = 0; k < j; k++)

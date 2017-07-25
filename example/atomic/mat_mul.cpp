@@ -1,6 +1,5 @@
-// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -55,7 +54,7 @@ $srccode%cpp% */
 	vector<double> x(n);
 	vector< AD<double> > ax(n);
 	for(j = 0; j < n; j++)
-		ax[j] = x[j] = j + 1;
+		ax[j] = x[j] = double(j + 1);
 	CppAD::Independent(ax);
 
 	// ------------------------------------------------------------------
@@ -104,7 +103,7 @@ $srccode%cpp% */
 	size_t m = atom_y.size();
 	vector<double> y(m);
 	for(j = 0; j <  n; j++)
-		x[j] = j + 2;
+		x[j] = double(j + 2);
 	y = g.Forward(0, x);
 	ok &= y[0] == x[0] * x[2] + x[1] * x[3];
 	ok &= y[1] == x[0] * 7.   + x[1] * 8.;
@@ -119,7 +118,7 @@ $srccode%cpp% */
 	//         [ 0 ,  0,  0, 0  ]
 	CppAD::vector<double> dx(n), dy(m);
 	for(j = 0; j <  n; j++)
-		dx[j] = j + 1;
+		dx[j] = double(j + 1);
 	dy = g.Forward(1, dx);
 	ok &= dy[0] == 1. * x[2] + 2. * x[3] + 3. * x[0] + 4. * x[1];
 	ok &= dy[1] == 1. * 7.   + 2. * 8.   + 3. * 0.   + 4. * 0.;

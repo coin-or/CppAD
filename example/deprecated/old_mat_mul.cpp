@@ -99,7 +99,7 @@ bool old_mat_mul(void)
 	// Test zero order forward mode evaluation of g(x)
 	CppAD::vector<double> x( X.size() ), y(m);
 	for(j = 0; j <  X.size() ; j++)
-		x[j] = j + 2;
+		x[j] = double(j + 2);
 	y = G.Forward(0, x);
 	ok &= y[0] == x[0] * x[2] + x[1] * x[3];
 	ok &= y[1] == x[0] * 7.   + x[1] * 8.;
@@ -114,7 +114,7 @@ bool old_mat_mul(void)
 	//         [ 0 ,  0,  0, 0  ]
 	CppAD::vector<double> dx( X.size() ), dy(m);
 	for(j = 0; j <  X.size() ; j++)
-		dx[j] = j + 1;
+		dx[j] = double(j + 1);
 	dy = G.Forward(1, dx);
 	ok &= dy[0] == 1. * x[2] + 2. * x[3] + 3. * x[0] + 4. * x[1];
 	ok &= dy[1] == 1. * 7.   + 2. * 8.   + 3. * 0.   + 4. * 0.;

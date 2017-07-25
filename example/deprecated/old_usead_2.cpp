@@ -348,7 +348,7 @@ bool old_usead_2(void)
 	size_t M      = 2;          // number of r steps to take
 	ax[0]         = au[0];      // value of z_0 (t) = t, at t = 0
 	ax[1]         = au[1];      // value of z_1 (t) = t^2/2, at t = 0
-	AD<double> dt = au[2] / M;  // size of each r step
+	AD<double> dt = au[2] / double(M);  // size of each r step
 	ax[2]         = dt;
 	for(size_t i_step = 0; i_step < M; i_step++)
 	{	size_t id = 0;               // not used

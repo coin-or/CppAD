@@ -96,7 +96,7 @@ bool abs_eval(void)
 	// Choose a point x_hat
 	d_vector x_hat(n);
 	for(size_t j = 0; j < n; j++)
-		x_hat[j] = double(j - 1.0);
+		x_hat[j] = double(j - 1);
 
 	// value of a_hat = a(x_hat)
 	d_vector a_hat = a.Forward(0, x_hat);
