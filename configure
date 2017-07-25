@@ -673,6 +673,7 @@ cppad_cplusplus_201100_ok
 cppad_has_cstdint_8_to_64
 cppad_has_rvalue
 cppad_has_nullptr
+cppad_compiler_is_gnucxx
 cppad_has_tmpnam_s
 cppad_has_mkstemp
 cppad_has_colpack
@@ -6231,6 +6232,8 @@ cppad_has_mkstemp=1
 
 cppad_has_tmpnam_s=0
 
+
+cppad_compiler_is_gnucxx=0
 
 cppad_has_nullptr=0
 

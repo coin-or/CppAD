@@ -501,6 +501,7 @@ AC_SUBST(cppad_has_tmpnam_s, 0)
 
 dnl autotools version cannot use c++11 compiler
 dnl so supress corresponding features
+AC_SUBST(cppad_compiler_is_gnucxx, 0)
 AC_SUBST(cppad_has_nullptr, 0)
 AC_SUBST(cppad_has_rvalue, 0)
 AC_SUBST(cppad_has_cstdint_8_to_64, 0)
