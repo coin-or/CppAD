@@ -452,7 +452,7 @@ $srccode%cpp% */
 					size_t i_right = 3 + n_left + ell * nc_right + j;
 					// check if result of for this product is alwasy zero
 					// note that x is nan for commponents that are variables
-					bool zero = x[i_left] == Base(0) || x[i_right] == Base(0);
+					bool zero = x[i_left] == Base(0.0) || x[i_right] == Base(0);
 					if( ! zero )
 					{	s[i_result] =
 							CppAD::set_union(s[i_result], r[i_left] );

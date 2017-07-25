@@ -146,7 +146,7 @@ Vector ADFun<Base>::RevOne(const Vector  &x, size_t i)
 	Vector w(m);
 	for(i1 = 0; i1 < m; i1++)
 		w[i1] = 0.;
-	w[i] = Base(1);
+	w[i] = Base(1.0);
 
 	// dimension the return value
 	Vector dw(n);

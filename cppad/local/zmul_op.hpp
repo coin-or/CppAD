@@ -1,4 +1,3 @@
-// $Id$
 # ifndef CPPAD_LOCAL_ZMUL_OP_HPP
 # define CPPAD_LOCAL_ZMUL_OP_HPP
 
@@ -57,7 +56,7 @@ inline void forward_zmulvv_op(
 
 	size_t k;
 	for(size_t d = p; d <= q; d++)
-	{	z[d] = Base(0);
+	{	z[d] = Base(0.0);
 		for(k = 0; k <= d; k++)
 			z[d] += azmul(x[d-k], y[k]);
 	}

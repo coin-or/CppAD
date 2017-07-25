@@ -60,16 +60,16 @@ inline void forward_acos_op(
 	Base uj;
 	if( p == 0 )
 	{	z[0] = acos( x[0] );
-		uj   = Base(1) - x[0] * x[0];
+		uj   = Base(1.0) - x[0] * x[0];
 		b[0] = sqrt( uj );
 		p++;
 	}
 	for(size_t j = p; j <= q; j++)
-	{	uj = Base(0);
+	{	uj = Base(0.0);
 		for(k = 0; k <= j; k++)
 			uj -= x[k] * x[j-k];
-		b[j] = Base(0);
-		z[j] = Base(0);
+		b[j] = Base(0.0);
+		z[j] = Base(0.0);
 		for(k = 1; k < j; k++)
 		{	b[j] -= Base(double(k)) * b[k] * b[j-k];
 			z[j] -= Base(double(k)) * z[k] * b[j-k];
@@ -77,7 +77,7 @@ inline void forward_acos_op(
 		b[j] /= Base(double(j));
 		z[j] /= Base(double(j));
 		//
-		b[j] += uj / Base(2);
+		b[j] += uj / Base(2.0);
 		z[j] -= x[j];
 		//
 		b[j] /= b[0];
@@ -127,14 +127,14 @@ inline void forward_acos_op_dir(
 	{	Base uq = - 2.0 * x[m + ell] * x[0];
 		for(k = 1; k < q; k++)
 			uq -= x[(k-1)*r+1+ell] * x[(q-k-1)*r+1+ell];
-		b[m+ell] = Base(0);
-		z[m+ell] = Base(0);
+		b[m+ell] = Base(0.0);
+		z[m+ell] = Base(0.0);
 		for(k = 1; k < q; k++)
 		{	b[m+ell] += Base(double(k)) * b[(k-1)*r+1+ell] * b[(q-k-1)*r+1+ell];
 			z[m+ell] += Base(double(k)) * z[(k-1)*r+1+ell] * b[(q-k-1)*r+1+ell];
 		}
-		b[m+ell] =  ( uq / Base(2) - b[m+ell] / Base(q) ) / b[0];
-		z[m+ell] = -( x[m+ell]     + z[m+ell] / Base(q) ) / b[0];
+		b[m+ell] =  ( uq / Base(2.0) - b[m+ell] / Base(double(q)) ) / b[0];
+		z[m+ell] = -( x[m+ell]     + z[m+ell] / Base(double(q)) ) / b[0];
 	}
 }
 
@@ -171,7 +171,7 @@ inline void forward_acos_op_0(
 	Base* b = z      -       cap_order; // called y in documentation
 
 	z[0] = acos( x[0] );
-	b[0] = sqrt( Base(1) - x[0] * x[0] );
+	b[0] = sqrt( Base(1.0) - x[0] * x[0] );
 }
 /*!
 Compute reverse mode partial derivatives for result of op = AcosOp.
@@ -217,7 +217,7 @@ inline void reverse_acos_op(
 	const Base* b  = z  - cap_order; // called y in documentation
 	Base* pb       = pz - nc_partial;
 
-	Base inv_b0 = Base(1) / b[0];
+	Base inv_b0 = Base(1.0) / b[0];
 
 	// number of indices to access
 	size_t j = d;

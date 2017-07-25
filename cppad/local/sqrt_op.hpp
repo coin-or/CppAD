@@ -56,11 +56,11 @@ inline void forward_sqrt_op(
 	}
 	for(size_t j = p; j <= q; j++)
 	{
-		z[j] = Base(0);
+		z[j] = Base(0.0);
 		for(k = 1; k < j; k++)
 			z[j] -= Base(double(k)) * z[k] * z[j-k];
 		z[j] /= Base(double(j));
-		z[j] += x[j] / Base(2);
+		z[j] += x[j] / Base(2.0);
 		z[j] /= z[0];
 	}
 }
@@ -97,11 +97,11 @@ inline void forward_sqrt_op_dir(
 
 	size_t m = (q-1) * r + 1;
 	for(size_t ell = 0; ell < r; ell++)
-	{	z[m+ell] = Base(0);
+	{	z[m+ell] = Base(0.0);
 		for(size_t k = 1; k < q; k++)
 			z[m+ell] -= Base(double(k)) * z[(k-1)*r+1+ell] * z[(q-k-1)*r+1+ell];
-		z[m+ell] /= Base(q);
-		z[m+ell] += x[m+ell] / Base(2);
+		z[m+ell] /= Base(double(q));
+		z[m+ell] += x[m+ell] / Base(2.0);
 		z[m+ell] /= z[0];
 	}
 }
@@ -169,7 +169,7 @@ inline void reverse_sqrt_op(
 	Base* pz       = partial + i_z * nc_partial;
 
 
-	Base inv_z0 = Base(1) / z[0];
+	Base inv_z0 = Base(1.0) / z[0];
 
 	// number of indices to access
 	size_t j = d;
@@ -181,12 +181,12 @@ inline void reverse_sqrt_op(
 		pz[j]    = azmul(pz[j], inv_z0);
 
 		pz[0]   -= azmul(pz[j], z[j]);
-		px[j]   += pz[j] / Base(2);
+		px[j]   += pz[j] / Base(2.0);
 		for(k = 1; k < j; k++)
 			pz[k]   -= azmul(pz[j], z[j-k]);
 		--j;
 	}
-	px[0] += azmul(pz[0], inv_z0) / Base(2);
+	px[0] += azmul(pz[0], inv_z0) / Base(2.0);
 }
 
 } } // END_CPPAD_LOCAL_NAMESPACE

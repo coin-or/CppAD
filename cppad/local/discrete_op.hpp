@@ -1,9 +1,8 @@
-// $Id$
 # ifndef CPPAD_LOCAL_DISCRETE_OP_HPP
 # define CPPAD_LOCAL_DISCRETE_OP_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -114,7 +113,7 @@ inline void forward_dis_op(
 	}
 	for(size_t ell = 0; ell < r; ell++)
 		for(size_t k = p; k <= q; k++)
-			z[ (k-1) * r + 1 + ell ] = Base(0);
+			z[ (k-1) * r + 1 + ell ] = Base(0.0);
 }
 
 

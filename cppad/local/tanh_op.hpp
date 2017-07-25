@@ -115,12 +115,12 @@ inline void forward_tanh_op_dir(
 	size_t k;
 	size_t m = (q-1) * r + 1;
 	for(size_t ell = 0; ell < r; ell++)
-	{	z[m+ell] = Base(q) * ( x[m+ell] - x[m+ell] * y[0] );
+	{	z[m+ell] = Base(double(q)) * ( x[m+ell] - x[m+ell] * y[0] );
 		for(k = 1; k < q; k++)
 			z[m+ell] -= Base(double(k)) * x[(k-1)*r+1+ell] * y[(q-k-1)*r+1+ell];
-		z[m+ell] /= Base(q);
+		z[m+ell] /= Base(double(q));
 		//
-		y[m+ell] = Base(2) * z[m+ell] * z[0];
+		y[m+ell] = Base(2.0) * z[m+ell] * z[0];
 		for(k = 1; k < q; k++)
 			y[m+ell] += z[(k-1)*r+1+ell] * z[(q-k-1)*r+1+ell];
 	}
@@ -223,7 +223,7 @@ inline void reverse_tanh_op(
 
 		--j;
 	}
-	px[0] += azmul(pz[0], Base(1) - y[0]);
+	px[0] += azmul(pz[0], Base(1.0) - y[0]);
 }
 
 } } // END_CPPAD_LOCAL_NAMESPACE

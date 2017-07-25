@@ -373,7 +373,7 @@ void BenderQuad(
 	// initial forward direction vector as zero
 	BAvector dx(n);
 	for(j = 0; j < n; j++)
-		dx[j] = Base(0);
+		dx[j] = Base(0.0);
 
 	// weight, first and second order derivative values
 	BAvector dg(1), w(1), ddw(2 * n);
@@ -383,12 +383,12 @@ void BenderQuad(
 	// Jacobian and Hessian of G(x) is equal Jacobian and Hessian of Gtilde
 	for(j = 0; j < n; j++)
 	{	// compute partials in x[j] direction
-		dx[j] = Base(1);
+		dx[j] = Base(1.0);
 		dg    = Gtilde.Forward(1, dx);
 		gx[j] = dg[0];
 
 		// restore the dx vector to zero
-		dx[j] = Base(0);
+		dx[j] = Base(0.0);
 
 		// compute second partials w.r.t x[j] and x[l]  for l = 1, n
 		ddw = Gtilde.Reverse(2, w);

@@ -1,4 +1,3 @@
-// $Id$
 # ifndef CPPAD_LOCAL_DIV_OP_HPP
 # define CPPAD_LOCAL_DIV_OP_HPP
 
@@ -191,7 +190,7 @@ inline void reverse_divvv_op(
 
 	// Using CondExp, it can make sense to divide by zero
 	// so do not make it an error.
-	Base inv_y0 = Base(1) / y[0];
+	Base inv_y0 = Base(1.0) / y[0];
 
 	size_t k;
 	// number of indices to access
@@ -255,7 +254,7 @@ inline void forward_divpv_op(
 		p++;
 	}
 	for(size_t d = p; d <= q; d++)
-	{	z[d] = Base(0);
+	{	z[d] = Base(0.0);
 		for(k = 1; k <= d; k++)
 			z[d] -= z[d-k] * y[k];
 		z[d] /= y[0];
@@ -381,7 +380,7 @@ inline void reverse_divpv_op(
 
 	// Using CondExp, it can make sense to divide by zero so do not
 	// make it an error.
-	Base inv_y0 = Base(1) / y[0];
+	Base inv_y0 = Base(1.0) / y[0];
 
 	size_t k;
 	// number of indices to access
@@ -561,7 +560,7 @@ inline void reverse_divvp_op(
 
 	// Using CondExp, it can make sense to divide by zero
 	// so do not make it an error.
-	Base inv_y = Base(1) / y;
+	Base inv_y = Base(1.0) / y;
 
 	// number of indices to access
 	size_t j = d + 1;

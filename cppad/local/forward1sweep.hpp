@@ -739,7 +739,7 @@ void forward1sweep(
 				i++;
 			}
 			while(i <= q)
-			{	taylor[ i_var * J + i] = Base(0);
+			{	taylor[ i_var * J + i] = Base(0.0);
 				i++;
 			}
 			break;
@@ -927,7 +927,7 @@ void forward1sweep(
 			CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < num_par );
 			user_tx[user_j * user_q1 + 0] = parameter[ arg[0]];
 			for(k = 1; k < user_q1; k++)
-				user_tx[user_j * user_q1 + k] = Base(0);
+				user_tx[user_j * user_q1 + k] = Base(0.0);
 			play->forward_user(op, user_state,
 				user_old, user_m, user_n, user_i, user_j
 			);
@@ -948,7 +948,7 @@ void forward1sweep(
 			user_iy[user_i] = 0;
 			user_ty[user_i * user_q1 + 0] = parameter[ arg[0]];
 			for(k = 1; k < p; k++)
-				user_ty[user_i * user_q1 + k] = Base(0);
+				user_ty[user_i * user_q1 + k] = Base(0.0);
 			play->forward_user(op, user_state,
 				user_old, user_m, user_n, user_i, user_j
 			);

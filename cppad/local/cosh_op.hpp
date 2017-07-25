@@ -67,8 +67,8 @@ inline void forward_cosh_op(
 	}
 	for(size_t j = p; j <= q; j++)
 	{
-		s[j] = Base(0);
-		c[j] = Base(0);
+		s[j] = Base(0.0);
+		c[j] = Base(0.0);
 		for(k = 1; k <= j; k++)
 		{	s[j] += Base(double(k)) * x[k] * c[j-k];
 			c[j] += Base(double(k)) * x[k] * s[j-k];
@@ -120,14 +120,14 @@ inline void forward_cosh_op_dir(
 	// (except that there is a sign difference for the hyperbolic case).
 	size_t m = (q-1) * r + 1;
 	for(size_t ell = 0; ell < r; ell++)
-	{	s[m+ell] = Base(q) * x[m + ell] * c[0];
-		c[m+ell] = Base(q) * x[m + ell] * s[0];
+	{	s[m+ell] = Base(double(q)) * x[m + ell] * c[0];
+		c[m+ell] = Base(double(q)) * x[m + ell] * s[0];
 		for(size_t k = 1; k < q; k++)
 		{	s[m+ell] += Base(double(k)) * x[(k-1)*r+1+ell] * c[(q-k-1)*r+1+ell];
 			c[m+ell] += Base(double(k)) * x[(k-1)*r+1+ell] * s[(q-k-1)*r+1+ell];
 		}
-		s[m+ell] /= Base(q);
-		c[m+ell] /= Base(q);
+		s[m+ell] /= Base(double(q));
+		c[m+ell] /= Base(double(q));
 	}
 }
 

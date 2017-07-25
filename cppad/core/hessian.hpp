@@ -149,8 +149,8 @@ Vector ADFun<Base>::Hessian(const Vector &x, size_t l)
 
 	Vector w(m);
 	for(i = 0; i < m; i++)
-		w[i] = Base(0);
-	w[l] = Base(1);
+		w[i] = Base(0.0);
+	w[l] = Base(1.0);
 
 	return Hessian(x, w);
 }
@@ -185,7 +185,7 @@ Vector ADFun<Base>::Hessian(const Vector &x, const Vector &w)
 	// direction vector for calls to forward
 	Vector u(n);
 	for(j = 0; j < n; j++)
-		u[j] = Base(0);
+		u[j] = Base(0.0);
 
 
 	// location for return values from Reverse
@@ -194,9 +194,9 @@ Vector ADFun<Base>::Hessian(const Vector &x, const Vector &w)
 	// loop over forward directions
 	for(j = 0; j < n; j++)
 	{	// evaluate partials of entire function w.r.t. j-th coordinate
-		u[j] = Base(1);
+		u[j] = Base(1.0);
 		Forward(1, u);
-		u[j] = Base(0);
+		u[j] = Base(0.0);
 
 		// evaluate derivative of partial corresponding to F_i
 		ddw = Reverse(2, w);

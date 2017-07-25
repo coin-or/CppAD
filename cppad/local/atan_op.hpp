@@ -59,13 +59,13 @@ inline void forward_atan_op(
 	size_t k;
 	if( p == 0 )
 	{	z[0] = atan( x[0] );
-		b[0] = Base(1) + x[0] * x[0];
+		b[0] = Base(1.0) + x[0] * x[0];
 		p++;
 	}
 	for(size_t j = p; j <= q; j++)
 	{
-		b[j] = Base(2) * x[0] * x[j];
-		z[j] = Base(0);
+		b[j] = Base(2.0) * x[0] * x[j];
+		z[j] = Base(0.0);
 		for(k = 1; k < j; k++)
 		{	b[j] += x[k] * x[j-k];
 			z[j] -= Base(double(k)) * z[k] * b[j-k];
@@ -115,13 +115,13 @@ inline void forward_atan_op_dir(
 
 	size_t m = (q-1) * r + 1;
 	for(size_t ell = 0; ell < r; ell++)
-	{	b[m+ell] = Base(2) * x[m+ell] * x[0];
-		z[m+ell] = Base(q) * x[m+ell];
+	{	b[m+ell] = Base(2.0) * x[m+ell] * x[0];
+		z[m+ell] = Base(double(q)) * x[m+ell];
 		for(size_t k = 1; k < q; k++)
 		{	b[m+ell] += x[(k-1)*r+1+ell] * x[(q-k-1)*r+1+ell];
 			z[m+ell] -= Base(double(k)) * z[(k-1)*r+1+ell] * b[(q-k-1)*r+1+ell];
 		}
-		z[m+ell] /= ( Base(q) * b[0] );
+		z[m+ell] /= ( Base(double(q)) * b[0] );
 	}
 }
 
@@ -158,7 +158,7 @@ inline void forward_atan_op_0(
 	Base* b = z      -       cap_order; // called y in documentation
 
 	z[0] = atan( x[0] );
-	b[0] = Base(1) + x[0] * x[0];
+	b[0] = Base(1.0) + x[0] * x[0];
 }
 /*!
 Reverse mode partial derivatives for result of op = AtanOp.
@@ -204,7 +204,7 @@ inline void reverse_atan_op(
 	const Base* b  = z  - cap_order; // called y in documentation
 	Base* pb       = pz - nc_partial;
 
-	Base inv_b0 = Base(1) / b[0];
+	Base inv_b0 = Base(1.0) / b[0];
 
 	// number of indices to access
 	size_t j = d;
@@ -212,7 +212,7 @@ inline void reverse_atan_op(
 	while(j)
 	{	// scale partials w.r.t z[j] and b[j]
 		pz[j]  = azmul(pz[j], inv_b0);
-		pb[j] *= Base(2);
+		pb[j] *= Base(2.0);
 
 		pb[0] -= azmul(pz[j], z[j]);
 		px[j] += pz[j] + azmul(pb[j], x[0]);
@@ -228,7 +228,7 @@ inline void reverse_atan_op(
 		}
 		--j;
 	}
-	px[0] += azmul(pz[0], inv_b0) + Base(2) * azmul(pb[0], x[0]);
+	px[0] += azmul(pz[0], inv_b0) + Base(2.0) * azmul(pb[0], x[0]);
 }
 
 } } // END_CPPAD_LOCAL_NAMESPACE

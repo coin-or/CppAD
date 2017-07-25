@@ -147,8 +147,8 @@ Vector ADFun<Base>::ForOne(const Vector &x, size_t j)
 	// direction in which are are taking the derivative
 	Vector dx(n);
 	for(j1 = 0; j1 < n; j1++)
-		dx[j1] = Base(0);
-	dx[j] = Base(1);
+		dx[j1] = Base(0.0);
+	dx[j] = Base(1.0);
 
 	// dimension the return value
 	Vector dy(m);

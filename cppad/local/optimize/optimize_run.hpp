@@ -357,7 +357,7 @@ void optimize_run(
 					// second argument is always the parameter 0
 					// third argument is always the parameter 2 / sqrt(pi)
 					CPPAD_ASSERT_UNKNOWN( NumArg(ErfOp) == 3 );
-					rec->PutArg( rec->PutPar( Base(0) ) );
+					rec->PutArg( rec->PutPar( Base(0.0) ) );
 					rec->PutArg( rec->PutPar(
 						Base( 1.0 / std::sqrt( std::atan(1.0) ) )
 					) );

@@ -98,10 +98,10 @@ inline void forward_expm1_op_dir(
 
 	size_t m = (q-1)*r + 1;
 	for(size_t ell = 0; ell < r; ell++)
-	{	z[m+ell] = Base(q) * x[m+ell] * z[0];
+	{	z[m+ell] = Base(double(q)) * x[m+ell] * z[0];
 		for(size_t k = 1; k < q; k++)
 			z[m+ell] += Base(double(k)) * x[(k-1)*r+ell+1] * z[(q-k-1)*r+ell+1];
-		z[m+ell] /= Base(q);
+		z[m+ell] /= Base(double(q));
 		z[m+ell] += x[m+ell];
 	}
 }

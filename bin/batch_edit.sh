@@ -21,14 +21,16 @@
 spell_list='
 '
 revert_list='
+	omh/appendix/whats_new/whats_new_14.omh
 '
 move_list='
 '
 move_sed='s|quad_program|qp_interior|'
 #
 cat << EOF > junk.sed
-s|Base(\\([jk]\\))|Base(double(\\1))|
-s|static_cast<Base>(\\([jk]\\))|static_cast<Base>(double(\\1))|
+s|Base(\\([q]\\))|Base(double(\\1))|
+s|static_cast<Base>(\\([q]\\))|static_cast<Base>(double(\\1))|
+s|Base(\\([0-9]\\))|Base(\\1.0)|
 EOF
 # -----------------------------------------------------------------------------
 if [ $0 != "bin/batch_edit.sh" ]

@@ -57,7 +57,7 @@ inline void forward_log1p_op(
 			return;
 	}
 	if ( p == 1 )
-	{	z[1] = x[1] / (Base(1) + x[0]);
+	{	z[1] = x[1] / (Base(1.0) + x[0]);
 		p++;
 	}
 	for(size_t j = p; j <= q; j++)
@@ -67,7 +67,7 @@ inline void forward_log1p_op(
 			z[j] -= Base(double(k)) * z[k] * x[j-k];
 		z[j] /= Base(double(j));
 		z[j] += x[j];
-		z[j] /= (Base(1) + x[0]);
+		z[j] /= (Base(1.0) + x[0]);
 	}
 }
 
@@ -104,10 +104,10 @@ inline void forward_log1p_op_dir(
 
 	size_t m = (q-1) * r + 1;
 	for(size_t ell = 0; ell < r; ell++)
-	{	z[m+ell] = Base(q) * x[m+ell];
+	{	z[m+ell] = Base(double(q)) * x[m+ell];
 		for(size_t k = 1; k < q; k++)
 			z[m+ell] -= Base(double(k)) * z[(k-1)*r+1+ell] * x[(q-k-1)*r+1+ell];
-		z[m+ell] /= (Base(q) + Base(q) * x[0]);
+		z[m+ell] /= (Base(double(q)) + Base(q) * x[0]);
 	}
 }
 
@@ -177,7 +177,7 @@ inline void reverse_log1p_op(
 	const Base* z  = taylor  + i_z * cap_order;
 	Base* pz       = partial + i_z * nc_partial;
 
-	Base inv_1px0 = Base(1) / (Base(1) + x[0]);
+	Base inv_1px0 = Base(1.0) / (Base(1) + x[0]);
 
 	j = d;
 	while(j)

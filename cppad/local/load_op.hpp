@@ -449,7 +449,7 @@ inline void forward_load_op(
 	{	for(size_t ell = 0; ell < r; ell++)
 		{	for(size_t k = p; k <= q; k++)
 			{	size_t m = (k-1) * r + 1 + ell;
-				z[m]     = Base(0);
+				z[m]     = Base(0.0);
 			}
 		}
 	}

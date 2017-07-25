@@ -255,7 +255,7 @@ inline void forward_powpv_op(
 	for(d = p; d <= q; d++)
 	{	if( d == 0 )
 			z_0[d] = log(x);
-		else	z_0[d] = Base(0);
+		else	z_0[d] = Base(0.0);
 	}
 
 	// 2DO: remove requirement that i_z * cap_order <= max addr_t value
@@ -325,7 +325,7 @@ inline void forward_powpv_op_dir(
 	// z_0 = log(x)
 	size_t m  = (q-1) * r + 1;
 	for(size_t ell = 0; ell < r; ell++)
-		z_0[m+ell] = Base(0);
+		z_0[m+ell] = Base(0.0);
 
 	// 2DO: remove requirement i_z * num_taylor_per_var <= max addr_t value
 	CPPAD_ASSERT_KNOWN(

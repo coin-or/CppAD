@@ -476,7 +476,7 @@ void forward2sweep(
 			case ParOp:
 			k = i_var*(J-1)*r + i_var + (q-1)*r + 1;
 			for(ell = 0; ell < r; ell++)
-				taylor[k + ell] = Base(0);
+				taylor[k + ell] = Base(0.0);
 			break;
 			// -------------------------------------------------
 
@@ -639,7 +639,7 @@ void forward2sweep(
 			user_tx_all[user_j*(q*r+1) + 0] = parameter[ arg[0]];
 			for(ell = 0; ell < r; ell++)
 				for(k = 1; k < user_q1; k++)
-					user_tx_all[user_j*(q*r+1) + (k-1)*r+1+ell] = Base(0);
+					user_tx_all[user_j*(q*r+1) + (k-1)*r+1+ell] = Base(0.0);
 			play->forward_user(op, user_state,
 				user_old, user_m, user_n, user_i, user_j
 			);
@@ -665,7 +665,7 @@ void forward2sweep(
 			user_ty_all[user_i*(q*r+1) + 0] = parameter[ arg[0]];
 			for(ell = 0; ell < r; ell++)
 				for(k = 1; k < user_q1; k++)
-					user_ty_all[user_i*(q*r+1) + (k-1)*r+1+ell] = Base(0);
+					user_ty_all[user_i*(q*r+1) + (k-1)*r+1+ell] = Base(0.0);
 			play->forward_user(op, user_state,
 				user_old, user_m, user_n, user_i, user_j
 			);

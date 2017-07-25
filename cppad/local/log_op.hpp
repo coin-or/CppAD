@@ -103,10 +103,10 @@ inline void forward_log_op_dir(
 
 	size_t m = (q-1) * r + 1;
 	for(size_t ell = 0; ell < r; ell++)
-	{	z[m+ell] = Base(q) * x[m+ell];
+	{	z[m+ell] = Base(double(q)) * x[m+ell];
 		for(size_t k = 1; k < q; k++)
 			z[m+ell] -= Base(double(k)) * z[(k-1)*r+1+ell] * x[(q-k-1)*r+1+ell];
-		z[m+ell] /= (Base(q) * x[0]);
+		z[m+ell] /= (Base(double(q)) * x[0]);
 	}
 }
 
@@ -176,7 +176,7 @@ inline void reverse_log_op(
 	const Base* z  = taylor  + i_z * cap_order;
 	Base* pz       = partial + i_z * nc_partial;
 
-	Base inv_x0 = Base(1) / x[0];
+	Base inv_x0 = Base(1.0) / x[0];
 
 	j = d;
 	while(j)

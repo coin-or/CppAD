@@ -378,7 +378,7 @@ inline void forward_erf_op_dir(
 	// z_4' (t) = erf'[x(t)] * x'(t) = z3(t) * x'(t)
 	// z_4[1] + 2 * z_4[2] * t +  ... =
 	// (z_3[0] + z_3[1] * t +  ...) * (x[1] + 2 * x[2] * t +  ...)
-	Base base_q = static_cast<Base>(q);
+	Base base_q = static_cast<Base>(double(q));
 	for(size_t ell = 0; ell < r; ell++)
 	{	// index in z_4 and x for q-th order term
 		size_t m = (q-1)*r + ell + 1;
