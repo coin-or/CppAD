@@ -343,8 +343,9 @@ $$
 $head Source Code$$
 $srccode%cpp% */
 void random_seed(size_t seed)
-{	srand(seed); }
-void uniform_01(unsigned n, double* a)
+{	srand( (unsigned int) seed );
+}
+void uniform_01(size_t n, double* a)
 {	static double factor = 1. / (double) RAND_MAX;
 	while(n--)
 		a[n] = rand() * factor;
