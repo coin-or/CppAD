@@ -183,10 +183,11 @@ bool multi_newton_setup(
 		else	num_sub_thread = num_min;
 
 		// when thread_num == 0, xlow_thread == xlow
-		double xlow_thread = xlow + sum_num * sub_length_;
+		double xlow_thread = xlow + double(sum_num) * sub_length_;
 
 		// when thread_num == num_threads - 1, xup_thread = xup
-		double xup_thread = xlow + (sum_num + num_sub_thread) * sub_length_;
+		double xup_thread =
+			xlow + double(sum_num + num_sub_thread) * sub_length_;
 		if( thread_num == num_threads - 1 )
 			xup_thread = xup;
 
@@ -276,15 +277,15 @@ void multi_newton_worker(void)
 
 	// check for a zero on each sub-interval
 	size_t i;
-	double xlast = xlow - 2 * sub_length_; // over sub_length_ away from x_low
-	double flast = 2 * epsilon_;           // any value > epsilon_ would do
+	double xlast = xlow - 2.0 * sub_length_; // over sub_length_ away from x_low
+	double flast = 2.0 * epsilon_;           // any value > epsilon_ would do
 	for(i = 0; i < num_sub; i++)
 	{
 		// note that when i == 0, xlow_i == xlow (exactly)
-		double xlow_i = xlow + i * sub_length_;
+		double xlow_i = xlow + double(i) * sub_length_;
 
 		// note that when i == num_sub - 1, xup_i = xup (exactly)
-		double xup_i  = xup  - (num_sub - i - 1) * sub_length_;
+		double xup_i  = xup  - double(num_sub - i - 1) * sub_length_;
 
 		// initial point for Newton iterations
 		double xcur = (xup_i + xlow_i) / 2.;
@@ -813,7 +814,7 @@ namespace { // empty namespace
 		}
 		double pi      = 4. * std::atan(1.);
 		double xlow    = 0.;
-		double xup     = (num_zero_ - 1) * pi;
+		double xup     = double(num_zero_ - 1) * pi;
 		double eps     =
 			xup * 100. * CppAD::numeric_limits<double>::epsilon();
 		size_t max_itr = 20;
@@ -891,12 +892,12 @@ bool multi_newton_time(
 	//
 	// correctness check
 	double pi      = 4. * std::atan(1.);
-	double xup     = (num_zero_ - 1) * pi;
+	double xup     = double(num_zero_ - 1) * pi;
 	double eps     = xup * 100. * CppAD::numeric_limits<double>::epsilon();
 	ok        &= (xout_.size() == num_zero);
 	size_t i   = 0;
 	for(i = 0; i < xout_.size(); i++)
-		ok &= std::fabs( xout_[i] - pi * i) <= 2 * eps;
+		ok &= std::fabs( xout_[i] - pi * double(i)) <= 2 * eps;
 
 	// xout_ is a static variable, so clear it to free its memory
 	xout_.clear();

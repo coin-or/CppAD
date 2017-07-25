@@ -157,8 +157,8 @@ bool team_create(size_t num_threads)
 	num_threads_ = num_threads;
 
 	// initialize two barriers, one for work done, one for new job ready
-	wait_for_work_ = new boost::barrier(num_threads);
-	wait_for_job_  = new boost::barrier(num_threads);
+	wait_for_work_ = new boost::barrier( (unsigned int) num_threads );
+	wait_for_job_  = new boost::barrier( (unsigned int) num_threads );
 
 	// initial job for the threads
 	thread_job_           = init_enum;

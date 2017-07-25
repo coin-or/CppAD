@@ -519,7 +519,8 @@ bool harmonic_time(
 	ok &= thread_alloc::in_parallel() == false;
 
 	// Correctness check
-	double eps1000 = mega_sum_ * 1e3 * std::numeric_limits<double>::epsilon();
+	double eps1000 =
+		double(mega_sum_) * 1e3 * std::numeric_limits<double>::epsilon();
 	size_t i       = mega_sum_ * 1000000;
 	double check = 0.;
 	while(i)
