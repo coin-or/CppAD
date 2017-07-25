@@ -1,4 +1,3 @@
-// $Id$
 # ifndef CPPAD_LOCAL_EXPM1_OP_HPP
 # define CPPAD_LOCAL_EXPM1_OP_HPP
 # if CPPAD_USE_CPLUSPLUS_2011
@@ -60,8 +59,8 @@ inline void forward_expm1_op(
 	{
 		z[j] = x[1] * z[j-1];
 		for(k = 2; k <= j; k++)
-			z[j] += Base(k) * x[k] * z[j-k];
-		z[j] /= Base(j);
+			z[j] += Base(double(k)) * x[k] * z[j-k];
+		z[j] /= Base(double(j));
 		z[j] += x[j];
 	}
 }
@@ -101,7 +100,7 @@ inline void forward_expm1_op_dir(
 	for(size_t ell = 0; ell < r; ell++)
 	{	z[m+ell] = Base(q) * x[m+ell] * z[0];
 		for(size_t k = 1; k < q; k++)
-			z[m+ell] += Base(k) * x[(k-1)*r+ell+1] * z[(q-k-1)*r+ell+1];
+			z[m+ell] += Base(double(k)) * x[(k-1)*r+ell+1] * z[(q-k-1)*r+ell+1];
 		z[m+ell] /= Base(q);
 		z[m+ell] += x[m+ell];
 	}
@@ -185,11 +184,11 @@ inline void reverse_expm1_op(
 	{	px[j] += pz[j];
 
 		// scale partial w.r.t z[j]
-		pz[j] /= Base(j);
+		pz[j] /= Base(double(j));
 
 		for(k = 1; k <= j; k++)
-		{	px[k]   += Base(k) * azmul(pz[j], z[j-k]);
-			pz[j-k] += Base(k) * azmul(pz[j], x[k]);
+		{	px[k]   += Base(double(k)) * azmul(pz[j], z[j-k]);
+			pz[j-k] += Base(double(k)) * azmul(pz[j], x[k]);
 		}
 		--j;
 	}

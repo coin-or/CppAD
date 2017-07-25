@@ -148,10 +148,10 @@ inline void forward_erf_op(
 	{	// z_4' (t) = erf'[x(t)] * x'(t) = z3(t) * x'(t)
 		// z_4[1] + 2 * z_4[2] * t +  ... =
 		// (z_3[0] + z_3[1] * t +  ...) * (x[1] + 2 * x[2] * t +  ...)
-		Base base_j = static_cast<Base>(j);
+		Base base_j = static_cast<Base>(double(j));
 		z_4[j]      = static_cast<Base>(0);
 		for(size_t k = 1; k <= j; k++)
-			z_4[j] += (Base(k) / base_j) * x[k] * z_3[j-k];
+			z_4[j] += (Base(double(k)) / base_j) * x[k] * z_3[j-k];
 	}
 }
 
@@ -387,7 +387,7 @@ inline void forward_erf_op_dir(
 		for(size_t k = 1; k < q; k++)
 		{	size_t x_index  = (k-1)*r + ell + 1;
 			size_t z3_index = (q-k-1)*r + ell + 1;
-			z_4[m]         += (Base(k) / base_q) * x[x_index] * z_3[z3_index];
+			z_4[m]         += (Base(double(k)) / base_q) * x[x_index] * z_3[z3_index];
 		}
 	}
 }
@@ -521,10 +521,10 @@ inline void reverse_erf_op(
 	// Reverse z_4
 	size_t j = d;
 	while(j)
-	{	pz_4[j] /= Base(j);
+	{	pz_4[j] /= Base(double(j));
 		for(size_t k = 1; k <= j; k++)
-		{	px[k]     += azmul(pz_4[j], z_3[j-k]) * Base(k);
-			pz_3[j-k] += azmul(pz_4[j], x[k]) * Base(k);
+		{	px[k]     += azmul(pz_4[j], z_3[j-k]) * Base(double(k));
+			pz_3[j-k] += azmul(pz_4[j], x[k]) * Base(double(k));
 		}
 		j--;
 	}

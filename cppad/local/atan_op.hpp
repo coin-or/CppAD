@@ -1,4 +1,3 @@
-// $Id$
 # ifndef CPPAD_LOCAL_ATAN_OP_HPP
 # define CPPAD_LOCAL_ATAN_OP_HPP
 
@@ -69,9 +68,9 @@ inline void forward_atan_op(
 		z[j] = Base(0);
 		for(k = 1; k < j; k++)
 		{	b[j] += x[k] * x[j-k];
-			z[j] -= Base(k) * z[k] * b[j-k];
+			z[j] -= Base(double(k)) * z[k] * b[j-k];
 		}
-		z[j] /= Base(j);
+		z[j] /= Base(double(j));
 		z[j] += x[j];
 		z[j] /= b[0];
 	}
@@ -120,7 +119,7 @@ inline void forward_atan_op_dir(
 		z[m+ell] = Base(q) * x[m+ell];
 		for(size_t k = 1; k < q; k++)
 		{	b[m+ell] += x[(k-1)*r+1+ell] * x[(q-k-1)*r+1+ell];
-			z[m+ell] -= Base(k) * z[(k-1)*r+1+ell] * b[(q-k-1)*r+1+ell];
+			z[m+ell] -= Base(double(k)) * z[(k-1)*r+1+ell] * b[(q-k-1)*r+1+ell];
 		}
 		z[m+ell] /= ( Base(q) * b[0] );
 	}
@@ -220,11 +219,11 @@ inline void reverse_atan_op(
 		px[0] += azmul(pb[j], x[j]);
 
 		// more scaling of partials w.r.t z[j]
-		pz[j] /= Base(j);
+		pz[j] /= Base(double(j));
 
 		for(k = 1; k < j; k++)
-		{	pb[j-k] -= Base(k) * azmul(pz[j], z[k]);
-			pz[k]   -= Base(k) * azmul(pz[j], b[j-k]);
+		{	pb[j-k] -= Base(double(k)) * azmul(pz[j], z[k]);
+			pz[k]   -= Base(double(k)) * azmul(pz[j], b[j-k]);
 			px[k]   += azmul(pb[j], x[j-k]);
 		}
 		--j;

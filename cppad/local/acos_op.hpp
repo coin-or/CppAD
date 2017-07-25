@@ -1,4 +1,3 @@
-// $Id$
 # ifndef CPPAD_LOCAL_ACOS_OP_HPP
 # define CPPAD_LOCAL_ACOS_OP_HPP
 
@@ -72,11 +71,11 @@ inline void forward_acos_op(
 		b[j] = Base(0);
 		z[j] = Base(0);
 		for(k = 1; k < j; k++)
-		{	b[j] -= Base(k) * b[k] * b[j-k];
-			z[j] -= Base(k) * z[k] * b[j-k];
+		{	b[j] -= Base(double(k)) * b[k] * b[j-k];
+			z[j] -= Base(double(k)) * z[k] * b[j-k];
 		}
-		b[j] /= Base(j);
-		z[j] /= Base(j);
+		b[j] /= Base(double(j));
+		z[j] /= Base(double(j));
 		//
 		b[j] += uj / Base(2);
 		z[j] -= x[j];
@@ -131,8 +130,8 @@ inline void forward_acos_op_dir(
 		b[m+ell] = Base(0);
 		z[m+ell] = Base(0);
 		for(k = 1; k < q; k++)
-		{	b[m+ell] += Base(k) * b[(k-1)*r+1+ell] * b[(q-k-1)*r+1+ell];
-			z[m+ell] += Base(k) * z[(k-1)*r+1+ell] * b[(q-k-1)*r+1+ell];
+		{	b[m+ell] += Base(double(k)) * b[(k-1)*r+1+ell] * b[(q-k-1)*r+1+ell];
+			z[m+ell] += Base(double(k)) * z[(k-1)*r+1+ell] * b[(q-k-1)*r+1+ell];
 		}
 		b[m+ell] =  ( uq / Base(2) - b[m+ell] / Base(q) ) / b[0];
 		z[m+ell] = -( x[m+ell]     + z[m+ell] / Base(q) ) / b[0];
@@ -241,17 +240,17 @@ inline void reverse_acos_op(
 		px[j] -= pz[j] + azmul(pb[j], x[0]);
 
 		// further scale partial w.r.t. z[j] by 1 / j
-		pz[j] /= Base(j);
+		pz[j] /= Base(double(j));
 
 		for(k = 1; k < j; k++)
 		{	// update partials w.r.t b^(j-k)
-			pb[j-k] -= Base(k) * azmul(pz[j], z[k]) + azmul(pb[j], b[k]);
+			pb[j-k] -= Base(double(k)) * azmul(pz[j], z[k]) + azmul(pb[j], b[k]);
 
 			// update partials w.r.t. x^k
 			px[k]   -= azmul(pb[j], x[j-k]);
 
 			// update partials w.r.t. z^k
-			pz[k]   -= Base(k) * azmul(pz[j], b[j-k]);
+			pz[k]   -= Base(double(k)) * azmul(pz[j], b[j-k]);
 		}
 		--j;
 	}

@@ -1,4 +1,3 @@
-// $Id$
 # ifndef CPPAD_LOCAL_TANH_OP_HPP
 # define CPPAD_LOCAL_TANH_OP_HPP
 
@@ -64,11 +63,11 @@ inline void forward_tanh_op(
 		p++;
 	}
 	for(size_t j = p; j <= q; j++)
-	{	Base base_j = static_cast<Base>(j);
+	{	Base base_j = static_cast<Base>(double(j));
 
 		z[j] = x[j];
 		for(k = 1; k <= j; k++)
-			z[j] -= Base(k) * x[k] * y[j-k] / base_j;
+			z[j] -= Base(double(k)) * x[k] * y[j-k] / base_j;
 
 		y[j] = z[0] * z[j];
 		for(k = 1; k <= j; k++)
@@ -118,7 +117,7 @@ inline void forward_tanh_op_dir(
 	for(size_t ell = 0; ell < r; ell++)
 	{	z[m+ell] = Base(q) * ( x[m+ell] - x[m+ell] * y[0] );
 		for(k = 1; k < q; k++)
-			z[m+ell] -= Base(k) * x[(k-1)*r+1+ell] * y[(q-k-1)*r+1+ell];
+			z[m+ell] -= Base(double(k)) * x[(k-1)*r+1+ell] * y[(q-k-1)*r+1+ell];
 		z[m+ell] /= Base(q);
 		//
 		y[m+ell] = Base(2) * z[m+ell] * z[0];
@@ -214,10 +213,10 @@ inline void reverse_tanh_op(
 	while(j)
 	{
 		px[j]   += pz[j];
-		pz[j]   /= Base(j);
+		pz[j]   /= Base(double(j));
 		for(k = 1; k <= j; k++)
-		{	px[k]   -= azmul(pz[j], y[j-k]) * Base(k);
-			py[j-k] -= azmul(pz[j], x[k]) * Base(k);
+		{	px[k]   -= azmul(pz[j], y[j-k]) * Base(double(k));
+			py[j-k] -= azmul(pz[j], x[k]) * Base(double(k));
 		}
 		for(k = 0; k < j; k++)
 			pz[k] += azmul(py[j-1], z[j-k-1]) * base_two;

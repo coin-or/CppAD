@@ -1,4 +1,3 @@
-// $Id$
 # ifndef CPPAD_LOCAL_SIN_OP_HPP
 # define CPPAD_LOCAL_SIN_OP_HPP
 
@@ -71,11 +70,11 @@ inline void forward_sin_op(
 		s[j] = Base(0);
 		c[j] = Base(0);
 		for(k = 1; k <= j; k++)
-		{	s[j] += Base(k) * x[k] * c[j-k];
-			c[j] -= Base(k) * x[k] * s[j-k];
+		{	s[j] += Base(double(k)) * x[k] * c[j-k];
+			c[j] -= Base(double(k)) * x[k] * s[j-k];
 		}
-		s[j] /= Base(j);
-		c[j] /= Base(j);
+		s[j] /= Base(double(j));
+		c[j] /= Base(double(j));
 	}
 }
 /*!
@@ -124,8 +123,8 @@ inline void forward_sin_op_dir(
 	{	s[m+ell] =   Base(q) * x[m + ell] * c[0];
 		c[m+ell] = - Base(q) * x[m + ell] * s[0];
 		for(size_t k = 1; k < q; k++)
-		{	s[m+ell] += Base(k) * x[(k-1)*r+1+ell] * c[(q-k-1)*r+1+ell];
-			c[m+ell] -= Base(k) * x[(k-1)*r+1+ell] * s[(q-k-1)*r+1+ell];
+		{	s[m+ell] += Base(double(k)) * x[(k-1)*r+1+ell] * c[(q-k-1)*r+1+ell];
+			c[m+ell] -= Base(double(k)) * x[(k-1)*r+1+ell] * s[(q-k-1)*r+1+ell];
 		}
 		s[m+ell] /= Base(q);
 		c[m+ell] /= Base(q);
@@ -220,15 +219,15 @@ inline void reverse_sin_op(
 	size_t k;
 	while(j)
 	{
-		ps[j]   /= Base(j);
-		pc[j]   /= Base(j);
+		ps[j]   /= Base(double(j));
+		pc[j]   /= Base(double(j));
 		for(k = 1; k <= j; k++)
 		{
-			px[k]   += Base(k) * azmul(ps[j], c[j-k]);
-			px[k]   -= Base(k) * azmul(pc[j], s[j-k]);
+			px[k]   += Base(double(k)) * azmul(ps[j], c[j-k]);
+			px[k]   -= Base(double(k)) * azmul(pc[j], s[j-k]);
 
-			ps[j-k] -= Base(k) * azmul(pc[j], x[k]);
-			pc[j-k] += Base(k) * azmul(ps[j], x[k]);
+			ps[j-k] -= Base(double(k)) * azmul(pc[j], x[k]);
+			pc[j-k] += Base(double(k)) * azmul(ps[j], x[k]);
 
 		}
 		--j;

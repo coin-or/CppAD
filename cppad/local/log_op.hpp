@@ -1,4 +1,3 @@
-// $Id$
 # ifndef CPPAD_LOCAL_LOG_OP_HPP
 # define CPPAD_LOCAL_LOG_OP_HPP
 
@@ -64,8 +63,8 @@ inline void forward_log_op(
 	{
 		z[j] = -z[1] * x[j-1];
 		for(k = 2; k < j; k++)
-			z[j] -= Base(k) * z[k] * x[j-k];
-		z[j] /= Base(j);
+			z[j] -= Base(double(k)) * z[k] * x[j-k];
+		z[j] /= Base(double(j));
 		z[j] += x[j];
 		z[j] /= x[0];
 	}
@@ -106,7 +105,7 @@ inline void forward_log_op_dir(
 	for(size_t ell = 0; ell < r; ell++)
 	{	z[m+ell] = Base(q) * x[m+ell];
 		for(size_t k = 1; k < q; k++)
-			z[m+ell] -= Base(k) * z[(k-1)*r+1+ell] * x[(q-k-1)*r+1+ell];
+			z[m+ell] -= Base(double(k)) * z[(k-1)*r+1+ell] * x[(q-k-1)*r+1+ell];
 		z[m+ell] /= (Base(q) * x[0]);
 	}
 }
@@ -188,11 +187,11 @@ inline void reverse_log_op(
 		px[j]   += pz[j];
 
 		// further scale partial w.r.t. z[j]
-		pz[j]   /= Base(j);
+		pz[j]   /= Base(double(j));
 
 		for(k = 1; k < j; k++)
-		{	pz[k]   -= Base(k) * azmul(pz[j], x[j-k]);
-			px[j-k] -= Base(k) * azmul(pz[j], z[k]);
+		{	pz[k]   -= Base(double(k)) * azmul(pz[j], x[j-k]);
+			px[j-k] -= Base(double(k)) * azmul(pz[j], z[k]);
 		}
 		--j;
 	}

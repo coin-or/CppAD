@@ -1,4 +1,3 @@
-// $Id$
 # ifndef CPPAD_LOCAL_SQRT_OP_HPP
 # define CPPAD_LOCAL_SQRT_OP_HPP
 
@@ -59,8 +58,8 @@ inline void forward_sqrt_op(
 	{
 		z[j] = Base(0);
 		for(k = 1; k < j; k++)
-			z[j] -= Base(k) * z[k] * z[j-k];
-		z[j] /= Base(j);
+			z[j] -= Base(double(k)) * z[k] * z[j-k];
+		z[j] /= Base(double(j));
 		z[j] += x[j] / Base(2);
 		z[j] /= z[0];
 	}
@@ -100,7 +99,7 @@ inline void forward_sqrt_op_dir(
 	for(size_t ell = 0; ell < r; ell++)
 	{	z[m+ell] = Base(0);
 		for(size_t k = 1; k < q; k++)
-			z[m+ell] -= Base(k) * z[(k-1)*r+1+ell] * z[(q-k-1)*r+1+ell];
+			z[m+ell] -= Base(double(k)) * z[(k-1)*r+1+ell] * z[(q-k-1)*r+1+ell];
 		z[m+ell] /= Base(q);
 		z[m+ell] += x[m+ell] / Base(2);
 		z[m+ell] /= z[0];

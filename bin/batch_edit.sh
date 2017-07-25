@@ -27,8 +27,8 @@ move_list='
 move_sed='s|quad_program|qp_interior|'
 #
 cat << EOF > junk.sed
-s|jfac\\( *\\)\\*= *\\(j\\);|jfac\\1*= double(j);|
-s|jfac\\( *\\)\\*= *\\((j + 1)\\);|jfac\\1*= double(j + 1);|
+s|Base(\\([jk]\\))|Base(double(\\1))|
+s|static_cast<Base>(\\([jk]\\))|static_cast<Base>(double(\\1))|
 EOF
 # -----------------------------------------------------------------------------
 if [ $0 != "bin/batch_edit.sh" ]
