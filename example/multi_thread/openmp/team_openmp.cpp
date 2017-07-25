@@ -91,7 +91,7 @@ bool team_destroy(void)
 	num_threads_ = 1;
 
 	// Set the number of OpenMP threads to one
-	omp_set_num_threads(num_threads_);
+	omp_set_num_threads( int(num_threads_) );
 
 	// inform CppAD no longer in multi-threading mode
 	thread_alloc::parallel_setup(num_threads_, CPPAD_NULL, CPPAD_NULL);
