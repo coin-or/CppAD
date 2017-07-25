@@ -59,7 +59,7 @@ namespace {
 		// for some reason this function is missing on some systems
 		// assert( pthread_is_multithreaded_np() > 0 );
 		for(i = 1; i < n; i++)
-			b[i] = (a[i] + a[i-1]) / 2.0;
+			b[i] = (a[i] + a[i-1]) / 2.0f;
 		return;
 	}
 	// End of Example A.1.1.1c of OpenMP 2.5 standard document ---------------
@@ -121,7 +121,7 @@ bool a11c(void)
 	}
 
 	// check the result
-	float eps = 100. * std::numeric_limits<float>::epsilon();
+	float eps = 100.0f * std::numeric_limits<float>::epsilon();
 	for(i = 1; i < n ; i++)
 		ok &= std::fabs( (2. * b[i] - a[i] - a[i-1]) / b[i] ) <= eps;
 

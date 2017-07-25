@@ -202,11 +202,11 @@ bool team_create(size_t num_threads)
 	// initialize two barriers, one for work done, one for new job ready
 	pthread_barrierattr_t* no_barrierattr = CPPAD_NULL;
 	rc = pthread_barrier_init(
-		&wait_for_work_, no_barrierattr, num_threads
+		&wait_for_work_, no_barrierattr, (unsigned int) num_threads
 	);
 	ok &= (rc == 0);
 	rc  = pthread_barrier_init(
-		&wait_for_job_, no_barrierattr, num_threads
+		&wait_for_job_, no_barrierattr, (unsigned int) num_threads
 	);
 	ok &= (rc == 0);
 
