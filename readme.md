@@ -1,5 +1,7 @@
 # CppAD: A Package for Differentiation of C++ Algorithms
 
+[gh-pages] (https://coin-or.github.io/CppAD/doc)
+
 ## Links
 
 - [Homepage](http://www.coin-or.org/CppAD/)
