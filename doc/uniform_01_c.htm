@@ -192,8 +192,9 @@ randomly sampled over the interval [0,1].
 <b><big><a name="Source Code" id="Source Code">Source Code</a></big></b>
 
 <pre><tt><font color="#009900">void</font> <b><font color="#000000">random_seed</font></b><font color="#990000">(</font><font color="#008080">size_t</font> seed<font color="#990000">)</font>
-<font color="#FF0000">{</font>    <b><font color="#000000">srand</font></b><font color="#990000">(</font>seed<font color="#990000">);</font> <font color="#FF0000">}</font>
-<font color="#009900">void</font> <b><font color="#000000">uniform_01</font></b><font color="#990000">(</font><font color="#009900">unsigned</font> n<font color="#990000">,</font> <font color="#009900">double</font><font color="#990000">*</font> a<font color="#990000">)</font>
+<font color="#FF0000">{</font>    <b><font color="#000000">srand</font></b><font color="#990000">(</font> <font color="#990000">(</font><font color="#009900">unsigned</font> <font color="#009900">int</font><font color="#990000">)</font> seed <font color="#990000">);</font>
+<font color="#FF0000">}</font>
+<font color="#009900">void</font> <b><font color="#000000">uniform_01</font></b><font color="#990000">(</font><font color="#008080">size_t</font> n<font color="#990000">,</font> <font color="#009900">double</font><font color="#990000">*</font> a<font color="#990000">)</font>
 <font color="#FF0000">{</font>    <b><font color="#0000FF">static</font></b> <font color="#009900">double</font> factor <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">.</font> <font color="#990000">/</font> <font color="#990000">(</font><font color="#009900">double</font><font color="#990000">)</font> RAND_MAX<font color="#990000">;</font>
      <b><font color="#0000FF">while</font></b><font color="#990000">(</font>n<font color="#990000">--)</font>
           a<font color="#990000">[</font>n<font color="#990000">]</font> <font color="#990000">=</font> <b><font color="#000000">rand</font></b><font color="#990000">()</font> <font color="#990000">*</font> factor<font color="#990000">;</font>

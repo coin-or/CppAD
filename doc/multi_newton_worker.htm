@@ -182,15 +182,15 @@ This is the number for the current thread; see
 
      <i><font color="#9A1900">// check for a zero on each sub-interval</font></i>
      <font color="#008080">size_t</font> i<font color="#990000">;</font>
-     <font color="#009900">double</font> xlast <font color="#990000">=</font> xlow <font color="#990000">-</font> <font color="#993399">2</font> <font color="#990000">*</font> sub_length_<font color="#990000">;</font> <i><font color="#9A1900">// over sub_length_ away from x_low</font></i>
-     <font color="#009900">double</font> flast <font color="#990000">=</font> <font color="#993399">2</font> <font color="#990000">*</font> epsilon_<font color="#990000">;</font>           <i><font color="#9A1900">// any value &gt; epsilon_ would do</font></i>
+     <font color="#009900">double</font> xlast <font color="#990000">=</font> xlow <font color="#990000">-</font> <font color="#993399">2.0</font> <font color="#990000">*</font> sub_length_<font color="#990000">;</font> <i><font color="#9A1900">// over sub_length_ away from x_low</font></i>
+     <font color="#009900">double</font> flast <font color="#990000">=</font> <font color="#993399">2.0</font> <font color="#990000">*</font> epsilon_<font color="#990000">;</font>           <i><font color="#9A1900">// any value &gt; epsilon_ would do</font></i>
      <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> num_sub<font color="#990000">;</font> i<font color="#990000">++)</font>
      <font color="#FF0000">{</font>
           <i><font color="#9A1900">// note that when i == 0, xlow_i == xlow (exactly)</font></i>
-          <font color="#009900">double</font> xlow_i <font color="#990000">=</font> xlow <font color="#990000">+</font> i <font color="#990000">*</font> sub_length_<font color="#990000">;</font>
+          <font color="#009900">double</font> xlow_i <font color="#990000">=</font> xlow <font color="#990000">+</font> <font color="#009900">double</font><font color="#990000">(</font>i<font color="#990000">)</font> <font color="#990000">*</font> sub_length_<font color="#990000">;</font>
 
           <i><font color="#9A1900">// note that when i == num_sub - 1, xup_i = xup (exactly)</font></i>
-          <font color="#009900">double</font> xup_i  <font color="#990000">=</font> xup  <font color="#990000">-</font> <font color="#990000">(</font>num_sub <font color="#990000">-</font> i <font color="#990000">-</font> <font color="#993399">1</font><font color="#990000">)</font> <font color="#990000">*</font> sub_length_<font color="#990000">;</font>
+          <font color="#009900">double</font> xup_i  <font color="#990000">=</font> xup  <font color="#990000">-</font> <font color="#009900">double</font><font color="#990000">(</font>num_sub <font color="#990000">-</font> i <font color="#990000">-</font> <font color="#993399">1</font><font color="#990000">)</font> <font color="#990000">*</font> sub_length_<font color="#990000">;</font>
 
           <i><font color="#9A1900">// initial point for Newton iterations</font></i>
           <font color="#009900">double</font> xcur <font color="#990000">=</font> <font color="#990000">(</font>xup_i <font color="#990000">+</font> xlow_i<font color="#990000">)</font> <font color="#990000">/</font> <font color="#993399">2</font><font color="#990000">.;</font>

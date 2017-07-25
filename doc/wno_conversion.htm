@@ -12,10 +12,10 @@ MathJax.Hub.Config({
 >
 </script>
 <head>
-<title>Utility Routines used by CppAD Examples</title>
+<title>Suppress Suspect Implicit Conversion Warnings</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
-<meta name="description" id="description" content="Utility Routines used by CppAD Examples">
-<meta name="keywords" id="keywords" content=" utility routines used cppad examples ">
+<meta name="description" id="description" content="Suppress Suspect Implicit Conversion Warnings">
+<meta name="keywords" id="keywords" content=" suppress suspect implicit conversion warnings syntax purpose ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -23,7 +23,7 @@ A:link { color : blue }
 A:visited { color : purple }
 A:active { color : purple }
 </style>
-<script type='text/javascript' language='JavaScript' src='_exampleutility_htm.js'>
+<script type='text/javascript' language='JavaScript' src='_wno_conversion_htm.js'>
 </script>
 </head>
 <body>
@@ -31,8 +31,8 @@ A:active { color : purple }
 <td>
 <a href="../index.html" target="_top"><img border="0" src="_image.gif"></a>
 </td>
-<td><a href="stack_machine.cpp.htm" target="_top">Prev</a>
-</td><td><a href="general.cpp.htm" target="_top">Next</a>
+<td><a href="testvector.htm" target="_top">Prev</a>
+</td><td><a href="speed.htm" target="_top">Next</a>
 </td><td>
 <select onchange='choose_across0(this)'>
 <option>Index-&gt;</option>
@@ -48,7 +48,7 @@ A:active { color : purple }
 <option>Up-&gt;</option>
 <option>CppAD</option>
 <option>Example</option>
-<option>ExampleUtility</option>
+<option>wno_conversion</option>
 </select>
 </td>
 <td>
@@ -78,18 +78,12 @@ A:active { color : purple }
 <option>wno_conversion</option>
 </select>
 </td>
-<td>
-<select onchange='choose_down0(this)'>
-<option>ExampleUtility-&gt;</option>
-<option>general.cpp</option>
-<option>speed_example.cpp</option>
-<option>lu_vec_ad.cpp</option>
-</select>
-</td>
+<td>wno_conversion</td>
 <td>
 <select onchange='choose_current0(this)'>
 <option>Headings-&gt;</option>
-<option>Contents</option>
+<option>Syntax</option>
+<option>Purpose</option>
 </select>
 </td>
 </tr></table><br>
@@ -99,13 +93,32 @@ A:active { color : purple }
 \newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
 \newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
 \newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
-\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>Utility Routines used by CppAD Examples</big></big></b></center>
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@
+
+
+<center><b><big><big>Suppress Suspect Implicit Conversion Warnings</big></big></b></center>
 <br>
-<b><big><a name="Contents" id="Contents">Contents</a></big></b>
+<b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
+
 <br>
-<table>
-<tr><td><a href="general.cpp.htm" target="_top">general.cpp</a></td><td>CppAD&nbsp;Examples&nbsp;and&nbsp;Tests</td></tr><tr><td><a href="speed_example.cpp.htm" target="_top">speed_example.cpp</a></td><td>Run&nbsp;the&nbsp;Speed&nbsp;Examples</td></tr><tr><td><a href="lu_vec_ad.cpp.htm" target="_top">lu_vec_ad.cpp</a></td><td>Lu&nbsp;Factor&nbsp;and&nbsp;Solve&nbsp;with&nbsp;Recorded&nbsp;Pivoting</td></tr></table>
-<hr>Input File: omh/example_list.omh
+
+<code><font color="blue"><span style='white-space: nowrap'>#&nbsp;include&nbsp;&lt;cppad/wno_conversion.hpp&gt;</span></font></code>
+
+
+<br>
+<br>
+<b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
+<br>
+In many cases it is good to have warnings for implicit conversions
+that may loose range or precision.
+The include command above, before any other includes, suppresses
+these warning for a particular compilation unit (which usually corresponds
+to a 
+<code><i><font color="black"><span style='white-space: nowrap'>*</span></font></i><font color="blue"><span style='white-space: nowrap'>.cpp</span></font></code>
+ file).
+
+
+<hr>Input File: cppad/wno_conversion.hpp
 
 </body>
 </html>

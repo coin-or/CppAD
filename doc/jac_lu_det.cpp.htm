@@ -76,6 +76,7 @@ A:active { color : purple }
 <option>ExampleUtility</option>
 <option>ListAllExamples</option>
 <option>testvector</option>
+<option>wno_conversion</option>
 </select>
 </td>
 <td>
@@ -108,7 +109,9 @@ A:active { color : purple }
 \newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
 \newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
 \newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>Gradient of Determinant Using Lu Factorization: Example and Test</big></big></b></center>
-<code><font color="blue"><pre><tt>
+<code><font color="blue"><pre><tt><i><font color="#9A1900">// Complex examples should supppress conversion warnings</font></i>
+<b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/wno_conversion.hpp&gt;</font>
+
 <b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/cppad.hpp&gt;</font>
 <b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/speed/det_by_lu.hpp&gt;</font>
 

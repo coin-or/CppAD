@@ -279,11 +279,11 @@ Set the following preprocessor symbol to 1 to demonstrate this bug:
      <i><font color="#9A1900">// initialize two barriers, one for work done, one for new job ready</font></i>
      pthread_barrierattr_t<font color="#990000">*</font> no_barrierattr <font color="#990000">=</font> CPPAD_NULL<font color="#990000">;</font>
      rc <font color="#990000">=</font> <b><font color="#000000">pthread_barrier_init</font></b><font color="#990000">(</font>
-          <font color="#990000">&amp;</font>wait_for_work_<font color="#990000">,</font> no_barrierattr<font color="#990000">,</font> num_threads
+          <font color="#990000">&amp;</font>wait_for_work_<font color="#990000">,</font> no_barrierattr<font color="#990000">,</font> <font color="#990000">(</font><font color="#009900">unsigned</font> <font color="#009900">int</font><font color="#990000">)</font> num_threads
      <font color="#990000">);</font>
      ok <font color="#990000">&amp;=</font> <font color="#990000">(</font>rc <font color="#990000">==</font> <font color="#993399">0</font><font color="#990000">);</font>
      rc  <font color="#990000">=</font> <b><font color="#000000">pthread_barrier_init</font></b><font color="#990000">(</font>
-          <font color="#990000">&amp;</font>wait_for_job_<font color="#990000">,</font> no_barrierattr<font color="#990000">,</font> num_threads
+          <font color="#990000">&amp;</font>wait_for_job_<font color="#990000">,</font> no_barrierattr<font color="#990000">,</font> <font color="#990000">(</font><font color="#009900">unsigned</font> <font color="#009900">int</font><font color="#990000">)</font> num_threads
      <font color="#990000">);</font>
      ok <font color="#990000">&amp;=</font> <font color="#990000">(</font>rc <font color="#990000">==</font> <font color="#993399">0</font><font color="#990000">);</font>
 

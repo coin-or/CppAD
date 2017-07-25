@@ -229,8 +229,8 @@ See <a href="team_thread.hpp.htm" target="_top"><span style='white-space: nowrap
      num_threads_ <font color="#990000">=</font> num_threads<font color="#990000">;</font>
 
      <i><font color="#9A1900">// initialize two barriers, one for work done, one for new job ready</font></i>
-     wait_for_work_ <font color="#990000">=</font> <b><font color="#0000FF">new</font></b> boost<font color="#990000">::</font><b><font color="#000000">barrier</font></b><font color="#990000">(</font>num_threads<font color="#990000">);</font>
-     wait_for_job_  <font color="#990000">=</font> <b><font color="#0000FF">new</font></b> boost<font color="#990000">::</font><b><font color="#000000">barrier</font></b><font color="#990000">(</font>num_threads<font color="#990000">);</font>
+     wait_for_work_ <font color="#990000">=</font> <b><font color="#0000FF">new</font></b> boost<font color="#990000">::</font><b><font color="#000000">barrier</font></b><font color="#990000">(</font> <font color="#990000">(</font><font color="#009900">unsigned</font> <font color="#009900">int</font><font color="#990000">)</font> num_threads <font color="#990000">);</font>
+     wait_for_job_  <font color="#990000">=</font> <b><font color="#0000FF">new</font></b> boost<font color="#990000">::</font><b><font color="#000000">barrier</font></b><font color="#990000">(</font> <font color="#990000">(</font><font color="#009900">unsigned</font> <font color="#009900">int</font><font color="#990000">)</font> num_threads <font color="#990000">);</font>
 
      <i><font color="#9A1900">// initial job for the threads</font></i>
      thread_job_           <font color="#990000">=</font> init_enum<font color="#990000">;</font>

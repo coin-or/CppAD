@@ -167,10 +167,10 @@ A:active { color : purple }
      <font color="#FF0000">{</font>    bpow <font color="#990000">*=</font> b<font color="#990000">;</font>
           apow <font color="#990000">*=</font> a<font color="#990000">;</font>
      <font color="#FF0000">}</font>
-     <font color="#009900">double</font> check <font color="#990000">=</font> <font color="#990000">(</font>bpow <font color="#990000">-</font> apow<font color="#990000">)</font> <font color="#990000">/</font> <font color="#990000">(</font>degree<font color="#990000">+</font><font color="#993399">1</font><font color="#990000">);</font>
+     <font color="#009900">double</font> check <font color="#990000">=</font> <font color="#990000">(</font>bpow <font color="#990000">-</font> apow<font color="#990000">)</font> <font color="#990000">/</font> <font color="#009900">double</font><font color="#990000">(</font>degree<font color="#990000">+</font><font color="#993399">1</font><font color="#990000">);</font>
 
      <i><font color="#9A1900">// step size corresponding to r</font></i>
-     <font color="#009900">double</font> step <font color="#990000">=</font> <font color="#990000">(</font>b <font color="#990000">-</font> a<font color="#990000">)</font> <font color="#990000">/</font> <b><font color="#000000">exp</font></b><font color="#990000">(</font><b><font color="#000000">log</font></b><font color="#990000">(</font><font color="#993399">2</font><font color="#990000">.)*(</font>n<font color="#990000">-</font><font color="#993399">1</font><font color="#990000">));</font>
+     <font color="#009900">double</font> step <font color="#990000">=</font> <font color="#990000">(</font>b <font color="#990000">-</font> a<font color="#990000">)</font> <font color="#990000">/</font> <b><font color="#000000">exp</font></b><font color="#990000">(</font><b><font color="#000000">log</font></b><font color="#990000">(</font><font color="#993399">2</font><font color="#990000">.)*</font><font color="#009900">double</font><font color="#990000">(</font>n<font color="#990000">-</font><font color="#993399">1</font><font color="#990000">));</font>
      <i><font color="#9A1900">// step size corresponding to error estimate</font></i>
      step <font color="#990000">*=</font> <font color="#993399">2</font><font color="#990000">.;</font>
      <i><font color="#9A1900">// step size raised to a power</font></i>
@@ -181,7 +181,7 @@ A:active { color : purple }
 
           r <font color="#990000">=</font> CppAD<font color="#990000">::</font><b><font color="#000000">RombergOne</font></b><font color="#990000">(</font>F<font color="#990000">,</font> a<font color="#990000">,</font> b<font color="#990000">,</font> n<font color="#990000">,</font> p<font color="#990000">,</font> e<font color="#990000">);</font>
 
-          ok  <font color="#990000">&amp;=</font> e <font color="#990000">&lt;</font> <font color="#990000">(</font>degree<font color="#990000">+</font><font color="#993399">1</font><font color="#990000">)</font> <font color="#990000">*</font> spow<font color="#990000">;</font>
+          ok  <font color="#990000">&amp;=</font> e <font color="#990000">&lt;</font> <font color="#009900">double</font><font color="#990000">(</font>degree<font color="#990000">+</font><font color="#993399">1</font><font color="#990000">)</font> <font color="#990000">*</font> spow<font color="#990000">;</font>
           ok  <font color="#990000">&amp;=</font> CppAD<font color="#990000">::</font><b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>check<font color="#990000">,</font> r<font color="#990000">,</font> <font color="#993399">0</font><font color="#990000">.,</font> e<font color="#990000">);</font>
      <font color="#FF0000">}</font>
 

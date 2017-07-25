@@ -76,6 +76,7 @@ A:active { color : purple }
 <option>ExampleUtility</option>
 <option>ListAllExamples</option>
 <option>testvector</option>
+<option>wno_conversion</option>
 </select>
 </td>
 <td>
@@ -339,6 +340,10 @@ the value <a href="ipopt_prefix.htm" target="_top"><span style='white-space: now
 
 <code><font color="blue">
 <pre><tt>
+<i><font color="#9A1900">// suppress conversion warnings before other includes</font></i>
+<b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/wno_conversion.hpp&gt;</font>
+<i><font color="#9A1900">//</font></i>
+
 <b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;adolc/adouble.h&gt;</font>
 <b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;adolc/taping.h&gt;</font>
 <b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;adolc/drivers/drivers.h&gt;</font>

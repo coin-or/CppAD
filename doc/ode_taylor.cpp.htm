@@ -76,6 +76,7 @@ A:active { color : purple }
 <option>ExampleUtility</option>
 <option>ListAllExamples</option>
 <option>testvector</option>
+<option>wno_conversion</option>
 </select>
 </td>
 <td>
@@ -293,7 +294,7 @@ method for approximating the solution of an ODE.
      <i><font color="#9A1900">// Taylor's method should have no truncation error for this case</font></i>
      <font color="#009900">double</font> eps   <font color="#990000">=</font> <font color="#993399">100</font><font color="#990000">.</font> <font color="#990000">*</font> std<font color="#990000">::</font>numeric_limits<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;::</font><b><font color="#000000">epsilon</font></b><font color="#990000">();</font>
      <font color="#009900">double</font> check <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">.;</font>
-     <font color="#009900">double</font> t     <font color="#990000">=</font> n_step <font color="#990000">*</font> dt<font color="#990000">;</font>
+     <font color="#009900">double</font> t     <font color="#990000">=</font> <font color="#009900">double</font><font color="#990000">(</font>n_step<font color="#990000">)</font> <font color="#990000">*</font> dt<font color="#990000">;</font>
      <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> n<font color="#990000">;</font> i<font color="#990000">++)</font>
      <font color="#FF0000">{</font>    check <font color="#990000">*=</font> t <font color="#990000">/</font> <font color="#009900">double</font><font color="#990000">(</font>i <font color="#990000">+</font> <font color="#993399">1</font><font color="#990000">);</font>
           ok <font color="#990000">&amp;=</font> CppAD<font color="#990000">::</font><b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>z<font color="#990000">[</font>i<font color="#990000">],</font> check<font color="#990000">,</font> eps<font color="#990000">,</font> eps<font color="#990000">);</font>

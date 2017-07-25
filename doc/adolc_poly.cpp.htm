@@ -120,7 +120,10 @@ See <a href="link_poly.htm" target="_top"><span style='white-space: nowrap'>link
 <b><big><a name="Implementation" id="Implementation">Implementation</a></big></b>
 
 
-<pre><tt><b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;vector&gt;</font>
+<pre><tt><i><font color="#9A1900">// suppress conversion warnings before other includes</font></i>
+<b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/wno_conversion.hpp&gt;</font>
+<i><font color="#9A1900">//</font></i>
+<b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;vector&gt;</font>
 <b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;adolc/adolc.h&gt;</font>
 
 <b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/speed/uniform_01.hpp&gt;</font>

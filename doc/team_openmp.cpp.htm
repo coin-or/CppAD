@@ -164,7 +164,7 @@ See <a href="team_thread.hpp.htm" target="_top"><span style='white-space: nowrap
      num_threads_ <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font>
 
      <i><font color="#9A1900">// Set the number of OpenMP threads to one</font></i>
-     <b><font color="#000000">omp_set_num_threads</font></b><font color="#990000">(</font>num_threads_<font color="#990000">);</font>
+     <b><font color="#000000">omp_set_num_threads</font></b><font color="#990000">(</font> <font color="#009900">int</font><font color="#990000">(</font>num_threads_<font color="#990000">)</font> <font color="#990000">);</font>
 
      <i><font color="#9A1900">// inform CppAD no longer in multi-threading mode</font></i>
      thread_alloc<font color="#990000">::</font><b><font color="#000000">parallel_setup</font></b><font color="#990000">(</font>num_threads_<font color="#990000">,</font> CPPAD_NULL<font color="#990000">,</font> CPPAD_NULL<font color="#990000">);</font>

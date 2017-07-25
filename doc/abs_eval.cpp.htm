@@ -191,7 +191,7 @@ to the function itself.
      <i><font color="#9A1900">// Choose a point x_hat</font></i>
      <font color="#008080">d_vector</font> <b><font color="#000000">x_hat</font></b><font color="#990000">(</font>n<font color="#990000">);</font>
      <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> n<font color="#990000">;</font> j<font color="#990000">++)</font>
-          x_hat<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">=</font> <font color="#009900">double</font><font color="#990000">(</font>j <font color="#990000">-</font> <font color="#993399">1.0</font><font color="#990000">);</font>
+          x_hat<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">=</font> <font color="#009900">double</font><font color="#990000">(</font>j <font color="#990000">-</font> <font color="#993399">1</font><font color="#990000">);</font>
 
      <i><font color="#9A1900">// value of a_hat = a(x_hat)</font></i>
      <font color="#008080">d_vector</font> a_hat <font color="#990000">=</font> a<font color="#990000">.</font><b><font color="#000000">Forward</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">,</font> x_hat<font color="#990000">);</font>

@@ -246,10 +246,11 @@ See
           <b><font color="#0000FF">else</font></b> num_sub_thread <font color="#990000">=</font> num_min<font color="#990000">;</font>
 
           <i><font color="#9A1900">// when thread_num == 0, xlow_thread == xlow</font></i>
-          <font color="#009900">double</font> xlow_thread <font color="#990000">=</font> xlow <font color="#990000">+</font> sum_num <font color="#990000">*</font> sub_length_<font color="#990000">;</font>
+          <font color="#009900">double</font> xlow_thread <font color="#990000">=</font> xlow <font color="#990000">+</font> <font color="#009900">double</font><font color="#990000">(</font>sum_num<font color="#990000">)</font> <font color="#990000">*</font> sub_length_<font color="#990000">;</font>
 
           <i><font color="#9A1900">// when thread_num == num_threads - 1, xup_thread = xup</font></i>
-          <font color="#009900">double</font> xup_thread <font color="#990000">=</font> xlow <font color="#990000">+</font> <font color="#990000">(</font>sum_num <font color="#990000">+</font> num_sub_thread<font color="#990000">)</font> <font color="#990000">*</font> sub_length_<font color="#990000">;</font>
+          <font color="#009900">double</font> xup_thread <font color="#990000">=</font>
+               xlow <font color="#990000">+</font> <font color="#009900">double</font><font color="#990000">(</font>sum_num <font color="#990000">+</font> num_sub_thread<font color="#990000">)</font> <font color="#990000">*</font> sub_length_<font color="#990000">;</font>
           <b><font color="#0000FF">if</font></b><font color="#990000">(</font> thread_num <font color="#990000">==</font> num_threads <font color="#990000">-</font> <font color="#993399">1</font> <font color="#990000">)</font>
                xup_thread <font color="#990000">=</font> xup<font color="#990000">;</font>
 

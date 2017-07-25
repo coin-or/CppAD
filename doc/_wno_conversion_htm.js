@@ -8,10 +8,9 @@ var list_across0 = [
 var list_up0 = [
 'cppad.htm',
 'example.htm',
-'exampleutility.htm',
-'speed_example.cpp.htm'
+'wno_conversion.htm'
 ];
-var list_down3 = [
+var list_down2 = [
 'install.htm',
 'introduction.htm',
 'ad.htm',
@@ -24,7 +23,7 @@ var list_down3 = [
 'speed.htm',
 'appendix.htm'
 ];
-var list_down2 = [
+var list_down1 = [
 'get_started.cpp.htm',
 'general.htm',
 'exampleutility.htm',
@@ -32,13 +31,9 @@ var list_down2 = [
 'testvector.htm',
 'wno_conversion.htm'
 ];
-var list_down1 = [
-'general.cpp.htm',
-'speed_example.cpp.htm',
-'lu_vec_ad.cpp.htm'
-];
 var list_current0 = [
-'speed_example.cpp.htm#Running Tests'
+'wno_conversion.htm#Syntax',
+'wno_conversion.htm#Purpose'
 ];
 function choose_across0(item)
 {	var index          = item.selectedIndex;
@@ -51,12 +46,6 @@ function choose_up0(item)
 	item.selectedIndex = 0;
 	if(index > 0)
 		document.location = list_up0[index-1];
-}
-function choose_down3(item)
-{	var index          = item.selectedIndex;
-	item.selectedIndex = 0;
-	if(index > 0)
-		document.location = list_down3[index-1];
 }
 function choose_down2(item)
 {	var index          = item.selectedIndex;

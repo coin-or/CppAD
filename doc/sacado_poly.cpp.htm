@@ -120,10 +120,13 @@ See <a href="link_poly.htm" target="_top"><span style='white-space: nowrap'>link
 
 
 
-<pre><tt><b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/utility/vector.hpp&gt;</font>
+<pre><tt><i><font color="#9A1900">// suppress conversion warnings before other includes</font></i>
+<b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/wno_conversion.hpp&gt;</font>
+<i><font color="#9A1900">//</font></i>
+<b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;Sacado.hpp&gt;</font>
+<b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/utility/vector.hpp&gt;</font>
 <b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/utility/poly.hpp&gt;</font>
 <b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/speed/uniform_01.hpp&gt;</font>
-<b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;Sacado.hpp&gt;</font>
 
 <i><font color="#9A1900">// list of possible options</font></i>
 <b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;map&gt;</font>

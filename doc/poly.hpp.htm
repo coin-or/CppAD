@@ -153,7 +153,7 @@ A:active { color : purple }
           <font color="#008080">Vector</font> <b><font color="#000000">b</font></b><font color="#990000">(</font>d <font color="#990000">-</font> k <font color="#990000">+</font> <font color="#993399">1</font><font color="#990000">);</font>
           <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font> k<font color="#990000">;</font> i <font color="#990000">&lt;=</font> d<font color="#990000">;</font> i<font color="#990000">++)</font>
           <font color="#FF0000">{</font>    factor   <font color="#990000">*=</font> i<font color="#990000">;</font>
-               tmp       <font color="#990000">=</font> factor<font color="#990000">;</font>
+               tmp       <font color="#990000">=</font> <font color="#009900">double</font><font color="#990000">(</font> factor <font color="#990000">);</font>
                b<font color="#990000">[</font>i <font color="#990000">-</font> k<font color="#990000">]</font>  <font color="#990000">=</font> a<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">*</font> tmp<font color="#990000">;</font>
                factor   <font color="#990000">/=</font> <font color="#990000">(</font>i <font color="#990000">-</font> k <font color="#990000">+</font> <font color="#993399">1</font><font color="#990000">);</font>
           <font color="#FF0000">}</font>

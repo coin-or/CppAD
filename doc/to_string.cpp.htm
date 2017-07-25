@@ -124,30 +124,50 @@ A:active { color : purple }
 <b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/utility/to_string.hpp&gt;</font>
 <b><font color="#0000FF">namespace</font></b> <font color="#FF0000">{</font>
      <b><font color="#0000FF">template</font></b> <font color="#990000">&lt;</font><b><font color="#0000FF">class</font></b> <font color="#008080">Integer</font><font color="#990000">&gt;</font>
-     <font color="#008080">Integer</font> <b><font color="#000000">string2int</font></b><font color="#990000">(</font><b><font color="#0000FF">const</font></b> std<font color="#990000">::</font>string<font color="#990000">&amp;</font> s<font color="#990000">)</font>
+     <font color="#008080">Integer</font> <b><font color="#000000">string2signed</font></b><font color="#990000">(</font><b><font color="#0000FF">const</font></b> std<font color="#990000">::</font>string<font color="#990000">&amp;</font> s<font color="#990000">)</font>
      <font color="#FF0000">{</font>    <font color="#008080">Integer</font> result <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
           <font color="#008080">size_t</font> index   <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
           <b><font color="#0000FF">if</font></b><font color="#990000">(</font> s<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">==</font> <font color="#FF0000">'-'</font> <font color="#990000">)</font>
                <font color="#990000">++</font>index<font color="#990000">;</font>
           <b><font color="#0000FF">while</font></b><font color="#990000">(</font> index <font color="#990000">&lt;</font> s<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">)</font>
-               result <font color="#990000">=</font> <font color="#993399">10</font> <font color="#990000">*</font> result <font color="#990000">+</font> <b><font color="#000000">Integer</font></b><font color="#990000">(</font> s<font color="#990000">[</font>index<font color="#990000">++]</font> <font color="#990000">-</font> <font color="#FF0000">'0'</font><font color="#990000">);</font>
+               result <font color="#990000">=</font> <b><font color="#000000">Integer</font></b><font color="#990000">(</font><font color="#993399">10</font> <font color="#990000">*</font> result <font color="#990000">+</font> s<font color="#990000">[</font>index<font color="#990000">++]</font> <font color="#990000">-</font> <font color="#FF0000">'0'</font><font color="#990000">);</font>
           <b><font color="#0000FF">if</font></b><font color="#990000">(</font> s<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">==</font> <font color="#FF0000">'-'</font> <font color="#990000">)</font>
                <b><font color="#0000FF">return</font></b> <font color="#990000">-</font> result<font color="#990000">;</font>
           <b><font color="#0000FF">return</font></b> result<font color="#990000">;</font>
      <font color="#FF0000">}</font>
      <b><font color="#0000FF">template</font></b> <font color="#990000">&lt;</font><b><font color="#0000FF">class</font></b> <font color="#008080">Integer</font><font color="#990000">&gt;</font>
-     <font color="#009900">bool</font> <b><font color="#000000">integer</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
+     <font color="#008080">Integer</font> <b><font color="#000000">string2unsigned</font></b><font color="#990000">(</font><b><font color="#0000FF">const</font></b> std<font color="#990000">::</font>string<font color="#990000">&amp;</font> s<font color="#990000">)</font>
+     <font color="#FF0000">{</font>    <font color="#008080">Integer</font> result <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
+          <font color="#008080">size_t</font> index   <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
+          <b><font color="#0000FF">while</font></b><font color="#990000">(</font> index <font color="#990000">&lt;</font> s<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">)</font>
+               result <font color="#990000">=</font> <b><font color="#000000">Integer</font></b><font color="#990000">(</font><font color="#993399">10</font> <font color="#990000">*</font> result <font color="#990000">+</font> s<font color="#990000">[</font>index<font color="#990000">++]</font> <font color="#990000">-</font> <font color="#FF0000">'0'</font><font color="#990000">);</font>
+          <b><font color="#0000FF">return</font></b> result<font color="#990000">;</font>
+     <font color="#FF0000">}</font>
+     <b><font color="#0000FF">template</font></b> <font color="#990000">&lt;</font><b><font color="#0000FF">class</font></b> <font color="#008080">Integer</font><font color="#990000">&gt;</font>
+     <font color="#009900">bool</font> <b><font color="#000000">signed_integer</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
      <font color="#FF0000">{</font>    <font color="#009900">bool</font> ok <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
           <i><font color="#9A1900">//</font></i>
           <font color="#008080">Integer</font> max    <font color="#990000">=</font> std<font color="#990000">::</font>numeric_limits<font color="#990000">&lt;</font>Integer<font color="#990000">&gt;::</font><b><font color="#000000">max</font></b><font color="#990000">();</font>
           std<font color="#990000">::</font><font color="#008080">string</font> s  <font color="#990000">=</font> CppAD<font color="#990000">::</font><b><font color="#000000">to_string</font></b><font color="#990000">(</font>max<font color="#990000">);</font>
-          <font color="#008080">Integer</font> check  <font color="#990000">=</font> string2int<font color="#990000">&lt;</font>Integer<font color="#990000">&gt;(</font>s<font color="#990000">);</font>
+          <font color="#008080">Integer</font> check  <font color="#990000">=</font> string2signed<font color="#990000">&lt;</font>Integer<font color="#990000">&gt;(</font>s<font color="#990000">);</font>
           ok            <font color="#990000">&amp;=</font> max <font color="#990000">==</font> check<font color="#990000">;</font>
           <i><font color="#9A1900">//</font></i>
-          <font color="#008080">Integer</font> min       <font color="#990000">=</font> std<font color="#990000">::</font>numeric_limits<font color="#990000">&lt;</font>Integer<font color="#990000">&gt;::</font><b><font color="#000000">min</font></b><font color="#990000">();</font>
+          <font color="#008080">Integer</font> min    <font color="#990000">=</font> std<font color="#990000">::</font>numeric_limits<font color="#990000">&lt;</font>Integer<font color="#990000">&gt;::</font><b><font color="#000000">min</font></b><font color="#990000">();</font>
           s              <font color="#990000">=</font> CppAD<font color="#990000">::</font><b><font color="#000000">to_string</font></b><font color="#990000">(</font>min<font color="#990000">);</font>
-          check          <font color="#990000">=</font> string2int<font color="#990000">&lt;</font>Integer<font color="#990000">&gt;(</font>s<font color="#990000">);</font>
+          check          <font color="#990000">=</font> string2signed<font color="#990000">&lt;</font>Integer<font color="#990000">&gt;(</font>s<font color="#990000">);</font>
           ok            <font color="#990000">&amp;=</font> min <font color="#990000">==</font> check<font color="#990000">;</font>
+          <i><font color="#9A1900">//</font></i>
+          <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
+     <font color="#FF0000">}</font>
+     <b><font color="#0000FF">template</font></b> <font color="#990000">&lt;</font><b><font color="#0000FF">class</font></b> <font color="#008080">Integer</font><font color="#990000">&gt;</font>
+     <font color="#009900">bool</font> <b><font color="#000000">unsigned_integer</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
+     <font color="#FF0000">{</font>    <font color="#009900">bool</font> ok <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
+          <i><font color="#9A1900">//</font></i>
+          <font color="#008080">Integer</font> max    <font color="#990000">=</font> std<font color="#990000">::</font>numeric_limits<font color="#990000">&lt;</font>Integer<font color="#990000">&gt;::</font><b><font color="#000000">max</font></b><font color="#990000">();</font>
+          std<font color="#990000">::</font><font color="#008080">string</font> s  <font color="#990000">=</font> CppAD<font color="#990000">::</font><b><font color="#000000">to_string</font></b><font color="#990000">(</font>max<font color="#990000">);</font>
+          <font color="#008080">Integer</font> check  <font color="#990000">=</font> string2unsigned<font color="#990000">&lt;</font>Integer<font color="#990000">&gt;(</font>s<font color="#990000">);</font>
+          ok            <font color="#990000">&amp;=</font> max <font color="#990000">==</font> check<font color="#990000">;</font>
+          ok            <font color="#990000">&amp;=</font> std<font color="#990000">::</font>numeric_limits<font color="#990000">&lt;</font>Integer<font color="#990000">&gt;::</font><b><font color="#000000">min</font></b><font color="#990000">()</font> <font color="#990000">==</font> <font color="#993399">0</font><font color="#990000">;</font>
           <i><font color="#9A1900">//</font></i>
           <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
      <font color="#FF0000">}</font>
@@ -155,10 +175,10 @@ A:active { color : purple }
      <font color="#009900">bool</font> <b><font color="#000000">floating</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
      <font color="#FF0000">{</font>    <font color="#009900">bool</font>  ok  <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
           <font color="#008080">Float</font> eps <font color="#990000">=</font> std<font color="#990000">::</font>numeric_limits<font color="#990000">&lt;</font>Float<font color="#990000">&gt;::</font><b><font color="#000000">epsilon</font></b><font color="#990000">();</font>
-          <font color="#008080">Float</font> pi  <font color="#990000">=</font> <font color="#993399">4.0</font> <font color="#990000">*</font> std<font color="#990000">::</font><b><font color="#000000">atan</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">.);</font>
+          <font color="#008080">Float</font> pi  <font color="#990000">=</font> <b><font color="#000000">Float</font></b><font color="#990000">(</font> <font color="#993399">4.0</font> <font color="#990000">*</font> std<font color="#990000">::</font><b><font color="#000000">atan</font></b><font color="#990000">(</font><font color="#993399">1.0</font><font color="#990000">)</font> <font color="#990000">);</font>
           <i><font color="#9A1900">//</font></i>
           std<font color="#990000">::</font><font color="#008080">string</font> s <font color="#990000">=</font> CppAD<font color="#990000">::</font><b><font color="#000000">to_string</font></b><font color="#990000">(</font> pi <font color="#990000">);</font>
-          <font color="#008080">Float</font> check    <font color="#990000">=</font> std<font color="#990000">::</font><b><font color="#000000">atof</font></b><font color="#990000">(</font> s<font color="#990000">.</font><b><font color="#000000">c_str</font></b><font color="#990000">()</font> <font color="#990000">);</font>
+          <font color="#008080">Float</font> check   <font color="#990000">=</font> <b><font color="#000000">Float</font></b><font color="#990000">(</font> std<font color="#990000">::</font><b><font color="#000000">atof</font></b><font color="#990000">(</font> s<font color="#990000">.</font><b><font color="#000000">c_str</font></b><font color="#990000">()</font> <font color="#990000">)</font> <font color="#990000">);</font>
           ok           <font color="#990000">&amp;=</font> std<font color="#990000">::</font><b><font color="#000000">fabs</font></b><font color="#990000">(</font> check <font color="#990000">/</font> pi <font color="#990000">-</font> <font color="#993399">1.0</font> <font color="#990000">)</font> <font color="#990000">&lt;=</font> <font color="#993399">2.0</font> <font color="#990000">*</font> eps<font color="#990000">;</font>
           <i><font color="#9A1900">//</font></i>
           <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
@@ -171,12 +191,12 @@ A:active { color : purple }
      <b><font color="#0000FF">template</font></b> <font color="#990000">&lt;</font><b><font color="#0000FF">class</font></b> <font color="#008080">Base</font><font color="#990000">&gt;</font>
      <font color="#009900">bool</font> <b><font color="#000000">ad_floating</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
      <font color="#FF0000">{</font>    <font color="#009900">bool</font>  ok  <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
-          <font color="#008080">Base</font> eps <font color="#990000">=</font> std<font color="#990000">::</font>numeric_limits<font color="#990000">&lt;</font>Base<font color="#990000">&gt;::</font><b><font color="#000000">epsilon</font></b><font color="#990000">();</font>
-          <font color="#008080">Base</font> pi  <font color="#990000">=</font> <font color="#993399">4.0</font> <font color="#990000">*</font> std<font color="#990000">::</font><b><font color="#000000">atan</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">.);</font>
+          <font color="#008080">Base</font> eps  <font color="#990000">=</font> std<font color="#990000">::</font>numeric_limits<font color="#990000">&lt;</font>Base<font color="#990000">&gt;::</font><b><font color="#000000">epsilon</font></b><font color="#990000">();</font>
+          <font color="#008080">Base</font> pi   <font color="#990000">=</font> <b><font color="#000000">Base</font></b><font color="#990000">(</font> <font color="#993399">4.0</font> <font color="#990000">*</font> std<font color="#990000">::</font><b><font color="#000000">atan</font></b><font color="#990000">(</font><font color="#993399">1.0</font><font color="#990000">)</font> <font color="#990000">);</font>
           <i><font color="#9A1900">//</font></i>
           std<font color="#990000">::</font><font color="#008080">string</font> s <font color="#990000">=</font> CppAD<font color="#990000">::</font><b><font color="#000000">to_string</font></b><font color="#990000">(</font> CppAD<font color="#990000">::</font>AD<font color="#990000">&lt;</font>Base<font color="#990000">&gt;(</font> pi <font color="#990000">)</font> <font color="#990000">);</font>
-          <font color="#008080">Base</font> check    <font color="#990000">=</font> std<font color="#990000">::</font><b><font color="#000000">atof</font></b><font color="#990000">(</font> s<font color="#990000">.</font><b><font color="#000000">c_str</font></b><font color="#990000">()</font> <font color="#990000">);</font>
-          ok           <font color="#990000">&amp;=</font> std<font color="#990000">::</font><b><font color="#000000">fabs</font></b><font color="#990000">(</font> check <font color="#990000">/</font> pi <font color="#990000">-</font> <font color="#993399">1.0</font> <font color="#990000">)</font> <font color="#990000">&lt;=</font> <font color="#993399">2.0</font> <font color="#990000">*</font> eps<font color="#990000">;</font>
+          <font color="#008080">Base</font> check    <font color="#990000">=</font> <b><font color="#000000">Base</font></b><font color="#990000">(</font> std<font color="#990000">::</font><b><font color="#000000">atof</font></b><font color="#990000">(</font> s<font color="#990000">.</font><b><font color="#000000">c_str</font></b><font color="#990000">()</font> <font color="#990000">)</font> <font color="#990000">);</font>
+          ok           <font color="#990000">&amp;=</font> <b><font color="#000000">fabs</font></b><font color="#990000">(</font> check <font color="#990000">/</font> pi <font color="#990000">-</font> <b><font color="#000000">Base</font></b><font color="#990000">(</font><font color="#993399">1.0</font><font color="#990000">)</font> <font color="#990000">)</font> <font color="#990000">&lt;=</font> <b><font color="#000000">Base</font></b><font color="#990000">(</font> <font color="#993399">2.0</font> <font color="#990000">)</font> <font color="#990000">*</font> eps<font color="#990000">;</font>
           <i><font color="#9A1900">//</font></i>
           <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
      <font color="#FF0000">}</font>
@@ -186,11 +206,14 @@ A:active { color : purple }
 <font color="#009900">bool</font> <b><font color="#000000">to_string</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
 <font color="#FF0000">{</font>    <font color="#009900">bool</font> ok <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
 
-     ok <font color="#990000">&amp;=</font> integer<font color="#990000">&lt;</font><font color="#009900">unsigned</font> <font color="#009900">short</font><font color="#990000">&gt;();</font>
-     ok <font color="#990000">&amp;=</font> integer<font color="#990000">&lt;</font><font color="#009900">signed</font> <font color="#009900">int</font><font color="#990000">&gt;();</font>
-     ok <font color="#990000">&amp;=</font> integer<font color="#990000">&lt;</font><font color="#009900">unsigned</font> <font color="#009900">long</font><font color="#990000">&gt;();</font>
+     ok <font color="#990000">&amp;=</font> unsigned_integer<font color="#990000">&lt;</font><font color="#009900">unsigned</font> <font color="#009900">short</font><font color="#990000">&gt;();</font>
+     ok <font color="#990000">&amp;=</font> signed_integer<font color="#990000">&lt;</font><font color="#009900">signed</font> <font color="#009900">int</font><font color="#990000">&gt;();</font>
+     <i><font color="#9A1900">//</font></i>
+     ok <font color="#990000">&amp;=</font> unsigned_integer<font color="#990000">&lt;</font><font color="#009900">unsigned</font> <font color="#009900">long</font><font color="#990000">&gt;();</font>
+     ok <font color="#990000">&amp;=</font> signed_integer<font color="#990000">&lt;</font><font color="#009900">signed</font> <font color="#009900">long</font><font color="#990000">&gt;();</font>
 <b><font color="#000080"># if</font></b> CPPAD_USE_CPLUSPLUS_2011
-     ok <font color="#990000">&amp;=</font> integer<font color="#990000">&lt;</font><font color="#009900">signed</font> <font color="#009900">long</font> <font color="#009900">long</font><font color="#990000">&gt;();</font>
+     ok <font color="#990000">&amp;=</font> unsigned_integer<font color="#990000">&lt;</font><font color="#009900">unsigned</font> <font color="#009900">long</font> <font color="#009900">long</font><font color="#990000">&gt;();</font>
+     ok <font color="#990000">&amp;=</font> signed_integer<font color="#990000">&lt;</font><font color="#009900">signed</font> <font color="#009900">long</font> <font color="#009900">long</font><font color="#990000">&gt;();</font>
 <b><font color="#000080"># endif</font></b>
      <i><font color="#9A1900">//</font></i>
      ok <font color="#990000">&amp;=</font> floating<font color="#990000">&lt;</font><font color="#009900">float</font><font color="#990000">&gt;();</font>

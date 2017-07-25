@@ -144,7 +144,7 @@ A:active { color : purple }
      <i><font color="#9A1900">// set S to the solution of the equation we will solve</font></i>
      <b><font color="#0000FF">for</font></b><font color="#990000">(</font>j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> n<font color="#990000">;</font> j<font color="#990000">++)</font>
           <b><font color="#0000FF">for</font></b><font color="#990000">(</font>k <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> k <font color="#990000">&lt;</font> m<font color="#990000">;</font> k<font color="#990000">++)</font>
-               S<font color="#990000">[</font> j <font color="#990000">*</font> m <font color="#990000">+</font> k <font color="#990000">]</font> <font color="#990000">=</font> <b><font color="#000000">Complex</font></b><font color="#990000">(</font>j<font color="#990000">,</font> j <font color="#990000">+</font> k<font color="#990000">);</font>
+               S<font color="#990000">[</font> j <font color="#990000">*</font> m <font color="#990000">+</font> k <font color="#990000">]</font> <font color="#990000">=</font> <b><font color="#000000">Complex</font></b><font color="#990000">(</font><font color="#009900">double</font><font color="#990000">(</font>j<font color="#990000">),</font> <font color="#009900">double</font><font color="#990000">(</font>j <font color="#990000">+</font> k<font color="#990000">));</font>
 
      <i><font color="#9A1900">// set B = A * S</font></i>
      <font color="#008080">size_t</font> ik<font color="#990000">;</font>

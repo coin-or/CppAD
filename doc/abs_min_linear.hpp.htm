@@ -196,7 +196,7 @@ A:active { color : purple }
      <font color="#008080">DblVector</font> g_tilde <font color="#990000">=</font> CppAD<font color="#990000">::</font><b><font color="#000000">abs_eval</font></b><font color="#990000">(</font>n<font color="#990000">,</font> m<font color="#990000">,</font> s<font color="#990000">,</font> g_hat<font color="#990000">,</font> g_jac<font color="#990000">,</font> delta_x<font color="#990000">);</font>
      <i><font color="#9A1900">//</font></i>
      <i><font color="#9A1900">// value of sigma at delta_x = 0; i.e., sign( z(x, u) )</font></i>
-     CppAD<font color="#990000">::</font><font color="#008080">vector&lt;int&gt;</font> <b><font color="#000000">sigma</font></b><font color="#990000">(</font>s<font color="#990000">);</font>
+     CppAD<font color="#990000">::</font><font color="#008080">vector&lt;double&gt;</font> <b><font color="#000000">sigma</font></b><font color="#990000">(</font>s<font color="#990000">);</font>
      <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> s<font color="#990000">;</font> i<font color="#990000">++)</font>
           sigma<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> CppAD<font color="#990000">::</font><b><font color="#000000">sign</font></b><font color="#990000">(</font> g_tilde<font color="#990000">[</font>m <font color="#990000">+</font> i<font color="#990000">]</font> <font color="#990000">);</font>
      <i><font color="#9A1900">//</font></i>
