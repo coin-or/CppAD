@@ -191,7 +191,7 @@ namespace {
 		check = df.Forward(0, x0);
 		ok   &= NearEqual(check[0], y1[0], eps, eps);
 		for(size_t ell = 0.0; ell < r; ell++)
-		{	xq[ell]     = x1[ell] / (ell + 1.0);
+		{	xq[ell]     = x1[ell] / double(ell + 1);
 			zeroq[ell]  = 0.0;
 		}
 		yq    = f.Forward(1, r, xq);

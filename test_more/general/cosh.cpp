@@ -54,7 +54,7 @@ bool Cosh(void)
 			value = sinh_u;
 		else	value = cosh_u;
 
-		jfac *= j;
+		jfac *= double(j);
 		ok &= NearEqual(w[0], value/jfac, eps99, eps99); // d^jz/du^j
 		v[0]  = 0.;
 	}
@@ -73,7 +73,7 @@ bool Cosh(void)
 
 		ok &= NearEqual(r[j], value/jfac, eps99, eps99); // d^jz/du^j
 
-		jfac *= (j + 1);
+		jfac *= double(j + 1);
 	}
 
 	return ok;

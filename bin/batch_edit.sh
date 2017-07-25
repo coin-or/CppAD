@@ -27,17 +27,8 @@ move_list='
 move_sed='s|quad_program|qp_interior|'
 #
 cat << EOF > junk.sed
-/^# include <cppad\\/configure.hpp>/! b skip
-N
-/CPPAD_COMPILER_IS_GNUCXX/! b skip
-: loop
-N
-/\\n# endif\$/! b loop
-s|.*|// suppress conversion warnings before other includes\\
-# include <cppad/wno_conversion.hpp>\\
-//|
-#
-: skip
+s|jfac\\( *\\)\\*= *\\(j\\);|jfac\\1*= double(j);|
+s|jfac\\( *\\)\\*= *\\((j + 1)\\);|jfac\\1*= double(j + 1);|
 EOF
 # -----------------------------------------------------------------------------
 if [ $0 != "bin/batch_edit.sh" ]

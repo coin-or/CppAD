@@ -65,7 +65,7 @@ namespace {
 		CPPAD_TESTVECTOR(double) x_p(n*(p+1)), z_not(m*(p+1)), z_yes(m*(p+1));
 		for(j = 0; j < n; j++)
 		{	for(k = 0; k <= p; k++)
-				x_p[ j * (p+1) + k ] = 1.0 / (p + 1 - k);
+				x_p[ j * (p+1) + k ] = 1.0 / double(p + 1 - k);
 		}
 		z_not = check_not.Forward(p, x_p);
 		z_yes = check_yes.Forward(p, x_p);
@@ -81,7 +81,7 @@ namespace {
 		CPPAD_TESTVECTOR(double) w(m*(p+1)), dw_not(n*(p+1)), dw_yes(n*(p+1));
 		for(i = 0; i < m; i++)
 		{	for(k = 0; k <= p; k++)
-				w[ i * (p+1) + k ] = 2.0 / (p + 1 - k );
+				w[ i * (p+1) + k ] = 2.0 / double(p + 1 - k );
 		}
 		dw_not = check_not.Reverse(p+1, w);
 		dw_yes = check_yes.Reverse(p+1, w);

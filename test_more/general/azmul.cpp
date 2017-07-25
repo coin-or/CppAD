@@ -211,7 +211,7 @@ namespace {
 
 		for(size_t j = 0; j < n; j++)
 		{	for(size_t ell = 0; ell < r; ell++)
-				a1dx[r * j + ell] = a1double(1.0 + ell);
+				a1dx[r * j + ell] = a1double(1.0 + double(ell));
 		}
 		a1z = a1f.Forward(1, r, a1dx);
 

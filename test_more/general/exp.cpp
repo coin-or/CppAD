@@ -115,7 +115,7 @@ bool ExpTestTwo(void)
 	v[0]         = 1.;
 	for(j = 1; j < p; j++)
 	{	w     = f.Forward(j, v);
-		jfac *= j;
+		jfac *= double(j);
 		ok &= NearEqual(jfac*w[0], exp_u, eps99 , eps99); // d^jz/du^j
 		v[0]  = 0.;
 	}
@@ -127,7 +127,7 @@ bool ExpTestTwo(void)
 	jfac  = 1.;
 	for(j = 0; j < p; j++)
 	{	ok &= NearEqual(jfac*r[j], exp_u, eps99 , eps99); // d^jz/du^j
-		jfac *= (j + 1);
+		jfac *= double(j + 1);
 	}
 
 	return ok;
