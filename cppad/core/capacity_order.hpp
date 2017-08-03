@@ -39,7 +39,7 @@ For example, a call to $cref/Forward/forward_order/$$ with the syntax
 $codei%
         %yq% = %f%.Forward(%q%, %xq%)
 %$$
-where $icode%q% > 0%$$ and  $code%xq%.size() == %f%.Domain()%$$,
+where $icode%q% > 0%$$ and  $icode%xq%.size() == %f%.Domain()%$$,
 uses the lower order Taylor coefficients and
 computes the $th q$$ order Taylor coefficients for all
 the variables in the operation sequence corresponding to $icode f$$.
