@@ -37,6 +37,7 @@ $spell
 	ipopt
 	colpack
 	Wconversion
+	xq
 $$
 
 $section Changes and Additions to CppAD During 2017$$
@@ -49,6 +50,27 @@ See $cref/05-12/whats_new_17/05-12/$$.
 $lnext
 Speed tests no longer automatically compile in release mode; see
 $cref/debug_which/speed/debug_which/$$
+$lend
+
+$head 08-08$$
+Fix some minor typos in the documentation.
+To be specific:
+$list number$$
+The font, in the $cref sparse_rc$$ and $cref sparse_rcv$$ syntax,
+for the text
+$codei%
+	%target% = %pattern%
+%$$
+$lnext
+The font, in $cref capacity_order$$, for the text
+$codei%
+	%xq%.size() == %f%.Domain()
+%$$
+$lnext
+Remove a percent sign $code %$$, in $cref CppAD_vector$$, in the text
+$codei%
+	# include <cppad/utility/vector.hpp>
+%$$
 $lend
 
 $head 07-25$$
