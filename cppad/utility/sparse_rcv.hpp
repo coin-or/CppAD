@@ -35,7 +35,7 @@ $codei%sparse_rcv<%SizeVector%, %ValueVector%>  %empty%
 %$$
 $codei%sparse_rcv<%SizeVector%, %ValueVector%>  %matrix%(%pattern%)
 %$$
-$codei%target% = %matrix%
+$icode%target% = %matrix%
 %$$
 $icode%matrix%.set(%k%, %v%)
 %$$
