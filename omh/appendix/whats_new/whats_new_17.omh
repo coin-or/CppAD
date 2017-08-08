@@ -43,30 +43,27 @@ $$
 $section Changes and Additions to CppAD During 2017$$
 
 $head API Changes$$
-$list number$$
-Versions of CppAD before 20170512 were compatible with eigen-3.2.9 and earlier.
-After 20170512 they are compatible eigen-3.3.3 and later.
-See $cref/05-12/whats_new_17/05-12/$$.
-$lnext
 Speed tests no longer automatically compile in release mode; see
 $cref/debug_which/speed/debug_which/$$
-$lend
 
 $head 08-08$$
+$list number$$
+The $cref eigen_plugin.hpp$$ was put back in the
+$cref cppad_eigen.hpp$$ definitions.
+This makes CppAD incompatible with older versions of eigen; e.g., eigen-3.2.9.
+The plugin was removed on $cref/05-12/whats_new_17/05-12/$$.
+$lnext
 Fix some minor typos in the documentation.
 To be specific:
-$list number$$
 The font, in the $cref sparse_rc$$ and $cref sparse_rcv$$ syntax,
 for the text
 $codei%
 	%target% = %pattern%
 %$$
-$lnext
 The font, in $cref capacity_order$$, for the text
 $codei%
 	%xq%.size() == %f%.Domain()
 %$$
-$lnext
 Remove a percent sign $code %$$, in $cref CppAD_vector$$, in the text
 $codei%
 	# include <cppad/utility/vector.hpp>

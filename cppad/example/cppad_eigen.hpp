@@ -43,6 +43,7 @@ $section Enable Use of Eigen Linear Algebra Package with CppAD$$
 $head Syntax$$
 $codei%# include <cppad/example/cppad_eigen.hpp>%$$
 $children%
+	cppad/example/eigen_plugin.hpp%
 	example/general/eigen_array.cpp%
 	example/general/eigen_det.cpp
 %$$
@@ -63,7 +64,12 @@ They return true if they succeed and false otherwise.
 $head Include Files$$
 The file $code cppad_eigen.hpp$$ includes both
 $code <cppad/cppad.hpp>$$ and $code <Eigen/Core>$$.
+The file $cref eigen_plugin.hpp$$ defines $code value_type$$
+in the Eigen matrix class so its vectors are
+$cref/simple vectors/SimpleVector/$$
+(not necessary for eigen-3.3.3 and later).
 $srccode%cpp% */
+# define EIGEN_MATRIXBASE_PLUGIN <cppad/example/eigen_plugin.hpp>
 # include <Eigen/Core>
 # include <cppad/cppad.hpp>
 /* %$$

@@ -604,6 +604,7 @@ nobase_myinclude_HEADERS = \
 	cppad/example/eigen_mat_inv.hpp \
 	cppad/example/eigen_mat_mul.hpp \
 	cppad/example/mat_mul.hpp \
+	cppad/example/eigen_plugin.hpp \
 	cppad/ipopt/solve_callback.hpp \
 	cppad/ipopt/solve.hpp \
 	cppad/ipopt/solve_result.hpp \

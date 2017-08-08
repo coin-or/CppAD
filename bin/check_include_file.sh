@@ -47,6 +47,7 @@ bin/ls_files.sh | sed -n -e '/cppad\/.*\.hpp$/p' | \
 		-e '1,1s|^|cppad/configure.hpp\n|' \
 		-e '/cppad\/local\/prototype_op.hpp/d' \
 		-e '/cppad\/local\/optimize\/define_prototype.hpp/d' \
+		-e '/cppad\/example\/eigen_plugin.hpp/d' \
 		-e '/cppad\/deprecated\//d' | \
 	sort -u > check_include_file.3.$$
 #
