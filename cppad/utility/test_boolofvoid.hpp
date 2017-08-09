@@ -82,6 +82,7 @@ $code example/ipopt_solve.cpp$$.
 $end
 */
 
+# include <cppad/core/cppad_assert.hpp>
 # include <string>
 
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE

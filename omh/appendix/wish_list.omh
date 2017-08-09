@@ -30,9 +30,14 @@ $spell
 	Jacobian
 	const
 	Eigen
+	boolofvoid
 $$
 
 $section The CppAD Wish List$$
+
+$head test_boolofvoid$$
+For general purpose use, the $cref test_boolofvoid$$ should be usable
+without including a memory check at the end.
 
 $head Eigen$$
 Use a wrapper class for
@@ -44,7 +49,6 @@ to use the syntax
 $codei%
 	TESTVECTOR<%Scalar%>
 %$$
-
 
 $head const ADFun$$
 Currently the structure that iterates through the operations sequence
