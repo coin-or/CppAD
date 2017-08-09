@@ -38,6 +38,7 @@ $spell
 	colpack
 	Wconversion
 	xq
+	boolofvoid
 $$
 
 $section Changes and Additions to CppAD During 2017$$
@@ -45,6 +46,10 @@ $section Changes and Additions to CppAD During 2017$$
 $head API Changes$$
 Speed tests no longer automatically compile in release mode; see
 $cref/debug_which/speed/debug_which/$$
+
+$head 08-09$$
+Add the $cref/test_boolofvoid/wish_list/test_boolofvoid/$$
+wish list item.
 
 $head 08-08$$
 $list number$$
