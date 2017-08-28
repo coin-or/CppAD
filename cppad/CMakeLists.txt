@@ -108,23 +108,20 @@ IF( NOT cppad_has_nullptr )
 	SET(cppad_cplusplus_201100_ok 0)
 ENDIF( NOT cppad_has_nullptr )
 # -----------------------------------------------------------------------------
-# cppad_has_cstdint_8_to_64
+# cppad_has_long_long
 #
 SET(source "
-# include <cstdint>
-template <class T> inline bool is_pod(void)               { return false; }
-template <>        inline bool is_pod<uint8_t>(void)      { return true;  }
-template <>        inline bool is_pod<uint16_t>(void)     { return true;  }
-template <>        inline bool is_pod<uint32_t>(void)     { return true;  }
-template <>        inline bool is_pod<uint64_t>(void)     { return true;  }
+template <class T> inline bool is_pod(void)  { return false; }
+template <>  inline bool is_pod<signed long long>(void) { return true;  }
+template <>  inline bool is_pod<unsigned long long>(void) { return true;  }
 int main(void)
 {	return 0; }
 "
 )
-check_source_runs("${source}" cppad_has_cstdint_8_to_64)
-IF( NOT cppad_has_cstdint_8_to_64 )
+check_source_runs("${source}" cppad_has_long_long)
+IF( NOT cppad_has_long_long )
 	SET(cppad_cplusplus_201100_ok 0)
-ENDIF( NOT cppad_has_cstdint_8_to_64 )
+ENDIF( NOT cppad_has_long_long )
 # -----------------------------------------------------------------------------
 # cppad_compiler_has_erf
 # cppad_compiler_has_asinh

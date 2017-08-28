@@ -1,9 +1,8 @@
-// $Id$
 # ifndef CPPAD_LOCAL_POD_VECTOR_HPP
 # define CPPAD_LOCAL_POD_VECTOR_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -20,48 +19,13 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # include <cppad/utility/thread_alloc.hpp>
 # include <cppad/core/cppad_assert.hpp>
 # include <cppad/local/op_code.hpp>
+# include <cppad/local/is_pod.hpp>
 
 namespace CppAD { namespace local { // BEGIN_CPPAD_LOCAL_NAMESPACE
 /*!
 \file pod_vector.hpp
 File used to define pod_vector class
 */
-
-/*
-A list of which Types pod_vector<Type> consideres to be plain old data
-*/
-/// default value is false
-template <class Type> inline bool is_pod(void)           { return false; }
-/// system pod types so far:
-template <> inline bool is_pod<bool>(void)               { return true; }
-template <> inline bool is_pod<float>(void)              { return true; }
-template <> inline bool is_pod<double>(void)             { return true; }
-# if CPPAD_CSTDINT_HAS_8_TO_64
-template <> inline bool is_pod<int8_t>(void)             { return true;  }
-template <> inline bool is_pod<int16_t>(void)            { return true;  }
-template <> inline bool is_pod<int32_t>(void)            { return true;  }
-template <> inline bool is_pod<int64_t>(void)            { return true;  }
-//
-template <> inline bool is_pod<uint8_t>(void)            { return true;  }
-template <> inline bool is_pod<uint16_t>(void)           { return true;  }
-template <> inline bool is_pod<uint32_t>(void)           { return true;  }
-template <> inline bool is_pod<uint64_t>(void)           { return true;  }
-# else // CPPAD_CSTDINT_HAS_8_TO_64
-template <> inline bool is_pod<char>(void)               { return true; }
-template <> inline bool is_pod<short int>(void)          { return true; }
-template <> inline bool is_pod<int>(void)                { return true; }
-//
-template <> inline bool is_pod<unsigned char>(void)      { return true; }
-template <> inline bool is_pod<unsigned short int>(void) { return true; }
-template <> inline bool is_pod<unsigned int>(void)       { return true; }
-# if CPPAD_SIZE_T_NOT_UNSIGNED_INT
-template <> inline bool is_pod<size_t>(void)             { return true; }
-# endif
-# endif // CPPAD_CSTDINT_HAS_8_TO_64
-
-/// CppAD pod types so far:
-template <> inline bool is_pod<OpCode>(void)             { return true; }
-
 // ---------------------------------------------------------------------------
 /*!
 A vector class with Type element that does not use element constructors
@@ -91,7 +55,8 @@ public:
 		size_t max_length = std::numeric_limits<size_t>::max()
 	)
 	: max_length_(max_length), length_(0), capacity_(0), data_(CPPAD_NULL)
-	{ }
+	{	CPPAD_ASSERT_UNKNOWN( is_pod<size_t>() );
+	}
 	// ----------------------------------------------------------------------
 	/// Destructor: returns allocated memory to \c thread_alloc;
 	/// see \c extend.  If this is not plain old data,

@@ -17,6 +17,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 # include <cppad/core/define.hpp>
 # include <cppad/core/cppad_assert.hpp>
+# include <cppad/local/is_pod.hpp>
 
 // needed before one can use CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL
 # include <cppad/utility/thread_alloc.hpp>
@@ -146,6 +147,9 @@ enum OpCode {
 };
 // Note that bin/check_op_code.sh assumes the pattern '^\tNumberOp$' occurs
 // at the end of this list and only at the end of this list.
+
+/// specialize is_pod<OpCode> to be true
+template <> inline bool is_pod<OpCode>(void) { return true; }
 
 /*!
 Number of arguments for a specified operator.

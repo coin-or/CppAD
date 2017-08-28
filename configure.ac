@@ -501,12 +501,10 @@ AC_SUBST(cppad_has_tmpnam_s, 0)
 
 dnl autotools version cannot use c++11 compiler
 dnl so supress corresponding features
-AC_SUBST(cppad_compiler_is_gnucxx, 0)
-AC_SUBST(cppad_has_nullptr, 0)
-AC_SUBST(cppad_has_rvalue, 0)
-AC_SUBST(cppad_has_cstdint_8_to_64, 0)
 AC_SUBST(cppad_cplusplus_201100_ok, 0)
-AC_SUBST(cppad_has_steady_clock, 0)
+
+dnl autotools version does not check if using g++
+AC_SUBST(cppad_compiler_is_gnucxx, 0)
 
 dnl Determine if size_t has same size as unsigned int
 AC_CHECK_SIZEOF([size_t])
