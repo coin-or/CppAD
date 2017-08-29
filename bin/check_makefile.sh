@@ -17,12 +17,8 @@ fi
 # -----------------------------------------------------------------------------
 echo "Checking include files listed in makefile.am"
 echo "-------------------------------------------------------"
-bin/ls_files.sh .h .hpp | sed -n \
-	-e '/^cppad\/deprecated\//d' \
-	-e '/cppad\/.*\.h$/p' \
-	-e '/cppad\/.*\.hpp$/p' \
+bin/ls_files.sh | sed -n -e '/cppad\/.*\.hpp$/p' \
 	> check_makefile.1.$$
-echo 'cppad/configure.hpp' >> check_makefile.1.$$
 sort -u check_makefile.1.$$ > check_makefile.2.$$
 #
 sed < makefile.am -n \

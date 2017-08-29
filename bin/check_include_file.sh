@@ -41,14 +41,16 @@ cat check_include_file.1.$$ | \
 #	cppad/local/prototype_op.hpp
 #	cppad/local/optimize/define_prototype.hpp
 # All other files should.
-# The file cppad/configure.hpp may not yet be created.
+#
+# The files cppad/configure.hpp and cppad/local/is_pod.hpp
+# are not in git repository (build during configuration)
 bin/ls_files.sh | sed -n -e '/cppad\/.*\.hpp$/p' | \
 	sed \
 		-e '1,1s|^|cppad/configure.hpp\n|' \
+		-e '1,1s|^|cppad/local/is_pod.hpp\n|' \
 		-e '/cppad\/local\/prototype_op.hpp/d' \
 		-e '/cppad\/local\/optimize\/define_prototype.hpp/d' \
-		-e '/cppad\/example\/eigen_plugin.hpp/d' \
-		-e '/cppad\/deprecated\//d' | \
+		-e '/cppad\/example\/eigen_plugin.hpp/d' | \
 	sort -u > check_include_file.3.$$
 #
 different='no'

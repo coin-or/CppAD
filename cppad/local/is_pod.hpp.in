@@ -18,33 +18,20 @@ namespace CppAD { namespace local { // BEGIN_CPPAD_LOCAL_NAMESPACE
 /*!
 Is this type plain old data; i.e., its constructor need not be called.
 
-The default definition is false. This inlude file defines it as true
+The default definition is false. This include file defines it as true
 for all the fundamental types except for void and nullptr_t.
 */
 template <class T> inline bool is_pod(void) { return false; }
 // The following command suppresses doxygen processing for the code below
 /// \cond
-template <> inline bool is_pod<bool>(void) { return true; }
-template <> inline bool is_pod<float>(void) { return true; }
-template <> inline bool is_pod<double>(void) { return true; }
-template <> inline bool is_pod<long double>(void) { return true; }
-//
-template <> inline bool is_pod<signed char>(void) { return true; }
-template <> inline bool is_pod<unsigned char>(void) { return true; }
-//
-template <> inline bool is_pod<signed short>(void) { return true; }
-template <> inline bool is_pod<unsigned short>(void) { return true; }
-//
-template <> inline bool is_pod<signed int>(void) { return true; }
-template <> inline bool is_pod<unsigned int>(void) { return true; }
-//
-template <> inline bool is_pod<signed long>(void) { return true; }
-template <> inline bool is_pod<unsigned long>(void) { return true; }
-//
+// C++98 Fundamental types
+@is_pod_specialize_98@
+
 # if CPPAD_USE_CPLUSPLUS_2011
-template <> inline bool is_pod<signed long long>(void) { return true; }
-template <> inline bool is_pod<unsigned long long>(void) { return true; }
+// C++11 Fundamental types
+@is_pod_specialize_11@
 # endif
+
 /// \endcond
 } } // END_CPPAD_LOCAL_NAMESPACE
 

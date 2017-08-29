@@ -8,9 +8,9 @@
 # A copy of this license is included in the COPYING file of this distribution.
 # Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # -----------------------------------------------------------------------------
-# Build the cppad/configure.hpp file.
-# Inherit environment from ../CMakeLists.txt
+# Configure the CppAD include file directory
 # -----------------------------------------------------------------------------
+# check_match
 MACRO(check_match match_variable match_constant output_variable)
 	STRING(COMPARE EQUAL ${${match_variable}} ${match_constant} match_flag )
 	IF( match_flag )
@@ -277,9 +277,11 @@ int main(void)
 " )
 check_source_runs("${source}" cppad_has_tmpnam_s )
 # -----------------------------------------------------------------------------
-# Copy a file to another location and modify its contents.
-# configure_file(InputFile OutputFile [COPYONLY] [ESCAPE_QUOTES] [@ONLY])
+# configure.hpp
 CONFIGURE_FILE(
 	${CMAKE_CURRENT_SOURCE_DIR}/configure.hpp.in
 	${CMAKE_CURRENT_SOURCE_DIR}/configure.hpp
 )
+# -----------------------------------------------------------------------------
+# configure files in local subdirectory
+ADD_SUBDIRECTORY(local)

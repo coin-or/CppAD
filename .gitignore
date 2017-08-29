@@ -6,6 +6,7 @@ autom4te.cache
 bin/test_one.sh
 commit.sh.old
 cppad/configure.hpp
+cppad/local/is_pod.hpp
 test_one.cpp
 test_one.exe
 # only one directory
