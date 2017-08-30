@@ -39,6 +39,7 @@ $spell
 	Wconversion
 	xq
 	boolofvoid
+	namespace
 $$
 
 $section Changes and Additions to CppAD During 2017$$
@@ -46,6 +47,14 @@ $section Changes and Additions to CppAD During 2017$$
 $head API Changes$$
 Speed tests no longer automatically compile in release mode; see
 $cref/debug_which/speed/debug_which/$$
+
+$head 08-29$$
+There was a problem on some systems that created an error when
+specializing the $code is_pod$$ template function in the
+$code CppAD::local$$ namespace.
+This has been fixed by testing for compatibility at during the
+$cref cmake$$ command and creating the file $code cppad/local/is_pod.hpp$$.
+
 
 $head 08-09$$
 Add the $cref/test_boolofvoid/wish_list/test_boolofvoid/$$
