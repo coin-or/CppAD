@@ -58,9 +58,6 @@ INCLUDE(cmake/command_line_arg.cmake)
 # optional_package(package description)
 INCLUDE(cmake/optional_package.cmake)
 #
-# add_cppad_cxx_flags(target_name)
-INCLUDE(cmake/add_cppad_cxx_flags.cmake)
-#
 # check_source_runs(source variable)
 INCLUDE(cmake/check_source_runs.cmake)
 #
@@ -119,7 +116,7 @@ IF( cmake_install_postfix )
 ENDIF( cmake_install_postfix )
 # -----------------------------------------------------------------------------
 # cppad_cxx_flags
-command_line_arg(cppad_cxx_flags NOTFOUND STRING
+command_line_arg(cppad_cxx_flags "" STRING
 	"compile flags used with cppad (besides debug, release, and profile flags)"
 )
 # -----------------------------------------------------------------------------

@@ -59,7 +59,9 @@ FOREACH( com c cpp )
 	#
 	IF( ${com} STREQUAL cpp )
 		# These are C++ compiler flags (may not be valid for C)
-		add_cppad_cxx_flags(det_by_minor_${com})
+		SET_TARGET_PROPERTIES(
+			det_by_minor_${com} PROPERTIES COMPILE_FLAGS "${cppad_cxx_flags}"
+		)
 	ENDIF( ${com} STREQUAL cpp )
 	#
 	# Add target the executes this program

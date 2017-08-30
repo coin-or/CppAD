@@ -145,9 +145,6 @@ IF( NOT  empty_cppad_lib )
 	ADD_DEPENDENCIES(test_more_general ${cppad_lib} )
 ENDIF( NOT  empty_cppad_lib )
 #
-# Compiler flags for cppad source
-add_cppad_cxx_flags(test_more_general)
-#
 # List of libraries to be linked into the specified target
 TARGET_LINK_LIBRARIES(test_more_general
 	${cppad_lib}
