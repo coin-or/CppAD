@@ -191,16 +191,14 @@ IF( cppad_deprecated )
 	MESSAGE(FATAL_ERROR "cppad_deprecated must be NO" )
 ENDIF( cppad_deprecated )
 # =============================================================================
-# cppad_has_colpack, colpack_libs, cppad_lib
+# colpack_libs, cppad_lib
 #
 IF( cppad_has_colpack )
-	SET(cppad_has_colpack 1)
 	SET( colpack_libs "ColPack" )
-	SET( cppad_lib "cppad_lib" )
+	SET( cppad_lib    "cppad_lib" )
 ELSE( cppad_has_colpack )
-	SET(cppad_has_colpack 0)
 	SET( colpack_libs "" )
-	SET( cppad_lib "" )
+	SET( cppad_lib    "" )
 ENDIF( cppad_has_colpack )
 # =============================================================================
 # automated system configuration

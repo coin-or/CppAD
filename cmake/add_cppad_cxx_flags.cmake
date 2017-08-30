@@ -1,6 +1,5 @@
-# $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the
@@ -12,8 +11,9 @@
 # add_cppad_cxx_flags(target_name)
 #
 # target_name: (in)
-# The compiler flags for this target are set to
-#	cppad_cxx_flags.
+# If cppad_cxx_flags has been set, the compiler flags for this target are set
+# to ${cppad_cxx_flags}. Otherwise, the compiler flags are set to the
+# empty string.
 #
 # Side Effects:
 # The variable flags is used for scratch space and not

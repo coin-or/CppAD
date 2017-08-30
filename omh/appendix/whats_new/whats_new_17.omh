@@ -48,6 +48,14 @@ $head API Changes$$
 Speed tests no longer automatically compile in release mode; see
 $cref/debug_which/speed/debug_which/$$
 
+$head 08-30$$
+If $cref colpack_prefix$$ was not specified, one would get the following
+waring during the $cref cmake$$ command:
+$codei%
+	Policy CMP0046 is not set: Error on non-existent dependency in
+%$$
+This has been fixed by not adding the dependency when it is not needed.
+
 $head 08-29$$
 There was a problem on some systems that created an error when
 specializing the $code is_pod$$ template function in the

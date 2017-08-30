@@ -66,7 +66,6 @@ FOREACH(pod_type ${pod_type_list})
 	IF( ${pod_type_var} )
 		SET(is_pod_specialize_11 "${is_pod_specialize_11}${line}")
 	ENDIF( ${pod_type_var} )
-	print_variable(is_pod_specialize_11)
 ENDFOREACH(pod_type)
 # -----------------------------------------------------------------------------
 # is_pod.hpp
