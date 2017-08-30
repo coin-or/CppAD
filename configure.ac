@@ -509,15 +509,6 @@ AC_SUBST(is_pod_specialize_98,
 )
 AC_SUBST(is_pod_specialize_11, "")
 
-dnl Determine if size_t has same size as unsigned int
-AC_CHECK_SIZEOF([size_t])
-AC_CHECK_SIZEOF([unsigned int])
-if test "$ac_cv_sizeof_size_t" != "$ac_cv_sizeof_unsigned_int" ; then
-	AC_SUBST(cppad_size_t_not_unsigned_int, 1)
-else
-	AC_SUBST(cppad_size_t_not_unsigned_int, 0)
-fi
-
 dnl Determine which definition we are using for CPPAD_TESTVECTOR
 if test "$stdvector$boostvector$eigenvector" = "nonono" ; then
 	AC_SUBST(cppad_cppadvector, 1)

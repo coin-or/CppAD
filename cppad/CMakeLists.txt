@@ -186,19 +186,6 @@ int main(void)
 )
 check_source_runs("${source}" cppad_has_gettimeofday)
 # -----------------------------------------------------------------------------
-# cppad_size_t_not_unsigned_int
-#
-SET(source "
-# include <cstring>
-template <class T> inline bool is_pod(void)               { return false; }
-template <>        inline bool is_pod<unsigned int>(void) { return true;  }
-template <>        inline bool is_pod<size_t>(void)       { return true;  }
-int main(void)
-{	return 0; }
-"
-)
-check_source_runs("${source}" cppad_size_t_not_unsigned_int)
-# -----------------------------------------------------------------------------
 # cppad_tape_addr_type, cppad_tape_id_type
 #
 FOREACH(cmake_var cppad_tape_id_type cppad_tape_addr_type )

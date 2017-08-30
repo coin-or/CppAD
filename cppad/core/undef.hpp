@@ -83,7 +83,6 @@ Preprecessor definitions that presist after cppad/cppad.hpp is included:
 # undef CPPAD_REVERSE_SWEEP_TRACE
 # undef CPPAD_REV_HES_SWEEP_TRACE
 # undef CPPAD_REV_JAC_SWEEP_TRACE
-# undef CPPAD_SIZE_T_NOT_UNSIGNED_INT
 # undef CPPAD_STANDARD_MATH_UNARY_AD
 # undef CPPAD_STDVECTOR
 # undef CPPAD_TRACE_CAPACITY
