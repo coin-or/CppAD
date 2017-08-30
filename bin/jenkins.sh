@@ -85,11 +85,13 @@ log_eval bin/get_eigen.sh
 # where $libdir is 'lib64' if /usr/lib64 exists and 'lib' otherwise.
 log_eval bin/get_ipopt.sh
 # -------------------------------------------------------------------
+# Commented out because autotools build no longer supports sacado.
+#
 # Running bin/get_sacado.sh ensures its include files are in
 #	$trunk_dir/build/prefix/include
 # and library files in
 #	$trunk_dir/build/prefix/$libdir
-log_eval bin/get_sacado.sh
+# log_eval bin/get_sacado.sh
 # -------------------------------------------------------------------
 # Running bin/get_colpack.sh ensures its library files are in
 #	$trunk_dir/build/prefix/$libdir
@@ -138,12 +140,14 @@ else
 	build_type=''
 fi
 #
+# Commented out because autotools build no longer supports sacado.
+# SACADO_DIR="$trunk_dir/build/prefix" \\
+#
 cat << EOF
 $trunk_dir/configure \\
 	$build_type \\
 	--disable-silent-rules \\
 	ADOLC_DIR="$trunk_dir/build/prefix" \\
-	SACADO_DIR="$trunk_dir/build/prefix" \\
 	EIGEN_DIR="$trunk_dir/build/prefix" \\
 	IPOPT_DIR="$trunk_dir/build/prefix" \\
 	FADBAD_DIR="$trunk_dir/build/prefix"  \\
@@ -154,7 +158,6 @@ EOF
 if ! $trunk_dir/configure $build_type \
 	--disable-silent-rules \
 	ADOLC_DIR="$trunk_dir/build/prefix" \
-	SACADO_DIR="$trunk_dir/build/prefix" \
 	EIGEN_DIR="$trunk_dir/build/prefix" \
 	IPOPT_DIR="$trunk_dir/build/prefix" \
 	FADBAD_DIR="$trunk_dir/build/prefix" \
