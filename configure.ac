@@ -287,11 +287,7 @@ AC_ARG_VAR(SACADO_DIR,
 )
 AM_CONDITIONAL(CppAD_SACADO, test "$SACADO_DIR" != "")
 if test "$SACADO_DIR" != "" ; then
-	AC_MSG_RESULT([$SACADO_DIR])
-	if test "$have_ar" = "no"; then
-		AC_MSG_ERROR([ar is missing and SACADO_DIR is present])
-	fi
-	AC_SUBST(cppad_has_sacado, 1)
+	AC_MSG_ERROR([CppAD autotools build no longer support sacado, use cmake])
 else
 	AC_MSG_RESULT([no])
 	AC_SUBST(cppad_has_sacado, 0)
@@ -505,6 +501,13 @@ AC_SUBST(cppad_cplusplus_201100_ok, 0)
 
 dnl autotools version does not check if using g++
 AC_SUBST(cppad_compiler_is_gnucxx, 0)
+
+dnl autotools version is slower because it does not specialize is_pod
+dnl for the  Fundamental types
+AC_SUBST(is_pod_specialize_98,
+	"template <> inline bool is_pod<size_t>(void) { return true; }"
+)
+AC_SUBST(is_pod_specialize_11, "")
 
 dnl Determine if size_t has same size as unsigned int
 AC_CHECK_SIZEOF([size_t])
@@ -784,6 +787,7 @@ dnl AC_CONFIG_FILES(file-list) for each file in the list, configure will
 dnl read file.in, do its substitutions, and create file
 AC_CONFIG_FILES([
 	cppad/configure.hpp
+	cppad/local/is_pod.hpp
 	cppad_ipopt/example/test.sh
 	cppad_ipopt/speed/test.sh
 	cppad_ipopt/test/test.sh

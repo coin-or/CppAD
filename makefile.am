@@ -9,9 +9,13 @@
 # Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # -----------------------------------------------------------------------------
 #
-BUILT_SOURCES = $(top_srcdir)/cppad/configure.hpp
+BUILT_SOURCES = \
+	$(top_srcdir)/cppad/configure.hpp \
+	$(top_srcdir)/cppad/local/is_pod.hpp
 $(top_srcdir)/cppad/configure.hpp: cppad/configure.hpp
 	cp cppad/configure.hpp $(top_srcdir)/cppad/configure.hpp
+$(top_srcdir)/cppad/local/is_pod.hpp: cppad/local/is_pod.hpp
+	cp cppad/local/is_pod.hpp $(top_srcdir)/cppad/local/is_pod.hpp
 #
 if CppAD_POSTFIX
 postfix_dir  = $(POSTFIX_DIR)

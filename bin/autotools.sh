@@ -21,7 +21,6 @@ CPPAD_DIR=$HOME/prefix/cppad
 EIGEN_DIR=$HOME/prefix/eigen
 FADBAD_DIR=$HOME/prefix/fadbad
 IPOPT_DIR=$HOME/prefix/ipopt
-SACADO_DIR=$HOME/prefix/sacado
 # version type is one of "trunk" or "stable"
 version_type="stable"
 # -----------------------------------------------------------------------------
@@ -202,22 +201,14 @@ then
 		dir_list="$dir_list
 		IPOPT_DIR=$IPOPT_DIR"
 	fi
-	if [ -e $SACADO_DIR/include/Sacado.hpp ]
-	then
-		dir_list="$dir_list
-			SACADO_DIR=$SACADO_DIR"
-	fi
 	# Use =int (a signed type) to do more checking for
 	# slicing from size_t to addr_t.
 	special_types=""
 #_build_test_only:	special_types="TAPE_ADDR_TYPE=int TAPE_ID_TYPE=int"
 	#
 	dir_list=`echo $dir_list | sed -e 's|\t\t*| |g'`
-	cxx_flags="-Wall -ansi -pedantic-errors -std=c++98 -Wshadow"
-#_build_test_only:	if [ -e $EIGEN_DIR/include/Eigen ]
-#_build_test_only:	then
-#_build_test_only:	cxx_flags="-Wall -ansi -pedantic-errors -std=c++98 -Wno-long-long -Wno-sign-compare"
-#_build_test_only:	fi
+	cxx_flags="-Wall -ansi -pedantic-errors -std=c++11 -Wshadow"
+	cxx_flags="$cxx_flags -isystem $EIGEN_DIR/include"
 cat << EOF
 ../configure > $log_file \\
 $dir_list \\

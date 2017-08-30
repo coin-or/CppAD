@@ -100,8 +100,8 @@ DIST_COMMON = $(srcdir)/makefile.am $(top_srcdir)/configure \
 am__CONFIG_DISTCLEAN_FILES = config.status config.cache config.log \
  configure.lineno config.status.lineno
 mkinstalldirs = $(install_sh) -d
-CONFIG_CLEAN_FILES = cppad/configure.hpp pkgconfig/cppad.pc \
-	pkgconfig/cppad-uninstalled.pc
+CONFIG_CLEAN_FILES = cppad/configure.hpp cppad/local/is_pod.hpp \
+	pkgconfig/cppad.pc pkgconfig/cppad-uninstalled.pc
 CONFIG_CLEAN_VPATH_FILES =
 AM_V_P = $(am__v_P_@AM_V@)
 am__v_P_ = $(am__v_P_@AM_DEFAULT_V@)
@@ -200,6 +200,7 @@ DIST_SUBDIRS = cppad_ipopt/src example/ipopt_solve cppad_ipopt/example \
 	test_more/compare_c test_more/general
 am__DIST_COMMON = $(srcdir)/makefile.in \
 	$(top_srcdir)/cppad/configure.hpp.in \
+	$(top_srcdir)/cppad/local/is_pod.hpp.in \
 	$(top_srcdir)/pkgconfig/cppad-uninstalled.pc.in \
 	$(top_srcdir)/pkgconfig/cppad.pc.in COPYING ar-lib compile \
 	config.guess config.sub depcomp install-sh missing
@@ -391,6 +392,8 @@ includedir = @includedir@
 infodir = @infodir@
 install_sh = @install_sh@
 ipopt_prefix = @ipopt_prefix@
+is_pod_specialize_11 = @is_pod_specialize_11@
+is_pod_specialize_98 = @is_pod_specialize_98@
 libdir = @libdir@
 libexecdir = @libexecdir@
 localedir = @localedir@
@@ -422,7 +425,10 @@ top_srcdir = @top_srcdir@
 # Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # -----------------------------------------------------------------------------
 #
-BUILT_SOURCES = $(top_srcdir)/cppad/configure.hpp
+BUILT_SOURCES = \
+	$(top_srcdir)/cppad/configure.hpp \
+	$(top_srcdir)/cppad/local/is_pod.hpp
+
 @CppAD_POSTFIX_FALSE@postfix_dir = .
 #
 @CppAD_POSTFIX_TRUE@postfix_dir = $(POSTFIX_DIR)
@@ -483,7 +489,6 @@ myinclude_HEADERS = \
 #
 nobase_myinclude_HEADERS = \
 	cppad/base_require.hpp \
-	cppad/configure.hpp \
 	cppad/core/abort_recording.hpp \
 	cppad/core/abs.hpp \
 	cppad/core/abs_normal_fun.hpp \
@@ -635,7 +640,6 @@ nobase_myinclude_HEADERS = \
 	cppad/local/forward2sweep.hpp \
 	cppad/local/hash_code.hpp \
 	cppad/local/independent.hpp \
-	cppad/local/is_pod.hpp \
 	cppad/local/load_op.hpp \
 	cppad/local/log1p_op.hpp \
 	cppad/local/log_op.hpp \
@@ -861,6 +865,8 @@ $(ACLOCAL_M4): @MAINTAINER_MODE_TRUE@ $(am__aclocal_m4_deps)
 	$(am__cd) $(srcdir) && $(ACLOCAL) $(ACLOCAL_AMFLAGS)
 $(am__aclocal_m4_deps):
 cppad/configure.hpp: $(top_builddir)/config.status $(top_srcdir)/cppad/configure.hpp.in
+	cd $(top_builddir) && $(SHELL) ./config.status $@
+cppad/local/is_pod.hpp: $(top_builddir)/config.status $(top_srcdir)/cppad/local/is_pod.hpp.in
 	cd $(top_builddir) && $(SHELL) ./config.status $@
 pkgconfig/cppad.pc: $(top_builddir)/config.status $(top_srcdir)/pkgconfig/cppad.pc.in
 	cd $(top_builddir) && $(SHELL) ./config.status $@
@@ -1369,6 +1375,8 @@ uninstall-am: uninstall-myincludeHEADERS \
 
 $(top_srcdir)/cppad/configure.hpp: cppad/configure.hpp
 	cp cppad/configure.hpp $(top_srcdir)/cppad/configure.hpp
+$(top_srcdir)/cppad/local/is_pod.hpp: cppad/local/is_pod.hpp
+	cp cppad/local/is_pod.hpp $(top_srcdir)/cppad/local/is_pod.hpp
 @CppAD_HAVE_AR_FALSE@	SPEED_TESTS =
 @CppAD_HAVE_AR_FALSE@	SPEED_DIRS =
 
