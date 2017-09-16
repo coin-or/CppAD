@@ -49,6 +49,11 @@ $head API Changes$$
 Speed tests no longer automatically compile in release mode; see
 $cref/debug_which/speed/debug_which/$$
 
+$head 09-16$$
+An $cref/optimize/wish_list/optimize/$$ entry
+was added to the wish list
+and the $cref/check_finite/wish_list/check_finite/$$ entry was modified.
+
 $head 08-30$$
 $list number$$
 If $cref colpack_prefix$$ was not specified, one would get the following

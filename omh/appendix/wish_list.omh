@@ -35,6 +35,25 @@ $$
 
 $section The CppAD Wish List$$
 
+$head check_finite$$
+$list number$$
+Sometimes one only gets infinite value during zero order forward
+and nan when computing corresponding derivatives.
+Change $cref check_for_nan$$ to $code check_finite$$
+(not infinite or nan) so that error detection happens during zero
+order forward instead of later.
+$lnext
+In addition, the current $cref check_for_nan$$ writes the corresponding
+zero order values to a temporary file.
+It would be nice if the $code check_finite$$ routine made writing
+the zero order values optional.
+$lend
+
+$head optimize$$
+The $cref optimize$$ command seems to use a lot of memory when the
+tape is large. We should create a test case that demonstrates this and then
+work on reducing the amount of memory needed by this operation.
+
 $head test_boolofvoid$$
 For general purpose use, the $cref test_boolofvoid$$ should be usable
 without including a memory check at the end.
@@ -120,13 +139,6 @@ There should be some examples and tests for both speed and memory use
 that demonstrate that checkpointing is useful.
 
 $comment -------------------------------------------------------------------$$
-
-$head check_finite$$
-Sometimes one only gets infinite value during zero order forward
-and nan when computing corresponding derivatives.
-Change $cref check_for_nan$$ to $code check_finite$$
-(not infinite or nan) so that error detection happens during zero
-order forward instead of later.
 
 $head Compilation Speed$$
 Create a library corresponding to $code AD<double>$$ so that
