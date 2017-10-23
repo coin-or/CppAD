@@ -41,6 +41,8 @@ $spell
 	boolofvoid
 	namespace
 	cxx
+	uninitialized
+	cmake
 $$
 
 $section Changes and Additions to CppAD During 2017$$
@@ -48,6 +50,15 @@ $section Changes and Additions to CppAD During 2017$$
 $head API Changes$$
 Speed tests no longer automatically compile in release mode; see
 $cref/debug_which/speed/debug_which/$$
+
+$head 10-23$$
+$list number$$
+Require $code cmake.3.1$$ or greater and fix
+a cmake warning by always using the new $code CMP0054$$ policy.
+$lnext
+Fix a $code g++ 7.2.1$$ warning about a possibly uninitialized value
+in the file $code cppad/local/optimize/hash_code.hpp$$.
+$lend
 
 $head 09-16$$
 An $cref/optimize/wish_list/optimize/$$ entry

@@ -16,7 +16,12 @@ SET(CMAKE_LEGACY_CYGWIN_WIN32 0) # remove when version below >= 2.8.4
 #
 # Set the minimum required version of cmake for this project.
 # see http://www.cmake.org/pipermail/cmake/2013-January/053213.html
-CMAKE_MINIMUM_REQUIRED(VERSION 2.8)
+CMAKE_MINIMUM_REQUIRED(VERSION 3.1)
+#
+# https://gitlab.kitware.com/cmake/cmake/issues/17292
+if(POLICY CMP0054)
+  cmake_policy(SET CMP0054 NEW)
+endif()
 #
 # cppad_version is used by set_version.sh to get the version number.
 SET(cppad_version      "20170916" )

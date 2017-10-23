@@ -1,9 +1,8 @@
-// $Id$
 # ifndef CPPAD_LOCAL_OPTIMIZE_HASH_CODE_HPP
 # define CPPAD_LOCAL_OPTIMIZE_HASH_CODE_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -46,9 +45,9 @@ inline size_t optimize_hash_code(
 {
 	//
 	CPPAD_ASSERT_UNKNOWN(num_arg <= 2 );
-	size_t sum = size_t(arg[0]) + size_t(op);
-	if( 1 < num_arg )
-		sum += size_t(arg[1]);
+	size_t sum = size_t(op);
+	for(size_t i = 0; i < num_arg; i++)
+		sum += size_t(arg[i]);
 	//
 	return sum % CPPAD_HASH_TABLE_SIZE;
 }
