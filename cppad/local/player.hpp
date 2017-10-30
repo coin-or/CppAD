@@ -1,4 +1,3 @@
-// $Id$
 # ifndef CPPAD_LOCAL_PLAYER_HPP
 # define CPPAD_LOCAL_PLAYER_HPP
 
@@ -45,20 +44,20 @@ private:
 	size_t num_vecad_vec_rec_;
 
 	/// The operators in the recording.
-	pod_vector<CPPAD_OP_CODE_TYPE> op_rec_;
+	pod_vector<CPPAD_OP_CODE_TYPE> op_vec_;
 
 	/// The VecAD indices in the recording.
-	pod_vector<addr_t> vecad_ind_rec_;
+	pod_vector<addr_t> vecad_ind_vec_;
 
 	/// The operation argument indices in the recording
-	pod_vector<addr_t> op_arg_rec_;
+	pod_vector<addr_t> op_arg_vec_;
 
 	/// The parameters in the recording.
 	/// Note that Base may not be plain old data, so use false in consructor.
-	pod_vector<Base> par_rec_;
+	pod_vector<Base> par_vec_;
 
 	/// Character strings ('\\0' terminated) in the recording.
-	pod_vector<char> text_rec_;
+	pod_vector<char> text_vec_;
 
 	// ----------------------------------------------------------------------
 	// Variables used for iterating thorough operators in the recording
@@ -89,11 +88,11 @@ public:
 	player(void) :
 	num_var_rec_(0)                                      ,
 	num_load_op_rec_(0)                                  ,
-	op_rec_( std::numeric_limits<addr_t>::max() )        ,
-	vecad_ind_rec_( std::numeric_limits<addr_t>::max() ) ,
-	op_arg_rec_( std::numeric_limits<addr_t>::max() )    ,
-	par_rec_( std::numeric_limits<addr_t>::max() )       ,
-	text_rec_( std::numeric_limits<addr_t>::max() )
+	op_vec_( std::numeric_limits<addr_t>::max() )        ,
+	vecad_ind_vec_( std::numeric_limits<addr_t>::max() ) ,
+	op_arg_vec_( std::numeric_limits<addr_t>::max() )    ,
+	par_vec_( std::numeric_limits<addr_t>::max() )       ,
+	text_vec_( std::numeric_limits<addr_t>::max() )
 	{ }
 
 	// =================================================================
@@ -119,28 +118,28 @@ public:
 		num_load_op_rec_    = rec.num_load_op_rec_;
 
 		// op_rec_
-		op_rec_.swap(rec.op_rec_);
+		op_vec_.swap(rec.op_vec_);
 
 		// vec_ind_rec_
-		vecad_ind_rec_.swap(rec.vecad_ind_rec_);
+		vecad_ind_vec_.swap(rec.vecad_ind_vec_);
 
 		// op_arg_rec_
-		op_arg_rec_.swap(rec.op_arg_rec_);
+		op_arg_vec_.swap(rec.op_arg_vec_);
 
 		// par_rec_
-		par_rec_.swap(rec.par_rec_);
+		par_vec_.swap(rec.par_vec_);
 
 		// text_rec_
-		text_rec_.swap(rec.text_rec_);
+		text_vec_.swap(rec.text_vec_);
 
 		// set the number of VecAD vectors
 		num_vecad_vec_rec_ = 0;
-		for(i = 0; i < vecad_ind_rec_.size(); i += vecad_ind_rec_[i] + 1)
+		for(i = 0; i < vecad_ind_vec_.size(); i += vecad_ind_vec_[i] + 1)
 			num_vecad_vec_rec_++;
 
-		// vecad_ind_rec_ contains size of each VecAD followed by
+		// vecad_ind_vec_ contains size of each VecAD followed by
 		// the parameter indices used to iniialize it.
-		CPPAD_ASSERT_UNKNOWN( i == vecad_ind_rec_.size() );
+		CPPAD_ASSERT_UNKNOWN( i == vecad_ind_vec_.size() );
 	}
 	// ===============================================================
 	/*!
@@ -153,12 +152,12 @@ public:
 	{
 		num_var_rec_        = play.num_var_rec_;
 		num_load_op_rec_    = play.num_load_op_rec_;
-		op_rec_             = play.op_rec_;
+		op_vec_             = play.op_vec_;
 		num_vecad_vec_rec_  = play.num_vecad_vec_rec_;
-		vecad_ind_rec_      = play.vecad_ind_rec_;
-		op_arg_rec_         = play.op_arg_rec_;
-		par_rec_            = play.par_rec_;
-		text_rec_           = play.text_rec_;
+		vecad_ind_vec_      = play.vecad_ind_vec_;
+		op_arg_vec_         = play.op_arg_vec_;
+		par_vec_            = play.par_vec_;
+		text_vec_           = play.text_vec_;
 	}
 	// ===============================================================
 	/// Erase the recording stored in the player
@@ -168,11 +167,11 @@ public:
 		num_load_op_rec_   = 0;
 		num_vecad_vec_rec_ = 0;
 
-		op_rec_.erase();
-		vecad_ind_rec_.erase();
-		op_arg_rec_.erase();
-		par_rec_.erase();
-		text_rec_.erase();
+		op_vec_.erase();
+		vecad_ind_vec_.erase();
+		op_arg_vec_.erase();
+		par_vec_.erase();
+		text_vec_.erase();
 	}
 	// ================================================================
 	// const functions that retrieve infromation from this player
@@ -188,7 +187,7 @@ public:
 	the index of the operator in recording
 	*/
 	OpCode GetOp (size_t i) const
-	{	return OpCode(op_rec_[i]); }
+	{	return OpCode(op_vec_[i]); }
 
 	/*!
 	\brief
@@ -201,7 +200,7 @@ public:
 	the index of the VecAD index in recording
 	*/
 	size_t GetVecInd (size_t i) const
-	{	return vecad_ind_rec_[i]; }
+	{	return vecad_ind_vec_[i]; }
 
 	/*!
 	\brief
@@ -214,7 +213,7 @@ public:
 	the index of the parameter in recording
 	*/
 	Base GetPar(size_t i) const
-	{	return par_rec_[i]; }
+	{	return par_vec_[i]; }
 
 	/*!
 	\brief
@@ -225,7 +224,7 @@ public:
 
 	*/
 	const Base* GetPar(void) const
-	{	return par_rec_.data(); }
+	{	return par_vec_.data(); }
 
 	/*!
 	\brief
@@ -238,8 +237,8 @@ public:
 	the index where the string begins.
 	*/
 	const char *GetTxt(size_t i) const
-	{	CPPAD_ASSERT_UNKNOWN(i < text_rec_.size() );
-		return text_rec_.data() + i;
+	{	CPPAD_ASSERT_UNKNOWN(i < text_vec_.size() );
+		return text_vec_.data() + i;
 	}
 
 	/// Fetch number of variables in the recording.
@@ -252,11 +251,11 @@ public:
 
 	/// Fetch number of operators in the recording.
 	size_t num_op_rec(void) const
-	{	return op_rec_.size(); }
+	{	return op_vec_.size(); }
 
 	/// Fetch number of VecAD indices in the recording.
 	size_t num_vec_ind_rec(void) const
-	{	return vecad_ind_rec_.size(); }
+	{	return vecad_ind_vec_.size(); }
 
 	/// Fetch number of VecAD vectors in the recording
 	size_t num_vecad_vec_rec(void) const
@@ -264,24 +263,24 @@ public:
 
 	/// Fetch number of argument indices in the recording.
 	size_t num_op_arg_rec(void) const
-	{	return op_arg_rec_.size(); }
+	{	return op_arg_vec_.size(); }
 
 	/// Fetch number of parameters in the recording.
 	size_t num_par_rec(void) const
-	{	return par_rec_.size(); }
+	{	return par_vec_.size(); }
 
 	/// Fetch number of characters (representing strings) in the recording.
 	size_t num_text_rec(void) const
-	{	return text_rec_.size(); }
+	{	return text_vec_.size(); }
 
 	/// Fetch a rough measure of amount of memory used to store recording
 	/// (just lengths, not capacities).
 	size_t Memory(void) const
-	{	return op_rec_.size()        * sizeof(OpCode)
-		     + op_arg_rec_.size()    * sizeof(addr_t)
-		     + par_rec_.size()       * sizeof(Base)
-		     + text_rec_.size()      * sizeof(char)
-		     + vecad_ind_rec_.size() * sizeof(addr_t)
+	{	return op_vec_.size()        * sizeof(OpCode)
+		     + op_arg_vec_.size()    * sizeof(addr_t)
+		     + par_vec_.size()       * sizeof(Base)
+		     + text_vec_.size()      * sizeof(char)
+		     + vecad_ind_vec_.size() * sizeof(addr_t)
 		;
 	}
 	// =====================================================================
@@ -316,8 +315,8 @@ public:
 		size_t&        op_index   ,
 		size_t&        var_index  )
 	{
-		op        = op_          = OpCode( op_rec_[0] );
-		op_arg    = op_arg_      = op_arg_rec_.data();
+		op        = op_          = OpCode( op_vec_[0] );
+		op_arg    = op_arg_      = op_arg_vec_.data();
 		op_index  = op_index_    = 0;
 		var_index = var_index_   = 0;
 # ifndef NDEBUG
@@ -388,7 +387,7 @@ public:
 		op_arg      = op_arg_    += NumArg(op_);
 
 		// next operator
-		op          = op_         = OpCode( op_rec_[ op_index_ ] );
+		op          = op_         = OpCode( op_vec_[ op_index_ ] );
 
 		// index for last result for next operator
 		var_index   = var_index_ += NumRes(op);
@@ -396,9 +395,9 @@ public:
 # ifndef NDEBUG
 		special_before_next_ = (op == CSumOp) | (op == CSkipOp);
 		//
-		CPPAD_ASSERT_UNKNOWN( op_arg_rec_.data() <= op_arg_ );
+		CPPAD_ASSERT_UNKNOWN( op_arg_vec_.data() <= op_arg_ );
 		CPPAD_ASSERT_UNKNOWN(
-			op_arg_ + NumArg(op) <= op_arg_rec_.data() + op_arg_rec_.size()
+			op_arg_ + NumArg(op) <= op_arg_vec_.data() + op_arg_vec_.size()
 		);
 		CPPAD_ASSERT_UNKNOWN( var_index_ < num_var_rec_ );
 # endif
@@ -452,9 +451,9 @@ public:
 		CPPAD_ASSERT_UNKNOWN( special_before_next_ );
 		special_before_next_ = false;
 		//
-		CPPAD_ASSERT_UNKNOWN( op_arg_rec_.data() <= op_arg_ );
+		CPPAD_ASSERT_UNKNOWN( op_arg_vec_.data() <= op_arg_ );
 		CPPAD_ASSERT_UNKNOWN(
-			op_arg_ + NumArg(op) <= op_arg_rec_.data() + op_arg_rec_.size()
+			op_arg_ + NumArg(op) <= op_arg_vec_.data() + op_arg_vec_.size()
 		);
 		CPPAD_ASSERT_UNKNOWN( var_index_ < num_var_rec_ );
 # endif
@@ -508,9 +507,9 @@ public:
 		CPPAD_ASSERT_UNKNOWN( special_before_next_ );
 		special_before_next_ = false;
 		//
-		CPPAD_ASSERT_UNKNOWN( op_arg_rec_.data() <= op_arg_ );
+		CPPAD_ASSERT_UNKNOWN( op_arg_vec_.data() <= op_arg_ );
 		CPPAD_ASSERT_UNKNOWN(
-			op_arg_ + NumArg(op) <= op_arg_rec_.data() + op_arg_rec_.size()
+			op_arg_ + NumArg(op) <= op_arg_vec_.data() + op_arg_vec_.size()
 		);
 		CPPAD_ASSERT_UNKNOWN( var_index_ < num_var_rec_ );
 # endif
@@ -682,10 +681,10 @@ public:
 		size_t&        op_index   ,
 		size_t&        var_index  )
 	{
-		op_arg      = op_arg_     = op_arg_rec_.data() + op_arg_rec_.size();
-		op_index    = op_index_   = op_rec_.size() - 1;
+		op_arg      = op_arg_     = op_arg_vec_.data() + op_arg_vec_.size();
+		op_index    = op_index_   = op_vec_.size() - 1;
 		var_index   = var_index_  = num_var_rec_ - 1;
-		op          = op_         = OpCode( op_rec_[ op_index_ ] );
+		op          = op_         = OpCode( op_vec_[ op_index_ ] );
 # ifndef NDEBUG
 		special_before_next_ = false;
 		CPPAD_ASSERT_UNKNOWN( op_ == EndOp );
@@ -759,7 +758,7 @@ public:
 		// next operator
 		CPPAD_ASSERT_UNKNOWN( op_index_  > 0 );
 		op_index    = --op_index_;                                  // index
-		op          = op_         = OpCode( op_rec_[ op_index_ ] ); // value
+		op          = op_         = OpCode( op_vec_[ op_index_ ] ); // value
 
 		// first argument for next operator
 		op_arg      = op_arg_    -= NumArg(op);
@@ -767,9 +766,9 @@ public:
 # ifndef NDEBUG
 		special_before_next_ = (op == CSumOp) | (op == CSkipOp);
 		//
-		CPPAD_ASSERT_UNKNOWN( op_arg_rec_.data() <= op_arg_ );
+		CPPAD_ASSERT_UNKNOWN( op_arg_vec_.data() <= op_arg_ );
 		CPPAD_ASSERT_UNKNOWN(
-			op_arg_ + NumArg(op) <= op_arg_rec_.data() + op_arg_rec_.size()
+			op_arg_ + NumArg(op) <= op_arg_vec_.data() + op_arg_vec_.size()
 		);
 # endif
 	}
@@ -824,8 +823,8 @@ public:
 		CPPAD_ASSERT_UNKNOWN( special_before_next_ );
 		special_before_next_ = false;
 		//
-		CPPAD_ASSERT_UNKNOWN( op_index_ < op_rec_.size() );
-		CPPAD_ASSERT_UNKNOWN( op_arg_rec_.data() <= op_arg_ );
+		CPPAD_ASSERT_UNKNOWN( op_index_ < op_vec_.size() );
+		CPPAD_ASSERT_UNKNOWN( op_arg_vec_.data() <= op_arg_ );
 		CPPAD_ASSERT_UNKNOWN( var_index_ < num_var_rec_ );
 # endif
 	}
@@ -879,8 +878,8 @@ public:
 		CPPAD_ASSERT_UNKNOWN( special_before_next_ );
 		special_before_next_ = false;
 		//
-		CPPAD_ASSERT_UNKNOWN( op_index_ < op_rec_.size() );
-		CPPAD_ASSERT_UNKNOWN( op_arg_rec_.data() <= op_arg_ );
+		CPPAD_ASSERT_UNKNOWN( op_index_ < op_vec_.size() );
+		CPPAD_ASSERT_UNKNOWN( op_arg_vec_.data() <= op_arg_ );
 		CPPAD_ASSERT_UNKNOWN( var_index_ < num_var_rec_ );
 # endif
 	}

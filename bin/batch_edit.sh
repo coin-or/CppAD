@@ -23,16 +23,15 @@ spell_list='
 revert_list='
 '
 move_list='
-	cppad/local/optimize/op_info.hpp
-	cppad/local/optimize/get_op_info.hpp
 '
 move_sed='s|op_info|opt_op_info|'
 #
 cat << EOF > junk.sed
-s|op_info|opt_op_info|g
-s|_OP_INFO_|_OPT_OP_INFO_|
-s|op_info>&     |op_info>\\& |
-s|op_info>     |op_info> |
+s|\\([^a-zA-Z0-9_]\\)op_rec_\\([^a-zA-Z0-9_]\\)|\\1op_vec_\2|g
+s|\\([^a-zA-Z0-9_]\\)vecad_ind_rec_\\([^a-zA-Z0-9_]\\)|\\1vecad_ind_vec_\2|g
+s|\\([^a-zA-Z0-9_]\\)op_arg_rec_\\([^a-zA-Z0-9_]\\)|\\1op_arg_vec_\2|g
+s|\\([^a-zA-Z0-9_]\\)par_rec_\\([^a-zA-Z0-9_]\\)|\\1par_vec_\2|g
+s|\\([^a-zA-Z0-9_]\\)text_rec_\\([^a-zA-Z0-9_]\\)|\\1text_vec_\2|g
 EOF
 # -----------------------------------------------------------------------------
 if [ $0 != "bin/batch_edit.sh" ]
