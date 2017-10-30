@@ -16,7 +16,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # include <stack>
 # include <iterator>
 # include <cppad/local/optimize/usage.hpp>
-# include <cppad/local/optimize/get_op_info.hpp>
+# include <cppad/local/optimize/get_opt_op_info.hpp>
 # include <cppad/local/optimize/old2new.hpp>
 # include <cppad/local/optimize/size_pair.hpp>
 # include <cppad/local/optimize/csum_variable.hpp>
@@ -134,8 +134,8 @@ void optimize_run(
 	sparse_list               skip_op_true;
 	sparse_list               skip_op_false;
 	vector<bool>              vecad_used;
-	vector<struct_op_info>    op_info;
-	get_op_info(
+	vector<struct_opt_op_info>    opt_op_info;
+	get_opt_op_info(
 		conditional_skip,
 		compare_op,
 		print_for_op,
@@ -146,7 +146,7 @@ void optimize_run(
 		skip_op_true,
 		skip_op_false,
 		vecad_used,
-		op_info
+		opt_op_info
 	);
 
 	// nan with type Base
@@ -250,9 +250,9 @@ void optimize_run(
 	{	addr_t mask; // temporary used in some switch cases
 		//
 		// this operator information
-		op    =  op_info[i_op].op;
-		arg   =  op_info[i_op].arg;
-		i_var =  op_info[i_op].i_var;
+		op    =  opt_op_info[i_op].op;
+		arg   =  opt_op_info[i_op].arg;
+		i_var =  opt_op_info[i_op].i_var;
 		//
 		// determine if we should insert a conditional skip here
 		bool skip  = conditional_skip;
@@ -300,7 +300,7 @@ void optimize_run(
 			std::numeric_limits<addr_t>::max() >= rec->num_op_rec()
 		);
 		//
-		if( op_info[i_op].usage != yes_usage )
+		if( opt_op_info[i_op].usage != yes_usage )
 		{	if( op == CExpOp )
 				++cexp_next;
 		}
@@ -336,7 +336,7 @@ void optimize_run(
 			case SqrtOp:
 			case TanOp:
 			case TanhOp:
-			previous = op_info[i_op].previous;
+			previous = opt_op_info[i_op].previous;
 			if( previous > 0 )
 			{	size_t j_op = previous;
 				old2new[i_op].new_var = old2new[j_op].new_var;
@@ -374,14 +374,14 @@ void optimize_run(
 			// Binary operators, left variable, right parameter, one result
 			case SubvpOp:
 			// check if this is the top of a csum connection
-			if( op_info[i_op].usage == csum_usage )
+			if( opt_op_info[i_op].usage == csum_usage )
 				break;
-			if( op_info[ var2op[arg[0]] ].usage == csum_usage )
+			if( opt_op_info[ var2op[arg[0]] ].usage == csum_usage )
 			{
 				// convert to a sequence of summation operators
 				size_pair = record_csum(
 					var2op              ,
-					op_info             ,
+					opt_op_info             ,
 					old2new             ,
 					i_var               ,
 					play->num_par_rec() ,
@@ -397,7 +397,7 @@ void optimize_run(
 			case DivvpOp:
 			case PowvpOp:
 			case ZmulvpOp:
-			previous = op_info[i_op].previous;
+			previous = opt_op_info[i_op].previous;
 			if( previous > 0 )
 			{	size_t j_op = previous;
 				old2new[i_op].new_var = old2new[j_op].new_var;
@@ -406,7 +406,7 @@ void optimize_run(
 			{	//
 				size_pair = record_vp(
 					var2op              ,
-					op_info             ,
+					opt_op_info             ,
 					old2new             ,
 					i_var               ,
 					play->num_par_rec() ,
@@ -423,7 +423,7 @@ void optimize_run(
 			// Binary operators, left index, right variable, one result
 			case DisOp:
 			CPPAD_ASSERT_NARG_NRES(op, 2, 1);
-			previous = op_info[i_op].previous;
+			previous = opt_op_info[i_op].previous;
 			if( previous > 0 )
 			{	size_t j_op = previous;
 				old2new[i_op].new_var = old2new[j_op].new_var;
@@ -447,14 +447,14 @@ void optimize_run(
 			case SubpvOp:
 			case AddpvOp:
 			// check if this is the top of a csum connection
-			if( op_info[i_op].usage == csum_usage )
+			if( opt_op_info[i_op].usage == csum_usage )
 				break;
-			if( op_info[ var2op[arg[1]] ].usage == csum_usage )
+			if( opt_op_info[ var2op[arg[1]] ].usage == csum_usage )
 			{
 				// convert to a sequence of summation operators
 				size_pair = record_csum(
 					var2op              ,
-					op_info             ,
+					opt_op_info             ,
 					old2new             ,
 					i_var               ,
 					play->num_par_rec() ,
@@ -471,7 +471,7 @@ void optimize_run(
 			case MulpvOp:
 			case PowpvOp:
 			case ZmulpvOp:
-			previous = op_info[i_op].previous;
+			previous = opt_op_info[i_op].previous;
 			if( previous > 0 )
 			{	size_t j_op = previous;
 				old2new[i_op].new_var = old2new[j_op].new_var;
@@ -480,7 +480,7 @@ void optimize_run(
 			{	//
 				size_pair = record_pv(
 					var2op              ,
-					op_info             ,
+					opt_op_info             ,
 					old2new             ,
 					i_var               ,
 					play->num_par_rec() ,
@@ -498,17 +498,17 @@ void optimize_run(
 			case AddvvOp:
 			case SubvvOp:
 			// check if this is the top of a csum connection
-			if( op_info[i_op].usage == csum_usage )
+			if( opt_op_info[i_op].usage == csum_usage )
 				break;
 			if(
-				op_info[ var2op[arg[0]] ].usage == csum_usage ||
-				op_info[ var2op[arg[1]] ].usage == csum_usage
+				opt_op_info[ var2op[arg[0]] ].usage == csum_usage ||
+				opt_op_info[ var2op[arg[1]] ].usage == csum_usage
 			)
 			{
 				// convert to a sequence of summation operators
 				size_pair = record_csum(
 					var2op              ,
-					op_info             ,
+					opt_op_info             ,
 					old2new             ,
 					i_var               ,
 					play->num_par_rec() ,
@@ -525,7 +525,7 @@ void optimize_run(
 			case MulvvOp:
 			case PowvvOp:
 			case ZmulvvOp:
-			previous = op_info[i_op].previous;
+			previous = opt_op_info[i_op].previous;
 			if( previous > 0 )
 			{	size_t j_op = previous;
 				old2new[i_op].new_var = old2new[j_op].new_var;
@@ -534,7 +534,7 @@ void optimize_run(
 			{	//
 				size_pair = record_vv(
 					var2op              ,
-					op_info             ,
+					opt_op_info             ,
 					old2new             ,
 					i_var               ,
 					play->num_par_rec() ,
@@ -866,7 +866,7 @@ void optimize_run(
 
 # ifndef NDEBUG
 	for(i_op = 0; i_op < num_op; i_op++)
-		if( NumRes( op_info[i_op].op ) > 0 )
+		if( NumRes( opt_op_info[i_op].op ) > 0 )
 			CPPAD_ASSERT_UNKNOWN(
 				size_t(old2new[i_op].new_op) < rec->num_op_rec()
 			);
@@ -893,7 +893,7 @@ void optimize_run(
 			sparse_list::const_iterator itr_true(skip_op_true, i);
 			while( *itr_true != skip_op_true.end() )
 			{	i_op = *itr_true;
-				// op_info[i_op].usage == yes_usage
+				// opt_op_info[i_op].usage == yes_usage
 				CPPAD_ASSERT_UNKNOWN( old2new[i_op].new_op != 0 );
 				rec->ReplaceArg(i_arg++, old2new[i_op].new_op );
 				//
@@ -902,7 +902,7 @@ void optimize_run(
 			sparse_list::const_iterator itr_false(skip_op_false, i);
 			while( *itr_false != skip_op_false.end() )
 			{	i_op   = *itr_false;
-				// op_info[i_op].usage == yes_usage
+				// opt_op_info[i_op].usage == yes_usage
 				CPPAD_ASSERT_UNKNOWN( old2new[i_op].new_op != 0 );
 				rec->ReplaceArg(i_arg++, old2new[i_op].new_op );
 				//

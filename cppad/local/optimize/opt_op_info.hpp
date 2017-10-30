@@ -1,8 +1,7 @@
-// $Id$
-# ifndef CPPAD_LOCAL_OPTIMIZE_OP_INFO_HPP
-# define CPPAD_LOCAL_OPTIMIZE_OP_INFO_HPP
+# ifndef CPPAD_LOCAL_OPTIMIZE_OPT_OP_INFO_HPP
+# define CPPAD_LOCAL_OPTIMIZE_OPT_OP_INFO_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -19,7 +18,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 namespace CppAD { namespace local { namespace optimize {
 
 /// information for one operator
-struct struct_op_info {
+struct struct_opt_op_info {
 	/// arguments
 	const addr_t* arg;
 
@@ -33,8 +32,8 @@ struct struct_op_info {
 	If previous == 0, no such operator was found.
 	\li
 	If previous != 0,
-	op_info[pevious].previous == 0 and
-	op_info[previous].usage == yes_usage.
+	opt_op_info[pevious].previous == 0 and
+	opt_op_info[previous].usage == yes_usage.
 	*/
 	addr_t previous;
 

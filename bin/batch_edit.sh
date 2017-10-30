@@ -21,16 +21,18 @@
 spell_list='
 '
 revert_list='
-	omh/appendix/whats_new/whats_new_14.omh
 '
 move_list='
+	cppad/local/optimize/op_info.hpp
+	cppad/local/optimize/get_op_info.hpp
 '
-move_sed='s|quad_program|qp_interior|'
+move_sed='s|op_info|opt_op_info|'
 #
 cat << EOF > junk.sed
-s|Base(\\([q]\\))|Base(double(\\1))|
-s|static_cast<Base>(\\([q]\\))|static_cast<Base>(double(\\1))|
-s|Base(\\([0-9]\\))|Base(\\1.0)|
+s|op_info|opt_op_info|g
+s|_OP_INFO_|_OPT_OP_INFO_|
+s|op_info>&     |op_info>\\& |
+s|op_info>     |op_info> |
 EOF
 # -----------------------------------------------------------------------------
 if [ $0 != "bin/batch_edit.sh" ]

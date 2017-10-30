@@ -28,25 +28,25 @@ for the current operator.
 \param var2op
 mapping from variable index to operator index.
 
-\param op_info
+\param opt_op_info
 Mapping from operator index to operator information.
-The input value of op_info[current].previous is assumed to be zero.
+The input value of opt_op_info[current].previous is assumed to be zero.
 If a match if found,
-the output value of op_info[current].previous is set to the
+the output value of opt_op_info[current].previous is set to the
 matching operator index, otherwise it is left as is.
-Note that op_info[current].previous < current.
+Note that opt_op_info[current].previous < current.
 
 \param current
 is the index of the current operator which must be an unary
 or binary operator. Note that NumArg(ErfOp) == 3 but it is effectivey
-a unary operator and is allowed otherwise NumArg( op_info[current].op) < 3.
+a unary operator and is allowed otherwise NumArg( opt_op_info[current].op) < 3.
 It is assumed that hash_table_op is initialized as a vector of emtpy
 sets. After this initialization, the value of current inceases with
 each call to match_op.
 
 \li
 This must be a unary or binary
-operator; hence, NumArg( op_info[current].op ) is one or two.
+operator; hence, NumArg( opt_op_info[current].op ) is one or two.
 There is one exception, NumRes( ErfOp ) == 3, but arg[0]
 is the only true arguments (the others are always the same).
 
@@ -58,22 +58,22 @@ It also must not be an independent variable operator InvOp.
 \param hash_table_op
 is a vector of sets,
 hash_table_op.n_set() == CPPAD_HASH_TABLE_SIZE and
-hash_table_op.end() == op_info.size().
+hash_table_op.end() == opt_op_info.size().
 If i_op is an element of set[j],
-then the operation op_info[i_op] has hash code j,
-and op_info[i_op] does not match any other element of set[j].
+then the operation opt_op_info[i_op] has hash code j,
+and opt_op_info[i_op] does not match any other element of set[j].
 An entry will be added each time match_op is called
 and a match for the current operator is not found.
 */
 
 inline void match_op(
 	const vector<addr_t>&          var2op         ,
-	vector<struct_op_info>&        op_info        ,
+	vector<struct_opt_op_info>&    opt_op_info        ,
 	size_t                         current        ,
 	sparse_list&                   hash_table_op  )
-{	size_t num_op = op_info.size();
+{	size_t num_op = opt_op_info.size();
 	//
-	CPPAD_ASSERT_UNKNOWN( op_info[current].previous == 0 );
+	CPPAD_ASSERT_UNKNOWN( opt_op_info[current].previous == 0 );
 	CPPAD_ASSERT_UNKNOWN(
 		hash_table_op.n_set() == CPPAD_HASH_TABLE_SIZE
 	);
@@ -81,8 +81,8 @@ inline void match_op(
 	CPPAD_ASSERT_UNKNOWN( current < num_op );
 	//
 	// current operator
-	OpCode        op         = op_info[current].op;
-	const addr_t* arg        = op_info[current].arg;
+	OpCode        op         = opt_op_info[current].op;
+	const addr_t* arg        = opt_op_info[current].arg;
 	//
 	// which arguments are variable
 	size_t num_arg = NumArg(op);
@@ -171,11 +171,11 @@ inline void match_op(
 	for(size_t j = 0; j < num_arg; ++j)
 	{	arg_match[j] = arg[j];
 		if( variable[j] )
-		{	size_t previous = op_info[ var2op[arg[j]] ].previous;
+		{	size_t previous = opt_op_info[ var2op[arg[j]] ].previous;
 			if( previous != 0 )
-			{	CPPAD_ASSERT_UNKNOWN( op_info[previous].previous == 0 );
+			{	CPPAD_ASSERT_UNKNOWN( opt_op_info[previous].previous == 0 );
 				//
-				arg_match[j] = op_info[previous].i_var;
+				arg_match[j] = opt_op_info[previous].i_var;
 			}
 		}
 	}
@@ -192,28 +192,28 @@ inline void match_op(
 		// candidate previous for current operator
 		size_t  candidate  = *itr;
 		CPPAD_ASSERT_UNKNOWN( candidate < current );
-		CPPAD_ASSERT_UNKNOWN( op_info[candidate].previous == 0 );
+		CPPAD_ASSERT_UNKNOWN( opt_op_info[candidate].previous == 0 );
 		//
 		// check for a match
-		bool match = op == op_info[candidate].op;
+		bool match = op == opt_op_info[candidate].op;
 		if( match )
 		{	for(size_t j = 0; j < num_arg; j++)
 			{	if( variable[j] )
 				{	size_t previous =
-						op_info[ var2op[op_info[candidate].arg[j]] ].previous;
+						opt_op_info[ var2op[opt_op_info[candidate].arg[j]] ].previous;
 					if( previous != 0 )
-					{	CPPAD_ASSERT_UNKNOWN(op_info[previous].previous == 0);
+					{	CPPAD_ASSERT_UNKNOWN(opt_op_info[previous].previous == 0);
 						//
 						match &=
-							arg_match[j] == addr_t( op_info[previous].i_var );
+							arg_match[j] == addr_t( opt_op_info[previous].i_var );
 					}
 					else
-						match &= arg_match[j] == op_info[candidate].arg[j];
+						match &= arg_match[j] == opt_op_info[candidate].arg[j];
 				}
 			}
 		}
 		if( match )
-		{	op_info[current].previous = static_cast<addr_t>( candidate );
+		{	opt_op_info[current].previous = static_cast<addr_t>( candidate );
 			return;
 		}
 		++itr;
@@ -230,26 +230,26 @@ inline void match_op(
 		{
 			size_t candidate  = *itr_swap;
 			CPPAD_ASSERT_UNKNOWN( candidate < current );
-			CPPAD_ASSERT_UNKNOWN( op_info[candidate].previous == 0 );
+			CPPAD_ASSERT_UNKNOWN( opt_op_info[candidate].previous == 0 );
 			//
-			bool match = op == op_info[candidate].op;
+			bool match = op == opt_op_info[candidate].op;
 			if( match )
 			{	for(size_t j = 0; j < num_arg; j++)
 				{	CPPAD_ASSERT_UNKNOWN( variable[j] )
 					size_t previous =
-						op_info[ var2op[op_info[candidate].arg[j]] ].previous;
+						opt_op_info[ var2op[opt_op_info[candidate].arg[j]] ].previous;
 					if( previous != 0 )
-					{	CPPAD_ASSERT_UNKNOWN(op_info[previous].previous == 0);
+					{	CPPAD_ASSERT_UNKNOWN(opt_op_info[previous].previous == 0);
 						//
 						match &=
-							arg_match[j] == addr_t( op_info[previous].i_var );
+							arg_match[j] == addr_t( opt_op_info[previous].i_var );
 					}
 					else
-						match &= arg_match[j] == op_info[candidate].arg[j];
+						match &= arg_match[j] == opt_op_info[candidate].arg[j];
 				}
 			}
 			if( match )
-			{	op_info[current].previous = static_cast<addr_t>( candidate );
+			{	opt_op_info[current].previous = static_cast<addr_t>( candidate );
 				return;
 			}
 			++itr_swap;

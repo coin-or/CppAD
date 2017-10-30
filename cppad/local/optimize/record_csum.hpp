@@ -24,7 +24,7 @@ Recording a cummulative cummulative summation.
 \param var2op
 mapping from old variable index to old operator index.
 
-\param op_info
+\param opt_op_info
 mapping from old index to operator index to operator information
 
 \param old2new
@@ -34,9 +34,9 @@ mapping from old operator index to information about the new recording.
 is the index in the old operation sequence for
 the variable corresponding to the result for the current operator.
 We use the notation i_op = var2op[current].
-It follows that  NumRes( op_info[i_op].op ) > 0.
-If 0 < j_op < i_op, either op_info[j_op].usage == csum_usage,
-op_info[j_op].usage = no_usage, or old2new[j_op].new_var != 0.
+It follows that  NumRes( opt_op_info[i_op].op ) > 0.
+If 0 < j_op < i_op, either opt_op_info[j_op].usage == csum_usage,
+opt_op_info[j_op].usage = no_usage, or old2new[j_op].new_var != 0.
 
 \param npar
 is the number of parameters corresponding to the old operation sequence.
@@ -59,18 +59,18 @@ These stacks are passed in so that they are created once
 and then be reused with calls to record_csum.
 
 \par Assumptions
-op_info[i_o].op
+opt_op_info[i_o].op
 must be one of AddpvOp, AddvvOp, SubpvOp, SubvpOp, SubvvOp.
-op_info[i_op].usage != no_usage and ! op_info[i_op].usage == csum_usage.
-Furthermore op_info[j_op].usage == csum_usage is true from some
+opt_op_info[i_op].usage != no_usage and ! opt_op_info[i_op].usage == csum_usage.
+Furthermore opt_op_info[j_op].usage == csum_usage is true from some
 j_op that corresponds to a variable that is an argument to
-op_info[i_op].
+opt_op_info[i_op].
 */
 
 template <class Base>
 struct_size_pair record_csum(
 	const vector<addr_t>&                              var2op         ,
-	const vector<struct_op_info>&                      op_info        ,
+	const vector<struct_opt_op_info>&                  opt_op_info        ,
 	const CppAD::vector<struct struct_old2new>&        old2new        ,
 	size_t                                             current        ,
 	size_t                                             npar           ,
@@ -85,7 +85,7 @@ struct_size_pair record_csum(
 	CPPAD_ASSERT_UNKNOWN( work.sub_stack.empty() );
 	//
 	size_t i_op = var2op[current];
-	CPPAD_ASSERT_UNKNOWN( ! ( op_info[i_op].usage == csum_usage ) );
+	CPPAD_ASSERT_UNKNOWN( ! ( opt_op_info[i_op].usage == csum_usage ) );
 	//
 	size_t                        i;
 	OpCode                        op;
@@ -94,8 +94,8 @@ struct_size_pair record_csum(
 	struct struct_csum_variable var;
 	//
 	// information corresponding to the root node in the cummulative summation
-	var.op  = op_info[i_op].op;   // this operator
-	var.arg = op_info[i_op].arg;  // arguments for this operator
+	var.op  = opt_op_info[i_op].op;   // this operator
+	var.arg = opt_op_info[i_op].arg;  // arguments for this operator
 	var.add = true;               // was parrent operator positive or negative
 	//
 	// initialize stack as containing this one operator
@@ -106,14 +106,14 @@ struct_size_pair record_csum(
 	//
 # ifndef NDEBUG
 	bool ok = false;
-	struct_op_info info = op_info[i_op];
+	struct_opt_op_info info = opt_op_info[i_op];
 	if( var.op == SubvpOp )
-		ok = op_info[ var2op[info.arg[0]] ].usage == csum_usage;
+		ok = opt_op_info[ var2op[info.arg[0]] ].usage == csum_usage;
 	if( var.op == AddpvOp || var.op == SubpvOp )
-		ok = op_info[ var2op[info.arg[1]] ].usage == csum_usage;
+		ok = opt_op_info[ var2op[info.arg[1]] ].usage == csum_usage;
 	if( var.op == AddvvOp || var.op == SubvvOp )
-	{	ok  = op_info[ var2op[info.arg[0]] ].usage == csum_usage;
-		ok |= op_info[ var2op[info.arg[1]] ].usage == csum_usage;
+	{	ok  = opt_op_info[ var2op[info.arg[0]] ].usage == csum_usage;
+		ok |= opt_op_info[ var2op[info.arg[1]] ].usage == csum_usage;
 	}
 	CPPAD_ASSERT_UNKNOWN( ok );
 # endif
@@ -145,13 +145,13 @@ struct_size_pair record_csum(
 			case SubvvOp:
 			//
 			// check if the first argument has csum usage
-			if( op_info[var2op[arg[0]]].usage == csum_usage )
+			if( opt_op_info[var2op[arg[0]]].usage == csum_usage )
 			{	CPPAD_ASSERT_UNKNOWN(
 					size_t( old2new[ var2op[arg[0]] ].new_var) == 0
 				);
 				// push the operator corresponding to the first argument
-				var.op  = op_info[ var2op[arg[0]] ].op;
-				var.arg = op_info[ var2op[arg[0]] ].arg;
+				var.op  = opt_op_info[ var2op[arg[0]] ].op;
+				var.arg = opt_op_info[ var2op[arg[0]] ].arg;
 				// first argument has same sign as parent node
 				var.add = add;
 				work.op_stack.push( var );
@@ -188,13 +188,13 @@ struct_size_pair record_csum(
 			case AddvvOp:
 			case AddpvOp:
 			// check if the second argument has csum usage
-			if( op_info[var2op[arg[1]]].usage == csum_usage )
+			if( opt_op_info[var2op[arg[1]]].usage == csum_usage )
 			{	CPPAD_ASSERT_UNKNOWN(
 					size_t( old2new[ var2op[arg[1]] ].new_var) == 0
 				);
 				// push the operator corresoponding to the second arugment
-				var.op   = op_info[ var2op[arg[1]] ].op;
-				var.arg  = op_info[ var2op[arg[1]] ].arg;
+				var.op   = opt_op_info[ var2op[arg[1]] ].op;
+				var.arg  = opt_op_info[ var2op[arg[1]] ].arg;
 				var.add  = add;
 				work.op_stack.push( var );
 			}
