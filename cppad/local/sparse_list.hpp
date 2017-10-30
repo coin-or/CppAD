@@ -12,6 +12,7 @@ A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 # include <cppad/core/define.hpp>
+# include <cppad/local/is_pod.hpp>
 # include <list>
 
 namespace CppAD { namespace local { // BEGIN_CPPAD_LOCAL_NAMESPACE
@@ -32,7 +33,8 @@ class sparse_list {
 public:
 	/// declare a const iterator
 	typedef sparse_list_const_iterator const_iterator;
-
+private:
+	// -----------------------------------------------------------------
 	/// type used for each entry in a singly linked list.
 	struct pair_size_t {
 		/// For the first entry in each list, this is the reference count.
@@ -44,7 +46,7 @@ public:
 		/// (The first entry in data_ is not used.)
 		size_t next;
 	};
-private:
+	friend bool is_pod<pair_size_t>(void);
 	// -----------------------------------------------------------------
 	/// Possible elements in each set are 0, 1, ..., end_ - 1;
 	size_t end_;
