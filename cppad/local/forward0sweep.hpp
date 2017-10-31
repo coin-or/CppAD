@@ -271,11 +271,11 @@ void forward0sweep(
 		{	switch(op)
 			{
 				case UserOp:
-				{	// get information for this user atomic sequence
+				{	// get information for this user atomic call
 					CPPAD_ASSERT_UNKNOWN( user_state == start_user );
 					play->get_user_info(op, arg, user_old, user_m, user_n);
 					//
-					// skip to the last UserOp
+					// skip to the second UserOp
 					i_op += user_m + user_n;
 					play->get_op_info(++i_op, op, arg, i_var);
 					CPPAD_ASSERT_UNKNOWN( op == UserOp );
