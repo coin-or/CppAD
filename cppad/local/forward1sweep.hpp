@@ -944,6 +944,7 @@ void forward1sweep(
 			CPPAD_ASSERT_UNKNOWN( user_state == ret_user );
 			CPPAD_ASSERT_UNKNOWN( user_i < user_m );
 			CPPAD_ASSERT_UNKNOWN( user_j == user_n );
+			CPPAD_ASSERT_UNKNOWN( size_t( arg[0] ) < num_par );
 			//
 			user_iy[user_i] = 0;
 			user_ty[user_i * user_q1 + 0] = parameter[ arg[0]];
