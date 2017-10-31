@@ -23,8 +23,6 @@ File used to define the player class.
 
 /// information for one operator
 struct struct_op_info {
-	/// op code
-	OpCode op;
 
 	/// pointer to first arguments for this op
 	addr_t* op_arg;
@@ -175,7 +173,6 @@ public:
 		for(size_t i = 0; i < num_op; i++)
 		{	struct_op_info op_info;
 			OpCode  op          = static_cast<OpCode>( op_vec_[i] );
-			op_info.op          = op;
 			//
 			// pointer corresponding to first argument
 			op_info.op_arg      = op_arg;
@@ -268,7 +265,7 @@ public:
 		OpCode&        op         ,
 		const addr_t*& op_arg     ,
 		size_t&        var_index  )
-	{	op        = op_info_vec_[op_index].op;
+	{	op        = OpCode( op_vec_[op_index] );
 		op_arg    = op_info_vec_[op_index].op_arg;
 		var_index = op_info_vec_[op_index].var_index;
 		return;
