@@ -13,6 +13,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 
 # include <cppad/local/user_state.hpp>
+# include <cppad/local/is_pod.hpp>
 
 namespace CppAD { namespace local { // BEGIN_CPPAD_LOCAL_NAMESPACE
 /*!
@@ -20,6 +21,22 @@ namespace CppAD { namespace local { // BEGIN_CPPAD_LOCAL_NAMESPACE
 File used to define the player class.
 */
 
+/// information for one operator
+struct struct_op_info {
+	/// op code
+	OpCode op;
+
+	/// index in op_arg_vec_ corresponding to the first arguments for this op
+	size_t arg_index;
+
+	/*!
+	Primary variable index for this operator. If the operator has no results,
+	this is num_var_rec_ (an invalid variable index). If the operator has more
+	than one result, this is the primary result; i.e., the last result.
+	Auxillary results have a lower index and are only used by this operator.
+	*/
+	addr_t var_index;
+};
 
 /*!
 Class used to store and play back an operation sequence recording.
@@ -62,6 +79,10 @@ private:
 	// ----------------------------------------------------------------------
 	// Variables used for iterating thorough operators in the recording
 	// ----------------------------------------------------------------------
+
+	/// information correspoding to individual operations
+	pod_vector<struct_op_info> op_info_vec_;
+
 	/// Current operator
 	OpCode op_;
 
@@ -111,8 +132,7 @@ public:
 	 rec .
 	*/
 	void get(recorder<Base>& rec)
-	{	size_t i;
-
+	{
 		// just set size_t values
 		num_var_rec_        = rec.num_var_rec_;
 		num_load_op_rec_    = rec.num_load_op_rec_;
@@ -132,14 +152,65 @@ public:
 		// text_rec_
 		text_vec_.swap(rec.text_vec_);
 
-		// set the number of VecAD vectors
+		// num_vecad_vec_rec_
 		num_vecad_vec_rec_ = 0;
-		for(i = 0; i < vecad_ind_vec_.size(); i += vecad_ind_vec_[i] + 1)
-			num_vecad_vec_rec_++;
+		{	// vecad_ind_vec_ contains size of each VecAD followed by
+			// the parameter indices used to inialize it.
+			size_t i = 0;
+			while( i < vecad_ind_vec_.size() )
+			{	num_vecad_vec_rec_++;
+				i += vecad_ind_vec_[i] + 1;
+			}
+			CPPAD_ASSERT_UNKNOWN( i == vecad_ind_vec_.size() );
+		}
 
-		// vecad_ind_vec_ contains size of each VecAD followed by
-		// the parameter indices used to iniialize it.
-		CPPAD_ASSERT_UNKNOWN( i == vecad_ind_vec_.size() );
+		// op_info_vec_
+		CPPAD_ASSERT_UNKNOWN( op_vec_[0] == BeginOp );
+		CPPAD_ASSERT_NARG_NRES(BeginOp, 1, 1);
+		size_t num_op    = op_vec_.size();
+		addr_t var_index = 0;
+		size_t arg_index = 0;
+		op_info_vec_.erase();
+		op_info_vec_.extend( num_op );
+		for(size_t i = 0; i < num_op; i++)
+		{	struct_op_info op_info;
+			OpCode  op          = static_cast<OpCode>( op_vec_[i] );
+			op_info.op          = op;
+			//
+			// index corresponding to first argument
+			op_info.arg_index   = arg_index;
+			arg_index          += NumArg(op);
+			//
+			var_index          += addr_t( NumRes(op) );
+			if( NumRes(op) > 0 )
+			{	// index corresponding to last result
+				op_info.var_index   = var_index - 1;
+			}
+			else
+			{	// invalid index corresponding to no result
+				op_info.var_index   = addr_t( num_var_rec_ );
+			}
+			//
+			if( op == CSumOp )
+			{	// phony number of arguments
+				CPPAD_ASSERT_UNKNOWN( NumArg(CSumOp) == 0 );
+				// The actual number of arugments for this operator is
+				// op_arg[0] + op_arg[1] + 4.
+				addr_t* op_arg = op_arg_vec_.data() + arg_index;
+				arg_index     += op_arg[0] + op_arg[1] + 4;
+			}
+			if( op == CSkipOp )
+			{	// phony number of arguments
+				CPPAD_ASSERT_UNKNOWN( NumArg(CSumOp) == 0 );
+				// The actual number of arugments for this operator is
+				// 7 + op_arg[4] + op_arg[5].
+				addr_t* op_arg = op_arg_vec_.data() + arg_index;
+				arg_index     += 7 + op_arg[4] + op_arg[5];
+			}
+			//
+			// store information for this operator
+			op_info_vec_[i] = op_info;
+		}
 	}
 	// ===============================================================
 	/*!
@@ -158,6 +229,7 @@ public:
 		op_arg_vec_         = play.op_arg_vec_;
 		par_vec_            = play.par_vec_;
 		text_vec_           = play.text_vec_;
+		op_info_vec_        = play.op_info_vec_;
 	}
 	// ===============================================================
 	/// Erase the recording stored in the player
@@ -172,6 +244,7 @@ public:
 		op_arg_vec_.erase();
 		par_vec_.erase();
 		text_vec_.erase();
+		op_info_vec_.erase();
 	}
 	// ================================================================
 	// const functions that retrieve infromation from this player
@@ -1021,6 +1094,11 @@ public:
 	}
 
 };
+// =========================================================================
+// Tell pod_vector class that each struct_op_info is plain old data and hence
+// the corresponding constructor need not be called.
+template <> inline bool is_pod<struct_op_info>(void)
+{	return true; }
 
 } } // END_CPPAD_lOCAL_NAMESPACE
 # endif
