@@ -492,7 +492,7 @@ void printOpField(
 	os << leader;
 
 	// print the value into an internal buffer
-	buffer << std::setw(width) << value;
+	buffer << std::setw( int(width) ) << value;
 	str = buffer.str();
 
 	// length of the string

@@ -26,8 +26,8 @@ struct struct_op_info {
 	/// op code
 	OpCode op;
 
-	/// index in op_arg_vec_ corresponding to the first arguments for this op
-	size_t arg_index;
+	/// pointer to first arguments for this op
+	addr_t* op_arg;
 
 	/*!
 	Primary variable index for this operator. If the operator has no results,
@@ -167,9 +167,9 @@ public:
 		// op_info_vec_
 		CPPAD_ASSERT_UNKNOWN( op_vec_[0] == BeginOp );
 		CPPAD_ASSERT_NARG_NRES(BeginOp, 1, 1);
-		size_t num_op    = op_vec_.size();
-		addr_t var_index = 0;
-		size_t arg_index = 0;
+		size_t  num_op    = op_vec_.size();
+		addr_t  var_index = 0;
+		addr_t* op_arg    = op_arg_vec_.data();
 		op_info_vec_.erase();
 		op_info_vec_.extend( num_op );
 		for(size_t i = 0; i < num_op; i++)
@@ -177,9 +177,9 @@ public:
 			OpCode  op          = static_cast<OpCode>( op_vec_[i] );
 			op_info.op          = op;
 			//
-			// index corresponding to first argument
-			op_info.arg_index   = arg_index;
-			arg_index          += NumArg(op);
+			// pointer corresponding to first argument
+			op_info.op_arg      = op_arg;
+			op_arg             += NumArg(op);
 			//
 			var_index          += addr_t( NumRes(op) );
 			if( NumRes(op) > 0 )
@@ -196,16 +196,14 @@ public:
 				CPPAD_ASSERT_UNKNOWN( NumArg(CSumOp) == 0 );
 				// The actual number of arugments for this operator is
 				// op_arg[0] + op_arg[1] + 4.
-				addr_t* op_arg = op_arg_vec_.data() + arg_index;
-				arg_index     += op_arg[0] + op_arg[1] + 4;
+				op_arg += op_arg[0] + op_arg[1] + 4;
 			}
 			if( op == CSkipOp )
 			{	// phony number of arguments
 				CPPAD_ASSERT_UNKNOWN( NumArg(CSumOp) == 0 );
 				// The actual number of arugments for this operator is
 				// 7 + op_arg[4] + op_arg[5].
-				addr_t* op_arg = op_arg_vec_.data() + arg_index;
-				arg_index     += 7 + op_arg[4] + op_arg[5];
+				op_arg += 7 + op_arg[4] + op_arg[5];
 			}
 			//
 			// store information for this operator
@@ -249,6 +247,85 @@ public:
 	// ================================================================
 	// const functions that retrieve infromation from this player
 	// ================================================================
+	/*!
+	\brief
+	fetch the information corresponding to an operator
+
+	\param op_index
+	index for this operator [in]
+
+	\param op [out]
+	op code for this operator.
+
+	\param op_arg [out]
+	pointer to the first arguement to this operator.
+
+	\param var_index [out]
+	index of the last variable (primary variable) for this operator
+	*/
+	void get_op_info(
+		size_t         op_index   ,
+		OpCode&        op         ,
+		const addr_t*& op_arg     ,
+		size_t&        var_index  )
+	{	op        = op_info_vec_[op_index].op;
+		op_arg    = op_info_vec_[op_index].op_arg;
+		var_index = op_info_vec_[op_index].var_index;
+		return;
+	}
+	/*!
+	\brief
+	unpack extra information corresponding to a UserOp
+
+	\param op [in]
+	must be a UserOp
+
+	\param op_arg [in]
+	is the arguments for this operator
+
+	\param user_old [out]
+	is the extra information passed to the old style user atomic functions.
+
+	\param user_m   [out]
+	is the number of results for this user atmoic function.
+
+	\param user_n   [out]
+	is the number of arguments for this user atmoic function.
+
+	\return
+	Is a pointer to this user atomic function.
+	*/
+	atomic_base<Base>* get_user_info(
+		const OpCode     op         ,
+		const addr_t*    op_arg     ,
+		size_t&          user_old   ,
+		size_t&          user_m     ,
+		size_t&          user_n     )
+	{	atomic_base<Base>* user_atom;
+		//
+		CPPAD_ASSERT_UNKNOWN( op == UserOp );
+		CPPAD_ASSERT_NARG_NRES(op, 4, 0);
+		//
+		user_old = op_arg[1];
+		user_n   = op_arg[2];
+		user_m   = op_arg[3];
+		CPPAD_ASSERT_UNKNOWN( user_n > 0 );
+		//
+		size_t user_index = size_t( op_arg[0] );
+		user_atom = atomic_base<Base>::class_object(user_index);
+# ifndef NDEBUG
+		if( user_atom == CPPAD_NULL )
+		{	// user_atom is null so cannot use user_atom->afun_name()
+			std::string msg = atomic_base<Base>::class_name(user_index)
+				+ ": atomic_base function has been deleted";
+			CPPAD_ASSERT_KNOWN(false, msg.c_str() );
+		}
+# endif
+		// the atomic_base object corresponding to this user function
+		user_atom = atomic_base<Base>::class_object(user_index);
+		CPPAD_ASSERT_UNKNOWN( user_atom != CPPAD_NULL );
+		return user_atom;
+	}
 	/*!
 	\brief
 	fetch an operator from the recording.
