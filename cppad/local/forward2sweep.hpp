@@ -141,7 +141,7 @@ void forward2sweep(
 	const size_t                r,
 	const size_t                n,
 	const size_t                numvar,
-	      local::player<Base>*  play,
+	      const local::player<Base>* play,
 	const size_t                J,
 	      Base*                 taylor,
 	const bool*                 cskip_op,

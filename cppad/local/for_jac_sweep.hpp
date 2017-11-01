@@ -89,7 +89,7 @@ void ForJacSweep(
 	bool                  dependency   ,
 	size_t                n            ,
 	size_t                numvar       ,
-	local::player<Base>*  play         ,
+	const local::player<Base>* play,
 	Vector_set&           var_sparsity )
 {
 	OpCode           op;

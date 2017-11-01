@@ -87,7 +87,7 @@ void optimize_run(
 	const std::string&           options   ,
 	size_t                       n         ,
 	CppAD::vector<size_t>&       dep_taddr ,
-	player<Base>*                play      ,
+	const player<Base>* play,
 	recorder<Base>*              rec       )
 {
 	bool conditional_skip = true;

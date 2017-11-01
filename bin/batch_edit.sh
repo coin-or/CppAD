@@ -27,11 +27,9 @@ move_list='
 move_sed='s|op_info|opt_op_info|'
 #
 cat << EOF > junk.sed
-s|\\([^a-zA-Z0-9_]\\)op_rec_\\([^a-zA-Z0-9_]\\)|\\1op_vec_\2|g
-s|\\([^a-zA-Z0-9_]\\)vecad_ind_rec_\\([^a-zA-Z0-9_]\\)|\\1vecad_ind_vec_\2|g
-s|\\([^a-zA-Z0-9_]\\)op_arg_rec_\\([^a-zA-Z0-9_]\\)|\\1op_arg_vec_\2|g
-s|\\([^a-zA-Z0-9_]\\)par_rec_\\([^a-zA-Z0-9_]\\)|\\1par_vec_\2|g
-s|\\([^a-zA-Z0-9_]\\)text_rec_\\([^a-zA-Z0-9_]\\)|\\1text_vec_\2|g
+s|local::player<Base>\\* *play *,|const local::player<Base>* play,|
+s|const *const local::player<Base>\\* *play *,|const local::player<Base>* play,|
+s|\\([^:]\\)player<Base>\\* *play *,|\\1const player<Base>* play,|
 EOF
 # -----------------------------------------------------------------------------
 if [ $0 != "bin/batch_edit.sh" ]

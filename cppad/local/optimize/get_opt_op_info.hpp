@@ -205,7 +205,7 @@ void get_opt_op_info(
 	bool                          conditional_skip    ,
 	bool                          compare_op          ,
 	bool                          print_for_op        ,
-	player<Base>*                 play                ,
+	const player<Base>* play,
 	const vector<size_t>&         dep_taddr           ,
 	vector<addr_t>&               var2op              ,
 	vector<struct_cexp_info>&     cexp_info           ,

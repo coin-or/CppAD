@@ -546,7 +546,7 @@ is the vector of argument indices for this operation
 template <class Base>
 void printOp(
 	std::ostream&          os     ,
-	const local::player<Base>*    play   ,
+	const local::player<Base>* play,
 	size_t                 i_op   ,
 	size_t                 i_var  ,
 	OpCode                 op     ,

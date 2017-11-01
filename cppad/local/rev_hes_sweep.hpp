@@ -101,7 +101,7 @@ template <class Base, class Vector_set>
 void RevHesSweep(
 	size_t                n,
 	size_t                numvar,
-	local::player<Base>*  play,
+	const local::player<Base>* play,
 	const Vector_set&     for_jac_sparse,
 	bool*                 RevJac,
 	Vector_set&           rev_hes_sparse

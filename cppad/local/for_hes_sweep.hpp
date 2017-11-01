@@ -98,7 +98,7 @@ template <class Base, class Vector_set>
 void ForHesSweep(
 	size_t                n,
 	size_t                numvar,
-	local::player<Base>*  play,
+	const local::player<Base>* play,
 	const Vector_set&     for_jac_sparse,
 	const Vector_set&     rev_jac_sparse,
 	Vector_set&           for_hes_sparse

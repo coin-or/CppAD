@@ -242,7 +242,7 @@ public:
 		size_t         op_index   ,
 		OpCode&        op         ,
 		const addr_t*& op_arg     ,
-		size_t&        var_index  )
+		size_t&        var_index  ) const
 	{	op        = OpCode( op_vec_[op_index] );
 		op_arg    = op_info_vec_[op_index].arg_index + op_arg_vec_.data();
 		var_index = op_info_vec_[op_index].var_index;
@@ -275,7 +275,7 @@ public:
 		const addr_t*    op_arg     ,
 		size_t&          user_old   ,
 		size_t&          user_m     ,
-		size_t&          user_n     )
+		size_t&          user_n     ) const
 	{	atomic_base<Base>* user_atom;
 		//
 		CPPAD_ASSERT_UNKNOWN( op == UserOp );
