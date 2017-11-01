@@ -759,7 +759,7 @@ void forward0sweep(
 			// -------------------------------------------------
 
 			case UserOp:
-			// start or end an atomic operation sequence
+			// start or end an atomic function call
 			flag = user_state == start_user;
 			user_atom = play->get_user_info(op, arg, user_old, user_m, user_n);
 			if( flag )

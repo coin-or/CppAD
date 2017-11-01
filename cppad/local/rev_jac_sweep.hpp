@@ -619,6 +619,7 @@ void RevJacSweep(
 			// -------------------------------------------------
 
 			case UserOp:
+			// start or end an atomic function call
 			CPPAD_ASSERT_UNKNOWN(
 				user_state == start_user || user_state == end_user
 			);
