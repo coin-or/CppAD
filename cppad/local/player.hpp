@@ -24,8 +24,8 @@ File used to define the player class.
 /// information for one operator
 struct struct_op_info {
 
-	/// pointer to first arguments for this op
-	addr_t* op_arg;
+	/// index in op_arg_vec_ corresponding to first arguments for this op
+	addr_t arg_index;
 
 	/*!
 	Primary variable index for this operator. If the operator has no results,
@@ -167,7 +167,7 @@ public:
 		CPPAD_ASSERT_NARG_NRES(BeginOp, 1, 1);
 		size_t  num_op    = op_vec_.size();
 		addr_t  var_index = 0;
-		addr_t* op_arg    = op_arg_vec_.data();
+		addr_t  arg_index = 0;
 		op_info_vec_.erase();
 		op_info_vec_.extend( num_op );
 		for(size_t i = 0; i < num_op; i++)
@@ -175,8 +175,8 @@ public:
 			OpCode  op          = static_cast<OpCode>( op_vec_[i] );
 			//
 			// pointer corresponding to first argument
-			op_info.op_arg      = op_arg;
-			op_arg             += NumArg(op);
+			op_info.arg_index   = arg_index;
+			arg_index          += addr_t( NumArg(op) );
 			//
 			var_index          += addr_t( NumRes(op) );
 			if( NumRes(op) > 0 )
@@ -193,14 +193,16 @@ public:
 				CPPAD_ASSERT_UNKNOWN( NumArg(CSumOp) == 0 );
 				// The actual number of arugments for this operator is
 				// op_arg[0] + op_arg[1] + 4.
-				op_arg += op_arg[0] + op_arg[1] + 4;
+				addr_t* op_arg = op_arg_vec_.data() + arg_index;
+				arg_index += op_arg[0] + op_arg[1] + 4;
 			}
 			if( op == CSkipOp )
 			{	// phony number of arguments
 				CPPAD_ASSERT_UNKNOWN( NumArg(CSumOp) == 0 );
 				// The actual number of arugments for this operator is
 				// 7 + op_arg[4] + op_arg[5].
-				op_arg += 7 + op_arg[4] + op_arg[5];
+				addr_t* op_arg = op_arg_vec_.data() + arg_index;
+				arg_index += 7 + op_arg[4] + op_arg[5];
 			}
 			//
 			// store information for this operator
@@ -266,7 +268,7 @@ public:
 		const addr_t*& op_arg     ,
 		size_t&        var_index  )
 	{	op        = OpCode( op_vec_[op_index] );
-		op_arg    = op_info_vec_[op_index].op_arg;
+		op_arg    = op_info_vec_[op_index].arg_index + op_arg_vec_.data();
 		var_index = op_info_vec_[op_index].var_index;
 		return;
 	}
