@@ -162,7 +162,8 @@ void RevJacSweep(
 		parameter = play->GetPar();
 	//
 	// Initialize
-	play->reverse_start(op, arg, i_op, i_var);
+	i_op = play->num_op_rec();
+	play->get_op_info(--i_op, op, arg, i_var);
 	CPPAD_ASSERT_UNKNOWN( op == EndOp );
 # if CPPAD_REV_JAC_SWEEP_TRACE
 	std::cout << std::endl;
@@ -173,7 +174,7 @@ void RevJacSweep(
 	{	bool flag; // temporary for use in switch cases
 		//
 		// next op
-		play->reverse_next(op, arg, i_op, i_var);
+		play->get_op_info(--i_op, op, arg, i_var);
 # ifndef NDEBUG
 		if( i_op <= n )
 		{	CPPAD_ASSERT_UNKNOWN((op == InvOp) | (op == BeginOp));
@@ -275,18 +276,10 @@ void RevJacSweep(
 			// -------------------------------------------------
 
 			case CSkipOp:
-			// CSkipOp has a variable number of arguments and
-			// reverse_next thinks it one has one argument.
-			// We must inform reverse_next of this special case.
-			play->reverse_cskip(op, arg, i_op, i_var);
 			break;
 			// -------------------------------------------------
 
 			case CSumOp:
-			// CSumOp has a variable number of arguments and
-			// reverse_next thinks it one has one argument.
-			// We must inform reverse_next of this special case.
-			play->reverse_csum(op, arg, i_op, i_var);
 			reverse_sparse_jacobian_csum_op(
 				i_var, arg, var_sparsity
 			);
@@ -624,17 +617,19 @@ void RevJacSweep(
 				user_state == start_user || user_state == end_user
 			);
 			flag = user_state == end_user;
-			user_atom = play->reverse_user(op, user_state,
-				user_old, user_m, user_n, user_i, user_j
-			);
+			user_atom = play->get_user_info(op, arg, user_old, user_m, user_n);
 			if( flag )
-			{	// start of user atomic operation sequence
+			{	user_state = ret_user;
+				user_i     = user_m;
+				user_j     = user_n;
+				//
 				user_x.resize( user_n );
 				user_ix.resize( user_n );
 				user_iy.resize( user_m );
 			}
 			else
-			{	// end of users atomic operation sequence
+			{	user_state = end_user;
+				//
 				user_atom->set_old(user_old);
 				user_atom->rev_sparse_jac(
 					user_x, user_ix, user_iy, var_sparsity
@@ -643,45 +638,68 @@ void RevJacSweep(
 			break;
 
 			case UsrapOp:
-			CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < num_par );
-			play->reverse_user(op, user_state,
-				user_old, user_m, user_n, user_i, user_j
-			);
+			// parameter argument in an atomic operation sequence
+			CPPAD_ASSERT_UNKNOWN( NumArg(op) == 1 );
+			CPPAD_ASSERT_UNKNOWN( user_state == arg_user );
+			CPPAD_ASSERT_UNKNOWN( user_i == 0 );
+			CPPAD_ASSERT_UNKNOWN( user_j <= user_n );
+			CPPAD_ASSERT_UNKNOWN( size_t( arg[0] ) < num_par );
+			//
+			--user_j;
 			// argument parameter value
 			user_x[user_j] = parameter[arg[0]];
 			// special variable index used for parameters
 			user_ix[user_j] = 0;
 			//
+			if( user_j == 0 )
+				user_state = start_user;
 			break;
 
 			case UsravOp:
+			// variable argument in an atomic operation sequence
+			CPPAD_ASSERT_UNKNOWN( NumArg(op) == 1 );
+			CPPAD_ASSERT_UNKNOWN( user_state == arg_user );
+			CPPAD_ASSERT_UNKNOWN( user_i == 0 );
+			CPPAD_ASSERT_UNKNOWN( user_j <= user_n );
 			CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) <= i_var );
-			CPPAD_ASSERT_UNKNOWN( 0 < arg[0] );
-			play->reverse_user(op, user_state,
-				user_old, user_m, user_n, user_i, user_j
-			);
+			//
+			--user_j;
 			// argument variables not available during sparsity calculations
 			user_x[user_j] = CppAD::numeric_limits<Base>::quiet_NaN();
 			// variable index for this argument
 			user_ix[user_j] = arg[0];
+			//
+			if( user_j == 0 )
+				user_state = start_user;
 			break;
 
 			case UsrrpOp:
-			// parameter result in an atomic operation sequence
-			CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < num_par );
-			play->reverse_user(op, user_state,
-				user_old, user_m, user_n, user_i, user_j
-			);
-			// special variable index used for parameters
-			user_iy[user_i] = 0;
+			// parameter result for a user atomic function
+			CPPAD_ASSERT_NARG_NRES(op, 1, 0);
+			CPPAD_ASSERT_UNKNOWN( user_state == ret_user );
+			CPPAD_ASSERT_UNKNOWN( user_i <= user_m );
+			CPPAD_ASSERT_UNKNOWN( user_j == user_n );
+			CPPAD_ASSERT_UNKNOWN( size_t( arg[0] ) < num_par );
+			//
+			--user_i;
+			user_iy[user_i] = 0; // special variable used for parameters
+			//
+			if( user_i == 0 )
+				user_state = arg_user;
 			break;
 
 			case UsrrvOp:
-			play->reverse_user(op, user_state,
-				user_old, user_m, user_n, user_i, user_j
-			);
-			// variable index for this result
-			user_iy[user_i] = i_var;
+			// variable result for a user atomic function
+			CPPAD_ASSERT_NARG_NRES(op, 0, 1);
+			CPPAD_ASSERT_UNKNOWN( user_state == ret_user );
+			CPPAD_ASSERT_UNKNOWN( user_i <= user_m );
+			CPPAD_ASSERT_UNKNOWN( user_j == user_n );
+			//
+			--user_i;
+			user_iy[user_i] = i_var; // variable for this result
+			//
+			if( user_i == 0 )
+				user_state = arg_user;
 			break;
 			// -------------------------------------------------
 
