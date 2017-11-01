@@ -252,9 +252,6 @@ inline size_t NumArg( OpCode op)
 	{	CPPAD_ASSERT_UNKNOWN( size_t(NumberOp) + 1 ==
 			sizeof(NumArgTable) / sizeof(NumArgTable[0])
 		);
-		CPPAD_ASSERT_UNKNOWN( size_t(NumberOp) <=
-			std::numeric_limits<CPPAD_OP_CODE_TYPE>::max()
-		);
 		first = false;
 	}
 	// do this check every time

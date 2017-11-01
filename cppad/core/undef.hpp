@@ -79,7 +79,6 @@ Preprecessor definitions that presist after cppad/cppad.hpp is included:
 # undef CPPAD_LIB_EXPORT
 # undef CPPAD_MAX_NUM_CAPACITY
 # undef CPPAD_MIN_DOUBLE_CAPACITY
-# undef CPPAD_OP_CODE_TYPE
 # undef CPPAD_REVERSE_SWEEP_TRACE
 # undef CPPAD_REV_HES_SWEEP_TRACE
 # undef CPPAD_REV_JAC_SWEEP_TRACE

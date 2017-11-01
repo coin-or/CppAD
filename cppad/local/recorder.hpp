@@ -46,7 +46,7 @@ private:
 	size_t	num_load_op_rec_;
 
 	/// The operators in the recording.
-	pod_vector<CPPAD_OP_CODE_TYPE> op_vec_;
+	pod_vector<OpCode> op_vec_;
 
 	/// The VecAD indices in the recording.
 	pod_vector<addr_t> vecad_ind_vec_;
@@ -151,7 +151,7 @@ public:
 
 	/// Approximate amount of memory used by the recording
 	size_t Memory(void) const
-	{	return op_vec_.capacity()        * sizeof(CPPAD_OP_CODE_TYPE)
+	{	return op_vec_.capacity()        * sizeof(OpCode)
 		     + vecad_ind_vec_.capacity() * sizeof(size_t)
 		     + op_arg_vec_.capacity()    * sizeof(addr_t)
 		     + par_vec_.capacity()       * sizeof(Base)
@@ -193,7 +193,7 @@ inline addr_t recorder<Base>::PutOp(OpCode op)
 		(abort_op_index_ == 0) || (abort_op_index_ != i),
 		"Operator index equals abort_op_index in Independent"
 	);
-	op_vec_[i]  = static_cast<CPPAD_OP_CODE_TYPE>(op);
+	op_vec_[i]  = op;
 	CPPAD_ASSERT_UNKNOWN( op_vec_.size() == i + 1 );
 	CPPAD_ASSERT_UNKNOWN( (op != LdpOp) & (op != LdvOp) );
 
@@ -252,7 +252,7 @@ inline addr_t recorder<Base>::PutLoadOp(OpCode op)
 		"This is the abort operator index specified by "
 		"Independent(x, abort_op_index)."
 	);
-	op_vec_[i]  = static_cast<CPPAD_OP_CODE_TYPE>(op);
+	op_vec_[i]  = op;
 	CPPAD_ASSERT_UNKNOWN( op_vec_.size() == i + 1 );
 	CPPAD_ASSERT_UNKNOWN( (op == LdpOp) | (op == LdvOp) );
 

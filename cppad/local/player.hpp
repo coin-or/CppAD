@@ -59,7 +59,7 @@ private:
 	size_t num_vecad_vec_rec_;
 
 	/// The operators in the recording.
-	pod_vector<CPPAD_OP_CODE_TYPE> op_vec_;
+	pod_vector<OpCode> op_vec_;
 
 	/// The VecAD indices in the recording.
 	pod_vector<addr_t> vecad_ind_vec_;
@@ -402,10 +402,11 @@ public:
 	/// (just lengths, not capacities).
 	size_t Memory(void) const
 	{	return op_vec_.size()        * sizeof(OpCode)
+		     + vecad_ind_vec_.size() * sizeof(addr_t)
 		     + op_arg_vec_.size()    * sizeof(addr_t)
 		     + par_vec_.size()       * sizeof(Base)
 		     + text_vec_.size()      * sizeof(char)
-		     + vecad_ind_vec_.size() * sizeof(addr_t)
+		     + op_info_vec_.size()   * sizeof(struct_op_info)
 		;
 	}
 
