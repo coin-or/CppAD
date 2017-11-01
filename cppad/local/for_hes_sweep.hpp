@@ -201,7 +201,9 @@ void ForHesSweep(
 
 		// does the Hessian in question have a non-zero derivative
 		// with respect to this variable
-		bool include = rev_jac_sparse.is_element(i_var, 0);
+		bool include = NumRes(op) > 0;
+		if( include )
+			include = rev_jac_sparse.is_element(i_var, 0);
 		//
 		// operators to include even if derivative is zero
 		include |= op == EndOp;
@@ -413,7 +415,7 @@ void ForHesSweep(
 			CPPAD_ASSERT_UNKNOWN( user_j < user_n );
 			CPPAD_ASSERT_UNKNOWN( size_t( arg[0] ) <= i_var );
 			//
-			// arguemnt varialbes not avaialbe during sparisty calculations
+			// arguemnt variables not avaialbe during sparisty calculations
 			user_x[user_j] = CppAD::numeric_limits<Base>::quiet_NaN();
 			user_ix[user_j] = arg[0]; // variable for this argument
 			//
