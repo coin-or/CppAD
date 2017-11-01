@@ -247,7 +247,8 @@ void get_opt_op_info(
 	// ----------------------------------------------------------------------
 	// Forward pass to compute op, arg, i_var for each operator and var2op
 	// ----------------------------------------------------------------------
-	play->forward_start(op, arg, i_op, i_var);
+	i_op = 0;
+	play->get_op_info(i_op, op, arg, i_var);
 	CPPAD_ASSERT_UNKNOWN( op              == BeginOp );
 	CPPAD_ASSERT_UNKNOWN( NumRes(BeginOp) == 1 );
 	CPPAD_ASSERT_UNKNOWN( i_op            == 0 );
@@ -265,7 +266,7 @@ void get_opt_op_info(
 	user_state = start_user;
 	while(op != EndOp)
 	{	// next operator
-		play->forward_next(op, arg, i_op, i_var);
+		play->get_op_info(++i_op, op, arg, i_var);
 		CPPAD_ASSERT_UNKNOWN(
 			size_t( std::numeric_limits<addr_t>::max() ) > i_var
 		);
@@ -283,26 +284,7 @@ void get_opt_op_info(
 			var2op[i_var] = addr_t( i_op );
 		//
 		switch( op )
-		{	case CSumOp:
-			// must correct arg before next operator
-			play->forward_csum(op, arg, i_op, i_var);
-			break;
-
-			case CSkipOp:
-			// must correct arg before next operator
-			play->forward_csum(op, arg, i_op, i_var);
-			break;
-
-			case UserOp:
-			case UsrapOp:
-			case UsravOp:
-			case UsrrpOp:
-			case UsrrvOp:
-			play->forward_user(op, user_state,
-				user_old, user_m, user_n, user_i, user_j
-			);
-			break;
-
+		{
 			case CExpOp:
 			// Set the operator index for this conditional expression and
 			// count the number of conditional expressions.

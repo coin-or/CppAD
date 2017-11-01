@@ -306,14 +306,15 @@ void ADFun<Base>::abs_normal_fun(ADFun<Base>& g, ADFun<Base>& a)
 	const addr_t* arg = CPPAD_NULL;   // arguments for this operator
 	size_t        i_op;               // index of this operator
 	size_t        i_var;              // variable index for this operator
-	play_.forward_start(op, arg, i_op, i_var);
+	i_op = 0;
+	play_.get_op_info(i_op, op, arg, i_var);
 	CPPAD_ASSERT_UNKNOWN( op == BeginOp );
 	//
 	bool    more_operators = true;
 	while( more_operators )
 	{
 		// next op
-		play_.forward_next(op, arg, i_op, i_var);
+		play_.get_op_info(++i_op, op, arg, i_var);
 		switch( op )
 		{	// absolute value operator
 			case AbsOp:
@@ -323,13 +324,9 @@ void ADFun<Base>::abs_normal_fun(ADFun<Base>& g, ADFun<Base>& a)
 			break;
 
 			case CSumOp:
-			// CSumOp has a variable number of arguments
-			play_.forward_csum(op, arg, i_op, i_var);
 			break;
 
 			case CSkipOp:
-			// CSkip has a variable number of arguments
-			play_.forward_cskip(op, arg, i_op, i_var);
 			break;
 
 			case EndOp:
@@ -359,7 +356,8 @@ void ADFun<Base>::abs_normal_fun(ADFun<Base>& g, ADFun<Base>& a)
 		f2g_var[i_var] = addr_t( num_var ); // invalid (should not be used)
 	//
 	// record the independent variables in f
-	play_.forward_start(op, arg, i_op, i_var);
+	i_op = 0;
+	play_.get_op_info(i_op, op, arg, i_var);
 	CPPAD_ASSERT_UNKNOWN( op == BeginOp );
 	more_operators   = true;
 	while( more_operators )
@@ -385,7 +383,7 @@ void ADFun<Base>::abs_normal_fun(ADFun<Base>& g, ADFun<Base>& a)
 			break;
 		}
 		if( more_operators )
-			play_.forward_next(op, arg, i_op, i_var);
+			play_.get_op_info(++i_op, op, arg, i_var);
 	}
 	// add one for the phantom variable
 	CPPAD_ASSERT_UNKNOWN( 1 + Domain() == i_var );
@@ -770,7 +768,7 @@ void ADFun<Base>::abs_normal_fun(ADFun<Base>& g, ADFun<Base>& a)
 			CPPAD_ASSERT_UNKNOWN(false);
 		}
 		if( more_operators )
-			play_.forward_next(op, arg, i_op, i_var);
+			play_.get_op_info(++i_op, op, arg, i_var);
 	}
 	// Check a few expected results
 	CPPAD_ASSERT_UNKNOWN( rec.num_op_rec() == play_.num_op_rec() );

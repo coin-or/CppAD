@@ -77,46 +77,34 @@ size_t ADFun<Base>::number_skip(void)
 	const addr_t* arg;
 
 	// information defined by forward_user
-	size_t user_old=0, user_m=0, user_n=0, user_i=0, user_j=0;
-	local::enum_user_state user_state;
+	size_t user_old=0, user_m=0, user_n=0;
 
 	// number of variables skipped
 	size_t num_var_skip = 0;
 
 	// start playback
-	user_state = local::start_user;
-	play_.forward_start(op, arg, i_op, i_var);
+	i_op = 0;
+	play_.get_op_info(i_op, op, arg, i_var);
 	CPPAD_ASSERT_UNKNOWN(op == local::BeginOp)
 	while(op != local::EndOp)
 	{	// next op
-		play_.forward_next(op, arg, i_op, i_var);
+		play_.get_op_info(++i_op, op, arg, i_var);
 		//
 		if( op == local::UserOp )
 		{	// skip only appears at front or back UserOp of user atomic call
 			bool skip_call = cskip_op_[i_op];
-			CPPAD_ASSERT_UNKNOWN( user_state == local::start_user );
-			play_.forward_user(
-				op, user_state, user_old, user_m, user_n, user_i, user_j
-			);
+			play_.get_user_info(op, arg, user_old, user_m, user_n);
 			CPPAD_ASSERT_UNKNOWN( NumRes(op) == 0 );
 			size_t num_op = user_m + user_n + 1;
 			for(size_t i = 0; i < num_op; i++)
-			{	play_.forward_next(op, arg, i_op, i_var);
-				play_.forward_user(
-					op, user_state, user_old, user_m, user_n, user_i, user_j
-				);
+			{	play_.get_op_info(++i_op, op, arg, i_var);
 				if( skip_call )
 					num_var_skip += NumRes(op);
 			}
-			CPPAD_ASSERT_UNKNOWN( user_state == local::start_user );
+			CPPAD_ASSERT_UNKNOWN( op == local::UserOp );
 		}
 		else
-		{	if( op == local::CSumOp)
-				play_.forward_csum(op, arg, i_op, i_var);
-			else if (op == local::CSkipOp)
-				play_.forward_cskip(op, arg, i_op, i_var);
-			//
-			if( cskip_op_[i_op] )
+		{	if( cskip_op_[i_op] )
 				num_var_skip += NumRes(op);
 		}
 	}
