@@ -177,7 +177,8 @@ void ForHesSweep(
 		parameter = play->GetPar();
 
 	// Initialize
-	play->forward_start(op, arg, i_op, i_var);
+	i_op = 0;
+	play->get_op_info(i_op, op, arg, i_var);
 	CPPAD_ASSERT_UNKNOWN( op == BeginOp );
 	bool more_operators = true;
 # if CPPAD_FOR_HES_SWEEP_TRACE
@@ -190,7 +191,7 @@ void ForHesSweep(
 	while(more_operators)
 	{
 		// next op
-		play->forward_next(op, arg, i_op, i_var);
+		play->get_op_info(++i_op, op, arg, i_var);
 # ifndef NDEBUG
 		if( i_op <= n )
 		{	CPPAD_ASSERT_UNKNOWN((op == InvOp) | (op == BeginOp));
@@ -271,18 +272,10 @@ void ForHesSweep(
 			// -------------------------------------------------
 
 			case CSkipOp:
-			// CSkipOp has a variable number of arguments and
-			// reverse_next thinks it one has one argument.
-			// We must inform reverse_next of this special case.
-			play->forward_cskip(op, arg, i_op, i_var);
 			break;
 			// -------------------------------------------------
 
 			case CSumOp:
-			// CSumOp has a variable number of arguments and
-			// reverse_next thinks it one has one argument.
-			// We must inform reverse_next of this special case.
-			play->forward_csum(op, arg, i_op, i_var);
 			break;
 			// -------------------------------------------------
 
@@ -367,15 +360,17 @@ void ForHesSweep(
 			// -------------------------------------------------
 
 			case UserOp:
+			// start or end an atomic function call
 			CPPAD_ASSERT_UNKNOWN(
 				user_state == start_user || user_state == end_user
 			);
 			flag = user_state == start_user;
-			user_atom = play->forward_user(op, user_state,
-				user_old, user_m, user_n, user_i, user_j
-			);
+			user_atom = play->get_user_info(op, arg, user_old, user_m, user_n);
 			if( flag )
-			{	// start of user atomic operation sequence
+			{	user_state = arg_user;
+				user_i     = 0;
+				user_j     = 0;
+				//
 				user_x.resize( user_n );
 				user_ix.resize( user_n );
 				user_iy.resize( user_m );
@@ -384,7 +379,8 @@ void ForHesSweep(
 # endif
 			}
 			else
-			{	// end of user atomic operation sequence
+			{	user_state = start_user;
+				//
 				user_atom->set_old(user_old);
 				user_atom->for_sparse_hes(
 					user_x, user_ix, user_iy,
@@ -394,51 +390,68 @@ void ForHesSweep(
 			break;
 
 			case UsrapOp:
-			CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < num_par );
-			// argument parameter value
-			user_x[user_j] = parameter[arg[0]];
-			// special variable user for parameters
-			user_ix[user_j] = 0;
+			// parameter argument for a user atomic function
+			CPPAD_ASSERT_UNKNOWN( NumArg(op) == 1 );
+			CPPAD_ASSERT_UNKNOWN( user_state == arg_user );
+			CPPAD_ASSERT_UNKNOWN( user_i == 0 );
+			CPPAD_ASSERT_UNKNOWN( user_j < user_n );
+			CPPAD_ASSERT_UNKNOWN( size_t( arg[0] ) < num_par );
 			//
-			play->forward_user(op, user_state,
-				user_old, user_m, user_n, user_i, user_j
-			);
+			user_x[user_j] = parameter[arg[0]];
+			user_ix[user_j] = 0; // special variable used for parameters
+			//
+			++user_j;
+			if( user_j == user_n )
+				user_state = ret_user;
 			break;
 
 			case UsravOp:
-			CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) <= i_var );
-			CPPAD_ASSERT_UNKNOWN( 0 < arg[0] );
+			// variable argument for a user atomic function
+			CPPAD_ASSERT_UNKNOWN( NumArg(op) == 1 );
+			CPPAD_ASSERT_UNKNOWN( user_state == arg_user );
+			CPPAD_ASSERT_UNKNOWN( user_i == 0 );
+			CPPAD_ASSERT_UNKNOWN( user_j < user_n );
+			CPPAD_ASSERT_UNKNOWN( size_t( arg[0] ) <= i_var );
+			//
 			// arguemnt varialbes not avaialbe during sparisty calculations
 			user_x[user_j] = CppAD::numeric_limits<Base>::quiet_NaN();
-			// varialbe index for this argument
-			user_ix[user_j] = arg[0];
+			user_ix[user_j] = arg[0]; // variable for this argument
 			//
-			play->forward_user(op, user_state,
-				user_old, user_m, user_n, user_i, user_j
-			);
+			++user_j;
+			if( user_j == user_n )
+				user_state = ret_user;
 			break;
 
 			case UsrrpOp:
-			CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < num_par );
-			// special variable index user for parameters
-			user_iy[user_i] = 0;
+			// parameter result for a user atomic function
+			CPPAD_ASSERT_NARG_NRES(op, 1, 0);
+			CPPAD_ASSERT_UNKNOWN( user_state == ret_user );
+			CPPAD_ASSERT_UNKNOWN( user_i < user_m );
+			CPPAD_ASSERT_UNKNOWN( user_j == user_n );
+			CPPAD_ASSERT_UNKNOWN( size_t( arg[0] ) < num_par );
+			//
+			user_iy[user_i] = 0; // special variable used for parameters
 # if CPPAD_FOR_HES_SWEEP_TRACE
 			// remember argument for delayed tracing
 			user_usrrp[user_i] = arg[0];
 # endif
-			//
-			play->forward_user(op, user_state,
-				user_old, user_m, user_n, user_i, user_j
-			);
+			++user_i;
+			if( user_i == user_m )
+				user_state = end_user;
 			break;
 
 			case UsrrvOp:
-			// variable index for this result
-			user_iy[user_i] = i_var;
+			// variable result for a user atomic function
+			CPPAD_ASSERT_NARG_NRES(op, 0, 1);
+			CPPAD_ASSERT_UNKNOWN( user_state == ret_user );
+			CPPAD_ASSERT_UNKNOWN( user_i < user_m );
+			CPPAD_ASSERT_UNKNOWN( user_j == user_n );
 			//
-			play->forward_user(op, user_state,
-				user_old, user_m, user_n, user_i, user_j
-			);
+			user_iy[user_i] = i_var; // variable index for this result
+			//
+			++user_i;
+			if( user_i == user_m )
+				user_state = end_user;
 			break;
 			// -------------------------------------------------
 
@@ -559,8 +572,6 @@ void ForHesSweep(
 # else
 	}
 # endif
-	// value corresponding to EndOp
-	CPPAD_ASSERT_UNKNOWN( i_var + 1 == play->num_var_rec() );
 
 	return;
 }
