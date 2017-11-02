@@ -85,12 +85,12 @@ corresponds to the set with index i in \a var_sparsity.
 */
 
 template <class Base, class Vector_set>
-void ForJacSweep(
-	bool                  dependency   ,
-	size_t                n            ,
-	size_t                numvar       ,
+void for_jac_sweep(
 	const local::player<Base>* play,
-	Vector_set&           var_sparsity )
+	bool                       dependency        ,
+	size_t                     n                 ,
+	size_t                     numvar            ,
+	Vector_set&                var_sparsity )
 {
 	OpCode           op;
 	size_t         i_op;

@@ -244,11 +244,11 @@ void ADFun<Base>::for_jac_sparsity(
 		);
 
 		// compute sparsity for other variables
-		local::ForJacSweep(
+		local::for_jac_sweep(
+			&play_,
 			dependency,
 			n,
 			num_var_tape_,
-			&play_,
 			for_jac_sparse_pack_
 		);
 		// set the output pattern
@@ -274,11 +274,11 @@ void ADFun<Base>::for_jac_sparsity(
 		);
 
 		// compute sparsity for other variables
-		local::ForJacSweep(
+		local::for_jac_sweep(
+			&play_,
 			dependency,
 			n,
 			num_var_tape_,
-			&play_,
 			for_jac_sparse_set_
 		);
 		// get the ouput pattern

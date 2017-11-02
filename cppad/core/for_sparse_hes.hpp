@@ -215,11 +215,11 @@ void ADFun<Base>::ForSparseHesCase(
 	}
 	// compute forward Jacobiain sparsity pattern
 	bool dependency = false;
-	local::ForJacSweep(
+	local::for_jac_sweep(
+		&play_,
 		dependency,
 		n,
 		num_var_tape_,
-		&play_,
 		for_jac_pattern
 	);
 	// sparsity pattern correspnding to s
@@ -335,11 +335,11 @@ void ADFun<Base>::ForSparseHesCase(
 	}
 	// compute forward Jacobiain sparsity pattern
 	bool dependency = false;
-	local::ForJacSweep(
+	local::for_jac_sweep(
+		&play_,
 		dependency,
 		n,
 		num_var_tape_,
-		&play_,
 		for_jac_pattern
 	);
 	// sparsity pattern correspnding to s

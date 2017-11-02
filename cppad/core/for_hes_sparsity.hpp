@@ -190,11 +190,11 @@ void ADFun<Base>::for_hes_sparsity(
 			internal_for_jac.add_element( ind_taddr_[j] , ind_taddr_[j] );
 		}
 		// forward Jacobian sparsity for all variables on tape
-		local::ForJacSweep(
+		local::for_jac_sweep(
+			&play_,
 			dependency,
 			n,
 			num_var_tape_,
-			&play_,
 			internal_for_jac
 		);
 		// reverse Jacobian sparsity pattern for select_range
@@ -241,11 +241,11 @@ void ADFun<Base>::for_hes_sparsity(
 			internal_for_jac.add_element( ind_taddr_[j] , ind_taddr_[j] );
 		}
 		// forward Jacobian sparsity for all variables on tape
-		local::ForJacSweep(
+		local::for_jac_sweep(
+			&play_,
 			dependency,
 			n,
 			num_var_tape_,
-			&play_,
 			internal_for_jac
 		);
 		// reverse Jacobian sparsity pattern for select_range
