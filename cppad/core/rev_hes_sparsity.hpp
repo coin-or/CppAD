@@ -202,10 +202,10 @@ void ADFun<Base>::rev_hes_sparsity(
 		internal_hes.resize(num_var_tape_, ell);
 		//
 		// compute the Hessian sparsity pattern
-		local::RevHesSweep(
+		local::rev_hes_sweep(
+			&play_,
 			n,
 			num_var_tape_,
-			&play_,
 			for_jac_sparse_pack_,
 			rev_jac_pattern.data(),
 			internal_hes
@@ -231,10 +231,10 @@ void ADFun<Base>::rev_hes_sparsity(
 		internal_hes.resize(num_var_tape_, ell);
 		//
 		// compute the Hessian sparsity pattern
-		local::RevHesSweep(
+		local::rev_hes_sweep(
+			&play_,
 			n,
 			num_var_tape_,
-			&play_,
 			for_jac_sparse_set_,
 			rev_jac_pattern.data(),
 			internal_hes

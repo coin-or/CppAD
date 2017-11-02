@@ -98,13 +98,13 @@ they are used for temporary work space.
 */
 
 template <class Base, class Vector_set>
-void RevHesSweep(
-	size_t                n,
-	size_t                numvar,
+void rev_hes_sweep(
 	const local::player<Base>* play,
-	const Vector_set&     for_jac_sparse,
-	bool*                 RevJac,
-	Vector_set&           rev_hes_sparse
+	size_t                     n,
+	size_t                     numvar,
+	const Vector_set&          for_jac_sparse,
+	bool*                      RevJac,
+	Vector_set&                rev_hes_sparse
 )
 {
 	OpCode           op;
