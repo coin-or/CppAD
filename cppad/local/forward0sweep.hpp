@@ -79,12 +79,6 @@ is a recording of the operations corresponding to the function
 \f]
 where \f$ n \f$ is the number of independent variables and
 \f$ m \f$ is the number of dependent variables.
-\n
-\n
-The object play is effectly constant.
-The exception to this is that while palying back the tape
-the object play holds information about the current location
-with in the tape and this changes during palyback.
 
 \param J
 Is the number of columns in the coefficient matrix taylor.

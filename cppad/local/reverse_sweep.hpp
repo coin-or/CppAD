@@ -105,13 +105,6 @@ the k-th partial derivative to the k-th order Taylor coefficient.
 This routine computes the derivative of \f$ W(u) \f$
 with respect to all the Taylor coefficients
 \f$ u^{(k)} \f$ for \f$ k = 0 , ... , d \f$.
-\n
-\n
-The object \a play is effectly constant.
-There is an exception to this,
-while palying back the tape
-the object \a play holds information about the current location
-with in the tape and this changes during palyback.
 
 \param J
 Is the number of columns in the coefficient matrix \a Taylor.

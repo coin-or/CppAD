@@ -63,10 +63,6 @@ is a recording of the operations corresponding to a function
 \f]
 where \f$ n \f$ is the number of independent variables
 and \f$ m \f$ is the number of dependent variables.
-The object \a play is effectly constant.
-It is not declared const because while playing back the tape
-the object \a play holds information about the current location
-with in the tape and this changes during playback.
 
 \param var_sparsity
 For i = 0 , ... , \a numvar - 1,

@@ -27,18 +27,12 @@ move_list='
 move_sed='s|op_info|opt_op_info|'
 #
 cat << EOF > junk.sed
-/RevHesSweep(/! b skip
+/\\\\param play/! b skip
 : loop
 N
-/);*\$/! b loop
+/\\n\\n\$/! b loop
+s|The object .* is effectly constant.*|\\n|
 #
-s|\\n\\tconst local::player<Base>\\* play,||
-s|\\n\\t*&play_,||
-#
-s|void RevHesSweep(\\n|void rev_hes_sweep(\\n\\tconst local::player<Base>\\* play,\\n|
-s|\\(\\t*\\)local::RevHesSweep(\\n|\\1local::rev_hes_sweep(\\n\\1\\t\\&play_,\\n|
-#
-s|   *|&     |g
 : skip
 EOF
 # -----------------------------------------------------------------------------
