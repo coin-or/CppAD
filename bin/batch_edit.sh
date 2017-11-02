@@ -27,9 +27,19 @@ move_list='
 move_sed='s|op_info|opt_op_info|'
 #
 cat << EOF > junk.sed
-s|local::player<Base>\\* *play *,|const local::player<Base>* play,|
-s|const *const local::player<Base>\\* *play *,|const local::player<Base>* play,|
-s|\\([^:]\\)player<Base>\\* *play *,|\\1const player<Base>* play,|
+/ForHesSweep(/! b skip
+: loop
+N
+/);*\$/! b loop
+#
+s|\\n\\tconst local::player<Base>\\* play,||
+s|\\n\\t*&play_,||
+#
+s|void ForHesSweep(\\n|void for_hes_sweep(\\n\\tconst local::player<Base>\\* play,\\n|
+s|\\(\\t*\\)local::ForHesSweep(\\n|\\1local::for_hes_sweep(\\n\\1\\t\\&play_,\\n|
+#
+s|   *|&     |g
+: skip
 EOF
 # -----------------------------------------------------------------------------
 if [ $0 != "bin/batch_edit.sh" ]
