@@ -440,8 +440,8 @@ ADFun<Base>::ADFun(const VectorAD &x, const VectorAD &y)
 	// use independent variable values to fill in values for others
 	CPPAD_ASSERT_UNKNOWN( cskip_op_.size() == play_.num_op_rec() );
 	CPPAD_ASSERT_UNKNOWN( load_op_.size()  == play_.num_load_op_rec() );
-	local::forward0sweep(std::cout, false,
-		n, num_var_tape_, &play_, cap_order_taylor_, taylor_.data(),
+	local::forward0sweep(&play_, std::cout, false,
+		n, num_var_tape_, cap_order_taylor_, taylor_.data(),
 		cskip_op_.data(), load_op_,
 		compare_change_count_,
 		compare_change_number_,

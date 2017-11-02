@@ -142,18 +142,18 @@ play was recorded.
 
 template <class Base>
 void forward0sweep(
-	std::ostream&         s_out,
-	bool                  print,
-	size_t                n,
-	size_t                numvar,
 	const local::player<Base>* play,
-	size_t                J,
-	Base*                 taylor,
-	bool*                 cskip_op,
-	pod_vector<addr_t>&   var_by_load_op,
-	size_t                compare_change_count,
-	size_t&               compare_change_number,
-	size_t&               compare_change_op_index
+	std::ostream&              s_out,
+	bool                       print,
+	size_t                     n,
+	size_t                     numvar,
+	size_t                     J,
+	Base*                      taylor,
+	bool*                      cskip_op,
+	pod_vector<addr_t>&        var_by_load_op,
+	size_t                     compare_change_count,
+	size_t&                    compare_change_number,
+	size_t&                    compare_change_op_index
 )
 {	CPPAD_ASSERT_UNKNOWN( J >= 1 );
 	CPPAD_ASSERT_UNKNOWN( play->num_var_rec() == numvar );

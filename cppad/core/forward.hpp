@@ -155,8 +155,8 @@ VectorBase ADFun<Base>::Forward(
 	CPPAD_ASSERT_UNKNOWN( cskip_op_.size() == play_.num_op_rec() );
 	CPPAD_ASSERT_UNKNOWN( load_op_.size()  == play_.num_load_op_rec() );
 	if( q == 0 )
-	{	local::forward0sweep(s, true,
-			n, num_var_tape_, &play_, C,
+	{	local::forward0sweep(&play_, s, true,
+			n, num_var_tape_, C,
 			taylor_.data(), cskip_op_.data(), load_op_,
 			compare_change_count_,
 			compare_change_number_,
@@ -164,8 +164,8 @@ VectorBase ADFun<Base>::Forward(
 		);
 	}
 	else
-	{	local::forward1sweep(s, true, p, q,
-			n, num_var_tape_, &play_, C,
+	{	local::forward1sweep(&play_, s, true, p, q,
+			n, num_var_tape_, C,
 			taylor_.data(), cskip_op_.data(), load_op_,
 			compare_change_count_,
 			compare_change_number_,
@@ -384,11 +384,11 @@ VectorBase ADFun<Base>::Forward(
 	CPPAD_ASSERT_UNKNOWN( cskip_op_.size() == play_.num_op_rec() );
 	CPPAD_ASSERT_UNKNOWN( load_op_.size()  == play_.num_load_op_rec() );
 	local::forward2sweep(
+		&play_,
 		q,
 		r,
 		n,
 		num_var_tape_,
-		&play_,
 		c,
 		taylor_.data(),
 		cskip_op_.data(),

@@ -185,20 +185,20 @@ play was recorded.
 
 template <class Base>
 void forward1sweep(
-	std::ostream&         s_out,
-	const bool            print,
-	const size_t          p,
-	const size_t          q,
-	const size_t          n,
-	const size_t          numvar,
 	const local::player<Base>* play,
-	const size_t          J,
-	Base*                 taylor,
-	bool*                 cskip_op,
-	pod_vector<addr_t>&   var_by_load_op,
-	size_t                compare_change_count,
-	size_t&               compare_change_number,
-	size_t&               compare_change_op_index
+	std::ostream&              s_out,
+	const bool                 print,
+	const size_t               p,
+	const size_t               q,
+	const size_t               n,
+	const size_t               numvar,
+	const size_t               J,
+	Base*                      taylor,
+	bool*                      cskip_op,
+	pod_vector<addr_t>&        var_by_load_op,
+	size_t                     compare_change_count,
+	size_t&                    compare_change_number,
+	size_t&                    compare_change_op_index
 )
 {
 	// number of directions

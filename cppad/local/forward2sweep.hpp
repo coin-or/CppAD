@@ -137,13 +137,13 @@ the instruction corresponds to a parameter (not variable).
 
 template <class Base>
 void forward2sweep(
+	const local::player<Base>*  play,
 	const size_t                q,
 	const size_t                r,
 	const size_t                n,
 	const size_t                numvar,
-	      const local::player<Base>* play,
 	const size_t                J,
-	      Base*                 taylor,
+	Base*                       taylor,
 	const bool*                 cskip_op,
 	const pod_vector<addr_t>&   var_by_load_op
 )
