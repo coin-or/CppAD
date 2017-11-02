@@ -232,11 +232,11 @@ void ADFun<Base>::ForSparseHesCase(
 	}
 	// compute reverse sparsity pattern for dependency analysis
 	// (note that we are only want non-zero derivatives not true dependency)
-	local::RevJacSweep(
+	local::rev_jac_sweep(
+		&play_,
 		dependency,
 		n,
 		num_var_tape_,
-		&play_,
 		rev_jac_pattern
 	);
 	// vector of sets that will hold the forward Hessain values
@@ -359,11 +359,11 @@ void ADFun<Base>::ForSparseHesCase(
 	//
 	// compute reverse sparsity pattern for dependency analysis
 	// (note that we are only want non-zero derivatives not true dependency)
-	local::RevJacSweep(
+	local::rev_jac_sweep(
+		&play_,
 		dependency,
 		n,
 		num_var_tape_,
-		&play_,
 		rev_jac_pattern
 	);
 	//

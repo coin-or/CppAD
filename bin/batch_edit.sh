@@ -27,7 +27,7 @@ move_list='
 move_sed='s|op_info|opt_op_info|'
 #
 cat << EOF > junk.sed
-/ForJacSweep(/! b skip
+/RevJacSweep(/! b skip
 : loop
 N
 /);*\$/! b loop
@@ -35,8 +35,8 @@ N
 s|\\n\\tconst local::player<Base>\\* play,||
 s|\\n\\t*&play_,||
 #
-s|void ForJacSweep(\\n|void for_jac_sweep(\\n\\tconst local::player<Base>\\* play,\\n|
-s|\\(\\t*\\)local::ForJacSweep(\\n|\\1local::for_jac_sweep(\\n\\1\\t\\&play_,\\n|
+s|void RevJacSweep(\\n|void rev_jac_sweep(\\n\\tconst local::player<Base>\\* play,\\n|
+s|\\(\\t*\\)local::RevJacSweep(\\n|\\1local::rev_jac_sweep(\\n\\1\\t\\&play_,\\n|
 #
 s|   *|&     |g
 : skip

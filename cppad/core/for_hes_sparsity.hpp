@@ -205,11 +205,11 @@ void ADFun<Base>::for_hes_sparsity(
 			internal_rev_jac.add_element( dep_taddr_[i] , 0 );
 		}
 		// reverse Jacobian sparsity for all variables on tape
-		local::RevJacSweep(
+		local::rev_jac_sweep(
+			&play_,
 			dependency,
 			n,
 			num_var_tape_,
-			&play_,
 			internal_rev_jac
 		);
 		// internal vector of sets that will hold Hessian
@@ -257,11 +257,11 @@ void ADFun<Base>::for_hes_sparsity(
 			internal_rev_jac.add_element( dep_taddr_[i] , 0 );
 		}
 		// reverse Jacobian sparsity for all variables on tape
-		local::RevJacSweep(
+		local::rev_jac_sweep(
+			&play_,
 			dependency,
 			n,
 			num_var_tape_,
-			&play_,
 			internal_rev_jac
 		);
 		// internal vector of sets that will hold Hessian

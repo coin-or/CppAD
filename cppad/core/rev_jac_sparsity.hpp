@@ -204,11 +204,11 @@ void ADFun<Base>::rev_jac_sparsity(
 		);
 
 		// compute sparsity for other variables
-		local::RevJacSweep(
+		local::rev_jac_sweep(
+			&play_,
 			dependency,
 			n,
 			num_var_tape_,
-			&play_,
 			internal_jac
 		);
 		// get sparstiy pattern for independent variables
@@ -233,11 +233,11 @@ void ADFun<Base>::rev_jac_sparsity(
 		);
 
 		// compute sparsity for other variables
-		local::RevJacSweep(
+		local::rev_jac_sweep(
+			&play_,
 			dependency,
 			n,
 			num_var_tape_,
-			&play_,
 			internal_jac
 		);
 		// get sparstiy pattern for independent variables

@@ -257,11 +257,11 @@ void ADFun<Base>::RevSparseJacCase(
 	}
 
 	// evaluate the sparsity patterns
-	local::RevJacSweep(
+	local::rev_jac_sweep(
+		&play_,
 		dependency,
 		n,
 		num_var_tape_,
-		&play_,
 		var_sparsity
 	);
 
@@ -397,11 +397,11 @@ void ADFun<Base>::RevSparseJacCase(
 		}
 	}
 	// evaluate the sparsity patterns
-	local::RevJacSweep(
+	local::rev_jac_sweep(
+		&play_,
 		dependency,
 		n,
 		num_var_tape_,
-		&play_,
 		var_sparsity
 	);
 
@@ -586,11 +586,11 @@ void ADFun<Base>::RevSparseJacCheckpoint(
 	}
 
 	// evaluate the sparsity pattern for all variables
-	local::RevJacSweep(
+	local::rev_jac_sweep(
+		&play_,
 		dependency,
 		n,
 		num_var_tape_,
-		&play_,
 		var_sparsity
 	);
 
