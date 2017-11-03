@@ -98,7 +98,7 @@ enum OpCode {
 	ExpOp,    // exp(variable)
 	Expm1Op,  // expm1(variable)
 	InvOp,    // independent variable
-	LdpOp,    // z[parameter]
+	LdpOp,    // z[parameter] (parameter converted to index)
 	LdvOp,    // z[variable]
 	LepvOp,   // parameter <= variable
 	LevpOp,   // variable  <= parameter
@@ -121,8 +121,8 @@ enum OpCode {
 	SinOp,    // sin(variable)
 	SinhOp,   // sinh(variable)
 	SqrtOp,   // sqrt(variable)
-	StppOp,   // z[parameter] = parameter
-	StpvOp,   // z[parameter] = variable
+	StppOp,   // z[parameter] = parameter (first parameter converted to index)
+	StpvOp,   // z[parameter] = variable  (parameter converted to index)
 	StvpOp,   // z[variable]  = parameter
 	StvvOp,   // z[variable]  = variable
 	SubpvOp,  // parameter  - variable
