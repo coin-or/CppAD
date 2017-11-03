@@ -184,20 +184,23 @@ public:
 			// store information for this operator
 			op_info_vec_[i] = op_info;
 		}
-# ifndef NDEBUG
-		/*
-		Chech that arguments, that are variables, have value less than or
-		equal to the previously created variable. This is the directed
-		acyclic graph condition (DAG).
+		check_dag();
+	}
+	/*!
+	Chech arguments that are variables, to make sure the have value less
+	than or equal to the previously created variable. This is the directed
+	acyclic graph condition (DAG).
 
-		Also check that parameter index less than length of list of paraemters.
-		Note that for the load and store operations, parameters get converted
-		to index if the vector, instead of index in list of parameters.
-
-		Note that the following operators are not checked:
-		CExpOp, CSkipOp, PriOp
-		*/
-		addr_t num_par       = addr_t( par_vec_.size() );
+	Note that the following operators are not checked:
+	CExpOp, CSkipOp, PriOp
+	*/
+# ifdef NDEBUG
+	void check_dag(void)
+	{	return; }
+# else
+	void check_dag(void)
+	{
+		size_t  num_op       = op_vec_.size();
 		addr_t arg_var_bound = 0;
 		for(size_t i = 0; i < num_op; i++)
 		{	OpCode op = op_vec_[i];
@@ -207,7 +210,10 @@ public:
 				// cases not handled
 				case CExpOp:
 				case CSkipOp:
+				case ParOp:
 				case PriOp:
+				case UsrapOp:
+				case UsrrpOp:
 				break;
 
 				// cases where nothing to do
@@ -240,11 +246,6 @@ public:
 
 
 				// operator(parameter)
-				case ParOp:
-				case UsrapOp:
-				case UsrrpOp:
-				CPPAD_ASSERT_UNKNOWN(op_arg[0] <= num_par );
-				break;
 
 
 				// operator(variable)
@@ -283,7 +284,6 @@ public:
 				case PowpvOp:
 				case SubpvOp:
 				case ZmulpvOp:
-				CPPAD_ASSERT_UNKNOWN(op_arg[0] < num_par );
 				CPPAD_ASSERT_UNKNOWN(op_arg[1] <= arg_var_bound );
 				break;
 
@@ -295,7 +295,6 @@ public:
 				case SubvpOp:
 				case ZmulvpOp:
 				CPPAD_ASSERT_UNKNOWN(op_arg[0] <= arg_var_bound );
-				CPPAD_ASSERT_UNKNOWN(op_arg[1] < num_par );
 				break;
 
 				// operator(variable, variable)
@@ -332,7 +331,7 @@ public:
 				break;
 			}
 			if( NumRes(op) > 0 )
-			{	var_index = op_info_vec_[i].var_index;
+			{	addr_t var_index = op_info_vec_[i].var_index;
 				if( var_index > 0 )
 				{	CPPAD_ASSERT_UNKNOWN(arg_var_bound < var_index);
 				}
@@ -343,8 +342,8 @@ public:
 				arg_var_bound = var_index;
 			}
 		}
-# endif
 	}
+# endif
 	// ===============================================================
 	/*!
 	Copying an operation sequence from another player to this one
