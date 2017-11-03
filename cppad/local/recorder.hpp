@@ -65,13 +65,8 @@ public:
 	/// Default constructor
 	recorder(void) :
 	thread_offset_( thread_alloc::thread_num() * CPPAD_HASH_TABLE_SIZE ) ,
-	num_var_rec_(0)                                      ,
-	num_load_op_rec_(0)                                  ,
-	op_vec_( std::numeric_limits<addr_t>::max() )        ,
-	vecad_ind_vec_( std::numeric_limits<addr_t>::max() ) ,
-	op_arg_vec_( std::numeric_limits<addr_t>::max() )    ,
-	par_vec_( std::numeric_limits<addr_t>::max() )       ,
-	text_vec_( std::numeric_limits<addr_t>::max() )
+	num_var_rec_(0)      ,
+	num_load_op_rec_(0)
 	{
 		abort_op_index_ = 0;
 	}
