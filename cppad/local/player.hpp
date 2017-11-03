@@ -148,7 +148,7 @@ public:
 		op_info_vec_.extend( num_op );
 		for(size_t i = 0; i < num_op; i++)
 		{	struct_op_info op_info;
-			OpCode  op          = static_cast<OpCode>( op_vec_[i] );
+			OpCode  op          = op_vec_[i];
 			//
 			// pointer corresponding to first argument
 			op_info.arg_index   = arg_index;
@@ -184,6 +184,166 @@ public:
 			// store information for this operator
 			op_info_vec_[i] = op_info;
 		}
+# ifndef NDEBUG
+		/*
+		Chech that arguments, that are variables, have value less than or
+		equal to the previously created variable. This is the directed
+		acyclic graph condition (DAG).
+
+		Also check that parameter index less than length of list of paraemters.
+		Note that for the load and store operations, parameters get converted
+		to index if the vector, instead of index in list of parameters.
+
+		Note that the following operators are not checked:
+		CExpOp, CSkipOp, PriOp
+		*/
+		addr_t num_par       = addr_t( par_vec_.size() );
+		addr_t arg_var_bound = 0;
+		for(size_t i = 0; i < num_op; i++)
+		{	OpCode op = op_vec_[i];
+			addr_t* op_arg = op_arg_vec_.data() + op_info_vec_[i].arg_index;
+			switch(op)
+			{
+				// cases not handled
+				case CExpOp:
+				case CSkipOp:
+				case PriOp:
+				break;
+
+				// cases where nothing to do
+				case BeginOp:
+				case EndOp:
+				case InvOp:
+				case LdpOp:
+				case UserOp:
+				case UsrrvOp:
+				case StppOp:
+				break;
+
+				// LdvOp, StvpOp
+				case LdvOp:
+				case StvpOp:
+				CPPAD_ASSERT_UNKNOWN(op_arg[1] <= arg_var_bound );
+				CPPAD_ASSERT_UNKNOWN(op_arg[1] <= arg_var_bound );
+				break;
+
+				// StpvOp
+				case StpvOp:
+				CPPAD_ASSERT_UNKNOWN(op_arg[2] <= arg_var_bound );
+				break;
+
+				// StvvOp
+				case StvvOp:
+				CPPAD_ASSERT_UNKNOWN(op_arg[1] <= arg_var_bound );
+				CPPAD_ASSERT_UNKNOWN(op_arg[2] <= arg_var_bound );
+				break;
+
+
+				// operator(parameter)
+				case ParOp:
+				case UsrapOp:
+				case UsrrpOp:
+				CPPAD_ASSERT_UNKNOWN(op_arg[0] <= num_par );
+				break;
+
+
+				// operator(variable)
+				case AbsOp:
+				case AcosOp:
+				case AcoshOp:
+				case AsinOp:
+				case AsinhOp:
+				case AtanOp:
+				case AtanhOp:
+				case CosOp:
+				case CoshOp:
+				case ErfOp:
+				case ExpOp:
+				case Expm1Op:
+				case LogOp:
+				case Log1pOp:
+				case SignOp:
+				case SinOp:
+				case SinhOp:
+				case SqrtOp:
+				case TanOp:
+				case TanhOp:
+				case UsravOp:
+				CPPAD_ASSERT_UNKNOWN(op_arg[0] <= arg_var_bound );
+				break;
+
+				// operator(parameter, variable)
+				case AddpvOp:
+				case DivpvOp:
+				case EqpvOp:
+				case LepvOp:
+				case LtpvOp:
+				case MulpvOp:
+				case NepvOp:
+				case PowpvOp:
+				case SubpvOp:
+				case ZmulpvOp:
+				CPPAD_ASSERT_UNKNOWN(op_arg[0] < num_par );
+				CPPAD_ASSERT_UNKNOWN(op_arg[1] <= arg_var_bound );
+				break;
+
+				// operator(variable, parameter)
+				case DivvpOp:
+				case LevpOp:
+				case LtvpOp:
+				case PowvpOp:
+				case SubvpOp:
+				case ZmulvpOp:
+				CPPAD_ASSERT_UNKNOWN(op_arg[0] <= arg_var_bound );
+				CPPAD_ASSERT_UNKNOWN(op_arg[1] < num_par );
+				break;
+
+				// operator(variable, variable)
+				case AddvvOp:
+				case DivvvOp:
+				case EqvvOp:
+				case LevvOp:
+				case LtvvOp:
+				case MulvvOp:
+				case NevvOp:
+				case PowvvOp:
+				case SubvvOp:
+				case ZmulvvOp:
+				CPPAD_ASSERT_UNKNOWN(op_arg[0] <= arg_var_bound );
+				CPPAD_ASSERT_UNKNOWN(op_arg[1] <= arg_var_bound );
+				break;
+
+				// CSumOp
+				case CSumOp:
+				{	addr_t num_add = op_arg[0];
+					addr_t num_sub = op_arg[1];
+					for(addr_t j = 0; j < num_add + num_sub; j++)
+						CPPAD_ASSERT_UNKNOWN(op_arg[3+j] <= arg_var_bound);
+				}
+				break;
+
+				// operator(index, variable)
+				case DisOp:
+				CPPAD_ASSERT_UNKNOWN(op_arg[1] <= arg_var_bound );
+				break;
+
+				default:
+				CPPAD_ASSERT_UNKNOWN(false);
+				break;
+			}
+			if( NumRes(op) > 0 )
+			{	var_index = op_info_vec_[i].var_index;
+				if( var_index > 0 )
+				{	CPPAD_ASSERT_UNKNOWN(arg_var_bound < var_index);
+				}
+				else
+				{	CPPAD_ASSERT_UNKNOWN(arg_var_bound == var_index);
+				}
+				//
+				arg_var_bound = var_index;
+			}
+		}
+# endif
 	}
 	// ===============================================================
 	/*!
@@ -236,7 +396,9 @@ public:
 	pointer to the first arguement to this operator.
 
 	\param var_index [out]
-	index of the last variable (primary variable) for this operator
+	index of the last variable (primary variable) for this operator.
+	If there is no primary variable for this operator, i_var not sepcified
+	and could have any value.
 	*/
 	void get_op_info(
 		size_t         op_index   ,
