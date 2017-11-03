@@ -9,10 +9,20 @@
 # A copy of this license is included in the COPYING file of this distribution.
 # Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # -----------------------------------------------------------------------------
-if [ ! -e "bin/check_all.sh" ]
+if [ "$0" != 'bin/check_all.sh' ]
 then
 	echo "bin/check_all.sh: must be executed from its parent directory"
 	exit 1
+fi
+debug_all='no'
+if [ "$1" != '' ]
+then
+	debug_all='yes'
+	if [ "$1" != 'debug_all' ]
+	then
+		echo 'usage: bin/check_all.sh [debug_all]'
+		exit 1
+	fi
 fi
 echo_log_eval() {
 	echo $*
@@ -87,7 +97,10 @@ echo_log_eval rm -rf cppad-$version
 echo_log_eval tar -xzf $tarball
 echo_log_eval cd cppad-$version
 # -----------------------------------------------------------------------------
-if [ "$random_zero_one" == '0' ]
+if [ "$debug_all" == 'yes' ]
+then
+	echo_log_eval bin/run_cmake.sh --cppad_vector --debug_all
+elif [ "$random_zero_one" == '0' ]
 then
 	echo_log_eval bin/run_cmake.sh --boost_vector --debug_odd
 else

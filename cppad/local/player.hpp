@@ -226,29 +226,7 @@ public:
 				case StppOp:
 				break;
 
-				// LdvOp, StvpOp
-				case LdvOp:
-				case StvpOp:
-				CPPAD_ASSERT_UNKNOWN(op_arg[1] <= arg_var_bound );
-				CPPAD_ASSERT_UNKNOWN(op_arg[1] <= arg_var_bound );
-				break;
-
-				// StpvOp
-				case StpvOp:
-				CPPAD_ASSERT_UNKNOWN(op_arg[2] <= arg_var_bound );
-				break;
-
-				// StvvOp
-				case StvvOp:
-				CPPAD_ASSERT_UNKNOWN(op_arg[1] <= arg_var_bound );
-				CPPAD_ASSERT_UNKNOWN(op_arg[2] <= arg_var_bound );
-				break;
-
-
-				// operator(parameter)
-
-
-				// operator(variable)
+				// only first argument is a variable
 				case AbsOp:
 				case AcosOp:
 				case AcoshOp:
@@ -258,46 +236,45 @@ public:
 				case AtanhOp:
 				case CosOp:
 				case CoshOp:
+				case DivvpOp:
 				case ErfOp:
 				case ExpOp:
 				case Expm1Op:
+				case LevpOp:
 				case LogOp:
 				case Log1pOp:
+				case LtvpOp:
+				case PowvpOp:
 				case SignOp:
 				case SinOp:
 				case SinhOp:
 				case SqrtOp:
+				case SubvpOp:
 				case TanOp:
 				case TanhOp:
 				case UsravOp:
+				case ZmulvpOp:
 				CPPAD_ASSERT_UNKNOWN(op_arg[0] <= arg_var_bound );
 				break;
 
-				// operator(parameter, variable)
+				// only second argument is a variable
 				case AddpvOp:
+				case DisOp:
 				case DivpvOp:
 				case EqpvOp:
+				case LdvOp:
 				case LepvOp:
 				case LtpvOp:
 				case MulpvOp:
 				case NepvOp:
 				case PowpvOp:
+				case StvpOp:
 				case SubpvOp:
 				case ZmulpvOp:
 				CPPAD_ASSERT_UNKNOWN(op_arg[1] <= arg_var_bound );
 				break;
 
-				// operator(variable, parameter)
-				case DivvpOp:
-				case LevpOp:
-				case LtvpOp:
-				case PowvpOp:
-				case SubvpOp:
-				case ZmulvpOp:
-				CPPAD_ASSERT_UNKNOWN(op_arg[0] <= arg_var_bound );
-				break;
-
-				// operator(variable, variable)
+				// only first and second arguments are variables
 				case AddvvOp:
 				case DivvvOp:
 				case EqvvOp:
@@ -312,6 +289,17 @@ public:
 				CPPAD_ASSERT_UNKNOWN(op_arg[1] <= arg_var_bound );
 				break;
 
+				// StpvOp
+				case StpvOp:
+				CPPAD_ASSERT_UNKNOWN(op_arg[2] <= arg_var_bound );
+				break;
+
+				// StvvOp
+				case StvvOp:
+				CPPAD_ASSERT_UNKNOWN(op_arg[1] <= arg_var_bound );
+				CPPAD_ASSERT_UNKNOWN(op_arg[2] <= arg_var_bound );
+				break;
+
 				// CSumOp
 				case CSumOp:
 				{	addr_t num_add = op_arg[0];
@@ -319,11 +307,6 @@ public:
 					for(addr_t j = 0; j < num_add + num_sub; j++)
 						CPPAD_ASSERT_UNKNOWN(op_arg[3+j] <= arg_var_bound);
 				}
-				break;
-
-				// operator(index, variable)
-				case DisOp:
-				CPPAD_ASSERT_UNKNOWN(op_arg[1] <= arg_var_bound );
 				break;
 
 				default:
