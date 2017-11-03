@@ -409,7 +409,6 @@ void for_hes_sweep(
 			CPPAD_ASSERT_UNKNOWN( user_state == arg_user );
 			CPPAD_ASSERT_UNKNOWN( user_i == 0 );
 			CPPAD_ASSERT_UNKNOWN( user_j < user_n );
-			CPPAD_ASSERT_UNKNOWN( size_t( arg[0] ) <= i_var );
 			//
 			// arguemnt variables not avaialbe during sparisty calculations
 			user_x[user_j] = CppAD::numeric_limits<Base>::quiet_NaN();

@@ -715,7 +715,6 @@ void ReverseSweep(
 			CPPAD_ASSERT_UNKNOWN( user_state == arg_user );
 			CPPAD_ASSERT_UNKNOWN( user_i == 0 );
 			CPPAD_ASSERT_UNKNOWN( user_j <= user_n );
-			CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) <= i_var );
 			//
 			--user_j;
 			user_ix[user_j] = arg[0];

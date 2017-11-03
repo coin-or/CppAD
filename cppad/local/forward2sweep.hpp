@@ -637,7 +637,6 @@ void forward2sweep(
 			CPPAD_ASSERT_UNKNOWN( user_state == arg_user );
 			CPPAD_ASSERT_UNKNOWN( user_i == 0 );
 			CPPAD_ASSERT_UNKNOWN( user_j < user_n );
-			CPPAD_ASSERT_UNKNOWN( size_t( arg[0] ) <= i_var );
 			//
 			user_tx_all[user_j*(q*r+1)+0] = taylor[arg[0]*((J-1)*r+1)+0];
 			for(ell = 0; ell < r; ell++)

@@ -27,13 +27,7 @@ move_list='
 move_sed='s|op_info|opt_op_info|'
 #
 cat << EOF > junk.sed
-/\\\\param play/! b skip
-: loop
-N
-/\\n\\n\$/! b loop
-s|The object .* is effectly constant.*|\\n|
-#
-: skip
+/CPPAD_ASSERT_UNKNOWN(  *size_t( *arg\\[[01]\\] *) *<=* *i_var *);/d
 EOF
 # -----------------------------------------------------------------------------
 if [ $0 != "bin/batch_edit.sh" ]

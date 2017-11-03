@@ -674,7 +674,6 @@ void rev_hes_sweep(
 			CPPAD_ASSERT_UNKNOWN( user_state == arg_user );
 			CPPAD_ASSERT_UNKNOWN( user_i == 0 );
 			CPPAD_ASSERT_UNKNOWN( user_j <= user_n );
-			CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) <= i_var );
 			//
 			--user_j;
 			// argument variables not available during sparsity calculations
