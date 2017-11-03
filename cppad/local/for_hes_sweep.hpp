@@ -519,11 +519,6 @@ void for_hes_sweep(
 				std::cout << std::endl;
 			}
 		}
-		const addr_t*   arg_tmp = arg;
-		if( op == CSumOp )
-			arg_tmp = arg - arg[-1] - 4;
-		if( op == CSkipOp )
-			arg_tmp = arg - arg[-1] - 7;
 		for(i = 0; i < limit; i++)
 		{	zf_value[i] = false;
 			for(j = 0; j < limit; j++)
@@ -553,7 +548,7 @@ void for_hes_sweep(
 				i_op,
 				i_var,
 				op,
-				arg_tmp
+				arg
 			);
 			if( NumRes(op) > 0 && (! delay_print) ) printOpResult(
 				std::cout,

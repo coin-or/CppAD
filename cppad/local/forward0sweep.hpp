@@ -901,11 +901,6 @@ void forward0sweep(
 			}
 		}
 		Base*           Z_tmp   = taylor + i_var * J;
-		const addr_t*   arg_tmp = arg;
-		if( op == CSumOp )
-			arg_tmp = arg - arg[-1] - 4;
-		if( op == CSkipOp )
-			arg_tmp = arg - arg[-1] - 7;
 		if( op != UsrrvOp )
 		{
 			printOp(
@@ -914,7 +909,7 @@ void forward0sweep(
 				i_op,
 				i_var,
 				op,
-				arg_tmp
+				arg
 			);
 			if( NumRes(op) > 0 ) printOpResult(
 				std::cout,

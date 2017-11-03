@@ -266,7 +266,11 @@ void get_opt_op_info(
 	user_state = start_user;
 	while(op != EndOp)
 	{	// next operator
-		play->get_op_info(++i_op, op, arg, i_var);
+		size_t i_tmp;
+		play->get_op_info(++i_op, op, arg, i_tmp);
+		if( NumRes(op) > 0 )
+			i_var = i_tmp;
+		//
 		CPPAD_ASSERT_UNKNOWN(
 			size_t( std::numeric_limits<addr_t>::max() ) > i_var
 		);

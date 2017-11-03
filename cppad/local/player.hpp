@@ -190,9 +190,6 @@ public:
 	Chech arguments that are variables, to make sure the have value less
 	than or equal to the previously created variable. This is the directed
 	acyclic graph condition (DAG).
-
-	Note that the following operators are not checked:
-	CExpOp, CSkipOp, PriOp
 	*/
 # ifdef NDEBUG
 	void check_dag(void)
@@ -207,12 +204,6 @@ public:
 			addr_t* op_arg = op_arg_vec_.data() + op_info_vec_[i].arg_index;
 			switch(op)
 			{
-				// cases not handled
-				case CExpOp:
-				case CSkipOp:
-				case PriOp:
-				break;
-
 				// cases where nothing to do
 				case BeginOp:
 				case EndOp:
@@ -309,9 +300,39 @@ public:
 				}
 				break;
 
+				// CExpOp
+				case CExpOp:
+				if( op_arg[1] & 1 )
+					CPPAD_ASSERT_UNKNOWN( op_arg[2] <= arg_var_bound);
+				if( op_arg[1] & 2 )
+					CPPAD_ASSERT_UNKNOWN( op_arg[3] <= arg_var_bound);
+				if( op_arg[1] & 4 )
+					CPPAD_ASSERT_UNKNOWN( op_arg[4] <= arg_var_bound);
+				if( op_arg[1] & 8 )
+					CPPAD_ASSERT_UNKNOWN( op_arg[5] <= arg_var_bound);
+				break;
+
+				// PriOp
+				case PriOp:
+				if( op_arg[0] & 1 )
+					CPPAD_ASSERT_UNKNOWN( op_arg[1] <= arg_var_bound);
+				if( op_arg[0] & 2 )
+					CPPAD_ASSERT_UNKNOWN( op_arg[3] <= arg_var_bound);
+				break;
+
+				// CSkipOp, PriOp
+				case CSkipOp:
+				if( op_arg[1] & 1 )
+					CPPAD_ASSERT_UNKNOWN( op_arg[2] <= arg_var_bound);
+				if( op_arg[1] & 2 )
+					CPPAD_ASSERT_UNKNOWN( op_arg[3] <= arg_var_bound);
+				break;
+
 				default:
 				CPPAD_ASSERT_UNKNOWN(false);
 				break;
+
+
 			}
 			if( NumRes(op) > 0 )
 			{	addr_t var_index = op_info_vec_[i].var_index;

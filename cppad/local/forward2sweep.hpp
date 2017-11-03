@@ -743,11 +743,6 @@ void forward2sweep(
 				std::cout << std::endl;
 			}
 		}
-		const addr_t*   arg_tmp = arg;
-		if( op == CSumOp )
-			arg_tmp = arg - arg[-1] - 4;
-		if( op == CSkipOp )
-			arg_tmp = arg - arg[-1] - 7;
 		if( op != UsrrvOp )
 		{	printOp(
 				std::cout,
@@ -755,7 +750,7 @@ void forward2sweep(
 				i_op,
 				i_var,
 				op,
-				arg_tmp
+				arg
 			);
 			Base* Z_tmp = CPPAD_NULL;
 			if( op == UsravOp )
