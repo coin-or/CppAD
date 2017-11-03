@@ -210,10 +210,7 @@ public:
 				// cases not handled
 				case CExpOp:
 				case CSkipOp:
-				case ParOp:
 				case PriOp:
-				case UsrapOp:
-				case UsrrpOp:
 				break;
 
 				// cases where nothing to do
@@ -221,7 +218,10 @@ public:
 				case EndOp:
 				case InvOp:
 				case LdpOp:
+				case ParOp:
 				case UserOp:
+				case UsrapOp:
+				case UsrrpOp:
 				case UsrrvOp:
 				case StppOp:
 				break;
