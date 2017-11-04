@@ -19,13 +19,6 @@ namespace CppAD { namespace local { namespace optimize {
 
 /// information for one operator
 struct struct_opt_op_info {
-	/// arguments
-	const addr_t* arg;
-
-	/// Primary (not auxillary) variable index for this operator. If the
-	// operator has not results, this is num_var (an invalid variable index).
-	addr_t i_var;
-
 	/*!
 	previous operator that can be used in place of this operator.
 	\li
@@ -36,9 +29,6 @@ struct struct_opt_op_info {
 	opt_op_info[previous].usage == yes_usage.
 	*/
 	addr_t previous;
-
-	/// op code
-	OpCode op;
 
 	/// How is this operator used to compute the dependent variables.
 	/// If usage = csum_usage or usage = no_usage, previous = 0.

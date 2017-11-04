@@ -159,7 +159,7 @@ in the operation sequence; i.e., num_var = play->nun_var_rec().
 It maps each variable index to the operator that created the variable.
 This is only true for the primary variables.
 If the index i_var corresponds to an auxillary variable, var2op[i_var]
-is equalt to num_op (which is not a valid operator index).
+is equal to num_op (which is not a valid operator index).
 
 \param cexp_info
 The input size of this vector must be zero.
@@ -243,10 +243,8 @@ void get_opt_op_info(
 	size_t user_old=0, user_m=0, user_n=0, user_i=0, user_j=0;
 	enum_user_state user_state;
 	//
-	//
-	//
 	// ----------------------------------------------------------------------
-	// Forward pass to compute op, arg, i_var for each operator and var2op
+	// Forward pass to determine var2op and num_cexp_op
 	// ----------------------------------------------------------------------
 	OpCode        op;     // operator
 	const addr_t* arg;    // arguments
@@ -258,51 +256,24 @@ void get_opt_op_info(
 	CPPAD_ASSERT_UNKNOWN( NumRes(BeginOp) == 1 );
 	CPPAD_ASSERT_UNKNOWN( i_op            == 0 );
 	CPPAD_ASSERT_UNKNOWN( i_var           == 0 );
-	//
-	opt_op_info[i_op].op    = op;
-	opt_op_info[i_op].arg   = arg;
-	opt_op_info[i_op].i_var = addr_t( i_var );
-	//
 	// This variaible index, 0, is automatically created, but it should
 	// not used because variable index 0 represents a paraemeter during
-	// the recording process. So we set
-	var2op[i_var] = addr_t( num_op );
+	// the recording process. So we leave var2op[0] as an invalid values
 	//
 	size_t num_cexp_op = 0;
 	user_state = start_user;
 	while(op != EndOp)
 	{	// next operator
-		size_t i_tmp;
-		play->get_op_info(++i_op, op, arg, i_tmp);
-		if( NumRes(op) > 0 )
-			i_var = i_tmp;
-		//
-		CPPAD_ASSERT_UNKNOWN(
-			size_t( std::numeric_limits<addr_t>::max() ) > i_var
-		);
-		CPPAD_ASSERT_UNKNOWN(
-			size_t( std::numeric_limits<addr_t>::max() ) > i_op
-		);
-		//
-		// information for this operator
-		opt_op_info[i_op].op    = op;
-		opt_op_info[i_op].arg   = arg;
-		opt_op_info[i_op].i_var = addr_t( i_var );
+		play->get_op_info(++i_op, op, arg, i_var);
 		//
 		// mapping from variable index to operator index
 		if( NumRes(op) > 0 )
+		{	// set operator value for the primary variable for this operator
 			var2op[i_var] = addr_t( i_op );
-		//
-		switch( op )
-		{
-			case CExpOp:
-			// Set the operator index for this conditional expression and
-			// count the number of conditional expressions.
+		}
+		if( op == CExpOp )
+		{	// count the number of conditional expressions.
 			++num_cexp_op;
-			break;
-
-			default:
-			break;
 		}
 	}
 	// vector that maps conditional expression index to operator index
