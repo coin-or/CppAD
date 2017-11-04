@@ -25,6 +25,9 @@ and the argument has previous match,
 the previous match for the argument is used when checking for a match
 for the current operator.
 
+\param play
+This is the old operation sequence.
+
 \param var2op
 mapping from variable index to operator index.
 
@@ -65,14 +68,17 @@ and opt_op_info[i_op] does not match any other element of set[j].
 An entry will be added each time match_op is called
 and a match for the current operator is not found.
 */
-
-inline void match_op(
+template <class Base>
+void match_op(
+	const player<Base>*            play           ,
 	const vector<addr_t>&          var2op         ,
-	vector<struct_opt_op_info>&    opt_op_info        ,
+	vector<struct_opt_op_info>&    opt_op_info    ,
 	size_t                         current        ,
 	sparse_list&                   hash_table_op  )
-{	size_t num_op = opt_op_info.size();
+{	//
+	size_t num_op = play->num_op_rec();
 	//
+	CPPAD_ASSERT_UNKNOWN( num_op == opt_op_info.size() );
 	CPPAD_ASSERT_UNKNOWN( opt_op_info[current].previous == 0 );
 	CPPAD_ASSERT_UNKNOWN(
 		hash_table_op.n_set() == CPPAD_HASH_TABLE_SIZE
@@ -81,8 +87,10 @@ inline void match_op(
 	CPPAD_ASSERT_UNKNOWN( current < num_op );
 	//
 	// current operator
-	OpCode        op         = opt_op_info[current].op;
-	const addr_t* arg        = opt_op_info[current].arg;
+	OpCode        op;
+	const addr_t* arg;
+	size_t        i_var;
+	play->get_op_info(current, op, arg, i_var);
 	//
 	// which arguments are variable
 	size_t num_arg = NumArg(op);
@@ -163,19 +171,27 @@ inline void match_op(
 		CPPAD_ASSERT_UNKNOWN(false);
 	}
 	//
-	// If i-th argument to current operator has a previous operator,
-	// this is the i-th argument for previous operator.
-	// Otherwise, it is the i-th argument for the current operator
-	// (if a previous variable exists)
+	// If j-th argument to current operator has a previous operator,
+	// this is the j-th argument for previous operator.
+	// Otherwise, it is the j-th argument for the current operator.
 	addr_t arg_match[2];
 	for(size_t j = 0; j < num_arg; ++j)
 	{	arg_match[j] = arg[j];
 		if( variable[j] )
-		{	size_t previous = opt_op_info[ var2op[arg[j]] ].previous;
+		{	size_t j_op     = var2op[ arg[j] ];
+			size_t previous = opt_op_info[j_op].previous;
 			if( previous != 0 )
-			{	CPPAD_ASSERT_UNKNOWN( opt_op_info[previous].previous == 0 );
+			{	// a previous match, be the end of the line; i.e.,
+				// it does not have a previous match.
+				CPPAD_ASSERT_UNKNOWN( opt_op_info[previous].previous == 0 );
 				//
-				arg_match[j] = opt_op_info[previous].i_var;
+				OpCode        op_p;
+				const addr_t* arg_p;
+				size_t        i_var_p;
+				play->get_op_info(previous, op_p, arg_p, i_var_p);
+				//
+				CPPAD_ASSERT_UNKNOWN( NumRes(op_p) > 0 );
+				arg_match[j] = addr_t( i_var_p );
 			}
 		}
 	}
@@ -194,21 +210,32 @@ inline void match_op(
 		CPPAD_ASSERT_UNKNOWN( candidate < current );
 		CPPAD_ASSERT_UNKNOWN( opt_op_info[candidate].previous == 0 );
 		//
+		OpCode        op_c;
+		const addr_t* arg_c;
+		size_t        i_var_c;
+		play->get_op_info(candidate, op_c, arg_c, i_var_c);
+		//
 		// check for a match
-		bool match = op == opt_op_info[candidate].op;
+		bool match = op == op_c;
 		if( match )
 		{	for(size_t j = 0; j < num_arg; j++)
 			{	if( variable[j] )
 				{	size_t previous =
-						opt_op_info[ var2op[opt_op_info[candidate].arg[j]] ].previous;
+						opt_op_info[ var2op[ arg_c[j] ] ].previous;
 					if( previous != 0 )
-					{	CPPAD_ASSERT_UNKNOWN(opt_op_info[previous].previous == 0);
+					{	// must be end of the line for a previous match
+						CPPAD_ASSERT_UNKNOWN(
+							opt_op_info[previous].previous == 0
+						);
 						//
-						match &=
-							arg_match[j] == addr_t( opt_op_info[previous].i_var );
+						OpCode        op_p;
+						const addr_t* arg_p;
+						size_t        i_var_p;
+						play->get_op_info(previous, op_p, arg_p, i_var_p);
+						//
+						match &= arg_match[j] == addr_t( i_var_p );
 					}
-					else
-						match &= arg_match[j] == opt_op_info[candidate].arg[j];
+					else match &= arg_match[j] == arg_c[j];
 				}
 			}
 		}
@@ -232,24 +259,35 @@ inline void match_op(
 			CPPAD_ASSERT_UNKNOWN( candidate < current );
 			CPPAD_ASSERT_UNKNOWN( opt_op_info[candidate].previous == 0 );
 			//
-			bool match = op == opt_op_info[candidate].op;
+			OpCode        op_c;
+			const addr_t* arg_c;
+			size_t        i_var_c;
+			play->get_op_info(candidate, op_c, arg_c, i_var_c);
+			//
+			bool match = op == op_c;
 			if( match )
 			{	for(size_t j = 0; j < num_arg; j++)
 				{	CPPAD_ASSERT_UNKNOWN( variable[j] )
 					size_t previous =
-						opt_op_info[ var2op[opt_op_info[candidate].arg[j]] ].previous;
+						opt_op_info[ var2op[ arg_c[j] ] ].previous;
 					if( previous != 0 )
-					{	CPPAD_ASSERT_UNKNOWN(opt_op_info[previous].previous == 0);
+					{	CPPAD_ASSERT_UNKNOWN(
+							opt_op_info[previous].previous == 0
+						);
 						//
-						match &=
-							arg_match[j] == addr_t( opt_op_info[previous].i_var );
+						OpCode        op_p;
+						const addr_t* arg_p;
+						size_t        i_var_p;
+						play->get_op_info(previous, op_p, arg_p, i_var_p);
+						//
+						match &= arg_match[j] == addr_t( i_var_p );
 					}
 					else
-						match &= arg_match[j] == opt_op_info[candidate].arg[j];
+						match &= arg_match[j] == arg_c[j];
 				}
 			}
 			if( match )
-			{	opt_op_info[current].previous = static_cast<addr_t>( candidate );
+			{	opt_op_info[current].previous = static_cast<addr_t>(candidate);
 				return;
 			}
 			++itr_swap;

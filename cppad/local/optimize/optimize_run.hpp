@@ -22,7 +22,6 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # include <cppad/local/optimize/csum_variable.hpp>
 # include <cppad/local/optimize/csum_stacks.hpp>
 # include <cppad/local/optimize/cexp_info.hpp>
-# include <cppad/local/optimize/match_op.hpp>
 # include <cppad/local/optimize/record_pv.hpp>
 # include <cppad/local/optimize/record_vp.hpp>
 # include <cppad/local/optimize/record_vv.hpp>

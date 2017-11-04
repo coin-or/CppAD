@@ -140,9 +140,7 @@ print forward operators; i.e., PriOp.
 This is also a side effect; i.e. NumRes(PriOp) is zero.
 
 \param play
-This is the operation sequence.
-It is essentially const, except for play back state which
-changes while it plays back the operation seqeunce.
+This is the old operation sequence.
 
 \param dep_taddr
 is a vector of variable indices for the dependent variables.
@@ -205,14 +203,14 @@ void get_opt_op_info(
 	bool                          conditional_skip    ,
 	bool                          compare_op          ,
 	bool                          print_for_op        ,
-	const player<Base>* play,
+	const player<Base>*           play                ,
 	const vector<size_t>&         dep_taddr           ,
 	vector<addr_t>&               var2op              ,
 	vector<struct_cexp_info>&     cexp_info           ,
 	sparse_list&                  skip_op_true        ,
 	sparse_list&                  skip_op_false       ,
 	vector<bool>&                 vecad_used          ,
-	vector<struct_opt_op_info>&   opt_op_info             )
+	vector<struct_opt_op_info>&   opt_op_info         )
 {
 	CPPAD_ASSERT_UNKNOWN( var2op.size()  == 0 );
 	CPPAD_ASSERT_UNKNOWN( cexp_info.size() == 0 );
@@ -1001,7 +999,7 @@ void get_opt_op_info(
 			case ZmulvpOp:
 			case ZmulvvOp:
 			// check for a previous match
-			match_op( var2op, opt_op_info, i_op, hash_table_op );
+			match_op(play, var2op, opt_op_info, i_op, hash_table_op );
 			if( opt_op_info[i_op].previous != 0 )
 			{	// like a unary operator that assigns i_op equal to previous.
 				size_t previous = opt_op_info[i_op].previous;
