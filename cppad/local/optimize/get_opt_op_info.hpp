@@ -48,6 +48,9 @@ inline bool add_or_subtract(OpCode op)
 /*!
 Increarse argument usage and propagate cexp_set from result to argument.
 
+\param play
+is the player for the old operation sequence.
+
 \param sum_result
 is result an addition or subtraction operator (passed for speed so
 do not need to call add_or_subtract for result).
@@ -84,12 +87,14 @@ If cexp_set.n_set() != 0 and opt_op_info[i_arg].usage != no_usage,
 the output value of set[i_arg] is the intersection of
 its input value and set[i_result].
 */
+template <class Base>
 inline void usage_cexp_result2arg(
-	bool                    sum_result ,
-	size_t                  i_result   ,
-	size_t                  i_arg      ,
+	const player<Base>*         play           ,
+	bool                        sum_result     ,
+	size_t                      i_result       ,
+	size_t                      i_arg          ,
 	vector<struct_opt_op_info>& opt_op_info    ,
-	sparse_list&            cexp_set   )
+	sparse_list&                cexp_set       )
 {
 	// cexp_set
 	if( cexp_set.n_set() > 0 )
@@ -105,7 +110,9 @@ inline void usage_cexp_result2arg(
 	// usage
 	bool csum = sum_result && opt_op_info[i_arg].usage == no_usage;
 	if( csum )
-		csum = add_or_subtract( opt_op_info[i_arg].op );
+	{	OpCode op_a = play->GetOp(i_arg);
+		csum = add_or_subtract( op_a );
+	}
 	if( csum )
 		opt_op_info[i_arg].usage = csum_usage;
 	else
@@ -236,21 +243,22 @@ void get_opt_op_info(
 	size_t user_old=0, user_m=0, user_n=0, user_i=0, user_j=0;
 	enum_user_state user_state;
 	//
-	// information set by forward_next
-	OpCode        op;     // operator
-	const addr_t* arg;    // arguments
-	size_t        i_op;   // operator index
-	size_t        i_var;  // variable index of first result
+	//
 	//
 	// ----------------------------------------------------------------------
 	// Forward pass to compute op, arg, i_var for each operator and var2op
 	// ----------------------------------------------------------------------
+	OpCode        op;     // operator
+	const addr_t* arg;    // arguments
+	size_t        i_op;   // operator index
+	size_t        i_var;  // variable index of first result
 	i_op = 0;
 	play->get_op_info(i_op, op, arg, i_var);
 	CPPAD_ASSERT_UNKNOWN( op              == BeginOp );
 	CPPAD_ASSERT_UNKNOWN( NumRes(BeginOp) == 1 );
 	CPPAD_ASSERT_UNKNOWN( i_op            == 0 );
 	CPPAD_ASSERT_UNKNOWN( i_var           == 0 );
+	//
 	opt_op_info[i_op].op    = op;
 	opt_op_info[i_op].arg   = arg;
 	opt_op_info[i_op].i_var = addr_t( i_var );
@@ -385,9 +393,7 @@ void get_opt_op_info(
 	{	--i_op;
 		//
 		// this operator information
-		op    =  opt_op_info[i_op].op;
-		arg   =  opt_op_info[i_op].arg;
-		i_var =  opt_op_info[i_op].i_var;
+		play->get_op_info(i_op, op, arg, i_var);
 		//
 		// Is the result of this operation used.
 		// (This only makes sense when NumRes(op) > 0.)
@@ -430,7 +436,9 @@ void get_opt_op_info(
 			CPPAD_ASSERT_UNKNOWN( NumRes(op) > 0 );
 			if( use_result != no_usage )
 			{	size_t j_op = var2op[ arg[0] ];
-				usage_cexp_result2arg(sum_op, i_op, j_op, opt_op_info, cexp_set);
+				usage_cexp_result2arg(
+					play, sum_op, i_op, j_op, opt_op_info, cexp_set
+				);
 			}
 			break; // --------------------------------------------
 
@@ -447,7 +455,9 @@ void get_opt_op_info(
 			CPPAD_ASSERT_UNKNOWN( NumRes(op) > 0 );
 			if( use_result != no_usage )
 			{	size_t j_op = var2op[ arg[1] ];
-				usage_cexp_result2arg(sum_op, i_op, j_op, opt_op_info, cexp_set);
+				usage_cexp_result2arg(
+					play, sum_op, i_op, j_op, opt_op_info, cexp_set
+				);
 			}
 			break; // --------------------------------------------
 
@@ -465,7 +475,7 @@ void get_opt_op_info(
 			{	for(size_t i = 0; i < 2; i++)
 				{	size_t j_op = var2op[ arg[i] ];
 					usage_cexp_result2arg(
-						sum_op, i_op, j_op, opt_op_info, cexp_set
+						play, sum_op, i_op, j_op, opt_op_info, cexp_set
 					);
 				}
 			}
@@ -483,14 +493,14 @@ void get_opt_op_info(
 				if( arg[1] & 1 )
 				{	size_t j_op = var2op[ arg[2] ];
 					usage_cexp_result2arg(
-						sum_op, i_op, j_op, opt_op_info, cexp_set
+						play, sum_op, i_op, j_op, opt_op_info, cexp_set
 					);
 				}
 				// propgate from result to right argument
 				if( arg[1] & 2 )
 				{	size_t j_op = var2op[ arg[3] ];
 					usage_cexp_result2arg(
-							sum_op, i_op, j_op, opt_op_info, cexp_set
+							play, sum_op, i_op, j_op, opt_op_info, cexp_set
 					);
 				}
 				// are if_true and if_false cases the same variable
@@ -503,7 +513,7 @@ void get_opt_op_info(
 					bool can_skip = conditional_skip & (! same_variable);
 					can_skip     &= opt_op_info[j_op].usage == no_usage;
 					usage_cexp_result2arg(
-						sum_op, i_op, j_op, opt_op_info, cexp_set
+						play, sum_op, i_op, j_op, opt_op_info, cexp_set
 					);
 					if( can_skip )
 					{	// j_op corresponds to the value used when the
@@ -522,7 +532,7 @@ void get_opt_op_info(
 					bool can_skip = conditional_skip & (! same_variable);
 					can_skip     &= opt_op_info[j_op].usage == no_usage;
 					usage_cexp_result2arg(
-						sum_op, i_op, j_op, opt_op_info, cexp_set
+						play, sum_op, i_op, j_op, opt_op_info, cexp_set
 					);
 					if( can_skip )
 					{	// j_op corresponds to the value used when the
@@ -559,14 +569,14 @@ void get_opt_op_info(
 				{	// arg[1] is a variable
 					size_t j_op = var2op[ arg[1] ];
 					usage_cexp_result2arg(
-						sum_op, i_op, j_op, opt_op_info, cexp_set
+						play, sum_op, i_op, j_op, opt_op_info, cexp_set
 					);
 				}
 				if( arg[0] & 2 )
 				{	// arg[3] is a variable
 					size_t j_op = var2op[ arg[3] ];
 					usage_cexp_result2arg(
-						sum_op, i_op, j_op, opt_op_info, cexp_set
+						play, sum_op, i_op, j_op, opt_op_info, cexp_set
 					);
 				}
 			}
@@ -586,7 +596,9 @@ void get_opt_op_info(
 			{	opt_op_info[i_op].usage = yes_usage;
 				//
 				size_t j_op = var2op[ arg[1] ];
-				usage_cexp_result2arg(sum_op, i_op, j_op, opt_op_info, cexp_set);
+				usage_cexp_result2arg(
+					play, sum_op, i_op, j_op, opt_op_info, cexp_set
+				);
 			}
 			break; // ----------------------------------------------
 
@@ -598,7 +610,9 @@ void get_opt_op_info(
 			{	opt_op_info[i_op].usage = yes_usage;
 				//
 				size_t j_op = var2op[ arg[0] ];
-				usage_cexp_result2arg(sum_op, i_op, j_op, opt_op_info, cexp_set);
+				usage_cexp_result2arg(
+					play, sum_op, i_op, j_op, opt_op_info, cexp_set
+				);
 			}
 			break; // ----------------------------------------------
 
@@ -615,7 +629,7 @@ void get_opt_op_info(
 				for(size_t i = 0; i < 2; i++)
 				{	size_t j_op = var2op[ arg[i] ];
 					usage_cexp_result2arg(
-						sum_op, i_op, j_op, opt_op_info, cexp_set
+						play, sum_op, i_op, j_op, opt_op_info, cexp_set
 					);
 				}
 			}
@@ -681,7 +695,7 @@ void get_opt_op_info(
 				for(size_t i = 0; i < num_add + num_sub; i++)
 				{	size_t j_op = var2op[ arg[3 + i] ];
 					usage_cexp_result2arg(
-						sum_op, i_op, j_op, opt_op_info, cexp_set
+						play, sum_op, i_op, j_op, opt_op_info, cexp_set
 					);
 				}
 			}
@@ -704,7 +718,9 @@ void get_opt_op_info(
 				// -------------------------------------------------------
 				last_user_i_op = i_op;
 				CPPAD_ASSERT_UNKNOWN( i_op > user_n + user_m + 1 );
-				CPPAD_ASSERT_UNKNOWN(opt_op_info[last_user_i_op].usage==no_usage);
+				CPPAD_ASSERT_UNKNOWN(
+					opt_op_info[last_user_i_op].usage == no_usage
+				);
 # ifndef NDEBUG
 				if( cexp_set.n_set() > 0 )
 				{	sparse_list_const_iterator itr(cexp_set, last_user_i_op);
@@ -820,7 +836,7 @@ void get_opt_op_info(
 					}
 					if( use_arg_j )
 					{	size_t j_op = var2op[ user_ix[j] ];
-						usage_cexp_result2arg(
+						usage_cexp_result2arg(play,
 							sum_op, last_user_i_op, j_op, opt_op_info, cexp_set
 						);
 					}
@@ -855,7 +871,6 @@ void get_opt_op_info(
 
 			case UsravOp:
 			// variable argument in an atomic operation sequence
-			CPPAD_ASSERT_UNKNOWN( arg[0] <= opt_op_info[i_op].i_var );
 			CPPAD_ASSERT_UNKNOWN( 0 < arg[0] );
 			//
 			// reverse_user using opt_op_info instead of play
@@ -891,7 +906,7 @@ void get_opt_op_info(
 					user_r_pack[user_i] = true;
 				//
 				usage_cexp_result2arg(
-					sum_op, i_op, last_user_i_op, opt_op_info, cexp_set
+					play, sum_op, i_op, last_user_i_op, opt_op_info, cexp_set
 				);
 			}
 			break; // --------------------------------------------------------
@@ -923,7 +938,8 @@ void get_opt_op_info(
 	for(i_op = 0; i_op < num_op; ++i_op)
 	{	opt_op_info[i_op].previous = 0;
 
-		if( opt_op_info[i_op].usage == yes_usage ) switch( opt_op_info[i_op].op )
+		if( opt_op_info[i_op].usage == yes_usage )
+		switch( play->GetOp(i_op) )
 		{
 			case NumberOp:
 			CPPAD_ASSERT_UNKNOWN(false);
@@ -1006,7 +1022,7 @@ void get_opt_op_info(
 				bool sum_op = false;
 				CPPAD_ASSERT_UNKNOWN( previous < i_op );
 				usage_cexp_result2arg(
-					sum_op, i_op, previous, opt_op_info, cexp_set
+					play, sum_op, i_op, previous, opt_op_info, cexp_set
 				);
 			}
 			break;
@@ -1028,8 +1044,8 @@ void get_opt_op_info(
 			opt_op_info[i].previous == 0 || opt_op_info[i].usage == yes_usage
 		);
 		i_op            = cexp2op[i];
-		arg             = opt_op_info[i_op].arg;
-		CPPAD_ASSERT_UNKNOWN( opt_op_info[i_op].op == CExpOp );
+		play->get_op_info(i_op, op, arg, i_var);
+		CPPAD_ASSERT_UNKNOWN( op == CExpOp );
 		//
 		struct_cexp_info info;
 		info.i_op       = i_op;
@@ -1059,12 +1075,12 @@ void get_opt_op_info(
 		if( keep )
 		{	sparse_list_const_iterator itr(cexp_set, i_op);
 			if( *itr != cexp_set.end() )
-			{	if( opt_op_info[i_op].op == UserOp )
+			{	if( play->GetOp(i_op) == UserOp )
 				{	// i_op is the first operations in this user atomic call.
 					// Find the last operation in this call.
 					++j_op;
-					while( opt_op_info[j_op].op != UserOp )
-					{	switch( opt_op_info[j_op].op )
+					while( play->GetOp(j_op) != UserOp )
+					{	switch( play->GetOp(j_op) )
 						{	case UsrapOp:
 							case UsravOp:
 							case UsrrpOp:
