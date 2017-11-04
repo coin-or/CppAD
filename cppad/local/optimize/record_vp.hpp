@@ -27,44 +27,34 @@ player object corresponding to the old recroding.
 \param var2op
 mapping from old variable index to old operator index.
 
-\param opt_op_info
-mapping from old index to operator index to operator information
-
 \param old2new
 mapping from old operator index to information about the new recording.
 
-\param current
-is the index in the old operation sequence for
-the variable corresponding to the result for the current operator.
-We use the notation i_op = var2op[current].
-It follows that  NumRes( opt_op_info[i_op].op ) > 0.
-If 0 < j_op < i_op, either opt_op_info[j_op].csum_connected,
-opt_op_info[j_op].usage = 0, or old2new[j_op].new_var != 0.
+\param i_op
+is the index in the old operation sequence for this operator.
+the must be one of the following:
+DivvpOp, PowvpOp, SubvpOp, ZmulvpOp.
 
 \param rec
 is the object that will record the new operations.
 
 \return
 is the operator and variable indices in the new operation sequence.
-
-\param op
-is the operator that we are recording which must be one of the following:
-DivvpOp, PowvpOp, SubvpOp, ZmulvpOp.
-
-\param arg
-is the vector of arguments for this operator.
 */
 template <class Base>
 struct_size_pair record_vp(
 	const player<Base>*                                play           ,
 	const vector<addr_t>&                              var2op         ,
-	const vector<struct_opt_op_info>&                  opt_op_info        ,
 	const CppAD::vector<struct struct_old2new>&        old2new        ,
-	size_t                                             current        ,
-	recorder<Base>*                                    rec            ,
-	OpCode                                             op             ,
-	const addr_t*                                      arg            )
+	size_t                                             i_op           ,
+	recorder<Base>*                                    rec            )
 {
+	// get_op_info
+	OpCode        op;
+	const addr_t* arg;
+	size_t        i_var;
+	play->get_op_info(i_op, op, arg, i_var);
+	//
 # ifndef NDEBUG
 	switch(op)
 	{	case DivvpOp:
@@ -84,14 +74,16 @@ struct_size_pair record_vp(
 	// sequence; i.e., given a parameter index i < npar, the corresponding
 	// parameter value is par[i].
 	const Base* par = play->GetPar();
-
-	CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < current );
-	CPPAD_ASSERT_UNKNOWN( size_t(arg[1]) < npar    );
+	//
+	CPPAD_ASSERT_UNKNOWN( NumRes(op) > 0 );
+	CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < i_var ); // DAG condition
+	CPPAD_ASSERT_UNKNOWN( size_t(arg[1]) < npar  );
+	//
 	addr_t new_arg[2];
 	new_arg[0]   = old2new[ var2op[arg[0]] ].new_var;
 	new_arg[1]   = rec->PutPar( par[arg[1]] );
 	rec->PutArg( new_arg[0], new_arg[1] );
-
+	//
 	struct_size_pair ret;
 	ret.i_op  = rec->num_op_rec();
 	ret.i_var = rec->PutOp(op);

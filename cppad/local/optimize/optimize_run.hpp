@@ -408,12 +408,9 @@ void optimize_run(
 				size_pair = record_vp(
 					play                ,
 					var2op              ,
-					opt_op_info         ,
 					old2new             ,
-					i_var               ,
-					rec                 ,
-					op                  ,
-					arg
+					i_op                ,
+					rec
 				);
 				old2new[i_op].new_op  = addr_t( size_pair.i_op );
 				old2new[i_op].new_var = addr_t( size_pair.i_var );
@@ -480,12 +477,9 @@ void optimize_run(
 				size_pair = record_pv(
 					play                ,
 					var2op              ,
-					opt_op_info         ,
 					old2new             ,
-					i_var               ,
-					rec                 ,
-					op                  ,
-					arg
+					i_op                ,
+					rec
 				);
 				old2new[i_op].new_op  = addr_t( size_pair.i_op );
 				old2new[i_op].new_var = addr_t( size_pair.i_var );
@@ -532,12 +526,9 @@ void optimize_run(
 				size_pair = record_vv(
 					play                ,
 					var2op              ,
-					opt_op_info         ,
 					old2new             ,
-					i_var               ,
-					rec                 ,
-					op                  ,
-					arg
+					i_op                ,
+					rec
 				);
 				old2new[i_op].new_op  = addr_t( size_pair.i_op );
 				old2new[i_op].new_var = addr_t( size_pair.i_var );

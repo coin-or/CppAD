@@ -98,9 +98,9 @@ struct_size_pair record_csum(
 	struct struct_csum_variable var;
 	//
 	// information corresponding to the root node in the cummulative summation
-	var.op  = opt_op_info[i_op].op;   // this operator
-	var.arg = opt_op_info[i_op].arg;  // arguments for this operator
-	var.add = true;               // was parrent operator positive or negative
+	size_t not_used;
+	play->get_op_info(i_op, var.op, var.arg, not_used);
+	var.add = true;  // was parrent operator positive or negative
 	//
 	// initialize stack as containing this one operator
 	work.op_stack.push( var );
@@ -154,8 +154,8 @@ struct_size_pair record_csum(
 					size_t( old2new[ var2op[arg[0]] ].new_var) == 0
 				);
 				// push the operator corresponding to the first argument
-				var.op  = opt_op_info[ var2op[arg[0]] ].op;
-				var.arg = opt_op_info[ var2op[arg[0]] ].arg;
+				size_t i_op_tmp = var2op[ arg[0] ];
+				play->get_op_info(i_op_tmp, var.op, var.arg, not_used);
 				// first argument has same sign as parent node
 				var.add = add;
 				work.op_stack.push( var );
@@ -197,8 +197,8 @@ struct_size_pair record_csum(
 					size_t( old2new[ var2op[arg[1]] ].new_var) == 0
 				);
 				// push the operator corresoponding to the second arugment
-				var.op   = opt_op_info[ var2op[arg[1]] ].op;
-				var.arg  = opt_op_info[ var2op[arg[1]] ].arg;
+				size_t i_op_tmp = var2op[ arg[1] ];
+				play->get_op_info(i_op_tmp, var.op, var.arg, not_used);
 				var.add  = add;
 				work.op_stack.push( var );
 			}
