@@ -21,6 +21,9 @@ namespace CppAD { namespace local { namespace optimize  {
 /*!
 Recording a cummulative cummulative summation.
 
+\param play
+player object corresponding to the old recroding.
+
 \param var2op
 mapping from old variable index to old operator index.
 
@@ -37,14 +40,6 @@ We use the notation i_op = var2op[current].
 It follows that  NumRes( opt_op_info[i_op].op ) > 0.
 If 0 < j_op < i_op, either opt_op_info[j_op].usage == csum_usage,
 opt_op_info[j_op].usage = no_usage, or old2new[j_op].new_var != 0.
-
-\param npar
-is the number of parameters corresponding to the old operation sequence.
-
-\param par
-is a vector of length npar containing the parameters
-the old operation sequence; i.e.,
-given a parameter index i < npar, the corresponding parameter value is par[i].
 
 \param rec
 is the object that will record the new operations.
@@ -69,16 +64,25 @@ opt_op_info[i_op].
 
 template <class Base>
 struct_size_pair record_csum(
+	const player<Base>*                                play           ,
 	const vector<addr_t>&                              var2op         ,
-	const vector<struct_opt_op_info>&                  opt_op_info        ,
+	const vector<struct_opt_op_info>&                  opt_op_info    ,
 	const CppAD::vector<struct struct_old2new>&        old2new        ,
 	size_t                                             current        ,
-	size_t                                             npar           ,
-	const Base*                                        par            ,
 	recorder<Base>*                                    rec            ,
 	// local information passed so stacks need not be allocated for every call
 	struct_csum_stacks&                                work           )
 {
+# ifndef NDEBUG
+	// number of parameters corresponding to the old operation sequence.
+	size_t npar = play->num_par_rec();
+# endif
+
+	// vector of length npar containing the parameters the old operation
+	// sequence; i.e., given a parameter index i < npar, the corresponding
+	// parameter value is par[i].
+	const Base* par = play->GetPar();
+
 	// check assumption about work space
 	CPPAD_ASSERT_UNKNOWN( work.op_stack.empty() );
 	CPPAD_ASSERT_UNKNOWN( work.add_stack.empty() );

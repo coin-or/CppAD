@@ -87,7 +87,7 @@ void optimize_run(
 	const std::string&           options   ,
 	size_t                       n         ,
 	CppAD::vector<size_t>&       dep_taddr ,
-	const player<Base>* play,
+	const player<Base>*          play      ,
 	recorder<Base>*              rec       )
 {
 	bool conditional_skip = true;
@@ -246,13 +246,15 @@ void optimize_run(
 	struct_size_pair size_pair;
 
 	user_state = start_user;
+	i_var      = 0;
 	for(i_op = 0; i_op < num_op; ++i_op)
 	{	addr_t mask; // temporary used in some switch cases
 		//
 		// this operator information
-		op    =  opt_op_info[i_op].op;
-		arg   =  opt_op_info[i_op].arg;
-		i_var =  opt_op_info[i_op].i_var;
+		size_t i_tmp;
+		play->get_op_info(i_op, op, arg, i_tmp);
+		if( NumRes(op) > 0 )
+			i_var = i_tmp;
 		//
 		// determine if we should insert a conditional skip here
 		bool skip  = conditional_skip;
@@ -380,12 +382,11 @@ void optimize_run(
 			{
 				// convert to a sequence of summation operators
 				size_pair = record_csum(
+					play                ,
 					var2op              ,
-					opt_op_info             ,
+					opt_op_info         ,
 					old2new             ,
 					i_var               ,
-					play->num_par_rec() ,
-					play->GetPar()      ,
 					rec                 ,
 					csum_work
 				);
@@ -405,12 +406,11 @@ void optimize_run(
 			else
 			{	//
 				size_pair = record_vp(
+					play                ,
 					var2op              ,
-					opt_op_info             ,
+					opt_op_info         ,
 					old2new             ,
 					i_var               ,
-					play->num_par_rec() ,
-					play->GetPar()      ,
 					rec                 ,
 					op                  ,
 					arg
@@ -453,12 +453,11 @@ void optimize_run(
 			{
 				// convert to a sequence of summation operators
 				size_pair = record_csum(
+					play                ,
 					var2op              ,
-					opt_op_info             ,
+					opt_op_info         ,
 					old2new             ,
 					i_var               ,
-					play->num_par_rec() ,
-					play->GetPar()      ,
 					rec                 ,
 					csum_work
 				);
@@ -479,12 +478,11 @@ void optimize_run(
 			else
 			{	//
 				size_pair = record_pv(
+					play                ,
 					var2op              ,
-					opt_op_info             ,
+					opt_op_info         ,
 					old2new             ,
 					i_var               ,
-					play->num_par_rec() ,
-					play->GetPar()      ,
 					rec                 ,
 					op                  ,
 					arg
@@ -507,12 +505,11 @@ void optimize_run(
 			{
 				// convert to a sequence of summation operators
 				size_pair = record_csum(
+					play                ,
 					var2op              ,
-					opt_op_info             ,
+					opt_op_info         ,
 					old2new             ,
 					i_var               ,
-					play->num_par_rec() ,
-					play->GetPar()      ,
 					rec                 ,
 					csum_work
 				);
@@ -533,12 +530,11 @@ void optimize_run(
 			else
 			{	//
 				size_pair = record_vv(
+					play                ,
 					var2op              ,
-					opt_op_info             ,
+					opt_op_info         ,
 					old2new             ,
 					i_var               ,
-					play->num_par_rec() ,
-					play->GetPar()      ,
 					rec                 ,
 					op                  ,
 					arg
@@ -866,10 +862,12 @@ void optimize_run(
 
 # ifndef NDEBUG
 	for(i_op = 0; i_op < num_op; i_op++)
-		if( NumRes( opt_op_info[i_op].op ) > 0 )
+	{	play->get_op_info(i_op, op, arg, i_var);
+		if( NumRes(op) > 0 )
 			CPPAD_ASSERT_UNKNOWN(
 				size_t(old2new[i_op].new_op) < rec->num_op_rec()
 			);
+	}
 # endif
 	// make sure that all the conditional expressions have been
 	// checked to see if they are still present

@@ -20,6 +20,9 @@ namespace CppAD { namespace local { namespace optimize  {
 /*!
 Record an operation of the form (parameter op variable).
 
+\param play
+player object corresponding to the old recroding.
+
 \param var2op
 mapping from old variable index to old operator index.
 
@@ -37,14 +40,6 @@ It follows that  NumRes( opt_op_info[i_op].op ) > 0.
 If 0 < j_op < i_op, either opt_op_info[j_op].csum_connected,
 opt_op_info[j_op].usage = 0, or old2new[j_op].new_var != 0.
 
-\param npar
-is the number of parameters corresponding to the old operation sequence.
-
-\param par
-is a vector of length npar containing the parameters
-the old operation sequence; i.e.,
-given a parameter index i < npar, the corresponding parameter value is par[i].
-
 \param rec
 is the object that will record the new operations.
 
@@ -60,12 +55,11 @@ is the vector of arguments for this operator.
 */
 template <class Base>
 struct_size_pair record_pv(
+	const player<Base>*                                play           ,
 	const vector<addr_t>&                              var2op         ,
 	const vector<struct_opt_op_info>&                  opt_op_info        ,
 	const CppAD::vector<struct struct_old2new>&        old2new        ,
 	size_t                                             current        ,
-	size_t                                             npar           ,
-	const Base*                                        par            ,
 	recorder<Base>*                                    rec            ,
 	OpCode                                             op             ,
 	const addr_t*                                      arg            )
@@ -83,7 +77,15 @@ struct_size_pair record_pv(
 		default:
 		CPPAD_ASSERT_UNKNOWN(false);
 	}
+	// number of parameters corresponding to the old operation sequence.
+	size_t npar = play->num_par_rec();
 # endif
+
+	// vector of length npar containing the parameters the old operation
+	// sequence; i.e., given a parameter index i < npar, the corresponding
+	// parameter value is par[i].
+	const Base* par = play->GetPar();
+
 	CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < npar    );
 	CPPAD_ASSERT_UNKNOWN( size_t(arg[1]) < current );
 	addr_t new_arg[2];
