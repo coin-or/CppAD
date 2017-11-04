@@ -91,13 +91,8 @@ struct_size_pair record_csum(
 	size_t i_op = var2op[current];
 	CPPAD_ASSERT_UNKNOWN( ! ( opt_op_info[i_op].usage == csum_usage ) );
 	//
-	size_t                        i;
-	OpCode                        op;
-	const addr_t*                 arg;
-	bool                          add;
-	struct struct_csum_variable var;
-	//
 	// information corresponding to the root node in the cummulative summation
+	struct struct_csum_variable var;
 	size_t not_used;
 	play->get_op_info(i_op, var.op, var.arg, not_used);
 	var.add = true;  // was parrent operator positive or negative
@@ -110,14 +105,13 @@ struct_size_pair record_csum(
 	//
 # ifndef NDEBUG
 	bool ok = false;
-	struct_opt_op_info info = opt_op_info[i_op];
 	if( var.op == SubvpOp )
-		ok = opt_op_info[ var2op[info.arg[0]] ].usage == csum_usage;
+		ok = opt_op_info[ var2op[ var.arg[0] ] ].usage == csum_usage;
 	if( var.op == AddpvOp || var.op == SubpvOp )
-		ok = opt_op_info[ var2op[info.arg[1]] ].usage == csum_usage;
+		ok = opt_op_info[ var2op[ var.arg[1] ] ].usage == csum_usage;
 	if( var.op == AddvvOp || var.op == SubvvOp )
-	{	ok  = opt_op_info[ var2op[info.arg[0]] ].usage == csum_usage;
-		ok |= opt_op_info[ var2op[info.arg[1]] ].usage == csum_usage;
+	{	ok  = opt_op_info[ var2op[ var.arg[0] ] ].usage == csum_usage;
+		ok |= opt_op_info[ var2op[ var.arg[1] ] ].usage == csum_usage;
 	}
 	CPPAD_ASSERT_UNKNOWN( ok );
 # endif
@@ -127,9 +121,9 @@ struct_size_pair record_csum(
 	{	// get this summation operator
 		var     = work.op_stack.top();
 		work.op_stack.pop();
-		op      = var.op;
-		arg     = var.arg;
-		add     = var.add;
+		OpCode        op      = var.op;
+		const addr_t* arg     = var.arg;
+		bool          add     = var.add;
 		//
 		// process first argument to this operator
 		switch(op)
@@ -229,7 +223,7 @@ struct_size_pair record_csum(
 	addr_t new_arg = rec->PutPar(sum_par);
 	rec->PutArg(new_arg);              // arg[2]
 	// addition arguments
-	for(i = 0; i < n_add; i++)
+	for(size_t i = 0; i < n_add; i++)
 	{	CPPAD_ASSERT_UNKNOWN( ! work.add_stack.empty() );
 		size_t old_arg = work.add_stack.top();
 		new_arg        = old2new[ var2op[old_arg] ].new_var;
@@ -238,7 +232,7 @@ struct_size_pair record_csum(
 		work.add_stack.pop();
 	}
 	// subtraction arguments
-	for(i = 0; i < n_sub; i++)
+	for(size_t i = 0; i < n_sub; i++)
 	{	CPPAD_ASSERT_UNKNOWN( ! work.sub_stack.empty() );
 		size_t old_arg = work.sub_stack.top();
 		new_arg        = old2new[ var2op[old_arg] ].new_var;
