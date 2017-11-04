@@ -43,6 +43,9 @@ $spell
 	cxx
 	uninitialized
 	cmake
+	op
+	sizeof
+	addr
 $$
 
 $section Changes and Additions to CppAD During 2017$$
@@ -50,6 +53,19 @@ $section Changes and Additions to CppAD During 2017$$
 $head API Changes$$
 Speed tests no longer automatically compile in release mode; see
 $cref/debug_which/speed/debug_which/$$
+
+$head 11-04$$
+The method for iterating through the tape has been changed.
+It now includes an extra data structure that makes it faster,
+but also requires slightly more memory. To be specific, the term
+$codei%
+	%f%.size_op() * sizeof(%tape_addr_type) * 2
+%$$
+was added to the value returned by
+$cref/size_op_seq/seq_property/size_op_seq/$$.
+In addition, some minor corrections were made to the
+$cref/tape_addr_type/cmake/cppad_tape_addr_type/$$
+requirements.
 
 $head 10-23$$
 $list number$$

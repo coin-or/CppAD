@@ -209,6 +209,7 @@ $codei%
 	    + %f%.size_par()    * sizeof(%Base%)
 	    + %f%.size_text()   * sizeof(char)
 	    + %f%.size_VecAD()  * sizeof(%tape_addr_type%)
+	    + %f%.size_op()     * sizeof(%tape_addr_type%) * 2
 %$$
 see $cref/tape_addr_type/cmake/cppad_tape_addr_type/$$.
 Note that this is the minimal amount of memory that can hold

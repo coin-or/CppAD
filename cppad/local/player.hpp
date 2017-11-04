@@ -61,9 +61,6 @@ private:
 	/// The operators in the recording.
 	pod_vector<OpCode> op_vec_;
 
-	/// The VecAD indices in the recording.
-	pod_vector<addr_t> vecad_ind_vec_;
-
 	/// The operation argument indices in the recording
 	pod_vector<addr_t> op_arg_vec_;
 
@@ -73,6 +70,9 @@ private:
 
 	/// Character strings ('\\0' terminated) in the recording.
 	pod_vector<char> text_vec_;
+
+	/// The VecAD indices in the recording.
+	pod_vector<addr_t> vecad_ind_vec_;
 
 	/// information correspoding to individual operations
 	pod_vector<struct_op_info> op_info_vec_;
@@ -118,10 +118,6 @@ public:
 		op_vec_.swap(rec.op_vec_);
 		CPPAD_ASSERT_UNKNOWN(op_vec_.size() < addr_t_max );
 
-		// vec_ind_rec_
-		vecad_ind_vec_.swap(rec.vecad_ind_vec_);
-		CPPAD_ASSERT_UNKNOWN(vecad_ind_vec_.size() < addr_t_max );
-
 		// op_arg_rec_
 		op_arg_vec_.swap(rec.op_arg_vec_);
 		CPPAD_ASSERT_UNKNOWN(op_arg_vec_.size() < addr_t_max );
@@ -133,6 +129,10 @@ public:
 		// text_rec_
 		text_vec_.swap(rec.text_vec_);
 		CPPAD_ASSERT_UNKNOWN(text_vec_.size() < addr_t_max );
+
+		// vec_ind_rec_
+		vecad_ind_vec_.swap(rec.vecad_ind_vec_);
+		CPPAD_ASSERT_UNKNOWN(vecad_ind_vec_.size() < addr_t_max );
 
 		// num_vecad_vec_rec_
 		num_vecad_vec_rec_ = 0;
@@ -574,11 +574,20 @@ public:
 	/// Fetch a rough measure of amount of memory used to store recording
 	/// (just lengths, not capacities).
 	size_t Memory(void) const
-	{	return op_vec_.size()        * sizeof(OpCode)
-		     + vecad_ind_vec_.size() * sizeof(addr_t)
+	{	// check assumptions made by ad_fun<Base>::size_op_seq()
+		CPPAD_ASSERT_UNKNOWN( op_vec_.size() == num_op_rec() );
+		CPPAD_ASSERT_UNKNOWN( op_arg_vec_.size() == num_op_arg_rec() );
+		CPPAD_ASSERT_UNKNOWN( par_vec_.size() == num_par_rec() );
+		CPPAD_ASSERT_UNKNOWN( text_vec_.size() == num_text_rec() );
+		CPPAD_ASSERT_UNKNOWN( vecad_ind_vec_.size() == num_vec_ind_rec() );
+		CPPAD_ASSERT_UNKNOWN( op_info_vec_.size() == num_op_rec() );
+		CPPAD_ASSERT_UNKNOWN( sizeof(struct_op_info) == 2 * sizeof(addr_t) );
+		//
+		return op_vec_.size()        * sizeof(OpCode)
 		     + op_arg_vec_.size()    * sizeof(addr_t)
 		     + par_vec_.size()       * sizeof(Base)
 		     + text_vec_.size()      * sizeof(char)
+		     + vecad_ind_vec_.size() * sizeof(addr_t)
 		     + op_info_vec_.size()   * sizeof(struct_op_info)
 		;
 	}
