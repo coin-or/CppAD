@@ -74,8 +74,14 @@ private:
 	/// The VecAD indices in the recording.
 	pod_vector<addr_t> vecad_ind_vec_;
 
-	/// information correspoding to individual operations
+	/// Redundant information correspoding to individual operations
+	/// that simplifies and speeds up iterating through the operation sequence.
 	pod_vector<struct_op_info> op_info_vec_;
+
+	/// Mapping from primary variable index to corresponding operator index.
+	/// This is used to traverse sub-graphs of the operation sequence.
+	/// This value is valid (invalid) for primary (auxillary) variables.
+	pod_vector<addr_t> var2op_vec_;
 
 public:
 	// =================================================================
@@ -146,51 +152,69 @@ public:
 			CPPAD_ASSERT_UNKNOWN( i == vecad_ind_vec_.size() );
 		}
 
-		// op_info_vec_
+		// op_info_vec_, var2op_vec_
 		CPPAD_ASSERT_UNKNOWN( op_vec_[0] == BeginOp );
 		CPPAD_ASSERT_NARG_NRES(BeginOp, 1, 1);
-		size_t  num_op    = op_vec_.size();
+		addr_t  num_op    = addr_t( op_vec_.size() );
 		addr_t  var_index = 0;
 		addr_t  arg_index = 0;
 		op_info_vec_.erase();
 		op_info_vec_.extend( num_op );
-		for(size_t i = 0; i < num_op; i++)
+		var2op_vec_.erase();
+		var2op_vec_.extend( num_var_rec_ );
+		for(addr_t i_op = 0; i_op < num_op; ++i_op)
 		{	struct_op_info op_info;
-			OpCode  op          = op_vec_[i];
+			OpCode  op          = op_vec_[i_op];
 			//
-			// pointer corresponding to first argument
+			// index of first argument for this operator
 			op_info.arg_index   = arg_index;
+			//
+			// index of first argument for next operator
 			arg_index          += addr_t( NumArg(op) );
 			//
+			// index of first result for next operator
 			var_index          += addr_t( NumRes(op) );
+			//
 			if( NumRes(op) > 0 )
-			{	// index corresponding to last result
+			{	// index of last (primary) result for this operator
+				// when NumRes(op) > 0.
 				op_info.var_index   = var_index - 1;
+				//
+				// index of operator for this primaryh variable
+				var2op_vec_[op_info.var_index] = i_op;
+				//
+				if( op == CSumOp )
+				{	// phony number of arguments
+					CPPAD_ASSERT_UNKNOWN( NumArg(CSumOp) == 0 );
+					//
+					// pointer to first argument for this operator
+					addr_t* op_arg = op_arg_vec_.data() + arg_index;
+					//
+					// The actual number of arugments for this operator is
+					// op_arg[0] + op_arg[1] + 4. Correct index of
+					// first argument for next operator
+					arg_index += op_arg[0] + op_arg[1] + 4;
+				}
 			}
 			else
-			{	// invalid index corresponding to no result
+			{	// invalid index, no result for this operator
 				op_info.var_index   = addr_t( num_var_rec_ );
+				//
+				if( op == CSkipOp )
+				{	// phony number of arguments
+					CPPAD_ASSERT_UNKNOWN( NumArg(CSumOp) == 0 );
+					//
+					// pointer to first argument for this operator
+					addr_t* op_arg = op_arg_vec_.data() + arg_index;
+					//
+					// The actual number of arugments for this operator is
+					// 7 + op_arg[4] + op_arg[5]. Correct index of
+					// first argument for next operator.
+					arg_index += 7 + op_arg[4] + op_arg[5];
+				}
 			}
-			//
-			if( op == CSumOp )
-			{	// phony number of arguments
-				CPPAD_ASSERT_UNKNOWN( NumArg(CSumOp) == 0 );
-				// The actual number of arugments for this operator is
-				// op_arg[0] + op_arg[1] + 4.
-				addr_t* op_arg = op_arg_vec_.data() + arg_index;
-				arg_index += op_arg[0] + op_arg[1] + 4;
-			}
-			if( op == CSkipOp )
-			{	// phony number of arguments
-				CPPAD_ASSERT_UNKNOWN( NumArg(CSumOp) == 0 );
-				// The actual number of arugments for this operator is
-				// 7 + op_arg[4] + op_arg[5].
-				addr_t* op_arg = op_arg_vec_.data() + arg_index;
-				arg_index += 7 + op_arg[4] + op_arg[5];
-			}
-			//
 			// store information for this operator
-			op_info_vec_[i] = op_info;
+			op_info_vec_[i_op] = op_info;
 		}
 		check_dag();
 	}
@@ -374,6 +398,7 @@ public:
 		par_vec_            = play.par_vec_;
 		text_vec_           = play.text_vec_;
 		op_info_vec_        = play.op_info_vec_;
+		var2op_vec_         = play.var2op_vec_;
 	}
 	// ===============================================================
 	/// Erase the recording stored in the player
@@ -389,6 +414,7 @@ public:
 		par_vec_.erase();
 		text_vec_.erase();
 		op_info_vec_.erase();
+		var2op_vec_.erase();
 	}
 	// ================================================================
 	// const functions that retrieve infromation from this player
