@@ -162,6 +162,11 @@ public:
 		op_info_vec_.extend( num_op );
 		var2op_vec_.erase();
 		var2op_vec_.extend( num_var_rec_ );
+# ifndef NDEBUG
+		// value of var2op for auxillary variables is op_vec_.size() (invalid)
+		for(size_t i_var = 0; i_var < num_var_rec_; ++i_var)
+			var2op_vec_[i_var] = addr_t( op_vec_.size() );
+# endif
 		for(addr_t i_op = 0; i_op < num_op; ++i_op)
 		{	struct_op_info op_info;
 			OpCode  op          = op_vec_[i_op];
@@ -419,6 +424,22 @@ public:
 	// ================================================================
 	// const functions that retrieve infromation from this player
 	// ================================================================
+	/*!
+	\brief
+	fetch the operator corresponding to a primary variable
+
+	\param var_index
+	must be the index of a primary variable.
+
+	\return
+	is the index of the operator corresponding to this primary variable.
+	*/
+	size_t var2op(size_t var_index) const
+	{	size_t i_op = var2op_vec_[var_index];
+		// check that var_index is a primary variable index
+		CPPAD_ASSERT_UNKNOWN( i_op < op_vec_.size() );
+		return i_op;
+	}
 	/*!
 	\brief
 	fetch the information corresponding to an operator

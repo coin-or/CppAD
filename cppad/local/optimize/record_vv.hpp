@@ -22,9 +22,6 @@ Record an operation of the form (variable op variable).
 \param play
 player object corresponding to the old recroding.
 
-\param var2op
-mapping from old variable index to old operator index.
-
 \param old2new
 mapping from old operator index to information about the new recording.
 
@@ -42,7 +39,6 @@ is the operator and variable indices in the new operation sequence.
 template <class Base>
 struct_size_pair record_vv(
 	const player<Base>*                                play           ,
-	const vector<addr_t>&                              var2op         ,
 	const CppAD::vector<struct struct_old2new>&        old2new        ,
 	size_t                                             i_op           ,
 	recorder<Base>*                                    rec            )
@@ -72,8 +68,8 @@ struct_size_pair record_vv(
 	CPPAD_ASSERT_UNKNOWN( size_t(arg[1]) < i_var ); // DAG condition
 	//
 	addr_t new_arg[2];
-	new_arg[0]   = old2new[ var2op[arg[0]] ].new_var;
-	new_arg[1]   = old2new[ var2op[arg[1]] ].new_var;
+	new_arg[0]   = old2new[ play->var2op(arg[0]) ].new_var;
+	new_arg[1]   = old2new[ play->var2op(arg[1]) ].new_var;
 	rec->PutArg( new_arg[0], new_arg[1] );
 	//
 	struct_size_pair ret;

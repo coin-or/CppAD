@@ -152,15 +152,6 @@ This is the old operation sequence.
 \param dep_taddr
 is a vector of variable indices for the dependent variables.
 
-\param var2op
-The input size of this vector must be zero.
-Upone return it has size equal to the number of variables
-in the operation sequence; i.e., num_var = play->nun_var_rec().
-It maps each variable index to the operator that created the variable.
-This is only true for the primary variables.
-If the index i_var corresponds to an auxillary variable, var2op[i_var]
-is equal to num_op (which is not a valid operator index).
-
 \param cexp_info
 The input size of this vector must be zero.
 If conditional_skip is false, cexp_info is not changed.
@@ -212,14 +203,12 @@ void get_opt_op_info(
 	bool                          print_for_op        ,
 	const player<Base>*           play                ,
 	const vector<size_t>&         dep_taddr           ,
-	vector<addr_t>&               var2op              ,
 	vector<struct_cexp_info>&     cexp_info           ,
 	sparse_list&                  skip_op_true        ,
 	sparse_list&                  skip_op_false       ,
 	vector<bool>&                 vecad_used          ,
 	vector<struct_opt_op_info>&   opt_op_info         )
 {
-	CPPAD_ASSERT_UNKNOWN( var2op.size()  == 0 );
 	CPPAD_ASSERT_UNKNOWN( cexp_info.size() == 0 );
 	CPPAD_ASSERT_UNKNOWN( vecad_used.size() == 0 );
 	CPPAD_ASSERT_UNKNOWN( opt_op_info.size() == 0 );
@@ -228,23 +217,17 @@ void get_opt_op_info(
 	const size_t num_op = play->num_op_rec();
 	opt_op_info.resize( num_op );
 	//
-	// number of variables in the tape
-	const size_t num_var = play->num_var_rec();
-	var2op.resize( num_var );
-	//
 	// initialize mapping from variable index to operator index
 	CPPAD_ASSERT_UNKNOWN(
 		std::numeric_limits<addr_t>::max() >= num_op
 	);
-	for(size_t i = 0; i < num_var; i++)
-		var2op[i] = addr_t( num_op ); // invalid (used for auxillary variables)
 	//
 	// information set by forward_user
 	size_t user_old=0, user_m=0, user_n=0, user_i=0, user_j=0;
 	enum_user_state user_state;
 	//
 	// ----------------------------------------------------------------------
-	// Forward pass to determine var2op and num_cexp_op
+	// Forward pass to determine num_cexp_op
 	// ----------------------------------------------------------------------
 	OpCode        op;     // operator
 	const addr_t* arg;    // arguments
@@ -256,9 +239,6 @@ void get_opt_op_info(
 	CPPAD_ASSERT_UNKNOWN( NumRes(BeginOp) == 1 );
 	CPPAD_ASSERT_UNKNOWN( i_op            == 0 );
 	CPPAD_ASSERT_UNKNOWN( i_var           == 0 );
-	// This variaible index, 0, is automatically created, but it should
-	// not used because variable index 0 represents a paraemeter during
-	// the recording process. So we leave var2op[0] as an invalid values
 	//
 	size_t num_cexp_op = 0;
 	user_state = start_user;
@@ -266,11 +246,6 @@ void get_opt_op_info(
 	{	// next operator
 		play->get_op_info(++i_op, op, arg, i_var);
 		//
-		// mapping from variable index to operator index
-		if( NumRes(op) > 0 )
-		{	// set operator value for the primary variable for this operator
-			var2op[i_var] = addr_t( i_op );
-		}
 		if( op == CExpOp )
 		{	// count the number of conditional expressions.
 			++num_cexp_op;
@@ -351,7 +326,7 @@ void get_opt_op_info(
 	for(size_t i = 0; i < num_op; i++)
 		opt_op_info[i].usage = no_usage;
 	for(size_t i = 0; i < dep_taddr.size(); i++)
-	{	i_op                = var2op[ dep_taddr[i] ];
+	{	i_op                = play->var2op(dep_taddr[i]);
 		opt_op_info[i_op].usage = yes_usage;    // dependent variables
 	}
 	//
@@ -406,7 +381,7 @@ void get_opt_op_info(
 			case ZmulvpOp:
 			CPPAD_ASSERT_UNKNOWN( NumRes(op) > 0 );
 			if( use_result != no_usage )
-			{	size_t j_op = var2op[ arg[0] ];
+			{	size_t j_op = play->var2op(arg[0]);
 				usage_cexp_result2arg(
 					play, sum_op, i_op, j_op, opt_op_info, cexp_set
 				);
@@ -425,7 +400,7 @@ void get_opt_op_info(
 			case ZmulpvOp:
 			CPPAD_ASSERT_UNKNOWN( NumRes(op) > 0 );
 			if( use_result != no_usage )
-			{	size_t j_op = var2op[ arg[1] ];
+			{	size_t j_op = play->var2op(arg[1]);
 				usage_cexp_result2arg(
 					play, sum_op, i_op, j_op, opt_op_info, cexp_set
 				);
@@ -444,7 +419,7 @@ void get_opt_op_info(
 			CPPAD_ASSERT_UNKNOWN( NumRes(op) > 0 );
 			if( use_result != no_usage )
 			{	for(size_t i = 0; i < 2; i++)
-				{	size_t j_op = var2op[ arg[i] ];
+				{	size_t j_op = play->var2op(arg[i]);
 					usage_cexp_result2arg(
 						play, sum_op, i_op, j_op, opt_op_info, cexp_set
 					);
@@ -462,14 +437,14 @@ void get_opt_op_info(
 			{	CPPAD_ASSERT_UNKNOWN( NumArg(CExpOp) == 6 );
 				// propgate from result to left argument
 				if( arg[1] & 1 )
-				{	size_t j_op = var2op[ arg[2] ];
+				{	size_t j_op = play->var2op(arg[2]);
 					usage_cexp_result2arg(
 						play, sum_op, i_op, j_op, opt_op_info, cexp_set
 					);
 				}
 				// propgate from result to right argument
 				if( arg[1] & 2 )
-				{	size_t j_op = var2op[ arg[3] ];
+				{	size_t j_op = play->var2op(arg[3]);
 					usage_cexp_result2arg(
 							play, sum_op, i_op, j_op, opt_op_info, cexp_set
 					);
@@ -480,7 +455,7 @@ void get_opt_op_info(
 				//
 				// if_true
 				if( arg[1] & 4 )
-				{	size_t j_op = var2op[ arg[4] ];
+				{	size_t j_op = play->var2op(arg[4]);
 					bool can_skip = conditional_skip & (! same_variable);
 					can_skip     &= opt_op_info[j_op].usage == no_usage;
 					usage_cexp_result2arg(
@@ -499,7 +474,7 @@ void get_opt_op_info(
 				//
 				// if_false
 				if( arg[1] & 8 )
-				{	size_t j_op = var2op[ arg[5] ];
+				{	size_t j_op = play->var2op(arg[5]);
 					bool can_skip = conditional_skip & (! same_variable);
 					can_skip     &= opt_op_info[j_op].usage == no_usage;
 					usage_cexp_result2arg(
@@ -538,14 +513,14 @@ void get_opt_op_info(
 			{	opt_op_info[i_op].usage = yes_usage;
 				if( arg[0] & 1 )
 				{	// arg[1] is a variable
-					size_t j_op = var2op[ arg[1] ];
+					size_t j_op = play->var2op(arg[1]);
 					usage_cexp_result2arg(
 						play, sum_op, i_op, j_op, opt_op_info, cexp_set
 					);
 				}
 				if( arg[0] & 2 )
 				{	// arg[3] is a variable
-					size_t j_op = var2op[ arg[3] ];
+					size_t j_op = play->var2op(arg[3]);
 					usage_cexp_result2arg(
 						play, sum_op, i_op, j_op, opt_op_info, cexp_set
 					);
@@ -566,7 +541,7 @@ void get_opt_op_info(
 			if( compare_op )
 			{	opt_op_info[i_op].usage = yes_usage;
 				//
-				size_t j_op = var2op[ arg[1] ];
+				size_t j_op = play->var2op(arg[1]);
 				usage_cexp_result2arg(
 					play, sum_op, i_op, j_op, opt_op_info, cexp_set
 				);
@@ -580,7 +555,7 @@ void get_opt_op_info(
 			if( compare_op )
 			{	opt_op_info[i_op].usage = yes_usage;
 				//
-				size_t j_op = var2op[ arg[0] ];
+				size_t j_op = play->var2op(arg[0]);
 				usage_cexp_result2arg(
 					play, sum_op, i_op, j_op, opt_op_info, cexp_set
 				);
@@ -598,7 +573,7 @@ void get_opt_op_info(
 			{	opt_op_info[i_op].usage = yes_usage;
 				//
 				for(size_t i = 0; i < 2; i++)
-				{	size_t j_op = var2op[ arg[i] ];
+				{	size_t j_op = play->var2op(arg[i]);
 					usage_cexp_result2arg(
 						play, sum_op, i_op, j_op, opt_op_info, cexp_set
 					);
@@ -626,7 +601,7 @@ void get_opt_op_info(
 			{	size_t i_vec = arg2vecad[ arg[0] ];
 				vecad_used[i_vec] = true;
 				//
-				size_t j_op = var2op[ arg[1] ];
+				size_t j_op = play->var2op(arg[1]);
 				opt_op_info[j_op].usage = yes_usage;
 			}
 			break; // --------------------------------------------
@@ -637,7 +612,7 @@ void get_opt_op_info(
 			if( vecad_used[ arg2vecad[ arg[0] ] ] )
 			{	opt_op_info[i_op].usage = yes_usage;
 				//
-				size_t j_op = var2op[ arg[2] ];
+				size_t j_op = play->var2op(arg[2]);
 				opt_op_info[j_op].usage = yes_usage;
 			}
 			break; // --------------------------------------------
@@ -648,9 +623,9 @@ void get_opt_op_info(
 			if( vecad_used[ arg2vecad[ arg[0] ] ] )
 			{	opt_op_info[i_op].usage = yes_usage;
 				//
-				size_t j_op = var2op[ arg[1] ];
+				size_t j_op = play->var2op(arg[1]);
 				opt_op_info[j_op].usage = yes_usage;
-				size_t k_op = var2op[ arg[2] ];
+				size_t k_op = play->var2op(arg[2]);
 				opt_op_info[k_op].usage = yes_usage;
 			}
 			break; // -----------------------------------------------------
@@ -664,7 +639,7 @@ void get_opt_op_info(
 				size_t num_add = size_t( arg[0] );
 				size_t num_sub = size_t( arg[1] );
 				for(size_t i = 0; i < num_add + num_sub; i++)
-				{	size_t j_op = var2op[ arg[3 + i] ];
+				{	size_t j_op = play->var2op( arg[3 + i] );
 					usage_cexp_result2arg(
 						play, sum_op, i_op, j_op, opt_op_info, cexp_set
 					);
@@ -806,7 +781,7 @@ void get_opt_op_info(
 							use_arg_j = true;
 					}
 					if( use_arg_j )
-					{	size_t j_op = var2op[ user_ix[j] ];
+					{	size_t j_op = play->var2op(user_ix[j]);
 						usage_cexp_result2arg(play,
 							sum_op, last_user_i_op, j_op, opt_op_info, cexp_set
 						);
@@ -986,7 +961,7 @@ void get_opt_op_info(
 			case ZmulvpOp:
 			case ZmulvvOp:
 			// check for a previous match
-			match_op(play, var2op, opt_op_info, i_op, hash_table_op );
+			match_op(play, opt_op_info, i_op, hash_table_op );
 			if( opt_op_info[i_op].previous != 0 )
 			{	// like a unary operator that assigns i_op equal to previous.
 				size_t previous = opt_op_info[i_op].previous;

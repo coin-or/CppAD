@@ -27,7 +27,8 @@ move_list='
 move_sed='s|op_info|opt_op_info|'
 #
 cat << EOF > junk.sed
-/CPPAD_ASSERT_UNKNOWN(  *size_t( *arg\\[[01]\\] *) *<=* *i_var *);/d
+s|var2op\\[ *\\([a-zA-Z_.]*\\[.\\]\\) *\\]|play->var2op(\\1)|
+s|var2op\\[ *\\([a-zA-Z_.]*\\) *\\]|play->var2op(\\1)|
 EOF
 # -----------------------------------------------------------------------------
 if [ $0 != "bin/batch_edit.sh" ]
