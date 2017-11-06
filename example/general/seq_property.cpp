@@ -134,7 +134,7 @@ bool seq_property(void)
 	sum += npar   * sizeof(double);
 	sum += ntext  * sizeof(char);
 	sum += nvecad * sizeof(CPPAD_TAPE_ADDR_TYPE);
-	sum += nop    * 2 * sizeof(CPPAD_TAPE_ADDR_TYPE);
+	sum += nop    * sizeof(CPPAD_TAPE_ADDR_TYPE) * 3;
 	ok &= f.size_op_seq() == sum;
 
 	return ok;

@@ -57,7 +57,7 @@ $icode%col_major% = %pattern%.col_major()
 $head SizeVector$$
 We use $icode SizeVector$$ to denote $cref SimpleVector$$ class
 $cref/with elements of type/SimpleVector/Elements of Specified Type/$$
-$code size$$.
+$code size_t$$.
 
 $head empty$$
 This is an empty sparsity pattern. To be specific,

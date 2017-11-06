@@ -203,13 +203,14 @@ $codei%
 and is the amount of memory required to store the operation sequence
 (not counting a small amount of memory required for every operation sequence).
 For the current version of CppAD, this is given by
+$comment see size_t player::Memory(void)$$
 $codei%
 	%s% = %f%.size_op()     * sizeof(CppAD::local::OpCode)
 	    + %f%.size_op_arg() * sizeof(%tape_addr_type%)
 	    + %f%.size_par()    * sizeof(%Base%)
 	    + %f%.size_text()   * sizeof(char)
 	    + %f%.size_VecAD()  * sizeof(%tape_addr_type%)
-	    + %f%.size_op()     * sizeof(%tape_addr_type%) * 2
+	    + %f%.size_op()     * sizeof(%tape_addr_type%) * 3
 %$$
 see $cref/tape_addr_type/cmake/cppad_tape_addr_type/$$.
 Note that this is the minimal amount of memory that can hold

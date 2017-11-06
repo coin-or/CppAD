@@ -126,11 +126,11 @@ private:
 	/// Packed results of the forward mode Jacobian sparsity calculations.
 	/// for_jac_sparse_pack_.n_set() != 0  implies other sparsity results
 	/// are empty
-	local::sparse_pack      for_jac_sparse_pack_;
+	local::sparse_pack for_jac_sparse_pack_;
 
 	/// Set results of the forward mode Jacobian sparsity calculations
 	/// for_jac_sparse_set_.n_set() != 0  implies for_sparse_pack_ is empty.
-	local::sparse_list         for_jac_sparse_set_;
+	local::sparse_list for_jac_sparse_set_;
 
 // ------------------------------------------------------------
 // Private member functions
@@ -187,7 +187,7 @@ private:
 	);
 	// ------------------------------------------------------------
 	// vector of bool version of ForSparseHes
-	// (see doxygen in rev_sparse_hes.hpp)
+	// (see doxygen in for_sparse_hes.hpp)
 	template <class VectorSet>
 	void ForSparseHesCase(
 		bool               set_type  ,
@@ -196,7 +196,7 @@ private:
 		VectorSet&         h
 	);
 	// vector of std::set<size_t> version of ForSparseHes
-	// (see doxygen in rev_sparse_hes.hpp)
+	// (see doxygen in for_sparse_hes.hpp)
 	template <class VectorSet>
 	void ForSparseHesCase(
 		const std::set<size_t>&  set_type  ,
@@ -329,6 +329,10 @@ public:
 		bool dependency = false
 	);
 	// ---------------------------------------------------------------------
+	template <typename SizeVector>
+	void subgraph_dep(
+		sparse_rc<SizeVector>& pattern_out
+	);
 	template <typename SizeVector, typename BaseVector>
 	size_t sparse_jac_for(
 		size_t                               group_max ,
@@ -388,7 +392,7 @@ public:
 	);
 	// ---------------------------------------------------------------------
 	// forward mode Hessian sparsity
-	// (see doxygen documentation in rev_sparse_hes.hpp)
+	// (see doxygen documentation in for_sparse_hes.hpp)
 	template <typename VectorSet>
 	VectorSet ForSparseHes(
 		const VectorSet &r, const VectorSet &s

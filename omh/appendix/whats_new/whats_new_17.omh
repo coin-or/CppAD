@@ -54,6 +54,15 @@ $head API Changes$$
 Speed tests no longer automatically compile in release mode; see
 $cref/debug_which/speed/debug_which/$$
 
+$head 11-06$$
+More information has been added to the operation sequence.
+To be specific, the extra amount of
+$codei%
+	%f%.size_op() * sizeof(%tape_addr_type)
+%$$
+was added to the value returned by
+$cref/size_op_seq/seq_property/size_op_seq/$$.
+
 $head 11-04$$
 The method for iterating through the tape has been changed.
 It now includes an extra data structure that makes it faster,

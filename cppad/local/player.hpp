@@ -21,21 +21,6 @@ namespace CppAD { namespace local { // BEGIN_CPPAD_LOCAL_NAMESPACE
 File used to define the player class.
 */
 
-/// information for one operator
-struct struct_op_info {
-
-	/// index in arg_vec_ corresponding to first arguments for this op
-	addr_t arg_index;
-
-	/*!
-	Primary variable index for this operator. If the operator has no results,
-	this is num_var_rec_ (an invalid variable index). If the operator has more
-	than one result, this is the primary result; i.e., the last result.
-	Auxillary results have a lower index and are only used by this operator.
-	*/
-	addr_t var_index;
-};
-
 /*!
 Class used to store and play back an operation sequence recording.
 
@@ -47,8 +32,8 @@ template <class Base>
 class player {
 private:
 	// ----------------------------------------------------------------------
-	// Variables that define the recording
-	// ----------------------------------------------------------------------
+	// information that defines the recording
+
 	/// Number of variables in the recording.
 	size_t num_var_rec_;
 
@@ -74,9 +59,21 @@ private:
 	/// The VecAD indices in the recording.
 	pod_vector<addr_t> vecad_ind_vec_;
 
-	/// Redundant information correspoding to individual operations
-	/// that simplifies and speeds up iterating through the operation sequence.
-	pod_vector<struct_op_info> op_info_vec_;
+	// ----------------------------------------------------------------------
+	// Redundant information that simplifies and speeds up iterating through
+	// the operation sequence.
+
+	/// index in arg_vec_ corresonding to the first argument for each operator
+	pod_vector<addr_t> op2arg_vec_;
+
+	/*!
+	Index of the result variable for each operator. If the operator has
+	no results, this is not defined. The invalid index num_var_rec_ is used
+	when NDEBUG is not defined. If the operator has more than one result, this
+	is the primary result; i.e., the last result. Auxillary are only used by
+	the operator and not used by other operators.
+	*/
+	pod_vector<addr_t> op2var_vec_;
 
 	/// Mapping from primary variable index to corresponding operator index.
 	/// This is used to traverse sub-graphs of the operation sequence.
@@ -152,15 +149,19 @@ public:
 			CPPAD_ASSERT_UNKNOWN( i == vecad_ind_vec_.size() );
 		}
 
-		// op_info_vec_, var2op_vec_
+		// op2arg_vec_, op2var_vec_, var2op_vec_
 		CPPAD_ASSERT_UNKNOWN( op_vec_[0] == BeginOp );
 		CPPAD_ASSERT_NARG_NRES(BeginOp, 1, 1);
 		addr_t  num_op    = addr_t( op_vec_.size() );
 		addr_t  var_index = 0;
 		addr_t  arg_index = 0;
-		op_info_vec_.erase();
-		op_info_vec_.extend( num_op );
+		//
+		op2arg_vec_.erase();
+		op2var_vec_.erase();
 		var2op_vec_.erase();
+		//
+		op2arg_vec_.extend( num_op );
+		op2var_vec_.extend( num_op );
 		var2op_vec_.extend( num_var_rec_ );
 # ifndef NDEBUG
 		// value of var2op for auxillary variables is op_vec_.size() (invalid)
@@ -168,11 +169,10 @@ public:
 			var2op_vec_[i_var] = addr_t( op_vec_.size() );
 # endif
 		for(addr_t i_op = 0; i_op < num_op; ++i_op)
-		{	struct_op_info op_info;
-			OpCode  op          = op_vec_[i_op];
+		{	OpCode  op          = op_vec_[i_op];
 			//
 			// index of first argument for this operator
-			op_info.arg_index   = arg_index;
+			op2arg_vec_[i_op]   = arg_index;
 			//
 			// index of first argument for next operator
 			arg_index          += addr_t( NumArg(op) );
@@ -183,10 +183,10 @@ public:
 			if( NumRes(op) > 0 )
 			{	// index of last (primary) result for this operator
 				// when NumRes(op) > 0.
-				op_info.var_index   = var_index - 1;
+				op2var_vec_[i_op] = var_index - 1;
 				//
-				// index of operator for this primaryh variable
-				var2op_vec_[op_info.var_index] = i_op;
+				// mapping from this primary variable to its operator
+				var2op_vec_[var_index - 1] = i_op;
 				//
 				if( op == CSumOp )
 				{	// phony number of arguments
@@ -203,7 +203,7 @@ public:
 			}
 			else
 			{	// invalid index, no result for this operator
-				op_info.var_index   = addr_t( num_var_rec_ );
+				op2var_vec_[i_op] = addr_t( num_var_rec_ );
 				//
 				if( op == CSkipOp )
 				{	// phony number of arguments
@@ -218,8 +218,6 @@ public:
 					arg_index += 7 + op_arg[4] + op_arg[5];
 				}
 			}
-			// store information for this operator
-			op_info_vec_[i_op] = op_info;
 		}
 		check_dag();
 	}
@@ -238,7 +236,7 @@ public:
 		addr_t arg_var_bound = 0;
 		for(size_t i = 0; i < num_op; i++)
 		{	OpCode op = op_vec_[i];
-			addr_t* op_arg = arg_vec_.data() + op_info_vec_[i].arg_index;
+			addr_t* op_arg = arg_vec_.data() + op2arg_vec_[i];
 			switch(op)
 			{
 				// cases where nothing to do
@@ -372,7 +370,7 @@ public:
 
 			}
 			if( NumRes(op) > 0 )
-			{	addr_t var_index = op_info_vec_[i].var_index;
+			{	addr_t var_index = op2var_vec_[i];
 				if( var_index > 0 )
 				{	CPPAD_ASSERT_UNKNOWN(arg_var_bound < var_index);
 				}
@@ -402,7 +400,8 @@ public:
 		arg_vec_            = play.arg_vec_;
 		par_vec_            = play.par_vec_;
 		text_vec_           = play.text_vec_;
-		op_info_vec_        = play.op_info_vec_;
+		op2arg_vec_         = play.op2arg_vec_;
+		op2var_vec_         = play.op2var_vec_;
 		var2op_vec_         = play.var2op_vec_;
 	}
 	// ===============================================================
@@ -418,7 +417,8 @@ public:
 		arg_vec_.erase();
 		par_vec_.erase();
 		text_vec_.erase();
-		op_info_vec_.erase();
+		op2arg_vec_.erase();
+		op2var_vec_.erase();
 		var2op_vec_.erase();
 	}
 	// ================================================================
@@ -464,8 +464,8 @@ public:
 		const addr_t*& op_arg     ,
 		size_t&        var_index  ) const
 	{	op        = OpCode( op_vec_[op_index] );
-		op_arg    = op_info_vec_[op_index].arg_index + arg_vec_.data();
-		var_index = op_info_vec_[op_index].var_index;
+		op_arg    = op2arg_vec_[op_index] + arg_vec_.data();
+		var_index = op2var_vec_[op_index];
 		return;
 	}
 	/*!
@@ -619,32 +619,28 @@ public:
 	{	return text_vec_.size(); }
 
 	/// Fetch a rough measure of amount of memory used to store recording
-	/// (just lengths, not capacities).
+	/// using just lengths, not capacities; see the heading size_op_arg
+	/// in the file seq_property.omh.
 	size_t Memory(void) const
 	{	// check assumptions made by ad_fun<Base>::size_op_seq()
 		CPPAD_ASSERT_UNKNOWN( op_vec_.size() == num_op_rec() );
+		CPPAD_ASSERT_UNKNOWN( op2arg_vec_.size() == num_op_rec() );
+		CPPAD_ASSERT_UNKNOWN( op2var_vec_.size() == num_op_rec() );
 		CPPAD_ASSERT_UNKNOWN( arg_vec_.size()    == num_op_arg_rec() );
 		CPPAD_ASSERT_UNKNOWN( par_vec_.size() == num_par_rec() );
 		CPPAD_ASSERT_UNKNOWN( text_vec_.size() == num_text_rec() );
 		CPPAD_ASSERT_UNKNOWN( vecad_ind_vec_.size() == num_vec_ind_rec() );
-		CPPAD_ASSERT_UNKNOWN( op_info_vec_.size() == num_op_rec() );
-		CPPAD_ASSERT_UNKNOWN( sizeof(struct_op_info) == 2 * sizeof(addr_t) );
 		//
 		return op_vec_.size()        * sizeof(OpCode)
 		     + arg_vec_.size()       * sizeof(addr_t)
 		     + par_vec_.size()       * sizeof(Base)
 		     + text_vec_.size()      * sizeof(char)
 		     + vecad_ind_vec_.size() * sizeof(addr_t)
-		     + op_info_vec_.size()   * sizeof(struct_op_info)
+		     + op_vec_.size()        * sizeof(addr_t) * 3
 		;
 	}
 
 };
-// =========================================================================
-// Tell pod_vector class that each struct_op_info is plain old data and hence
-// the corresponding constructor need not be called.
-template <> inline bool is_pod<struct_op_info>(void)
-{	return true; }
 
 } } // END_CPPAD_lOCAL_NAMESPACE
 # endif

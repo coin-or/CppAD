@@ -186,6 +186,7 @@ nobase_myinclude_HEADERS =  \
 	cppad/core/sparse_jacobian.hpp \
 	cppad/core/standard_math.hpp \
 	cppad/core/std_math_98.hpp \
+	cppad/core/subgraph_dep.hpp \
 	cppad/core/sub_eq.hpp \
 	cppad/core/sub.hpp \
 	cppad/core/tape_link.hpp \
