@@ -52,7 +52,7 @@ private:
 	pod_vector<addr_t> vecad_ind_vec_;
 
 	/// The argument indices in the recording
-	pod_vector<addr_t> op_arg_vec_;
+	pod_vector<addr_t> arg_vec_;
 
 	/// The parameters in the recording.
 	/// Note that Base may not be plain old data, so use false in consructor.
@@ -96,7 +96,7 @@ public:
 		num_load_op_rec_ = 0;
 		op_vec_.free();
 		vecad_ind_vec_.free();
-		op_arg_vec_.free();
+		arg_vec_.free();
 		par_vec_.free();
 		text_vec_.free();
 	}
@@ -148,7 +148,7 @@ public:
 	size_t Memory(void) const
 	{	return op_vec_.capacity()        * sizeof(OpCode)
 		     + vecad_ind_vec_.capacity() * sizeof(size_t)
-		     + op_arg_vec_.capacity()    * sizeof(addr_t)
+		     + arg_vec_.capacity()       * sizeof(addr_t)
 		     + par_vec_.capacity()       * sizeof(Base)
 		     + text_vec_.capacity()      * sizeof(char);
 	}
@@ -391,9 +391,9 @@ The operation argument index
 template <class Base>
 inline void recorder<Base>::PutArg(addr_t arg0)
 {
-	size_t i       = op_arg_vec_.extend(1);
-	op_arg_vec_[i] =  static_cast<addr_t>( arg0 );
-	CPPAD_ASSERT_UNKNOWN( op_arg_vec_.size() == i + 1 );
+	size_t i       = arg_vec_.extend(1);
+	arg_vec_[i]    =  static_cast<addr_t>( arg0 );
+	CPPAD_ASSERT_UNKNOWN( arg_vec_.size()    == i + 1 );
 }
 /*!
 Put two operation argument index in the recording
@@ -409,10 +409,10 @@ Second operation argument index.
 template <class Base>
 inline void recorder<Base>::PutArg(addr_t arg0, addr_t arg1)
 {
-	size_t i         = op_arg_vec_.extend(2);
-	op_arg_vec_[i++] =  static_cast<addr_t>( arg0 );
-	op_arg_vec_[i]   =  static_cast<addr_t>( arg1 );
-	CPPAD_ASSERT_UNKNOWN( op_arg_vec_.size() == i + 1 );
+	size_t i         = arg_vec_.extend(2);
+	arg_vec_[i++] =  static_cast<addr_t>( arg0 );
+	arg_vec_[i]      =  static_cast<addr_t>( arg1 );
+	CPPAD_ASSERT_UNKNOWN( arg_vec_.size()    == i + 1 );
 }
 /*!
 Put three operation argument index in the recording
@@ -431,11 +431,11 @@ Third operation argument index.
 template <class Base>
 inline void recorder<Base>::PutArg(addr_t arg0, addr_t arg1, addr_t arg2)
 {
-	size_t i         = op_arg_vec_.extend(3);
-	op_arg_vec_[i++] =  static_cast<addr_t>( arg0 );
-	op_arg_vec_[i++] =  static_cast<addr_t>( arg1 );
-	op_arg_vec_[i]   =  static_cast<addr_t>( arg2 );
-	CPPAD_ASSERT_UNKNOWN( op_arg_vec_.size() == i + 1 );
+	size_t i         = arg_vec_.extend(3);
+	arg_vec_[i++] =  static_cast<addr_t>( arg0 );
+	arg_vec_[i++] =  static_cast<addr_t>( arg1 );
+	arg_vec_[i]      =  static_cast<addr_t>( arg2 );
+	CPPAD_ASSERT_UNKNOWN( arg_vec_.size()    == i + 1 );
 }
 /*!
 Put four operation argument index in the recording
@@ -458,12 +458,12 @@ template <class Base>
 inline void recorder<Base>::PutArg(addr_t arg0, addr_t arg1, addr_t arg2,
 	addr_t arg3)
 {
-	size_t i         = op_arg_vec_.extend(4);
-	op_arg_vec_[i++] =  static_cast<addr_t>( arg0 );
-	op_arg_vec_[i++] =  static_cast<addr_t>( arg1 );
-	op_arg_vec_[i++] =  static_cast<addr_t>( arg2 );
-	op_arg_vec_[i]   =  static_cast<addr_t>( arg3 );
-	CPPAD_ASSERT_UNKNOWN( op_arg_vec_.size() == i + 1 );
+	size_t i         = arg_vec_.extend(4);
+	arg_vec_[i++] =  static_cast<addr_t>( arg0 );
+	arg_vec_[i++] =  static_cast<addr_t>( arg1 );
+	arg_vec_[i++] =  static_cast<addr_t>( arg2 );
+	arg_vec_[i]      =  static_cast<addr_t>( arg3 );
+	CPPAD_ASSERT_UNKNOWN( arg_vec_.size()    == i + 1 );
 
 }
 /*!
@@ -490,13 +490,13 @@ template <class Base>
 inline void recorder<Base>::PutArg(addr_t arg0, addr_t arg1, addr_t arg2,
 	addr_t arg3, addr_t arg4)
 {
-	size_t i         = op_arg_vec_.extend(5);
-	op_arg_vec_[i++] =  static_cast<addr_t>( arg0 );
-	op_arg_vec_[i++] =  static_cast<addr_t>( arg1 );
-	op_arg_vec_[i++] =  static_cast<addr_t>( arg2 );
-	op_arg_vec_[i++] =  static_cast<addr_t>( arg3 );
-	op_arg_vec_[i]   =  static_cast<addr_t>( arg4 );
-	CPPAD_ASSERT_UNKNOWN( op_arg_vec_.size() == i + 1 );
+	size_t i         = arg_vec_.extend(5);
+	arg_vec_[i++] =  static_cast<addr_t>( arg0 );
+	arg_vec_[i++] =  static_cast<addr_t>( arg1 );
+	arg_vec_[i++] =  static_cast<addr_t>( arg2 );
+	arg_vec_[i++] =  static_cast<addr_t>( arg3 );
+	arg_vec_[i]      =  static_cast<addr_t>( arg4 );
+	CPPAD_ASSERT_UNKNOWN( arg_vec_.size()    == i + 1 );
 
 }
 /*!
@@ -526,14 +526,14 @@ template <class Base>
 inline void recorder<Base>::PutArg(addr_t arg0, addr_t arg1, addr_t arg2,
 	addr_t arg3, addr_t arg4, addr_t arg5)
 {
-	size_t i         = op_arg_vec_.extend(6);
-	op_arg_vec_[i++] =  static_cast<addr_t>( arg0 );
-	op_arg_vec_[i++] =  static_cast<addr_t>( arg1 );
-	op_arg_vec_[i++] =  static_cast<addr_t>( arg2 );
-	op_arg_vec_[i++] =  static_cast<addr_t>( arg3 );
-	op_arg_vec_[i++] =  static_cast<addr_t>( arg4 );
-	op_arg_vec_[i]   =  static_cast<addr_t>( arg5 );
-	CPPAD_ASSERT_UNKNOWN( op_arg_vec_.size() == i + 1 );
+	size_t i         = arg_vec_.extend(6);
+	arg_vec_[i++] =  static_cast<addr_t>( arg0 );
+	arg_vec_[i++] =  static_cast<addr_t>( arg1 );
+	arg_vec_[i++] =  static_cast<addr_t>( arg2 );
+	arg_vec_[i++] =  static_cast<addr_t>( arg3 );
+	arg_vec_[i++] =  static_cast<addr_t>( arg4 );
+	arg_vec_[i]      =  static_cast<addr_t>( arg5 );
+	CPPAD_ASSERT_UNKNOWN( arg_vec_.size()    == i + 1 );
 }
 // --------------------------------------------------------------------------
 /*!
@@ -549,8 +549,8 @@ first of the arguments being reserved.
 template <class Base>
 inline size_t recorder<Base>::ReserveArg(size_t n_arg)
 {
-	size_t i = op_arg_vec_.extend(n_arg);
-	CPPAD_ASSERT_UNKNOWN( op_arg_vec_.size() == i + n_arg );
+	size_t i = arg_vec_.extend(n_arg);
+	CPPAD_ASSERT_UNKNOWN( arg_vec_.size()    == i + n_arg );
 	return i;
 }
 
@@ -567,7 +567,7 @@ is the new value for the argument with the specified index.
 */
 template <class Base>
 inline void recorder<Base>::ReplaceArg(size_t i_arg, size_t value)
-{	op_arg_vec_[i_arg] =  static_cast<addr_t>( value ); }
+{	arg_vec_[i_arg] =  static_cast<addr_t>( value ); }
 // --------------------------------------------------------------------------
 /*!
 Put a character string in the text for this recording.

@@ -24,7 +24,7 @@ File used to define the player class.
 /// information for one operator
 struct struct_op_info {
 
-	/// index in op_arg_vec_ corresponding to first arguments for this op
+	/// index in arg_vec_ corresponding to first arguments for this op
 	addr_t arg_index;
 
 	/*!
@@ -62,7 +62,7 @@ private:
 	pod_vector<OpCode> op_vec_;
 
 	/// The operation argument indices in the recording
-	pod_vector<addr_t> op_arg_vec_;
+	pod_vector<addr_t> arg_vec_;
 
 	/// The parameters in the recording.
 	/// Note that Base may not be plain old data, so use false in consructor.
@@ -109,7 +109,7 @@ public:
 	Use an assert to check that the lenght of the following vectors is
 	less than the maximum possible value for addr_t; i.e., that an index
 	in these vectors can be represented using the type addr_t:
-	op_vec_, vecad_ind_vec_, op_arg_vec_, par_vec_, text_vec_.
+	op_vec_, vecad_ind_vec_, arg_vec_, par_vec_, text_vec_.
 	*/
 	void get(recorder<Base>& rec)
 	{
@@ -125,8 +125,8 @@ public:
 		CPPAD_ASSERT_UNKNOWN(op_vec_.size() < addr_t_max );
 
 		// op_arg_rec_
-		op_arg_vec_.swap(rec.op_arg_vec_);
-		CPPAD_ASSERT_UNKNOWN(op_arg_vec_.size() < addr_t_max );
+		arg_vec_.swap(rec.arg_vec_);
+		CPPAD_ASSERT_UNKNOWN(arg_vec_.size()    < addr_t_max );
 
 		// par_rec_
 		par_vec_.swap(rec.par_vec_);
@@ -193,7 +193,7 @@ public:
 					CPPAD_ASSERT_UNKNOWN( NumArg(CSumOp) == 0 );
 					//
 					// pointer to first argument for this operator
-					addr_t* op_arg = op_arg_vec_.data() + arg_index;
+					addr_t* op_arg = arg_vec_.data() + arg_index;
 					//
 					// The actual number of arugments for this operator is
 					// op_arg[0] + op_arg[1] + 4. Correct index of
@@ -210,7 +210,7 @@ public:
 					CPPAD_ASSERT_UNKNOWN( NumArg(CSumOp) == 0 );
 					//
 					// pointer to first argument for this operator
-					addr_t* op_arg = op_arg_vec_.data() + arg_index;
+					addr_t* op_arg = arg_vec_.data() + arg_index;
 					//
 					// The actual number of arugments for this operator is
 					// 7 + op_arg[4] + op_arg[5]. Correct index of
@@ -238,7 +238,7 @@ public:
 		addr_t arg_var_bound = 0;
 		for(size_t i = 0; i < num_op; i++)
 		{	OpCode op = op_vec_[i];
-			addr_t* op_arg = op_arg_vec_.data() + op_info_vec_[i].arg_index;
+			addr_t* op_arg = arg_vec_.data() + op_info_vec_[i].arg_index;
 			switch(op)
 			{
 				// cases where nothing to do
@@ -399,7 +399,7 @@ public:
 		op_vec_             = play.op_vec_;
 		num_vecad_vec_rec_  = play.num_vecad_vec_rec_;
 		vecad_ind_vec_      = play.vecad_ind_vec_;
-		op_arg_vec_         = play.op_arg_vec_;
+		arg_vec_            = play.arg_vec_;
 		par_vec_            = play.par_vec_;
 		text_vec_           = play.text_vec_;
 		op_info_vec_        = play.op_info_vec_;
@@ -415,7 +415,7 @@ public:
 
 		op_vec_.erase();
 		vecad_ind_vec_.erase();
-		op_arg_vec_.erase();
+		arg_vec_.erase();
 		par_vec_.erase();
 		text_vec_.erase();
 		op_info_vec_.erase();
@@ -464,7 +464,7 @@ public:
 		const addr_t*& op_arg     ,
 		size_t&        var_index  ) const
 	{	op        = OpCode( op_vec_[op_index] );
-		op_arg    = op_info_vec_[op_index].arg_index + op_arg_vec_.data();
+		op_arg    = op_info_vec_[op_index].arg_index + arg_vec_.data();
 		var_index = op_info_vec_[op_index].var_index;
 		return;
 	}
@@ -608,7 +608,7 @@ public:
 
 	/// Fetch number of argument indices in the recording.
 	size_t num_op_arg_rec(void) const
-	{	return op_arg_vec_.size(); }
+	{	return arg_vec_.size(); }
 
 	/// Fetch number of parameters in the recording.
 	size_t num_par_rec(void) const
@@ -623,7 +623,7 @@ public:
 	size_t Memory(void) const
 	{	// check assumptions made by ad_fun<Base>::size_op_seq()
 		CPPAD_ASSERT_UNKNOWN( op_vec_.size() == num_op_rec() );
-		CPPAD_ASSERT_UNKNOWN( op_arg_vec_.size() == num_op_arg_rec() );
+		CPPAD_ASSERT_UNKNOWN( arg_vec_.size()    == num_op_arg_rec() );
 		CPPAD_ASSERT_UNKNOWN( par_vec_.size() == num_par_rec() );
 		CPPAD_ASSERT_UNKNOWN( text_vec_.size() == num_text_rec() );
 		CPPAD_ASSERT_UNKNOWN( vecad_ind_vec_.size() == num_vec_ind_rec() );
@@ -631,7 +631,7 @@ public:
 		CPPAD_ASSERT_UNKNOWN( sizeof(struct_op_info) == 2 * sizeof(addr_t) );
 		//
 		return op_vec_.size()        * sizeof(OpCode)
-		     + op_arg_vec_.size()    * sizeof(addr_t)
+		     + arg_vec_.size()       * sizeof(addr_t)
 		     + par_vec_.size()       * sizeof(Base)
 		     + text_vec_.size()      * sizeof(char)
 		     + vecad_ind_vec_.size() * sizeof(addr_t)

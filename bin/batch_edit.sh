@@ -27,8 +27,11 @@ move_list='
 move_sed='s|op_info|opt_op_info|'
 #
 cat << EOF > junk.sed
-s|var2op\\[ *\\([a-zA-Z_.]*\\[.\\]\\) *\\]|play->var2op(\\1)|
-s|var2op\\[ *\\([a-zA-Z_.]*\\) *\\]|play->var2op(\\1)|
+s|op_arg_vec_\\[i\\] |arg_vec_[i]    |g
+s|op_arg_vec_.capacity() |arg_vec_.capacity()    |g
+s|op_arg_vec_.size() |arg_vec_.size()    |g
+s|op_arg_vec_  |arg_vec_     |g
+s|op_arg_vec_|arg_vec_|g
 EOF
 # -----------------------------------------------------------------------------
 if [ $0 != "bin/batch_edit.sh" ]
