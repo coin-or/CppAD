@@ -873,6 +873,9 @@ and the true number of arguments num_arg can be large.
 It may be more efficient to handle these cases separately
 (see below).
 
+\param arg
+is the argument vector for this operator.
+
 \param variable
 If the input value of the elements in this vector do not matter.
 Upon return, for j < NumArg(op), the j-th argument for this operator is a
@@ -887,7 +890,7 @@ Otherwise the true number of arguments num_arg = NumArg(op).
 If the input size of variable is less than num_arg,
 variable.extend is used to increase its size to be num_arg.
 
-\paragraph CSkipOp
+\par CSkipOp
 In the case of CSkipOp,
 \code
 		num_arg     = 7 + arg[4] + arg[5];
@@ -895,7 +898,9 @@ In the case of CSkipOp,
 		variable[3] = (arg[1] & 2) != 0;
 \endcode
 and all the other variable values are false.
-In the case of CSum,
+
+\par CSumOp
+In the case of CSumOp,
 \code
 		num_arg = 4 + arg[0] + arg[1];
 		for(size_t i = 3; i < num_arg - 1; ++i)
