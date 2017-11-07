@@ -87,90 +87,18 @@ void match_op(
 	const addr_t* arg;
 	size_t        i_var;
 	play->get_op_info(current, op, arg, i_var);
+	CPPAD_ASSERT_UNKNOWN( 0 < NumArg(op) );
+	CPPAD_ASSERT_UNKNOWN( NumArg(op) <= 3 );
 	//
-	// which arguments are variable
-	size_t num_arg = NumArg(op);
-	//
-	bool   variable[2];
-	variable[0] = false;
-	variable[1] = false;
-	switch(op)
-	{	//
-		case ErfOp:
-		num_arg = 1; // other arugments are always the same
-		//
-		case AbsOp:
-		case AcosOp:
-		case AcoshOp:
-		case AsinOp:
-		case AsinhOp:
-		case AtanOp:
-		case AtanhOp:
-		case CosOp:
-		case CoshOp:
-		case ExpOp:
-		case Expm1Op:
-		case LogOp:
-		case Log1pOp:
-		case SignOp:
-		case SinOp:
-		case SinhOp:
-		case SqrtOp:
-		case TanOp:
-		case TanhOp:
-		CPPAD_ASSERT_UNKNOWN( num_arg == 1 );
-		variable[0] = true;
-		break;
-
-
-		case AddpvOp:
-		case DisOp:
-		case DivpvOp:
-		case EqpvOp:
-		case LepvOp:
-		case LtpvOp:
-		case MulpvOp:
-		case NepvOp:
-		case PowpvOp:
-		case SubpvOp:
-		case ZmulpvOp:
-		CPPAD_ASSERT_UNKNOWN( num_arg == 2 );
-		variable[1] = true;
-		break;
-
-		case DivvpOp:
-		case LevpOp:
-		case LtvpOp:
-		case PowvpOp:
-		case SubvpOp:
-		case ZmulvpOp:
-		CPPAD_ASSERT_UNKNOWN( num_arg == 2 );
-		variable[0] = true;
-		break;
-
-		case AddvvOp:
-		case DivvvOp:
-		case EqvvOp:
-		case LevvOp:
-		case LtvvOp:
-		case MulvvOp:
-		case NevvOp:
-		case PowvvOp:
-		case SubvvOp:
-		case ZmulvvOp:
-		CPPAD_ASSERT_UNKNOWN( num_arg == 2 );
-		variable[0] = true;
-		variable[1] = true;
-		break;
-
-		default:
-		CPPAD_ASSERT_UNKNOWN(false);
-	}
+	bool   variable[3];
+	CPPAD_ASSERT_UNKNOWN( NumArg(op) <= 3 );
+	arg_is_variable(op, variable);
 	//
 	// If j-th argument to current operator has a previous operator,
 	// this is the j-th argument for previous operator.
 	// Otherwise, it is the j-th argument for the current operator.
-	addr_t arg_match[2];
+	addr_t arg_match[3];
+	size_t num_arg = NumArg(op);
 	for(size_t j = 0; j < num_arg; ++j)
 	{	arg_match[j] = arg[j];
 		if( variable[j] )

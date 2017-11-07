@@ -133,7 +133,7 @@ enum OpCode {
 	// user atomic operation codes
 	UserOp,   // start of a user atomic operaiton
 	// arg[0] = index of the operation if atomic_base<Base> class
-	// arg[1] = extra information passed trough by deprecated old atomic class
+	// arg[1] = extra information passed through by deprecated old atomic class
 	// arg[2] = number of arguments to this atomic function
 	// arg[3] = number of results for this atomic function
 	UsrapOp,  // this user atomic argument is a parameter
@@ -862,6 +862,179 @@ void printOpResult(
 	for(k = 0; k < nrz; k++)
 		os << "| rz[" << k << "]=" << rz[k];
 }
+
+/*!
+Determines which arguments are variaibles for an operator.
+
+\param op
+is the operator which not be one of the following:
+CExpOp, CSkipOp, CSumOp, PriOp,
+
+\param variable
+The size of this vector is greater than or equal NumArg(op) and
+the values of its elements do not matter.
+Upon return, for j < NumArg(op), the j-th argument for this operator is a
+variable index if and only if variable[j] is true. Note that the variable
+index 0, for the BeginOp, does not correspond to a real variable and false
+is returned for this case.
+*/
+inline void arg_is_variable(OpCode op, bool variable[])
+{
+	switch(op)
+	{
+		// -------------------------------------------------------------------
+		// cases not handled by this routine
+		case CExpOp:
+		case CSkipOp:
+		case CSumOp:
+		case PriOp:
+		CPPAD_ASSERT_UNKNOWN(false);
+		break;
+
+		// -------------------------------------------------------------------
+		// cases where NumArg(op) == 0
+
+		case EndOp:
+		case InvOp:
+		case UsrrvOp:
+		CPPAD_ASSERT_UNKNOWN( NumArg(op) == 0 );
+		break;
+
+		// -------------------------------------------------------------------
+		// cases where NumArg(op) == 1
+		case AbsOp:
+		case AcoshOp:
+		case AcosOp:
+		case AsinhOp:
+		case AsinOp:
+		case AtanhOp:
+		case AtanOp:
+		case CoshOp:
+		case CosOp:
+		case Expm1Op:
+		case ExpOp:
+		case Log1pOp:
+		case LogOp:
+		case SignOp:
+		case SinhOp:
+		case SinOp:
+		case SqrtOp:
+		case TanhOp:
+		case TanOp:
+		case UsravOp:
+		CPPAD_ASSERT_UNKNOWN( NumArg(op) == 1 );
+		variable[0] = true;
+		break;
+
+		case BeginOp:
+		case ParOp:
+		case UsrapOp:
+		case UsrrpOp:
+		CPPAD_ASSERT_UNKNOWN( NumArg(op) == 1 );
+		variable[0] = false;
+		break;
+
+
+		// -------------------------------------------------------------------
+		// cases where NumArg(op) == 2
+
+		case AddpvOp:
+		case DisOp:
+		case DivpvOp:
+		case EqpvOp:
+		case LepvOp:
+		case LtpvOp:
+		case MulpvOp:
+		case NepvOp:
+		case PowpvOp:
+		case SubpvOp:
+		case ZmulpvOp:
+		CPPAD_ASSERT_UNKNOWN( NumArg(op) == 2 );
+		variable[0] = false;
+		variable[1] = true;
+		break;
+
+		case DivvpOp:
+		case LevpOp:
+		case LtvpOp:
+		case PowvpOp:
+		case SubvpOp:
+		case ZmulvpOp:
+		CPPAD_ASSERT_UNKNOWN( NumArg(op) == 2 );
+		variable[0] = true;
+		variable[1] = false;
+		break;
+
+		case AddvvOp:
+		case DivvvOp:
+		case EqvvOp:
+		case LevvOp:
+		case LtvvOp:
+		case MulvvOp:
+		case NevvOp:
+		case PowvvOp:
+		case SubvvOp:
+		case ZmulvvOp:
+		CPPAD_ASSERT_UNKNOWN( NumArg(op) == 2 );
+		variable[0] = true;
+		variable[1] = true;
+		break;
+
+		case ErfOp:
+		CPPAD_ASSERT_UNKNOWN( NumArg(op) == 3 );
+		variable[0] = false; // parameter index corresponding to zero
+		variable[1] = false; // parameter index corresponding to one
+		variable[2] = true;
+		break;
+
+		// --------------------------------------------------------------------
+		// cases where NumArg(op) == 3
+
+		case LdpOp:
+		case StppOp:
+		CPPAD_ASSERT_UNKNOWN( NumArg(op) == 3 );
+		variable[0] = false;
+		variable[1] = false;
+		variable[2] = false;
+		break;
+
+		case LdvOp:
+		case StvpOp:
+		CPPAD_ASSERT_UNKNOWN( NumArg(op) == 3 );
+		variable[0] = false;
+		variable[1] = true;
+		variable[2] = false;
+		break;
+
+		case StpvOp:
+		CPPAD_ASSERT_UNKNOWN( NumArg(op) == 3 );
+		variable[0] = false;
+		variable[1] = false;
+		variable[2] = true;
+		break;
+
+		case StvvOp:
+		CPPAD_ASSERT_UNKNOWN( NumArg(op) == 3 );
+		variable[0] = false;
+		variable[1] = true;
+		variable[2] = true;
+		break;
+
+		// --------------------------------------------------------------------
+		// cases where NumArg(op) == 4
+		case UserOp:
+		CPPAD_ASSERT_UNKNOWN( NumArg(op) == 4 );
+		for(size_t i = 0; i < 4; i++)
+			variable[i] = false;
+
+		// --------------------------------------------------------------------
+		default:
+		CPPAD_ASSERT_UNKNOWN(false);
+		break;
+	}
+}
+
+
 
 } } // END_CPPAD_LOCAL_NAMESPACE
 # endif

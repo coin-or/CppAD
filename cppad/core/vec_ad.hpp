@@ -440,7 +440,6 @@ public:
 				CPPAD_ASSERT_UNKNOWN( ind_taddr > 0 );
 
 				// put operand addresses in tape
-				// (value of third arugment does not matter)
 				tape->Rec_.PutArg(
 					(addr_t) vec_->offset_,
 					(addr_t) ind_taddr,
