@@ -31,9 +31,7 @@ Given the sparsity pattern for the dependent variables,
 RevJacSweep computes the sparsity pattern for all the independent variables.
 
 \tparam Base
-base type for the operator; i.e., this operation sequence was recorded
-using AD< \a Base > and computations by this routine are done using type
-\a Base.
+this operation sequence was recorded using AD<Base>.
 
 \tparam Vector_set
 is the type used for vectors of sets. It can be either
