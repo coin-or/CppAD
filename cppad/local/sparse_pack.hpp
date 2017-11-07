@@ -93,7 +93,7 @@ public:
 		n_set_          = n_set_in;
 		end_            = end_in;
 		if( n_set_ == 0 )
-		{	data_.free();
+		{	data_.clear();
 			return;
 		}
 		// now start a new vector with empty sets

@@ -35,11 +35,14 @@ class pod_vector {
 private:
 	/// number of elements currently in this vector
 	size_t length_;
+	//
 	/// maximum number of Type elements current allocation can hold
 	size_t capacity_;
+	//
 	/// pointer to the first type elements
 	/// (not defined and should not be used when capacity_ = 0)
 	Type   *data_;
+	//
 	/// do not use the copy constructor
 	explicit pod_vector(const pod_vector& )
 	{	CPPAD_ASSERT_UNKNOWN(false); }
@@ -69,14 +72,17 @@ public:
 	/// current number of elements in this vector.
 	inline size_t size(void) const
 	{	return length_; }
+	//
 	/// current capacity (amount of allocated storage) for this vector.
 	inline size_t capacity(void) const
 	{	return capacity_; }
+	//
 	/// current data pointer, no longer valid after any of the following:
 	/// extend, erase, operator=, and ~pod_vector.
 	/// Take extreem care when using this function.
 	inline Type* data(void)
 	{	return data_; }
+	//
 	/// const version of \c data pointer
 	inline const Type* data(void) const
 	{	return data_; }
@@ -89,6 +95,7 @@ public:
 
 	\return
 	is the number  of elements in the vector before \c extend was extended.
+	This is the index of the first new element added to the vector.
 
 	- If \c Type is plain old data, new elements are not initialized;
 	i.e., their constructor is not called. Otherwise, the constructor
@@ -97,7 +104,6 @@ public:
 	- This is the only routine that allocates memory for \c pod_vector.
 	and it uses thread_alloc for this allocation, hence this determines
 	which thread corresponds to this vector (when in parallel mode).
-
 	*/
 	inline size_t extend(size_t n)
 	{	size_t old_length   = length_;
@@ -173,9 +179,9 @@ public:
 	}
 	// ----------------------------------------------------------------------
 	/*!
-	Remove all the elements from this vector and delete its memory.
+	Remove all the elements from this vector and free its memory.
 	*/
-	void free(void)
+	void clear(void)
 	{	if( capacity_ > 0 )
 		{	void* v_ptr = reinterpret_cast<void*>( data_ );
 			if( ! is_pod<Type>() )
@@ -190,6 +196,7 @@ public:
 		capacity_ = 0;
 		length_   = 0;
 	}
+	// -----------------------------------------------------------------------
 	/// vector assignment operator
 	void operator=(
 		/// right hand size of the assingment operation
@@ -219,6 +226,7 @@ public:
 		for(i = 0; i < length_; i++)
 		{	data_[i] = x.data_[i]; }
 	}
+	// -----------------------------------------------------------------------
 	/*!
 	Swap all properties of this vector with another.
 

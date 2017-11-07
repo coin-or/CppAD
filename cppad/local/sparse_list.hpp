@@ -399,8 +399,8 @@ public:
 		if( n_set_in == 0 )
 		{	// restore object to start after constructor
 			// (no memory allocated for this object)
-			data_.free();
-			start_.free();
+			data_.clear();
+			start_.clear();
 			data_not_used_  = 0;
 			end_            = 0;
 			//

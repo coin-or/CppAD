@@ -94,11 +94,11 @@ public:
 	void free(void)
 	{	num_var_rec_     = 0;
 		num_load_op_rec_ = 0;
-		op_vec_.free();
-		vecad_ind_vec_.free();
-		arg_vec_.free();
-		par_vec_.free();
-		text_vec_.free();
+		op_vec_.clear();
+		vecad_ind_vec_.clear();
+		arg_vec_.clear();
+		par_vec_.clear();
+		text_vec_.clear();
 	}
 	/// Put next operator in the operation sequence.
 	inline addr_t PutOp(OpCode op);

@@ -1,9 +1,8 @@
-// $Id$
 # ifndef CPPAD_CORE_OPTIMIZE_HPP
 # define CPPAD_CORE_OPTIMIZE_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -265,7 +264,7 @@ void ADFun<Base>::optimize(const std::string& options)
 	for_jac_sparse_set_.resize(0,0);
 
 	// free old Taylor coefficient memory
-	taylor_.free();
+	taylor_.clear();
 	num_order_taylor_     = 0;
 	cap_order_taylor_     = 0;
 

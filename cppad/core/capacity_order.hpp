@@ -132,7 +132,7 @@ is the number of orders to allocate memory for.
 If <code>c == 0</code> then \c r must also be zero.
 In this case num_order_taylor_, cap_order_taylor_, and num_direction_taylor_
 are all set to zero.
-In addition, taylor_.free() is called.
+In addition, taylor_.clear() is called.
 
 \param r
 is the number of directions to allocate memory for.
@@ -162,7 +162,7 @@ void ADFun<Base>::capacity_order(size_t c, size_t r)
 
 	if( c == 0 )
 	{	CPPAD_ASSERT_UNKNOWN( r == 0 );
-		taylor_.free();
+		taylor_.clear();
 		num_order_taylor_     = 0;
 		cap_order_taylor_     = 0;
 		num_direction_taylor_ = r;
@@ -225,7 +225,7 @@ is the number of orders to allocate memory for.
 If <code>c == 0</code>,
 num_order_taylor_, cap_order_taylor_, and num_direction_taylor_
 are all set to zero.
-In addition, taylor_.free() is called.
+In addition, taylor_.clear() is called.
 
 \par num_order_taylor_
 The output value of num_order_taylor_ is the mininumum of its input

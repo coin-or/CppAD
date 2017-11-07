@@ -27,7 +27,10 @@ move_list='
 move_sed='s|op_info|opt_op_info|'
 #
 cat << EOF > junk.sed
-/CPPAD_ASSERT_ARG_BEFORE_RESULT(op, arg, i_var);/d
+s|_vec_.free()|_vec_.clear()|
+s|data_.free()|data_.clear()|
+s|start_.free()|start_.clear()|
+s|taylor_.free()|taylor_.clear()|
 EOF
 # -----------------------------------------------------------------------------
 if [ $0 != "bin/batch_edit.sh" ]

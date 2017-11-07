@@ -826,7 +826,7 @@ void ADFun<Base>::abs_normal_fun(ADFun<Base>& g, ADFun<Base>& a)
 	g.for_jac_sparse_set_.resize(0, 0);
 
 	// free taylor coefficient memory
-	g.taylor_.free();
+	g.taylor_.clear();
 	g.num_order_taylor_ = 0;
 	g.cap_order_taylor_ = 0;
 
@@ -855,7 +855,7 @@ void ADFun<Base>::abs_normal_fun(ADFun<Base>& g, ADFun<Base>& a)
 	a.for_jac_sparse_set_.resize(0, 0);
 
 	// free taylor coefficient memory
-	a.taylor_.free();
+	a.taylor_.clear();
 	a.num_order_taylor_ = 0;
 	a.cap_order_taylor_ = 0;
 }
