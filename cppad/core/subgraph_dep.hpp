@@ -109,76 +109,115 @@ void user_variables(
 	return;
 }
 
+/*!
+Compute dependency sparsity pattern for a player.
 
-template <typename Base, typename SizeVector>
+\tparam Base
+this operation sequence was recorded using AD<Base>.
+
+\tparam Vector_set
+is the type used for vectors of sets. It can be either
+sparse_pack or sparse_list.
+
+\param play
+this is the player holding the operation sequence.
+
+\param ind_taddr
+this is the vector of independent variables for this recording.
+
+\param dep_taddr
+this is the vector of dependent variables for this recording.
+
+\param sparsity_out
+this is the dependency sparsity pattern for the player.
+The input value of sparsity_out does not matter.
+Upon return
+sparsity_out.n_set() = dep_taddr.size(),
+sparsity_out.end()   = ind_taddr.size(),
+and if (i, j) is in sparsity_out,
+dep_taddr[i] depends on ind_taddr[j].
+*/
+
+template <typename Base, typename Vector_set>
 void subgraph_dep(
 	const player<Base>*    play         ,
+	const vector<size_t>&  ind_taddr    ,
 	const vector<size_t>&  dep_taddr    ,
-	sparse_rc<SizeVector>& pattern_out  )
+	Vector_set&            sparsity_out )
 {
-	// number of operators in the tape
+	// number of independent variables
+	size_t n_ind = ind_taddr.size();
+
+	// numver of dependent variables
+	size_t n_dep = dep_taddr.size();
+
+	// number of variables in the tape
 	size_t num_var = play->num_var_rec();
 
-	// set of variables in the subgraph
+	// numbef of operators in the tape
+	size_t num_op  = play->num_op_rec();
+
+	// subgraph of variables that are not independent and are connected
+	// to the dependent variable
 	pod_vector<addr_t> subgraph;
 
-	// set of independent variables connected to the subgraph
-	pod_vector<addr_t> connected;
+	// start with an empty set of independent variables connected
+	// to each dependent variable.
+	sparsity_out.resize(n_dep, n_ind);
 
-	// variables that are arguments to a user function call
+	// variables that are arguments to a particular user function call
 	pod_vector<addr_t> argument_variable;
 
-	// if sub_or_connected[i_op] == i, one of the following holds:
-	// 1. operator i_op is already in sub-graph for dependent variable i
-	// 2. i_op corresponds to an independent variable connected to subgraph
-	pod_vector<addr_t> sub_or_connected(num_var);
+	// if sub_or_connected[i_op] == i_dep, one of the following holds:
+	// 1. if i_op is an independent variable operator connected to i_dep
+	// 2. otherwise it is in subgraph for dependent variable i_dep
+	pod_vector<addr_t> sub_or_connected(num_op);
 	//
 	// initilaize sub_or_connected to an impossible dependent variable index
-	size_t n_dep = dep_taddr.size();
-	for(size_t i_var = 0; i_var < num_var; ++i_var)
-		sub_or_connected[i_var] = addr_t(n_dep);
+	for(size_t i_op = 0; i_op < num_op; ++i_op)
+		sub_or_connected[i_op] = addr_t(n_dep);
 
 	// which arguments, for one operator, are variables
 	pod_vector<bool> variable;
 
 	// for each dependent variable
 	for(size_t i_dep = 0; i_dep < n_dep; ++i_dep)
-	{	// start with an empty subgraph and connected set
+	{
+		// start with an empty subgraph for this dependent variable
 		subgraph.erase();
-		connected.erase();
 
 		// tape index corresponding to this dependent variable
-		size_t var_index = dep_taddr[i_dep];
+		size_t i_var = dep_taddr[i_dep];
 
-		// put this node in the sub-graph for this independent variable
-		subgraph.push_back(var_index);
-		sub_or_connected[var_index] = addr_t( i_dep );
+		// put this node in the subgraph for this independent variable
+		// (var_index cannot be an independent variable so put is subgraph)
+		size_t i_op = play->var2op(i_var);
+		CPPAD_ASSERT_UNKNNOWN( play->GetOp(i_op) != InvOp );
+		subgraph.push_back(i_op);
+		sub_or_connected[i_op] = addr_t( i_dep );
 
 		// check all that all the variables in the subgraph have been scanned
 		size_t sub_index = 0;
 		while(sub_index < subgraph.size() )
-		{	// variable for this node in the subgraph
-			var_index    = subgraph[sub_index];
+		{	// scan this variable to see which other variables are connected
+			i_var    = subgraph[sub_index];
 			//
-			// operator for this noide
-			size_t i_op  = play->var2op(var_index);
+			// operator for this variable
+			i_op  = play->var2op(i_var);
 			//
 			// get the information for this operator
 			local::OpCode  op;
 			addr_t* op_arg;
-			size_t  i_var;
 			play->get_info(i_op, op, op_arg, i_var);
 			CPPAD_ASSERT_UNKNOWN( NumRes(op) > 0 );
-			CPPAD_ASSERT_UNKNOWN( var_index == i_var );
-
+			//
 			// special case where operator corresponds to a user function call
 			if( op == UsrrvOp )
-			{	// 2DO: make this more efficient using sparsity pattern
-				// for the user function call.
+			{	// 2DO: make the resulting sparsity_out  more efficient using
+				// sparsity pattern for the user function call.
 				//
 				// determine the UserOp that started this function call
 				// along with the first variable result for this call.
-				size_t first_result = i_var;
 				while( op != UserOp )
 				{	CPPAD_ASSERT_UNKNOWN( i_op > 0 );
 					play->get_info(--i_op, op, op_arg, i_var);
@@ -188,29 +227,43 @@ void subgraph_dep(
 						op == UsrrpOp ||
 						op == UsrrvOp
 					);
-					if( op == UsrrvOp )
-						first_result = i_var;
 				}
-				if( sub_or_connected[first_result] != addr_t(i_dep) )
-				{	// we have not yet processed this function call
+				//
+				// check if we have processed this function call
+				if( sub_or_connected[i_op] != addr_t(i_dep) )
+				{	// Mark as processed so we do not repeat this calculation.
+					sub_or_connected[i_op] = addr_t(i_dep);
 					//
-					sub_or_connected[first_result] = addr_t(i_dep);
+					// Check that this is only place sub_or_connected can
+					// change for this i_op
+					CPPAD_ASSERT_UNKNOWN( NumRes(op) == 0 );
+					//
+					// determine which variables are connected to this call
 					user_variables(play, i_op, argument_variable);
+					//
+					// check each of these variables
 					for(size_t j = 0; j < argument_variable.size(); ++j)
 					{	size_t j_var = argument_variable[j];
-						if( sub_or_connected[j_var] != addr_t(i_dep) )
+						size_t j_op  = play->var2op( j_var );
+						//
+						// has this variable already been processed
+						// for this dependent variable
+						if( sub_or_connected[j_op] != addr_t(i_dep) )
 						{	// variable not yet in subgraph or connected
-							size_t j_op = play->var2op( j_var );
+							//
 							if( play->GetOp(j_op) == InvOp )
 							{	// This is an independent variable
-								CPPAD_ASSERT_UNKNOWN( j_var == j_op - 1 );
-								connected.push_back( addr_t(j_var) );
+								size_t j_ind = j_var - 1;
+								CPPAD_ASSERT_UNKNOWN(
+									j_var == ind_taddr[j_ind]
+								);
+								sparsity_out.add_element(i_dep, j_ind);
 							}
 							else
 							{	// add to the subgraph
-								subgraph.push_back( addr_t( j_var ) );
+								subgraph.push_back( addr_t( j_op ) );
 							}
-							sub_or_connected[j_var] = addr_t( i_dep );
+							sub_or_connected[j_op] = addr_t( i_dep );
 						}
 					}
 				}
@@ -221,22 +274,28 @@ void subgraph_dep(
 				// num_arg  = true number of arguments for this operator
 				size_t num_arg = arg_is_variable(op, op_arg, variable);
 
-				// loop through the variables
+				// loop through arguments that are variables
 				for(size_t j = 0; j < num_arg; ++j) if( variable[j] )
-				{	// index for this variables
+				{	// index for this variable
 					size_t j_var = op_arg[j];
+					size_t j_op  = play->var2op( j_var );
+					//
+					// has this variable already been processed
+					// for this dependent variable
+					if( sub_or_connected[j_op] != addr_t(i_dep) )
 					{	// variable not yet in subgraph or connected
-						size_t j_op = play->var2op( j_var );
+						//
 						if( play->GetOp(j_op) == InvOp )
 						{	// This is an independent variable
-							CPPAD_ASSERT_UNKNOWN( j_var == j_op - 1 );
-							connected.push_back( addr_t(j_var) );
+							size_t j_ind = j_var - 1;
+							CPPAD_ASSERT_UNKNOWN( j_var == ind_taddr[j_ind] );
+							sparsity_out.add_element(i_dep, j_ind);
 						}
 						else
 						{	// add to the subgraph
-							subgraph.push_back( addr_t( j_var ) );
+							subgraph.push_back( addr_t( j_op ) );
 						}
-						sub_or_connected[j_var] = addr_t( i_dep );
+						sub_or_connected[j_op] = addr_t( i_dep );
 					}
 				}
 			}
