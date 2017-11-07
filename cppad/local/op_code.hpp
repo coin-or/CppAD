@@ -17,7 +17,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 # include <cppad/core/define.hpp>
 # include <cppad/core/cppad_assert.hpp>
-# include <cppad/local/is_pod.hpp>
+# include <cppad/local/pod_vector.hpp>
 
 // needed before one can use CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL
 # include <cppad/utility/thread_alloc.hpp>
@@ -867,32 +867,54 @@ void printOpResult(
 Determines which arguments are variaibles for an operator.
 
 \param op
-is the operator which not be one of the following:
-CExpOp, CSkipOp, CSumOp, PriOp,
+is the operator. Note that CSkipOp and CSumOp are special cases
+because the true number of arguments is not equal to NumArg(op)
+and the true number of arguments num_arg can be large.
+It may be more efficient to handle these cases separately
+(see below).
 
 \param variable
-The size of this vector is greater than or equal NumArg(op) and
-the values of its elements do not matter.
+If the input value of the elements in this vector do not matter.
 Upon return, for j < NumArg(op), the j-th argument for this operator is a
 variable index if and only if variable[j] is true. Note that the variable
 index 0, for the BeginOp, does not correspond to a real variable and false
 is returned for this case.
+
+\return
+The return value is the true number of arguments num_arg.
+If op is CSkipOp or CSumOp, see below.
+Otherwise the true number of arguments num_arg = NumArg(op).
+If the input size of variable is less than num_arg,
+variable.extend is used to increase its size to be num_arg.
+
+\paragraph CSkipOp
+In the case of CSkipOp,
+\code
+		num_arg     = 7 + arg[4] + arg[5];
+		variable[2] = (arg[1] & 1) != 0;
+		variable[3] = (arg[1] & 2) != 0;
+\endcode
+and all the other variable values are false.
+In the case of CSum,
+\code
+		num_arg = 4 + arg[0] + arg[1];
+		for(size_t i = 3; i < num_arg - 1; ++i)
+			variable[i] = true;
+\endcode
+and all the other variable values are false.
 */
-inline void arg_is_variable(OpCode op, bool variable[])
-{
+inline void arg_is_variable(
+	OpCode            op       ,
+	const addr_t*     arg      ,
+	pod_vector<bool>& variable )
+{	size_t num_arg = NumArg(op);
+	if( variable.size() < num_arg )
+		variable.extend( num_arg - variable.size() );
+	//
 	switch(op)
 	{
 		// -------------------------------------------------------------------
-		// cases not handled by this routine
-		case CExpOp:
-		case CSkipOp:
-		case CSumOp:
-		case PriOp:
-		CPPAD_ASSERT_UNKNOWN(false);
-		break;
-
-		// -------------------------------------------------------------------
-		// cases where NumArg(op) == 0
+		// cases where true number of arugments = NumArg(op) == 0
 
 		case EndOp:
 		case InvOp:
@@ -1021,11 +1043,69 @@ inline void arg_is_variable(OpCode op, bool variable[])
 		break;
 
 		// --------------------------------------------------------------------
-		// cases where NumArg(op) == 4
+		// case where NumArg(op) == 4
 		case UserOp:
 		CPPAD_ASSERT_UNKNOWN( NumArg(op) == 4 );
 		for(size_t i = 0; i < 4; i++)
 			variable[i] = false;
+		break;
+
+		// --------------------------------------------------------------------
+		// case where NumArg(op) == 5
+		case PriOp:
+		CPPAD_ASSERT_UNKNOWN( NumArg(op) == 5 );
+		variable[0] = false;
+		variable[1] = (arg[0] & 1) != 0;
+		variable[2] = false;
+		variable[3] = (arg[0] & 2) != 0;
+		variable[4] = false;
+		break;
+
+		// --------------------------------------------------------------------
+		// case where NumArg(op) == 6
+		case CExpOp:
+		CPPAD_ASSERT_UNKNOWN( NumArg(op) == 6 );
+		variable[0] = false;
+		variable[1] = false;
+		variable[2] = (arg[0] & 1) != 0;
+		variable[3] = (arg[0] & 2) != 0;
+		variable[4] = (arg[0] & 4) != 0;
+		variable[5] = (arg[0] & 8) != 0;
+		break;
+
+		// -------------------------------------------------------------------
+		// CSkipOp:
+		case CSkipOp:
+		CPPAD_ASSERT_UNKNOWN( NumArg(op) == 0 )
+		//
+		// true number of arguments
+		num_arg = 7 + arg[4] + arg[5];
+		if( variable.size() < num_arg )
+			variable.extend( num_arg - variable.size() );
+		variable[0] = false;
+		variable[1] = false;
+		variable[2] = (arg[1] & 1) != 0;
+		variable[3] = (arg[1] & 2) != 0;
+		for(size_t i = 4; i < num_arg; ++i)
+			variable[i] = false;
+		break;
+
+		// -------------------------------------------------------------------
+		// CSumOp:
+		case CSumOp:
+		CPPAD_ASSERT_UNKNOWN( NumArg(op) == 0 )
+		//
+		// true number of arguments
+		num_arg = 4 + arg[0] + arg[1];
+		if( variable.size() < num_arg )
+			variable.extend( num_arg - variable.size() );
+		variable[0] = false;
+		variable[1] = false;
+		variable[2] = false;
+		for(size_t i = 3; i < num_arg - 1; ++i)
+			variable[i] = true;
+		variable[num_arg - 1] = false;
+		break;
 
 		// --------------------------------------------------------------------
 		default:
@@ -1033,8 +1113,6 @@ inline void arg_is_variable(OpCode op, bool variable[])
 		break;
 	}
 }
-
-
 
 } } // END_CPPAD_LOCAL_NAMESPACE
 # endif

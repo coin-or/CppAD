@@ -90,9 +90,9 @@ void match_op(
 	CPPAD_ASSERT_UNKNOWN( 0 < NumArg(op) );
 	CPPAD_ASSERT_UNKNOWN( NumArg(op) <= 3 );
 	//
-	bool   variable[3];
-	CPPAD_ASSERT_UNKNOWN( NumArg(op) <= 3 );
-	arg_is_variable(op, variable);
+	pod_vector<bool>  variable(3);
+	arg_is_variable(op, arg, variable);
+	CPPAD_ASSERT_UNKNOWN( variable.size() == 3 );
 	//
 	// If j-th argument to current operator has a previous operator,
 	// this is the j-th argument for previous operator.

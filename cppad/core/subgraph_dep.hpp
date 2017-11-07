@@ -76,117 +76,88 @@ void ADFun<Base>::subgraph_dep(sparse_rc<SizeVector>& pattern_out)
 	// number of operators in the tape
 	size_t num_op = play_.num_op_rec();
 
-	// set of operators in the subgraph, excluding the independent variables
+	// set of operators in the subgraph
 	local::pod_vector<addr_t> subgraph;
 
-	// set of indepndent variables operators in subgraph
-	local::pod_vector<addr_t> independent;
+	// set of indepndent variables operators connected to the subgraph
+	local::pod_vector<addr_t> connected;
 
-	// if in_subgrah[i_op] == i, one of the following holds:
+	// if sub_or_connected[i_op] == i, one of the following holds:
 	// 1. operator i_op is already in sub-graph for dependent variable i
-	// 2. i_op corresponds to an independent variable an it is in independent.
-	local::pod_vector<addr_t> in_subgraph( num_op );
+	// 2. i_op corresponds to an independent variable connected to subgraph
+	local::pod_vector<addr_t> sub_or_connected( num_op );
 	//
-	// initilaize in_subgraph to an impossible dependent variable index
+	// initilaize sub_or_connected to an impossible dependent variable index
 	for(size_t i_op = 0; i_op < num_op; ++i_op)
-		in_subgraph[i_op] = Range();
+		sub_or_connected[i_op] = addr_t( Range() );
 
-	//
-	// which arguments are variables
-	local::pod_vector<bool> is_var(5);
+	// which arguments, for one operator, are variables
+	local::pod_vector<bool> variable;
 
 	// for each dependent variable
-	for(size_t i = 0; i < Range(); ++i)
-	{	// start with an empty subgraph and empty independent set
+	for(size_t i_dep = 0; i_dep < Range(); ++i_dep)
+	{	// start with an empty subgraph and empty connected set
 		subgraph.erase();
-		independent.erase();
+		connected.erase();
 
 		// tape index corresponding to this dependent variable
-		size_t var_index = dep_taddr_[i];
+		size_t var_index = dep_taddr_[i_dep];
 
 		// put operator for this dependent variable in the subgraph
 		size_t i_op  = play_.var2op( var_index );
+		CPPAD_ASSERT_UNKNOWN( play_.GetOp(i_op) != local::InvOp );
 		subgraph.push_back(i_op);
+		sub_or_connected[i_op] = addr_t( i_dep );
 
+		// check all arguments that are variables in the subgraph
 		size_t sub_index = 0;
 		while(sub_index < subgraph.size() )
 		{	// operator for this node in the subgraph
 			i_op = subgraph[sub_index];
 			//
+			// get the arguments for this operator
 			local::OpCode  op;
 			addr_t* op_arg;
 			size_t  i_var;
 			play_.get_info(i_op, op, op_arg, i_var);
 
-			// 2DO: handle this case
-			CPPAD_ASSERT_UNKNOWN( op == local::UserOp );
-
 			// only operators that have results appear in subgraph
 			CPPAD_ASSERT_UNKNOWN( NumRes(op) > 0 );
 
-			// this special case is not possible because NumRes(CSkipOp) == 0
-			CPPAD_ASSERT_UNKNOWN( op != local::CSkipOp)
+			// 2DO: handle this case
+			CPPAD_ASSERT_UNKNOWN( op == local::UserOp );
 
-			// number of arguments for this operator
-			if( op == local::CSumOp )
-			{	// special case where NumArg(op) is not correct
-				CPPAD_ASSERT_UNKNOWN( NumArg(op) == 0 );
-				//
-				// number of arguments that are variables
-				size_t num_arg_var = op_arg[0] + op_arg[1];
-				for(size_t j = 0; j < num_arg_var; ++j)
-				{	// index for this variable
-					size_t j_var = op_arg[3 + j];
-					// operator for this variable
-					size_t j_op  = play_.var2op(j_var);
-					// check if operator not yet in subgraph or independent
-					if( in_subgraph[j_op] != addr_t(i) )
-					{	// if this is an independent variables
-						if( play_.GetOp(j_op) == local::InvOp )
-						{	CPPAD_ASSERT_UNKNOWN( j_var == j_op - 1 );
-							// add to set of independet varables i depends on
-							independent.push_back( addr_t(j_var) );
-						}
-						else
-						{	// add to the subgraph
-							subgraph.push_back( addr_t( j_op ) );
-						}
-						in_subgraph[j_op] = addr_t( i );
+			// variable = which operator arguments are variables
+			// num_arg  = true number of arguments for this operator
+			size_t num_arg = arg_is_variable(op, op_arg, variable);
+
+			// loop through the variables
+			for(size_t j = 0; j < num_arg; ++j) if( variable[j] )
+			{	// index for this variables
+				size_t j_var = op_arg[j];
+
+				// operator for this variables
+				size_t j_op  = play_.var2op(j_var);
+
+				if( sub_or_connected[j_op] != addr_t(i_dep) )
+				{	// this operator is not yet in subgraph or connected
+					if( play_.GetOp(j_op) == local::InvOp )
+					{	// This is an independent variable operator
+						CPPAD_ASSERT_UNKNOWN( j_var == j_op - 1 );
+
+						// add to the connected set of independent variables
+						connected.push_back( addr_t(j_var) );
 					}
-				}
-			}
-			else
-			{	// which arguments are variables
-				bool variable[3];
-				CPPAD_ASSERT_UNKNOWN( NumArg(op) <= 3 );
-				arg_is_variable(op, variable);
-				//
-				// loop through the variables
-				for(size_t j = 0; j < NumArg(op); ++j) if( variable[j] )
-				{	// index for this variables
-					size_t j_var = op_arg[j];
-					// operator for this variables
-					size_t j_op  = play_.var2op(j_var);
-					// check if operator not yet in subgraph or independent
-					if( in_subgraph[j_op] != addr_t(i) )
-					{	// if this is an independent variables
-						if( play_.GetOp(j_op) == local::InvOp )
-						{	CPPAD_ASSERT_UNKNOWN( j_var == j_op - 1 );
-							// add to set of independet varables i depends on
-							independent.push_back( addr_t(j_var) );
-						}
-						else
-						{	// add to the subgraph
-							subgraph.push_back( addr_t( j_op ) );
-						}
-						in_subgraph[j_op] = addr_t( i );
+					else
+					{	// add to the subgraph
+						subgraph.push_back( addr_t( j_op ) );
 					}
+					sub_or_connected[j_op] = addr_t( i_dep );
 				}
 			}
 			++sub_index;
 		}
 	}
-
 }
 
 } // END_CPPAD_NAMESPACE
