@@ -27,10 +27,13 @@ move_list='
 move_sed='s|op_info|opt_op_info|'
 #
 cat << EOF > junk.sed
-s|_vec_.free()|_vec_.clear()|
-s|data_.free()|data_.clear()|
-s|start_.free()|start_.clear()|
-s|taylor_.free()|taylor_.clear()|
+/pod_vector<[a-zA-Z_]*> [a-zA-Z_0-9]*;/! b skip
+N
+/\.extend([a-zA-Z_0-9]*)/! b skip
+#
+s|;\\n\\t*[a-zA-Z_0-9]*\\.extend||
+#
+: skip
 EOF
 # -----------------------------------------------------------------------------
 if [ $0 != "bin/batch_edit.sh" ]

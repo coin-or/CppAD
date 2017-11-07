@@ -504,8 +504,7 @@ void ADFun<Base>::ForSparseHesCheckpoint(
 
 	// Array that holds the reverse Jacobiain dependcy flags.
 	// Initialize as true for dependent variables, flase for others.
-	local::pod_vector<bool> RevJac;
-	RevJac.extend(num_var_tape_);
+	local::pod_vector<bool> RevJac(num_var_tape_);
 	for(size_t i = 0; i < num_var_tape_; i++)
 		RevJac[i] = false;
 	for(size_t i = 0; i < m; i++)

@@ -177,8 +177,7 @@ void ADFun<Base>::rev_hes_sparsity(
 	);
 	//
 	// vector that holds reverse Jacobian sparsity flag
-	local::pod_vector<bool> rev_jac_pattern;
-	rev_jac_pattern.extend(num_var_tape_);
+	local::pod_vector<bool> rev_jac_pattern(num_var_tape_);
 	for(size_t i = 0; i < num_var_tape_; i++)
 		rev_jac_pattern[i] = false;
 	//

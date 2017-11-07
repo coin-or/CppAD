@@ -104,8 +104,7 @@ private:
 		size_t n_set = start_.size();
 		//
 		// save the reference counters
-		pod_vector<size_t> ref_count;
-		ref_count.extend(n_set);
+		pod_vector<size_t> ref_count(n_set);
 		for(size_t i = 0; i < n_set; i++)
 			ref_count[i] = reference_count(i);
 
@@ -249,11 +248,9 @@ private:
 		size_t n_set  = start_.size();
 		//
 		// copy the sets to a temporary data vector
-		pod_vector<pair_size_t> data_tmp;
-		data_tmp.extend(1); // data_tmp[0] will not be used
+		pod_vector<pair_size_t> data_tmp(1); // data_tmp[0] will not be used
 		//
-		pod_vector<size_t> start_tmp;
-		start_tmp.extend(n_set);
+		pod_vector<size_t> start_tmp(n_set);
 		for(size_t i = 0; i < n_set; i++)
 		{	size_t start    = start_[i];
 			if( start == 0 )

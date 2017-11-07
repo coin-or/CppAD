@@ -47,11 +47,17 @@ private:
 	explicit pod_vector(const pod_vector& )
 	{	CPPAD_ASSERT_UNKNOWN(false); }
 public:
-	/// Constructors set capacity, length, and data to zero.
-	inline pod_vector(void)
+	/// default constructor sets capacity_ = lenght_ = data_ = 0
+	pod_vector(void)
 	: length_(0), capacity_(0), data_(CPPAD_NULL)
 	{	CPPAD_ASSERT_UNKNOWN( is_pod<size_t>() );
 	}
+	/// sizing constructor
+	pod_vector(
+		/// number of elements in this vector
+		size_t n
+	)   : length_(0), capacity_(0), data_(CPPAD_NULL)
+	{	extend(n); }
 	// ----------------------------------------------------------------------
 	/// Destructor: returns allocated memory to \c thread_alloc;
 	/// see \c extend.  If this is not plain old data,
@@ -70,21 +76,21 @@ public:
 	}
 	// ----------------------------------------------------------------------
 	/// current number of elements in this vector.
-	inline size_t size(void) const
+	size_t size(void) const
 	{	return length_; }
 	//
 	/// current capacity (amount of allocated storage) for this vector.
-	inline size_t capacity(void) const
+	size_t capacity(void) const
 	{	return capacity_; }
 	//
-	/// current data pointer, no longer valid after any of the following:
+	/// current data pointer is no longer valid after any of the following:
 	/// extend, erase, operator=, and ~pod_vector.
 	/// Take extreem care when using this function.
-	inline Type* data(void)
+	Type* data(void)
 	{	return data_; }
 	//
-	/// const version of \c data pointer
-	inline const Type* data(void) const
+	/// const version of data pointer (see non-const documentation)
+	const Type* data(void) const
 	{	return data_; }
 	// ----------------------------------------------------------------------
 	/*!
@@ -105,7 +111,7 @@ public:
 	and it uses thread_alloc for this allocation, hence this determines
 	which thread corresponds to this vector (when in parallel mode).
 	*/
-	inline size_t extend(size_t n)
+	size_t extend(size_t n)
 	{	size_t old_length   = length_;
 		length_            += n;
 
@@ -229,6 +235,8 @@ public:
 	// -----------------------------------------------------------------------
 	/*!
 	Swap all properties of this vector with another.
+	This is useful when moving a vector that grows after it has reached
+	its final size (without copying every element).
 
 	\param other
 	is the other vector that we are swapping this vector with.
@@ -237,6 +245,17 @@ public:
 	{	std::swap(capacity_, other.capacity_);
 		std::swap(length_,   other.length_);
 		std::swap(data_,     other.data_);
+	}
+	// ------------------------------------------------------------------------
+	/*!
+	Add an element to theh back of this vector
+
+	\param e
+	is the element we are adding to the back of the vector.
+	*/
+	void push_back(const Type& e)
+	{	size_t i = extend(1);
+		data_[i] = e;
 	}
 };
 

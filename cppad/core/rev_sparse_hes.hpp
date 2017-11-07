@@ -262,8 +262,7 @@ void ADFun<Base>::RevSparseHesCase(
 
 	// Array that will hold reverse Jacobian dependency flag.
 	// Initialize as true for the dependent variables.
-	local::pod_vector<bool> RevJac;
-	RevJac.extend(num_var_tape_);
+	local::pod_vector<bool> RevJac(num_var_tape_);
 	for(i = 0; i < num_var_tape_; i++)
 		RevJac[i] = false;
 	for(i = 0; i < m; i++)
@@ -384,8 +383,7 @@ void ADFun<Base>::RevSparseHesCase(
 
 	// Array that will hold reverse Jacobian dependency flag.
 	// Initialize as true for the dependent variables.
-	local::pod_vector<bool> RevJac;
-	RevJac.extend(num_var_tape_);
+	local::pod_vector<bool> RevJac(num_var_tape_);
 	for(i = 0; i < num_var_tape_; i++)
 		RevJac[i] = false;
 	itr_1 = s[0].begin();
@@ -567,8 +565,7 @@ void ADFun<Base>::RevSparseHesCheckpoint(
 
 	// Array that holds the reverse Jacobiain dependcy flags.
 	// Initialize as true for dependent variables, flase for others.
-	local::pod_vector<bool> RevJac;
-	RevJac.extend(num_var_tape_);
+	local::pod_vector<bool> RevJac(num_var_tape_);
 	for(size_t i = 0; i < num_var_tape_; i++)
 		RevJac[i] = false;
 	for(size_t i = 0; i < m; i++)
