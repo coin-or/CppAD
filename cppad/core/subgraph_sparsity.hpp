@@ -70,7 +70,7 @@ $codei%
 %$$
 If $icode transpose$$ it is false (true),
 upon return $icode pattern_out$$ is a sparsity pattern for
-$latex J(x)$$ ($latex J(x)^\R{T}$$).
+$latex F^{(1)} (x)$$ ($latex F^{(1)} (x)^\R{T}$$).
 
 $head Example$$
 $children%

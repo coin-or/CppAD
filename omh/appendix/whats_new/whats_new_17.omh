@@ -54,6 +54,13 @@ $head API Changes$$
 Speed tests no longer automatically compile in release mode; see
 $cref/debug_which/speed/debug_which/$$
 
+$head 11-08$$
+Add the $cref subgraph_sparsity$$ method for computing
+dependency and sparsity.
+This was inspired by the
+$href%https://cran.r-project.org/web/packages/TMB/index.html%TMB%$$ package.
+
+
 $head 11-06$$
 More information has been added to the operation sequence.
 To be specific, the extra amount of

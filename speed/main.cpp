@@ -239,9 +239,7 @@ $codep
 	global_option["revsparsity"]
 $$
 is true and otherwise it is false.
-If it is true, CppAD will use a
-$cref ForSparseJac$$ and $cref ForSparseHes$$ where possible
-for its sparsity patterns.
+If it is true, CppAD will use reverse mode for sparsity patterns.
 Otherwise it will use $cref RevSparseJac$$ and $cref RevSparseHes$$.
 
 $subhead colpack$$
