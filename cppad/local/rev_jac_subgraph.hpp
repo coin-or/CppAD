@@ -1,5 +1,5 @@
-# ifndef CPPAD_CORE_SUBGRAPH_DEP_HPP
-# define CPPAD_CORE_SUBGRAPH_DEP_HPP
+# ifndef CPPAD_LOCAL_REV_JAC_SUBGRAPH_HPP
+# define CPPAD_LOCAL_REV_JAC_SUBGRAPH_HPP
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
@@ -11,53 +11,14 @@ A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 
-/*
-$begin subgraph_depend$$
-
-$section Computing Dependency Using A Sub-graph Method$$
-
-$head Under Construction$$
-
-$head Syntax$$
-$icode%f%.subgraph_dep(%pattern_out%)%$$
-
-$head Purpose$$
-We use $latex F : B^n \rightarrow B^m$$ to denote the
-$cref/AD function/glossary/AD Function/$$ corresponding to $icode f$$.
-This routine computes a
-$cref/dependency pattern/dependency.cpp/Dependency Pattern/$$ for
-$latex F ( x )$$ using a sub-graph technique.
-To be specific, for $latex i = 0 , \ldots , m-1$$,
-the dependency for $latex F_i (x)$$ is computed by traversing
-the sub-graph corresponding to the $th i$$ dependent variable.
-
-$head SizeVector$$
-We use $icode SizeVector$$ to denote $cref SimpleVector$$ class
-$cref/with elements of type/SimpleVector/Elements of Specified Type/$$
-$code size_t$$.
-
-$head pattern_out$$
-This argument has prototype
-$codei%
-	sparse_rc<%SizeVector%>& %pattern_out%
-%$$
-This input value of $icode pattern_out$$ does not matter.
-Upon return $icode pattern_out$$ is a
-$cref/dependency pattern/dependency.cpp/Dependency Pattern/$$
-for $latex F(x)$$.
-To be specific, if $latex F_i (x)$$ depends on the value of $latex x_j$$
-then the row, column pair  $latex (i, j)$$ appears in $icode pattern_out$$.
-
-$end
-*/
-
 namespace CppAD { namespace local { // BEGIN_CPPAD_LOCAL_NAMESPACE
 /*!
-\file subgraph_dep.hpp
-Dependency for on dependent variable .
+\file rev_jac_subgraph.hpp
+Compute dependency sparsity pattern using subgraph technique.
 */
+
 /*!
-Determine the set of results and argument variables for a user function call.
+Determine the set of argument variables for a user function call.
 
 \param play
 is the player for this operation sequence.
@@ -110,23 +71,19 @@ void user_variables(
 }
 
 /*!
-Compute dependency sparsity pattern for a player.
+Compute dependency sparsity pattern for an ADFun<Base> function.
 
 \tparam Base
-this operation sequence was recorded using AD<Base>.
-
-\tparam Vector_set
-is the type used for vectors of sets. It can be either
-sparse_pack or sparse_list.
+the operation sequence was recorded using AD<Base>.
 
 \param play
-this is the player holding the operation sequence.
+is the operation sequence corresponding to the ADFun<Base> function.
 
 \param ind_taddr
-this is the vector of independent variables for this recording.
+is the vector of independent variables for this ADFun<Base> function.
 
 \param dep_taddr
-this is the vector of dependent variables for this recording.
+is the vector of dependent variables for this ADFun<Base> function.
 
 \param row_out
 The input size and elements of row_out do not matter.
@@ -221,6 +178,8 @@ void subgraph_dep(
 			local::OpCode  op;
 			addr_t* op_arg;
 			play->get_info(i_op, op, op_arg, i_var);
+			//
+			// Only nodes corresponding to variables are included subgraph.
 			CPPAD_ASSERT_UNKNOWN( NumRes(op) > 0 );
 			//
 			// special case where operator corresponds to a user function call
