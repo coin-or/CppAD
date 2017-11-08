@@ -128,22 +128,34 @@ this is the vector of independent variables for this recording.
 \param dep_taddr
 this is the vector of dependent variables for this recording.
 
-\param sparsity_out
-this is the dependency sparsity pattern for the player.
-The input value of sparsity_out does not matter.
-Upon return
-sparsity_out.n_set() = dep_taddr.size(),
-sparsity_out.end()   = ind_taddr.size(),
-and if (i, j) is in sparsity_out,
-dep_taddr[i] depends on ind_taddr[j].
+\param row_out
+The input size and elements of row_out do not matter.
+We use number of non-zeros (nnz) to denote the number of elements
+in row_out. For k = 0 , ... , nnz-1, row_out[k] is the row index
+of the k-th no-zero element of the dependency sparsitiy pattern for
+the function corresponding to the recording.
+\code
+	0 <= row_out[k] < dep_taddr.size()
+\endcode
+
+\param col_out
+The input size and elements of col_out do not matter.
+Upon return is has the same size as row_out; i.e., nnz.
+For k = 0 , ... , nnz-1, col_out[k] is the column index
+of the k-th no-zero element of the dependency sparsitiy pattern for
+the function corresponding to the recording.
+\code
+	0 <= col_out[k] < ind_taddr.size()
+\endcode
 */
 
-template <typename Base, typename Vector_set>
+template <typename Base>
 void subgraph_dep(
-	const player<Base>*    play         ,
-	const vector<size_t>&  ind_taddr    ,
-	const vector<size_t>&  dep_taddr    ,
-	Vector_set&            sparsity_out )
+	const player<Base>*        play         ,
+	const vector<size_t>&      ind_taddr    ,
+	const vector<size_t>&      dep_taddr    ,
+	pod_vector<size_t>&        row_out      ,
+	pod_vector<size_t>&        col_out      )
 {
 	// number of independent variables
 	size_t n_ind = ind_taddr.size();
@@ -161,9 +173,9 @@ void subgraph_dep(
 	// to the dependent variable
 	pod_vector<addr_t> subgraph;
 
-	// start with an empty set of independent variables connected
-	// to each dependent variable.
-	sparsity_out.resize(n_dep, n_ind);
+	// start with an empty sparsity pattern
+	row_out.erase();
+	col_out.erase();
 
 	// variables that are arguments to a particular user function call
 	pod_vector<addr_t> argument_variable;
@@ -257,7 +269,8 @@ void subgraph_dep(
 								CPPAD_ASSERT_UNKNOWN(
 									j_var == ind_taddr[j_ind]
 								);
-								sparsity_out.add_element(i_dep, j_ind);
+								row_out.push_back(i_dep);
+								col_out.push_back(j_ind);
 							}
 							else
 							{	// add to the subgraph
@@ -289,7 +302,8 @@ void subgraph_dep(
 						{	// This is an independent variable
 							size_t j_ind = j_var - 1;
 							CPPAD_ASSERT_UNKNOWN( j_var == ind_taddr[j_ind] );
-							sparsity_out.add_element(i_dep, j_ind);
+							row_out.push_back(i_dep);
+							col_out.push_back(j_ind);
 						}
 						else
 						{	// add to the subgraph
