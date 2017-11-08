@@ -329,10 +329,6 @@ public:
 		bool dependency = false
 	);
 	// ---------------------------------------------------------------------
-	template <typename SizeVector>
-	void subgraph_dep(
-		sparse_rc<SizeVector>& pattern_out
-	);
 	template <typename SizeVector, typename BaseVector>
 	size_t sparse_jac_for(
 		size_t                               group_max ,
@@ -360,6 +356,11 @@ public:
 		sparse_hes_work&                     work
 	);
 	// ---------------------------------------------------------------------
+	template <typename SizeVector>
+	void subgraph_sparsity(
+		sparse_rc<SizeVector>&       pattern_out ,
+		bool                         transpose
+	);
 	template <typename SizeVector>
 	void for_jac_sparsity(
 		const sparse_rc<SizeVector>& pattern_in       ,

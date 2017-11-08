@@ -25,6 +25,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # include <cppad/utility/test_boolofvoid.hpp>
 
 // external compiled tests
+extern bool subgraph_sparsity(void);
 extern bool sub_sparse_hes(void);
 extern bool sparsity_sub(void);
 extern bool sparse_sub_hes(void);
@@ -58,6 +59,7 @@ int main(void)
 	// This line is used by test_one.sh
 
 	// external compiled tests
+	Run( subgraph_sparsity,         "subgraph_sparsity" );
 	Run( sub_sparse_hes,            "sub_sparse_hes" );
 	Run( sparsity_sub,              "sparsity_sub" );
 	Run( sparse_sub_hes,            "sparse_sub_hes" );

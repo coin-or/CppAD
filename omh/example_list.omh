@@ -293,6 +293,7 @@ $rref sqrt.cpp$$
 $rref stack_machine.cpp$$
 $rref sub.cpp$$
 $rref sub_eq.cpp$$
+$rref subgraph_sparsity.cpp$$
 $rref sub_sparse_hes.cpp$$
 $rref tan.cpp$$
 $rref tanh.cpp$$

@@ -40,19 +40,19 @@ void user_variables(
 	OpCode        op;
 	const addr_t* op_arg;
 	size_t        i_var;
-	play->get_info(i_op, op, op_arg, i_var);
+	play->get_op_info(i_op, op, op_arg, i_var);
 	CPPAD_ASSERT_UNKNOWN( op == UserOp );
 	//
 	argument_variable.erase();
 	//
-	play->get_info(++i_op, op, op_arg, i_var);
+	play->get_op_info(++i_op, op, op_arg, i_var);
 	while( op != UserOp )
 	{	switch(op)
 		{
 			case UsravOp:
 			{	CPPAD_ASSERT_NARG_NRES(op, 1, 0);
 				size_t j_var = op_arg[0];
-				argument_variable.push_back(j_var);
+				argument_variable.push_back( addr_t(j_var) );
 			}
 			break;
 
@@ -65,7 +65,7 @@ void user_variables(
 			CPPAD_ASSERT_UNKNOWN(false);
 			break;
 		}
-		play->get_info(++i_op, op, op_arg, i_var);
+		play->get_op_info(++i_op, op, op_arg, i_var);
 	}
 	return;
 }
@@ -107,21 +107,15 @@ the function corresponding to the recording.
 */
 
 template <typename Base>
-void subgraph_dep(
+void rev_jac_subgraph(
 	const player<Base>*        play         ,
 	const vector<size_t>&      ind_taddr    ,
 	const vector<size_t>&      dep_taddr    ,
 	pod_vector<size_t>&        row_out      ,
 	pod_vector<size_t>&        col_out      )
 {
-	// number of independent variables
-	size_t n_ind = ind_taddr.size();
-
 	// numver of dependent variables
 	size_t n_dep = dep_taddr.size();
-
-	// number of variables in the tape
-	size_t num_var = play->num_var_rec();
 
 	// numbef of operators in the tape
 	size_t num_op  = play->num_op_rec();
@@ -158,11 +152,18 @@ void subgraph_dep(
 		// tape index corresponding to this dependent variable
 		size_t i_var = dep_taddr[i_dep];
 
-		// put this node in the subgraph for this independent variable
-		// (var_index cannot be an independent variable so put is subgraph)
+		// put this node in the subgraph for this dependent variable
 		size_t i_op = play->var2op(i_var);
-		CPPAD_ASSERT_UNKNNOWN( play->GetOp(i_op) != InvOp );
-		subgraph.push_back(i_op);
+		if( play->GetOp(i_op) == InvOp )
+		{	// this dependent variable is also an independent variable
+			size_t i_ind = i_var - 1;
+			CPPAD_ASSERT_UNKNOWN( i_var == ind_taddr[i_ind] );
+			row_out.push_back(i_dep);
+			col_out.push_back(i_ind);
+		}
+		else
+		{	subgraph.push_back( addr_t(i_op) );
+		}
 		sub_or_connected[i_op] = addr_t( i_dep );
 
 		// check all that all the variables in the subgraph have been scanned
@@ -176,8 +177,8 @@ void subgraph_dep(
 			//
 			// get the information for this operator
 			local::OpCode  op;
-			addr_t* op_arg;
-			play->get_info(i_op, op, op_arg, i_var);
+			const addr_t* op_arg;
+			play->get_op_info(i_op, op, op_arg, i_var);
 			//
 			// Only nodes corresponding to variables are included subgraph.
 			CPPAD_ASSERT_UNKNOWN( NumRes(op) > 0 );
@@ -191,7 +192,7 @@ void subgraph_dep(
 				// along with the first variable result for this call.
 				while( op != UserOp )
 				{	CPPAD_ASSERT_UNKNOWN( i_op > 0 );
-					play->get_info(--i_op, op, op_arg, i_var);
+					play->get_op_info(--i_op, op, op_arg, i_var);
 					CPPAD_ASSERT_UNKNOWN(
 						op == UsrapOp ||
 						op == UsravOp ||

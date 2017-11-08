@@ -1,0 +1,93 @@
+/* --------------------------------------------------------------------------
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+
+CppAD is distributed under multiple licenses. This distribution is under
+the terms of the
+                    Eclipse Public License Version 1.0.
+
+A copy of this license is included in the COPYING file of this distribution.
+Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
+-------------------------------------------------------------------------- */
+
+/*
+$begin subgraph_sparsity.cpp$$
+$spell
+	Subgraph
+$$
+
+$section Subgraph Dependency Sparsity Patterns: Example and Test$$
+
+
+$code
+$srcfile%example/sparse/subgraph_sparsity.cpp%0%// BEGIN C++%// END C++%1%$$
+$$
+
+$end
+*/
+// BEGIN C++
+# include <cppad/cppad.hpp>
+
+bool subgraph_sparsity(void)
+{	bool ok = true;
+	using CppAD::AD;
+	typedef CPPAD_TESTVECTOR(size_t)     SizeVector;
+	typedef CppAD::sparse_rc<SizeVector> sparsity;
+	//
+	// domain space vector
+	size_t n = 2;
+	CPPAD_TESTVECTOR(AD<double>) ax(n);
+	ax[0] = 0.;
+	ax[1] = 1.;
+
+	// declare independent variables and start recording
+	CppAD::Independent(ax);
+
+	// range space vector
+	size_t m = 3;
+	CPPAD_TESTVECTOR(AD<double>) ay(m);
+	ay[0] = ax[0];
+	ay[1] = ax[0] * ax[1];
+	ay[2] = ax[1];
+
+	// create f: x -> y and stop tape recording
+	CppAD::ADFun<double> f(ax, ay);
+
+	// compute sparsite pattern for F'(x)
+	bool transpose       = false;
+	sparsity pattern_out;
+	f.subgraph_sparsity(pattern_out, transpose);
+	size_t nnz = pattern_out.nnz();
+	ok        &= nnz == 4;
+	ok        &= pattern_out.nr() == m;
+	ok        &= pattern_out.nc() == n;
+	{	// check results
+		const SizeVector& row( pattern_out.row() );
+		const SizeVector& col( pattern_out.col() );
+		SizeVector col_major = pattern_out.col_major();
+		//
+		ok &= row[ col_major[0] ] ==  0  && col[ col_major[0] ] ==  0;
+		ok &= row[ col_major[1] ] ==  1  && col[ col_major[1] ] ==  0;
+		ok &= row[ col_major[2] ] ==  1  && col[ col_major[2] ] ==  1;
+		ok &= row[ col_major[3] ] ==  2  && col[ col_major[3] ] ==  1;
+	}
+	// note that the transpose of the identity is the identity
+	transpose     = true;
+	f.subgraph_sparsity(pattern_out, transpose);
+	//
+	nnz  = pattern_out.nnz();
+	ok  &= nnz == 4;
+	ok  &= pattern_out.nr() == n;
+	ok  &= pattern_out.nc() == m;
+	{	// check results
+		const SizeVector& row( pattern_out.row() );
+		const SizeVector& col( pattern_out.col() );
+		SizeVector row_major = pattern_out.row_major();
+		//
+		ok &= col[ row_major[0] ] ==  0  && row[ row_major[0] ] ==  0;
+		ok &= col[ row_major[1] ] ==  1  && row[ row_major[1] ] ==  0;
+		ok &= col[ row_major[2] ] ==  1  && row[ row_major[2] ] ==  1;
+		ok &= col[ row_major[3] ] ==  2  && row[ row_major[3] ] ==  1;
+	}
+	return ok;
+}
+// END C++

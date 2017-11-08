@@ -33,6 +33,7 @@ SET(source_list sparse.cpp
 	sparse_sub_hes.cpp
 	sparsity_sub.cpp
 	sub_sparse_hes.cpp
+	subgraph_sparsity.cpp
 )
 
 set_compile_flags( example_sparse "${cppad_debug_which}" "${source_list}" )

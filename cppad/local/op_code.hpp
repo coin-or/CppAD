@@ -908,7 +908,7 @@ In the case of CSumOp,
 \endcode
 and all the other variable values are false.
 */
-inline void arg_is_variable(
+inline size_t arg_is_variable(
 	OpCode            op       ,
 	const addr_t*     arg      ,
 	pod_vector<bool>& variable )
@@ -1117,6 +1117,7 @@ inline void arg_is_variable(
 		CPPAD_ASSERT_UNKNOWN(false);
 		break;
 	}
+	return num_arg;
 }
 
 } } // END_CPPAD_LOCAL_NAMESPACE

@@ -92,6 +92,8 @@ $$
 $section Calculating Sparsity Patterns$$
 
 $children%
+	cppad/core/subgraph_sparsity.hpp%
+
 	cppad/core/for_jac_sparsity.hpp%
 	cppad/core/for_sparse_jac.hpp%
 
@@ -110,6 +112,7 @@ $children%
 
 $head Preferred Sparsity Patterns$$
 $table
+$rref subgraph_sparsity$$
 $rref for_jac_sparsity$$
 $rref rev_jac_sparsity$$
 $rref for_hes_sparsity$$
