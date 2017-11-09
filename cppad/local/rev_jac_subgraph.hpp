@@ -30,12 +30,19 @@ it must be the first UserOp in the call
 
 \param variable
 is the set of argument variables corresponding to this operator.
+
+\param work
+this is work space used by get_argument_variable to make subsequent calls
+faster. It should not be used by the calling routine. In addition,
+it is better for it to not drop out of scope between calls to
+get_argument_variable.
 */
 template <typename Base>
 void get_argument_variable(
-	const player<Base>*  play     ,
-	size_t               i_op     ,
-	pod_vector<size_t>&  variable )
+	const player<Base>*  play        ,
+	size_t               i_op        ,
+	pod_vector<size_t>&  variable    ,
+	pod_vector<bool>&    work        )
 {
 	// reset to size zero, but keep allocated memory
 	variable.erase();
@@ -74,7 +81,8 @@ void get_argument_variable(
 		CPPAD_ASSERT_UNKNOWN( variable.size() > 0 );
 		return;
 	}
-	pod_vector<bool> is_variable;
+	// create a reference to work with a better name
+	pod_vector<bool>& is_variable(work);
 	size_t num_arg = arg_is_variable(op, op_arg, is_variable);
 	for(size_t j = 0; j < num_arg; ++j)
 	{	if( is_variable[j] )
@@ -153,6 +161,9 @@ void rev_jac_subgraph(
 	for(size_t i_op = 0; i_op < num_op; ++i_op)
 		sub_or_connected[i_op] = n_dep;
 
+	// work space used by get_argument_variable
+	pod_vector<bool> work;
+
 	// for each dependent variable
 	for(size_t i_dep = 0; i_dep < n_dep; ++i_dep)
 	{
@@ -209,7 +220,7 @@ void rev_jac_subgraph(
 				sub_or_connected[i_op] = i_dep;
 				//
 				// determine which variables are connected to this call
-				get_argument_variable(play, i_op, argument_variable);
+				get_argument_variable(play, i_op, argument_variable, work);
 				//
 				// check each of these variables
 				for(size_t j = 0; j < argument_variable.size(); ++j)

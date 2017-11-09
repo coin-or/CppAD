@@ -876,10 +876,10 @@ It may be more efficient to handle these cases separately
 \param arg
 is the argument vector for this operator.
 
-\param variable
+\param is_variable
 If the input value of the elements in this vector do not matter.
 Upon return, for j < NumArg(op), the j-th argument for this operator is a
-variable index if and only if variable[j] is true. Note that the variable
+variable index if and only if is_variable[j] is true. Note that the variable
 index 0, for the BeginOp, does not correspond to a real variable and false
 is returned for this case.
 
@@ -887,34 +887,34 @@ is returned for this case.
 The return value is the true number of arguments num_arg.
 If op is CSkipOp or CSumOp, see below.
 Otherwise the true number of arguments num_arg = NumArg(op).
-If the input size of variable is less than num_arg,
-variable.extend is used to increase its size to be num_arg.
+If the input size of is_variable is less than num_arg,
+is_variable.extend is used to increase its size to be num_arg.
 
 \par CSkipOp
 In the case of CSkipOp,
 \code
-		num_arg     = 7 + arg[4] + arg[5];
-		variable[2] = (arg[1] & 1) != 0;
-		variable[3] = (arg[1] & 2) != 0;
+		num_arg        = 7 + arg[4] + arg[5];
+		is_variable[2] = (arg[1] & 1) != 0;
+		is_variable[3] = (arg[1] & 2) != 0;
 \endcode
-and all the other variable values are false.
+and all the other is_variable values are false.
 
 \par CSumOp
 In the case of CSumOp,
 \code
 		num_arg = 4 + arg[0] + arg[1];
 		for(size_t i = 3; i < num_arg - 1; ++i)
-			variable[i] = true;
+			is_variable[i] = true;
 \endcode
-and all the other variable values are false.
+and all the other is_variable values are false.
 */
 inline size_t arg_is_variable(
-	OpCode            op       ,
-	const addr_t*     arg      ,
-	pod_vector<bool>& variable )
+	OpCode            op          ,
+	const addr_t*     arg         ,
+	pod_vector<bool>& is_variable )
 {	size_t num_arg = NumArg(op);
-	if( variable.size() < num_arg )
-		variable.extend( num_arg - variable.size() );
+	if( is_variable.size() < num_arg )
+		is_variable.extend( num_arg - is_variable.size() );
 	//
 	switch(op)
 	{
@@ -950,7 +950,7 @@ inline size_t arg_is_variable(
 		case TanOp:
 		case UsravOp:
 		CPPAD_ASSERT_UNKNOWN( NumArg(op) == 1 );
-		variable[0] = true;
+		is_variable[0] = true;
 		break;
 
 		case BeginOp:
@@ -958,7 +958,7 @@ inline size_t arg_is_variable(
 		case UsrapOp:
 		case UsrrpOp:
 		CPPAD_ASSERT_UNKNOWN( NumArg(op) == 1 );
-		variable[0] = false;
+		is_variable[0] = false;
 		break;
 
 
@@ -977,8 +977,8 @@ inline size_t arg_is_variable(
 		case SubpvOp:
 		case ZmulpvOp:
 		CPPAD_ASSERT_UNKNOWN( NumArg(op) == 2 );
-		variable[0] = false;
-		variable[1] = true;
+		is_variable[0] = false;
+		is_variable[1] = true;
 		break;
 
 		case DivvpOp:
@@ -988,8 +988,8 @@ inline size_t arg_is_variable(
 		case SubvpOp:
 		case ZmulvpOp:
 		CPPAD_ASSERT_UNKNOWN( NumArg(op) == 2 );
-		variable[0] = true;
-		variable[1] = false;
+		is_variable[0] = true;
+		is_variable[1] = false;
 		break;
 
 		case AddvvOp:
@@ -1003,15 +1003,15 @@ inline size_t arg_is_variable(
 		case SubvvOp:
 		case ZmulvvOp:
 		CPPAD_ASSERT_UNKNOWN( NumArg(op) == 2 );
-		variable[0] = true;
-		variable[1] = true;
+		is_variable[0] = true;
+		is_variable[1] = true;
 		break;
 
 		case ErfOp:
 		CPPAD_ASSERT_UNKNOWN( NumArg(op) == 3 );
-		variable[0] = false; // parameter index corresponding to zero
-		variable[1] = false; // parameter index corresponding to one
-		variable[2] = true;
+		is_variable[0] = false; // parameter index corresponding to zero
+		is_variable[1] = false; // parameter index corresponding to one
+		is_variable[2] = true;
 		break;
 
 		// --------------------------------------------------------------------
@@ -1020,31 +1020,31 @@ inline size_t arg_is_variable(
 		case LdpOp:
 		case StppOp:
 		CPPAD_ASSERT_UNKNOWN( NumArg(op) == 3 );
-		variable[0] = false;
-		variable[1] = false;
-		variable[2] = false;
+		is_variable[0] = false;
+		is_variable[1] = false;
+		is_variable[2] = false;
 		break;
 
 		case LdvOp:
 		case StvpOp:
 		CPPAD_ASSERT_UNKNOWN( NumArg(op) == 3 );
-		variable[0] = false;
-		variable[1] = true;
-		variable[2] = false;
+		is_variable[0] = false;
+		is_variable[1] = true;
+		is_variable[2] = false;
 		break;
 
 		case StpvOp:
 		CPPAD_ASSERT_UNKNOWN( NumArg(op) == 3 );
-		variable[0] = false;
-		variable[1] = false;
-		variable[2] = true;
+		is_variable[0] = false;
+		is_variable[1] = false;
+		is_variable[2] = true;
 		break;
 
 		case StvvOp:
 		CPPAD_ASSERT_UNKNOWN( NumArg(op) == 3 );
-		variable[0] = false;
-		variable[1] = true;
-		variable[2] = true;
+		is_variable[0] = false;
+		is_variable[1] = true;
+		is_variable[2] = true;
 		break;
 
 		// --------------------------------------------------------------------
@@ -1052,30 +1052,30 @@ inline size_t arg_is_variable(
 		case UserOp:
 		CPPAD_ASSERT_UNKNOWN( NumArg(op) == 4 );
 		for(size_t i = 0; i < 4; i++)
-			variable[i] = false;
+			is_variable[i] = false;
 		break;
 
 		// --------------------------------------------------------------------
 		// case where NumArg(op) == 5
 		case PriOp:
 		CPPAD_ASSERT_UNKNOWN( NumArg(op) == 5 );
-		variable[0] = false;
-		variable[1] = (arg[0] & 1) != 0;
-		variable[2] = false;
-		variable[3] = (arg[0] & 2) != 0;
-		variable[4] = false;
+		is_variable[0] = false;
+		is_variable[1] = (arg[0] & 1) != 0;
+		is_variable[2] = false;
+		is_variable[3] = (arg[0] & 2) != 0;
+		is_variable[4] = false;
 		break;
 
 		// --------------------------------------------------------------------
 		// case where NumArg(op) == 6
 		case CExpOp:
 		CPPAD_ASSERT_UNKNOWN( NumArg(op) == 6 );
-		variable[0] = false;
-		variable[1] = false;
-		variable[2] = (arg[0] & 1) != 0;
-		variable[3] = (arg[0] & 2) != 0;
-		variable[4] = (arg[0] & 4) != 0;
-		variable[5] = (arg[0] & 8) != 0;
+		is_variable[0] = false;
+		is_variable[1] = false;
+		is_variable[2] = (arg[0] & 1) != 0;
+		is_variable[3] = (arg[0] & 2) != 0;
+		is_variable[4] = (arg[0] & 4) != 0;
+		is_variable[5] = (arg[0] & 8) != 0;
 		break;
 
 		// -------------------------------------------------------------------
@@ -1085,14 +1085,14 @@ inline size_t arg_is_variable(
 		//
 		// true number of arguments
 		num_arg = 7 + arg[4] + arg[5];
-		if( variable.size() < num_arg )
-			variable.extend( num_arg - variable.size() );
-		variable[0] = false;
-		variable[1] = false;
-		variable[2] = (arg[1] & 1) != 0;
-		variable[3] = (arg[1] & 2) != 0;
+		if( is_variable.size() < num_arg )
+			is_variable.extend( num_arg - is_variable.size() );
+		is_variable[0] = false;
+		is_variable[1] = false;
+		is_variable[2] = (arg[1] & 1) != 0;
+		is_variable[3] = (arg[1] & 2) != 0;
 		for(size_t i = 4; i < num_arg; ++i)
-			variable[i] = false;
+			is_variable[i] = false;
 		break;
 
 		// -------------------------------------------------------------------
@@ -1102,14 +1102,14 @@ inline size_t arg_is_variable(
 		//
 		// true number of arguments
 		num_arg = 4 + arg[0] + arg[1];
-		if( variable.size() < num_arg )
-			variable.extend( num_arg - variable.size() );
-		variable[0] = false;
-		variable[1] = false;
-		variable[2] = false;
+		if( is_variable.size() < num_arg )
+			is_variable.extend( num_arg - is_variable.size() );
+		is_variable[0] = false;
+		is_variable[1] = false;
+		is_variable[2] = false;
 		for(size_t i = 3; i < num_arg - 1; ++i)
-			variable[i] = true;
-		variable[num_arg - 1] = false;
+			is_variable[i] = true;
+		is_variable[num_arg - 1] = false;
 		break;
 
 		// --------------------------------------------------------------------
