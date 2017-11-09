@@ -35,7 +35,7 @@ template <typename Base>
 void user_variables(
 	const player<Base>*  play              ,
 	size_t               i_op              ,
-	pod_vector<addr_t>&  argument_variable )
+	pod_vector<size_t>&  argument_variable )
 {
 	OpCode        op;
 	const addr_t* op_arg;
@@ -52,7 +52,7 @@ void user_variables(
 			case UsravOp:
 			{	CPPAD_ASSERT_NARG_NRES(op, 1, 0);
 				size_t j_var = op_arg[0];
-				argument_variable.push_back( addr_t(j_var) );
+				argument_variable.push_back(j_var);
 			}
 			break;
 
@@ -122,23 +122,23 @@ void rev_jac_subgraph(
 
 	// subgraph of variables that are not independent and are connected
 	// to the dependent variable
-	pod_vector<addr_t> subgraph;
+	pod_vector<size_t> subgraph;
 
 	// start with an empty sparsity pattern
 	row_out.erase();
 	col_out.erase();
 
 	// variables that are arguments to a particular user function call
-	pod_vector<addr_t> argument_variable;
+	pod_vector<size_t> argument_variable;
 
 	// if sub_or_connected[i_op] == i_dep, one of the following holds:
 	// 1. if i_op is an independent variable operator connected to i_dep
 	// 2. otherwise it is in subgraph for dependent variable i_dep
-	pod_vector<addr_t> sub_or_connected(num_op);
+	pod_vector<size_t> sub_or_connected(num_op);
 	//
 	// initilaize sub_or_connected to an impossible dependent variable index
 	for(size_t i_op = 0; i_op < num_op; ++i_op)
-		sub_or_connected[i_op] = addr_t(n_dep);
+		sub_or_connected[i_op] = n_dep;
 
 	// which arguments, for one operator, are variables
 	pod_vector<bool> variable;
@@ -162,9 +162,9 @@ void rev_jac_subgraph(
 			col_out.push_back(i_ind);
 		}
 		else
-		{	subgraph.push_back( addr_t(i_op) );
+		{	subgraph.push_back(i_op);
 		}
-		sub_or_connected[i_op] = addr_t( i_dep );
+		sub_or_connected[i_op] = i_dep;
 
 		// check all that all the variables in the subgraph have been scanned
 		size_t sub_index = 0;
@@ -202,9 +202,9 @@ void rev_jac_subgraph(
 				}
 				//
 				// check if we have processed this function call
-				if( sub_or_connected[i_op] != addr_t(i_dep) )
+				if( sub_or_connected[i_op] != i_dep )
 				{	// Mark as processed so we do not repeat this calculation.
-					sub_or_connected[i_op] = addr_t(i_dep);
+					sub_or_connected[i_op] = i_dep;
 					//
 					// Check that this is only place sub_or_connected can
 					// change for this i_op
@@ -216,11 +216,11 @@ void rev_jac_subgraph(
 					// check each of these variables
 					for(size_t j = 0; j < argument_variable.size(); ++j)
 					{	size_t j_var = argument_variable[j];
-						size_t j_op  = play->var2op( j_var );
+						size_t j_op  = play->var2op(j_var);
 						//
 						// has this variable already been processed
 						// for this dependent variable
-						if( sub_or_connected[j_op] != addr_t(i_dep) )
+						if( sub_or_connected[j_op] != i_dep )
 						{	// variable not yet in subgraph or connected
 							//
 							if( play->GetOp(j_op) == InvOp )
@@ -234,9 +234,9 @@ void rev_jac_subgraph(
 							}
 							else
 							{	// add to the subgraph
-								subgraph.push_back( addr_t( j_op ) );
+								subgraph.push_back(j_op);
 							}
-							sub_or_connected[j_op] = addr_t( i_dep );
+							sub_or_connected[j_op] = i_dep;
 						}
 					}
 				}
@@ -251,11 +251,11 @@ void rev_jac_subgraph(
 				for(size_t j = 0; j < num_arg; ++j) if( variable[j] )
 				{	// index for this variable
 					size_t j_var = op_arg[j];
-					size_t j_op  = play->var2op( j_var );
+					size_t j_op  = play->var2op(j_var);
 					//
 					// has this variable already been processed
 					// for this dependent variable
-					if( sub_or_connected[j_op] != addr_t(i_dep) )
+					if( sub_or_connected[j_op] != i_dep )
 					{	// variable not yet in subgraph or connected
 						//
 						if( play->GetOp(j_op) == InvOp )
@@ -267,9 +267,9 @@ void rev_jac_subgraph(
 						}
 						else
 						{	// add to the subgraph
-							subgraph.push_back( addr_t( j_op ) );
+							subgraph.push_back(j_op);
 						}
-						sub_or_connected[j_op] = addr_t( i_dep );
+						sub_or_connected[j_op] = i_dep;
 					}
 				}
 			}
