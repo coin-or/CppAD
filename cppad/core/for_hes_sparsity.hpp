@@ -66,7 +66,7 @@ $codei%
 %$$
 
 $head select_domain$$
-The argument $icode diagonal$$ has prototype
+The argument $icode select_domain$$ has prototype
 $codei%
 	const %BoolVector%& %select_domain%
 %$$

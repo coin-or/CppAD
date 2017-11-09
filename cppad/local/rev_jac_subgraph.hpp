@@ -16,6 +16,71 @@ namespace CppAD { namespace local { // BEGIN_CPPAD_LOCAL_NAMESPACE
 \file rev_jac_subgraph.hpp
 Compute dependency sparsity pattern using subgraph technique.
 */
+/*!
+Determine the set of primary result variables for an operator.
+If the operator is not a user function call, this is one variable.
+
+\param play
+is the player for this operation sequence.
+
+\param i_op
+is the operator index. It this operator is in a user function call,
+it must be the first UserOp in the call
+(there are two UserOp in each such call).
+If this operator is not UserOp, it must have a result; i.e.,
+NumRes(op) > 0 for this operator.
+
+\param variable
+is the set of result variables corresponding to this operator.
+*/
+template <typename Base>
+void get_result_variable(
+	const player<Base>*  play        ,
+	size_t               i_op        ,
+	pod_vector<size_t>&  variable    )
+{
+	// reset to size zero, but keep allocated memory
+	variable.erase();
+	//
+	// operator corresponding to i_op
+	OpCode        op;
+	const addr_t* op_arg;
+	size_t        i_var;
+	play->get_op_info(i_op, op, op_arg, i_var);
+	CPPAD_ASSERT_UNKNOWN(
+		op != UsrapOp && op != UsravOp && op != UsrrpOp && op != UsrrvOp
+	);
+	if( op != UserOp )
+	{	CPPAD_ASSERT_UNKNOWN( NumRes(op) > 0 );
+		variable.push_back(i_var);
+	}
+	else
+	{	play->get_op_info(++i_op, op, op_arg, i_var);
+		while( op != UserOp )
+		{	switch(op)
+			{
+				case UsrrvOp:
+				{	CPPAD_ASSERT_NARG_NRES(op, 0, 1);
+					variable.push_back(i_var);
+				}
+				break;
+
+				case UsrapOp:
+				case UsravOp:
+				case UsrrpOp:
+				break;
+
+				default:
+				CPPAD_ASSERT_UNKNOWN(false);
+				break;
+			}
+			play->get_op_info(++i_op, op, op_arg, i_var);
+		}
+		CPPAD_ASSERT_UNKNOWN( variable.size() > 0 );
+		return;
+	}
+	return;
+}
 
 /*!
 Determine the set of argument variables for an operator
@@ -97,14 +162,25 @@ Compute dependency sparsity pattern for an ADFun<Base> function.
 \tparam Base
 the operation sequence was recorded using AD<Base>.
 
+\tparam BoolVector
+a simple vector class with elements of type bool.
+
 \param play
 is the operation sequence corresponding to the ADFun<Base> function.
 
 \param ind_taddr
-is the vector of independent variables for this ADFun<Base> function.
+mapping from user independent variable index to variable index in play.
 
 \param dep_taddr
-is the vector of dependent variables for this ADFun<Base> function.
+mapping from user pendent variable index to variable index in play.
+
+\param select_domain
+only the selected independent variables will be included in the sparsity
+pattern (must have same size as ind_taddr).
+
+\param select_range
+only the selected dependent variables will be included in the sparsity pattern
+(must have same size as dep_taddr).
 
 \param row_out
 The input size and elements of row_out do not matter.
@@ -114,6 +190,7 @@ of the k-th no-zero element of the dependency sparsitiy pattern for
 the function corresponding to the recording.
 \code
 	0 <= row_out[k] < dep_taddr.size()
+	select_range[ row_out[k] ] == true
 \endcode
 
 \param col_out
@@ -124,21 +201,29 @@ of the k-th no-zero element of the dependency sparsitiy pattern for
 the function corresponding to the recording.
 \code
 	0 <= col_out[k] < ind_taddr.size()
+	select_domain[ col_out[k] ] == true
 \endcode
 */
 
-template <typename Base>
+template <typename Base, typename BoolVector>
 void rev_jac_subgraph(
-	const player<Base>*        play         ,
-	const vector<size_t>&      ind_taddr    ,
-	const vector<size_t>&      dep_taddr    ,
-	pod_vector<size_t>&        row_out      ,
-	pod_vector<size_t>&        col_out      )
+	const player<Base>*        play          ,
+	const vector<size_t>&      ind_taddr     ,
+	const vector<size_t>&      dep_taddr     ,
+	const BoolVector&          select_domain ,
+	const BoolVector&          select_range  ,
+	pod_vector<size_t>&        row_out       ,
+	pod_vector<size_t>&        col_out       )
 {
-	// numver of dependent variables
-	size_t n_dep = dep_taddr.size();
+	// number of independent variables
+	size_t n_ind = ind_taddr.size();
+	CPPAD_ASSERT_UNKNOWN( size_t( select_domain.size() ) == n_ind );
 
-	// numbef of operators in the tape
+	// number of dependent variables
+	size_t n_dep = dep_taddr.size();
+	CPPAD_ASSERT_UNKNOWN( size_t( select_range.size() ) == n_dep );
+
+	// number of operators in the tape
 	size_t num_op  = play->num_op_rec();
 
 	// subgraph of variables that are not independent and are connected
@@ -152,20 +237,89 @@ void rev_jac_subgraph(
 	// variables that are arguments to a particular user function call
 	pod_vector<size_t> argument_variable;
 
+	// work space used by get_argument_variable
+	pod_vector<bool> work;
+
 	// if sub_or_connected[i_op] == i_dep, one of the following holds:
 	// 1. if i_op is an independent variable operator connected to i_dep
 	// 2. otherwise it is in subgraph for dependent variable i_dep
 	pod_vector<size_t> sub_or_connected(num_op);
 	//
 	// initilaize sub_or_connected to an impossible dependent variable index
-	for(size_t i_op = 0; i_op < num_op; ++i_op)
-		sub_or_connected[i_op] = n_dep;
+	// that is greater than n_dep.
+	bool entire_domain = true;
+	for(size_t j = 0; j < n_ind; j++)
+		entire_domain &= select_domain[j];
+	if( entire_domain )
+	{	// initialize sub_or_connected to an impossible user dependent
+		// variable index
+		for(size_t i_op = 0; i_op < num_op; ++i_op)
+			sub_or_connected[i_op] = n_dep;
+	}
+	else
+	{	// initialize sub_or_connected to a value greater than n_dep
+		for(size_t i_op = 0; i_op < num_op; ++i_op)
+			sub_or_connected[i_op] = n_dep + 1;
+		//
+		// Change to n_dep for each operator connected to selected domain.
+		// Only need to consider UserOp and operators that have NumRes(op) > 0
+		for(size_t i_op = 0; i_op < num_op; ++i_op)
+		{	OpCode op = play->GetOp(i_op);
+			switch(op)
+			{	case InvOp:
+				CPPAD_ASSERT_UNKNOWN( NumRes(op) > 0 );
+				CPPAD_ASSERT_UNKNOWN( i_op > 0 );
+				// get user index for this independent variable
+				{	size_t j = i_op - 1;
+					CPPAD_ASSERT_UNKNOWN( play->var2op(ind_taddr[j]) == i_op );
+					//
+					// change if this independent has been selected
+					if( select_domain[j] )
+						sub_or_connected[i_op] = n_dep;
+				}
+				break;
 
-	// work space used by get_argument_variable
-	pod_vector<bool> work;
+				case UserOp:
+				get_argument_variable(play, i_op, argument_variable, work);
+				for(size_t j = 0; j < argument_variable.size(); j++)
+				{	size_t j_var = argument_variable[j];
+					size_t j_op  = play->var2op(j_var);
+					if( sub_or_connected[j_op] == n_dep )
+						sub_or_connected[i_op] = n_dep;
+				}
+				// skip past the rest of this user function call
+				// (note that this advance the loop index i_op)
+				op = play->GetOp(++i_op);
+				{	while( op != UserOp )
+					{	CPPAD_ASSERT_UNKNOWN(
+							op == UsrapOp ||
+							op == UsravOp ||
+							op == UsrrpOp ||
+							op == UsrrvOp
+						);
+					op = play->GetOp(++i_op);
+					}
+				}
+				// second UserOp for this function call
+				CPPAD_ASSERT_UNKNOWN( op == UserOp);
+				break;
 
-	// for each dependent variable
-	for(size_t i_dep = 0; i_dep < n_dep; ++i_dep)
+				default:
+				CPPAD_ASSERT_UNKNOWN( NumRes(op) > 0 );
+				get_argument_variable(play, i_op, argument_variable, work);
+				for(size_t j = 0; j < argument_variable.size(); j++)
+				{	size_t j_var = argument_variable[j];
+					size_t j_op  = play->var2op(j_var);
+					if( sub_or_connected[j_op] == n_dep )
+						sub_or_connected[i_op] = n_dep;
+				}
+				break;
+			}
+		}
+	}
+
+	// for each of the selected dependent variables
+	for(size_t i_dep = 0; i_dep < n_dep; ++i_dep) if( select_range[i_dep] )
 	{
 		// start with an empty subgraph for this dependent variable
 		subgraph.erase();
@@ -215,11 +369,13 @@ void rev_jac_subgraph(
 					op = play->GetOp(--i_op);
 				}
 			}
-			if( sub_or_connected[i_op] != i_dep )
-			{	// Mark as processed so we do not repeat this calculation.
+			bool scan = sub_or_connected[i_op] !=  i_dep;
+			scan     &= sub_or_connected[i_op] <=  n_dep;
+			if( scan )
+			{	// Mark as scanned so we do not repeat this calculation.
 				sub_or_connected[i_op] = i_dep;
 				//
-				// determine which variables are connected to this call
+				// determine which variables are connected to this operator
 				get_argument_variable(play, i_op, argument_variable, work);
 				//
 				// check each of these variables

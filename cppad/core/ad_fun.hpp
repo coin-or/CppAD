@@ -356,10 +356,12 @@ public:
 		sparse_hes_work&                     work
 	);
 	// ---------------------------------------------------------------------
-	template <typename SizeVector>
+	template <typename BoolVector, typename SizeVector>
 	void subgraph_sparsity(
-		sparse_rc<SizeVector>&       pattern_out ,
-		bool                         transpose
+		const BoolVector&            select_domain    ,
+		const BoolVector&            select_range     ,
+		bool                         transpose        ,
+		sparse_rc<SizeVector>&       pattern_out
 	);
 	template <typename SizeVector>
 	void for_jac_sparsity(

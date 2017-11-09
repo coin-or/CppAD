@@ -52,10 +52,19 @@ bool subgraph_sparsity(void)
 	// create f: x -> y and stop tape recording
 	CppAD::ADFun<double> f(ax, ay);
 
+
+
 	// compute sparsite pattern for F'(x)
+	CPPAD_TESTVECTOR(bool) select_domain(n), select_range(m);
+	for(size_t j = 0; j < n; j++)
+		select_domain[j] = true;
+	for(size_t i = 0; i < m; i++)
+		select_range[i] = true;
 	bool transpose       = false;
 	sparsity pattern_out;
-	f.subgraph_sparsity(pattern_out, transpose);
+	f.subgraph_sparsity(select_domain, select_range, transpose, pattern_out);
+
+	// check sparsity pattern
 	size_t nnz = pattern_out.nnz();
 	ok        &= nnz == 4;
 	ok        &= pattern_out.nr() == m;
@@ -72,7 +81,7 @@ bool subgraph_sparsity(void)
 	}
 	// note that the transpose of the identity is the identity
 	transpose     = true;
-	f.subgraph_sparsity(pattern_out, transpose);
+	f.subgraph_sparsity(select_domain, select_range, transpose, pattern_out);
 	//
 	nnz  = pattern_out.nnz();
 	ok  &= nnz == 4;
