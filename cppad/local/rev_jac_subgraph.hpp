@@ -18,54 +18,67 @@ Compute dependency sparsity pattern using subgraph technique.
 */
 
 /*!
-Determine the set of argument variables for a user function call.
+Determine the set of argument variables for an operator
 
 \param play
 is the player for this operation sequence.
 
 \param i_op
-is the operator index for the first UserOp in the user function call
-(there are two in each such call).
+is the operator index. It this operator is in a user function call,
+it must be the first UserOp in the call
+(there are two UserOp in each such call).
 
-\param argument_variable
-is the set of variables corresponding to the arguments
-for this user function call.
+\param variable
+is the set of argument variables corresponding to this operator.
 */
 template <typename Base>
-void user_variables(
-	const player<Base>*  play              ,
-	size_t               i_op              ,
-	pod_vector<size_t>&  argument_variable )
+void get_argument_variable(
+	const player<Base>*  play     ,
+	size_t               i_op     ,
+	pod_vector<size_t>&  variable )
 {
+	// reset to size zero, but keep allocated memory
+	variable.erase();
+	//
+	// operator corresponding to i_op
 	OpCode        op;
 	const addr_t* op_arg;
 	size_t        i_var;
 	play->get_op_info(i_op, op, op_arg, i_var);
-	CPPAD_ASSERT_UNKNOWN( op == UserOp );
-	//
-	argument_variable.erase();
-	//
-	play->get_op_info(++i_op, op, op_arg, i_var);
-	while( op != UserOp )
-	{	switch(op)
-		{
-			case UsravOp:
-			{	CPPAD_ASSERT_NARG_NRES(op, 1, 0);
-				size_t j_var = op_arg[0];
-				argument_variable.push_back(j_var);
+	CPPAD_ASSERT_UNKNOWN(
+		op != UsrapOp && op != UsravOp && op != UsrrpOp && op != UsrrvOp
+	);
+	if( op == UserOp )
+	{	play->get_op_info(++i_op, op, op_arg, i_var);
+		while( op != UserOp )
+		{	switch(op)
+			{
+				case UsravOp:
+				{	CPPAD_ASSERT_NARG_NRES(op, 1, 0);
+					size_t j_var = op_arg[0];
+					variable.push_back(j_var);
+				}
+				break;
+
+				case UsrrvOp:
+				case UsrrpOp:
+				case UsrapOp:
+				break;
+
+				default:
+				CPPAD_ASSERT_UNKNOWN(false);
+				break;
 			}
-			break;
-
-			case UsrrvOp:
-			case UsrrpOp:
-			case UsrapOp:
-			break;
-
-			default:
-			CPPAD_ASSERT_UNKNOWN(false);
-			break;
+			play->get_op_info(++i_op, op, op_arg, i_var);
 		}
-		play->get_op_info(++i_op, op, op_arg, i_var);
+		CPPAD_ASSERT_UNKNOWN( variable.size() > 0 );
+		return;
+	}
+	pod_vector<bool> is_variable;
+	size_t num_arg = arg_is_variable(op, op_arg, is_variable);
+	for(size_t j = 0; j < num_arg; ++j)
+	{	if( is_variable[j] )
+			variable.push_back(op_arg[j]);
 	}
 	return;
 }
@@ -140,9 +153,6 @@ void rev_jac_subgraph(
 	for(size_t i_op = 0; i_op < num_op; ++i_op)
 		sub_or_connected[i_op] = n_dep;
 
-	// which arguments, for one operator, are variables
-	pod_vector<bool> variable;
-
 	// for each dependent variable
 	for(size_t i_dep = 0; i_dep < n_dep; ++i_dep)
 	{
@@ -164,96 +174,49 @@ void rev_jac_subgraph(
 		else
 		{	subgraph.push_back(i_op);
 		}
-		sub_or_connected[i_op] = i_dep;
 
 		// check all that all the variables in the subgraph have been scanned
 		size_t sub_index = 0;
 		while(sub_index < subgraph.size() )
-		{	// scan this variable to see which other variables are connected
-			i_var    = subgraph[sub_index];
+		{	// scan this operator to see which variables are connected to it
+			i_op      = subgraph[sub_index];
+			OpCode op = play->GetOp(i_op);
 			//
-			// operator for this variable
-			i_op  = play->var2op(i_var);
-			//
-			// get the information for this operator
-			local::OpCode  op;
-			const addr_t* op_arg;
-			play->get_op_info(i_op, op, op_arg, i_var);
-			//
-			// Only nodes corresponding to variables are included subgraph.
+			// There must be a result for this operator
 			CPPAD_ASSERT_UNKNOWN( NumRes(op) > 0 );
 			//
-			// special case where operator corresponds to a user function call
+			// special case where result is part of a user function call,
+			// find first UserOp for this function call.
 			if( op == UsrrvOp )
-			{	// 2DO: make the resulting sparsity_out  more efficient using
+			{	// 2DO: make the resulting sparsity_out more efficient using
 				// sparsity pattern for the user function call.
 				//
 				// determine the UserOp that started this function call
 				// along with the first variable result for this call.
 				while( op != UserOp )
-				{	CPPAD_ASSERT_UNKNOWN( i_op > 0 );
-					play->get_op_info(--i_op, op, op_arg, i_var);
-					CPPAD_ASSERT_UNKNOWN(
+				{	CPPAD_ASSERT_UNKNOWN(
 						op == UsrapOp ||
 						op == UsravOp ||
 						op == UsrrpOp ||
 						op == UsrrvOp
 					);
-				}
-				//
-				// check if we have processed this function call
-				if( sub_or_connected[i_op] != i_dep )
-				{	// Mark as processed so we do not repeat this calculation.
-					sub_or_connected[i_op] = i_dep;
-					//
-					// Check that this is only place sub_or_connected can
-					// change for this i_op
-					CPPAD_ASSERT_UNKNOWN( NumRes(op) == 0 );
-					//
-					// determine which variables are connected to this call
-					user_variables(play, i_op, argument_variable);
-					//
-					// check each of these variables
-					for(size_t j = 0; j < argument_variable.size(); ++j)
-					{	size_t j_var = argument_variable[j];
-						size_t j_op  = play->var2op(j_var);
-						//
-						// has this variable already been processed
-						// for this dependent variable
-						if( sub_or_connected[j_op] != i_dep )
-						{	// variable not yet in subgraph or connected
-							//
-							if( play->GetOp(j_op) == InvOp )
-							{	// This is an independent variable
-								size_t j_ind = j_var - 1;
-								CPPAD_ASSERT_UNKNOWN(
-									j_var == ind_taddr[j_ind]
-								);
-								row_out.push_back(i_dep);
-								col_out.push_back(j_ind);
-							}
-							else
-							{	// add to the subgraph
-								subgraph.push_back(j_op);
-							}
-							sub_or_connected[j_op] = i_dep;
-						}
-					}
+					CPPAD_ASSERT_UNKNOWN( i_op > 0 );
+					op = play->GetOp(--i_op);
 				}
 			}
-			else
-			{
-				// variable = which operator arguments are variables
-				// num_arg  = true number of arguments for this operator
-				size_t num_arg = arg_is_variable(op, op_arg, variable);
-
-				// loop through arguments that are variables
-				for(size_t j = 0; j < num_arg; ++j) if( variable[j] )
-				{	// index for this variable
-					size_t j_var = op_arg[j];
+			if( sub_or_connected[i_op] != i_dep )
+			{	// Mark as processed so we do not repeat this calculation.
+				sub_or_connected[i_op] = i_dep;
+				//
+				// determine which variables are connected to this call
+				get_argument_variable(play, i_op, argument_variable);
+				//
+				// check each of these variables
+				for(size_t j = 0; j < argument_variable.size(); ++j)
+				{	size_t j_var = argument_variable[j];
 					size_t j_op  = play->var2op(j_var);
 					//
-					// has this variable already been processed
+					// has this argument already been processed
 					// for this dependent variable
 					if( sub_or_connected[j_op] != i_dep )
 					{	// variable not yet in subgraph or connected
