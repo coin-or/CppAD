@@ -110,6 +110,7 @@ extern bool Sqrt(void);
 extern bool std_math(void);
 extern bool Sub(void);
 extern bool SubEq(void);
+extern bool subgraph_sparsity(void);
 extern bool SubZero(void);
 extern bool tan(void);
 extern bool to_string(void);
@@ -213,6 +214,7 @@ int main(void)
 	Run( std_math,        "std_math"       );
 	Run( Sub,             "Sub"            );
 	Run( SubEq,           "SubEq"          );
+	Run( subgraph_sparsity, "subgraph_sparsity" );
 	Run( SubZero,         "SubZero"        );
 	Run( tan,             "tan"            );
 	Run( to_string,       "to_string"      );

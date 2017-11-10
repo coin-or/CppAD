@@ -125,6 +125,7 @@ SET(source_list
 	sub.cpp
 	sub_eq.cpp
 	sub_zero.cpp
+	subgraph_sparsity.cpp
 	tan.cpp
 	test_vector.cpp
 	to_string.cpp
