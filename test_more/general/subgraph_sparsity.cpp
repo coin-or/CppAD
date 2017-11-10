@@ -17,30 +17,37 @@ namespace {
 	template <typename SizeVector>
 	bool compare(
 		CppAD::sparse_rc<SizeVector> subgraph  ,
-		CppAD::sparse_rc<SizeVector> for_jac   )
+		CppAD::sparse_rc<SizeVector> check     )
 	{	bool ok = true;
 
 		// check nnz
 		size_t sub_nnz = subgraph.nnz();
-		size_t for_nnz = for_jac.nnz();
-		ok            &= sub_nnz == for_nnz;
-		size_t nnz     = std::min(sub_nnz, for_nnz);
+		size_t chk_nnz = check.nnz();
+		ok            &= sub_nnz == chk_nnz;
+		size_t nnz     = std::min(sub_nnz, chk_nnz);
 
 		// row major order
 		SizeVector sub_order = subgraph.row_major();
-		SizeVector for_order = for_jac.row_major();
+		SizeVector chk_order = check.row_major();
 
 		// check row indices
 		const SizeVector& sub_row( subgraph.row() );
-		const SizeVector& for_row( for_jac.row() );
+		const SizeVector& chk_row( check.row() );
 		for(size_t k = 0; k < nnz; k++)
-			ok &= sub_row[ sub_order[k] ] == for_row[ for_order[k] ];
+			ok &= sub_row[ sub_order[k] ] == chk_row[ chk_order[k] ];
 
 		// check column indices
 		const SizeVector& sub_col( subgraph.col() );
-		const SizeVector& for_col( for_jac.col() );
+		const SizeVector& chk_col( check.col() );
 		for(size_t k = 0; k < nnz; k++)
-			ok &= sub_col[ sub_order[k] ] == for_col[ for_order[k] ];
+			ok &= sub_col[ sub_order[k] ] == chk_col[ chk_order[k] ];
+
+		/*
+		std::cout << "\nsub_row = " << sub_row << "\n";
+		std::cout << "chk_row = " << chk_row << "\n";
+		std::cout << "sub_col = " << sub_col << "\n";
+		std::cout << "chk_col = " << chk_col << "\n";
+		*/
 
 		return ok;
 
@@ -66,15 +73,19 @@ bool subgraph_sparsity(void)
 	// range space vector
 	size_t m = 6;
 	CPPAD_TESTVECTOR(AD<double>) ay(m);
-	ay[0] = 0.0;                  // does not depend on anything
-	ay[1] = ax[1];                // is equal to an independent variable
-	ay[2] = ax[1] * ax[2];        // operator(variable, variable)
-	ay[3] = sin(ax[1]);           // operator(variable)
-	ay[4] = ax[4] / 2.0;          // operator(variable, parameter)
-	ay[5] = 2.0 / ax[3];          // operator(parameter, variable)
+	ay[0] = 0.0;                     // does not depend on anything
+	ay[1] = ax[1];                   // is equal to an independent variable
+	AD<double> sum = ax[1] + ax[1];  // only uses ax[1]
+	ay[2] = sum * ax[2];             // operator(variable, variable)
+	ay[3] = sin(ax[1]);              // operator(variable)
+	ay[4] = ax[4] / 2.0;             // operator(variable, parameter)
+	ay[5] = 2.0 / ax[3];             // operator(parameter, variable)
 
 	// create f: x -> y and stop tape recording
 	CppAD::ADFun<double> f(ax, ay);
+
+	// ----------------------------------------------------------------------
+	// Entire sparsity pattern
 
 	// compute sparsity using subgraph_sparsity
 	CPPAD_TESTVECTOR(bool) select_domain(n), select_range(m);
@@ -87,16 +98,37 @@ bool subgraph_sparsity(void)
 	f.subgraph_sparsity(select_domain, select_range, transpose, subgraph_out);
 
 	// compute sparsity using for_jac_sparsity
-	sparsity eye(n, n, n);
+	sparsity pattern_in(n, n, n);
 	for(size_t k = 0; k < n; k++)
-		eye.set(k, k, k);
+		pattern_in.set(k, k, k);
 	bool dependency     = true;
 	bool internal_bool  = true;
-	sparsity for_jac_out;
-	f.for_jac_sparsity(eye, transpose, dependency, internal_bool, for_jac_out);
+	sparsity check_out;
+	f.for_jac_sparsity(
+		pattern_in, transpose, dependency, internal_bool, check_out
+	);
 
 	// compare results
-	compare(subgraph_out, for_jac_out);
+	ok &= compare(subgraph_out, check_out);
+
+	// ----------------------------------------------------------------------
+	// Exclude ax[1]
+	select_domain[1] = false;
+	f.subgraph_sparsity(select_domain, select_range, transpose, subgraph_out);
+
+	pattern_in.resize(n, n, n-1);
+	for(size_t k = 0; k < n-1; k++)
+	{	if( k < 1 )
+			pattern_in.set(k, k, k);
+		else
+			pattern_in.set(k, k+1, k+1);
+	}
+	f.for_jac_sparsity(
+		pattern_in, transpose, dependency, internal_bool, check_out
+	);
+
+	// compare results
+	ok &= compare(subgraph_out, check_out);
 
 	return ok;
 }

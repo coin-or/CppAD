@@ -16,71 +16,6 @@ namespace CppAD { namespace local { // BEGIN_CPPAD_LOCAL_NAMESPACE
 \file rev_jac_subgraph.hpp
 Compute dependency sparsity pattern using subgraph technique.
 */
-/*!
-Determine the set of primary result variables for an operator.
-If the operator is not a user function call, this is one variable.
-
-\param play
-is the player for this operation sequence.
-
-\param i_op
-is the operator index. It this operator is in a user function call,
-it must be the first UserOp in the call
-(there are two UserOp in each such call).
-If this operator is not UserOp, it must have a result; i.e.,
-NumRes(op) > 0 for this operator.
-
-\param variable
-is the set of result variables corresponding to this operator.
-*/
-template <typename Base>
-void get_result_variable(
-	const player<Base>*  play        ,
-	size_t               i_op        ,
-	pod_vector<size_t>&  variable    )
-{
-	// reset to size zero, but keep allocated memory
-	variable.erase();
-	//
-	// operator corresponding to i_op
-	OpCode        op;
-	const addr_t* op_arg;
-	size_t        i_var;
-	play->get_op_info(i_op, op, op_arg, i_var);
-	CPPAD_ASSERT_UNKNOWN(
-		op != UsrapOp && op != UsravOp && op != UsrrpOp && op != UsrrvOp
-	);
-	if( op != UserOp )
-	{	CPPAD_ASSERT_UNKNOWN( NumRes(op) > 0 );
-		variable.push_back(i_var);
-	}
-	else
-	{	play->get_op_info(++i_op, op, op_arg, i_var);
-		while( op != UserOp )
-		{	switch(op)
-			{
-				case UsrrvOp:
-				{	CPPAD_ASSERT_NARG_NRES(op, 0, 1);
-					variable.push_back(i_var);
-				}
-				break;
-
-				case UsrapOp:
-				case UsravOp:
-				case UsrrpOp:
-				break;
-
-				default:
-				CPPAD_ASSERT_UNKNOWN(false);
-				break;
-			}
-			play->get_op_info(++i_op, op, op_arg, i_var);
-		}
-		CPPAD_ASSERT_UNKNOWN( variable.size() > 0 );
-		return;
-	}
-	return;
-}
 
 /*!
 Determine the set of argument variables for an operator
@@ -95,6 +30,8 @@ it must be the first UserOp in the call
 
 \param variable
 is the set of argument variables corresponding to this operator.
+Note that identical arguments only appear once; e.g., x * x only
+has one operator corresponding to x (assuming x is a variable).
 
 \param work
 this is work space used by get_argument_variable to make subsequent calls
@@ -151,7 +88,13 @@ void get_argument_variable(
 	size_t num_arg = arg_is_variable(op, op_arg, is_variable);
 	for(size_t j = 0; j < num_arg; ++j)
 	{	if( is_variable[j] )
-			variable.push_back(op_arg[j]);
+		{	size_t j_var = op_arg[j];
+			bool push = true;
+			for(size_t k = 0; k < variable.size(); ++k)
+				push = push & (variable[k] != j_var);
+			if( push )
+				variable.push_back(op_arg[j]);
+		}
 	}
 	return;
 }
@@ -305,13 +248,14 @@ void rev_jac_subgraph(
 				break;
 
 				default:
-				CPPAD_ASSERT_UNKNOWN( NumRes(op) > 0 );
-				get_argument_variable(play, i_op, argument_variable, work);
-				for(size_t j = 0; j < argument_variable.size(); j++)
-				{	size_t j_var = argument_variable[j];
-					size_t j_op  = play->var2op(j_var);
-					if( sub_or_connected[j_op] == n_dep )
-						sub_or_connected[i_op] = n_dep;
+				if( NumRes(op) > 0 )
+				{	get_argument_variable(play, i_op, argument_variable, work);
+					for(size_t j = 0; j < argument_variable.size(); j++)
+					{	size_t j_var = argument_variable[j];
+						size_t j_op  = play->var2op(j_var);
+						if( sub_or_connected[j_op] == n_dep )
+							sub_or_connected[i_op] = n_dep;
+					}
 				}
 				break;
 			}
@@ -333,11 +277,14 @@ void rev_jac_subgraph(
 		{	// this dependent variable is also an independent variable
 			size_t i_ind = i_var - 1;
 			CPPAD_ASSERT_UNKNOWN( i_var == ind_taddr[i_ind] );
-			row_out.push_back(i_dep);
-			col_out.push_back(i_ind);
+			if( select_domain[i_ind] )
+			{	row_out.push_back(i_dep);
+				col_out.push_back(i_ind);
+			}
 		}
 		else
-		{	subgraph.push_back(i_op);
+		{	if( sub_or_connected[i_op] <= n_dep )
+				subgraph.push_back(i_op);
 		}
 
 		// check all that all the variables in the subgraph have been scanned
@@ -369,9 +316,8 @@ void rev_jac_subgraph(
 					op = play->GetOp(--i_op);
 				}
 			}
-			bool scan = sub_or_connected[i_op] !=  i_dep;
-			scan     &= sub_or_connected[i_op] <=  n_dep;
-			if( scan )
+			CPPAD_ASSERT_UNKNOWN( sub_or_connected[i_op] <= n_dep );
+			if( sub_or_connected[i_op] !=  i_dep )
 			{	// Mark as scanned so we do not repeat this calculation.
 				sub_or_connected[i_op] = i_dep;
 				//
@@ -392,14 +338,16 @@ void rev_jac_subgraph(
 						{	// This is an independent variable
 							size_t j_ind = j_var - 1;
 							CPPAD_ASSERT_UNKNOWN( j_var == ind_taddr[j_ind] );
-							row_out.push_back(i_dep);
-							col_out.push_back(j_ind);
+							if( select_domain[j_ind] )
+							{	row_out.push_back(i_dep);
+								col_out.push_back(j_ind);
+							}
 						}
 						else
 						{	// add to the subgraph
-							subgraph.push_back(j_op);
+							if( sub_or_connected[j_op] <= n_dep )
+								subgraph.push_back(j_op);
 						}
-						sub_or_connected[j_op] = i_dep;
 					}
 				}
 			}
