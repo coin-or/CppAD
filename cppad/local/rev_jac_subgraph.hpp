@@ -24,20 +24,17 @@ Determine the set of argument variables for an operator
 is the player for this operation sequence.
 
 \param i_op
-is the operator index. It this operator is in a user function call,
-it must be the first UserOp in the call. There is a UserOp at the
-beginning and end of each call.
+is the operator index. If this operator is part of a user function call,
+it must be the first UserOp in the call. (There is a UserOp at the
+beginning and end of each call.)
 
 \param variable
 is the set of argument variables corresponding to this operator.
-Note that identical arguments only appear once; e.g., x * x only
-has one operator corresponding to x (assuming x is a variable).
 
 \param work
 this is work space used by get_argument_variable to make subsequent calls
 faster. It should not be used by the calling routine. In addition,
-it is better for it to not drop out of scope between calls to
-get_argument_variable.
+it is better if work does not drop out of scope between calls.
 */
 template <typename Base>
 void get_argument_variable(
@@ -54,9 +51,13 @@ void get_argument_variable(
 	const addr_t* op_arg;
 	size_t        i_var;
 	play->get_op_info(i_op, op, op_arg, i_var);
+	//
+	// partial check of assumptions on user function calls
 	CPPAD_ASSERT_UNKNOWN(
 		op != UsrapOp && op != UsravOp && op != UsrrpOp && op != UsrrvOp
 	);
+	//
+	// we assume this is the first UserOp of the call
 	if( op == UserOp )
 	{	play->get_op_info(++i_op, op, op_arg, i_var);
 		while( op != UserOp )
@@ -75,6 +76,7 @@ void get_argument_variable(
 				break;
 
 				default:
+				// cannot find second UserOp in this call
 				CPPAD_ASSERT_UNKNOWN(false);
 				break;
 			}
@@ -83,7 +85,7 @@ void get_argument_variable(
 		CPPAD_ASSERT_UNKNOWN( variable.size() > 0 );
 		return;
 	}
-	// create a reference to work with a better name
+	// is_varialbe is a reference to work with a better name
 	pod_vector<bool>& is_variable(work);
 	size_t num_arg = arg_is_variable(op, op_arg, is_variable);
 	for(size_t j = 0; j < num_arg; ++j)
@@ -111,7 +113,7 @@ is the operation sequence corresponding to the ADFun<Base> function.
 mapping from user independent variable index to variable index in play.
 
 \param dep_taddr
-mapping from user pendent variable index to variable index in play.
+mapping from user dependent variable index to variable index in play.
 
 \param select_domain
 only the selected independent variables will be included in the sparsity
@@ -155,8 +157,9 @@ void rev_jac_subgraph(
 	pod_vector<size_t>&        col_out       )
 {
 	// number of independent variables
-	size_t n_ind = ind_taddr.size();
-	CPPAD_ASSERT_UNKNOWN( size_t( select_domain.size() ) == n_ind );
+	CPPAD_ASSERT_UNKNOWN(
+		size_t( select_domain.size() ) == ind_taddr.size()
+	);
 
 	// number of dependent variables
 	size_t n_dep = dep_taddr.size();
@@ -165,23 +168,22 @@ void rev_jac_subgraph(
 	// number of operators in the tape
 	size_t num_op  = play->num_op_rec();
 
-	// subgraph of variables that are not independent and are connected
-	// to the dependent variable
-	pod_vector<size_t> subgraph;
-
 	// start with an empty sparsity pattern
 	row_out.erase();
 	col_out.erase();
 
-	// variables that are arguments to a particular user function call
+	// subgraph of operators that are are connected to one of the selected
+	// dependent variables and depend on the selected independent variables
+	pod_vector<size_t> subgraph;
+
+	// variables that are arguments to a particular operator
 	pod_vector<size_t> argument_variable;
 
 	// work space used by get_argument_variable
 	pod_vector<bool> work;
-	//
+
 	// Map user function call operators to the UserOp at the beginning
-	// at the beginning of the corresponding function call
-	// Other operators are left as is.
+	// of the corresponding function call. Other operators are left as is.
 	pod_vector<size_t> map_user_op(num_op);
 	for(size_t i_op = 0; i_op < num_op; ++i_op)
 	{	map_user_op[i_op] = i_op;
@@ -199,22 +201,25 @@ void rev_jac_subgraph(
 			map_user_op[i_op] = begin;
 		}
 	}
+
 	// If in_subgraph[i_op] == n_dep + 1, this operator is not
-	// connected to the selected independent variables.
+	// connected to the selected independent variables
+	// (or it is an operator in a user function call that is not the
+	// first UserOp in the call).
 	//
 	// If in_subgraph[i_op] == i_dep < n_dep, this operator is in the
 	// subgraph for the correpsonding dependent variable.
 	pod_vector<size_t> in_subgraph(num_op);
-	//
+
 	// initialize in_subgraph to n_dep + 1
 	// We will use a forward pass to determine which operators depend
 	// on the selected independent variables.
 	for(size_t i_op = 0; i_op < num_op; ++i_op)
 		in_subgraph[i_op] = n_dep + 1;
-	//
+
 	// Change to n_dep for each operator connected to selected domain.
 	// Only need to modify first UserOp in a user function call and
-	// operators that have NumRes(op) > 0
+	// operators that have NumRes(op) > 0.
 	bool begin_user = false;
 	for(size_t i_op = 0; i_op < num_op; ++i_op)
 	{	OpCode op = play->GetOp(i_op);
@@ -281,24 +286,26 @@ void rev_jac_subgraph(
 		i_op        = map_user_op[i_op];
 
 		// if this variable depends on the selected indepent variables
-		// start processing its subgraph
+		// process its subgraph
 		if( in_subgraph[i_op] <= n_dep )
 			subgraph.push_back(i_op);
 
-		// scan all the variables in this subgraph
+		// scan all the operators in this subgraph
 		size_t sub_index = 0;
 		while(sub_index < subgraph.size() )
-		{	// scan this operator to see which variables are connected to it
-			i_op      = subgraph[sub_index];
-			OpCode op = play->GetOp(i_op);
+		{	// this operator is connected to the selected domain and range
+			i_op = subgraph[sub_index];
 			CPPAD_ASSERT_UNKNOWN( in_subgraph[i_op] <= n_dep );
-			//
-			// There must be a result for this operator
-			CPPAD_ASSERT_UNKNOWN( op == UserOp || NumRes(op) > 0 );
 			//
 			if( in_subgraph[i_op] !=  i_dep )
 			{	// mark this operator so we do not repeat this calculation.
 				in_subgraph[i_op] = i_dep;
+				//
+				// operator corresponding to this index
+				OpCode op = play->GetOp(i_op);
+				//
+				// There must be a result for this operator
+				CPPAD_ASSERT_UNKNOWN( op == UserOp || NumRes(op) > 0 );
 				//
 				// special case of independent variable operator
 				if( op == InvOp )
@@ -308,6 +315,7 @@ void rev_jac_subgraph(
 					CPPAD_ASSERT_UNKNOWN( play->var2op(i_var) == i_op );
 					CPPAD_ASSERT_UNKNOWN( i_var == ind_taddr[i_ind] );
 					CPPAD_ASSERT_UNKNOWN( select_domain[i_ind] );
+					// put this pair in the sparsity pattern
 					row_out.push_back(i_dep);
 					col_out.push_back(i_ind);
 				}
@@ -325,6 +333,7 @@ void rev_jac_subgraph(
 					}
 				}
 			}
+			// we are done scaling this subgraph node
 			++sub_index;
 		}
 	}
