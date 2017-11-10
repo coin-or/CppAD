@@ -25,8 +25,8 @@ is the player for this operation sequence.
 
 \param i_op
 is the operator index. It this operator is in a user function call,
-it must be the first UserOp in the call
-(there are two UserOp in each such call).
+it must be the first UserOp in the call. There is a UserOp at the
+beginning and end of each call.
 
 \param variable
 is the set of argument variables corresponding to this operator.
@@ -194,6 +194,7 @@ void rev_jac_subgraph(
 					op==UsrapOp || op==UsravOp || op==UsrrpOp || op==UsrrvOp
 				);
 				map_user_op[i_op] = begin;
+				op = play->GetOp(++i_op);
 			}
 			map_user_op[i_op] = begin;
 		}
@@ -205,47 +206,37 @@ void rev_jac_subgraph(
 	// subgraph for the correpsonding dependent variable.
 	pod_vector<size_t> in_subgraph(num_op);
 	//
-	// Are all the independent variables selected
-	bool entire_domain = true;
-	for(size_t j = 0; j < n_ind; j++)
-		entire_domain &= select_domain[j];
+	// initialize in_subgraph to n_dep + 1
+	// We will use a forward pass to determine which operators depend
+	// on the selected independent variables.
+	for(size_t i_op = 0; i_op < num_op; ++i_op)
+		in_subgraph[i_op] = n_dep + 1;
 	//
-	// initialize in_subgraph
-	if( entire_domain )
-	{	// initialize in_subgraph to n_dep; i.e., all operators depend on
-		// the independent variables
-		for(size_t i_op = 0; i_op < num_op; ++i_op)
-			in_subgraph[i_op] = n_dep;
-	}
-	else
-	{	// initialize in_subgraph to n_dep + 1
-		// We will use a forward pass to determine which operators depend
-		// on the selected independent variables.
-		for(size_t i_op = 0; i_op < num_op; ++i_op)
-			in_subgraph[i_op] = n_dep + 1;
-		//
-		// Change to n_dep for each operator connected to selected domain.
-		// Only need to modify UserOp and operators that have NumRes(op) > 0
-		for(size_t i_op = 0; i_op < num_op; ++i_op)
-		{	OpCode op = play->GetOp(i_op);
-			switch(op)
-			{	case InvOp:
-				CPPAD_ASSERT_UNKNOWN( NumRes(op) > 0 );
-				CPPAD_ASSERT_UNKNOWN( i_op > 0 );
-				// get user index for this independent variable
-				{	size_t j = i_op - 1;
-					CPPAD_ASSERT_UNKNOWN( play->var2op(ind_taddr[j]) == i_op );
-					//
-					// change if this independent has been selected
-					if( select_domain[j] )
-						in_subgraph[i_op] = n_dep;
-				}
-				break;
+	// Change to n_dep for each operator connected to selected domain.
+	// Only need to modify first UserOp in a user function call and
+	// operators that have NumRes(op) > 0
+	bool begin_user = false;
+	for(size_t i_op = 0; i_op < num_op; ++i_op)
+	{	OpCode op = play->GetOp(i_op);
+		switch(op)
+		{	case InvOp:
+			CPPAD_ASSERT_UNKNOWN( NumRes(op) > 0 );
+			CPPAD_ASSERT_UNKNOWN( i_op > 0 );
+			// get user index for this independent variable
+			{	size_t j = i_op - 1;
+				CPPAD_ASSERT_UNKNOWN( play->var2op(ind_taddr[j]) == i_op );
+				//
+				// change if this independent has been selected
+				if( select_domain[j] )
+					in_subgraph[i_op] = n_dep;
+			}
+			break;
 
-				// this will mark both first and last UserOp
-				// but that does not matter
-				case UserOp:
-				get_argument_variable(play, i_op, argument_variable, work);
+			// only mark both first UserOp for each call
+			case UserOp:
+			begin_user = not begin_user;
+			if( begin_user )
+			{	get_argument_variable(play, i_op, argument_variable, work);
 				for(size_t j = 0; j < argument_variable.size(); j++)
 				{	size_t j_var = argument_variable[j];
 					size_t j_op  = play->var2op(j_var);
@@ -253,21 +244,26 @@ void rev_jac_subgraph(
 					if( in_subgraph[j_op] == n_dep )
 						in_subgraph[i_op] = n_dep;
 				}
-				break;
-
-				default:
-				if( NumRes(op) > 0 )
-				{	get_argument_variable(play, i_op, argument_variable, work);
-					for(size_t j = 0; j < argument_variable.size(); j++)
-					{	size_t j_var = argument_variable[j];
-						size_t j_op  = play->var2op(j_var);
-						j_op         = map_user_op[j_op];
-						if( in_subgraph[j_op] == n_dep )
-							in_subgraph[i_op] = n_dep;
-					}
-				}
-				break;
 			}
+			break;
+
+			// skip UsrrvOp (gets mapped to UserOp above)
+			case UsrrvOp:
+			CPPAD_ASSERT_UNKNOWN( NumRes(op) > 0 );
+			break;
+
+			default:
+			if( NumRes(op) > 0 )
+			{	get_argument_variable(play, i_op, argument_variable, work);
+				for(size_t j = 0; j < argument_variable.size(); j++)
+				{	size_t j_var = argument_variable[j];
+					size_t j_op  = play->var2op(j_var);
+					j_op         = map_user_op[j_op];
+					if( in_subgraph[j_op] == n_dep )
+						in_subgraph[i_op] = n_dep;
+				}
+			}
+			break;
 		}
 	}
 

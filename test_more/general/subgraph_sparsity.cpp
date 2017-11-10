@@ -13,11 +13,21 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # include <cppad/cppad.hpp>
 
 namespace {
+	typedef CPPAD_TESTVECTOR(size_t)  svector;
+	typedef CppAD::sparse_rc<svector> sparsity;
+	//
+	using CppAD::AD;
+	typedef CPPAD_TESTVECTOR(AD<double>) avector;
 
-	template <typename SizeVector>
+	// algorithm that will be checkpointed
+	void g_algo(const avector& u, avector& v)
+	{	for(size_t j = 0; j < size_t( u.size() ); ++j)
+			v[0] += u[j];
+	}
+
 	bool compare(
-		CppAD::sparse_rc<SizeVector> subgraph  ,
-		CppAD::sparse_rc<SizeVector> check     )
+		CppAD::sparse_rc<svector> subgraph  ,
+		CppAD::sparse_rc<svector> check     )
 	{	bool ok = true;
 
 		// check nnz
@@ -27,18 +37,18 @@ namespace {
 		size_t nnz     = std::min(sub_nnz, chk_nnz);
 
 		// row major order
-		SizeVector sub_order = subgraph.row_major();
-		SizeVector chk_order = check.row_major();
+		svector sub_order = subgraph.row_major();
+		svector chk_order = check.row_major();
 
 		// check row indices
-		const SizeVector& sub_row( subgraph.row() );
-		const SizeVector& chk_row( check.row() );
+		const svector& sub_row( subgraph.row() );
+		const svector& chk_row( check.row() );
 		for(size_t k = 0; k < nnz; k++)
 			ok &= sub_row[ sub_order[k] ] == chk_row[ chk_order[k] ];
 
 		// check column indices
-		const SizeVector& sub_col( subgraph.col() );
-		const SizeVector& chk_col( check.col() );
+		const svector& sub_col( subgraph.col() );
+		const svector& chk_col( check.col() );
 		for(size_t k = 0; k < nnz; k++)
 			ok &= sub_col[ sub_order[k] ] == chk_col[ chk_order[k] ];
 
@@ -57,12 +67,15 @@ namespace {
 
 bool subgraph_sparsity(void)
 {	bool ok = true;
-	using CppAD::AD;
-	typedef CPPAD_TESTVECTOR(size_t)     SizeVector;
-	typedef CppAD::sparse_rc<SizeVector> sparsity;
+
+	// declare checkpoint function
+	avector au(3), av(1);
+	for(size_t j = 0; j < 3; j++)
+		au[j] = AD<double>(j);
+	CppAD::checkpoint<double> atom_g("atom_g", g_algo, au, av);
 	//
 	// domain space vector
-	size_t n = 5;
+	size_t n = 6;
 	CPPAD_TESTVECTOR(AD<double>) ax(n);
 	for(size_t j = 0; j < n; j++)
 		ax[j] = AD<double>(j);
@@ -71,7 +84,7 @@ bool subgraph_sparsity(void)
 	CppAD::Independent(ax);
 
 	// range space vector
-	size_t m = 6;
+	size_t m = 7;
 	CPPAD_TESTVECTOR(AD<double>) ay(m);
 	ay[0] = 0.0;                     // does not depend on anything
 	ay[1] = ax[1];                   // is equal to an independent variable
@@ -80,7 +93,13 @@ bool subgraph_sparsity(void)
 	ay[3] = sin(ax[1]);              // operator(variable)
 	ay[4] = ax[4] / 2.0;             // operator(variable, parameter)
 	ay[5] = 2.0 / ax[3];             // operator(parameter, variable)
-
+	//
+	// a user function call
+	for(size_t j = 0; j < size_t(au.size()); ++j)
+		au[j] = ax[j + 3];
+	atom_g(au, av);
+	ay[6] = av[0];
+	//
 	// create f: x -> y and stop tape recording
 	CppAD::ADFun<double> f(ax, ay);
 
