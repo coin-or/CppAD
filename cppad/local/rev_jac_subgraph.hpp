@@ -89,11 +89,7 @@ void get_argument_variable(
 	for(size_t j = 0; j < num_arg; ++j)
 	{	if( is_variable[j] )
 		{	size_t j_var = op_arg[j];
-			bool push = true;
-			for(size_t k = 0; k < variable.size(); ++k)
-				push = push & (variable[k] != j_var);
-			if( push )
-				variable.push_back(op_arg[j]);
+			variable.push_back(j_var);
 		}
 	}
 	return;
@@ -182,30 +178,54 @@ void rev_jac_subgraph(
 
 	// work space used by get_argument_variable
 	pod_vector<bool> work;
-
-	// if sub_or_connected[i_op] == i_dep, one of the following holds:
-	// 1. if i_op is an independent variable operator connected to i_dep
-	// 2. otherwise it is in subgraph for dependent variable i_dep
-	pod_vector<size_t> sub_or_connected(num_op);
 	//
-	// initilaize sub_or_connected to an impossible dependent variable index
-	// that is greater than n_dep.
+	// Map user function call operators to the UserOp at the beginning
+	// at the beginning of the corresponding function call
+	// Other operators are left as is.
+	pod_vector<size_t> map_user_op(num_op);
+	for(size_t i_op = 0; i_op < num_op; ++i_op)
+	{	map_user_op[i_op] = i_op;
+		OpCode op = play->GetOp(i_op);
+		if( op == UserOp )
+		{	size_t begin = i_op;
+			op           = play->GetOp(++i_op);
+			while( op != UserOp )
+			{	CPPAD_ASSERT_UNKNOWN(
+					op==UsrapOp || op==UsravOp || op==UsrrpOp || op==UsrrvOp
+				);
+				map_user_op[i_op] = begin;
+			}
+			map_user_op[i_op] = begin;
+		}
+	}
+	// If in_subgraph[i_op] == n_dep + 1, this operator is not
+	// connected to the selected independent variables.
+	//
+	// If in_subgraph[i_op] == i_dep < n_dep, this operator is in the
+	// subgraph for the correpsonding dependent variable.
+	pod_vector<size_t> in_subgraph(num_op);
+	//
+	// Are all the independent variables selected
 	bool entire_domain = true;
 	for(size_t j = 0; j < n_ind; j++)
 		entire_domain &= select_domain[j];
+	//
+	// initialize in_subgraph
 	if( entire_domain )
-	{	// initialize sub_or_connected to an impossible user dependent
-		// variable index
+	{	// initialize in_subgraph to n_dep; i.e., all operators depend on
+		// the independent variables
 		for(size_t i_op = 0; i_op < num_op; ++i_op)
-			sub_or_connected[i_op] = n_dep;
+			in_subgraph[i_op] = n_dep;
 	}
 	else
-	{	// initialize sub_or_connected to a value greater than n_dep
+	{	// initialize in_subgraph to n_dep + 1
+		// We will use a forward pass to determine which operators depend
+		// on the selected independent variables.
 		for(size_t i_op = 0; i_op < num_op; ++i_op)
-			sub_or_connected[i_op] = n_dep + 1;
+			in_subgraph[i_op] = n_dep + 1;
 		//
 		// Change to n_dep for each operator connected to selected domain.
-		// Only need to consider UserOp and operators that have NumRes(op) > 0
+		// Only need to modify UserOp and operators that have NumRes(op) > 0
 		for(size_t i_op = 0; i_op < num_op; ++i_op)
 		{	OpCode op = play->GetOp(i_op);
 			switch(op)
@@ -218,33 +238,21 @@ void rev_jac_subgraph(
 					//
 					// change if this independent has been selected
 					if( select_domain[j] )
-						sub_or_connected[i_op] = n_dep;
+						in_subgraph[i_op] = n_dep;
 				}
 				break;
 
+				// this will mark both first and last UserOp
+				// but that does not matter
 				case UserOp:
 				get_argument_variable(play, i_op, argument_variable, work);
 				for(size_t j = 0; j < argument_variable.size(); j++)
 				{	size_t j_var = argument_variable[j];
 					size_t j_op  = play->var2op(j_var);
-					if( sub_or_connected[j_op] == n_dep )
-						sub_or_connected[i_op] = n_dep;
+					j_op         = map_user_op[j_op];
+					if( in_subgraph[j_op] == n_dep )
+						in_subgraph[i_op] = n_dep;
 				}
-				// skip past the rest of this user function call
-				// (note that this advance the loop index i_op)
-				op = play->GetOp(++i_op);
-				{	while( op != UserOp )
-					{	CPPAD_ASSERT_UNKNOWN(
-							op == UsrapOp ||
-							op == UsravOp ||
-							op == UsrrpOp ||
-							op == UsrrvOp
-						);
-					op = play->GetOp(++i_op);
-					}
-				}
-				// second UserOp for this function call
-				CPPAD_ASSERT_UNKNOWN( op == UserOp);
 				break;
 
 				default:
@@ -253,8 +261,9 @@ void rev_jac_subgraph(
 					for(size_t j = 0; j < argument_variable.size(); j++)
 					{	size_t j_var = argument_variable[j];
 						size_t j_op  = play->var2op(j_var);
-						if( sub_or_connected[j_op] == n_dep )
-							sub_or_connected[i_op] = n_dep;
+						j_op         = map_user_op[j_op];
+						if( in_subgraph[j_op] == n_dep )
+							in_subgraph[i_op] = n_dep;
 					}
 				}
 				break;
@@ -271,83 +280,52 @@ void rev_jac_subgraph(
 		// tape index corresponding to this dependent variable
 		size_t i_var = dep_taddr[i_dep];
 
-		// put this node in the subgraph for this dependent variable
+		// operator corresponding to this dependent variable
 		size_t i_op = play->var2op(i_var);
-		if( play->GetOp(i_op) == InvOp )
-		{	// this dependent variable is also an independent variable
-			size_t i_ind = i_var - 1;
-			CPPAD_ASSERT_UNKNOWN( i_var == ind_taddr[i_ind] );
-			if( select_domain[i_ind] )
-			{	row_out.push_back(i_dep);
-				col_out.push_back(i_ind);
-			}
-		}
-		else
-		{	if( sub_or_connected[i_op] <= n_dep )
-				subgraph.push_back(i_op);
-		}
+		i_op        = map_user_op[i_op];
 
-		// check all that all the variables in the subgraph have been scanned
+		// if this variable depends on the selected indepent variables
+		// start processing its subgraph
+		if( in_subgraph[i_op] <= n_dep )
+			subgraph.push_back(i_op);
+
+		// scan all the variables in this subgraph
 		size_t sub_index = 0;
 		while(sub_index < subgraph.size() )
 		{	// scan this operator to see which variables are connected to it
 			i_op      = subgraph[sub_index];
 			OpCode op = play->GetOp(i_op);
+			CPPAD_ASSERT_UNKNOWN( in_subgraph[i_op] <= n_dep );
 			//
 			// There must be a result for this operator
-			CPPAD_ASSERT_UNKNOWN( NumRes(op) > 0 );
+			CPPAD_ASSERT_UNKNOWN( op == UserOp || NumRes(op) > 0 );
 			//
-			// special case where result is part of a user function call,
-			// find first UserOp for this function call.
-			if( op == UsrrvOp )
-			{	// 2DO: make the resulting sparsity_out more efficient using
-				// sparsity pattern for the user function call.
+			if( in_subgraph[i_op] !=  i_dep )
+			{	// mark this operator so we do not repeat this calculation.
+				in_subgraph[i_op] = i_dep;
 				//
-				// determine the UserOp that started this function call
-				// along with the first variable result for this call.
-				while( op != UserOp )
-				{	CPPAD_ASSERT_UNKNOWN(
-						op == UsrapOp ||
-						op == UsravOp ||
-						op == UsrrpOp ||
-						op == UsrrvOp
-					);
-					CPPAD_ASSERT_UNKNOWN( i_op > 0 );
-					op = play->GetOp(--i_op);
+				// special case of independent variable operator
+				if( op == InvOp )
+				{	CPPAD_ASSERT_NARG_NRES(op, 0, 1);
+					i_var        = i_op;
+					size_t i_ind = i_var - 1;
+					CPPAD_ASSERT_UNKNOWN( play->var2op(i_var) == i_op );
+					CPPAD_ASSERT_UNKNOWN( i_var == ind_taddr[i_ind] );
+					CPPAD_ASSERT_UNKNOWN( select_domain[i_ind] );
+					row_out.push_back(i_dep);
+					col_out.push_back(i_ind);
 				}
-			}
-			CPPAD_ASSERT_UNKNOWN( sub_or_connected[i_op] <= n_dep );
-			if( sub_or_connected[i_op] !=  i_dep )
-			{	// Mark as scanned so we do not repeat this calculation.
-				sub_or_connected[i_op] = i_dep;
-				//
-				// determine which variables are connected to this operator
-				get_argument_variable(play, i_op, argument_variable, work);
-				//
-				// check each of these variables
-				for(size_t j = 0; j < argument_variable.size(); ++j)
-				{	size_t j_var = argument_variable[j];
-					size_t j_op  = play->var2op(j_var);
+				else
+				{	// which variables are connected to this operator
+					get_argument_variable(play, i_op, argument_variable, work);
 					//
-					// has this argument already been processed
-					// for this dependent variable
-					if( sub_or_connected[j_op] != i_dep )
-					{	// variable not yet in subgraph or connected
-						//
-						if( play->GetOp(j_op) == InvOp )
-						{	// This is an independent variable
-							size_t j_ind = j_var - 1;
-							CPPAD_ASSERT_UNKNOWN( j_var == ind_taddr[j_ind] );
-							if( select_domain[j_ind] )
-							{	row_out.push_back(i_dep);
-								col_out.push_back(j_ind);
-							}
-						}
-						else
-						{	// add to the subgraph
-							if( sub_or_connected[j_op] <= n_dep )
-								subgraph.push_back(j_op);
-						}
+					// add the corresponding operators to the subgraph
+					for(size_t j = 0; j < argument_variable.size(); ++j)
+					{	size_t j_var = argument_variable[j];
+						size_t j_op  = play->var2op(j_var);
+						j_op         = map_user_op[j_op];
+						if( in_subgraph[j_op] <= n_dep )
+							subgraph.push_back(j_op);
 					}
 				}
 			}
