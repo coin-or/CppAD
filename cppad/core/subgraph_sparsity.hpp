@@ -42,6 +42,13 @@ to determine which independent variables affect it.
 This avoids to overhead of performing set operations
 that is inherent in other methods for computing sparsity patterns.
 
+$head Atomic Function$$
+The sparsity calculation for
+$cref/Atomic functions/atomic_afun/$$ that are in $icode f$$
+are not efficient. To be specific, each atomic function is considered
+one operation and all of its inputs depend on all of its outputs.
+This may be improved upon in the future.
+
 $head BoolVector$$
 The type $icode BoolVector$$ is a $cref SimpleVector$$ class with
 $cref/elements of type/SimpleVector/Elements of Specified Type/$$
