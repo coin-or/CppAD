@@ -1,6 +1,5 @@
-// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -58,6 +57,22 @@ bool link_mat_mul(
 	CppAD::vector<double>&           dz
 )
 {
+	// --------------------------------------------------------------------
+	// check global options
+	const char* valid[] = { "onetape", "optimize", "atomic", "memory"};
+	size_t n_valid = sizeof(valid) / sizeof(valid[0]);
+	typedef std::map<std::string, bool>::iterator iterator;
+	//
+	for(iterator itr=global_option.begin(); itr!=global_option.end(); ++itr)
+	{	if( itr->second )
+		{	bool ok = false;
+			for(size_t i = 0; i < n_valid; i++)
+				ok |= itr->first == valid[i];
+			if( ! ok )
+				return false;
+		}
+	}
+	// --------------------------------------------------------------------
 	// optimization options: no conditional skips or compare operators
 	std::string options="no_compare_op";
 	// -----------------------------------------------------

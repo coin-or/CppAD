@@ -103,12 +103,29 @@ bool link_sparse_hessian(
 	CppAD::vector<double>&           hessian  ,
 	size_t&                          n_sweep  )
 {
-	if( global_option["atomic"] )
-		return false;
-# if ! CPPAD_HAS_COLPACK
-	if( global_option["colpack"] )
-		return false;
+	// --------------------------------------------------------------------
+	// check global options
+	const char* valid[] = {
+		"onetape", "optimize", "memory",
+# if CPPAD_HAS_COLPACK
+		"boolsparsity", "revsparsity", "colpack"
+# else
+		"boolsparsity", "revsparsity"
 # endif
+	};
+	size_t n_valid = sizeof(valid) / sizeof(valid[0]);
+	typedef std::map<std::string, bool>::iterator iterator;
+	//
+	for(iterator itr=global_option.begin(); itr!=global_option.end(); ++itr)
+	{	if( itr->second )
+		{	bool ok = false;
+			for(size_t i = 0; i < n_valid; i++)
+				ok |= itr->first == valid[i];
+			if( ! ok )
+				return false;
+		}
+	}
+	// ---------------------------------------------------------------------
 	// optimization options: no conditional skips or compare operators
 	std::string options="no_compare_op";
 	// -----------------------------------------------------------------------

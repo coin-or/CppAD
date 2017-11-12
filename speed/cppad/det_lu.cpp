@@ -51,9 +51,22 @@ bool link_det_lu(
 	CppAD::vector<double>           &matrix   ,
 	CppAD::vector<double>           &gradient )
 {
-	// speed test global option values
-	if( global_option["onetape"] || global_option["atomic"] )
-		return false;
+	// --------------------------------------------------------------------
+	// check global options
+	const char* valid[] = { "optimize", "memory"};
+	size_t n_valid = sizeof(valid) / sizeof(valid[0]);
+	typedef std::map<std::string, bool>::iterator iterator;
+	//
+	for(iterator itr=global_option.begin(); itr!=global_option.end(); ++itr)
+	{	if( itr->second )
+		{	bool ok = false;
+			for(size_t i = 0; i < n_valid; i++)
+				ok |= itr->first == valid[i];
+			if( ! ok )
+				return false;
+		}
+	}
+	// --------------------------------------------------------------------
 
 	// optimization options: no conditional skips or compare operators
 	std::string options="no_compare_op";
