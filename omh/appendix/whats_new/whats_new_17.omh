@@ -46,6 +46,7 @@ $spell
 	op
 	sizeof
 	addr
+	subsparsity
 $$
 
 $section Changes and Additions to CppAD During 2017$$
@@ -53,6 +54,10 @@ $section Changes and Additions to CppAD During 2017$$
 $head API Changes$$
 Speed tests no longer automatically compile in release mode; see
 $cref/debug_which/speed/debug_which/$$
+
+$head 11-12$$
+Add the $cref/subsparsity/speed_main/Sparsity Options/subsparsity/$$ option
+to the CppAD speed tests.
 
 $head 11-08$$
 Add the $cref subgraph_sparsity$$ method for computing

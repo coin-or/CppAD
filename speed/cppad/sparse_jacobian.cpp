@@ -65,26 +65,39 @@ namespace {
 		bool transpose     = false;
 		bool internal_bool = global_option["boolsparsity"];
 		bool dependency    = false;
-		size_t q;
-		if( reverse )
-			q = f.Range();
-		else
-			q = f.Domain();
-		//
-		CppAD::sparse_rc<s_vector> identity;
-		identity.resize(q, q, q);
-		for(size_t k = 0; k < q; k++)
-			identity.set(k, k, k);
-		//
-		if( reverse )
-		{	f.rev_jac_sparsity(
-				identity, transpose, dependency, internal_bool, sparsity
+		bool subgraph      = global_option["subsparsity"];
+		size_t n = f.Domain();
+		size_t m = f.Range();
+		if( subgraph )
+		{	b_vector select_domain(n), select_range(m);
+			for(size_t j = 0; j < n; ++j)
+				select_domain[j] = true;
+			for(size_t i = 0; i < m; ++i)
+				select_range[i] = true;
+			f.subgraph_sparsity(
+				select_domain, select_range, transpose, sparsity
 			);
 		}
 		else
-		{	f.for_jac_sparsity(
-				identity, transpose, dependency, internal_bool, sparsity
-			);
+		{	size_t q = n;
+			if( reverse )
+				q = m;
+			//
+			CppAD::sparse_rc<s_vector> identity;
+			identity.resize(q, q, q);
+			for(size_t k = 0; k < q; k++)
+				identity.set(k, k, k);
+			//
+			if( reverse )
+			{	f.rev_jac_sparsity(
+					identity, transpose, dependency, internal_bool, sparsity
+				);
+			}
+			else
+			{	f.for_jac_sparsity(
+					identity, transpose, dependency, internal_bool, sparsity
+				);
+			}
 		}
 	}
 }
@@ -104,9 +117,9 @@ bool link_sparse_jacobian(
 	const char* valid[] = {
 		"onetape", "optimize", "memory",
 # if CPPAD_HAS_COLPACK
-		"boolsparsity", "revsparsity", "colpack"
+		"boolsparsity", "revsparsity", "subsparsity", "colpack"
 # else
-		"boolsparsity", "revsparsity"
+		"boolsparsity", "revsparsity", "subsparsity"
 # endif
 	};
 	size_t n_valid = sizeof(valid) / sizeof(valid[0]);
@@ -120,6 +133,10 @@ bool link_sparse_jacobian(
 			if( ! ok )
 				return false;
 		}
+	}
+	if( global_option["subsparsity"] )
+	{	if( global_option["boolsparisty"] || global_option["revsparsity"] )
+			return false;
 	}
 	// ---------------------------------------------------------------------
 	// optimization options: no conditional skips or compare operators

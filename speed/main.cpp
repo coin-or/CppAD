@@ -47,6 +47,8 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin speed_main$$
 $spell
+	subgraphs
+	subsparsity
 	revsparsity
 	colpack
 	onetape
@@ -214,15 +216,22 @@ are present.
 
 $subhead boolsparsity$$
 If this option is present, CppAD will use a
-$cref/vector of bool/glossary/Sparsity Pattern/Boolean Vector/$$
-for its sparsity patterns.
-Otherwise it will use a
-$cref/vector of sets/glossary/Sparsity Pattern/Vector of Sets/$$.
+$cref/vectors of bool/glossary/Sparsity Pattern/Boolean Vector/$$
+to compute sparsity patterns.
+Otherwise CppAD will use
+$cref/vectors of sets/glossary/Sparsity Pattern/Vector of Sets/$$.
 
 $subhead revsparsity$$
 If this option is present,
-CppAD will use reverse mode for sparsity patterns.
-Otherwise it will use $cref RevSparseJac$$ and $cref RevSparseHes$$.
+CppAD will use reverse mode for to compute sparsity patterns.
+Otherwise CppAD will use forward mode.
+
+$subhead subsparsity$$
+If this option is present,
+CppAD will use subgraphs to compute sparsity patterns.
+If either the $code boolsparsity$$ or $code revsparsity$$ is also present,
+the CppAD speed tests will return false; i.e., these options are not
+supported by $cref subgraph_sparsity$$.
 
 $subhead colpack$$
 If this option is present,
@@ -335,6 +344,7 @@ namespace {
 		"memory",
 		"boolsparsity",
 		"revsparsity",
+		"subsparsity",
 		"colpack"
 	};
 	size_t num_option = sizeof(option_list) / sizeof( option_list[0] );
