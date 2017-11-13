@@ -53,8 +53,14 @@ $srccode%cpp% */
 extern std::map<std::string, bool> global_option;
 
 namespace {
+	// typedefs
 	using CppAD::vector;
-	typedef vector<size_t>  s_vector;
+	typedef CppAD::AD<double>           a1double;
+	typedef CppAD::AD<a1double>         a2double;
+	typedef vector<size_t>              s_vector;
+	typedef vector<double>              d_vector;
+	typedef vector<a1double>            a1vector;
+	typedef vector<a2double>            a2vector;
 	//
 	void calc_sparsity(
 		CppAD::sparse_rc<s_vector>&  sparsity ,
@@ -92,6 +98,39 @@ namespace {
 			);
 		}
 	}
+	void create_fun(
+		const d_vector&             x        ,
+		const s_vector&             row      ,
+		const s_vector&             col      ,
+		CppAD::ADFun<double>&       fun      )
+	{
+		// declare independent variables
+		size_t n = x.size();
+		a1vector a1x(n);
+		for(size_t j = 0; j < n; j++)
+			a1x[j] = x[j];
+		//
+		// declare independent variables
+		Independent(a1x);
+		//
+		// AD computation of y
+		size_t order = 0;
+		a1vector a1y(1);
+		CppAD::sparse_hes_fun<a1double>(n, a1x, row, col, order, a1y);
+		//
+		// create function object f : X -> Y
+		fun.Dependent(a1x, a1y);
+		//
+		if( global_option["optimize"] )
+		{	std::string options="no_compare_op";
+			fun.optimize(options);
+		}
+		//
+		// skip comparison operators
+		fun.compare_change_count(0);
+		//
+		return;
+	}
 }
 
 bool link_sparse_hessian(
@@ -125,21 +164,10 @@ bool link_sparse_hessian(
 				return false;
 		}
 	}
-	// ---------------------------------------------------------------------
-	// optimization options: no conditional skips or compare operators
-	std::string options="no_compare_op";
 	// -----------------------------------------------------------------------
 	// setup
-	typedef vector<double>              d_vector;
-	typedef CppAD::AD<double>           a_double;
-	typedef vector<a_double>            ad_vector;
-	//
-	size_t order = 0;         // derivative order corresponding to function
-	size_t m = 1;             // number of dependent variables
 	size_t n = size;          // number of independent variables
-	ad_vector a_x(n);         // AD domain space vector
-	ad_vector a_y(m);         // AD range space vector
-	d_vector  w(m);           // double range space vector
+	d_vector  w(1);           // double range space vector
 	CppAD::ADFun<double> f;   // AD function object
 	//
 	// weights for hessian calculation (only one component of f)
@@ -165,33 +193,20 @@ bool link_sparse_hessian(
 	if( global_option["colpack"] )
 		coloring = "colpack.symmetric";
 # endif
+	//
+	// structure htat holds some of the work done by sparse_hes
+	CppAD::sparse_hes_work work;
+
 	// -----------------------------------------------------------------------
 	if( ! global_option["onetape"] ) while(repeat--)
 	{	// choose a value for x
 		CppAD::uniform_01(n, x);
-		for(size_t j = 0; j < n; j++)
-			a_x[j] = x[j];
 		//
-		// declare independent variables
-		Independent(a_x);
+		// create f(x)
+		create_fun(x, row, col, f);
 		//
-		// AD computation of f(x)
-		CppAD::sparse_hes_fun<a_double>(n, a_x, row, col, order, a_y);
-		//
-		// create function object f : X -> Y
-		f.Dependent(a_x, a_y);
-		//
-		if( global_option["optimize"] )
-			f.optimize(options);
-		//
-		// skip comparison operators
-		f.compare_change_count(0);
-		//
-		// calculate the Hessian sparsity pattern for this function
+		// calculate the Hessian sparsity pattern for f(x)
 		calc_sparsity(sparsity, f);
-		//
-		// structure that holds some of work done by sparse_hes
-		CppAD::sparse_hes_work work;
 		//
 		// calculate this Hessian at this x
 		n_sweep = f.sparse_hes(x, w, subset, sparsity, coloring, work);
@@ -201,29 +216,13 @@ bool link_sparse_hessian(
 	else
 	{	// choose a value for x
 		CppAD::uniform_01(n, x);
-		for(size_t j = 0; j < n; j++)
-			a_x[j] = x[j];
 		//
-		// declare independent variables
-		Independent(a_x);
+		// create f(x)
+		create_fun(x, row, col, f);
 		//
-		// AD computation of f(x)
-		CppAD::sparse_hes_fun<a_double>(n, a_x, row, col, order, a_y);
-		//
-		// create function object f : X -> Y
-		f.Dependent(a_x, a_y);
-		//
-		if( global_option["optimize"] )
-			f.optimize(options);
-		//
-		// skip comparison operators
-		f.compare_change_count(0);
-		//
-		// calculate the Hessian sparsity pattern for this function
+		// calculate the Hessian sparsity pattern for f(x)
 		calc_sparsity(sparsity, f);
 		//
-		// declare structure that holds some of work done by sparse_hes
-		CppAD::sparse_hes_work work;
 		while(repeat--)
 		{	// choose a value for x
 			CppAD::uniform_01(n, x);
