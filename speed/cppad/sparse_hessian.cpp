@@ -65,14 +65,14 @@ namespace {
 	//
 	void calc_sparsity(
 		sparsity_pattern&      sparsity ,
-		CppAD::ADFun<double>&  f        )
+		CppAD::ADFun<double>&  fun      )
 	{	bool reverse       = global_option["revsparsity"];
 		bool transpose     = false;
 		bool dependency    = false;
 		bool internal_bool = global_option["boolsparsity"];
 		//
-		size_t n = f.Domain();
-		size_t m = f.Range();
+		size_t n = fun.Domain();
+		size_t m = fun.Range();
 		CPPAD_ASSERT_UNKNOWN( m == 1 );
 		//
 		vector<bool> select_range(m);
@@ -83,10 +83,10 @@ namespace {
 			identity.resize(n, n, n);
 			for(size_t k = 0; k < n; k++)
 				identity.set(k, k, k);
-			f.for_jac_sparsity(
+			fun.for_jac_sparsity(
 				identity, transpose, dependency, internal_bool, sparsity
 			);
-			f.rev_hes_sparsity(
+			fun.rev_hes_sparsity(
 				select_range, transpose, internal_bool, sparsity
 			);
 		}
@@ -94,7 +94,7 @@ namespace {
 		{	vector<bool> select_domain(n);
 			for(size_t j = 0; j < n; j++)
 				select_domain[j] = true;
-			f.for_hes_sparsity(
+			fun.for_hes_sparsity(
 				select_domain, select_range, internal_bool, sparsity
 			);
 		}
@@ -169,7 +169,7 @@ bool link_sparse_hessian(
 	// setup
 	size_t n = size;          // number of independent variables
 	d_vector  w(1);           // double range space vector
-	CppAD::ADFun<double> f;   // AD function object
+	CppAD::ADFun<double> fun; // AD function object used to calculate Hessian
 	//
 	// weights for hessian calculation (only one component of f)
 	w[0] = 1.0;
@@ -204,13 +204,13 @@ bool link_sparse_hessian(
 		CppAD::uniform_01(n, x);
 		//
 		// create f(x)
-		create_fun(x, row, col, f);
+		create_fun(x, row, col, fun);
 		//
 		// calculate the Hessian sparsity pattern for f(x)
-		calc_sparsity(sparsity, f);
+		calc_sparsity(sparsity, fun);
 		//
 		// calculate this Hessian at this x
-		n_sweep = f.sparse_hes(x, w, subset, sparsity, coloring, work);
+		n_sweep = fun.sparse_hes(x, w, subset, sparsity, coloring, work);
 		for(size_t k = 0; k < nnz; k++)
 			hessian[k] = subset_val[k];
 	}
@@ -219,17 +219,17 @@ bool link_sparse_hessian(
 		CppAD::uniform_01(n, x);
 		//
 		// create f(x)
-		create_fun(x, row, col, f);
+		create_fun(x, row, col, fun);
 		//
 		// calculate the Hessian sparsity pattern for f(x)
-		calc_sparsity(sparsity, f);
+		calc_sparsity(sparsity, fun);
 		//
 		while(repeat--)
 		{	// choose a value for x
 			CppAD::uniform_01(n, x);
 			//
 			// calculate this Hessian at this x
-			n_sweep = f.sparse_hes(x, w, subset, sparsity, coloring, work);
+			n_sweep = fun.sparse_hes(x, w, subset, sparsity, coloring, work);
 			for(size_t k = 0; k < nnz; k++)
 				hessian[k] = subset_val[k];
 		}
