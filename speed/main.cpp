@@ -47,6 +47,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin speed_main$$
 $spell
+	hes
 	subgraphs
 	subsparsity
 	revsparsity
@@ -138,7 +139,8 @@ If $icode test$$ is equal to $code speed$$,
 all of the speed tests are run.
 
 $head seed$$
-The command line argument $icode seed$$ is a positive integer.
+The command line argument $icode seed$$ is an unsigned integer
+(all its characters are between 0 and 9).
 The random number simulator $cref uniform_01$$ is initialized with
 the call
 $codei%
@@ -185,7 +187,7 @@ to indicate that the test not implemented,
 when $code global_onetape$$ is true.
 
 $subhead memory$$
-This option is special becasue individual CppAD speed tests need not do
+This option is special because individual CppAD speed tests need not do
 anything different if this option is true or false.
 If the $code memory$$ option is present, the CppAD
 $cref/hold_memory/ta_hold_memory/$$ routine will be called by
@@ -205,10 +207,20 @@ $code onetape$$ option.
 
 $subhead atomic$$
 If this option is present,
-$cref speed_cppad$$ will use its user defined
+CppAD will use a user defined
 $cref/atomic/atomic_base/$$ operation is used for the test.
 So far, CppAD has only implemented
 the $cref/mat_mul/link_mat_mul/$$ test as an atomic operation.
+
+$subhead grad2hes$$
+If this option is present,
+$cref speed_cppad$$ will compute hessians as the Jacobian
+of the gradient.
+This is accomplished using
+$cref/multiple levels/mul_level/$$ of AD.
+So far, CppAD has only implemented
+the $cref/sparse_hessian/link_sparse_hessian/$$
+test in this manner.
 
 $head Sparsity Options$$
 The following options only apply to the
@@ -345,6 +357,7 @@ namespace {
 		"onetape",
 		"optimize",
 		"atomic",
+		"grad2hes",
 		"boolsparsity",
 		"revsparsity",
 		"subsparsity",
@@ -494,18 +507,23 @@ int main(int argc, char *argv[])
 			if( strcmp(test_list[i].name, argv[1]) == 0 )
 				match = test_list[i].index;
 		error = match == test_error;
+		for(size_t i = 0; *(argv[2] + i) != '\0'; ++i)
+		{	error |= *(argv[2] + i) < '0';
+			error |= '9' < *(argv[2] + i);
+		}
 		iseed = std::atoi( argv[2] );
 		error |= iseed < 0;
 		for(size_t i = 0; i < num_option; i++)
 			global_option[ option_list[i] ] = false;
 		for(size_t i = 3; i < size_t(argc); i++)
-		{	error = true;
+		{	bool found = false;
 			for(size_t j = 0; j < num_option; j++)
 			{	if( strcmp(argv[i], option_list[j]) == 0 )
 				{	global_option[ option_list[j] ] = true;
-					error = false;
+					found = true;
 				}
 			}
+			error |= ! found;
 		}
 	}
 	if( error )

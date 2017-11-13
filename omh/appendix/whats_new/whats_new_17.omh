@@ -55,6 +55,20 @@ $head API Changes$$
 Speed tests no longer automatically compile in release mode; see
 $cref/debug_which/speed/debug_which/$$
 
+$head 11-13$$
+$list number$$
+Add the $cref/grad2hes/speed_main/Global Options/grad2hes/$$ option
+to the CppAD speed tests.
+$lnext
+Implement the
+$cref/subsparsity/speed_main/Sparsity Options/subsparsity/$$ option
+for the CppAD $cref/sparse_hessian/link_sparse_hessian/$$ test.
+$lnext
+Fix detection of invalid options in the speed test programs; see the
+$cref/global/speed_main/Global Options/$$ and
+$cref/sparsity/speed_main/Sparsity Options/$$ options.
+$lend
+
 $head 11-12$$
 Add the $cref/subsparsity/speed_main/Sparsity Options/subsparsity/$$ option
 to the CppAD speed tests.
