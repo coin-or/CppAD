@@ -115,7 +115,7 @@ bool link_sparse_jacobian(
 	// --------------------------------------------------------------------
 	// check global options
 	const char* valid[] = {
-		"onetape", "optimize", "memory",
+		"memory", "onetape", "optimize",
 # if CPPAD_HAS_COLPACK
 		"boolsparsity", "revsparsity", "subsparsity", "colpack"
 # else

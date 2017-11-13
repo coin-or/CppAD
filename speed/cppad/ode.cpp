@@ -55,7 +55,7 @@ bool link_ode(
 {
 	// --------------------------------------------------------------------
 	// check global options
-	const char* valid[] = { "onetape", "optimize", "memory"};
+	const char* valid[] = { "memory", "onetape", "optimize"};
 	size_t n_valid = sizeof(valid) / sizeof(valid[0]);
 	typedef std::map<std::string, bool>::iterator iterator;
 	//

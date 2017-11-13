@@ -145,7 +145,7 @@ bool link_sparse_hessian(
 	// --------------------------------------------------------------------
 	// check global options
 	const char* valid[] = {
-		"onetape", "optimize", "memory",
+		"memory", "onetape", "optimize",
 # if CPPAD_HAS_COLPACK
 		"boolsparsity", "revsparsity", "colpack"
 # else

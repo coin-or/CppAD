@@ -59,7 +59,7 @@ bool link_mat_mul(
 {
 	// --------------------------------------------------------------------
 	// check global options
-	const char* valid[] = { "onetape", "optimize", "atomic", "memory"};
+	const char* valid[] = { "memory", "onetape", "optimize", "atomic"};
 	size_t n_valid = sizeof(valid) / sizeof(valid[0]);
 	typedef std::map<std::string, bool>::iterator iterator;
 	//
