@@ -184,12 +184,23 @@ For this reason, $cref cppad_det_lu.cpp$$ returns false,
 to indicate that the test not implemented,
 when $code global_onetape$$ is true.
 
+$subhead memory$$
+This option is special becasue individual CppAD speed tests need not do
+anything different if this option is true or false.
+If the $code memory$$ option is present, the CppAD
+$cref/hold_memory/ta_hold_memory/$$ routine will be called by
+the speed test main program before any of the tests are executed
+This should make the CppAD $code thread_alloc$$ allocator faster.
+If it is not present, CppAD will used standard memory allocation.
+Another package might use this option for a different
+memory allocation method.
+
 $subhead optimize$$
 If this option is present,
-$cref speed_cppad$$ will $cref optimize$$
+CppAD will $cref optimize$$
 the operation sequence before doing computations.
 If it is false, this optimization will not be done.
-Note that this option is often faster when combined with the
+Note that this option is usually slower unless it is combined with the
 $code onetape$$ option.
 
 $subhead atomic$$
@@ -198,14 +209,6 @@ $cref speed_cppad$$ will use its user defined
 $cref/atomic/atomic_base/$$ operation is used for the test.
 So far, CppAD has only implemented
 the $cref/mat_mul/link_mat_mul/$$ test as an atomic operation.
-
-$subhead memory$$
-If this option is present, the CppAD
-$cref/hold_memory/ta_hold_memory/$$ routine will be called by
-the speed test main program before any of the tests are executed
-(individual CppAD speed tests need not do anything special).
-This should make the CppAD $code thread_alloc$$ allocator faster.
-If it is not present, CppAD will used standard memory allocation.
 
 $head Sparsity Options$$
 The following options only apply to the
@@ -338,10 +341,10 @@ namespace {
 	using std::cout;
 	using std::endl;
 	const char* option_list[] = {
+		"memory",
 		"onetape",
 		"optimize",
 		"atomic",
-		"memory",
 		"boolsparsity",
 		"revsparsity",
 		"subsparsity",
@@ -353,9 +356,17 @@ namespace {
 	void not_available_message(const char* test_name)
 	{	cout << AD_PACKAGE << ": " << test_name;
 		cout << " is not availabe with " << endl;
+		int max_len = 0;
+		for(size_t i = 0; i < num_option; i++)
+		{	int len = int( std::strlen( option_list[i] ) );
+			max_len = std::max( max_len, len);
+		}
 		for(size_t i = 0; i < num_option; i++)
 		{	std::string option = option_list[i];
-			cout << option << " = " << global_option[option] << endl;
+			if( global_option[option] )
+				cout << std::setw(max_len + 1) << option << " = true\n";
+			else
+				cout << std::setw(max_len + 1) << option << " = false\n";
 		}
 	}
 	// ------------------------------------------------------
