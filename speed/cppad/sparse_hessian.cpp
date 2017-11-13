@@ -55,13 +55,14 @@ extern std::map<std::string, bool> global_option;
 namespace {
 	// typedefs
 	using CppAD::vector;
-	typedef CppAD::AD<double>           a1double;
-	typedef CppAD::AD<a1double>         a2double;
-	typedef vector<size_t>              s_vector;
-	typedef vector<double>              d_vector;
-	typedef vector<a1double>            a1vector;
-	typedef vector<a2double>            a2vector;
-	typedef CppAD::sparse_rc<s_vector>  sparsity_pattern;
+	typedef CppAD::AD<double>                     a1double;
+	typedef CppAD::AD<a1double>                   a2double;
+	typedef vector<size_t>                        s_vector;
+	typedef vector<double>                        d_vector;
+	typedef vector<a1double>                      a1vector;
+	typedef vector<a2double>                      a2vector;
+	typedef CppAD::sparse_rc<s_vector>            sparsity_pattern;
+	typedef CppAD::sparse_rcv<s_vector, d_vector> sparse_matrix;
 	// ------------------------------------------------------------------------
 	void create_fun(
 		const d_vector&             x        ,
@@ -133,6 +134,34 @@ namespace {
 			);
 		}
 	}
+	// ------------------------------------------------------------------------
+	size_t calc_hessian(
+		d_vector&               hessian  ,
+		const d_vector&         x        ,
+		sparse_matrix&          subset   ,
+		const sparsity_pattern& sparsity ,
+		CppAD::sparse_hes_work& work     ,
+		CppAD::ADFun<double>&   fun      )
+	{	d_vector w(1);
+		w[0] = 1.0;
+		//
+		// coloring method
+		std::string coloring = "cppad.symmetric";
+# if CPPAD_HAS_COLPACK
+		if( global_option["colpack"] )
+			coloring = "colpack.symmetric";
+# endif
+		//
+		size_t n_sweep = fun.sparse_hes(
+			x, w, subset, sparsity, coloring, work
+		);
+		const d_vector& val( subset.val() );
+		size_t nnz = subset.nnz();
+		for(size_t k = 0; k < nnz; k++)
+			hessian[k] = val[k];
+		//
+		return n_sweep;
+	}
 }
 
 bool link_sparse_hessian(
@@ -169,11 +198,7 @@ bool link_sparse_hessian(
 	// -----------------------------------------------------------------------
 	// setup
 	size_t n = size;          // number of independent variables
-	d_vector  w(1);           // double range space vector
 	CppAD::ADFun<double> fun; // AD function object used to calculate Hessian
-	//
-	// weights for hessian calculation (only one component of f)
-	w[0] = 1.0;
 	//
 	// declare sparsity pattern
 	sparsity_pattern sparsity;
@@ -186,17 +211,9 @@ bool link_sparse_hessian(
 	subset_pattern.resize(nr, nc, nnz);
 	for(size_t k = 0; k < nnz; k++)
 		subset_pattern.set(k, row[k], col[k]);
-	CppAD::sparse_rcv<s_vector, d_vector> subset( subset_pattern );
-	const d_vector& subset_val( subset.val() );
+	sparse_matrix subset( subset_pattern );
 	//
-	// coloring method
-	std::string coloring = "cppad.symmetric";
-# if CPPAD_HAS_COLPACK
-	if( global_option["colpack"] )
-		coloring = "colpack.symmetric";
-# endif
-	//
-	// structure htat holds some of the work done by sparse_hes
+	// structure that holds some of the work done by sparse_hes
 	CppAD::sparse_hes_work work;
 
 	// -----------------------------------------------------------------------
@@ -211,9 +228,7 @@ bool link_sparse_hessian(
 		calc_sparsity(sparsity, fun);
 		//
 		// calculate the Hessian at this x
-		n_sweep = fun.sparse_hes(x, w, subset, sparsity, coloring, work);
-		for(size_t k = 0; k < nnz; k++)
-			hessian[k] = subset_val[k];
+		n_sweep = calc_hessian(hessian, x, subset, sparsity, work, fun);
 	}
 	else
 	{	// choose a value for x
@@ -230,9 +245,7 @@ bool link_sparse_hessian(
 			CppAD::uniform_01(n, x);
 			//
 			// calculate this Hessian at this x
-			n_sweep = fun.sparse_hes(x, w, subset, sparsity, coloring, work);
-			for(size_t k = 0; k < nnz; k++)
-				hessian[k] = subset_val[k];
+			n_sweep = calc_hessian(hessian, x, subset, sparsity, work, fun);
 		}
 	}
 	return true;
