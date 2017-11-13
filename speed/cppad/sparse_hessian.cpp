@@ -62,7 +62,41 @@ namespace {
 	typedef vector<a1double>            a1vector;
 	typedef vector<a2double>            a2vector;
 	typedef CppAD::sparse_rc<s_vector>  sparsity_pattern;
-	//
+	// ------------------------------------------------------------------------
+	void create_fun(
+		const d_vector&             x        ,
+		const s_vector&             row      ,
+		const s_vector&             col      ,
+		CppAD::ADFun<double>&       fun      )
+	{
+		// declare independent variables
+		size_t n = x.size();
+		a1vector a1x(n);
+		for(size_t j = 0; j < n; j++)
+			a1x[j] = x[j];
+		//
+		// declare independent variables
+		Independent(a1x);
+		//
+		// a1double computation of y
+		size_t order = 0;
+		a1vector a1y(1);
+		CppAD::sparse_hes_fun<a1double>(n, a1x, row, col, order, a1y);
+		//
+		// create function object for y = f(x)
+		fun.Dependent(a1x, a1y);
+		//
+		if( global_option["optimize"] )
+		{	std::string options="no_compare_op";
+			fun.optimize(options);
+		}
+		//
+		// skip comparison operators
+		fun.compare_change_count(0);
+		//
+		return;
+	}
+	// ------------------------------------------------------------------------
 	void calc_sparsity(
 		sparsity_pattern&      sparsity ,
 		CppAD::ADFun<double>&  fun      )
@@ -98,39 +132,6 @@ namespace {
 				select_domain, select_range, internal_bool, sparsity
 			);
 		}
-	}
-	void create_fun(
-		const d_vector&             x        ,
-		const s_vector&             row      ,
-		const s_vector&             col      ,
-		CppAD::ADFun<double>&       fun      )
-	{
-		// declare independent variables
-		size_t n = x.size();
-		a1vector a1x(n);
-		for(size_t j = 0; j < n; j++)
-			a1x[j] = x[j];
-		//
-		// declare independent variables
-		Independent(a1x);
-		//
-		// AD computation of y
-		size_t order = 0;
-		a1vector a1y(1);
-		CppAD::sparse_hes_fun<a1double>(n, a1x, row, col, order, a1y);
-		//
-		// create function object f : X -> Y
-		fun.Dependent(a1x, a1y);
-		//
-		if( global_option["optimize"] )
-		{	std::string options="no_compare_op";
-			fun.optimize(options);
-		}
-		//
-		// skip comparison operators
-		fun.compare_change_count(0);
-		//
-		return;
 	}
 }
 
@@ -206,10 +207,10 @@ bool link_sparse_hessian(
 		// create f(x)
 		create_fun(x, row, col, fun);
 		//
-		// calculate the Hessian sparsity pattern for f(x)
+		// calculate the sparsity pattern for Hessian of f(x)
 		calc_sparsity(sparsity, fun);
 		//
-		// calculate this Hessian at this x
+		// calculate the Hessian at this x
 		n_sweep = fun.sparse_hes(x, w, subset, sparsity, coloring, work);
 		for(size_t k = 0; k < nnz; k++)
 			hessian[k] = subset_val[k];
@@ -221,7 +222,7 @@ bool link_sparse_hessian(
 		// create f(x)
 		create_fun(x, row, col, fun);
 		//
-		// calculate the Hessian sparsity pattern for f(x)
+		// calculate the sparsity pattern for Hessian of f(x)
 		calc_sparsity(sparsity, fun);
 		//
 		while(repeat--)
