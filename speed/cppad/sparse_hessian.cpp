@@ -61,10 +61,11 @@ namespace {
 	typedef vector<double>              d_vector;
 	typedef vector<a1double>            a1vector;
 	typedef vector<a2double>            a2vector;
+	typedef CppAD::sparse_rc<s_vector>  sparsity_pattern;
 	//
 	void calc_sparsity(
-		CppAD::sparse_rc<s_vector>&  sparsity ,
-		CppAD::ADFun<double>&        f        )
+		sparsity_pattern&      sparsity ,
+		CppAD::ADFun<double>&  f        )
 	{	bool reverse       = global_option["revsparsity"];
 		bool transpose     = false;
 		bool dependency    = false;
@@ -78,7 +79,7 @@ namespace {
 		select_range[0] = true;
 		//
 		if( reverse )
-		{	CppAD::sparse_rc<s_vector> identity;
+		{	sparsity_pattern identity;
 			identity.resize(n, n, n);
 			for(size_t k = 0; k < n; k++)
 				identity.set(k, k, k);
@@ -174,10 +175,10 @@ bool link_sparse_hessian(
 	w[0] = 1.0;
 	//
 	// declare sparsity pattern
-	CppAD::sparse_rc<s_vector>  sparsity;
+	sparsity_pattern sparsity;
 	//
 	// declare subset where Hessian is evaluated
-	CppAD::sparse_rc<s_vector> subset_pattern;
+	sparsity_pattern subset_pattern;
 	size_t nr  = n;
 	size_t nc  = n;
 	size_t nnz = row.size();
