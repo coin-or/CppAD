@@ -130,7 +130,7 @@ $end
 -----------------------------------------------------------------------------
 */
 # include <cppad/core/ad_fun.hpp>
-# include <cppad/local/rev_jac_subgraph.hpp>
+# include <cppad/local/subgraph.hpp>
 
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 

@@ -1,5 +1,5 @@
-# ifndef CPPAD_LOCAL_REV_JAC_SUBGRAPH_HPP
-# define CPPAD_LOCAL_REV_JAC_SUBGRAPH_HPP
+# ifndef CPPAD_LOCAL_SUBGRAPH_HPP
+# define CPPAD_LOCAL_SUBGRAPH_HPP
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
@@ -13,7 +13,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 namespace CppAD { namespace local { // BEGIN_CPPAD_LOCAL_NAMESPACE
 /*!
-\file rev_jac_subgraph.hpp
+\file subgraph.hpp
 Compute dependency sparsity pattern using subgraph technique.
 */
 

@@ -23,17 +23,13 @@ spell_list='
 revert_list='
 '
 move_list='
+	cppad/local/rev_jac_subgraph.hpp
 '
-move_sed='s|op_info|opt_op_info|'
+move_sed='s|rev_jac_subgraph.hpp|subgraph.hpp|'
 #
 cat << EOF > junk.sed
-/pod_vector<[a-zA-Z_]*> [a-zA-Z_0-9]*;/! b skip
-N
-/\.extend([a-zA-Z_0-9]*)/! b skip
-#
-s|;\\n\\t*[a-zA-Z_0-9]*\\.extend||
-#
-: skip
+s|rev_jac_subgraph.hpp|subgraph.hpp|
+s|REV_JAC_SUBGRAPH_HPP|SUBGRAPH_HPP|
 EOF
 # -----------------------------------------------------------------------------
 if [ $0 != "bin/batch_edit.sh" ]

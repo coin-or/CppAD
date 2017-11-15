@@ -272,7 +272,7 @@ nobase_myinclude_HEADERS =  \
 	cppad/local/recorder.hpp \
 	cppad/local/reverse_sweep.hpp \
 	cppad/local/rev_hes_sweep.hpp \
-	cppad/local/rev_jac_subgraph.hpp \
+	cppad/local/subgraph.hpp \
 	cppad/local/rev_jac_sweep.hpp \
 	cppad/local/set_get_in_parallel.hpp \
 	cppad/local/sign_op.hpp \
