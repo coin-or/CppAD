@@ -44,10 +44,12 @@ that is inherent in other methods for computing sparsity patterns.
 
 $head Atomic Function$$
 The sparsity calculation for
-$cref/Atomic functions/atomic_afun/$$ that are in $icode f$$
-are not efficient. To be specific, each atomic function is considered
-one operation and all of its inputs depend on all of its outputs.
-This may be improved upon in the future.
+$cref/atomic functions/atomic_afun/$$ in the $icode f$$ operation sequence
+are not efficient. To be specific, each atomic function is treated as if
+all of its outputs depend on all of its inputs.
+This may be improved upon in the future; see the
+$cref/subgraph atomic functions/wish_list/Subgraph Atomic Functions/$$
+wish list item.
 
 $head BoolVector$$
 The type $icode BoolVector$$ is a $cref SimpleVector$$ class with

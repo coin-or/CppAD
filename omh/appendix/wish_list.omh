@@ -10,6 +10,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 $begin wish_list$$
 $spell
+	subgraph
 	Recomputation
 	optimizer
 	checkpointing
@@ -34,6 +35,16 @@ $spell
 $$
 
 $section The CppAD Wish List$$
+
+$head Subgraph Atomic Functions$$
+The $cref subgraph_sparsity$$ calculation treats
+each atomic function call as if
+all of its outputs depend on all of its inputs;
+see $cref/atomic function/subgraph_sparsity/Atomic Function/$$.
+These sparsity patterns could be made more efficient
+(could have fewer possibly non-zeros entries)
+by using the sparsity patterns for the atomic functions.
+
 
 $head check_finite$$
 $list number$$

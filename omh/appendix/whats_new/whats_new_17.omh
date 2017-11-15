@@ -55,6 +55,11 @@ $head API Changes$$
 Speed tests no longer automatically compile in release mode; see
 $cref/debug_which/speed/debug_which/$$
 
+$head 11-15$$
+Add wish list item for $cref subgraph_sparsity$$ when
+$cref/atomic functions/wish_list/Subgraph Atomic Functions/$$
+are present.
+
 $head 11-13$$
 $list number$$
 Add the $cref/grad2hes/speed_main/Global Options/grad2hes/$$ option

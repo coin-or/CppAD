@@ -144,6 +144,12 @@ the function corresponding to the recording.
 	0 <= col_out[k] < ind_taddr.size()
 	select_domain[ col_out[k] ] == true
 \endcode
+
+\par UserOp
+All of the inputs and outputs for an atomic function call are considered
+to be connected.
+2DO: It would be good to use the sparsity patters for atomic function calls
+to to make the sparsity pattern more efficient.
 */
 
 template <typename Base, typename BoolVector>
