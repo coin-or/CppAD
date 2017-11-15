@@ -190,12 +190,15 @@ void rev_jac_subgraph(
 
 	// Map user function call operators to the UserOp at the beginning
 	// of the corresponding function call. Other operators are left as is.
-	pod_vector<size_t> map_user_op(num_op);
+	CPPAD_ASSERT_UNKNOWN(
+		num_op < size_t( std::numeric_limits<addr_t>::max() )
+	);
+	pod_vector<addr_t> map_user_op(num_op);
 	for(size_t i_op = 0; i_op < num_op; ++i_op)
-	{	map_user_op[i_op] = i_op;
+	{	map_user_op[i_op] = addr_t( i_op );
 		OpCode op = play->GetOp(i_op);
 		if( op == UserOp )
-		{	size_t begin = i_op;
+		{	addr_t begin = addr_t( i_op );
 			op           = play->GetOp(++i_op);
 			while( op != UserOp )
 			{	CPPAD_ASSERT_UNKNOWN(
