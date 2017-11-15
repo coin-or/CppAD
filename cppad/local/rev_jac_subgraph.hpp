@@ -191,7 +191,7 @@ void rev_jac_subgraph(
 	// Map user function call operators to the UserOp at the beginning
 	// of the corresponding function call. Other operators are left as is.
 	CPPAD_ASSERT_UNKNOWN(
-		num_op < size_t( std::numeric_limits<addr_t>::max() )
+		num_op <= size_t( std::numeric_limits<addr_t>::max() )
 	);
 	pod_vector<addr_t> map_user_op(num_op);
 	for(size_t i_op = 0; i_op < num_op; ++i_op)
@@ -218,13 +218,17 @@ void rev_jac_subgraph(
 	//
 	// If in_subgraph[i_op] == i_dep < n_dep, this operator is in the
 	// subgraph for the correpsonding dependent variable.
-	pod_vector<size_t> in_subgraph(num_op);
+	pod_vector<addr_t> in_subgraph(num_op);
 
 	// initialize in_subgraph to n_dep + 1
 	// We will use a forward pass to determine which operators depend
 	// on the selected independent variables.
+	CPPAD_ASSERT_UNKNOWN(
+		n_dep + 1 <= size_t( std::numeric_limits<addr_t>::max() )
+	);
+	addr_t n_dep_addr_t = addr_t(n_dep);
 	for(size_t i_op = 0; i_op < num_op; ++i_op)
-		in_subgraph[i_op] = n_dep + 1;
+		in_subgraph[i_op] = n_dep_addr_t + 1;
 
 	// Change to n_dep for each operator connected to selected domain.
 	// Only need to modify first UserOp in a user function call and
@@ -242,7 +246,7 @@ void rev_jac_subgraph(
 				//
 				// change if this independent has been selected
 				if( select_domain[j] )
-					in_subgraph[i_op] = n_dep;
+					in_subgraph[i_op] = n_dep_addr_t;
 			}
 			break;
 
@@ -255,8 +259,8 @@ void rev_jac_subgraph(
 				{	size_t j_var = argument_variable[j];
 					size_t j_op  = play->var2op(j_var);
 					j_op         = map_user_op[j_op];
-					if( in_subgraph[j_op] == n_dep )
-						in_subgraph[i_op] = n_dep;
+					if( in_subgraph[j_op] == n_dep_addr_t )
+						in_subgraph[i_op] =  n_dep_addr_t;
 				}
 			}
 			break;
@@ -273,17 +277,21 @@ void rev_jac_subgraph(
 				{	size_t j_var = argument_variable[j];
 					size_t j_op  = play->var2op(j_var);
 					j_op         = map_user_op[j_op];
-					if( in_subgraph[j_op] == n_dep )
-						in_subgraph[i_op] = n_dep;
+					if( in_subgraph[j_op] == n_dep_addr_t )
+						in_subgraph[i_op] =  n_dep_addr_t;
 				}
 			}
 			break;
 		}
 	}
+	CPPAD_ASSERT_UNKNOWN( ! begin_user );
 
 	// for each of the selected dependent variables
 	for(size_t i_dep = 0; i_dep < n_dep; ++i_dep) if( select_range[i_dep] )
 	{
+		// addr_t version of i_dep
+		addr_t i_dep_addr_t = addr_t(i_dep);
+
 		// start with an empty subgraph for this dependent variable
 		subgraph.erase();
 
@@ -296,7 +304,7 @@ void rev_jac_subgraph(
 
 		// if this variable depends on the selected indepent variables
 		// process its subgraph
-		if( in_subgraph[i_op] <= n_dep )
+		if( in_subgraph[i_op] <= n_dep_addr_t )
 			subgraph.push_back(i_op);
 
 		// scan all the operators in this subgraph
@@ -304,11 +312,11 @@ void rev_jac_subgraph(
 		while(sub_index < subgraph.size() )
 		{	// this operator is connected to the selected domain and range
 			i_op = subgraph[sub_index];
-			CPPAD_ASSERT_UNKNOWN( in_subgraph[i_op] <= n_dep );
+			CPPAD_ASSERT_UNKNOWN( in_subgraph[i_op] <= n_dep_addr_t );
 			//
-			if( in_subgraph[i_op] !=  i_dep )
+			if( in_subgraph[i_op] !=  i_dep_addr_t )
 			{	// mark this operator so we do not repeat this calculation.
-				in_subgraph[i_op] = i_dep;
+				in_subgraph[i_op] = i_dep_addr_t;
 				//
 				// operator corresponding to this index
 				OpCode op = play->GetOp(i_op);
@@ -337,7 +345,7 @@ void rev_jac_subgraph(
 					{	size_t j_var = argument_variable[j];
 						size_t j_op  = play->var2op(j_var);
 						j_op         = map_user_op[j_op];
-						if( in_subgraph[j_op] <= n_dep )
+						if( in_subgraph[j_op] <= n_dep_addr_t )
 							subgraph.push_back(j_op);
 					}
 				}
