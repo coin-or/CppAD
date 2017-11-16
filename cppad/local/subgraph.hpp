@@ -17,6 +17,7 @@ namespace CppAD { namespace local { // BEGIN_CPPAD_LOCAL_NAMESPACE
 Compute dependency sparsity pattern using subgraph technique.
 */
 
+// ---------------------------------------------------------------------------
 /*!
 Determine the set of argument variables for an operator
 
@@ -97,6 +98,183 @@ void get_argument_variable(
 	return;
 }
 
+// ---------------------------------------------------------------------------
+/*!
+\tparam Base
+this operation sequence was recording using AD<Base>.
+
+\param play
+is the operation sequence corresponding to the ADFun<Base> function.
+
+\param map_user_op
+If map_user_op.size() == 0 upon entry, then upon return it has the
+values specified below. Otherwise, it must be have the proper values on entry.
+Upon return, map_user_op.size() is equal to the number of operators
+in play.
+We use the term user OpCocde for the any one of the following:
+UserOp, UsrapOp, UsravOp, UsrrpOp, or UsrrvOp.
+Suppose
+\code
+	OpCodce op_i = play->GetOp(i_op);
+	size_t  j_op = map_user_op[i_op];
+	OpCode  op_j = play->GetOP(j_op);
+\endcode
+If op is a user OpCode, j_op is the index of the first operator
+in the corresponding atomic function call and op_j == UserOp.
+Otherwise j_op == i_op;
+
+\param select_domain
+is a vector with, size equal to the number of independent variables
+in the recording,  that determines the selected independent variables.
+
+\param depend_no
+is the valued used to signify an operator that does not depend on the
+selected independent variables.
+
+\param depend_yes
+is the valued used to signify an operator that depends on the
+selected independent variables.
+
+\param in_subgraph
+The input value of this vector does not matter.
+Upon return, a pod_vector erase and extend is used to change its size to be
+equal to the number of operators (so re-using the same vector avoids
+repeated memory allocation).
+If in_subgraph[i_op] == depend_no (depend_yes),
+the arguments for this operator depend (do not depend)
+on the selected independent variables.
+Note that for user function call operators i_op,
+in_subgraph[i_op] is depend_no except for the first UserOp in the
+atomic function call sequence. For the first UserOp,
+it is depend_yes if any of the
+arguments in the call sequence depend on the selected independent variables.
+Except for UserOP, only operators with NumRes(op) > 0 are included
+in the dependency; e.g., comparision operators are not included.
+*/
+template <typename Base, typename BoolVector>
+void init_subgraph(
+	const player<Base>*  play          ,
+	pod_vector<addr_t>&  map_user_op   ,
+	const BoolVector&    select_domain ,
+	addr_t               depend_no     ,
+	addr_t               depend_yes    ,
+	pod_vector<addr_t>&  in_subgraph   )
+{
+	// number of operators in the recording
+	size_t num_op = play->num_op_rec();
+	CPPAD_ASSERT_UNKNOWN(
+		num_op <= size_t( std::numeric_limits<addr_t>::max() )
+	);
+
+	// map_user_op
+	if( map_user_op.size() != 0 )
+	{	CPPAD_ASSERT_UNKNOWN( map_user_op.size() == num_op );
+	}
+	else
+	{	map_user_op.extend(num_op);
+		for(size_t i_op = 0; i_op < num_op; ++i_op)
+		{	map_user_op[i_op] = addr_t( i_op );
+			OpCode op = play->GetOp(i_op);
+			if( op == UserOp )
+			{	addr_t begin = addr_t( i_op );
+				op           = play->GetOp(++i_op);
+				while( op != UserOp )
+				{	CPPAD_ASSERT_UNKNOWN(
+						op==UsrapOp || op==UsravOp || op==UsrrpOp || op==UsrrvOp
+					);
+					map_user_op[i_op] = begin;
+					op = play->GetOp(++i_op);
+				}
+				map_user_op[i_op] = begin;
+			}
+		}
+	}
+
+	// set in_subgraph to have proper size
+	in_subgraph.erase();
+	in_subgraph.extend(num_op);
+
+	// variables that are arguments to a particular operator
+	pod_vector<size_t> argument_variable;
+
+	// work space used by get_argument_variable
+	pod_vector<bool> work;
+
+	// use a forward pass to determine which operators depend on the
+	// selected set of independent variables
+# ifndef NDEBUG
+	size_t count_independent = 0;
+# endif
+	bool begin_atomic_call = false;
+	for(size_t i_op = 0; i_op < num_op; ++i_op)
+	{	OpCode op = play->GetOp(i_op);
+		switch(op)
+		{	case InvOp:
+			CPPAD_ASSERT_UNKNOWN( NumRes(op) > 0 );
+			CPPAD_ASSERT_UNKNOWN( i_op > 0 );
+			{	// get user index for this independent variable
+				size_t j = i_op - 1;
+				CPPAD_ASSERT_UNKNOWN( j < select_domain.size() );
+				//
+				// set in_subgraph[i_op]
+				if( select_domain[j] )
+					in_subgraph[i_op] = depend_yes;
+				else
+					in_subgraph[i_op] = depend_no;
+			}
+# ifndef NDEBUG
+			++count_independent;
+# endif
+			break;
+
+			// only mark both first UserOp for each call as depending
+			// on the selected independent variables
+			case UserOp:
+			begin_atomic_call = not begin_atomic_call;
+			in_subgraph[i_op] = depend_no;
+			if( begin_atomic_call )
+			{	get_argument_variable(play, i_op, argument_variable, work);
+				for(size_t j = 0; j < argument_variable.size(); j++)
+				{	size_t j_var = argument_variable[j];
+					size_t j_op  = play->var2op(j_var);
+					j_op         = map_user_op[j_op];
+					CPPAD_ASSERT_UNKNOWN( j_op < i_op );
+					if( in_subgraph[j_op] == depend_yes )
+						in_subgraph[i_op] =  depend_yes;
+				}
+			}
+			break;
+
+			// skip UsrrvOp (gets mapped to first UserOp in this call)
+			case UsrrvOp:
+			CPPAD_ASSERT_UNKNOWN( NumRes(op) > 0 );
+			in_subgraph[i_op] = depend_no;
+			break;
+
+			default:
+			// Except for UserOp, only include operators with NumRes(op) > 0.
+			in_subgraph[i_op] = depend_no;
+			if( NumRes(op) > 0 )
+			{	get_argument_variable(play, i_op, argument_variable, work);
+				for(size_t j = 0; j < argument_variable.size(); j++)
+				{	size_t j_var = argument_variable[j];
+					size_t j_op  = play->var2op(j_var);
+					j_op         = map_user_op[j_op];
+					CPPAD_ASSERT_UNKNOWN( j_op < i_op );
+					if( in_subgraph[j_op] == depend_yes )
+						in_subgraph[i_op] =  depend_yes;
+				}
+			}
+			break;
+		}
+	}
+	CPPAD_ASSERT_UNKNOWN( count_independent == select_domain.size() );
+	//
+	return;
+}
+
+
+// ---------------------------------------------------------------------------
 /*!
 Compute dependency sparsity pattern for an ADFun<Base> function.
 
@@ -171,9 +349,6 @@ void rev_jac_subgraph(
 	size_t n_dep = dep_taddr.size();
 	CPPAD_ASSERT_UNKNOWN( size_t( select_range.size() ) == n_dep );
 
-	// number of operators in the tape
-	size_t num_op  = play->num_op_rec();
-
 	// start with an empty sparsity pattern
 	row_out.erase();
 	col_out.erase();
@@ -188,107 +363,21 @@ void rev_jac_subgraph(
 	// work space used by get_argument_variable
 	pod_vector<bool> work;
 
-	// Map user function call operators to the UserOp at the beginning
-	// of the corresponding function call. Other operators are left as is.
-	CPPAD_ASSERT_UNKNOWN(
-		num_op <= size_t( std::numeric_limits<addr_t>::max() )
+	// set map_user_op and initialize in_subgraph
+	pod_vector<addr_t> map_user_op, in_subgraph;
+	addr_t depend_no  = addr_t( n_dep + 1 );
+	addr_t depend_yes = addr_t( n_dep );
+	init_subgraph(
+		play, map_user_op, select_domain, depend_no, depend_yes, in_subgraph
 	);
-	pod_vector<addr_t> map_user_op(num_op);
-	for(size_t i_op = 0; i_op < num_op; ++i_op)
-	{	map_user_op[i_op] = addr_t( i_op );
-		OpCode op = play->GetOp(i_op);
-		if( op == UserOp )
-		{	addr_t begin = addr_t( i_op );
-			op           = play->GetOp(++i_op);
-			while( op != UserOp )
-			{	CPPAD_ASSERT_UNKNOWN(
-					op==UsrapOp || op==UsravOp || op==UsrrpOp || op==UsrrvOp
-				);
-				map_user_op[i_op] = begin;
-				op = play->GetOp(++i_op);
-			}
-			map_user_op[i_op] = begin;
-		}
-	}
-
-	// If in_subgraph[i_op] == n_dep + 1, this operator is not
-	// connected to the selected independent variables
-	// (or it is an operator in a user function call that is not the
-	// first UserOp in the call).
-	//
-	// If in_subgraph[i_op] == i_dep < n_dep, this operator is in the
-	// subgraph for the correpsonding dependent variable.
-	pod_vector<addr_t> in_subgraph(num_op);
-
-	// initialize in_subgraph to n_dep + 1
-	// We will use a forward pass to determine which operators depend
-	// on the selected independent variables.
-	CPPAD_ASSERT_UNKNOWN(
-		n_dep + 1 <= size_t( std::numeric_limits<addr_t>::max() )
-	);
-	addr_t n_dep_addr_t = addr_t(n_dep);
-	for(size_t i_op = 0; i_op < num_op; ++i_op)
-		in_subgraph[i_op] = n_dep_addr_t + 1;
-
-	// Change to n_dep for each operator connected to selected domain.
-	// Only need to modify first UserOp in a user function call and
-	// operators that have NumRes(op) > 0.
-	bool begin_user = false;
-	for(size_t i_op = 0; i_op < num_op; ++i_op)
-	{	OpCode op = play->GetOp(i_op);
-		switch(op)
-		{	case InvOp:
-			CPPAD_ASSERT_UNKNOWN( NumRes(op) > 0 );
-			CPPAD_ASSERT_UNKNOWN( i_op > 0 );
-			// get user index for this independent variable
-			{	size_t j = i_op - 1;
-				CPPAD_ASSERT_UNKNOWN( play->var2op(ind_taddr[j]) == i_op );
-				//
-				// change if this independent has been selected
-				if( select_domain[j] )
-					in_subgraph[i_op] = n_dep_addr_t;
-			}
-			break;
-
-			// only mark both first UserOp for each call
-			case UserOp:
-			begin_user = not begin_user;
-			if( begin_user )
-			{	get_argument_variable(play, i_op, argument_variable, work);
-				for(size_t j = 0; j < argument_variable.size(); j++)
-				{	size_t j_var = argument_variable[j];
-					size_t j_op  = play->var2op(j_var);
-					j_op         = map_user_op[j_op];
-					if( in_subgraph[j_op] == n_dep_addr_t )
-						in_subgraph[i_op] =  n_dep_addr_t;
-				}
-			}
-			break;
-
-			// skip UsrrvOp (gets mapped to UserOp above)
-			case UsrrvOp:
-			CPPAD_ASSERT_UNKNOWN( NumRes(op) > 0 );
-			break;
-
-			default:
-			if( NumRes(op) > 0 )
-			{	get_argument_variable(play, i_op, argument_variable, work);
-				for(size_t j = 0; j < argument_variable.size(); j++)
-				{	size_t j_var = argument_variable[j];
-					size_t j_op  = play->var2op(j_var);
-					j_op         = map_user_op[j_op];
-					if( in_subgraph[j_op] == n_dep_addr_t )
-						in_subgraph[i_op] =  n_dep_addr_t;
-				}
-			}
-			break;
-		}
-	}
-	CPPAD_ASSERT_UNKNOWN( ! begin_user );
+	CPPAD_ASSERT_UNKNOWN( map_user_op.size() == play->num_op_rec() );
+	CPPAD_ASSERT_UNKNOWN( in_subgraph.size() == play->num_op_rec() );
 
 	// for each of the selected dependent variables
+	CPPAD_ASSERT_UNKNOWN( depend_yes < depend_no );
 	for(size_t i_dep = 0; i_dep < n_dep; ++i_dep) if( select_range[i_dep] )
-	{
+	{	CPPAD_ASSERT_UNKNOWN( i_dep < size_t( depend_yes ) );
+
 		// addr_t version of i_dep
 		addr_t i_dep_addr_t = addr_t(i_dep);
 
@@ -304,7 +393,7 @@ void rev_jac_subgraph(
 
 		// if this variable depends on the selected indepent variables
 		// process its subgraph
-		if( in_subgraph[i_op] <= n_dep_addr_t )
+		if( in_subgraph[i_op] <= depend_yes )
 			subgraph.push_back(i_op);
 
 		// scan all the operators in this subgraph
@@ -312,7 +401,7 @@ void rev_jac_subgraph(
 		while(sub_index < subgraph.size() )
 		{	// this operator is connected to the selected domain and range
 			i_op = subgraph[sub_index];
-			CPPAD_ASSERT_UNKNOWN( in_subgraph[i_op] <= n_dep_addr_t );
+			CPPAD_ASSERT_UNKNOWN( in_subgraph[i_op] <= depend_yes );
 			//
 			if( in_subgraph[i_op] !=  i_dep_addr_t )
 			{	// mark this operator so we do not repeat this calculation.
@@ -345,7 +434,7 @@ void rev_jac_subgraph(
 					{	size_t j_var = argument_variable[j];
 						size_t j_op  = play->var2op(j_var);
 						j_op         = map_user_op[j_op];
-						if( in_subgraph[j_op] <= n_dep_addr_t )
+						if( in_subgraph[j_op] <= depend_yes )
 							subgraph.push_back(j_op);
 					}
 				}
