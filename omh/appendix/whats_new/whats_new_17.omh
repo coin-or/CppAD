@@ -56,9 +56,15 @@ Speed tests no longer automatically compile in release mode; see
 $cref/debug_which/speed/debug_which/$$
 
 $head 11-15$$
+$list number$$
 Add wish list item for $cref subgraph_sparsity$$ when
 $cref/atomic functions/wish_list/Subgraph Atomic Functions/$$
 are present.
+$lnext
+Fix $cref make_check$$ when $cref ipopt_prefix$$ is not present on the
+$cref cmake$$ command line
+(make was trying to build some of the ipopt tests).
+$lend
 
 $head 11-13$$
 $list number$$
