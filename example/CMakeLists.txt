@@ -30,7 +30,9 @@ ADD_SUBDIRECTORY(general)
 ADD_SUBDIRECTORY(get_started)
 
 # ipopt_solve examples
-ADD_SUBDIRECTORY(ipopt_solve)
+IF( cppad_has_ipopt)
+	ADD_SUBDIRECTORY(ipopt_solve)
+ENDIF( cppad_has_ipopt)
 
 # multi_thread examples
 ADD_SUBDIRECTORY(multi_thread)
