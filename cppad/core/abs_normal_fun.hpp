@@ -831,7 +831,7 @@ void ADFun<Base>::abs_normal_fun(ADFun<Base>& g, ADFun<Base>& a)
 
 	// Transferring the recording swaps its vectors so do this last
 	// replace the recording in g (this ADFun object)
-	g.play_.get(rec);
+	g.play_.get(rec, n + s);
 
 	// ------------------------------------------------------------------------
 	// Create the function a

@@ -167,8 +167,6 @@ void for_jac_sweep(
 
 		// this op
 		play->get_op_info(++i_op, op, arg, i_var);
-		CPPAD_ASSERT_UNKNOWN( (i_op > n)  | (op == InvOp) );
-		CPPAD_ASSERT_UNKNOWN( (i_op <= n) | (op != InvOp) );
 
 		// rest of information depends on the case
 		switch( op )

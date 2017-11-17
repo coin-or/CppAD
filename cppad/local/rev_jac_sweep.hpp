@@ -169,12 +169,6 @@ void rev_jac_sweep(
 		//
 		// next op
 		play->get_op_info(--i_op, op, arg, i_var);
-# ifndef NDEBUG
-		if( i_op <= n )
-		{	CPPAD_ASSERT_UNKNOWN((op == InvOp) | (op == BeginOp));
-		}
-		else	CPPAD_ASSERT_UNKNOWN((op != InvOp) & (op != BeginOp));
-# endif
 
 		// rest of information depends on the case
 		switch( op )

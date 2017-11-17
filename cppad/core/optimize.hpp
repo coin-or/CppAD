@@ -253,7 +253,7 @@ void ADFun<Base>::optimize(const std::string& options)
 	num_var_tape_  = rec.num_var_rec();
 
 	// now replace the recording
-	play_.get(rec);
+	play_.get(rec, n);
 
 	// set flag so this function knows it has been optimized
 	has_been_optimized_ = true;

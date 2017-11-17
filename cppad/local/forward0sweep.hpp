@@ -255,8 +255,6 @@ void forward0sweep(
 	{
 		// this op
 		play->get_op_info(++i_op, op, arg, i_var);
-		CPPAD_ASSERT_UNKNOWN( (i_op > n)  | (op == InvOp) );
-		CPPAD_ASSERT_UNKNOWN( (i_op <= n) | (op != InvOp) );
 		CPPAD_ASSERT_UNKNOWN( i_op < play->num_op_rec() );
 
 		// check if we are skipping this operation

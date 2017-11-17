@@ -102,13 +102,17 @@ public:
 	operation, the state of the recording is no longer defined. For example,
 	the pod_vector member variables in this have been swapped with rec.
 
+	\param n_ind
+	the number of independent variables (only used for error checking
+	when NDEBUG is not defined).
+
 	\par
 	Use an assert to check that the lenght of the following vectors is
 	less than the maximum possible value for addr_t; i.e., that an index
 	in these vectors can be represented using the type addr_t:
 	op_vec_, vecad_ind_vec_, arg_vec_, par_vec_, text_vec_.
 	*/
-	void get(recorder<Base>& rec)
+	void get(recorder<Base>& rec, size_t n_ind)
 	{
 # ifndef NDEBUG
 		size_t addr_t_max = size_t( std::numeric_limits<addr_t>::max() );
@@ -215,10 +219,34 @@ public:
 				}
 			}
 		}
+		check_inv_op(n_ind);
 		check_dag();
 	}
+	// ----------------------------------------------------------------------
 	/*!
-	Chech arguments that are variables, to make sure the have value less
+	Check that InvOp operators start with second operator and are contiguous,
+	and there are n_ind of them.
+	*/
+# ifdef NDEBUG
+	void check_inv_op(size_t n_ind)
+	{	return; }
+# else
+	void check_inv_op(size_t n_ind)
+	{	size_t num_op = op_vec_.size();
+		CPPAD_ASSERT_UNKNOWN( op_vec_[0] = BeginOp );
+		CPPAD_ASSERT_UNKNOWN( op_vec_[1] = InvOp   );
+		// start at second operator
+		for(size_t i_op = 1; i_op < num_op; ++i_op)
+		{	OpCode op = op_vec_[i_op];
+			CPPAD_ASSERT_UNKNOWN( (op == InvOp) == (i_op <= n_ind) );
+		}
+		return;
+	}
+
+# endif
+	// ----------------------------------------------------------------------
+	/*!
+	Check arguments that are variables, to make sure the have value less
 	than or equal to the previously created variable. This is the directed
 	acyclic graph condition (DAG).
 	*/
