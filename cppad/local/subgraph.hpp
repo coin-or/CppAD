@@ -141,13 +141,13 @@ Upon return, a pod_vector erase and extend is used to change its size to be
 equal to the number of operators (so re-using the same vector avoids
 repeated memory allocation).
 If in_subgraph[i_op] == depend_no (depend_yes),
-the arguments for this operator depend (do not depend)
+the result for this operator depends (does not depend)
 on the selected independent variables.
 Note that for user function call operators i_op,
 in_subgraph[i_op] is depend_no except for the first UserOp in the
 atomic function call sequence. For the first UserOp,
-it is depend_yes if any of the
-arguments in the call sequence depend on the selected independent variables.
+it is depend_yes if any of the results for the call sequence
+depend on the selected independent variables.
 Except for UserOP, only operators with NumRes(op) > 0 are included
 in the dependency; e.g., comparision operators are not included.
 */
@@ -273,6 +273,139 @@ void init_subgraph(
 	return;
 }
 
+// ---------------------------------------------------------------------------
+/*!
+Subgraph corresponding to one dependent, and selected independent, variables
+
+\tparam Base
+this operation sequence was recording using AD<Base>.
+
+\param play
+is the operation sequence corresponding to the ADFun<Base> function.
+
+\param dep_taddr
+is the vector mapping user dependent variable indices
+to the correpsonding variable in he recording.
+
+\param map_user_op
+has size is equal to the number of operators in play.
+We use the term user OpCocde for the any one of the following:
+UserOp, UsrapOp, UsravOp, UsrrpOp, or UsrrvOp.
+Suppose
+\code
+	OpCodce op_i = play->GetOp(i_op);
+	size_t  j_op = map_user_op[i_op];
+	OpCode  op_j = play->GetOP(j_op);
+\endcode
+If op is a user OpCode, j_op is the index of the first operator
+in the corresponding atomic function call and op_j == UserOp.
+Otherwise j_op == i_op;
+
+\param depend_yes
+is the value used to signify that an operator depends on the selected
+independent variables.
+
+\param i_dep
+is the user index for his dependent variable;
+that i_dep < depend_yes.
+Furthermore, in_subgraph[i_op] is not eqaul to i_dep for any i_op.
+
+\param in_subgraph
+has size equal to the number of operators in play.
+If in_subgraph[i_op] <= depend_yes,
+the result for this operator depends on the selected independent variables.
+Note that for user function call operators i_op,
+\code
+	depend_yes < in_subgraph[i_op]
+\endcode
+except for the first UserOp in the atomic function call sequence.
+For the first UserOp,
+\code
+	in_subgraph[i_op] <= depend_yes
+\endcode
+if any result for the user function call
+depends on the selected independent variables.
+Except for UserOP, only operators with NumRes(op) > 0 are included
+in the dependency; e.g., comparision operators are not included.
+
+\param subgraph
+the input size and contents of this vector do not matter.
+Repeated calls with the same subgraph vector should reduce
+the amount of memory allocation.
+Upon return it contains the operator indices for the subgraph
+corresponding to the dependent and the selected independent variables.
+Furthermore the operator indices in subgraph are unique; i.e.,
+if i != j then subgraph[i] != subgraph[k].
+*/
+template <typename Base>
+void get_subgraph(
+	const player<Base>*       play         ,
+	const vector<size_t>&     dep_taddr    ,
+	const pod_vector<addr_t>& map_user_op  ,
+	addr_t                    depend_yes   ,
+	addr_t                    i_dep        ,
+	pod_vector<addr_t>&       in_subgraph  ,
+	pod_vector<addr_t>&       subgraph     )
+{
+	// assumption on i_dep
+	CPPAD_ASSERT_UNKNOWN( i_dep < depend_yes );
+
+	// variables that are arguments to a particular operator
+	pod_vector<size_t> argument_variable;
+
+	// work space used by get_argument_variable
+	pod_vector<bool> work;
+
+	// start with an empty subgraph for this dependent variable
+	subgraph.erase();
+
+	// tape index corresponding to this dependent variable
+	size_t i_var = dep_taddr[i_dep];
+
+	// operator corresponding to this dependent variable
+	size_t i_op = play->var2op(i_var);
+	i_op        = map_user_op[i_op];
+
+	// if this variable depends on the selected indepent variables
+	// process its subgraph
+	CPPAD_ASSERT_UNKNOWN( in_subgraph[i_op] != i_dep )
+	if( in_subgraph[i_op] <= depend_yes )
+	{	subgraph.push_back( addr_t(i_op) );
+		in_subgraph[i_op] = i_dep;
+	}
+
+	// scan all the operators in this subgraph
+	size_t sub_index = 0;
+	while(sub_index < subgraph.size() )
+	{	// this operator connected to this dependent and selected independent
+		i_op = subgraph[sub_index];
+		CPPAD_ASSERT_UNKNOWN( in_subgraph[i_op] <= i_dep );
+		//
+		// There must be a result for this operator
+# ifndef NDEBUG
+		OpCode op = play->GetOp(i_op);
+		CPPAD_ASSERT_UNKNOWN(op == UserOp || NumRes(op) > 0 );
+# endif
+		//
+		// which variables are connected to this operator
+		get_argument_variable(play, i_op, argument_variable, work);
+		//
+		// add the corresponding operators to the subgraph
+		for(size_t j = 0; j < argument_variable.size(); ++j)
+		{	size_t j_var = argument_variable[j];
+			size_t j_op  = play->var2op(j_var);
+			j_op         = map_user_op[j_op];
+			bool  depend = in_subgraph[j_op] <= depend_yes;
+			bool  in     = in_subgraph[j_op] == i_dep;
+			if( depend & (! in) )
+			{	subgraph.push_back( addr_t(j_op) );
+				in_subgraph[j_op] = i_dep;
+			}
+		}
+		// we are done scaning this subgraph operator
+		++sub_index;
+	}
+}
 
 // ---------------------------------------------------------------------------
 /*!
@@ -355,13 +488,7 @@ void rev_jac_subgraph(
 
 	// subgraph of operators that are are connected to one of the selected
 	// dependent variables and depend on the selected independent variables
-	pod_vector<size_t> subgraph;
-
-	// variables that are arguments to a particular operator
-	pod_vector<size_t> argument_variable;
-
-	// work space used by get_argument_variable
-	pod_vector<bool> work;
+	pod_vector<addr_t> subgraph;
 
 	// set map_user_op and initialize in_subgraph
 	pod_vector<addr_t> map_user_op, in_subgraph;
@@ -375,72 +502,44 @@ void rev_jac_subgraph(
 
 	// for each of the selected dependent variables
 	CPPAD_ASSERT_UNKNOWN( depend_yes < depend_no );
+	CPPAD_ASSERT_UNKNOWN( NumRes(BeginOp) == 1 );
+	CPPAD_ASSERT_UNKNOWN( NumRes(InvOp) == 1 );
 	for(size_t i_dep = 0; i_dep < n_dep; ++i_dep) if( select_range[i_dep] )
 	{	CPPAD_ASSERT_UNKNOWN( i_dep < size_t( depend_yes ) );
-
-		// addr_t version of i_dep
-		addr_t i_dep_addr_t = addr_t(i_dep);
-
-		// start with an empty subgraph for this dependent variable
-		subgraph.erase();
-
-		// tape index corresponding to this dependent variable
-		size_t i_var = dep_taddr[i_dep];
-
-		// operator corresponding to this dependent variable
-		size_t i_op = play->var2op(i_var);
-		i_op        = map_user_op[i_op];
-
-		// if this variable depends on the selected indepent variables
-		// process its subgraph
-		if( in_subgraph[i_op] <= depend_yes )
-			subgraph.push_back(i_op);
-
-		// scan all the operators in this subgraph
-		size_t sub_index = 0;
-		while(sub_index < subgraph.size() )
-		{	// this operator is connected to the selected domain and range
-			i_op = subgraph[sub_index];
-			CPPAD_ASSERT_UNKNOWN( in_subgraph[i_op] <= depend_yes );
+		//
+		get_subgraph(
+			play            ,
+			dep_taddr       ,
+			map_user_op     ,
+			depend_yes      ,
+			addr_t(i_dep)   ,
+			in_subgraph     ,
+			subgraph
+		);
+		//
+		for(size_t k = 0; k < subgraph.size(); k++)
+		{	size_t i_op = subgraph[k];
 			//
-			if( in_subgraph[i_op] !=  i_dep_addr_t )
-			{	// mark this operator so we do not repeat this calculation.
-				in_subgraph[i_op] = i_dep_addr_t;
+			// operator corresponding to this index
+			OpCode op = play->GetOp(i_op);
+			//
+			// There must be a result for this operator
+			CPPAD_ASSERT_UNKNOWN( op == UserOp || NumRes(op) > 0 );
+			//
+			// independent variable entries correspond to sparsity pattern
+			if( op == InvOp )
+			{	CPPAD_ASSERT_NARG_NRES(op, 0, 1);
+				// i_var is equal i_op becasue BeginOp and InvOp have 1 result
+				size_t i_var = i_op;       // tape index for this variable
+				size_t i_ind = i_var - 1;  // user index for this variable
+				CPPAD_ASSERT_UNKNOWN( play->var2op(i_var) == i_op );
+				CPPAD_ASSERT_UNKNOWN( i_var == ind_taddr[i_ind] );
+				CPPAD_ASSERT_UNKNOWN( select_domain[i_ind] );
 				//
-				// operator corresponding to this index
-				OpCode op = play->GetOp(i_op);
-				//
-				// There must be a result for this operator
-				CPPAD_ASSERT_UNKNOWN( op == UserOp || NumRes(op) > 0 );
-				//
-				// special case of independent variable operator
-				if( op == InvOp )
-				{	CPPAD_ASSERT_NARG_NRES(op, 0, 1);
-					i_var        = i_op;
-					size_t i_ind = i_var - 1;
-					CPPAD_ASSERT_UNKNOWN( play->var2op(i_var) == i_op );
-					CPPAD_ASSERT_UNKNOWN( i_var == ind_taddr[i_ind] );
-					CPPAD_ASSERT_UNKNOWN( select_domain[i_ind] );
-					// put this pair in the sparsity pattern
-					row_out.push_back(i_dep);
-					col_out.push_back(i_ind);
-				}
-				else
-				{	// which variables are connected to this operator
-					get_argument_variable(play, i_op, argument_variable, work);
-					//
-					// add the corresponding operators to the subgraph
-					for(size_t j = 0; j < argument_variable.size(); ++j)
-					{	size_t j_var = argument_variable[j];
-						size_t j_op  = play->var2op(j_var);
-						j_op         = map_user_op[j_op];
-						if( in_subgraph[j_op] <= depend_yes )
-							subgraph.push_back(j_op);
-					}
-				}
+				// put this pair in the sparsity pattern
+				row_out.push_back(i_dep);
+				col_out.push_back(i_ind);
 			}
-			// we are done scaling this subgraph node
-			++sub_index;
 		}
 	}
 }
