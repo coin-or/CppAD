@@ -172,7 +172,7 @@ void ADFun<Base>::subgraph_sparsity(
 	// compute the sparsity pattern in row, col
     local::pod_vector<size_t> row;
     local::pod_vector<size_t> col;
-	rev_jac_subgraph(
+	local::subgraph_sparsity(
 		&play_, ind_taddr_, dep_taddr_, select_domain, select_range, row, col
 	);
 	CPPAD_ASSERT_UNKNOWN( row.size() == col.size() );

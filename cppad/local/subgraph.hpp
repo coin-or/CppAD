@@ -463,7 +463,7 @@ to to make the sparsity pattern more efficient.
 */
 
 template <typename Base, typename BoolVector>
-void rev_jac_subgraph(
+void subgraph_sparsity(
 	const player<Base>*        play          ,
 	const vector<size_t>&      ind_taddr     ,
 	const vector<size_t>&      dep_taddr     ,
