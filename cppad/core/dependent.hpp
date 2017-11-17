@@ -3,7 +3,7 @@
 # define CPPAD_CORE_DEPENDENT_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -284,15 +284,13 @@ void ADFun<Base>::Dependent(local::ADTape<Base> *tape, const ADvector &y)
 	num_var_tape_       = tape->Rec_.num_var_rec();
 
 	// taylor_
-	taylor_.erase();
+	taylor_.resize(0);
 
 	// cskip_op_
-	cskip_op_.erase();
-	cskip_op_.extend( tape->Rec_.num_op_rec() );
+	cskip_op_.resize( tape->Rec_.num_op_rec() );
 
 	// load_op_
-	load_op_.erase();
-	load_op_.extend( tape->Rec_.num_load_op_rec() );
+	load_op_.resize( tape->Rec_.num_load_op_rec() );
 
 	// play_
 	// Now that each dependent variable has a place in the tape,

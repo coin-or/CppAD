@@ -270,8 +270,7 @@ void ADFun<Base>::optimize(const std::string& options)
 
 	// resize and initilaize conditional skip vector
 	// (must use player size because it now has the recoreder information)
-	cskip_op_.erase();
-	cskip_op_.extend( play_.num_op_rec() );
+	cskip_op_.resize( play_.num_op_rec() );
 
 # ifndef NDEBUG
 	if( check_zero_order )

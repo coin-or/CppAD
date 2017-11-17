@@ -156,13 +156,9 @@ public:
 		addr_t  var_index = 0;
 		addr_t  arg_index = 0;
 		//
-		op2arg_vec_.erase();
-		op2var_vec_.erase();
-		var2op_vec_.erase();
-		//
-		op2arg_vec_.extend( num_op );
-		op2var_vec_.extend( num_op );
-		var2op_vec_.extend( num_var_rec_ );
+		op2arg_vec_.resize( num_op );
+		op2var_vec_.resize( num_op );
+		var2op_vec_.resize( num_var_rec_ );
 # ifndef NDEBUG
 		// value of var2op for auxillary variables is op_vec_.size() (invalid)
 		for(size_t i_var = 0; i_var < num_var_rec_; ++i_var)
@@ -412,14 +408,14 @@ public:
 		num_load_op_rec_   = 0;
 		num_vecad_vec_rec_ = 0;
 
-		op_vec_.erase();
-		vecad_ind_vec_.erase();
-		arg_vec_.erase();
-		par_vec_.erase();
-		text_vec_.erase();
-		op2arg_vec_.erase();
-		op2var_vec_.erase();
-		var2op_vec_.erase();
+		op_vec_.resize(0);
+		vecad_ind_vec_.resize(0);
+		arg_vec_.resize(0);
+		par_vec_.resize(0);
+		text_vec_.resize(0);
+		op2arg_vec_.resize(0);
+		op2var_vec_.resize(0);
+		var2op_vec_.resize(0);
 	}
 	// ================================================================
 	// const functions that retrieve infromation from this player

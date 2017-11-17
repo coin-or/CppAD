@@ -783,8 +783,7 @@ void ADFun<Base>::abs_normal_fun(ADFun<Base>& g, ADFun<Base>& a)
 	g.num_var_tape_ = rec.num_var_rec();
 
 	// dimension cskip_op vector to number of operators
-	g.cskip_op_.erase();
-	g.cskip_op_.extend( rec.num_op_rec() );
+	g.cskip_op_.resize( rec.num_op_rec() );
 
 	// independent variables in g: (x, u)
 	size_t s = f_abs_res.size();

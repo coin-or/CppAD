@@ -405,13 +405,11 @@ public:
 		}
 		end_                   = end_in;
 		//
-		start_.erase();
-		start_.extend(n_set_in);
+		start_.resize(n_set_in);
 		for(size_t i = 0; i < n_set_in; i++)
 			start_[i] = 0;
 		//
-		data_.erase();
-		data_.extend(1); // first element is not used
+		data_.resize(1); // first element is not used
 		data_not_used_  = 1;
 	}
 	// -----------------------------------------------------------------

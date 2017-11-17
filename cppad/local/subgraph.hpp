@@ -45,7 +45,7 @@ void get_argument_variable(
 	pod_vector<bool>&    work        )
 {
 	// reset to size zero, but keep allocated memory
-	variable.erase();
+	variable.resize(0);
 	//
 	// operator corresponding to i_op
 	OpCode        op;
@@ -191,8 +191,7 @@ void init_subgraph(
 	}
 
 	// set in_subgraph to have proper size
-	in_subgraph.erase();
-	in_subgraph.extend(num_op);
+	in_subgraph.resize(num_op);
 
 	// variables that are arguments to a particular operator
 	pod_vector<size_t> argument_variable;
@@ -357,7 +356,7 @@ void get_subgraph(
 	pod_vector<bool> work;
 
 	// start with an empty subgraph for this dependent variable
-	subgraph.erase();
+	subgraph.resize(0);
 
 	// tape index corresponding to this dependent variable
 	size_t i_var = dep_taddr[i_dep];
@@ -483,8 +482,8 @@ void rev_jac_subgraph(
 	CPPAD_ASSERT_UNKNOWN( size_t( select_range.size() ) == n_dep );
 
 	// start with an empty sparsity pattern
-	row_out.erase();
-	col_out.erase();
+	row_out.resize(0);
+	col_out.resize(0);
 
 	// subgraph of operators that are are connected to one of the selected
 	// dependent variables and depend on the selected independent variables

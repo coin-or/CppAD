@@ -98,16 +98,13 @@ public:
 		}
 		// now start a new vector with empty sets
 		Pack zero(0);
-		data_.erase();
 
 		n_pack_         = ( 1 + (end_ - 1) / n_bit_ );
 		size_t i        = n_set_ * n_pack_;
 
-		if( i > 0 )
-		{	data_.extend(i);
-			while(i--)
-				data_[i] = zero;
-		}
+		data_.resize(i);
+		while(i--)
+			data_[i] = zero;
 	}
 	// -----------------------------------------------------------------
 	/*!
