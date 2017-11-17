@@ -132,9 +132,9 @@ am__general_SOURCES_DIST = base_adolc.cpp ipopt_solve.cpp \
 	rev_sparse_jac.cpp rev_two.cpp simple_vector.cpp sin.cpp \
 	sin_cos.cpp sinh.cpp sparse_hessian.cpp sparse_jacobian.cpp \
 	sparse_sub_hes.cpp sparse_vec_ad.cpp sqrt.cpp std_math.cpp \
-	sub.cpp sub_eq.cpp sub_zero.cpp tan.cpp test_vector.cpp \
-	to_string.cpp value.cpp vec_ad.cpp vec_ad_par.cpp \
-	vec_unary.cpp
+	sub.cpp sub_eq.cpp sub_zero.cpp subgraph_sparsity.cpp tan.cpp \
+	test_vector.cpp to_string.cpp value.cpp vec_ad.cpp \
+	vec_ad_par.cpp vec_unary.cpp
 @CppAD_ADOLC_TRUE@am__objects_1 = base_adolc.$(OBJEXT)
 @CppAD_IPOPT_TRUE@am__objects_2 = ipopt_solve.$(OBJEXT)
 @CppAD_OPENMP_TRUE@am__objects_3 = alloc_openmp.$(OBJEXT)
@@ -171,9 +171,9 @@ am_general_OBJECTS = $(am__objects_1) $(am__objects_2) \
 	sparse_jacobian.$(OBJEXT) sparse_sub_hes.$(OBJEXT) \
 	sparse_vec_ad.$(OBJEXT) sqrt.$(OBJEXT) std_math.$(OBJEXT) \
 	sub.$(OBJEXT) sub_eq.$(OBJEXT) sub_zero.$(OBJEXT) \
-	tan.$(OBJEXT) test_vector.$(OBJEXT) to_string.$(OBJEXT) \
-	value.$(OBJEXT) vec_ad.$(OBJEXT) vec_ad_par.$(OBJEXT) \
-	vec_unary.$(OBJEXT)
+	subgraph_sparsity.$(OBJEXT) tan.$(OBJEXT) \
+	test_vector.$(OBJEXT) to_string.$(OBJEXT) value.$(OBJEXT) \
+	vec_ad.$(OBJEXT) vec_ad_par.$(OBJEXT) vec_unary.$(OBJEXT)
 general_OBJECTS = $(am_general_OBJECTS)
 general_LDADD = $(LDADD)
 am__DEPENDENCIES_1 =
@@ -584,6 +584,7 @@ general_SOURCES = \
 	sub.cpp \
 	sub_eq.cpp \
 	sub_zero.cpp \
+	subgraph_sparsity.cpp \
 	tan.cpp \
 	test_vector.cpp \
 	to_string.cpp \
@@ -738,6 +739,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sub.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sub_eq.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sub_zero.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/subgraph_sparsity.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/tan.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/test_vector.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/to_string.Po@am__quote@

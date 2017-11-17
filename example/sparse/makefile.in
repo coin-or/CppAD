@@ -108,7 +108,8 @@ am_sparse_OBJECTS = sparse.$(OBJEXT) colpack_hes.$(OBJEXT) \
 	sparse_hes.$(OBJEXT) sparse_hessian.$(OBJEXT) \
 	sparse_jac_for.$(OBJEXT) sparse_jacobian.$(OBJEXT) \
 	sparse_jac_rev.$(OBJEXT) sparse_sub_hes.$(OBJEXT) \
-	sparsity_sub.$(OBJEXT) sub_sparse_hes.$(OBJEXT)
+	sparsity_sub.$(OBJEXT) sub_sparse_hes.$(OBJEXT) \
+	subgraph_sparsity.$(OBJEXT)
 sparse_OBJECTS = $(am_sparse_OBJECTS)
 sparse_LDADD = $(LDADD)
 AM_V_P = $(am__v_P_@AM_V@)
@@ -374,7 +375,8 @@ sparse_SOURCES = sparse.cpp \
 	sparse_jac_rev.cpp \
 	sparse_sub_hes.cpp \
 	sparsity_sub.cpp \
-	sub_sparse_hes.cpp
+	sub_sparse_hes.cpp \
+	subgraph_sparsity.cpp
 
 all: all-am
 
@@ -447,6 +449,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sparse_sub_hes.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sparsity_sub.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sub_sparse_hes.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/subgraph_sparsity.Po@am__quote@
 
 .cpp.o:
 @am__fastdepCXX_TRUE@	$(AM_V_CXX)depbase=`echo $@ | sed 's|[^/]*$$|$(DEPDIR)/&|;s|\.o$$||'`;\

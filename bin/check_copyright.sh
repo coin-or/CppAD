@@ -29,11 +29,15 @@ list=`git status | sed -n \
             sed -e 's/^.*: *//' -e 's/ -> /\n/' | \
 			sed -e '/^makefile.in$/d' \
 				-e '/^.gitignore$/d' \
-				-e '/\/makefile.in$/d' \
+				-e '/^authors$/d' \
+				-e '/^readme.md$/d' \
+				-e '/^COPYING$/d' \
+				-e '/^compile$/d' \
+				-e '/^config.guess$/d' \
+				-e '/^config.sub$/d' \
+				-e '/^configure$/d' \
 				-e '/\/check_copyright.sh$/d' \
-				-e '/authors/d' \
-				-e '/readme.md/d' \
-				-e '/COPYING/d' |
+				-e '/\/makefile.in$/d' |
                 sort -u`
 cat << EOF > check_copyright.1.$$
 # Change copyright second year to current year

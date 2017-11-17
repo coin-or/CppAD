@@ -584,6 +584,7 @@ nobase_myinclude_HEADERS = \
 	cppad/core/std_math_98.hpp \
 	cppad/core/sub_eq.hpp \
 	cppad/core/sub.hpp \
+	cppad/core/subgraph_sparsity.hpp \
 	cppad/core/tape_link.hpp \
 	cppad/core/test_vector.hpp \
 	cppad/core/testvector.hpp \
@@ -647,10 +648,10 @@ nobase_myinclude_HEADERS = \
 	cppad/local/optimize/cexp_info.hpp \
 	cppad/local/optimize/csum_stacks.hpp \
 	cppad/local/optimize/csum_variable.hpp \
-	cppad/local/optimize/get_op_info.hpp \
+	cppad/local/optimize/get_opt_op_info.hpp \
 	cppad/local/optimize/hash_code.hpp \
 	cppad/local/optimize/old2new.hpp \
-	cppad/local/optimize/op_info.hpp \
+	cppad/local/optimize/opt_op_info.hpp \
 	cppad/local/optimize/optimize_run.hpp \
 	cppad/local/optimize/record_csum.hpp \
 	cppad/local/optimize/record_pv.hpp \
@@ -667,6 +668,7 @@ nobase_myinclude_HEADERS = \
 	cppad/local/recorder.hpp \
 	cppad/local/reverse_sweep.hpp \
 	cppad/local/rev_hes_sweep.hpp \
+	cppad/local/rev_jac_subgraph.hpp \
 	cppad/local/rev_jac_sweep.hpp \
 	cppad/local/set_get_in_parallel.hpp \
 	cppad/local/sign_op.hpp \
