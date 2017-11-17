@@ -164,8 +164,9 @@ public:
 	is the new size for this vector.
 
 	\par
-	if n <= capacity(), no memory is freed or allocated and the capacity
-	is not changed. If n > capacity(), new memory is allocates and all the
+	if n <= capacity(), no memory is freed or allocated, the capacity
+	is not changed, and existing elements are preserved.
+	If n > capacity(), new memory is allocates and all the
 	data in the vector is lost.
 
 	- If \c Type is plain old data, new elements are not initialized;

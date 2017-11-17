@@ -337,6 +337,11 @@ Upon return it contains the operator indices for the subgraph
 corresponding to the dependent and the selected independent variables.
 Furthermore the operator indices in subgraph are unique; i.e.,
 if i != j then subgraph[i] != subgraph[k].
+There is one important difference between in_subgraph and subgraph:
+depend_yes < in_subgraph[i_op] for all operators in an atomic function
+call except possibly the first UserOp.
+If an atomic function call is in the subgraph, all the operators
+in the atomic funcion call are included in the subgraph.
 */
 template <typename Base>
 void get_rev_subgraph(
@@ -405,6 +410,34 @@ void get_rev_subgraph(
 		}
 		// we are done scaning this subgraph operator
 		++sub_index;
+	}
+
+	// add extra operators corresponding to rest of atomic function calls
+	size_t n_sub = subgraph.size();
+	for(size_t k = 0; k < n_sub; ++k)
+	{	i_op = subgraph[k];
+		//
+		if( play->GetOp(i_op) == UserOp )
+		{	// This is the first UserOp of this atomic function call
+			while( play->GetOp(++i_op) != UserOp )
+			{	switch(play->GetOp(i_op))
+				{
+					case UsravOp:
+					case UsrrvOp:
+					case UsrrpOp:
+					case UsrapOp:
+					subgraph.push_back( addr_t(i_op) );
+					break;
+
+					default:
+					// cannot find second UserOp in this call
+					CPPAD_ASSERT_UNKNOWN(false);
+					break;
+				}
+			}
+			// THis is the second UserOp of this atomic function call
+			subgraph.push_back( addr_t(i_op) );
+		}
 	}
 }
 
@@ -525,7 +558,11 @@ void subgraph_sparsity(
 			OpCode op = play->GetOp(i_op);
 			//
 			// There must be a result for this operator
-			CPPAD_ASSERT_UNKNOWN( op == UserOp || NumRes(op) > 0 );
+# ifndef NDEBUG
+			if( NumRes(op) == 0 ) CPPAD_ASSERT_UNKNOWN(
+				op==UserOp || op==UsrapOp || op==UsravOp || op==UsrrpOp
+			);
+# endif
 			//
 			// independent variable entries correspond to sparsity pattern
 			if( op == InvOp )

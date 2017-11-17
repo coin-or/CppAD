@@ -132,6 +132,10 @@ private:
 	/// for_jac_sparse_set_.n_set() != 0  implies for_sparse_pack_ is empty.
 	local::sparse_list for_jac_sparse_set_;
 
+	/// Vector with entire_graph[i_op] = i_op. Used to specify the entire
+	/// graph as a subgraph. Set by Dependent, abs_normal, and optimize.
+	local::pod_vector<addr_t> entire_graph_;
+
 // ------------------------------------------------------------
 // Private member functions
 
@@ -665,7 +669,8 @@ public:
 	size_t Memory(void) const
 	{	size_t pervar  = cap_order_taylor_ * sizeof(Base)
 		+ for_jac_sparse_pack_.memory()
-		+ for_jac_sparse_set_.memory();
+		+ for_jac_sparse_set_.memory()
+		+ entire_graph_.capacity() * sizeof(addr_t);
 		size_t total   = num_var_tape_  * pervar + play_.Memory();
 		return total;
 	}

@@ -156,35 +156,44 @@ so only the last UserOp fore each call needs to have cskip_op[i] true.
 
 \param var_by_load_op
 is a vector with size play->num_load_op_rec().
-Is the variable index corresponding to each load instruction.
+It contains the variable index corresponding to each load instruction.
 In the case where the index is zero,
 the instruction corresponds to a parameter (not variable).
+
+\param subgraph
+is the set of operators over which the reverse mode calculations
+will be preformed. For k = 0, ... , subgraph.size() - 1,
+subgraph[k] is an operator index and
+\code
+	play->num_op_rec() > subgraph[k] > subgraph[k-1]
+\endcode
+If i_var is a variable index, and play->var2op(i_var) is not in the subgraph,
+then the partials with respect to i_var are not modified and need to be
+initialized as zero. Note that this means the partial for the independent
+varaibles, that are not in the subgraph are not calculated.
+If part of an atomic function call is in the subgraph,
+the entire atomic function call must be in the subgraph.
 
 \par Assumptions
 The first operator on the tape is a BeginOp,
 and the next \a n operators are InvOp operations for the
-corresponding independent variables.
+corresponding independent variables; see play->check_inv_op(n_ind).
 */
 template <class Base>
-void ReverseSweep(
+void reverse_sweep(
 	size_t                      d,
 	size_t                      n,
 	size_t                      numvar,
-	const local::player<Base>* play,
+	const local::player<Base>*  play,
 	size_t                      J,
 	const Base*                 Taylor,
 	size_t                      K,
 	Base*                       Partial,
 	bool*                       cskip_op,
-	const pod_vector<addr_t>&   var_by_load_op
+	const pod_vector<addr_t>&   var_by_load_op,
+	const pod_vector<addr_t>&   subgraph
 )
 {
-	OpCode           op;
-	size_t         i_op;
-	size_t        i_var;
-
-	const addr_t*   arg = CPPAD_NULL;
-
 	// check numvar argument
 	CPPAD_ASSERT_UNKNOWN( play->num_var_rec() == numvar );
 	CPPAD_ASSERT_UNKNOWN( numvar > 0 );
@@ -219,18 +228,19 @@ void ReverseSweep(
 	size_t j, ell;
 
 	// Initialize
-	i_op = play->num_op_rec();
-	play->get_op_info(--i_op, op, arg, i_var);
-	CPPAD_ASSERT_UNKNOWN( op == EndOp );
 # if CPPAD_REVERSE_SWEEP_TRACE
 	std::cout << std::endl;
 # endif
-	bool more_operators = true;
-	while(more_operators)
+	size_t subgraph_index = subgraph.size() - 1;
+	while(subgraph_index > 0)
 	{	bool flag; // temporary for use in switch cases
 		//
 		// next op
-		play->get_op_info(--i_op, op, arg, i_var);
+		size_t        i_op = subgraph[--subgraph_index];
+		OpCode        op;
+		const addr_t* arg;
+		size_t        i_var;
+		play->get_op_info(i_op, op, arg, i_var);
 		CPPAD_ASSERT_UNKNOWN( i_op < play->num_op_rec() );
 
 		// check if we are skipping this operation
@@ -238,15 +248,15 @@ void ReverseSweep(
 		{	switch(op)
 			{
 				case UserOp:
-				{	// et information for this user atomic call
+				{	// get information for this user atomic call
 					CPPAD_ASSERT_UNKNOWN( user_state == end_user );
 					play->get_user_info(op, arg, user_old, user_m, user_n);
 					//
 					// skip to the first UserOp
-					CPPAD_ASSERT_UNKNOWN(i_op > user_m + user_n);
-					i_op -= user_m + user_n;
-					play->get_user_info(op, arg, user_old, user_m, user_n);
-					CPPAD_ASSERT_UNKNOWN( op == UserOp );
+					CPPAD_ASSERT_UNKNOWN(subgraph_index > user_m + user_n);
+					subgraph_index -= user_m + user_n;
+					i_op            = subgraph[--subgraph_index];
+					CPPAD_ASSERT_UNKNOWN( play->GetOp(i_op) == UserOp );
 				}
 				break;
 
@@ -254,7 +264,9 @@ void ReverseSweep(
 				break;
 			}
 			CPPAD_ASSERT_UNKNOWN( 0 < i_op );
-			play->get_op_info(--i_op, op, arg, i_var);
+			CPPAD_ASSERT_UNKNOWN( subgraph_index > 0 );
+			i_op = subgraph[--subgraph_index];
+			play->get_op_info(i_op, op, arg, i_var);
 		}
 # if CPPAD_REVERSE_SWEEP_TRACE
 		size_t       i_tmp  = i_var;
@@ -363,7 +375,7 @@ void ReverseSweep(
 
 			case BeginOp:
 			CPPAD_ASSERT_NARG_NRES(op, 1, 1);
-			more_operators = false;
+			CPPAD_ASSERT_UNKNOWN( i_op == 0 );
 			break;
 			// --------------------------------------------------
 
@@ -438,6 +450,13 @@ void ReverseSweep(
 				d, i_var, arg, parameter, J, Taylor, K, Partial
 			);
 			break;
+			// --------------------------------------------------
+			case EndOp:
+			CPPAD_ASSERT_UNKNOWN(
+				i_op == play->num_op_rec() - 1
+			);
+			break;
+
 			// --------------------------------------------------
 
 # if CPPAD_USE_CPLUSPLUS_2011
@@ -790,9 +809,6 @@ void ReverseSweep(
 # if CPPAD_REVERSE_SWEEP_TRACE
 	std::cout << std::endl;
 # endif
-	// values corresponding to BeginOp
-	CPPAD_ASSERT_UNKNOWN( i_op == 0 );
-	CPPAD_ASSERT_UNKNOWN( i_var == 0 );
 }
 
 } } // END_CPPAD_LOCAL_NAMESPACE
