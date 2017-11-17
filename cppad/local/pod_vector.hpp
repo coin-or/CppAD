@@ -47,7 +47,7 @@ private:
 	explicit pod_vector(const pod_vector& )
 	{	CPPAD_ASSERT_UNKNOWN(false); }
 public:
-	/// default constructor sets capacity_ = lenght_ = data_ = 0
+	/// default constructor sets capacity_ = length_ = data_ = 0
 	pod_vector(void)
 	: length_(0), capacity_(0), data_(CPPAD_NULL)
 	{	CPPAD_ASSERT_UNKNOWN( is_pod<size_t>() );

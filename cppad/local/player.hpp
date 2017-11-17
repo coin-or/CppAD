@@ -107,7 +107,7 @@ public:
 	when NDEBUG is not defined).
 
 	\par
-	Use an assert to check that the lenght of the following vectors is
+	Use an assert to check that the length of the following vectors is
 	less than the maximum possible value for addr_t; i.e., that an index
 	in these vectors can be represented using the type addr_t:
 	op_vec_, vecad_ind_vec_, arg_vec_, par_vec_, text_vec_.

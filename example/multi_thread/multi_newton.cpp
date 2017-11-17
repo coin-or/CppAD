@@ -377,7 +377,7 @@ bool multi_newton_takedown(vector<double>& xout)
 	bool   ok = true;
 	ok       &= thread_alloc::thread_num() == 0;
 
-	// initialize as more that sub_lenght_ / 2 from any possible solution
+	// initialize as more that sub_length_ / 2 from any possible solution
 	double xlast = - sub_length_;
 	for(size_t thread_num = 0; thread_num < num_threads; thread_num++)
 	{	vector<double>& x = work_all_[thread_num]->x;

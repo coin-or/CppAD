@@ -293,10 +293,10 @@ bool mul_level_adolc_ode(void)
 	using CppAD::thread_alloc; // the allocator
 	size_t capacity;           // capacity of an allocation
 
-	// the vector x with lenght n (or greater) in double
+	// the vector x with length n (or greater) in double
 	double* x = thread_alloc::create_array<double>(n, capacity);
 
-	// the vector x with lenght n in a1type
+	// the vector x with length n in a1type
 	CPPAD_TESTVECTOR(a1type) a1x(n);
 	for(i = 0; i < n; i++)
 		a1x[i] = x[i] = double(i + 1);

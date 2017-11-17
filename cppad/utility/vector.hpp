@@ -429,7 +429,7 @@ public:
 		const vector& x
 	)
 	{	size_t i;
-		// If original lenght is zero, then resize it.
+		// If original length is zero, then resize it.
 		// Otherwise a length mismatch is an error.
 		if( length_ == 0 )
 			resize( x.length_ );
@@ -749,7 +749,7 @@ public:
 		const vectorBool& v
 	)
 	{	size_t i;
-		// If original lenght is zero, then resize it.
+		// If original length is zero, then resize it.
 		// Otherwise a length mismatch is an error.
 		if( length_ == 0 )
 			resize( v.length_ );

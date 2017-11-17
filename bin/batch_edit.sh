@@ -23,13 +23,11 @@ spell_list='
 revert_list='
 '
 move_list='
-	cppad/local/rev_jac_subgraph.hpp
 '
 move_sed='s|rev_jac_subgraph.hpp|subgraph.hpp|'
 #
 cat << EOF > junk.sed
-s|rev_jac_subgraph.hpp|subgraph.hpp|
-s|REV_JAC_SUBGRAPH_HPP|SUBGRAPH_HPP|
+s|lenght|length|g
 EOF
 # -----------------------------------------------------------------------------
 if [ $0 != "bin/batch_edit.sh" ]

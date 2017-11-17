@@ -33,7 +33,7 @@ bool track_new_del(void)
 	// initial count
 	size_t count = CPPAD_TRACK_COUNT();
 
-	// allocate an array of lenght 5
+	// allocate an array of length 5
 	double *ptr = CPPAD_NULL;
 	size_t  newlen = 5;
 	ptr = CPPAD_TRACK_NEW_VEC(newlen, ptr);
@@ -44,7 +44,7 @@ bool track_new_del(void)
 	for(i = 0; i < ncopy; i++)
 		ptr[i] = double(i);
 
-	// extend the buffer to be lenght 10
+	// extend the buffer to be length 10
 	newlen = 10;
 	ptr    = CPPAD_TRACK_EXTEND(newlen, ncopy, ptr);
 

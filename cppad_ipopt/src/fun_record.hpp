@@ -2,7 +2,7 @@
 # ifndef CPPAD_CPPAD_IPOPT_SRC_FUN_RECORD_HPP
 # define CPPAD_CPPAD_IPOPT_SRC_FUN_RECORD_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -52,7 +52,7 @@ the index value for \c k in the evaluation <tt>eval_r</tt>.
 \f$ u \in {\bf R}^{q(k)} \f$.
 
 \param n
-is the lenght of the vector \c x.
+is the length of the vector \c x.
 
 \param x
 the length of \c x is equal to \c n and the point
@@ -62,7 +62,7 @@ the length of \c x is equal to \c n and the point
 is the point at which the operation sequence for \f$ r_k \f$ is recorded.
 
 \param J
-is a vector with lenght <tt>q[k]</tt> that projects from \f$ {\bf R}^n \f$
+is a vector with length <tt>q[k]</tt> that projects from \f$ {\bf R}^n \f$
 to \f$ {\bf R}^{q[k]} \f$
 by selecting an ordered subset of the possible indices
 \f$ \{ 0 , \ldots , n-1 \} \f$.
