@@ -42,7 +42,8 @@ sparse_SOURCES   = sparse.cpp \
 	sparse_jac_rev.cpp \
 	sparse_sub_hes.cpp \
 	sparsity_sub.cpp \
-	sub_sparse_hes.cpp
+	sub_sparse_hes.cpp \
+	subgraph_sparsity.cpp
 #
 test: check
 	./sparse
