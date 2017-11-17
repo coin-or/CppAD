@@ -100,6 +100,9 @@ void get_argument_variable(
 
 // ---------------------------------------------------------------------------
 /*!
+Initialize calculation of subgraph corresponding to a dependent variable
+(and a selected set of independent variables).
+
 \tparam Base
 this operation sequence was recording using AD<Base>.
 
@@ -137,9 +140,7 @@ selected independent variables.
 
 \param in_subgraph
 The input value of this vector does not matter.
-Upon return, a pod_vector erase and extend is used to change its size to be
-equal to the number of operators (so re-using the same vector avoids
-repeated memory allocation).
+Re-using the same vector avoids repeated memory allocation.
 If in_subgraph[i_op] == depend_no (depend_yes),
 the result for this operator depends (does not depend)
 on the selected independent variables.
@@ -152,7 +153,7 @@ Except for UserOP, only operators with NumRes(op) > 0 are included
 in the dependency; e.g., comparision operators are not included.
 */
 template <typename Base, typename BoolVector>
-void init_subgraph(
+void init_rev_subgraph(
 	const player<Base>*  play          ,
 	pod_vector<addr_t>&  map_user_op   ,
 	const BoolVector&    select_domain ,
@@ -274,7 +275,8 @@ void init_subgraph(
 
 // ---------------------------------------------------------------------------
 /*!
-Subgraph corresponding to one dependent, and selected independent, variables
+Get the subgraph corresponding to a dependent variables
+(and a selected set of independent variables).
 
 \tparam Base
 this operation sequence was recording using AD<Base>.
@@ -337,7 +339,7 @@ Furthermore the operator indices in subgraph are unique; i.e.,
 if i != j then subgraph[i] != subgraph[k].
 */
 template <typename Base>
-void get_subgraph(
+void get_rev_subgraph(
 	const player<Base>*       play         ,
 	const vector<size_t>&     dep_taddr    ,
 	const pod_vector<addr_t>& map_user_op  ,
@@ -493,7 +495,7 @@ void subgraph_sparsity(
 	pod_vector<addr_t> map_user_op, in_subgraph;
 	addr_t depend_no  = addr_t( n_dep + 1 );
 	addr_t depend_yes = addr_t( n_dep );
-	init_subgraph(
+	init_rev_subgraph(
 		play, map_user_op, select_domain, depend_no, depend_yes, in_subgraph
 	);
 	CPPAD_ASSERT_UNKNOWN( map_user_op.size() == play->num_op_rec() );
@@ -506,7 +508,7 @@ void subgraph_sparsity(
 	for(size_t i_dep = 0; i_dep < n_dep; ++i_dep) if( select_range[i_dep] )
 	{	CPPAD_ASSERT_UNKNOWN( i_dep < size_t( depend_yes ) );
 		//
-		get_subgraph(
+		get_rev_subgraph(
 			play            ,
 			dep_taddr       ,
 			map_user_op     ,
