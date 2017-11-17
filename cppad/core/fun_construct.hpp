@@ -301,7 +301,7 @@ void ADFun<Base>::operator=(const ADFun<Base>& f)
 	taylor_                    = f.taylor_;
 	cskip_op_                  = f.cskip_op_;
 	load_op_                   = f.load_op_;
-	entire_graph_              = f.entire_graph_;
+	subgraph_info_             = f.subgraph_info_;
 	//
 	// player
 	play_                      = f.play_;

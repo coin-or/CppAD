@@ -272,14 +272,10 @@ void ADFun<Base>::optimize(const std::string& options)
 	// (must use player size because it now has the recoreder information)
 	cskip_op_.resize( play_.num_op_rec() );
 
-	// resize entire_graph_. We the optimized version of the recording
-	// can have more operations due to adding conditional skip operators.
-	size_t old_size = entire_graph_.size();
-	entire_graph_.resize( play_.num_op_rec() );
-	if( entire_graph_.size() > old_size )
-	{	for(size_t i_op = 0; i_op < entire_graph_.size(); ++i_op)
-			entire_graph_[i_op] = addr_t( i_op );
-	}
+	// resize subgraph_info_
+	subgraph_info_.resize(
+		ind_taddr_.size(), dep_taddr_.size(), play_.num_op_rec()
+	);
 
 # ifndef NDEBUG
 	if( check_zero_order )

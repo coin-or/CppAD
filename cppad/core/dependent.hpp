@@ -310,11 +310,10 @@ void ADFun<Base>::Dependent(local::ADTape<Base> *tape, const ADvector &y)
 	for_jac_sparse_pack_.resize(0, 0);
 	for_jac_sparse_set_.resize(0,0);
 
-	// entire_graph_ as a subgraph
-	size_t num_op = play_.num_op_rec();
-	entire_graph_.resize(num_op);
-	for(size_t i_op = 0; i_op < num_op; ++i_op)
-		entire_graph_[i_op] = addr_t( i_op );
+	// resize subgraph_info_
+	subgraph_info_.resize(
+		ind_taddr_.size(), dep_taddr_.size(), play_.num_op_rec()
+	);
 	// ---------------------------------------------------------------------
 	// End set ad_fun.hpp private member data
 	// ---------------------------------------------------------------------

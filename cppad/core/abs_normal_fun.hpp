@@ -785,12 +785,6 @@ void ADFun<Base>::abs_normal_fun(ADFun<Base>& g, ADFun<Base>& a)
 	// dimension cskip_op vector to number of operators
 	g.cskip_op_.resize( rec.num_op_rec() );
 
-	// entire_graph_ as a subgraph
-	size_t num_op = rec.num_op_rec();
-	g.entire_graph_.resize(num_op);
-	for(i_op = 0; i_op < num_op; ++i_op)
-		g.entire_graph_[i_op] = addr_t( i_op );
-
 	// independent variables in g: (x, u)
 	size_t s = f_abs_res.size();
 	size_t n = Domain();
@@ -838,6 +832,11 @@ void ADFun<Base>::abs_normal_fun(ADFun<Base>& g, ADFun<Base>& a)
 	// Transferring the recording swaps its vectors so do this last
 	// replace the recording in g (this ADFun object)
 	g.play_.get(rec, n + s);
+
+	// resize subgraph_info_
+	g.subgraph_info_.resize(
+		g.ind_taddr_.size(), g.dep_taddr_.size(), g.play_.num_op_rec()
+	);
 
 	// ------------------------------------------------------------------------
 	// Create the function a

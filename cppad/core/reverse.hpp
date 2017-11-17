@@ -171,7 +171,7 @@ VectorBase ADFun<Base>::Reverse(size_t q, const VectorBase &w)
 		Partial.data(),
 		cskip_op_.data(),
 		load_op_,
-		entire_graph_
+		subgraph_info_.entire_graph()
 	);
 
 	// return the derivative values

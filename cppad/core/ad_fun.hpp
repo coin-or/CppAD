@@ -48,6 +48,7 @@ $childtable%
 
 $end
 */
+# include <cppad/local/subgraph.hpp>
 
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 /*!
@@ -62,6 +63,7 @@ Class used to hold function objects
 A function object has a recording of <tt>AD<Base></tt> operations.
 It does it calculations using \c Base operations.
 */
+
 
 template <class Base>
 class ADFun {
@@ -132,9 +134,8 @@ private:
 	/// for_jac_sparse_set_.n_set() != 0  implies for_sparse_pack_ is empty.
 	local::sparse_list for_jac_sparse_set_;
 
-	/// Vector with entire_graph[i_op] = i_op. Used to specify the entire
-	/// graph as a subgraph. Set by Dependent, abs_normal, and optimize.
-	local::pod_vector<addr_t> entire_graph_;
+	/// subgraph information for this object
+	local::subgraph_info subgraph_info_;
 
 // ------------------------------------------------------------
 // Private member functions
@@ -670,7 +671,7 @@ public:
 	{	size_t pervar  = cap_order_taylor_ * sizeof(Base)
 		+ for_jac_sparse_pack_.memory()
 		+ for_jac_sparse_set_.memory()
-		+ entire_graph_.capacity() * sizeof(addr_t);
+		+ subgraph_info_.memory();
 		size_t total   = num_var_tape_  * pervar + play_.Memory();
 		return total;
 	}

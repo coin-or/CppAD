@@ -11,11 +11,113 @@ A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 
+# include <cppad/local/pod_vector.hpp>
+
 namespace CppAD { namespace local { // BEGIN_CPPAD_LOCAL_NAMESPACE
 /*!
 \file subgraph.hpp
 Compute dependency sparsity pattern using subgraph technique.
 */
+// ---------------------------------------------------------------------------
+/// class for maintaining subgrap information attached to on ADFun object.
+class subgraph_info {
+private:
+	/// number of independent variables for this function
+	size_t             n_ind_;
+	/// number of dependent variables for this function
+	size_t             n_dep_;
+	/// number of operatros in operation sequence
+	size_t             n_op_;
+	/// the entire operation sequence as a subgraph (size n_op_).
+	pod_vector<addr_t> entire_graph_;
+	/// mapping atomic call operators to UserOp that begins call sequence
+	/// (size zero or n_op_).
+	pod_vector<addr_t> map_user_op_;
+	/// flags which operatiors are in subgraph
+	/// (size zero or n_op_).
+	pod_vector<addr_t> in_subgraph_;
+public:
+	/// defualt constructor (all sizes are zero)
+	subgraph_info(void)
+	: n_ind_(0), n_dep_(0), n_op_(0)
+	{	CPPAD_ASSERT_UNKNOWN( entire_graph_.size() == n_op_ );
+		CPPAD_ASSERT_UNKNOWN( map_user_op_.size() == n_op_ );
+		CPPAD_ASSERT_UNKNOWN( in_subgraph_.size() == n_op_ );
+	}
+	/// assignment operator
+	void operator=(const subgraph_info& info)
+	{	n_ind_            = info.n_ind_;
+		n_dep_            = info.n_dep_;
+		n_op_             = info.n_op_;
+		entire_graph_     = info.entire_graph_;
+		map_user_op_      = info.map_user_op_;
+		in_subgraph_      = info.in_subgraph_;
+		return;
+	}
+	/*!
+	set sizes for this object (the default sizes are zero)
+
+	\param n_ind
+	number of indepent variables.
+
+	\param n_dep
+	number of dependent variables.
+
+	\param n_op
+	number of operators.
+
+	\par entire_graph_
+	This member funcition is set the sorted subgraph corresponding to the
+	entire operation sequence; i.e., entire_graph_[i_op] == i_op for
+	i_op = 0 , ... , n_op -1.
+
+	\par map_user_op_
+	is resized to zero.
+
+	\par in_subgraph_
+	is resized to zero.
+	*/
+	void resize(size_t n_ind, size_t n_dep, size_t n_op)
+	{	// n_ind_
+		n_ind_ = n_ind;
+		// n_dep_
+		n_dep  = n_dep;
+		// n_op_
+		n_op_  = n_op;
+		//
+		// entire_graph_
+		size_t old_size = entire_graph_.size();
+		size_t old_cap  = entire_graph_.capacity();
+		entire_graph_.resize(n_op);
+		if( old_cap < n_op )
+		{	for(size_t i_op = 0; i_op < n_op; ++i_op)
+				entire_graph_[i_op] = addr_t( i_op );
+		}
+		else if( old_size < n_op )
+		{	for(size_t i_op = old_size; i_op < n_op; ++i_op)
+				entire_graph_[i_op] = addr_t( i_op );
+		}
+		//
+		// map_user_op_
+		map_user_op_.resize(0);
+		//
+		// in_subgraph_
+		in_subgraph_.resize(0);
+		//
+		return;
+	}
+	/// entire graph represented as a sorted subgraph
+	const pod_vector<addr_t>& entire_graph(void) const
+	{	return entire_graph_; }
+	/// amount of memory corresonding to this object
+	size_t memory(void) const
+	{	CPPAD_ASSERT_UNKNOWN( entire_graph_.size() == n_op_ );
+		size_t sum_addr_t = entire_graph_.size();
+		sum_addr_t       += map_user_op_.size();
+		sum_addr_t       += in_subgraph_.size();
+		return sum_addr_t * sizeof(addr_t);
+	}
+};
 
 // ---------------------------------------------------------------------------
 /*!
