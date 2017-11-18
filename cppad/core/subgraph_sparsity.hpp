@@ -130,7 +130,7 @@ $end
 -----------------------------------------------------------------------------
 */
 # include <cppad/core/ad_fun.hpp>
-# include <cppad/local/subgraph/subgraph.hpp>
+# include <cppad/local/subgraph/sparsity.hpp>
 
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 
