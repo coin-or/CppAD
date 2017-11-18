@@ -26,11 +26,8 @@ $$
 $section Any Order Reverse Mode$$
 $mindex derivative$$
 
-
-
 $head Syntax$$
 $icode%dw% = %f%.Reverse(%q%, %w%)%$$
-
 
 $head Purpose$$
 We use $latex F : B^n \rightarrow B^m$$ to denote the
@@ -56,7 +53,6 @@ $latex u^{(0)}$$ is the value of the independent variables when the
 corresponding
 AD of $icode Base$$
 $cref/operation sequence/glossary/Operation/Sequence/$$ was recorded.
-
 
 $subhead X(t, u)$$
 The function
@@ -100,7 +96,6 @@ The function $latex W : B^{n \times q} \rightarrow B$$ is defined by
 $latex \[
 W(u) = \sum_{k=0}^{q-1} ( w^{(k)} )^\R{T} \frac{1}{k !} \Dpow{k}{t} Y(0, u)
 \] $$
-
 
 $head f$$
 The object $icode f$$ has prototype

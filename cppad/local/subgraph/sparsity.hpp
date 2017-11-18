@@ -92,7 +92,7 @@ void subgraph_sparsity(
 {
 	// check dimension assumptions
 	CPPAD_ASSERT_UNKNOWN(
-		size_t( dep_taddr.size() ) == sub_info.n_dep()
+		dep_taddr.size() == sub_info.n_dep()
 	);
 	CPPAD_ASSERT_UNKNOWN(
 		size_t(select_domain.size()) == sub_info.n_ind()

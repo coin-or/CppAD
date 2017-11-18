@@ -17,6 +17,7 @@
 # 5. Change: $code $srcfile ...$$ $$ -> $srcfile ... $$
 # 6. Convert tabs to spaces.
 # 7. Change CPPAD_TESTVECTOR to a template type (see Eigen entry in wishlist).
+# 8. Change : B^n to \B{R}^n and other simuilar uses of B as a space.
 # -----------------------------------------------------------------------------
 spell_list='
 '

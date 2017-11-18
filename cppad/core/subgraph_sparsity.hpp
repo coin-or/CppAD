@@ -29,7 +29,7 @@ $icode%f%.subgraph_sparsity(
 	%select_domain%, %select_range%, %transpose%, %pattern_out%
 )%$$
 
-$head Purpose$$
+$head Notation$$
 We use $latex F : \B{R}^n \rightarrow \B{R}^m$$ to denote the
 $cref/AD function/glossary/AD Function/$$ corresponding to
 the operation sequence stored in $icode f$$.
