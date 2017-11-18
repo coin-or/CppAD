@@ -89,7 +89,7 @@ public:
 		bool   ok   = true;
 		size_t i_op = 0;
 		while( i_op < n_op_ )
-		{	OpCode op = play->GetOp(i_op++);
+		{	OpCode op = play->GetOp(i_op);
 			ok       &= map_user_op_[i_op] == addr_t( i_op );
 			if( op == UserOp )
 			{	addr_t begin = addr_t( i_op );
@@ -101,8 +101,9 @@ public:
 					ok  &= map_user_op_[i_op] == begin;
 					op   = play->GetOp(++i_op);
 				}
-				ok  &= map_user_op_[i_op++] == begin;
+				ok  &= map_user_op_[i_op] == begin;
 			}
+			++i_op;
 		}
 		return ok;
 	}
@@ -320,10 +321,7 @@ this operation sequence was recording using AD<Base>.
 is the operation sequence corresponding to the ADFun<Base> function.
 
 \param map_user_op
-If map_user_op.size() == 0 upon entry, then upon return it has the
-values specified below. Otherwise, it must be have the proper values on entry.
-Upon return, map_user_op.size() is equal to the number of operators
-in play.
+map_user_op.size() is equal to the number of operators in play.
 We use the term user OpCocde for the any one of the following:
 UserOp, UsrapOp, UsravOp, UsrrpOp, or UsrrvOp.
 Suppose
@@ -364,42 +362,19 @@ in the dependency; e.g., comparision operators are not included.
 */
 template <typename Base, typename BoolVector>
 void init_rev_subgraph(
-	const player<Base>*  play          ,
-	pod_vector<addr_t>&  map_user_op   ,
-	const BoolVector&    select_domain ,
-	addr_t               depend_no     ,
-	addr_t               depend_yes    ,
-	pod_vector<addr_t>&  in_subgraph   )
+	const player<Base>*  play                ,
+	const pod_vector<addr_t>&  map_user_op   ,
+	const BoolVector&    select_domain       ,
+	addr_t               depend_no           ,
+	addr_t               depend_yes          ,
+	pod_vector<addr_t>&  in_subgraph         )
 {
 	// number of operators in the recording
 	size_t num_op = play->num_op_rec();
 	CPPAD_ASSERT_UNKNOWN(
 		num_op <= size_t( std::numeric_limits<addr_t>::max() )
 	);
-
-	// map_user_op
-	if( map_user_op.size() != 0 )
-	{	CPPAD_ASSERT_UNKNOWN( map_user_op.size() == num_op );
-	}
-	else
-	{	map_user_op.extend(num_op);
-		for(size_t i_op = 0; i_op < num_op; ++i_op)
-		{	map_user_op[i_op] = addr_t( i_op );
-			OpCode op = play->GetOp(i_op);
-			if( op == UserOp )
-			{	addr_t begin = addr_t( i_op );
-				op           = play->GetOp(++i_op);
-				while( op != UserOp )
-				{	CPPAD_ASSERT_UNKNOWN(
-						op==UsrapOp || op==UsravOp || op==UsrrpOp || op==UsrrvOp
-					);
-					map_user_op[i_op] = begin;
-					op = play->GetOp(++i_op);
-				}
-				map_user_op[i_op] = begin;
-			}
-		}
-	}
+	CPPAD_ASSERT_UNKNOWN( map_user_op.size() == num_op );
 
 	// set in_subgraph to have proper size
 	in_subgraph.resize(num_op);
@@ -756,18 +731,26 @@ void subgraph_sparsity(
 	row_out.resize(0);
 	col_out.resize(0);
 
+	// map_user_op
+	if( sub_info.map_user_op().size() == 0 )
+		sub_info.set_map_user_op(play);
+	else
+	{	CPPAD_ASSERT_UNKNOWN( sub_info.check_map_user_op(play) );
+	}
+	const pod_vector<addr_t>& map_user_op( sub_info.map_user_op() );
+	CPPAD_ASSERT_UNKNOWN( map_user_op.size() == play->num_op_rec() );
+
 	// subgraph of operators that are are connected to one of the selected
 	// dependent variables and depend on the selected independent variables
 	pod_vector<addr_t> subgraph;
 
-	// set map_user_op and initialize in_subgraph
-	pod_vector<addr_t> map_user_op, in_subgraph;
+	// set in_subgraph
+	pod_vector<addr_t> in_subgraph;
 	addr_t depend_no  = addr_t( n_dep + 1 );
 	addr_t depend_yes = addr_t( n_dep );
 	init_rev_subgraph(
 		play, map_user_op, select_domain, depend_no, depend_yes, in_subgraph
 	);
-	CPPAD_ASSERT_UNKNOWN( map_user_op.size() == play->num_op_rec() );
 	CPPAD_ASSERT_UNKNOWN( in_subgraph.size() == play->num_op_rec() );
 
 	// for each of the selected dependent variables
