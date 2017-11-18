@@ -81,7 +81,7 @@ public:
 	{	// n_ind_
 		n_ind_ = n_ind;
 		// n_dep_
-		n_dep  = n_dep;
+		n_dep_ = n_dep;
 		// n_op_
 		n_op_  = n_op;
 		//
@@ -106,6 +106,15 @@ public:
 		//
 		return;
 	}
+	/// number of independent variables
+	size_t n_ind(void) const
+	{	return n_ind_; }
+	/// number of dependent variables
+	size_t n_dep(void) const
+	{	return n_dep_; }
+	/// number of operators
+	size_t n_op(void) const
+	{	return n_op_; }
 	/// entire graph represented as a sorted subgraph
 	const pod_vector<addr_t>& entire_graph(void) const
 	{	return entire_graph_; }
@@ -316,7 +325,7 @@ void init_rev_subgraph(
 			CPPAD_ASSERT_UNKNOWN( i_op > 0 );
 			{	// get user index for this independent variable
 				size_t j = i_op - 1;
-				CPPAD_ASSERT_UNKNOWN( j < select_domain.size() );
+				CPPAD_ASSERT_UNKNOWN( j < size_t(select_domain.size()) );
 				//
 				// set in_subgraph[i_op]
 				if( select_domain[j] )
@@ -370,7 +379,7 @@ void init_rev_subgraph(
 			break;
 		}
 	}
-	CPPAD_ASSERT_UNKNOWN( count_independent == select_domain.size() );
+	CPPAD_ASSERT_UNKNOWN( count_independent == size_t(select_domain.size()) );
 	//
 	return;
 }
@@ -575,19 +584,20 @@ a simple vector class with elements of type bool.
 \param play
 is the operation sequence corresponding to the ADFun<Base> function.
 
-\param ind_taddr
-mapping from user independent variable index to variable index in play.
+\param sub_info
+is the subgraph information for this ADFun object.
 
 \param dep_taddr
-mapping from user dependent variable index to variable index in play.
+mapping from user dependent variable index to variable index in play
+(must have size sub_info.n_dep()).
 
 \param select_domain
 only the selected independent variables will be included in the sparsity
-pattern (must have same size as ind_taddr).
+pattern (must have size sub_info.n_ind()).
 
 \param select_range
 only the selected dependent variables will be included in the sparsity pattern
-(must have same size as dep_taddr).
+(must have size sub_info.n_dep()).
 
 \param row_out
 The input size and elements of row_out do not matter.
@@ -607,7 +617,7 @@ For k = 0 , ... , nnz-1, col_out[k] is the column index
 of the k-th no-zero element of the dependency sparsitiy pattern for
 the function corresponding to the recording.
 \code
-	0 <= col_out[k] < ind_taddr.size()
+	0 <= col_out[k] < sub_info.n_ind()
 	select_domain[ col_out[k] ] == true
 \endcode
 
@@ -621,21 +631,27 @@ to to make the sparsity pattern more efficient.
 template <typename Base, typename BoolVector>
 void subgraph_sparsity(
 	const player<Base>*        play          ,
-	const vector<size_t>&      ind_taddr     ,
+	subgraph_info&             sub_info      ,
 	const vector<size_t>&      dep_taddr     ,
 	const BoolVector&          select_domain ,
 	const BoolVector&          select_range  ,
 	pod_vector<size_t>&        row_out       ,
 	pod_vector<size_t>&        col_out       )
 {
-	// number of independent variables
+	// check dimension assumptions
 	CPPAD_ASSERT_UNKNOWN(
-		size_t( select_domain.size() ) == ind_taddr.size()
+		size_t( dep_taddr.size() ) == sub_info.n_dep()
+	);
+	CPPAD_ASSERT_UNKNOWN(
+		size_t(select_domain.size()) == sub_info.n_ind()
+	);
+	CPPAD_ASSERT_UNKNOWN(
+		size_t(select_range.size()) == sub_info.n_dep()
 	);
 
 	// number of dependent variables
 	size_t n_dep = dep_taddr.size();
-	CPPAD_ASSERT_UNKNOWN( size_t( select_range.size() ) == n_dep );
+	CPPAD_ASSERT_UNKNOWN( size_t(select_range.size()) == n_dep );
 
 	// start with an empty sparsity pattern
 	row_out.resize(0);
@@ -689,7 +705,6 @@ void subgraph_sparsity(
 				size_t i_var = i_op;       // tape index for this variable
 				size_t i_ind = i_var - 1;  // user index for this variable
 				CPPAD_ASSERT_UNKNOWN( play->var2op(i_var) == i_op );
-				CPPAD_ASSERT_UNKNOWN( i_var == ind_taddr[i_ind] );
 				CPPAD_ASSERT_UNKNOWN( select_domain[i_ind] );
 				//
 				// put this pair in the sparsity pattern
