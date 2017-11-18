@@ -22,6 +22,9 @@ Compute dependency sparsity pattern using subgraph technique.
 /// class for maintaining subgrap information attached to on ADFun object.
 class subgraph_info {
 private:
+	// -----------------------------------------------------------------------
+	// private member data
+	// -----------------------------------------------------------------------
 	/// number of independent variables for this function
 	size_t             n_ind_;
 	/// number of dependent variables for this function
@@ -37,13 +40,83 @@ private:
 	/// (size zero or n_op_).
 	pod_vector<addr_t> in_subgraph_;
 public:
-	/// defualt constructor (all sizes are zero)
+	// -----------------------------------------------------------------------
+	// const public functions
+	// -----------------------------------------------------------------------
+	/// number of independent variables
+	size_t n_ind(void) const
+	{	return n_ind_; }
+
+	/// number of dependent variables
+	size_t n_dep(void) const
+	{	return n_dep_; }
+
+	/// number of operators
+	size_t n_op(void) const
+	{	return n_op_; }
+
+	/// entire graph represented as a sorted subgraph
+	const pod_vector<addr_t>& entire_graph(void) const
+	{	return entire_graph_; }
+
+	/// map user atomic function calls to first operator in the call
+	const pod_vector<addr_t>& map_user_op(void) const
+	{	return map_user_op_; }
+
+	/// amount of memory corresonding to this object
+	size_t memory(void) const
+	{	CPPAD_ASSERT_UNKNOWN( entire_graph_.size() == n_op_ );
+		size_t sum_addr_t = entire_graph_.size();
+		sum_addr_t       += map_user_op_.size();
+		sum_addr_t       += in_subgraph_.size();
+		return sum_addr_t * sizeof(addr_t);
+	}
+	// -----------------------------------------------------------------------
+	/*!
+	check that the value of map_user_op is OK for this operation sequence
+
+	\param play
+	is the player for this operation sequence.
+
+	\param return
+	is true, if map_user_op has the correct value for this operation sequence
+	(is the same as it would be after a set_map_user_op).
+	*/
+	template <typename Base>
+	bool check_map_user_op(const player<Base>* play) const
+	{	if( map_user_op_.size() != n_op_ )
+			return false;
+		bool   ok   = true;
+		size_t i_op = 0;
+		while( i_op < n_op_ )
+		{	OpCode op = play->GetOp(i_op++);
+			ok       &= map_user_op_[i_op] == addr_t( i_op );
+			if( op == UserOp )
+			{	addr_t begin = addr_t( i_op );
+				op           = play->GetOp(++i_op);
+				while( op != UserOp )
+				{	CPPAD_ASSERT_UNKNOWN(
+					op==UsrapOp || op==UsravOp || op==UsrrpOp || op==UsrrvOp
+					);
+					ok  &= map_user_op_[i_op] == begin;
+					op   = play->GetOp(++i_op);
+				}
+				ok  &= map_user_op_[i_op++] == begin;
+			}
+		}
+		return ok;
+	}
+	// -----------------------------------------------------------------------
+	// non const public functions
+	// -----------------------------------------------------------------------
+	/// default constructor (all sizes are zero)
 	subgraph_info(void)
 	: n_ind_(0), n_dep_(0), n_op_(0)
 	{	CPPAD_ASSERT_UNKNOWN( entire_graph_.size() == n_op_ );
 		CPPAD_ASSERT_UNKNOWN( map_user_op_.size() == n_op_ );
 		CPPAD_ASSERT_UNKNOWN( in_subgraph_.size() == n_op_ );
 	}
+	// -----------------------------------------------------------------------
 	/// assignment operator
 	void operator=(const subgraph_info& info)
 	{	n_ind_            = info.n_ind_;
@@ -54,6 +127,7 @@ public:
 		in_subgraph_      = info.in_subgraph_;
 		return;
 	}
+	// -----------------------------------------------------------------------
 	/*!
 	set sizes for this object (the default sizes are zero)
 
@@ -106,25 +180,50 @@ public:
 		//
 		return;
 	}
-	/// number of independent variables
-	size_t n_ind(void) const
-	{	return n_ind_; }
-	/// number of dependent variables
-	size_t n_dep(void) const
-	{	return n_dep_; }
-	/// number of operators
-	size_t n_op(void) const
-	{	return n_op_; }
-	/// entire graph represented as a sorted subgraph
-	const pod_vector<addr_t>& entire_graph(void) const
-	{	return entire_graph_; }
-	/// amount of memory corresonding to this object
-	size_t memory(void) const
-	{	CPPAD_ASSERT_UNKNOWN( entire_graph_.size() == n_op_ );
-		size_t sum_addr_t = entire_graph_.size();
-		sum_addr_t       += map_user_op_.size();
-		sum_addr_t       += in_subgraph_.size();
-		return sum_addr_t * sizeof(addr_t);
+	/*!
+	set the value of map_user_op for this operation sequence
+
+	\param play
+	is the player for this operation sequence. It must have size
+	equal to n_op_.
+
+	\par map_user_op_
+	This size of map_user_op must be zero when this function is called
+	(which it is after a resize operation).
+	This function sets its size to the number of operations in play.
+	We use the term user OpCocde for the any one of the following:
+	UserOp, UsrapOp, UsravOp, UsrrpOp, or UsrrvOp. Suppose
+	\code
+		OpCodce op_i = play->GetOp(i_op);
+		size_t  j_op = map_user_op[i_op];
+		OpCode  op_j = play->GetOP(j_op);
+	\endcode
+	If op is a user OpCode, j_op is the index of the first operator
+	in the corresponding atomic function call and op_j == UserOp.
+	Otherwise j_op == i_op;
+	*/
+	template <typename Base>
+	void set_map_user_op(const player<Base>* play)
+	{	CPPAD_ASSERT_UNKNOWN( map_user_op_.size() == 0 );
+		CPPAD_ASSERT_UNKNOWN( n_op_ == play->num_op_rec() );
+		map_user_op_.resize(n_op_);
+		for(size_t i_op = 0; i_op < n_op_; ++i_op)
+		{	map_user_op_[i_op] = addr_t( i_op );
+			OpCode op = play->GetOp(i_op);
+			if( op == UserOp )
+			{	addr_t begin = addr_t( i_op );
+				op           = play->GetOp(++i_op);
+				while( op != UserOp )
+				{	CPPAD_ASSERT_UNKNOWN(
+					op==UsrapOp || op==UsravOp || op==UsrrpOp || op==UsrrvOp
+					);
+					map_user_op_[i_op] = begin;
+					op                 = play->GetOp(++i_op);
+				}
+				map_user_op_[i_op] = begin;
+			}
+		}
+		return;
 	}
 };
 
