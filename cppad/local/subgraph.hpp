@@ -18,8 +18,90 @@ namespace CppAD { namespace local { // BEGIN_CPPAD_LOCAL_NAMESPACE
 \file subgraph.hpp
 Compute dependency sparsity pattern using subgraph technique.
 */
-// ---------------------------------------------------------------------------
-/// class for maintaining subgrap information attached to on ADFun object.
+
+// ===========================================================================
+/*!
+Determine the set of argument variables for an operator
+
+\param play
+is the player for this operation sequence.
+
+\param i_op
+is the operator index. If this operator is part of a user function call,
+it must be the first UserOp in the call. (There is a UserOp at the
+beginning and end of each call.)
+
+\param variable
+is the set of argument variables corresponding to this operator.
+
+\param work
+this is work space used by get_argument_variable to make subsequent calls
+faster. It should not be used by the calling routine. In addition,
+it is better if work does not drop out of scope between calls.
+*/
+template <typename Base>
+void get_argument_variable(
+	const player<Base>*  play        ,
+	size_t               i_op        ,
+	pod_vector<size_t>&  variable    ,
+	pod_vector<bool>&    work        )
+{
+	// reset to size zero, but keep allocated memory
+	variable.resize(0);
+	//
+	// operator corresponding to i_op
+	OpCode        op;
+	const addr_t* op_arg;
+	size_t        i_var;
+	play->get_op_info(i_op, op, op_arg, i_var);
+	//
+	// partial check of assumptions on user function calls
+	CPPAD_ASSERT_UNKNOWN(
+		op != UsrapOp && op != UsravOp && op != UsrrpOp && op != UsrrvOp
+	);
+	//
+	// we assume this is the first UserOp of the call
+	if( op == UserOp )
+	{	play->get_op_info(++i_op, op, op_arg, i_var);
+		while( op != UserOp )
+		{	switch(op)
+			{
+				case UsravOp:
+				{	CPPAD_ASSERT_NARG_NRES(op, 1, 0);
+					size_t j_var = op_arg[0];
+					variable.push_back(j_var);
+				}
+				break;
+
+				case UsrrvOp:
+				case UsrrpOp:
+				case UsrapOp:
+				break;
+
+				default:
+				// cannot find second UserOp in this call
+				CPPAD_ASSERT_UNKNOWN(false);
+				break;
+			}
+			play->get_op_info(++i_op, op, op_arg, i_var);
+		}
+		CPPAD_ASSERT_UNKNOWN( variable.size() > 0 );
+		return;
+	}
+	// is_varialbe is a reference to work with a better name
+	pod_vector<bool>& is_variable(work);
+	size_t num_arg = arg_is_variable(op, op_arg, is_variable);
+	for(size_t j = 0; j < num_arg; ++j)
+	{	if( is_variable[j] )
+		{	size_t j_var = op_arg[j];
+			variable.push_back(j_var);
+		}
+	}
+	return;
+}
+
+// ===========================================================================
+/// class for maintaining subgraph information attached to on ADFun object.
 class subgraph_info {
 private:
 	// -----------------------------------------------------------------------
@@ -84,7 +166,7 @@ public:
 	\param play
 	is the player for this operation sequence.
 
-	\param return
+	\return
 	is true, if map_user_op has the correct value for this operation sequence
 	(is the same as it would be after a set_map_user_op).
 	*/
@@ -367,88 +449,7 @@ public:
 	}
 };
 
-// ---------------------------------------------------------------------------
-/*!
-Determine the set of argument variables for an operator
-
-\param play
-is the player for this operation sequence.
-
-\param i_op
-is the operator index. If this operator is part of a user function call,
-it must be the first UserOp in the call. (There is a UserOp at the
-beginning and end of each call.)
-
-\param variable
-is the set of argument variables corresponding to this operator.
-
-\param work
-this is work space used by get_argument_variable to make subsequent calls
-faster. It should not be used by the calling routine. In addition,
-it is better if work does not drop out of scope between calls.
-*/
-template <typename Base>
-void get_argument_variable(
-	const player<Base>*  play        ,
-	size_t               i_op        ,
-	pod_vector<size_t>&  variable    ,
-	pod_vector<bool>&    work        )
-{
-	// reset to size zero, but keep allocated memory
-	variable.resize(0);
-	//
-	// operator corresponding to i_op
-	OpCode        op;
-	const addr_t* op_arg;
-	size_t        i_var;
-	play->get_op_info(i_op, op, op_arg, i_var);
-	//
-	// partial check of assumptions on user function calls
-	CPPAD_ASSERT_UNKNOWN(
-		op != UsrapOp && op != UsravOp && op != UsrrpOp && op != UsrrvOp
-	);
-	//
-	// we assume this is the first UserOp of the call
-	if( op == UserOp )
-	{	play->get_op_info(++i_op, op, op_arg, i_var);
-		while( op != UserOp )
-		{	switch(op)
-			{
-				case UsravOp:
-				{	CPPAD_ASSERT_NARG_NRES(op, 1, 0);
-					size_t j_var = op_arg[0];
-					variable.push_back(j_var);
-				}
-				break;
-
-				case UsrrvOp:
-				case UsrrpOp:
-				case UsrapOp:
-				break;
-
-				default:
-				// cannot find second UserOp in this call
-				CPPAD_ASSERT_UNKNOWN(false);
-				break;
-			}
-			play->get_op_info(++i_op, op, op_arg, i_var);
-		}
-		CPPAD_ASSERT_UNKNOWN( variable.size() > 0 );
-		return;
-	}
-	// is_varialbe is a reference to work with a better name
-	pod_vector<bool>& is_variable(work);
-	size_t num_arg = arg_is_variable(op, op_arg, is_variable);
-	for(size_t j = 0; j < num_arg; ++j)
-	{	if( is_variable[j] )
-		{	size_t j_var = op_arg[j];
-			variable.push_back(j_var);
-		}
-	}
-	return;
-}
-
-// ---------------------------------------------------------------------------
+// ===========================================================================
 /*!
 Get the subgraph corresponding to a dependent variables
 (and a selected set of independent variables).
@@ -582,7 +583,7 @@ void get_rev_subgraph(
 		++sub_index;
 	}
 }
-// ---------------------------------------------------------------------------
+// ===========================================================================
 /*!
 Include entire atomic function call when first UserOp is in a subgraph.
 
@@ -632,10 +633,7 @@ void subgraph_entire_call(
 	}
 
 }
-
-
-
-// ---------------------------------------------------------------------------
+// ===========================================================================
 /*!
 Compute dependency sparsity pattern for an ADFun<Base> function.
 
