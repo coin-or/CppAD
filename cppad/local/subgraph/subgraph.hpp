@@ -1,5 +1,5 @@
-# ifndef CPPAD_LOCAL_SUBGRAPH_HPP
-# define CPPAD_LOCAL_SUBGRAPH_HPP
+# ifndef CPPAD_LOCAL_SUBGRAPH_SUBGRAPH_HPP
+# define CPPAD_LOCAL_SUBGRAPH_SUBGRAPH_HPP
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
@@ -342,18 +342,21 @@ public:
 	in the recording. It determines the selected independent variables.
 
 	\par in_subgraph_
-	The input size and elements of this vector do not matter.
-	If in_subgraph_[i_op] == n_dep_ (n_dep_ + 1),
+	We use depend_yes (depend_no) for the value n_dep_, n_dep_+1.
+	The important properties are that depend_yes < depend_no and
+	for a valid indpendent variable index i_ind < depend_yes.
+	The input size and elements of in_subgraph_ do not matter.
+	If in_subgraph_[i_op] == depend_yes (depend_no),
 	the result for this operator depends (does not depend)
 	on the selected independent variables.
 	Note that for user function call operators i_op,
-	in_subgraph[i_op] is n_dep_ + 1 except for the first UserOp in the
+	in_subgraph[i_op] is depend_no except for the first UserOp in the
 	atomic function call sequence. For the first UserOp,
-	it is n_dep_ (n_dep_ + 1) if any of the results for the call sequence
+	it is depend_yes (depend_no) if any of the results for the call sequence
 	depend (do not depend) on the selected independent variables.
-	Except for UserOP, only operators with NumRes(op) > 0 are included
-	in the dependency (have in_subgraph_ value n_dep_);
-	e.g., comparision operators have in_subgraph_ value n_dep_ + 1.
+	Except for UserOP, only operators with NumRes(op) > 0 have in_subgraph_
+	value depend_yes;
+	e.g., comparision operators have in_subgraph_ value depend_no.
 	*/
 	template <typename Base, typename BoolVector>
 	void init_rev_in_subgraph(
@@ -738,10 +741,12 @@ void subgraph_sparsity(
 	pod_vector<addr_t>& in_subgraph( sub_info.in_subgraph() );
 	CPPAD_ASSERT_UNKNOWN( in_subgraph.size() == play->num_op_rec() );
 	//
-	addr_t depend_no  = addr_t( n_dep + 1 );
 	addr_t depend_yes = addr_t( n_dep );
 
 	// for each of the selected dependent variables
+# ifndef NDEBUG
+	addr_t depend_no  = addr_t( n_dep + 1 );
+# endif
 	CPPAD_ASSERT_UNKNOWN( depend_yes < depend_no );
 	CPPAD_ASSERT_UNKNOWN( NumRes(BeginOp) == 1 );
 	CPPAD_ASSERT_UNKNOWN( NumRes(InvOp) == 1 );
