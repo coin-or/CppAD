@@ -1,6 +1,6 @@
 
-# ifndef CPPAD_LOCAL_SUBGRAPH_IN_SUBGRAPH_HPP
-# define CPPAD_LOCAL_SUBGRAPH_IN_SUBGRAPH_HPP
+# ifndef CPPAD_LOCAL_SUBGRAPH_INIT_REV_HPP
+# define CPPAD_LOCAL_SUBGRAPH_INIT_REV_HPP
 
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
@@ -18,8 +18,8 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 // BEGIN_CPPAD_LOCAL_SUBGRAPH_NAMESPACE
 namespace CppAD { namespace local { namespace subgraph {
 /*!
-\file in_subgraph.hpp
-calculations involving the in_subgraph vector.
+\file init_rev.hpp
+initialize for a reverse mode subgraph calculation
 */
 
 // -----------------------------------------------------------------------

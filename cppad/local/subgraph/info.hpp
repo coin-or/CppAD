@@ -256,6 +256,6 @@ public:
 } } } // END_CPPAD_LOCAL_SUBGRAPH_NAMESPACE
 
 // routines that operate on in_subgraph
-# include <cppad/local/subgraph/in_subgraph.hpp>
+# include <cppad/local/subgraph/init_rev.hpp>
 
 # endif
