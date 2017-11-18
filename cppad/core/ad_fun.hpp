@@ -48,7 +48,7 @@ $childtable%
 
 $end
 */
-# include <cppad/local/subgraph.hpp>
+# include <cppad/local/subgraph/subgraph.hpp>
 
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 /*!
@@ -135,7 +135,7 @@ private:
 	local::sparse_list for_jac_sparse_set_;
 
 	/// subgraph information for this object
-	local::subgraph_info subgraph_info_;
+	local::subgraph::subgraph_info subgraph_info_;
 
 // ------------------------------------------------------------
 // Private member functions

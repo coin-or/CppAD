@@ -13,7 +13,8 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 # include <cppad/local/pod_vector.hpp>
 
-namespace CppAD { namespace local { // BEGIN_CPPAD_LOCAL_NAMESPACE
+// BEGIN_CPPAD_LOCAL_SUBGRAPH_NAMESPACE
+namespace CppAD { namespace local { namespace subgraph {
 /*!
 \file subgraph.hpp
 Compute dependency sparsity pattern using subgraph technique.
@@ -784,6 +785,6 @@ void subgraph_sparsity(
 	}
 }
 
-} } // END_CPPAD_LOCAL_NAMESPACE
+} } } // END_CPPAD_LOCAL_SUBGRAPH_NAMESPACE
 
 # endif

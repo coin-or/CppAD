@@ -130,7 +130,7 @@ $end
 -----------------------------------------------------------------------------
 */
 # include <cppad/core/ad_fun.hpp>
-# include <cppad/local/subgraph.hpp>
+# include <cppad/local/subgraph/subgraph.hpp>
 
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 
@@ -172,7 +172,7 @@ void ADFun<Base>::subgraph_sparsity(
 	// compute the sparsity pattern in row, col
     local::pod_vector<size_t> row;
     local::pod_vector<size_t> col;
-	local::subgraph_sparsity(
+	local::subgraph::subgraph_sparsity(
 		&play_,
 		subgraph_info_,
 		dep_taddr_,
