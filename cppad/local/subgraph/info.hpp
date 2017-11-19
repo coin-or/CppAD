@@ -251,11 +251,21 @@ public:
 		const player<Base>*  play                ,
 		const BoolVector&    select_domain
 	);
+	// -----------------------------------------------------------------------
+	// see get_rev.hpp
+	template <typename Base>
+	void get_rev_subgraph(
+		const player<Base>*       play         ,
+		const vector<size_t>&     dep_taddr    ,
+		addr_t                    i_dep        ,
+		pod_vector<addr_t>&       subgraph
+	);
 };
 
 } } } // END_CPPAD_LOCAL_SUBGRAPH_NAMESPACE
 
 // routines that operate on in_subgraph
 # include <cppad/local/subgraph/init_rev.hpp>
+# include <cppad/local/subgraph/get_rev.hpp>
 
 # endif

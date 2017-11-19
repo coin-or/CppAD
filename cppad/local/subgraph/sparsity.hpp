@@ -14,7 +14,6 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # include <cppad/local/pod_vector.hpp>
 # include <cppad/local/subgraph/arg_variable.hpp>
 # include <cppad/local/subgraph/info.hpp>
-# include <cppad/local/subgraph/get_rev.hpp>
 # include <cppad/local/subgraph/entire_call.hpp>
 
 // BEGIN_CPPAD_LOCAL_SUBGRAPH_NAMESPACE
@@ -139,13 +138,10 @@ void subgraph_sparsity(
 	for(size_t i_dep = 0; i_dep < n_dep; ++i_dep) if( select_range[i_dep] )
 	{	CPPAD_ASSERT_UNKNOWN( i_dep < size_t( depend_yes ) );
 		//
-		get_rev_subgraph(
+		sub_info.get_rev_subgraph(
 			play            ,
 			dep_taddr       ,
-			map_user_op     ,
-			depend_yes      ,
 			addr_t(i_dep)   ,
-			in_subgraph     ,
 			subgraph
 		);
 		//
