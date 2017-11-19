@@ -105,11 +105,11 @@ am_sparse_OBJECTS = sparse.$(OBJEXT) colpack_hes.$(OBJEXT) \
 	for_sparse_jac.$(OBJEXT) rc_sparsity.$(OBJEXT) \
 	rev_hes_sparsity.$(OBJEXT) rev_jac_sparsity.$(OBJEXT) \
 	rev_sparse_hes.$(OBJEXT) rev_sparse_jac.$(OBJEXT) \
-	sparse_hes.$(OBJEXT) sparse_hessian.$(OBJEXT) \
-	sparse_jac_for.$(OBJEXT) sparse_jacobian.$(OBJEXT) \
-	sparse_jac_rev.$(OBJEXT) sparse_sub_hes.$(OBJEXT) \
-	sparsity_sub.$(OBJEXT) sub_sparse_hes.$(OBJEXT) \
-	subgraph_sparsity.$(OBJEXT)
+	reverse_subgraph.$(OBJEXT) sparse_hes.$(OBJEXT) \
+	sparse_hessian.$(OBJEXT) sparse_jac_for.$(OBJEXT) \
+	sparse_jacobian.$(OBJEXT) sparse_jac_rev.$(OBJEXT) \
+	sparse_sub_hes.$(OBJEXT) sparsity_sub.$(OBJEXT) \
+	sub_sparse_hes.$(OBJEXT) subgraph_sparsity.$(OBJEXT)
 sparse_OBJECTS = $(am_sparse_OBJECTS)
 sparse_LDADD = $(LDADD)
 AM_V_P = $(am__v_P_@AM_V@)
@@ -368,6 +368,7 @@ sparse_SOURCES = sparse.cpp \
 	rev_jac_sparsity.cpp \
 	rev_sparse_hes.cpp \
 	rev_sparse_jac.cpp \
+	reverse_subgraph.cpp \
 	sparse_hes.cpp \
 	sparse_hessian.cpp \
 	sparse_jac_for.cpp \
@@ -440,6 +441,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/rev_jac_sparsity.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/rev_sparse_hes.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/rev_sparse_jac.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/reverse_subgraph.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sparse.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sparse_hes.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sparse_hessian.Po@am__quote@

@@ -16,7 +16,7 @@ $spell
 	Jacobian
 $$
 
-$section Computing Sparse Jacobian: Example and Test$$
+$section Computing Sparse Jacobian Using Reverse Mode: Example and Test$$
 
 $code
 $srcfile%example/sparse/sparse_jac_rev.cpp%0%// BEGIN C++%// END C++%1%$$

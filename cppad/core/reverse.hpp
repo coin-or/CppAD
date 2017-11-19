@@ -26,19 +26,19 @@ Compute derivatives using reverse mode.
 Use reverse mode to compute derivative of forward mode Taylor coefficients.
 
 The function
-\f$ X : {\rm R} \times {\rm R}^{n \times q} \rightarrow {\rm R} \f$
+\f$ X : {\bf R} \times {\bf R}^{n \times q} \rightarrow {\bf R} \f$
 is defined by
 \f[
 X(t , u) = \sum_{k=0}^{q-1} u^{(k)} t^k
 \f]
 The function
-\f$ Y : {\rm R} \times {\rm R}^{n \times q} \rightarrow {\rm R} \f$
+\f$ Y : {\bf R} \times {\bf R}^{n \times q} \rightarrow {\bf R} \f$
 is defined by
 \f[
 Y(t , u) = F[ X(t, u) ]
 \f]
 The function
-\f$ W : {\rm R}^{n \times q} \rightarrow {\rm R} \f$ is defined by
+\f$ W : {\bf R}^{n \times q} \rightarrow {\bf R} \f$ is defined by
 \f[
 W(u) = \sum_{k=0}^{q-1} ( w^{(k)} )^{\rm T}
 \frac{1}{k !} \frac{ \partial^k } { t^k } Y(0, u)

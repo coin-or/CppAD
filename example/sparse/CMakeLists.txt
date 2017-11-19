@@ -25,6 +25,7 @@ SET(source_list sparse.cpp
 	rev_jac_sparsity.cpp
 	rev_sparse_hes.cpp
 	rev_sparse_jac.cpp
+	reverse_subgraph.cpp
 	sparse_hes.cpp
 	sparse_hessian.cpp
 	sparse_jac_for.cpp

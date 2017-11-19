@@ -231,7 +231,7 @@ void reverse_sweep(
 # if CPPAD_REVERSE_SWEEP_TRACE
 	std::cout << std::endl;
 # endif
-	size_t subgraph_index = subgraph.size() - 1;
+	size_t subgraph_index = subgraph.size();
 	while(subgraph_index > 0)
 	{	bool flag; // temporary for use in switch cases
 		//

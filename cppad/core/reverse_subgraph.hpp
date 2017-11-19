@@ -23,8 +23,6 @@ $$
 
 $section Reverse Mode Using Subgraphs$$
 
-$head Under Construction$$
-
 $head Syntax$$
 $icode%f%.reverse_subgraph(%select_domain%)
 %$$
@@ -113,6 +111,15 @@ $latex \[
 Note that this corresponds to the convention when
 $cref/w/reverse_any/w/$$ has size $icode%m% * %q%$$ in
 normal reverse mode.
+
+$head Example$$
+$children%
+	example/sparse/reverse_subgraph.cpp
+%$$
+The file
+$cref reverse_subgraph.cpp$$
+contains an example and test of this operation.
+It returns true if it succeeds and false otherwise.
 
 $end
 */
@@ -268,6 +275,9 @@ void ADFun<Base>::reverse_subgraph(
 	// Add all the atomic function call operators
 	// for calls that have first operator in the subgraph
 	local::subgraph::entire_call(&play_, subgraph);
+
+	// sort the subgraph
+	std::sort( subgraph.data(), subgraph.data() + subgraph.size() );
 
 	// initialize Partial matrix to zero on subgraph
 	Base zero(0);
