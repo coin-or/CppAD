@@ -73,6 +73,11 @@ Except for UserOP, only operators with NumRes(op) > 0 are included
 in the dependency; e.g., comparision operators are not included.
 Upon return, some of the i_op for which in_subgraph[i_op] <= n_dep_,
 will be changed to in_subgraph[i_op] = i_dep.
+
+\par processed_
+If NDEBUG is not defined, the vector processed_ is checked
+to make sure i_dep is not an element.
+The element i_dep is added to the vector processed_.
 */
 template <typename Base>
 void subgraph_info::get_rev_subgraph(
@@ -81,6 +86,18 @@ void subgraph_info::get_rev_subgraph(
 	addr_t                    i_dep        ,
 	pod_vector<addr_t>&       subgraph     )
 {
+	// processed_
+# ifndef NDEBUG
+	for(size_t i = 0; i < processed_.size(); ++i)
+	{	CPPAD_ASSERT_KNOWN(
+			processed_[i] != i_dep ,
+			"reverse_subgraph(ell) has already been processed for this ell\n"
+			"since the previous reverse_subgraph(select_domain)"
+		);
+	}
+# endif
+	processed_.push_back(i_dep);
+
 	// special value; see init_rev_in_subgraph
 	addr_t depend_yes = addr_t( n_dep_ );
 

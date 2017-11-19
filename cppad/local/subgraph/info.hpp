@@ -47,6 +47,10 @@ private:
 	/// (size zero or n_op_).
 	pod_vector<addr_t> in_subgraph_;
 
+	/// flags which independent variables have been processed since
+	/// the previous init_rev_in_subgraph
+	pod_vector<addr_t> processed_;
+
 public:
 	// -----------------------------------------------------------------------
 	// const public functions

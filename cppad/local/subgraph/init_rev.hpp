@@ -54,6 +54,10 @@ depend (do not depend) on the selected independent variables.
 Except for UserOP, only operators with NumRes(op) > 0 have in_subgraph_
 value depend_yes;
 e.g., comparision operators have in_subgraph_ value depend_no.
+
+\par processed_
+This vector is initialized to have size zero when
+init_rev_in_subgraph is called.
 */
 template <typename Base, typename BoolVector>
 void subgraph_info::init_rev_in_subgraph(
@@ -67,6 +71,9 @@ void subgraph_info::init_rev_in_subgraph(
 	// depend_yes and depend_no
 	addr_t depend_yes = addr_t( n_dep_ );
 	addr_t depend_no  = addr_t( n_dep_ + 1 );
+
+	// processed_
+	processed_.resize(0);
 
 	// set in_subgraph to have proper size
 	in_subgraph_.resize(n_op_);
