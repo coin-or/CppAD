@@ -276,6 +276,7 @@ nobase_myinclude_HEADERS =  \
 	cppad/local/subgraph/entire_call.hpp \
 	cppad/local/subgraph/get_rev.hpp \
 	cppad/local/subgraph/info.hpp \
+	cppad/local/subgraph/init_rev.hpp \
 	cppad/local/subgraph/sparsity.hpp \
 	cppad/local/rev_jac_sweep.hpp \
 	cppad/local/set_get_in_parallel.hpp \
