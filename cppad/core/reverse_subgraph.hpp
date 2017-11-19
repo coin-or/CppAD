@@ -159,7 +159,7 @@ void ADFun<Base>::reverse_subgraph( const VectorBool& select_domain )
 		dep_taddr_.size() == subgraph_info_.n_dep()
 	);
 	CPPAD_ASSERT_UNKNOWN(
-		select_domain.size() == subgraph_info_.n_ind()
+		size_t( select_domain.size() ) == subgraph_info_.n_ind()
 	);
 
 	// map_user_op
@@ -281,11 +281,31 @@ void ADFun<Base>::reverse_subgraph(
 	// sort the subgraph
 	std::sort( subgraph.data(), subgraph.data() + subgraph.size() );
 
+	/*
+	// Use this printout for debugging
+	std::cout << "{ ";
+	for(size_t k = 0; k < subgraph.size(); k++)
+	{	if( k > 0 )
+			std::cout << ", ";
+		std::cout << subgraph[k];
+	}
+	std::cout << "}\n";
+	*/
+
 	// initialize Partial matrix to zero on subgraph
 	Base zero(0);
 	local::pod_vector<Base> Partial(num_var_tape_ * q);
+	//
+	// all independent variables
+	{	size_t k = ind_taddr_.size() * q;
+		while(--k)
+			Partial[k] = zero;
+	}
+	// rest of subgraph
 	for(size_t k = 0; k < subgraph.size(); ++k)
-	{	size_t               i_op = size_t( subgraph[k] );
+	if( play_.GetOp( subgraph[k] != local::InvOp ) )
+	{
+		size_t               i_op = size_t( subgraph[k] );
 		local::OpCode        op;
 		const addr_t*        arg;
 		size_t               i_var;

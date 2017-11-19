@@ -128,7 +128,9 @@ void subgraph_sparsity(
 		sub_info.in_subgraph().size() == play->num_op_rec()
 	);
 	//
+# ifndef NDEBUG
 	addr_t depend_yes = addr_t( n_dep );
+# endif
 
 	// for each of the selected dependent variables
 # ifndef NDEBUG

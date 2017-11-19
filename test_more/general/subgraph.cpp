@@ -24,6 +24,51 @@ namespace {
 			v[0] += u[j];
 	}
 
+	// will be a pointer to atomic version of g_algo
+	CppAD::checkpoint<double>* atom_g = CPPAD_NULL;
+
+	// record function
+	void record_function(size_t& n, size_t& m, CppAD::ADFun<double>& fun)
+	{
+		// declare checkpoint function
+		avector au(3), av(1);
+		for(size_t j = 0; j < 3; j++)
+			au[j] = AD<double>(j);
+		if( atom_g == CPPAD_NULL )
+			atom_g = new CppAD::checkpoint<double>("atom_g", g_algo, au, av);
+		//
+		// domain space vector
+		n = 6;
+		CPPAD_TESTVECTOR(AD<double>) ax(n);
+		for(size_t j = 0; j < n; j++)
+			ax[j] = AD<double>(j);
+
+		// declare independent variables and start recording
+		CppAD::Independent(ax);
+
+		// range space vector
+		m = 7;
+		CPPAD_TESTVECTOR(AD<double>) ay(m);
+		ay[0] = 0.0;                     // does not depend on anything
+		ay[1] = ax[1];                   // is equal to an independent variable
+		AD<double> sum = ax[1] + ax[1];  // only uses ax[1]
+		ay[2] = sum * ax[2];             // operator(variable, variable)
+		ay[3] = sin(ax[1]);              // operator(variable)
+		ay[4] = ax[4] / 2.0;             // operator(variable, parameter)
+		ay[5] = 2.0 / ax[3];             // operator(parameter, variable)
+		//
+		// a user function call
+		for(size_t j = 0; j < size_t(au.size()); ++j)
+			au[j] = ax[j + 3];
+		(*atom_g)(au, av);
+		ay[6] = av[0];
+		//
+		// create f: x -> y and stop tape recording
+		fun.Dependent(ax, ay);
+		//
+		return;
+	}
+
 	// =======================================================================
 	bool compare_subgraph_sparsity(
 		CppAD::sparse_rc<svector> subgraph  ,
@@ -65,40 +110,10 @@ namespace {
 	bool subgraph_sparsity(void)
 	{	bool ok = true;
 
-		// declare checkpoint function
-		avector au(3), av(1);
-		for(size_t j = 0; j < 3; j++)
-			au[j] = AD<double>(j);
-		CppAD::checkpoint<double> atom_g("atom_g", g_algo, au, av);
-		//
-		// domain space vector
-		size_t n = 6;
-		CPPAD_TESTVECTOR(AD<double>) ax(n);
-		for(size_t j = 0; j < n; j++)
-			ax[j] = AD<double>(j);
-
-		// declare independent variables and start recording
-		CppAD::Independent(ax);
-
-		// range space vector
-		size_t m = 7;
-		CPPAD_TESTVECTOR(AD<double>) ay(m);
-		ay[0] = 0.0;                     // does not depend on anything
-		ay[1] = ax[1];                   // is equal to an independent variable
-		AD<double> sum = ax[1] + ax[1];  // only uses ax[1]
-		ay[2] = sum * ax[2];             // operator(variable, variable)
-		ay[3] = sin(ax[1]);              // operator(variable)
-		ay[4] = ax[4] / 2.0;             // operator(variable, parameter)
-		ay[5] = 2.0 / ax[3];             // operator(parameter, variable)
-		//
-		// a user function call
-		for(size_t j = 0; j < size_t(au.size()); ++j)
-			au[j] = ax[j + 3];
-		atom_g(au, av);
-		ay[6] = av[0];
-		//
-		// create f: x -> y and stop tape recording
-		CppAD::ADFun<double> f(ax, ay);
+		// create f: x -> y
+		size_t n, m;
+		CppAD::ADFun<double> f;
+		record_function(n, m, f);
 
 		// --------------------------------------------------------------------
 		// Entire sparsity pattern
@@ -152,10 +167,100 @@ namespace {
 
 		return ok;
 	}
+	// =======================================================================
+	bool reverse_subgraph(void)
+	{	bool ok = true;
+		double eps99 = 99.0 * std::numeric_limits<double>::epsilon();
+		using CppAD::NearEqual;
+
+		// create f: x -> y
+		size_t n, m;
+		CppAD::ADFun<double> f;
+		record_function(n, m, f);
+
+		// value of x at which to compute derivatives
+		CPPAD_TESTVECTOR(double) x(n);
+		for(size_t j = 0; j < n; ++j)
+			x[j] = double(n) / double(j + 1);
+		f.Forward(0, x);
+
+		// exclude x[4] from the derivative calculations
+		CPPAD_TESTVECTOR(bool) select_domain(n);
+		for(size_t j = 0; j < n; j++)
+			select_domain[j] = true;
+		select_domain[4] = false;
+		f.reverse_subgraph(select_domain);
+
+		// vector used to check results
+		CPPAD_TESTVECTOR(double) check(n);
+		for(size_t j = 0; j < n; j++)
+			check[j] = 0.0;
+
+		// derivative of y[0]
+		CPPAD_TESTVECTOR(double) dw(n);
+		size_t q   = 1;
+		size_t ell = 0;
+		f.reverse_subgraph(dw, q, ell);
+		for(size_t j = 0; j < n; j++)
+			ok &= NearEqual(dw[j], check[j], eps99, eps99);
+		//
+		// derivative of y[1]
+		check[1] = 1.0;
+		ell = 1;
+		f.reverse_subgraph(dw, q, ell);
+		for(size_t j = 0; j < n; j++)
+			ok &= NearEqual(dw[j], check[j], eps99, eps99);
+		//
+		// derivative of y[2]
+		check[1] = 2.0 * x[2];
+		check[2] = 2.0 * x[1];
+		ell = 2;
+		f.reverse_subgraph(dw, q, ell);
+		for(size_t j = 0; j < n; j++)
+			ok &= NearEqual(dw[j], check[j], eps99, eps99);
+		//
+		// derivative of y[3]
+		check[1] = cos( x[1] );
+		check[2] = 0.0;
+		ell = 3;
+		f.reverse_subgraph(dw, q, ell);
+		for(size_t j = 0; j < n; j++)
+			ok &= NearEqual(dw[j], check[j], eps99, eps99);
+		//
+		// derivative of y[4] (x[4] is not selected)
+		check[1] = 0.0;
+		ell = 4;
+		f.reverse_subgraph(dw, q, ell);
+		for(size_t j = 0; j < n; j++)
+			ok &= NearEqual(dw[j], check[j], eps99, eps99);
+		//
+		// derivative of y[5]
+		check[3] = -2.0 / (x[3] * x[3]);
+		ell = 5;
+		f.reverse_subgraph(dw, q, ell);
+		for(size_t j = 0; j < n; j++)
+			ok &= NearEqual(dw[j], check[j], eps99, eps99);
+		//
+		// derivative of y[6]  (x[4] is not selected)
+		check[3] = 1.0;
+		check[5] = 1.0;
+		ell = 6;
+		f.reverse_subgraph(dw, q, ell);
+		for(size_t j = 0; j < n; j++)
+			ok &= NearEqual(dw[j], check[j], eps99, eps99);
+		//
+		return ok;
+	}
+
 }
 bool subgraph(void)
 {	bool ok = true;
 	ok     &= subgraph_sparsity();
+	ok     &= reverse_subgraph();
+	//
+	ok     &= atom_g != CPPAD_NULL;
+	delete atom_g;
+	//
 	return ok;
 }
 
