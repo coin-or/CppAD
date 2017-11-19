@@ -37,6 +37,8 @@ bool reverse_subgraph(void)
 	typedef CPPAD_TESTVECTOR(double)     d_vector;
 	typedef CPPAD_TESTVECTOR(bool)       b_vector;
 	//
+	double eps99 = 99.0 * std::numeric_limits<double>::epsilon();
+	//
 	// domain space vector
 	size_t n = 4;
 	a_vector  a_x(n);
@@ -78,7 +80,7 @@ bool reverse_subgraph(void)
 	for(size_t j = 1; j < n; j++)
 		select_domain[j] = true;
 	//
-	// initilaize for reverse mode derivatives computaiton on subgraphs
+	// initilaize for reverse mode derivatives computation on subgraphs
 	f.reverse_subgraph(select_domain);
 	//
 	// compute the derivative for each range component
@@ -90,7 +92,7 @@ bool reverse_subgraph(void)
 		// check derivatives for i-th row of J(x)
 		ok &= dw[0] == 0.0;
 		for(size_t j = 1; j < n; j++)
-			ok &= dw[j] == J[i * n + j];
+			ok &= NearEqual(dw[j], J[i * n + j], eps99, eps99);
 	}
 	return ok;
 }
