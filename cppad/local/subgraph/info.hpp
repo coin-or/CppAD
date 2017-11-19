@@ -47,9 +47,12 @@ private:
 	/// (size zero or n_op_).
 	pod_vector<addr_t> in_subgraph_;
 
-	/// flags which independent variables have been processed since
-	/// the previous init_rev_in_subgraph
-	pod_vector<addr_t> processed_;
+	/// flags which dependent variables are selected
+	pod_vector<bool> select_domain_;
+
+	/// flags which dependent variables have been processed since
+	/// the previous init_rev
+	pod_vector<bool> process_range_;
 
 public:
 	// -----------------------------------------------------------------------
@@ -74,6 +77,15 @@ public:
 	/// map user atomic function calls to first operator in the call
 	const pod_vector<addr_t>& map_user_op(void) const
 	{	return map_user_op_; }
+
+	/// previous select_domain argument to init_rev
+	const pod_vector<bool>& select_domain(void) const
+	{	return select_domain_; }
+
+	/// dependent variables that have been processed since previous init_rev
+	const pod_vector<bool>& process_range(void) const
+	{	return process_range_; }
+
 
 	/// amount of memory corresonding to this object
 	size_t memory(void) const
@@ -251,14 +263,14 @@ public:
 	// -----------------------------------------------------------------------
 	// see init_rev.hpp
 	template <typename Base, typename BoolVector>
-	void init_rev_in_subgraph(
+	void init_rev(
 		const player<Base>*  play                ,
 		const BoolVector&    select_domain
 	);
 	// -----------------------------------------------------------------------
 	// see get_rev.hpp
 	template <typename Base>
-	void get_rev_subgraph(
+	void get_rev(
 		const player<Base>*       play         ,
 		const vector<size_t>&     dep_taddr    ,
 		addr_t                    i_dep        ,

@@ -55,25 +55,35 @@ Except for UserOP, only operators with NumRes(op) > 0 have in_subgraph_
 value depend_yes;
 e.g., comparision operators have in_subgraph_ value depend_no.
 
-\par processed_
-This vector is initialized to have size zero when
-init_rev_in_subgraph is called.
+\par select_domain_
+This vector is is set equal to the select_domain argument.
+
+\par process_range_
+This vector is to to size n_dep_ and its values are set to false
 */
 template <typename Base, typename BoolVector>
-void subgraph_info::init_rev_in_subgraph(
+void subgraph_info::init_rev(
 	const player<Base>*  play                ,
 	const BoolVector&    select_domain       )
 {
 	// number of operators in the recording
 	CPPAD_ASSERT_UNKNOWN( map_user_op_.size() == n_op_ );
 	CPPAD_ASSERT_UNKNOWN( play->num_op_rec()  == n_op_ );
+	CPPAD_ASSERT_UNKNOWN( size_t( select_domain.size() ) == n_ind_ );
 
 	// depend_yes and depend_no
 	addr_t depend_yes = addr_t( n_dep_ );
 	addr_t depend_no  = addr_t( n_dep_ + 1 );
 
-	// processed_
-	processed_.resize(0);
+	// select_domain_
+	select_domain_.resize(n_ind_);
+	for(size_t j = 0; j < n_ind_; ++j)
+		select_domain_[j]  = select_domain[j];
+
+	// process_range_
+	process_range_.resize(n_dep_);
+	for(size_t i = 0; i < n_dep_; ++i)
+		process_range_[i] = false;
 
 	// set in_subgraph to have proper size
 	in_subgraph_.resize(n_op_);
@@ -100,7 +110,7 @@ void subgraph_info::init_rev_in_subgraph(
 			CPPAD_ASSERT_UNKNOWN( i_op > 0 );
 			{	// get user index for this independent variable
 				size_t j = i_op - 1;
-				CPPAD_ASSERT_UNKNOWN( j < size_t(select_domain.size()) );
+				CPPAD_ASSERT_UNKNOWN( j < n_ind_ );
 				//
 				// set in_subgraph_[i_op]
 				if( select_domain[j] )

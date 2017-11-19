@@ -121,8 +121,8 @@ void subgraph_sparsity(
 	// dependent variables and depend on the selected independent variables
 	pod_vector<addr_t> subgraph;
 
-	// initialize in_subgraph
-	sub_info.init_rev_in_subgraph(play, select_domain);
+	// initialize for a reverse mode subgraph calculation
+	sub_info.init_rev(play, select_domain);
 	pod_vector<addr_t>& in_subgraph( sub_info.in_subgraph() );
 	CPPAD_ASSERT_UNKNOWN( in_subgraph.size() == play->num_op_rec() );
 	//
@@ -138,7 +138,7 @@ void subgraph_sparsity(
 	for(size_t i_dep = 0; i_dep < n_dep; ++i_dep) if( select_range[i_dep] )
 	{	CPPAD_ASSERT_UNKNOWN( i_dep < size_t( depend_yes ) );
 		//
-		sub_info.get_rev_subgraph(
+		sub_info.get_rev(
 			play            ,
 			dep_taddr       ,
 			addr_t(i_dep)   ,

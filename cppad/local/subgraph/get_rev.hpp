@@ -74,29 +74,20 @@ in the dependency; e.g., comparision operators are not included.
 Upon return, some of the i_op for which in_subgraph[i_op] <= n_dep_,
 will be changed to in_subgraph[i_op] = i_dep.
 
-\par processed_
-If NDEBUG is not defined, the vector processed_ is checked
-to make sure i_dep is not an element.
-The element i_dep is added to the vector processed_.
+\par process_range_
+The value process_range_[i_dep] is checked to make sure it is false.
+It is then set to have value true.
 */
 template <typename Base>
-void subgraph_info::get_rev_subgraph(
+void subgraph_info::get_rev(
 	const player<Base>*       play         ,
 	const vector<size_t>&     dep_taddr    ,
 	addr_t                    i_dep        ,
 	pod_vector<addr_t>&       subgraph     )
 {
-	// processed_
-# ifndef NDEBUG
-	for(size_t i = 0; i < processed_.size(); ++i)
-	{	CPPAD_ASSERT_KNOWN(
-			processed_[i] != i_dep ,
-			"reverse_subgraph(ell) has already been processed for this ell\n"
-			"since the previous reverse_subgraph(select_domain)"
-		);
-	}
-# endif
-	processed_.push_back(i_dep);
+	// process_range_
+	CPPAD_ASSERT_UNKNOWN( process_range_[i_dep] == false );
+	process_range_[i_dep] = true;
 
 	// special value; see init_rev_in_subgraph
 	addr_t depend_yes = addr_t( n_dep_ );
