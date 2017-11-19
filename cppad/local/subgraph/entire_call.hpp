@@ -36,7 +36,7 @@ first one in the corresponding atomic function call.
 The other call operators are included in the subgraph.
 */
 template <typename Base>
-void subgraph_entire_call(
+void entire_call(
 	const player<Base>*       play         ,
 	pod_vector<addr_t>&       subgraph     )
 {

@@ -12,7 +12,6 @@ A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 
-# include <cppad/core/subgraph_sparsity.hpp>
 //
 # include <cppad/core/for_jac_sparsity.hpp>
 # include <cppad/core/rev_jac_sparsity.hpp>
@@ -31,5 +30,8 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 //
 # include <cppad/core/sparse_jacobian.hpp>
 # include <cppad/core/sparse_hessian.hpp>
+//
+# include <cppad/core/subgraph_sparsity.hpp>
+# include <cppad/core/reverse_subgraph.hpp>
 
 # endif

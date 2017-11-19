@@ -334,6 +334,16 @@ public:
 		bool dependency = false
 	);
 	// ---------------------------------------------------------------------
+	template <typename VectorBool>
+	void reverse_subgraph(
+		const VectorBool&                   select_domain
+	);
+	template <typename VectorBase>
+	void reverse_subgraph(
+		VectorBase&                          dw        ,
+		size_t                               q         ,
+		size_t                               ell
+	);
 	template <typename SizeVector, typename BaseVector>
 	size_t sparse_jac_for(
 		size_t                               group_max ,

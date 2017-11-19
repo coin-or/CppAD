@@ -92,8 +92,6 @@ $$
 $section Calculating Sparsity Patterns$$
 
 $children%
-	cppad/core/subgraph_sparsity.hpp%
-
 	cppad/core/for_jac_sparsity.hpp%
 	cppad/core/for_sparse_jac.hpp%
 
@@ -107,16 +105,18 @@ $children%
 	cppad/core/for_sparse_hes.hpp%
 
 	example/sparse/dependency.cpp%
-	example/sparse/rc_sparsity.cpp
+	example/sparse/rc_sparsity.cpp%
+
+	cppad/core/subgraph_sparsity.hpp
 %$$
 
 $head Preferred Sparsity Patterns$$
 $table
-$rref subgraph_sparsity$$
 $rref for_jac_sparsity$$
 $rref rev_jac_sparsity$$
 $rref for_hes_sparsity$$
 $rref rev_hes_sparsity$$
+$rref subgraph_sparsity$$
 $tend
 
 $head Old Sparsity Patterns$$
@@ -142,13 +142,16 @@ $children%
 	cppad/core/sparse_jacobian.hpp%
 
 	cppad/core/sparse_hes.hpp%
-	cppad/core/sparse_hessian.hpp
+	cppad/core/sparse_hessian.hpp%
+
+	cppad/core/reverse_subgraph.hpp
 %$$
 
 $head Preferred Sparsity Patterns$$
 $table
 $rref sparse_jac$$
 $rref sparse_hes$$
+$rref reverse_subgraph$$
 $tend
 
 $head Old Sparsity Patterns$$

@@ -101,21 +101,13 @@ VectorBase ADFun<Base>::Reverse(size_t q, const VectorBase &w)
 	// number of dependent variables
 	size_t m = dep_taddr_.size();
 
-	local::pod_vector<Base> Partial;
-	Partial.extend(num_var_tape_  * q);
-
-	// update maximum memory requirement
-	// memoryMax = std::max( memoryMax,
-	//	Memory() + num_var_tape_  * q * sizeof(Base)
-	// );
-
 	// check VectorBase is Simple Vector class with Base type elements
 	CheckSimpleVector<Base, VectorBase>();
 
 	CPPAD_ASSERT_KNOWN(
 		size_t(w.size()) == m || size_t(w.size()) == (m * q),
 		"Argument w to Reverse does not have length equal to\n"
-		"the dimension of the range for the corresponding ADFun."
+		"the dimension of the range or dimension of range times q."
 	);
 	CPPAD_ASSERT_KNOWN(
 		q > 0,
@@ -123,7 +115,7 @@ VectorBase ADFun<Base>::Reverse(size_t q, const VectorBase &w)
 	);
 	CPPAD_ASSERT_KNOWN(
 		num_order_taylor_ >= q,
-		"Less that q taylor_ coefficients are currently stored"
+		"Less than q Taylor coefficients are currently stored"
 		" in this ADFun object."
 	);
 	// special case where multiple forward directions have been computed,
@@ -139,7 +131,9 @@ VectorBase ADFun<Base>::Reverse(size_t q, const VectorBase &w)
 		"Reverse mode for Forward(q, r, xq) with more than one direction"
 		"\n(r > 1) is not yet supported for q > 1."
 	);
+
 	// initialize entire Partial matrix to zero
+	local::pod_vector<Base> Partial(num_var_tape_ * q);
 	for(i = 0; i < num_var_tape_; i++)
 		for(j = 0; j < q; j++)
 			Partial[i * q + j] = zero;
