@@ -117,6 +117,31 @@ normal reverse mode.
 $end
 */
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
+/*!
+\file reverse_subgraph.hpp
+Compute derivatvies using reverse mode and subgraphs.
+*/
+
+/*!
+Initialize reverse mode derivative computation on subgraphs.
+
+\param select_domain
+is a vector with size equal to the dimension of the domain for this function.
+Only derivatives w.r.t. the components that are true will be computed.
+
+\par subgraph_info_.map_user_op()
+If the input size of this vector is zero,
+its value for this player (play_) is computed.
+
+\par subgraph_info.in_subgraph_
+This vector is initialized for a reverse mode computation on subgraphs.
+
+\par subgraph_info.select_domain()
+This vector is set equal to the select_domain argument.
+
+\par subgraph_info.process_range()
+This vector is initialized to have size Range() and its elements are false.
+*/
 
 template <typename Base>
 template <typename VectorBool>
@@ -147,6 +172,59 @@ void ADFun<Base>::reverse_subgraph( const VectorBool& select_domain )
 	return;
 }
 
+
+/*!
+Use reverse mode to compute derivative of Taylor coefficients on a subgraph.
+
+The function
+\f$ X : {\bf R} \times {\bf R}^{n \times q} \rightarrow {\bf R} \f$
+is defined by
+\f[
+X(t , u) = \sum_{k=0}^{q-1} u^{(k)} t^k
+\f]
+The function
+\f$ Y : {\bf R} \times {\bf R}^{n \times q} \rightarrow {\bf R} \f$
+is defined by
+\f[
+Y(t , u) = F[ X(t, u) ]
+\f]
+The function
+\f$ W : {\bf R}^{n \times q} \rightarrow {\bf R} \f$ is defined by
+\f[
+W(u) = \sum_{k=0}^{q-1} ( w^{(k)} )^{\rm T}
+\frac{1}{k !} \frac{ \partial^k } { t^k } Y(0, u)
+\f]
+
+\param q
+is the number of Taylor coefficient we are differentiating.
+
+\param ell
+is the component of the range that is selected for differentiation.
+
+\param dw
+Is a vector \f$ dw \f$ such that
+for \f$ j = 0 , \ldots , n-1 \f$ and
+\f$ k = 0 , \ldots , q-1 \f$
+\f[
+	dw[ j * q + k ] = W^{(1)} ( x )_{j,k}
+\f]
+where the matrix \f$ x \f$ is the value for \f$ u \f$
+that corresponding to the forward mode Taylor coefficients
+for the independent variables as specified by previous calls to Forward.
+Note that if
+\code
+	subgraph_info.select_domain[j] == false
+\endcode
+dw[ j * q + k ] is set to zero (not the formula above).
+
+\par subgraph_info.process_range()
+The element process_range[ell] is set to true by this operation.
+
+\par subgraph_info.in_subgraph_
+some of the elements of this vector are set to have value ell
+(so it can not longer be used to determine the subgraph corresponding to
+the ell-th dependent variable).
+*/
 template <typename Base>
 template <typename VectorBase>
 void ADFun<Base>::reverse_subgraph(
@@ -180,7 +258,6 @@ void ADFun<Base>::reverse_subgraph(
 		"This dependent variable index has already been processed\n"
 		"after the previous reverse_subgraph(select_domain)."
 	);
-
 
 	// subgraph of operators connected to dependent variable ell
 	pod_vector<addr_t> subgraph;
