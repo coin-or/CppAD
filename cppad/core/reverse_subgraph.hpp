@@ -168,13 +168,15 @@ void ADFun<Base>::reverse_subgraph( const VectorBool& select_domain )
 	else
 	{	CPPAD_ASSERT_UNKNOWN( subgraph_info_.check_map_user_op(&play_) );
 	}
-	const pod_vector<addr_t>& map_user_op( subgraph_info_.map_user_op() );
-	CPPAD_ASSERT_UNKNOWN( map_user_op.size() == play_.num_op_rec() );
+	CPPAD_ASSERT_UNKNOWN(
+		subgraph_info_.map_user_op().size() == play_.num_op_rec()
+	);
 
 	// initialize for reverse mode subgraph computations
 	subgraph_info_.init_rev(&play_, select_domain);
-	pod_vector<addr_t>& in_subgraph( subgraph_info_.in_subgraph() );
-	CPPAD_ASSERT_UNKNOWN( in_subgraph.size() == play_.num_op_rec() );
+	CPPAD_ASSERT_UNKNOWN(
+		subgraph_info_.in_subgraph().size() == play_.num_op_rec()
+	);
 
 	return;
 }
