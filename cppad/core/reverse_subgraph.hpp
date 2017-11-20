@@ -295,15 +295,7 @@ void ADFun<Base>::reverse_subgraph(
 	// initialize Partial matrix to zero on subgraph
 	Base zero(0);
 	local::pod_vector<Base> Partial(num_var_tape_ * q);
-	//
-	// all independent variables
-	{	size_t k = ind_taddr_.size() * q;
-		while(--k)
-			Partial[k] = zero;
-	}
-	// rest of subgraph
 	for(size_t k = 0; k < subgraph.size(); ++k)
-	if( play_.GetOp( subgraph[k] != local::InvOp ) )
 	{
 		size_t               i_op = size_t( subgraph[k] );
 		local::OpCode        op;
@@ -349,13 +341,30 @@ void ADFun<Base>::reverse_subgraph(
 	);
 
 	// return the derivative values
-	const pod_vector<bool>& select_domain( subgraph_info_.select_domain() );
 	dw.resize(n * q);
+	size_t subgraph_index = 0;
+	size_t subgraph_value = addr_t(n + 1);
+	if( subgraph.size() > 0 )
+		subgraph_value = subgraph[subgraph_index];
 	for(size_t j = 0; j < n; j++)
 	{	// independent variable taddr equals its operator taddr
 		CPPAD_ASSERT_UNKNOWN( play_.GetOp( ind_taddr_[j] ) == local::InvOp );
 		//
-		if( select_domain[j] )
+		// operator corresponding to this independent variable
+		size_t i_op = play_.var2op( ind_taddr_[j] );
+		CPPAD_ASSERT_UNKNOWN(  i_op == j + 1 );
+		//
+		// advance to subgraph entry that is greater than or equal i_op
+		// Note that variables j
+		while( subgraph_value < i_op )
+		{	++subgraph_index;
+			if( subgraph_index < subgraph.size() )
+				subgraph_value = subgraph[subgraph_index];
+			else
+				subgraph_value = addr_t(n + 1);
+		}
+		// only include independent variables that are in the subgraph
+		if( subgraph_value == i_op )
 		{	for(size_t k = 0; k < q; k++)
 				dw[j * q + k ] = Partial[ind_taddr_[j] * q + k];
 		}

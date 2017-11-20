@@ -47,6 +47,8 @@ Repeated calls with the same subgraph vector should reduce
 the amount of memory allocation.
 Upon return it contains the operator indices for the subgraph
 corresponding to the dependent and the selected independent variables.
+Only selected independent variable operators InvOp are included
+in the subgraph.
 Furthermore the operator indices in subgraph are unique; i.e.,
 if i_op != j_op then subgraph[i_op] != subgraph[j_op].
 
@@ -140,9 +142,13 @@ void subgraph_info::get_rev(
 		{	size_t j_var = argument_variable[j];
 			size_t j_op  = play->var2op(j_var);
 			j_op         = map_user_op_[j_op];
-			bool  depend = in_subgraph_[j_op] <= depend_yes;
-			bool  out    = in_subgraph_[j_op] != i_dep;
-			if( depend & out )
+			bool add = in_subgraph_[j_op] <= depend_yes;
+			add     &= in_subgraph_[j_op] != i_dep;
+			if( play->GetOp(j_op) == InvOp )
+			{	CPPAD_ASSERT_UNKNOWN( j_op == j_var );
+				add &= select_domain_[j_var - 1];
+			}
+			if( add )
 			{	subgraph.push_back( addr_t(j_op) );
 				in_subgraph_[j_op] = i_dep;
 			}
