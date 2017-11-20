@@ -82,7 +82,7 @@ namespace {
 		// order of derivative in sparse_hes_fun
 		size_t order = 0;
 		//
-		if( ! global_option["grad2hes"] )
+		if( ! global_option["hes2jac"] )
 		{
 			// declare independent variables
 			Independent(a1x);
@@ -149,7 +149,7 @@ namespace {
 		bool transpose     = false;
 		//
 		if( global_option["subsparsity"] )
-		{	CPPAD_ASSERT_UNKNOWN( global_option["grad2hes"] )
+		{	CPPAD_ASSERT_UNKNOWN( global_option["hes2jac"] )
 			CPPAD_ASSERT_UNKNOWN( n == m );
 			b_vector select_domain(n), select_range(m);
 			for(size_t j = 0; j < n; ++j)
@@ -167,7 +167,7 @@ namespace {
 		bool reverse       = global_option["revsparsity"];
 		bool internal_bool = global_option["boolsparsity"];
 		//
-		if( ! global_option["grad2hes"] )
+		if( ! global_option["hes2jac"] )
 		{	// fun corresponds to f(x)
 			//
 			CPPAD_ASSERT_UNKNOWN( m == 1 );
@@ -229,7 +229,7 @@ namespace {
 		CppAD::ADFun<double>&   fun      )
 	{	size_t n_sweep;
 		//
-		if( ! global_option["grad2hes"] )
+		if( ! global_option["hes2jac"] )
 		{	// fun corresponds to f(x)
 			//
 			// coloring method
@@ -291,7 +291,7 @@ bool link_sparse_hessian(
 	// --------------------------------------------------------------------
 	// check global options
 	const char* valid[] = {
-		"memory", "onetape", "optimize", "grad2hes", "subgraph",
+		"memory", "onetape", "optimize", "hes2jac", "subgraph",
 # if CPPAD_HAS_COLPACK
 		"boolsparsity", "revsparsity", "subsparsity", "colpack"
 # else
@@ -313,11 +313,11 @@ bool link_sparse_hessian(
 	if( global_option["subsparsity"] )
 	{	if( global_option["boolsparsity"] || global_option["revsparsity"] )
 			return false;
-		if( ! global_option["grad2hes"] )
+		if( ! global_option["hes2jac"] )
 			return false;
 	}
 	if( global_option["subgraph"] )
-	{	if( ! global_option["grad2hes"] )
+	{	if( ! global_option["hes2jac"] )
 			return false;
 	}
 	// -----------------------------------------------------------------------

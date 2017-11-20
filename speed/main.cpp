@@ -47,6 +47,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin speed_main$$
 $spell
+	jac
 	subgraph
 	Jacobians
 	hes
@@ -214,7 +215,7 @@ $cref/atomic/atomic_base/$$ operation is used for the test.
 So far, CppAD has only implemented
 the $cref/mat_mul/link_mat_mul/$$ test as an atomic operation.
 
-$subhead grad2hes$$
+$subhead hes2jac$$
 If this option is present,
 $cref speed_cppad$$ will compute hessians as the Jacobian
 of the gradient.
@@ -230,7 +231,7 @@ $cref speed_cppad$$ will compute sparse Jacobians using subgraphs.
 The CppAD $cref/sparse_jacobian/link_sparse_jacobian/$$
 test is implemented for this option.
 In addition, the CppAD $cref/sparse_hessian/link_sparse_hessian/$$
-test is implemented for this option when $code grad2hes$$ is present.
+test is implemented for this option when $code hes2jac$$ is present.
 
 $head Sparsity Options$$
 The following options only apply to the
@@ -367,7 +368,7 @@ namespace {
 		"onetape",
 		"optimize",
 		"atomic",
-		"grad2hes",
+		"hes2jac",
 		"subgraph",
 		"boolsparsity",
 		"revsparsity",

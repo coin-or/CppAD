@@ -48,6 +48,7 @@ $spell
 	sizeof
 	addr
 	subsparsity
+	subgraph
 $$
 
 $section Changes and Additions to CppAD During 2017$$
@@ -57,8 +58,13 @@ Speed tests no longer automatically compile in release mode; see
 $cref/debug_which/speed/debug_which/$$
 
 $head 11-20$$
+$list number$$
 Add the $cref subgraph_jac_rev$$ method for computing
 sparse Jacobians.
+$lnext
+Add the $cref/subgraph/speed_main/Global Options/subgraph/$$ option
+to the CppAD speed tests.
+$lend
 
 $head 11-19$$
 Add the $cref subgraph_reverse$$ method for computing
@@ -80,7 +86,7 @@ $lend
 
 $head 11-13$$
 $list number$$
-Add the $cref/grad2hes/speed_main/Global Options/grad2hes/$$ option
+Add the $cref/hes2jac/speed_main/Global Options/hes2jac/$$ option
 to the CppAD speed tests.
 $lnext
 Implement the
