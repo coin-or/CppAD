@@ -39,7 +39,7 @@ extern bool rev_hes_sparsity(void);
 extern bool rev_jac_sparsity(void);
 extern bool RevSparseJac(void);
 extern bool rev_sparse_hes(void);
-extern bool reverse_subgraph(void);
+extern bool subgraph_reverse(void);
 extern bool for_hes_sparsity(void);
 extern bool for_jac_sparsity(void);
 extern bool ForSparseJac(void);
@@ -75,7 +75,7 @@ int main(void)
 	Run( rev_jac_sparsity,          "rev_jac_sparsity" );
 	Run( RevSparseJac,              "RevSparseJac" );
 	Run( rev_sparse_hes,            "rev_sparse_hes" );
-	Run( reverse_subgraph,          "reverse_subgraph");
+	Run( subgraph_reverse,          "reverse_subgraph");
 	Run( for_hes_sparsity,          "for_hes_sparsity" );
 	Run( for_jac_sparsity,          "for_jac_sparsity" );
 	Run( ForSparseJac,              "ForSparseJac" );

@@ -80,7 +80,7 @@ $childtable%
 	omh/reverse/reverse_one.omh%
 	omh/reverse/reverse_two.omh%
 	omh/reverse/reverse_any.omh%
-	cppad/core/reverse_subgraph.hpp
+	cppad/core/subgraph_reverse.hpp
 %$$
 
 $end

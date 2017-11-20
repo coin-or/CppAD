@@ -168,7 +168,7 @@ namespace {
 		return ok;
 	}
 	// =======================================================================
-	bool reverse_subgraph(void)
+	bool subgraph_reverse(void)
 	{	bool ok = true;
 		double eps99 = 99.0 * std::numeric_limits<double>::epsilon();
 		using CppAD::NearEqual;
@@ -189,7 +189,7 @@ namespace {
 		for(size_t j = 0; j < n; j++)
 			select_domain[j] = true;
 		select_domain[4] = false;
-		f.reverse_subgraph(select_domain);
+		f.subgraph_reverse(select_domain);
 
 		// vector used to check results
 		CPPAD_TESTVECTOR(double) check(n);
@@ -200,14 +200,14 @@ namespace {
 		CPPAD_TESTVECTOR(double) dw(n);
 		size_t q   = 1;
 		size_t ell = 0;
-		f.reverse_subgraph(dw, q, ell);
+		f.subgraph_reverse(dw, q, ell);
 		for(size_t j = 0; j < n; j++)
 			ok &= NearEqual(dw[j], check[j], eps99, eps99);
 		//
 		// derivative of y[1]
 		check[1] = 1.0;
 		ell = 1;
-		f.reverse_subgraph(dw, q, ell);
+		f.subgraph_reverse(dw, q, ell);
 		for(size_t j = 0; j < n; j++)
 			ok &= NearEqual(dw[j], check[j], eps99, eps99);
 		//
@@ -215,7 +215,7 @@ namespace {
 		check[1] = 2.0 * x[2];
 		check[2] = 2.0 * x[1];
 		ell = 2;
-		f.reverse_subgraph(dw, q, ell);
+		f.subgraph_reverse(dw, q, ell);
 		for(size_t j = 0; j < n; j++)
 			ok &= NearEqual(dw[j], check[j], eps99, eps99);
 		//
@@ -223,21 +223,21 @@ namespace {
 		check[1] = cos( x[1] );
 		check[2] = 0.0;
 		ell = 3;
-		f.reverse_subgraph(dw, q, ell);
+		f.subgraph_reverse(dw, q, ell);
 		for(size_t j = 0; j < n; j++)
 			ok &= NearEqual(dw[j], check[j], eps99, eps99);
 		//
 		// derivative of y[4] (x[4] is not selected)
 		check[1] = 0.0;
 		ell = 4;
-		f.reverse_subgraph(dw, q, ell);
+		f.subgraph_reverse(dw, q, ell);
 		for(size_t j = 0; j < n; j++)
 			ok &= NearEqual(dw[j], check[j], eps99, eps99);
 		//
 		// derivative of y[5]
 		check[3] = -2.0 / (x[3] * x[3]);
 		ell = 5;
-		f.reverse_subgraph(dw, q, ell);
+		f.subgraph_reverse(dw, q, ell);
 		for(size_t j = 0; j < n; j++)
 			ok &= NearEqual(dw[j], check[j], eps99, eps99);
 		//
@@ -245,7 +245,7 @@ namespace {
 		check[3] = 1.0;
 		check[5] = 1.0;
 		ell = 6;
-		f.reverse_subgraph(dw, q, ell);
+		f.subgraph_reverse(dw, q, ell);
 		for(size_t j = 0; j < n; j++)
 			ok &= NearEqual(dw[j], check[j], eps99, eps99);
 		//
@@ -256,7 +256,7 @@ namespace {
 bool subgraph(void)
 {	bool ok = true;
 	ok     &= subgraph_sparsity();
-	ok     &= reverse_subgraph();
+	ok     &= subgraph_reverse();
 	//
 	ok     &= atom_g != CPPAD_NULL;
 	delete atom_g;

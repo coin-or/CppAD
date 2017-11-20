@@ -165,9 +165,9 @@ void ADFun<Base>::subgraph_jac_rev(
 		select_domain[ col[k] ] = true;
 	//
 	// initialize reverse mode computation on subgraphs
-	reverse_subgraph(select_domain);
+	subgraph_reverse(select_domain);
 	//
-	// memory used to hold reverse_subgraph results
+	// memory used to hold subgraph_reverse results
 	BaseVector dw;
 	//
 	// initialize index in row_major
@@ -177,7 +177,7 @@ void ADFun<Base>::subgraph_jac_rev(
 		size_t i_dep = row[ row_major[k] ];
 		size_t i_ind = col[ row_major[k] ];
 		size_t ell   = i_dep;
-		reverse_subgraph(dw, q, ell);
+		subgraph_reverse(dw, q, ell);
 		while( i_dep == ell )
 		{	subset.set( row_major[k], dw[i_ind] );
 			++k;

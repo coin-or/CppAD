@@ -172,7 +172,7 @@ nobase_myinclude_HEADERS =  \
 	cppad/core/pow.hpp \
 	cppad/core/print_for.hpp \
 	cppad/core/reverse.hpp \
-	cppad/core/reverse_subgraph.hpp \
+	cppad/core/subgraph_reverse.hpp \
 	cppad/core/rev_hes_sparsity.hpp \
 	cppad/core/rev_jac_sparsity.hpp \
 	cppad/core/rev_one.hpp \

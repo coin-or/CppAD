@@ -10,7 +10,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 
 /*
-$begin reverse_subgraph.cpp$$
+$begin subgraph_reverse.cpp$$
 $spell
 	Subgraphs
 $$
@@ -18,14 +18,14 @@ $$
 $section Computing Reverse Mode on Subgraphs: Example and Test$$
 
 $code
-$srcfile%example/sparse/reverse_subgraph.cpp%0%// BEGIN C++%// END C++%1%$$
+$srcfile%example/sparse/subgraph_reverse.cpp%0%// BEGIN C++%// END C++%1%$$
 $$
 
 $end
 */
 // BEGIN C++
 # include <cppad/cppad.hpp>
-bool reverse_subgraph(void)
+bool subgraph_reverse(void)
 {	bool ok = true;
 	//
 	using CppAD::AD;
@@ -81,13 +81,13 @@ bool reverse_subgraph(void)
 		select_domain[j] = true;
 	//
 	// initilaize for reverse mode derivatives computation on subgraphs
-	f.reverse_subgraph(select_domain);
+	f.subgraph_reverse(select_domain);
 	//
 	// compute the derivative for each range component
 	for(size_t i = 0; i < m; i++)
 	{	d_vector dw;
 		size_t   q = 1; // derivative of one Taylor coefficient (zero order)
-		f.reverse_subgraph(dw, q, i);
+		f.subgraph_reverse(dw, q, i);
 		//
 		// check derivatives for i-th row of J(x)
 		ok &= dw[0] == 0.0;

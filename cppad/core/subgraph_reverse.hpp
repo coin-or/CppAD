@@ -11,7 +11,7 @@ A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 /*
-$begin reverse_subgraph$$
+$begin subgraph_reverse$$
 $spell
 	subgraph
 	Subgraphs
@@ -24,9 +24,9 @@ $$
 $section Reverse Mode Using Subgraphs$$
 
 $head Syntax$$
-$icode%f%.reverse_subgraph(%select_domain%)
+$icode%f%.subgraph_reverse(%select_domain%)
 %$$
-$icode%f%.reverse_subgraph(%dw%, %q%, %ell%)
+$icode%f%.subgraph_reverse(%dw%, %q%, %ell%)
 %$$
 
 $head Purpose$$
@@ -114,10 +114,10 @@ normal reverse mode.
 
 $head Example$$
 $children%
-	example/sparse/reverse_subgraph.cpp
+	example/sparse/subgraph_reverse.cpp
 %$$
 The file
-$cref reverse_subgraph.cpp$$
+$cref subgraph_reverse.cpp$$
 contains an example and test of this operation.
 It returns true if it succeeds and false otherwise.
 
@@ -125,7 +125,7 @@ $end
 */
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 /*!
-\file reverse_subgraph.hpp
+\file subgraph_reverse.hpp
 Compute derivatvies using reverse mode and subgraphs.
 */
 
@@ -152,7 +152,7 @@ This vector is initialized to have size Range() and its elements are false.
 
 template <typename Base>
 template <typename VectorBool>
-void ADFun<Base>::reverse_subgraph( const VectorBool& select_domain )
+void ADFun<Base>::subgraph_reverse( const VectorBool& select_domain )
 {	using local::pod_vector;
 
 	CPPAD_ASSERT_UNKNOWN(
@@ -236,7 +236,7 @@ the ell-th dependent variable).
 */
 template <typename Base>
 template <typename VectorBase>
-void ADFun<Base>::reverse_subgraph(
+void ADFun<Base>::subgraph_reverse(
 	VectorBase& dw  ,
 	size_t      q   ,
 	size_t      ell )
@@ -265,7 +265,7 @@ void ADFun<Base>::reverse_subgraph(
 	CPPAD_ASSERT_KNOWN(
 		subgraph_info_.process_range()[ell] == false,
 		"This dependent variable index has already been processed\n"
-		"after the previous reverse_subgraph(select_domain)."
+		"after the previous subgraph_reverse(select_domain)."
 	);
 
 	// subgraph of operators connected to dependent variable ell
@@ -375,7 +375,7 @@ void ADFun<Base>::reverse_subgraph(
 		}
 	}
 	CPPAD_ASSERT_KNOWN( ! ( hasnan(dw) && check_for_nan_ ) ,
-		"f.reverse_subgraph(dw, q, ell): dw has a nan,\n"
+		"f.subgraph_reverse(dw, q, ell): dw has a nan,\n"
 		"but none of f's Taylor coefficents are nan."
 	);
 	return;

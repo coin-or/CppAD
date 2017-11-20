@@ -32,7 +32,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # include <cppad/core/sparse_hessian.hpp>
 //
 # include <cppad/core/subgraph_sparsity.hpp>
-# include <cppad/core/reverse_subgraph.hpp>
+# include <cppad/core/subgraph_reverse.hpp>
 # include <cppad/core/subgraph_jac_rev.hpp>
 
 # endif

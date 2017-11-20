@@ -56,7 +56,7 @@ Speed tests no longer automatically compile in release mode; see
 $cref/debug_which/speed/debug_which/$$
 
 $head 11-19$$
-Add the $cref reverse_subgraph$$ method for computing
+Add the $cref subgraph_reverse$$ method for computing
 sparse derivatives.
 This was inspired by the
 $href%https://cran.r-project.org/web/packages/TMB/index.html%TMB%$$ package.

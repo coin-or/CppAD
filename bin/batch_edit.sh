@@ -24,11 +24,13 @@ spell_list='
 revert_list='
 '
 move_list='
+	cppad/core/reverse_subgraph.hpp
+	example/sparse/reverse_subgraph.cpp
 '
-move_sed='s|rev_jac_subgraph.hpp|subgraph.hpp|'
+move_sed='s|reverse_subgraph|subgraph_reverse|'
 #
 cat << EOF > junk.sed
-s|lenght|length|g
+s|reverse_subgraph|subgraph_reverse|
 EOF
 # -----------------------------------------------------------------------------
 if [ $0 != "bin/batch_edit.sh" ]

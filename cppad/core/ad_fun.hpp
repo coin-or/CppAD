@@ -335,11 +335,11 @@ public:
 	);
 	// ---------------------------------------------------------------------
 	template <typename VectorBool>
-	void reverse_subgraph(
+	void subgraph_reverse(
 		const VectorBool&                   select_domain
 	);
 	template <typename VectorBase>
-	void reverse_subgraph(
+	void subgraph_reverse(
 		VectorBase&                          dw        ,
 		size_t                               q         ,
 		size_t                               ell
