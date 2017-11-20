@@ -34,6 +34,7 @@ SET(source_list sparse.cpp
 	sparse_sub_hes.cpp
 	sparsity_sub.cpp
 	sub_sparse_hes.cpp
+	subgraph_jac_rev.cpp
 	subgraph_sparsity.cpp
 )
 

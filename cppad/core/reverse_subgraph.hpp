@@ -311,8 +311,9 @@ void ADFun<Base>::reverse_subgraph(
 			);
 		}
 		else
-		{	CPPAD_ASSERT_UNKNOWN( i_var > NumRes(op) );
-			for(size_t i = i_var - NumRes(op); i <= i_var; ++i)
+		{	CPPAD_ASSERT_UNKNOWN( i_var >= NumRes(op) );
+			size_t j_var = i_var + 1 - NumRes(op);
+			for(size_t i = j_var; i <= i_var; ++i)
 			{	for(size_t j = 0; j < q; ++j)
 					Partial[i * q + j] = zero;
 			}

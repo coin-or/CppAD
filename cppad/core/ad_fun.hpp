@@ -345,6 +345,11 @@ public:
 		size_t                               ell
 	);
 	template <typename SizeVector, typename BaseVector>
+	void subgraph_jac_rev(
+		const BaseVector&                    x         ,
+		sparse_rcv<SizeVector, BaseVector>&  subset
+	);
+	template <typename SizeVector, typename BaseVector>
 	size_t sparse_jac_for(
 		size_t                               group_max ,
 		const BaseVector&                    x         ,

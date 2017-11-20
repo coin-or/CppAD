@@ -79,7 +79,8 @@ results are retained (the higher order forward results are lost).
 $childtable%
 	omh/reverse/reverse_one.omh%
 	omh/reverse/reverse_two.omh%
-	omh/reverse/reverse_any.omh
+	omh/reverse/reverse_any.omh%
+	cppad/core/reverse_subgraph.hpp
 %$$
 
 $end
@@ -144,14 +145,14 @@ $children%
 	cppad/core/sparse_hes.hpp%
 	cppad/core/sparse_hessian.hpp%
 
-	cppad/core/reverse_subgraph.hpp
+	cppad/core/subgraph_jac_rev.hpp
 %$$
 
 $head Preferred Sparsity Patterns$$
 $table
 $rref sparse_jac$$
 $rref sparse_hes$$
-$rref reverse_subgraph$$
+$rref subgraph_jac_rev$$
 $tend
 
 $head Old Sparsity Patterns$$
