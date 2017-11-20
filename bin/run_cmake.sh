@@ -41,6 +41,7 @@ usage: bin/run_cmake.sh: \\
 	[--verbose] \\
 	[--c++98] \\
 	[--profile_speed] \\
+	[--callgrind] \\
 	[--clang ] \\
 	[--no_colpack] \\
 	[--no_eigen] \\
@@ -67,6 +68,10 @@ EOF
 
 		--profile_speed)
 		profile_speed='yes'
+		;;
+
+		--callgrind)
+		callgrind='yes'
 		;;
 
 		--clang)
@@ -202,6 +207,15 @@ done
 #
 # cppad_cxx_flags
 cppad_cxx_flags="-Wall -pedantic-errors -std=$standard -Wshadow -Wconversion"
+if [ "$callgrind" == 'yes' ]
+then
+	if [ "$debug_which" != 'debug_none' ]
+	then
+		echo 'run_cmake.sh: --callgrind requires --debug_none'
+		exit 1
+	fi
+	cppad_cxx_flags="$cppad_cxx_flags -g"
+fi
 cmake_args="$cmake_args -D cppad_cxx_flags='$cppad_cxx_flags'"
 #
 # clang
