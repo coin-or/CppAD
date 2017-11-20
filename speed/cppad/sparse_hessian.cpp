@@ -250,16 +250,24 @@ namespace {
 		else
 		{	// fun corresponds to g(x)
 			//
-			// coloring method
-			std::string coloring = "cppad";
+			if( global_option["subgraph"] )
+			{	fun.subgraph_jac_rev(x, subset);
+				n_sweep = 0;
+			}
+			else
+			{
+				//
+				// coloring method
+				std::string coloring = "cppad";
 # if CPPAD_HAS_COLPACK
-			if( global_option["colpack"] )
-				coloring = "colpack";
+				if( global_option["colpack"] )
+					coloring = "colpack";
 # endif
-			size_t group_max = 1;
-			n_sweep = fun.sparse_jac_for(
-				group_max, x, subset, sparsity, coloring, jac_work
-			);
+				size_t group_max = 1;
+				n_sweep = fun.sparse_jac_for(
+					group_max, x, subset, sparsity, coloring, jac_work
+				);
+			}
 		}
 		// return result
 		const d_vector& val( subset.val() );
@@ -283,7 +291,7 @@ bool link_sparse_hessian(
 	// --------------------------------------------------------------------
 	// check global options
 	const char* valid[] = {
-		"memory", "onetape", "optimize", "grad2hes",
+		"memory", "onetape", "optimize", "grad2hes", "subgraph",
 # if CPPAD_HAS_COLPACK
 		"boolsparsity", "revsparsity", "subsparsity", "colpack"
 # else
@@ -306,6 +314,10 @@ bool link_sparse_hessian(
 	{	if( global_option["boolsparsity"] || global_option["revsparsity"] )
 			return false;
 		if( ! global_option["grad2hes"] )
+			return false;
+	}
+	if( global_option["subgraph"] )
+	{	if( ! global_option["grad2hes"] )
 			return false;
 	}
 	// -----------------------------------------------------------------------

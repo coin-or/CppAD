@@ -47,6 +47,8 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin speed_main$$
 $spell
+	subgraph
+	Jacobians
 	hes
 	subgraphs
 	subsparsity
@@ -222,6 +224,14 @@ So far, CppAD has only implemented
 the $cref/sparse_hessian/link_sparse_hessian/$$
 test in this manner.
 
+$subhead subgraph$$
+If this option is present,
+$cref speed_cppad$$ will compute sparse Jacobians using subgraphs.
+The CppAD $cref/sparse_jacobian/link_sparse_jacobian/$$
+test is implemented for this option.
+In addition, the CppAD $cref/sparse_hessian/link_sparse_hessian/$$
+test is implemented for this option when $code grad2hes$$ is present.
+
 $head Sparsity Options$$
 The following options only apply to the
 $cref/sparse_jacobian/link_sparse_jacobian/$$ and
@@ -358,6 +368,7 @@ namespace {
 		"optimize",
 		"atomic",
 		"grad2hes",
+		"subgraph",
 		"boolsparsity",
 		"revsparsity",
 		"subsparsity",

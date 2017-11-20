@@ -115,7 +115,7 @@ bool link_sparse_jacobian(
 	// --------------------------------------------------------------------
 	// check global options
 	const char* valid[] = {
-		"memory", "onetape", "optimize",
+		"memory", "onetape", "optimize", "subgraph",
 # if CPPAD_HAS_COLPACK
 		"boolsparsity", "revsparsity", "subsparsity", "colpack"
 # else
@@ -201,14 +201,21 @@ bool link_sparse_jacobian(
 		// calculate the Jacobian sparsity pattern for this function
 		calc_sparsity(sparsity, f);
 		//
-		// structure that holds some of the work done by sparse_jac_for
-		CppAD::sparse_jac_work work;
-		//
-		// calculate the Jacobian at this x
-		// (use forward mode because m > n ?)
-		n_sweep = f.sparse_jac_for(
-			group_max, x, subset, sparsity, coloring, work
-		);
+		if( global_option["subgraph"] )
+		{	// user reverse mode becasue forward not yet implemented
+			f.subgraph_jac_rev(x, subset);
+			n_sweep = 0;
+		}
+		else
+		{	// structure that holds some of the work done by sparse_jac_for
+			CppAD::sparse_jac_work work;
+			//
+			// calculate the Jacobian at this x
+			// (use forward mode because m > n ?)
+			n_sweep = f.sparse_jac_for(
+				group_max, x, subset, sparsity, coloring, work
+			);
+		}
 		for(size_t k = 0; k < nnz; k++)
 			jacobian[k] = subset_val[k];
 	}
@@ -244,10 +251,17 @@ bool link_sparse_jacobian(
 			CppAD::uniform_01(n, x);
 			//
 			// calculate the Jacobian at this x
-			// (use forward mode because m > n ?)
-			n_sweep = f.sparse_jac_for(
-				group_max, x, subset, sparsity, coloring, work
-			);
+			if( global_option["subgraph"] )
+			{	// user reverse mode becasue forward not yet implemented
+				f.subgraph_jac_rev(x, subset);
+				n_sweep = 0;
+			}
+			else
+			{	// (use forward mode because m > n ?)
+				n_sweep = f.sparse_jac_for(
+					group_max, x, subset, sparsity, coloring, work
+				);
+			}
 			for(size_t k = 0; k < nnz; k++)
 				jacobian[k] = subset_val[k];
 		}
