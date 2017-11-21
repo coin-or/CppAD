@@ -96,27 +96,41 @@ bool subgraph_jac_rev(void)
 		select_domain[j] = true;
 	for(size_t i = 0; i < m; ++i)
 		select_range[i] = true;
+	// -----------------------------------------------------------------------
+	// Compute Jacobian using f.subgraph_jac_rev(x, subset)
+	// -----------------------------------------------------------------------
 	//
+	// get sparsity pattern
 	bool transpose     = false;
 	sparse_rc<s_vector> pattern_jac;
 	f.subgraph_sparsity(
 		select_domain, select_range, transpose, pattern_jac
 	);
-	//
-	// compute entire Jacobian
+	// f.subgraph_jac_rev(x, subset)
 	sparse_rcv<s_vector, d_vector> subset( pattern_jac );
 	f.subgraph_jac_rev(x, subset);
 	//
-	const s_vector row( subset.row() );
-	const s_vector col( subset.col() );
-	const d_vector val( subset.val() );
-	s_vector row_major = subset.row_major();
-	//
+	// check result
 	ok  &= subset.nnz() == nnz;
+	s_vector row_major = subset.row_major();
 	for(size_t k = 0; k < nnz; k++)
-	{	ok &= row[ row_major[k] ] == check_row[k];
-		ok &= col[ row_major[k] ] == check_col[k];
-		ok &= val[ row_major[k] ] == check_val[k];
+	{	ok &= subset.row()[ row_major[k] ] == check_row[k];
+		ok &= subset.col()[ row_major[k] ] == check_col[k];
+		ok &= subset.val()[ row_major[k] ] == check_val[k];
+	}
+	// -----------------------------------------------------------------------
+	// f.subgraph_jac_rev(select_domain, select_range, x, matrix_out)
+	// -----------------------------------------------------------------------
+	sparse_rcv<s_vector, d_vector>  matrix_out;
+	f.subgraph_jac_rev(select_domain, select_range, x, matrix_out);
+	//
+	// check result
+	ok  &= matrix_out.nnz() == nnz;
+	row_major = matrix_out.row_major();
+	for(size_t k = 0; k < nnz; k++)
+	{	ok &= matrix_out.row()[ row_major[k] ] == check_row[k];
+		ok &= matrix_out.col()[ row_major[k] ] == check_col[k];
+		ok &= matrix_out.val()[ row_major[k] ] == check_val[k];
 	}
 	//
 	return ok;

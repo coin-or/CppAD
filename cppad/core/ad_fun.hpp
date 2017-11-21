@@ -350,6 +350,13 @@ public:
 		const BaseVector&                    x         ,
 		sparse_rcv<SizeVector, BaseVector>&  subset
 	);
+	template <typename BoolVector, typename SizeVector, typename BaseVector>
+	void subgraph_jac_rev(
+		const BoolVector&                    select_domain ,
+		const BoolVector&                    select_range  ,
+		const BaseVector&                    x             ,
+		sparse_rcv<SizeVector, BaseVector>&  matrix_out
+	);
 	template <typename SizeVector, typename BaseVector>
 	size_t sparse_jac_for(
 		size_t                               group_max ,

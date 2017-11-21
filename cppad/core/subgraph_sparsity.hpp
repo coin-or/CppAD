@@ -85,7 +85,8 @@ $codei%
 %$$
 It has size $latex m$$ and specifies which components of the range
 to include in the calculation.
-A subgraph is built for each dependent variable in the selected set.
+A subgraph is built for each dependent variable
+and the selected set of independent variables.
 
 $head transpose$$
 This argument has prototype
