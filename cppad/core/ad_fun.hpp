@@ -338,11 +338,12 @@ public:
 	void subgraph_reverse(
 		const VectorBool&                   select_domain
 	);
-	template <typename VectorBase>
+	template <typename VectorBase, typename SizeVector>
 	void subgraph_reverse(
-		VectorBase&                          dw        ,
 		size_t                               q         ,
-		size_t                               ell
+		size_t                               ell       ,
+		SizeVector&                          col       ,
+		VectorBase&                          dw
 	);
 	template <typename SizeVector, typename BaseVector>
 	void subgraph_jac_rev(

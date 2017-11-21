@@ -168,10 +168,33 @@ namespace {
 		return ok;
 	}
 	// =======================================================================
-	bool subgraph_reverse(void)
+	bool compare_subgraph_reverse(
+		const CPPAD_TESTVECTOR(size_t)&  col   ,
+		const CPPAD_TESTVECTOR(double)&  dw    ,
+		const CPPAD_TESTVECTOR(double)&  check )
 	{	bool ok = true;
 		double eps99 = 99.0 * std::numeric_limits<double>::epsilon();
-		using CppAD::NearEqual;
+		//
+		size_t n = check.size();
+		//
+		// check order in col
+		for(size_t c = 1; c < col.size(); c++)
+			ok &= col[c] > col[c-1];
+		//
+		size_t c = 0;
+		for(size_t j = 1; j < n; j++)
+		{	while( c < col.size() && col[c] < j )
+				++c;
+			if( c < col.size() && col[c] == j )
+				ok &= CppAD::NearEqual(dw[j], check[j], eps99, eps99);
+			else
+				ok &= CppAD::NearEqual(0.0, check[j], eps99, eps99);
+		}
+		return ok;
+	}
+
+	bool subgraph_reverse(void)
+	{	bool ok = true;
 
 		// create f: x -> y
 		size_t n, m;
@@ -197,57 +220,51 @@ namespace {
 			check[j] = 0.0;
 
 		// derivative of y[0]
-		CPPAD_TESTVECTOR(double) dw(n);
+		CPPAD_TESTVECTOR(size_t) col;
+		CPPAD_TESTVECTOR(double) dw;
 		size_t q   = 1;
 		size_t ell = 0;
-		f.subgraph_reverse(dw, q, ell);
-		for(size_t j = 0; j < n; j++)
-			ok &= NearEqual(dw[j], check[j], eps99, eps99);
+		f.subgraph_reverse(q, ell, col, dw);
+		ok &= compare_subgraph_reverse(col, dw, check);
 		//
 		// derivative of y[1]
 		check[1] = 1.0;
 		ell = 1;
-		f.subgraph_reverse(dw, q, ell);
-		for(size_t j = 0; j < n; j++)
-			ok &= NearEqual(dw[j], check[j], eps99, eps99);
+		f.subgraph_reverse(q, ell, col, dw);
+		ok &= compare_subgraph_reverse(col, dw, check);
 		//
 		// derivative of y[2]
 		check[1] = 2.0 * x[2];
 		check[2] = 2.0 * x[1];
 		ell = 2;
-		f.subgraph_reverse(dw, q, ell);
-		for(size_t j = 0; j < n; j++)
-			ok &= NearEqual(dw[j], check[j], eps99, eps99);
+		f.subgraph_reverse(q, ell, col, dw);
+		ok &= compare_subgraph_reverse(col, dw, check);
 		//
 		// derivative of y[3]
 		check[1] = cos( x[1] );
 		check[2] = 0.0;
 		ell = 3;
-		f.subgraph_reverse(dw, q, ell);
-		for(size_t j = 0; j < n; j++)
-			ok &= NearEqual(dw[j], check[j], eps99, eps99);
+		f.subgraph_reverse(q, ell, col, dw);
+		ok &= compare_subgraph_reverse(col, dw, check);
 		//
 		// derivative of y[4] (x[4] is not selected)
 		check[1] = 0.0;
 		ell = 4;
-		f.subgraph_reverse(dw, q, ell);
-		for(size_t j = 0; j < n; j++)
-			ok &= NearEqual(dw[j], check[j], eps99, eps99);
+		f.subgraph_reverse(q, ell, col, dw);
+		ok &= compare_subgraph_reverse(col, dw, check);
 		//
 		// derivative of y[5]
 		check[3] = -2.0 / (x[3] * x[3]);
 		ell = 5;
-		f.subgraph_reverse(dw, q, ell);
-		for(size_t j = 0; j < n; j++)
-			ok &= NearEqual(dw[j], check[j], eps99, eps99);
+		f.subgraph_reverse(q, ell, col, dw);
+		ok &= compare_subgraph_reverse(col, dw, check);
 		//
 		// derivative of y[6]  (x[4] is not selected)
 		check[3] = 1.0;
 		check[5] = 1.0;
 		ell = 6;
-		f.subgraph_reverse(dw, q, ell);
-		for(size_t j = 0; j < n; j++)
-			ok &= NearEqual(dw[j], check[j], eps99, eps99);
+		f.subgraph_reverse(q, ell, col, dw);
+		ok &= compare_subgraph_reverse(col, dw, check);
 		//
 		return ok;
 	}
@@ -263,4 +280,3 @@ bool subgraph(void)
 	//
 	return ok;
 }
-

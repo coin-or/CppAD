@@ -36,6 +36,7 @@ bool subgraph_reverse(void)
 	typedef CPPAD_TESTVECTOR(AD<double>) a_vector;
 	typedef CPPAD_TESTVECTOR(double)     d_vector;
 	typedef CPPAD_TESTVECTOR(bool)       b_vector;
+	typedef CPPAD_TESTVECTOR(size_t)     s_vector;
 	//
 	double eps99 = 99.0 * std::numeric_limits<double>::epsilon();
 	//
@@ -74,7 +75,7 @@ bool subgraph_reverse(void)
 	};
 	J[11] = x[3];
 	//
-	// compute derivatives for all x components except index 0
+	// exclude x[0] from the calculations
 	b_vector select_domain(n);
 	select_domain[0] = false;
 	for(size_t j = 1; j < n; j++)
@@ -86,13 +87,29 @@ bool subgraph_reverse(void)
 	// compute the derivative for each range component
 	for(size_t i = 0; i < m; i++)
 	{	d_vector dw;
+		s_vector col;
 		size_t   q = 1; // derivative of one Taylor coefficient (zero order)
-		f.subgraph_reverse(dw, q, i);
+		f.subgraph_reverse(q, i, col, dw);
+		//
+		// check order in col
+		for(size_t c = 1; c < col.size(); c++)
+			ok &= col[c] > col[c-1];
+		//
+		// check that x[0] has been excluded by select_domain
+		if( col.size() > 0 )
+			ok &= col[0] != 0;
 		//
 		// check derivatives for i-th row of J(x)
-		ok &= dw[0] == 0.0;
+		// note that dw is only specified for j in col
+		size_t c = 0;
 		for(size_t j = 1; j < n; j++)
-			ok &= NearEqual(dw[j], J[i * n + j], eps99, eps99);
+		{	while( c < col.size() && col[c] < j )
+				++c;
+			if( c < col.size() && col[c] == j )
+				ok &= NearEqual(dw[j], J[i * n + j], eps99, eps99);
+			else
+				ok &= NearEqual(0.0, J[i * n + j], eps99, eps99);
+		}
 	}
 	return ok;
 }

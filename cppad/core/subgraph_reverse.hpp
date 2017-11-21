@@ -13,6 +13,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin subgraph_reverse$$
 $spell
+	resize
 	subgraph
 	Subgraphs
 	dw
@@ -26,7 +27,7 @@ $section Reverse Mode Using Subgraphs$$
 $head Syntax$$
 $icode%f%.subgraph_reverse(%select_domain%)
 %$$
-$icode%f%.subgraph_reverse(%dw%, %q%, %ell%)
+$icode%f%.subgraph_reverse(%q%, %ell%, %col%, %dw%)
 %$$
 
 $head Purpose$$
@@ -61,6 +62,11 @@ The type $icode BoolVector$$ is a $cref SimpleVector$$ class with
 $cref/elements of type/SimpleVector/Elements of Specified Type/$$
 $code bool$$.
 
+$head SizeVector$$
+The type $icode SizeVector$$ is a $cref SimpleVector$$ class with
+$cref/elements of type/SimpleVector/Elements of Specified Type/$$
+$code size_t$$.
+
 $head select_domain$$
 The argument $icode select_domain$$ has prototype
 $codei%
@@ -91,6 +97,23 @@ the derivatives for; i.e. $latex \ell$$.
 This index can only be used once per, and after, a call that selects
 the independent variables using $icode select_domain$$.
 
+$head col$$
+This argument $icode col$$ has prototype
+$codei%
+	%SizeVector% %col%
+%$$
+The input size and value of its elements do not matter.
+The $icode%col%.resize%$$ member function is used to change its size
+to the number the number of possible non-zero derivative components.
+For each $icode c$$,
+$codei%
+	%select_domain%[ %col%[%c%] ] == true
+	%col%[%c%+1] >= %col%[%c%]
+%$$
+and the derivative with respect to the $th j$$ independent
+variable is possibly non-zero where
+$icode%j% = %col%[%c%]%$$.
+
 $head dw$$
 The argument $icode dw$$ has prototype
 $codei%
@@ -99,18 +122,15 @@ $codei%
 Its input size and value does not matter.
 Upon return,
 it is a vector with size $latex n \times q$$.
-For $latex k = 0 , \ldots , q-1$$,
-and $icode j$$ such that $icode%select_domain%[%j%]%$$ is true,
+For $latex c = 0 , \ldots , %col%.size()-1$$,
+and $latex k = 0, \ldots , q-1$$,
 $latex \[
 	dw[ j * q + k ] = W^{(1)} ( x )_{j,k}
 \] $$
-If $icode%select_domain%[%j%]%$$ is false,
-$latex \[
-	dw[ j * q + k ] = 0.0
-\] $$
-Note that this corresponds to the convention when
-$cref/w/reverse_any/w/$$ has size $icode%m% * %q%$$ in
-normal reverse mode.
+is the derivative of the specified Taylor coefficients w.r.t the $th j$$
+independent variable where $icode%j% = %col%[%c%]%$$.
+Note that this corresponds to the $cref reverse_any$$ convention when
+$cref/w/reverse_any/w/$$ has size $icode%m% * %q%$$.
 
 $head Example$$
 $children%
@@ -210,9 +230,14 @@ is the number of Taylor coefficient we are differentiating.
 \param ell
 is the component of the range that is selected for differentiation.
 
+\param col
+is the set of indices j = col[c] where the return value is defined.
+If an index j is not in col, then either its derivative is zero,
+or it is not in select_domain.
+
 \param dw
 Is a vector \f$ dw \f$ such that
-for \f$ j = 0 , \ldots , n-1 \f$ and
+for j = col[c],
 \f$ k = 0 , \ldots , q-1 \f$
 \f[
 	dw[ j * q + k ] = W^{(1)} ( x )_{j,k}
@@ -220,11 +245,6 @@ for \f$ j = 0 , \ldots , n-1 \f$ and
 where the matrix \f$ x \f$ is the value for \f$ u \f$
 that corresponding to the forward mode Taylor coefficients
 for the independent variables as specified by previous calls to Forward.
-Note that if
-\code
-	subgraph_info.select_domain[j] == false
-\endcode
-dw[ j * q + k ] is set to zero (not the formula above).
 
 \par subgraph_info.process_range()
 The element process_range[ell] is set to true by this operation.
@@ -235,11 +255,12 @@ some of the elements of this vector are set to have value ell
 the ell-th dependent variable).
 */
 template <typename Base>
-template <typename VectorBase>
+template <typename VectorBase, typename SizeVector>
 void ADFun<Base>::subgraph_reverse(
-	VectorBase& dw  ,
 	size_t      q   ,
-	size_t      ell )
+	size_t      ell ,
+	SizeVector& col ,
+	VectorBase& dw  )
 {	using local::pod_vector;
 
 	// check VectorBase is Simple Vector class with Base type elements
@@ -341,43 +362,40 @@ void ADFun<Base>::subgraph_reverse(
 		subgraph
 	);
 
-	// return the derivative values
-	dw.resize(n * q);
+	// number of non-zero in return value
+	size_t col_size       = 0;
 	size_t subgraph_index = 0;
-	size_t subgraph_value = addr_t(n + 1);
-	if( subgraph.size() > 0 )
-		subgraph_value = subgraph[subgraph_index];
-	for(size_t j = 0; j < n; j++)
-	{	// independent variable taddr equals its operator taddr
-		CPPAD_ASSERT_UNKNOWN( play_.GetOp( ind_taddr_[j] ) == local::InvOp );
-		//
-		// operator corresponding to this independent variable
-		size_t i_op = play_.var2op( ind_taddr_[j] );
-		CPPAD_ASSERT_UNKNOWN(  i_op == j + 1 );
-		//
-		// advance to subgraph entry that is greater than or equal i_op
-		// Note that variables j
-		while( subgraph_value < i_op )
-		{	++subgraph_index;
-			if( subgraph_index < subgraph.size() )
-				subgraph_value = subgraph[subgraph_index];
-			else
-				subgraph_value = addr_t(n + 1);
-		}
-		// only include independent variables that are in the subgraph
-		if( subgraph_value == i_op )
-		{	for(size_t k = 0; k < q; k++)
-				dw[j * q + k ] = Partial[ind_taddr_[j] * q + k];
-		}
+	while( subgraph_index < subgraph.size() )
+	{	// check for InvOp
+		if( subgraph[subgraph_index] > addr_t(n) )
+			subgraph_index = subgraph.size();
 		else
-		{	for(size_t k = 0; k < q; k++)
-				dw[j * q + k ] = zero;
+		{	++col_size;
+			++subgraph_index;
 		}
 	}
+	col.resize(col_size);
+
+	// return the derivative values
+	dw.resize(n * q);
+	for(size_t c = 0; c < col_size; ++c)
+	{	size_t i_op = subgraph[c];
+		CPPAD_ASSERT_UNKNOWN( play_.GetOp(i_op) == local::InvOp );
+		//
+		size_t j = i_op - 1;
+		CPPAD_ASSERT_UNKNOWN( i_op == play_.var2op(ind_taddr_[j]) );
+		//
+		// return paritial for this independent variable
+		col[c] = j;
+		for(size_t k = 0; k < q; k++)
+			dw[j * q + k ] = Partial[ind_taddr_[j] * q + k];
+	}
+	//
 	CPPAD_ASSERT_KNOWN( ! ( hasnan(dw) && check_for_nan_ ) ,
 		"f.subgraph_reverse(dw, q, ell): dw has a nan,\n"
 		"but none of f's Taylor coefficents are nan."
 	);
+	//
 	return;
 }
 

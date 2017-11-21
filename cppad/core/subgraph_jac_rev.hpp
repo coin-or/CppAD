@@ -169,6 +169,7 @@ void ADFun<Base>::subgraph_jac_rev(
 	//
 	// memory used to hold subgraph_reverse results
 	BaseVector dw;
+	SizeVector dw_col;
 	//
 	// initialize index in row_major
 	size_t k = 0;
@@ -177,9 +178,15 @@ void ADFun<Base>::subgraph_jac_rev(
 		size_t i_dep = row[ row_major[k] ];
 		size_t i_ind = col[ row_major[k] ];
 		size_t ell   = i_dep;
-		subgraph_reverse(dw, q, ell);
+		subgraph_reverse(q, ell, dw_col, dw);
+# ifndef NDEBUG
+		size_t c = 0;
+# endif
 		while( i_dep == ell )
-		{	subset.set( row_major[k], dw[i_ind] );
+		{	// check that subgraph_reverse has retured this value
+			CPPAD_ASSERT_UNKNOWN( i_ind == dw_col[c++] );
+			//
+			subset.set( row_major[k], dw[i_ind] );
 			++k;
 			if( k == nnz )
 			{	i_dep = m;
