@@ -92,20 +92,20 @@ bool subgraph_reverse(void)
 		f.subgraph_reverse(q, i, col, dw);
 		//
 		// check order in col
-		for(size_t c = 1; c < col.size(); c++)
+		for(size_t c = 1; c < size_t( col.size() ); c++)
 			ok &= col[c] > col[c-1];
 		//
 		// check that x[0] has been excluded by select_domain
-		if( col.size() > 0 )
+		if( size_t( col.size() ) > 0 )
 			ok &= col[0] != 0;
 		//
 		// check derivatives for i-th row of J(x)
 		// note that dw is only specified for j in col
 		size_t c = 0;
 		for(size_t j = 1; j < n; j++)
-		{	while( c < col.size() && col[c] < j )
+		{	while( c < size_t( col.size() ) && col[c] < j )
 				++c;
-			if( c < col.size() && col[c] == j )
+			if( c < size_t( col.size() ) && col[c] == j )
 				ok &= NearEqual(dw[j], J[i * n + j], eps99, eps99);
 			else
 				ok &= NearEqual(0.0, J[i * n + j], eps99, eps99);
