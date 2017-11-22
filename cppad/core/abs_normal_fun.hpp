@@ -835,7 +835,10 @@ void ADFun<Base>::abs_normal_fun(ADFun<Base>& g, ADFun<Base>& a)
 
 	// resize subgraph_info_
 	g.subgraph_info_.resize(
-		g.ind_taddr_.size(), g.dep_taddr_.size(), g.play_.num_op_rec()
+		g.ind_taddr_.size(),   // n_ind
+		g.dep_taddr_.size(),   // n_dep
+		g.play_.num_op_rec(),  // n_op
+		g.play_.num_var_rec()  // n_var
 	);
 
 	// ------------------------------------------------------------------------

@@ -274,7 +274,10 @@ void ADFun<Base>::optimize(const std::string& options)
 
 	// resize subgraph_info_
 	subgraph_info_.resize(
-		ind_taddr_.size(), dep_taddr_.size(), play_.num_op_rec()
+		ind_taddr_.size(),    // n_ind
+		dep_taddr_.size(),    // n_dep
+		play_.num_op_rec(),   // n_op
+		play_.num_var_rec()   // n_var
 	);
 
 # ifndef NDEBUG

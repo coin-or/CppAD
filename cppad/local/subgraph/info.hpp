@@ -28,13 +28,16 @@ private:
 	// private member data
 	// -----------------------------------------------------------------------
 	/// number of independent variables for this function
-	size_t             n_ind_;
+	size_t  n_ind_;
 
 	/// number of dependent variables for this function
-	size_t             n_dep_;
+	size_t  n_dep_;
 
 	/// number of operatros in operation sequence
-	size_t             n_op_;
+	size_t  n_op_;
+
+	/// number of variables in operation sequence
+	size_t n_var_;
 
 	/// the entire operation sequence as a subgraph (size n_op_).
 	pod_vector<addr_t> entire_graph_;
@@ -69,6 +72,10 @@ public:
 	/// number of operators
 	size_t n_op(void) const
 	{	return n_op_; }
+
+	// number of variables
+	size_t n_var(void) const
+	{	return n_var_; }
 
 	/// entire graph represented as a sorted subgraph
 	const pod_vector<addr_t>& entire_graph(void) const
@@ -142,7 +149,7 @@ public:
 
 	/// default constructor (all sizes are zero)
 	subgraph_info(void)
-	: n_ind_(0), n_dep_(0), n_op_(0)
+	: n_ind_(0), n_dep_(0), n_op_(0), n_var_(0)
 	{	CPPAD_ASSERT_UNKNOWN( entire_graph_.size() == n_op_ );
 		CPPAD_ASSERT_UNKNOWN( map_user_op_.size() == n_op_ );
 		CPPAD_ASSERT_UNKNOWN( in_subgraph_.size() == n_op_ );
@@ -171,6 +178,9 @@ public:
 	\param n_op
 	number of operators.
 
+	param n_var
+	number of variables.
+
 	\par entire_graph_
 	This member funcition is set the sorted subgraph corresponding to the
 	entire operation sequence; i.e., entire_graph_[i_op] == i_op for
@@ -182,7 +192,7 @@ public:
 	\par in_subgraph_
 	is resized to zero.
 	*/
-	void resize(size_t n_ind, size_t n_dep, size_t n_op)
+	void resize(size_t n_ind, size_t n_dep, size_t n_op, size_t n_var)
 	{	CPPAD_ASSERT_UNKNOWN(
 			n_op <= size_t( std::numeric_limits<addr_t>::max() )
 		);
@@ -192,6 +202,9 @@ public:
 		n_dep_ = n_dep;
 		// n_op_
 		n_op_  = n_op;
+		// n_var_
+		n_var_ = n_var;
+
 		//
 		// entire_graph_
 		size_t old_size = entire_graph_.size();
@@ -219,8 +232,8 @@ public:
 	set the value of map_user_op for this operation sequence
 
 	\param play
-	is the player for this operation sequence. It must have size
-	equal to n_op_.
+	is the player for this operation sequence. It must same number of
+	operators and variables as this subgraph_info object.
 
 	\par map_user_op_
 	This size of map_user_op must be zero when this function is called
@@ -241,6 +254,7 @@ public:
 	void set_map_user_op(const player<Base>* play)
 	{	CPPAD_ASSERT_UNKNOWN( map_user_op_.size() == 0 );
 		CPPAD_ASSERT_UNKNOWN( n_op_ == play->num_op_rec() );
+		CPPAD_ASSERT_UNKNOWN( n_var_ == play->num_var_rec() );
 		map_user_op_.resize(n_op_);
 		for(size_t i_op = 0; i_op < n_op_; ++i_op)
 		{	map_user_op_[i_op] = addr_t( i_op );

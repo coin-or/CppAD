@@ -312,7 +312,10 @@ void ADFun<Base>::Dependent(local::ADTape<Base> *tape, const ADvector &y)
 
 	// resize subgraph_info_
 	subgraph_info_.resize(
-		ind_taddr_.size(), dep_taddr_.size(), play_.num_op_rec()
+		ind_taddr_.size(),   // n_dep
+		dep_taddr_.size(),   // n_ind
+		play_.num_op_rec(),  // n_op
+		play_.num_var_rec()  // n_var
 	);
 	// ---------------------------------------------------------------------
 	// End set ad_fun.hpp private member data
