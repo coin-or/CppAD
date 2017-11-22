@@ -248,7 +248,7 @@ void ADFun<Base>::subgraph_jac_rev(
 		size_t c = 0;
 		while( i_dep == ell )
 		{	// check that subgraph_reverse has retured this value
-			if( c < dw_col.size() )
+			if( c < size_t( dw_col.size() ) )
 			{	if( i_ind == dw_col[c++] )
 					subset.set( row_major[k], dw[i_ind] );
 				else
@@ -299,7 +299,7 @@ void ADFun<Base>::subgraph_jac_rev(
 	{	// compute Jacobian and sparsity for this dependent variable
 		size_t q   = 1;
 		subgraph_reverse(q, i, col, dw);
-		CPPAD_ASSERT_UNKNOWN( dw.size() == n );
+		CPPAD_ASSERT_UNKNOWN( size_t( dw.size() ) == n );
 		//
 		// offset for this dependent variable
 		size_t index = row_out.size();
@@ -307,7 +307,7 @@ void ADFun<Base>::subgraph_jac_rev(
 		CPPAD_ASSERT_UNKNOWN( val_out.size() == index );
 		//
 		// extend vectors to hold results for this dependent variable
-		size_t col_size = col.size();
+		size_t col_size = size_t( col.size() );
 		row_out.extend( col_size );
 		col_out.extend( col_size );
 		val_out.extend( col_size );

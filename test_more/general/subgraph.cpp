@@ -175,17 +175,17 @@ namespace {
 	{	bool ok = true;
 		double eps99 = 99.0 * std::numeric_limits<double>::epsilon();
 		//
-		size_t n = check.size();
+		size_t n = size_t( check.size() );
 		//
 		// check order in col
-		for(size_t c = 1; c < col.size(); c++)
+		for(size_t c = 1; c < size_t( col.size() ); c++)
 			ok &= col[c] > col[c-1];
 		//
 		size_t c = 0;
 		for(size_t j = 1; j < n; j++)
-		{	while( c < col.size() && col[c] < j )
+		{	while( c < size_t( col.size() ) && col[c] < j )
 				++c;
-			if( c < col.size() && col[c] == j )
+			if( c < size_t( col.size() ) && col[c] == j )
 				ok &= CppAD::NearEqual(dw[j], check[j], eps99, eps99);
 			else
 				ok &= CppAD::NearEqual(0.0, check[j], eps99, eps99);
