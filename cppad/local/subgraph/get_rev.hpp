@@ -86,7 +86,11 @@ void subgraph_info::get_rev(
 	const vector<size_t>&     dep_taddr    ,
 	addr_t                    i_dep        ,
 	pod_vector<addr_t>&       subgraph     )
-{
+{	// check sizes
+	CPPAD_ASSERT_UNKNOWN( map_user_op_.size()   == n_op_ );
+	CPPAD_ASSERT_UNKNOWN( arg_variable_.n_set() == n_op_ );
+	CPPAD_ASSERT_UNKNOWN( arg_variable_.end()   == n_var_ );
+
 	// process_range_
 	CPPAD_ASSERT_UNKNOWN( process_range_[i_dep] == false );
 	process_range_[i_dep] = true;
@@ -96,12 +100,6 @@ void subgraph_info::get_rev(
 
 	// assumption on i_dep
 	CPPAD_ASSERT_UNKNOWN( i_dep < depend_yes );
-
-	// variables that are arguments to a particular operator
-	pod_vector<size_t> argument_variable;
-
-	// work space used by get_argument_variable
-	pod_vector<bool> work;
 
 	// start with an empty subgraph for this dependent variable
 	subgraph.resize(0);
@@ -135,11 +133,10 @@ void subgraph_info::get_rev(
 # endif
 		//
 		// which variables are connected to this operator
-		get_argument_variable(play, i_op, argument_variable, work);
-		//
-		// add the corresponding operators to the subgraph
-		for(size_t j = 0; j < argument_variable.size(); ++j)
-		{	size_t j_var = argument_variable[j];
+		sparse_list::const_iterator itr(arg_variable_, i_op);
+		size_t j_var = *itr;
+		while( j_var < n_var_ )
+		{	// add the corresponding operators to the subgraph
 			size_t j_op  = play->var2op(j_var);
 			j_op         = map_user_op_[j_op];
 			bool add = in_subgraph_[j_op] <= depend_yes;
@@ -152,6 +149,7 @@ void subgraph_info::get_rev(
 			{	subgraph.push_back( addr_t(j_op) );
 				in_subgraph_[j_op] = i_dep;
 			}
+			j_var = *(++itr);
 		}
 		// we are done scaning this subgraph operator
 		++sub_index;

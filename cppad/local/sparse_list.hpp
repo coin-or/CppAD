@@ -347,6 +347,23 @@ private:
 		//
 	}
 public:
+	/*!
+	Assignement operator.
+
+	\param other
+	this sparse_list with be set to a deep copy of other.
+
+	\par vector_of_sets
+	This public member function is not yet part of
+	the vector_of_sets concept. If usefull in this regard,
+	it needs to be implemented for the spare_pack class.
+	*/
+	void operator=(const sparse_list& other)
+	{	end_           = other.end_;
+		data_not_used_ = other.data_not_used_;
+		start_         = other.start_;
+		data_          = other.data_;
+	}
 	/// declare a const iterator
 	typedef sparse_list_const_iterator const_iterator;
 
