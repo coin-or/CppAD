@@ -19,13 +19,16 @@ namespace CppAD { namespace local { // BEGIN_CPPAD_LOCAL_NAMESPACE
 \file sparse_pack.hpp
 Vector of sets of positive integers stored as a packed array of bools.
 */
+class sparse_pack_const_iterator;
 
 // ==========================================================================
 /*!
 Vector of sets of postivie integers, each set stored as a packed boolean array.
+
+All the public member functions for this class are also in the
+sparse_list class. This defines the CppAD vector_of_sets concept.
 */
 
-class sparse_pack_const_iterator;
 class sparse_pack {
 	friend class sparse_pack_const_iterator;
 private:
@@ -48,11 +51,6 @@ private:
 public:
 	/// declare a const iterator
 	typedef sparse_pack_const_iterator const_iterator;
-
-	// ==================================================================
-	// BEGIN: Public member fucntion that are also in sparse_pack
-	// This defines the CppAD vector_of_sets concept
-	// ==================================================================
 
 	// -----------------------------------------------------------------
 	/*! Default constructor (no sets)
@@ -350,14 +348,14 @@ public:
 	Print the vector of sets (used for debugging)
 	*/
 	void print(void) const;
-
-	// ==================================================================
-	// END: Public member fucntion that are also in sparse_list
-	// ==================================================================
 };
 // ==========================================================================
 /*!
 cons_iterator for one set of positive integers in a sparse_pack object.
+
+All the public member functions for this class are also in the
+sparse_list_const_iterator class.
+This defines the CppAD vector_of_sets iterator concept.
 */
 class sparse_pack_const_iterator {
 private:

@@ -21,18 +21,18 @@ namespace CppAD { namespace local { // BEGIN_CPPAD_LOCAL_NAMESPACE
 Vector of sets of positive integers stored as singly linked lists
 in with the element values strictly increasing.
 */
+class sparse_list_const_iterator;
 
 // =========================================================================
 /*!
 Vector of sets of positive integers, each set stored as a singly
 linked list.
+
+All the public member functions for this class are also in the
+sparse_pack class. This defines the CppAD vector_of_sets concept.
 */
-class sparse_list_const_iterator;
 class sparse_list {
 	friend class sparse_list_const_iterator;
-public:
-	/// declare a const iterator
-	typedef sparse_list_const_iterator const_iterator;
 private:
 	// -----------------------------------------------------------------
 	/// type used for each entry in a singly linked list.
@@ -347,10 +347,8 @@ private:
 		//
 	}
 public:
-	// ==================================================================
-	// BEGIN: Public member fucntion that are also in sparse_pack
-	// This defines the CppAD vector_of_sets concept
-	// ==================================================================
+	/// declare a const iterator
+	typedef sparse_list_const_iterator const_iterator;
 
 	// -----------------------------------------------------------------
 	/*! Default constructor (no sets)
@@ -942,14 +940,14 @@ public:
 	Print the vector of sets (used for debugging)
 	*/
 	void print(void) const;
-
-	// ==================================================================
-	// END: Public member fucntion that are also in sparse_pack
-	// ==================================================================
 };
 // =========================================================================
 /*!
 cons_iterator for one set of positive integers in a sparse_list object.
+
+All the public member functions for this class are also in the
+sparse_pack_const_iterator class.
+This defines the CppAD vector_of_sets iterator concept.
 */
 class sparse_list_const_iterator {
 private:
