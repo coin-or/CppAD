@@ -346,17 +346,12 @@ private:
 		data_[start].value--;
 		//
 	}
-	// -----------------------------------------------------------------
-	/*! Using copy constructor is a programing (not user) error
-
-	\param v
-	vector of sets that we are attempting to make a copy of.
-	*/
-	sparse_list(const sparse_list& v)
-	{	// Error: Probably a sparse_list argument has been passed by value
-		CPPAD_ASSERT_UNKNOWN(false);
-	}
 public:
+	// ==================================================================
+	// BEGIN: Public member fucntion that are also in sparse_pack
+	// This defines the CppAD vector_of_sets concept
+	// ==================================================================
+
 	// -----------------------------------------------------------------
 	/*! Default constructor (no sets)
 	*/
@@ -371,6 +366,16 @@ public:
 # ifndef NDEBUG
 		check_data_not_used();
 # endif
+	}
+	// -----------------------------------------------------------------
+	/*! Using copy constructor is a programing (not user) error
+
+	\param v
+	vector of sets that we are attempting to make a copy of.
+	*/
+	sparse_list(const sparse_list& v)
+	{	// Error: Probably a sparse_list argument has been passed by value
+		CPPAD_ASSERT_UNKNOWN(false);
 	}
 	// -----------------------------------------------------------------
 	/*!
@@ -442,38 +447,6 @@ public:
 	}
 	// -----------------------------------------------------------------
 	/*!
-	check an element is in a set.
-
-	\param index
-	is the index for this set in the vector of sets.
-
-	\param element
-	is the element we are checking to see if it is in the set.
-	*/
-	bool is_element(size_t index, size_t element) const
-	{	CPPAD_ASSERT_UNKNOWN( index   < start_.size() );
-		CPPAD_ASSERT_UNKNOWN( element < end_ );
-		//
-		size_t start = start_[index];
-		if( start == 0 )
-			return false;
-		//
-		CPPAD_ASSERT_UNKNOWN( data_[start].value > 0 );
-		CPPAD_ASSERT_UNKNOWN( data_[start].next > 0 );
-		//
-		size_t next  = data_[start].next;
-		size_t value = data_[next].value;
-		while( value < element )
-		{	next  = data_[next].next;
-			if( next == 0 )
-				value = end_;
-			else
-				value = data_[next].value;
-		}
-		return element == value;
-	}
-	// -----------------------------------------------------------------
-	/*!
 	Add one element to a set.
 
 	\param index
@@ -528,6 +501,38 @@ public:
 		data_[insert].next    = next;
 		data_[previous].next  = insert;
 		data_[insert].value   = element;
+	}
+	// -----------------------------------------------------------------
+	/*!
+	check an element is in a set.
+
+	\param index
+	is the index for this set in the vector of sets.
+
+	\param element
+	is the element we are checking to see if it is in the set.
+	*/
+	bool is_element(size_t index, size_t element) const
+	{	CPPAD_ASSERT_UNKNOWN( index   < start_.size() );
+		CPPAD_ASSERT_UNKNOWN( element < end_ );
+		//
+		size_t start = start_[index];
+		if( start == 0 )
+			return false;
+		//
+		CPPAD_ASSERT_UNKNOWN( data_[start].value > 0 );
+		CPPAD_ASSERT_UNKNOWN( data_[start].next > 0 );
+		//
+		size_t next  = data_[start].next;
+		size_t value = data_[next].value;
+		while( value < element )
+		{	next  = data_[next].next;
+			if( next == 0 )
+				value = end_;
+			else
+				value = data_[next].value;
+		}
+		return element == value;
 	}
 	// -----------------------------------------------------------------
 	/*! Assign the empty set to one of the sets.
@@ -937,6 +942,10 @@ public:
 	Print the vector of sets (used for debugging)
 	*/
 	void print(void) const;
+
+	// ==================================================================
+	// END: Public member fucntion that are also in sparse_pack
+	// ==================================================================
 };
 // =========================================================================
 /*!

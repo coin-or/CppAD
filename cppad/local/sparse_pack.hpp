@@ -49,6 +49,10 @@ public:
 	/// declare a const iterator
 	typedef sparse_pack_const_iterator const_iterator;
 
+	// ==================================================================
+	// BEGIN: Public member fucntion that are also in sparse_pack
+	// ==================================================================
+
 	// -----------------------------------------------------------------
 	/*! Default constructor (no sets)
 	*/
@@ -345,6 +349,10 @@ public:
 	Print the vector of sets (used for debugging)
 	*/
 	void print(void) const;
+
+	// ==================================================================
+	// END: Public member fucntion that are also in sparse_list
+	// ==================================================================
 };
 // ==========================================================================
 /*!
