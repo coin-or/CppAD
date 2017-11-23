@@ -11,7 +11,9 @@
 # -----------------------------------------------------------------------------
 cat << EOF
 Bug in CppAD optimizer.
-This test passes when nz = 10000 and fails when nz = 10001
+Test passes when: nz     = 10000
+Test passes when: factor = eps99
+Test fails  when: nz  = 10001 and factor = 1.0
 EOF
 cat << EOF > bug.$$
 # include <cppad/cppad.hpp>
@@ -23,9 +25,11 @@ int main(void)
 	//
 	double eps99 = 99.0 * std::numeric_limits<double>::epsilon();
 	//
-	// length of the data vector z (1e5)
-	// size_t nz = 10000;
+	// length of the data vector z
 	size_t nz = 10001;
+	//
+	// factor for last term
+	double factor = 1.0;
 	//
 	// z starts at -1.0 and ends at 1.0
 	vector<double> z(nz);
@@ -36,10 +40,15 @@ int main(void)
 	vector< AD<double> > ax(1), ay(1);
 	ax[0] = 0.0;
 	CppAD::Independent(ax);
-	AD<double> sum = 0.0;
+	AD<double> asum = 0.0;
 	for(size_t i = 0; i < nz; i++)
-		sum += (z[i] - ax[0]) * ax[0];
-	ay[0] = sum;
+	{	AD<double> aterm = (z[i] - ax[0]) * ax[0];
+		if( i == nz - 1 )
+			asum += factor * aterm;
+		else
+			asum += aterm;
+	}
+	ay[0] = asum;
 	CppAD::ADFun<double> f(ax, ay);
 	//
 	// value of x where we are computing derivative
@@ -57,6 +66,14 @@ int main(void)
 }
 EOF
 # -----------------------------------------------------------------------------
+if [ ! -e ../cppad/configure.hpp ]
+then
+	echo
+	echo 'Cannot find the file cppad/configure.hpp in directory ..'
+	echo 'Must change into .. directory and run bin/run_cmake.sh'
+	rm bug.$$
+	exit 1
+fi
 if [ ! -e build ]
 then
 	mkdir build
