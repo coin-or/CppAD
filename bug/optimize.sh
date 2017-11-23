@@ -1,5 +1,4 @@
 #! /bin/bash -e
-# $Id$
 # -----------------------------------------------------------------------------
 # CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 #
@@ -12,6 +11,7 @@
 # -----------------------------------------------------------------------------
 cat << EOF
 Bug in CppAD optimizer.
+This test passes when nz = 10000 and fails when nz = 10001
 EOF
 cat << EOF > bug.$$
 # include <cppad/cppad.hpp>
@@ -24,7 +24,8 @@ int main(void)
 	double eps99 = 99.0 * std::numeric_limits<double>::epsilon();
 	//
 	// length of the data vector z (1e5)
-	size_t nz = 100000;
+	// size_t nz = 10000;
+	size_t nz = 10001;
 	//
 	// z starts at -1.0 and ends at 1.0
 	vector<double> z(nz);

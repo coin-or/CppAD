@@ -287,11 +287,18 @@ void ADFun<Base>::optimize(const std::string& options)
 		check = Forward(0, x);
 
 		// check results
-		Base eps = 10. * CppAD::numeric_limits<Base>::epsilon();
-		for(i = 0; i < m; i++) CPPAD_ASSERT_KNOWN(
-			abs_geq( eps * max_taylor , check[i] - y[i] ) ,
-			"Error during check of f.optimize()."
-		);
+		Base eps99 = Base(99) * CppAD::numeric_limits<Base>::epsilon();
+		for(i = 0; i < m; i++)
+		if( ! abs_geq( eps99 * max_taylor , check[i] - y[i] ) )
+		{	std::string msg = "Error during check of f.optimize().";
+			msg += "\neps99 * max_taylor = " + to_string(eps99 * max_taylor);
+			msg += "\ncheck[i] = " + to_string(check[i]);
+			msg += "\ny[i]     = " + to_string(y[i]);
+			CPPAD_ASSERT_KNOWN(
+				abs_geq( eps99 * max_taylor , check[i] - y[i] ) ,
+				msg.c_str()
+			);
+		}
 
 		// Erase memory that this calculation was done so NDEBUG gives
 		// same final state for this object (from users perspective)
