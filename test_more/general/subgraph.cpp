@@ -28,7 +28,11 @@ namespace {
 	CppAD::checkpoint<double>* atom_g = CPPAD_NULL;
 
 	// record function
-	void record_function(size_t& n, size_t& m, CppAD::ADFun<double>& fun)
+	void record_function(
+		bool                  optimize ,
+		size_t&               n        ,
+		size_t&               m        ,
+		CppAD::ADFun<double>& fun      )
 	{
 		// declare checkpoint function
 		avector au(3), av(1);
@@ -47,7 +51,7 @@ namespace {
 		CppAD::Independent(ax);
 
 		// range space vector
-		m = 7;
+		m = 8;
 		CPPAD_TESTVECTOR(AD<double>) ay(m);
 		ay[0] = 0.0;                     // does not depend on anything
 		ay[1] = ax[1];                   // is equal to an independent variable
@@ -63,9 +67,17 @@ namespace {
 		(*atom_g)(au, av);
 		ay[6] = av[0];
 		//
+		// variable + variable operatros that optimizier will change to
+		// cumulative sumation
+		ay[7] = 0.0;
+		for(size_t j = 0; j < n; ++j)
+			ay[7] += ax[j];
+		//
 		// create f: x -> y and stop tape recording
 		fun.Dependent(ax, ay);
 		//
+		if( optimize )
+			fun.optimize();
 		return;
 	}
 
@@ -107,13 +119,13 @@ namespace {
 		return ok;
 
 	}
-	bool subgraph_sparsity(void)
+	bool subgraph_sparsity(bool optimize)
 	{	bool ok = true;
 
 		// create f: x -> y
 		size_t n, m;
 		CppAD::ADFun<double> f;
-		record_function(n, m, f);
+		record_function(optimize, n, m, f);
 
 		// --------------------------------------------------------------------
 		// Entire sparsity pattern
@@ -193,13 +205,13 @@ namespace {
 		return ok;
 	}
 
-	bool subgraph_reverse(void)
+	bool subgraph_reverse(bool optimize)
 	{	bool ok = true;
 
 		// create f: x -> y
 		size_t n, m;
 		CppAD::ADFun<double> f;
-		record_function(n, m, f);
+		record_function(optimize, n, m, f);
 
 		// value of x at which to compute derivatives
 		CPPAD_TESTVECTOR(double) x(n);
@@ -271,11 +283,15 @@ namespace {
 
 }
 bool subgraph(void)
-{	bool ok = true;
-	ok     &= subgraph_sparsity();
-	ok     &= subgraph_reverse();
+{	bool ok       = true;
+	bool optimize = true;
+	ok           &= subgraph_sparsity(optimize);
+	ok           &= subgraph_reverse(optimize);
+	optimize      = false;
+	ok           &= subgraph_sparsity(optimize);
+	ok           &= subgraph_reverse(optimize);
 	//
-	ok     &= atom_g != CPPAD_NULL;
+	ok           &= atom_g != CPPAD_NULL;
 	delete atom_g;
 	//
 	return ok;
