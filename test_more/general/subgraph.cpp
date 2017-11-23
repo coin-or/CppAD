@@ -278,6 +278,14 @@ namespace {
 		f.subgraph_reverse(q, ell, col, dw);
 		ok &= compare_subgraph_reverse(col, dw, check);
 		//
+		// derivative of y[7] (x[4] is not selected)
+		for(size_t j = 0; j < n;  ++j)
+			check[j] = 1.0;
+		check[4] = 0.0;
+		ell = 7;
+		f.subgraph_reverse(q, ell, col, dw);
+		ok &= compare_subgraph_reverse(col, dw, check);
+		//
 		return ok;
 	}
 
