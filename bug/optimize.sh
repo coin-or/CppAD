@@ -38,7 +38,7 @@ int main(void)
 	CppAD::Independent(ax);
 	AD<double> sum = 0.0;
 	for(size_t i = 0; i < nz; i++)
-		sum += (z[i] - ax[0]) * (z[i] - ax[0]);
+		sum += (z[i] - ax[0]) * ax[0];
 	ay[0] = sum;
 	CppAD::ADFun<double> f(ax, ay);
 	//
