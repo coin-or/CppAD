@@ -18,6 +18,7 @@ namespace {
 	using CppAD::AD;
 	typedef CPPAD_TESTVECTOR(AD<double>) avector;
 
+	// ========================================================================
 	// algorithm that will be checkpointed
 	void g_algo(const avector& u, avector& v)
 	{	for(size_t j = 0; j < size_t( u.size() ); ++j)
@@ -26,7 +27,7 @@ namespace {
 
 	// will be a pointer to atomic version of g_algo
 	CppAD::checkpoint<double>* atom_g = CPPAD_NULL;
-
+	// ------------------------------------------------------------------------
 	// record function
 	void record_function(
 		bool                  optimize ,
@@ -80,8 +81,7 @@ namespace {
 			fun.optimize();
 		return;
 	}
-
-	// =======================================================================
+	// ------------------------------------------------------------------------
 	bool compare_subgraph_sparsity(
 		CppAD::sparse_rc<svector> subgraph  ,
 		CppAD::sparse_rc<svector> check     )
@@ -119,7 +119,8 @@ namespace {
 		return ok;
 
 	}
-	bool subgraph_sparsity(bool optimize)
+	// ------------------------------------------------------------------------
+	bool test_subgraph_sparsity(bool optimize)
 	{	bool ok = true;
 
 		// create f: x -> y
@@ -179,7 +180,7 @@ namespace {
 
 		return ok;
 	}
-	// =======================================================================
+	// ------------------------------------------------------------------------
 	bool compare_subgraph_reverse(
 		const CPPAD_TESTVECTOR(size_t)&  col   ,
 		const CPPAD_TESTVECTOR(double)&  dw    ,
@@ -204,8 +205,8 @@ namespace {
 		}
 		return ok;
 	}
-
-	bool subgraph_reverse(bool optimize)
+	// ------------------------------------------------------------------------
+	bool test_subgraph_reverse(bool optimize)
 	{	bool ok = true;
 
 		// create f: x -> y
@@ -292,12 +293,12 @@ namespace {
 }
 bool subgraph(void)
 {	bool ok       = true;
-	bool optimize = true;
-	ok           &= subgraph_sparsity(optimize);
-	ok           &= subgraph_reverse(optimize);
-	optimize      = false;
-	ok           &= subgraph_sparsity(optimize);
-	ok           &= subgraph_reverse(optimize);
+	bool optimize = false;
+	ok           &= test_subgraph_sparsity(optimize);
+	ok           &= test_subgraph_reverse(optimize);
+	optimize      = true;
+	ok           &= test_subgraph_sparsity(optimize);
+	ok           &= test_subgraph_reverse(optimize);
 	//
 	ok           &= atom_g != CPPAD_NULL;
 	delete atom_g;
