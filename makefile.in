@@ -568,7 +568,7 @@ nobase_myinclude_HEADERS = \
 	cppad/core/pow.hpp \
 	cppad/core/print_for.hpp \
 	cppad/core/reverse.hpp \
-	cppad/core/reverse_subgraph.hpp \
+	cppad/core/subgraph_reverse.hpp \
 	cppad/core/rev_hes_sparsity.hpp \
 	cppad/core/rev_jac_sparsity.hpp \
 	cppad/core/rev_one.hpp \
@@ -585,6 +585,7 @@ nobase_myinclude_HEADERS = \
 	cppad/core/std_math_98.hpp \
 	cppad/core/sub_eq.hpp \
 	cppad/core/sub.hpp \
+	cppad/core/subgraph_jac_rev.hpp \
 	cppad/core/subgraph_sparsity.hpp \
 	cppad/core/tape_link.hpp \
 	cppad/core/test_vector.hpp \
