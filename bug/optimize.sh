@@ -11,19 +11,7 @@
 # Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # -----------------------------------------------------------------------------
 cat << EOF
-TMB is having trouble using subgraphs to compute the derivative of w.r.t mu
-for the following:
-	# include <TMB.hpp>
-	template<class Type>
-	Type objective_function<Type>::operator() ()
-	{
-	  DATA_VECTOR(z);
-	  PARAMETER(x);
-	  Type f = ( (z - x) * (z - x) ) .sum();
-	  return f;
-	}
-where z = seq(-1, 1, length=1e5) .
-This is a test of the same computation entirely in CppAD.
+Bug in CppAD optimizer.
 EOF
 cat << EOF > bug.$$
 # include <cppad/cppad.hpp>
@@ -54,28 +42,13 @@ int main(void)
 	CppAD::ADFun<double> f(ax, ay);
 	//
 	// value of x where we are computing derivative
-	vector<double> x(1);
-	x[0] = .1;
-	f.Forward(0, x);
+	vector<double> x(1), y_before(1), y_after(1);
+	x[0]     = .1;
+	y_before = f.Forward(0, x);
+	f.optimize();
+	y_after  = f.Forward(0, x);
 	//
-	// compute gradient of f using subgraphs
-	vector<bool> select_domain(1);
-	select_domain[0] = true;
-	f.subgraph_reverse(select_domain);
-	vector<size_t> col;
-	vector<double> dw;
-	size_t q  = 1;
-	size_t ell = 0;
-	f.subgraph_reverse(q, ell, col, dw);
-	//
-	// compute check
-	double check = 0.0;
-	for(size_t i = 0; i < nz; i++)
-		check -= 2.0 * (z[i] - x[0]);
-	//
-	ok &= col.size() == 1;
-	ok &= col[0] == 0;
-	ok &= CppAD::NearEqual(dw[0], check, eps99, eps99);
+	ok &= CppAD::NearEqual(y_before[0], y_after[0], eps99, eps99);
 	//
 	if( ok )
 		return 0;
