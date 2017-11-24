@@ -1,8 +1,7 @@
-// $Id$
 # ifndef CPPAD_LOCAL_OPTIMIZE_MATCH_OP_HPP
 # define CPPAD_LOCAL_OPTIMIZE_MATCH_OP_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -210,6 +209,9 @@ inline void match_op(
 					}
 					else
 						match &= arg_match[j] == op_info[candidate].arg[j];
+				}
+				else
+				{	match &= arg_match[j] == op_info[candidate].arg[j];
 				}
 			}
 		}

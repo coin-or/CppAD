@@ -1,7 +1,6 @@
 #! /bin/bash -e
-# $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the
@@ -204,7 +203,7 @@ do
 done
 #
 # cppad_cxx_flags
-cppad_cxx_flags="-Wall -pedantic-errors -std=$standard"
+cppad_cxx_flags="-Wall -pedantic-errors -std=$standard -Wno-conversion -Wno-maybe-uninitialized -Wno-unused-variable -Wno-expansion-to-defined"
 if [ "$testvector" != 'eigen' ]
 then
 	cppad_cxx_flags="$cppad_cxx_flags -Wshadow"
