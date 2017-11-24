@@ -29,6 +29,8 @@ list=`git status | sed -n \
             sed -e 's/^.*: *//' -e 's/ -> /\n/' | \
 			sed -e '/^makefile.in$/d' \
 				-e '/^.gitignore$/d' \
+				-e '/^config.guess$/d' \
+				-e '/^config.sub$/d' \
 				-e '/\/makefile.in$/d' \
 				-e '/\/check_copyright.sh$/d' \
 				-e '/AUTHORS/d' \
