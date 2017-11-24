@@ -1972,6 +1972,54 @@ namespace {
 		//
 		return ok;
 	}
+
+	// Test case where only varaible arguments were being checked for
+	// a complete match once hash_codes were equal.
+	// (*bug fixed 2017-11-23)
+	bool only_check_variables_when_hash_codes_match(void)
+	{	bool ok = true;
+		using CppAD::AD;
+		using CppAD::vector;
+		//
+		double eps99 = 99.0 * std::numeric_limits<double>::epsilon();
+		//
+		// length of the data vector z
+		size_t nz = 9999;
+		//
+		// factor for last term
+		double factor = 1e+5;
+		//
+		// z starts at -1.0 and ends at 1.0
+		vector<double> z(nz);
+		for(size_t i = 0; i < nz; i++)
+			z[i] = -1.0 + 2.0 * double(i) / double(nz - 1);
+		//
+		// f(x) = sum from i=0 to nz-1 of (x - z[i])^2
+		vector< AD<double> > ax(1), ay(1);
+		ax[0] = 0.0;
+		CppAD::Independent(ax);
+		AD<double> asum = 0.0;
+		for(size_t i = 0; i < nz; i++)
+		{	AD<double> aterm = z[i] - ax[0];
+			if( i == nz - 1 )
+				asum += factor * aterm;
+			else
+				asum += aterm / factor;
+		}
+		ay[0] = asum;
+		CppAD::ADFun<double> f(ax, ay);
+		//
+		// value of x where we are computing derivative
+		vector<double> x(1), y_before(1), y_after(1);
+		x[0]     = .1;
+		y_before = f.Forward(0, x);
+		f.optimize();
+		y_after  = f.Forward(0, x);
+		//
+		ok &= CppAD::NearEqual(y_before[0], y_after[0], eps99, eps99);
+		//
+		return ok;
+	}
 }
 
 bool optimize(void)
@@ -2051,6 +2099,10 @@ bool optimize(void)
 		// check case where an if case is used after the conditional expression
 		ok     &= cond_exp_if_false_used_after();
 	}
+
+	// not using conditional_skip or atomic functions
+	ok &= only_check_variables_when_hash_codes_match();
+
 	//
 	CppAD::user_atomic<double>::clear();
 	return ok;

@@ -49,6 +49,7 @@ $spell
 	addr
 	subsparsity
 	subgraph
+	optimizer
 $$
 
 $section Changes and Additions to CppAD During 2017$$
@@ -56,6 +57,14 @@ $section Changes and Additions to CppAD During 2017$$
 $head API Changes$$
 Speed tests no longer automatically compile in release mode; see
 $cref/debug_which/speed/debug_which/$$
+
+$head 11-23$$
+The $code ADFun$$ function $cref/optimizer/optimize/$$
+was not handling hash code collisions properly.
+To be specific, only the arguments
+that were variables where checked for a complete match.
+The arguments that are constants need to also be checked.
+This has been fixed.
 
 $head 11-20$$
 $list number$$

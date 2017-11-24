@@ -161,6 +161,9 @@ void match_op(
 					}
 					else match &= arg_match[j] == arg_c[j];
 				}
+				else
+				{	match &= arg_match[j] == arg_c[j];
+				}
 			}
 		}
 		if( match )
