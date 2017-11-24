@@ -198,6 +198,35 @@ public:
 			data_[t++] = zero;
 	}
 	// -----------------------------------------------------------------
+	/*!
+	Assign one set equal to a vector of size_t.
+
+	\param target
+	is the index in this sparse_list object of the set being assinged.
+
+	\param source
+	is a vector of size_t, sorted in accending order, with no repeated
+	elements. (Accending order is required by sparse_list. It is included
+	here so that once can interchange use of sparse_list and sparse_pack.)
+
+	\par data_not_used_
+	increments this value by number of elements lost.
+	*/
+	void assignment(
+		size_t                    target  ,
+		const pod_vector<size_t>& source  )
+	{	CPPAD_ASSERT_UNKNOWN( target  <  n_set_ );
+		//
+		// initialize target as empty
+		clear(target);
+		//
+		// add the elements in source
+		for(size_t i = 0; i < source.size(); ++i)
+			add_element(target, source[i] );
+		//
+		return;
+	}
+	// -----------------------------------------------------------------
 	/*! Assign one set equal to another set.
 
 	\param this_target

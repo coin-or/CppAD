@@ -172,6 +172,30 @@ bool test_intersection(void)
 	return ok;
 }
 
+template<class VectorSet>
+bool test_vector_assignment(void)
+{	bool ok = true;
+	//
+	VectorSet vec_set;
+	size_t n_set = 3;
+	size_t end   = 5;
+	vec_set.resize(n_set, end);
+	//
+	// set[1] = {2, 3}
+	size_t target = 1;
+	CppAD::local::pod_vector<size_t> source(2);
+	source[0] = 2;
+	source[1] = 3;
+	vec_set.assignment(target, source);
+	//
+	typename VectorSet::const_iterator itr(vec_set, target);
+	ok &= *itr     == 2;
+	ok &= *(++itr) == 3;
+	ok &= *(++itr) == end;
+	//
+	return ok;
+}
+
 } // END empty namespace
 
 bool vector_set(void)
@@ -184,6 +208,9 @@ bool vector_set(void)
 	//
 	ok     &= test_intersection<CppAD::local::sparse_pack>();
 	ok     &= test_intersection<CppAD::local::sparse_list>();
+	//
+	ok     &= test_vector_assignment<CppAD::local::sparse_pack>();
+	ok     &= test_vector_assignment<CppAD::local::sparse_list>();
 	//
 	return ok;
 }

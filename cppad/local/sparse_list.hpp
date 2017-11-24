@@ -590,6 +590,73 @@ public:
 		//
 	}
 	// -----------------------------------------------------------------
+	/*!
+	Assign one set equal to a vector of size_t
+	(faster than one adding one element at a time).
+
+	\param target
+	is the index in this sparse_list object of the set being assinged.
+
+	\param source
+	is a vector of size_t, sorted in accending order, with no repeated
+	elements. All of the elements must have value less than end();
+
+	\par data_not_used_
+	increments this value by number of elements lost.
+	*/
+	void assignment(
+		size_t                    target  ,
+		const pod_vector<size_t>& source  )
+	{	CPPAD_ASSERT_UNKNOWN( target  <   start_.size() );
+
+		// number of list elements that will be deleted by this operation
+		size_t number_delete = 0;
+		size_t ref_count     = reference_count(target);
+		//
+		size_t start  = start_[target];
+		if( ref_count == 1 )
+			number_delete = number_elements(target) + 1;
+		else if (ref_count > 1 )
+		{	// decrement reference counter
+			CPPAD_ASSERT_UNKNOWN( data_[start].value > 1 )
+			data_[start].value--;
+		}
+		//
+		if( source.size() == 0 )
+		{	// no elements in this set
+			start_[target] = 0;
+		}
+		else
+		{	// make a copy of source in this sparse_list
+			start                   = data_.extend(2);
+			size_t next             = start + 1;
+			start_[target]          = start;
+			data_[start].value      = 1; // reference count
+			data_[start].next       = next;
+			//
+			size_t last = source.size() - 1;
+			for(size_t i = 0; i < last; ++i)
+			{	data_[next].value = source[i];
+				size_t index      = data_.extend(1);
+				data_[next].next  = index;
+				next              = index;
+				CPPAD_ASSERT_UNKNOWN( source[i] < source[i+1] );
+			}
+			CPPAD_ASSERT_UNKNOWN( source[last] < end_ );
+			data_[next].value = source[last];
+			data_[next].next  = 0;
+		}
+		//
+		// adjust data_not_used_
+		data_not_used_ += number_delete;
+		//
+		// check if time for garbage collection
+		if( data_not_used_ > data_.size() / 2 + 100 )
+			collect_garbage();
+		//
+		return;
+	}
+	// -----------------------------------------------------------------
 	/*! Assign one set equal to another set.
 
 	\param this_target
