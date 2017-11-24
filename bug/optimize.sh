@@ -11,9 +11,7 @@
 # -----------------------------------------------------------------------------
 cat << EOF
 Bug in CppAD optimizer.
-Test passes when: nz     = 10000
-Test passes when: factor = eps99
-Test fails  when: nz  = 10001 and factor = 1.0
+Test passes when nz = 9998 and fails when nz = 9999
 EOF
 cat << EOF > bug.$$
 # include <cppad/cppad.hpp>
@@ -26,10 +24,10 @@ int main(void)
 	double eps99 = 99.0 * std::numeric_limits<double>::epsilon();
 	//
 	// length of the data vector z
-	size_t nz = 10001;
+	size_t nz = 9999;
 	//
 	// factor for last term
-	double factor = 1.0;
+	double factor = 1e+5;
 	//
 	// z starts at -1.0 and ends at 1.0
 	vector<double> z(nz);
@@ -42,11 +40,11 @@ int main(void)
 	CppAD::Independent(ax);
 	AD<double> asum = 0.0;
 	for(size_t i = 0; i < nz; i++)
-	{	AD<double> aterm = (z[i] - ax[0]) * ax[0];
+	{	AD<double> aterm = z[i] - ax[0];
 		if( i == nz - 1 )
 			asum += factor * aterm;
 		else
-			asum += aterm;
+			asum += aterm / factor;
 	}
 	ay[0] = asum;
 	CppAD::ADFun<double> f(ax, ay);
