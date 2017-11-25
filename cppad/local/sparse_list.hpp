@@ -699,19 +699,65 @@ public:
 	{
 		CPPAD_ASSERT_UNKNOWN( target < start_.size() );
 		CPPAD_ASSERT_UNKNOWN( left   < start_.size() );
-		//
-		// check for case where right is empty
-		if( right.size() == 0 )
-		{	// target = left
-			assignment(target, left, *this);
-			return;
-		}
 
 		// get start indices before we modify start_ in case target
 		// and left are the same.
 		size_t start_target = start_[target];
 		size_t start_left   = start_[left];
 
+		// -------------------------------------------------------------------
+		// Check if right is a subset of left so that we used reference count
+		// and not copies of identical sets.
+		//
+		// initialize index for left and right sets
+		size_t current_left  = start_left;
+		size_t current_right = 0;
+		//
+		// initialize value_left
+		size_t value_left  = end_;
+		if( current_left > 0 )
+		{	// advance from reference counter to data
+			current_left = data_[current_left].next;
+			CPPAD_ASSERT_UNKNOWN( current_left != 0 )
+			//
+			value_left = data_[current_left].value;
+			CPPAD_ASSERT_UNKNOWN( value_left < end_);
+		}
+		//
+		// initialize value_right
+		size_t value_right = end_;
+		if( right.size() > 0 )
+			value_right = right[current_right];
+		//
+		bool subset = true;
+		while( subset & (value_right < end_) )
+		{	while( value_left < value_right )
+			{	// advance left
+				current_left = data_[current_left].next;
+				if( current_left == 0 )
+					value_left = end_;
+				else
+					value_left = data_[current_left].value;
+			}
+			if( value_right < value_left )
+				subset = false;
+			else
+			{	// advance right
+				++current_right;
+				if( current_right == right.size() )
+					value_right = end_;
+				else
+					value_right = right[current_right];
+			}
+		}
+		//
+		if( subset )
+		{	// target = left will use reference count for identical sets
+			assignment(target, left, *this);
+			return;
+		}
+
+		// -------------------------------------------------------------------
 		// number of elements that will be deleted by removing old version
 		// of target
 		size_t number_delete = 0;
@@ -724,21 +770,21 @@ public:
 			CPPAD_ASSERT_UNKNOWN( data_[start_target].value > 1 )
 			data_[target].value--;
 		}
-
+		//
 		// start new version of target
 		size_t start        = data_.extend(1);
 		start_[target]      = start;
 		data_[start].value  = 1; // reference count
-
+		//
 		// previous index for new set
 		size_t previous_target = start;
-
-		// current index for left and right sets
-		size_t current_left  = start_left;
-		size_t current_right = 0;
-
+		//
+		// initialize index for left and right sets
+		current_left  = start_left;
+		current_right = 0;
+		//
 		// initialize value_left
-		size_t value_left  = end_;
+		value_left  = end_;
 		if( current_left > 0 )
 		{	// advance from reference counter to data
 			current_left = data_[current_left].next;
@@ -747,12 +793,12 @@ public:
 			value_left = data_[current_left].value;
 			CPPAD_ASSERT_UNKNOWN( value_left < end_);
 		}
-
+		//
 		// initialize value_right
-		size_t value_right = end_;
+		value_right = end_;
 		if( right.size() > 0 )
 			value_right = right[current_right];
-
+		//
 		// merge
 		while( (value_left < end_) | (value_right < end_) )
 		{	if( value_left == value_right)

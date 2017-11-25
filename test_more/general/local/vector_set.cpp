@@ -194,11 +194,22 @@ bool test_vector_union(void)
 	right[2] = 4; // repeated element
 	vec_set.binary_union(target, left, right);
 	//
-	typename VectorSet::const_iterator itr(vec_set, target);
-	ok &= *itr     == 1;
-	ok &= *(++itr) == 2;
-	ok &= *(++itr) == 4;
-	ok &= *(++itr) == end;
+	typename VectorSet::const_iterator itr1(vec_set, target);
+	ok &= *itr1     == 1;
+	ok &= *(++itr1) == 2;
+	ok &= *(++itr1) == 4;
+	ok &= *(++itr1) == end;
+	//
+	// check case where right is a subset of left
+	target = 0;
+	left   = 1;
+	vec_set.binary_union(target, left, right);
+	//
+	typename VectorSet::const_iterator itr2(vec_set, target);
+	ok &= *itr2     == 1;
+	ok &= *(++itr2) == 2;
+	ok &= *(++itr2) == 4;
+	ok &= *(++itr2) == end;
 	//
 	return ok;
 }
