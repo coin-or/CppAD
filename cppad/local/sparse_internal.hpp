@@ -225,20 +225,21 @@ void set_internal_sparsity(
 		CPPAD_ASSERT_UNKNOWN( internal_pattern.number_elements(i_var) == 0 );
 	}
 # endif
+	pod_vector<size_t> internal_row;
 	for(size_t i = 0; i < nr; i++)
-	{	for(size_t j = 0; j < nc; j++)
+	{	internal_row.resize(0);
+		for(size_t j = 0; j < nc; j++)
 		{	bool flag = pattern_in[i * nc + j];
 			if( transpose )
 				flag = pattern_in[j * nr + i];
 			if( flag )
-			{	size_t i_var = internal_index[i];
-				CPPAD_ASSERT_UNKNOWN( i_var < internal_pattern.n_set() );
-				CPPAD_ASSERT_UNKNOWN( j < nc );
-				bool ignore  = zero_empty && i_var == 0;
-				if( ! ignore )
-					internal_pattern.add_element( i_var, j);
-			}
+				internal_row.push_back(j);
 		}
+		size_t i_var = internal_index[i];
+		CPPAD_ASSERT_UNKNOWN( i_var < internal_pattern.n_set() );
+		bool ignore  = zero_empty && i_var == 0;
+		if( ! ignore )
+			internal_pattern.binary_union(i_var, i_var, internal_row);
 	}
 	return;
 }
