@@ -590,73 +590,6 @@ public:
 		//
 	}
 	// -----------------------------------------------------------------
-	/*!
-	Assign one set equal to a vector of size_t
-	(faster than one adding one element at a time).
-
-	\param target
-	is the index in this sparse_list object of the set being assinged.
-
-	\param source
-	is a vector of size_t, sorted in accending order, with no repeated
-	elements. All of the elements must have value less than end();
-
-	\par data_not_used_
-	increments this value by number of elements lost.
-	*/
-	void assignment(
-		size_t                    target  ,
-		const pod_vector<size_t>& source  )
-	{	CPPAD_ASSERT_UNKNOWN( target  <   start_.size() );
-
-		// number of list elements that will be deleted by this operation
-		size_t number_delete = 0;
-		size_t ref_count     = reference_count(target);
-		//
-		size_t start  = start_[target];
-		if( ref_count == 1 )
-			number_delete = number_elements(target) + 1;
-		else if (ref_count > 1 )
-		{	// decrement reference counter
-			CPPAD_ASSERT_UNKNOWN( data_[start].value > 1 )
-			data_[start].value--;
-		}
-		//
-		if( source.size() == 0 )
-		{	// no elements in this set
-			start_[target] = 0;
-		}
-		else
-		{	// make a copy of source in this sparse_list
-			start                   = data_.extend(2);
-			size_t next             = start + 1;
-			start_[target]          = start;
-			data_[start].value      = 1; // reference count
-			data_[start].next       = next;
-			//
-			size_t last = source.size() - 1;
-			for(size_t i = 0; i < last; ++i)
-			{	data_[next].value = source[i];
-				size_t index      = data_.extend(1);
-				data_[next].next  = index;
-				next              = index;
-				CPPAD_ASSERT_UNKNOWN( source[i] < source[i+1] );
-			}
-			CPPAD_ASSERT_UNKNOWN( source[last] < end_ );
-			data_[next].value = source[last];
-			data_[next].next  = 0;
-		}
-		//
-		// adjust data_not_used_
-		data_not_used_ += number_delete;
-		//
-		// check if time for garbage collection
-		if( data_not_used_ > data_.size() / 2 + 100 )
-			collect_garbage();
-		//
-		return;
-	}
-	// -----------------------------------------------------------------
 	/*! Assign one set equal to another set.
 
 	\param this_target
@@ -737,6 +670,143 @@ public:
 		data_not_used_ += number_delete;
 
 		// check if time for garbage collection
+		if( data_not_used_ > data_.size() / 2 + 100 )
+			collect_garbage();
+	}
+	// -----------------------------------------------------------------
+	/*!
+	Assign a set equal to the union of a set and a vector;
+
+	\param target
+	is the index in this sparse_list object of the set being assinged.
+
+	\param left
+	is the index in this sparse_list object of the
+	left operand for the union operation.
+	It is OK for target and left to be the same value.
+
+	\param right
+	is a vector of size_t, sorted in accending order.
+	right operand for the union operation.
+	Elements can be repeated in right, but are not be repeated in the
+	resulting set.
+	All of the elements must have value less than end();
+	*/
+	void binary_union(
+		size_t                    target ,
+		size_t                    left   ,
+		const pod_vector<size_t>& right  )
+	{
+		CPPAD_ASSERT_UNKNOWN( target < start_.size() );
+		CPPAD_ASSERT_UNKNOWN( left   < start_.size() );
+		//
+		// check for case where right is empty
+		if( right.size() == 0 )
+		{	// target = left
+			assignment(target, left, *this);
+			return;
+		}
+
+		// get start indices before we modify start_ in case target
+		// and left are the same.
+		size_t start_target = start_[target];
+		size_t start_left   = start_[left];
+
+		// number of elements that will be deleted by removing old version
+		// of target
+		size_t number_delete = 0;
+		size_t ref_count     = reference_count(target);
+		//
+		if( ref_count == 1 )
+			number_delete = number_elements(target) + 1;
+		else if (ref_count > 1 )
+		{	// decrement reference counter
+			CPPAD_ASSERT_UNKNOWN( data_[start_target].value > 1 )
+			data_[target].value--;
+		}
+
+		// start new version of target
+		size_t start        = data_.extend(1);
+		start_[target]      = start;
+		data_[start].value  = 1; // reference count
+
+		// previous index for new set
+		size_t previous_target = start;
+
+		// current index for left and right sets
+		size_t current_left  = start_left;
+		size_t current_right = 0;
+
+		// initialize value_left
+		size_t value_left  = end_;
+		if( current_left > 0 )
+		{	// advance from reference counter to data
+			current_left = data_[current_left].next;
+			CPPAD_ASSERT_UNKNOWN( current_left != 0 )
+			//
+			value_left = data_[current_left].value;
+			CPPAD_ASSERT_UNKNOWN( value_left < end_);
+		}
+
+		// initialize value_right
+		size_t value_right = end_;
+		if( right.size() > 0 )
+			value_right = right[current_right];
+
+		// merge
+		while( (value_left < end_) | (value_right < end_) )
+		{	if( value_left == value_right)
+			{	// advance left so left and right are no longer equal
+				current_left = data_[current_left].next;
+				if( current_left == 0 )
+					value_left = end_;
+				else
+					value_left = data_[current_left].value;
+				CPPAD_ASSERT_UNKNOWN( value_right < value_left );
+			}
+			// place to put new element
+			size_t current_target       = data_.extend(1);
+			data_[previous_target].next = current_target;
+			//
+			if( value_left < value_right )
+			{	// value_left case
+				CPPAD_ASSERT_UNKNOWN( value_left < end_ );
+				data_[current_target].value = value_left;
+				//
+				// advance left
+				current_left = data_[current_left].next;
+				if( current_left == 0 )
+					value_left = end_;
+				else
+					value_left = data_[current_left].value;
+			}
+			else
+			{	CPPAD_ASSERT_UNKNOWN( value_right < value_left )
+				// value_right case
+				CPPAD_ASSERT_UNKNOWN( value_right < end_);
+				data_[current_target].value = value_right;
+				//
+				// advance right (skip values equal to this one)
+				size_t previous_value = value_right;
+				while( value_right == previous_value )
+				{	++current_right;
+					if( current_right == right.size() )
+						value_right = end_;
+					else
+					{	value_right = right[current_right];
+						CPPAD_ASSERT_UNKNOWN( value_right < end_ );
+					}
+				}
+			}
+			// done setting current target value
+			previous_target  = current_target;
+		}
+		// make end of target list
+		data_[previous_target].next = 0;
+
+		// adjust data_not_used_
+		data_not_used_ += number_delete;
+
 		if( data_not_used_ > data_.size() / 2 + 100 )
 			collect_garbage();
 	}

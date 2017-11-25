@@ -198,35 +198,6 @@ public:
 			data_[t++] = zero;
 	}
 	// -----------------------------------------------------------------
-	/*!
-	Assign one set equal to a vector of size_t.
-
-	\param target
-	is the index in this sparse_list object of the set being assinged.
-
-	\param source
-	is a vector of size_t, sorted in accending order, with no repeated
-	elements. (Accending order is required by sparse_list. It is included
-	here so that once can interchange use of sparse_list and sparse_pack.)
-
-	\par data_not_used_
-	increments this value by number of elements lost.
-	*/
-	void assignment(
-		size_t                    target  ,
-		const pod_vector<size_t>& source  )
-	{	CPPAD_ASSERT_UNKNOWN( target  <  n_set_ );
-		//
-		// initialize target as empty
-		clear(target);
-		//
-		// add the elements in source
-		for(size_t i = 0; i < source.size(); ++i)
-			add_element(target, source[i] );
-		//
-		return;
-	}
-	// -----------------------------------------------------------------
 	/*! Assign one set equal to another set.
 
 	\param this_target
@@ -259,7 +230,41 @@ public:
 		while(j--)
 			data_[t++] = other.data_[v++];
 	}
+	// -----------------------------------------------------------------
+	/*!
+	Assign a set equal to the union of a set and a vector;
 
+	\param target
+	is the index in this sparse_list object of the set being assinged.
+
+	\param left
+	is the index in this sparse_list object of the
+	left operand for the union operation.
+	It is OK for target and left to be the same value.
+
+	\param right
+	is a vector of size_t, sorted in accending order.
+	right operand for the union operation.
+	Elements can be repeated in right, but are not be repeated in the
+	resulting set.
+	All of the elements must have value less than end();
+	*/
+	void binary_union(
+		size_t                    target ,
+		size_t                    left   ,
+		const pod_vector<size_t>& right  )
+	{
+		// initialize target = left
+		size_t t = target * n_pack_;
+		size_t l = left   * n_pack_;
+		size_t j = n_pack_;
+		while(j--)
+			data_[t++] = data_[l++];
+
+		// add the elements in right
+		for(size_t i = 0; i < right.size(); ++i)
+			add_element(target, right[i]);
+	}
 	// -----------------------------------------------------------------
 	/*! Assing a set equal to the union of two other sets.
 

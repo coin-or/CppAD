@@ -173,7 +173,7 @@ bool test_intersection(void)
 }
 
 template<class VectorSet>
-bool test_vector_assignment(void)
+bool test_vector_union(void)
 {	bool ok = true;
 	//
 	VectorSet vec_set;
@@ -181,16 +181,23 @@ bool test_vector_assignment(void)
 	size_t end   = 5;
 	vec_set.resize(n_set, end);
 	//
-	// set[1] = {2, 3}
+	// set[1] = {1, 2}
+	vec_set.add_element(1, 1);
+	vec_set.add_element(1, 2);
+	//
+	// set[1] = {1, 2} union {2, 4} = {1, 2, 4}
 	size_t target = 1;
-	CppAD::local::pod_vector<size_t> source(2);
-	source[0] = 2;
-	source[1] = 3;
-	vec_set.assignment(target, source);
+	size_t left   = 1;
+	CppAD::local::pod_vector<size_t> right(3);
+	right[0] = 2;
+	right[1] = 4;
+	right[2] = 4; // repeated element
+	vec_set.binary_union(target, left, right);
 	//
 	typename VectorSet::const_iterator itr(vec_set, target);
-	ok &= *itr     == 2;
-	ok &= *(++itr) == 3;
+	ok &= *itr     == 1;
+	ok &= *(++itr) == 2;
+	ok &= *(++itr) == 4;
 	ok &= *(++itr) == end;
 	//
 	return ok;
@@ -209,8 +216,8 @@ bool vector_set(void)
 	ok     &= test_intersection<CppAD::local::sparse_pack>();
 	ok     &= test_intersection<CppAD::local::sparse_list>();
 	//
-	ok     &= test_vector_assignment<CppAD::local::sparse_pack>();
-	ok     &= test_vector_assignment<CppAD::local::sparse_list>();
+	ok     &= test_vector_union<CppAD::local::sparse_pack>();
+	ok     &= test_vector_union<CppAD::local::sparse_list>();
 	//
 	return ok;
 }
