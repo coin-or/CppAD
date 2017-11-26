@@ -27,16 +27,17 @@ fi
 echo_log_eval() {
 	echo $*
 	echo $* >> $top_srcdir/check_all.log
-	if ! eval $* >> $top_srcdir/check_all.log 2> $top_srcdir/check_all.err
+	echo $* >  $top_srcdir/check_all.err
+	if ! eval $* >> $top_srcdir/check_all.log 2>> $top_srcdir/check_all.err
 	then
 		cat $top_srcdir/check_all.err
 		echo 'Error: see check_all.log'
 		exit 1
 	fi
-	msg=`cat $top_srcdir/check_all.err`
-	if [ "$msg" != '' ]
+	count=`wc -l $top_srcdir/check_all.err | sed -e 's|\([0-9]*\) .*|\1|'`
+	if [ "$count" != '1' ]
 	then
-		echo "$msg"
+		cat "$top_srcdir/check_all.err"
 		echo 'Warning: see check_all.err'
 		exit 1
 	fi

@@ -768,7 +768,7 @@ public:
 		else if (ref_count > 1 )
 		{	// decrement reference counter
 			CPPAD_ASSERT_UNKNOWN( data_[start_target].value > 1 )
-			data_[target].value--;
+			data_[start_target].value--;
 		}
 		//
 		// start new version of target
