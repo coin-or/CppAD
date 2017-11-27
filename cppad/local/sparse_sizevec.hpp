@@ -67,29 +67,6 @@ private:
 	pod_vector<size_t> start_;
 	// -----------------------------------------------------------------
 	/*!
-	ChecRe: still testingk data structor for one set
-	*/
-# ifdef NDEBUG
-	void check_data_structure(size_t index) const
-	{	return; }
-# else
-	void check_data_structure(size_t index) const
-	{	size_t start = start_[index];
-		if( start == 0 )
-			return;
-		size_t reference_count = data_[start + 0];
-		size_t length          = data_[start + 1];
-		size_t first           = data_[start + 2];
-		size_t last            = data_[start + 2 + length];
-		CPPAD_ASSERT_UNKNOWN( reference_count > 0 );
-		CPPAD_ASSERT_UNKNOWN( length          > 0 );
-		CPPAD_ASSERT_UNKNOWN( first < end_);
-		CPPAD_ASSERT_UNKNOWN( last == end_);
-		return;
-	}
-# endif
-	// -----------------------------------------------------------------
-	/*!
 	Private member functiont that counts references to a set.
 
 	\param index
@@ -100,8 +77,7 @@ private:
 	Otherwise it is the number of sets that share the same vector.
 	*/
 	size_t reference_count(size_t index) const
-	{	check_data_structure(index);
-		// start index
+	{	// start index
 		size_t start = start_[index];
 		if( start == 0 )
 			return 0;
@@ -159,10 +135,10 @@ private:
 	(effectively const, but modifies and restores values)
 	*/
 # ifdef NDEBUG
-	void check_data_not_user(void)
+	void check_data_structure(void)
 	{	return; }
 # else
-	void check_data_not_used(void)
+	void check_data_structure(void)
 	{	// number of sets
 		size_t n_set = start_.size();
 		//
@@ -174,10 +150,19 @@ private:
 		// count the number of entries in data_ that are used
 		size_t data_used = 0;
 		for(size_t i = 0; i < n_set; i++)
-		{	check_data_structure(i);
-			size_t start = start_[i];
-			if( start != 0 )
-			{	// decrement the reference counter
+		{	size_t start = start_[i];
+			if( start > 0 )
+			{	// check structure this non-empty set
+				size_t reference_count = data_[start + 0];
+				size_t length          = data_[start + 1];
+				size_t first           = data_[start + 2];
+				size_t last            = data_[start + 2 + length];
+				CPPAD_ASSERT_UNKNOWN( reference_count > 0 );
+				CPPAD_ASSERT_UNKNOWN( length          > 0 );
+				CPPAD_ASSERT_UNKNOWN( first < end_);
+				CPPAD_ASSERT_UNKNOWN( last == end_);
+				//
+				// decrement the reference counter
 				data_[start]--;
 				//
 				// count the entries when find last reference
@@ -300,7 +285,7 @@ private:
 	*/
 	void collect_garbage(void)
 	{	CPPAD_ASSERT_UNKNOWN( data_not_used_ > data_.size() / 2 );
-		check_data_not_used();
+		check_data_structure();
 		//
 		// number of sets including empty ones
 		size_t n_set  = start_.size();
@@ -376,7 +361,7 @@ public:
 	// -----------------------------------------------------------------
 	/// Destructor
 	~sparse_sizevec(void)
-	{	check_data_not_used();
+	{	check_data_structure();
 	}
 	// -----------------------------------------------------------------
 	/*!
@@ -406,7 +391,7 @@ public:
 	is the maximum element plus one (the minimum element is 0).
 	*/
 	void resize(size_t n_set, size_t end)
-	{	check_data_not_used();
+	{	check_data_structure();
 
 		if( n_set == 0 )
 		{	// restore object to start after constructor
@@ -435,9 +420,7 @@ public:
 	is the index of the set we are checking number of the elements of.
 	*/
 	size_t number_elements(size_t index) const
-	{	check_data_structure(index);
-
-		size_t start = start_[index];
+	{	size_t start = start_[index];
 		if( start == 0 )
 			return 0;
 		return data_[start + 1];
@@ -455,7 +438,6 @@ public:
 	void add_element(size_t index, size_t element)
 	{	CPPAD_ASSERT_UNKNOWN( index   < start_.size() );
 		CPPAD_ASSERT_UNKNOWN( element < end_ );
-		check_data_not_used();
 
 		// check if element is already in the set
 		if( is_element(index, element) )
@@ -506,9 +488,6 @@ public:
 
 		// adjust data_not_used_
 		data_not_used_ += number_lost;
-		check_data_not_used();
-
-
 		if( data_not_used_ > data_.size() / 2 + 100 )
 			collect_garbage();
 		//
@@ -525,8 +504,7 @@ public:
 	is the element we are checking to see if it is in the set.
 	*/
 	bool is_element(size_t index, size_t element) const
-	{	check_data_structure(index);
-		//
+	{	//
 		CPPAD_ASSERT_UNKNOWN( element < end_ );
 		//
 		size_t start = start_[index];
@@ -598,8 +576,7 @@ public:
 		// If this and other are the same, use another reference to same list
 		size_t other_start = other.start_[other_source];
 		if( this == &other )
-		{	check_data_structure( other_source );
-			CPPAD_ASSERT_UNKNOWN( this_target != other_source );
+		{	CPPAD_ASSERT_UNKNOWN( this_target != other_source );
 			start_[this_target] = other_start;
 			if( other_start != 0 )
 			{	// increment reference count
@@ -1059,8 +1036,7 @@ public:
 	:
 	data_( vec_set.data_ ) ,
 	end_ ( vec_set.end_ )
-	{	vec_set.check_data_structure(index);
-		size_t start = vec_set.start_[index];
+	{	size_t start = vec_set.start_[index];
 		if( start == 0 )
 		{	data_index_ = 0;
 		}
