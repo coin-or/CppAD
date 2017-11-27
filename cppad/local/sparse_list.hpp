@@ -42,7 +42,7 @@ private:
 		/// For the other entries in the list this is an element of the set.
 		size_t value;
 
-		/// This is the index in data_ of the next entry in the list.
+		/// This is the data index of the next entry in the list.
 		/// If there are no more entries in the list, this value is zero.
 		/// (The first entry in data_ is not used.)
 		size_t next;
@@ -79,15 +79,15 @@ private:
 	/*!
 	Private member functiont that counts references to sets.
 
-	\param index
+	\param i
 	is the index of the set that we are counting the references to.
 
 	\return
 	if the set is empty, the return value is zero.
 	Otherwise it is the number of sets that share the same linked list
 	*/
-	size_t reference_count(size_t index) const
-	{	size_t ret = start_[index];
+	size_t reference_count(size_t i) const
+	{	size_t ret = start_[i];
 		if( ret != 0 )
 		{	CPPAD_ASSERT_UNKNOWN( data_[ret].value != 0 );
 			CPPAD_ASSERT_UNKNOWN( data_[ret].next != 0 );
@@ -306,21 +306,21 @@ private:
 	/*!
 	Make a separate copy of the shared list
 
-	\param index
-	is the index, in the vector of sets, for this list.
+	\param i
+	is the index, in the vector of sets, for this set.
 	*/
-	void separate_copy(size_t index)
-	{	size_t ref_count = reference_count(index);
+	void separate_copy(size_t i)
+	{	size_t ref_count = reference_count(i);
 		if( ref_count <= 1 )
 			return;
 		//
-		size_t start = start_[index];
+		size_t start = start_[i];
 		size_t next  = data_[start].next;
 		size_t value = data_[next].value;
 		//
 		size_t copy_cur       = data_.extend(2);
 		size_t copy_next      = copy_cur + 1;
-		start_[index]         = copy_cur;
+		start_[i]             = copy_cur;
 		data_[copy_cur].value = 1;
 		data_[copy_cur].next  = copy_next;
 		copy_cur              = copy_next;
@@ -440,19 +440,19 @@ public:
 	/*!
 	Count number of elements in a set.
 
-	\param index
+	\param i
 	is the index of the set we are counting the elements of.
 	*/
-	size_t number_elements(size_t index) const
-	{	CPPAD_ASSERT_UNKNOWN(index < start_.size() );
+	size_t number_elements(size_t i) const
+	{	CPPAD_ASSERT_UNKNOWN(i < start_.size() );
 
 		size_t count   = 0;
-		size_t start   = start_[index];
+		size_t start   = start_[i];
 
 		// check if the set is empty
 		if( start == 0 )
 			return count;
-		CPPAD_ASSERT_UNKNOWN( reference_count(index) > 0 );
+		CPPAD_ASSERT_UNKNOWN( reference_count(i) > 0 );
 
 		// advance to the first element in the set
 		size_t next    = data_[start].next;
@@ -468,25 +468,25 @@ public:
 	/*!
 	Add one element to a set.
 
-	\param index
+	\param i
 	is the index for this set in the vector of sets.
 
 	\param element
 	is the element we are adding to the set.
 	*/
-	void add_element(size_t index, size_t element)
-	{	CPPAD_ASSERT_UNKNOWN( index   < start_.size() );
+	void add_element(size_t i, size_t element)
+	{	CPPAD_ASSERT_UNKNOWN( i   < start_.size() );
 		CPPAD_ASSERT_UNKNOWN( element < end_ );
 
 		// check if element is already in the set
-		if( is_element(index, element) )
+		if( is_element(i, element) )
 			return;
 
 		// check for case where starting set is empty
-		size_t start = start_[index];
+		size_t start = start_[i];
 		if( start == 0 )
 		{	start         = data_.extend(2);
-			start_[index] = start;
+			start_[i]     = start;
 			size_t next   = start + 1;
 			data_[start].value = 1; // reference count
 			data_[start].next  = next;
@@ -495,10 +495,10 @@ public:
 			return;
 		}
 		// make sure that we have a separate copy of this set
-		separate_copy(index);
+		separate_copy(i);
 		//
-		// start of list with this index (after separate_copy)
-		size_t previous = start_[index];
+		// start of set with this index (after separate_copy)
+		size_t previous = start_[i];
 		// check reference count for this list
 		CPPAD_ASSERT_UNKNOWN( data_[previous].value == 1 );
 		// first entry in this list (which starts out non-empty)
@@ -525,17 +525,17 @@ public:
 	/*!
 	check an element is in a set.
 
-	\param index
+	\param i
 	is the index for this set in the vector of sets.
 
 	\param element
 	is the element we are checking to see if it is in the set.
 	*/
-	bool is_element(size_t index, size_t element) const
-	{	CPPAD_ASSERT_UNKNOWN( index   < start_.size() );
+	bool is_element(size_t i, size_t element) const
+	{	CPPAD_ASSERT_UNKNOWN( i   < start_.size() );
 		CPPAD_ASSERT_UNKNOWN( element < end_ );
 		//
-		size_t start = start_[index];
+		size_t start = start_[i];
 		if( start == 0 )
 			return false;
 		//
@@ -1173,12 +1173,12 @@ private:
 	pair_size_t                    next_pair_;
 public:
 	/// construct a const_iterator for a list in a sparse_list object
-	sparse_list_const_iterator (const sparse_list& list, size_t index)
+	sparse_list_const_iterator (const sparse_list& list, size_t i)
 	:
 	data_( list.data_ )    ,
 	end_ ( list.end_ )
-	{	CPPAD_ASSERT_UNKNOWN( index < list.start_.size() );
-		size_t start = list.start_[index];
+	{	CPPAD_ASSERT_UNKNOWN( i < list.start_.size() );
+		size_t start = list.start_[i];
 		if( start == 0 )
 		{	next_pair_.next  = 0;
 			next_pair_.value = end_;
@@ -1187,7 +1187,7 @@ public:
 		{	// value for this entry is reference count for list
 			CPPAD_ASSERT_UNKNOWN( data_[start].value > 0 );
 
-			// index where list truely starts
+			// data index where list truely starts
 			size_t next = data_[start].next;
 			CPPAD_ASSERT_UNKNOWN( next != 0 );
 
