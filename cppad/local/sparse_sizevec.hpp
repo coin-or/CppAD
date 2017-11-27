@@ -69,16 +69,16 @@ private:
 	/*!
 	Private member functiont that counts references to a set.
 
-	\param index
+	\param i
 	is the index of the set that we are counting the references to.
 
 	\return
 	if the set is empty, the return value is zero.
 	Otherwise it is the number of sets that share the same vector.
 	*/
-	size_t reference_count(size_t index) const
-	{	// start index
-		size_t start = start_[index];
+	size_t reference_count(size_t i) const
+	{	// start data index
+		size_t start = start_[i];
 		if( start == 0 )
 			return 0;
 		//
@@ -89,28 +89,28 @@ private:
 	/*!
 	drop a set.
 
-	\param index
+	\param i
 	is the index of the set that will be dropped.
 
 	\par reference_count
 	if the set is non-empty,
-	the reference cound corresponding to index will be decremented.
+	the reference count corresponding to index will be decremented.
 
 	\return
 	is the number of elements of data_ that will be lost when the set is
 	dropped. This is non-zero when the initial reference count is one.
 	*/
-	size_t drop(size_t index)
+	size_t drop(size_t i)
 	{
 		// reference count
-		size_t ref_count = reference_count(index);
+		size_t ref_count = reference_count(i);
 
 		// empty set case
 		if( ref_count == 0 )
 			return 0;
 
 		// start
-		size_t start = start_[index];
+		size_t start = start_[i];
 		CPPAD_ASSERT_UNKNOWN( data_[start] == ref_count );
 
 		// decrement reference counter
@@ -227,7 +227,7 @@ private:
 			return 3;
 		}
 		//
-		// index
+		// data index
 		size_t index_one    = start_one + 2;
 		size_t index_two    = start_two + 2;
 		//
@@ -416,11 +416,11 @@ public:
 	/*!
 	Return number of elements in a set.
 
-	\param index
+	\param i
 	is the index of the set we are checking number of the elements of.
 	*/
-	size_t number_elements(size_t index) const
-	{	size_t start = start_[index];
+	size_t number_elements(size_t i) const
+	{	size_t start = start_[i];
 		if( start == 0 )
 			return 0;
 		return data_[start + 1];
@@ -429,25 +429,25 @@ public:
 	/*!
 	Add one element to a set.
 
-	\param index
+	\param i
 	is the index for this set in the vector of sets.
 
 	\param element
 	is the element we are adding to the set.
 	*/
-	void add_element(size_t index, size_t element)
-	{	CPPAD_ASSERT_UNKNOWN( index   < start_.size() );
+	void add_element(size_t i, size_t element)
+	{	CPPAD_ASSERT_UNKNOWN( i   < start_.size() );
 		CPPAD_ASSERT_UNKNOWN( element < end_ );
 
 		// check if element is already in the set
-		if( is_element(index, element) )
+		if( is_element(i, element) )
 			return;
 
 		// check for case where old set is empty
-		size_t start = start_[index];
+		size_t start = start_[i];
 		if( start == 0 )
 		{	start            = data_.extend(4);
-			start_[index]    = start;
+			start_[i]        = start;
 			data_[start]     = 1;        // reference count
 			data_[start + 1] = 1;        // length
 			data_[start + 2] = element;  // the element
@@ -455,7 +455,7 @@ public:
 			return;
 		}
 		//
-		size_t number_lost = drop(index);
+		size_t number_lost = drop(i);
 		//
 		// start of new set
 		size_t length         = data_[start + 1];
@@ -484,7 +484,7 @@ public:
 
 		//
 		// connect up new set
-		start_[index] = new_start;
+		start_[i] = new_start;
 
 		// adjust data_not_used_
 		data_not_used_ += number_lost;
@@ -497,17 +497,17 @@ public:
 	/*!
 	Check if an element is in a set.
 
-	\param index
+	\param i
 	is the index for this set in the vector of sets.
 
 	\param element
 	is the element we are checking to see if it is in the set.
 	*/
-	bool is_element(size_t index, size_t element) const
+	bool is_element(size_t i, size_t element) const
 	{	//
 		CPPAD_ASSERT_UNKNOWN( element < end_ );
 		//
-		size_t start = start_[index];
+		size_t start = start_[i];
 		if( start == 0 )
 			return false;
 		//
@@ -1028,20 +1028,20 @@ private:
 	/// Possible elements in a list are 0, 1, ..., end_ - 1;
 	const size_t                   end_;
 
-	/// index of next entry in data_, zero for no more entries
+	/// data index of next entry, zero for no more entries
 	size_t                         data_index_;
 public:
 	/// construct a const_iterator for a set in a sparse_sizevec object
-	sparse_sizevec_const_iterator (const sparse_sizevec& vec_set, size_t index)
+	sparse_sizevec_const_iterator (const sparse_sizevec& vec_set, size_t i)
 	:
 	data_( vec_set.data_ ) ,
 	end_ ( vec_set.end_ )
-	{	size_t start = vec_set.start_[index];
+	{	size_t start = vec_set.start_[i];
 		if( start == 0 )
 		{	data_index_ = 0;
 		}
 		else
-		{	// index of the first element in the set
+		{	// data index of the first element in the set
 			data_index_ = start + 2;
 			CPPAD_ASSERT_UNKNOWN( data_[data_index_] < end_ );
 		}
