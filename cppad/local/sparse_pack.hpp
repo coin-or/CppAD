@@ -26,7 +26,8 @@ class sparse_pack_const_iterator;
 Vector of sets of postivie integers, each set stored as a packed boolean array.
 
 All the public member functions for this class are also in the
-sparse_list class. This defines the CppAD vector_of_sets concept.
+sparse_list and sparse_vecsize classes.
+This defines the CppAD vector_of_sets concept.
 */
 
 class sparse_pack {
@@ -48,12 +49,14 @@ private:
 	size_t n_pack_;
 	/// Data for all the sets.
 	pod_vector<Pack>  data_;
+// ============================================================================
 public:
 	/// declare a const iterator
 	typedef sparse_pack_const_iterator const_iterator;
 
 	// -----------------------------------------------------------------
-	/*! Default constructor (no sets)
+	/*!
+	Default constructor (no sets)
 	*/
 	sparse_pack(void) :
 	n_bit_( std::numeric_limits<Pack>::digits ),
@@ -62,7 +65,8 @@ public:
 	n_pack_(0)
 	{ }
 	// -----------------------------------------------------------------
-	/*! Make use of copy constructor an error
+	/*!
+	Make use of copy constructor an error
 
 	\param v
 	vector that we are attempting to make a copy of.
@@ -74,12 +78,14 @@ public:
 		CPPAD_ASSERT_UNKNOWN(0);
 	}
 	// -----------------------------------------------------------------
-	/*! Destructor
+	/*!
+	Destructor
 	*/
 	~sparse_pack(void)
 	{ }
 	// -----------------------------------------------------------------
-	/*! Change number of sets, set end, and initialize all sets as empty
+	/*!
+	Change number of sets, set end, and initialize all sets as empty
 
 	If \c n_set_in is zero, any memory currently allocated for this object
 	is freed. Otherwise, new memory may be allocated for the sets (if needed).
@@ -134,7 +140,8 @@ public:
 		return count;
 	}
 	// -----------------------------------------------------------------
-	/*! Add one element to a set.
+	/*!
+	Add one element to a set.
 
 	\param index
 	is the index for this set in the vector of sets.
@@ -156,7 +163,8 @@ public:
 		data_[ index * n_pack_ + j] |= mask;
 	}
 	// -----------------------------------------------------------------
-	/*! Is an element of a set.
+	/*!
+	Is an element of a set.
 
 	\param index
 	is the index for this set in the vector of sets.
@@ -179,7 +187,8 @@ public:
 		return (data_[ index * n_pack_ + j] & mask) != zero;
 	}
 	// -----------------------------------------------------------------
-	/*! Assign the empty set to one of the sets.
+	/*!
+	Assign the empty set to one of the sets.
 
 	\param target
 	is the index of the set we are setting to the empty set.
@@ -198,7 +207,8 @@ public:
 			data_[t++] = zero;
 	}
 	// -----------------------------------------------------------------
-	/*! Assign one set equal to another set.
+	/*!
+	Assign one set equal to another set.
 
 	\param this_target
 	is the index (in this \c sparse_pack object) of the set being assinged.
@@ -266,7 +276,8 @@ public:
 			add_element(target, right[i]);
 	}
 	// -----------------------------------------------------------------
-	/*! Assing a set equal to the union of two other sets.
+	/*!
+	Assing a set equal to the union of two other sets.
 
 	\param this_target
 	is the index (in this \c sparse_pack object) of the set being assinged.
@@ -310,7 +321,8 @@ public:
 			data_[t++] = ( data_[l++] | other.data_[r++] );
 	}
 	// -----------------------------------------------------------------
-	/*! Assing a set equal to the intersection of two other sets.
+	/*!
+	Assing a set equal to the intersection of two other sets.
 
 	\param this_target
 	is the index (in this \c sparse_pack object) of the set being assinged.
@@ -354,7 +366,8 @@ public:
 			data_[t++] = ( data_[l++] & other.data_[r++] );
 	}
 	// -----------------------------------------------------------------
-	/*! Fetch n_set for vector of sets object.
+	/*!
+	Fetch n_set for vector of sets object.
 
 	\return
 	Number of from sets for this vector of sets object
@@ -362,7 +375,8 @@ public:
 	size_t n_set(void) const
 	{	return n_set_; }
 	// -----------------------------------------------------------------
-	/*! Fetch end for this vector of sets object.
+	/*!
+	Fetch end for this vector of sets object.
 
 	\return
 	is the maximum element value plus one (the minimum element value is 0).
@@ -370,7 +384,8 @@ public:
 	size_t end(void) const
 	{	return end_; }
 	// -----------------------------------------------------------------
-	/*! Amount of memory used by this vector of sets
+	/*!
+	Amount of memory used by this vector of sets
 
 	\return
 	The amount of memory in units of type unsigned char memory.

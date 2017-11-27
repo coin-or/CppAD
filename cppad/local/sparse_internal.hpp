@@ -16,6 +16,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # include <cppad/core/define.hpp>
 # include <cppad/local/sparse_pack.hpp>
 # include <cppad/local/sparse_list.hpp>
+# include <cppad/local/sparse_sizevec.hpp>
 
 namespace CppAD { namespace local { // BEGIN_CPPAD_LOCAL_NAMESPACE
 /*!
