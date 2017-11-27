@@ -218,17 +218,22 @@ bool test_vector_union(void)
 
 bool vector_set(void)
 {	bool ok = true;
+
 	ok     &= test_no_other<CppAD::local::sparse_pack>();
 	ok     &= test_no_other<CppAD::local::sparse_list>();
+	ok     &= test_no_other<CppAD::local::sparse_sizevec>();
 	//
 	ok     &= test_yes_other<CppAD::local::sparse_pack>();
 	ok     &= test_yes_other<CppAD::local::sparse_list>();
+	ok     &= test_yes_other<CppAD::local::sparse_sizevec>();
 	//
 	ok     &= test_intersection<CppAD::local::sparse_pack>();
 	ok     &= test_intersection<CppAD::local::sparse_list>();
+	ok     &= test_intersection<CppAD::local::sparse_sizevec>();
 	//
 	ok     &= test_vector_union<CppAD::local::sparse_pack>();
 	ok     &= test_vector_union<CppAD::local::sparse_list>();
+	ok     &= test_vector_union<CppAD::local::sparse_sizevec>();
 	//
 	return ok;
 }

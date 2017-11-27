@@ -65,7 +65,29 @@ private:
 	elements in this set
 	*/
 	pod_vector<size_t> start_;
-
+	// -----------------------------------------------------------------
+	/*!
+	ChecRe: still testingk data structor for one set
+	*/
+# ifdef NDEBUG
+	void check_data_structure(size_t index) const
+	{	return; }
+# else
+	void check_data_structure(size_t index) const
+	{	size_t start = start_[index];
+		if( start == 0 )
+			return;
+		size_t reference_count = data_[start + 0];
+		size_t length          = data_[start + 1];
+		size_t first           = data_[start + 2];
+		size_t last            = data_[start + 2 + length];
+		CPPAD_ASSERT_UNKNOWN( reference_count > 0 );
+		CPPAD_ASSERT_UNKNOWN( length          > 0 );
+		CPPAD_ASSERT_UNKNOWN( first < end_);
+		CPPAD_ASSERT_UNKNOWN( last == end_);
+		return;
+	}
+# endif
 	// -----------------------------------------------------------------
 	/*!
 	Private member functiont that counts references to a set.
@@ -78,23 +100,68 @@ private:
 	Otherwise it is the number of sets that share the same vector.
 	*/
 	size_t reference_count(size_t index) const
-	{	// start index
+	{	check_data_structure(index);
+		// start index
 		size_t start = start_[index];
 		if( start == 0 )
 			return 0;
-		//
-		CPPAD_ASSERT_UNKNOWN( data_[start] != 0 );    // reference count
-		CPPAD_ASSERT_UNKNOWN( data_[start + 1] > 0 ); // length
-
 		//
 		// reference count
 		return data_[start];
 	}
 	// -----------------------------------------------------------------
 	/*!
+	drop a set.
+
+	\param index
+	is the index of the set that will be dropped.
+
+	\par reference_count
+	if the set is non-empty,
+	the reference cound corresponding to index will be decremented.
+
+	\return
+	is the number of elements of data_ that will be lost when the set is
+	dropped. This is non-zero when the initial reference count is one.
+	*/
+	size_t drop(size_t index)
+	{
+		// reference count
+		size_t ref_count = reference_count(index);
+
+		// empty set case
+		if( ref_count == 0 )
+			return 0;
+
+		// start
+		size_t start = start_[index];
+		CPPAD_ASSERT_UNKNOWN( data_[start] == ref_count );
+
+		// decrement reference counter
+		data_[start]--;
+
+		// nothing lost unless new reference count is zero
+		if( ref_count != 1 )
+			return 0;
+
+		// number of elements in the set
+		size_t length = data_[start + 1];
+
+		// reference count, length, end marker, plus elements in set
+		size_t number_lost = 3 + length;
+
+		// number_lost
+		return number_lost;
+	}
+	// -----------------------------------------------------------------
+	/*!
 	Member function that checks the number of data elements not used
 	(effectively const, but modifies and restores values)
 	*/
+# ifdef NDEBUG
+	void check_data_not_user(void)
+	{	return; }
+# else
 	void check_data_not_used(void)
 	{	// number of sets
 		size_t n_set = start_.size();
@@ -107,10 +174,10 @@ private:
 		// count the number of entries in data_ that are used
 		size_t data_used = 0;
 		for(size_t i = 0; i < n_set; i++)
-		{	size_t start = start_[i];
+		{	check_data_structure(i);
+			size_t start = start_[i];
 			if( start != 0 )
 			{	// decrement the reference counter
-				CPPAD_ASSERT_UNKNOWN( data_[start] > 0 );
 				data_[start]--;
 				//
 				// count the entries when find last reference
@@ -129,6 +196,7 @@ private:
 		);
 		return;
 	}
+# endif
 	// -----------------------------------------------------------------
 	/*!
 	Check if one of two sets is a subset of the other set
@@ -232,9 +300,7 @@ private:
 	*/
 	void collect_garbage(void)
 	{	CPPAD_ASSERT_UNKNOWN( data_not_used_ > data_.size() / 2 );
-# ifndef NDEBUG
 		check_data_not_used();
-# endif
 		//
 		// number of sets including empty ones
 		size_t n_set  = start_.size();
@@ -310,10 +376,7 @@ public:
 	// -----------------------------------------------------------------
 	/// Destructor
 	~sparse_sizevec(void)
-	{
-# ifndef NDEBUG
-		check_data_not_used();
-# endif
+	{	check_data_not_used();
 	}
 	// -----------------------------------------------------------------
 	/*!
@@ -343,10 +406,8 @@ public:
 	is the maximum element plus one (the minimum element is 0).
 	*/
 	void resize(size_t n_set, size_t end)
-	{
-# ifndef NDEBUG
-		check_data_not_used();
-# endif
+	{	check_data_not_used();
+
 		if( n_set == 0 )
 		{	// restore object to start after constructor
 			// (no memory allocated for this object)
@@ -374,13 +435,11 @@ public:
 	is the index of the set we are checking number of the elements of.
 	*/
 	size_t number_elements(size_t index) const
-	{	CPPAD_ASSERT_UNKNOWN(index < start_.size() );
+	{	check_data_structure(index);
+
 		size_t start = start_[index];
 		if( start == 0 )
 			return 0;
-		//
-		CPPAD_ASSERT_UNKNOWN( data_[start] != 0 );     // ref count
-		CPPAD_ASSERT_UNKNOWN( data_[start + 1] != 0 ); // length
 		return data_[start + 1];
 	}
 	// -----------------------------------------------------------------
@@ -396,6 +455,7 @@ public:
 	void add_element(size_t index, size_t element)
 	{	CPPAD_ASSERT_UNKNOWN( index   < start_.size() );
 		CPPAD_ASSERT_UNKNOWN( element < end_ );
+		check_data_not_used();
 
 		// check if element is already in the set
 		if( is_element(index, element) )
@@ -412,6 +472,8 @@ public:
 			data_[start + 3] = end_;     // end marker
 			return;
 		}
+		//
+		size_t number_lost = drop(index);
 		//
 		// start of new set
 		size_t length         = data_[start + 1];
@@ -437,6 +499,18 @@ public:
 			value   = data_[start + 2 + count];
 		}
 		data_.push_back( end_ );
+
+		//
+		// connect up new set
+		start_[index] = new_start;
+
+		// adjust data_not_used_
+		data_not_used_ += number_lost;
+		check_data_not_used();
+
+
+		if( data_not_used_ > data_.size() / 2 + 100 )
+			collect_garbage();
 		//
 		return;
 	}
@@ -451,15 +525,14 @@ public:
 	is the element we are checking to see if it is in the set.
 	*/
 	bool is_element(size_t index, size_t element) const
-	{	CPPAD_ASSERT_UNKNOWN( index   < start_.size() );
+	{	check_data_structure(index);
+		//
 		CPPAD_ASSERT_UNKNOWN( element < end_ );
 		//
 		size_t start = start_[index];
 		if( start == 0 )
 			return false;
 		//
-		CPPAD_ASSERT_UNKNOWN( data_[start]     > 0 ); // reference count
-		CPPAD_ASSERT_UNKNOWN( data_[start + 1] > 0 ); // length count
 		size_t length       = data_[start + 1];
 		const size_t* first = data_.data() + start + 2;
 		const size_t* last  = first + length;
@@ -478,34 +551,16 @@ public:
 	(unlinked) by this operation.
 	*/
 	void clear(size_t target)
-	{	CPPAD_ASSERT_UNKNOWN( target < start_.size() );
+	{	// number of references to this set
+		size_t number_lost = drop( target );
 
-		// number of references to this set
-		size_t ref_count = reference_count(target);
+		// set target to empty set
+		start_[target] = 0;
 
-		// case by reference count
-		if( ref_count > 1  )
-		{	// just remove this reference
-			size_t start   = start_[target];
-			start_[target] = 0;
-			CPPAD_ASSERT_UNKNOWN( data_[start] == ref_count );
-			data_[start]--;
-		}
-		else if( ref_count == 1 )
-		{
-			// number of data_ elements that will be lost by this operation
-			size_t number_delete = number_elements(target) + 3;
-
-			// delete the elements from the set
-			start_[target] = 0;
-
-			// adjust data_not_used_
-			data_not_used_ += number_delete;
-
-			if( data_not_used_ > data_.size() / 2 + 100 )
-				collect_garbage();
-		}
-		//
+		// adjust data_not_used_
+		data_not_used_ += number_lost;
+		if( data_not_used_ > data_.size() / 2 + 100 )
+			collect_garbage();
 	}
 	// -----------------------------------------------------------------
 	/*!
@@ -538,24 +593,17 @@ public:
 			return;
 
 		// number of elements that will be deleted by this operation
-		size_t number_delete = 0;
-		size_t ref_count     = reference_count(this_target);
-		size_t start         = start_[this_target];
-		if( ref_count == 1 )
-			number_delete = number_elements(this_target) + 3;
-		else if (ref_count > 1 )
-		{	// decrement reference counter
-			CPPAD_ASSERT_UNKNOWN( data_[start] > 1 )
-			data_[start];
-		}
+		size_t number_lost = drop(this_target);
 
 		// If this and other are the same, use another reference to same list
 		size_t other_start = other.start_[other_source];
 		if( this == &other )
-		{	start_[this_target] = other_start;
+		{	check_data_structure( other_source );
+			CPPAD_ASSERT_UNKNOWN( this_target != other_source );
+			start_[this_target] = other_start;
 			if( other_start != 0 )
-			{	data_[other_start]++; // increment reference count
-				CPPAD_ASSERT_UNKNOWN( data_[other_start + 1] > 1 ); // length
+			{	// increment reference count
+				data_[other_start]++;
 			}
 		}
 		else if( other_start  == 0 )
@@ -575,7 +623,7 @@ public:
 		}
 
 		// adjust data_not_used_
-		data_not_used_ += number_delete;
+		data_not_used_ += number_lost;
 
 		// check if time for garbage collection
 		if( data_not_used_ > data_.size() / 2 + 100 )
@@ -608,11 +656,7 @@ public:
 		CPPAD_ASSERT_UNKNOWN( target < start_.size() );
 		CPPAD_ASSERT_UNKNOWN( left   < start_.size() );
 
-		// get start indices before we modify start_ in case target
-		// and left are the same.
-		size_t start_target = start_[target];
 		size_t start_left   = start_[left];
-
 		// -------------------------------------------------------------------
 		// Check if right is a subset of left so that we used reference count
 		// and not make copies of identical sets.
@@ -662,16 +706,7 @@ public:
 		// -------------------------------------------------------------------
 		// number of elements that will be deleted by removing old version
 		// of target
-		size_t number_delete = 0;
-		size_t ref_count     = reference_count(target);
-		//
-		if( ref_count == 1 )
-			number_delete = number_elements(target) + 3;
-		else if (ref_count > 1 )
-		{	// decrement reference counter
-			CPPAD_ASSERT_UNKNOWN( data_[start_target] > 1 )
-			data_[start_target]--;
-		}
+		size_t number_lost = drop(target);
 		//
 		// start new version of target
 		size_t start       = data_.extend(2);
@@ -680,7 +715,8 @@ public:
 		// data_[start + 1] = length is not yet known
 		//
 		// initialize value_left
-		value_left  = end_;
+		current_left = start_left;
+		value_left   = end_;
 		if( current_left > 0 )
 		{	// advance from reference counter to data
 			current_left = current_left + 2;
@@ -740,7 +776,7 @@ public:
 		//
 
 		// adjust data_not_used_
-		data_not_used_ += number_delete;
+		data_not_used_ += number_lost;
 
 		if( data_not_used_ > data_.size() / 2 + 100 )
 			collect_garbage();
@@ -796,20 +832,11 @@ public:
 
 		// must get all the start indices before modify start_this
 		// (incase start_this is the same as start_left or start_right)
-		size_t start_target  = start_[this_target];
 		size_t start_left    = start_[this_left];
 		size_t start_right   = other.start_[other_right];
 
 		// number of list elements that will be deleted by this operation
-		size_t number_delete = 0;
-		size_t ref_count     = reference_count(this_target);
-		if( ref_count == 1 )
-			number_delete = number_elements(this_target) + 3;
-		else if (ref_count > 1 )
-		{	// decrement reference counter
-			CPPAD_ASSERT_UNKNOWN( data_[start_target] > 1 )
-			data_[start_target]--;
-		}
+		size_t number_lost = drop(this_target);
 
 		// start the new list
 		size_t start        = data_.extend(2);
@@ -860,7 +887,7 @@ public:
 		data_[start + 1] = length;
 
 		// adjust data_not_used_
-		data_not_used_ += number_delete;
+		data_not_used_ += number_lost;
 
 		if( data_not_used_ > data_.size() / 2 + 100 )
 			collect_garbage();
@@ -916,21 +943,12 @@ public:
 
 		// must get all the start indices before modify start_this
 		// (incase start_this is the same as start_left or start_right)
-		size_t start_target  = start_[this_target];
 		size_t start_left    = start_[this_left];
 		size_t start_right   = other.start_[other_right];
 
 
 		// number of list elements that will be deleted by this operation
-		size_t number_delete = 0;
-		size_t ref_count     = reference_count(this_target);
-		if( ref_count == 1 )
-			number_delete = number_elements(this_target) + 3;
-		else if (ref_count > 1 )
-		{	// decrement reference counter
-			CPPAD_ASSERT_UNKNOWN( data_[start_target] > 1 )
-			data_[start_target]--;
-		}
+		size_t number_lost = drop(this_target);
 
 		// initialize intersection as empty
 		size_t start        = 0;
@@ -982,7 +1000,7 @@ public:
 		}
 
 		// adjust data_not_used_
-		data_not_used_ += number_delete;
+		data_not_used_ += number_lost;
 		//
 		if( data_not_used_ > data_.size() / 2 + 100 )
 			collect_garbage();
@@ -1041,16 +1059,13 @@ public:
 	:
 	data_( vec_set.data_ ) ,
 	end_ ( vec_set.end_ )
-	{	CPPAD_ASSERT_UNKNOWN( index < vec_set.start_.size() );
+	{	vec_set.check_data_structure(index);
 		size_t start = vec_set.start_[index];
 		if( start == 0 )
 		{	data_index_ = 0;
 		}
 		else
-		{	CPPAD_ASSERT_UNKNOWN( data_[start]     > 0 ); // ref count
-			CPPAD_ASSERT_UNKNOWN( data_[start + 1] > 0 ); // length
-
-			// index of the first element in the set
+		{	// index of the first element in the set
 			data_index_ = start + 2;
 			CPPAD_ASSERT_UNKNOWN( data_[data_index_] < end_ );
 		}
