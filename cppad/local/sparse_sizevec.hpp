@@ -392,9 +392,9 @@ private:
 	\par
 	It is faster to post multiple elements to set i and then call
 	process_post(i) then to add each element individually.
-	It is an error to call any member function
-	(other than post_element and clear)
-	that refers to set i, before processing the posts to set i.
+	It is an error to call any member function,
+	that depends on the value of set i,
+	before processing the posts to set i.
 	*/
 	void post_element(size_t i, size_t element)
 	{	CPPAD_ASSERT_UNKNOWN( i < start_.size() );
@@ -694,8 +694,7 @@ public:
 	is the element we are adding to the set.
 	*/
 	void add_element(size_t i, size_t element)
-	{	CPPAD_ASSERT_UNKNOWN( post_[i] == 0 );
-		CPPAD_ASSERT_UNKNOWN( i   < start_.size() );
+	{	CPPAD_ASSERT_UNKNOWN( i   < start_.size() );
 		CPPAD_ASSERT_UNKNOWN( element < end_ );
 
 		// check if element is already in the set
@@ -828,8 +827,7 @@ public:
 		size_t                  this_target  ,
 		size_t                  other_source ,
 		const sparse_sizevec&   other        )
-	{	CPPAD_ASSERT_UNKNOWN( post_[this_target] == 0 );
-		CPPAD_ASSERT_UNKNOWN( other.post_[ other_source ] == 0 );
+	{	CPPAD_ASSERT_UNKNOWN( other.post_[ other_source ] == 0 );
 		//
 		CPPAD_ASSERT_UNKNOWN( this_target  <   start_.size()        );
 		CPPAD_ASSERT_UNKNOWN( other_source <   other.start_.size()  );
@@ -841,6 +839,15 @@ public:
 
 		// number of elements that will be deleted by this operation
 		size_t number_lost = drop(this_target);
+
+		// drop any posting for the target set
+		size_t post = post_[this_target];
+		if( post > 0 )
+		{	// do not need to worry about target being same as source
+			size_t capacity = data_[post + 1];
+			number_lost += capacity + 2;
+			post_[this_target] = 0;
+		}
 
 		// If this and other are the same, use another reference to same list
 		size_t other_start = other.start_[other_source];
@@ -895,8 +902,7 @@ public:
 		size_t                    target ,
 		size_t                    left   ,
 		const pod_vector<size_t>& right  )
-	{	CPPAD_ASSERT_UNKNOWN( post_[target] == 0 );
-		CPPAD_ASSERT_UNKNOWN( post_[left] == 0 );
+	{	CPPAD_ASSERT_UNKNOWN( post_[left] == 0 );
 		//
 		CPPAD_ASSERT_UNKNOWN( target < start_.size() );
 		CPPAD_ASSERT_UNKNOWN( left   < start_.size() );
@@ -952,6 +958,15 @@ public:
 		// number of elements that will be deleted by removing old version
 		// of target
 		size_t number_lost = drop(target);
+
+		// drop any posting for the target set
+		size_t post = post_[target];
+		if( post > 0 )
+		{	CPPAD_ASSERT_UNKNOWN( target != left );
+			size_t capacity = data_[post + 1];
+			number_lost += capacity + 2;
+			post_[target] = 0;
+		}
 		//
 		// start new version of target
 		size_t start       = data_.extend(2);
@@ -1050,8 +1065,7 @@ public:
 		size_t                this_left    ,
 		size_t                other_right  ,
 		const sparse_sizevec& other        )
-	{	CPPAD_ASSERT_UNKNOWN( post_[this_target] == 0 );
-		CPPAD_ASSERT_UNKNOWN( post_[this_left] == 0 );
+	{	CPPAD_ASSERT_UNKNOWN( post_[this_left] == 0 );
 		CPPAD_ASSERT_UNKNOWN( other.post_[ other_right ] == 0 );
 		//
 		CPPAD_ASSERT_UNKNOWN( this_target < start_.size()         );
@@ -1083,6 +1097,15 @@ public:
 
 		// number of list elements that will be deleted by this operation
 		size_t number_lost = drop(this_target);
+
+		// drop any posting for the target set
+		size_t post = post_[this_target];
+		if( post > 0 )
+		{	// do not need to worry about target being same as left or right
+			size_t capacity = data_[post + 1];
+			number_lost += capacity + 2;
+			post_[this_target] = 0;
+		}
 
 		// start the new list
 		size_t start        = data_.extend(2);
@@ -1162,8 +1185,7 @@ public:
 		size_t                  this_left    ,
 		size_t                  other_right  ,
 		const sparse_sizevec&   other        )
-	{	CPPAD_ASSERT_UNKNOWN( post_[this_target] == 0 );
-		CPPAD_ASSERT_UNKNOWN( post_[this_left] == 0 );
+	{	CPPAD_ASSERT_UNKNOWN( post_[this_left] == 0 );
 		CPPAD_ASSERT_UNKNOWN( other.post_[ other_right ] == 0 );
 		//
 		CPPAD_ASSERT_UNKNOWN( this_target < start_.size()         );
@@ -1196,6 +1218,15 @@ public:
 
 		// number of list elements that will be deleted by this operation
 		size_t number_lost = drop(this_target);
+
+		// drop any posting for the target set
+		size_t post = post_[this_target];
+		if( post > 0 )
+		{	// do not need to worry about target being same as left or right
+			size_t capacity = data_[post + 1];
+			number_lost += capacity + 2;
+			post_[this_target] = 0;
+		}
 
 		// initialize intersection as empty
 		size_t start        = 0;
