@@ -213,7 +213,11 @@ private:
 		for(size_t i = 0; i < n_set; i++)
 		{	size_t post = post_[i];
 			if( post > 0 )
-			{	size_t capacity     = data_[post + 1];
+			{	CPPAD_ASSERT_UNKNOWN( data_[post] > 0 );
+				CPPAD_ASSERT_UNKNOWN( data_[post + 1] > 0 );
+				CPPAD_ASSERT_UNKNOWN( data_[post + 2] < end_ );
+				//
+				size_t capacity     = data_[post + 1];
 				data_used_by_posts += capacity + 2;
 			}
 		}
@@ -375,6 +379,210 @@ private:
 		// all of the elements, except the first, are used
 		data_not_used_ = 1;
 	}
+	/*!
+	Post an element for delayed addition to a set.
+
+	\param i
+	is the index for this set in the vector of sets.
+
+	\param element
+	is the value of the element that we are posting.
+	The same element may be posted multiple times.
+
+	\par
+	It is faster to post multiple elements to set i and then call
+	process_post(i) then to add each element individually.
+	It is an error to call any member function
+	(other than post_element and clear)
+	that refers to set i, before processing the posts to set i.
+	*/
+	void post_element(size_t i, size_t element)
+	{	CPPAD_ASSERT_UNKNOWN( i < start_.size() );
+		CPPAD_ASSERT_UNKNOWN( element < end_ );
+
+		size_t post = post_[i];
+		if( post == 0 )
+		{	// minimum capacity for an post vector
+			size_t min_capacity = 10;
+			size_t post_new = data_.extend(min_capacity + 2);
+			data_[post_new]     = 1;            // length
+			data_[post_new + 1] = min_capacity; // capacity
+			data_[post_new + 2] = element;
+			post_[i]            = post_new;
+		}
+		else
+		{	size_t length   = data_[post];
+			size_t capacity = data_[post + 1];
+			if( length == capacity )
+			{
+				size_t post_new = data_.extend( 2 * capacity );
+				//
+				data_[post_new]     = length + 1;
+				data_[post_new + 1] = 2 * capacity;
+				//
+				for(size_t j = 0; j < length; j++)
+					data_[post_new + 2 + j] = data_[post + 2 + j];
+				data_[post_new + 2 + length] = element;
+				//
+				post_[i]            = post_new;
+				size_t number_lost = length + 2;
+				data_not_used_    += number_lost;
+			}
+			else
+			{	data_[post]              = length + 1;
+				data_[post + 2 + length] = element;
+			}
+		}
+
+		// check amount of data_not_used_
+		collect_garbage();
+
+		return;
+	}
+	// -----------------------------------------------------------------
+	/*!
+	process post entries for a specific set.
+
+	\param i
+	index of the set for which we are processing the post entries.
+
+	\par post_
+	Upon call, post_[i] is location in data_ of the elements that get
+	added to the i-th set.  Upon return, post_[i] is zero.
+	*/
+	void process_post(size_t i)
+	{	// start
+		size_t start = start_[i];
+		// post
+		size_t post = post_[i];
+		//
+		// check if there are no elements to process
+		if( post == 0 )
+			return;
+		//
+		// sort the elements that need to be processed
+		size_t  length_post   = data_[post];
+		size_t  capacity_post = data_[post + 1];
+		size_t* first_post    = data_.data() + post + 2;
+		size_t* last_post     = first_post + length_post;
+		std::sort(first_post, last_post);
+		// -------------------------------------------------------------------
+		// check if posted elements are a subset of set
+		//
+		// first element of the set
+		size_t current_set = start;
+		size_t value_set   = end_;
+		if( start > 0 )
+		{	current_set = start + 2;
+			value_set   = data_[current_set];
+		}
+		//
+		// first element to post
+		size_t* current_post = first_post;
+		size_t  value_post   = *current_post;
+		//
+		bool subset = true;
+		while( subset & (first_post != last_post) )
+		{	CPPAD_ASSERT_UNKNOWN( value_post < end_ );
+			while( value_set < value_post )
+				value_set = data_[++current_set];
+			if( value_post < value_set )
+				subset = false;
+			else
+			{	++current_post;
+				if( current_post == last_post )
+					value_post = end_;
+				else
+					value_post = *current_post;
+			}
+		}
+		//
+		if( subset )
+		{	// drop the post_ elements
+			post_[i] = 0;
+			//
+			size_t number_lost = capacity_post + 2;
+			data_not_used_    += number_lost;
+			collect_garbage();
+			//
+			// nothing else to do
+			return;
+		}
+		// -------------------------------------------------------------------
+		// number of element that will be lost by removing old i-th set
+		size_t number_lost = drop(i);
+
+		// start new version of i-th set
+		size_t start_new  = data_.extend(2);
+		start_[i]         = start_new;
+		data_[start_new]  = 1; // reference count
+		// data[start_new + 1] = length_new is not yet known
+		//
+		// first element of the set
+		current_set = start;
+		value_set   = end_;
+		if( start > 0 )
+		{	current_set = start + 2;
+			value_set   = data_[current_set];
+		}
+		//
+		// first element to process
+		current_post = first_post;
+		value_post   = *current_post;
+		//
+		// merge
+		while( (value_set < end_) | (current_post != last_post ) )
+		{	if( value_set == value_post )
+			{	// advance left so left and right are no longer equal
+				++current_set;
+				value_set = data_[current_set];
+				CPPAD_ASSERT_UNKNOWN( value_post < value_set );
+			}
+			//
+			if( value_set < value_post )
+			{	// add value_set
+				CPPAD_ASSERT_UNKNOWN( value_set < end_ );
+				data_.push_back( value_set );
+				//
+				// advance set
+				++current_set;
+				value_set = data_[current_set];
+			}
+			else
+			{	CPPAD_ASSERT_UNKNOWN( value_post < value_set )
+				// add value_post
+				CPPAD_ASSERT_UNKNOWN( value_post < end_);
+				data_.push_back( value_post );
+				//
+				// advance post (skip values equal to this one)
+				size_t value_previous = value_post;
+				while( value_post == value_previous )
+				{	++current_post;
+					if( current_post == last_post )
+						value_post = end_;
+					else
+						value_post = *current_post;
+				}
+			}
+		}
+		// make end of target list
+		data_.push_back( end_ );
+		//
+		// reference count, length, and end_ are not elements of set
+		CPPAD_ASSERT_UNKNOWN( data_.size() > start_new + 3 );
+		size_t length_new    = data_.size() - (start_new + 3);
+		data_[start_new + 1] = length_new;
+		CPPAD_ASSERT_UNKNOWN( data_[start_new + length_new + 2] == end_ );
+		//
+		// drop to post_ elements for this set
+		post_[i] = 0;
+		//
+		number_lost    += capacity_post + 2;
+		data_not_used_ += number_lost;
+		collect_garbage();
+		//
+		return;
+	}
 public:
 	/// declare a const iterator
 	typedef sparse_sizevec_const_iterator const_iterator;
@@ -468,7 +676,9 @@ public:
 	is the index of the set we are checking number of the elements of.
 	*/
 	size_t number_elements(size_t i) const
-	{	size_t start = start_[i];
+	{	CPPAD_ASSERT_UNKNOWN( post_[i] == 0 );
+		//
+		size_t start = start_[i];
 		if( start == 0 )
 			return 0;
 		return data_[start + 1];
@@ -484,7 +694,8 @@ public:
 	is the element we are adding to the set.
 	*/
 	void add_element(size_t i, size_t element)
-	{	CPPAD_ASSERT_UNKNOWN( i   < start_.size() );
+	{	CPPAD_ASSERT_UNKNOWN( post_[i] == 0 );
+		CPPAD_ASSERT_UNKNOWN( i   < start_.size() );
 		CPPAD_ASSERT_UNKNOWN( element < end_ );
 
 		// check if element is already in the set
@@ -551,7 +762,7 @@ public:
 	is the element we are checking to see if it is in the set.
 	*/
 	bool is_element(size_t i, size_t element) const
-	{	//
+	{	CPPAD_ASSERT_UNKNOWN( post_[i] == 0 );
 		CPPAD_ASSERT_UNKNOWN( element < end_ );
 		//
 		size_t start = start_[i];
@@ -576,11 +787,20 @@ public:
 	(unlinked) by this operation.
 	*/
 	void clear(size_t target)
-	{	// number of references to this set
+	{
+		// number of data_ elements used for this set
 		size_t number_lost = drop( target );
 
 		// set target to empty set
 		start_[target] = 0;
+
+		// drop the posted elements
+		if( post_[target] != 0 )
+		{	size_t capacity = post_[target + 1];
+			number_lost    += capacity + 2;
+			//
+			post_[target] = 0;
+		}
 
 		// adjust data_not_used_
 		data_not_used_ += number_lost;
@@ -608,7 +828,10 @@ public:
 		size_t                  this_target  ,
 		size_t                  other_source ,
 		const sparse_sizevec&   other        )
-	{	CPPAD_ASSERT_UNKNOWN( this_target  <   start_.size()        );
+	{	CPPAD_ASSERT_UNKNOWN( post_[this_target] == 0 );
+		CPPAD_ASSERT_UNKNOWN( other.post_[ other_source ] == 0 );
+		//
+		CPPAD_ASSERT_UNKNOWN( this_target  <   start_.size()        );
 		CPPAD_ASSERT_UNKNOWN( other_source <   other.start_.size()  );
 		CPPAD_ASSERT_UNKNOWN( end_        == other.end_   );
 
@@ -672,7 +895,9 @@ public:
 		size_t                    target ,
 		size_t                    left   ,
 		const pod_vector<size_t>& right  )
-	{
+	{	CPPAD_ASSERT_UNKNOWN( post_[target] == 0 );
+		CPPAD_ASSERT_UNKNOWN( post_[left] == 0 );
+		//
 		CPPAD_ASSERT_UNKNOWN( target < start_.size() );
 		CPPAD_ASSERT_UNKNOWN( left   < start_.size() );
 
@@ -825,7 +1050,10 @@ public:
 		size_t                this_left    ,
 		size_t                other_right  ,
 		const sparse_sizevec& other        )
-	{
+	{	CPPAD_ASSERT_UNKNOWN( post_[this_target] == 0 );
+		CPPAD_ASSERT_UNKNOWN( post_[this_left] == 0 );
+		CPPAD_ASSERT_UNKNOWN( other.post_[ other_right ] == 0 );
+		//
 		CPPAD_ASSERT_UNKNOWN( this_target < start_.size()         );
 		CPPAD_ASSERT_UNKNOWN( this_left   < start_.size()         );
 		CPPAD_ASSERT_UNKNOWN( other_right < other.start_.size()   );
@@ -934,7 +1162,10 @@ public:
 		size_t                  this_left    ,
 		size_t                  other_right  ,
 		const sparse_sizevec&   other        )
-	{
+	{	CPPAD_ASSERT_UNKNOWN( post_[this_target] == 0 );
+		CPPAD_ASSERT_UNKNOWN( post_[this_left] == 0 );
+		CPPAD_ASSERT_UNKNOWN( other.post_[ other_right ] == 0 );
+		//
 		CPPAD_ASSERT_UNKNOWN( this_target < start_.size()         );
 		CPPAD_ASSERT_UNKNOWN( this_left   < start_.size()         );
 		CPPAD_ASSERT_UNKNOWN( other_right < other.start_.size()   );
@@ -1073,7 +1304,9 @@ public:
 	:
 	data_( vec_set.data_ ) ,
 	end_ ( vec_set.end_ )
-	{	size_t start = vec_set.start_[i];
+	{	CPPAD_ASSERT_UNKNOWN( vec_set.post_[i] == 0 );
+		//
+		size_t start = vec_set.start_[i];
 		if( start == 0 )
 		{	data_index_ = 0;
 		}
