@@ -67,7 +67,7 @@ private:
 	pod_vector<size_t> start_;
 	// -----------------------------------------------------------------
 	/*!
-	Private member functiont that counts references to a set.
+	Counts references to a set.
 
 	\param i
 	is the index of the set that we are counting the references to.
@@ -274,7 +274,7 @@ private:
 	}
 	// -----------------------------------------------------------------
 	/*!
-	Private member functions that does garbage collection.
+	Does garbage collection when indicated.
 
 	This routine should be called when more entries are not being used.
 	If a significant propotion are not being used, the data structure
