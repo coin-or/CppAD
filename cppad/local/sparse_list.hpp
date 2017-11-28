@@ -77,7 +77,7 @@ private:
 
 	// -----------------------------------------------------------------
 	/*!
-	Private member functiont that counts references to sets.
+	Counts references to sets.
 
 	\param i
 	is the index of the set that we are counting the references to.
@@ -229,17 +229,19 @@ private:
 	}
 	// -----------------------------------------------------------------
 	/*!
-	Private member functions that does garbage collection.
+	Does garbage collection when indicated.
 
-	This routine should be called when the number entries in data_
-	that are not being used is greater that data_.size() / 2.
+	This routine should be called when more entries are not being used.
+	If a significant propotion are not being used, the data structure
+	will be compacted.
 
-	Note that the size of data_ should equal the number of entries
-	in the singly linked lists plust the number of entries in data_
-	that are not being used. (Note that data_[0] never gets used.)
+	The size of data_ should equal the number of entries used by the sets
+	plus the number of entries that are not being used data_not_used_.
+	Note that data_[0] never gets used.
 	*/
 	void collect_garbage(void)
-	{	CPPAD_ASSERT_UNKNOWN( data_not_used_ > data_.size() / 2 );
+	{	if( data_not_used_ < data_.size() / 2 +  100)
+			return;
 # ifndef NDEBUG
 		check_data_not_used();
 # endif
@@ -588,9 +590,7 @@ public:
 
 			// adjust data_not_used_
 			data_not_used_ += number_delete;
-
-			if( data_not_used_ > data_.size() / 2 + 100 )
-				collect_garbage();
+			collect_garbage();
 		}
 		//
 	}
@@ -674,10 +674,7 @@ public:
 
 		// adjust data_not_used_
 		data_not_used_ += number_delete;
-
-		// check if time for garbage collection
-		if( data_not_used_ > data_.size() / 2 + 100 )
-			collect_garbage();
+		collect_garbage();
 	}
 	// -----------------------------------------------------------------
 	/*!
@@ -858,9 +855,7 @@ public:
 
 		// adjust data_not_used_
 		data_not_used_ += number_delete;
-
-		if( data_not_used_ > data_.size() / 2 + 100 )
-			collect_garbage();
+		collect_garbage();
 	}
 	// -----------------------------------------------------------------
 	/*!
@@ -983,9 +978,7 @@ public:
 
 		// adjust data_not_used_
 		data_not_used_ += number_delete;
-
-		if( data_not_used_ > data_.size() / 2 + 100 )
-			collect_garbage();
+		collect_garbage();
 	}
 	// -----------------------------------------------------------------
 	/*!
@@ -1115,9 +1108,7 @@ public:
 
 		// adjust data_not_used_
 		data_not_used_ += number_delete;
-		//
-		if( data_not_used_ > data_.size() / 2 + 100 )
-			collect_garbage();
+		collect_garbage();
 	}
 	// -----------------------------------------------------------------
 	/*! Fetch n_set for vector of sets object.

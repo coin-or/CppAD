@@ -276,15 +276,17 @@ private:
 	/*!
 	Private member functions that does garbage collection.
 
-	This routine should be called when the number entries in data_
-	that are not being used is greater that data_.size() / 2.
+	This routine should be called when more entries are not being used.
+	If a significant propotion are not being used, the data structure
+	will be compacted.
 
-	Note that the size of data_ should equal the number of entries
-	used by the sets plus the number of entries in data_
-	that are not being used. (Note that data_[0] never gets used.)
+	The size of data_ should equal the number of entries used by the sets
+	plus the number of entries that are not being used data_not_used_.
+	Note that data_[0] never gets used.
 	*/
 	void collect_garbage(void)
-	{	CPPAD_ASSERT_UNKNOWN( data_not_used_ > data_.size() / 2 );
+	{	if( data_not_used_ < data_.size() / 2 +  100)
+			return;
 		check_data_structure();
 		//
 		// number of sets including empty ones
@@ -305,10 +307,12 @@ private:
 					start_tmp[i] = data_[start + 1];
 				}
 				else
-				{	size_t tmp_start          = data_tmp.extend(1);
+				{	size_t tmp_start          = data_tmp.extend(2);
 					start_tmp[i]              = tmp_start;
+					data_tmp[tmp_start + 0]   = data_[start + 0];
+					data_tmp[tmp_start + 1]   = data_[start + 1];
 					//
-					for(size_t j = 0; data_[start + j] != end_; ++j)
+					for(size_t j = 2; data_[start + j] != end_; ++j)
 						data_tmp.push_back( data_[start + j] );
 					data_tmp.push_back(end_);
 					//
@@ -488,8 +492,7 @@ public:
 
 		// adjust data_not_used_
 		data_not_used_ += number_lost;
-		if( data_not_used_ > data_.size() / 2 + 100 )
-			collect_garbage();
+		collect_garbage();
 		//
 		return;
 	}
@@ -537,8 +540,7 @@ public:
 
 		// adjust data_not_used_
 		data_not_used_ += number_lost;
-		if( data_not_used_ > data_.size() / 2 + 100 )
-			collect_garbage();
+		collect_garbage();
 	}
 	// -----------------------------------------------------------------
 	/*!
@@ -601,10 +603,7 @@ public:
 
 		// adjust data_not_used_
 		data_not_used_ += number_lost;
-
-		// check if time for garbage collection
-		if( data_not_used_ > data_.size() / 2 + 100 )
-			collect_garbage();
+		collect_garbage();
 	}
 	// -----------------------------------------------------------------
 	/*!
@@ -754,9 +753,7 @@ public:
 
 		// adjust data_not_used_
 		data_not_used_ += number_lost;
-
-		if( data_not_used_ > data_.size() / 2 + 100 )
-			collect_garbage();
+		collect_garbage();
 	}
 	// -----------------------------------------------------------------
 	/*!
@@ -865,9 +862,7 @@ public:
 
 		// adjust data_not_used_
 		data_not_used_ += number_lost;
-
-		if( data_not_used_ > data_.size() / 2 + 100 )
-			collect_garbage();
+		collect_garbage();
 	}
 	// -----------------------------------------------------------------
 	/*!
@@ -978,9 +973,7 @@ public:
 
 		// adjust data_not_used_
 		data_not_used_ += number_lost;
-		//
-		if( data_not_used_ > data_.size() / 2 + 100 )
-			collect_garbage();
+		collect_garbage();
 	}
 	// -----------------------------------------------------------------
 	/*! Fetch n_set for vector of sets object.
