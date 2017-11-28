@@ -119,15 +119,15 @@ public:
 	/*!
 	Count number of elements in a set.
 
-	\param index
+	\param i
 	is the index in of the set we are counting the elements of.
 	*/
-	size_t number_elements(size_t index) const
+	size_t number_elements(size_t i) const
 	{	static Pack one(1);
-		CPPAD_ASSERT_UNKNOWN( index < n_set_ );
+		CPPAD_ASSERT_UNKNOWN( i < n_set_ );
 		size_t count  = 0;
 		for(size_t k = 0; k < n_pack_; k++)
-		{	Pack   unit = data_[ index * n_pack_ + k ];
+		{	Pack   unit = data_[ i * n_pack_ + k ];
 			Pack   mask = one;
 			size_t n    = std::min(n_bit_, end_ - n_bit_ * k);
 			for(size_t bit = 0; bit < n; bit++)
@@ -143,48 +143,40 @@ public:
 	/*!
 	Add one element to a set.
 
-	\param index
+	\param i
 	is the index for this set in the vector of sets.
 
 	\param element
 	is the element we are adding to the set.
-
-	\par Checked Assertions
-	\li index    < n_set_
-	\li element  < end_
 	*/
-	void add_element(size_t index, size_t element)
+	void add_element(size_t i, size_t element)
 	{	static Pack one(1);
-		CPPAD_ASSERT_UNKNOWN( index   < n_set_ );
+		CPPAD_ASSERT_UNKNOWN( i   < n_set_ );
 		CPPAD_ASSERT_UNKNOWN( element < end_ );
 		size_t j  = element / n_bit_;
 		size_t k  = element - j * n_bit_;
 		Pack mask = one << k;
-		data_[ index * n_pack_ + j] |= mask;
+		data_[ i * n_pack_ + j] |= mask;
 	}
 	// -----------------------------------------------------------------
 	/*!
 	Is an element of a set.
 
-	\param index
+	\param i
 	is the index for this set in the vector of sets.
 
 	\param element
 	is the element we are checking to see if it is in the set.
-
-	\par Checked Assertions
-	\li index    < n_set_
-	\li element  < end_
 	*/
-	bool is_element(size_t index, size_t element) const
+	bool is_element(size_t i, size_t element) const
 	{	static Pack one(1);
 		static Pack zero(0);
-		CPPAD_ASSERT_UNKNOWN( index   < n_set_ );
+		CPPAD_ASSERT_UNKNOWN( i   < n_set_ );
 		CPPAD_ASSERT_UNKNOWN( element < end_ );
 		size_t j  = element / n_bit_;
 		size_t k  = element - j * n_bit_;
 		Pack mask = one << k;
-		return (data_[ index * n_pack_ + j] & mask) != zero;
+		return (data_[ i * n_pack_ + j] & mask) != zero;
 	}
 	// -----------------------------------------------------------------
 	/*!
@@ -424,26 +416,26 @@ private:
 	const size_t             end_;
 
 	/// index of this set in the vector of sets;
-	const size_t             index_;
+	const size_t             set_index_;
 
 	/// value of the next element in this set
 	/// (use end_ for no such element exists; i.e., past end of the set).
 	size_t                   next_element_;
 public:
 	/// construct a const_iterator for a set in a sparse_pack object
-	sparse_pack_const_iterator (const sparse_pack& pack, size_t index)
+	sparse_pack_const_iterator (const sparse_pack& pack, size_t set_index)
 	:
-	data_      ( pack.data_ )         ,
-	n_bit_     ( pack.n_bit_ )        ,
-	n_pack_    ( pack.n_pack_ )       ,
-	end_       ( pack.end_ )          ,
-	index_     ( index )
+	data_          ( pack.data_ )         ,
+	n_bit_         ( pack.n_bit_ )        ,
+	n_pack_        ( pack.n_pack_ )       ,
+	end_           ( pack.end_ )          ,
+	set_index_     ( set_index )
 	{	static Pack one(1);
-		CPPAD_ASSERT_UNKNOWN( index < pack.n_set_ );
+		CPPAD_ASSERT_UNKNOWN( set_index_ < pack.n_set_ );
 		//
 		next_element_ = 0;
 		if( next_element_ < end_ )
-		{	Pack check = data_[ index_ * n_pack_ + 0 ];
+		{	Pack check = data_[ set_index_ * n_pack_ + 0 ];
 			if( check & one )
 				return;
 		}
@@ -473,7 +465,7 @@ public:
 		size_t mask = one << k;
 
 		// start search at this packed value
-		Pack check = data_[ index_ * n_pack_ + j ];
+		Pack check = data_[ set_index_ * n_pack_ + j ];
 		//
 		while( true )
 		{	// check if this element is in the set
@@ -498,7 +490,7 @@ public:
 				mask  = one;
 				j++;
 				CPPAD_ASSERT_UNKNOWN( j < n_pack_ );
-				check = data_[ index_ * n_pack_ + j ];
+				check = data_[ set_index_ * n_pack_ + j ];
 			}
 		}
 		// should never get here
