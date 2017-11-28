@@ -107,7 +107,7 @@ bool test_yes_other(void)
 		other_vec.add_element(i, i+1);
 	}
 	//
-	// assignment from other
+	// assignment of one set from other
 	size_t target = 0;
 	size_t source = 1;
 	vec_set.assignment(target, source, other_vec);
@@ -122,6 +122,14 @@ bool test_yes_other(void)
 	ok &= vec_set.is_element(target, left);
 	ok &= vec_set.is_element(target, right+1);
 	//
+	// now use assignment for entire vector of sets
+	vec_set = other_vec;
+	ok &= ! vec_set.is_element(0, 0);
+	ok &= ! vec_set.is_element(0, 1);
+	for(size_t i = 1; i < n_set; i++)
+	{	ok &= ! vec_set.is_element(i, i);
+		ok &=   vec_set.is_element(i, i+1);
+	}
 	return ok;
 }
 

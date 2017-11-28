@@ -65,6 +65,33 @@ private:
 	elements in this set
 	*/
 	pod_vector<size_t> start_;
+
+	/*!
+	Vectors of elements that have not yet been added to corresponding sets.
+
+	\li
+	If all the post_element calls for the i-th set have been added,
+	post_[i] is zero. Otherwise the conditions below hold.
+
+	\li
+	data_[ post_[i] ]  the number of elements that have been posted,
+	but not yet added, to set i.
+
+	\li
+	data_[ post_[i] + 1 ] is the capacity for holding elements
+	which is greater than or equal the number of elements.
+
+	\li
+	data_[ post_[i] + 2 ] is the first element that has benn posted,
+	but not yet added, to set i.
+
+	\li
+	data_[ post_[i] + 1 + n] is the last element that has been posted,
+	but not yet added, to set i.
+	Here n is the number of elements that are posted and not yet added
+	to set i.
+	*/
+	pod_vector<size_t> post_;
 	// -----------------------------------------------------------------
 	/*!
 	Counts references to a set.
@@ -131,7 +158,7 @@ private:
 	}
 	// -----------------------------------------------------------------
 	/*!
-	Member function that checks the number of data elements not used
+	Checks data structure
 	(effectively const, but modifies and restores values)
 	*/
 # ifdef NDEBUG
@@ -140,15 +167,19 @@ private:
 # else
 	void check_data_structure(void)
 	{	// number of sets
+		CPPAD_ASSERT_UNKNOWN( post_.size() == start_.size() );
 		size_t n_set = start_.size();
-		//
+
+		// ------------------------------------------------------------------
 		// save the reference counters
 		pod_vector<size_t> ref_count(n_set);
 		for(size_t i = 0; i < n_set; i++)
 			ref_count[i] = reference_count(i);
+		// ------------------------------------------------------------------
 
-		// count the number of entries in data_ that are used
-		size_t data_used = 0;
+		// ------------------------------------------------------------------
+		// count the number of entries in data_ that are used by sets
+		size_t data_used_by_sets = 0;
 		for(size_t i = 0; i < n_set; i++)
 		{	size_t start = start_[i];
 			if( start > 0 )
@@ -172,10 +203,22 @@ private:
 					data_[start] = ref_count[i];
 
 					// number of data_ entries used for this set
-					data_used += number_elements(i) + 3;
+					data_used_by_sets += number_elements(i) + 3;
 				}
 			}
 		}
+		// ------------------------------------------------------------------
+		// check the number of entries in data_ that are used by posts
+		size_t data_used_by_posts = 0;
+		for(size_t i = 0; i < n_set; i++)
+		{	size_t post = post_[i];
+			if( post > 0 )
+			{	size_t capacity     = data_[post + 1];
+				data_used_by_posts += capacity + 2;
+			}
+		}
+		// ------------------------------------------------------------------
+		size_t data_used = data_used_by_sets + data_used_by_posts;
 		CPPAD_ASSERT_UNKNOWN(
 			data_used + data_not_used_ == data_.size()
 		);
@@ -333,25 +376,8 @@ private:
 		data_not_used_ = 1;
 	}
 public:
-	/*!
-	Assignement operator.
-
-	\param other
-	this sparse_sizevec with be set to a deep copy of other.
-
-	\par vector_of_sets
-	This public member function is not yet part of
-	the vector_of_sets concept.
-	*/
-	void operator=(const sparse_sizevec& other)
-	{	end_           = other.end_;
-		data_not_used_ = other.data_not_used_;
-		start_         = other.start_;
-		data_          = other.data_;
-	}
 	/// declare a const iterator
 	typedef sparse_sizevec_const_iterator const_iterator;
-
 	// -----------------------------------------------------------------
 	/*!
 	Default constructor (no sets)
@@ -360,7 +386,8 @@ public:
 	end_(0)            ,
 	data_not_used_(0)  ,
 	data_(0)           ,
-	start_(0)
+	start_(0)          ,
+	post_(0)
 	{ }
 	// -----------------------------------------------------------------
 	/// Destructor
@@ -377,6 +404,20 @@ public:
 	sparse_sizevec(const sparse_sizevec& v)
 	{	// Error: Probably a sparse_sizevec argument has been passed by value
 		CPPAD_ASSERT_UNKNOWN(false);
+	}
+	// -----------------------------------------------------------------
+	/*!
+	Assignement operator.
+
+	\param other
+	this sparse_sizevec with be set to a deep copy of other.
+	*/
+	void operator=(const sparse_sizevec& other)
+	{	end_           = other.end_;
+		data_not_used_ = other.data_not_used_;
+		start_         = other.start_;
+		post_          = other.post_;
+		data_          = other.data_;
 	}
 	// -----------------------------------------------------------------
 	/*!
@@ -410,10 +451,13 @@ public:
 		end_                   = end;
 		//
 		start_.resize(n_set);
+		post_.resize(n_set);
 		for(size_t i = 0; i < n_set; i++)
-			start_[i] = 0;
+		{	start_[i] = 0;
+			post_[i]  = 0;
+		}
 		//
-		data_.resize(1); // first element is not used
+		data_.resize(1);     // first element is not used
 		data_not_used_  = 1;
 	}
 	// -----------------------------------------------------------------

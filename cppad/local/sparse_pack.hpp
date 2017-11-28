@@ -53,7 +53,6 @@ private:
 public:
 	/// declare a const iterator
 	typedef sparse_pack_const_iterator const_iterator;
-
 	// -----------------------------------------------------------------
 	/*!
 	Default constructor (no sets)
@@ -76,6 +75,21 @@ public:
 	{	// Error:
 		// Probably a sparse_pack argument has been passed by value
 		CPPAD_ASSERT_UNKNOWN(0);
+	}
+	// -----------------------------------------------------------------
+	/*!
+	Assignment operator.
+
+	\param other
+	this sparse_pack will be set to a deep copyof other.
+
+	*/
+	void operator=(const sparse_pack& other)
+	{	CPPAD_ASSERT_UNKNOWN( n_bit_  == other.n_bit_);
+		n_set_  = other.n_set_;
+		end_    = other.end_;
+		n_pack_ = other.n_pack_;
+		data_   = other.data_;
 	}
 	// -----------------------------------------------------------------
 	/*!

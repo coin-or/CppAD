@@ -97,7 +97,7 @@ private:
 	}
 	// -----------------------------------------------------------------
 	/*!
-	Member function that checks the number of data elements not used
+	Checks the number of data elements not used
 	(effectively const, but modifies and restores values)
 	*/
 	void check_data_not_used(void)
@@ -350,25 +350,8 @@ private:
 	}
 // ===========================================================================
 public:
-	/*!
-	Assignement operator.
-
-	\param other
-	this sparse_list with be set to a deep copy of other.
-
-	\par vector_of_sets
-	This public member function is not yet part of
-	the vector_of_sets concept.
-	*/
-	void operator=(const sparse_list& other)
-	{	end_           = other.end_;
-		data_not_used_ = other.data_not_used_;
-		start_         = other.start_;
-		data_          = other.data_;
-	}
 	/// declare a const iterator
 	typedef sparse_list_const_iterator const_iterator;
-
 	// -----------------------------------------------------------------
 	/*!
 	Default constructor (no sets)
@@ -397,6 +380,23 @@ public:
 	sparse_list(const sparse_list& v)
 	{	// Error: Probably a sparse_list argument has been passed by value
 		CPPAD_ASSERT_UNKNOWN(false);
+	}
+	// -----------------------------------------------------------------
+	/*!
+	Assignement operator.
+
+	\param other
+	this sparse_list with be set to a deep copy of other.
+
+	\par vector_of_sets
+	This public member function is not yet part of
+	the vector_of_sets concept.
+	*/
+	void operator=(const sparse_list& other)
+	{	end_           = other.end_;
+		data_not_used_ = other.data_not_used_;
+		start_         = other.start_;
+		data_          = other.data_;
 	}
 	// -----------------------------------------------------------------
 	/*!
