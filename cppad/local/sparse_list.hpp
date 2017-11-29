@@ -28,7 +28,7 @@ class sparse_list_const_iterator;
 Vector of sets of positive integers, each set stored as a singly
 linked list.
 
-All the public member functions for this class are also in the
+All the public members for this class are also in the
 sparse_pack and sparse_vecsize classes.
 This defines the CppAD vector_of_sets concept.
 */
@@ -1144,8 +1144,8 @@ public:
 /*!
 cons_iterator for one set of positive integers in a sparse_list object.
 
-All the public member functions for this class are also in the
-sparse_pack_const_iterator class.
+All the public members for this class are also in the
+sparse_pack_const_iterator and sparse_sizevec_const_iterator classes.
 This defines the CppAD vector_of_sets iterator concept.
 */
 class sparse_list_const_iterator {

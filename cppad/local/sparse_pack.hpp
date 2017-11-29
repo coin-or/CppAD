@@ -25,7 +25,7 @@ class sparse_pack_const_iterator;
 /*!
 Vector of sets of postivie integers, each set stored as a packed boolean array.
 
-All the public member functions for this class are also in the
+All the public members for this class are also in the
 sparse_list and sparse_vecsize classes.
 This defines the CppAD vector_of_sets concept.
 */
@@ -408,8 +408,8 @@ public:
 /*!
 cons_iterator for one set of positive integers in a sparse_pack object.
 
-All the public member functions for this class are also in the
-sparse_list_const_iterator class.
+All the public members for this class are also in the
+sparse_list_const_iterator and sparse_sizevec_const_iterator classes.
 This defines the CppAD vector_of_sets iterator concept.
 */
 class sparse_pack_const_iterator {

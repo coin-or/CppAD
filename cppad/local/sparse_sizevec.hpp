@@ -27,8 +27,8 @@ class sparse_sizevec_const_iterator;
 /*!
 Vector of sets of positive integers, each set stored as a size_t vector.
 
-All the public member functions for this class are also in the
-sparse_pack and sparse_list classes.
+All the public members for this class, except post_element and process_post,
+are also in the sparse_pack and sparse_list classes.
 This defines the CppAD vector_of_sets concept.
 */
 class sparse_sizevec {
@@ -379,6 +379,10 @@ private:
 		// all of the elements, except the first, are used
 		data_not_used_ = 1;
 	}
+public:
+	// =======================================================================
+	// Public members NOT in vector_of_sets concept
+	// =======================================================================
 	/*!
 	Post an element for delayed addition to a set.
 
@@ -583,7 +587,9 @@ private:
 		//
 		return;
 	}
-public:
+	// =======================================================================
+	// Public members in vector_of_sets concept
+	// =======================================================================
 	/// declare a const iterator
 	typedef sparse_sizevec_const_iterator const_iterator;
 	// -----------------------------------------------------------------
@@ -771,6 +777,12 @@ public:
 		size_t length       = data_[start + 1];
 		const size_t* first = data_.data() + start + 2;
 		const size_t* last  = first + length;
+		if( length < 10 )
+		{	bool result = false;
+			while( last > first )
+				result |= *(--last) == element;
+			return result;
+		}
 		//
 		return std::binary_search(first, last, element);
 	}
@@ -1316,7 +1328,7 @@ public:
 cons_iterator for one set of positive integers in a sparse_sizevec object.
 
 All the public member functions for this class are also in the
-sparse_pack_const_iterator class.
+sparse_pack_const_iterator and sparse_list_const_iterator classes.
 This defines the CppAD vector_of_sets iterator concept.
 */
 class sparse_sizevec_const_iterator {
