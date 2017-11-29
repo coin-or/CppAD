@@ -53,7 +53,7 @@ private:
 
 	/// Mapping operator to variables that are arguments to the operator.
 	/// (size (0,0) after construtor or resize)
-	sparse_list arg_variable_;
+	sparse_sizevec arg_variable_;
 
 	// -----------------------------------------------------------------------
 	// other private member data
@@ -99,7 +99,7 @@ public:
 	{	return map_user_op_; }
 
 	/// arguments that are variables as a function of operator index
-	const sparse_list& arg_variable(void) const
+	const sparse_sizevec& arg_variable(void) const
 	{	return arg_variable_; }
 
 	/// previous select_domain argument to init_rev
@@ -318,14 +318,16 @@ public:
 			{	// arg_varable_ for this operator
 				get_argument_variable(play, i_op, argument_variable, work);
 				for(size_t j = 0; j < argument_variable.size(); ++j)
-					arg_variable_.add_element(i_op, argument_variable[j]);
+					arg_variable_.post_element(i_op, argument_variable[j]);
+				arg_variable_.process_post(i_op);
 			}
 			if( op == UserOp )
 			{	// first UserOp in an atomic function call sequence
 				// arg_variable_ for this operator
 				get_argument_variable(play, i_op, argument_variable, work);
 				for(size_t j = 0; j < argument_variable.size(); ++j)
-					arg_variable_.add_element(i_op, argument_variable[j]);
+					arg_variable_.post_element(i_op, argument_variable[j]);
+				arg_variable_.process_post(i_op);
 				//
 				// All operators in this atomic call sequence will be
 				// mapped to the UserOp that begins this call.

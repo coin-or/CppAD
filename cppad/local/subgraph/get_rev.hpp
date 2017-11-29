@@ -133,7 +133,7 @@ void subgraph_info::get_rev(
 # endif
 		//
 		// which variables are connected to this operator
-		sparse_list::const_iterator itr(arg_variable_, i_op);
+		sparse_sizevec::const_iterator itr(arg_variable_, i_op);
 		size_t j_var = *itr;
 		while( j_var < n_var_ )
 		{	// add the corresponding operators to the subgraph
