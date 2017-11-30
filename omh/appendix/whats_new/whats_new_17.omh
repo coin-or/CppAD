@@ -58,6 +58,9 @@ $head API Changes$$
 Speed tests no longer automatically compile in release mode; see
 $cref/debug_which/speed/debug_which/$$
 
+$head 11-30$$
+Edit the $cref download$$ instructions.
+
 $head 11-23$$
 The $code ADFun$$ function $cref/optimizer/optimize/$$
 was not handling hash code collisions properly.

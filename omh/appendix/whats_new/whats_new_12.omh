@@ -254,8 +254,9 @@ $lend
 
 $head 11-21$$
 $list number$$
-Fix the version number in link to the
-$cref/current download files/download/Current Version/$$.
+Fix the
+$cref/version/download/Version/$$ number in link to the
+current download files.
 $lnext
 Change the
 $code subversion$$ download instructions to use

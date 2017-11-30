@@ -67,8 +67,6 @@ You should use the $cref cmake$$ instructions to install CppAD.
 $head Distribution Directory$$
 You must first obtain a copy of the CppAD distribution directory
 using the $cref download$$ instructions.
-The install instructions below correspond to the
-$cref/current version/download/Current Version/$$.
 We refer to the corresponding
 $cref/distribution directory/download/Distribution Directory/$$ as
 $icode dist_dir$$.
