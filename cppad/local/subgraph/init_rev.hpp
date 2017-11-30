@@ -122,7 +122,7 @@ void subgraph_info::init_rev(
 			case UserOp:
 			begin_atomic_call  = not begin_atomic_call;
 			if( begin_atomic_call )
-			{	sparse_sizevec::const_iterator itr(arg_variable_, i_op);
+			{	sparse_list::const_iterator itr(arg_variable_, i_op);
 				size_t j_var = *itr;
 				while( j_var < n_var_ )
 				{	size_t j_op  = play->var2op(j_var);
@@ -144,7 +144,7 @@ void subgraph_info::init_rev(
 			default:
 			// Except for UserOp, only include when NumRes(op) > 0.
 			if( NumRes(op) > 0 )
-			{	sparse_sizevec::const_iterator itr(arg_variable_, i_op);
+			{	sparse_list::const_iterator itr(arg_variable_, i_op);
 				size_t j_var = *itr;
 				while( j_var < n_var_ )
 				{	size_t j_op  = play->var2op(j_var);
