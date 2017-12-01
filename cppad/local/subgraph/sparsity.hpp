@@ -110,7 +110,7 @@ void subgraph_sparsity(
 
 	// map_user_op
 	if( sub_info.map_user_op().size() == 0 )
-		sub_info.set_map_user_op_and_arg_variable(play);
+		sub_info.set_map_user_op(play);
 	else
 	{	CPPAD_ASSERT_UNKNOWN( sub_info.check_map_user_op(play) );
 	}

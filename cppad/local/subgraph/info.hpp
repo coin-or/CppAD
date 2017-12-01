@@ -43,17 +43,13 @@ private:
 	pod_vector<addr_t> entire_graph_;
 
 	// -----------------------------------------------------------------------
-	// private member data set by set_map_user_op_and_arg_variable
+	// private member data set by set_map_user_op
 	// -----------------------------------------------------------------------
 
 	/// Mapping atomic call operators to UserOp that begins call sequence,
 	/// other operators are not changed by the map.
 	/// (size zero after construtor or resize)
 	pod_vector<addr_t> map_user_op_;
-
-	/// Mapping operator to variables that are arguments to the operator.
-	/// (size (0,0) after construtor or resize)
-	sparse_list arg_variable_;
 
 	// -----------------------------------------------------------------------
 	// other private member data
@@ -98,10 +94,6 @@ public:
 	const pod_vector<addr_t>& map_user_op(void) const
 	{	return map_user_op_; }
 
-	/// arguments that are variables as a function of operator index
-	const sparse_list& arg_variable(void) const
-	{	return arg_variable_; }
-
 	/// previous select_domain argument to init_rev
 	const pod_vector<bool>& select_domain(void) const
 	{	return select_domain_; }
@@ -117,7 +109,6 @@ public:
 		size_t sum = entire_graph_.size() * sizeof(addr_t);
 		sum       += map_user_op_.size()  * sizeof(addr_t);
 		sum       += in_subgraph_.size()  * sizeof(addr_t);
-		sum       += arg_variable_.memory();
 		return sum;
 	}
 	// -----------------------------------------------------------------------
@@ -129,7 +120,7 @@ public:
 
 	\return
 	is true, if map_user_op has the correct value for this operation sequence
-	(is the same as it would be after a set_map_user_op_and_arg_variable).
+	(is the same as it would be after a set_map_user_op).
 	*/
 	template <typename Base>
 	bool check_map_user_op(const player<Base>* play) const
@@ -170,8 +161,6 @@ public:
 	: n_ind_(0), n_dep_(0), n_op_(0), n_var_(0)
 	{	CPPAD_ASSERT_UNKNOWN( entire_graph_.size()  == 0 );
 		CPPAD_ASSERT_UNKNOWN( map_user_op_.size()   == 0 );
-		CPPAD_ASSERT_UNKNOWN( arg_variable_.n_set() == 0 );
-		CPPAD_ASSERT_UNKNOWN( arg_variable_.end()   == 0 );
 		CPPAD_ASSERT_UNKNOWN( in_subgraph_.size()   == 0 );
 	}
 	// -----------------------------------------------------------------------
@@ -182,7 +171,6 @@ public:
 		n_op_             = info.n_op_;
 		entire_graph_     = info.entire_graph_;
 		map_user_op_      = info.map_user_op_;
-		arg_variable_     = info.arg_variable_;
 		in_subgraph_      = info.in_subgraph_;
 		return;
 	}
@@ -209,9 +197,6 @@ public:
 
 	\par map_user_op_
 	is resized to zero.
-
-	\par arg_variable_
-	is resized to (0, 0)
 
 	\par in_subgraph_
 	is resized to zero.
@@ -246,9 +231,6 @@ public:
 		// map_user_op_
 		map_user_op_.resize(0);
 		//
-		// arg_variable_
-		arg_variable_.resize(0, 0);
-		//
 		// in_subgraph_
 		in_subgraph_.resize(0);
 		//
@@ -256,7 +238,7 @@ public:
 	}
 	// -----------------------------------------------------------------------
 	/*!
-	set the value of map_user_op and arg_variable for this operation sequence
+	set the value of map_user_op for this operation sequence
 
 	\param play
 	is the player for this operation sequence. It must same number of
@@ -277,36 +259,18 @@ public:
 	in the corresponding atomic function call and op_j == UserOp.
 	Otherwise j_op == i_op;
 
-	\par arg_variable_
-	The size of arg_variable_ must be (0, 0) when this fucntion is called
-	(which is true after a resize operation).
-	This function sets its size to (n_op_, n_var_).
-	For each opeartor, if NumRes(op) > 0, or if it is the first UserOp
-	in an atomic function call, the corresponding set is the arugments
-	that are variables for this operator.
-	If NumRes(op) == 0 and this is not the first UserOp in an atomic fucntion
-	call, the corresponding set is empty.
 	*/
 	template <typename Base>
-	void set_map_user_op_and_arg_variable(const player<Base>* play)
+	void set_map_user_op(const player<Base>* play)
 	{	CPPAD_ASSERT_UNKNOWN( map_user_op_.size()   == 0 );
-		CPPAD_ASSERT_UNKNOWN( arg_variable_.n_set() == 0 );
-		CPPAD_ASSERT_UNKNOWN( arg_variable_.end()   == 0 );
 		//
 		CPPAD_ASSERT_UNKNOWN( n_op_  == play->num_op_rec() );
 		CPPAD_ASSERT_UNKNOWN( n_var_ == play->num_var_rec() );
 		//
-		// variables that are arguments to a particular operator
-		pod_vector<size_t> argument_variable;
-		//
-		// work space used by get_argument_variable
-		pod_vector<bool> work;
-		//
-		// resize map_user_op_ and arg_variable_
+		// resize map_user_op_
 		map_user_op_.resize(n_op_);
-		arg_variable_.resize(n_op_, n_var_);
 		//
-		// set map_user_op and arg_variable for each operator
+		// set map_user_op for each operator
 		for(size_t i_op = 0; i_op < n_op_; ++i_op)
 		{	// this operator
 			OpCode op = play->GetOp(i_op);
@@ -314,18 +278,8 @@ public:
 			// value of map_user_op when op is not in atomic function call)
 			map_user_op_[i_op] = addr_t( i_op );
 			//
-			if( NumRes(op) > 0 )
-			{	// arg_varable_ for this operator
-				get_argument_variable(play, i_op, argument_variable, work);
-				for(size_t j = 0; j < argument_variable.size(); ++j)
-					arg_variable_.add_element(i_op, argument_variable[j]);
-			}
 			if( op == UserOp )
 			{	// first UserOp in an atomic function call sequence
-				// arg_variable_ for this operator
-				get_argument_variable(play, i_op, argument_variable, work);
-				for(size_t j = 0; j < argument_variable.size(); ++j)
-					arg_variable_.add_element(i_op, argument_variable[j]);
 				//
 				// All operators in this atomic call sequence will be
 				// mapped to the UserOp that begins this call.

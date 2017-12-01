@@ -68,8 +68,6 @@ void subgraph_info::init_rev(
 {
 	// check sizes
 	CPPAD_ASSERT_UNKNOWN( map_user_op_.size()   == n_op_ );
-	CPPAD_ASSERT_UNKNOWN( arg_variable_.n_set() == n_op_ );
-	CPPAD_ASSERT_UNKNOWN( arg_variable_.end()   == n_var_ );
 	CPPAD_ASSERT_UNKNOWN( play->num_op_rec()    == n_op_ );
 	CPPAD_ASSERT_UNKNOWN( size_t( select_domain.size() ) == n_ind_ );
 
@@ -89,6 +87,12 @@ void subgraph_info::init_rev(
 
 	// set in_subgraph to have proper size
 	in_subgraph_.resize(n_op_);
+
+	// space used to return set of arguments that are variables
+	pod_vector<size_t> argument_variable;
+
+	// temporary space used by get_argument_variable
+	pod_vector<bool> work;
 
 # ifndef NDEBUG
 	size_t count_independent = 0;
@@ -122,16 +126,14 @@ void subgraph_info::init_rev(
 			case UserOp:
 			begin_atomic_call  = not begin_atomic_call;
 			if( begin_atomic_call )
-			{	sparse_list::const_iterator itr(arg_variable_, i_op);
-				size_t j_var = *itr;
-				while( j_var < n_var_ )
-				{	size_t j_op  = play->var2op(j_var);
+			{	get_argument_variable(play, i_op, argument_variable, work);
+				for(size_t j = 0; j < argument_variable.size(); ++j)
+				{	size_t j_var = argument_variable[j];
+					size_t j_op  = play->var2op(j_var);
 					j_op         = map_user_op_[j_op];
 					CPPAD_ASSERT_UNKNOWN( j_op < i_op );
 					if( in_subgraph_[j_op] == depend_yes )
 						in_subgraph_[i_op] =  depend_yes;
-
-					j_var = *(++itr);
 				}
 			}
 			break;
@@ -144,15 +146,14 @@ void subgraph_info::init_rev(
 			default:
 			// Except for UserOp, only include when NumRes(op) > 0.
 			if( NumRes(op) > 0 )
-			{	sparse_list::const_iterator itr(arg_variable_, i_op);
-				size_t j_var = *itr;
-				while( j_var < n_var_ )
-				{	size_t j_op  = play->var2op(j_var);
+			{	get_argument_variable(play, i_op, argument_variable, work);
+				for(size_t j = 0; j < argument_variable.size(); ++j)
+				{	size_t j_var = argument_variable[j];
+					size_t j_op  = play->var2op(j_var);
 					j_op         = map_user_op_[j_op];
 					CPPAD_ASSERT_UNKNOWN( j_op < i_op );
 					if( in_subgraph_[j_op] == depend_yes )
 						in_subgraph_[i_op] =  depend_yes;
-					j_var = *(++itr);
 				}
 			}
 			break;

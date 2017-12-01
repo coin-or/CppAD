@@ -184,7 +184,7 @@ void ADFun<Base>::subgraph_reverse( const VectorBool& select_domain )
 
 	// map_user_op
 	if( subgraph_info_.map_user_op().size() == 0 )
-		subgraph_info_.set_map_user_op_and_arg_variable(&play_);
+		subgraph_info_.set_map_user_op(&play_);
 	else
 	{	CPPAD_ASSERT_UNKNOWN( subgraph_info_.check_map_user_op(&play_) );
 	}
