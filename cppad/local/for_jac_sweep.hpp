@@ -111,10 +111,10 @@ void for_jac_sweep(
 	size_t num_vecad_ind   = play->num_vec_ind_rec();
 	size_t num_vecad_vec   = play->num_vecad_vec_rec();
 	Vector_set  vecad_sparsity;
-	vecad_sparsity.resize(num_vecad_vec, limit);
 	pod_vector<size_t> vecad_ind;
 	if( num_vecad_vec > 0 )
 	{	size_t length;
+		vecad_sparsity.resize(num_vecad_vec, limit);
 		vecad_ind.extend(num_vecad_ind);
 		j             = 0;
 		for(i = 0; i < num_vecad_vec; i++)

@@ -20,10 +20,22 @@ bool test_no_other(void)
 	VectorSet vec_set;
 	size_t n_set = 4;
 	size_t end   = 5;
-	vec_set.resize(n_set, end);
 	//
+	// set size of vec_set
+	vec_set.resize(n_set, end);
 	ok &= end == vec_set.end();
 	ok &= n_set == vec_set.n_set();
+	//
+	// test resizing to zero
+	vec_set.resize(0, 0);
+	ok &= 0 == vec_set.n_set();
+	ok &= 0 == vec_set.end();
+	//
+	// set size of vec_set
+	vec_set.resize(n_set, end);
+	ok &= end == vec_set.end();
+	ok &= n_set == vec_set.n_set();
+
 	//
 	// add the element i+1 to set i
 	for(size_t i = 1; i < n_set; i++)

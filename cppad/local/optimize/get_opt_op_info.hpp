@@ -319,7 +319,8 @@ void get_opt_op_info(
 	// conditional expression compare = bool ( element % 2)
 	size_t end_set = 2 * num_cexp_op;
 	//
-	cexp_set.resize(num_set, end_set);
+	if( num_set > 0 )
+		cexp_set.resize(num_set, end_set);
 	// -----------------------------------------------------------------------
 	//
 	// initialize operator usage

@@ -648,15 +648,19 @@ public:
 
 	\param end
 	is the maximum element plus one (the minimum element is 0).
+	If n_set is zero, end must also be zero.
 	*/
 	void resize(size_t n_set, size_t end)
 	{	check_data_structure();
 
 		if( n_set == 0 )
-		{	// restore object to start after constructor
+		{	CPPAD_ASSERT_UNKNOWN(end == 0 );
+			//
+			// restore object to start after constructor
 			// (no memory allocated for this object)
 			data_.clear();
 			start_.clear();
+			post_.clear();
 			data_not_used_  = 0;
 			end_            = 0;
 			//

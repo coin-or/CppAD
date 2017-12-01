@@ -133,11 +133,11 @@ void rev_hes_sweep(
 	size_t num_vecad_ind   = play->num_vec_ind_rec();
 	size_t num_vecad_vec   = play->num_vecad_vec_rec();
 	Vector_set vecad_sparse;
-	vecad_sparse.resize(num_vecad_vec, limit);
 	pod_vector<size_t> vecad_ind;
 	pod_vector<bool>   vecad_jac;
 	if( num_vecad_vec > 0 )
 	{	size_t length;
+		vecad_sparse.resize(num_vecad_vec, limit);
 		vecad_ind.extend(num_vecad_ind);
 		vecad_jac.extend(num_vecad_vec);
 		j             = 0;
