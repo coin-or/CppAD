@@ -138,19 +138,19 @@ private:
 	Check if one of two sets is a subset of the other set
 
 	\param one_this
-	is the index in this sparse_list object of the first set.
+	is the index in this sparse_sizevec object of the first set.
 
 	\param two_other
-	is the index in other sparse_list object of the second set.
+	is the index in other sparse_sizevec object of the second set.
 
 	\param other
-	is the other sparse_list object which may be the same as this object.
+	is the other sparse_sizevec object which may be the same as this object.
 
 	\return
 	If zero, niether set is a subset of the other.
-	If one, then the two sets are equal.
-	If two, then set one is a subset of set two and not equal set two.
-	If three, then set two is a subset of set one and not equal set one..
+	If one, then one is a subset of two and they are not equal.
+	If two, then two is a subset of one and they are not equal.
+	If three, then the sets are equal.
 	*/
 	size_t is_subset(
 		size_t                  one_this    ,
@@ -169,13 +169,13 @@ private:
 		{	// set one is empty
 			if( start_two == 0 )
 			{	// set two is empty
-				return 1;
+				return 3;
 			}
-			return 2;
+			return 1;
 		}
 		if( start_two == 0 )
 		{	// set two is empty and one is not empty
-			return 3;
+			return 2;
 		}
 		//
 		// next
@@ -214,14 +214,14 @@ private:
 		if( one_subset )
 		{	if( two_subset )
 			{	// sets are equal
-				return 1;
+				return 3;
 			}
 			// one is a subset of two
-			return 2;
+			return 1;
 		}
 		if( two_subset )
-		{	// two is a subset of on
-			return 3;
+		{	// two is a subset of one
+			return 2;
 		}
 		//
 		// neither is a subset
@@ -896,12 +896,12 @@ public:
 		size_t subset = is_subset(this_left, other_right, other);
 
 		// case where right is a subset of left or right and left are equal
-		if( subset == 1 || subset == 3 )
+		if( subset == 2 || subset == 3 )
 		{	assignment(this_target, this_left, *this);
 			return;
 		}
 		// case where the left is a subset of right and they are not equal
-		if( subset == 2 )
+		if( subset == 1 )
 		{	assignment(this_target, other_right, other);
 			return;
 		}
@@ -1019,12 +1019,12 @@ public:
 		size_t subset = is_subset(this_left, other_right, other);
 
 		// case where left is a subset of right or left and right are equal
-		if( subset == 1 || subset == 2 )
+		if( subset == 1 || subset == 3 )
 		{	assignment(this_target, this_left, *this);
 			return;
 		}
 		// case where the right is a subset of left and they are not equal
-		if( subset == 3 )
+		if( subset == 2 )
 		{	assignment(this_target, other_right, other);
 			return;
 		}
