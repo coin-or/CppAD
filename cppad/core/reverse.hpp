@@ -14,6 +14,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 # include <algorithm>
 # include <cppad/local/pod_vector.hpp>
+# include <cppad/core/hold_reverse_memory.hpp>
 
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 /*!
@@ -132,22 +133,22 @@ VectorBase ADFun<Base>::Reverse(size_t q, const VectorBase &w)
 		"\n(r > 1) is not yet supported for q > 1."
 	);
 
-	// initialize entire Partial matrix to zero
-	local::pod_vector<Base> Partial(num_var_tape_ * q);
+	// initialize entire partial matrix to zero
+	partial_.resize(num_var_tape_ * q);
 	for(i = 0; i < num_var_tape_; i++)
 		for(j = 0; j < q; j++)
-			Partial[i * q + j] = zero;
+			partial_[i * q + j] = zero;
 
 	// set the dependent variable direction
 	// (use += because two dependent variables can point to same location)
 	for(i = 0; i < m; i++)
 	{	CPPAD_ASSERT_UNKNOWN( dep_taddr_[i] < num_var_tape_  );
 		if( size_t(w.size()) == m )
-			Partial[dep_taddr_[i] * q + q - 1] += w[i];
+			partial_[dep_taddr_[i] * q + q - 1] += w[i];
 		else
 		{	for(k = 0; k < q; k++)
 				// ? should use += here, first make test to demonstrate bug
-				Partial[ dep_taddr_[i] * q + k ] = w[i * q + k ];
+				partial_[ dep_taddr_[i] * q + k ] = w[i * q + k ];
 		}
 	}
 
@@ -162,7 +163,7 @@ VectorBase ADFun<Base>::Reverse(size_t q, const VectorBase &w)
 		cap_order_taylor_,
 		taylor_.data(),
 		q,
-		Partial.data(),
+		partial_.data(),
 		cskip_op_.data(),
 		load_op_,
 		subgraph_info_.entire_graph()
@@ -182,18 +183,22 @@ VectorBase ADFun<Base>::Reverse(size_t q, const VectorBase &w)
 		if( size_t(w.size()) == m )
 		{	for(k = 0; k < q; k++)
 				value[j * q + k ] =
-					Partial[ind_taddr_[j] * q + q - 1 - k];
+					partial_[ind_taddr_[j] * q + q - 1 - k];
 		}
 		else
 		{	for(k = 0; k < q; k++)
 				value[j * q + k ] =
-					Partial[ind_taddr_[j] * q + k];
+					partial_[ind_taddr_[j] * q + k];
 		}
 	}
 	CPPAD_ASSERT_KNOWN( ! ( hasnan(value) && check_for_nan_ ) ,
 		"dw = f.Reverse(q, w): has a nan,\n"
 		"but none of its Taylor coefficents are nan."
 	);
+
+	// check hold_reverse_memory
+	if( ! hold_reverse_memory_ )
+		partial_.clear();
 
 	return value;
 }

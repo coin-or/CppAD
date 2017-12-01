@@ -97,6 +97,7 @@ extern bool HesLuDet(void);
 extern bool HesMinorDet(void);
 extern bool Hessian(void);
 extern bool HesTimesDir(void);
+extern bool hold_reverse_memory(void);
 extern bool Independent(void);
 extern bool Integer(void);
 extern bool Interface2C(void);
@@ -208,6 +209,7 @@ int main(void)
 	Run( HesMinorDet,       "HesMinorDet"      );
 	Run( Hessian,           "Hessian"          );
 	Run( HesTimesDir,       "HesTimesDir"      );
+	Run( hold_reverse_memory, "hold_reverse_memory" );
 	Run( Independent,       "Independent"      );
 	Run( Integer,           "Integer"          );
 	Run( Interface2C,       "Interface2C"      );

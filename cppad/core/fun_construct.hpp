@@ -244,6 +244,7 @@ i.e., operation sequences that were recorded using the type \c AD<Base>.
 template <typename Base>
 ADFun<Base>::ADFun(void) :
 has_been_optimized_(false),
+hold_reverse_memory_(false),
 check_for_nan_(true) ,
 compare_change_count_(1),
 compare_change_number_(0),
@@ -280,6 +281,7 @@ void ADFun<Base>::operator=(const ADFun<Base>& f)
 	//
 	// size_t objects
 	has_been_optimized_        = f.has_been_optimized_;
+	hold_reverse_memory_       = f.hold_reverse_memory_;
 	check_for_nan_             = f.check_for_nan_;
 	compare_change_count_      = f.compare_change_count_;
 	compare_change_number_     = f.compare_change_number_;
@@ -419,7 +421,8 @@ ADFun<Base>::ADFun(const VectorAD &x, const VectorAD &y)
 
 
 	// ad_fun.hpp member values not set by dependent
-	check_for_nan_ = true;
+	hold_reverse_memory_ = false;
+	check_for_nan_       = true;
 
 	// allocate memory for one zero order taylor_ coefficient
 	CPPAD_ASSERT_UNKNOWN( num_order_taylor_ == 0 );
