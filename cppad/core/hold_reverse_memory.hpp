@@ -27,11 +27,11 @@ $icode%b% = %f%.hold_reverse_memory()
 %$$
 
 $head Purpose$$
-The $cref reverse$$ mode routines compute a derivatives for a number
+The $cref reverse$$ mode routines compute a derivatives for a specified number
 of Taylor coefficients and every variable in the operation sequence.
-This routine allows one to decide if that memory should be held onto
-by $icode f$$ between calls these routines to avoid repeated memory allocation.
-Setting this value to true
+This setting enables one to hold onto the memory in $icode f$$ used to store
+these derivatives.
+Holding onto this memory
 may speed up calculations and require more memory.
 
 $head f$$
@@ -52,9 +52,12 @@ This argument or result has prototype
 $codei%
 	bool %b%
 %$$
-Future calls to $icode%f%.Forward%$$ will (will not) hold onto memory
-between calls to reverse mode routines
-depending on if $icode b$$ is true (false).
+If $icode b$$ is true,
+$icode f$$ will hold onto the memory used to store derivatives
+of the Taylor coefficients.
+If $icode b$$ is false,
+the memory used to store these coefficients will be freed
+and future calls will not hold onto this memory.
 
 $head Default$$
 The value for this setting after construction of $icode f$$) is false.
