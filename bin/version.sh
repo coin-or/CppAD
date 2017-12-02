@@ -67,13 +67,6 @@ then
 fi
 # -----------------------------------------------------------------------------
 # Make the version number in the relevant files is the same
-yyyy_mm_dd=`echo $version | sed \
-	-e 's|\([0-9]\{4\}\)0000|\10101|' \
-	-e 's|\(....\)\(..\)\(..\).*|\1-\2-\3|'`
-sed  \
-	-e "s/, [0-9]\{4\}-[0-9]\{2\}-[0-9]\{2\} *,/, $yyyy_mm_dd,/" \
-	-i.old authors
-#
 sed  \
 	-e "s/(\[cppad\], *\[[0-9]\{8\}[.0-9]*\] *,/([cppad], [$version],/"  \
 	-i.old configure.ac
@@ -98,7 +91,6 @@ do
 done
 list="
 	$list
-	authors
 	configure.ac
 	configure
 "
