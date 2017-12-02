@@ -70,8 +70,12 @@ private:
 	data_[ start_[i] ].value is the reference count for this list.
 
 	\li
-	data_[ start_[i] ].next is not zero because there
-	is at least one entry in this list.
+	data_[ start_[i] ].next point the the first element in the list
+	and is not zero because there is at least one entry in this list.
+
+	\li
+	data_[ last ].value == end_ and data_[ last ].next = 0
+	for the value past the end of the linked list.
 	*/
 	pod_vector<size_t> start_;
 
@@ -87,20 +91,24 @@ private:
 	Otherwise it is the number of sets that share the same linked list
 	*/
 	size_t reference_count(size_t i) const
-	{	size_t ret = start_[i];
-		if( ret != 0 )
-		{	CPPAD_ASSERT_UNKNOWN( data_[ret].value != 0 );
-			CPPAD_ASSERT_UNKNOWN( data_[ret].next != 0 );
-			ret = data_[ret].value;
-		}
-		return ret;
+	{	// start data index
+		size_t start = start_[i];
+		if( start == 0 )
+			return 0;
+		//
+		// reference count
+		return data_[start].value;
 	}
 	// -----------------------------------------------------------------
 	/*!
-	Checks the number of data elements not used
+	Checks data structure
 	(effectively const, but modifies and restores values)
 	*/
-	void check_data_not_used(void)
+# ifdef NDEBUG
+	void check_data_structure(void)
+	{	return; }
+# else
+	void check_data_structure(void)
 	{	// number of sets
 		size_t n_set = start_.size();
 		//
@@ -108,19 +116,26 @@ private:
 		pod_vector<size_t> ref_count(n_set);
 		for(size_t i = 0; i < n_set; i++)
 			ref_count[i] = reference_count(i);
-
+		//
 		// count the number of entries in data_ that are used
 		size_t data_used = 0;
 		for(size_t i = 0; i < n_set; i++)
 		{	size_t start = start_[i];
-			if( start != 0 )
-			{	// decrement the reference counter
-				CPPAD_ASSERT_UNKNOWN( data_[start].value > 0 );
+			if( start > 0 )
+			{	// check structure for this non-empty set
+				size_t reference_count = data_[start].value;
+				size_t next            = data_[start].next;
+				CPPAD_ASSERT_UNKNOWN( reference_count > 0 );
+				CPPAD_ASSERT_UNKNOWN( next != 0 );
+				CPPAD_ASSERT_UNKNOWN( data_[next].value < end_ );
+				//
+				// decrement the reference counter
 				data_[start].value--;
 				//
 				// count the entries when find last reference
 				if( data_[start].value == 0 )
-				{	// restore reference count
+				{
+					// restore reference count
 					data_[start].value = ref_count[i];
 
 					// number of data entries used for this set
@@ -128,11 +143,14 @@ private:
 				}
 			}
 		}
+		//
+		// check the amount of data not used
 		CPPAD_ASSERT_UNKNOWN(
 			data_used + data_not_used_ == data_.size()
 		);
 		return;
 	}
+# endif
 	// -----------------------------------------------------------------
 	/*!
 	Check if one of two sets is a subset of the other set
@@ -242,9 +260,7 @@ private:
 	void collect_garbage(void)
 	{	if( data_not_used_ < data_.size() / 2 +  100)
 			return;
-# ifndef NDEBUG
-		check_data_not_used();
-# endif
+		check_data_structure();
 		//
 		// number of sets including empty ones
 		size_t n_set  = start_.size();
@@ -365,10 +381,7 @@ public:
 	// -----------------------------------------------------------------
 	/// Destructor
 	~sparse_list(void)
-	{
-# ifndef NDEBUG
-		check_data_not_used();
-# endif
+	{	check_data_structure();
 	}
 	// -----------------------------------------------------------------
 	/*!
@@ -416,10 +429,8 @@ public:
 	If n_set is zero, end must also be zero.
 	*/
 	void resize(size_t n_set, size_t end)
-	{
-# ifndef NDEBUG
-		check_data_not_used();
-# endif
+	{	check_data_structure();
+
 		if( n_set == 0 )
 		{	CPPAD_ASSERT_UNKNOWN( end == 0 );
 			//

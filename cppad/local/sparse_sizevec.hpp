@@ -183,7 +183,7 @@ private:
 		for(size_t i = 0; i < n_set; i++)
 		{	size_t start = start_[i];
 			if( start > 0 )
-			{	// check structure this non-empty set
+			{	// check structure for this non-empty set
 				size_t reference_count = data_[start + 0];
 				size_t length          = data_[start + 1];
 				size_t first           = data_[start + 2];
