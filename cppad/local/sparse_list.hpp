@@ -336,33 +336,35 @@ private:
 		size_t next  = data_[start].next;
 		size_t value = data_[next].value;
 		//
-		size_t copy_cur       = data_.extend(2);
-		size_t copy_next      = copy_cur + 1;
-		start_[i]             = copy_cur;
-		data_[copy_cur].value = 1;
-		data_[copy_cur].next  = copy_next;
-		copy_cur              = copy_next;
+		// new version of list
+		size_t start_new   = data_.extend(2);
+		size_t next_new    = start_new + 1;
 		//
-		CPPAD_ASSERT_UNKNOWN( value < end_ );
-		while( value < end_ )
-		{	data_[copy_cur].value   = value;
-			//
-			next       = data_[next].next;
+		// reference counter for new version of list
+		data_[start_new].value = 1;
+		data_[start_new].next  = next_new;
+		//
+		CPPAD_ASSERT_UNKNOWN( next != 0 )
+		while( next != 0 )
+		{	data_[next_new].value  = value;
+			next                   = data_[next].next;
 			if( next == 0 )
-			{	value = end_;
-				data_[copy_cur].next = 0;
-			}
+				data_[next_new].next = 0;
 			else
-			{	value  = data_[next].value;
-				data_[copy_cur].next = data_.extend(1);
+			{	value                  = data_[next].value;
+				data_[next_new].next   = data_.extend(1);
+				next_new               = data_[next_new].next;
 			}
 		}
-		CPPAD_ASSERT_UNKNOWN( next == 0 );
 		//
 		// decrement reference count
 		CPPAD_ASSERT_UNKNOWN( data_[start].value == ref_count );
 		data_[start].value--;
 		//
+		// starting point for new list
+		start_[i] = start_new;
+		//
+		return;
 	}
 // ===========================================================================
 public:
