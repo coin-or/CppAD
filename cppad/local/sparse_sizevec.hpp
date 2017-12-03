@@ -82,7 +82,7 @@ private:
 	which is greater than or equal the number of elements.
 
 	\li
-	data_[ post_[i] + 2 ] is the first element that has benn posted,
+	data_[ post_[i] + 2 ] is the first element that has been posted,
 	but not yet added, to set i.
 
 	\li
@@ -169,7 +169,14 @@ private:
 	{	// number of sets
 		CPPAD_ASSERT_UNKNOWN( post_.size() == start_.size() );
 		size_t n_set = start_.size();
-
+		if( n_set == 0 )
+		{	CPPAD_ASSERT_UNKNOWN( end_ == 0 );
+			CPPAD_ASSERT_UNKNOWN( data_not_used_ == 0 );
+			CPPAD_ASSERT_UNKNOWN( data_.size() == 0 );
+			CPPAD_ASSERT_UNKNOWN( start_.size() == 0 );
+			CPPAD_ASSERT_UNKNOWN( post_.size() == 0 );
+			return;
+		}
 		// ------------------------------------------------------------------
 		// save the reference counters
 		pod_vector<size_t> ref_count(n_set);
@@ -208,7 +215,7 @@ private:
 			}
 		}
 		// ------------------------------------------------------------------
-		// check the number of entries in data_ that are used by posts
+		// count the number of entries in data_ that are used by posts
 		size_t data_used_by_posts = 0;
 		for(size_t i = 0; i < n_set; i++)
 		{	size_t post = post_[i];
@@ -379,6 +386,166 @@ private:
 
 		// all of the elements, except the first, are used
 		data_not_used_ = 1;
+	}
+	// -----------------------------------------------------------------
+	/*!
+	Assign a set equal to the union of a set and a vector;
+
+	\param target
+	is the index in this sparse_sizevec object of the set being assinged.
+
+	\param left
+	is the index in this sparse_sizevec object of the
+	left operand for the union operation.
+	It is OK for target and left to be the same value.
+
+	\param right
+	is a vector of size_t, sorted in accending order.
+	right operand for the union operation.
+	Elements can be repeated in right, but are not be repeated in the
+	resulting set.
+	All of the elements must have value less than end();
+	*/
+	void binary_union(
+		size_t                    target ,
+		size_t                    left   ,
+		const pod_vector<size_t>& right  )
+	{	CPPAD_ASSERT_UNKNOWN( post_[left] == 0 );
+		//
+		CPPAD_ASSERT_UNKNOWN( target < start_.size() );
+		CPPAD_ASSERT_UNKNOWN( left   < start_.size() );
+
+		size_t start_left   = start_[left];
+		// -------------------------------------------------------------------
+		// Check if right is a subset of left so that we used reference count
+		// and not make copies of identical sets.
+		//
+		// initialize index for left and right sets
+		size_t current_left  = start_left;
+		size_t current_right = 0;
+		//
+		// initialize value_left
+		size_t value_left  = end_;
+		if( current_left > 0 )
+		{	// advance from reference counter to data
+			current_left = current_left + 2;
+			value_left   = data_[current_left];
+			CPPAD_ASSERT_UNKNOWN( value_left < end_);
+		}
+		//
+		// initialize value_right
+		size_t value_right = end_;
+		if( right.size() > 0 )
+			value_right = right[current_right];
+		//
+		bool subset = true;
+		while( subset & (value_right < end_) )
+		{	while( value_left < value_right )
+			{	// advance left
+				value_left = data_[++current_left];
+			}
+			if( value_right < value_left )
+				subset = false;
+			else
+			{	// advance right
+				++current_right;
+				if( current_right == right.size() )
+					value_right = end_;
+				else
+					value_right = right[current_right];
+			}
+		}
+		//
+		if( subset )
+		{	// target = left will use reference count for identical sets
+			assignment(target, left, *this);
+			return;
+		}
+
+		// -------------------------------------------------------------------
+		// number of elements that will be deleted by removing old version
+		// of target
+		size_t number_lost = drop(target);
+
+		// drop any posting for the target set
+		size_t post = post_[target];
+		if( post > 0 )
+		{	CPPAD_ASSERT_UNKNOWN( target != left );
+			size_t capacity = data_[post + 1];
+			number_lost += capacity + 2;
+			post_[target] = 0;
+		}
+		//
+		// start new version of target
+		size_t start       = data_.extend(2);
+		start_[target]     = start;
+		data_[start]       = 1; // reference count
+		// data_[start + 1] = length is not yet known
+		//
+		// initialize value_left
+		current_left = start_left;
+		value_left   = end_;
+		if( current_left > 0 )
+		{	// advance from reference counter to data
+			current_left = current_left + 2;
+			value_left   = data_[current_left];
+			CPPAD_ASSERT_UNKNOWN( value_left < end_);
+		}
+		//
+		// initialize value_right
+		value_right = end_;
+		if( right.size() > 0 )
+			value_right = right[current_right];
+		//
+		// merge
+		while( (value_left < end_) | (value_right < end_) )
+		{	if( value_left == value_right)
+			{	// advance left so left and right are no longer equal
+				++current_left;
+				value_left = data_[current_left];
+				CPPAD_ASSERT_UNKNOWN( value_right < value_left );
+			}
+			//
+			if( value_left < value_right )
+			{	// value_left case
+				CPPAD_ASSERT_UNKNOWN( value_left < end_ );
+				data_.push_back( value_left );
+				//
+				// advance left
+				++current_left;
+				value_left = data_[current_left];
+			}
+			else
+			{	CPPAD_ASSERT_UNKNOWN( value_right < value_left )
+				// value_right case
+				CPPAD_ASSERT_UNKNOWN( value_right < end_);
+				data_.push_back( value_right );
+				//
+				// advance right (skip values equal to this one)
+				size_t previous_value = value_right;
+				while( value_right == previous_value )
+				{	++current_right;
+					if( current_right == right.size() )
+						value_right = end_;
+					else
+					{	value_right = right[current_right];
+						CPPAD_ASSERT_UNKNOWN( value_right < end_ );
+					}
+				}
+			}
+		}
+		// make end of target list
+		data_.push_back( end_ );
+		//
+		// reference count, length, and end_ are not elements of set
+		CPPAD_ASSERT_UNKNOWN( data_.size() > start + 3 );
+		size_t length    = data_.size() - (start + 3);
+		data_[start + 1] = length;
+		//
+
+		// adjust data_not_used_
+		data_not_used_ += number_lost;
+		collect_garbage();
 	}
 public:
 	// =======================================================================
@@ -630,9 +797,9 @@ public:
 	void operator=(const sparse_sizevec& other)
 	{	end_           = other.end_;
 		data_not_used_ = other.data_not_used_;
+		data_          = other.data_;
 		start_         = other.start_;
 		post_          = other.post_;
-		data_          = other.data_;
 	}
 	// -----------------------------------------------------------------
 	/*!
@@ -891,166 +1058,6 @@ public:
 				data_.push_back( other.data_[other_start + 2 + j] );
 			data_.push_back(end_);
 		}
-
-		// adjust data_not_used_
-		data_not_used_ += number_lost;
-		collect_garbage();
-	}
-	// -----------------------------------------------------------------
-	/*!
-	Assign a set equal to the union of a set and a vector;
-
-	\param target
-	is the index in this sparse_sizevec object of the set being assinged.
-
-	\param left
-	is the index in this sparse_sizevec object of the
-	left operand for the union operation.
-	It is OK for target and left to be the same value.
-
-	\param right
-	is a vector of size_t, sorted in accending order.
-	right operand for the union operation.
-	Elements can be repeated in right, but are not be repeated in the
-	resulting set.
-	All of the elements must have value less than end();
-	*/
-	void binary_union(
-		size_t                    target ,
-		size_t                    left   ,
-		const pod_vector<size_t>& right  )
-	{	CPPAD_ASSERT_UNKNOWN( post_[left] == 0 );
-		//
-		CPPAD_ASSERT_UNKNOWN( target < start_.size() );
-		CPPAD_ASSERT_UNKNOWN( left   < start_.size() );
-
-		size_t start_left   = start_[left];
-		// -------------------------------------------------------------------
-		// Check if right is a subset of left so that we used reference count
-		// and not make copies of identical sets.
-		//
-		// initialize index for left and right sets
-		size_t current_left  = start_left;
-		size_t current_right = 0;
-		//
-		// initialize value_left
-		size_t value_left  = end_;
-		if( current_left > 0 )
-		{	// advance from reference counter to data
-			current_left = current_left + 2;
-			value_left   = data_[current_left];
-			CPPAD_ASSERT_UNKNOWN( value_left < end_);
-		}
-		//
-		// initialize value_right
-		size_t value_right = end_;
-		if( right.size() > 0 )
-			value_right = right[current_right];
-		//
-		bool subset = true;
-		while( subset & (value_right < end_) )
-		{	while( value_left < value_right )
-			{	// advance left
-				value_left = data_[++current_left];
-			}
-			if( value_right < value_left )
-				subset = false;
-			else
-			{	// advance right
-				++current_right;
-				if( current_right == right.size() )
-					value_right = end_;
-				else
-					value_right = right[current_right];
-			}
-		}
-		//
-		if( subset )
-		{	// target = left will use reference count for identical sets
-			assignment(target, left, *this);
-			return;
-		}
-
-		// -------------------------------------------------------------------
-		// number of elements that will be deleted by removing old version
-		// of target
-		size_t number_lost = drop(target);
-
-		// drop any posting for the target set
-		size_t post = post_[target];
-		if( post > 0 )
-		{	CPPAD_ASSERT_UNKNOWN( target != left );
-			size_t capacity = data_[post + 1];
-			number_lost += capacity + 2;
-			post_[target] = 0;
-		}
-		//
-		// start new version of target
-		size_t start       = data_.extend(2);
-		start_[target]     = start;
-		data_[start]       = 1; // reference count
-		// data_[start + 1] = length is not yet known
-		//
-		// initialize value_left
-		current_left = start_left;
-		value_left   = end_;
-		if( current_left > 0 )
-		{	// advance from reference counter to data
-			current_left = current_left + 2;
-			value_left   = data_[current_left];
-			CPPAD_ASSERT_UNKNOWN( value_left < end_);
-		}
-		//
-		// initialize value_right
-		value_right = end_;
-		if( right.size() > 0 )
-			value_right = right[current_right];
-		//
-		// merge
-		while( (value_left < end_) | (value_right < end_) )
-		{	if( value_left == value_right)
-			{	// advance left so left and right are no longer equal
-				++current_left;
-				value_left = data_[current_left];
-				CPPAD_ASSERT_UNKNOWN( value_right < value_left );
-			}
-			//
-			if( value_left < value_right )
-			{	// value_left case
-				CPPAD_ASSERT_UNKNOWN( value_left < end_ );
-				data_.push_back( value_left );
-				//
-				// advance left
-				++current_left;
-				value_left = data_[current_left];
-			}
-			else
-			{	CPPAD_ASSERT_UNKNOWN( value_right < value_left )
-				// value_right case
-				CPPAD_ASSERT_UNKNOWN( value_right < end_);
-				data_.push_back( value_right );
-				//
-				// advance right (skip values equal to this one)
-				size_t previous_value = value_right;
-				while( value_right == previous_value )
-				{	++current_right;
-					if( current_right == right.size() )
-						value_right = end_;
-					else
-					{	value_right = right[current_right];
-						CPPAD_ASSERT_UNKNOWN( value_right < end_ );
-					}
-				}
-			}
-		}
-		// make end of target list
-		data_.push_back( end_ );
-		//
-		// reference count, length, and end_ are not elements of set
-		CPPAD_ASSERT_UNKNOWN( data_.size() > start + 3 );
-		size_t length    = data_.size() - (start + 3);
-		data_[start + 1] = length;
-		//
 
 		// adjust data_not_used_
 		data_not_used_ += number_lost;

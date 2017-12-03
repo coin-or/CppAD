@@ -125,59 +125,19 @@ void set_internal_sparsity(
 # endif
 	const SizeVector& row( pattern_in.row() );
 	const SizeVector& col( pattern_in.col() );
-	size_t nnz = pattern_in.nnz();
-	pod_vector<size_t> internal_row;
-	if( transpose )
-	{	CPPAD_ASSERT_UNKNOWN( pattern_in.nr() == nc );
-		CPPAD_ASSERT_UNKNOWN( pattern_in.nc() == nr );
+	size_t nnz = row.size();
+	for(size_t k = 0; k < nnz; k++)
+	{	size_t r = row[k];
+		size_t c = col[k];
+		if( transpose )
+			std::swap(r, c);
 		//
-		SizeVector col_major = pattern_in.col_major();
-		size_t k = 0;
-		while( k < nnz )
-		{	// this column of pattern_in
-			size_t c   = col[ col_major[k] ];
-			// length of the column
-			size_t len = 0;
-			internal_row.resize(0);
-			while( k + len < nnz && c == col[ col_major[k + len] ] )
-			{	internal_row.push_back( row[ col_major[k + len] ] );
-				++len;
-			}
-			size_t i_var = internal_index[c];
-			CPPAD_ASSERT_UNKNOWN( i_var < internal_pattern.n_set() );
-			bool ignore  = zero_empty && i_var == 0;
-			if( ! ignore )
-				internal_pattern.binary_union(i_var, i_var, internal_row);
-			//
-			CPPAD_ASSERT_UNKNOWN( len > 0 );
-			k += len;
-		}
-	}
-	else
-	{	CPPAD_ASSERT_UNKNOWN( pattern_in.nr() == nr );
-		CPPAD_ASSERT_UNKNOWN( pattern_in.nc() == nc );
-		//
-		SizeVector row_major = pattern_in.row_major();
-		size_t k = 0;
-		while( k < nnz )
-		{	// this row of pattern_in
-			size_t r   = row[ row_major[k] ];
-			// length of the row
-			size_t len = 0;
-			internal_row.resize(0);
-			while( k + len < nnz && r == row[ row_major[k + len] ] )
-			{	internal_row.push_back( col[ row_major[k + len] ] );
-				++len;
-			}
-			size_t i_var = internal_index[r];
-			CPPAD_ASSERT_UNKNOWN( i_var < internal_pattern.n_set() );
-			bool ignore  = zero_empty && i_var == 0;
-			if( ! ignore )
-				internal_pattern.binary_union(i_var, i_var, internal_row);
-			//
-			CPPAD_ASSERT_UNKNOWN( len > 0 );
-			k += len;
-		}
+		size_t i_var = internal_index[r];
+		CPPAD_ASSERT_UNKNOWN( i_var < internal_pattern.n_set() );
+		CPPAD_ASSERT_UNKNOWN( c < nc );
+		bool ignore  = zero_empty && i_var == 0;
+		if( ! ignore )
+			internal_pattern.add_element( internal_index[r], c );
 	}
 }
 template <class InternalSparsity>
@@ -190,7 +150,6 @@ void set_internal_sparsity(
 	const vectorBool&             pattern_in       )
 {	size_t nr = internal_index.size();
 	size_t nc = internal_pattern.end();
-	CPPAD_ASSERT_UNKNOWN( pattern_in.size() == nr * nc );
 # ifndef NDEBUG
 	CPPAD_ASSERT_UNKNOWN( pattern_in.size() == nr * nc );
 	if( input_empty ) for(size_t i = 0; i < nr; i++)
@@ -198,21 +157,20 @@ void set_internal_sparsity(
 		CPPAD_ASSERT_UNKNOWN( internal_pattern.number_elements(i_var) == 0 );
 	}
 # endif
-	pod_vector<size_t> internal_row;
 	for(size_t i = 0; i < nr; i++)
-	{	internal_row.resize(0);
-		for(size_t j = 0; j < nc; j++)
+	{	for(size_t j = 0; j < nc; j++)
 		{	bool flag = pattern_in[i * nc + j];
 			if( transpose )
 				flag = pattern_in[j * nr + i];
 			if( flag )
-				internal_row.push_back(j);
+			{	size_t i_var = internal_index[i];
+				CPPAD_ASSERT_UNKNOWN( i_var < internal_pattern.n_set() );
+				CPPAD_ASSERT_UNKNOWN( j < nc );
+				bool ignore  = zero_empty && i_var == 0;
+				if( ! ignore )
+					internal_pattern.add_element( i_var, j);
+			}
 		}
-		size_t i_var = internal_index[i];
-		CPPAD_ASSERT_UNKNOWN( i_var < internal_pattern.n_set() );
-		bool ignore  = zero_empty && i_var == 0;
-		if( ! ignore )
-			internal_pattern.binary_union(i_var, i_var, internal_row);
 	}
 	return;
 }
@@ -226,7 +184,6 @@ void set_internal_sparsity(
 	const vector<bool>&           pattern_in       )
 {	size_t nr = internal_index.size();
 	size_t nc = internal_pattern.end();
-	CPPAD_ASSERT_UNKNOWN( pattern_in.size() == nr * nc );
 # ifndef NDEBUG
 	CPPAD_ASSERT_UNKNOWN( pattern_in.size() == nr * nc );
 	if( input_empty ) for(size_t i = 0; i < nr; i++)
@@ -234,21 +191,20 @@ void set_internal_sparsity(
 		CPPAD_ASSERT_UNKNOWN( internal_pattern.number_elements(i_var) == 0 );
 	}
 # endif
-	pod_vector<size_t> internal_row;
 	for(size_t i = 0; i < nr; i++)
-	{	internal_row.resize(0);
-		for(size_t j = 0; j < nc; j++)
+	{	for(size_t j = 0; j < nc; j++)
 		{	bool flag = pattern_in[i * nc + j];
 			if( transpose )
 				flag = pattern_in[j * nr + i];
 			if( flag )
-				internal_row.push_back(j);
+			{	size_t i_var = internal_index[i];
+				CPPAD_ASSERT_UNKNOWN( i_var < internal_pattern.n_set() );
+				CPPAD_ASSERT_UNKNOWN( j < nc );
+				bool ignore  = zero_empty && i_var == 0;
+				if( ! ignore )
+					internal_pattern.add_element( i_var, j);
+			}
 		}
-		size_t i_var = internal_index[i];
-		CPPAD_ASSERT_UNKNOWN( i_var < internal_pattern.n_set() );
-		bool ignore  = zero_empty && i_var == 0;
-		if( ! ignore )
-			internal_pattern.binary_union(i_var, i_var, internal_row);
 	}
 	return;
 }
@@ -260,46 +216,46 @@ void set_internal_sparsity(
 	const vector<size_t>&              internal_index   ,
 	InternalSparsity&                  internal_pattern ,
 	const vector< std::set<size_t> >&  pattern_in       )
-{	// not worried about efficiency with vectors of standard sets
-	// should use sparse_rc<SizeVector> for efficiency
-	//
-	size_t nr = internal_index.size();
+{	size_t nr = internal_index.size();
 	size_t nc = internal_pattern.end();
-	//
-	// number of non-zeros in pattern_in
-	size_t nnz = 0;
-	for(size_t i = 0; i < pattern_in.size(); ++i)
-		nnz += pattern_in[i].size();
-	//
-	// convert pattern_in to a sparse_rc
-	size_t nr_in = pattern_in.size();
-	size_t nc_in;
+# ifndef NDEBUG
+	if( input_empty ) for(size_t i = 0; i < nr; i++)
+	{	size_t i_var = internal_index[i];
+		CPPAD_ASSERT_UNKNOWN( internal_pattern.number_elements(i_var) == 0 );
+	}
+# endif
 	if( transpose )
-	{	CPPAD_ASSERT_UNKNOWN( pattern_in.size() == nc )
-		nc_in = nr;
-	}
-	else
-	{	CPPAD_ASSERT_UNKNOWN( pattern_in.size() == nr )
-		nc_in = nc;
-	}
-	sparse_rc< vector<size_t> > pattern_rc(nr_in, nc_in, nnz);
-	size_t k = 0;
-	for(size_t i = 0; i < pattern_in.size(); ++i)
-	{	std::set<size_t>::const_iterator itr( pattern_in[i].begin() );
-		while( itr != pattern_in[i].end() )
-		{	size_t j = *itr++;
-			pattern_rc.set(k++, i, j);
+	{	CPPAD_ASSERT_UNKNOWN( pattern_in.size() == nc );
+		for(size_t j = 0; j < nc; j++)
+		{	std::set<size_t>::const_iterator itr( pattern_in[j].begin() );
+			while( itr != pattern_in[j].end() )
+			{	size_t i = *itr;
+				size_t i_var = internal_index[i];
+				CPPAD_ASSERT_UNKNOWN( i_var < internal_pattern.n_set() );
+				CPPAD_ASSERT_UNKNOWN( j < nc );
+				bool ignore  = zero_empty && i_var == 0;
+				if( ! ignore )
+					internal_pattern.add_element( i_var, j);
+				++itr;
+			}
 		}
 	}
-	set_internal_sparsity(
-		zero_empty,
-		input_empty,
-		transpose,
-		internal_index,
-		internal_pattern,
-		pattern_rc
-	);
-	//
+	else
+	{	CPPAD_ASSERT_UNKNOWN( pattern_in.size() == nr );
+		for(size_t i = 0; i < nr; i++)
+		{	std::set<size_t>::const_iterator itr( pattern_in[i].begin() );
+			while( itr != pattern_in[i].end() )
+			{	size_t j = *itr;
+				size_t i_var = internal_index[i];
+				CPPAD_ASSERT_UNKNOWN( i_var < internal_pattern.n_set() );
+				CPPAD_ASSERT_UNKNOWN( j < nc );
+				bool ignore  = zero_empty && i_var == 0;
+				if( ! ignore )
+					internal_pattern.add_element( i_var, j);
+				++itr;
+			}
+		}
+	}
 	return;
 }
 // ---------------------------------------------------------------------------

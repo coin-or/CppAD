@@ -50,6 +50,40 @@ private:
 	/// Data for all the sets.
 	pod_vector<Pack>  data_;
 // ============================================================================
+	/*!
+	Assign a set equal to the union of a set and a vector;
+
+	\param target
+	is the index in this sparse_list object of the set being assinged.
+
+	\param left
+	is the index in this sparse_list object of the
+	left operand for the union operation.
+	It is OK for target and left to be the same value.
+
+	\param right
+	is a vector of size_t, sorted in accending order.
+	right operand for the union operation.
+	Elements can be repeated in right, but are not be repeated in the
+	resulting set.
+	All of the elements must have value less than end();
+	*/
+	void binary_union(
+		size_t                    target ,
+		size_t                    left   ,
+		const pod_vector<size_t>& right  )
+	{
+		// initialize target = left
+		size_t t = target * n_pack_;
+		size_t l = left   * n_pack_;
+		size_t j = n_pack_;
+		while(j--)
+			data_[t++] = data_[l++];
+
+		// add the elements in right
+		for(size_t i = 0; i < right.size(); ++i)
+			add_element(target, right[i]);
+	}
 public:
 	/// declare a const iterator
 	typedef sparse_pack_const_iterator const_iterator;
@@ -247,41 +281,6 @@ public:
 		size_t j = n_pack_;
 		while(j--)
 			data_[t++] = other.data_[v++];
-	}
-	// -----------------------------------------------------------------
-	/*!
-	Assign a set equal to the union of a set and a vector;
-
-	\param target
-	is the index in this sparse_list object of the set being assinged.
-
-	\param left
-	is the index in this sparse_list object of the
-	left operand for the union operation.
-	It is OK for target and left to be the same value.
-
-	\param right
-	is a vector of size_t, sorted in accending order.
-	right operand for the union operation.
-	Elements can be repeated in right, but are not be repeated in the
-	resulting set.
-	All of the elements must have value less than end();
-	*/
-	void binary_union(
-		size_t                    target ,
-		size_t                    left   ,
-		const pod_vector<size_t>& right  )
-	{
-		// initialize target = left
-		size_t t = target * n_pack_;
-		size_t l = left   * n_pack_;
-		size_t j = n_pack_;
-		while(j--)
-			data_[t++] = data_[l++];
-
-		// add the elements in right
-		for(size_t i = 0; i < right.size(); ++i)
-			add_element(target, right[i]);
 	}
 	// -----------------------------------------------------------------
 	/*!

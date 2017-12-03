@@ -192,6 +192,7 @@ bool test_intersection(void)
 	return ok;
 }
 
+// This test no longer used becauce the operation was changed to private
 template<class VectorSet>
 bool test_vector_union(void)
 {	bool ok = true;
@@ -250,10 +251,6 @@ bool vector_set(void)
 	ok     &= test_intersection<CppAD::local::sparse_pack>();
 	ok     &= test_intersection<CppAD::local::sparse_list>();
 	ok     &= test_intersection<CppAD::local::sparse_sizevec>();
-	//
-	ok     &= test_vector_union<CppAD::local::sparse_pack>();
-	ok     &= test_vector_union<CppAD::local::sparse_list>();
-	ok     &= test_vector_union<CppAD::local::sparse_sizevec>();
 	//
 	return ok;
 }
