@@ -120,6 +120,68 @@ private:
 	}
 	// -----------------------------------------------------------------
 	/*!
+	drop a set and its postings.
+
+	\param i
+	is the index of the set that will be dropped.
+
+	\par reference_count
+	if the set is non-empty,
+	the reference count data_[ start_[i] ] will be decremented.
+
+	\par start_
+	The value start_[i] is set to zero.
+
+	\par post_
+	the value post_[i] will be set to zero.
+
+	\return
+	is the number of elements of data_ that will be lost when the set is
+	dropped. This is non-zero when the initial reference count is one.
+	*/
+	size_t drop(size_t i)
+	{	// inialize counter
+		size_t count = 0;
+
+		// count posted elements that will be dropped
+		size_t next = post_[i];
+		while( data_[next].value != end_ )
+		{	++count;
+			next = data_[next].next;
+		}
+
+		// drop posted elements
+		post_[i] = 0;
+
+		// check for empty set
+		size_t start = start_[i];
+		if( start == 0 )
+			return count;
+
+		// decrement reference counter
+		CPPAD_ASSERT_UNKNOWN( data_[start].value == reference_count(i) );
+		data_[start].value--;
+
+		// set this set to empty
+		start_[i] = 0;
+
+		// nothing else lost unless new reference count is zero
+		if( data_[start].value > 0 )
+			return count;
+
+		// count reference counter and elements in the set
+		++count;
+		next = start;            // reference counter
+		next = data_[next].next; // first element of the set
+		while( data_[next].value != end_ )
+		{	++count;
+			next = data_[next].next;
+		}
+
+		return count;
+	}
+	// -----------------------------------------------------------------
+	/*!
 	Checks data structure
 	(effectively const, but modifies and restores values)
 	*/
@@ -446,9 +508,8 @@ private:
 		CPPAD_ASSERT_UNKNOWN( target < start_.size() );
 		CPPAD_ASSERT_UNKNOWN( left   < start_.size() );
 
-		// get start indices before we modify start_ in case target
+		// get start indices before drop modifies modify start_ in case target
 		// and left are the same.
-		size_t start_target = start_[target];
 		size_t start_left   = start_[left];
 
 		// -------------------------------------------------------------------
@@ -501,19 +562,11 @@ private:
 		}
 
 		// -------------------------------------------------------------------
+
 		// number of elements that will be deleted by removing old version
 		// of target
-		size_t number_delete = 0;
-		size_t ref_count     = reference_count(target);
-		//
-		if( ref_count == 1 )
-			number_delete = number_elements(target) + 1;
-		else if (ref_count > 1 )
-		{	// decrement reference counter
-			CPPAD_ASSERT_UNKNOWN( data_[start_target].value > 1 )
-			data_[start_target].value--;
-		}
-		//
+		size_t number_delete = drop(target);
+
 		// start new version of target
 		size_t start        = data_.extend(1);
 		start_[target]      = start;
@@ -819,30 +872,12 @@ public:
 	void clear(size_t target)
 	{	CPPAD_ASSERT_UNKNOWN( target < start_.size() );
 
-		// number of references to this set
-		size_t ref_count = reference_count(target);
+		// drop t he set and postings
+		size_t number_delete = drop(target);
 
-		// case by reference count
-		if( ref_count > 1  )
-		{	// just remove this reference
-			size_t start   = start_[target];
-			start_[target] = 0;
-			CPPAD_ASSERT_UNKNOWN( data_[start].value == ref_count );
-			data_[start].value--;
-		}
-		else if( ref_count == 1 )
-		{
-			// number of data_ elements that will be lost by this operation
-			size_t number_delete = number_elements(target) + 1;
-
-			// delete the elements from the set
-			start_[target] = 0;
-
-			// adjust data_not_used_
-			data_not_used_ += number_delete;
-			collect_garbage();
-		}
-		//
+		// adjust data_not_used_
+		data_not_used_ += number_delete;
+		collect_garbage();
 	}
 	// -----------------------------------------------------------------
 	/*!
@@ -877,16 +912,7 @@ public:
 			return;
 
 		// number of list elements that will be deleted by this operation
-		size_t number_delete = 0;
-		size_t ref_count     = reference_count(this_target);
-		size_t start         = start_[this_target];
-		if( ref_count == 1 )
-			number_delete = number_elements(this_target) + 1;
-		else if (ref_count > 1 )
-		{	// decrement reference counter
-			CPPAD_ASSERT_UNKNOWN( data_[start].value > 1 )
-			data_[start].value--;
-		}
+		size_t number_delete = drop(this_target);
 
 		// If this and other are the same, use another reference to same list
 		size_t other_start = other.start_[other_source];
@@ -981,21 +1007,11 @@ public:
 
 		// must get all the start indices before modify start_this
 		// (incase start_this is the same as start_left or start_right)
-		size_t start_target  = start_[this_target];
 		size_t start_left    = start_[this_left];
 		size_t start_right   = other.start_[other_right];
 
-
 		// number of list elements that will be deleted by this operation
-		size_t number_delete = 0;
-		size_t ref_count     = reference_count(this_target);
-		if( ref_count == 1 )
-			number_delete = number_elements(this_target) + 1;
-		else if (ref_count > 1 )
-		{	// decrement reference counter
-			CPPAD_ASSERT_UNKNOWN( data_[start_target].value > 1 )
-			data_[start_target].value--;
-		}
+		size_t number_delete = drop(this_target);
 
 		// start the new list
 		size_t start        = data_.extend(1);
@@ -1097,21 +1113,11 @@ public:
 
 		// must get all the start indices before modify start_this
 		// (incase start_this is the same as start_left or start_right)
-		size_t start_target  = start_[this_target];
 		size_t start_left    = start_[this_left];
 		size_t start_right   = other.start_[other_right];
 
-
 		// number of list elements that will be deleted by this operation
-		size_t number_delete = 0;
-		size_t ref_count     = reference_count(this_target);
-		if( ref_count == 1 )
-			number_delete = number_elements(this_target) + 1;
-		else if (ref_count > 1 )
-		{	// decrement reference counter
-			CPPAD_ASSERT_UNKNOWN( data_[start_target].value > 1 )
-			data_[start_target].value--;
-		}
+		size_t number_delete = drop(this_target);
 
 		// start the new list as emptyh
 		size_t start        = 0;
