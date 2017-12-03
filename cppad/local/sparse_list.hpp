@@ -68,14 +68,15 @@ private:
 
 	\li
 	data_[ start_[i] ].value is the reference count for this list.
+	This element is not in the list.
 
 	\li
 	data_[ start_[i] ].next point the the first element in the list
 	and is not zero because there is at least one entry in this list.
 
 	\li
-	data_[ last ].value == end_ and data_[ last ].next = 0
-	for the value past the end of the linked list.
+	For all lists, the last pair in the list has data_ index zero,
+	data_[0].value == end_ and data_[0].next = 0, and is not in the set.
 	*/
 	pod_vector<size_t> start_;
 
@@ -111,6 +112,17 @@ private:
 	void check_data_structure(void)
 	{	// number of sets
 		size_t n_set = start_.size();
+		if( n_set == 0 )
+		{	CPPAD_ASSERT_UNKNOWN( end_ == 0 );
+			CPPAD_ASSERT_UNKNOWN( data_not_used_ == 0 );
+			CPPAD_ASSERT_UNKNOWN( data_.size() == 0 );
+			CPPAD_ASSERT_UNKNOWN( start_.size() == 0 );
+			return;
+		}
+		//
+		// check data index zero
+		CPPAD_ASSERT_UNKNOWN( data_[0].value == end_ );
+		CPPAD_ASSERT_UNKNOWN( data_[0].next  == 0  );
 		//
 		// save the reference counters
 		pod_vector<size_t> ref_count(n_set);
@@ -118,7 +130,8 @@ private:
 			ref_count[i] = reference_count(i);
 		//
 		// count the number of entries in data_ that are used
-		size_t data_used = 0;
+		// (count data_[0] which is used by all lists).
+		size_t data_used = 1;
 		for(size_t i = 0; i < n_set; i++)
 		{	size_t start = start_[i];
 			if( start > 0 )
@@ -140,6 +153,12 @@ private:
 
 					// number of data entries used for this set
 					data_used += number_elements(i) + 1;
+
+					/*
+					number of elements checks that value < end_
+					each pair in the list except for the start pair
+					and the pair with index zero.
+					*/
 				}
 			}
 		}
@@ -213,19 +232,13 @@ private:
 				two_subset = false;
 			else
 			{	next_one = data_[next_one].next;
-				if( next_one == 0 )
-					value_one = end_;
-				else
-					value_one = data_[next_one].value;
+				value_one = data_[next_one].value;
 			}
 			if( value_two > value_union )
 				one_subset = false;
 			else
 			{	next_two = other.data_[next_two].next;
-				if( next_two == 0 )
-					value_two = end_;
-				else
-					value_two = other.data_[next_two].value;
+				value_two = other.data_[next_two].value;
 			}
 			value_union = std::min(value_one, value_two);
 		}
@@ -266,7 +279,9 @@ private:
 		size_t n_set  = start_.size();
 		//
 		// copy the sets to a temporary version of data_
-		pod_vector<pair_size_t> data_tmp(1); // data_tmp[0] will not be used
+		pod_vector<pair_size_t> data_tmp(1);
+		data_tmp[0].value = end_;
+		data_tmp[0].next  = 0;
 		//
 		pod_vector<size_t> start_tmp(n_set);
 		for(size_t i = 0; i < n_set; i++)
@@ -305,8 +320,10 @@ private:
 							next_tmp                 = tmp;
 						}
 					}
+					//
 					// store the starting address here
 					data_[start].value = tmp_start;
+					//
 					// flag that indicates this link list already copied
 					data_[start].next = 0;
 				}
@@ -317,8 +334,9 @@ private:
 		start_.swap(start_tmp);
 		data_.swap(data_tmp);
 
-		// all of the elements, except the first, are used
-		data_not_used_ = 1;
+		// all of the elements are used, including data_[0] which is used
+		// by all the lists.
+		data_not_used_ = 0;
 	}
 	// -----------------------------------------------------------------
 	/*!
@@ -451,8 +469,12 @@ public:
 		for(size_t i = 0; i < n_set; i++)
 			start_[i] = 0;
 		//
-		data_.resize(1); // first element is not used
-		data_not_used_  = 1;
+		// last element, marks the end for all lists
+		data_.resize(1);
+		data_[0].value  = end_;
+		data_[0].next   = 0;
+		//
+		data_not_used_  = 0;
 	}
 	// -----------------------------------------------------------------
 	/*!
@@ -460,17 +482,20 @@ public:
 
 	\param i
 	is the index of the set we are counting the elements of.
+
+	\par
+	number of elements checks that value < end_ for each element of the set.
 	*/
 	size_t number_elements(size_t i) const
 	{	CPPAD_ASSERT_UNKNOWN(i < start_.size() );
 
-		size_t count   = 0;
-		size_t start   = start_[i];
-
 		// check if the set is empty
+		size_t start   = start_[i];
 		if( start == 0 )
-			return count;
-		CPPAD_ASSERT_UNKNOWN( reference_count(i) > 0 );
+			return 0;
+
+		// initialize counter
+		size_t count   = 0;
 
 		// advance to the first element in the set
 		size_t next    = data_[start].next;
@@ -503,11 +528,13 @@ public:
 		// check for case where starting set is empty
 		size_t start = start_[i];
 		if( start == 0 )
-		{	start         = data_.extend(2);
-			start_[i]     = start;
-			size_t next   = start + 1;
+		{	start              = data_.extend(2);
+			start_[i]          = start;
 			data_[start].value = 1; // reference count
+			//
+			size_t next        = start + 1;
 			data_[start].next  = next;
+			//
 			data_[next].value  = element;
 			data_[next].next   = 0;
 			return;
@@ -517,20 +544,19 @@ public:
 		//
 		// start of set with this index (after separate_copy)
 		size_t previous = start_[i];
+		//
 		// check reference count for this list
 		CPPAD_ASSERT_UNKNOWN( data_[previous].value == 1 );
-		// first entry in this list (which starts out non-empty)
+		//
+		// first entry in this set
 		size_t next     = data_[previous].next;
 		size_t value    = data_[next].value;
-		CPPAD_ASSERT_UNKNOWN( value < end_ );
+		//
 		// locate place to insert this element
 		while( value < element )
 		{	previous = next;
 			next     = data_[next].next;
-			if( next == 0 )
-				value = end_;
-			else
-				value = data_[next].value;
+			value = data_[next].value;
 		}
 		CPPAD_ASSERT_UNKNOWN( element < value )
 		//
@@ -557,17 +583,11 @@ public:
 		if( start == 0 )
 			return false;
 		//
-		CPPAD_ASSERT_UNKNOWN( data_[start].value > 0 );
-		CPPAD_ASSERT_UNKNOWN( data_[start].next > 0 );
-		//
 		size_t next  = data_[start].next;
 		size_t value = data_[next].value;
 		while( value < element )
 		{	next  = data_[next].next;
-			if( next == 0 )
-				value = end_;
-			else
-				value = data_[next].value;
+			value = data_[next].value;
 		}
 		return element == value;
 	}
@@ -753,10 +773,7 @@ public:
 		{	while( value_left < value_right )
 			{	// advance left
 				current_left = data_[current_left].next;
-				if( current_left == 0 )
-					value_left = end_;
-				else
-					value_left = data_[current_left].value;
+				value_left = data_[current_left].value;
 			}
 			if( value_right < value_left )
 				subset = false;
@@ -823,10 +840,7 @@ public:
 		{	if( value_left == value_right)
 			{	// advance left so left and right are no longer equal
 				current_left = data_[current_left].next;
-				if( current_left == 0 )
-					value_left = end_;
-				else
-					value_left = data_[current_left].value;
+				value_left   = data_[current_left].value;
 				CPPAD_ASSERT_UNKNOWN( value_right < value_left );
 			}
 			// place to put new element
@@ -840,10 +854,7 @@ public:
 				//
 				// advance left
 				current_left = data_[current_left].next;
-				if( current_left == 0 )
-					value_left = end_;
-				else
-					value_left = data_[current_left].value;
+				value_left   = data_[current_left].value;
 			}
 			else
 			{	CPPAD_ASSERT_UNKNOWN( value_right < value_left )
@@ -904,6 +915,7 @@ public:
 		CPPAD_ASSERT_UNKNOWN( this_left   < start_.size()         );
 		CPPAD_ASSERT_UNKNOWN( other_right < other.start_.size()   );
 		CPPAD_ASSERT_UNKNOWN( end_        == other.end_           );
+		check_data_structure();
 
 		// check if one of the two operands is a subset of the the other
 		size_t subset = is_subset(this_left, other_right, other);
@@ -959,10 +971,7 @@ public:
 		{	if( value_left == value_right )
 			{	// advance right so left and right are no longer equal
 				next_right  = other.data_[next_right].next;
-				if( next_right == 0 )
-					value_right = end_;
-				else
-					value_right = other.data_[next_right].value;
+				value_right = other.data_[next_right].value;
 			}
 			if( value_left < value_right )
 			{	size_t tmp        = data_.extend(1);
@@ -971,10 +980,7 @@ public:
 				data_[next].value = value_left;
 				// advance left to its next element
 				next_left  = data_[next_left].next;
-				if( next_left == 0 )
-					value_left       = end_;
-				else
-					value_left = data_[next_left].value;
+				value_left = data_[next_left].value;
 			}
 			else
 			{	CPPAD_ASSERT_UNKNOWN( value_right < value_left )
@@ -984,10 +990,7 @@ public:
 				data_[next].value = value_right;
 				// advance right to its next element
 				next_right  = other.data_[next_right].next;
-				if( next_right == 0 )
-					value_right = end_;
-				else
-					value_right = other.data_[next_right].value;
+				value_right = other.data_[next_right].value;
 			}
 		}
 		data_[next].next = 0;
@@ -995,6 +998,7 @@ public:
 		// adjust data_not_used_
 		data_not_used_ += number_delete;
 		collect_garbage();
+		check_data_structure();
 	}
 	// -----------------------------------------------------------------
 	/*!
@@ -1092,29 +1096,20 @@ public:
 				next              = tmp;
 				data_[next].value = value_left;
 				//
-				// advance left to its next element
+				// advance left
 				next_left  = data_[next_left].next;
-				if( next_left == 0 )
-					value_left = end_;
-				else
-					value_left = data_[next_left].value;
+				value_left = data_[next_left].value;
 				//
 			}
 			if( value_left > value_right )
 			{	// advance right
 				next_right  = other.data_[next_right].next;
-				if( next_right == 0 )
-					value_right = end_;
-				else
-					value_right = other.data_[next_right].value;
+				value_right = other.data_[next_right].value;
 			}
 			if( value_right > value_left )
 			{	// advance left
 				next_left  = data_[next_left].next;
-				if( next_left == 0 )
-					value_left = end_;
-				else
-					value_left = data_[next_left].value;
+				value_left = data_[next_left].value;
 			}
 		}
 		if( start != 0 )
@@ -1206,12 +1201,7 @@ public:
 
 	/// advance to next element in this list
 	sparse_list_const_iterator& operator++(void)
-	{	if( next_pair_.next == 0 )
-			next_pair_.value = end_;
-		else
-		{	next_pair_  = data_[next_pair_.next];
-			CPPAD_ASSERT_UNKNOWN( next_pair_.value < end_ );
-		}
+	{	next_pair_  = data_[next_pair_.next];
 		return *this;
 	}
 
