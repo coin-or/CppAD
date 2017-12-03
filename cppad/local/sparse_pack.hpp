@@ -189,6 +189,38 @@ public:
 		}
 		return count;
 	}
+	/*!
+	Post an element for delayed addition to a set.
+
+	\param i
+	is the index for this set in the vector of sets.
+
+	\param element
+	is the value of the element that we are posting.
+	The same element may be posted multiple times.
+
+	\par
+	It is faster to post multiple elements to set i and then call
+	process_post(i) then to add each element individually.
+	It is an error to call any member function,
+	that depends on the value of set i,
+	before processing the posts to set i.
+	*/
+	void post_element(size_t i, size_t element)
+	{	add_element(i, element); }
+	// -----------------------------------------------------------------
+	/*!
+	process post entries for a specific set.
+
+	\param i
+	index of the set for which we are processing the post entries.
+
+	\par post_
+	Upon call, post_[i] is location in data_ of the elements that get
+	added to the i-th set.  Upon return, post_[i] is zero.
+	*/
+	void process_post(size_t i)
+	{	return; }
 	// -----------------------------------------------------------------
 	/*!
 	Add one element to a set.

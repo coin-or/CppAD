@@ -27,8 +27,8 @@ class sparse_sizevec_const_iterator;
 /*!
 Vector of sets of positive integers, each set stored as a size_t vector.
 
-All the public members for this class, except post_element and process_post,
-are also in the sparse_pack and sparse_list classes.
+All the public members for this class are also in the
+sparse_pack and sparse_list classes.
 This defines the CppAD vector_of_sets concept.
 */
 class sparse_sizevec {
@@ -548,9 +548,110 @@ private:
 		collect_garbage();
 	}
 public:
-	// =======================================================================
-	// Public members NOT in vector_of_sets concept
-	// =======================================================================
+	/// declare a const iterator
+	typedef sparse_sizevec_const_iterator const_iterator;
+	// -----------------------------------------------------------------
+	/*!
+	Default constructor (no sets)
+	*/
+	sparse_sizevec(void) :
+	end_(0)            ,
+	data_not_used_(0)  ,
+	data_(0)           ,
+	start_(0)          ,
+	post_(0)
+	{ }
+	// -----------------------------------------------------------------
+	/// Destructor
+	~sparse_sizevec(void)
+	{	check_data_structure();
+	}
+	// -----------------------------------------------------------------
+	/*!
+	Using copy constructor is a programing (not user) error
+
+	\param v
+	vector of sets that we are attempting to make a copy of.
+	*/
+	sparse_sizevec(const sparse_sizevec& v)
+	{	// Error: Probably a sparse_sizevec argument has been passed by value
+		CPPAD_ASSERT_UNKNOWN(false);
+	}
+	// -----------------------------------------------------------------
+	/*!
+	Assignement operator.
+
+	\param other
+	this sparse_sizevec with be set to a deep copy of other.
+	*/
+	void operator=(const sparse_sizevec& other)
+	{	end_           = other.end_;
+		data_not_used_ = other.data_not_used_;
+		data_          = other.data_;
+		start_         = other.start_;
+		post_          = other.post_;
+	}
+	// -----------------------------------------------------------------
+	/*!
+	Start a new vector of sets.
+
+	\param n_set
+	is the number of sets in this vector of sets.
+	\li
+	If n_set is zero, any memory currently allocated for this object
+	is freed.
+	\li
+	If n_set is non-zero, a vector of n_set sets is created and all
+	the sets are initilaized as empty.
+
+	\param end
+	is the maximum element plus one (the minimum element is 0).
+	If n_set is zero, end must also be zero.
+	*/
+	void resize(size_t n_set, size_t end)
+	{	check_data_structure();
+
+		if( n_set == 0 )
+		{	CPPAD_ASSERT_UNKNOWN(end == 0 );
+			//
+			// restore object to start after constructor
+			// (no memory allocated for this object)
+			data_.clear();
+			start_.clear();
+			post_.clear();
+			data_not_used_  = 0;
+			end_            = 0;
+			//
+			return;
+		}
+		end_                   = end;
+		//
+		start_.resize(n_set);
+		post_.resize(n_set);
+		for(size_t i = 0; i < n_set; i++)
+		{	start_[i] = 0;
+			post_[i]  = 0;
+		}
+		//
+		data_.resize(1);     // first element is not used
+		data_not_used_  = 1;
+	}
+	// -----------------------------------------------------------------
+	/*!
+	Return number of elements in a set.
+
+	\param i
+	is the index of the set we are checking number of the elements of.
+	*/
+	size_t number_elements(size_t i) const
+	{	CPPAD_ASSERT_UNKNOWN( post_[i] == 0 );
+		//
+		size_t start = start_[i];
+		if( start == 0 )
+			return 0;
+		return data_[start + 1];
+	}
+	// ------------------------------------------------------------------
 	/*!
 	Post an element for delayed addition to a set.
 
@@ -654,9 +755,8 @@ public:
 		size_t  value_post   = *current_post;
 		//
 		bool subset = true;
-		while( subset & (first_post != last_post) )
-		{	CPPAD_ASSERT_UNKNOWN( value_post < end_ );
-			while( value_set < value_post )
+		while( subset & (value_post != end_) )
+		{	while( value_set < value_post )
 				value_set = data_[++current_set];
 			if( value_post < value_set )
 				subset = false;
@@ -754,112 +854,6 @@ public:
 		collect_garbage();
 		//
 		return;
-	}
-	// =======================================================================
-	// Public members in vector_of_sets concept
-	// =======================================================================
-	/// declare a const iterator
-	typedef sparse_sizevec_const_iterator const_iterator;
-	// -----------------------------------------------------------------
-	/*!
-	Default constructor (no sets)
-	*/
-	sparse_sizevec(void) :
-	end_(0)            ,
-	data_not_used_(0)  ,
-	data_(0)           ,
-	start_(0)          ,
-	post_(0)
-	{ }
-	// -----------------------------------------------------------------
-	/// Destructor
-	~sparse_sizevec(void)
-	{	check_data_structure();
-	}
-	// -----------------------------------------------------------------
-	/*!
-	Using copy constructor is a programing (not user) error
-
-	\param v
-	vector of sets that we are attempting to make a copy of.
-	*/
-	sparse_sizevec(const sparse_sizevec& v)
-	{	// Error: Probably a sparse_sizevec argument has been passed by value
-		CPPAD_ASSERT_UNKNOWN(false);
-	}
-	// -----------------------------------------------------------------
-	/*!
-	Assignement operator.
-
-	\param other
-	this sparse_sizevec with be set to a deep copy of other.
-	*/
-	void operator=(const sparse_sizevec& other)
-	{	end_           = other.end_;
-		data_not_used_ = other.data_not_used_;
-		data_          = other.data_;
-		start_         = other.start_;
-		post_          = other.post_;
-	}
-	// -----------------------------------------------------------------
-	/*!
-	Start a new vector of sets.
-
-	\param n_set
-	is the number of sets in this vector of sets.
-	\li
-	If n_set is zero, any memory currently allocated for this object
-	is freed.
-	\li
-	If n_set is non-zero, a vector of n_set sets is created and all
-	the sets are initilaized as empty.
-
-	\param end
-	is the maximum element plus one (the minimum element is 0).
-	If n_set is zero, end must also be zero.
-	*/
-	void resize(size_t n_set, size_t end)
-	{	check_data_structure();
-
-		if( n_set == 0 )
-		{	CPPAD_ASSERT_UNKNOWN(end == 0 );
-			//
-			// restore object to start after constructor
-			// (no memory allocated for this object)
-			data_.clear();
-			start_.clear();
-			post_.clear();
-			data_not_used_  = 0;
-			end_            = 0;
-			//
-			return;
-		}
-		end_                   = end;
-		//
-		start_.resize(n_set);
-		post_.resize(n_set);
-		for(size_t i = 0; i < n_set; i++)
-		{	start_[i] = 0;
-			post_[i]  = 0;
-		}
-		//
-		data_.resize(1);     // first element is not used
-		data_not_used_  = 1;
-	}
-	// -----------------------------------------------------------------
-	/*!
-	Return number of elements in a set.
-
-	\param i
-	is the index of the set we are checking number of the elements of.
-	*/
-	size_t number_elements(size_t i) const
-	{	CPPAD_ASSERT_UNKNOWN( post_[i] == 0 );
-		//
-		size_t start = start_[i];
-		if( start == 0 )
-			return 0;
-		return data_[start + 1];
 	}
 	// -----------------------------------------------------------------
 	/*!

@@ -192,9 +192,8 @@ bool test_intersection(void)
 	return ok;
 }
 
-// This test no longer used becauce the operation was changed to private
 template<class VectorSet>
-bool test_vector_union(void)
+bool test_post(void)
 {	bool ok = true;
 	//
 	VectorSet vec_set;
@@ -206,14 +205,12 @@ bool test_vector_union(void)
 	vec_set.add_element(1, 1);
 	vec_set.add_element(1, 2);
 	//
-	// set[1] = {1, 2} union {2, 4} = {1, 2, 4}
+	// set[1] = {1, 2} union (2, 4, 4)  = {1, 2, 4}
 	size_t target = 1;
-	size_t left   = 1;
-	CppAD::local::pod_vector<size_t> right(3);
-	right[0] = 2;
-	right[1] = 4;
-	right[2] = 4; // repeated element
-	vec_set.binary_union(target, left, right);
+	vec_set.post_element(target, 2);
+	vec_set.post_element(target, 4);
+	vec_set.post_element(target, 4);
+	vec_set.process_post(target);
 	//
 	typename VectorSet::const_iterator itr1(vec_set, target);
 	ok &= *itr1     == 1;
@@ -221,10 +218,11 @@ bool test_vector_union(void)
 	ok &= *(++itr1) == 4;
 	ok &= *(++itr1) == end;
 	//
-	// check case where right is a subset of left
-	target = 0;
-	left   = 1;
-	vec_set.binary_union(target, left, right);
+	// set[1] = {1, 2, 4} union (1, 2)
+	target = 1;
+	vec_set.post_element(target, 1);
+	vec_set.post_element(target, 2);
+	vec_set.process_post(target);
 	//
 	typename VectorSet::const_iterator itr2(vec_set, target);
 	ok &= *itr2     == 1;
@@ -251,6 +249,10 @@ bool vector_set(void)
 	ok     &= test_intersection<CppAD::local::sparse_pack>();
 	ok     &= test_intersection<CppAD::local::sparse_list>();
 	ok     &= test_intersection<CppAD::local::sparse_sizevec>();
+	//
+	ok     &= test_post<CppAD::local::sparse_pack>();
+	ok     &= test_post<CppAD::local::sparse_list>();
+	ok     &= test_post<CppAD::local::sparse_sizevec>();
 	//
 	return ok;
 }

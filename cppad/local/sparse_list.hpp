@@ -98,6 +98,11 @@ private:
 	*/
 	pod_vector<size_t> post_;
 
+	/*!
+	A temporary vector used by member functions that keeps its capacity.
+	*/
+	pod_vector<size_t> temporary_;
+
 	// -----------------------------------------------------------------
 	/*!
 	Counts references to sets.
@@ -773,6 +778,91 @@ public:
 		}
 		CPPAD_ASSERT_UNKNOWN( count > 0 );
 		return count;
+	}
+	/*!
+	Post an element for delayed addition to a set.
+
+	\param i
+	is the index for this set in the vector of sets.
+
+	\param element
+	is the value of the element that we are posting.
+	The same element may be posted multiple times.
+
+	\par
+	It is faster to post multiple elements to set i and then call
+	process_post(i) then to add each element individually.
+	It is an error to call any member function,
+	that depends on the value of set i,
+	before processing the posts to set i.
+	*/
+	void post_element(size_t i, size_t element)
+	{	CPPAD_ASSERT_UNKNOWN( i < start_.size() );
+		CPPAD_ASSERT_UNKNOWN( element < end_ );
+
+		// put element at the front of this list
+		size_t next         = post_[i];
+		size_t post         = data_.extend(1);
+		post_[i]            = post;
+		data_[post].value   = element;
+		data_[post].next    = next;
+
+		return;
+	}
+	// -----------------------------------------------------------------
+	/*!
+	process post entries for a specific set.
+
+	\param i
+	index of the set for which we are processing the post entries.
+
+	\par post_
+	Upon call, post_[i] is location in data_ of the elements that get
+	added to the i-th set.  Upon return, post_[i] is zero.
+	*/
+	void process_post(size_t i)
+	{	// post
+		size_t post = post_[i];
+		//
+		// done with this posting
+		post_[i] = 0;
+		//
+		// check if there are no elements to process
+		if( post == 0 )
+			return;
+		//
+		// check if there is only one element to process
+		size_t value = data_[post].value;
+		size_t next  = data_[post].next;
+		if( next == 0 )
+		{	add_element(i, value);
+			// only lost the one posting element
+			++data_not_used_;
+			collect_garbage();
+			return;
+		}
+		//
+		// copy the elements that need to be processed into temporary
+		temporary_.resize(0);
+		while( value != end_ )
+		{	temporary_.push_back(value);
+			value = data_[next].value;
+			next  = data_[next].next;
+		}
+		//
+		// sort temporary_
+		size_t number_post = temporary_.size();
+		CPPAD_ASSERT_UNKNOWN( number_post > 1 );
+		std::sort( temporary_.data(), temporary_.data() + number_post);
+		//
+		// add the elements to the set
+		binary_union(i, i, temporary_);
+		//
+		// adjust data not used_
+		data_not_used_ += number_post;
+		collect_garbage();
+		//
+		return;
 	}
 	// -----------------------------------------------------------------
 	/*!
