@@ -117,8 +117,7 @@ void color_symmetric_cppad(
 	CppAD::vector<size_t>&  row       ,
 	CppAD::vector<size_t>&  col       ,
 	CppAD::vector<size_t>&  color     )
-{	size_t o1, o2, i1, i2, j1, j2, k1, c1, c2;
-
+{
 	size_t K = row.size();
 	size_t m = pattern.n_set();
 	CPPAD_ASSERT_UNKNOWN( m == pattern.end() );
@@ -128,7 +127,7 @@ void color_symmetric_cppad(
 	// row, column pairs that appear in ( row[k], col[k] )
 	CppAD::vector< std::set<size_t> > pair_needed(m);
 	std::set<size_t>::iterator itr1, itr2;
-	for(k1 = 0;  k1 < K; k1++)
+	for(size_t k1 = 0;  k1 < K; k1++)
 	{	CPPAD_ASSERT_UNKNOWN( pattern.is_element(row[k1], col[k1]) );
 		pair_needed[ row[k1] ].insert( col[k1] );
 		pair_needed[ col[k1] ].insert( row[k1] );
@@ -136,7 +135,7 @@ void color_symmetric_cppad(
 
 	// order the rows decending by number of pairs needed
 	CppAD::vector<size_t> key(m), order2row(m);
-	for(i1 = 0; i1 < m; i1++)
+	for(size_t i1 = 0; i1 < m; i1++)
 	{	CPPAD_ASSERT_UNKNOWN( pair_needed[i1].size() <= m );
 		key[i1] = m - pair_needed[i1].size();
 	}
@@ -144,14 +143,14 @@ void color_symmetric_cppad(
 
 	// mapping from order index to row index
 	CppAD::vector<size_t> row2order(m);
-	for(o1 = 0; o1 < m; o1++)
+	for(size_t o1 = 0; o1 < m; o1++)
 		row2order[ order2row[o1] ] = o1;
 
 	// initial coloring
 	color.resize(m);
-	c1 = 0;
-	for(o1 = 0; o1 < m; o1++)
-	{	i1 = order2row[o1];
+	size_t c1 = 0;
+	for(size_t o1 = 0; o1 < m; o1++)
+	{	size_t i1 = order2row[o1];
 		if( pair_needed[i1].empty() )
 			color[i1] = m;
 		else
@@ -162,14 +161,14 @@ void color_symmetric_cppad(
 	CppAD::vector<bool> forbidden(m);
 
 	// must start with row zero so that we remove results computed for it
-	for(o1 = 0; o1 < m; o1++) // for each row that appears (in order)
+	for(size_t o1 = 0; o1 < m; o1++) // for each row that appears (in order)
 	if( color[ order2row[o1] ] < m )
-	{	i1 = order2row[o1];
+	{	size_t i1 = order2row[o1];
 		c1 = color[i1];
 
 		// initial all colors as ok for this row
 		// (value of forbidden for c > c1 does not matter)
-		for(c2 = 0; c2 <= c1; c2++)
+		for(size_t c2 = 0; c2 <= c1; c2++)
 			forbidden[c2] = false;
 
 		// -----------------------------------------------------
@@ -178,14 +177,14 @@ void color_symmetric_cppad(
 		itr1 = pair_needed[i1].begin();
 		while( itr1 != pair_needed[i1].end() )
 		{	// entry (i1, j1) is needed for this row
-			j1 = *itr1;
+			size_t j1 = *itr1;
 
 			// Forbid rows i2 != i1 that have non-zero sparsity at (i2, j1).
 			// Note that this is the same as non-zero sparsity at (j1, i2)
 			typename VectorSet::const_iterator pattern_itr(pattern, j1);
-			i2 = *pattern_itr;
+			size_t i2 = *pattern_itr;
 			while( i2 != pattern.end() )
-			{	c2 = color[i2];
+			{	size_t c2 = color[i2];
 				if( c2 < c1 )
 					forbidden[c2] = true;
 				i2 = *(++pattern_itr);
@@ -194,12 +193,12 @@ void color_symmetric_cppad(
 		}
 		// -----------------------------------------------------
 		// Forbid grouping with rows that this row would destroy results for
-		for(o2 = 0; o2 < o1; o2++)
-		{	i2 = order2row[o2];
-			c2 = color[i2];
+		for(size_t o2 = 0; o2 < o1; o2++)
+		{	size_t i2 = order2row[o2];
+			size_t c2 = color[i2];
 			itr2 = pair_needed[i2].begin();
 			while( itr2 != pair_needed[i2].end() )
-			{	j2 = *itr2;
+			{	size_t j2 = *itr2;
 				// row i2 needs pair (i2, j2).
 				// Forbid grouping with i1 if (i1, j2) has non-zero sparsity
 				if( pattern.is_element(i1, j2) )
@@ -209,7 +208,7 @@ void color_symmetric_cppad(
 		}
 
 		// pick the color with smallest index
-		c2 = 0;
+		size_t c2 = 0;
 		while( forbidden[c2] )
 		{	c2++;
 			CPPAD_ASSERT_UNKNOWN( c2 <= c1 );
@@ -219,7 +218,7 @@ void color_symmetric_cppad(
 		// no longer need results that are computed by this row
 		itr1 = pair_needed[i1].begin();
 		while( itr1 != pair_needed[i1].end() )
-		{	j1 = *itr1;
+		{	size_t j1 = *itr1;
 			if( row2order[j1] > o1 )
 			{	itr2 = pair_needed[j1].find(i1);
 				if( itr2 != pair_needed[j1].end() )
@@ -233,9 +232,9 @@ void color_symmetric_cppad(
 	}
 
 	// determine which sparsity entries need to be reflected
-	for(k1 = 0; k1 < row.size(); k1++)
-	{	i1   = row[k1];
-		j1   = col[k1];
+	for(size_t k1 = 0; k1 < row.size(); k1++)
+	{	size_t i1   = row[k1];
+		size_t j1   = col[k1];
 		itr1 = pair_needed[i1].find(j1);
 		if( itr1 == pair_needed[i1].end() )
 		{	row[k1] = j1;
@@ -319,14 +318,14 @@ void color_symmetric_colpack(
 	cppad_colpack_symmetric(color, m, adolc_pattern);
 
 	// determine which sparsity entries need to be reflected
-	size_t i1, i2, j1, j2, k1, k2;
-	for(k1 = 0; k1 < row.size(); k1++)
-	{	i1 = row[k1];
-		j1 = col[k1];
+	for(size_t k1 = 0; k1 < row.size(); k1++)
+	{	size_t i1 = row[k1];
+		size_t j1 = col[k1];
 		bool reflect = false;
-		for(i2 = 0; i2 < m; i2++) if( (i1 != i2) & (color[i1]==color[i2]) )
-		{	for(k2 = 1; k2 <= adolc_pattern[i2][0]; k2++)
-			{	j2 = adolc_pattern[i2][k2];
+		for(size_t i2 = 0; i2 < m; i2++)
+		if( (i1 != i2) & (color[i1]==color[i2]) )
+		{	for(size_t k2 = 1; k2 <= adolc_pattern[i2][0]; k2++)
+			{	size_t j2 = adolc_pattern[i2][k2];
 				reflect |= (j1 == j2);
 			}
 		}
