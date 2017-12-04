@@ -29,44 +29,10 @@ computed together.
 is a simple vector class with elements of type size_t.
 
 \tparam VectorSet
-is an unspecified type with the exception that it must support the
-operations under pattern and the following operations where
-p is a VectorSet object:
-\n
-<code>VectorSet p</code>
-Constructs a new vector of sets object.
-\n
-<code>p.resize(ns, ne)</code>
-resizes \c p to ns sets with elements between zero and \c ne.
-All of the sets are initially empty.
-\n
-<code>p.add_element(s, e)</code>
-add element \c e to set with index \c s.
+is a vector_of_sets class.
 
 \param pattern [in]
 Is a representation of the sparsity pattern for the matrix.
-\n
-<code>m = pattern.n_set()</code>
-\n
-sets m to the number of rows (and columns) in the sparse matrix.
-All of the row indices are less than this value.
-\n
-<code>n = pattern.end()</code>
-\n
-sets n to the number of columns in the sparse matrix
-(which must be equal to the number of rows).
-All of the column indices are less than this value.
-\n
-<code>VectorSet::const_iterator itr(pattern, i)</code>
-constructs an iterator that starts iterating over
-columns in the i-th row of the sparsity pattern.
-\n
-<code>j = *itr</code>
-Sets j to the next possibly non-zero column.
-\n
-<code>++itr</code>
-Advances to the next possibly non-zero column.
-\n
 
 \param row [in/out]
 is a vector specifying which row indices to compute.
