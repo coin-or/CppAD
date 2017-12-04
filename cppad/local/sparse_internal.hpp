@@ -107,8 +107,8 @@ void set_internal_sparsity(
 	InternalSparsity&             internal_pattern ,
 	const sparse_rc<SizeVector>&  pattern_in       )
 {
-# ifndef NDEBUG
 	size_t nr = internal_index.size();
+# ifndef NDEBUG
 	size_t nc = internal_pattern.end();
 	if( transpose )
 	{	CPPAD_ASSERT_UNKNOWN( pattern_in.nr() == nc );
@@ -137,8 +137,11 @@ void set_internal_sparsity(
 		CPPAD_ASSERT_UNKNOWN( c < nc );
 		bool ignore  = zero_empty && i_var == 0;
 		if( ! ignore )
-			internal_pattern.add_element( internal_index[r], c );
+			internal_pattern.post_element( internal_index[r], c );
 	}
+	// process posts
+	for(size_t i = 0; i < nr; ++i)
+		internal_pattern.process_post( internal_index[i] );
 }
 template <class InternalSparsity>
 void set_internal_sparsity(
@@ -168,10 +171,13 @@ void set_internal_sparsity(
 				CPPAD_ASSERT_UNKNOWN( j < nc );
 				bool ignore  = zero_empty && i_var == 0;
 				if( ! ignore )
-					internal_pattern.add_element( i_var, j);
+					internal_pattern.post_element( i_var, j);
 			}
 		}
 	}
+	// process posts
+	for(size_t i = 0; i < nr; ++i)
+		internal_pattern.process_post( internal_index[i] );
 	return;
 }
 template <class InternalSparsity>
@@ -202,10 +208,13 @@ void set_internal_sparsity(
 				CPPAD_ASSERT_UNKNOWN( j < nc );
 				bool ignore  = zero_empty && i_var == 0;
 				if( ! ignore )
-					internal_pattern.add_element( i_var, j);
+					internal_pattern.post_element( i_var, j);
 			}
 		}
 	}
+	// process posts
+	for(size_t i = 0; i < nr; ++i)
+		internal_pattern.process_post( internal_index[i] );
 	return;
 }
 template <class InternalSparsity>
@@ -235,7 +244,7 @@ void set_internal_sparsity(
 				CPPAD_ASSERT_UNKNOWN( j < nc );
 				bool ignore  = zero_empty && i_var == 0;
 				if( ! ignore )
-					internal_pattern.add_element( i_var, j);
+					internal_pattern.post_element( i_var, j);
 				++itr;
 			}
 		}
@@ -251,11 +260,14 @@ void set_internal_sparsity(
 				CPPAD_ASSERT_UNKNOWN( j < nc );
 				bool ignore  = zero_empty && i_var == 0;
 				if( ! ignore )
-					internal_pattern.add_element( i_var, j);
+					internal_pattern.post_element( i_var, j);
 				++itr;
 			}
 		}
 	}
+	// process posts
+	for(size_t i = 0; i < nr; ++i)
+		internal_pattern.process_post( internal_index[i] );
 	return;
 }
 // ---------------------------------------------------------------------------
