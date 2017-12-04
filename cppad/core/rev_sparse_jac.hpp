@@ -223,9 +223,6 @@ void ADFun<Base>::RevSparseJacCase(
 	// dimension of the result vector
 	s.resize( q * n );
 
-	// temporary indices
-	size_t i, j;
-
 	// check VectorSet is Simple Vector class with bool elements
 	CheckSimpleVector<bool, VectorSet>();
 	//
@@ -244,17 +241,20 @@ void ADFun<Base>::RevSparseJacCase(
 	var_sparsity.resize(num_var_tape_, q);
 
 	// The sparsity pattern corresponding to the dependent variables
-	for(i = 0; i < m; i++)
+	for(size_t i = 0; i < m; i++)
 	{	CPPAD_ASSERT_UNKNOWN( dep_taddr_[i] < num_var_tape_ );
 		if( transpose )
-		{	for(j = 0; j < q; j++) if( r[ i * q + j ] )
-				var_sparsity.add_element( dep_taddr_[i], j );
+		{	for(size_t j = 0; j < q; j++) if( r[ i * q + j ] )
+				var_sparsity.post_element( dep_taddr_[i], j );
 		}
 		else
-		{	for(j = 0; j < q; j++) if( r[ j * m + i ] )
-				var_sparsity.add_element( dep_taddr_[i], j );
+		{	for(size_t j = 0; j < q; j++) if( r[ j * m + i ] )
+				var_sparsity.post_element( dep_taddr_[i], j );
 		}
 	}
+	// process posts
+	for(size_t i = 0; i < m; i++)
+		var_sparsity.process_post( dep_taddr_[i] );
 
 	// evaluate the sparsity patterns
 	local::rev_jac_sweep(
@@ -267,7 +267,7 @@ void ADFun<Base>::RevSparseJacCase(
 
 	// return values corresponding to dependent variables
 	CPPAD_ASSERT_UNKNOWN( size_t(s.size()) == q * n );
-	for(j = 0; j < n; j++)
+	for(size_t j = 0; j < n; j++)
 	{	CPPAD_ASSERT_UNKNOWN( ind_taddr_[j] == (j+1) );
 
 		// ind_taddr_[j] is operator taddr for j-th independent variable
@@ -275,16 +275,16 @@ void ADFun<Base>::RevSparseJacCase(
 
 		// extract the result from var_sparsity
 		if( transpose )
-		{	for(i = 0; i < q; i++)
+		{	for(size_t i = 0; i < q; i++)
 				s[ j * q + i ] = false;
 		}
 		else
-		{	for(i = 0; i < q; i++)
+		{	for(size_t i = 0; i < q; i++)
 				s[ i * n + j ] = false;
 		}
 		CPPAD_ASSERT_UNKNOWN( var_sparsity.end() == q );
 		local::sparse_pack::const_iterator itr(var_sparsity, j+1);
-		i = *itr;
+		size_t i = *itr;
 		while( i < q )
 		{	if( transpose )
 				s[ j * q + i ] = true;
@@ -336,7 +336,6 @@ void ADFun<Base>::RevSparseJacCase(
 	else	s.resize( q );
 
 	// temporary indices
-	size_t i, j;
 	std::set<size_t>::const_iterator itr_1;
 
 	// check VectorSet is Simple Vector class with sets for elements
@@ -367,35 +366,39 @@ void ADFun<Base>::RevSparseJacCase(
 
 	// The sparsity pattern corresponding to the dependent variables
 	if( transpose )
-	{	for(i = 0; i < m; i++)
+	{	for(size_t i = 0; i < m; i++)
 		{	itr_1 = r[i].begin();
 			while(itr_1 != r[i].end())
-			{	j = *itr_1++;
+			{	size_t j = *itr_1++;
 				CPPAD_ASSERT_KNOWN(
 				j < q,
 				"RevSparseJac: transpose is true and element of the set\n"
 				"r[i] has value greater than or equal q."
 				);
 				CPPAD_ASSERT_UNKNOWN( dep_taddr_[i] < num_var_tape_ );
-				var_sparsity.add_element( dep_taddr_[i], j );
+				var_sparsity.post_element( dep_taddr_[i], j );
 			}
 		}
 	}
 	else
-	{	for(i = 0; i < q; i++)
+	{	for(size_t i = 0; i < q; i++)
 		{	itr_1 = r[i].begin();
 			while(itr_1 != r[i].end())
-			{	j = *itr_1++;
+			{	size_t j = *itr_1++;
 				CPPAD_ASSERT_KNOWN(
 				j < m,
 				"RevSparseJac: transpose is false and element of the set\n"
 				"r[i] has value greater than or equal range dimension."
 				);
 				CPPAD_ASSERT_UNKNOWN( dep_taddr_[j] < num_var_tape_ );
-				var_sparsity.add_element( dep_taddr_[j], i );
+				var_sparsity.post_element( dep_taddr_[j], i );
 			}
 		}
 	}
+	// process posts
+	for(size_t i = 0; i < m; i++)
+		var_sparsity.process_post( dep_taddr_[i] );
+
 	// evaluate the sparsity patterns
 	local::rev_jac_sweep(
 		&play_,
@@ -408,7 +411,7 @@ void ADFun<Base>::RevSparseJacCase(
 	// return values corresponding to dependent variables
 	CPPAD_ASSERT_UNKNOWN( size_t(s.size()) == q || transpose );
 	CPPAD_ASSERT_UNKNOWN( size_t(s.size()) == n || ! transpose );
-	for(j = 0; j < n; j++)
+	for(size_t j = 0; j < n; j++)
 	{	CPPAD_ASSERT_UNKNOWN( ind_taddr_[j] == (j+1) );
 
 		// ind_taddr_[j] is operator taddr for j-th independent variable
@@ -416,7 +419,7 @@ void ADFun<Base>::RevSparseJacCase(
 
 		CPPAD_ASSERT_UNKNOWN( var_sparsity.end() == q );
 		local::sparse_list::const_iterator itr_2(var_sparsity, j+1);
-		i = *itr_2;
+		size_t i = *itr_2;
 		while( i < q )
 		{	if( transpose )
 				s[j].insert(i);
@@ -569,7 +572,7 @@ void ADFun<Base>::RevSparseJacCheckpoint(
 		{	local::sparse_list::const_iterator itr(r, i);
 			size_t j = *itr;
 			while( j < q )
-			{	var_sparsity.add_element( dep_taddr_[i], j );
+			{	var_sparsity.post_element( dep_taddr_[i], j );
 				j = *(++itr);
 			}
 		}
@@ -579,11 +582,14 @@ void ADFun<Base>::RevSparseJacCheckpoint(
 		{	local::sparse_list::const_iterator itr(r, j);
 			size_t i = *itr;
 			while( i < m )
-			{	var_sparsity.add_element( dep_taddr_[i], j );
+			{	var_sparsity.post_element( dep_taddr_[i], j );
 				i = *(++itr);
 			}
 		}
 	}
+	// process posts
+	for(size_t i = 0; i < m; i++)
+		var_sparsity.process_post( dep_taddr_[i] );
 
 	// evaluate the sparsity pattern for all variables
 	local::rev_jac_sweep(
@@ -613,12 +619,15 @@ void ADFun<Base>::RevSparseJacCheckpoint(
 		size_t i = *itr;
 		while( i < q )
 		{	if( transpose )
-				s.add_element(j, i);
+				s.post_element(j, i);
 			else
-				s.add_element(i, j);
+				s.post_element(i, j);
 			i  = *(++itr);
 		}
 	}
+	// process posts
+	for(size_t i = 0; i < s.n_set(); i++)
+		s.process_post(i);
 
 }
 
