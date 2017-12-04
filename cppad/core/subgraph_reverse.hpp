@@ -313,9 +313,9 @@ void ADFun<Base>::subgraph_reverse(
 	std::cout << "}\n";
 	*/
 
-	// initialize partial matrix to zero on subgraph
+	// initialize Partial matrix to zero on subgraph
 	Base zero(0);
-	partial_.resize(num_var_tape_ * q);
+	local::pod_vector<Base> Partial(num_var_tape_ * q);
 	for(size_t k = 0; k < subgraph.size(); ++k)
 	{
 		size_t               i_op = size_t( subgraph[k] );
@@ -336,13 +336,13 @@ void ADFun<Base>::subgraph_reverse(
 			size_t j_var = i_var + 1 - NumRes(op);
 			for(size_t i = j_var; i <= i_var; ++i)
 			{	for(size_t j = 0; j < q; ++j)
-					partial_[i * q + j] = zero;
+					Partial[i * q + j] = zero;
 			}
 		}
 	}
 
 	// set partial to one for component we are differentiating
-	partial_[ dep_taddr_[ell] * q + q - 1] = Base(1);
+	Partial[ dep_taddr_[ell] * q + q - 1] = Base(1);
 
 	// evaluate the derivatives
 	CPPAD_ASSERT_UNKNOWN( cskip_op_.size() == play_.num_op_rec() );
@@ -356,7 +356,7 @@ void ADFun<Base>::subgraph_reverse(
 		cap_order_taylor_,
 		taylor_.data(),
 		q,
-		partial_.data(),
+		Partial.data(),
 		cskip_op_.data(),
 		load_op_,
 		subgraph
@@ -388,7 +388,7 @@ void ADFun<Base>::subgraph_reverse(
 		// return paritial for this independent variable
 		col[c] = j;
 		for(size_t k = 0; k < q; k++)
-			dw[j * q + k ] = partial_[ind_taddr_[j] * q + k];
+			dw[j * q + k ] = Partial[ind_taddr_[j] * q + k];
 	}
 	//
 	CPPAD_ASSERT_KNOWN( ! ( hasnan(dw) && check_for_nan_ ) ,
@@ -396,11 +396,6 @@ void ADFun<Base>::subgraph_reverse(
 		"but none of f's Taylor coefficents are nan."
 	);
 	//
-
-	// check hold_reverse_memory
-	if( ! hold_reverse_memory_ )
-		partial_.clear();
-
 	return;
 }
 

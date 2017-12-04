@@ -79,7 +79,6 @@ SET(source_list
 	hes_minor_det.cpp
 	hessian.cpp
 	hes_times_dir.cpp
-	hold_reverse_memory.cpp
 	independent.cpp
 	integer.cpp
 	interface2c.cpp

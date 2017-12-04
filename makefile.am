@@ -151,7 +151,6 @@ nobase_myinclude_HEADERS =  \
 	cppad/core/fun_eval.hpp \
 	cppad/core/hash_code.hpp \
 	cppad/core/hessian.hpp \
-	cppad/core/hold_reverse_memory.hpp \
 	cppad/core/identical.hpp \
 	cppad/core/independent.hpp \
 	cppad/core/integer.hpp \

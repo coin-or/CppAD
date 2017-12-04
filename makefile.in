@@ -410,7 +410,6 @@ target_alias = @target_alias@
 top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
-
 # -----------------------------------------------------------------------------
 # CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 #
@@ -547,7 +546,6 @@ nobase_myinclude_HEADERS = \
 	cppad/core/fun_eval.hpp \
 	cppad/core/hash_code.hpp \
 	cppad/core/hessian.hpp \
-	cppad/core/hold_reverse_memory.hpp \
 	cppad/core/identical.hpp \
 	cppad/core/independent.hpp \
 	cppad/core/integer.hpp \
@@ -1381,6 +1379,7 @@ uninstall-am: uninstall-myincludeHEADERS \
 
 .PRECIOUS: makefile
 
+git show b9584032fdcedfe3234b3ad9d93c8a277f84f6f7:makefile.am
 $(top_srcdir)/cppad/configure.hpp: cppad/configure.hpp
 	cp cppad/configure.hpp $(top_srcdir)/cppad/configure.hpp
 $(top_srcdir)/cppad/local/is_pod.hpp: cppad/local/is_pod.hpp

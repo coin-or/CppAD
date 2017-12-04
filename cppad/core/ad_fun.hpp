@@ -43,8 +43,7 @@ $childtable%
 	cppad/core/optimize.hpp%
 	example/abs_normal/abs_normal.omh%
 	cppad/core/fun_check.hpp%
-	cppad/core/check_for_nan.hpp%
-	cppad/core/hold_reverse_memory.hpp
+	cppad/core/check_for_nan.hpp
 %$$
 
 $end
@@ -73,9 +72,6 @@ class ADFun {
 private:
 	/// Has this ADFun object been optmized
 	bool has_been_optimized_;
-
-	/// Hold onto memory used for reverse mode calculations; i.e., partial_
-	bool hold_reverse_memory_;
 
 	/// Check for nan's and report message to user (default value is true).
 	bool check_for_nan_;
@@ -117,9 +113,6 @@ private:
 
 	/// results of the forward mode calculations
 	local::pod_vector<Base> taylor_;
-
-	/// memory used for reverse mode calculations
-	local::pod_vector<Base> partial_;
 
 	/// which operations can be conditionally skipped
 	/// Set during forward pass of order zero
@@ -303,12 +296,6 @@ public:
 	/// destructor
 	~ADFun(void)
 	{ }
-
-	/// set hold_reverse_memory
-	void hold_reverse_memory(bool value);
-
-	/// get hold_reverse_memory
-	bool hold_reverse_memory(void) const;
 
 	/// set check_for_nan
 	void check_for_nan(bool value);

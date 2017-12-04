@@ -122,20 +122,20 @@ am__general_SOURCES_DIST = mul_level_adolc.cpp mul_level_adolc_ode.cpp \
 	exp.cpp expm1.cpp for_one.cpp for_two.cpp forward.cpp \
 	forward_dir.cpp forward_order.cpp fun_assign.cpp fun_check.cpp \
 	hes_lagrangian.cpp hes_lu_det.cpp hes_minor_det.cpp \
-	hessian.cpp hes_times_dir.cpp hold_reverse_memory.cpp \
-	independent.cpp integer.cpp interface2c.cpp interp_onetape.cpp \
-	interp_retape.cpp jac_lu_det.cpp jac_minor_det.cpp \
-	jacobian.cpp log10.cpp log1p.cpp log.cpp lu_ratio.cpp \
-	lu_vec_ad.cpp lu_vec_ad.hpp lu_vec_ad_ok.cpp mul.cpp \
-	mul_eq.cpp mul_level.cpp mul_level_ode.cpp near_equal_ext.cpp \
-	number_skip.cpp numeric_type.cpp num_limits.cpp ode_stiff.cpp \
-	ode_taylor.cpp opt_val_hes.cpp par_var.cpp poly.cpp pow.cpp \
-	pow_int.cpp print_for.cpp reverse_checkpoint.cpp \
-	reverse_one.cpp reverse_three.cpp reverse_two.cpp rev_one.cpp \
-	rev_two.cpp rosen_34.cpp runge45_2.cpp seq_property.cpp \
-	sign.cpp sin.cpp sinh.cpp sqrt.cpp stack_machine.cpp sub.cpp \
-	sub_eq.cpp tan.cpp tanh.cpp tape_index.cpp unary_minus.cpp \
-	unary_plus.cpp value.cpp var2par.cpp vec_ad.cpp
+	hessian.cpp hes_times_dir.cpp independent.cpp integer.cpp \
+	interface2c.cpp interp_onetape.cpp interp_retape.cpp \
+	jac_lu_det.cpp jac_minor_det.cpp jacobian.cpp log10.cpp \
+	log1p.cpp log.cpp lu_ratio.cpp lu_vec_ad.cpp lu_vec_ad.hpp \
+	lu_vec_ad_ok.cpp mul.cpp mul_eq.cpp mul_level.cpp \
+	mul_level_ode.cpp near_equal_ext.cpp number_skip.cpp \
+	numeric_type.cpp num_limits.cpp ode_stiff.cpp ode_taylor.cpp \
+	opt_val_hes.cpp par_var.cpp poly.cpp pow.cpp pow_int.cpp \
+	print_for.cpp reverse_checkpoint.cpp reverse_one.cpp \
+	reverse_three.cpp reverse_two.cpp rev_one.cpp rev_two.cpp \
+	rosen_34.cpp runge45_2.cpp seq_property.cpp sign.cpp sin.cpp \
+	sinh.cpp sqrt.cpp stack_machine.cpp sub.cpp sub_eq.cpp tan.cpp \
+	tanh.cpp tape_index.cpp unary_minus.cpp unary_plus.cpp \
+	value.cpp var2par.cpp vec_ad.cpp
 @CppAD_ADOLC_TRUE@am__objects_1 = mul_level_adolc.$(OBJEXT) \
 @CppAD_ADOLC_TRUE@	mul_level_adolc_ode.$(OBJEXT)
 am_general_OBJECTS = $(am__objects_1) abort_recording.$(OBJEXT) \
@@ -156,8 +156,8 @@ am_general_OBJECTS = $(am__objects_1) abort_recording.$(OBJEXT) \
 	forward_order.$(OBJEXT) fun_assign.$(OBJEXT) \
 	fun_check.$(OBJEXT) hes_lagrangian.$(OBJEXT) \
 	hes_lu_det.$(OBJEXT) hes_minor_det.$(OBJEXT) hessian.$(OBJEXT) \
-	hes_times_dir.$(OBJEXT) hold_reverse_memory.$(OBJEXT) \
-	independent.$(OBJEXT) integer.$(OBJEXT) interface2c.$(OBJEXT) \
+	hes_times_dir.$(OBJEXT) independent.$(OBJEXT) \
+	integer.$(OBJEXT) interface2c.$(OBJEXT) \
 	interp_onetape.$(OBJEXT) interp_retape.$(OBJEXT) \
 	jac_lu_det.$(OBJEXT) jac_minor_det.$(OBJEXT) \
 	jacobian.$(OBJEXT) log10.$(OBJEXT) log1p.$(OBJEXT) \
@@ -285,7 +285,6 @@ CXX_FLAGS = @CXX_FLAGS@
 CXX_FLAGS_EIGEN = @CXX_FLAGS_EIGEN@
 CXX_FLAGS_FADBAD = @CXX_FLAGS_FADBAD@
 CYGPATH_W = @CYGPATH_W@
-
 # -----------------------------------------------------------------------------
 # CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 #
@@ -535,7 +534,6 @@ general_SOURCES = \
 	hes_minor_det.cpp \
 	hessian.cpp \
 	hes_times_dir.cpp \
-	hold_reverse_memory.cpp \
 	independent.cpp \
 	integer.cpp \
 	interface2c.cpp\
@@ -696,7 +694,6 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/hes_minor_det.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/hes_times_dir.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/hessian.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/hold_reverse_memory.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/independent.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/integer.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/interface2c.Po@am__quote@
@@ -1005,6 +1002,7 @@ uninstall-am:
 
 .PRECIOUS: makefile
 
+git show b9584032fdcedfe3234b3ad9d93c8a277f84f6f7:example/general/makefile.am
 
 test: check
 	./general

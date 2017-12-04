@@ -58,8 +58,11 @@ $head API Changes$$
 Speed tests no longer automatically compile in release mode; see
 $cref/debug_which/speed/debug_which/$$
 
+$head 12-04$$
+Back out the $code hold_reverse_memory$$ option.
+
 $head 12-01$$
-The $cref hold_reverse_memory$$ option was added.
+The $code hold_reverse_memory$$ option was added.
 
 $head 11-30$$
 Edit the $cref download$$ instructions.
