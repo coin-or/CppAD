@@ -54,7 +54,7 @@ private:
 
 	/// number of elements in data_ that have been allocated
 	/// and are no longer being used.
-	size_t data_not_used_;
+	size_t number_not_used_;
 
 	/// The data for all the singly linked lists.
 	pod_vector<pair_size_t> data_;
@@ -200,7 +200,7 @@ private:
 		size_t n_set = start_.size();
 		if( n_set == 0 )
 		{	CPPAD_ASSERT_UNKNOWN( end_ == 0 );
-			CPPAD_ASSERT_UNKNOWN( data_not_used_ == 0 );
+			CPPAD_ASSERT_UNKNOWN( number_not_used_ == 0 );
 			CPPAD_ASSERT_UNKNOWN( data_.size() == 0 );
 			CPPAD_ASSERT_UNKNOWN( start_.size() == 0 );
 			return;
@@ -216,7 +216,7 @@ private:
 		// -----------------------------------------------------------
 		// count the number of entries in data_ that are used by sets
 		// (data_[0] is used by all the sets)
-		size_t data_used_by_sets = 1;
+		size_t number_used_by_sets = 1;
 		for(size_t i = 0; i < n_set; i++)
 		{	size_t start = start_[i];
 			if( start > 0 )
@@ -237,7 +237,7 @@ private:
 					data_[start].value = ref_count[i];
 
 					// number of data entries used for this set
-					data_used_by_sets += number_elements(i) + 1;
+					number_used_by_sets += number_elements(i) + 1;
 					/*
 					number of elements checks that value < end_
 					each pair in the list except for the start pair
@@ -248,7 +248,7 @@ private:
 		}
 		// ------------------------------------------------------------------
 		// count the number of entries in data_ that are used by posts
-		size_t data_used_by_posts = 0;
+		size_t number_used_by_posts = 0;
 		for(size_t i = 0; i < n_set; i++)
 		{	size_t post = post_[i];
 			if( post > 0 )
@@ -257,16 +257,16 @@ private:
 				CPPAD_ASSERT_UNKNOWN( value < end_ );
 				//
 				while( value < end_ )
-				{	++data_used_by_posts;
+				{	++number_used_by_posts;
 					value = data_[next].value;
 					next  = data_[next].next;
 				}
 			}
 		}
 		// ------------------------------------------------------------------
-		size_t data_used = data_used_by_sets + data_used_by_posts;
+		size_t number_used = number_used_by_sets + number_used_by_posts;
 		CPPAD_ASSERT_UNKNOWN(
-			data_used + data_not_used_ == data_.size()
+			number_used + number_not_used_ == data_.size()
 		);
 		return;
 	}
@@ -368,11 +368,11 @@ private:
 	will be compacted.
 
 	The size of data_ should equal the number of entries used by the sets
-	plus the number of entries that are not being used data_not_used_.
+	plus the number of entries that are not being used number_not_used_.
 	Note that data_[0] never gets used.
 	*/
 	void collect_garbage(void)
-	{	if( data_not_used_ < data_.size() / 2 +  100)
+	{	if( number_not_used_ < data_.size() / 2 +  100)
 			return;
 		check_data_structure();
 		//
@@ -437,7 +437,7 @@ private:
 
 		// all of the elements are used, including data_[0] which is used
 		// by all the lists.
-		data_not_used_ = 0;
+		number_not_used_ = 0;
 	}
 	// -----------------------------------------------------------------
 	/*!
@@ -645,8 +645,8 @@ private:
 		// make end of target list
 		data_[previous_target].next = 0;
 
-		// adjust data_not_used_
-		data_not_used_ += number_delete;
+		// adjust number_not_used_
+		number_not_used_ += number_delete;
 		collect_garbage();
 	}
 // ===========================================================================
@@ -659,7 +659,7 @@ public:
 	*/
 	sparse_list(void) :
 	end_(0)            ,
-	data_not_used_(0)  ,
+	number_not_used_(0)  ,
 	data_(0)           ,
 	start_(0)          ,
 	post_(0)
@@ -693,7 +693,7 @@ public:
 	*/
 	void operator=(const sparse_list& other)
 	{	end_           = other.end_;
-		data_not_used_ = other.data_not_used_;
+		number_not_used_ = other.number_not_used_;
 		data_          = other.data_;
 		start_         = other.start_;
 		post_          = other.post_;
@@ -726,7 +726,7 @@ public:
 			data_.clear();
 			start_.clear();
 			post_.clear();
-			data_not_used_  = 0;
+			number_not_used_  = 0;
 			end_            = 0;
 			//
 			return;
@@ -746,7 +746,7 @@ public:
 		data_[0].value  = end_;
 		data_[0].next   = 0;
 		//
-		data_not_used_  = 0;
+		number_not_used_  = 0;
 	}
 	// -----------------------------------------------------------------
 	/*!
@@ -837,7 +837,7 @@ public:
 		if( next == 0 )
 		{	add_element(i, value);
 			// only lost the one posting element
-			++data_not_used_;
+			++number_not_used_;
 			collect_garbage();
 			return;
 		}
@@ -859,7 +859,7 @@ public:
 		binary_union(i, i, temporary_);
 		//
 		// adjust data not used_
-		data_not_used_ += number_post;
+		number_not_used_ += number_post;
 		collect_garbage();
 		//
 		return;
@@ -955,7 +955,7 @@ public:
 	\param target
 	is the index of the set we are setting to the empty set.
 
-	\par data_not_used_
+	\par number_not_used_
 	increments this value by number of data_ elements that are lost
 	(unlinked) by this operation.
 	*/
@@ -965,8 +965,8 @@ public:
 		// drop t he set and postings
 		size_t number_delete = drop(target);
 
-		// adjust data_not_used_
-		data_not_used_ += number_delete;
+		// adjust number_not_used_
+		number_not_used_ += number_delete;
 		collect_garbage();
 	}
 	// -----------------------------------------------------------------
@@ -984,7 +984,7 @@ public:
 	is the other sparse_list object (which may be the same as this
 	sparse_list object). This must have the same value for end_.
 
-	\par data_not_used_
+	\par number_not_used_
 	increments this value by number of elements lost.
 	*/
 	void assignment(
@@ -1040,8 +1040,8 @@ public:
 			}
 		}
 
-		// adjust data_not_used_
-		data_not_used_ += number_delete;
+		// adjust number_not_used_
+		number_not_used_ += number_delete;
 		collect_garbage();
 	}
 	// -----------------------------------------------------------------
@@ -1146,8 +1146,8 @@ public:
 		}
 		data_[next].next = 0;
 
-		// adjust data_not_used_
-		data_not_used_ += number_delete;
+		// adjust number_not_used_
+		number_not_used_ += number_delete;
 		collect_garbage();
 	}
 	// -----------------------------------------------------------------
@@ -1259,8 +1259,8 @@ public:
 			data_[next].next = 0;
 		}
 
-		// adjust data_not_used_
-		data_not_used_ += number_delete;
+		// adjust number_not_used_
+		number_not_used_ += number_delete;
 		collect_garbage();
 	}
 	// -----------------------------------------------------------------
