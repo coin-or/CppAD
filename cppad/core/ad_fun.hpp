@@ -114,6 +114,11 @@ private:
 	/// results of the forward mode calculations
 	local::pod_vector<Base> taylor_;
 
+	/// Memory used for subgraph reverse mode calculations.
+	/// Declared here to avoid reallocation for each call to subgraph_reverse.
+	/// Not in subgraph_info_ because it depends on Base.
+	local::pod_vector<Base> subgraph_partial_;
+
 	/// which operations can be conditionally skipped
 	/// Set during forward pass of order zero
 	local::pod_vector<bool> cskip_op_;
