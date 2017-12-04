@@ -97,9 +97,14 @@ void color_general_cppad(
 	for(size_t k = 0;  k < K; k++)
 	{	CPPAD_ASSERT_UNKNOWN( pattern.is_element(row[k], col[k]) );
 		row_appear[ row[k] ] = true;
-		c2r_appear.add_element(col[k], row[k]);
-		r2c_appear.add_element(row[k], col[k]);
+		c2r_appear.post_element(col[k], row[k]);
+		r2c_appear.post_element(row[k], col[k]);
 	}
+	// process posts
+	for(size_t j = 0; j < n; ++j)
+		c2r_appear.process_post(j);
+	for(size_t i = 0; i < m; ++i)
+		r2c_appear.process_post(i);
 
 	// for each column, which rows are non-zero and do not appear
 	VectorSet not_appear;
@@ -109,10 +114,13 @@ void color_general_cppad(
 		size_t j = *pattern_itr;
 		while( j != pattern.end() )
 		{	if( ! c2r_appear.is_element(j , i) )
-				not_appear.add_element(j, i);
+				not_appear.post_element(j, i);
 			j = *(++pattern_itr);
 		}
 	}
+	// process posts
+	for(size_t j = 0; j < n; ++j)
+		not_appear.process_post(j);
 
 	// initial coloring
 	color.resize(m);
