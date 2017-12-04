@@ -187,6 +187,7 @@ void ADFun<Base>::for_hes_sparsity(
 		internal_for_jac.resize(num_var_tape_, n + 1 );
 		for(size_t j = 0; j < n; j++) if( select_domain[j] )
 		{	CPPAD_ASSERT_UNKNOWN( ind_taddr_[j] < n + 1 );
+			// use add_element when only adding one element per set
 			internal_for_jac.add_element( ind_taddr_[j] , ind_taddr_[j] );
 		}
 		// forward Jacobian sparsity for all variables on tape
@@ -202,6 +203,7 @@ void ADFun<Base>::for_hes_sparsity(
 		internal_rev_jac.resize(num_var_tape_, 1);
 		for(size_t i = 0; i < m; i++) if( select_range[i] )
 		{	CPPAD_ASSERT_UNKNOWN( dep_taddr_[i] < num_var_tape_ );
+			// use add_element when only adding one element per set
 			internal_rev_jac.add_element( dep_taddr_[i] , 0 );
 		}
 		// reverse Jacobian sparsity for all variables on tape
@@ -238,6 +240,7 @@ void ADFun<Base>::for_hes_sparsity(
 		internal_for_jac.resize(num_var_tape_, n + 1 );
 		for(size_t j = 0; j < n; j++) if( select_domain[j] )
 		{	CPPAD_ASSERT_UNKNOWN( ind_taddr_[j] < n + 1 );
+			// use add_element when only adding one element per set
 			internal_for_jac.add_element( ind_taddr_[j] , ind_taddr_[j] );
 		}
 		// forward Jacobian sparsity for all variables on tape
@@ -254,6 +257,7 @@ void ADFun<Base>::for_hes_sparsity(
 		internal_rev_jac.resize(num_var_tape_, 1);
 		for(size_t i = 0; i < m; i++) if( select_range[i] )
 		{	CPPAD_ASSERT_UNKNOWN( dep_taddr_[i] < num_var_tape_ );
+			// use add_element when only adding one element per set
 			internal_rev_jac.add_element( dep_taddr_[i] , 0 );
 		}
 		// reverse Jacobian sparsity for all variables on tape

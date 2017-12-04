@@ -210,6 +210,7 @@ void ADFun<Base>::ForSparseHesCase(
 		// ind_taddr_[i] is operator taddr for i-th independent variable
 		CPPAD_ASSERT_UNKNOWN( play_.GetOp( ind_taddr_[i] ) == local::InvOp );
 		//
+		// Use add_element when only adding one element per set is added.
 		if( r[i] )
 			for_jac_pattern.add_element( ind_taddr_[i], ind_taddr_[i] );
 	}
@@ -227,6 +228,8 @@ void ADFun<Base>::ForSparseHesCase(
 	rev_jac_pattern.resize(num_var_tape_, 1);
 	for(size_t i = 0; i < m; i++)
 	{	CPPAD_ASSERT_UNKNOWN( dep_taddr_[i] < num_var_tape_ );
+		//
+		// Use add_element when only adding one element per set is added.
 		if( s[i] )
 			rev_jac_pattern.add_element( dep_taddr_[i], 0);
 	}
@@ -331,6 +334,7 @@ void ADFun<Base>::ForSparseHesCase(
 		// ind_taddr_[i] is operator taddr for i-th independent variable
 		CPPAD_ASSERT_UNKNOWN( play_.GetOp( ind_taddr_[i] ) == local::InvOp );
 		//
+		// Use add_element when only adding one element per set is added.
 		for_jac_pattern.add_element( ind_taddr_[i], ind_taddr_[i] );
 	}
 	// compute forward Jacobiain sparsity pattern
@@ -354,6 +358,8 @@ void ADFun<Base>::ForSparseHesCase(
 			"greater than or equal m"
 		);
 		CPPAD_ASSERT_UNKNOWN( dep_taddr_[i] < num_var_tape_ );
+		//
+		// Use add_element when only adding one element per set is added.
 		rev_jac_pattern.add_element( dep_taddr_[i], 0);
 	}
 	//
@@ -546,11 +552,14 @@ void ADFun<Base>::ForSparseHesCheckpoint(
 		size_t i = *itr;
 		while( i < q )
 		{	if( transpose )
-				h.add_element(j,  i);
-			else	h.add_element(i, j);
+				h.post_element(j,  i);
+			else	h.post_element(i, j);
 			i = *(++itr);
 		}
 	}
+	// process posts
+	for(size_t i = 0; i < n; ++i)
+		h.process_post(i);
 }
 # endif
 

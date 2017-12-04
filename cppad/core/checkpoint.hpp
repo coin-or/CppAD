@@ -1,9 +1,8 @@
-// $Id$
 # ifndef CPPAD_CORE_CHECKPOINT_HPP
 # define CPPAD_CORE_CHECKPOINT_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -277,7 +276,9 @@ private:
 		{	local::sparse_list identity;
 			identity.resize(n, n);
 			for(size_t j = 0; j < n; j++)
+			{	// use add_element because only adding one element per set
 				identity.add_element(j, j);
+			}
 			f_.ForSparseJacCheckpoint(
 				n, identity, transpose, dependency, jac_sparse_set_
 			);
@@ -287,7 +288,9 @@ private:
 		{	local::sparse_list identity;
 			identity.resize(m, m);
 			for(size_t i = 0; i < m; i++)
+			{	// use add_element because only adding one element per set
 				identity.add_element(i, i);
+			}
 			f_.RevSparseJacCheckpoint(
 				m, identity, transpose, dependency, jac_sparse_set_
 			);
@@ -344,7 +347,9 @@ private:
 		local::sparse_list identity;
 		identity.resize(n, n);
 		for(size_t j = 0; j < n; j++)
+		{	// use add_element because only adding one element per set
 			identity.add_element(j, j);
+		}
 
 		// compute sparsity pattern for H(x) = sum_i f_i(x)^{(2)}
 		bool transpose  = false;
