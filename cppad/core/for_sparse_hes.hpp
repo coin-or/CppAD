@@ -498,7 +498,7 @@ template <class Base>
 void ADFun<Base>::ForSparseHesCheckpoint(
 	vector<bool>&                 r         ,
 	vector<bool>&                 s         ,
-	local::sparse_list&                  h         )
+	local::sparse_list&           h         )
 {
 	size_t n = Domain();
 	size_t m = Range();
