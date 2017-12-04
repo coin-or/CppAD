@@ -553,7 +553,7 @@ void ADFun<Base>::RevSparseHesCheckpoint(
 	size_t                        q         ,
 	vector<bool>&                 s         ,
 	bool                          transpose ,
-	local::sparse_list&                  h         )
+	local::sparse_list&           h         )
 {	size_t n = Domain();
 	size_t m = Range();
 
@@ -607,11 +607,13 @@ void ADFun<Base>::RevSparseHesCheckpoint(
 		size_t i = *itr;
 		while( i < q )
 		{	if( transpose )
-				h.add_element(j,  i);
-			else	h.add_element(i, j);
+				h.post_element(j,  i);
+			else	h.post_element(i, j);
 			i = *(++itr);
 		}
 	}
+	for(size_t i = 0; i < h.n_set(); ++i)
+		h.process_post(i);
 }
 
 } // END_CPPAD_NAMESPACE
