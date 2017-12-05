@@ -421,52 +421,6 @@ private:
 	}
 	// -----------------------------------------------------------------
 	/*!
-	Make a separate copy of the shared list
-
-	\param i
-	is the index, in the vector of sets, for this set.
-	*/
-	void separate_copy(size_t i)
-	{	size_t ref_count = reference_count(i);
-		if( ref_count <= 1 )
-			return;
-		//
-		size_t start = start_[i];
-		size_t next  = data_[start].next;
-		size_t value = data_[next].value;
-		//
-		// new version of list
-		size_t start_new   = get_data_index();
-		size_t next_new    = get_data_index();
-		//
-		// reference counter for new version of list
-		data_[start_new].value = 1;
-		data_[start_new].next  = next_new;
-		//
-		CPPAD_ASSERT_UNKNOWN( next != 0 )
-		while( next != 0 )
-		{	data_[next_new].value  = value;
-			next                   = data_[next].next;
-			if( next == 0 )
-				data_[next_new].next = 0;
-			else
-			{	value                  = data_[next].value;
-				data_[next_new].next   = get_data_index();
-				next_new               = data_[next_new].next;
-			}
-		}
-		//
-		// decrement reference count
-		CPPAD_ASSERT_UNKNOWN( data_[start].value == ref_count );
-		data_[start].value--;
-		//
-		// starting point for new list
-		start_[i] = start_new;
-		//
-		return;
-	}
-	// -----------------------------------------------------------------
-	/*!
 	Assign a set equal to the union of a set and a vector;
 
 	\param target
@@ -673,12 +627,12 @@ public:
 	the vector_of_sets concept.
 	*/
 	void operator=(const sparse_list& other)
-	{	end_           = other.end_;
+	{	end_             = other.end_;
 		number_not_used_ = other.number_not_used_;
 		data_not_used_   = other.data_not_used_;
-		data_          = other.data_;
-		start_         = other.start_;
-		post_          = other.post_;
+		data_            = other.data_;
+		start_           = other.start_;
+		post_            = other.post_;
 	}
 	// -----------------------------------------------------------------
 	/*!
@@ -871,10 +825,6 @@ public:
 	{	CPPAD_ASSERT_UNKNOWN( i   < start_.size() );
 		CPPAD_ASSERT_UNKNOWN( element < end_ );
 
-		// check if element is already in the set
-		if( is_element(i, element) )
-			return;
-
 		// check for case where starting set is empty
 		size_t start = start_[i];
 		if( start == 0 )
@@ -889,14 +839,9 @@ public:
 			data_[next].next   = 0;
 			return;
 		}
-		// make sure that we have a separate copy of this set
-		separate_copy(i);
 		//
-		// start of set with this index (after separate_copy)
+		// start of set with this index
 		size_t previous = start_[i];
-		//
-		// check reference count for this list
-		CPPAD_ASSERT_UNKNOWN( data_[previous].value == 1 );
 		//
 		// first entry in this set
 		size_t next     = data_[previous].next;
@@ -908,12 +853,78 @@ public:
 			next     = data_[next].next;
 			value = data_[next].value;
 		}
-		CPPAD_ASSERT_UNKNOWN( element < value )
 		//
-		size_t insert         = get_data_index();
-		data_[insert].next    = next;
-		data_[previous].next  = insert;
-		data_[insert].value   = element;
+		// check for case where element is in the set
+		if( value == element )
+			return;
+		//
+		//
+		// check for case where this is the only reference to this set
+		CPPAD_ASSERT_UNKNOWN( element < value );
+		if( data_[start].value == 1 )
+		{	size_t insert         = get_data_index();
+			data_[insert].next    = next;
+			data_[insert].value   = element;
+			data_[previous].next  = insert;
+			//
+			return;
+		}
+		//
+		// must make a separate copy with new element inserted
+		CPPAD_ASSERT_UNKNOWN( data_[start].value > 1 );
+		data_[start].value--;   // reverence counter for old list
+		//
+		size_t start_new       = get_data_index();
+		data_[start_new].value = 1;         // reference counter for new list
+		size_t previous_new    = start_new;
+		//
+		// start of old set with this index
+		previous  = start_[i];
+		//
+		// first entry in old set
+		next    = data_[previous].next;
+		value   = data_[next].value;
+		//
+		// locate place to insert this element
+		while( value < element )
+		{	// copy to new list
+			size_t next_new          = get_data_index();
+			data_[previous_new].next = next_new;
+			data_[next_new].value    = value;
+			previous_new             = next_new;
+			//
+			// get next value
+			previous = next;
+			next     = data_[next].next;
+			value = data_[next].value;
+		}
+		CPPAD_ASSERT_UNKNOWN( element < value );
+		//
+		// insert the element
+		size_t next_new          = get_data_index();
+		data_[previous_new].next = next_new;
+		data_[next_new].value    = element;
+		previous_new             = next_new;
+		//
+		// copy rest of the old set
+		while( value < end_ )
+		{	// copy to new list
+			next_new                 = get_data_index();
+			data_[previous_new].next = next_new;
+			data_[next_new].value    = value;
+			previous_new             = next_new;
+			//
+			// get next value
+			previous = next;
+			next     = data_[next].next;
+			value = data_[next].value;
+		}
+		CPPAD_ASSERT_UNKNOWN( next == 0 );
+		data_[previous_new].next = 0;
+		//
+		// hook up new list
+		start_[i] = start_new;
+		return;
 	}
 	// -----------------------------------------------------------------
 	/*!
