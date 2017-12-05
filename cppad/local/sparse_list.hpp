@@ -421,87 +421,6 @@ private:
 	}
 	// -----------------------------------------------------------------
 	/*!
-	Does garbage collection when indicated.
-
-	This routine should be called when more entries are not being used.
-	If a significant propotion are not being used, the data structure
-	will be compacted.
-
-	The size of data_ should equal the number of entries used by the sets,
-	plus number used by posts, plus number not being used.
-	Note that data_[0] gets used by both sets and posts.
-	*/
-	void collect_garbage(void)
-	{	if( number_not_used_ < data_.size() / 2 +  100)
-			return;
-		check_data_structure();
-		//
-		// number of sets including empty ones
-		size_t n_set  = start_.size();
-		//
-		// copy the sets to a temporary version of data_
-		pod_vector<pair_size_t> data_tmp(1);
-		data_tmp[0].value = end_;
-		data_tmp[0].next  = 0;
-		//
-		pod_vector<size_t> start_tmp(n_set);
-		for(size_t i = 0; i < n_set; i++)
-		{	size_t start    = start_[i];
-			if( start == 0 )
-				start_tmp[i] = 0;
-			else
-			{	// check if this linked list has already been copied
-				if( data_[start].next == 0 )
-				{	// starting address in data_tmp has been stored here
-					start_tmp[i] = data_[start].value;
-				}
-				else
-				{	size_t count              = data_[start].value;
-					size_t next               = data_[start].next;
-					//
-					size_t tmp_start          = data_tmp.extend(2);
-					size_t next_tmp           = tmp_start + 1;
-					start_tmp[i]              = tmp_start;
-					data_tmp[tmp_start].value = count;
-					data_tmp[tmp_start].next  = next_tmp;
-					//
-					CPPAD_ASSERT_UNKNOWN( next != 0 );
-					while( next != 0 )
-					{	CPPAD_ASSERT_UNKNOWN( data_[next].value < end_ );
-						data_tmp[next_tmp].value = data_[next].value;
-						//
-						next                      = data_[next].next;
-						if( next == 0 )
-							data_tmp[next_tmp].next = 0;
-						else
-						{	// data_tmp[next_tmp].next  = data_tmp.extend(1);
-							// does not seem to work ?
-							size_t tmp               = data_tmp.extend(1);
-							data_tmp[next_tmp].next  = tmp;
-							next_tmp                 = tmp;
-						}
-					}
-					//
-					// store the starting address here
-					data_[start].value = tmp_start;
-					//
-					// flag that indicates this link list already copied
-					data_[start].next = 0;
-				}
-			}
-		}
-
-		// swap the tmp and old data vectors
-		start_.swap(start_tmp);
-		data_.swap(data_tmp);
-
-		// all of the elements are used, including data_[0] which is used
-		// by all the lists.
-		data_not_used_   = 0;
-		number_not_used_ = 0;
-	}
-	// -----------------------------------------------------------------
-	/*!
 	Make a separate copy of the shared list
 
 	\param i
@@ -708,7 +627,7 @@ private:
 		// set the new start value for target
 		start_[target] = start;
 
-		collect_garbage();
+		return;
 	}
 // ===========================================================================
 public:
@@ -905,7 +824,6 @@ public:
 			//
 			add_element(i, value);
 			//
-			collect_garbage();
 			return;
 		}
 		//
@@ -937,7 +855,6 @@ public:
 		// add the elements to the set
 		binary_union(i, i, temporary_);
 		//
-		collect_garbage();
 		return;
 	}
 	// -----------------------------------------------------------------
@@ -1042,7 +959,7 @@ public:
 		size_t number_drop = drop(target);
 		number_not_used_  += number_drop;
 
-		collect_garbage();
+		return;
 	}
 	// -----------------------------------------------------------------
 	/*!
@@ -1120,7 +1037,7 @@ public:
 		// set the new start value for this_target
 		start_[this_target] = this_start;
 
-		collect_garbage();
+		return;
 	}
 	// -----------------------------------------------------------------
 	/*!
@@ -1227,7 +1144,7 @@ public:
 		// set the new start value for this_target
 		start_[this_target] = start;
 
-		collect_garbage();
+		return;
 	}
 	// -----------------------------------------------------------------
 	/*!
@@ -1341,7 +1258,7 @@ public:
 		// set new start for this_target
 		start_[this_target] = start;
 
-		collect_garbage();
+		return;
 	}
 	// -----------------------------------------------------------------
 	/*! Fetch n_set for vector of sets object.
