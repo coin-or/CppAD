@@ -61,7 +61,7 @@ int main(void)
 	// This line is used by test_one.sh
 
 	// external compiled tests
-	Run( subgraph_jac_rev,         " subgraph_jac_rev" );
+	Run( subgraph_jac_rev,          "subgraph_jac_rev" );
 	Run( subgraph_sparsity,         "subgraph_sparsity" );
 	Run( sub_sparse_hes,            "sub_sparse_hes" );
 	Run( sparsity_sub,              "sparsity_sub" );

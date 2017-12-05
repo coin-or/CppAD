@@ -55,6 +55,9 @@ private:
 	/// number of elements in data_ that are not being used.
 	size_t number_not_used_;
 
+	/// list of elements of data_ that are not being used.
+	size_t data_not_used_;
+
 	/// The data for all the singly linked lists.
 	pod_vector<pair_size_t> data_;
 
@@ -139,31 +142,45 @@ private:
 	\par post_
 	the value post_[i] will be set to zero.
 
+	\par data_not_used_
+	the eleemmnts of data_ that are dropped are added to this list.
+
 	\return
 	is the additional number of elements of data_ that are not used.
 	This is non-zero when the initial reference count is one.
 	*/
 	size_t drop(size_t i)
-	{	// inialize counter
-		size_t count = 0;
+	{	// inialize count of addition elements not being used.
+		size_t number_drop = 0;
 
-		// count posted elements that will no longer be used
-		size_t next = post_[i];
-		while( data_[next].value != end_ )
-		{	++count;
-			next = data_[next].next;
+		// the elements in the post list will no longer be used
+		size_t post = post_[i];
+		if( post != 0 )
+		{	// drop this posting
+			post_[i]    = 0;
+			//
+			// count elements in this posting
+			++number_drop;
+			size_t previous = post;
+			size_t next     = data_[previous].next;
+			while( next != 0 )
+			{	previous = next;
+				next     = data_[previous].next;
+				++number_drop;
+			}
+			//
+			// add the posting elements to data_not_used_
+			data_[previous].next = data_not_used_;
+			data_not_used_       = post;
 		}
-
-		// drop posted elements
-		post_[i] = 0;
 
 		// check for empty set
 		size_t start = start_[i];
 		if( start == 0 )
-			return count;
+			return number_drop;
 
 		// decrement reference counter
-		CPPAD_ASSERT_UNKNOWN( data_[start].value == reference_count(i) );
+		CPPAD_ASSERT_UNKNOWN( data_[start].value > 0 );
 		data_[start].value--;
 
 		// set this set to empty
@@ -172,19 +189,24 @@ private:
 		// If new reference count is positive, the list corresponding to
 		// start is still being used.
 		if( data_[start].value > 0 )
-			return count;
+			return number_drop;
 
-		// The reference counter and the elements of this set
-		// will no longer be used.
-		++count;
-		next = start;            // reference counter
-		next = data_[next].next; // first element of the set
-		while( data_[next].value != end_ )
-		{	++count;
-			next = data_[next].next;
+		//
+		// count elements representing this set
+		++number_drop;
+		size_t previous = start;
+		size_t next     = data_[previous].next;
+		while( next != 0 )
+		{	previous = next;
+			next     = data_[previous].next;
+			++number_drop;
 		}
-
-		return count;
+		//
+		// add representing this set to data_not_used_
+		data_[previous].next = data_not_used_;
+		data_not_used_       = start;
+		//
+		return number_drop;
 	}
 	// -----------------------------------------------------------------
 	/*!
@@ -202,6 +224,7 @@ private:
 		if( n_set == 0 )
 		{	CPPAD_ASSERT_UNKNOWN( end_ == 0 );
 			CPPAD_ASSERT_UNKNOWN( number_not_used_ == 0 );
+			CPPAD_ASSERT_UNKNOWN( data_not_used_ == 0 );
 			CPPAD_ASSERT_UNKNOWN( data_.size() == 0 );
 			CPPAD_ASSERT_UNKNOWN( start_.size() == 0 );
 			return;
@@ -215,7 +238,7 @@ private:
 		for(size_t i = 0; i < n_set; i++)
 			ref_count[i] = reference_count(i);
 		// -----------------------------------------------------------
-		// number of entries in data used by both sets and posts
+		// number of entries in data used by sets and posts
 		size_t number_used_by_sets = 1;
 		// -----------------------------------------------------------
 		// count the number of entries in data_ that are used by sets
@@ -265,6 +288,15 @@ private:
 				}
 			}
 		}
+		// ------------------------------------------------------------------
+		// count number of entries in data_not_used_
+		size_t count = 0;
+		size_t next = data_not_used_;
+		while( next != 0 )
+		{	++count;
+			next = data_[next].next;
+		}
+		CPPAD_ASSERT_UNKNOWN( number_not_used_ == count );
 		// ------------------------------------------------------------------
 		size_t number_used = number_used_by_sets + number_used_by_posts;
 		CPPAD_ASSERT_UNKNOWN(
@@ -439,6 +471,7 @@ private:
 
 		// all of the elements are used, including data_[0] which is used
 		// by all the lists.
+		data_not_used_   = 0;
 		number_not_used_ = 0;
 	}
 	// -----------------------------------------------------------------
@@ -570,13 +603,8 @@ private:
 
 		// -------------------------------------------------------------------
 
-		// number of elements that will be deleted by removing old version
-		// of target
-		size_t number_drop = drop(target);
-
 		// start new version of target
 		size_t start        = data_.extend(1);
-		start_[target]      = start;
 		data_[start].value  = 1; // reference count
 		//
 		// previous index for new set
@@ -648,7 +676,12 @@ private:
 		data_[previous_target].next = 0;
 
 		// adjust number_not_used_
-		number_not_used_ += number_drop;
+		size_t number_drop = drop(target);
+		number_not_used_  += number_drop;
+
+		// set the new start value for target
+		start_[target] = start;
+
 		collect_garbage();
 	}
 // ===========================================================================
@@ -662,6 +695,7 @@ public:
 	sparse_list(void) :
 	end_(0)              ,
 	number_not_used_(0)  ,
+	data_not_used_(0)    ,
 	data_(0)             ,
 	start_(0)            ,
 	post_(0)
@@ -696,6 +730,7 @@ public:
 	void operator=(const sparse_list& other)
 	{	end_           = other.end_;
 		number_not_used_ = other.number_not_used_;
+		data_not_used_   = other.data_not_used_;
 		data_          = other.data_;
 		start_         = other.start_;
 		post_          = other.post_;
@@ -729,6 +764,7 @@ public:
 			start_.clear();
 			post_.clear();
 			number_not_used_  = 0;
+			data_not_used_    = 0;
 			end_              = 0;
 			//
 			return;
@@ -749,6 +785,7 @@ public:
 		data_[0].next     = 0;
 		//
 		number_not_used_  = 0;
+		data_not_used_    = 0;
 	}
 	// -----------------------------------------------------------------
 	/*!
@@ -834,22 +871,31 @@ public:
 			return;
 		//
 		// check if there is only one element to process
-		size_t value = data_[post].value;
 		size_t next  = data_[post].next;
 		if( next == 0 )
-		{	add_element(i, value);
+		{	add_element(i, data_[post].value);
+			//
 			// This one posting element is no longer being used.
+			data_[post].next = data_not_used_;
+			data_not_used_   = post;
 			++number_not_used_;
+			//
 			collect_garbage();
 			return;
 		}
 		//
 		// copy the elements that need to be processed into temporary
 		temporary_.resize(0);
-		while( value != end_ )
-		{	temporary_.push_back(value);
-			value = data_[next].value;
-			next  = data_[next].next;
+		size_t previous  = post;
+		size_t value     = data_[previous].value;
+		CPPAD_ASSERT_UNKNOWN( value < end_ );
+		temporary_.push_back(value);
+		while( next != 0 )
+		{	previous = next;
+			value    = data_[previous].value;
+			CPPAD_ASSERT_UNKNOWN( value < end_ );
+			temporary_.push_back(value);
+			next     = data_[previous].next;
 		}
 		//
 		// sort temporary_
@@ -861,7 +907,9 @@ public:
 		binary_union(i, i, temporary_);
 		//
 		// adjust data not used_
-		number_not_used_ += number_post;
+		data_[previous].next = data_not_used_;
+		data_not_used_       = post;
+		number_not_used_    += number_post;
 		collect_garbage();
 		//
 		return;
@@ -964,11 +1012,10 @@ public:
 	void clear(size_t target)
 	{	CPPAD_ASSERT_UNKNOWN( target < start_.size() );
 
-		// drop the set and postings
-		size_t number_drop = drop(target);
-
 		// adjust number_not_used_
-		number_not_used_ += number_drop;
+		size_t number_drop = drop(target);
+		number_not_used_  += number_drop;
+
 		collect_garbage();
 	}
 	// -----------------------------------------------------------------
@@ -1003,27 +1050,25 @@ public:
 		if( (this == &other) & (this_target == other_source) )
 			return;
 
-		// number of list elements that will be deleted by this operation
-		size_t number_drop = drop(this_target);
+		// set depending on cases below
+		size_t this_start;
 
 		// If this and other are the same, use another reference to same list
 		size_t other_start = other.start_[other_source];
 		if( this == &other )
-		{	start_[this_target] = other_start;
+		{	this_start = other_start;
 			if( other_start != 0 )
 			{	data_[other_start].value++; // increment reference count
 				CPPAD_ASSERT_UNKNOWN( data_[other_start].value > 1 );
 			}
 		}
 		else if( other_start  == 0 )
-		{	// the target list is empty
-			start_[this_target] = 0;
+		{	this_start = 0;
 		}
 		else
 		{	// make a copy of the other list in this sparse_list
-			size_t this_start = data_.extend(2);
+			this_start        = data_.extend(2);
 			size_t this_next  = this_start + 1;
-			start_[this_target]     = this_start;
 			data_[this_start].value = 1; // reference count
 			data_[this_start].next  = this_next;
 			//
@@ -1043,7 +1088,12 @@ public:
 		}
 
 		// adjust number_not_used_
-		number_not_used_ += number_drop;
+		size_t number_drop = drop(this_target);
+		number_not_used_  += number_drop;
+
+		// set the new start value for this_target
+		start_[this_target] = this_start;
+
 		collect_garbage();
 	}
 	// -----------------------------------------------------------------
@@ -1102,13 +1152,9 @@ public:
 		size_t start_left    = start_[this_left];
 		size_t start_right   = other.start_[other_right];
 
-		// number of list elements that will be deleted by this operation
-		size_t number_drop = drop(this_target);
-
 		// start the new list
 		size_t start        = data_.extend(1);
 		size_t next         = start;
-		start_[this_target] = start;
 		data_[start].value  = 1; // reference count
 
 		// next for left and right lists
@@ -1149,7 +1195,12 @@ public:
 		data_[next].next = 0;
 
 		// adjust number_not_used_
-		number_not_used_ += number_drop;
+		size_t number_drop = drop(this_target);
+		number_not_used_  += number_drop;
+
+		// set the new start value for this_target
+		start_[this_target] = start;
+
 		collect_garbage();
 	}
 	// -----------------------------------------------------------------
@@ -1208,13 +1259,9 @@ public:
 		size_t start_left    = start_[this_left];
 		size_t start_right   = other.start_[other_right];
 
-		// number of list elements that will be deleted by this operation
-		size_t number_drop = drop(this_target);
-
 		// start the new list as emptyh
 		size_t start        = 0;
 		size_t next         = start;
-		start_[this_target] = start;
 
 		// next for left and right lists
 		size_t next_left   = data_[start_left].next;
@@ -1262,7 +1309,12 @@ public:
 		}
 
 		// adjust number_not_used_
-		number_not_used_ += number_drop;
+		size_t number_drop = drop(this_target);
+		number_not_used_  += number_drop;
+
+		// set new start for this_target
+		start_[this_target] = start;
+
 		collect_garbage();
 	}
 	// -----------------------------------------------------------------
