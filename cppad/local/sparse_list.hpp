@@ -52,8 +52,7 @@ private:
 	/// Possible elements in each set are 0, 1, ..., end_ - 1;
 	size_t end_;
 
-	/// number of elements in data_ that have been allocated
-	/// and are no longer being used.
+	/// number of elements in data_ that are not being used.
 	size_t number_not_used_;
 
 	/// The data for all the singly linked lists.
@@ -125,7 +124,7 @@ private:
 	}
 	// -----------------------------------------------------------------
 	/*!
-	drop a set and its postings.
+	drop a set and its postings (no longer being used).
 
 	\param i
 	is the index of the set that will be dropped.
@@ -141,14 +140,14 @@ private:
 	the value post_[i] will be set to zero.
 
 	\return
-	is the number of elements of data_ that will be lost when the set is
-	dropped. This is non-zero when the initial reference count is one.
+	is the additional number of elements of data_ that are not used.
+	This is non-zero when the initial reference count is one.
 	*/
 	size_t drop(size_t i)
 	{	// inialize counter
 		size_t count = 0;
 
-		// count posted elements that will be dropped
+		// count posted elements that will no longer be used
 		size_t next = post_[i];
 		while( data_[next].value != end_ )
 		{	++count;
@@ -170,11 +169,13 @@ private:
 		// set this set to empty
 		start_[i] = 0;
 
-		// nothing else lost unless new reference count is zero
+		// If new reference count is positive, the list corresponding to
+		// start is still being used.
 		if( data_[start].value > 0 )
 			return count;
 
-		// count reference counter and elements in the set
+		// The reference counter and the elements of this set
+		// will no longer be used.
 		++count;
 		next = start;            // reference counter
 		next = data_[next].next; // first element of the set
@@ -214,9 +215,10 @@ private:
 		for(size_t i = 0; i < n_set; i++)
 			ref_count[i] = reference_count(i);
 		// -----------------------------------------------------------
-		// count the number of entries in data_ that are used by sets
-		// (data_[0] is used by all the sets)
+		// number of entries in data used by both sets and posts
 		size_t number_used_by_sets = 1;
+		// -----------------------------------------------------------
+		// count the number of entries in data_ that are used by sets
 		for(size_t i = 0; i < n_set; i++)
 		{	size_t start = start_[i];
 			if( start > 0 )
@@ -367,9 +369,9 @@ private:
 	If a significant propotion are not being used, the data structure
 	will be compacted.
 
-	The size of data_ should equal the number of entries used by the sets
-	plus the number of entries that are not being used number_not_used_.
-	Note that data_[0] never gets used.
+	The size of data_ should equal the number of entries used by the sets,
+	plus number used by posts, plus number not being used.
+	Note that data_[0] gets used by both sets and posts.
 	*/
 	void collect_garbage(void)
 	{	if( number_not_used_ < data_.size() / 2 +  100)
@@ -570,7 +572,7 @@ private:
 
 		// number of elements that will be deleted by removing old version
 		// of target
-		size_t number_delete = drop(target);
+		size_t number_drop = drop(target);
 
 		// start new version of target
 		size_t start        = data_.extend(1);
@@ -646,7 +648,7 @@ private:
 		data_[previous_target].next = 0;
 
 		// adjust number_not_used_
-		number_not_used_ += number_delete;
+		number_not_used_ += number_drop;
 		collect_garbage();
 	}
 // ===========================================================================
@@ -658,10 +660,10 @@ public:
 	Default constructor (no sets)
 	*/
 	sparse_list(void) :
-	end_(0)            ,
+	end_(0)              ,
 	number_not_used_(0)  ,
-	data_(0)           ,
-	start_(0)          ,
+	data_(0)             ,
+	start_(0)            ,
 	post_(0)
 	{ }
 	// -----------------------------------------------------------------
@@ -727,7 +729,7 @@ public:
 			start_.clear();
 			post_.clear();
 			number_not_used_  = 0;
-			end_            = 0;
+			end_              = 0;
 			//
 			return;
 		}
@@ -743,8 +745,8 @@ public:
 		//
 		// last element, marks the end for all lists
 		data_.resize(1);
-		data_[0].value  = end_;
-		data_[0].next   = 0;
+		data_[0].value    = end_;
+		data_[0].next     = 0;
 		//
 		number_not_used_  = 0;
 	}
@@ -836,7 +838,7 @@ public:
 		size_t next  = data_[post].next;
 		if( next == 0 )
 		{	add_element(i, value);
-			// only lost the one posting element
+			// This one posting element is no longer being used.
 			++number_not_used_;
 			collect_garbage();
 			return;
@@ -956,17 +958,17 @@ public:
 	is the index of the set we are setting to the empty set.
 
 	\par number_not_used_
-	increments this value by number of data_ elements that are lost
-	(unlinked) by this operation.
+	increments this value by additional number of data_ elements that are
+	no longer being used.
 	*/
 	void clear(size_t target)
 	{	CPPAD_ASSERT_UNKNOWN( target < start_.size() );
 
-		// drop t he set and postings
-		size_t number_delete = drop(target);
+		// drop the set and postings
+		size_t number_drop = drop(target);
 
 		// adjust number_not_used_
-		number_not_used_ += number_delete;
+		number_not_used_ += number_drop;
 		collect_garbage();
 	}
 	// -----------------------------------------------------------------
@@ -985,7 +987,7 @@ public:
 	sparse_list object). This must have the same value for end_.
 
 	\par number_not_used_
-	increments this value by number of elements lost.
+	increments this value by additional number of elements not being used.
 	*/
 	void assignment(
 		size_t               this_target  ,
@@ -1002,7 +1004,7 @@ public:
 			return;
 
 		// number of list elements that will be deleted by this operation
-		size_t number_delete = drop(this_target);
+		size_t number_drop = drop(this_target);
 
 		// If this and other are the same, use another reference to same list
 		size_t other_start = other.start_[other_source];
@@ -1041,7 +1043,7 @@ public:
 		}
 
 		// adjust number_not_used_
-		number_not_used_ += number_delete;
+		number_not_used_ += number_drop;
 		collect_garbage();
 	}
 	// -----------------------------------------------------------------
@@ -1101,7 +1103,7 @@ public:
 		size_t start_right   = other.start_[other_right];
 
 		// number of list elements that will be deleted by this operation
-		size_t number_delete = drop(this_target);
+		size_t number_drop = drop(this_target);
 
 		// start the new list
 		size_t start        = data_.extend(1);
@@ -1147,7 +1149,7 @@ public:
 		data_[next].next = 0;
 
 		// adjust number_not_used_
-		number_not_used_ += number_delete;
+		number_not_used_ += number_drop;
 		collect_garbage();
 	}
 	// -----------------------------------------------------------------
@@ -1207,7 +1209,7 @@ public:
 		size_t start_right   = other.start_[other_right];
 
 		// number of list elements that will be deleted by this operation
-		size_t number_delete = drop(this_target);
+		size_t number_drop = drop(this_target);
 
 		// start the new list as emptyh
 		size_t start        = 0;
@@ -1260,7 +1262,7 @@ public:
 		}
 
 		// adjust number_not_used_
-		number_not_used_ += number_delete;
+		number_not_used_ += number_drop;
 		collect_garbage();
 	}
 	// -----------------------------------------------------------------
