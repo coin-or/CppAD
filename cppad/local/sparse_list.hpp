@@ -210,6 +210,32 @@ private:
 	}
 	// -----------------------------------------------------------------
 	/*!
+	get a new data_ element for use.
+
+	\par number_not_used_
+	if this is non-zero, it is decremented by one.
+
+	\par data_not_used_
+	if this list is non-empty, one element is removed from it.
+
+	\return
+	is the index in data_ of the new element.
+	*/
+	size_t get_data_index(void)
+	{	size_t index;
+		if( data_not_used_ > 0 )
+		{	CPPAD_ASSERT_UNKNOWN( number_not_used_ > 0 );
+			--number_not_used_;
+			index          = data_not_used_;
+			data_not_used_ = data_[index].next;
+		}
+		else
+		{	index = data_.extend(1);
+		}
+		return index;
+	}
+	// -----------------------------------------------------------------
+	/*!
 	Checks data structure
 	(effectively const, but modifies and restores values)
 	*/
@@ -491,8 +517,8 @@ private:
 		size_t value = data_[next].value;
 		//
 		// new version of list
-		size_t start_new   = data_.extend(2);
-		size_t next_new    = start_new + 1;
+		size_t start_new   = get_data_index();
+		size_t next_new    = get_data_index();
 		//
 		// reference counter for new version of list
 		data_[start_new].value = 1;
@@ -506,7 +532,7 @@ private:
 				data_[next_new].next = 0;
 			else
 			{	value                  = data_[next].value;
-				data_[next_new].next   = data_.extend(1);
+				data_[next_new].next   = get_data_index();
 				next_new               = data_[next_new].next;
 			}
 		}
@@ -604,7 +630,7 @@ private:
 		// -------------------------------------------------------------------
 
 		// start new version of target
-		size_t start        = data_.extend(1);
+		size_t start        = get_data_index();
 		data_[start].value  = 1; // reference count
 		//
 		// previous index for new set
@@ -639,7 +665,7 @@ private:
 				CPPAD_ASSERT_UNKNOWN( value_right < value_left );
 			}
 			// place to put new element
-			size_t current_target       = data_.extend(1);
+			size_t current_target       = get_data_index();
 			data_[previous_target].next = current_target;
 			//
 			if( value_left < value_right )
@@ -841,7 +867,7 @@ public:
 
 		// put element at the front of this list
 		size_t next         = post_[i];
-		size_t post         = data_.extend(1);
+		size_t post         = get_data_index();
 		post_[i]            = post;
 		data_[post].value   = element;
 		data_[post].next    = next;
@@ -863,9 +889,6 @@ public:
 	{	// post
 		size_t post = post_[i];
 		//
-		// done with this posting
-		post_[i] = 0;
-		//
 		// check if there are no elements to process
 		if( post == 0 )
 			return;
@@ -873,12 +896,14 @@ public:
 		// check if there is only one element to process
 		size_t next  = data_[post].next;
 		if( next == 0 )
-		{	add_element(i, data_[post].value);
-			//
-			// This one posting element is no longer being used.
+		{	// done with this posting
+			size_t value     = data_[post].value;
+			post_[i]         = 0;
 			data_[post].next = data_not_used_;
 			data_not_used_   = post;
 			++number_not_used_;
+			//
+			add_element(i, value);
 			//
 			collect_garbage();
 			return;
@@ -897,21 +922,22 @@ public:
 			temporary_.push_back(value);
 			next     = data_[previous].next;
 		}
+		size_t number_post = temporary_.size();
+		//
+		// done with this posting
+		post_[i]              = 0;
+		data_[previous].next  = data_not_used_;
+		data_not_used_        = post;
+		number_not_used_     += number_post;;
 		//
 		// sort temporary_
-		size_t number_post = temporary_.size();
 		CPPAD_ASSERT_UNKNOWN( number_post > 1 );
 		std::sort( temporary_.data(), temporary_.data() + number_post);
 		//
 		// add the elements to the set
 		binary_union(i, i, temporary_);
 		//
-		// adjust data not used_
-		data_[previous].next = data_not_used_;
-		data_not_used_       = post;
-		number_not_used_    += number_post;
 		collect_garbage();
-		//
 		return;
 	}
 	// -----------------------------------------------------------------
@@ -935,11 +961,11 @@ public:
 		// check for case where starting set is empty
 		size_t start = start_[i];
 		if( start == 0 )
-		{	start              = data_.extend(2);
+		{	start              = get_data_index();
 			start_[i]          = start;
 			data_[start].value = 1; // reference count
 			//
-			size_t next        = start + 1;
+			size_t next        = get_data_index();
 			data_[start].next  = next;
 			//
 			data_[next].value  = element;
@@ -967,7 +993,7 @@ public:
 		}
 		CPPAD_ASSERT_UNKNOWN( element < value )
 		//
-		size_t insert         = data_.extend(1);
+		size_t insert         = get_data_index();
 		data_[insert].next    = next;
 		data_[previous].next  = insert;
 		data_[insert].value   = element;
@@ -1067,8 +1093,8 @@ public:
 		}
 		else
 		{	// make a copy of the other list in this sparse_list
-			this_start        = data_.extend(2);
-			size_t this_next  = this_start + 1;
+			this_start        = get_data_index();
+			size_t this_next  = get_data_index();
 			data_[this_start].value = 1; // reference count
 			data_[this_start].next  = this_next;
 			//
@@ -1080,7 +1106,7 @@ public:
 				if( next == 0 )
 					data_[this_next].next = 0;
 				else
-				{	size_t tmp = data_.extend(1);
+				{	size_t tmp = get_data_index();
 					data_[this_next].next = tmp;
 					this_next             = tmp;
 				}
@@ -1153,7 +1179,7 @@ public:
 		size_t start_right   = other.start_[other_right];
 
 		// start the new list
-		size_t start        = data_.extend(1);
+		size_t start        = get_data_index();
 		size_t next         = start;
 		data_[start].value  = 1; // reference count
 
@@ -1173,7 +1199,7 @@ public:
 				value_right = other.data_[next_right].value;
 			}
 			if( value_left < value_right )
-			{	size_t tmp        = data_.extend(1);
+			{	size_t tmp        = get_data_index();
 				data_[next].next  = tmp;
 				next              = tmp;
 				data_[next].value = value_left;
@@ -1183,7 +1209,7 @@ public:
 			}
 			else
 			{	CPPAD_ASSERT_UNKNOWN( value_right < value_left )
-				size_t tmp        = data_.extend(1);
+				size_t tmp        = get_data_index();
 				data_[next].next  = tmp;
 				next              = tmp;
 				data_[next].value = value_right;
@@ -1276,13 +1302,13 @@ public:
 		{	if( value_left == value_right )
 			{	if( start == 0 )
 				{	// this is the first element in the intersection
-					start               = data_.extend(1);
+					start               = get_data_index();
 					next                = start;
 					start_[this_target] = start;
 					data_[start].value  = 1; // reference count
 					CPPAD_ASSERT_UNKNOWN( start > 0 );
 				}
-				size_t tmp        = data_.extend(1);
+				size_t tmp        = get_data_index();
 				data_[next].next  = tmp;
 				next              = tmp;
 				data_[next].value = value_left;
