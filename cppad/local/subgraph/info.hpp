@@ -187,7 +187,7 @@ public:
 	\param n_op
 	number of operators.
 
-	param n_var
+	\param n_var
 	number of variables.
 
 	\par entire_graph_

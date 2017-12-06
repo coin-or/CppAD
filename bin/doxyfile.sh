@@ -41,6 +41,8 @@ s|  *| |g
 EOF
 sed -i doxyfile -f bin/doxyfile.$$
 # -----------------------------------------------------------------------------
+include_directory_list=`find cppad -type d | tr '\n' ' ' `
+# -----------------------------------------------------------------------------
 # PREDEFINED:see http://www.stack.nl/~dimitri/doxygen/manual/preprocessing.html
 # 2DO: change EXTRACT_ALL to NO so get warnings for undocumented functions.
 echo "create bin/doxyfile.$$"
@@ -61,16 +63,7 @@ GENERATE_LATEX          = NO
 GENERATE_TREEVIEW       = YES
 INHERIT_DOCS            = NO
 INLINE_INHERITED_MEMB   = YES
-INPUT                   = \
-	./cppad \
-	./cppad/core \
-	./cppad/local \
-	./cppad/local/optimize \
-	./cppad/ipopt \
-	./cppad_ipopt/src \
-	./cppad_lib \
-	./cppad/utility \
-	./speed/src
+INPUT                   = $include_directory_list
 LATEX_BATCHMODE         = YES
 MACRO_EXPANSION         = YES
 MULTILINE_CPP_IS_BRIEF  = YES

@@ -16,7 +16,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 // BEGIN_CPPAD_LOCAL_SUBGRAPH_NAMESPACE
 namespace CppAD { namespace local { namespace subgraph {
 /*!
-\file subgraph.hpp
+\file entire_call.hpp
 include entire function call in a subgraph
 */
 // ===========================================================================
