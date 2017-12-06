@@ -164,26 +164,35 @@ public:
 	// implicit default constructor
 	inline AD(void);
 
-	// use default implicit copy constructor and assignment operator
+	// destructor
+	~AD(void) { }
+
+	// use default implicit copy constructor
 	// inline AD(const AD &x);
-	// inline AD& operator=(const AD &x);
 
-	// implicit construction and assingment from base type
+	// implicit construction from base type
 	inline AD(const Base &b);
-	inline AD& operator=(const Base &b);
 
-	// implicit contructor and assignment from VecAD<Base>::reference
+	// implicit contructor from VecAD<Base>::reference
 	inline AD(const VecAD_reference<Base> &x);
-	inline AD& operator=(const VecAD_reference<Base> &x);
 
 	// explicit construction from some other type (depricated)
 	template <class T> inline explicit AD(const T &t);
 
+	// conversion from AD to Base type
+	friend Base Value <Base> (const AD<Base> &x);
+
+	// use default assignment operator
+	// inline AD& operator=(const AD &x);
+
+	// assingment from base type
+	inline AD& operator=(const Base &b);
+
+	// assignment from VecAD<Base>::reference
+	inline AD& operator=(const VecAD_reference<Base> &x);
+
 	// assignment from some other type
 	template <class T> inline AD& operator=(const T &right);
-
-	// base type corresponding to an AD object
-	friend Base Value <Base> (const AD<Base> &x);
 
 	// compound assignment operators
 	inline AD& operator += (const AD &right);
@@ -194,10 +203,6 @@ public:
 	// unary operators
 	inline AD operator +(void) const;
 	inline AD operator -(void) const;
-
-	// destructor
-	~AD(void)
-	{ }
 
 	// interface so these functions need not be friends
 	inline AD abs_me(void) const;
