@@ -25,15 +25,12 @@ $icode%f%.abs_normal_fun(%g%, %a%)%$$
 $head f$$
 The object $icode f$$ has prototype
 $codei%
-	ADFun<%Base%>& %f%
+	const ADFun<%Base%>& %f%
 %$$
 It represents a function $latex f : \B{R}^n \rightarrow \B{R}^m$$.
 We assume that the only non-smooth terms in the representation are
 absolute value functions and use $latex s \in \B{Z}_+$$
 to represent the number of these terms.
-It is effectively $code const$$, except that some internal state
-that is not relevant to the user; see
-$cref/const ADFun/wish_list/const ADFun/$$.
 
 $subhead n$$
 We use $icode n$$ to denote the dimension of the domain space for $icode f$$.
@@ -292,7 +289,7 @@ is used.
 # define NOT_YET_COMPILING 0
 
 template <class Base>
-void ADFun<Base>::abs_normal_fun(ADFun<Base>& g, ADFun<Base>& a)
+void ADFun<Base>::abs_normal_fun(ADFun<Base>& g, ADFun<Base>& a) const
 {	using namespace local;
 
 	// -----------------------------------------------------------------------

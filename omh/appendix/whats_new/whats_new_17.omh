@@ -11,6 +11,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 $begin whats_new_17$$
 $spell
+	const
 	Perl
 	CppAD
 	doxygen
@@ -57,6 +58,13 @@ $section Changes and Additions to CppAD During 2017$$
 $head API Changes$$
 Speed tests no longer automatically compile in release mode; see
 $cref/debug_which/speed/debug_which/$$
+
+$head 12-06$$
+A $cref wish_list$$ item to enable one to iterate through a
+$code const$$ $cref ADFun$$ operation sequence was completed.
+In addition, the $cref/f/abs_normal_fun/f/$$ argument to the
+$code abs_normal$$ operation was converted to be $code const$$.
+
 
 $head 12-05$$
 The internal data object used to represent sparsity patterns as

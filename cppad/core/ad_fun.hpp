@@ -677,7 +677,7 @@ public:
 	void optimize( const std::string& options = "" );
 
 	// create abs-normal representation of the function f(x)
-	void abs_normal_fun( ADFun& g, ADFun& a );
+	void abs_normal_fun( ADFun& g, ADFun& a ) const;
 	// ------------------- Deprecated -----------------------------
 
 	/// deprecated: assign a new operation sequence
