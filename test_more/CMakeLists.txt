@@ -19,6 +19,9 @@ ADD_SUBDIRECTORY(compare_c)
 # debug_rel tests
 ADD_SUBDIRECTORY(debug_rel)
 
+# cppad_for_tmb tests
+ADD_SUBDIRECTORY(cppad_for_tmb)
+
 # general tests
 ADD_SUBDIRECTORY(general)
 

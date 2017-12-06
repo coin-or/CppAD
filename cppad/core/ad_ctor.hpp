@@ -97,7 +97,6 @@ inline AD<Base>::AD(const AD &x)
 \endcode
 */
 
-// --------------------------------------------------------------------------
 /*!
 Default Constructor.
 
@@ -111,6 +110,7 @@ inline AD<Base>::AD(void)
 , taddr_(0)
 { }
 
+// --------------------------------------------------------------------------
 # ifdef CPPAD_FOR_TMB
 /*!
 Constructor from double.
@@ -131,7 +131,9 @@ inline AD<Base>::AD(const double &d)
 {	// check that this is a parameter
 	CPPAD_ASSERT_UNKNOWN( Parameter(*this) );
 }
+// --------------------------------------------------------------------------
 # else
+// --------------------------------------------------------------------------
 /*!
 Constructor from Base type.
 
@@ -156,7 +158,6 @@ inline AD<Base>::AD(const Base &b)
 }
 # endif
 // --------------------------------------------------------------------------
-
 
 /*!
 Constructor from an ADVec<Base> element drops the vector information.
