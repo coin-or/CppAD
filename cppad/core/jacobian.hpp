@@ -221,7 +221,11 @@ Vector ADFun<Base>::Jacobian(const Vector &x)
 
 	// choose the method with the least work
 	Vector jac( n * m );
+# ifdef CPPAD_FOR_TMB
+	if( workForward < workReverse )
+# else
 	if( workForward <= workReverse )
+# endif
 		JacobianFor(*this, x, jac);
 	else	JacobianRev(*this, x, jac);
 

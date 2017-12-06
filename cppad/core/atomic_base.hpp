@@ -1021,7 +1021,7 @@ $children%
 	example/atomic/reverse.cpp
 %$$
 $head Examples$$
-The file $cref atomic_forward.cpp$$ contains an example and test
+The file $cref atomic_reverse.cpp$$ contains an example and test
 that uses this routine.
 It returns true if the test passes and false if it fails.
 
