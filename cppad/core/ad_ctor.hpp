@@ -97,6 +97,7 @@ inline AD<Base>::AD(const AD &x)
 \endcode
 */
 
+// --------------------------------------------------------------------------
 /*!
 Default Constructor.
 
@@ -110,7 +111,27 @@ inline AD<Base>::AD(void)
 , taddr_(0)
 { }
 
+# ifdef CPPAD_FOR_TMB
+/*!
+Constructor from double.
 
+\param d
+is value corresponding to this AD object.
+The tape identifier will be an invalid tape identifier,
+so this object is initially a parameter.
+
+\par CPPAD_FOR_TMB
+This constructor is defined when CPPAD_FOR_TMB is defined.
+*/
+template <class Base>
+inline AD<Base>::AD(const double &d)
+: value_( Base(d) )
+, tape_id_(0)
+, taddr_(0)
+{	// check that this is a parameter
+	CPPAD_ASSERT_UNKNOWN( Parameter(*this) );
+}
+# else
 /*!
 Constructor from Base type.
 
@@ -121,6 +142,9 @@ Base type for this AD object.
 is the Base type value corresponding to this AD object.
 The tape identifier will be an invalid tape identifier,
 so this object is initially a parameter.
+
+\par CPPAD_FOR_TMB
+This constructor is defined when CPPAD_FOR_TMB is not defined.
 */
 template <class Base>
 inline AD<Base>::AD(const Base &b)
@@ -130,6 +154,9 @@ inline AD<Base>::AD(const Base &b)
 {	// check that this is a parameter
 	CPPAD_ASSERT_UNKNOWN( Parameter(*this) );
 }
+# endif
+// --------------------------------------------------------------------------
+
 
 /*!
 Constructor from an ADVec<Base> element drops the vector information.

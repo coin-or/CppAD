@@ -170,8 +170,14 @@ public:
 	// use default implicit copy constructor
 	// inline AD(const AD &x);
 
+# ifdef CPPAD_FOR_TMB
+	// TMB would rather have implicit construction from double,
+	// CppAD uses default constructor and assignment to double instead.
+	inline AD(const double &d);
+# else
 	// implicit construction from base type
 	inline AD(const Base &b);
+# endif
 
 	// implicit contructor from VecAD<Base>::reference
 	inline AD(const VecAD_reference<Base> &x);
