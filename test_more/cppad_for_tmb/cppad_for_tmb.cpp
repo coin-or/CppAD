@@ -134,8 +134,11 @@ bool prefer_reverse(void)
 // Special version of atomic_base so one functions works for multiple threads.
 //
 // algorithm that we are checkpoingint
+const size_t n_sum_ = 1000;
 void square_algo(const ad_vector& ax, ad_vector& ay)
-{	ay[0] =  ax[0] * ax[0];
+{	ay[0] = 0.0;
+	for(size_t i = 0; i < n_sum_; ++i)
+		ay[0] += ax[0];
 	return;
 }
 // inform CppAD if we are in parallel mode
@@ -171,37 +174,31 @@ bool multi_thread_checkpoint(void)
 	CppAD::thread_alloc::hold_memory(true);
 	CppAD::parallel_ad<double>();
 
+	// place to hold result for each thread
+	d_vector y(num_threads);
+	for(int thread = 0; thread < num_threads; thread++)
+		y[thread] = 0.0;
 
-	// repeat this test many times to get a random failure when
-	// threads are sharing the same ADFun object
-	for(size_t repeat = 0; repeat < 100; repeat++)
-	{
-		// place to hold result for each thread
-		d_vector y(num_threads);
-		for(int thread = 0; thread < num_threads; thread++)
-			y[thread] = 0.0;
+	# pragma omp parallel for
+	for(int thread = 0; thread < num_threads; thread++)
+	{	ad_vector au(n), av(m);
+		au[0] = 1.0;
+		CppAD::Independent(au);
+		atom_fun(au, av);
+		CppAD::ADFun<double> f(au, av);
+		//
+		d_vector x(n), v(m);
+		x[0]      = double( thread + 1 );
+		v         = f.Forward(0, x);
+		//
+		// this assigment has false sharing; i.e., will case cache resets
+		y[thread] = v[0];
+	}
 
-		# pragma omp parallel for
-		for(int thread = 0; thread < num_threads; thread++)
-		{	ad_vector au(n), av(m);
-			au[0] = 1.0;
-			CppAD::Independent(au);
-			atom_fun(au, av);
-			CppAD::ADFun<double> f(au, av);
-			//
-			d_vector x(n), v(m);
-			x[0]      = double( thread + 1 );
-			v         = f.Forward(0, x);
-			//
-			// this assigment has false sharing; i.e., will case cache resets
-			y[thread] = v[0];
-		}
-
-		// check the results
-		for(int thread = 0; thread < num_threads; thread++)
-		{	double check = double( (thread + 1) * (thread + 1) );
-			ok          &= check == y[thread];
-		}
+	// check the results
+	for(int thread = 0; thread < num_threads; thread++)
+	{	double check = double( n_sum_ * (thread + 1) );
+		ok          &= check == y[thread];
 	}
 	return ok;
 }
