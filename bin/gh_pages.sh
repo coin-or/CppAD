@@ -39,16 +39,17 @@ then
 fi
 #
 # copy gh_pages.sh to a build directory for safe keeping
-if [ ! -d build/tmp ]
+tmp_dir='build/tmp'
+if [ ! -d $tmp_dir ]
 then
-	mkdir -p build/tmp
+	mkdir -p $tmp_dir
 fi
-echo_eval cp bin/gh_pages.sh build/tmp/gh_pages.sh
+echo_eval cp bin/gh_pages.sh $tmp_dir/gh_pages.sh
 #
 # revert copy of bin/gh_pages.sh so that status for master is clean
 echo_eval git checkout bin/gh_pages.sh
 #
-if diff bin/gh_pages.sh build/tmp/gh_pages.sh > /dev/null
+if diff bin/gh_pages.sh $tmp_dir/gh_pages.sh > /dev/null
 then
 	gh_pages_changed='no'
 else
@@ -61,12 +62,12 @@ version=`bin/version.sh get`
 # build documentation
 bin/run_omhelp.sh htm clean gh_pages
 #
-# move doc to build/tmp/doc directory for safe keeping
-if [ -e 'build/tmp/doc' ]
+# move doc to $tmp_dir/doc directory for safe keeping
+if [ -e "$tmp_dir/doc" ]
 then
-	echo_eval rm -r build/tmp/doc
+	echo_eval rm -r $tmp_dir/doc
 fi
-echo_eval mv doc build/tmp/doc
+echo_eval mv doc $tmp_dir/doc
 # -----------------------------------------------------------------------------
 # checkout gh-pages
 echo_eval git checkout gh-pages
@@ -82,21 +83,21 @@ fi
 list=`ls -a doc`
 for file in $list
 do
-	if [ ! -e "build/tmp/doc/$file" ]
+	if [ ! -e "$tmp_dir/doc/$file" ]
 	then
 		echo_eval git rm doc/$file
 	fi
 done
 #
 # copy new version of files
-list=`ls build/tmp/doc`
+list=`ls $tmp_dir/doc`
 for file in $list
 do
 	if [ ! -e doc/$file ]
 	then
 		echo "git add doc/$file"
 	fi
-	cp build/tmp/$file doc/$file
+	cp $tmp_dir/doc/$file doc/$file
 done
 #
 # stage all the changes
@@ -108,7 +109,7 @@ if [ "$gh_pages_changed" == 'yes' ]
 then
 	echo 'The following will restore the bin/gh_pages.sh file'
 	echo '	git checkout master'
-	echo '	cp build/tmp/gh_pages.sh bin/gh_pages.sh'
+	echo "	cp $tmp_dir/gh_pages.sh bin/gh_pages.sh"
 fi
 echo 'bin/gh_pages.sh: OK'
 exit 0
