@@ -22,14 +22,18 @@ echo_eval() {
 	eval $*
 }
 # -----------------------------------------------------------------------------
+clean='no'
 htm='no'
 xml='no'
-clean='no'
 printable='no'
 gh_pages='no'
 while [ "$1" != '' ]
 do
 	case "$1" in
+
+		clean)
+		clean='yes'
+		;;
 
 		htm)
 		htm='yes'
@@ -37,10 +41,6 @@ do
 
 		xml)
 		xml='yes'
-		;;
-
-		clean)
-		clean='yes'
 		;;
 
 		printable)
@@ -59,7 +59,7 @@ do
 done
 if [ "$htm" == "$xml" ]
 then
-	echo 'usage: bin/run_omhelp.sh [htm] [xml] [clean] [printable] [gh_pages]'
+	echo 'usage: bin/run_omhelp.sh [clean] [htm] [xml] [printable] [gh_pages]'
 	echo 'order does not matter and htm or xml is present (but not both).'
 	exit 1
 fi
@@ -73,7 +73,6 @@ fi
 if [ "$clean" == 'yes' ]
 then
 	echo_eval rm -rf doc
-	exit 0
 fi
 #
 if [ ! -e doc ]
