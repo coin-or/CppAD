@@ -1,7 +1,7 @@
 #! /bin/bash -e
 # $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the
@@ -22,37 +22,73 @@ echo_eval() {
 	eval $*
 }
 # -----------------------------------------------------------------------------
-#
-if [ "$1" != "htm" ] && [ "$1" != "xml" ] && [ "$1" != "clean" ]
+htm='no'
+xml='no'
+clean='no'
+printable='no'
+gh_pages='no'
+while [ "$1" != '' ]
+do
+	case "$1" in
+
+		htm)
+		htm='yes'
+		;;
+
+		xml)
+		xml='yes'
+		;;
+
+		clean)
+		clean='yes'
+		;;
+
+		printable)
+		printable='yes'
+		;;
+
+		gh_pages)
+		gh_pages='yes'
+		;;
+
+		*)
+		echo "$1 is not a valid bin/run_omhelp.sh option"
+		exit 1
+	esac
+	shift
+done
+if [ "$htm" == "$xml" ]
 then
-	echo "usage: bin/run_omhelp.sh (htm|xml|clean) [printable]"
+	echo 'usage: bin/run_omhelp.sh [htm] [xml] [clean] [printable] [gh_pages]'
+	echo 'order does not matter and htm or xml is present (but not both).'
 	exit 1
 fi
-if [ "$2" != "" ] && [ "$2" != "printable" ]
+if [ "$htm" == 'yes' ]
 then
-	echo "usage: bin/run_omhelp.sh (htm|xml|clean) [printable]"
-	exit 1
+	ext='htm'
+else
+	ext='xml'
 fi
-if [ "$1" == "clean" ]
+# -----------------------------------------------------------------------------
+if [ "$clean" == 'yes' ]
 then
 	echo_eval rm -rf doc
 	exit 0
 fi
-ext="$1"
-if [ "$2" == 'printable' ]
-then
-	printable="yes"
-else
-	printable='no'
-fi
 #
-echo "Building doc/*.$ext printable=$printable"
 if [ ! -e doc ]
 then
 	echo_eval mkdir doc
-fi 
+fi
 echo_eval cd doc
-cmd="omhelp ../doc.omh -noframe -debug -l http://www.coin-or.org/CppAD/"
+# -----------------------------------------------------------------------------
+cmd='omhelp ../doc.omh -noframe -debug'
+if [ "$gh_pages" == 'yes' ]
+then
+	cmd="$cmd -image_link http://coin-or.github.io/CppAD/doc/index.html"
+else
+	cmd="$cmd -image_link http://www.coin-or.org/CppAD/"
+fi
 if [ "$ext" == "xml" ]
 then
 	cmd="$cmd -xml"
