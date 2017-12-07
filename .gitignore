@@ -3,6 +3,7 @@
 /ar-lib
 /autom4te.cache
 /bin/test_one.sh
+/bug/build/
 /cppad/configure.hpp
 /cppad/local/is_pod.hpp
 /doxyfile
