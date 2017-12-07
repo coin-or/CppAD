@@ -1,0 +1,403 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>Compute Sparse Jacobians Using Subgraphs</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Compute Sparse Jacobians Using Subgraphs">
+<meta name="keywords" id="keywords" content=" compute sparse jacobians using subgraphs syntax purpose method basevector sizevector boolvector f x uses forward subset select_domain select_range matrix_out example ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_subgraph_jac_rev_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://coin-or.github.io/CppAD/doc/index.html" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="sparse_sub_hes.cpp.htm" target="_top">Prev</a>
+</td><td><a href="subgraph_jac_rev.cpp.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>ADFun</option>
+<option>sparse_derivative</option>
+<option>subgraph_jac_rev</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>CppAD-&gt;</option>
+<option>Install</option>
+<option>Introduction</option>
+<option>AD</option>
+<option>ADFun</option>
+<option>preprocessor</option>
+<option>multi_thread</option>
+<option>utility</option>
+<option>ipopt_solve</option>
+<option>Example</option>
+<option>speed</option>
+<option>Appendix</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>ADFun-&gt;</option>
+<option>record_adfun</option>
+<option>drivers</option>
+<option>Forward</option>
+<option>Reverse</option>
+<option>sparsity_pattern</option>
+<option>sparse_derivative</option>
+<option>optimize</option>
+<option>abs_normal</option>
+<option>FunCheck</option>
+<option>check_for_nan</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>sparse_derivative-&gt;</option>
+<option>sparse_jac</option>
+<option>sparse_jacobian</option>
+<option>sparse_hes</option>
+<option>sparse_hessian</option>
+<option>subgraph_jac_rev</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down0(this)'>
+<option>subgraph_jac_rev-&gt;</option>
+<option>subgraph_jac_rev.cpp</option>
+</select>
+</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Syntax</option>
+<option>Purpose</option>
+<option>Method</option>
+<option>BaseVector</option>
+<option>SizeVector</option>
+<option>BoolVector</option>
+<option>f</option>
+<option>x</option>
+<option>Uses Forward</option>
+<option>subset</option>
+<option>select_domain</option>
+<option>select_range</option>
+<option>matrix_out</option>
+<option>Example</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>Compute Sparse Jacobians Using Subgraphs</big></big></b></center>
+<br>
+<b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
+
+<br>
+
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.subgraph_jac_rev(</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>subset</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+)</span></font></code>
+
+
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.subgraph_jac_rev(<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>select_domain</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>select_range</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>matrix_out</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+)</span></font></code>
+
+
+<br>
+<br>
+<b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
+<br>
+We use <small>@(@
+F : \B{R}^n \rightarrow \B{R}^m
+@)@</small> to denote the
+function corresponding to 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+.
+Here 
+<code><i><font color="black"><span style='white-space: nowrap'>n</span></font></i></code>
+ is the <a href="seq_property.htm#Domain" target="_top"><span style='white-space: nowrap'>domain</span></a>
+ size,
+and 
+<code><i><font color="black"><span style='white-space: nowrap'>m</span></font></i></code>
+ is the <a href="seq_property.htm#Range" target="_top"><span style='white-space: nowrap'>range</span></a>
+ size, or 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+.
+The syntax above takes advantage of sparsity when computing the Jacobian
+<small>@[@
+
+	J(x) = F^{(1)} (x)
+
+@]@</small>
+The first syntax computes the sparsity pattern and the value
+of the Jacobian at the same time.
+If one only wants the sparsity pattern,
+it should be faster to use <a href="subgraph_sparsity.htm" target="_top"><span style='white-space: nowrap'>subgraph_sparsity</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="Method" id="Method">Method</a></big></b>
+<br>
+This routine uses a subgraph technique. To be specific,
+for each dependent variable,
+it a subgraph of the operation sequence
+to determine which independent variables affect it.
+This avoids to overhead of performing set operations
+that is inherent in other methods for computing sparsity patterns.
+
+<br>
+<br>
+<b><big><a name="BaseVector" id="BaseVector">BaseVector</a></big></b>
+<br>
+The type 
+<code><i><font color="black"><span style='white-space: nowrap'>BaseVector</span></font></i></code>
+ is a <a href="simplevector.htm" target="_top"><span style='white-space: nowrap'>SimpleVector</span></a>
+ class with
+<a href="simplevector.htm#Elements of Specified Type" target="_top"><span style='white-space: nowrap'>elements&nbsp;of&nbsp;type</span></a>
+
+
+<code><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i></code>
+.
+
+<br>
+<br>
+<b><big><a name="SizeVector" id="SizeVector">SizeVector</a></big></b>
+<br>
+The type 
+<code><i><font color="black"><span style='white-space: nowrap'>SizeVector</span></font></i></code>
+ is a <a href="simplevector.htm" target="_top"><span style='white-space: nowrap'>SimpleVector</span></a>
+ class with
+<a href="simplevector.htm#Elements of Specified Type" target="_top"><span style='white-space: nowrap'>elements&nbsp;of&nbsp;type</span></a>
+
+<code><font color="blue">size_t</font></code>.
+
+<br>
+<br>
+<b><big><a name="BoolVector" id="BoolVector">BoolVector</a></big></b>
+<br>
+The type 
+<code><i><font color="black"><span style='white-space: nowrap'>BoolVector</span></font></i></code>
+ is a <a href="simplevector.htm" target="_top"><span style='white-space: nowrap'>SimpleVector</span></a>
+ class with
+<a href="simplevector.htm#Elements of Specified Type" target="_top"><span style='white-space: nowrap'>elements&nbsp;of&nbsp;type</span></a>
+
+<code><font color="blue">bool</font></code>.
+
+<br>
+<br>
+<b><big><a name="f" id="f">f</a></big></b>
+<br>
+This object has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ADFun&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+Note that the Taylor coefficients stored in 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+ are affected
+by this operation; see
+<a href="sparse_jac.htm#Uses Forward" target="_top"><span style='white-space: nowrap'>uses&nbsp;forward</span></a>
+ below.
+
+<br>
+<br>
+<b><big><a name="x" id="x">x</a></big></b>
+<br>
+This argument has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>BaseVector</span></font></i><font color="blue"><span style='white-space: nowrap'>&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+It is the value of 
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+ at which we are computing the Jacobian.
+
+<br>
+<br>
+<b><big><a name="Uses Forward" id="Uses Forward">Uses Forward</a></big></b>
+<br>
+After each call to <a href="forward.htm" target="_top"><span style='white-space: nowrap'>Forward</span></a>
+,
+the object 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+ contains the corresponding
+<a href="glossary.htm#Taylor Coefficient" target="_top"><span style='white-space: nowrap'>Taylor&nbsp;coefficients</span></a>
+.
+After a call to <code><font color="blue">sparse_jac_forward</font></code> or <code><font color="blue">sparse_jac_rev</font></code>,
+the zero order coefficients correspond to
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.Forward(0,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+All the other forward mode coefficients are unspecified.
+
+<br>
+<br>
+<b><big><a name="subset" id="subset">subset</a></big></b>
+<br>
+This argument has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sparse_rcv&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>SizeVector</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>BaseVector</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>subset</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+Its row size is 
+<code><i><font color="black"><span style='white-space: nowrap'>subset</span></font></i><font color="blue"><span style='white-space: nowrap'>.nr()&nbsp;==&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>m</span></font></i></code>
+,
+and its column size is 
+<code><i><font color="black"><span style='white-space: nowrap'>subset</span></font></i><font color="blue"><span style='white-space: nowrap'>.nc()&nbsp;==&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n</span></font></i></code>
+.
+It specifies which elements of the Jacobian are computed.
+The input elements in its value vector
+
+<code><i><font color="black"><span style='white-space: nowrap'>subset</span></font></i><font color="blue"><span style='white-space: nowrap'>.val()</span></font></code>
+ do not matter.
+Upon return it contains the value of the corresponding elements
+of the Jacobian.
+
+<br>
+<br>
+<b><big><a name="select_domain" id="select_domain">select_domain</a></big></b>
+<br>
+The argument 
+<code><i><font color="black"><span style='white-space: nowrap'>select_domain</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>BoolVector</span></font></i><font color="blue"><span style='white-space: nowrap'>&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>select_domain</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+It has size <small>@(@
+n
+@)@</small> and specifies which independent variables
+to include.
+
+<br>
+<br>
+<b><big><a name="select_range" id="select_range">select_range</a></big></b>
+<br>
+The argument 
+<code><i><font color="black"><span style='white-space: nowrap'>select_range</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>BoolVector</span></font></i><font color="blue"><span style='white-space: nowrap'>&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>select_range</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+It has size <small>@(@
+m
+@)@</small> and specifies which components of the range
+to include in the calculation.
+A subgraph is built for each dependent variable and the selected set
+of independent variables.
+
+<br>
+<br>
+<b><big><a name="matrix_out" id="matrix_out">matrix_out</a></big></b>
+<br>
+This argument has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sparse_rcv&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>SizeVector</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>BaseVector</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>matrix_out</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+This input value of 
+<code><i><font color="black"><span style='white-space: nowrap'>matrix_out</span></font></i></code>
+ does not matter.
+Upon return 
+<code><i><font color="black"><span style='white-space: nowrap'>matrix_out</span></font></i></code>
+ is
+<a href="sparse_rcv.htm" target="_top"><span style='white-space: nowrap'>sparse&nbsp;matrix</span></a>
+ representation of <small>@(@
+F^{(1)} (x)
+@)@</small>.
+The matrix has <small>@(@
+m
+@)@</small> rows, <small>@(@
+n
+@)@</small> columns.
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>select_domain</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>j</span></font></i><font color="blue"><span style='white-space: nowrap'>]</span></font></code>
+ is true,
+
+<code><i><font color="black"><span style='white-space: nowrap'>select_range</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>]</span></font></code>
+ is true, and
+<small>@(@
+F_i (x)
+@)@</small> depends on <small>@(@
+x_j
+@)@</small>,
+then the pair <small>@(@
+(i, j)
+@)@</small> is in 
+<code><i><font color="black"><span style='white-space: nowrap'>matrix_out</span></font></i></code>
+.
+For each 
+<code><i><font color="black"><span style='white-space: nowrap'>k</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;0&nbsp;,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>...</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>matrix_out</span></font></i><font color="blue"><span style='white-space: nowrap'>.nnz()</span></font></code>
+, let
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>matrix_out</span></font></i><font color="blue"><span style='white-space: nowrap'>.row()[</span></font><i><font color="black"><span style='white-space: nowrap'>k</span></font></i><font color="blue"><span style='white-space: nowrap'>]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>j</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>matrix_out</span></font></i><font color="blue"><span style='white-space: nowrap'>.col()[</span></font><i><font color="black"><span style='white-space: nowrap'>k</span></font></i><font color="blue"><span style='white-space: nowrap'>]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>v</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>matrix_out</span></font></i><font color="blue"><span style='white-space: nowrap'>.val()[</span></font><i><font color="black"><span style='white-space: nowrap'>k</span></font></i><font color="blue"><span style='white-space: nowrap'>]<br>
+</span></font></code>
+It follows that the partial of <small>@(@
+F_i (x)
+@)@</small> with respect to
+<small>@(@
+x_j
+@)@</small> is equal to <small>@(@
+v
+@)@</small>.
+
+
+<br>
+<br>
+<b><big><a name="Example" id="Example">Example</a></big></b>
+
+<br>
+The file <a href="subgraph_jac_rev.cpp.htm" target="_top"><span style='white-space: nowrap'>subgraph_jac_rev.cpp</span></a>
+
+is an example and test of <code><font color="blue">subgraph_jac_rev</font></code>.
+It returns <code><font color="blue">true</font></code>, if it succeeds, and <code><font color="blue">false</font></code> otherwise.
+
+
+
+<hr>Input File: cppad/core/subgraph_jac_rev.hpp
+
+</body>
+</html>

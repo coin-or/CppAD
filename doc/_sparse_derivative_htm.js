@@ -39,7 +39,8 @@ var list_down0 = [
 'sparse_jac.htm',
 'sparse_jacobian.htm',
 'sparse_hes.htm',
-'sparse_hessian.htm'
+'sparse_hessian.htm',
+'subgraph_jac_rev.htm'
 ];
 var list_current0 = [
 'sparse_derivative.htm#Preferred Sparsity Patterns',

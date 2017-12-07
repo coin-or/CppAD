@@ -38,6 +38,7 @@ var list_down2 = [
 'stack_machine.cpp.htm'
 ];
 var list_down1 = [
+'eigen_plugin.hpp.htm',
 'eigen_array.cpp.htm',
 'eigen_det.cpp.htm'
 ];

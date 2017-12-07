@@ -45,7 +45,8 @@ var list_down0 = [
 'for_hes_sparsity.htm',
 'forsparsehes.htm',
 'dependency.cpp.htm',
-'rc_sparsity.cpp.htm'
+'rc_sparsity.cpp.htm',
+'subgraph_sparsity.htm'
 ];
 var list_current0 = [
 'sparsity_pattern.htm#Preferred Sparsity Patterns',

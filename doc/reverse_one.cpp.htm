@@ -8,7 +8,7 @@ MathJax.Hub.Config({
 });
 </script>
 <script type='text/javascript' src=
-'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=default'
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
 >
 </script>
 <head>
@@ -29,7 +29,7 @@ A:active { color : purple }
 <body>
 <table><tr>
 <td>
-<a href="../index.html" target="_top"><img border="0" src="_image.gif"></a>
+<a href="http://coin-or.github.io/CppAD/doc/index.html" target="_top"><img border="0" src="_image.gif"></a>
 </td>
 <td><a href="reverse_one.htm" target="_top">Prev</a>
 </td><td><a href="reverse_two.htm" target="_top">Next</a>
@@ -74,6 +74,7 @@ A:active { color : purple }
 <option>reverse_one</option>
 <option>reverse_two</option>
 <option>reverse_any</option>
+<option>subgraph_reverse</option>
 </select>
 </td>
 <td>
@@ -107,28 +108,28 @@ A:active { color : purple }
 
      <i><font color="#9A1900">// domain space vector</font></i>
      <font color="#008080">size_t</font> n <font color="#990000">=</font> <font color="#993399">2</font><font color="#990000">;</font>
-     <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font>AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;)</font> <b><font color="#000000">X</font></b><font color="#990000">(</font>n<font color="#990000">);</font>
-     X<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">.;</font>
-     X<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">.;</font>
+     <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font>AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;)</font> <b><font color="#000000">ax</font></b><font color="#990000">(</font>n<font color="#990000">);</font>
+     ax<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">.;</font>
+     ax<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">.;</font>
 
      <i><font color="#9A1900">// declare independent variables and start recording</font></i>
-     CppAD<font color="#990000">::</font><b><font color="#000000">Independent</font></b><font color="#990000">(</font>X<font color="#990000">);</font>
+     CppAD<font color="#990000">::</font><b><font color="#000000">Independent</font></b><font color="#990000">(</font>ax<font color="#990000">);</font>
 
      <i><font color="#9A1900">// range space vector</font></i>
      <font color="#008080">size_t</font> m <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font>
-     <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font>AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;)</font> <b><font color="#000000">Y</font></b><font color="#990000">(</font>m<font color="#990000">);</font>
-     Y<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> X<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">*</font> X<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">*</font> X<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">];</font>
+     <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font>AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;)</font> <b><font color="#000000">ay</font></b><font color="#990000">(</font>m<font color="#990000">);</font>
+     ay<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> ax<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">*</font> ax<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">*</font> ax<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">];</font>
 
-     <i><font color="#9A1900">// create f : X -&gt; Y and stop recording</font></i>
-     CppAD<font color="#990000">::</font><font color="#008080">ADFun&lt;double&gt;</font> <b><font color="#000000">f</font></b><font color="#990000">(</font>X<font color="#990000">,</font> Y<font color="#990000">);</font>
+     <i><font color="#9A1900">// create f : x -&gt; y and stop recording</font></i>
+     CppAD<font color="#990000">::</font><font color="#008080">ADFun&lt;double&gt;</font> <b><font color="#000000">f</font></b><font color="#990000">(</font>ax<font color="#990000">,</font> ay<font color="#990000">);</font>
 
      <i><font color="#9A1900">// use first order reverse mode to evaluate derivative of y[0]</font></i>
-     <i><font color="#9A1900">// and use the values in X for the independent variables.</font></i>
+     <i><font color="#9A1900">// and use the values in x for the independent variables.</font></i>
      <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font><font color="#009900">double</font><font color="#990000">)</font> <b><font color="#000000">w</font></b><font color="#990000">(</font>m<font color="#990000">),</font> <b><font color="#000000">dw</font></b><font color="#990000">(</font>n<font color="#990000">);</font>
      w<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">.;</font>
      dw   <font color="#990000">=</font> f<font color="#990000">.</font><b><font color="#000000">Reverse</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">,</font> w<font color="#990000">);</font>
-     ok  <font color="#990000">&amp;=</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>dw<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">,</font> <font color="#993399">2</font><font color="#990000">.*</font>X<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]*</font>X<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">],</font> eps99<font color="#990000">,</font> eps99<font color="#990000">);</font>
-     ok  <font color="#990000">&amp;=</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>dw<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">,</font>    X<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]*</font>X<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">],</font> eps99<font color="#990000">,</font> eps99<font color="#990000">);</font>
+     ok  <font color="#990000">&amp;=</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>dw<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">,</font> <font color="#993399">2</font><font color="#990000">.*</font>ax<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]*</font>ax<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">],</font> eps99<font color="#990000">,</font> eps99<font color="#990000">);</font>
+     ok  <font color="#990000">&amp;=</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>dw<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">,</font>    ax<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]*</font>ax<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">],</font> eps99<font color="#990000">,</font> eps99<font color="#990000">);</font>
 
      <i><font color="#9A1900">// use zero order forward mode to evaluate y at x = (3, 4)</font></i>
      <i><font color="#9A1900">// and use the template parameter Vector for the vector type</font></i>

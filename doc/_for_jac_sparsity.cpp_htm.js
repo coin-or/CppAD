@@ -34,7 +34,8 @@ var list_down2 = [
 'for_hes_sparsity.htm',
 'forsparsehes.htm',
 'dependency.cpp.htm',
-'rc_sparsity.cpp.htm'
+'rc_sparsity.cpp.htm',
+'subgraph_sparsity.htm'
 ];
 var list_down1 = [
 'for_jac_sparsity.cpp.htm'

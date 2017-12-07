@@ -8,14 +8,14 @@ MathJax.Hub.Config({
 });
 </script>
 <script type='text/javascript' src=
-'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=default'
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
 >
 </script>
 <head>
-<title>Computing Sparse Jacobian: Example and Test</title>
+<title>Computing Sparse Jacobian Using Forward Mode: Example and Test</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
-<meta name="description" id="description" content="Computing Sparse Jacobian: Example and Test">
-<meta name="keywords" id="keywords" content=" computing sparse jacobian: example test ">
+<meta name="description" id="description" content="Computing Sparse Jacobian Using Forward Mode: Example and Test">
+<meta name="keywords" id="keywords" content=" computing sparse jacobian using forward mode: example test ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -29,7 +29,7 @@ A:active { color : purple }
 <body>
 <table><tr>
 <td>
-<a href="../index.html" target="_top"><img border="0" src="_image.gif"></a>
+<a href="http://coin-or.github.io/CppAD/doc/index.html" target="_top"><img border="0" src="_image.gif"></a>
 </td>
 <td><a href="sparse_jac.htm" target="_top">Prev</a>
 </td><td><a href="sparse_jac_rev.cpp.htm" target="_top">Next</a>
@@ -75,6 +75,7 @@ A:active { color : purple }
 <option>sparse_jacobian</option>
 <option>sparse_hes</option>
 <option>sparse_hessian</option>
+<option>subgraph_jac_rev</option>
 </select>
 </td>
 <td>
@@ -96,7 +97,7 @@ A:active { color : purple }
 \newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@
 
 
-<center><b><big><big>Computing Sparse Jacobian: Example and Test</big></big></b></center>
+<center><b><big><big>Computing Sparse Jacobian Using Forward Mode: Example and Test</big></big></b></center>
 <code><font color="blue"><pre><tt><b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/cppad.hpp&gt;</font>
 <font color="#009900">bool</font> <b><font color="#000000">sparse_jac_for</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
 <font color="#FF0000">{</font>    <font color="#009900">bool</font> ok <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>

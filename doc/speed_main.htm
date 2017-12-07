@@ -8,14 +8,14 @@ MathJax.Hub.Config({
 });
 </script>
 <script type='text/javascript' src=
-'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=default'
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
 >
 </script>
 <head>
 <title>Running the Speed Test Program</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Running the Speed Test Program">
-<meta name="keywords" id="keywords" content=" running the speed test program cppad uniform_01 syntax purpose package ad double profile correct seed global options onetape optimize atomic memory sparsity boolsparsity revsparsity colpack correctness results n_sweep link functions ">
+<meta name="keywords" id="keywords" content=" running the speed test program cppad uniform_01 syntax purpose package ad double profile correct seed global options onetape memory optimize atomic hes2jac subgraph sparsity boolsparsity revsparsity subsparsity colpack correctness results n_sweep link functions ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -29,7 +29,7 @@ A:active { color : purple }
 <body>
 <table><tr>
 <td>
-<a href="../index.html" target="_top"><img border="0" src="_image.gif"></a>
+<a href="http://coin-or.github.io/CppAD/doc/index.html" target="_top"><img border="0" src="_image.gif"></a>
 </td>
 <td><a href="speed.htm" target="_top">Prev</a>
 </td><td><a href="link_det_lu.htm" target="_top">Next</a>
@@ -107,12 +107,15 @@ A:active { color : purple }
 <option>seed</option>
 <option>Global Options</option>
 <option>---..onetape</option>
+<option>---..memory</option>
 <option>---..optimize</option>
 <option>---..atomic</option>
-<option>---..memory</option>
+<option>---..hes2jac</option>
+<option>---..subgraph</option>
 <option>Sparsity Options</option>
 <option>---..boolsparsity</option>
 <option>---..revsparsity</option>
+<option>---..subsparsity</option>
 <option>---..colpack</option>
 <option>Correctness Results</option>
 <option>Speed Results</option>
@@ -256,7 +259,8 @@ all of the speed tests are run.
 <br>
 The command line argument 
 <code><i><font color="black"><span style='white-space: nowrap'>seed</span></font></i></code>
- is a positive integer.
+ is an unsigned integer
+(all its characters are between 0 and 9).
 The random number simulator <a href="uniform_01.htm" target="_top"><span style='white-space: nowrap'>uniform_01</span></a>
  is initialized with
 the call
@@ -274,13 +278,23 @@ This global variable has prototype
 <pre style='display:inline'><tt>
      <b><font color="#0000FF">extern</font></b> std<font color="#990000">::</font><font color="#008080">map&lt;std::string, bool&gt;</font> global_option<font color="#990000">;</font>
 </tt></pre>
+The syntax
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;global_option[&quot;</span></font><i><font color="black"><span style='white-space: nowrap'>option</span></font></i><font color="blue"><span style='white-space: nowrap'>&quot;]<br>
+</span></font></code>
+has the value true, if 
+<code><i><font color="black"><span style='white-space: nowrap'>option</span></font></i></code>
+ is present,
+and false otherwise.
 This is true for each option that follows 
 <code><i><font color="black"><span style='white-space: nowrap'>seed</span></font></i></code>
 .
 The order of the options does not matter and the list can be empty.
-Each option, must be separate
-command line argument to the main program.
-The documentation below specifics how CppAD uses these options,
+Each option, is be a separate command line argument to the main program.
+The documentation below specifics how
+<a href="speed_cppad.htm" target="_top"><span style='white-space: nowrap'>speed_cppad</span></a>
+ uses these options,
 see the examples in <a href="speed_adolc.htm" target="_top"><span style='white-space: nowrap'>speed_adolc</span></a>
  for how another package might
 uses these options.
@@ -289,13 +303,9 @@ uses these options.
 <br>
 <b><a name="Global Options.onetape" id="Global Options.onetape">onetape</a></b>
 <br>
-If the option <code><font color="blue">onetape</font></code> is present,
-<code><font color='blue'><pre style='display:inline'> 
-     global_option[&quot;onetape&quot;]
-</pre></font></code>
-is true and otherwise it is false.
-If this external symbol is true,
-CppAD will use one taping of the operation
+If this option is present,
+<a href="speed_cppad.htm" target="_top"><span style='white-space: nowrap'>speed_cppad</span></a>
+ will use one taping of the operation
 sequence for all the repetitions of that speed test.
 Otherwise, the
 <a href="glossary.htm#Operation.Sequence" target="_top"><span style='white-space: nowrap'>operation&nbsp;sequence</span></a>
@@ -305,59 +315,83 @@ will be retaped for each test repetition.
 <br>
 </span></code>All of the tests, except <a href="link_det_lu.htm" target="_top"><span style='white-space: nowrap'>det_lu</span></a>
 ,
-have a fixed operations sequence.
+have the same operation sequence for each repetition.
 The operation sequence for <code><font color="blue">det_lu</font></code>
-may be different for each repetition of the test because it
-depends on the matrix for which the determinant is being calculated.
-For this reason, the CppAD test
-<a href="cppad_det_lu.cpp.htm" target="_top"><span style='white-space: nowrap'>cppad_det_lu.cpp</span></a>
- returns false
-(indicating that the test not implemented)
+may be different because it depends on the matrix for which the determinant
+is being calculated.
+For this reason, <a href="cppad_det_lu.cpp.htm" target="_top"><span style='white-space: nowrap'>cppad_det_lu.cpp</span></a>
+ returns false,
+to indicate that the test not implemented,
 when <code><font color="blue">global_onetape</font></code> is true.
-
-<br>
-<br>
-<b><a name="Global Options.optimize" id="Global Options.optimize">optimize</a></b>
-<br>
-If the option <code><font color="blue">optimize</font></code> is present,
-<code><font color='blue'><pre style='display:inline'> 
-     global_option[&quot;optimize&quot;]
-</pre></font></code>
-is true and otherwise it is false.
-If this external symbol is true,
-CppAD will optimize the operation sequence before doing computations.
-If it is false, this optimization will not be done.
-
-<br>
-<br>
-<b><a name="Global Options.atomic" id="Global Options.atomic">atomic</a></b>
-<br>
-If the option <code><font color="blue">atomic</font></code> is present,
-<code><font color='blue'><pre style='display:inline'> 
-     global_option[&quot;atomic&quot;]
-</pre></font></code>
-is true and otherwise it is false.
-If this external symbol is true, CppAD will use its user defined
-<a href="atomic_base.htm" target="_top"><span style='white-space: nowrap'>atomic</span></a>
- operation is used for the test.
-If no such atomic operation exists,
-and atomic is chosen, CppAD returns false for the test.
 
 <br>
 <br>
 <b><a name="Global Options.memory" id="Global Options.memory">memory</a></b>
 <br>
-If the option <code><font color="blue">memory</font></code> is present,
-<code><font color='blue'><pre style='display:inline'> 
-     global_option[&quot;memory&quot;]
-</pre></font></code>
-is true and otherwise it is false.
-If it is true, the CppAD
+This option is special because individual CppAD speed tests need not do
+anything different if this option is true or false.
+If the <code><font color="blue">memory</font></code> option is present, the CppAD
 <a href="ta_hold_memory.htm" target="_top"><span style='white-space: nowrap'>hold_memory</span></a>
  routine will be called by
-the main program before any of the tests are executed.
+the speed test main program before any of the tests are executed
 This should make the CppAD <code><font color="blue">thread_alloc</font></code> allocator faster.
-If it is false, CppAD will used standard memory allocation.
+If it is not present, CppAD will used standard memory allocation.
+Another package might use this option for a different
+memory allocation method.
+
+<br>
+<br>
+<b><a name="Global Options.optimize" id="Global Options.optimize">optimize</a></b>
+<br>
+If this option is present,
+CppAD will <a href="optimize.htm" target="_top"><span style='white-space: nowrap'>optimize</span></a>
+
+the operation sequence before doing computations.
+If it is false, this optimization will not be done.
+Note that this option is usually slower unless it is combined with the
+<code><font color="blue">onetape</font></code> option.
+
+<br>
+<br>
+<b><a name="Global Options.atomic" id="Global Options.atomic">atomic</a></b>
+<br>
+If this option is present,
+CppAD will use a user defined
+<a href="atomic_base.htm" target="_top"><span style='white-space: nowrap'>atomic</span></a>
+ operation is used for the test.
+So far, CppAD has only implemented
+the <a href="link_mat_mul.htm" target="_top"><span style='white-space: nowrap'>mat_mul</span></a>
+ test as an atomic operation.
+
+<br>
+<br>
+<b><a name="Global Options.hes2jac" id="Global Options.hes2jac">hes2jac</a></b>
+<br>
+If this option is present,
+<a href="speed_cppad.htm" target="_top"><span style='white-space: nowrap'>speed_cppad</span></a>
+ will compute hessians as the Jacobian
+of the gradient.
+This is accomplished using
+<a href="mul_level.htm" target="_top"><span style='white-space: nowrap'>multiple&nbsp;levels</span></a>
+ of AD.
+So far, CppAD has only implemented
+the <a href="link_sparse_hessian.htm" target="_top"><span style='white-space: nowrap'>sparse_hessian</span></a>
+
+test in this manner.
+
+<br>
+<br>
+<b><a name="Global Options.subgraph" id="Global Options.subgraph">subgraph</a></b>
+<br>
+If this option is present,
+<a href="speed_cppad.htm" target="_top"><span style='white-space: nowrap'>speed_cppad</span></a>
+ will compute sparse Jacobians using subgraphs.
+The CppAD <a href="link_sparse_jacobian.htm" target="_top"><span style='white-space: nowrap'>sparse_jacobian</span></a>
+
+test is implemented for this option.
+In addition, the CppAD <a href="link_sparse_hessian.htm" target="_top"><span style='white-space: nowrap'>sparse_hessian</span></a>
+
+test is implemented for this option when <code><font color="blue">hes2jac</font></code> is present.
 
 <br>
 <br>
@@ -368,56 +402,47 @@ The following options only apply to the
  and
 <a href="link_sparse_hessian.htm" target="_top"><span style='white-space: nowrap'>sparse_hessian</span></a>
  tests.
-The other tests will ignore these options:
+The other tests return false when any of these options
+are present.
 
 <br>
 <br>
 <b><a name="Sparsity Options.boolsparsity" id="Sparsity Options.boolsparsity">boolsparsity</a></b>
 <br>
-If the option <code><font color="blue">boolsparsity</font></code> is present,
-<code><font color='blue'><pre style='display:inline'> 
-     global_option[&quot;boolsparsity&quot;]
-</pre></font></code>
-is true and otherwise it is false.
-If it is true, CppAD will use a
-<a href="glossary.htm#Sparsity Pattern.Boolean Vector" target="_top"><span style='white-space: nowrap'>vector&nbsp;of&nbsp;bool</span></a>
+If this option is present, CppAD will use a
+<a href="glossary.htm#Sparsity Pattern.Boolean Vector" target="_top"><span style='white-space: nowrap'>vectors&nbsp;of&nbsp;bool</span></a>
 
-for its sparsity patterns.
-Otherwise it will use a
-<a href="glossary.htm#Sparsity Pattern.Vector of Sets" target="_top"><span style='white-space: nowrap'>vector&nbsp;of&nbsp;sets</span></a>
+to compute sparsity patterns.
+Otherwise CppAD will use
+<a href="glossary.htm#Sparsity Pattern.Vector of Sets" target="_top"><span style='white-space: nowrap'>vectors&nbsp;of&nbsp;sets</span></a>
 .
 
 <br>
 <br>
 <b><a name="Sparsity Options.revsparsity" id="Sparsity Options.revsparsity">revsparsity</a></b>
 <br>
-If the option <code><font color="blue">revsparsity</font></code> is present,
-<code><font color='blue'><pre style='display:inline'> 
-     global_option[&quot;revsparsity&quot;]
-</pre></font></code>
-is true and otherwise it is false.
-If it is true, CppAD will use a
-<a href="forsparsejac.htm" target="_top"><span style='white-space: nowrap'>ForSparseJac</span></a>
- and <a href="forsparsehes.htm" target="_top"><span style='white-space: nowrap'>ForSparseHes</span></a>
- where possible
-for its sparsity patterns.
-Otherwise it will use <a href="revsparsejac.htm" target="_top"><span style='white-space: nowrap'>RevSparseJac</span></a>
- and <a href="revsparsehes.htm" target="_top"><span style='white-space: nowrap'>RevSparseHes</span></a>
+If this option is present,
+CppAD will use reverse mode for to compute sparsity patterns.
+Otherwise CppAD will use forward mode.
+
+<br>
+<br>
+<b><a name="Sparsity Options.subsparsity" id="Sparsity Options.subsparsity">subsparsity</a></b>
+<br>
+If this option is present,
+CppAD will use subgraphs to compute sparsity patterns.
+If either the <code><font color="blue">boolsparsity</font></code> or <code><font color="blue">revsparsity</font></code> is also present,
+the CppAD speed tests will return false; i.e., these options are not
+supported by <a href="subgraph_sparsity.htm" target="_top"><span style='white-space: nowrap'>subgraph_sparsity</span></a>
 .
 
 <br>
 <br>
 <b><a name="Sparsity Options.colpack" id="Sparsity Options.colpack">colpack</a></b>
 <br>
-If the option <code><font color="blue">colpack</font></code> is present,
-<code><font color='blue'><pre style='display:inline'> 
-     global_option[&quot;colpack&quot;]
-</pre></font></code>
-is true and otherwise it is false.
-If this external symbol is true,
+If this option is present,
 CppAD will use <a href="colpack_prefix.htm" target="_top"><span style='white-space: nowrap'>colpack</span></a>
- to do the coloring
-for its
+ to do the coloring.
 Otherwise, it will use it's own coloring algorithm.
 
 <br>

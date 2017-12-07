@@ -8,7 +8,7 @@ MathJax.Hub.Config({
 });
 </script>
 <script type='text/javascript' src=
-'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=default'
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
 >
 </script>
 <head>
@@ -29,7 +29,7 @@ A:active { color : purple }
 <body>
 <table><tr>
 <td>
-<a href="../index.html" target="_top"><img border="0" src="_image.gif"></a>
+<a href="http://coin-or.github.io/CppAD/doc/index.html" target="_top"><img border="0" src="_image.gif"></a>
 </td>
 <td><a href="cppad_mat_mul.cpp.htm" target="_top">Prev</a>
 </td><td><a href="cppad_poly.cpp.htm" target="_top">Next</a>
@@ -135,10 +135,22 @@ See <a href="link_ode.htm" target="_top"><span style='white-space: nowrap'>link_
      CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;</font>      <font color="#990000">&amp;</font>jacobian
 <font color="#990000">)</font>
 <font color="#FF0000">{</font>
-     <i><font color="#9A1900">// speed test global option values</font></i>
-     <b><font color="#0000FF">if</font></b><font color="#990000">(</font> global_option<font color="#990000">[</font><font color="#FF0000">"atomic"</font><font color="#990000">]</font> <font color="#990000">)</font>
-          <b><font color="#0000FF">return</font></b> <b><font color="#0000FF">false</font></b><font color="#990000">;</font>
-
+     <i><font color="#9A1900">// --------------------------------------------------------------------</font></i>
+     <i><font color="#9A1900">// check global options</font></i>
+     <b><font color="#0000FF">const</font></b> <font color="#009900">char</font><font color="#990000">*</font> valid<font color="#990000">[]</font> <font color="#990000">=</font> <font color="#FF0000">{</font> <font color="#FF0000">"memory"</font><font color="#990000">,</font> <font color="#FF0000">"onetape"</font><font color="#990000">,</font> <font color="#FF0000">"optimize"</font><font color="#FF0000">}</font><font color="#990000">;</font>
+     <font color="#008080">size_t</font> n_valid <font color="#990000">=</font> <b><font color="#0000FF">sizeof</font></b><font color="#990000">(</font>valid<font color="#990000">)</font> <font color="#990000">/</font> <b><font color="#0000FF">sizeof</font></b><font color="#990000">(</font>valid<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]);</font>
+     <b><font color="#0000FF">typedef</font></b> std<font color="#990000">::</font>map<font color="#990000">&lt;</font>std<font color="#990000">::</font>string<font color="#990000">,</font> <font color="#009900">bool</font><font color="#990000">&gt;::</font><font color="#008080">iterator</font> iterator<font color="#990000">;</font>
+     <i><font color="#9A1900">//</font></i>
+     <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">iterator</font> itr<font color="#990000">=</font>global_option<font color="#990000">.</font><b><font color="#000000">begin</font></b><font color="#990000">();</font> itr<font color="#990000">!=</font>global_option<font color="#990000">.</font><b><font color="#000000">end</font></b><font color="#990000">();</font> <font color="#990000">++</font>itr<font color="#990000">)</font>
+     <font color="#FF0000">{</font>    <b><font color="#0000FF">if</font></b><font color="#990000">(</font> itr<font color="#990000">-&gt;</font>second <font color="#990000">)</font>
+          <font color="#FF0000">{</font>    <font color="#009900">bool</font> ok <font color="#990000">=</font> <b><font color="#0000FF">false</font></b><font color="#990000">;</font>
+               <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> n_valid<font color="#990000">;</font> i<font color="#990000">++)</font>
+                    ok <font color="#990000">|=</font> itr<font color="#990000">-&gt;</font>first <font color="#990000">==</font> valid<font color="#990000">[</font>i<font color="#990000">];</font>
+               <b><font color="#0000FF">if</font></b><font color="#990000">(</font> <font color="#990000">!</font> ok <font color="#990000">)</font>
+                    <b><font color="#0000FF">return</font></b> <b><font color="#0000FF">false</font></b><font color="#990000">;</font>
+          <font color="#FF0000">}</font>
+     <font color="#FF0000">}</font>
+     <i><font color="#9A1900">// --------------------------------------------------------------------</font></i>
      <i><font color="#9A1900">// optimization options: no conditional skips or compare operators</font></i>
      std<font color="#990000">::</font><font color="#008080">string</font> options<font color="#990000">=</font><font color="#FF0000">"no_compare_op"</font><font color="#990000">;</font>
      <i><font color="#9A1900">// --------------------------------------------------------------------</font></i>

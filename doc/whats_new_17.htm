@@ -8,14 +8,14 @@ MathJax.Hub.Config({
 });
 </script>
 <script type='text/javascript' src=
-'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=default'
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
 >
 </script>
 <head>
 <title>Changes and Additions to CppAD During 2017</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Changes and Additions to CppAD During 2017">
-<meta name="keywords" id="keywords" content=" changes additions to cppad during 2017 api 07-25 07-03 07-01 06-28 06-11 06-10 06-07 06-04 06-03 06-01 05-29 05-19 05-14 05-12 04-08 04-02 03-31 03-29 03-25 03-20 03-13 03-11 03-10 03-06 03-04 02-26 02-21 02-19 02-15 02-13 02-11 02-10 02-09 02-08 02-05 02-03 02-02 02-01 01-30 01-29 01-27 01-19 01-18 01-17 ">
+<meta name="keywords" id="keywords" content=" changes additions to cppad during 2017 api 12-06 12-05 12-04 12-01 11-30 11-23 11-20 11-19 11-15 11-13 11-12 11-08 11-06 11-04 10-23 09-16 08-30 08-29 08-09 08-08 07-25 07-03 07-01 06-28 06-11 06-10 06-07 06-04 06-03 06-01 05-29 05-19 05-14 05-12 04-08 04-02 03-31 03-29 03-25 03-20 03-13 03-11 03-10 03-06 03-04 02-26 02-21 02-19 02-15 02-13 02-11 02-10 02-09 02-08 02-05 02-03 02-02 02-01 01-30 01-29 01-27 01-19 01-18 01-17 ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -29,7 +29,7 @@ A:active { color : purple }
 <body>
 <table><tr>
 <td>
-<a href="../index.html" target="_top"><img border="0" src="_image.gif"></a>
+<a href="http://coin-or.github.io/CppAD/doc/index.html" target="_top"><img border="0" src="_image.gif"></a>
 </td>
 <td><a href="whats_new.htm" target="_top">Prev</a>
 </td><td><a href="whats_new_16.htm" target="_top">Next</a>
@@ -110,6 +110,26 @@ A:active { color : purple }
 <select onchange='choose_current0(this)'>
 <option>Headings-&gt;</option>
 <option>API Changes</option>
+<option>12-06</option>
+<option>12-05</option>
+<option>12-04</option>
+<option>12-01</option>
+<option>11-30</option>
+<option>11-23</option>
+<option>11-20</option>
+<option>11-19</option>
+<option>11-15</option>
+<option>11-13</option>
+<option>11-12</option>
+<option>11-08</option>
+<option>11-06</option>
+<option>11-04</option>
+<option>10-23</option>
+<option>09-16</option>
+<option>08-30</option>
+<option>08-29</option>
+<option>08-09</option>
+<option>08-08</option>
 <option>07-25</option>
 <option>07-03</option>
 <option>07-01</option>
@@ -169,21 +189,303 @@ A:active { color : purple }
 <center><b><big><big>Changes and Additions to CppAD During 2017</big></big></b></center>
 <br>
 <b><big><a name="API Changes" id="API Changes">API Changes</a></big></b>
-
-<ol type="1"><li>
-Versions of CppAD before 20170512 were compatible with eigen-3.2.9 and earlier.
-After 20170512 they are compatible eigen-3.3.3 and later.
-See <a href="whats_new_17.htm#05-12" target="_top"><span style='white-space: nowrap'>05-12</span></a>
-.
-</li><li>
-
+<br>
 Speed tests no longer automatically compile in release mode; see
 <a href="speed.htm#debug_which" target="_top"><span style='white-space: nowrap'>debug_which</span></a>
 
+
+<br>
+<br>
+<b><big><a name="12-06" id="12-06">12-06</a></big></b>
+<br>
+A <a href="wish_list.htm" target="_top"><span style='white-space: nowrap'>wish_list</span></a>
+ item to enable one to iterate through a
+<code><font color="blue">const</font></code> <a href="adfun.htm" target="_top"><span style='white-space: nowrap'>ADFun</span></a>
+ operation sequence was completed.
+In addition, the <a href="abs_normal_fun.htm#f" target="_top"><span style='white-space: nowrap'>f</span></a>
+ argument to the
+<code><font color="blue">abs_normal</font></code> operation was converted to be <code><font color="blue">const</font></code>.
+
+
+<br>
+<br>
+<b><big><a name="12-05" id="12-05">12-05</a></big></b>
+<br>
+The internal data object used to represent sparsity patterns as
+vectors of integers was improved;
+see <a href="for_jac_sparsity.htm#internal_bool" target="_top"><span style='white-space: nowrap'>internal_bool</span></a>
+
+in <code><font color="blue">for_jac_sparsity</font></code> and other
+<a href="sparsity_pattern.htm#Preferred Sparsity Patterns" target="_top"><span style='white-space: nowrap'>preferred&nbsp;sparsity&nbsp;pattern</span></a>
+
+routines.
+
+<br>
+<br>
+<b><big><a name="12-04" id="12-04">12-04</a></big></b>
+<br>
+Back out the <code><font color="blue">hold_reverse_memory</font></code> option.
+
+<br>
+<br>
+<b><big><a name="12-01" id="12-01">12-01</a></big></b>
+<br>
+The <code><font color="blue">hold_reverse_memory</font></code> option was added.
+
+<br>
+<br>
+<b><big><a name="11-30" id="11-30">11-30</a></big></b>
+<br>
+Edit the <a href="download.htm" target="_top"><span style='white-space: nowrap'>download</span></a>
+ instructions.
+
+<br>
+<br>
+<b><big><a name="11-23" id="11-23">11-23</a></big></b>
+<br>
+The <code><font color="blue">ADFun</font></code> function <a href="optimize.htm" target="_top"><span style='white-space: nowrap'>optimizer</span></a>
+
+was not handling hash code collisions properly.
+To be specific, only the arguments
+that were variables where checked for a complete match.
+The arguments that are constants need to also be checked.
+This has been fixed.
+
+<br>
+<br>
+<b><big><a name="11-20" id="11-20">11-20</a></big></b>
+
+<ol type="1"><li>
+Add the <a href="subgraph_jac_rev.htm" target="_top"><span style='white-space: nowrap'>subgraph_jac_rev</span></a>
+ method for computing
+sparse Jacobians.
+</li><li>
+
+Add the <a href="speed_main.htm#Global Options.subgraph" target="_top"><span style='white-space: nowrap'>subgraph</span></a>
+ option
+to the CppAD speed tests.
 </li></ol>
 
 
 <br>
+<br>
+<b><big><a name="11-19" id="11-19">11-19</a></big></b>
+<br>
+Add the <a href="subgraph_reverse.htm" target="_top"><span style='white-space: nowrap'>subgraph_reverse</span></a>
+ method for computing
+sparse derivatives.
+This was inspired by the
+<a href="https://cran.r-project.org/web/packages/TMB/index.html" target="_top"><span style='white-space: nowrap'>TMB</span></a>
+ package.
+
+
+<br>
+<br>
+<b><big><a name="11-15" id="11-15">11-15</a></big></b>
+
+<ol type="1"><li>
+Add wish list item for <a href="subgraph_sparsity.htm" target="_top"><span style='white-space: nowrap'>subgraph_sparsity</span></a>
+ when
+<a href="wish_list.htm#Subgraph Atomic Functions" target="_top"><span style='white-space: nowrap'>atomic&nbsp;functions</span></a>
+
+are present.
+</li><li>
+
+Fix <a href="cmake_check.htm" target="_top"><span style='white-space: nowrap'>cmake_check</span></a>
+ when <a href="ipopt_prefix.htm" target="_top"><span style='white-space: nowrap'>ipopt_prefix</span></a>
+ is not present on the
+<a href="cmake.htm" target="_top"><span style='white-space: nowrap'>cmake</span></a>
+ command line
+(make was trying to build some of the ipopt tests).
+</li></ol>
+
+
+<br>
+<br>
+<b><big><a name="11-13" id="11-13">11-13</a></big></b>
+
+<ol type="1"><li>
+Add the <a href="speed_main.htm#Global Options.hes2jac" target="_top"><span style='white-space: nowrap'>hes2jac</span></a>
+ option
+to the CppAD speed tests.
+</li><li>
+
+Implement the
+<a href="speed_main.htm#Sparsity Options.subsparsity" target="_top"><span style='white-space: nowrap'>subsparsity</span></a>
+ option
+for the CppAD <a href="link_sparse_hessian.htm" target="_top"><span style='white-space: nowrap'>sparse_hessian</span></a>
+ test.
+</li><li>
+
+Fix detection of invalid options in the speed test programs; see the
+<a href="speed_main.htm#Global Options" target="_top"><span style='white-space: nowrap'>global</span></a>
+ and
+<a href="speed_main.htm#Sparsity Options" target="_top"><span style='white-space: nowrap'>sparsity</span></a>
+ options.
+</li></ol>
+
+
+<br>
+<br>
+<b><big><a name="11-12" id="11-12">11-12</a></big></b>
+<br>
+Add the <a href="speed_main.htm#Sparsity Options.subsparsity" target="_top"><span style='white-space: nowrap'>subsparsity</span></a>
+ option
+to the CppAD speed tests.
+
+<br>
+<br>
+<b><big><a name="11-08" id="11-08">11-08</a></big></b>
+<br>
+Add the <a href="subgraph_sparsity.htm" target="_top"><span style='white-space: nowrap'>subgraph_sparsity</span></a>
+ method for computing
+dependency and sparsity.
+This was inspired by the
+<a href="https://cran.r-project.org/web/packages/TMB/index.html" target="_top"><span style='white-space: nowrap'>TMB</span></a>
+ package.
+
+
+<br>
+<br>
+<b><big><a name="11-06" id="11-06">11-06</a></big></b>
+<br>
+More information has been added to the operation sequence.
+To be specific, the extra amount of
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.size_op()&nbsp;*&nbsp;sizeof(</span></font><i><font color="black"><span style='white-space: nowrap'>tape_addr_type)<br>
+</span></font></i></code>
+was added to the value returned by
+<a href="seq_property.htm#size_op_seq" target="_top"><span style='white-space: nowrap'>size_op_seq</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="11-04" id="11-04">11-04</a></big></b>
+<br>
+The method for iterating through the tape has been changed.
+It now includes an extra data structure that makes it faster,
+but also requires slightly more memory. To be specific, the term
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.size_op()&nbsp;*&nbsp;sizeof(</span></font><i><font color="black"><span style='white-space: nowrap'>tape_addr_type)&nbsp;*&nbsp;2<br>
+</span></font></i></code>
+was added to the value returned by
+<a href="seq_property.htm#size_op_seq" target="_top"><span style='white-space: nowrap'>size_op_seq</span></a>
+.
+In addition, some minor corrections were made to the
+<a href="cmake.htm#cppad_tape_addr_type" target="_top"><span style='white-space: nowrap'>tape_addr_type</span></a>
+
+requirements.
+
+<br>
+<br>
+<b><big><a name="10-23" id="10-23">10-23</a></big></b>
+
+<ol type="1"><li>
+Require <code><font color="blue">cmake.3.1</font></code> or greater and fix
+a cmake warning by always using the new <code><font color="blue">CMP0054</font></code> policy.
+</li><li>
+
+Fix a <code><font color="blue">g++ 7.2.1</font></code> warning about a possibly uninitialized value
+in the file <code><font color="blue">cppad/local/optimize/hash_code.hpp</font></code>.
+</li></ol>
+
+
+<br>
+<br>
+<b><big><a name="09-16" id="09-16">09-16</a></big></b>
+<br>
+An <a href="wish_list.htm#optimize" target="_top"><span style='white-space: nowrap'>optimize</span></a>
+ entry
+was added to the wish list
+and the <a href="wish_list.htm#check_finite" target="_top"><span style='white-space: nowrap'>check_finite</span></a>
+ entry was modified.
+
+<br>
+<br>
+<b><big><a name="08-30" id="08-30">08-30</a></big></b>
+
+<ol type="1"><li>
+If <a href="colpack_prefix.htm" target="_top"><span style='white-space: nowrap'>colpack_prefix</span></a>
+ was not specified, one would get the following
+waring during the <a href="cmake.htm" target="_top"><span style='white-space: nowrap'>cmake</span></a>
+ command:
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Policy&nbsp;CMP0046&nbsp;is&nbsp;not&nbsp;set:&nbsp;Error&nbsp;on&nbsp;non-existent&nbsp;dependency&nbsp;in<br>
+</span></font></code>
+This has been fixed by not adding the dependency when it is not needed.
+</li><li>
+
+There was a problem running <a href="cmake_check.htm" target="_top"><span style='white-space: nowrap'>make&nbsp;check</span></a>
+
+when <a href="cmake.htm#cppad_cxx_flags" target="_top"><span style='white-space: nowrap'>cppad_cxx_flags</span></a>
+ was not specified.
+This has been fixed.
+This was probably introduced on <a href="whats_new_17.htm#05-29" target="_top"><span style='white-space: nowrap'>05-29</span></a>
+.
+</li></ol>
+
+
+
+<br>
+<br>
+<b><big><a name="08-29" id="08-29">08-29</a></big></b>
+<br>
+There was a problem on some systems that created an error when
+specializing the <code><font color="blue">is_pod</font></code> template function in the
+<code><font color="blue">CppAD::local</font></code> namespace.
+This has been fixed by testing for compatibility at during the
+<a href="cmake.htm" target="_top"><span style='white-space: nowrap'>cmake</span></a>
+ command and creating the file <code><font color="blue">cppad/local/is_pod.hpp</font></code>.
+
+
+<br>
+<br>
+<b><big><a name="08-09" id="08-09">08-09</a></big></b>
+<br>
+Add the <a href="wish_list.htm#test_boolofvoid" target="_top"><span style='white-space: nowrap'>test_boolofvoid</span></a>
+
+wish list item.
+
+<br>
+<br>
+<b><big><a name="08-08" id="08-08">08-08</a></big></b>
+
+<ol type="1"><li>
+The <a href="eigen_plugin.hpp.htm" target="_top"><span style='white-space: nowrap'>eigen_plugin.hpp</span></a>
+ was put back in the
+<a href="cppad_eigen.hpp.htm" target="_top"><span style='white-space: nowrap'>cppad_eigen.hpp</span></a>
+ definitions.
+This makes CppAD incompatible with older versions of eigen; e.g., eigen-3.2.9.
+The plugin was removed on <a href="whats_new_17.htm#05-12" target="_top"><span style='white-space: nowrap'>05-12</span></a>
+.
+</li><li>
+
+Fix some minor typos in the documentation.
+To be specific:
+The font, in the <a href="sparse_rc.htm" target="_top"><span style='white-space: nowrap'>sparse_rc</span></a>
+ and <a href="sparse_rcv.htm" target="_top"><span style='white-space: nowrap'>sparse_rcv</span></a>
+ syntax,
+for the text
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>target</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>pattern</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+The font, in <a href="capacity_order.htm" target="_top"><span style='white-space: nowrap'>capacity_order</span></a>
+, for the text
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>xq</span></font></i><font color="blue"><span style='white-space: nowrap'>.size()&nbsp;==&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.Domain()<br>
+</span></font></code>
+Remove a percent sign <code><font color="blue">%</font></code>, in <a href="cppad_vector.htm" target="_top"><span style='white-space: nowrap'>CppAD_vector</span></a>
+, in the text
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#&nbsp;include&nbsp;&lt;cppad/utility/vector.hpp&gt;<br>
+</span></font></code>
+</li></ol>
 <br>
 <b><big><a name="07-25" id="07-25">07-25</a></big></b>
 

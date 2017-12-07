@@ -1,0 +1,184 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>Subgraph Dependency Sparsity Patterns: Example and Test</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Subgraph Dependency Sparsity Patterns: Example and Test">
+<meta name="keywords" id="keywords" content=" subgraph dependency sparsity patterns: example test ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_subgraph_sparsity.cpp_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://coin-or.github.io/CppAD/doc/index.html" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="subgraph_sparsity.htm" target="_top">Prev</a>
+</td><td><a href="sparse_derivative.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>ADFun</option>
+<option>sparsity_pattern</option>
+<option>subgraph_sparsity</option>
+<option>subgraph_sparsity.cpp</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>ADFun-&gt;</option>
+<option>record_adfun</option>
+<option>drivers</option>
+<option>Forward</option>
+<option>Reverse</option>
+<option>sparsity_pattern</option>
+<option>sparse_derivative</option>
+<option>optimize</option>
+<option>abs_normal</option>
+<option>FunCheck</option>
+<option>check_for_nan</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>sparsity_pattern-&gt;</option>
+<option>for_jac_sparsity</option>
+<option>ForSparseJac</option>
+<option>rev_jac_sparsity</option>
+<option>RevSparseJac</option>
+<option>rev_hes_sparsity</option>
+<option>RevSparseHes</option>
+<option>for_hes_sparsity</option>
+<option>ForSparseHes</option>
+<option>dependency.cpp</option>
+<option>rc_sparsity.cpp</option>
+<option>subgraph_sparsity</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>subgraph_sparsity-&gt;</option>
+<option>subgraph_sparsity.cpp</option>
+</select>
+</td>
+<td>subgraph_sparsity.cpp</td>
+<td>Headings</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@
+
+
+<center><b><big><big>Subgraph Dependency Sparsity Patterns: Example and Test</big></big></b></center>
+<code><font color="blue"><pre><tt><b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/cppad.hpp&gt;</font>
+
+<font color="#009900">bool</font> <b><font color="#000000">subgraph_sparsity</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
+<font color="#FF0000">{</font>    <font color="#009900">bool</font> ok <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
+     <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>AD<font color="#990000">;</font>
+     <b><font color="#0000FF">typedef</font></b> <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font>size_t<font color="#990000">)</font>     SizeVector<font color="#990000">;</font>
+     <b><font color="#0000FF">typedef</font></b> CppAD<font color="#990000">::</font><font color="#008080">sparse_rc&lt;SizeVector&gt;</font> sparsity<font color="#990000">;</font>
+     <i><font color="#9A1900">//</font></i>
+     <i><font color="#9A1900">// domain space vector</font></i>
+     <font color="#008080">size_t</font> n <font color="#990000">=</font> <font color="#993399">2</font><font color="#990000">;</font>
+     <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font>AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;)</font> <b><font color="#000000">ax</font></b><font color="#990000">(</font>n<font color="#990000">);</font>
+     ax<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">.;</font>
+     ax<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">.;</font>
+
+     <i><font color="#9A1900">// declare independent variables and start recording</font></i>
+     CppAD<font color="#990000">::</font><b><font color="#000000">Independent</font></b><font color="#990000">(</font>ax<font color="#990000">);</font>
+
+     <i><font color="#9A1900">// range space vector</font></i>
+     <font color="#008080">size_t</font> m <font color="#990000">=</font> <font color="#993399">3</font><font color="#990000">;</font>
+     <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font>AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;)</font> <b><font color="#000000">ay</font></b><font color="#990000">(</font>m<font color="#990000">);</font>
+     ay<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> ax<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">];</font>
+     ay<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">=</font> ax<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">*</font> ax<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">];</font>
+     ay<font color="#990000">[</font><font color="#993399">2</font><font color="#990000">]</font> <font color="#990000">=</font> ax<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">];</font>
+
+     <i><font color="#9A1900">// create f: x -&gt; y and stop tape recording</font></i>
+     CppAD<font color="#990000">::</font><font color="#008080">ADFun&lt;double&gt;</font> <b><font color="#000000">f</font></b><font color="#990000">(</font>ax<font color="#990000">,</font> ay<font color="#990000">);</font>
+
+
+
+     <i><font color="#9A1900">// compute sparsite pattern for F'(x)</font></i>
+     <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font><font color="#009900">bool</font><font color="#990000">)</font> <b><font color="#000000">select_domain</font></b><font color="#990000">(</font>n<font color="#990000">),</font> <b><font color="#000000">select_range</font></b><font color="#990000">(</font>m<font color="#990000">);</font>
+     <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> n<font color="#990000">;</font> j<font color="#990000">++)</font>
+          select_domain<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
+     <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> m<font color="#990000">;</font> i<font color="#990000">++)</font>
+          select_range<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
+     <font color="#009900">bool</font> transpose       <font color="#990000">=</font> <b><font color="#0000FF">false</font></b><font color="#990000">;</font>
+     <font color="#008080">sparsity</font> pattern_out<font color="#990000">;</font>
+     f<font color="#990000">.</font><b><font color="#000000">subgraph_sparsity</font></b><font color="#990000">(</font>select_domain<font color="#990000">,</font> select_range<font color="#990000">,</font> transpose<font color="#990000">,</font> pattern_out<font color="#990000">);</font>
+
+     <i><font color="#9A1900">// check sparsity pattern</font></i>
+     <font color="#008080">size_t</font> nnz <font color="#990000">=</font> pattern_out<font color="#990000">.</font><b><font color="#000000">nnz</font></b><font color="#990000">();</font>
+     ok        <font color="#990000">&amp;=</font> nnz <font color="#990000">==</font> <font color="#993399">4</font><font color="#990000">;</font>
+     ok        <font color="#990000">&amp;=</font> pattern_out<font color="#990000">.</font><b><font color="#000000">nr</font></b><font color="#990000">()</font> <font color="#990000">==</font> m<font color="#990000">;</font>
+     ok        <font color="#990000">&amp;=</font> pattern_out<font color="#990000">.</font><b><font color="#000000">nc</font></b><font color="#990000">()</font> <font color="#990000">==</font> n<font color="#990000">;</font>
+     <font color="#FF0000">{</font>    <i><font color="#9A1900">// check results</font></i>
+          <b><font color="#0000FF">const</font></b> SizeVector<font color="#990000">&amp;</font> <b><font color="#000000">row</font></b><font color="#990000">(</font> pattern_out<font color="#990000">.</font><b><font color="#000000">row</font></b><font color="#990000">()</font> <font color="#990000">);</font>
+          <b><font color="#0000FF">const</font></b> SizeVector<font color="#990000">&amp;</font> <b><font color="#000000">col</font></b><font color="#990000">(</font> pattern_out<font color="#990000">.</font><b><font color="#000000">col</font></b><font color="#990000">()</font> <font color="#990000">);</font>
+          <font color="#008080">SizeVector</font> col_major <font color="#990000">=</font> pattern_out<font color="#990000">.</font><b><font color="#000000">col_major</font></b><font color="#990000">();</font>
+          <i><font color="#9A1900">//</font></i>
+          ok <font color="#990000">&amp;=</font> row<font color="#990000">[</font> col_major<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">]</font> <font color="#990000">==</font>  <font color="#993399">0</font>  <font color="#990000">&amp;&amp;</font> col<font color="#990000">[</font> col_major<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">]</font> <font color="#990000">==</font>  <font color="#993399">0</font><font color="#990000">;</font>
+          ok <font color="#990000">&amp;=</font> row<font color="#990000">[</font> col_major<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">]</font> <font color="#990000">==</font>  <font color="#993399">1</font>  <font color="#990000">&amp;&amp;</font> col<font color="#990000">[</font> col_major<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">]</font> <font color="#990000">==</font>  <font color="#993399">0</font><font color="#990000">;</font>
+          ok <font color="#990000">&amp;=</font> row<font color="#990000">[</font> col_major<font color="#990000">[</font><font color="#993399">2</font><font color="#990000">]</font> <font color="#990000">]</font> <font color="#990000">==</font>  <font color="#993399">1</font>  <font color="#990000">&amp;&amp;</font> col<font color="#990000">[</font> col_major<font color="#990000">[</font><font color="#993399">2</font><font color="#990000">]</font> <font color="#990000">]</font> <font color="#990000">==</font>  <font color="#993399">1</font><font color="#990000">;</font>
+          ok <font color="#990000">&amp;=</font> row<font color="#990000">[</font> col_major<font color="#990000">[</font><font color="#993399">3</font><font color="#990000">]</font> <font color="#990000">]</font> <font color="#990000">==</font>  <font color="#993399">2</font>  <font color="#990000">&amp;&amp;</font> col<font color="#990000">[</font> col_major<font color="#990000">[</font><font color="#993399">3</font><font color="#990000">]</font> <font color="#990000">]</font> <font color="#990000">==</font>  <font color="#993399">1</font><font color="#990000">;</font>
+     <font color="#FF0000">}</font>
+     <i><font color="#9A1900">// note that the transpose of the identity is the identity</font></i>
+     transpose     <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
+     f<font color="#990000">.</font><b><font color="#000000">subgraph_sparsity</font></b><font color="#990000">(</font>select_domain<font color="#990000">,</font> select_range<font color="#990000">,</font> transpose<font color="#990000">,</font> pattern_out<font color="#990000">);</font>
+     <i><font color="#9A1900">//</font></i>
+     nnz  <font color="#990000">=</font> pattern_out<font color="#990000">.</font><b><font color="#000000">nnz</font></b><font color="#990000">();</font>
+     ok  <font color="#990000">&amp;=</font> nnz <font color="#990000">==</font> <font color="#993399">4</font><font color="#990000">;</font>
+     ok  <font color="#990000">&amp;=</font> pattern_out<font color="#990000">.</font><b><font color="#000000">nr</font></b><font color="#990000">()</font> <font color="#990000">==</font> n<font color="#990000">;</font>
+     ok  <font color="#990000">&amp;=</font> pattern_out<font color="#990000">.</font><b><font color="#000000">nc</font></b><font color="#990000">()</font> <font color="#990000">==</font> m<font color="#990000">;</font>
+     <font color="#FF0000">{</font>    <i><font color="#9A1900">// check results</font></i>
+          <b><font color="#0000FF">const</font></b> SizeVector<font color="#990000">&amp;</font> <b><font color="#000000">row</font></b><font color="#990000">(</font> pattern_out<font color="#990000">.</font><b><font color="#000000">row</font></b><font color="#990000">()</font> <font color="#990000">);</font>
+          <b><font color="#0000FF">const</font></b> SizeVector<font color="#990000">&amp;</font> <b><font color="#000000">col</font></b><font color="#990000">(</font> pattern_out<font color="#990000">.</font><b><font color="#000000">col</font></b><font color="#990000">()</font> <font color="#990000">);</font>
+          <font color="#008080">SizeVector</font> row_major <font color="#990000">=</font> pattern_out<font color="#990000">.</font><b><font color="#000000">row_major</font></b><font color="#990000">();</font>
+          <i><font color="#9A1900">//</font></i>
+          ok <font color="#990000">&amp;=</font> col<font color="#990000">[</font> row_major<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">]</font> <font color="#990000">==</font>  <font color="#993399">0</font>  <font color="#990000">&amp;&amp;</font> row<font color="#990000">[</font> row_major<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">]</font> <font color="#990000">==</font>  <font color="#993399">0</font><font color="#990000">;</font>
+          ok <font color="#990000">&amp;=</font> col<font color="#990000">[</font> row_major<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">]</font> <font color="#990000">==</font>  <font color="#993399">1</font>  <font color="#990000">&amp;&amp;</font> row<font color="#990000">[</font> row_major<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">]</font> <font color="#990000">==</font>  <font color="#993399">0</font><font color="#990000">;</font>
+          ok <font color="#990000">&amp;=</font> col<font color="#990000">[</font> row_major<font color="#990000">[</font><font color="#993399">2</font><font color="#990000">]</font> <font color="#990000">]</font> <font color="#990000">==</font>  <font color="#993399">1</font>  <font color="#990000">&amp;&amp;</font> row<font color="#990000">[</font> row_major<font color="#990000">[</font><font color="#993399">2</font><font color="#990000">]</font> <font color="#990000">]</font> <font color="#990000">==</font>  <font color="#993399">1</font><font color="#990000">;</font>
+          ok <font color="#990000">&amp;=</font> col<font color="#990000">[</font> row_major<font color="#990000">[</font><font color="#993399">3</font><font color="#990000">]</font> <font color="#990000">]</font> <font color="#990000">==</font>  <font color="#993399">2</font>  <font color="#990000">&amp;&amp;</font> row<font color="#990000">[</font> row_major<font color="#990000">[</font><font color="#993399">3</font><font color="#990000">]</font> <font color="#990000">]</font> <font color="#990000">==</font>  <font color="#993399">1</font><font color="#990000">;</font>
+     <font color="#FF0000">}</font>
+     <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
+<font color="#FF0000">}</font></tt></pre>
+</font></code>
+<hr>Input File: example/sparse/subgraph_sparsity.cpp
+
+</body>
+</html>

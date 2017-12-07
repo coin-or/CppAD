@@ -1,0 +1,348 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>Subgraph Dependency Sparsity Patterns</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Subgraph Dependency Sparsity Patterns">
+<meta name="keywords" id="keywords" content=" subgraph dependency sparsity patterns syntax notation method atomic function boolvector sizevector f select_domain select_range transpose pattern_out example ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_subgraph_sparsity_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://coin-or.github.io/CppAD/doc/index.html" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="rc_sparsity.cpp.htm" target="_top">Prev</a>
+</td><td><a href="subgraph_sparsity.cpp.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>ADFun</option>
+<option>sparsity_pattern</option>
+<option>subgraph_sparsity</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>CppAD-&gt;</option>
+<option>Install</option>
+<option>Introduction</option>
+<option>AD</option>
+<option>ADFun</option>
+<option>preprocessor</option>
+<option>multi_thread</option>
+<option>utility</option>
+<option>ipopt_solve</option>
+<option>Example</option>
+<option>speed</option>
+<option>Appendix</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>ADFun-&gt;</option>
+<option>record_adfun</option>
+<option>drivers</option>
+<option>Forward</option>
+<option>Reverse</option>
+<option>sparsity_pattern</option>
+<option>sparse_derivative</option>
+<option>optimize</option>
+<option>abs_normal</option>
+<option>FunCheck</option>
+<option>check_for_nan</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>sparsity_pattern-&gt;</option>
+<option>for_jac_sparsity</option>
+<option>ForSparseJac</option>
+<option>rev_jac_sparsity</option>
+<option>RevSparseJac</option>
+<option>rev_hes_sparsity</option>
+<option>RevSparseHes</option>
+<option>for_hes_sparsity</option>
+<option>ForSparseHes</option>
+<option>dependency.cpp</option>
+<option>rc_sparsity.cpp</option>
+<option>subgraph_sparsity</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down0(this)'>
+<option>subgraph_sparsity-&gt;</option>
+<option>subgraph_sparsity.cpp</option>
+</select>
+</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Syntax</option>
+<option>Notation</option>
+<option>Method</option>
+<option>Atomic Function</option>
+<option>BoolVector</option>
+<option>SizeVector</option>
+<option>f</option>
+<option>select_domain</option>
+<option>select_range</option>
+<option>transpose</option>
+<option>pattern_out</option>
+<option>Example</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>Subgraph Dependency Sparsity Patterns</big></big></b></center>
+<br>
+<b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
+
+<br>
+
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.subgraph_sparsity(<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>select_domain</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>select_range</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>transpose</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>pattern_out</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+)</span></font></code>
+
+
+<br>
+<br>
+<b><big><a name="Notation" id="Notation">Notation</a></big></b>
+<br>
+We use <small>@(@
+F : \B{R}^n \rightarrow \B{R}^m
+@)@</small> to denote the
+<a href="glossary.htm#AD Function" target="_top"><span style='white-space: nowrap'>AD&nbsp;function</span></a>
+ corresponding to
+the operation sequence stored in 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+.
+
+<br>
+<br>
+<b><big><a name="Method" id="Method">Method</a></big></b>
+<br>
+This routine uses a subgraph technique. To be specific,
+for each dependent variable,
+it a subgraph of the operation sequence
+to determine which independent variables affect it.
+This avoids to overhead of performing set operations
+that is inherent in other methods for computing sparsity patterns.
+
+<br>
+<br>
+<b><big><a name="Atomic Function" id="Atomic Function">Atomic Function</a></big></b>
+<br>
+The sparsity calculation for
+<a href="atomic_afun.htm" target="_top"><span style='white-space: nowrap'>atomic&nbsp;functions</span></a>
+ in the 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+ operation sequence
+are not efficient. To be specific, each atomic function is treated as if
+all of its outputs depend on all of its inputs.
+This may be improved upon in the future; see the
+<a href="wish_list.htm#Subgraph Atomic Functions" target="_top"><span style='white-space: nowrap'>subgraph&nbsp;atomic&nbsp;functions</span></a>
+
+wish list item.
+
+<br>
+<br>
+<b><big><a name="BoolVector" id="BoolVector">BoolVector</a></big></b>
+<br>
+The type 
+<code><i><font color="black"><span style='white-space: nowrap'>BoolVector</span></font></i></code>
+ is a <a href="simplevector.htm" target="_top"><span style='white-space: nowrap'>SimpleVector</span></a>
+ class with
+<a href="simplevector.htm#Elements of Specified Type" target="_top"><span style='white-space: nowrap'>elements&nbsp;of&nbsp;type</span></a>
+
+<code><font color="blue">bool</font></code>.
+
+<br>
+<br>
+<b><big><a name="SizeVector" id="SizeVector">SizeVector</a></big></b>
+<br>
+The type 
+<code><i><font color="black"><span style='white-space: nowrap'>SizeVector</span></font></i></code>
+ is a <a href="simplevector.htm" target="_top"><span style='white-space: nowrap'>SimpleVector</span></a>
+ class with
+<a href="simplevector.htm#Elements of Specified Type" target="_top"><span style='white-space: nowrap'>elements&nbsp;of&nbsp;type</span></a>
+
+<code><font color="blue">size_t</font></code>.
+
+<br>
+<br>
+<b><big><a name="f" id="f">f</a></big></b>
+<br>
+The object 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ADFun&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+<br>
+<b><big><a name="select_domain" id="select_domain">select_domain</a></big></b>
+<br>
+The argument 
+<code><i><font color="black"><span style='white-space: nowrap'>select_domain</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>BoolVector</span></font></i><font color="blue"><span style='white-space: nowrap'>&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>select_domain</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+It has size <small>@(@
+n
+@)@</small> and specifies which independent variables
+to include in the calculation.
+If not all the independent variables are included in the calculation,
+a forward pass on the operation sequence is used to determine which
+nodes may be in the subgraphs.
+
+<br>
+<br>
+<b><big><a name="select_range" id="select_range">select_range</a></big></b>
+<br>
+The argument 
+<code><i><font color="black"><span style='white-space: nowrap'>select_range</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>BoolVector</span></font></i><font color="blue"><span style='white-space: nowrap'>&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>select_range</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+It has size <small>@(@
+m
+@)@</small> and specifies which components of the range
+to include in the calculation.
+A subgraph is built for each dependent variable
+and the selected set of independent variables.
+
+<br>
+<br>
+<b><big><a name="transpose" id="transpose">transpose</a></big></b>
+<br>
+This argument has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bool&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>transpose</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>transpose</span></font></i></code>
+ it is false (true),
+upon return 
+<code><i><font color="black"><span style='white-space: nowrap'>pattern_out</span></font></i></code>
+ is a sparsity pattern for
+<small>@(@
+J(x)
+@)@</small> (<small>@(@
+J(x)^\R{T}
+@)@</small>) defined below.
+
+<br>
+<br>
+<b><big><a name="pattern_out" id="pattern_out">pattern_out</a></big></b>
+<br>
+This argument has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sparse_rc&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>SizeVector</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>pattern_out</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+This input value of 
+<code><i><font color="black"><span style='white-space: nowrap'>pattern_out</span></font></i></code>
+ does not matter.
+Upon return 
+<code><i><font color="black"><span style='white-space: nowrap'>pattern_out</span></font></i></code>
+ is a
+<a href="dependency.cpp.htm#Dependency Pattern" target="_top"><span style='white-space: nowrap'>dependency&nbsp;pattern</span></a>
+
+for <small>@(@
+F(x)
+@)@</small>.
+The pattern has <small>@(@
+m
+@)@</small> rows, <small>@(@
+n
+@)@</small> columns.
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>select_domain</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>j</span></font></i><font color="blue"><span style='white-space: nowrap'>]</span></font></code>
+ is true,
+
+<code><i><font color="black"><span style='white-space: nowrap'>select_range</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>]</span></font></code>
+ is true, and
+<small>@(@
+F_i (x)
+@)@</small> depends on <small>@(@
+x_j
+@)@</small>,
+then the pair <small>@(@
+(i, j)
+@)@</small> is in 
+<code><i><font color="black"><span style='white-space: nowrap'>pattern_out</span></font></i></code>
+.
+Not that this is also a sparsity pattern for the Jacobian
+<small>@[@
+
+	J(x) = R F^{(1)} (x) D
+
+@]@</small>
+where <small>@(@
+D
+@)@</small> (<small>@(@
+R
+@)@</small>) is the diagonal matrix corresponding
+to 
+<code><i><font color="black"><span style='white-space: nowrap'>select_domain</span></font></i></code>
+ (
+<code><i><font color="black"><span style='white-space: nowrap'>select_range</span></font></i></code>
+).
+
+<br>
+<br>
+<b><big><a name="Example" id="Example">Example</a></big></b>
+
+<br>
+The file
+<a href="subgraph_sparsity.cpp.htm" target="_top"><span style='white-space: nowrap'>subgraph_sparsity.cpp</span></a>
+
+contains an example and test of this operation.
+It returns true if it succeeds and false otherwise.
+
+
+<hr>Input File: cppad/core/subgraph_sparsity.hpp
+
+</body>
+</html>

@@ -8,7 +8,7 @@ MathJax.Hub.Config({
 });
 </script>
 <script type='text/javascript' src=
-'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=default'
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
 >
 </script>
 <head>
@@ -29,7 +29,7 @@ A:active { color : purple }
 <body>
 <table><tr>
 <td>
-<a href="../index.html" target="_top"><img border="0" src="_image.gif"></a>
+<a href="http://coin-or.github.io/CppAD/doc/index.html" target="_top"><img border="0" src="_image.gif"></a>
 </td>
 <td><a href="hes_times_dir.cpp.htm" target="_top">Prev</a>
 </td><td><a href="reverse_three.cpp.htm" target="_top">Next</a>
@@ -89,6 +89,7 @@ A:active { color : purple }
 <option>reverse_one</option>
 <option>reverse_two</option>
 <option>reverse_any</option>
+<option>subgraph_reverse</option>
 </select>
 </td>
 <td>
@@ -133,7 +134,6 @@ A:active { color : purple }
 <br>
 
 <code><i><font color="black"><span style='white-space: nowrap'>dw</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.Reverse(</span></font><i><font color="black"><span style='white-space: nowrap'>q</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>w</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
-
 
 
 <br>
@@ -196,7 +196,6 @@ AD of
 
 <a href="glossary.htm#Operation.Sequence" target="_top"><span style='white-space: nowrap'>operation&nbsp;sequence</span></a>
  was recorded.
-
 
 <br>
 <br>
@@ -294,7 +293,6 @@ W : B^{n \times q} \rightarrow B
 W(u) = \sum_{k=0}^{q-1} ( w^{(k)} )^\R{T} \frac{1}{k !} \Dpow{k}{t} Y(0, u)
 
 @]@</small>
-
 
 <br>
 <br>

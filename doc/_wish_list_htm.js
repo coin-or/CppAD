@@ -38,8 +38,11 @@ var list_down1 = [
 'license.htm'
 ];
 var list_current0 = [
+'wish_list.htm#Subgraph Atomic Functions',
+'wish_list.htm#check_finite',
+'wish_list.htm#optimize',
+'wish_list.htm#test_boolofvoid',
 'wish_list.htm#Eigen',
-'wish_list.htm#const ADFun',
 'wish_list.htm#Atomic',
 'wish_list.htm#Atomic.Element-wise Operations',
 'wish_list.htm#Atomic.Sparsity',
@@ -50,7 +53,6 @@ var list_current0 = [
 'wish_list.htm#checkpoint',
 'wish_list.htm#checkpoint.Retape',
 'wish_list.htm#checkpoint.Testing',
-'wish_list.htm#check_finite',
 'wish_list.htm#Compilation Speed',
 'wish_list.htm#Base Requirements',
 'wish_list.htm#Adolc',

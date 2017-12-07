@@ -8,14 +8,14 @@ MathJax.Hub.Config({
 });
 </script>
 <script type='text/javascript' src=
-'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=default'
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
 >
 </script>
 <head>
 <title>The CppAD Wish List</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="The CppAD Wish List">
-<meta name="keywords" id="keywords" content=" the cppad wish list eigen const adfun atomic element-wise operations sparsity example optimization taping special operators checkpoint retape testing check_finite compilation speed base requirements adolc forward mode recomputation iterator interface operation sequence software guidelines tracing atan2 benderquad ">
+<meta name="keywords" id="keywords" content=" the cppad wish list subgraph atomic functions check_finite optimize test_boolofvoid eigen element-wise operations sparsity example optimization taping special operators checkpoint retape testing compilation speed base requirements adolc forward mode recomputation iterator interface operation sequence software guidelines tracing atan2 benderquad ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -29,7 +29,7 @@ A:active { color : purple }
 <body>
 <table><tr>
 <td>
-<a href="../index.html" target="_top"><img border="0" src="_image.gif"></a>
+<a href="http://coin-or.github.io/CppAD/doc/index.html" target="_top"><img border="0" src="_image.gif"></a>
 </td>
 <td><a href="bib.htm" target="_top">Prev</a>
 </td><td><a href="whats_new.htm" target="_top">Next</a>
@@ -88,8 +88,11 @@ A:active { color : purple }
 <td>
 <select onchange='choose_current0(this)'>
 <option>Headings-&gt;</option>
+<option>Subgraph Atomic Functions</option>
+<option>check_finite</option>
+<option>optimize</option>
+<option>test_boolofvoid</option>
 <option>Eigen</option>
-<option>const ADFun</option>
 <option>Atomic</option>
 <option>---..Element-wise Operations</option>
 <option>---..Sparsity</option>
@@ -100,7 +103,6 @@ A:active { color : purple }
 <option>checkpoint</option>
 <option>---..Retape</option>
 <option>---..Testing</option>
-<option>check_finite</option>
 <option>Compilation Speed</option>
 <option>Base Requirements</option>
 <option>Adolc</option>
@@ -125,6 +127,59 @@ A:active { color : purple }
 
 <center><b><big><big>The CppAD Wish List</big></big></b></center>
 <br>
+<b><big><a name="Subgraph Atomic Functions" id="Subgraph Atomic Functions">Subgraph Atomic Functions</a></big></b>
+<br>
+The <a href="subgraph_sparsity.htm" target="_top"><span style='white-space: nowrap'>subgraph_sparsity</span></a>
+ calculation treats
+each atomic function call as if
+all of its outputs depend on all of its inputs;
+see <a href="subgraph_sparsity.htm#Atomic Function" target="_top"><span style='white-space: nowrap'>atomic&nbsp;function</span></a>
+.
+These sparsity patterns could be made more efficient
+(could have fewer possibly non-zeros entries)
+by using the sparsity patterns for the atomic functions.
+
+
+<br>
+<br>
+<b><big><a name="check_finite" id="check_finite">check_finite</a></big></b>
+
+<ol type="1"><li>
+Sometimes one only gets infinite value during zero order forward
+and nan when computing corresponding derivatives.
+Change <a href="check_for_nan.htm" target="_top"><span style='white-space: nowrap'>check_for_nan</span></a>
+ to <code><font color="blue">check_finite</font></code>
+(not infinite or nan) so that error detection happens during zero
+order forward instead of later.
+</li><li>
+
+In addition, the current <a href="check_for_nan.htm" target="_top"><span style='white-space: nowrap'>check_for_nan</span></a>
+ writes the corresponding
+zero order values to a temporary file.
+It would be nice if the <code><font color="blue">check_finite</font></code> routine made writing
+the zero order values optional.
+</li></ol>
+
+
+<br>
+<br>
+<b><big><a name="optimize" id="optimize">optimize</a></big></b>
+<br>
+The <a href="optimize.htm" target="_top"><span style='white-space: nowrap'>optimize</span></a>
+ command seems to use a lot of memory when the
+tape is large. We should create a test case that demonstrates this and then
+work on reducing the amount of memory needed by this operation.
+
+<br>
+<br>
+<b><big><a name="test_boolofvoid" id="test_boolofvoid">test_boolofvoid</a></big></b>
+<br>
+For general purpose use, the <a href="test_boolofvoid.htm" target="_top"><span style='white-space: nowrap'>test_boolofvoid</span></a>
+ should be usable
+without including a memory check at the end.
+
+<br>
+<br>
 <b><big><a name="Eigen" id="Eigen">Eigen</a></big></b>
 <br>
 Use a wrapper class for
@@ -139,17 +194,6 @@ to use the syntax
 <code><font color="blue"><span style='white-space: nowrap'><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TESTVECTOR&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Scalar</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;<br>
 </span></font></code>
-<br>
-<b><big><a name="const ADFun" id="const ADFun">const ADFun</a></big></b>
-<br>
-Currently the structure that iterates through the operations sequence
-in an <a href="adfun.htm" target="_top"><span style='white-space: nowrap'>ADFun</span></a>
- object is part of the function object.
-There should be a separate constant iterator so that
-<code><font color="blue">ADFun</font></code> object could be <code><font color="blue">const</font></code> when they are not affected
-by this.
-
-<br>
 <br>
 <b><big><a name="Atomic" id="Atomic">Atomic</a></big></b>
 
@@ -252,17 +296,6 @@ There should be some examples and tests for both speed and memory use
 that demonstrate that checkpointing is useful.
 
 
-
-<br>
-<br>
-<b><big><a name="check_finite" id="check_finite">check_finite</a></big></b>
-<br>
-Sometimes one only gets infinite value during zero order forward
-and nan when computing corresponding derivatives.
-Change <a href="check_for_nan.htm" target="_top"><span style='white-space: nowrap'>check_for_nan</span></a>
- to <code><font color="blue">check_finite</font></code>
-(not infinite or nan) so that error detection happens during zero
-order forward instead of later.
 
 <br>
 <br>

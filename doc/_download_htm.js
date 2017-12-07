@@ -32,20 +32,19 @@ var list_down1 = [
 var list_current0 = [
 'download.htm#Purpose',
 'download.htm#Distribution Directory',
+'download.htm#Version',
+'download.htm#Release',
+'download.htm#License',
 'download.htm#Compressed Archives',
-'download.htm#Current Version',
-'download.htm#Current Version.Compressed Archives',
-'download.htm#Current Version.Subversion',
-'download.htm#Current Version.Git',
-'download.htm#Release Versions',
-'download.htm#Release Versions.Coin',
-'download.htm#Release Versions.github',
+'download.htm#Compressed Archives.Coin',
+'download.htm#Compressed Archives.Github',
+'download.htm#Source Code Control',
+'download.htm#Source Code Control.Git',
+'download.htm#Source Code Control.Subversion',
 'download.htm#Monthly Versions',
-'download.htm#Daily Versions',
 'download.htm#Windows File Extraction and Testing',
 'download.htm#Install Instructions',
-'download.htm#No Documentation',
-'download.htm#No Documentation.Building Documentation'
+'download.htm#Building Documentation'
 ];
 function choose_across0(item)
 {	var index          = item.selectedIndex;

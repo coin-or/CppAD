@@ -8,7 +8,7 @@ MathJax.Hub.Config({
 });
 </script>
 <script type='text/javascript' src=
-'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=default'
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
 >
 </script>
 <head>
@@ -29,7 +29,7 @@ A:active { color : purple }
 <body>
 <table><tr>
 <td>
-<a href="../index.html" target="_top"><img border="0" src="_image.gif"></a>
+<a href="http://coin-or.github.io/CppAD/doc/index.html" target="_top"><img border="0" src="_image.gif"></a>
 </td>
 <td><a href="mul_level_ode.cpp.htm" target="_top">Prev</a>
 </td><td><a href="ode_taylor.cpp.htm" target="_top">Next</a>
@@ -463,10 +463,10 @@ the value <a href="ipopt_prefix.htm" target="_top"><span style='white-space: now
      <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>thread_alloc<font color="#990000">;</font> <i><font color="#9A1900">// the allocator</font></i>
      <font color="#008080">size_t</font> capacity<font color="#990000">;</font>           <i><font color="#9A1900">// capacity of an allocation</font></i>
 
-     <i><font color="#9A1900">// the vector x with lenght n (or greater) in double</font></i>
+     <i><font color="#9A1900">// the vector x with length n (or greater) in double</font></i>
      <font color="#009900">double</font><font color="#990000">*</font> x <font color="#990000">=</font> thread_alloc<font color="#990000">::</font>create_array<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;(</font>n<font color="#990000">,</font> capacity<font color="#990000">);</font>
 
-     <i><font color="#9A1900">// the vector x with lenght n in a1type</font></i>
+     <i><font color="#9A1900">// the vector x with length n in a1type</font></i>
      <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font>a1type<font color="#990000">)</font> <b><font color="#000000">a1x</font></b><font color="#990000">(</font>n<font color="#990000">);</font>
      <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> n<font color="#990000">;</font> i<font color="#990000">++)</font>
           a1x<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> x<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> <font color="#009900">double</font><font color="#990000">(</font>i <font color="#990000">+</font> <font color="#993399">1</font><font color="#990000">);</font>
