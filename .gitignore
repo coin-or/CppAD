@@ -1,14 +1,28 @@
-# script use to make git commits
-git_commit.sh
-# names used for temporary files
-junk
-junk.sed
-# build directory used by other branches
-build
-# doxygen directory and file used by other branches
-doxydoc
-doxyfile
-# log files
-*.log
-# error files
+# specific files
+/aclocal.m4
+/ar-lib
+/autom4te.cache
+/bin/test_one.sh
+/cppad/configure.hpp
+/cppad/local/is_pod.hpp
+/doxyfile
+/git_commit.sh
+/test_one.cpp
+/test_one.exe
+# specific directories
+/build/
+/doxydoc/
+# specific extensions in all directories
 *.err
+*.log
+*.swp
+*.tmp
+# all new directories
+/new/
+/new.*/
+# all junk files and direcrories
+junk
+junk.*
+# all temp files and directories
+temp
+temp.*
