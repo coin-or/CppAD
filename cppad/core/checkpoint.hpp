@@ -242,6 +242,21 @@ It returns true if it succeeds and false if it fails.
 
 $end
 */
+// ---------------------------------------------------------------------------
+// standard case
+# define CPPAD_NTHREADS 1
+# define CPPAD_THEAD_F_ f_[0]
+//
+// special definitions when for TMB multi-threading
+# ifdef CPPAD_FOR_TMB
+# ifdef _OPENMP
+# undef  CPPAD_NTHREADS
+# undef  CPPAD_THEAD_F_
+# define CPPAD_NTHREADS omp_get_max_threads()
+# define CPPAD_THEAD_F_ f_[ omp_get_thread_num() ]
+# endif
+# endif
+// ---------------------------------------------------------------------------
 template <class Base>
 class checkpoint : public atomic_base<Base> {
 // ---------------------------------------------------------------------------
@@ -250,7 +265,7 @@ private:
 	typedef typename atomic_base<Base>::option_enum option_enum;
 	//
 	/// AD function corresponding to this checkpoint object
-	ADFun<Base> f_;
+	vector< ADFun<Base> > f_;
 	//
 	/// sparsity for entire Jacobian f(x)^{(1)} does not change so can cache it
 	local::sparse_list         jac_sparse_set_;
@@ -268,8 +283,8 @@ private:
 	{	CPPAD_ASSERT_UNKNOWN( jac_sparse_set_.n_set() == 0 );
 		bool transpose  = false;
 		bool dependency = true;
-		size_t n = f_.Domain();
-		size_t m = f_.Range();
+		size_t n = CPPAD_THEAD_F_.Domain();
+		size_t m = CPPAD_THEAD_F_.Range();
 		// Use the choice for forward / reverse that results in smaller
 		// size for the sparsity pattern of all variables in the tape.
 		if( n <= m )
@@ -279,10 +294,10 @@ private:
 			{	// use add_element because only adding one element per set
 				identity.add_element(j, j);
 			}
-			f_.ForSparseJacCheckpoint(
+			CPPAD_THEAD_F_.ForSparseJacCheckpoint(
 				n, identity, transpose, dependency, jac_sparse_set_
 			);
-			f_.size_forward_set(0);
+			CPPAD_THEAD_F_.size_forward_set(0);
 		}
 		else
 		{	local::sparse_list identity;
@@ -291,20 +306,20 @@ private:
 			{	// use add_element because only adding one element per set
 				identity.add_element(i, i);
 			}
-			f_.RevSparseJacCheckpoint(
+			CPPAD_THEAD_F_.RevSparseJacCheckpoint(
 				m, identity, transpose, dependency, jac_sparse_set_
 			);
 		}
-		CPPAD_ASSERT_UNKNOWN( f_.size_forward_set() == 0 );
-		CPPAD_ASSERT_UNKNOWN( f_.size_forward_bool() == 0 );
+		CPPAD_ASSERT_UNKNOWN( CPPAD_THEAD_F_.size_forward_set() == 0 );
+		CPPAD_ASSERT_UNKNOWN( CPPAD_THEAD_F_.size_forward_bool() == 0 );
 	}
 	/// set jac_sparse_bool_
 	void set_jac_sparse_bool(void)
 	{	CPPAD_ASSERT_UNKNOWN( jac_sparse_bool_.size() == 0 );
 		bool transpose  = false;
 		bool dependency = true;
-		size_t n = f_.Domain();
-		size_t m = f_.Range();
+		size_t n = CPPAD_THEAD_F_.Domain();
+		size_t m = CPPAD_THEAD_F_.Range();
 		// Use the choice for forward / reverse that results in smaller
 		// size for the sparsity pattern of all variables in the tape.
 		if( n <= m )
@@ -313,10 +328,10 @@ private:
 			{	for(size_t i = 0; i < n; i++)
 					identity[ i * n + j ] = (i == j);
 			}
-			jac_sparse_bool_ = f_.ForSparseJac(
+			jac_sparse_bool_ = CPPAD_THEAD_F_.ForSparseJac(
 				n, identity, transpose, dependency
 			);
-			f_.size_forward_bool(0);
+			CPPAD_THEAD_F_.size_forward_bool(0);
 		}
 		else
 		{	vectorBool identity(m * m);
@@ -324,19 +339,19 @@ private:
 			{	for(size_t i = 0; i < m; i++)
 					identity[ i * m + j ] = (i == j);
 			}
-			jac_sparse_bool_ = f_.RevSparseJac(
+			jac_sparse_bool_ = CPPAD_THEAD_F_.RevSparseJac(
 				m, identity, transpose, dependency
 			);
 		}
-		CPPAD_ASSERT_UNKNOWN( f_.size_forward_bool() == 0 );
-		CPPAD_ASSERT_UNKNOWN( f_.size_forward_set() == 0 );
+		CPPAD_ASSERT_UNKNOWN( CPPAD_THEAD_F_.size_forward_bool() == 0 );
+		CPPAD_ASSERT_UNKNOWN( CPPAD_THEAD_F_.size_forward_set() == 0 );
 	}
 	// ------------------------------------------------------------------------
 	/// set hes_sparse_set_
 	void set_hes_sparse_set(void)
 	{	CPPAD_ASSERT_UNKNOWN( hes_sparse_set_.n_set() == 0 );
-		size_t n = f_.Domain();
-		size_t m = f_.Range();
+		size_t n = CPPAD_THEAD_F_.Domain();
+		size_t m = CPPAD_THEAD_F_.Range();
 		//
 		// set version of sparsity for vector of all ones
 		vector<bool> all_one(m);
@@ -354,23 +369,23 @@ private:
 		// compute sparsity pattern for H(x) = sum_i f_i(x)^{(2)}
 		bool transpose  = false;
 		bool dependency = false;
-		f_.ForSparseJacCheckpoint(
+		CPPAD_THEAD_F_.ForSparseJacCheckpoint(
 			n, identity, transpose, dependency, jac_sparse_set_
 		);
-		f_.RevSparseHesCheckpoint(
+		CPPAD_THEAD_F_.RevSparseHesCheckpoint(
 			n, all_one, transpose, hes_sparse_set_
 		);
 		CPPAD_ASSERT_UNKNOWN( hes_sparse_set_.n_set() == n );
 		CPPAD_ASSERT_UNKNOWN( hes_sparse_set_.end()   == n );
 		//
 		// drop the forward sparsity results from f_
-		f_.size_forward_set(0);
+		CPPAD_THEAD_F_.size_forward_set(0);
 	}
 	/// set hes_sparse_bool_
 	void set_hes_sparse_bool(void)
 	{	CPPAD_ASSERT_UNKNOWN( hes_sparse_bool_.size() == 0 );
-		size_t n = f_.Domain();
-		size_t m = f_.Range();
+		size_t n = CPPAD_THEAD_F_.Domain();
+		size_t m = CPPAD_THEAD_F_.Range();
 		//
 		// set version of sparsity for vector of all ones
 		vectorBool all_one(m);
@@ -387,14 +402,14 @@ private:
 		// compute sparsity pattern for H(x) = sum_i f_i(x)^{(2)}
 		bool transpose  = false;
 		bool dependency = false;
-		f_.ForSparseJac(n, identity, transpose, dependency);
-		hes_sparse_bool_ = f_.RevSparseHes(n, all_one, transpose);
+		CPPAD_THEAD_F_.ForSparseJac(n, identity, transpose, dependency);
+		hes_sparse_bool_ = CPPAD_THEAD_F_.RevSparseHes(n, all_one, transpose);
 		CPPAD_ASSERT_UNKNOWN( hes_sparse_bool_.size() == n * n );
 		//
 		// drop the forward sparsity results from f_
-		f_.size_forward_bool(0);
-		CPPAD_ASSERT_UNKNOWN( f_.size_forward_bool() == 0 );
-		CPPAD_ASSERT_UNKNOWN( f_.size_forward_set() == 0 );
+		CPPAD_THEAD_F_.size_forward_bool(0);
+		CPPAD_ASSERT_UNKNOWN( CPPAD_THEAD_F_.size_forward_bool() == 0 );
+		CPPAD_ASSERT_UNKNOWN( CPPAD_THEAD_F_.size_forward_set() == 0 );
 	}
 	// ------------------------------------------------------------------------
 	/*!
@@ -409,8 +424,8 @@ private:
 		      sparsity_type&                    s  ,
 		const vector<Base>&                     x  )
 	{	// during user sparsity calculations
-		size_t m = f_.Range();
-		size_t n = f_.Domain();
+		size_t m = CPPAD_THEAD_F_.Range();
+		size_t n = CPPAD_THEAD_F_.Domain();
 		if( jac_sparse_bool_.size() == 0 )
 			set_jac_sparse_bool();
 		if( jac_sparse_set_.n_set() != 0 )
@@ -454,8 +469,8 @@ private:
 		      sparsity_type&                    st ,
 		const vector<Base>&                     x  )
 	{	// during user sparsity calculations
-		size_t m = f_.Range();
-		size_t n = f_.Domain();
+		size_t m = CPPAD_THEAD_F_.Range();
+		size_t n = CPPAD_THEAD_F_.Domain();
 		if( jac_sparse_bool_.size() == 0 )
 			set_jac_sparse_bool();
 		if( jac_sparse_set_.n_set() != 0 )
@@ -499,9 +514,9 @@ private:
 		const sparsity_type&                    u  ,
 		      sparsity_type&                    v  ,
 		const vector<Base>&                     x  )
-	{	size_t n = f_.Domain();
+	{	size_t n = CPPAD_THEAD_F_.Domain();
 # ifndef NDEBUG
-		size_t m = f_.Range();
+		size_t m = CPPAD_THEAD_F_.Range();
 # endif
 		CPPAD_ASSERT_UNKNOWN( vx.size() == n );
 		CPPAD_ASSERT_UNKNOWN(  s.size() == m );
@@ -522,7 +537,7 @@ private:
 
 
 		// compute sparsity pattern for T(x) = S(x) * f'(x)
-		t = f_.RevSparseJac(1, s);
+		t = CPPAD_THEAD_F_.RevSparseJac(1, s);
 # ifndef NDEBUG
 		for(size_t j = 0; j < n; j++)
 			CPPAD_ASSERT_UNKNOWN( vx[j] || ! t[j] )
@@ -535,7 +550,7 @@ private:
 		// compute sparsity pattern for A(x) = f'(x)^T * U(x)
 		bool transpose = true;
 		sparsity_type a(n * q);
-		a = f_.RevSparseJac(q, u, transpose);
+		a = CPPAD_THEAD_F_.RevSparseJac(q, u, transpose);
 
 		// Need sparsity pattern for H(x) = (S(x) * f(x))''(x) * R,
 		// but use less efficient sparsity for  f(x)''(x) * R so that
@@ -600,7 +615,7 @@ l	should the operation sequence corresponding to the algo be optimized.
 		option_enum                    sparsity =
 				atomic_base<Base>::pack_sparsity_enum  ,
 		bool                           optimize = true
-	) : atomic_base<Base>(name, sparsity)
+	) : atomic_base<Base>(name, sparsity), f_(CPPAD_NTHREADS)
 	{	CheckSimpleVector< CppAD::AD<Base> , ADVector>();
 
 		// make a copy of ax because Independent modifies AD information
@@ -610,25 +625,27 @@ l	should the operation sequence corresponding to the algo be optimized.
 		// record mapping from x_tmp to ay
 		algo(x_tmp, ay);
 		// create function f_ : x -> y
-		f_.Dependent(ay);
+		f_[0].Dependent(ay);
 		if( optimize )
 		{	// suppress checking for nan in f_ results
 			// (see optimize documentation for atomic functions)
-			f_.check_for_nan(false);
+			f_[0].check_for_nan(false);
 			//
 			// now optimize
-			f_.optimize();
+			f_[0].optimize();
 		}
 		// now disable checking of comparison operations
 		// 2DO: add a debugging mode that checks for changes and aborts
-		f_.compare_change_count(0);
+		f_[0].compare_change_count(0);
+		// Copy the other threads
+		for(int i = 0; i < CPPAD_NTHREADS; i++) f_[i] = f_[0];
 	}
 	// ------------------------------------------------------------------------
 	/*!
 	Implement the user call to <tt>atom_fun.size_var()</tt>.
 	*/
 	size_t size_var(void)
-	{	return f_.size_var(); }
+	{	return CPPAD_THEAD_F_.size_var(); }
 	// ------------------------------------------------------------------------
 	/*!
 	Implement the user call to <tt>atom_fun(ax, ay)</tt>.
@@ -668,10 +685,10 @@ l	should the operation sequence corresponding to the algo be optimized.
 		      vector<bool>&      vy ,
 		const vector<Base>&      tx ,
 		      vector<Base>&      ty )
-	{	size_t n = f_.Domain();
-		size_t m = f_.Range();
+	{	size_t n = CPPAD_THEAD_F_.Domain();
+		size_t m = CPPAD_THEAD_F_.Range();
 		//
-		CPPAD_ASSERT_UNKNOWN( f_.size_var() > 0 );
+		CPPAD_ASSERT_UNKNOWN( CPPAD_THEAD_F_.size_var() > 0 );
 		CPPAD_ASSERT_UNKNOWN( tx.size() % (q+1) == 0 );
 		CPPAD_ASSERT_UNKNOWN( ty.size() % (q+1) == 0 );
 		CPPAD_ASSERT_UNKNOWN( n == tx.size() / (q+1) );
@@ -732,14 +749,14 @@ l	should the operation sequence corresponding to the algo be optimized.
 			}
 		}
 		// compute forward results for orders zero through q
-		ty = f_.Forward(q, tx);
+		ty = CPPAD_THEAD_F_.Forward(q, tx);
 
 		// no longer need the Taylor coefficients in f_
 		// (have to reconstruct them every time)
 		// Hold onto sparsity pattern because it is always good.
 		size_t c = 0;
 		size_t r = 0;
-		f_.capacity_order(c, r);
+		CPPAD_THEAD_F_.capacity_order(c, r);
 		return ok;
 	}
 	// ------------------------------------------------------------------------
@@ -756,12 +773,12 @@ l	should the operation sequence corresponding to the algo be optimized.
 		const vector<Base>&       py )
 	{
 # ifndef NDEBUG
-		size_t n = f_.Domain();
-		size_t m = f_.Range();
+		size_t n = CPPAD_THEAD_F_.Domain();
+		size_t m = CPPAD_THEAD_F_.Range();
 # endif
 		CPPAD_ASSERT_UNKNOWN( n == tx.size() / (q+1) );
 		CPPAD_ASSERT_UNKNOWN( m == ty.size() / (q+1) );
-		CPPAD_ASSERT_UNKNOWN( f_.size_var() > 0 );
+		CPPAD_ASSERT_UNKNOWN( CPPAD_THEAD_F_.size_var() > 0 );
 		CPPAD_ASSERT_UNKNOWN( tx.size() % (q+1) == 0 );
 		CPPAD_ASSERT_UNKNOWN( ty.size() % (q+1) == 0 );
 		bool ok  = true;
@@ -769,14 +786,14 @@ l	should the operation sequence corresponding to the algo be optimized.
 		// put proper forward mode coefficients in f_
 # ifdef NDEBUG
 		// compute forward results for orders zero through q
-		f_.Forward(q, tx);
+		CPPAD_THEAD_F_.Forward(q, tx);
 # else
 		CPPAD_ASSERT_UNKNOWN( px.size() == n * (q+1) );
 		CPPAD_ASSERT_UNKNOWN( py.size() == m * (q+1) );
 		size_t i, j, k;
 		//
 		// compute forward results for orders zero through q
-		vector<Base> check_ty = f_.Forward(q, tx);
+		vector<Base> check_ty = CPPAD_THEAD_F_.Forward(q, tx);
 		for(i = 0; i < m; i++)
 		{	for(k = 0; k <= q; k++)
 			{	j = i * (q+1) + k;
@@ -785,13 +802,13 @@ l	should the operation sequence corresponding to the algo be optimized.
 		}
 # endif
 		// now can run reverse mode
-		px = f_.Reverse(q+1, py);
+		px = CPPAD_THEAD_F_.Reverse(q+1, py);
 
 		// no longer need the Taylor coefficients in f_
 		// (have to reconstruct them every time)
 		size_t c = 0;
 		size_t r = 0;
-		f_.capacity_order(c, r);
+		CPPAD_THEAD_F_.capacity_order(c, r);
 		return ok;
 	}
 	// ------------------------------------------------------------------------
@@ -830,8 +847,8 @@ l	should the operation sequence corresponding to the algo be optimized.
 		      vector< std::set<size_t> >&       s  ,
 		const vector<Base>&                     x  )
 	{	// during user sparsity calculations
-		size_t m = f_.Range();
-		size_t n = f_.Domain();
+		size_t m = CPPAD_THEAD_F_.Range();
+		size_t n = CPPAD_THEAD_F_.Domain();
 		if( jac_sparse_bool_.size() != 0 )
 			jac_sparse_bool_.clear();
 		if( jac_sparse_set_.n_set() == 0 )
@@ -901,8 +918,8 @@ l	should the operation sequence corresponding to the algo be optimized.
 		      vector< std::set<size_t> >&       st ,
 		const vector<Base>&                     x  )
 	{	// during user sparsity calculations
-		size_t m = f_.Range();
-		size_t n = f_.Domain();
+		size_t m = CPPAD_THEAD_F_.Range();
+		size_t n = CPPAD_THEAD_F_.Domain();
 		if( jac_sparse_bool_.size() != 0 )
 			jac_sparse_bool_.clear();
 		if( jac_sparse_set_.n_set() == 0 )
@@ -989,9 +1006,9 @@ l	should the operation sequence corresponding to the algo be optimized.
 		const vector< std::set<size_t> >&       u  ,
 		      vector< std::set<size_t> >&       v  ,
 		const vector<Base>&                     x  )
-	{	size_t n = f_.Domain();
+	{	size_t n = CPPAD_THEAD_F_.Domain();
 # ifndef NDEBUG
-		size_t m = f_.Range();
+		size_t m = CPPAD_THEAD_F_.Range();
 # endif
 		CPPAD_ASSERT_UNKNOWN( vx.size() == n );
 		CPPAD_ASSERT_UNKNOWN(  s.size() == m );
@@ -1012,7 +1029,7 @@ l	should the operation sequence corresponding to the algo be optimized.
 		CPPAD_ASSERT_UNKNOWN( hes_sparse_set_.end()   == n );
 
 		// compute sparsity pattern for T(x) = S(x) * f'(x)
-		t = f_.RevSparseJac(1, s);
+		t = CPPAD_THEAD_F_.RevSparseJac(1, s);
 # ifndef NDEBUG
 		for(size_t j = 0; j < n; j++)
 			CPPAD_ASSERT_UNKNOWN( vx[j] || ! t[j] )
@@ -1026,7 +1043,7 @@ l	should the operation sequence corresponding to the algo be optimized.
 		// 2DO: change a to use INTERNAL_SPARSE_SET
 		bool transpose = true;
 		vector< std::set<size_t> > a(n);
-		a = f_.RevSparseJac(q, u, transpose);
+		a = CPPAD_THEAD_F_.RevSparseJac(q, u, transpose);
 
 		// Need sparsity pattern for H(x) = (S(x) * f(x))''(x) * R,
 		// but use less efficient sparsity for  f(x)''(x) * R so that
@@ -1060,4 +1077,7 @@ l	should the operation sequence corresponding to the algo be optimized.
 };
 
 } // END_CPPAD_NAMESPACE
+
+# undef  CPPAD_NTHREADS
+# undef  CPPAD_THEAD_F_
 # endif

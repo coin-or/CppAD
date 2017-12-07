@@ -23,13 +23,16 @@ ADD_EXECUTABLE(
 	${name} EXCLUDE_FROM_ALL ${name}.cpp
 )
 #
-# Add -D CPPAD_FOR_TMB to the compiler flags
-SET(cppad_cxx_flags "${cppad_cxx_flags} -D CPPAD_FOR_TMB")
+# Add extra definitions to the complilation flags
+SET(cppad_cxx_flags "${cppad_cxx_flags} ${OpenMP_CXX_FLAGS} -D CPPAD_FOR_TMB")
 #
 # set compiler flags for this executable
 SET_TARGET_PROPERTIES(
 	${name} PROPERTIES COMPILE_FLAGS "${cppad_cxx_flags}"
 )
+# extra flags used by linker for openmp support
+SET(CMAKE_EXE_LINKER_FLAGS ${OpenMP_CXX_FLAGS} )
+#
 # check_test_more_cppad_for_tmb target
 ADD_CUSTOM_TARGET(
 	check_test_more_${name} ${name} DEPENDS ${name}
