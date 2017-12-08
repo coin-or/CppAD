@@ -153,10 +153,15 @@ size_t thread_num(void)
 bool multi_thread_checkpoint(void)
 {	bool ok = true;
 
-	// OpenMP setup (test not yet passing for multiple threads)
-	int num_threads = 1;               // number of threads
+	// OpenMP setup
+	int num_threads = 4;               // number of threads
 	omp_set_dynamic(0);                // turn off dynamic thread adjustment
 	omp_set_num_threads(num_threads);  // set number of OMP threads
+
+	// check that multi-threading is possible on this machine
+	if( omp_get_max_threads() < 2 )
+	{	std::cout << "This machine does not support multi-threading: ";
+	}
 
 	// create checkpoint version of algorithm
 	size_t n(1), m(1);
