@@ -32,11 +32,26 @@ $spell
 	const
 	Eigen
 	boolofvoid
+	afun
+	hes
+	Mp
 $$
 
 $section The CppAD Wish List$$
 
-$head Subgraph Atomic Functions$$
+$head Multi-Threading$$
+The TMB packages has a special version of the
+$cref checkpoint$$ class
+that enables one checkpoint function to be my multiple OpenMp threads.
+Perhaps it would be useful to extend the CppAD multi-threading environment
+to allow for this.
+In addition, perhaps a multi-threading version of an ADFun object would
+be useful.
+
+$comment ------------------------------------------------------------------- $$
+$head Atomic$$
+
+$subhead Subgraph$$
 The $cref subgraph_sparsity$$ calculation treats
 each atomic function call as if
 all of its outputs depend on all of its inputs;
@@ -45,6 +60,36 @@ These sparsity patterns could be made more efficient
 (could have fewer possibly non-zeros entries)
 by using the sparsity patterns for the atomic functions.
 
+$subhead New API$$
+A new API for atomic functions could be created that uses
+$cref sparse_rc$$ for sparsity patterns and an interface like
+$codei%
+	%afun%.jac_sparsity(%select_domain%, %select_range%, %pattern_out%)
+	%afun%.hes_sparsity(%select_domain%, %select_range%, %pattern_out%)
+%$$
+see $cref subgraph_sparsity$$.
+This would be simpler for the user.
+
+$subhead Sparsity$$
+Add an $cref atomic_option$$ that checks if the sparsity patterns calculated
+by user atomic functions have
+elements for arguments that are know to be parameters and
+could be more efficient.
+For example, the user's version of $code for_sparse_jac$$ could check
+$cref/x/atomic_for_sparse_jac/Implementation/x/$$ to see for which components
+are variables;
+i.e., $cref/isnan(x[j])/nan/isnan/$$ is true for a particular call.
+Note that
+$cref/vx/atomic_for_sparse_hes/Implementation/vx/$$ should be removed,
+because the method above can be used to determine this information.
+
+$subhead Element-wise Operations$$
+Add user atomic functions for element-wise addition, subtraction,
+multiplication, and division.
+Where the operands are $cref/simple vectors/SimpleVector/$$
+with elements of type $codei%AD<%Base%>%$$.
+
+$comment ------------------------------------------------------------------- $$
 
 $head check_finite$$
 $list number$$
@@ -60,11 +105,6 @@ It would be nice if the $code check_finite$$ routine made writing
 the zero order values optional.
 $lend
 
-$head optimize$$
-The $cref optimize$$ command seems to use a lot of memory when the
-tape is large. We should create a test case that demonstrates this and then
-work on reducing the amount of memory needed by this operation.
-
 $head test_boolofvoid$$
 For general purpose use, the $cref test_boolofvoid$$ should be usable
 without including a memory check at the end.
@@ -79,27 +119,6 @@ to use the syntax
 $codei%
 	TESTVECTOR<%Scalar%>
 %$$
-
-$head Atomic$$
-
-$subhead Element-wise Operations$$
-Add user atomic functions for element-wise addition, subtraction,
-multiplication, and division.
-Where the operands are $cref/simple vectors/SimpleVector/$$
-with elements of type $codei%AD<%Base%>%$$.
-
-$subhead Sparsity$$
-Add an $cref atomic_option$$ that checks if the sparsity patterns calculated
-by user atomic functions have
-elements for arguments that are know to be parameters and
-could be more efficient.
-For example, the user's version of $code for_sparse_jac$$ could check
-$cref/x/atomic_for_sparse_jac/Implementation/x/$$ to see for which components
-are variables;
-i.e., $cref/isnan(x[j])/nan/isnan/$$ is true for a particular call.
-Note that
-$cref/vx/atomic_for_sparse_hes/Implementation/vx/$$ should be removed,
-because the method above can be used to determine this information.
 
 $head Example$$
 Split the $cref/example list/ListAllExamples/$$
@@ -120,6 +139,11 @@ $codei%
 and have the optimizer recognize when they should be used.
 (They could also be in the user API, but it would not be expected
 that the user would use them.)
+
+$subhead Memory$$
+The $cref optimize$$ command seems to use a lot of memory when the
+tape is large. We should create a test case that demonstrates this and then
+work on reducing the amount of memory needed by this operation.
 
 $comment ------------------------------------------------------------------ $$
 $head checkpoint$$
@@ -177,7 +201,6 @@ It would not be necessary to reallocate memory for a result that is
 repeatedly calculated
 (because an iterator for the result container would be passed in).
 $lend
-
 
 $head Operation Sequence$$
 It is possible to detect if the

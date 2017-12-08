@@ -59,6 +59,16 @@ $head API Changes$$
 Speed tests no longer automatically compile in release mode; see
 $cref/debug_which/speed/debug_which/$$
 
+$head 12-08$$
+$list number$$
+A wish list item for a
+$cref/new API/wish_list/Atomic/New API/$$ for
+user defined $cref/atomic/atomic_base/$$ functions.
+$lnext
+A $cref/multi-threading/wish_list/Multi-Threading/$$
+wish list item was added.
+$lend
+
 $head 12-06$$
 A $cref wish_list$$ item to enable one to iterate through a
 $code const$$ $cref ADFun$$ operation sequence was completed.
@@ -110,7 +120,7 @@ $href%https://cran.r-project.org/web/packages/TMB/index.html%TMB%$$ package.
 $head 11-15$$
 $list number$$
 Add wish list item for $cref subgraph_sparsity$$ when
-$cref/atomic functions/wish_list/Subgraph Atomic Functions/$$
+$cref/atomic functions/wish_list/Atomic/Subgraph/$$
 are present.
 $lnext
 Fix $cref cmake_check$$ when $cref ipopt_prefix$$ is not present on the
@@ -175,7 +185,7 @@ in the file $code cppad/local/optimize/hash_code.hpp$$.
 $lend
 
 $head 09-16$$
-An $cref/optimize/wish_list/optimize/$$ entry
+An $cref/optimization memory/wish_list/Optimization/Memory/$$ entry
 was added to the wish list
 and the $cref/check_finite/wish_list/check_finite/$$ entry was modified.
 
