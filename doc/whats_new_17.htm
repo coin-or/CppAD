@@ -8,14 +8,14 @@ MathJax.Hub.Config({
 });
 </script>
 <script type='text/javascript' src=
-'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=default'
 >
 </script>
 <head>
 <title>Changes and Additions to CppAD During 2017</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Changes and Additions to CppAD During 2017">
-<meta name="keywords" id="keywords" content=" changes additions to cppad during 2017 api 12-06 12-05 12-04 12-01 11-30 11-23 11-20 11-19 11-15 11-13 11-12 11-08 11-06 11-04 10-23 09-16 08-30 08-29 08-09 08-08 07-25 07-03 07-01 06-28 06-11 06-10 06-07 06-04 06-03 06-01 05-29 05-19 05-14 05-12 04-08 04-02 03-31 03-29 03-25 03-20 03-13 03-11 03-10 03-06 03-04 02-26 02-21 02-19 02-15 02-13 02-11 02-10 02-09 02-08 02-05 02-03 02-02 02-01 01-30 01-29 01-27 01-19 01-18 01-17 ">
+<meta name="keywords" id="keywords" content=" changes additions to cppad during 2017 api 12-08 12-06 12-05 12-04 12-01 11-30 11-23 11-20 11-19 11-15 11-13 11-12 11-08 11-06 11-04 10-23 09-16 08-30 08-29 08-09 08-08 07-25 07-03 07-01 06-28 06-11 06-10 06-07 06-04 06-03 06-01 05-29 05-19 05-14 05-12 04-08 04-02 03-31 03-29 03-25 03-20 03-13 03-11 03-10 03-06 03-04 02-26 02-21 02-19 02-15 02-13 02-11 02-10 02-09 02-08 02-05 02-03 02-02 02-01 01-30 01-29 01-27 01-19 01-18 01-17 ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -29,7 +29,7 @@ A:active { color : purple }
 <body>
 <table><tr>
 <td>
-<a href="http://coin-or.github.io/CppAD/doc/index.html" target="_top"><img border="0" src="_image.gif"></a>
+<a href="https://github.com/bradbell/cppad" target="_top"><img border="0" src="_image.gif"></a>
 </td>
 <td><a href="whats_new.htm" target="_top">Prev</a>
 </td><td><a href="whats_new_16.htm" target="_top">Next</a>
@@ -110,6 +110,7 @@ A:active { color : purple }
 <select onchange='choose_current0(this)'>
 <option>Headings-&gt;</option>
 <option>API Changes</option>
+<option>12-08</option>
 <option>12-06</option>
 <option>12-05</option>
 <option>12-04</option>
@@ -192,6 +193,24 @@ A:active { color : purple }
 <br>
 Speed tests no longer automatically compile in release mode; see
 <a href="speed.htm#debug_which" target="_top"><span style='white-space: nowrap'>debug_which</span></a>
+
+
+<br>
+<br>
+<b><big><a name="12-08" id="12-08">12-08</a></big></b>
+
+<ol type="1"><li>
+A wish list item for a
+<a href="wish_list.htm#Atomic.New API" target="_top"><span style='white-space: nowrap'>new&nbsp;API</span></a>
+ for
+user defined <a href="atomic_base.htm" target="_top"><span style='white-space: nowrap'>atomic</span></a>
+ functions.
+</li><li>
+
+A <a href="wish_list.htm#Multi-Threading" target="_top"><span style='white-space: nowrap'>multi-threading</span></a>
+
+wish list item was added.
+</li></ol>
 
 
 <br>
@@ -286,7 +305,7 @@ This was inspired by the
 <ol type="1"><li>
 Add wish list item for <a href="subgraph_sparsity.htm" target="_top"><span style='white-space: nowrap'>subgraph_sparsity</span></a>
  when
-<a href="wish_list.htm#Subgraph Atomic Functions" target="_top"><span style='white-space: nowrap'>atomic&nbsp;functions</span></a>
+<a href="wish_list.htm#Atomic.Subgraph" target="_top"><span style='white-space: nowrap'>atomic&nbsp;functions</span></a>
 
 are present.
 </li><li>
@@ -396,7 +415,7 @@ in the file <code><font color="blue">cppad/local/optimize/hash_code.hpp</font></
 <br>
 <b><big><a name="09-16" id="09-16">09-16</a></big></b>
 <br>
-An <a href="wish_list.htm#optimize" target="_top"><span style='white-space: nowrap'>optimize</span></a>
+An <a href="wish_list.htm#Optimization.Memory" target="_top"><span style='white-space: nowrap'>optimization&nbsp;memory</span></a>
  entry
 was added to the wish list
 and the <a href="wish_list.htm#check_finite" target="_top"><span style='white-space: nowrap'>check_finite</span></a>

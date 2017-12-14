@@ -8,14 +8,14 @@ MathJax.Hub.Config({
 });
 </script>
 <script type='text/javascript' src=
-'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=default'
 >
 </script>
 <head>
 <title>The CppAD Wish List</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="The CppAD Wish List">
-<meta name="keywords" id="keywords" content=" the cppad wish list subgraph atomic functions check_finite optimize test_boolofvoid eigen element-wise operations sparsity example optimization taping special operators checkpoint retape testing compilation speed base requirements adolc forward mode recomputation iterator interface operation sequence software guidelines tracing atan2 benderquad ">
+<meta name="keywords" id="keywords" content=" the cppad wish list multi-threading atomic subgraph new api sparsity element-wise operations check_finite test_boolofvoid eigen example optimization taping special operators memory checkpoint retape testing compilation speed base requirements adolc forward mode recomputation iterator interface operation sequence software guidelines tracing atan2 benderquad ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -29,7 +29,7 @@ A:active { color : purple }
 <body>
 <table><tr>
 <td>
-<a href="http://coin-or.github.io/CppAD/doc/index.html" target="_top"><img border="0" src="_image.gif"></a>
+<a href="https://github.com/bradbell/cppad" target="_top"><img border="0" src="_image.gif"></a>
 </td>
 <td><a href="bib.htm" target="_top">Prev</a>
 </td><td><a href="whats_new.htm" target="_top">Next</a>
@@ -88,18 +88,20 @@ A:active { color : purple }
 <td>
 <select onchange='choose_current0(this)'>
 <option>Headings-&gt;</option>
-<option>Subgraph Atomic Functions</option>
+<option>Multi-Threading</option>
+<option>Atomic</option>
+<option>---..Subgraph</option>
+<option>---..New API</option>
+<option>---..Sparsity</option>
+<option>---..Element-wise Operations</option>
 <option>check_finite</option>
-<option>optimize</option>
 <option>test_boolofvoid</option>
 <option>Eigen</option>
-<option>Atomic</option>
-<option>---..Element-wise Operations</option>
-<option>---..Sparsity</option>
 <option>Example</option>
 <option>Optimization</option>
 <option>---..Taping</option>
 <option>---..Special Operators</option>
+<option>---..Memory</option>
 <option>checkpoint</option>
 <option>---..Retape</option>
 <option>---..Testing</option>
@@ -127,7 +129,26 @@ A:active { color : purple }
 
 <center><b><big><big>The CppAD Wish List</big></big></b></center>
 <br>
-<b><big><a name="Subgraph Atomic Functions" id="Subgraph Atomic Functions">Subgraph Atomic Functions</a></big></b>
+<b><big><a name="Multi-Threading" id="Multi-Threading">Multi-Threading</a></big></b>
+<br>
+The TMB packages has a special version of the
+<a href="checkpoint.htm" target="_top"><span style='white-space: nowrap'>checkpoint</span></a>
+ class
+that enables one checkpoint function to be my multiple OpenMp threads.
+Perhaps it would be useful to extend the CppAD multi-threading environment
+to allow for this.
+In addition, perhaps a multi-threading version of an ADFun object would
+be useful.
+
+
+<br>
+<br>
+<b><big><a name="Atomic" id="Atomic">Atomic</a></big></b>
+
+
+<br>
+<br>
+<b><a name="Atomic.Subgraph" id="Atomic.Subgraph">Subgraph</a></b>
 <br>
 The <a href="subgraph_sparsity.htm" target="_top"><span style='white-space: nowrap'>subgraph_sparsity</span></a>
  calculation treats
@@ -138,6 +159,55 @@ see <a href="subgraph_sparsity.htm#Atomic Function" target="_top"><span style='w
 These sparsity patterns could be made more efficient
 (could have fewer possibly non-zeros entries)
 by using the sparsity patterns for the atomic functions.
+
+<br>
+<br>
+<b><a name="Atomic.New API" id="Atomic.New API">New API</a></b>
+<br>
+A new API for atomic functions could be created that uses
+<a href="sparse_rc.htm" target="_top"><span style='white-space: nowrap'>sparse_rc</span></a>
+ for sparsity patterns and an interface like
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>afun</span></font></i><font color="blue"><span style='white-space: nowrap'>.jac_sparsity(</span></font><i><font color="black"><span style='white-space: nowrap'>select_domain</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>select_range</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>pattern_out</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>afun</span></font></i><font color="blue"><span style='white-space: nowrap'>.hes_sparsity(</span></font><i><font color="black"><span style='white-space: nowrap'>select_domain</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>select_range</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>pattern_out</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+see <a href="subgraph_sparsity.htm" target="_top"><span style='white-space: nowrap'>subgraph_sparsity</span></a>
+.
+This would be simpler for the user.
+
+<br>
+<br>
+<b><a name="Atomic.Sparsity" id="Atomic.Sparsity">Sparsity</a></b>
+<br>
+Add an <a href="atomic_option.htm" target="_top"><span style='white-space: nowrap'>atomic_option</span></a>
+ that checks if the sparsity patterns calculated
+by user atomic functions have
+elements for arguments that are know to be parameters and
+could be more efficient.
+For example, the user's version of <code><font color="blue">for_sparse_jac</font></code> could check
+<a href="atomic_for_sparse_jac.htm#Implementation.x" target="_top"><span style='white-space: nowrap'>x</span></a>
+ to see for which components
+are variables;
+i.e., <a href="nan.htm#isnan" target="_top"><span style='white-space: nowrap'>isnan(x[j])</span></a>
+ is true for a particular call.
+Note that
+<a href="atomic_for_sparse_hes.htm#Implementation.vx" target="_top"><span style='white-space: nowrap'>vx</span></a>
+ should be removed,
+because the method above can be used to determine this information.
+
+<br>
+<br>
+<b><a name="Atomic.Element-wise Operations" id="Atomic.Element-wise Operations">Element-wise Operations</a></b>
+<br>
+Add user atomic functions for element-wise addition, subtraction,
+multiplication, and division.
+Where the operands are <a href="simplevector.htm" target="_top"><span style='white-space: nowrap'>simple&nbsp;vectors</span></a>
+
+with elements of type 
+<code><font color="blue"><span style='white-space: nowrap'>AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code>
+.
+
 
 
 <br>
@@ -163,15 +233,6 @@ the zero order values optional.
 
 <br>
 <br>
-<b><big><a name="optimize" id="optimize">optimize</a></big></b>
-<br>
-The <a href="optimize.htm" target="_top"><span style='white-space: nowrap'>optimize</span></a>
- command seems to use a lot of memory when the
-tape is large. We should create a test case that demonstrates this and then
-work on reducing the amount of memory needed by this operation.
-
-<br>
-<br>
 <b><big><a name="test_boolofvoid" id="test_boolofvoid">test_boolofvoid</a></big></b>
 <br>
 For general purpose use, the <a href="test_boolofvoid.htm" target="_top"><span style='white-space: nowrap'>test_boolofvoid</span></a>
@@ -194,43 +255,6 @@ to use the syntax
 <code><font color="blue"><span style='white-space: nowrap'><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TESTVECTOR&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Scalar</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;<br>
 </span></font></code>
-<br>
-<b><big><a name="Atomic" id="Atomic">Atomic</a></big></b>
-
-
-<br>
-<br>
-<b><a name="Atomic.Element-wise Operations" id="Atomic.Element-wise Operations">Element-wise Operations</a></b>
-<br>
-Add user atomic functions for element-wise addition, subtraction,
-multiplication, and division.
-Where the operands are <a href="simplevector.htm" target="_top"><span style='white-space: nowrap'>simple&nbsp;vectors</span></a>
-
-with elements of type 
-<code><font color="blue"><span style='white-space: nowrap'>AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code>
-.
-
-<br>
-<br>
-<b><a name="Atomic.Sparsity" id="Atomic.Sparsity">Sparsity</a></b>
-<br>
-Add an <a href="atomic_option.htm" target="_top"><span style='white-space: nowrap'>atomic_option</span></a>
- that checks if the sparsity patterns calculated
-by user atomic functions have
-elements for arguments that are know to be parameters and
-could be more efficient.
-For example, the user's version of <code><font color="blue">for_sparse_jac</font></code> could check
-<a href="atomic_for_sparse_jac.htm#Implementation.x" target="_top"><span style='white-space: nowrap'>x</span></a>
- to see for which components
-are variables;
-i.e., <a href="nan.htm#isnan" target="_top"><span style='white-space: nowrap'>isnan(x[j])</span></a>
- is true for a particular call.
-Note that
-<a href="atomic_for_sparse_hes.htm#Implementation.vx" target="_top"><span style='white-space: nowrap'>vx</span></a>
- should be removed,
-because the method above can be used to determine this information.
-
-<br>
 <br>
 <b><big><a name="Example" id="Example">Example</a></big></b>
 <br>
@@ -263,6 +287,15 @@ Add special operators that can be implemented more efficiently, e.g.,
 and have the optimizer recognize when they should be used.
 (They could also be in the user API, but it would not be expected
 that the user would use them.)
+
+<br>
+<br>
+<b><a name="Optimization.Memory" id="Optimization.Memory">Memory</a></b>
+<br>
+The <a href="optimize.htm" target="_top"><span style='white-space: nowrap'>optimize</span></a>
+ command seems to use a lot of memory when the
+tape is large. We should create a test case that demonstrates this and then
+work on reducing the amount of memory needed by this operation.
 
 
 <br>
@@ -352,7 +385,6 @@ It would not be necessary to reallocate memory for a result that is
 repeatedly calculated
 (because an iterator for the result container would be passed in).
 </li></ol>
-
 
 
 <br>
