@@ -15,6 +15,26 @@ then
 	exit 1
 fi
 # -----------------------------------------------------------------------------
+echo 'Checking if any makfile.in has changed'
+bin/autotools.sh automake >& /dev/null
+list=`git ls-files '*/makefile.in'`
+ok='yes'
+for file in $list
+do
+	diff=`git diff -- $file`
+	if [ "$diff" != '' ]
+	then
+		echo "git add $file"
+		git add $file
+		ok='no'
+	fi
+done
+if [ "$ok" == 'no' ]
+then
+	echo '*/makefile.in has changed.'
+	exit 1
+fi
+# -----------------------------------------------------------------------------
 echo "Checking include files listed in makefile.am"
 echo "-------------------------------------------------------"
 bin/ls_files.sh | sed -n -e '/cppad\/.*\.hpp$/p' \

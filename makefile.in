@@ -410,6 +410,7 @@ target_alias = @target_alias@
 top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
+
 # -----------------------------------------------------------------------------
 # CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 #
@@ -1379,7 +1380,6 @@ uninstall-am: uninstall-myincludeHEADERS \
 
 .PRECIOUS: makefile
 
-git show b9584032fdcedfe3234b3ad9d93c8a277f84f6f7:makefile.am
 $(top_srcdir)/cppad/configure.hpp: cppad/configure.hpp
 	cp cppad/configure.hpp $(top_srcdir)/cppad/configure.hpp
 $(top_srcdir)/cppad/local/is_pod.hpp: cppad/local/is_pod.hpp

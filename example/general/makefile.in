@@ -285,6 +285,7 @@ CXX_FLAGS = @CXX_FLAGS@
 CXX_FLAGS_EIGEN = @CXX_FLAGS_EIGEN@
 CXX_FLAGS_FADBAD = @CXX_FLAGS_FADBAD@
 CYGPATH_W = @CYGPATH_W@
+
 # -----------------------------------------------------------------------------
 # CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 #
@@ -1002,7 +1003,6 @@ uninstall-am:
 
 .PRECIOUS: makefile
 
-git show b9584032fdcedfe3234b3ad9d93c8a277f84f6f7:example/general/makefile.am
 
 test: check
 	./general
