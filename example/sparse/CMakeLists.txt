@@ -26,7 +26,6 @@ SET(source_list sparse.cpp
 	rev_jac_sparsity.cpp
 	rev_sparse_hes.cpp
 	rev_sparse_jac.cpp
-	subgraph_reverse.cpp
 	sparse_hes.cpp
 	sparse_hessian.cpp
 	sparse_jac_for.cpp
@@ -34,10 +33,11 @@ SET(source_list sparse.cpp
 	sparse_jac_rev.cpp
 	sparse_sub_hes.cpp
 	sparsity_sub.cpp
-	sub_sparse_hes.cpp
 	subgraph_hes2jac.cpp
 	subgraph_jac_rev.cpp
+	subgraph_reverse.cpp
 	subgraph_sparsity.cpp
+	sub_sparse_hes.cpp
 )
 # END_SORT_THIS_LINE_MINUS_2
 

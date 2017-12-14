@@ -254,7 +254,6 @@ $rref rc_sparsity.cpp$$
 $rref reverse_checkpoint.cpp$$
 $rref reverse_one.cpp$$
 $rref reverse_three.cpp$$
-$rref subgraph_reverse.cpp$$
 $rref reverse_two.cpp$$
 $rref rev_hes_sparsity.cpp$$
 $rref rev_jac_sparsity.cpp$$
@@ -297,6 +296,7 @@ $rref sub.cpp$$
 $rref sub_eq.cpp$$
 $rref subgraph_hes2jac.cpp$$
 $rref subgraph_jac_rev.cpp$$
+$rref subgraph_reverse.cpp$$
 $rref subgraph_sparsity.cpp$$
 $rref sub_sparse_hes.cpp$$
 $rref tan.cpp$$
