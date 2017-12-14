@@ -57,6 +57,7 @@ var list_down1 = [
 ];
 var list_current0 = [
 'whats_new_17.htm#API Changes',
+'whats_new_17.htm#12-14',
 'whats_new_17.htm#12-08',
 'whats_new_17.htm#12-06',
 'whats_new_17.htm#12-05',

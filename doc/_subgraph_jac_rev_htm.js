@@ -44,7 +44,8 @@ var list_down1 = [
 'subgraph_jac_rev.htm'
 ];
 var list_down0 = [
-'subgraph_jac_rev.cpp.htm'
+'subgraph_jac_rev.cpp.htm',
+'subgraph_hes2jac.cpp.htm'
 ];
 var list_current0 = [
 'subgraph_jac_rev.htm#Syntax',

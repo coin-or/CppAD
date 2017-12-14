@@ -97,6 +97,7 @@ A:active { color : purple }
 <select onchange='choose_down0(this)'>
 <option>subgraph_jac_rev-&gt;</option>
 <option>subgraph_jac_rev.cpp</option>
+<option>subgraph_hes2jac.cpp</option>
 </select>
 </td>
 <td>
@@ -131,9 +132,8 @@ A:active { color : purple }
 
 <br>
 
-<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.subgraph_jac_rev(</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>subset</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
-)</span></font></code>
-
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.subgraph_jac_rev(</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>subset</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
 
 <code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.subgraph_jac_rev(<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>select_domain</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>select_range</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>matrix_out</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
@@ -390,11 +390,11 @@ v
 <b><big><a name="Example" id="Example">Example</a></big></b>
 
 <br>
-The file <a href="subgraph_jac_rev.cpp.htm" target="_top"><span style='white-space: nowrap'>subgraph_jac_rev.cpp</span></a>
+The files <a href="subgraph_jac_rev.cpp.htm" target="_top"><span style='white-space: nowrap'>subgraph_jac_rev.cpp</span></a>
+ and <a href="subgraph_hes2jac.cpp.htm" target="_top"><span style='white-space: nowrap'>subgraph_hes2jac.cpp</span></a>
 
-is an example and test of <code><font color="blue">subgraph_jac_rev</font></code>.
-It returns <code><font color="blue">true</font></code>, if it succeeds, and <code><font color="blue">false</font></code> otherwise.
-
+are examples and tests using <code><font color="blue">subgraph_jac_rev</font></code>.
+They returns <code><font color="blue">true</font></code> for success and <code><font color="blue">false</font></code> for failure.
 
 
 <hr>Input File: cppad/core/subgraph_jac_rev.hpp
