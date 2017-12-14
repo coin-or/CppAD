@@ -1,5 +1,4 @@
 #! /bin/bash -e
-# $Id$
 # -----------------------------------------------------------------------------
 # CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 #
@@ -26,7 +25,6 @@ clean='no'
 htm='no'
 xml='no'
 printable='no'
-gh_pages='no'
 while [ "$1" != '' ]
 do
 	case "$1" in
@@ -47,10 +45,6 @@ do
 		printable='yes'
 		;;
 
-		gh_pages)
-		gh_pages='yes'
-		;;
-
 		*)
 		echo "$1 is not a valid bin/run_omhelp.sh option"
 		exit 1
@@ -59,7 +53,7 @@ do
 done
 if [ "$htm" == "$xml" ]
 then
-	echo 'usage: bin/run_omhelp.sh [clean] [htm] [xml] [printable] [gh_pages]'
+	echo 'usage: bin/run_omhelp.sh [clean] [htm] [xml] [printable]'
 	echo 'order does not matter and htm or xml is present (but not both).'
 	exit 1
 fi
@@ -82,12 +76,8 @@ fi
 echo_eval cd doc
 # -----------------------------------------------------------------------------
 cmd='omhelp ../doc.omh -noframe -debug'
-if [ "$gh_pages" == 'yes' ]
-then
-	cmd="$cmd -image_link http://coin-or.github.io/CppAD/doc/index.html"
-else
-	cmd="$cmd -image_link http://www.coin-or.org/CppAD/"
-fi
+cmd="$cmd -image_link http://www.coin-or.org/CppAD/"
+#
 if [ "$ext" == "xml" ]
 then
 	cmd="$cmd -xml"

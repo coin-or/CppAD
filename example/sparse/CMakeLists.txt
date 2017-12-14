@@ -9,6 +9,7 @@
 # Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # -----------------------------------------------------------------------------
 #
+# BEGIN_SORT_THIS_LINE_PLUS_2
 SET(source_list sparse.cpp
 	colpack_hes.cpp
 	colpack_hessian.cpp
@@ -34,9 +35,11 @@ SET(source_list sparse.cpp
 	sparse_sub_hes.cpp
 	sparsity_sub.cpp
 	sub_sparse_hes.cpp
+	subgraph_hes2jac.cpp
 	subgraph_jac_rev.cpp
 	subgraph_sparsity.cpp
 )
+# END_SORT_THIS_LINE_MINUS_2
 
 set_compile_flags( example_sparse "${cppad_debug_which}" "${source_list}" )
 #

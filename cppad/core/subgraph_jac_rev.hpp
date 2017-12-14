@@ -32,8 +32,8 @@ $$
 $section Compute Sparse Jacobians Using Subgraphs$$
 
 $head Syntax$$
-$icode%f%.subgraph_jac_rev(%x%, %subset%
-)%$$
+$icode%f%.subgraph_jac_rev(%x%, %subset%)
+%$$
 $icode%f%.subgraph_jac_rev(
 	%select_domain%, %select_range%, %x%, %matrix_out%
 )%$$
@@ -158,12 +158,12 @@ $latex x_j$$ is equal to $latex v$$.
 
 $head Example$$
 $children%
-	example/sparse/subgraph_jac_rev.cpp
+	example/sparse/subgraph_jac_rev.cpp%
+	example/sparse/subgraph_hes2jac.cpp
 %$$
-The file $cref subgraph_jac_rev.cpp$$
-is an example and test of $code subgraph_jac_rev$$.
-It returns $code true$$, if it succeeds, and $code false$$ otherwise.
-
+The files $cref subgraph_jac_rev.cpp$$ and $cref subgraph_hes2jac.cpp$$
+are examples and tests using $code subgraph_jac_rev$$.
+They returns $code true$$ for success and $code false$$ for failure.
 
 $end
 -----------------------------------------------------------------------------

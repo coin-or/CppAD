@@ -24,7 +24,9 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 // test runner
 # include <cppad/utility/test_boolofvoid.hpp>
 
+// BEGIN_SORT_THIS_LINE_PLUS_2
 // external compiled tests
+extern bool subgraph_hes2jac(void);
 extern bool subgraph_jac_rev(void);
 extern bool subgraph_sparsity(void);
 extern bool sub_sparse_hes(void);
@@ -51,6 +53,7 @@ extern bool colpack_jacobian(void);
 extern bool colpack_hes(void);
 extern bool colpack_hessian(void);
 extern bool rc_sparsity(void);
+// END_SORT_THIS_LINE_MINUS_1
 
 // main program that runs all the tests
 int main(void)
@@ -60,7 +63,9 @@ int main(void)
 
 	// This line is used by test_one.sh
 
+	// BEGIN_SORT_THIS_LINE_PLUS_2
 	// external compiled tests
+	Run( subgraph_hes2jac,          "subgraph_hes2jac" );
 	Run( subgraph_jac_rev,          "subgraph_jac_rev" );
 	Run( subgraph_sparsity,         "subgraph_sparsity" );
 	Run( sub_sparse_hes,            "sub_sparse_hes" );
@@ -83,6 +88,8 @@ int main(void)
 	Run( dependency,                "dependency" );
 	Run( conj_grad,                 "conj_grad" );
 	Run( rc_sparsity,               "rc_sparsity" );
+	// BEGIN_SORT_THIS_LINE_MINUS_1
+	//
 # if CPPAD_HAS_COLPACK
 	Run( colpack_jac,               "colpack_jac" );
 	Run( colpack_jacobian,          "colpack_jacobian" );

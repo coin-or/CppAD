@@ -51,6 +51,7 @@ $spell
 	subsparsity
 	subgraph
 	optimizer
+	subgraphs
 $$
 
 $section Changes and Additions to CppAD During 2017$$
@@ -58,6 +59,10 @@ $section Changes and Additions to CppAD During 2017$$
 $head API Changes$$
 Speed tests no longer automatically compile in release mode; see
 $cref/debug_which/speed/debug_which/$$
+
+$head 12-14$$
+Add the $cref subgraph_hes2jac.cpp$$ example
+which computes sparse Hessians using subgraphs and Jacobians.
 
 $head 12-08$$
 $list number$$

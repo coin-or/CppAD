@@ -73,6 +73,7 @@ $comment
 	omit:   TestOne.cpp OneCase.cpp lu_vec_ad.cpp
 $$
 
+$comment BEGIN_SORT_THIS_LINE_PLUS_2$$
 $table
 $rref a11c_bthread.cpp$$
 $rref a11c_openmp.cpp$$
@@ -294,6 +295,7 @@ $rref sqrt.cpp$$
 $rref stack_machine.cpp$$
 $rref sub.cpp$$
 $rref sub_eq.cpp$$
+$rref subgraph_hes2jac.cpp$$
 $rref subgraph_jac_rev.cpp$$
 $rref subgraph_sparsity.cpp$$
 $rref sub_sparse_hes.cpp$$
@@ -316,6 +318,7 @@ $rref var2par.cpp$$
 $rref vec_ad.cpp$$
 $rref vector_bool.cpp$$
 $tend
+$comment END_SORT_THIS_LINE_MINUS_2$$
 
 $end
 
