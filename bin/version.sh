@@ -16,13 +16,14 @@ then
 fi
 if [ "$1" != 'get' ] \
 && [ "$1" != 'set' ] \
+&& [ "$1" != 'date' ] \
 && [ "$1" != 'copy' ] \
 && [ "$1" != 'check' ]
 then
-	echo 'usage: bin/version.sh (get | set | check) [version]'
+	echo 'usage: bin/version.sh (get|set|date|copy|check) [version]'
 	echo 'get:   Gets the current version number from CMakeLists.txt.'
-	echo 'set:   Sets CMakeLists.txt version number to version.'
-	echo '       If version is not present, uses current yyyymmdd.'
+	echo 'set:   Sets CMakeLists.txt version number to [version].'
+	echo 'date:  Sets CMakeLists.txt version number to yyyymmdd.'
 	echo 'copy:  Copy version number from ./CMakeLists.txt to other files.'
 	echo 'check: Checks that version number has been copied.'
 	exit 1
@@ -34,13 +35,14 @@ echo_eval() {
 # -----------------------------------------------------------------------------
 if [ "$1" == 'set' ]
 then
-	if [ "$2" == '' ]
-	then
-		version=`date +%Y%m%d`
-	else
-		version="$2"
-	fi
-	echo 'sed -i.old CMakeLists.txt ...'
+	version="$2"
+fi
+if [ "$1" == 'date' ]
+then
+	version=`date +%Y%m%d`
+fi
+if [ "$1" == 'set' ] || [ "$1" == 'date' ]
+then
 	sed  \
 	-e "s/(\(cppad_version *\)\"[0-9.]\{8\}[0-9.]*\" *)/(\1\"$version\" )/"  \
 		-i.old CMakeLists.txt
