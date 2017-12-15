@@ -34,12 +34,13 @@ We use $latex F : \B{R}^n \rightarrow \B{R}^m$$ to denote the
 $cref/AD function/glossary/AD Function/$$ corresponding to
 the operation sequence stored in $icode f$$.
 
+
 $head Method$$
 This routine uses a subgraph technique. To be specific,
 for each dependent variable,
-it a subgraph of the operation sequence
-to determine which independent variables affect it.
-This avoids to overhead of performing set operations
+it creates a subgraph of the operation sequence
+containing the variables that affect the dependent variable.
+This avoids the overhead of performing set operations
 that is inherent in other methods for computing sparsity patterns.
 
 $head Atomic Function$$
