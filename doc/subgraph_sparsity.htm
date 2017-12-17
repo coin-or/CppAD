@@ -153,15 +153,16 @@ the operation sequence stored in
 <code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
 .
 
+
 <br>
 <br>
 <b><big><a name="Method" id="Method">Method</a></big></b>
 <br>
 This routine uses a subgraph technique. To be specific,
 for each dependent variable,
-it a subgraph of the operation sequence
-to determine which independent variables affect it.
-This avoids to overhead of performing set operations
+it creates a subgraph of the operation sequence
+containing the variables that affect the dependent variable.
+This avoids the overhead of performing set operations
 that is inherent in other methods for computing sparsity patterns.
 
 <br>
