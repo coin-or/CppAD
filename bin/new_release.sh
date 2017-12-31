@@ -27,7 +27,6 @@ echo_eval() {
 # master
 # -----------------------------------------------------------------------------
 #
-git checkout master
 branch=`git branch | grep '^\*'`
 if [ "$branch" != '* master' ]
 then
