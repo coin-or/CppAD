@@ -10,8 +10,8 @@
 # Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # -----------------------------------------------------------------------------
 svn_repo="https://projects.coin-or.org/svn/CppAD"
-stable_version="20170000" # start each stable_version at yyyy0000
-release='8'               # first release for each stable version is 0
+stable_version="20180000" # start each stable_version at yyyy0000
+release='0'               # first release for each stable version is 0
 # -----------------------------------------------------------------------------
 if [ "$0" != 'bin/new_release.sh' ]
 then
@@ -32,8 +32,8 @@ then
 	exit 1
 fi
 # Make sure version is up to date
-bin/version.sh date
-bin/version.sh copy
+bin/version.sh date > /dev/null
+bin/version.sh copy > /dev/null
 #
 # Make sure no uncommitted changes
 list=`git status -s`
@@ -70,8 +70,7 @@ fi
 if [ "$local_hash" == '' ] && [ "$remote_hash" == '' ]
 then
 	echo "new_release.sh: $stable_branch does not exist"
-	echo "Check that master local and remote are the same and then ?"
-	echo "	git checkout master"
+	echo "Use following command to create it ?"
 	echo "	git checkout -b $stable_branch master"
 	exit 1
 fi
