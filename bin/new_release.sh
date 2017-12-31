@@ -24,7 +24,8 @@ echo_eval() {
 	eval $*
 }
 # -----------------------------------------------------------------------------
-# Make sure this is master
+# master
+# -----------------------------------------------------------------------------
 #
 git checkout master
 branch=`git branch | grep '^\*'`
@@ -45,8 +46,26 @@ then
 	echo 'You must commit or abort changes before proceeding.'
 	exit 1
 fi
+# local hash code for master
+local_hash=`git show-ref master | \
+	grep "refs/heads/$stable_branch" | \
+	sed -e "s| *refs/heads/$stable_branch||"`
+#
+# remote hash code
+remote_hash=`git show-ref master | \
+	grep "refs/remotes/origin/$stable_branch" | \
+	sed -e "s| *refs/remotes/origin/$stable_branch||"`
+#
+if [ "$local_hash" != "$remote_hash" ]
+then
+	echo 'new_release.sh: local and remote for master differ'
+	echo "local  $stable_branch: $local_hash"
+	echo "remote $stable_branch: $remote_hash"
+	echo 'try:   git push'
+	exit 1
+fi
 # =============================================================================
-# master branch
+# stable branch
 # =============================================================================
 # Make sure local, remote and svn hash codes agree for this stable branch
 stable_branch=stable/$stable_version
