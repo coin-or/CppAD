@@ -9,6 +9,10 @@
 # A copy of this license is included in the COPYING file of this distribution.
 # Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # -----------------------------------------------------------------------------
+svn_repo="https://projects.coin-or.org/svn/CppAD"
+stable_version="20170000" # start each stable_version at yyyy0000
+release='8'               # first release for each stable version is 0
+# -----------------------------------------------------------------------------
 if [ "$0" != 'bin/new_release.sh' ]
 then
 	echo "bin/new_release.sh: must be executed from its parent directory"
@@ -20,14 +24,23 @@ echo_eval() {
 	eval $*
 }
 # -----------------------------------------------------------------------------
-svn_repo="https://projects.coin-or.org/svn/CppAD"
-stable_version="20170000" # start each stable_version at yyyy0000
-release='8'               # first release for each stable version is 0
-# -----------------------------------------------------------------------------
+# Make sure this is master
 branch=`git branch | grep '^\*'`
 if [ "$branch" != '* master' ]
 then
 	echo 'new_release.sh: must use master branch version of new_release.sh'
+	exit 1
+fi
+# Make sure version is up to date
+bin/version.sh date
+bin/version.sh copy
+#
+# Make sure no uncommitted changes
+list=`git status -s`
+if [ "$list" != '' ]
+then
+	echo "new_release.sh: 'git status -s' is not empty (for master branch)"
+	echo 'You must commit or abort changes before proceeding.'
 	exit 1
 fi
 # =============================================================================
@@ -125,16 +138,6 @@ then
 	echo 'This git reference tag already exists. Delete old version ?'
 	echo "	git tag -d $stable_version.$release"
 	echo "	git push --delete origin $stable_version.$release"
-	exit 1
-fi
-# -----------------------------------------------------------------------------
-# Make sure master branch does not have uncomitted changes
-# before checking out stable branch
-list=`git status -s`
-if [ "$list" != '' ]
-then
-	echo "new_release.sh: 'git status -s' is not empty (for master branch)"
-	echo 'You must commit or abort changes before proceeding.'
 	exit 1
 fi
 # =============================================================================
