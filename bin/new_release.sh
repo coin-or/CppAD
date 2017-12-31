@@ -186,14 +186,14 @@ if [ "$check_one" != "$check_two" ]
 then
 	echo 'bin/new_release.sh: version number is not correct ?'
 	echo "	bin/version.sh set $stable_version.$release"
+	echo '	bin/version.sh copy'
 	echo '	bin/version.sh check'
 	echo 'Then commit the changes.'
 	exit 1
 fi
 # -----------------------------------------------------------------------------
 # Make sure that autotools version of makfiles is up to current version.
-# Starting with 2018 will need to change command to bin/autotools.sh automake.
-./build.sh automake
+bin/autotools.sh automake
 list=`git status -s`
 if [ "$list" != '' ]
 then
