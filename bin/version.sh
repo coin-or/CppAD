@@ -115,6 +115,10 @@ do
 			if [ "$1" == 'copy' ]
 			then
 				mv $name.copy $name
+				if [ "$name" == 'configure' ]
+				then
+					chmod +x $name
+				fi
 			fi
 			if [ "$1" == 'check' ]
 			then
