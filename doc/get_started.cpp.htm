@@ -116,7 +116,7 @@ f : \B{R} \rightarrow \B{R}
 @)@</small> is defined by
 <small>@[@
 
-      f(x) = a_0 + a_1 * x^1 + \cdots + a_{k-1} * x^{k-1}
+	f(x) = a_0 + a_1 * x^1 + \cdots + a_{k-1} * x^{k-1}
 
 @]@</small>
 where 
@@ -134,7 +134,7 @@ f(x)
 @)@</small> is given by
 <small>@[@
 
-      f' (x) = a_1 + 2 * a_2 * x +  \cdots + (k-1) * a_{k-1} * x^{k-2}
+	f' (x) = a_1 + 2 * a_2 * x +  \cdots + (k-1) * a_{k-1} * x^{k-2}
 
 @]@</small>
 
@@ -155,7 +155,7 @@ x = 3
 If follows that
 <small>@[@
 
-      f' ( 3 ) = 1 + 2 * 3 + 3 * 3^2 + 4 * 3^3 = 142
+	f' ( 3 ) = 1 + 2 * 3 + 3 * 3^2 + 4 * 3^3 = 142
 
 @]@</small>
 
@@ -210,64 +210,64 @@ x = .5
 <b><font color="#000080">#include</font></b> <font color="#FF0000">&lt;cppad/cppad.hpp&gt;</font> <i><font color="#9A1900">// the CppAD package http://www.coin-or.org/CppAD/</font></i>
 
 <b><font color="#0000FF">namespace</font></b> <font color="#FF0000">{</font>
-      <i><font color="#9A1900">// define y(x) = Poly(a, x) in the empty namespace</font></i>
-      <b><font color="#0000FF">template</font></b> <font color="#990000">&lt;</font><b><font color="#0000FF">class</font></b> <font color="#008080">Type</font><font color="#990000">&gt;</font>
-      <font color="#008080">Type</font> <b><font color="#000000">Poly</font></b><font color="#990000">(</font><b><font color="#0000FF">const</font></b> std<font color="#990000">::</font><font color="#008080">vector&lt;double&gt;</font> <font color="#990000">&amp;</font>a<font color="#990000">,</font> <b><font color="#0000FF">const</font></b> <font color="#008080">Type</font> <font color="#990000">&amp;</font>x<font color="#990000">)</font>
-      <font color="#FF0000">{</font>     <font color="#008080">size_t</font> k  <font color="#990000">=</font> a<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">();</font>
-            <font color="#008080">Type</font> y   <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">.;</font>  <i><font color="#9A1900">// initialize summation</font></i>
-            <font color="#008080">Type</font> x_i <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">.;</font>  <i><font color="#9A1900">// initialize x^i</font></i>
-            <font color="#008080">size_t</font> i<font color="#990000">;</font>
-            <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> k<font color="#990000">;</font> i<font color="#990000">++)</font>
-            <font color="#FF0000">{</font>     y   <font color="#990000">+=</font> a<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">*</font> x_i<font color="#990000">;</font>  <i><font color="#9A1900">// y   = y + a_i * x^i</font></i>
-                  x_i <font color="#990000">*=</font> x<font color="#990000">;</font>           <i><font color="#9A1900">// x_i = x_i * x</font></i>
-            <font color="#FF0000">}</font>
-            <b><font color="#0000FF">return</font></b> y<font color="#990000">;</font>
-      <font color="#FF0000">}</font>
+     <i><font color="#9A1900">// define y(x) = Poly(a, x) in the empty namespace</font></i>
+     <b><font color="#0000FF">template</font></b> <font color="#990000">&lt;</font><b><font color="#0000FF">class</font></b> <font color="#008080">Type</font><font color="#990000">&gt;</font>
+     <font color="#008080">Type</font> <b><font color="#000000">Poly</font></b><font color="#990000">(</font><b><font color="#0000FF">const</font></b> std<font color="#990000">::</font><font color="#008080">vector&lt;double&gt;</font> <font color="#990000">&amp;</font>a<font color="#990000">,</font> <b><font color="#0000FF">const</font></b> <font color="#008080">Type</font> <font color="#990000">&amp;</font>x<font color="#990000">)</font>
+     <font color="#FF0000">{</font>    <font color="#008080">size_t</font> k  <font color="#990000">=</font> a<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">();</font>
+          <font color="#008080">Type</font> y   <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">.;</font>  <i><font color="#9A1900">// initialize summation</font></i>
+          <font color="#008080">Type</font> x_i <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">.;</font>  <i><font color="#9A1900">// initialize x^i</font></i>
+          <font color="#008080">size_t</font> i<font color="#990000">;</font>
+          <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> k<font color="#990000">;</font> i<font color="#990000">++)</font>
+          <font color="#FF0000">{</font>    y   <font color="#990000">+=</font> a<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">*</font> x_i<font color="#990000">;</font>  <i><font color="#9A1900">// y   = y + a_i * x^i</font></i>
+               x_i <font color="#990000">*=</font> x<font color="#990000">;</font>           <i><font color="#9A1900">// x_i = x_i * x</font></i>
+          <font color="#FF0000">}</font>
+          <b><font color="#0000FF">return</font></b> y<font color="#990000">;</font>
+     <font color="#FF0000">}</font>
 <font color="#FF0000">}</font>
 <i><font color="#9A1900">// main program</font></i>
 <font color="#009900">int</font> <b><font color="#000000">main</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
-<font color="#FF0000">{</font>     <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>AD<font color="#990000">;</font>           <i><font color="#9A1900">// use AD as abbreviation for CppAD::AD</font></i>
-      <b><font color="#0000FF">using</font></b> std<font color="#990000">::</font>vector<font color="#990000">;</font>         <i><font color="#9A1900">// use vector as abbreviation for std::vector</font></i>
-      <font color="#008080">size_t</font> i<font color="#990000">;</font>                  <i><font color="#9A1900">// a temporary index</font></i>
+<font color="#FF0000">{</font>    <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>AD<font color="#990000">;</font>           <i><font color="#9A1900">// use AD as abbreviation for CppAD::AD</font></i>
+     <b><font color="#0000FF">using</font></b> std<font color="#990000">::</font>vector<font color="#990000">;</font>         <i><font color="#9A1900">// use vector as abbreviation for std::vector</font></i>
+     <font color="#008080">size_t</font> i<font color="#990000">;</font>                  <i><font color="#9A1900">// a temporary index</font></i>
 
-      <i><font color="#9A1900">// vector of polynomial coefficients</font></i>
-      <font color="#008080">size_t</font> k <font color="#990000">=</font> <font color="#993399">5</font><font color="#990000">;</font>              <i><font color="#9A1900">// number of polynomial coefficients</font></i>
-      <font color="#008080">vector&lt;double&gt;</font> <b><font color="#000000">a</font></b><font color="#990000">(</font>k<font color="#990000">);</font>       <i><font color="#9A1900">// vector of polynomial coefficients</font></i>
-      <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> k<font color="#990000">;</font> i<font color="#990000">++)</font>
-            a<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">.;</font>           <i><font color="#9A1900">// value of polynomial coefficients</font></i>
+     <i><font color="#9A1900">// vector of polynomial coefficients</font></i>
+     <font color="#008080">size_t</font> k <font color="#990000">=</font> <font color="#993399">5</font><font color="#990000">;</font>              <i><font color="#9A1900">// number of polynomial coefficients</font></i>
+     <font color="#008080">vector&lt;double&gt;</font> <b><font color="#000000">a</font></b><font color="#990000">(</font>k<font color="#990000">);</font>       <i><font color="#9A1900">// vector of polynomial coefficients</font></i>
+     <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> k<font color="#990000">;</font> i<font color="#990000">++)</font>
+          a<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">.;</font>           <i><font color="#9A1900">// value of polynomial coefficients</font></i>
 
-      <i><font color="#9A1900">// domain space vector</font></i>
-      <font color="#008080">size_t</font> n <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font>              <i><font color="#9A1900">// number of domain space variables</font></i>
-      <font color="#008080">vector&lt; AD&lt;double&gt; &gt;</font> <b><font color="#000000">X</font></b><font color="#990000">(</font>n<font color="#990000">);</font> <i><font color="#9A1900">// vector of domain space variables</font></i>
-      X<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">3</font><font color="#990000">.;</font>                 <i><font color="#9A1900">// value corresponding to operation sequence</font></i>
+     <i><font color="#9A1900">// domain space vector</font></i>
+     <font color="#008080">size_t</font> n <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font>              <i><font color="#9A1900">// number of domain space variables</font></i>
+     <font color="#008080">vector&lt; AD&lt;double&gt; &gt;</font> <b><font color="#000000">X</font></b><font color="#990000">(</font>n<font color="#990000">);</font> <i><font color="#9A1900">// vector of domain space variables</font></i>
+     X<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">3</font><font color="#990000">.;</font>                 <i><font color="#9A1900">// value corresponding to operation sequence</font></i>
 
-      <i><font color="#9A1900">// declare independent variables and start recording operation sequence</font></i>
-      CppAD<font color="#990000">::</font><b><font color="#000000">Independent</font></b><font color="#990000">(</font>X<font color="#990000">);</font>
+     <i><font color="#9A1900">// declare independent variables and start recording operation sequence</font></i>
+     CppAD<font color="#990000">::</font><b><font color="#000000">Independent</font></b><font color="#990000">(</font>X<font color="#990000">);</font>
 
-      <i><font color="#9A1900">// range space vector</font></i>
-      <font color="#008080">size_t</font> m <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font>              <i><font color="#9A1900">// number of ranges space variables</font></i>
-      <font color="#008080">vector&lt; AD&lt;double&gt; &gt;</font> <b><font color="#000000">Y</font></b><font color="#990000">(</font>m<font color="#990000">);</font> <i><font color="#9A1900">// vector of ranges space variables</font></i>
-      Y<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <b><font color="#000000">Poly</font></b><font color="#990000">(</font>a<font color="#990000">,</font> X<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]);</font>      <i><font color="#9A1900">// value during recording of operations</font></i>
+     <i><font color="#9A1900">// range space vector</font></i>
+     <font color="#008080">size_t</font> m <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font>              <i><font color="#9A1900">// number of ranges space variables</font></i>
+     <font color="#008080">vector&lt; AD&lt;double&gt; &gt;</font> <b><font color="#000000">Y</font></b><font color="#990000">(</font>m<font color="#990000">);</font> <i><font color="#9A1900">// vector of ranges space variables</font></i>
+     Y<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <b><font color="#000000">Poly</font></b><font color="#990000">(</font>a<font color="#990000">,</font> X<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]);</font>      <i><font color="#9A1900">// value during recording of operations</font></i>
 
-      <i><font color="#9A1900">// store operation sequence in f: X -&gt; Y and stop recording</font></i>
-      CppAD<font color="#990000">::</font><font color="#008080">ADFun&lt;double&gt;</font> <b><font color="#000000">f</font></b><font color="#990000">(</font>X<font color="#990000">,</font> Y<font color="#990000">);</font>
+     <i><font color="#9A1900">// store operation sequence in f: X -&gt; Y and stop recording</font></i>
+     CppAD<font color="#990000">::</font><font color="#008080">ADFun&lt;double&gt;</font> <b><font color="#000000">f</font></b><font color="#990000">(</font>X<font color="#990000">,</font> Y<font color="#990000">);</font>
 
-      <i><font color="#9A1900">// compute derivative using operation sequence stored in f</font></i>
-      <font color="#008080">vector&lt;double&gt;</font> <b><font color="#000000">jac</font></b><font color="#990000">(</font>m <font color="#990000">*</font> n<font color="#990000">);</font> <i><font color="#9A1900">// Jacobian of f (m by n matrix)</font></i>
-      <font color="#008080">vector&lt;double&gt;</font> <b><font color="#000000">x</font></b><font color="#990000">(</font>n<font color="#990000">);</font>       <i><font color="#9A1900">// domain space vector</font></i>
-      x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">3</font><font color="#990000">.;</font>                 <i><font color="#9A1900">// argument value for derivative</font></i>
-      jac  <font color="#990000">=</font> f<font color="#990000">.</font><b><font color="#000000">Jacobian</font></b><font color="#990000">(</font>x<font color="#990000">);</font>      <i><font color="#9A1900">// Jacobian for operation sequence</font></i>
+     <i><font color="#9A1900">// compute derivative using operation sequence stored in f</font></i>
+     <font color="#008080">vector&lt;double&gt;</font> <b><font color="#000000">jac</font></b><font color="#990000">(</font>m <font color="#990000">*</font> n<font color="#990000">);</font> <i><font color="#9A1900">// Jacobian of f (m by n matrix)</font></i>
+     <font color="#008080">vector&lt;double&gt;</font> <b><font color="#000000">x</font></b><font color="#990000">(</font>n<font color="#990000">);</font>       <i><font color="#9A1900">// domain space vector</font></i>
+     x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">3</font><font color="#990000">.;</font>                 <i><font color="#9A1900">// argument value for derivative</font></i>
+     jac  <font color="#990000">=</font> f<font color="#990000">.</font><b><font color="#000000">Jacobian</font></b><font color="#990000">(</font>x<font color="#990000">);</font>      <i><font color="#9A1900">// Jacobian for operation sequence</font></i>
 
-      <i><font color="#9A1900">// print the results</font></i>
-      std<font color="#990000">::</font>cout <font color="#990000">&lt;&lt;</font> <font color="#FF0000">"f'(3) computed by CppAD = "</font> <font color="#990000">&lt;&lt;</font> jac<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">&lt;&lt;</font> std<font color="#990000">::</font>endl<font color="#990000">;</font>
+     <i><font color="#9A1900">// print the results</font></i>
+     std<font color="#990000">::</font>cout <font color="#990000">&lt;&lt;</font> <font color="#FF0000">"f'(3) computed by CppAD = "</font> <font color="#990000">&lt;&lt;</font> jac<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">&lt;&lt;</font> std<font color="#990000">::</font>endl<font color="#990000">;</font>
 
-      <i><font color="#9A1900">// check if the derivative is correct</font></i>
-      <font color="#009900">int</font> error_code<font color="#990000">;</font>
-      <b><font color="#0000FF">if</font></b><font color="#990000">(</font> jac<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">==</font> <font color="#993399">142</font><font color="#990000">.</font> <font color="#990000">)</font>
-            error_code <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>      <i><font color="#9A1900">// return code for correct case</font></i>
-      <b><font color="#0000FF">else</font></b>  error_code <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font>      <i><font color="#9A1900">// return code for incorrect case</font></i>
+     <i><font color="#9A1900">// check if the derivative is correct</font></i>
+     <font color="#009900">int</font> error_code<font color="#990000">;</font>
+     <b><font color="#0000FF">if</font></b><font color="#990000">(</font> jac<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">==</font> <font color="#993399">142</font><font color="#990000">.</font> <font color="#990000">)</font>
+          error_code <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>      <i><font color="#9A1900">// return code for correct case</font></i>
+     <b><font color="#0000FF">else</font></b>  error_code <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font>      <i><font color="#9A1900">// return code for incorrect case</font></i>
 
-      <b><font color="#0000FF">return</font></b> error_code<font color="#990000">;</font>
+     <b><font color="#0000FF">return</font></b> error_code<font color="#990000">;</font>
 <font color="#FF0000">}</font></tt></pre>
 <br>
 <b><big><a name="Output" id="Output">Output</a></big></b>
