@@ -74,7 +74,7 @@ bool link_det_lu(
 
 	// ------------------------------------------------------
 	while(repeat--)
-       {	// get the next matrix
+	{	// get the next matrix
 		CppAD::uniform_01(n, matrix);
 
 		// set independent variable values

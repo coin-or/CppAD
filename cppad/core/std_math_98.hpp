@@ -275,7 +275,7 @@ $head Method$$
 CppAD uses the representation
 $latex \[
 \begin{array}{lcr}
-        {\rm log10} (x) & = & \log(x) / \log(10)
+	{\rm log10} (x) & = & \log(x) / \log(10)
 \end{array}
 \] $$
 
@@ -589,10 +589,10 @@ namespace CppAD {
 	*/
      template <class Base>
      inline AD<Base> log10(const AD<Base> &x)
-     {    return CppAD::log(x) / CppAD::log( Base(10) ); }
+	{	return CppAD::log(x) / CppAD::log( Base(10) ); }
      template <class Base>
      inline AD<Base> log10(const VecAD_reference<Base> &x)
-     {    return CppAD::log(x.ADBase()) / CppAD::log( Base(10) ); }
+	{	return CppAD::log(x.ADBase()) / CppAD::log( Base(10) ); }
 }
 
 # undef CPPAD_STANDARD_MATH_UNARY_AD
