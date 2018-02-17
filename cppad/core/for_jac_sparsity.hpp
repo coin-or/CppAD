@@ -126,6 +126,10 @@ $codei%
 see $cref/pattern_out/for_jac_sparsity/pattern_out/$$ below.
 
 $head internal_bool$$
+This argument has prototype
+$codei%
+	bool %internal_bool%
+%$$
 If this is true, calculations are done with sets represented by a vector
 of boolean values. Otherwise, a vector of sets of integers is used.
 
