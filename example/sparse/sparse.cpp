@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -41,6 +41,7 @@ extern bool rev_hes_sparsity(void);
 extern bool rev_jac_sparsity(void);
 extern bool rev_sparse_hes(void);
 extern bool RevSparseJac(void);
+extern bool sparse2eigen(void);
 extern bool sparse_hessian(void);
 extern bool sparse_hes(void);
 extern bool sparse_jac_for(void);
@@ -95,6 +96,9 @@ int main(void)
 	Run( colpack_jacobian,          "colpack_jacobian" );
 	Run( colpack_hes,               "colpack_hes" );
 	Run( colpack_hessian,           "colpack_hessian" );
+# endif
+# if CPPAD_HAS_EIGEN
+	Run( sparse2eigen,              "sparse2eigen" );
 # endif
 	//
 	// check for memory leak

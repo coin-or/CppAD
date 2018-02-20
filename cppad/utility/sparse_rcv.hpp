@@ -1,7 +1,7 @@
 # ifndef CPPAD_UTILITY_SPARSE_RCV_HPP
 # define CPPAD_UTILITY_SPARSE_RCV_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -25,6 +25,7 @@ $spell
 	hpp
 	rcv
 	rc
+	Eigen
 $$
 $section Sparse Matrix Row, Column, Value Representation$$
 
@@ -188,6 +189,10 @@ $codei%
 %$$
 This routine generates an assert if there are two entries with the same
 row and column values (if $code NDEBUG$$ is not defined).
+
+$head Eigen Matrix$$
+If you have the $cref/eigen package/eigen_prefix/$$ in your include path,
+you can use $cref sparse2eigen$$ to convert a sparse matrix to eigen format.
 
 $children%
 	example/utility/sparse_rcv.cpp

@@ -1,5 +1,5 @@
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the
@@ -40,6 +40,10 @@ SET(source_list sparse.cpp
 	sub_sparse_hes.cpp
 )
 # END_SORT_THIS_LINE_MINUS_2
+
+IF( cppad_has_eigen )
+	SET(source_list sparse2eigen.cpp ${source_list} )
+ENDIF( cppad_has_eigen )
 
 set_compile_flags( example_sparse "${cppad_debug_which}" "${source_list}" )
 #

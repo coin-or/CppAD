@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -276,6 +276,7 @@ $rref simplex_method.cpp$$
 $rref simplex_method.hpp$$
 $rref sin.cpp$$
 $rref sinh.cpp$$
+$rref sparse2eigen.cpp$$
 $rref sparse_hes.cpp$$
 $rref sparse_hes_fun.cpp$$
 $rref sparse_hessian.cpp$$

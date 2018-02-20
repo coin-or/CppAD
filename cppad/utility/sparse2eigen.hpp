@@ -1,0 +1,113 @@
+# ifndef CPPAD_UTILITY_SPARSE2EIGEN_HPP
+# define CPPAD_UTILITY_SPARSE2EIGEN_HPP
+/* --------------------------------------------------------------------------
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+
+CppAD is distributed under multiple licenses. This distribution is under
+the terms of the
+                    Eclipse Public License Version 1.0.
+
+A copy of this license is included in the COPYING file of this distribution.
+Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
+-------------------------------------------------------------------------- */
+
+/*
+$begin sparse2eigen$$
+$spell
+	CppAD
+	Eigen
+	cppad.hpp
+	const
+	Ptr
+	nnz
+$$
+
+$section Convert A CppAD Sparse Matrix to an Eigen Sparse Matrix$$
+
+$head Syntax$$
+$codei%# include <cppad/utility/sparse2eigen.hpp>
+%$$
+$icode%destination% = sparse2eigen(%source%)%$$
+
+$head Prototype$$
+$srcfile%cppad/utility/sparse2eigen.hpp%0
+	%// BEGIN_PROTOTYPE%// END_PROTOTYPE%
+1%$$
+
+$head Eigen$$
+This routine is only available when
+$cref eigen_prefix$$ is specified.
+
+$head Scalar$$
+The type of elements of elements in $icode source$$ and $icode destination$$
+must be the same. We use $icode Scalar$$ to denote this type.
+
+$head source$$
+This is the CppAD sparse matrix that is being converted to eigen format.
+
+$head destination$$
+This is the Eigen sparse matrix that is the result of the conversion.
+
+$head Compressed$$
+The result matrix $icode destination$$
+is in compressed format. For example, let
+$codei%
+	size_t %%         %nnz%       = %source%.nnz()%;
+	const %s_vector%& %s_value%   = %source%.val();
+	const %s_vector%& %s_order%   = %source%.row_major();
+	const %Scalar%*   %d_value%   = %destination%.valuePtr();
+%$$
+It follows that, for $icode%k% = 0 , %...%, %nnz%$$
+$codei%
+	%s_value%[ %s_order%[%k%] ] = %d_value%[%k%]
+%$$
+
+$children%example/sparse/sparse2eigen.cpp
+%$$
+
+$head Example$$
+The file $cref sparse2eigen.cpp$$ contains an example and test
+of $code sparse2eigen.cpp$$ It return true if the test passes
+and false otherwise.
+
+$end
+*/
+# include <cppad/configure.hpp>
+# if CPPAD_HAS_EIGEN
+
+# include <Eigen/Sparse>
+# include <cppad/utility/sparse_rcv.hpp>
+# include <cppad/utility/vector.hpp>
+
+namespace CppAD { // BEGIN CPPAD_NAMESPACE
+
+// BEGIN_PROTOTYPE
+template <typename SizeVector, typename ValueVector, int Options>
+void sparse2eigen(
+const CppAD::sparse_rcv<SizeVector, ValueVector>&               source       ,
+Eigen::SparseMatrix<typename ValueVector::value_type, Options>& destination  )
+// END_PROTOTYPE
+{	typedef typename ValueVector::value_type scalar;
+	typedef Eigen::Triplet<scalar>           triplet;
+	std::vector<triplet> vec( source.nnz() );
+	//
+	const SizeVector&  row = source.row();
+	const SizeVector&  col = source.col();
+	const ValueVector& val = source.val();
+	//
+	for(size_t k = 0; k < source.nnz(); k++)
+		vec[k] = triplet( int(row[k]), int(col[k]), int(val[k]));
+	//
+	size_t nr = source.nr();
+	size_t nc = source.nc();
+	destination.resize(nr, nc);
+	destination.setFromTriplets(vec.begin(), vec.end());
+	//
+	CPPAD_ASSERT_UNKNOWN( destination.isCompressed() );
+	//
+	return;
+}
+
+}       // END_CPPAD_NAMESPACE
+# endif // CPPAD_HAS_EIGEN
+# endif

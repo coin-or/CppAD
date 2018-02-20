@@ -1,5 +1,5 @@
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the
@@ -88,6 +88,7 @@ myincludedir = $(includedir)/$(postfix_dir)
 myinclude_HEADERS = \
 	$(IPOPT_HEADER)
 #
+# BEGIN_SORT_THIS_LINE_PLUS_2
 nobase_myinclude_HEADERS =  \
 	cppad/base_require.hpp \
 	cppad/core/abort_recording.hpp \
@@ -332,6 +333,7 @@ nobase_myinclude_HEADERS =  \
 	cppad/utility/rosen_34.hpp \
 	cppad/utility/runge_45.hpp \
 	cppad/utility/set_union.hpp \
+	cppad/utility/sparse2eigen.hpp \
 	cppad/utility/sparse_rc.hpp \
 	cppad/utility/sparse_rcv.hpp \
 	cppad/utility/speed_test.hpp \
@@ -343,6 +345,7 @@ nobase_myinclude_HEADERS =  \
 	cppad/utility/vector.hpp \
 	cppad/wno_conversion.hpp
 # End nobase_myinclude_HEADERS (check_makefile.sh uses this comment)
+# END_SORT_THIS_LINE_MINUS_2
 # ---------------------------------------------------------------
 #
 # No objects or executables are required to install CppAD.

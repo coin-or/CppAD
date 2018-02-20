@@ -1,5 +1,5 @@
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the
@@ -19,7 +19,14 @@ AM_CXXFLAGS       = -g $(CXX_FLAGS)
 #
 AM_CPPFLAGS       = -I. -I$(top_srcdir) $(BOOST_INCLUDE) $(EIGEN_INCLUDE)
 #
+if CppAD_EIGEN_DIR
+EIGEN_SRC_FILES  = sparse2eigen.cpp
+else
+EIGEN_SRC_FILES  =
+endif
+#
 sparse_SOURCES   = sparse.cpp \
+	$(EIGEN_SRC_FILES) \
 	colpack_hes.cpp \
 	colpack_hessian.cpp \
 	colpack_jac.cpp \

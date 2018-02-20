@@ -1,7 +1,7 @@
 # ifndef CPPAD_UTILITY_HPP
 # define CPPAD_UTILITY_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -10,6 +10,7 @@ the terms of the
 A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
+// BEGIN_SORT_THIS_LINE_PLUS_1
 # include <cppad/utility/check_numeric_type.hpp>
 # include <cppad/utility/check_simple_vector.hpp>
 # include <cppad/utility/elapsed_seconds.hpp>
@@ -39,6 +40,9 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # include <cppad/utility/to_string.hpp>
 # include <cppad/utility/track_new_del.hpp>
 # include <cppad/utility/vector.hpp>
+# include <cppad/utility/sparse2eigen.hpp>
 # include <cppad/utility/sparse_rc.hpp>
 # include <cppad/utility/sparse_rcv.hpp>
+// END_SORT_THIUS_LINK_MINUS_1
+
 # endif
