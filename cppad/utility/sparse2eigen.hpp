@@ -38,9 +38,21 @@ $head Eigen$$
 This routine is only available when
 $cref eigen_prefix$$ is specified.
 
-$head Scalar$$
+$head SizeVector$$
+We use $cref/SizeVector/sparse_rc/SizeVector/$$ to denote a
+$cref SimpleVector$$ class with elements of $code size_t$$.
+
+$head ValueVector$$
+We use $icode ValueVector$$ to denote a
+$cref SimpleVector$$ class with elements of type $icode value_type$$.
+
+$head Options$$
+We use $icode Options$$ to denote either
+$code Eigen::RowMajor$$ of $code EigenColMajor$$.
+
+$head value_type$$
 The type of elements of elements in $icode source$$ and $icode destination$$
-must be the same. We use $icode Scalar$$ to denote this type.
+must be the same. We use $icode value_type$$ to denote this type.
 
 $head source$$
 This is the CppAD sparse matrix that is being converted to eigen format.
@@ -52,10 +64,10 @@ $head Compressed$$
 The result matrix $icode destination$$
 is in compressed format. For example, let
 $codei%
-	size_t %%         %nnz%       = %source%.nnz()%;
-	const %s_vector%& %s_value%   = %source%.val();
-	const %s_vector%& %s_order%   = %source%.row_major();
-	const %Scalar%*   %d_value%   = %destination%.valuePtr();
+	size_t %%           %nnz%       = %source%.nnz()%;
+	const %s_vector%&   %s_value%   = %source%.val();
+	const %s_vector%&   %s_order%   = %source%.row_major();
+	const %value_type%* %d_value%   = %destination%.valuePtr();
 %$$
 It follows that, for $icode%k% = 0 , %...%, %nnz%$$
 $codei%
@@ -87,8 +99,8 @@ void sparse2eigen(
 const CppAD::sparse_rcv<SizeVector, ValueVector>&               source       ,
 Eigen::SparseMatrix<typename ValueVector::value_type, Options>& destination  )
 // END_PROTOTYPE
-{	typedef typename ValueVector::value_type scalar;
-	typedef Eigen::Triplet<scalar>           triplet;
+{	typedef typename ValueVector::value_type value_type;
+	typedef Eigen::Triplet<value_type>       triplet;
 	std::vector<triplet> vec( source.nnz() );
 	//
 	const SizeVector&  row = source.row();
