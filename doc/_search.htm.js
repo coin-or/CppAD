@@ -471,7 +471,7 @@ Keyword =
 'sparse_rc.cpp  sparse_rc: Example and Test  ',' ',
 'sparse_rcv  Sparse Matrix Row, Column, Value Representation  ',' syntax sizevector valuevector empty pattern target nr nc nnz set k row_major col_major eigen example ',
 'sparse_rcv.cpp  sparse_rcv: Example and Test  ',' ',
-'sparse2eigen  Convert A CppAD Sparse Matrix to an Eigen Sparse Matrix  ',' syntax prototype scalar source destination compressed example ',
+'sparse2eigen  Convert A CppAD Sparse Matrix to an Eigen Sparse Matrix  ',' syntax prototype sizevector valuevector options value_type source destination compressed example ',
 'sparse2eigen.cpp  Converting CppAD Sparse Matrix to Eigen Format: Example and Test  ',' ',
 'ipopt_solve  Use Ipopt to Solve a Nonlinear Programming Problem  ',' syntax purpose include file bvector dvector options retape sparse string numeric integer xi xl xu gl gu fg_eval advector solution status zl zu lambda obj_value example get_started ode_inverse ',
 'ipopt_solve_get_started.cpp  Nonlinear Programming Using CppAD and Ipopt: Example and Test  ',' purpose configuration requirement ',

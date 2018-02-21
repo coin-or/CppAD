@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Convert A CppAD Sparse Matrix to an Eigen Sparse Matrix</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Convert A CppAD Sparse Matrix to an Eigen Sparse Matrix">
-<meta name="keywords" id="keywords" content=" convert cppad sparse matrix to eigen syntax prototype scalar source destination compressed example ">
+<meta name="keywords" id="keywords" content=" convert cppad sparse matrix to eigen syntax prototype sizevector valuevector options value_type source destination compressed example ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -113,7 +113,10 @@ A:active { color : purple }
 <option>Syntax</option>
 <option>Prototype</option>
 <option>Eigen</option>
-<option>Scalar</option>
+<option>SizeVector</option>
+<option>ValueVector</option>
+<option>Options</option>
+<option>value_type</option>
 <option>source</option>
 <option>destination</option>
 <option>Compressed</option>
@@ -157,7 +160,37 @@ This routine is only available when
 
 <br>
 <br>
-<b><big><a name="Scalar" id="Scalar">Scalar</a></big></b>
+<b><big><a name="SizeVector" id="SizeVector">SizeVector</a></big></b>
+<br>
+We use <a href="sparse_rc.htm#SizeVector" target="_top"><span style='white-space: nowrap'>SizeVector</span></a>
+ to denote a
+<a href="simplevector.htm" target="_top"><span style='white-space: nowrap'>SimpleVector</span></a>
+ class with elements of <code><font color="blue">size_t</font></code>.
+
+<br>
+<br>
+<b><big><a name="ValueVector" id="ValueVector">ValueVector</a></big></b>
+<br>
+We use 
+<code><i><font color="black"><span style='white-space: nowrap'>ValueVector</span></font></i></code>
+ to denote a
+<a href="simplevector.htm" target="_top"><span style='white-space: nowrap'>SimpleVector</span></a>
+ class with elements of type 
+<code><i><font color="black"><span style='white-space: nowrap'>value_type</span></font></i></code>
+.
+
+<br>
+<br>
+<b><big><a name="Options" id="Options">Options</a></big></b>
+<br>
+We use 
+<code><i><font color="black"><span style='white-space: nowrap'>Options</span></font></i></code>
+ to denote either
+<code><font color="blue">Eigen::RowMajor</font></code> of <code><font color="blue">EigenColMajor</font></code>.
+
+<br>
+<br>
+<b><big><a name="value_type" id="value_type">value_type</a></big></b>
 <br>
 The type of elements of elements in 
 <code><i><font color="black"><span style='white-space: nowrap'>source</span></font></i></code>
@@ -165,7 +198,7 @@ The type of elements of elements in
 <code><i><font color="black"><span style='white-space: nowrap'>destination</span></font></i></code>
 
 must be the same. We use 
-<code><i><font color="black"><span style='white-space: nowrap'>Scalar</span></font></i></code>
+<code><i><font color="black"><span style='white-space: nowrap'>value_type</span></font></i></code>
  to denote this type.
 
 <br>
@@ -190,10 +223,10 @@ The result matrix
 is in compressed format. For example, let
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>nnz</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>source</span></font></i><font color="blue"><span style='white-space: nowrap'>.nnz()</span></font><i><font color="black"><span style='white-space: nowrap'>;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font></i><font color="blue"><span style='white-space: nowrap'>s_vector</span></font><i><font color="black"><span style='white-space: nowrap'>&amp;&nbsp;</span></font></i><font color="blue"><span style='white-space: nowrap'>s_value</span></font><i><font color="black"><span style='white-space: nowrap'>&nbsp;&nbsp;&nbsp;=&nbsp;</span></font></i><font color="blue"><span style='white-space: nowrap'>source</span></font><i><font color="black"><span style='white-space: nowrap'>.val();<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font></i><font color="blue"><span style='white-space: nowrap'>s_vector</span></font><i><font color="black"><span style='white-space: nowrap'>&amp;&nbsp;</span></font></i><font color="blue"><span style='white-space: nowrap'>s_order</span></font><i><font color="black"><span style='white-space: nowrap'>&nbsp;&nbsp;&nbsp;=&nbsp;</span></font></i><font color="blue"><span style='white-space: nowrap'>source</span></font><i><font color="black"><span style='white-space: nowrap'>.row_major();<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font></i><font color="blue"><span style='white-space: nowrap'>Scalar</span></font><i><font color="black"><span style='white-space: nowrap'>*&nbsp;&nbsp;&nbsp;</span></font></i><font color="blue"><span style='white-space: nowrap'>d_value</span></font><i><font color="black"><span style='white-space: nowrap'>&nbsp;&nbsp;&nbsp;=&nbsp;</span></font></i><font color="blue"><span style='white-space: nowrap'>destination</span></font><i><font color="black"><span style='white-space: nowrap'>.valuePtr();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>nnz</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>source</span></font></i><font color="blue"><span style='white-space: nowrap'>.nnz()</span></font><i><font color="black"><span style='white-space: nowrap'>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font></i><font color="blue"><span style='white-space: nowrap'>s_vector</span></font><i><font color="black"><span style='white-space: nowrap'>&amp;&nbsp;&nbsp;&nbsp;</span></font></i><font color="blue"><span style='white-space: nowrap'>s_value</span></font><i><font color="black"><span style='white-space: nowrap'>&nbsp;&nbsp;&nbsp;=&nbsp;</span></font></i><font color="blue"><span style='white-space: nowrap'>source</span></font><i><font color="black"><span style='white-space: nowrap'>.val();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font></i><font color="blue"><span style='white-space: nowrap'>s_vector</span></font><i><font color="black"><span style='white-space: nowrap'>&amp;&nbsp;&nbsp;&nbsp;</span></font></i><font color="blue"><span style='white-space: nowrap'>s_order</span></font><i><font color="black"><span style='white-space: nowrap'>&nbsp;&nbsp;&nbsp;=&nbsp;</span></font></i><font color="blue"><span style='white-space: nowrap'>source</span></font><i><font color="black"><span style='white-space: nowrap'>.row_major();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font></i><font color="blue"><span style='white-space: nowrap'>value_type</span></font><i><font color="black"><span style='white-space: nowrap'>*&nbsp;</span></font></i><font color="blue"><span style='white-space: nowrap'>d_value</span></font><i><font color="black"><span style='white-space: nowrap'>&nbsp;&nbsp;&nbsp;=&nbsp;</span></font></i><font color="blue"><span style='white-space: nowrap'>destination</span></font><i><font color="black"><span style='white-space: nowrap'>.valuePtr();<br>
 </span></font></i></code>
 It follows that, for 
 <code><i><font color="black"><span style='white-space: nowrap'>k</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;0&nbsp;,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>...</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>nnz</span></font></i></code>

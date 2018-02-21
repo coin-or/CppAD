@@ -6106,6 +6106,7 @@ option&#160;<a href="atomic_mat_mul.cpp.htm#Use Atomic Function.option" target="
 options&#160;<a href="speed_main.htm#Sparsity Options" target="_top">Running&nbsp;the&nbsp;Speed&nbsp;Test&nbsp;Program:&#160;Sparsity&nbsp;Options</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="speed_main.htm#Global Options" target="_top">Running&nbsp;the&nbsp;Speed&nbsp;Test&nbsp;Program:&#160;Global&nbsp;Options</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="ipopt_solve.htm#options" target="_top">Use&nbsp;Ipopt&nbsp;to&nbsp;Solve&nbsp;a&nbsp;Nonlinear&nbsp;Programming&nbsp;Problem:&#160;options</a><br>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="sparse2eigen.htm#Options" target="_top">Convert&nbsp;A&nbsp;CppAD&nbsp;Sparse&nbsp;Matrix&nbsp;to&nbsp;an&nbsp;Eigen&nbsp;Sparse&nbsp;Matrix:&#160;Options</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="optimize.htm#options" target="_top">Optimize&nbsp;an&nbsp;ADFun&nbsp;Object&nbsp;Tape:&#160;options</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="atomic_option.htm" target="_top">Set&nbsp;Atomic&nbsp;Function&nbsp;Options</a><br>
 order&#160;<a href="old_mat_mul.hpp.htm#Reverse Partials One Order" target="_top">Define&nbsp;Matrix&nbsp;Multiply&nbsp;as&nbsp;a&nbsp;User&nbsp;Atomic&nbsp;Operation:&#160;Reverse&nbsp;Partials&nbsp;One&nbsp;Order</a><br>
@@ -7224,7 +7225,6 @@ same&#160;<a href="multi_thread.htm#Same Thread" target="_top">Using&nbsp;CppAD&
 scalar&#160;<a href="det_by_minor.htm#Scalar" target="_top">Determinant&nbsp;Using&nbsp;Expansion&nbsp;by&nbsp;Minors:&#160;Scalar</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="det_of_minor.htm#Scalar" target="_top">Determinant&nbsp;of&nbsp;a&nbsp;Minor:&#160;Scalar</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="det_by_lu.htm#Scalar" target="_top">Determinant&nbsp;Using&nbsp;Expansion&nbsp;by&nbsp;Lu&nbsp;Factorization:&#160;Scalar</a><br>
-&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="sparse2eigen.htm#Scalar" target="_top">Convert&nbsp;A&nbsp;CppAD&nbsp;Sparse&nbsp;Matrix&nbsp;to&nbsp;an&nbsp;Eigen&nbsp;Sparse&nbsp;Matrix:&#160;Scalar</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="odegearcontrol.htm#Scalar" target="_top">An&nbsp;Error&nbsp;Controller&nbsp;for&nbsp;Gear's&nbsp;Ode&nbsp;Solvers:&#160;Scalar</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="odegear.htm#Scalar" target="_top">An&nbsp;Arbitrary&nbsp;Order&nbsp;Gear&nbsp;Method:&#160;Scalar</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="odeerrcontrol.htm#Scalar" target="_top">An&nbsp;Error&nbsp;Controller&nbsp;for&nbsp;ODE&nbsp;Solvers:&#160;Scalar</a><br>
@@ -7478,6 +7478,7 @@ size<b>_</b>vec&#160;<a href="speed_test.htm#size_vec" target="_top">Run&nbsp;On
 size<b>_</b>vecad&#160;<a href="seq_property.htm#size_VecAD" target="_top">ADFun&nbsp;Sequence&nbsp;Properties:&#160;size_VecAD</a><br>
 sizevector&#160;<a href="luratio.htm#SizeVector" target="_top">LU&nbsp;Factorization&nbsp;of&nbsp;A&nbsp;Square&nbsp;Matrix&nbsp;and&nbsp;Stability&nbsp;Calculation:&#160;SizeVector</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="cppad_ipopt_nlp.htm#SizeVector" target="_top">Nonlinear&nbsp;Programming&nbsp;Using&nbsp;the&nbsp;CppAD&nbsp;Interface&nbsp;to&nbsp;Ipopt:&#160;SizeVector</a><br>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="sparse2eigen.htm#SizeVector" target="_top">Convert&nbsp;A&nbsp;CppAD&nbsp;Sparse&nbsp;Matrix&nbsp;to&nbsp;an&nbsp;Eigen&nbsp;Sparse&nbsp;Matrix:&#160;SizeVector</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="sparse_rcv.htm#SizeVector" target="_top">Sparse&nbsp;Matrix&nbsp;Row,&nbsp;Column,&nbsp;Value&nbsp;Representation:&#160;SizeVector</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="sparse_rc.htm#SizeVector" target="_top">Row&nbsp;and&nbsp;Column&nbsp;Index&nbsp;Sparsity&nbsp;Patterns:&#160;SizeVector</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="lufactor.htm#SizeVector" target="_top">LU&nbsp;Factorization&nbsp;of&nbsp;A&nbsp;Square&nbsp;Matrix:&#160;SizeVector</a><br>
@@ -9361,7 +9362,8 @@ value&#160;<a href="link_poly.htm#Return Value" target="_top">Speed&nbsp;Testing
 &#160;&#160;&#160;&#160;&#160;&#160;<a href="exp_2_for1.htm#Return Value" target="_top">exp_2:&nbsp;First&nbsp;Order&nbsp;Forward&nbsp;Mode:&#160;Return&nbsp;Value</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;<a href="exp_2_for0.htm#Return Value" target="_top">exp_2:&nbsp;Operation&nbsp;Sequence&nbsp;and&nbsp;Zero&nbsp;Order&nbsp;Forward&nbsp;Mode:&#160;Return&nbsp;Value</a><br>
 value<b>_</b>&#160;<a href="var2par.htm" target="_top">Convert&nbsp;an&nbsp;AD&nbsp;Variable&nbsp;to&nbsp;a&nbsp;Parameter</a><br>
-value<b>_</b>type&#160;<a href="simplevector.htm" target="_top">Definition&nbsp;of&nbsp;a&nbsp;Simple&nbsp;Vector</a><br>
+value<b>_</b>type&#160;<a href="sparse2eigen.htm#value_type" target="_top">Convert&nbsp;A&nbsp;CppAD&nbsp;Sparse&nbsp;Matrix&nbsp;to&nbsp;an&nbsp;Eigen&nbsp;Sparse&nbsp;Matrix:&#160;value_type</a><br>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="simplevector.htm" target="_top">Definition&nbsp;of&nbsp;a&nbsp;Simple&nbsp;Vector</a><br>
 valued&#160;<a href="boolvalued.htm" target="_top">Bool&nbsp;Valued&nbsp;Operations&nbsp;and&nbsp;Functions&nbsp;with&nbsp;AD&nbsp;Arguments</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="advalued.htm" target="_top">AD&nbsp;Valued&nbsp;Operations&nbsp;and&nbsp;Functions</a><br>
 values&#160;<a href="opt_val_hes.htm" target="_top">Jacobian&nbsp;and&nbsp;Hessian&nbsp;of&nbsp;Optimal&nbsp;Values</a><br>
@@ -9378,7 +9380,8 @@ values&#160;<a href="opt_val_hes.htm" target="_top">Jacobian&nbsp;and&nbsp;Hessi
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="base_hash.htm" target="_top">Base&nbsp;Type&nbsp;Requirements&nbsp;for&nbsp;Hash&nbsp;Coding&nbsp;Values</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="atomic_tangent.cpp.htm#Use Atomic Function.Large x Values" target="_top">Tan&nbsp;and&nbsp;Tanh&nbsp;as&nbsp;User&nbsp;Atomic&nbsp;Operations:&nbsp;Example&nbsp;and&nbsp;Test:&#160;Use&nbsp;Atomic&nbsp;Function.Large&nbsp;x&nbsp;Values</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="printfor.htm" target="_top">Printing&nbsp;AD&nbsp;Values&nbsp;During&nbsp;Forward&nbsp;Mode</a><br>
-valuevector&#160;<a href="sparse_rcv.htm#ValueVector" target="_top">Sparse&nbsp;Matrix&nbsp;Row,&nbsp;Column,&nbsp;Value&nbsp;Representation:&#160;ValueVector</a><br>
+valuevector&#160;<a href="sparse2eigen.htm#ValueVector" target="_top">Convert&nbsp;A&nbsp;CppAD&nbsp;Sparse&nbsp;Matrix&nbsp;to&nbsp;an&nbsp;Eigen&nbsp;Sparse&nbsp;Matrix:&#160;ValueVector</a><br>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="sparse_rcv.htm#ValueVector" target="_top">Sparse&nbsp;Matrix&nbsp;Row,&nbsp;Column,&nbsp;Value&nbsp;Representation:&#160;ValueVector</a><br>
 var&#160;<a href="printfor.htm#var" target="_top">Printing&nbsp;AD&nbsp;Values&nbsp;During&nbsp;Forward&nbsp;Mode:&#160;var</a><br>
 variable&#160;<a href="glossary.htm#Variable" target="_top">Glossary:&#160;Variable</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="glossary.htm#Tape.Independent Variable" target="_top">Glossary:&#160;Tape.Independent&nbsp;Variable</a><br>
