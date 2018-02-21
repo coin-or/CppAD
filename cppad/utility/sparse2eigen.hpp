@@ -48,7 +48,7 @@ $cref SimpleVector$$ class with elements of type $icode value_type$$.
 
 $head Options$$
 We use $icode Options$$ to denote either
-$code Eigen::RowMajor$$ of $code EigenColMajor$$.
+$code Eigen::RowMajor$$ of $code Eigen::ColMajor$$.
 
 $head value_type$$
 The type of elements of elements in $icode source$$ and $icode destination$$
