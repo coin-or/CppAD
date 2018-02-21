@@ -64,14 +64,20 @@ $head Compressed$$
 The result matrix $icode destination$$
 is in compressed format. For example, let
 $codei%
-	size_t %%           %nnz%       = %source%.nnz()%;
+	size_t %%           %nnz%       = %source%.nnz();
 	const %s_vector%&   %s_value%   = %source%.val();
-	const %s_vector%&   %s_order%   = %source%.row_major();
 	const %value_type%* %d_value%   = %destination%.valuePtr();
+	const %s_vector%&   %row_major% = %source%.row_major();
+	const %s_vector%&   %col_major% = %source%.col_major();
 %$$
-It follows that, for $icode%k% = 0 , %...%, %nnz%$$
+It follows that, for $icode%k% = 0 , %...%, %nnz%$$:
+If $icode Options$$ is $code Eigen::RowMajor$$,
 $codei%
-	%s_value%[ %s_order%[%k%] ] = %d_value%[%k%]
+	%d_value%[%k%] == %s_value%[ %row_major%[%k%] ]
+%$$
+If $icode Options$$ is $code Eigen::ColMajor$$,
+$codei%
+	%d_value%[%k%] == %s_value%[ %col_major%[%k%] ]
 %$$
 
 $children%example/sparse/sparse2eigen.cpp
