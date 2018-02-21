@@ -51,7 +51,8 @@ var list_down1 = [
 'to_string.htm',
 'set_union.htm',
 'sparse_rc.htm',
-'sparse_rcv.htm'
+'sparse_rcv.htm',
+'sparse2eigen.htm'
 ];
 var list_down0 = [
 'sparse_rcv.cpp.htm'
@@ -75,6 +76,7 @@ var list_current0 = [
 'sparse_rcv.htm#val',
 'sparse_rcv.htm#row_major',
 'sparse_rcv.htm#col_major',
+'sparse_rcv.htm#Eigen Matrix',
 'sparse_rcv.htm#Example'
 ];
 function choose_across0(item)

@@ -40,7 +40,8 @@ var list_down3 = [
 'to_string.htm',
 'set_union.htm',
 'sparse_rc.htm',
-'sparse_rcv.htm'
+'sparse_rcv.htm',
+'sparse2eigen.htm'
 ];
 var list_down2 = [
 'elapsed_seconds.htm',

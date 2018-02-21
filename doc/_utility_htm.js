@@ -50,7 +50,8 @@ var list_down0 = [
 'to_string.htm',
 'set_union.htm',
 'sparse_rc.htm',
-'sparse_rcv.htm'
+'sparse_rcv.htm',
+'sparse2eigen.htm'
 ];
 var list_current0 = [
 'utility.htm#Testing',

@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Sparse Matrix Row, Column, Value Representation</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Sparse Matrix Row, Column, Value Representation">
-<meta name="keywords" id="keywords" content=" sparse matrix row column value representation syntax sizevector valuevector empty pattern target nr nc nnz set k v col val row_major col_major example ">
+<meta name="keywords" id="keywords" content=" sparse matrix row column value representation syntax sizevector valuevector empty pattern target nr nc nnz set k v col val row_major col_major eigen example ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -98,6 +98,7 @@ A:active { color : purple }
 <option>set_union</option>
 <option>sparse_rc</option>
 <option>sparse_rcv</option>
+<option>sparse2eigen</option>
 </select>
 </td>
 <td>
@@ -127,6 +128,7 @@ A:active { color : purple }
 <option>val</option>
 <option>row_major</option>
 <option>col_major</option>
+<option>Eigen Matrix</option>
 <option>Example</option>
 </select>
 </td>
@@ -449,6 +451,15 @@ and if
 </span></font></code>
 This routine generates an assert if there are two entries with the same
 row and column values (if <code><font color="blue">NDEBUG</font></code> is not defined).
+
+<br>
+<br>
+<b><big><a name="Eigen Matrix" id="Eigen Matrix">Eigen Matrix</a></big></b>
+<br>
+If you have the <a href="eigen_prefix.htm" target="_top"><span style='white-space: nowrap'>eigen&nbsp;package</span></a>
+ in your include path,
+you can use <a href="sparse2eigen.htm" target="_top"><span style='white-space: nowrap'>sparse2eigen</span></a>
+ to convert a sparse matrix to eigen format.
 
 
 <br>

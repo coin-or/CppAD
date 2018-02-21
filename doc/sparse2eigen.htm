@@ -1,0 +1,217 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=default'
+>
+</script>
+<head>
+<title>Convert A CppAD Sparse Matrix to an Eigen Sparse Matrix</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Convert A CppAD Sparse Matrix to an Eigen Sparse Matrix">
+<meta name="keywords" id="keywords" content=" convert cppad sparse matrix to eigen syntax prototype scalar source destination compressed example ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_sparse2eigen_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="https://github.com/coin-or/cppad" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="sparse_rcv.cpp.htm" target="_top">Prev</a>
+</td><td><a href="sparse2eigen.cpp.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>utility</option>
+<option>sparse2eigen</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>CppAD-&gt;</option>
+<option>Install</option>
+<option>Introduction</option>
+<option>AD</option>
+<option>ADFun</option>
+<option>preprocessor</option>
+<option>multi_thread</option>
+<option>utility</option>
+<option>ipopt_solve</option>
+<option>Example</option>
+<option>speed</option>
+<option>Appendix</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>utility-&gt;</option>
+<option>ErrorHandler</option>
+<option>NearEqual</option>
+<option>speed_test</option>
+<option>SpeedTest</option>
+<option>time_test</option>
+<option>test_boolofvoid</option>
+<option>NumericType</option>
+<option>CheckNumericType</option>
+<option>SimpleVector</option>
+<option>CheckSimpleVector</option>
+<option>nan</option>
+<option>pow_int</option>
+<option>Poly</option>
+<option>LuDetAndSolve</option>
+<option>RombergOne</option>
+<option>RombergMul</option>
+<option>Runge45</option>
+<option>Rosen34</option>
+<option>OdeErrControl</option>
+<option>OdeGear</option>
+<option>OdeGearControl</option>
+<option>CppAD_vector</option>
+<option>thread_alloc</option>
+<option>index_sort</option>
+<option>to_string</option>
+<option>set_union</option>
+<option>sparse_rc</option>
+<option>sparse_rcv</option>
+<option>sparse2eigen</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down0(this)'>
+<option>sparse2eigen-&gt;</option>
+<option>sparse2eigen.cpp</option>
+</select>
+</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Syntax</option>
+<option>Prototype</option>
+<option>Eigen</option>
+<option>Scalar</option>
+<option>source</option>
+<option>destination</option>
+<option>Compressed</option>
+<option>Example</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>Convert A CppAD Sparse Matrix to an Eigen Sparse Matrix</big></big></b></center>
+<br>
+<b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
+
+<br>
+
+<code><font color="blue"><span style='white-space: nowrap'>#&nbsp;include&nbsp;&lt;cppad/utility/sparse2eigen.hpp&gt;<br>
+</span></font></code>
+
+<code><i><font color="black"><span style='white-space: nowrap'>destination</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;sparse2eigen(</span></font><i><font color="black"><span style='white-space: nowrap'>source</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+
+
+<br>
+<br>
+<b><big><a name="Prototype" id="Prototype">Prototype</a></big></b>
+
+<pre><tt>
+<b><font color="#0000FF">template</font></b> <font color="#990000">&lt;</font><b><font color="#0000FF">typename</font></b> <font color="#008080">SizeVector</font><font color="#990000">,</font> <b><font color="#0000FF">typename</font></b> <font color="#008080">ValueVector</font><font color="#990000">,</font> <font color="#009900">int</font> Options<font color="#990000">&gt;</font>
+<font color="#009900">void</font> <b><font color="#000000">sparse2eigen</font></b><font color="#990000">(</font>
+<b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>sparse_rcv<font color="#990000">&lt;</font>SizeVector<font color="#990000">,</font> ValueVector<font color="#990000">&gt;&amp;</font>               source       <font color="#990000">,</font>
+Eigen<font color="#990000">::</font>SparseMatrix<font color="#990000">&lt;</font><b><font color="#0000FF">typename</font></b> <font color="#008080">ValueVector</font><font color="#990000">::</font>value_type<font color="#990000">,</font> Options<font color="#990000">&gt;&amp;</font> destination  <font color="#990000">)</font></tt></pre>
+<br>
+<b><big><a name="Eigen" id="Eigen">Eigen</a></big></b>
+<br>
+This routine is only available when
+<a href="eigen_prefix.htm" target="_top"><span style='white-space: nowrap'>eigen_prefix</span></a>
+ is specified.
+
+<br>
+<br>
+<b><big><a name="Scalar" id="Scalar">Scalar</a></big></b>
+<br>
+The type of elements of elements in 
+<code><i><font color="black"><span style='white-space: nowrap'>source</span></font></i></code>
+ and 
+<code><i><font color="black"><span style='white-space: nowrap'>destination</span></font></i></code>
+
+must be the same. We use 
+<code><i><font color="black"><span style='white-space: nowrap'>Scalar</span></font></i></code>
+ to denote this type.
+
+<br>
+<br>
+<b><big><a name="source" id="source">source</a></big></b>
+<br>
+This is the CppAD sparse matrix that is being converted to eigen format.
+
+<br>
+<br>
+<b><big><a name="destination" id="destination">destination</a></big></b>
+<br>
+This is the Eigen sparse matrix that is the result of the conversion.
+
+<br>
+<br>
+<b><big><a name="Compressed" id="Compressed">Compressed</a></big></b>
+<br>
+The result matrix 
+<code><i><font color="black"><span style='white-space: nowrap'>destination</span></font></i></code>
+
+is in compressed format. For example, let
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>nnz</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>source</span></font></i><font color="blue"><span style='white-space: nowrap'>.nnz()</span></font><i><font color="black"><span style='white-space: nowrap'>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font></i><font color="blue"><span style='white-space: nowrap'>s_vector</span></font><i><font color="black"><span style='white-space: nowrap'>&amp;&nbsp;</span></font></i><font color="blue"><span style='white-space: nowrap'>s_value</span></font><i><font color="black"><span style='white-space: nowrap'>&nbsp;&nbsp;&nbsp;=&nbsp;</span></font></i><font color="blue"><span style='white-space: nowrap'>source</span></font><i><font color="black"><span style='white-space: nowrap'>.val();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font></i><font color="blue"><span style='white-space: nowrap'>s_vector</span></font><i><font color="black"><span style='white-space: nowrap'>&amp;&nbsp;</span></font></i><font color="blue"><span style='white-space: nowrap'>s_order</span></font><i><font color="black"><span style='white-space: nowrap'>&nbsp;&nbsp;&nbsp;=&nbsp;</span></font></i><font color="blue"><span style='white-space: nowrap'>source</span></font><i><font color="black"><span style='white-space: nowrap'>.row_major();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font></i><font color="blue"><span style='white-space: nowrap'>Scalar</span></font><i><font color="black"><span style='white-space: nowrap'>*&nbsp;&nbsp;&nbsp;</span></font></i><font color="blue"><span style='white-space: nowrap'>d_value</span></font><i><font color="black"><span style='white-space: nowrap'>&nbsp;&nbsp;&nbsp;=&nbsp;</span></font></i><font color="blue"><span style='white-space: nowrap'>destination</span></font><i><font color="black"><span style='white-space: nowrap'>.valuePtr();<br>
+</span></font></i></code>
+It follows that, for 
+<code><i><font color="black"><span style='white-space: nowrap'>k</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;0&nbsp;,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>...</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>nnz</span></font></i></code>
+
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>s_value</span></font></i><font color="blue"><span style='white-space: nowrap'>[&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>s_order</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>k</span></font></i><font color="blue"><span style='white-space: nowrap'>]&nbsp;]&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>d_value</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>k</span></font></i><font color="blue"><span style='white-space: nowrap'>]<br>
+</span></font></code>
+<br>
+<b><big><a name="Example" id="Example">Example</a></big></b>
+<br>
+The file <a href="sparse2eigen.cpp.htm" target="_top"><span style='white-space: nowrap'>sparse2eigen.cpp</span></a>
+ contains an example and test
+of <code><font color="blue">sparse2eigen.cpp</font></code> It return true if the test passes
+and false otherwise.
+
+
+<hr>Input File: cppad/utility/sparse2eigen.hpp
+
+</body>
+</html>

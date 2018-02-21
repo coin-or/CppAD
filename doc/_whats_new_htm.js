@@ -38,6 +38,7 @@ var list_down1 = [
 'license.htm'
 ];
 var list_down0 = [
+'whats_new_18.htm',
 'whats_new_17.htm',
 'whats_new_16.htm',
 'whats_new_15.htm',
