@@ -1,7 +1,7 @@
 # ifndef CPPAD_UTILITY_TEST_BOOLOFVOID_HPP
 # define CPPAD_UTILITY_TEST_BOOLOFVOID_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -19,11 +19,15 @@ $spell
 	bool
 	ipopt
 	cpp
+	cppad
+	hpp
 $$
 
 $section Object that Runs a Group of Tests$$
 
 $head Syntax$$
+$codei%# include <cppad/utility/test_boolofvoid.hpp>
+%$$
 $codei%test_boolofvoid %Run%(%group%, %width%)
 %$$
 $icode%Run%(%test%, %name%)

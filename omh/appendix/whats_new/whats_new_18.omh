@@ -16,6 +16,12 @@ $$
 
 $section Changes and Additions to CppAD During 2018$$
 
+$head 02-23$$
+The syntax for some of the $cref utility$$ files were missing the
+$code # include$$ command (or just the $code #$$ in the include command);
+e.g., see the
+$cref/syntax/set_union/Syntax/$$ for the $code set_union$$ utility.
+
 $head 02-20$$
 Add the utility function $cref sparse2eigen$$.
 

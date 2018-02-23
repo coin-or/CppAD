@@ -2,7 +2,7 @@
 # define CPPAD_UTILITY_SET_UNION_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -18,11 +18,15 @@ $spell
 	set
 	const
 	std
+	cppad
+	hpp
 $$
 
 $section Union of Standard Sets$$
 
 $head Syntax$$
+$codei%# include <cppad/utility/set_union.hpp>
+%$$
 $icode%result% = set_union(%left%, %right%)%$$
 
 $head Purpose$$
