@@ -1,6 +1,6 @@
 #! /bin/bash -e
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the
@@ -25,13 +25,12 @@ spell_list='
 revert_list='
 '
 move_list='
-	cppad/core/reverse_subgraph.hpp
-	example/sparse/reverse_subgraph.cpp
 '
 move_sed='s|reverse_subgraph|subgraph_reverse|'
 #
 cat << EOF > junk.sed
-s|reverse_subgraph|subgraph_reverse|
+/\$escape *\$\\\$/d
+/\$escape *.\$\\\$/d
 EOF
 # -----------------------------------------------------------------------------
 if [ $0 != "bin/batch_edit.sh" ]

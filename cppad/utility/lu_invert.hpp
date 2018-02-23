@@ -2,7 +2,7 @@
 # define CPPAD_UTILITY_LU_INVERT_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -14,7 +14,6 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 /*
 $begin LuInvert$$
-$escape #$$
 $spell
 	cppad.hpp
 	Lu
@@ -34,7 +33,8 @@ $mindex LuInvert linear$$
 $pre
 $$
 
-$head Syntax$$ $codei%# include <cppad/utility/lu_invert.hpp>
+$head Syntax$$
+$codei%# include <cppad/utility/lu_invert.hpp>
 %$$
 $codei%LuInvert(%ip%, %jp%, %LU%, %X%)%$$
 
