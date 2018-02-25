@@ -1330,9 +1330,9 @@ to <a href="ad.htm" target="_top"><span style='white-space: nowrap'>AD</span></a
 Code example for this fix
 <code><font color='blue'><pre style='display:inline'> 
      VecAD&lt;double&gt; V(1);
-     <a href="ad.htm" target="_top">AD</a>&lt;double&gt; zero = 0;
+     AD&lt;double&gt; zero = 0;
      V[zero] = 1.;
-     static_cast&lt; <a href="ad.htm" target="_top">AD</a>&lt;double&gt; &gt; ( V[zero] );
+     static_cast&lt; AD&lt;double&gt; &gt; ( V[zero] );
 </pre></font></code>
 <br>
 <b><big><a name="04-06" id="04-06">04-06</a></big></b>

@@ -1291,10 +1291,10 @@ through the <a href="condexp.htm" target="_top"><span style='white-space: nowrap
 case that is not used.
 For example, if
 <code><font color='blue'><pre style='display:inline'> 
-     <a href="independent.htm" target="_top">Independent</a>(ax);
-     <a href="ad.htm" target="_top">AD</a>&lt;double&gt; aeps = 1e-10;
+     Independent(ax);
+     AD&lt;double&gt; aeps = 1e-10;
      ay[0] = CondExpGt( ax[0], aeps, 1.0/ax[0], 1.0/aeps );
-     <a href="funconstruct.htm" target="_top">ADFun</a>&lt;double&gt; f(ax, ay);
+     ADFun&lt;double&gt; f(ax, ay);
 </pre></font></code>
 The corresponding reverse mode calculation,
 at <code><font color="blue">x[0] = 0.0</font></code>, would result in
