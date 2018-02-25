@@ -27,7 +27,7 @@ $section Convert A CppAD Sparse Matrix to an Eigen Sparse Matrix$$
 $head Syntax$$
 $codei%# include <cppad/utility/sparse2eigen.hpp>
 %$$
-$icode%destination% = sparse2eigen(%source%)%$$
+$codei%sparse2eigen(%source%, %destination%)%$$
 
 $head Prototype$$
 $srcfile%cppad/utility/sparse2eigen.hpp%0
