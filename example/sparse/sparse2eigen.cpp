@@ -52,7 +52,7 @@ bool sparse2eigen(void)
 	for(size_t i = 0; i < nr; i++)
 	{	for(size_t j = i; j <= i + 1; j++)
 		{	size_t k = i + j;
-			double v = double(k);
+			double v = double(k) / 2.0;
 			source.set(k, v);
 		}
 	}
@@ -80,7 +80,7 @@ bool sparse2eigen(void)
 					ok &= itr.col() == (i+1);
 				//
 				// check value
-				ok  &= itr.value() == double( itr.row() + itr.col() );
+				ok  &= itr.value() == double( itr.row() + itr.col() ) / 2.0;
 				ok  &= itr.value() == d_value[k];
 				//
 				++k;
@@ -115,7 +115,7 @@ bool sparse2eigen(void)
 					ok &= itr.row() == j;
 				//
 				// check value
-				ok  &= itr.value() == double( itr.row() + itr.col() );
+				ok  &= itr.value() == double( itr.row() + itr.col() ) / 2.0;
 				ok  &= itr.value() == d_value[k];
 				//
 				++k;

@@ -114,7 +114,7 @@ Eigen::SparseMatrix<typename ValueVector::value_type, Options>& destination  )
 	const ValueVector& val = source.val();
 	//
 	for(size_t k = 0; k < source.nnz(); k++)
-		vec[k] = triplet( int(row[k]), int(col[k]), int(val[k]));
+		vec[k] = triplet( int(row[k]), int(col[k]), val[k] );
 	//
 	size_t nr = source.nr();
 	size_t nc = source.nc();
