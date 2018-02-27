@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -46,7 +46,7 @@ $end
 // test runner
 # include <cppad/utility/test_boolofvoid.hpp>
 
-// prototype external compiled tests (this line expected by bin/new_test.sh)
+// BEGIN_SORT_THIS_LINE_PLUS_1
 extern bool abort_recording(void);
 extern bool fabs(void);
 extern bool acosh(void);
@@ -152,6 +152,7 @@ extern bool UnaryPlus(void);
 extern bool Value(void);
 extern bool Var2Par(void);
 extern bool vec_ad(void);
+// END_SORT_THIS_LINE_MINUS_1
 
 // main program that runs all the tests
 int main(void)
@@ -161,7 +162,7 @@ int main(void)
 
 	// This line is used by test_one.sh
 
-	// run external compiled tests (this line expected by bin/new_test.sh)
+	// BEGIN_SORT_THIS_LINE_PLUS_1
 	Run( abort_recording,   "abort_recording"  );
 	Run( fabs,              "fabs"             );
 	Run( acos,              "acos"             );
@@ -260,6 +261,7 @@ int main(void)
 	Run( Value,             "Value"            );
 	Run( Var2Par,           "Var2Par"          );
 	Run( vec_ad,            "vec_ad"           );
+	// END_SORT_THIS_LINE_MINUS_1
 # ifndef CPPAD_DEBUG_AND_RELEASE
 	Run( check_for_nan,     "check_for_nan"    );
 # endif

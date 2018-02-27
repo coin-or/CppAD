@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -21,7 +21,6 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 // test runner
 # include <cppad/utility/test_boolofvoid.hpp>
 
-// prototype external compiled tests (this line expected by bin/new_test.sh)
 extern bool old_mat_mul(void);
 extern bool old_reciprocal(void);
 extern bool old_tan(void);
@@ -39,7 +38,6 @@ int main(void)
 
 	// This line is used by test_one.sh
 
-	// run external compiled tests (this line expected by bin/new_test.sh)
 	Run( old_mat_mul,     "old_mat_mul"    );
 	Run( old_reciprocal,  "old_reciprocal" );
 	Run( old_tan,         "old_tan"        );

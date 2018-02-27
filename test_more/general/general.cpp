@@ -21,8 +21,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 // test runner
 # include <cppad/utility/test_boolofvoid.hpp>
 
-// BEGIN_SORT_THIS_LINE_PLUS_2
-// prototype external compiled tests (this line expected by bin/new_test.sh)
+// BEGIN_SORT_THIS_LINE_PLUS_1
 extern bool fabs(void);
 extern bool acos(void);
 extern bool acosh(void);
