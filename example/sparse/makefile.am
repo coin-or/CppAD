@@ -25,6 +25,7 @@ else
 EIGEN_SRC_FILES  =
 endif
 #
+# BEGIN_SORT_THIS_LINE_PLUS_3
 sparse_SOURCES   = sparse.cpp \
 	$(EIGEN_SRC_FILES) \
 	colpack_hes.cpp \
@@ -42,7 +43,6 @@ sparse_SOURCES   = sparse.cpp \
 	rev_jac_sparsity.cpp \
 	rev_sparse_hes.cpp \
 	rev_sparse_jac.cpp \
-	subgraph_reverse.cpp \
 	sparse_hes.cpp \
 	sparse_hessian.cpp \
 	sparse_jac_for.cpp \
@@ -50,10 +50,12 @@ sparse_SOURCES   = sparse.cpp \
 	sparse_jac_rev.cpp \
 	sparse_sub_hes.cpp \
 	sparsity_sub.cpp \
-	sub_sparse_hes.cpp \
 	subgraph_hes2jac.cpp \
 	subgraph_jac_rev.cpp \
-	subgraph_sparsity.cpp
+	subgraph_reverse.cpp \
+	subgraph_sparsity.cpp \
+	sub_sparse_hes.cpp
+# END_SORT_THIS_LINE_MINUS_1
 #
 test: check
 	./sparse

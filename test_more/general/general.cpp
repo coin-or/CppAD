@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -21,6 +21,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 // test runner
 # include <cppad/utility/test_boolofvoid.hpp>
 
+// BEGIN_SORT_THIS_LINE_PLUS_2
 // prototype external compiled tests (this line expected by bin/new_test.sh)
 extern bool fabs(void);
 extern bool acos(void);
@@ -104,6 +105,7 @@ extern bool SinCos(void);
 extern bool Sinh(void);
 extern bool sparse_hessian(void);
 extern bool sparse_jacobian(void);
+extern bool sparse_jac_work(void);
 extern bool sparse_sub_hes(void);
 extern bool sparse_vec_ad(void);
 extern bool Sqrt(void);
@@ -119,6 +121,7 @@ extern bool Value(void);
 extern bool VecAD(void);
 extern bool VecADPar(void);
 extern bool VecUnary(void);
+// END_SORT_THIS_LINE_MINUS_1
 
 // tests in local subdirectory
 extern bool vector_set(void);
@@ -131,7 +134,7 @@ int main(void)
 
 	// This line is used by test_one.sh
 
-	// run external compiled tests (this line expected by bin/new_test.sh)
+	// BEGIN_SORT_THIS_LINE_PLUS_1
 	Run( fabs,            "fabs"           );
 	Run( acos,            "acos"           );
 	Run( acosh,           "acosh"          );
@@ -208,6 +211,7 @@ int main(void)
 	Run( Sinh,            "Sinh"           );
 	Run( sparse_hessian,  "sparse_hessian" );
 	Run( sparse_jacobian, "sparse_jacobian");
+	Run( sparse_jac_work, "sparse_jac_work");
 	Run( sparse_sub_hes,  "sparse_sub_hes" );
 	Run( sparse_vec_ad,   "sparse_vec_ad"  );
 	Run( Sqrt,            "Sqrt"           );
@@ -222,6 +226,7 @@ int main(void)
 	Run( VecAD,           "VecAD"          );
 	Run( VecADPar,        "VecADPar"       );
 	Run( VecUnary,        "VecUnary"       );
+	// END_SORT_THIS_LINE_MINUS_1
 #if CPPAD_HAS_ADOLC
 	Run( base_adolc,      "base_adolc"     );
 # endif

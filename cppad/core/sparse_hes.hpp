@@ -1,7 +1,7 @@
 # ifndef CPPAD_CORE_SPARSE_HES_HPP
 # define CPPAD_CORE_SPARSE_HES_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -183,6 +183,9 @@ If it is empty, information is stored in $icode work$$.
 This can be used to reduce computation when
 a future call is for the same object $icode f$$,
 and the same subset of the Hessian.
+In fact, it can be used with a different $icode f$$
+and a different $icode subset$$ provided that Hessian sparsity pattern
+for $icode f$$ and the sparsity pattern in $icode subset$$ are the same.
 If either of these values change, use $icode%work%.clear()%$$ to
 empty this structure.
 

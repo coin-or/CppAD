@@ -12,9 +12,19 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 $begin whats_new_18$$
 $spell
 	CppAD
+	jac
+	hes
+	Jacobian
 $$
 
 $section Changes and Additions to CppAD During 2018$$
+
+$head 02-27$$
+Documentation was added to state that the $icode work$$ structure for
+$cref/sparse_jac/sparse_jac/work/$$ ( $cref/sparse_hes/sparse_hes/work/$$ )
+can be used a different $icode f$$ and a different $icode subset$$
+provided that Jacobian (Hessian) sparsity pattern for $icode f$$
+and the sparsity pattern in $icode subset$$ are the same.
 
 $head 02-26$$
 The routine $cref sparse2eigen$$, added on 02-20, only worked

@@ -1,7 +1,7 @@
 # ifndef CPPAD_CORE_SPARSE_JAC_HPP
 # define CPPAD_CORE_SPARSE_JAC_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -39,7 +39,6 @@ $icode%n_sweep% = %f%.sparse_jac_for(
 $icode%n_sweep% = %f%.sparse_jac_rev(
 	%x%, %subset%, %pattern%, %coloring%, %work%
 )%$$
-
 
 $head Purpose$$
 We use $latex F : \B{R}^n \rightarrow \B{R}^m$$ to denote the
@@ -165,6 +164,9 @@ This can be used to reduce computation when
 a future call is for the same object $icode f$$,
 the same member function $code sparse_jac_for$$ or $code sparse_jac_rev$$,
 and the same subset of the Jacobian.
+In fact, it can be used with a different $icode f$$
+and a different $icode subset$$ provided that Jacobian sparsity pattern
+for $icode f$$ and the sparsity pattern in $icode subset$$ are the same.
 If any of these values change, use $icode%work%.clear()%$$ to
 empty this structure.
 

@@ -1,5 +1,5 @@
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the
@@ -35,6 +35,7 @@ ELSE( cppad_has_ipopt )
 	SET(ipopt_libs "")
 ENDIF( cppad_has_ipopt )
 #
+# BEGIN_SORT_THIS_LINE_PLUS_6
 SET(source_list
 	${adolc_sources}
 	${eigen_sources}
@@ -118,6 +119,7 @@ SET(source_list
 	sinh.cpp
 	sparse_hessian.cpp
 	sparse_jacobian.cpp
+	sparse_jac_work.cpp
 	sparse_sub_hes.cpp
 	sparse_vec_ad.cpp
 	sqrt.cpp
@@ -133,9 +135,9 @@ SET(source_list
 	vec_ad.cpp
 	vec_ad_par.cpp
 	vec_unary.cpp
-
 	local/vector_set.cpp
 )
+# END_SORT_THIS_LINE_MINUS_2
 set_compile_flags( test_more_general "${cppad_debug_which}" "${source_list}" )
 #
 ADD_EXECUTABLE(test_more_general EXCLUDE_FROM_ALL ${source_list})

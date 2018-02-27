@@ -131,10 +131,10 @@ am__general_SOURCES_DIST = base_adolc.cpp ipopt_solve.cpp \
 	romberg_one.cpp rosen_34.cpp runge_45.cpp reverse.cpp \
 	rev_sparse_jac.cpp rev_two.cpp simple_vector.cpp sin.cpp \
 	sin_cos.cpp sinh.cpp sparse_hessian.cpp sparse_jacobian.cpp \
-	sparse_sub_hes.cpp sparse_vec_ad.cpp sqrt.cpp std_math.cpp \
-	sub.cpp sub_eq.cpp sub_zero.cpp subgraph.cpp tan.cpp \
-	test_vector.cpp to_string.cpp value.cpp vec_ad.cpp \
-	vec_ad_par.cpp vec_unary.cpp
+	sparse_jac_work.cpp sparse_sub_hes.cpp sparse_vec_ad.cpp \
+	sqrt.cpp std_math.cpp sub.cpp sub_eq.cpp sub_zero.cpp \
+	subgraph.cpp tan.cpp test_vector.cpp to_string.cpp value.cpp \
+	vec_ad.cpp vec_ad_par.cpp vec_unary.cpp
 @CppAD_ADOLC_TRUE@am__objects_1 = base_adolc.$(OBJEXT)
 @CppAD_IPOPT_TRUE@am__objects_2 = ipopt_solve.$(OBJEXT)
 @CppAD_OPENMP_TRUE@am__objects_3 = alloc_openmp.$(OBJEXT)
@@ -168,12 +168,13 @@ am_general_OBJECTS = $(am__objects_1) $(am__objects_2) \
 	rev_sparse_jac.$(OBJEXT) rev_two.$(OBJEXT) \
 	simple_vector.$(OBJEXT) sin.$(OBJEXT) sin_cos.$(OBJEXT) \
 	sinh.$(OBJEXT) sparse_hessian.$(OBJEXT) \
-	sparse_jacobian.$(OBJEXT) sparse_sub_hes.$(OBJEXT) \
-	sparse_vec_ad.$(OBJEXT) sqrt.$(OBJEXT) std_math.$(OBJEXT) \
-	sub.$(OBJEXT) sub_eq.$(OBJEXT) sub_zero.$(OBJEXT) \
-	subgraph.$(OBJEXT) tan.$(OBJEXT) test_vector.$(OBJEXT) \
-	to_string.$(OBJEXT) value.$(OBJEXT) vec_ad.$(OBJEXT) \
-	vec_ad_par.$(OBJEXT) vec_unary.$(OBJEXT)
+	sparse_jacobian.$(OBJEXT) sparse_jac_work.$(OBJEXT) \
+	sparse_sub_hes.$(OBJEXT) sparse_vec_ad.$(OBJEXT) \
+	sqrt.$(OBJEXT) std_math.$(OBJEXT) sub.$(OBJEXT) \
+	sub_eq.$(OBJEXT) sub_zero.$(OBJEXT) subgraph.$(OBJEXT) \
+	tan.$(OBJEXT) test_vector.$(OBJEXT) to_string.$(OBJEXT) \
+	value.$(OBJEXT) vec_ad.$(OBJEXT) vec_ad_par.$(OBJEXT) \
+	vec_unary.$(OBJEXT)
 general_OBJECTS = $(am_general_OBJECTS)
 general_LDADD = $(LDADD)
 am__DEPENDENCIES_1 =
@@ -286,7 +287,7 @@ CXX_FLAGS_FADBAD = @CXX_FLAGS_FADBAD@
 CYGPATH_W = @CYGPATH_W@
 
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the
@@ -493,6 +494,7 @@ AM_CXXFLAGS = -g $(ADOLC_FLAGS) $(IPOPT_FLAGS) $(CXX_FLAGS)
 AM_LDFLAGS = $(OPENMP_FLAGS)
 LDADD = $(ADOLC_LIB) $(IPOPT_LIB) $(EIGEN_LIB) $(OPENMP_FLAGS)
 #
+# BEGIN_SORT_THIS_LINE_PLUS_6
 general_SOURCES = \
 	$(ADOLC_SRC_FILES) \
 	$(IPOPT_SRC_FILES) \
@@ -577,6 +579,7 @@ general_SOURCES = \
 	sinh.cpp \
 	sparse_hessian.cpp \
 	sparse_jacobian.cpp \
+	sparse_jac_work.cpp \
 	sparse_sub_hes.cpp \
 	sparse_vec_ad.cpp \
 	sqrt.cpp \
@@ -731,6 +734,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sin_cos.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sinh.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sparse_hessian.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sparse_jac_work.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sparse_jacobian.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sparse_sub_hes.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sparse_vec_ad.Po@am__quote@
@@ -997,6 +1001,7 @@ uninstall-am:
 
 .PRECIOUS: makefile
 
+# END_SORT_THIS_LINE_MINUS_1
 
 test: check
 	./general

@@ -102,11 +102,11 @@ am__sparse_SOURCES_DIST = sparse.cpp sparse2eigen.cpp colpack_hes.cpp \
 	conj_grad.cpp dependency.cpp for_hes_sparsity.cpp \
 	for_jac_sparsity.cpp for_sparse_hes.cpp for_sparse_jac.cpp \
 	rc_sparsity.cpp rev_hes_sparsity.cpp rev_jac_sparsity.cpp \
-	rev_sparse_hes.cpp rev_sparse_jac.cpp subgraph_reverse.cpp \
-	sparse_hes.cpp sparse_hessian.cpp sparse_jac_for.cpp \
-	sparse_jacobian.cpp sparse_jac_rev.cpp sparse_sub_hes.cpp \
-	sparsity_sub.cpp sub_sparse_hes.cpp subgraph_hes2jac.cpp \
-	subgraph_jac_rev.cpp subgraph_sparsity.cpp
+	rev_sparse_hes.cpp rev_sparse_jac.cpp sparse_hes.cpp \
+	sparse_hessian.cpp sparse_jac_for.cpp sparse_jacobian.cpp \
+	sparse_jac_rev.cpp sparse_sub_hes.cpp sparsity_sub.cpp \
+	subgraph_hes2jac.cpp subgraph_jac_rev.cpp subgraph_reverse.cpp \
+	subgraph_sparsity.cpp sub_sparse_hes.cpp
 @CppAD_EIGEN_DIR_TRUE@am__objects_1 = sparse2eigen.$(OBJEXT)
 am_sparse_OBJECTS = sparse.$(OBJEXT) $(am__objects_1) \
 	colpack_hes.$(OBJEXT) colpack_hessian.$(OBJEXT) \
@@ -116,13 +116,13 @@ am_sparse_OBJECTS = sparse.$(OBJEXT) $(am__objects_1) \
 	for_sparse_hes.$(OBJEXT) for_sparse_jac.$(OBJEXT) \
 	rc_sparsity.$(OBJEXT) rev_hes_sparsity.$(OBJEXT) \
 	rev_jac_sparsity.$(OBJEXT) rev_sparse_hes.$(OBJEXT) \
-	rev_sparse_jac.$(OBJEXT) subgraph_reverse.$(OBJEXT) \
-	sparse_hes.$(OBJEXT) sparse_hessian.$(OBJEXT) \
-	sparse_jac_for.$(OBJEXT) sparse_jacobian.$(OBJEXT) \
-	sparse_jac_rev.$(OBJEXT) sparse_sub_hes.$(OBJEXT) \
-	sparsity_sub.$(OBJEXT) sub_sparse_hes.$(OBJEXT) \
+	rev_sparse_jac.$(OBJEXT) sparse_hes.$(OBJEXT) \
+	sparse_hessian.$(OBJEXT) sparse_jac_for.$(OBJEXT) \
+	sparse_jacobian.$(OBJEXT) sparse_jac_rev.$(OBJEXT) \
+	sparse_sub_hes.$(OBJEXT) sparsity_sub.$(OBJEXT) \
 	subgraph_hes2jac.$(OBJEXT) subgraph_jac_rev.$(OBJEXT) \
-	subgraph_sparsity.$(OBJEXT)
+	subgraph_reverse.$(OBJEXT) subgraph_sparsity.$(OBJEXT) \
+	sub_sparse_hes.$(OBJEXT)
 sparse_OBJECTS = $(am_sparse_OBJECTS)
 sparse_LDADD = $(LDADD)
 AM_V_P = $(am__v_P_@AM_V@)
@@ -368,6 +368,7 @@ AM_CPPFLAGS = -I. -I$(top_srcdir) $(BOOST_INCLUDE) $(EIGEN_INCLUDE)
 #
 @CppAD_EIGEN_DIR_TRUE@EIGEN_SRC_FILES = sparse2eigen.cpp
 #
+# BEGIN_SORT_THIS_LINE_PLUS_3
 sparse_SOURCES = sparse.cpp \
 	$(EIGEN_SRC_FILES) \
 	colpack_hes.cpp \
@@ -385,7 +386,6 @@ sparse_SOURCES = sparse.cpp \
 	rev_jac_sparsity.cpp \
 	rev_sparse_hes.cpp \
 	rev_sparse_jac.cpp \
-	subgraph_reverse.cpp \
 	sparse_hes.cpp \
 	sparse_hessian.cpp \
 	sparse_jac_for.cpp \
@@ -393,10 +393,11 @@ sparse_SOURCES = sparse.cpp \
 	sparse_jac_rev.cpp \
 	sparse_sub_hes.cpp \
 	sparsity_sub.cpp \
-	sub_sparse_hes.cpp \
 	subgraph_hes2jac.cpp \
 	subgraph_jac_rev.cpp \
-	subgraph_sparsity.cpp
+	subgraph_reverse.cpp \
+	subgraph_sparsity.cpp \
+	sub_sparse_hes.cpp
 
 all: all-am
 
@@ -694,6 +695,7 @@ uninstall-am:
 
 .PRECIOUS: makefile
 
+# END_SORT_THIS_LINE_MINUS_1
 #
 test: check
 	./sparse
