@@ -87,29 +87,28 @@ general_SOURCES  = \
 	$(IPOPT_SRC_FILES) \
 	$(OPENMP_SRC_FILES) \
 	general.cpp \
-	fabs.cpp \
 	acos.cpp \
 	acosh.cpp \
+	add.cpp \
+	add_eq.cpp \
+	add_zero.cpp \
 	adfun_copy.cpp \
 	asin.cpp \
 	asinh.cpp \
 	assign.cpp \
-	add.cpp \
-	add_eq.cpp \
-	add_zero.cpp \
+	atan2.cpp \
 	atan.cpp \
 	atanh.cpp \
-	atan2.cpp \
 	atomic_sparsity.cpp \
 	azmul.cpp \
 	base_alloc.cpp \
 	bool_sparsity.cpp \
-	check_simple_vector.cpp \
 	checkpoint.cpp \
-	compare.cpp \
+	check_simple_vector.cpp \
 	compare_change.cpp \
-	cond_exp.cpp \
+	compare.cpp \
 	cond_exp_ad.cpp \
+	cond_exp.cpp \
 	cond_exp_rev.cpp \
 	copy.cpp \
 	cos.cpp \
@@ -124,6 +123,7 @@ general_SOURCES  = \
 	expm1.cpp \
 	extern_value.cpp \
 	extern_value.hpp \
+	fabs.cpp \
 	for_hess.cpp \
 	for_sparse_hes.cpp \
 	for_sparse_jac.cpp \
@@ -134,19 +134,19 @@ general_SOURCES  = \
 	fun_check.cpp \
 	hes_sparsity.cpp \
 	jacobian.cpp \
-	num_limits.cpp \
-	log.cpp \
-	log1p.cpp \
 	log10.cpp \
+	log1p.cpp \
+	log.cpp \
+	mul_cond_rev.cpp \
 	mul.cpp \
 	mul_cskip.cpp \
 	mul_eq.cpp \
 	mul_level.cpp \
-	mul_cond_rev.cpp \
 	mul_zdouble.cpp \
 	mul_zero_one.cpp \
 	near_equal_ext.cpp \
 	neg.cpp \
+	num_limits.cpp \
 	ode_err_control.cpp \
 	optimize.cpp \
 	parameter.cpp \
@@ -154,15 +154,15 @@ general_SOURCES  = \
 	pow.cpp \
 	pow_int.cpp \
 	print_for.cpp \
-	romberg_one.cpp \
-	rosen_34.cpp \
-	runge_45.cpp \
 	reverse.cpp \
 	rev_sparse_jac.cpp \
 	rev_two.cpp \
+	romberg_one.cpp \
+	rosen_34.cpp \
+	runge_45.cpp \
 	simple_vector.cpp \
-	sin.cpp \
 	sin_cos.cpp \
+	sin.cpp \
 	sinh.cpp \
 	sparse_hessian.cpp \
 	sparse_jacobian.cpp \
@@ -173,8 +173,8 @@ general_SOURCES  = \
 	std_math.cpp \
 	sub.cpp \
 	sub_eq.cpp \
-	sub_zero.cpp \
 	subgraph.cpp \
+	sub_zero.cpp \
 	tan.cpp \
 	test_vector.cpp \
 	to_string.cpp \

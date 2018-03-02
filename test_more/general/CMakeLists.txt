@@ -41,29 +41,28 @@ SET(source_list
 	${eigen_sources}
 	${ipopt_sources}
 	general.cpp
-	fabs.cpp
 	acos.cpp
 	acosh.cpp
+	add.cpp
+	add_eq.cpp
+	add_zero.cpp
 	adfun_copy.cpp
 	asin.cpp
 	asinh.cpp
 	assign.cpp
-	add.cpp
-	add_eq.cpp
-	add_zero.cpp
+	atan2.cpp
 	atan.cpp
 	atanh.cpp
-	atan2.cpp
 	atomic_sparsity.cpp
 	azmul.cpp
 	base_alloc.cpp
 	bool_sparsity.cpp
-	check_simple_vector.cpp
 	checkpoint.cpp
-	compare.cpp
+	check_simple_vector.cpp
 	compare_change.cpp
-	cond_exp.cpp
+	compare.cpp
 	cond_exp_ad.cpp
+	cond_exp.cpp
 	cond_exp_rev.cpp
 	copy.cpp
 	cos.cpp
@@ -77,6 +76,7 @@ SET(source_list
 	exp.cpp
 	expm1.cpp
 	extern_value.cpp
+	fabs.cpp
 	for_hess.cpp
 	for_sparse_hes.cpp
 	for_sparse_jac.cpp
@@ -87,19 +87,20 @@ SET(source_list
 	fun_check.cpp
 	hes_sparsity.cpp
 	jacobian.cpp
-	num_limits.cpp
-	log.cpp
-	log1p.cpp
+	local/vector_set.cpp
 	log10.cpp
+	log1p.cpp
+	log.cpp
+	mul_cond_rev.cpp
 	mul.cpp
 	mul_cskip.cpp
 	mul_eq.cpp
 	mul_level.cpp
-	mul_cond_rev.cpp
 	mul_zdouble.cpp
 	mul_zero_one.cpp
 	near_equal_ext.cpp
 	neg.cpp
+	num_limits.cpp
 	ode_err_control.cpp
 	optimize.cpp
 	parameter.cpp
@@ -107,15 +108,15 @@ SET(source_list
 	pow.cpp
 	pow_int.cpp
 	print_for.cpp
-	romberg_one.cpp
-	rosen_34.cpp
-	runge_45.cpp
 	reverse.cpp
 	rev_sparse_jac.cpp
 	rev_two.cpp
+	romberg_one.cpp
+	rosen_34.cpp
+	runge_45.cpp
 	simple_vector.cpp
-	sin.cpp
 	sin_cos.cpp
+	sin.cpp
 	sinh.cpp
 	sparse_hessian.cpp
 	sparse_jacobian.cpp
@@ -126,8 +127,8 @@ SET(source_list
 	std_math.cpp
 	sub.cpp
 	sub_eq.cpp
-	sub_zero.cpp
 	subgraph.cpp
+	sub_zero.cpp
 	tan.cpp
 	test_vector.cpp
 	to_string.cpp
@@ -135,7 +136,6 @@ SET(source_list
 	vec_ad.cpp
 	vec_ad_par.cpp
 	vec_unary.cpp
-	local/vector_set.cpp
 )
 # END_SORT_THIS_LINE_MINUS_2
 set_compile_flags( test_more_general "${cppad_debug_which}" "${source_list}" )

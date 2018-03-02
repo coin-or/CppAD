@@ -48,7 +48,6 @@ $end
 
 // BEGIN_SORT_THIS_LINE_PLUS_1
 extern bool abort_recording(void);
-extern bool fabs(void);
 extern bool acosh(void);
 extern bool acos(void);
 extern bool ad_assign(void);
@@ -85,6 +84,7 @@ extern bool EqualOpSeq(void);
 extern bool Erf(void);
 extern bool expm1(void);
 extern bool exp(void);
+extern bool fabs(void);
 extern bool ForOne(void);
 extern bool ForTwo(void);
 extern bool forward_dir(void);
@@ -164,7 +164,6 @@ int main(void)
 
 	// BEGIN_SORT_THIS_LINE_PLUS_1
 	Run( abort_recording,   "abort_recording"  );
-	Run( fabs,              "fabs"             );
 	Run( acos,              "acos"             );
 	Run( acosh,             "acosh"            );
 	Run( ad_assign,         "ad_assign"        );
@@ -197,6 +196,7 @@ int main(void)
 	Run( Erf,               "Erf"              );
 	Run( exp,               "exp"              );
 	Run( expm1,             "expm1"            );
+	Run( fabs,              "fabs"             );
 	Run( ForOne,            "ForOne"           );
 	Run( ForTwo,            "ForTwo"           );
 	Run( forward_dir,       "forward_dir"      );

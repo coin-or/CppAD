@@ -112,66 +112,66 @@ am__libeigen_a_SOURCES_DIST = cppad_eigen.cpp eigen_mat_inv.cpp
 @CppAD_EIGEN_DIR_TRUE@	libeigen_a-eigen_mat_inv.$(OBJEXT)
 libeigen_a_OBJECTS = $(am_libeigen_a_OBJECTS)
 am__general_SOURCES_DIST = base_adolc.cpp ipopt_solve.cpp \
-	alloc_openmp.cpp general.cpp fabs.cpp acos.cpp acosh.cpp \
-	adfun_copy.cpp asin.cpp asinh.cpp assign.cpp add.cpp \
-	add_eq.cpp add_zero.cpp atan.cpp atanh.cpp atan2.cpp \
-	atomic_sparsity.cpp azmul.cpp base_alloc.cpp bool_sparsity.cpp \
-	check_simple_vector.cpp checkpoint.cpp compare.cpp \
-	compare_change.cpp cond_exp.cpp cond_exp_ad.cpp \
-	cond_exp_rev.cpp copy.cpp cos.cpp cosh.cpp dbl_epsilon.cpp \
-	dependency.cpp div.cpp div_eq.cpp div_zero_one.cpp erf.cpp \
-	exp.cpp expm1.cpp extern_value.cpp extern_value.hpp \
-	for_hess.cpp for_sparse_hes.cpp for_sparse_jac.cpp forward.cpp \
-	forward_dir.cpp forward_order.cpp from_base.cpp fun_check.cpp \
-	hes_sparsity.cpp jacobian.cpp num_limits.cpp log.cpp log1p.cpp \
-	log10.cpp mul.cpp mul_cskip.cpp mul_eq.cpp mul_level.cpp \
-	mul_cond_rev.cpp mul_zdouble.cpp mul_zero_one.cpp \
-	near_equal_ext.cpp neg.cpp ode_err_control.cpp optimize.cpp \
-	parameter.cpp poly.cpp pow.cpp pow_int.cpp print_for.cpp \
-	romberg_one.cpp rosen_34.cpp runge_45.cpp reverse.cpp \
-	rev_sparse_jac.cpp rev_two.cpp simple_vector.cpp sin.cpp \
-	sin_cos.cpp sinh.cpp sparse_hessian.cpp sparse_jacobian.cpp \
-	sparse_jac_work.cpp sparse_sub_hes.cpp sparse_vec_ad.cpp \
-	sqrt.cpp std_math.cpp sub.cpp sub_eq.cpp sub_zero.cpp \
-	subgraph.cpp tan.cpp test_vector.cpp to_string.cpp value.cpp \
-	vec_ad.cpp vec_ad_par.cpp vec_unary.cpp
+	alloc_openmp.cpp general.cpp acos.cpp acosh.cpp add.cpp \
+	add_eq.cpp add_zero.cpp adfun_copy.cpp asin.cpp asinh.cpp \
+	assign.cpp atan2.cpp atan.cpp atanh.cpp atomic_sparsity.cpp \
+	azmul.cpp base_alloc.cpp bool_sparsity.cpp checkpoint.cpp \
+	check_simple_vector.cpp compare_change.cpp compare.cpp \
+	cond_exp_ad.cpp cond_exp.cpp cond_exp_rev.cpp copy.cpp cos.cpp \
+	cosh.cpp dbl_epsilon.cpp dependency.cpp div.cpp div_eq.cpp \
+	div_zero_one.cpp erf.cpp exp.cpp expm1.cpp extern_value.cpp \
+	extern_value.hpp fabs.cpp for_hess.cpp for_sparse_hes.cpp \
+	for_sparse_jac.cpp forward.cpp forward_dir.cpp \
+	forward_order.cpp from_base.cpp fun_check.cpp hes_sparsity.cpp \
+	jacobian.cpp log10.cpp log1p.cpp log.cpp mul_cond_rev.cpp \
+	mul.cpp mul_cskip.cpp mul_eq.cpp mul_level.cpp mul_zdouble.cpp \
+	mul_zero_one.cpp near_equal_ext.cpp neg.cpp num_limits.cpp \
+	ode_err_control.cpp optimize.cpp parameter.cpp poly.cpp \
+	pow.cpp pow_int.cpp print_for.cpp reverse.cpp \
+	rev_sparse_jac.cpp rev_two.cpp romberg_one.cpp rosen_34.cpp \
+	runge_45.cpp simple_vector.cpp sin_cos.cpp sin.cpp sinh.cpp \
+	sparse_hessian.cpp sparse_jacobian.cpp sparse_jac_work.cpp \
+	sparse_sub_hes.cpp sparse_vec_ad.cpp sqrt.cpp std_math.cpp \
+	sub.cpp sub_eq.cpp subgraph.cpp sub_zero.cpp tan.cpp \
+	test_vector.cpp to_string.cpp value.cpp vec_ad.cpp \
+	vec_ad_par.cpp vec_unary.cpp
 @CppAD_ADOLC_TRUE@am__objects_1 = base_adolc.$(OBJEXT)
 @CppAD_IPOPT_TRUE@am__objects_2 = ipopt_solve.$(OBJEXT)
 @CppAD_OPENMP_TRUE@am__objects_3 = alloc_openmp.$(OBJEXT)
 am_general_OBJECTS = $(am__objects_1) $(am__objects_2) \
-	$(am__objects_3) general.$(OBJEXT) fabs.$(OBJEXT) \
-	acos.$(OBJEXT) acosh.$(OBJEXT) adfun_copy.$(OBJEXT) \
-	asin.$(OBJEXT) asinh.$(OBJEXT) assign.$(OBJEXT) add.$(OBJEXT) \
-	add_eq.$(OBJEXT) add_zero.$(OBJEXT) atan.$(OBJEXT) \
-	atanh.$(OBJEXT) atan2.$(OBJEXT) atomic_sparsity.$(OBJEXT) \
+	$(am__objects_3) general.$(OBJEXT) acos.$(OBJEXT) \
+	acosh.$(OBJEXT) add.$(OBJEXT) add_eq.$(OBJEXT) \
+	add_zero.$(OBJEXT) adfun_copy.$(OBJEXT) asin.$(OBJEXT) \
+	asinh.$(OBJEXT) assign.$(OBJEXT) atan2.$(OBJEXT) \
+	atan.$(OBJEXT) atanh.$(OBJEXT) atomic_sparsity.$(OBJEXT) \
 	azmul.$(OBJEXT) base_alloc.$(OBJEXT) bool_sparsity.$(OBJEXT) \
-	check_simple_vector.$(OBJEXT) checkpoint.$(OBJEXT) \
-	compare.$(OBJEXT) compare_change.$(OBJEXT) cond_exp.$(OBJEXT) \
-	cond_exp_ad.$(OBJEXT) cond_exp_rev.$(OBJEXT) copy.$(OBJEXT) \
-	cos.$(OBJEXT) cosh.$(OBJEXT) dbl_epsilon.$(OBJEXT) \
-	dependency.$(OBJEXT) div.$(OBJEXT) div_eq.$(OBJEXT) \
-	div_zero_one.$(OBJEXT) erf.$(OBJEXT) exp.$(OBJEXT) \
-	expm1.$(OBJEXT) extern_value.$(OBJEXT) for_hess.$(OBJEXT) \
+	checkpoint.$(OBJEXT) check_simple_vector.$(OBJEXT) \
+	compare_change.$(OBJEXT) compare.$(OBJEXT) \
+	cond_exp_ad.$(OBJEXT) cond_exp.$(OBJEXT) \
+	cond_exp_rev.$(OBJEXT) copy.$(OBJEXT) cos.$(OBJEXT) \
+	cosh.$(OBJEXT) dbl_epsilon.$(OBJEXT) dependency.$(OBJEXT) \
+	div.$(OBJEXT) div_eq.$(OBJEXT) div_zero_one.$(OBJEXT) \
+	erf.$(OBJEXT) exp.$(OBJEXT) expm1.$(OBJEXT) \
+	extern_value.$(OBJEXT) fabs.$(OBJEXT) for_hess.$(OBJEXT) \
 	for_sparse_hes.$(OBJEXT) for_sparse_jac.$(OBJEXT) \
 	forward.$(OBJEXT) forward_dir.$(OBJEXT) \
 	forward_order.$(OBJEXT) from_base.$(OBJEXT) \
 	fun_check.$(OBJEXT) hes_sparsity.$(OBJEXT) jacobian.$(OBJEXT) \
-	num_limits.$(OBJEXT) log.$(OBJEXT) log1p.$(OBJEXT) \
-	log10.$(OBJEXT) mul.$(OBJEXT) mul_cskip.$(OBJEXT) \
-	mul_eq.$(OBJEXT) mul_level.$(OBJEXT) mul_cond_rev.$(OBJEXT) \
-	mul_zdouble.$(OBJEXT) mul_zero_one.$(OBJEXT) \
-	near_equal_ext.$(OBJEXT) neg.$(OBJEXT) \
-	ode_err_control.$(OBJEXT) optimize.$(OBJEXT) \
-	parameter.$(OBJEXT) poly.$(OBJEXT) pow.$(OBJEXT) \
-	pow_int.$(OBJEXT) print_for.$(OBJEXT) romberg_one.$(OBJEXT) \
-	rosen_34.$(OBJEXT) runge_45.$(OBJEXT) reverse.$(OBJEXT) \
-	rev_sparse_jac.$(OBJEXT) rev_two.$(OBJEXT) \
-	simple_vector.$(OBJEXT) sin.$(OBJEXT) sin_cos.$(OBJEXT) \
+	log10.$(OBJEXT) log1p.$(OBJEXT) log.$(OBJEXT) \
+	mul_cond_rev.$(OBJEXT) mul.$(OBJEXT) mul_cskip.$(OBJEXT) \
+	mul_eq.$(OBJEXT) mul_level.$(OBJEXT) mul_zdouble.$(OBJEXT) \
+	mul_zero_one.$(OBJEXT) near_equal_ext.$(OBJEXT) neg.$(OBJEXT) \
+	num_limits.$(OBJEXT) ode_err_control.$(OBJEXT) \
+	optimize.$(OBJEXT) parameter.$(OBJEXT) poly.$(OBJEXT) \
+	pow.$(OBJEXT) pow_int.$(OBJEXT) print_for.$(OBJEXT) \
+	reverse.$(OBJEXT) rev_sparse_jac.$(OBJEXT) rev_two.$(OBJEXT) \
+	romberg_one.$(OBJEXT) rosen_34.$(OBJEXT) runge_45.$(OBJEXT) \
+	simple_vector.$(OBJEXT) sin_cos.$(OBJEXT) sin.$(OBJEXT) \
 	sinh.$(OBJEXT) sparse_hessian.$(OBJEXT) \
 	sparse_jacobian.$(OBJEXT) sparse_jac_work.$(OBJEXT) \
 	sparse_sub_hes.$(OBJEXT) sparse_vec_ad.$(OBJEXT) \
 	sqrt.$(OBJEXT) std_math.$(OBJEXT) sub.$(OBJEXT) \
-	sub_eq.$(OBJEXT) sub_zero.$(OBJEXT) subgraph.$(OBJEXT) \
+	sub_eq.$(OBJEXT) subgraph.$(OBJEXT) sub_zero.$(OBJEXT) \
 	tan.$(OBJEXT) test_vector.$(OBJEXT) to_string.$(OBJEXT) \
 	value.$(OBJEXT) vec_ad.$(OBJEXT) vec_ad_par.$(OBJEXT) \
 	vec_unary.$(OBJEXT)
@@ -500,29 +500,28 @@ general_SOURCES = \
 	$(IPOPT_SRC_FILES) \
 	$(OPENMP_SRC_FILES) \
 	general.cpp \
-	fabs.cpp \
 	acos.cpp \
 	acosh.cpp \
+	add.cpp \
+	add_eq.cpp \
+	add_zero.cpp \
 	adfun_copy.cpp \
 	asin.cpp \
 	asinh.cpp \
 	assign.cpp \
-	add.cpp \
-	add_eq.cpp \
-	add_zero.cpp \
+	atan2.cpp \
 	atan.cpp \
 	atanh.cpp \
-	atan2.cpp \
 	atomic_sparsity.cpp \
 	azmul.cpp \
 	base_alloc.cpp \
 	bool_sparsity.cpp \
-	check_simple_vector.cpp \
 	checkpoint.cpp \
-	compare.cpp \
+	check_simple_vector.cpp \
 	compare_change.cpp \
-	cond_exp.cpp \
+	compare.cpp \
 	cond_exp_ad.cpp \
+	cond_exp.cpp \
 	cond_exp_rev.cpp \
 	copy.cpp \
 	cos.cpp \
@@ -537,6 +536,7 @@ general_SOURCES = \
 	expm1.cpp \
 	extern_value.cpp \
 	extern_value.hpp \
+	fabs.cpp \
 	for_hess.cpp \
 	for_sparse_hes.cpp \
 	for_sparse_jac.cpp \
@@ -547,19 +547,19 @@ general_SOURCES = \
 	fun_check.cpp \
 	hes_sparsity.cpp \
 	jacobian.cpp \
-	num_limits.cpp \
-	log.cpp \
-	log1p.cpp \
 	log10.cpp \
+	log1p.cpp \
+	log.cpp \
+	mul_cond_rev.cpp \
 	mul.cpp \
 	mul_cskip.cpp \
 	mul_eq.cpp \
 	mul_level.cpp \
-	mul_cond_rev.cpp \
 	mul_zdouble.cpp \
 	mul_zero_one.cpp \
 	near_equal_ext.cpp \
 	neg.cpp \
+	num_limits.cpp \
 	ode_err_control.cpp \
 	optimize.cpp \
 	parameter.cpp \
@@ -567,15 +567,15 @@ general_SOURCES = \
 	pow.cpp \
 	pow_int.cpp \
 	print_for.cpp \
-	romberg_one.cpp \
-	rosen_34.cpp \
-	runge_45.cpp \
 	reverse.cpp \
 	rev_sparse_jac.cpp \
 	rev_two.cpp \
+	romberg_one.cpp \
+	rosen_34.cpp \
+	runge_45.cpp \
 	simple_vector.cpp \
-	sin.cpp \
 	sin_cos.cpp \
+	sin.cpp \
 	sinh.cpp \
 	sparse_hessian.cpp \
 	sparse_jacobian.cpp \
@@ -586,8 +586,8 @@ general_SOURCES = \
 	std_math.cpp \
 	sub.cpp \
 	sub_eq.cpp \
-	sub_zero.cpp \
 	subgraph.cpp \
+	sub_zero.cpp \
 	tan.cpp \
 	test_vector.cpp \
 	to_string.cpp \
