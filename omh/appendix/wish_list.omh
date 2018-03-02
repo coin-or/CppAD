@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -35,9 +35,33 @@ $spell
 	afun
 	hes
 	Mp
+	op
 $$
 
 $section The CppAD Wish List$$
+
+$head Changing Parameters$$
+It would be useful to have a means of changing that value of
+some of the $cref/parameters/glossary/Parameter/$$ in an
+$cref ADFun$$ object.
+For example, perhaps
+$codei%
+	Independent(%x%, %p_vector%)
+	Independent(%x%, %abort_op_index%, %p_vector%)
+%$$
+Could be used to specify the value of the these parameters
+during taping.
+The $th k$$ component of $icode p_vector$$ could be obtained during
+the taping process as
+$codei%
+	get_parameter(%k%)
+%$$
+After taping, the parameter vector in a function object $icode f$$
+could be changed using
+$codei%
+	%f%.set_parameter(%p_vector%)
+%$$
+
 
 $head Multi-Threading$$
 The TMB packages has a special version of the
