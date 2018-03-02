@@ -52,6 +52,8 @@ $codei%const %SizeVector%& %col%( %matrix%.col() )
 %$$
 $codei%const %ValueVector%& %val%( %matrix%.val() )
 %$$
+$codei%const sparse_rc<%SizeVector%>& %pat%( %matrix%.pat() )
+%$$
 $icode%row_major% = %matrix%.row_major()
 %$$
 $icode%col_major% = %matrix%.col_major()
@@ -74,7 +76,7 @@ are all zero.
 
 
 $head pattern$$
-This argument has prototype
+This constructor argument has prototype
 $codei%
 	const sparse_rc<%SizeVector%>& %pattern%
 %$$
@@ -153,6 +155,10 @@ $head val$$
 This vector has size $icode nnz$$ and
 $icode%val[%k%]%$$ is value of the $th k$$ possibly non-zero entry
 in the sparse matrix (the value may be zero).
+
+$head pat$$
+This is equal to the sparsity pattern; i.e.,
+$icode pattern$$ in the constructor.
 
 $head row_major$$
 This vector has prototype
@@ -267,6 +273,9 @@ public:
 	/// value for possibly non-zero elements
 	const ValueVector& val(void) const
 	{	return val_; }
+	/// sparsity pattern
+	const sparse_rc<SizeVector>& pat(void) const
+	{	return pattern_; }
 	/// row-major order
 	SizeVector row_major(void) const
 	{	return pattern_.row_major(); }

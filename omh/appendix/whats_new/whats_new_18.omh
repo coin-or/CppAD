@@ -15,9 +15,14 @@ $spell
 	jac
 	hes
 	Jacobian
+	rcv
 $$
 
 $section Changes and Additions to CppAD During 2018$$
+
+$head 03-10$$
+Add the $cref/pat/sparse_rcv/pat/$$ member function to
+the $code sparse_rcv$$ template class.
 
 $head 02-27$$
 Documentation was added to state that the $icode work$$ structure for

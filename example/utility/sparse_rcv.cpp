@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -64,6 +64,16 @@ bool sparse_rcv(void)
 	{	ok &= row[ col_major[k] ] == k;
 		ok &= col[ col_major[k] ] == k;
 		ok &= val[ col_major[k] ] == double(k);
+	}
+
+	// pat
+	const CppAD::sparse_rc<SizeVector> pat( matrix.pat() );
+	ok &= nnz == pat.nnz();
+	ok &= nr  == pat.nr();
+	ok &= nc  == pat.nc();
+	for(size_t k = 0; k < nnz; k++)
+	{	ok &= row[k] == pat.row()[k];
+		ok &= col[k] == pat.col()[k];
 	}
 
 	// create an empty matrix
