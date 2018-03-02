@@ -128,9 +128,8 @@ To build this program and run its correctness tests see <a href="cmake_check.htm
 <i><font color="#9A1900">// test runner</font></i>
 <b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/utility/test_boolofvoid.hpp&gt;</font>
 
-<i><font color="#9A1900">// prototype external compiled tests (this line expected by bin/new_test.sh)</font></i>
+<i><font color="#9A1900">// BEGIN_SORT_THIS_LINE_PLUS_1</font></i>
 <b><font color="#0000FF">extern</font></b> <font color="#009900">bool</font> <b><font color="#000000">abort_recording</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">);</font>
-<b><font color="#0000FF">extern</font></b> <font color="#009900">bool</font> <b><font color="#000000">fabs</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">);</font>
 <b><font color="#0000FF">extern</font></b> <font color="#009900">bool</font> <b><font color="#000000">acosh</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">);</font>
 <b><font color="#0000FF">extern</font></b> <font color="#009900">bool</font> <b><font color="#000000">acos</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">);</font>
 <b><font color="#0000FF">extern</font></b> <font color="#009900">bool</font> <b><font color="#000000">ad_assign</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">);</font>
@@ -167,6 +166,7 @@ To build this program and run its correctness tests see <a href="cmake_check.htm
 <b><font color="#0000FF">extern</font></b> <font color="#009900">bool</font> <b><font color="#000000">Erf</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">);</font>
 <b><font color="#0000FF">extern</font></b> <font color="#009900">bool</font> <b><font color="#000000">expm1</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">);</font>
 <b><font color="#0000FF">extern</font></b> <font color="#009900">bool</font> <b><font color="#000000">exp</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">);</font>
+<b><font color="#0000FF">extern</font></b> <font color="#009900">bool</font> <b><font color="#000000">fabs</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">);</font>
 <b><font color="#0000FF">extern</font></b> <font color="#009900">bool</font> <b><font color="#000000">ForOne</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">);</font>
 <b><font color="#0000FF">extern</font></b> <font color="#009900">bool</font> <b><font color="#000000">ForTwo</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">);</font>
 <b><font color="#0000FF">extern</font></b> <font color="#009900">bool</font> <b><font color="#000000">forward_dir</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">);</font>
@@ -234,6 +234,7 @@ To build this program and run its correctness tests see <a href="cmake_check.htm
 <b><font color="#0000FF">extern</font></b> <font color="#009900">bool</font> <b><font color="#000000">Value</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">);</font>
 <b><font color="#0000FF">extern</font></b> <font color="#009900">bool</font> <b><font color="#000000">Var2Par</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">);</font>
 <b><font color="#0000FF">extern</font></b> <font color="#009900">bool</font> <b><font color="#000000">vec_ad</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">);</font>
+<i><font color="#9A1900">// END_SORT_THIS_LINE_MINUS_1</font></i>
 
 <i><font color="#9A1900">// main program that runs all the tests</font></i>
 <font color="#009900">int</font> <b><font color="#000000">main</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
@@ -243,9 +244,8 @@ To build this program and run its correctness tests see <a href="cmake_check.htm
 
      <i><font color="#9A1900">// This line is used by test_one.sh</font></i>
 
-     <i><font color="#9A1900">// run external compiled tests (this line expected by bin/new_test.sh)</font></i>
+     <i><font color="#9A1900">// BEGIN_SORT_THIS_LINE_PLUS_1</font></i>
      <b><font color="#000000">Run</font></b><font color="#990000">(</font> abort_recording<font color="#990000">,</font>   <font color="#FF0000">"abort_recording"</font>  <font color="#990000">);</font>
-     <b><font color="#000000">Run</font></b><font color="#990000">(</font> fabs<font color="#990000">,</font>              <font color="#FF0000">"fabs"</font>             <font color="#990000">);</font>
      <b><font color="#000000">Run</font></b><font color="#990000">(</font> acos<font color="#990000">,</font>              <font color="#FF0000">"acos"</font>             <font color="#990000">);</font>
      <b><font color="#000000">Run</font></b><font color="#990000">(</font> acosh<font color="#990000">,</font>             <font color="#FF0000">"acosh"</font>            <font color="#990000">);</font>
      <b><font color="#000000">Run</font></b><font color="#990000">(</font> ad_assign<font color="#990000">,</font>         <font color="#FF0000">"ad_assign"</font>        <font color="#990000">);</font>
@@ -278,6 +278,7 @@ To build this program and run its correctness tests see <a href="cmake_check.htm
      <b><font color="#000000">Run</font></b><font color="#990000">(</font> Erf<font color="#990000">,</font>               <font color="#FF0000">"Erf"</font>              <font color="#990000">);</font>
      <b><font color="#000000">Run</font></b><font color="#990000">(</font> exp<font color="#990000">,</font>               <font color="#FF0000">"exp"</font>              <font color="#990000">);</font>
      <b><font color="#000000">Run</font></b><font color="#990000">(</font> expm1<font color="#990000">,</font>             <font color="#FF0000">"expm1"</font>            <font color="#990000">);</font>
+     <b><font color="#000000">Run</font></b><font color="#990000">(</font> fabs<font color="#990000">,</font>              <font color="#FF0000">"fabs"</font>             <font color="#990000">);</font>
      <b><font color="#000000">Run</font></b><font color="#990000">(</font> ForOne<font color="#990000">,</font>            <font color="#FF0000">"ForOne"</font>           <font color="#990000">);</font>
      <b><font color="#000000">Run</font></b><font color="#990000">(</font> ForTwo<font color="#990000">,</font>            <font color="#FF0000">"ForTwo"</font>           <font color="#990000">);</font>
      <b><font color="#000000">Run</font></b><font color="#990000">(</font> forward_dir<font color="#990000">,</font>       <font color="#FF0000">"forward_dir"</font>      <font color="#990000">);</font>
@@ -342,6 +343,7 @@ To build this program and run its correctness tests see <a href="cmake_check.htm
      <b><font color="#000000">Run</font></b><font color="#990000">(</font> Value<font color="#990000">,</font>             <font color="#FF0000">"Value"</font>            <font color="#990000">);</font>
      <b><font color="#000000">Run</font></b><font color="#990000">(</font> Var2Par<font color="#990000">,</font>           <font color="#FF0000">"Var2Par"</font>          <font color="#990000">);</font>
      <b><font color="#000000">Run</font></b><font color="#990000">(</font> vec_ad<font color="#990000">,</font>            <font color="#FF0000">"vec_ad"</font>           <font color="#990000">);</font>
+     <i><font color="#9A1900">// END_SORT_THIS_LINE_MINUS_1</font></i>
 <b><font color="#000080"># ifndef</font></b> CPPAD_DEBUG_AND_RELEASE
      <b><font color="#000000">Run</font></b><font color="#990000">(</font> check_for_nan<font color="#990000">,</font>     <font color="#FF0000">"check_for_nan"</font>    <font color="#990000">);</font>
 <b><font color="#000080"># endif</font></b>

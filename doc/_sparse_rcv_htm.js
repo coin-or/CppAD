@@ -74,6 +74,7 @@ var list_current0 = [
 'sparse_rcv.htm#row',
 'sparse_rcv.htm#col',
 'sparse_rcv.htm#val',
+'sparse_rcv.htm#pat',
 'sparse_rcv.htm#row_major',
 'sparse_rcv.htm#col_major',
 'sparse_rcv.htm#Eigen Matrix',

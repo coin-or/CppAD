@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Sparse Matrix Row, Column, Value Representation</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Sparse Matrix Row, Column, Value Representation">
-<meta name="keywords" id="keywords" content=" sparse matrix row column value representation syntax sizevector valuevector empty pattern target nr nc nnz set k v col val row_major col_major eigen example ">
+<meta name="keywords" id="keywords" content=" sparse matrix row column value representation syntax sizevector valuevector empty pattern target nr nc nnz set k v col val pat row_major col_major eigen example ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -126,6 +126,7 @@ A:active { color : purple }
 <option>row</option>
 <option>col</option>
 <option>val</option>
+<option>pat</option>
 <option>row_major</option>
 <option>col_major</option>
 <option>Eigen Matrix</option>
@@ -178,6 +179,9 @@ A:active { color : purple }
 <code><font color="blue"><span style='white-space: nowrap'>const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ValueVector</span></font></i><font color="blue"><span style='white-space: nowrap'>&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>val</span></font></i><font color="blue"><span style='white-space: nowrap'>(&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>matrix</span></font></i><font color="blue"><span style='white-space: nowrap'>.val()&nbsp;)<br>
 </span></font></code>
 
+<code><font color="blue"><span style='white-space: nowrap'>const&nbsp;sparse_rc&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>SizeVector</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>pat</span></font></i><font color="blue"><span style='white-space: nowrap'>(&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>matrix</span></font></i><font color="blue"><span style='white-space: nowrap'>.pat()&nbsp;)<br>
+</span></font></code>
+
 <code><i><font color="black"><span style='white-space: nowrap'>row_major</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>matrix</span></font></i><font color="blue"><span style='white-space: nowrap'>.row_major()<br>
 </span></font></code>
 
@@ -226,7 +230,7 @@ are all zero.
 <br>
 <b><big><a name="pattern" id="pattern">pattern</a></big></b>
 <br>
-This argument has prototype
+This constructor argument has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;sparse_rc&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>SizeVector</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>pattern</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
@@ -395,6 +399,15 @@ This vector has size
 <code><i><font color="black"><span style='white-space: nowrap'>val[</span></font></i><font color="blue"><span style='white-space: nowrap'>k</span></font><i><font color="black"><span style='white-space: nowrap'>]</span></font></i></code>
  is value of the <code><i>k</i></code>-th possibly non-zero entry
 in the sparse matrix (the value may be zero).
+
+<br>
+<br>
+<b><big><a name="pat" id="pat">pat</a></big></b>
+<br>
+This is equal to the sparsity pattern; i.e.,
+
+<code><i><font color="black"><span style='white-space: nowrap'>pattern</span></font></i></code>
+ in the constructor.
 
 <br>
 <br>

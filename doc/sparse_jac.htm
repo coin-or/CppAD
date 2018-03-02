@@ -146,7 +146,6 @@ A:active { color : purple }
 )</span></font></code>
 
 
-
 <br>
 <br>
 <b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
@@ -391,6 +390,17 @@ a future call is for the same object
 ,
 the same member function <code><font color="blue">sparse_jac_for</font></code> or <code><font color="blue">sparse_jac_rev</font></code>,
 and the same subset of the Jacobian.
+In fact, it can be used with a different 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+
+and a different 
+<code><i><font color="black"><span style='white-space: nowrap'>subset</span></font></i></code>
+ provided that Jacobian sparsity pattern
+for 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+ and the sparsity pattern in 
+<code><i><font color="black"><span style='white-space: nowrap'>subset</span></font></i></code>
+ are the same.
 If any of these values change, use 
 <code><i><font color="black"><span style='white-space: nowrap'>work</span></font></i><font color="blue"><span style='white-space: nowrap'>.clear()</span></font></code>
  to

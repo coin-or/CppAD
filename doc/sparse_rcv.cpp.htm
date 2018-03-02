@@ -160,6 +160,16 @@ A:active { color : purple }
           ok <font color="#990000">&amp;=</font> val<font color="#990000">[</font> col_major<font color="#990000">[</font>k<font color="#990000">]</font> <font color="#990000">]</font> <font color="#990000">==</font> <font color="#009900">double</font><font color="#990000">(</font>k<font color="#990000">);</font>
      <font color="#FF0000">}</font>
 
+     <i><font color="#9A1900">// pat</font></i>
+     <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font><font color="#008080">sparse_rc&lt;SizeVector&gt;</font> <b><font color="#000000">pat</font></b><font color="#990000">(</font> matrix<font color="#990000">.</font><b><font color="#000000">pat</font></b><font color="#990000">()</font> <font color="#990000">);</font>
+     ok <font color="#990000">&amp;=</font> nnz <font color="#990000">==</font> pat<font color="#990000">.</font><b><font color="#000000">nnz</font></b><font color="#990000">();</font>
+     ok <font color="#990000">&amp;=</font> nr  <font color="#990000">==</font> pat<font color="#990000">.</font><b><font color="#000000">nr</font></b><font color="#990000">();</font>
+     ok <font color="#990000">&amp;=</font> nc  <font color="#990000">==</font> pat<font color="#990000">.</font><b><font color="#000000">nc</font></b><font color="#990000">();</font>
+     <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> k <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> k <font color="#990000">&lt;</font> nnz<font color="#990000">;</font> k<font color="#990000">++)</font>
+     <font color="#FF0000">{</font>    ok <font color="#990000">&amp;=</font> row<font color="#990000">[</font>k<font color="#990000">]</font> <font color="#990000">==</font> pat<font color="#990000">.</font><b><font color="#000000">row</font></b><font color="#990000">()[</font>k<font color="#990000">];</font>
+          ok <font color="#990000">&amp;=</font> col<font color="#990000">[</font>k<font color="#990000">]</font> <font color="#990000">==</font> pat<font color="#990000">.</font><b><font color="#000000">col</font></b><font color="#990000">()[</font>k<font color="#990000">];</font>
+     <font color="#FF0000">}</font>
+
      <i><font color="#9A1900">// create an empty matrix</font></i>
      CppAD<font color="#990000">::</font><font color="#008080">sparse_rcv&lt;SizeVector, ValueVector&gt;</font> target<font color="#990000">;</font>
      ok <font color="#990000">&amp;=</font> target<font color="#990000">.</font><b><font color="#000000">nnz</font></b><font color="#990000">()</font> <font color="#990000">==</font> <font color="#993399">0</font><font color="#990000">;</font>
