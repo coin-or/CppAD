@@ -20,7 +20,12 @@ $$
 
 $section Changes and Additions to CppAD During 2018$$
 
-$head 03-10$$
+$head 03-04$$
+The $code example/abs_normal$$ directory was missing from the
+$cref/example/directory/Example Directory/$$ sub-directory list.
+This has been fixed.
+
+$head 03-02$$
 Add the $cref/pat/sparse_rcv/pat/$$ member function to
 the $code sparse_rcv$$ template class.
 
