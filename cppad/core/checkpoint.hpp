@@ -2,7 +2,7 @@
 # define CPPAD_CORE_CHECKPOINT_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -600,7 +600,7 @@ public:
 	The default value is unspecified.
 
 	\param optimize [in]
-l	should the operation sequence corresponding to the algo be optimized.
+	should the operation sequence corresponding to the algo be optimized.
 	The default value is true, but it is
 	sometimes useful to use false for debugging purposes.
 	*/
