@@ -1,6 +1,6 @@
 #! /bin/bash -e
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the
@@ -117,29 +117,15 @@ done
 # build the xml version of documentation for this distribution
 echo_log_eval cd $package_dir
 #
-# Only include the *.xml verison of the documentation in distribution
-# So remove the table at the top (but save the original doc.omh file).
-if ! grep < doc.omh > /dev/null \
-	'This comment is used to remove the table below'
+# This command creates omhelp.doc.log in current directory (and says so)
+echo_log_eval echo "run_omhelp.sh doc"
+if ! run_omhelp.sh doc
 then
-	echo "Missing comment expected in doc.omh"
-	exit 1
-fi
-echo_log_eval echo "sed -i.save doc.omh ..."
-sed -i.save doc.omh \
-	-e '/This comment is used to remove the table below/,/$tend/d'
-#
-# This command creates omhelp.xml.log in current directory (and says so)
-echo_log_eval echo "bin/run_omhelp.sh xml"
-if ! bin/run_omhelp.sh xml
-then
-	echo_log_eval cp omhelp.xml.log $top_srcdir/omhelp.xml.log
+	echo_log_eval cp omhelp.doc.log $top_srcdir/omhelp.doc.log
 	exit 1
 fi
 # Copy the log to the directory where the package.sh command was executed
-echo_log_eval cp omhelp.xml.log $top_srcdir/omhelp.xml.log
-# Restore the original doc.omh
-echo_log_eval mv doc.omh.save doc.omh
+echo_log_eval cp omhelp.doc.log $top_srcdir/omhelp.doc.log
 # ----------------------------------------------------------------------------
 # change back to the package parent directory and create the tarball
 echo_log_eval cd ..
