@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>The CppAD Wish List</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="The CppAD Wish List">
-<meta name="keywords" id="keywords" content=" the cppad wish list multi-threading atomic subgraph new api sparsity element-wise operations check_finite test_boolofvoid eigen example optimization taping special operators memory checkpoint retape testing compilation speed base requirements adolc forward mode recomputation iterator interface operation sequence software guidelines tracing atan2 benderquad ">
+<meta name="keywords" id="keywords" content=" the cppad wish list dynamic parameters multi-threading atomic subgraph new api sparsity element-wise operations check_finite test_boolofvoid eigen example optimization taping special operators memory checkpoint retape testing compilation speed base requirements adolc forward mode recomputation iterator interface operation sequence software guidelines tracing atan2 benderquad ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -88,6 +88,7 @@ A:active { color : purple }
 <td>
 <select onchange='choose_current0(this)'>
 <option>Headings-&gt;</option>
+<option>Dynamic Parameters</option>
 <option>Multi-Threading</option>
 <option>Atomic</option>
 <option>---..Subgraph</option>
@@ -128,6 +129,38 @@ A:active { color : purple }
 
 
 <center><b><big><big>The CppAD Wish List</big></big></b></center>
+<br>
+<b><big><a name="Dynamic Parameters" id="Dynamic Parameters">Dynamic Parameters</a></big></b>
+<br>
+It would be useful to have a means of changing that value of
+some of the <a href="glossary.htm#Parameter" target="_top"><span style='white-space: nowrap'>parameters</span></a>
+ in an
+<a href="adfun.htm" target="_top"><span style='white-space: nowrap'>ADFun</span></a>
+ object.
+For example, perhaps
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Independent(</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>dynamic_parameter</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Independent(</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>abort_op_index</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>dynamic_parameter</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+Could be used to specify the value of the these parameters
+during taping.
+The <code><i>k</i></code>-th component of 
+<code><i><font color="black"><span style='white-space: nowrap'>dynamic_parameter</span></font></i></code>
+ could be used during
+the taping process as
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dynamic_parameter(</span></font><i><font color="black"><span style='white-space: nowrap'>k</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+After taping, the dynamic parameter vector in a function object 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+
+could be changed using
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.dynamic_parameter(</span></font><i><font color="black"><span style='white-space: nowrap'>dynamic_parameter</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
 <br>
 <b><big><a name="Multi-Threading" id="Multi-Threading">Multi-Threading</a></big></b>
 <br>
