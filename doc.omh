@@ -69,27 +69,6 @@ cppad-20180307: A Package for Differentiation of C++ Algorithms
 $$
 $mindex AD algorithmic differentiation automatic C++ algorithm derivative CppAD version cppad.hpp$$
 
-$comment This comment is used to remove the table below$$
-$table
-$cnext
-	One section per web page $pre  $$ $cnext
-	All sections in one web page
-$rnext
-$cnext
-	(fast to load) $pre  $$ $cnext
-	(slow to load)
-$rnext
-Math displayed using MathJax $pre  $$ $cnext
-$href%cppad.htm%$$
-$pre  $$ $cnext
-$href%_printable.htm%$$
-$rnext
-Math displayed using MathML $pre  $$ $cnext
-$href%cppad.xml%$$ $pre  $$ $cnext
-$href%_printable.xml%$$
-$tend
-
-
 $head Syntax$$
 $code # include <cppad/cppad.hpp>$$
 
