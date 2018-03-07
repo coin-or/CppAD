@@ -1,6 +1,6 @@
 #! /bin/bash -e
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the
@@ -238,33 +238,11 @@ then
 	# ----------------------------------------------------------------------
 	# Things to do in the original source directory
 	# ----------------------------------------------------------------------
-	echo "Only include the *.xml version of the documentation in distribution"
-	if ! grep < doc.omh > /dev/null \
-		'This comment is used to remove the table below'
+	echo "run_omhelp.sh -clean doc"
+	if ! run_omhelp.sh -clean doc
 	then
-		echo "Missing comment expected in doc.omh"
 		exit 1
 	fi
-	echo "sed -i.save doc.omh ..."
-	sed -i.save doc.omh \
-		-e '/This comment is used to remove the table below/,/$tend/d'
-	#
-	if [ -e doc ]
-	then
-		echo "rm -r doc"
-		      rm -r doc
-	fi
-	#
-	echo "bin/run_omhelp.sh xml"
-	if ! bin/run_omhelp.sh xml
-	then
-		echo "mv doc.omh.save doc.omh"
-		mv doc.omh.save doc.omh
-		exit 1
-	fi
-	#
-	echo "mv doc.omh.save doc.omh"
-	      mv doc.omh.save doc.omh
 	# No longer run these because tested when bin/package.sh is run.
 	# Run automated checking of file names in original source directory
 	# list="
@@ -326,22 +304,8 @@ fi
 # omhelp comes after dist because dist only includes one help output
 if [ "$1" = "omhelp" ]
 then
-	if ! grep < doc.omh > /dev/null \
-		'This comment is used to remove the table below'
-	then
-		echo "doc.omh is missing a table."
-		echo "Try re-running bin/autotools.sh configure."
-	fi
-	for flag in "printable" ""
-	do
-		# Run xml after htm so that index.htm points to cppad.xml
-		# (see run_omhelp.sh).
-		for ext in htm xml
-		do
-			echo "bin/run_omhelp.sh $ext $flag"
-			      bin/run_omhelp.sh $ext $flag
-		done
-	done
+	echo 'run_omhelp.sh -clean doc'
+	run_omhelp.sh -clean doc
 	#
 	echo "OK: bin/autotools.sh omhelp"
 	exit 0
@@ -453,8 +417,8 @@ then
 	      bin/autotools.sh configure >> $log_dir/$log_file
 	#
 	# test user documentation
-	echo "bin/run_omhelp.sh xml  >> $log_file"
-	      bin/run_omhelp.sh xml  >> $log_dir/$log_file
+	echo "run_omhelp.sh -xml  doc >> $log_file"
+	run_omhelp.sh -xml doc  >> $log_dir/$log_file
 	#
 	# Developer documentation no longer works for autotools install
 	# test developer documentation
