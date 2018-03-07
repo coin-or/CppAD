@@ -1,6 +1,6 @@
 #! /bin/bash -e
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the
@@ -179,30 +179,16 @@ done
 # change into the version directory
 echo_eval cd $archive_name
 #
-# Only include the *.xml verison of the documentation in distribution
-# So remove the table at the top (but save the original doc.omh file).
-if ! grep < doc.omh > /dev/null \
-	'This comment is used to remove the table below'
+# This command creates omhelp.doc.log in current directory (and says so)
+echo "run_omhelp.sh doc"
+if ! run_omhelp.sh doc
 then
-	echo "Missing comment expected in doc.omh"
-	exit 1
-fi
-echo "sed -i.save doc.omh ..."
-sed -i.save doc.omh \
-	-e '/This comment is used to remove the table below/,/$tend/d'
-#
-# This command creates omhelp.xml.log in current directory (and says so)
-echo "bin/run_omhelp.sh xml"
-if ! bin/run_omhelp.sh xml
-then
-	mv omhelp.xml.log ../..
-	echo_eval mv doc.omh.save doc.omh
+	mv omhelp.doc.log ../..
 	exit 1
 fi
 # Move the log to the directory where the start directory
-echo_eval mv omhelp.xml.log $start_dir
+echo_eval mv omhelp.doc.log $start_dir
 #
-echo_eval mv doc.omh.save doc.omh
 echo_eval cd ..
 # ----------------------------------------------------------------------------
 #
