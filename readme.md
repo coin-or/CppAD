@@ -1,24 +1,17 @@
 # CppAD: A Package for Differentiation of C++ Algorithms
 
-[gh-pages](https://coin-or.github.io/CppAD/doc)
-
 ## Links
 
-- [Homepage](http://www.coin-or.org/CppAD/)
+- [docmentation](https://coin-or.github.io/CppAD/doc)
 
-- [Directories](http://www.coin-or.org/CppAD/directory.htm)
+- [News](https://coin-or.github.io/CppAD/doc/whats_new.htm)
 
-- [News](https://www.coin-or.org/CppAD/Doc/whats_new.htm)
+- [Install](https://coin-or.github.io/CppAD/doc/install.htm)
 
-- [Versions](http://www.coin-or.org/CppAD/Doc/download.htm)
-
-- [Install](https://www.coin-or.org/CppAD/Doc/install.htm)
-
-- [Web Documentation](https://www.coin-or.org/CppAD/Doc/cppad.htm)
+- [Directories](https://coin-or.github.io/CppAD/doc/directory.htm)
 
 - [Coin-OR Download](https://www.coin-or.org/download/source/CppAD/)
 
-- [Deprecated](https://www.coin-or.org/CppAD/Doc/deprecated.htm)
 
 
 ## Autotools
@@ -39,17 +32,5 @@ the following files, in this directory, are also for this purpose:
 `missing`.
 
 
-## Tarballs
-CppAD is available from Coin-OR with both the EPL and GPL licenses; see
-the versions link above. There is a separate tarball on the
-Coin-OR download page
-for each version and each license.
-
-## Documentation
-The web documentaition (linked above) is for the most recent version of CppAD.
-The tarballs mentioned above include documention for the corresponding version
-in a `doc` subdirectory.
-
 ## Copyright:
 See the file `authors` in this directory.
-
