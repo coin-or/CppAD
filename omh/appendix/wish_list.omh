@@ -40,26 +40,26 @@ $$
 
 $section The CppAD Wish List$$
 
-$head Changing Parameters$$
+$head Dynamic Parameters$$
 It would be useful to have a means of changing that value of
 some of the $cref/parameters/glossary/Parameter/$$ in an
 $cref ADFun$$ object.
 For example, perhaps
 $codei%
-	Independent(%x%, %p_vector%)
-	Independent(%x%, %abort_op_index%, %p_vector%)
+	Independent(%x%, %dynamic_parameter%)
+	Independent(%x%, %abort_op_index%, %dynamic_parameter%)
 %$$
 Could be used to specify the value of the these parameters
 during taping.
-The $th k$$ component of $icode p_vector$$ could be obtained during
+The $th k$$ component of $icode dynamic_parameter$$ could be used during
 the taping process as
 $codei%
-	get_parameter(%k%)
+	dynamic_parameter(%k%)
 %$$
-After taping, the parameter vector in a function object $icode f$$
+After taping, the dynamic parameter vector in a function object $icode f$$
 could be changed using
 $codei%
-	%f%.set_parameter(%p_vector%)
+	%f%.dynamic_parameter(%dynamic_parameter%)
 %$$
 
 
