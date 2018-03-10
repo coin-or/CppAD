@@ -79,11 +79,12 @@ then
 fi
 # ---------------------------------------------------------------------------
 # Run automated checks for the form bin/check_*.sh with a few exceptions.
+# In addition, run ~bradbell/bin/check_copyright.sh.
 list=`ls bin/check_* | sed \
 	-e '/check_all.sh/d' \
 	-e '/check_jenkins.sh/d' \
 	-e '/check_svn_dist.sh/d'`
-for check in $list
+for check in $list check_copyright.sh
 do
 	echo_log_eval $check
 done
