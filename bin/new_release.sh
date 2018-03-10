@@ -1,6 +1,6 @@
 #! /bin/bash -e
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the
@@ -34,8 +34,8 @@ then
 	exit 1
 fi
 # Make sure version is up to date
-bin/version.sh date > /dev/null
-bin/version.sh copy > /dev/null
+version.sh date > /dev/null
+version.sh copy > /dev/null
 #
 # Make sure no uncommitted changes
 list=`git status -s`
@@ -178,15 +178,15 @@ then
 	exit 1
 fi
 # -----------------------------------------------------------------------------
-check_one=`bin/version.sh get`
+check_one=`version.sh get`
 check_two=`grep "cppad-$stable_version\.$release" doc.omh \
 	| sed -e 's|cppad-\([0-9.]*\):.*|\1|'`
 if [ "$check_one" != "$check_two" ]
 then
 	echo 'bin/new_release.sh: version number is not correct ?'
-	echo "	bin/version.sh set $stable_version.$release"
-	echo '	bin/version.sh copy'
-	echo '	bin/version.sh check'
+	echo "	version.sh set $stable_version.$release"
+	echo '	version.sh copy'
+	echo '	version.sh check'
 	echo 'Then commit the changes.'
 	exit 1
 fi

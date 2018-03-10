@@ -19,6 +19,7 @@
 # 7. Change CPPAD_TESTVECTOR to a template type (see Eigen entry in wishlist).
 # 8. Change : B^n to \B{R}^n and other simuilar uses of B as a space.
 # 9. Change Vector<T> -> <T>Vector for T = Base, Size, Bool (T != Set)
+# 10. Change http://www.coin-or.org/CppAD to new download server.
 # -----------------------------------------------------------------------------
 spell_list='
 '
@@ -29,8 +30,8 @@ move_list='
 move_sed='s|reverse_subgraph|subgraph_reverse|'
 #
 cat << EOF > junk.sed
-/\$escape *\$\\\$/d
-/\$escape *.\$\\\$/d
+s|bin/version.sh|version.sh|
+s|set_version.sh|version.sh|
 EOF
 # -----------------------------------------------------------------------------
 if [ $0 != "bin/batch_edit.sh" ]

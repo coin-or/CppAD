@@ -1,7 +1,6 @@
 #! /bin/bash -e
-# $Id:$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the
@@ -26,7 +25,7 @@ then
 fi
 # --------------------------------------------------------------------------
 # make sure that version is consistent and all changes are checked in
-bin/version.sh check
+version.sh check
 # --------------------------------------------------------------------------
 # make sure repo is up to date
 git_status=`git status -s`
@@ -37,7 +36,7 @@ then
 fi
 # --------------------------------------------------------------------------
 # check that version corresponds to first of a month
-dd=`bin/version.sh get | sed -e 's|......\([0-9][0-9]\)|\1|' `
+dd=`version.sh get | sed -e 's|......\([0-9][0-9]\)|\1|' `
 if [ "$dd" != '01' ]
 then
 	echo 'tag_month.sh: verison does not correspond to first day of a month'
@@ -71,7 +70,7 @@ then
 fi
 # -----------------------------------------------------------------------------
 # If this version has already been tagged, delete the tag
-version=`bin/version.sh get`
+version=`version.sh get`
 if git tag --list | grep "$version"
 then
 	read -p "Delete preious tag for version $version [y/n] ?" response

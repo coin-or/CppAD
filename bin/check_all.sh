@@ -95,7 +95,7 @@ bin/package.sh
 # -----------------------------------------------------------------------------
 # choose which tarball to use for testing
 skip=''
-version=`bin/version.sh get`
+version=`version.sh get`
 echo_log_eval cd build
 list=( `ls cppad-$version.*.tgz` )
 if [ "${#list[@]}" == '1' ]

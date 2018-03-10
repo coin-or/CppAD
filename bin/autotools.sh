@@ -64,7 +64,7 @@ yyyy_mm_dd=`date +%F`
 # Version of cppad that corresponds to today.
 if [ "$version_type" == "trunk" ]
 then
-	version=`bin/version.sh get`
+	version=`version.sh get`
 else
 	version=`grep '^ *AC_INIT(' configure.ac |
 		sed -e 's/[^,]*, *\([^ ,]*\).*/\1/' -e 's|\[||' -e 's|\]||'`
@@ -80,8 +80,8 @@ configure_file_list="
 # change version to current date
 if [ "$1" = "version" ]
 then
-	echo 'bin/version.sh check'
-	bin/version.sh check
+	echo 'version.sh check'
+	version.sh check
 	#
 	echo "OK: bin/autotools.sh version"
 	exit 0

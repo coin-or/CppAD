@@ -55,11 +55,11 @@ else
 fi
 # ----------------------------------------------------------------------------
 # Make sure that version number is the same in all files
-echo_log_eval bin/version.sh check
+echo_log_eval version.sh check
 #
 # Get version number and make sure all copies agree
-version=`bin/version.sh get`
-echo_log_eval bin/version.sh get
+version=`version.sh get`
+echo_log_eval version.sh get
 # ----------------------------------------------------------------------------
 # Create the package directory
 package_dir="build/cppad-$version"

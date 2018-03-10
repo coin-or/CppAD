@@ -1,7 +1,6 @@
 #! /bin/bash -e
-# $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the
@@ -21,7 +20,7 @@ echo_eval() {
 }
 # -----------------------------------------------------------------------------
 # run doxygen
-version=`bin/version.sh get`
+version=`version.sh get`
 error_file='doxygen.err'
 output_directory='doxydoc'
 for name in doxyfile $error_file $output_directory
