@@ -89,12 +89,13 @@ list=`find . \
 	\( -name '*.c'   \) -or \
 	\( -name '*.cpp' \) -or \
 	\( -name '*.hpp' \) -or \
-	\( -name '*.h' \)   -or \
+	\( -name '*.h'   \) -or \
 	\( -name '*.in'  \) -or \
+	\( -name '*.md'  \) -or \
 	\( -name '*.omh' \) -or \
-	\( -name '*.py' \)  -or \
-	\( -name '*.sh' \)  -or \
-	\( -name '*.txt'  \) | sed -e '/\/bin\/version.sh$/d'`
+	\( -name '*.py'  \) -or \
+	\( -name '*.sh'  \) -or \
+	\( -name '*.txt' \) | sed -e '/\/bin\/version.sh$/d'`
 #
 # change back up to work directory (to be safe)
 echo_eval cd ..
