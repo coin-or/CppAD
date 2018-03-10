@@ -94,7 +94,7 @@ list=`find . \
 	\( -name '*.omh' \) -or \
 	\( -name '*.py' \)  -or \
 	\( -name '*.sh' \)  -or \
-	\( -name '*.txt'  \)`
+	\( -name '*.txt'  \) | sed -e '/\/bin\/version.sh$/d'`
 #
 # change back up to work directory (to be safe)
 echo_eval cd ..

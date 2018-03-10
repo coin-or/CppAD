@@ -54,35 +54,12 @@ else
 	exit 1
 fi
 # ----------------------------------------------------------------------------
-## Version number check has been moved to end of git_commit.sh
-##
-## if this is the master, set version to today
-## (This has been moved to git_commit.sh)
-#branch=`git branch | grep '^\*' | sed -e 's|^\* *||'`
-#if [ "$branch" == 'master' ]
-#then
-#	bin/version.sh set
-#fi
-#
-# make sure that version number is the same in all files
+# Make sure that version number is the same in all files
 echo_log_eval bin/version.sh check
 #
 # Get version number and make sure all copies agree
 version=`bin/version.sh get`
 echo_log_eval bin/version.sh get
-# ----------------------------------------------------------------------------
-# Run automated checks for the form bin/check_*.sh with a few exceptions.
-list=`ls bin/check_* | sed \
-	-e '/check_all.sh/d' \
-	-e '/check_jenkins.sh/d' \
-	-e '/check_svn_dist.sh/d'`
-for check in $list
-do
-	echo_log_eval $check
-done
-# ----------------------------------------------------------------------------
-# Check for doxygen errors
-echo_log_eval bin/run_doxygen.sh
 # ----------------------------------------------------------------------------
 # Create the package directory
 package_dir="build/cppad-$version"

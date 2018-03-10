@@ -1,6 +1,6 @@
 #! /bin/bash -e
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the
@@ -77,6 +77,16 @@ if [ -e "$HOME/prefix/cppad" ]
 then
 	echo_log_eval rm -r $HOME/prefix/cppad
 fi
+# ---------------------------------------------------------------------------
+# Run automated checks for the form bin/check_*.sh with a few exceptions.
+list=`ls bin/check_* | sed \
+	-e '/check_all.sh/d' \
+	-e '/check_jenkins.sh/d' \
+	-e '/check_svn_dist.sh/d'`
+for check in $list
+do
+	echo_log_eval $check
+done
 # ---------------------------------------------------------------------------
 # Create package to run test in
 echo "bin/package.sh"

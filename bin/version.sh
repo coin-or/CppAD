@@ -1,133 +1,174 @@
-#! /bin/bash -e
+# ! /bin/bash -e
+# This file was written by Bradley M. Bell and is used by multiple packages.
+# This version has the same license as the other files in this package.
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
-#
-# CppAD is distributed under multiple licenses. This distribution is under
-# the terms of the
-#                     Eclipse Public License Version 1.0.
-#
-# A copy of this license is included in the COPYING file of this distribution.
-# Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
+echo_eval() {
+     echo $*
+     eval $*
+}
 # -----------------------------------------------------------------------------
-if [ $0 != 'bin/version.sh' ]
+# package
+if ! grep '^PROJECT([a-zA-Z_]*)$' CMakeLists.txt > /dev/null
 then
-	echo 'bin/version.sh: must be executed from its parent directory'
+	echo 'Cannot determine package for this directory.'
 	exit 1
+else
+	package=`grep '^PROJECT([a-zA-Z_]*)$' CMakeLists.txt |
+		sed -e 's|PROJECT(||' -e 's|)||'`
 fi
+# -----------------------------------------------------------------------------
+case $package in
+	#
+	cppad)
+	file_list='doc.omh configure.ac'
+	;;
+	#
+	cppad_swig)
+	file_list='doc.omh'
+	;;
+	#
+	cppad_mixed)
+	file_list='doc.omh'
+	;;
+	#
+	dismod_at)
+	file_list='doc.omh bin/setup.py.in'
+	;;
+	#
+	*)
+	echo "version.sh: does not yet reconize the package $package"
+	echo "See $HOME/$package.git/bin/version.sh for how to fix this."
+	exit 1
+	;;
+esac
+# -----------------------------------------------------------------------------
+ok='yes'
 if [ "$1" != 'get' ] \
 && [ "$1" != 'set' ] \
 && [ "$1" != 'date' ] \
 && [ "$1" != 'copy' ] \
 && [ "$1" != 'check' ]
 then
-	echo 'usage: bin/version.sh (get|set|date|copy|check) [version]'
-	echo 'get:   Gets the current version number from CMakeLists.txt.'
-	echo 'set:   Sets CMakeLists.txt version number to [version].'
-	echo 'date:  Sets CMakeLists.txt version number to yyyymmdd.'
-	echo 'copy:  Copy version number from ./CMakeLists.txt to other files.'
-	echo 'check: Checks that version number has been copied.'
-	exit 1
+	ok='no'
 fi
-echo_eval() {
-     echo $*
-     eval $*
-}
-# -----------------------------------------------------------------------------
 if [ "$1" == 'set' ]
 then
-	version="$2"
-fi
-if [ "$1" == 'date' ]
-then
-	version=`date +%Y%m%d`
-fi
-if [ "$1" == 'set' ] || [ "$1" == 'date' ]
-then
-	sed  \
-	-e "s/(\(cppad_version *\)\"[0-9.]\{8\}[0-9.]*\" *)/(\1\"$version\" )/"  \
-		-i.old CMakeLists.txt
-	if diff CMakeLists.txt.old CMakeLists.txt
+	if [ "$2" == '' ]
 	then
-		echo 'No change in CMakeLists.txt'
+		ok='no'
 	fi
-	echo_eval rm CMakeLists.txt.old
-	#
-	echo 'version.sh set: OK'
-	exit 0
+	if [ "$3" != '' ]
+	then
+		ok='no'
+	fi
+else
+	if [ "$2" != '' ]
+	then
+		ok='no'
+	fi
 fi
-# -----------------------------------------------------------------------------
-# get the current version number
-version=`grep '^SET *( *cppad_version ' CMakeLists.txt | \
-	sed -e 's|^SET *( *cppad_version *"\([0-9.]\{8\}[0-9.]*\)" *)|\1|'`
-if ! (echo $version | grep '[0-9]\{8\}') > /dev/null
+if [ "$ok" != 'yes' ]
 then
-	echo 'version.sh: Cannot find verison number in CMakeLists.txt'
+	echo "version.sh $*"
+	echo 'usage: version.sh (get|date|copy|check)'
+	echo '       version.sh set version'
+	echo 'get:   returns date in CMakeLists.txt'
+	echo 'set:   sets version in CMakeLists.txt'
+	echo 'date:  sets version in CMakeLists.txt to current date'
+	echo 'copy:  copies version in CMakeLists.txt to other files'
+	echo 'check: checks that version number has been copied'
 	exit 1
 fi
-if [ "$1" == 'get' ]
+cmd="$1"
+# -----------------------------------------------------------------------------
+# determine version number
+if [ ! -f CMakeLists.txt ]
+then
+	echo 'version.sh: cannot find ./CMakeLists.txt'
+	exit 1
+fi
+cat << EOF > version.$$
+/^SET *( *${package}_version *"[0-9]\{8\}[0-9.]*" *)/! b skip
+s|^SET *( *${package}_version *"\\([0-9]\{8\}[0-9.]*\\)" *)|\1|
+p
+: skip
+EOF
+# version number in CMakeLists.txt
+version=`sed -n -f version.$$ CMakeLists.txt`
+rm version.$$
+if ! (echo $version | grep '[0-9]\{8\}') > /dev/null
+then
+	echo "version.sh: Cannot find ${package}_verison number in CMakeLists.txt"
+	exit 1
+fi
+if [ "$cmd" == 'set' ]
+then
+	# version number on command line
+	version="$2"
+fi
+if [ "$cmd" == 'date' ]
+then
+	# version number corresponding to current date
+	version=`date +%Y%m%d`
+fi
+# -----------------------------------------------------------------------------
+if [ "$cmd" == 'get' ]
 then
 	echo "$version"
 	exit 0
 fi
 # -----------------------------------------------------------------------------
-# copy with version number same as in top level CMakeLists.txt
-sed  \
-	-e "s/(\[cppad\], *\[[0-9]\{8\}[.0-9]*\] *,/([cppad], [$version],/"  \
-	< configure.ac > configure.ac.copy
-#
-sed \
-	-e "s/cppad [0-9]\{8\}[.0-9]*/cppad $version/g" \
-	-e "s/VERSION='[0-9]\{8\}[.0-9]*'/VERSION='$version'/g" \
-	-e "s/configure [0-9]\{8\}[.0-9]*/configure $version/g" \
-	-e "s/config.status [0-9]\{8\}[.0-9]*/config.status $version/g" \
-	-e "s/\$as_me [0-9]\{8\}[.0-9]*/\$as_me $version/g" \
-	-e "s/Generated by GNU Autoconf.*$version/&./" \
-	< configure > configure.copy
-chmod +x configure.copy
-#
-list='
-	omh/install/autotools.omh
-	doc.omh
-'
-for file in $list
+# cases where are are setting the version
+if [ "$cmd" == 'set' ] || [ "$cmd" == 'date' ]
+then
+cat << EOF > version.$$
+s|^SET *( *${package}_version *"[0-9.]*" *)|SET(${package}_version "$version")|
+EOF
+	sed  -i.old CMakeLists.txt -f version.$$
+	rm version.$$
+	if diff CMakeLists.txt.old CMakeLists.txt
+	then
+		echo 'No change to CMakeLists.txt'
+	fi
+	rm CMakeLists.txt.old
+	#
+	echo 'version.sh set: OK'
+	exit 0
+fi
+# -----------------------------------------------------------------------------
+change='no'
+for file in $file_list
 do
-	sed -e "s/cppad-[0-9]\{8\}\(\.[eg]pl\)/cppad-$version\1/" \
-		-e "s/cppad-[0-9]\{8\}[0-9.]*\:/cppad-$version:/" \
-		< $file > $file.copy
-done
-list="
-	$list
-	configure.ac
-	configure
-"
-ok='yes'
-for name in $list
-do
-	if ! diff $name $name.copy > /dev/null
+sed < $file > $file.copy \
+-e "s|$package-[0-9]\\{8\\}[0-9.]*|${package}-$version|" \
+-e "s|version *= *'[0-9]\\{8\\}[0-9.]*'|version = '$version'|" \
+-e "s|AC_INIT(\[cppad\], \[[0-9]\\{8\\}[0-9.]*\]|AC_INIT([cppad], [$version]|"
+	if [ -x "$file" ]
+	then
+		chmod +x $file.copy
+	fi
+	if ! diff $file $file.copy > /dev/null
 	then
 		echo '-------------------------------------------------------------'
-		echo "diff $name"
-		if diff $name $name.copy
+		echo "diff $file"
+		if diff $file $file.copy
 		then
 			echo 'version.sh: program error'
 			exit 1
 		else
-			if [ "$1" == 'copy' ]
+			if [ "$cmd" == 'copy' ]
 			then
-				mv $name.copy $name
-				if [ "$name" == 'configure' ]
-				then
-					chmod +x $name
-				fi
+				mv $file.copy $file
+				change='yes'
 			fi
-			if [ "$1" == 'check' ]
+			if [ "$cmd" == 'check' ]
 			then
 				ok='no'
-				rm $name.copy
+				rm $file.copy
 			fi
 		fi
 	else
-		rm $name.copy
+		rm $file.copy
 	fi
 done
 if [ "$ok" != 'yes' ]
@@ -135,6 +176,16 @@ then
 	echo 'version.sh check: Found differences.'
 	exit 1
 fi
+if [ "$change" == 'yes' ]  && [ "$package" == 'cppad' ]
+then
+	# update files that depend on version number in configure.ac
+	bin/autotools.sh automake
+fi
 # ----------------------------------------------------------------------------
-echo "version.sh $1: OK"
+if [ "$cmd" != 'copy' ] && [ "$cmd" != 'check' ]
+then
+	echo 'version.sh: program error'
+	exit 1
+fi
+echo "version.sh $cmd: OK"
 exit 0

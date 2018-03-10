@@ -27,7 +27,8 @@ list=`git status | sed -n \
         -e '/^[#\t ]*renamed:/p' \
         -e '/^[#\t ]*new file:/p' | \
             sed -e 's/^.*: *//' -e 's/ -> /\n/' | \
-			sed -e '/^makefile.in$/d' \
+			sed -e '/^bin\/version.sh$/d' \
+				-e '/^makefile.in$/d' \
 				-e '/^.gitignore$/d' \
 				-e '/^authors$/d' \
 				-e '/^readme.md$/d' \
