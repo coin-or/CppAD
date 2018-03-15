@@ -489,7 +489,7 @@ This atomic operation can use both set and bool sparsity patterns.
      <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>NearEqual<font color="#990000">;</font>
      <font color="#009900">float</font> eps <font color="#990000">=</font> <font color="#993399">10</font><font color="#990000">.</font>f <font color="#990000">*</font> CppAD<font color="#990000">::</font>numeric_limits<font color="#990000">&lt;</font><font color="#009900">float</font><font color="#990000">&gt;::</font><b><font color="#000000">epsilon</font></b><font color="#990000">();</font></tt></pre>
 <br>
-<b><a name="Use Atomic Function.Constructor" id="Use Atomic Function.Constructor">Constructor</a></b>
+<big><a name="Use Atomic Function.Constructor" id="Use Atomic Function.Constructor">Constructor</a></big>
 
 <pre style='display:inline'><tt>
      <i><font color="#9A1900">// --------------------------------------------------------------------</font></i>
@@ -497,7 +497,7 @@ This atomic operation can use both set and bool sparsity patterns.
      <font color="#008080">atomic_tangent</font> <b><font color="#000000">my_tan</font></b><font color="#990000">(</font><font color="#FF0000">"my_tan"</font><font color="#990000">,</font> <b><font color="#0000FF">false</font></b><font color="#990000">),</font> <b><font color="#000000">my_tanh</font></b><font color="#990000">(</font><font color="#FF0000">"my_tanh"</font><font color="#990000">,</font> <b><font color="#0000FF">true</font></b><font color="#990000">);</font>
 </tt></pre>
 <br>
-<b><a name="Use Atomic Function.Recording" id="Use Atomic Function.Recording">Recording</a></b>
+<big><a name="Use Atomic Function.Recording" id="Use Atomic Function.Recording">Recording</a></big>
 
 <pre><tt>     <i><font color="#9A1900">// domain space vector</font></i>
      <font color="#008080">size_t</font> n  <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font>
@@ -534,7 +534,7 @@ This atomic operation can use both set and bool sparsity patterns.
      CppAD<font color="#990000">::</font><font color="#008080">ADFun&lt;float&gt;</font> F<font color="#990000">;</font>
      F<font color="#990000">.</font><b><font color="#000000">Dependent</font></b><font color="#990000">(</font>ax<font color="#990000">,</font> af<font color="#990000">);</font></tt></pre>
 <br>
-<b><a name="Use Atomic Function.forward" id="Use Atomic Function.forward">forward</a></b>
+<big><a name="Use Atomic Function.forward" id="Use Atomic Function.forward">forward</a></big>
 
 <pre><tt>     <i><font color="#9A1900">// check function value</font></i>
      <font color="#009900">float</font> tan <font color="#990000">=</font> std<font color="#990000">::</font><b><font color="#000000">tan</font></b><font color="#990000">(</font>x0<font color="#990000">);</font>
@@ -554,7 +554,7 @@ This atomic operation can use both set and bool sparsity patterns.
      dx<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">.;</font>
      df    <font color="#990000">=</font> F<font color="#990000">.</font><b><font color="#000000">Forward</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">,</font> dx<font color="#990000">);</font></tt></pre>
 <br>
-<b><a name="Use Atomic Function.reverse" id="Use Atomic Function.reverse">reverse</a></b>
+<big><a name="Use Atomic Function.reverse" id="Use Atomic Function.reverse">reverse</a></big>
 
 <pre><tt>     <i><font color="#9A1900">// compute derivative of tan - tanh using reverse mode</font></i>
      CppAD<font color="#990000">::</font><font color="#008080">vector&lt;float&gt;</font> <b><font color="#000000">w</font></b><font color="#990000">(</font>m<font color="#990000">),</font> <b><font color="#000000">dw</font></b><font color="#990000">(</font>n<font color="#990000">);</font>
@@ -592,7 +592,7 @@ This atomic operation can use both set and bool sparsity patterns.
      ok   <font color="#990000">&amp;=</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>ddw<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">],</font> w<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]*</font>tanp  <font color="#990000">+</font> w<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]*</font>tanhp <font color="#990000">,</font> eps<font color="#990000">,</font> eps<font color="#990000">);</font>
      ok   <font color="#990000">&amp;=</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>ddw<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">],</font> w<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]*</font>tanpp <font color="#990000">+</font> w<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]*</font>tanhpp<font color="#990000">,</font> eps<font color="#990000">,</font> eps<font color="#990000">);</font></tt></pre>
 <br>
-<b><a name="Use Atomic Function.for_sparse_jac" id="Use Atomic Function.for_sparse_jac">for_sparse_jac</a></b>
+<big><a name="Use Atomic Function.for_sparse_jac" id="Use Atomic Function.for_sparse_jac">for_sparse_jac</a></big>
 
 <pre><tt>     <i><font color="#9A1900">// Forward mode computation of sparsity pattern for F.</font></i>
      <font color="#008080">size_t</font> p <font color="#990000">=</font> n<font color="#990000">;</font>
@@ -604,7 +604,7 @@ This atomic operation can use both set and bool sparsity patterns.
      ok  <font color="#990000">&amp;=</font> <font color="#990000">(</font>s1<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">==</font> <b><font color="#0000FF">true</font></b><font color="#990000">);</font>  <i><font color="#9A1900">// f[1] depends on x[0]</font></i>
      ok  <font color="#990000">&amp;=</font> <font color="#990000">(</font>s1<font color="#990000">[</font><font color="#993399">2</font><font color="#990000">]</font> <font color="#990000">==</font> <b><font color="#0000FF">false</font></b><font color="#990000">);</font> <i><font color="#9A1900">// f[2] does not depend on x[0]</font></i></tt></pre>
 <br>
-<b><a name="Use Atomic Function.rev_sparse_jac" id="Use Atomic Function.rev_sparse_jac">rev_sparse_jac</a></b>
+<big><a name="Use Atomic Function.rev_sparse_jac" id="Use Atomic Function.rev_sparse_jac">rev_sparse_jac</a></big>
 
 <pre><tt>     <i><font color="#9A1900">// Reverse mode computation of sparsity pattern for F.</font></i>
      <font color="#008080">size_t</font> q <font color="#990000">=</font> m<font color="#990000">;</font>
@@ -620,7 +620,7 @@ This atomic operation can use both set and bool sparsity patterns.
      ok  <font color="#990000">&amp;=</font> <font color="#990000">(</font>r2<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">==</font> <b><font color="#0000FF">true</font></b><font color="#990000">);</font>  <i><font color="#9A1900">// f[1] depends on x[0]</font></i>
      ok  <font color="#990000">&amp;=</font> <font color="#990000">(</font>r2<font color="#990000">[</font><font color="#993399">2</font><font color="#990000">]</font> <font color="#990000">==</font> <b><font color="#0000FF">false</font></b><font color="#990000">);</font> <i><font color="#9A1900">// f[2] does not depend on x[0]</font></i></tt></pre>
 <br>
-<b><a name="Use Atomic Function.rev_sparse_hes" id="Use Atomic Function.rev_sparse_hes">rev_sparse_hes</a></b>
+<big><a name="Use Atomic Function.rev_sparse_hes" id="Use Atomic Function.rev_sparse_hes">rev_sparse_hes</a></big>
 
 <pre><tt>     <i><font color="#9A1900">// Hessian sparsity for f[0]</font></i>
      CppAD<font color="#990000">::</font><font color="#008080">vectorBool</font> <b><font color="#000000">s3</font></b><font color="#990000">(</font>m<font color="#990000">),</font> <b><font color="#000000">h</font></b><font color="#990000">(</font>p <font color="#990000">*</font> n<font color="#990000">);</font>
@@ -636,7 +636,7 @@ This atomic operation can use both set and bool sparsity patterns.
      h    <font color="#990000">=</font> F<font color="#990000">.</font><b><font color="#000000">RevSparseHes</font></b><font color="#990000">(</font>p<font color="#990000">,</font> s3<font color="#990000">);</font>
      ok  <font color="#990000">&amp;=</font> <font color="#990000">(</font>h<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">==</font> <b><font color="#0000FF">false</font></b><font color="#990000">);</font>  <i><font color="#9A1900">// Hessian is zero</font></i></tt></pre>
 <br>
-<b><a name="Use Atomic Function.Large x Values" id="Use Atomic Function.Large x Values">Large x Values</a></b>
+<big><a name="Use Atomic Function.Large x Values" id="Use Atomic Function.Large x Values">Large x Values</a></big>
 
 <pre><tt>     <i><font color="#9A1900">// check tanh results for a large value of x</font></i>
      x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font>  <font color="#990000">=</font> std<font color="#990000">::</font>numeric_limits<font color="#990000">&lt;</font><font color="#009900">float</font><font color="#990000">&gt;::</font><b><font color="#000000">max</font></b><font color="#990000">()</font> <font color="#990000">/</font> two<font color="#990000">;</font>

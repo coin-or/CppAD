@@ -160,7 +160,7 @@ which defines matrix multiply as a <a href="atomic_base.htm" target="_top"><span
      <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">;</font>
      <font color="#008080">size_t</font> i<font color="#990000">,</font> j<font color="#990000">;</font></tt></pre>
 <br>
-<b><a name="Use Atomic Function.Constructor" id="Use Atomic Function.Constructor">Constructor</a></b>
+<big><a name="Use Atomic Function.Constructor" id="Use Atomic Function.Constructor">Constructor</a></big>
 
 <pre style='display:inline'><tt>
      <i><font color="#9A1900">// -------------------------------------------------------------------</font></i>
@@ -168,7 +168,7 @@ which defines matrix multiply as a <a href="atomic_base.htm" target="_top"><span
      <font color="#008080">atomic_mat_mul</font> afun<font color="#990000">;</font>
 </tt></pre>
 <br>
-<b><a name="Use Atomic Function.Recording" id="Use Atomic Function.Recording">Recording</a></b>
+<big><a name="Use Atomic Function.Recording" id="Use Atomic Function.Recording">Recording</a></big>
 
 <pre><tt>     <i><font color="#9A1900">// start recording with four independent varables</font></i>
      <font color="#008080">size_t</font> n <font color="#990000">=</font> <font color="#993399">4</font><font color="#990000">;</font>
@@ -218,7 +218,7 @@ which defines matrix multiply as a <a href="atomic_base.htm" target="_top"><span
      <i><font color="#9A1900">// g(x) = [ x0*x2 + x1*x3 , x0*7 + x1*8 , 5*x2  + 6*x3  , 5*7 + 6*8 ]^T</font></i>
      CppAD<font color="#990000">::</font><font color="#008080">ADFun&lt;double&gt;</font> <b><font color="#000000">g</font></b><font color="#990000">(</font>ax<font color="#990000">,</font> atom_y<font color="#990000">);</font></tt></pre>
 <br>
-<b><a name="Use Atomic Function.forward" id="Use Atomic Function.forward">forward</a></b>
+<big><a name="Use Atomic Function.forward" id="Use Atomic Function.forward">forward</a></big>
 
 <pre><tt>     <i><font color="#9A1900">// Test zero order forward mode evaluation of g(x)</font></i>
      <font color="#008080">size_t</font> m <font color="#990000">=</font> atom_y<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">();</font>
@@ -265,7 +265,7 @@ which defines matrix multiply as a <a href="atomic_base.htm" target="_top"><span
      ok <font color="#990000">&amp;=</font> ddy<font color="#990000">[</font><font color="#993399">2</font><font color="#990000">]</font> <font color="#990000">==</font> <font color="#993399">0</font><font color="#990000">.;</font>
      ok <font color="#990000">&amp;=</font> ddy<font color="#990000">[</font><font color="#993399">3</font><font color="#990000">]</font> <font color="#990000">==</font> <font color="#993399">0</font><font color="#990000">.;</font></tt></pre>
 <br>
-<b><a name="Use Atomic Function.reverse" id="Use Atomic Function.reverse">reverse</a></b>
+<big><a name="Use Atomic Function.reverse" id="Use Atomic Function.reverse">reverse</a></big>
 
 <pre><tt>     <i><font color="#9A1900">// Test second order reverse mode</font></i>
      CppAD<font color="#990000">::</font><font color="#008080">vector&lt;double&gt;</font> <b><font color="#000000">w</font></b><font color="#990000">(</font>m<font color="#990000">),</font> <b><font color="#000000">dw</font></b><font color="#990000">(</font><font color="#993399">2</font> <font color="#990000">*</font> n<font color="#990000">);</font>
@@ -287,7 +287,7 @@ which defines matrix multiply as a <a href="atomic_base.htm" target="_top"><span
      ok <font color="#990000">&amp;=</font> dw<font color="#990000">[</font><font color="#993399">2</font><font color="#990000">*</font><font color="#993399">2</font> <font color="#990000">+</font> <font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">==</font> <font color="#993399">1</font><font color="#990000">.;</font>
      ok <font color="#990000">&amp;=</font> dw<font color="#990000">[</font><font color="#993399">3</font><font color="#990000">*</font><font color="#993399">2</font> <font color="#990000">+</font> <font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">==</font> <font color="#993399">2</font><font color="#990000">.;</font></tt></pre>
 <br>
-<b><a name="Use Atomic Function.option" id="Use Atomic Function.option">option</a></b>
+<big><a name="Use Atomic Function.option" id="Use Atomic Function.option">option</a></big>
 
 <pre><tt>     <i><font color="#9A1900">//----------------------------------------------------------------------</font></i>
      <i><font color="#9A1900">// Test both the boolean and set sparsity at the atomic level</font></i>
@@ -296,7 +296,7 @@ which defines matrix multiply as a <a href="atomic_base.htm" target="_top"><span
                afun<font color="#990000">.</font><b><font color="#000000">option</font></b><font color="#990000">(</font> CppAD<font color="#990000">::</font>atomic_base<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;::</font>bool_sparsity_enum <font color="#990000">);</font>
           <b><font color="#0000FF">else</font></b> afun<font color="#990000">.</font><b><font color="#000000">option</font></b><font color="#990000">(</font> CppAD<font color="#990000">::</font>atomic_base<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;::</font>set_sparsity_enum <font color="#990000">);</font></tt></pre>
 <br>
-<b><a name="Use Atomic Function.for_sparse_jac" id="Use Atomic Function.for_sparse_jac">for_sparse_jac</a></b>
+<big><a name="Use Atomic Function.for_sparse_jac" id="Use Atomic Function.for_sparse_jac">for_sparse_jac</a></big>
 
 <pre><tt>     <i><font color="#9A1900">// Test forward Jacobian sparsity pattern</font></i>
      <i><font color="#9A1900">/*</font></i>
@@ -328,7 +328,7 @@ which defines matrix multiply as a <a href="atomic_base.htm" target="_top"><span
      <i><font color="#9A1900">// s[3] == {}</font></i>
      ok <font color="#990000">&amp;=</font> s<font color="#990000">[</font><font color="#993399">3</font><font color="#990000">].</font><b><font color="#000000">empty</font></b><font color="#990000">();</font></tt></pre>
 <br>
-<b><a name="Use Atomic Function.rev_sparse_jac" id="Use Atomic Function.rev_sparse_jac">rev_sparse_jac</a></b>
+<big><a name="Use Atomic Function.rev_sparse_jac" id="Use Atomic Function.rev_sparse_jac">rev_sparse_jac</a></big>
 
 <pre><tt>     <i><font color="#9A1900">// Test reverse Jacobian sparsity pattern</font></i>
      <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font>  m<font color="#990000">;</font> i<font color="#990000">++)</font>
@@ -351,7 +351,7 @@ which defines matrix multiply as a <a href="atomic_base.htm" target="_top"><span
      <i><font color="#9A1900">// r[3] == {}</font></i>
      ok <font color="#990000">&amp;=</font> r<font color="#990000">[</font><font color="#993399">3</font><font color="#990000">].</font><b><font color="#000000">empty</font></b><font color="#990000">();</font></tt></pre>
 <br>
-<b><a name="Use Atomic Function.rev_sparse_hes" id="Use Atomic Function.rev_sparse_hes">rev_sparse_hes</a></b>
+<big><a name="Use Atomic Function.rev_sparse_hes" id="Use Atomic Function.rev_sparse_hes">rev_sparse_hes</a></big>
 
 <pre><tt>     <i><font color="#9A1900">/* Test reverse Hessian sparsity pattern</font></i>
 <i><font color="#9A1900">     g_0^2 (x) = [ 0, 0, 1, 0 ] and for i &gt; 0, g_i^2 = 0</font></i>

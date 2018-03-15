@@ -155,7 +155,7 @@ so it can be different for different calls to the atomic function.
 
 <br>
 <br>
-<b><a name="Theory.Forward" id="Theory.Forward">Forward</a></b>
+<big><a name="Theory.Forward" id="Theory.Forward">Forward</a></big>
 <br>
 The zero order forward mode Taylor coefficient is give by
 <small>@[@
@@ -199,7 +199,7 @@ R_k
 
 <br>
 <br>
-<b><a name="Theory.Product of Three Matrices" id="Theory.Product of Three Matrices">Product of Three Matrices</a></b>
+<big><a name="Theory.Product of Three Matrices" id="Theory.Product of Three Matrices">Product of Three Matrices</a></big>
 <br>
 Suppose <small>@(@
 \bar{E}
@@ -262,7 +262,7 @@ It follows that
 
 <br>
 <br>
-<b><a name="Theory.Reverse" id="Theory.Reverse">Reverse</a></b>
+<big><a name="Theory.Reverse" id="Theory.Reverse">Reverse</a></big>
 <br>
 For <small>@(@
 k > 0
@@ -350,7 +350,7 @@ R_0
 
 <br>
 <br>
-<b><a name="Public.Types" id="Public.Types">Types</a></b>
+<big><a name="Public.Types" id="Public.Types">Types</a></big>
 
 <pre><tt><b><font color="#0000FF">namespace</font></b> <font color="#FF0000">{</font> <i><font color="#9A1900">// BEGIN_EMPTY_NAMESPACE</font></i>
 
@@ -369,7 +369,7 @@ R_0
      <b><font color="#0000FF">typedef</font></b> Eigen<font color="#990000">::</font>Matrix<font color="#990000">&lt;</font>
           ad_scalar<font color="#990000">,</font> Eigen<font color="#990000">::</font>Dynamic<font color="#990000">,</font> Eigen<font color="#990000">::</font>Dynamic<font color="#990000">,</font> Eigen<font color="#990000">::</font>RowMajor <font color="#990000">&gt;</font> ad_matrix<font color="#990000">;</font></tt></pre>
 <br>
-<b><a name="Public.Constructor" id="Public.Constructor">Constructor</a></b>
+<big><a name="Public.Constructor" id="Public.Constructor">Constructor</a></big>
 
 <pre><tt>     <i><font color="#9A1900">// constructor</font></i>
      <b><font color="#000000">atomic_eigen_mat_inv</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font> <font color="#990000">:</font> CppAD<font color="#990000">::</font>atomic_base<font color="#990000">&lt;</font>Base<font color="#990000">&gt;(</font>
@@ -378,7 +378,7 @@ R_0
      <font color="#990000">)</font>
      <font color="#FF0000">{</font> <font color="#FF0000">}</font></tt></pre>
 <br>
-<b><a name="Public.op" id="Public.op">op</a></b>
+<big><a name="Public.op" id="Public.op">op</a></big>
 
 <pre><tt>     <i><font color="#9A1900">// use atomic operation to invert an AD matrix</font></i>
      <font color="#008080">ad_matrix</font> <b><font color="#000000">op</font></b><font color="#990000">(</font><b><font color="#0000FF">const</font></b> ad_matrix<font color="#990000">&amp;</font> arg<font color="#990000">)</font>
@@ -411,7 +411,7 @@ R_0
 
 <br>
 <br>
-<b><a name="Private.Variables" id="Private.Variables">Variables</a></b>
+<big><a name="Private.Variables" id="Private.Variables">Variables</a></big>
 
 <pre><tt><b><font color="#0000FF">private</font></b><font color="#990000">:</font>
      <i><font color="#9A1900">// -------------------------------------------------------------</font></i>
@@ -421,7 +421,7 @@ R_0
      CppAD<font color="#990000">::</font><font color="#008080">vector&lt;matrix&gt;</font> r_arg_<font color="#990000">,</font> r_result_<font color="#990000">;</font>
      <i><font color="#9A1900">// -------------------------------------------------------------</font></i></tt></pre>
 <br>
-<b><a name="Private.forward" id="Private.forward">forward</a></b>
+<big><a name="Private.forward" id="Private.forward">forward</a></big>
 
 <pre><tt>     <i><font color="#9A1900">// forward mode routine called by CppAD</font></i>
      <b><font color="#0000FF">virtual</font></b> <font color="#009900">bool</font> <b><font color="#000000">forward</font></b><font color="#990000">(</font>
@@ -503,7 +503,7 @@ R_0
           <b><font color="#0000FF">return</font></b> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
      <font color="#FF0000">}</font></tt></pre>
 <br>
-<b><a name="Private.reverse" id="Private.reverse">reverse</a></b>
+<big><a name="Private.reverse" id="Private.reverse">reverse</a></big>
 
 <pre><tt>     <i><font color="#9A1900">// reverse mode routine called by CppAD</font></i>
      <b><font color="#0000FF">virtual</font></b> <font color="#009900">bool</font> <b><font color="#000000">reverse</font></b><font color="#990000">(</font>

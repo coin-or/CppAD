@@ -150,7 +150,7 @@ A \in \B{R}^{p \times p}
 
 <br>
 <br>
-<b><a name="Public.Types" id="Public.Types">Types</a></b>
+<big><a name="Public.Types" id="Public.Types">Types</a></big>
 
 <pre><tt><b><font color="#0000FF">namespace</font></b> <font color="#FF0000">{</font> <i><font color="#9A1900">// BEGIN_EMPTY_NAMESPACE</font></i>
 
@@ -173,7 +173,7 @@ A \in \B{R}^{p \times p}
      <i><font color="#9A1900">// lower triangular scalar matrix</font></i>
      <b><font color="#0000FF">typedef</font></b> Eigen<font color="#990000">::</font><font color="#008080">TriangularView&lt;matrix, Eigen::Lower&gt;</font>             lower_view<font color="#990000">;</font></tt></pre>
 <br>
-<b><a name="Public.Constructor" id="Public.Constructor">Constructor</a></b>
+<big><a name="Public.Constructor" id="Public.Constructor">Constructor</a></big>
 
 <pre><tt>     <i><font color="#9A1900">// constructor</font></i>
      <b><font color="#000000">atomic_eigen_cholesky</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font> <font color="#990000">:</font> CppAD<font color="#990000">::</font>atomic_base<font color="#990000">&lt;</font>Base<font color="#990000">&gt;(</font>
@@ -182,7 +182,7 @@ A \in \B{R}^{p \times p}
      <font color="#990000">)</font>
      <font color="#FF0000">{</font> <font color="#FF0000">}</font></tt></pre>
 <br>
-<b><a name="Public.op" id="Public.op">op</a></b>
+<big><a name="Public.op" id="Public.op">op</a></big>
 
 <pre><tt>     <i><font color="#9A1900">// use atomic operation to invert an AD matrix</font></i>
      <font color="#008080">ad_matrix</font> <b><font color="#000000">op</font></b><font color="#990000">(</font><b><font color="#0000FF">const</font></b> ad_matrix<font color="#990000">&amp;</font> arg<font color="#990000">)</font>
@@ -223,7 +223,7 @@ A \in \B{R}^{p \times p}
 
 <br>
 <br>
-<b><a name="Private.Variables" id="Private.Variables">Variables</a></b>
+<big><a name="Private.Variables" id="Private.Variables">Variables</a></big>
 
 <pre><tt><b><font color="#0000FF">private</font></b><font color="#990000">:</font>
      <i><font color="#9A1900">// -------------------------------------------------------------</font></i>
@@ -233,7 +233,7 @@ A \in \B{R}^{p \times p}
      CppAD<font color="#990000">::</font><font color="#008080">vector&lt;matrix&gt;</font> r_arg_<font color="#990000">,</font> r_result_<font color="#990000">;</font>
      <i><font color="#9A1900">// -------------------------------------------------------------</font></i></tt></pre>
 <br>
-<b><a name="Private.forward" id="Private.forward">forward</a></b>
+<big><a name="Private.forward" id="Private.forward">forward</a></big>
 
 <pre><tt>     <i><font color="#9A1900">// forward mode routine called by CppAD</font></i>
      <b><font color="#0000FF">virtual</font></b> <font color="#009900">bool</font> <b><font color="#000000">forward</font></b><font color="#990000">(</font>
@@ -336,7 +336,7 @@ A \in \B{R}^{p \times p}
           <b><font color="#0000FF">return</font></b> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
      <font color="#FF0000">}</font></tt></pre>
 <br>
-<b><a name="Private.reverse" id="Private.reverse">reverse</a></b>
+<big><a name="Private.reverse" id="Private.reverse">reverse</a></big>
 
 <pre><tt>     <i><font color="#9A1900">// reverse mode routine called by CppAD</font></i>
      <b><font color="#0000FF">virtual</font></b> <font color="#009900">bool</font> <b><font color="#000000">reverse</font></b><font color="#990000">(</font>

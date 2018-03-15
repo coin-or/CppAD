@@ -371,14 +371,14 @@ This example only uses set sparsity patterns.
      <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>NearEqual<font color="#990000">;</font>
      <font color="#009900">double</font> eps <font color="#990000">=</font> <font color="#993399">10</font><font color="#990000">.</font> <font color="#990000">*</font> std<font color="#990000">::</font>numeric_limits<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;::</font><b><font color="#000000">epsilon</font></b><font color="#990000">();</font></tt></pre>
 <br>
-<b><a name="Test Atomic Function.Constructor" id="Test Atomic Function.Constructor">Constructor</a></b>
+<big><a name="Test Atomic Function.Constructor" id="Test Atomic Function.Constructor">Constructor</a></big>
 
 <pre style='display:inline'><tt>
      <i><font color="#9A1900">// Create the atomic get_started object</font></i>
      <font color="#008080">atomic_set_sparsity</font> <b><font color="#000000">afun</font></b><font color="#990000">(</font><font color="#FF0000">"atomic_set_sparsity"</font><font color="#990000">);</font>
 </tt></pre>
 <br>
-<b><a name="Test Atomic Function.Recording" id="Test Atomic Function.Recording">Recording</a></b>
+<big><a name="Test Atomic Function.Recording" id="Test Atomic Function.Recording">Recording</a></big>
 
 <pre><tt>     <font color="#008080">size_t</font> n <font color="#990000">=</font> <font color="#993399">3</font><font color="#990000">;</font>
      <font color="#008080">size_t</font> m <font color="#990000">=</font> <font color="#993399">2</font><font color="#990000">;</font>
@@ -400,7 +400,7 @@ This example only uses set sparsity patterns.
      ok <font color="#990000">&amp;=</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>ay<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">,</font> ax<font color="#990000">[</font><font color="#993399">2</font><font color="#990000">],</font>  eps<font color="#990000">,</font> eps<font color="#990000">);</font>
      ok <font color="#990000">&amp;=</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>ay<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">,</font> ax<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">*</font> ax<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">],</font>  eps<font color="#990000">,</font> eps<font color="#990000">);</font>
 </tt></pre>
-<b><a name="Test Atomic Function.for_sparse_jac" id="Test Atomic Function.for_sparse_jac">for_sparse_jac</a></b>
+<big><a name="Test Atomic Function.for_sparse_jac" id="Test Atomic Function.for_sparse_jac">for_sparse_jac</a></big>
 
 <pre><tt>     <i><font color="#9A1900">// correct Jacobian result</font></i>
      <font color="#008080">set_vector</font> <b><font color="#000000">check_s</font></b><font color="#990000">(</font>m<font color="#990000">);</font>
@@ -416,7 +416,7 @@ This example only uses set sparsity patterns.
                ok <font color="#990000">&amp;=</font> s<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">==</font> check_s<font color="#990000">[</font>i<font color="#990000">];</font>
      <font color="#FF0000">}</font></tt></pre>
 <br>
-<b><a name="Test Atomic Function.rev_sparse_jac" id="Test Atomic Function.rev_sparse_jac">rev_sparse_jac</a></b>
+<big><a name="Test Atomic Function.rev_sparse_jac" id="Test Atomic Function.rev_sparse_jac">rev_sparse_jac</a></big>
 
 <pre><tt>     <i><font color="#9A1900">// compute and test reverse mode</font></i>
      <font color="#FF0000">{</font>    <font color="#008080">set_vector</font> <b><font color="#000000">r</font></b><font color="#990000">(</font>m<font color="#990000">),</font> <b><font color="#000000">s</font></b><font color="#990000">(</font>m<font color="#990000">);</font>
@@ -427,7 +427,7 @@ This example only uses set sparsity patterns.
                ok <font color="#990000">&amp;=</font> s<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">==</font> check_s<font color="#990000">[</font>i<font color="#990000">];</font>
      <font color="#FF0000">}</font></tt></pre>
 <br>
-<b><a name="Test Atomic Function.for_sparse_hes" id="Test Atomic Function.for_sparse_hes">for_sparse_hes</a></b>
+<big><a name="Test Atomic Function.for_sparse_hes" id="Test Atomic Function.for_sparse_hes">for_sparse_hes</a></big>
 
 <pre><tt>     <i><font color="#9A1900">// correct Hessian result</font></i>
      <font color="#008080">set_vector</font> <b><font color="#000000">check_h</font></b><font color="#990000">(</font>n<font color="#990000">);</font>
@@ -444,7 +444,7 @@ This example only uses set sparsity patterns.
                ok <font color="#990000">&amp;=</font> h<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">==</font> check_h<font color="#990000">[</font>i<font color="#990000">];</font>
      <font color="#FF0000">}</font></tt></pre>
 <br>
-<b><a name="Test Atomic Function.rev_sparse_hes" id="Test Atomic Function.rev_sparse_hes">rev_sparse_hes</a></b>
+<big><a name="Test Atomic Function.rev_sparse_hes" id="Test Atomic Function.rev_sparse_hes">rev_sparse_hes</a></big>
 <br>
 Note the previous call to <code><font color="blue">ForSparseJac</font></code> above
 stored its results in 
@@ -459,7 +459,7 @@ stored its results in
                ok <font color="#990000">&amp;=</font> h<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">==</font> check_h<font color="#990000">[</font>i<font color="#990000">];</font>
      <font color="#FF0000">}</font></tt></pre>
 <br>
-<b><a name="Test Atomic Function.Test Result" id="Test Atomic Function.Test Result">Test Result</a></b>
+<big><a name="Test Atomic Function.Test Result" id="Test Atomic Function.Test Result">Test Result</a></big>
 
 <pre style='display:inline'><tt>
      <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
