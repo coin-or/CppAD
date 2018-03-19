@@ -36,40 +36,57 @@ $spell
 	hes
 	Mp
 	op
+	bool
+	vec
 $$
 
 $section The CppAD Wish List$$
 
 $head Dynamic Parameters$$
-It would be useful to have a means of changing that value of
+It would be useful to have a means of changing the value of
 some of the $cref/parameters/glossary/Parameter/$$ in an
 $cref ADFun$$ object.
 $list number$$
 Perhaps
 $codei%
-	Independent(%x%, %abort_op_index%, %dynamic_parameter%)
+	Independent(%x%, %abort_op_index%, %dynamic_par_vec%)
 %$$
-Could be used to specify these parameters during taping.
+could be used to specify the independent dynamic parameters during taping.
 Note that $icode abort_op_index$$ equal to zero does not abort on any
 operation index.
 $lnext
 All operations that use dynamic parameters need to be taped.
 If the other operand is a parameter (variable),
-the result would be a dynamic parameter (variable).
+the result is a dynamic parameter (variable).
+$lnext
+We could add an extra field to $code%AD<%Base%>%$$,
+(e.g., $code dynamic_id_$$ )
+that identifies the index of a dynamic parameter in the parameter vector.
+If this index is zero, or the tape_id is does not correspond to this thread,
+it is not a dynamic parameter.
 $lnext
 After creating an $cref ADFun$$ object,
-the value corresponding to the dynamic parameters
-in the corresponding $code Independent$$ call could be changed using
+the value corresponding to the independent dynamic parameters
+could be changed using
 $codei%
-	%f%.dynamic_parameter(%dynamic_parameter%)
+	%f%.dynamic_parameter(%dynamic_par_vec%)
 %$$
 $lnext
-The initial dynamic parameters could correspond to the initial parameters
-in the tape.
-When these parameters changed, a special forward pass on the parameter
-operations would change the value in the player for the dynamic parameters.
+A function would be added to detect a dynamic parameter; i.e.,
+$codei%
+	Dynamic(%x%)
+%$$
+where $icode x$$ has type $codei%AD<%Base>%$$ and the result is a $code bool$$.
+The detection could be similar to variables; i.e.,
+right tape id and dynamic id is not zero.
 $lnext
-The identical functions would need to be changed so that dynamic
+The independent dynamic parameters could correspond to the initial parameters
+in the tape (possibly excluding the parameter with index zero).
+When the independent dynamic parameters change, a special forward pass
+on the dynamic parameter operations would set the value for all
+the other dynamic parameters in the tape.
+$lnext
+The identical functions need to be changed so that dynamic
 parameters were never be identically equal other values.
 $lend
 
