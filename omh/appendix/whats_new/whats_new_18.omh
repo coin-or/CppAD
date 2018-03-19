@@ -20,6 +20,11 @@ $$
 
 $section Changes and Additions to CppAD During 2018$$
 
+$head 03-19$$
+Add more detail to the
+$cref/dynamic parameters/wish_list/Dynamic Parameters/$$
+whish list item.
+
 $head 03-04$$
 The $code example/abs_normal$$ directory was missing from the
 $cref/example/directory/Example Directory/$$ sub-directory list.
