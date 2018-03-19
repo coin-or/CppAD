@@ -44,23 +44,34 @@ $head Dynamic Parameters$$
 It would be useful to have a means of changing that value of
 some of the $cref/parameters/glossary/Parameter/$$ in an
 $cref ADFun$$ object.
-For example, perhaps
+$list number$$
+Perhaps
 $codei%
-	Independent(%x%, %dynamic_parameter%)
 	Independent(%x%, %abort_op_index%, %dynamic_parameter%)
 %$$
-Could be used to specify the value of the these parameters
-during taping.
-The $th k$$ component of $icode dynamic_parameter$$ could be used during
-the taping process as
-$codei%
-	dynamic_parameter(%k%)
-%$$
-After taping, the dynamic parameter vector in a function object $icode f$$
-could be changed using
+Could be used to specify these parameters during taping.
+Note that $icode abort_op_index$$ equal to zero does not abort on any
+operation index.
+$lnext
+All operations that use dynamic parameters need to be taped.
+If the other operand is a parameter (variable),
+the result would be a dynamic parameter (variable).
+$lnext
+After creating an $cref ADFun$$ object,
+the value corresponding to the dynamic parameters
+in the corresponding $code Independent$$ call could be changed using
 $codei%
 	%f%.dynamic_parameter(%dynamic_parameter%)
 %$$
+$lnext
+The initial dynamic parameters could correspond to the initial parameters
+in the tape.
+When these parameters changed, a special forward pass on the parameter
+operations would change the value in the player for the dynamic parameters.
+$lnext
+The identical functions would need to be changed so that dynamic
+parameters were never be identically equal other values.
+$lend
 
 
 $head Multi-Threading$$
