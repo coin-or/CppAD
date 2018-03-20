@@ -20,6 +20,10 @@ $$
 
 $section Changes and Additions to CppAD During 2018$$
 
+$head 03-20$$
+Fix bug in $cref optimize$$ and $cref subgraph_sparsity$$
+when using C++11 $cref erf$$ function.
+
 $head 03-19$$
 Add more detail to the
 $cref/dynamic parameters/wish_list/Dynamic Parameters/$$

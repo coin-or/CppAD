@@ -2,7 +2,7 @@
 # define CPPAD_LOCAL_OP_CODE_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -1009,9 +1009,9 @@ inline size_t arg_is_variable(
 
 		case ErfOp:
 		CPPAD_ASSERT_UNKNOWN( NumArg(op) == 3 );
-		is_variable[0] = false; // parameter index corresponding to zero
-		is_variable[1] = false; // parameter index corresponding to one
-		is_variable[2] = true;
+		is_variable[0] = true;
+		is_variable[1] = false; // parameter index corresponding to zero
+		is_variable[2] = false; // parameter index corresponding to one
 		break;
 
 		// --------------------------------------------------------------------
