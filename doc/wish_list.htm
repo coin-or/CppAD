@@ -132,35 +132,73 @@ A:active { color : purple }
 <br>
 <b><big><a name="Dynamic Parameters" id="Dynamic Parameters">Dynamic Parameters</a></big></b>
 <br>
-It would be useful to have a means of changing that value of
+It would be useful to have a means of changing the value of
 some of the <a href="glossary.htm#Parameter" target="_top"><span style='white-space: nowrap'>parameters</span></a>
  in an
 <a href="adfun.htm" target="_top"><span style='white-space: nowrap'>ADFun</span></a>
  object.
-For example, perhaps
+<ol type="1"><li>
+Perhaps
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Independent(</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>dynamic_parameter</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Independent(</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>abort_op_index</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>dynamic_parameter</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Independent(</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>abort_op_index</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>dynamic_par_vec</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
 </span></font></code>
-Could be used to specify the value of the these parameters
-during taping.
-The <code><i>k</i></code>-th component of 
-<code><i><font color="black"><span style='white-space: nowrap'>dynamic_parameter</span></font></i></code>
- could be used during
-the taping process as
+could be used to specify the independent dynamic parameters during taping.
+Note that 
+<code><i><font color="black"><span style='white-space: nowrap'>abort_op_index</span></font></i></code>
+ equal to zero does not abort on any
+operation index.
+</li><li>
 
-<code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dynamic_parameter(</span></font><i><font color="black"><span style='white-space: nowrap'>k</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
-</span></font></code>
-After taping, the dynamic parameter vector in a function object 
-<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+All operations that use dynamic parameters need to be taped.
+If the other operand is a parameter (variable),
+the result is a dynamic parameter (variable).
+</li><li>
 
+We could add an extra field to <code><font color="blue">%AD&lt;%Base%&gt;%</font></code>,
+(e.g., <code><font color="blue">dynamic_id_</font></code> )
+that identifies the index of a dynamic parameter in the parameter vector.
+If this index is zero, or the tape_id is does not correspond to this thread,
+it is not a dynamic parameter.
+</li><li>
+
+After creating an <a href="adfun.htm" target="_top"><span style='white-space: nowrap'>ADFun</span></a>
+ object,
+the value corresponding to the independent dynamic parameters
 could be changed using
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.dynamic_parameter(</span></font><i><font color="black"><span style='white-space: nowrap'>dynamic_parameter</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.dynamic_parameter(</span></font><i><font color="black"><span style='white-space: nowrap'>dynamic_par_vec</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
 </span></font></code>
+</li><li>
+A function would be added to detect a dynamic parameter; i.e.,
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Dynamic(</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+where 
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+ has type 
+<code><font color="blue"><span style='white-space: nowrap'>AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base&gt;</span></font></i></code>
+ and the result is a <code><font color="blue">bool</font></code>.
+The detection could be similar to variables; i.e.,
+right tape id and dynamic id is not zero.
+</li><li>
+
+The independent dynamic parameters could correspond to the initial parameters
+in the tape (possibly excluding the parameter with index zero).
+When the independent dynamic parameters change, a special forward pass
+on the dynamic parameter operations would set the value for all
+the other dynamic parameters in the tape.
+</li><li>
+
+The identical functions need to be changed so that dynamic
+parameters were never be identically equal other values.
+</li></ol>
+
+
+
+<br>
 <br>
 <b><big><a name="Multi-Threading" id="Multi-Threading">Multi-Threading</a></big></b>
 <br>
