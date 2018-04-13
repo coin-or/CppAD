@@ -127,6 +127,8 @@ See <a href="link_mat_mul.htm" target="_top"><span style='white-space: nowrap'>l
 <i><font color="#9A1900">// Note that CppAD uses global_option["memory"] at the main program level</font></i>
 <b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;map&gt;</font>
 <b><font color="#0000FF">extern</font></b> std<font color="#990000">::</font><font color="#008080">map&lt;std::string, bool&gt;</font> global_option<font color="#990000">;</font>
+<i><font color="#9A1900">// see comments in main program for this external</font></i>
+<b><font color="#0000FF">extern</font></b> <font color="#008080">size_t</font> global_cppad_thread_alloc_inuse<font color="#990000">;</font>
 
 <font color="#009900">bool</font> <b><font color="#000000">link_mat_mul</font></b><font color="#990000">(</font>
      <font color="#008080">size_t</font>                           size     <font color="#990000">,</font>
@@ -135,7 +137,8 @@ See <a href="link_mat_mul.htm" target="_top"><span style='white-space: nowrap'>l
      CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;&amp;</font>           z        <font color="#990000">,</font>
      CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;&amp;</font>           dz
 <font color="#990000">)</font>
-<font color="#FF0000">{</font>
+<font color="#FF0000">{</font>    global_cppad_thread_alloc_inuse <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
+
      <i><font color="#9A1900">// --------------------------------------------------------------------</font></i>
      <i><font color="#9A1900">// check global options</font></i>
      <b><font color="#0000FF">const</font></b> <font color="#009900">char</font><font color="#990000">*</font> valid<font color="#990000">[]</font> <font color="#990000">=</font> <font color="#FF0000">{</font> <font color="#FF0000">"memory"</font><font color="#990000">,</font> <font color="#FF0000">"onetape"</font><font color="#990000">,</font> <font color="#FF0000">"optimize"</font><font color="#990000">,</font> <font color="#FF0000">"atomic"</font><font color="#FF0000">}</font><font color="#990000">;</font>
@@ -266,6 +269,8 @@ See <a href="link_mat_mul.htm" target="_top"><span style='white-space: nowrap'>l
      <i><font color="#9A1900">// would create new temporary work space.)</font></i>
      CppAD<font color="#990000">::</font>user_atomic<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;::</font><b><font color="#000000">clear</font></b><font color="#990000">();</font>
 
+     <font color="#008080">size_t</font> thread                   <font color="#990000">=</font> CppAD<font color="#990000">::</font>thread_alloc<font color="#990000">::</font><b><font color="#000000">thread_num</font></b><font color="#990000">();</font>
+     global_cppad_thread_alloc_inuse <font color="#990000">=</font> CppAD<font color="#990000">::</font>thread_alloc<font color="#990000">::</font><b><font color="#000000">inuse</font></b><font color="#990000">(</font>thread<font color="#990000">);</font>
      <b><font color="#0000FF">return</font></b> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
 <font color="#FF0000">}</font></tt></pre>
 
