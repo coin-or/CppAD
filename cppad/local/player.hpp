@@ -121,15 +121,15 @@ public:
 		num_var_rec_        = rec.num_var_rec_;
 		num_load_op_rec_    = rec.num_load_op_rec_;
 
-		// op_rec_
+		// op_vec_
 		op_vec_.swap(rec.op_vec_);
 		CPPAD_ASSERT_UNKNOWN(op_vec_.size() < addr_t_max );
 
-		// op_arg_rec_
+		// op_arg_vec_
 		arg_vec_.swap(rec.arg_vec_);
 		CPPAD_ASSERT_UNKNOWN(arg_vec_.size()    < addr_t_max );
 
-		// par_rec_
+		// par_vec_
 		par_vec_.swap(rec.par_vec_);
 		CPPAD_ASSERT_UNKNOWN(par_vec_.size() < addr_t_max );
 
@@ -137,7 +137,7 @@ public:
 		text_vec_.swap(rec.text_vec_);
 		CPPAD_ASSERT_UNKNOWN(text_vec_.size() < addr_t_max );
 
-		// vec_ind_rec_
+		// vecad_ind_vec_
 		vecad_ind_vec_.swap(rec.vecad_ind_vec_);
 		CPPAD_ASSERT_UNKNOWN(vecad_ind_vec_.size() < addr_t_max );
 

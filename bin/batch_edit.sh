@@ -11,7 +11,7 @@
 # -----------------------------------------------------------------------------
 # Plan for batch edit of all files:
 # 1. Do not update copyright date when do this edit
-# 2. Remove an svn Id commands.
+# 2. Remove all svn Id commands and delete check_svn_dist.sh.
 # 3. "included in the COPYING file" -> "included in the epl-v10.txt file"
 # 4. Remove all omhelp index commands.
 # 5. Change: $code $srcfile ...$$ $$ -> $srcfile ... $$
@@ -19,7 +19,8 @@
 # 7. Change CPPAD_TESTVECTOR to a template type (see Eigen entry in wishlist).
 # 8. Change : B^n to \B{R}^n and other simuilar uses of B as a space.
 # 9. Change Vector<T> -> <T>Vector for T = Base, Size, Bool (T != Set)
-# 10. Change http://www.coin-or.org/CppAD to new download server.
+# 10. Change http://www.coin-or.org/CppAD to new download server and figure
+#     a way to distribute gpl version of repository.
 # -----------------------------------------------------------------------------
 spell_list='
 '
@@ -30,8 +31,11 @@ move_list='
 move_sed='s|reverse_subgraph|subgraph_reverse|'
 #
 cat << EOF > junk.sed
-s|bin/version.sh|version.sh|
-s|set_version.sh|version.sh|
+s|\\([^_]\\)op_rec_|\\1op_vec_|g
+s|\\([^_]\\)vec_ind_rec_|\\1vecad_ind_vec_|g
+s|\\([^_]\\)test_rec_|\\1test_vec_|g
+s|\\([^_]\\)par_rec_|\\1par_vec_|g
+s|\\([^_]\\)op_arg_rec_|\\1op_arg_vec_|g
 EOF
 # -----------------------------------------------------------------------------
 if [ $0 != "bin/batch_edit.sh" ]
