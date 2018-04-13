@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -357,6 +357,11 @@ extern void info_sparse_hessian(size_t size, size_t& n_sweep);
 
 // --------------------------------------------------------------------------
 std::map<std::string, bool> global_option;
+// --------------------------------------------------------------------------
+// If return value for the previous CppAD speed test was false, this is zero.
+// Otherwise it is value returned by by CppAD::thread_alloc::inuse for the
+// current thread at end of the test.
+size_t global_cppad_thread_alloc_inuse = 0;
 // --------------------------------------------------------------------------
 
 
@@ -787,5 +792,9 @@ int main(int argc, char *argv[])
 		cout << "Memory leak detected" << endl;
 	}
 # endif
+	if( global_cppad_thread_alloc_inuse != 0 )
+	{	cout << "memory allocated at end of last cppad speed test = ";
+		cout << global_cppad_thread_alloc_inuse << std::endl;
+	}
 	return static_cast<int>( ! ok );
 }

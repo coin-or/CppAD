@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -45,13 +45,16 @@ $srccode%cpp% */
 // Note that CppAD uses global_option["memory"] at the main program level
 # include <map>
 extern std::map<std::string, bool> global_option;
+// see comments in main program for this external
+extern size_t global_cppad_thread_alloc_inuse;
 
 bool link_det_minor(
 	size_t                     size     ,
 	size_t                     repeat   ,
 	CppAD::vector<double>     &matrix   ,
 	CppAD::vector<double>     &gradient )
-{
+{	global_cppad_thread_alloc_inuse = 0;
+
 	// --------------------------------------------------------------------
 	// check global options
 	const char* valid[] = { "memory", "onetape", "optimize"};
@@ -155,6 +158,8 @@ bool link_det_minor(
 			gradient = f.Reverse(1, w);
 		}
 	}
+	size_t thread                   = CppAD::thread_alloc::thread_num();
+	global_cppad_thread_alloc_inuse = CppAD::thread_alloc::inuse(thread);
 	return true;
 }
 /* %$$

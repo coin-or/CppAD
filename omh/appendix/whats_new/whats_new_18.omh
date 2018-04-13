@@ -20,6 +20,11 @@ $$
 
 $section Changes and Additions to CppAD During 2018$$
 
+$head 04-13$$
+The $cref speed_cppad$$ tests were modified to report the
+amount of memory allocated at the end of each tests.
+This will aid in the reduction of CppAD memory usage.
+
 $head 03-20$$
 Fix bug in $cref optimize$$ and $cref subgraph_sparsity$$
 when using C++11 $cref erf$$ function.
