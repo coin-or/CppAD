@@ -2,7 +2,7 @@
 # define CPPAD_LOCAL_PLAYER_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -664,6 +664,249 @@ public:
 		;
 	}
 
+};
+
+// ============================================================================
+/// const_iterator for a player object.
+template <class Base>
+class player_const_iterator {
+private:
+	/// size of op_vec_
+	const size_t size_op_vec_;
+
+	/// size of arg_vec_
+	const size_t size_arg_vec_;
+
+	/// number of variables in tape
+	const size_t num_var_;
+
+	/// op_vec_.data()
+	const OpCode* const op_vec_data_;
+
+	/// arg_vec_.data()
+	const addr_t* const arg_vec_data_;
+
+	/// index of current operator
+	size_t op_index_;
+
+	/// index of first argument for current operator
+	size_t arg_index_;
+
+	/// index of first result for current operator
+	size_t var_index_;
+public:
+	/// Create a iterator starting either at beginning or end of tape
+	player_const_iterator(
+		/// operators in this player
+		const pod_vector<OpCode>& op_vec     ,
+		/// operator arguments for this player
+		const pod_vector<addr_t>& arg_vec    ,
+		/// number of variables in tape
+		size_t                    num_var    ,
+		/// operator index to start iterator at
+		/// must be first (0) or last (op_vec.size()-1)
+		size_t                    op_index   )
+	:
+	size_op_vec_  ( op_vec.size() ),
+	size_arg_vec_ ( arg_vec.size() ),
+	num_var_      ( num_var ),
+	op_vec_data_  ( op_vec.data() ),
+	arg_vec_data_ ( arg_vec.data() )
+	{	if( op_index == 0 )
+		{	op_index_  = 0;
+			arg_index_ = 0;
+			var_index_ = 0;
+		}
+		else
+		{	CPPAD_ASSERT_UNKNOWN(op_index == op_vec.size() - 1 );
+			op_index_  = op_vec.size() - 1;
+			arg_index_ = arg_vec.size() - 1;
+			var_index_ = num_var - 1;
+		}
+	}
+	/*!
+	Advance iterator to next operator
+	*/
+	void next(void)
+	{	CPPAD_ASSERT_UNKNOWN( op_index_ < size_op_vec_ );
+		OpCode op   = op_vec_data_[op_index_];
+		op_index_  += 1;
+		arg_index_ += NumArg(op);
+		var_index_ += NumRes(op);
+		bool done   = (op != CSumOp) & (op != CSkipOp);
+		if( done )
+			return;
+		//
+		// number of arguments for this operator depends on argument data
+		CPPAD_ASSERT_UNKNOWN( NumArg(op) == 0 );
+		const addr_t* arg = arg_vec_data_ + arg_index_;
+		//
+		// CSumOp
+		if( op == CSumOp )
+		{	//
+			addr_t n_var      = arg[0] + arg[1];
+			CPPAD_ASSERT_UNKNOWN( n_var == arg[3 + n_var] );
+			//
+			// add actual number of arguments to arg_index_
+			arg_index_ += 4 + n_var;
+			//
+			return;
+		}
+		//
+		// CSkip
+		if ( op == CSkipOp )
+		{	//
+			addr_t n_skip     = arg[4] + arg[5];
+			CPPAD_ASSERT_UNKNOWN( n_skip == arg[6 + n_skip] );
+			//
+			// add actual number of arguments to arg_index_
+			arg_index_ += 7 + n_skip;
+			//
+			return;
+		}
+		CPPAD_ASSERT_UNKNOWN( false );
+	}
+	/*!
+	Backup iterator to previous operator
+	*/
+	void previous(void)
+	{	//
+		CPPAD_ASSERT_UNKNOWN( 1 <= op_index_ );
+		CPPAD_ASSERT_UNKNOWN( op_index_ < size_op_vec_ );
+		op_index_  -= 1;
+		OpCode op   = op_vec_data_[op_index_];
+		//
+		CPPAD_ASSERT_UNKNOWN( NumArg(op) <= arg_index_ );
+		arg_index_ -= NumArg(op);
+		//
+		CPPAD_ASSERT_UNKNOWN( NumRes(op) <= var_index_ );
+		var_index_ -= NumRes(op);
+		//
+		bool done   = (op != CSumOp) & (op != CSkipOp);
+		if( done )
+			return;
+		//
+		// CSumOp
+		if( op == CSumOp )
+		{	// number of arguments for this operator depends on argument data
+			CPPAD_ASSERT_UNKNOWN( NumArg(CSumOp) == 0 );
+			//
+			// number of variables is stored in last argument
+			CPPAD_ASSERT_UNKNOWN( 1 < arg_index_ );
+			addr_t n_var = arg_vec_data_[arg_index_ - 1];
+			//
+			// index of first argument to this operator
+			arg_index_ -= 4 + n_var;
+# ifndef NDEBUG
+			const addr_t* arg = arg_vec_data_ + arg_index_;
+			CPPAD_ASSERT_UNKNOWN( arg[0] + arg[1] == n_var );
+# endif
+			return;
+		}
+		//
+		// CSkip
+		if( op == CSkipOp )
+		{	// number of arguments for this operator depends on argument data
+			CPPAD_ASSERT_UNKNOWN( NumArg(CSumOp) == 0 );
+			//
+			// number to possibly skip is stored in last argument
+			CPPAD_ASSERT_UNKNOWN( 1 < arg_index_ );
+			addr_t n_skip = arg_vec_data_[arg_index_ - 1];
+			//
+			// index of frist argument to this operator
+			arg_index_ -= 7 + n_skip;
+# ifndef NDEBUG
+			const addr_t* arg = arg_vec_data_ + arg_index_;
+			CPPAD_ASSERT_UNKNOWN( arg[4] + arg[5] == n_skip );
+# endif
+			return;
+		}
+		CPPAD_ASSERT_UNKNOWN( false );
+	}
+	/*!
+	\brief
+	Get information corresponding to current operator.
+
+	\param op [out]
+	op code for this operator.
+
+	\param op_arg [out]
+	pointer to the first arguement to this operator.
+
+	\param op_index [out]
+	index for this operator
+
+	\param var_index [out]
+	index of the last variable (primary variable) for this operator.
+	If there is no primary variable for this operator, var_index
+	is not sepcified and could have any value.
+	*/
+	void op_info(
+		OpCode&        op         ,
+		const addr_t*& op_arg     ,
+		size_t&        op_index   ,
+		size_t&        var_index  ) const
+	{	// check limits when NDEBUG  is not defined
+		CPPAD_ASSERT_UNKNOWN( op_index   < size_op_vec_ );
+		CPPAD_ASSERT_UNKNOWN( arg_index_ < size_arg_vec_ );
+		CPPAD_ASSERT_UNKNOWN( var_index_ < num_var_ );
+		//
+		op        = op_vec_data_[op_index];
+		op_arg    = arg_vec_data_ + arg_index_;
+		op_index  = op_index_;
+		var_index = var_index_;
+	}
+	/*!
+	\brief
+	Unpack extra information when current op is a UserOp
+
+	\param user_old [out]
+	is the extra information passed to the old style user atomic functions.
+
+	\param user_m [out]
+	is the number of results for this user atmoic function.
+
+	\param user_n [out]
+	is the number of arguments for this user atmoic function.
+
+	\return
+	is a pointer to this user atomic function.
+	*/
+	atomic_base<Base>* get_user_info(
+		size_t&          user_old   ,
+		size_t&          user_m     ,
+		size_t&          user_n     ) const
+	{	atomic_base<Base>* user_atom;
+		//
+		// get operator infromation
+		OpCode op;
+		const addr_t* op_arg;
+		size_t op_index;
+		size_t var_index;
+		op_info(op, op_arg, op_index, var_index);
+		//
+		CPPAD_ASSERT_UNKNOWN( op == UserOp );
+		CPPAD_ASSERT_NARG_NRES(op, 4, 0);
+		//
+		// return UserOp info
+		user_old = op_arg[1];
+		user_n   = op_arg[2];
+		user_m   = op_arg[3];
+		CPPAD_ASSERT_UNKNOWN( user_n > 0 );
+		//
+		size_t user_index = size_t( op_arg[0] );
+		user_atom = atomic_base<Base>::class_object(user_index);
+# ifndef NDEBUG
+		if( user_atom == CPPAD_NULL )
+		{	// user_atom is null so cannot use user_atom->afun_name()
+			std::string msg = atomic_base<Base>::class_name(user_index)
+				+ ": atomic_base function has been deleted";
+			CPPAD_ASSERT_KNOWN(false, msg.c_str() );
+		}
+# endif
+		//
+		return user_atom;
+	}
 };
 
 } } // END_CPPAD_lOCAL_NAMESPACE
