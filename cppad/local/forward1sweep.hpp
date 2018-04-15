@@ -2,7 +2,7 @@
 # define CPPAD_LOCAL_FORWARD1SWEEP_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -290,8 +290,9 @@ void forward1sweep(
 	vector<size_t> user_iy;
 
 	// skip the BeginOp at the beginning of the recording
-	i_op = 0;
-	play->get_op_info(i_op, op, arg, i_var);
+	typedef typename player<Base>::const_iterator iterator;
+	iterator itr = play->begin();
+	itr.op_info(op, arg, i_op, i_var);
 	CPPAD_ASSERT_UNKNOWN( op == BeginOp );
 	//
 # if CPPAD_FORWARD1SWEEP_TRACE
@@ -304,7 +305,7 @@ void forward1sweep(
 	while(more_operators)
 	{
 		// this op
-		play->get_op_info(++i_op, op, arg, i_var);
+		(++itr).op_info(op, arg, i_op, i_var);
 		CPPAD_ASSERT_UNKNOWN( i_op < play->num_op_rec() );
 
 		// check if we are skipping this operation
@@ -314,20 +315,22 @@ void forward1sweep(
 				case UserOp:
 				{	// get information for this user atomic call
 					CPPAD_ASSERT_UNKNOWN( user_state == start_user );
-					play->get_user_info(op, arg, user_old, user_m, user_n);
+					itr.user_info(user_old, user_m, user_n);
 					//
 					// skip to the second UserOp
-					i_op += user_m + user_n;
-					play->get_op_info(++i_op, op, arg, i_var);
+					for(i = 0; i < user_m + user_n + 1; ++i)
+						++itr;
+# ifndef NDEBUG
+					itr.op_info(op, arg, i_op, i_var);
 					CPPAD_ASSERT_UNKNOWN( op == UserOp );
+# endif
 				}
 				break;
 
 				default:
 				break;
 			}
-			play->get_op_info(++i_op, op, arg, i_var);
-			CPPAD_ASSERT_UNKNOWN( i_op < play->num_op_rec() );
+			(++itr).op_info(op, arg, i_op, i_var);
 		}
 
 		// action depends on the operator
@@ -859,7 +862,7 @@ void forward1sweep(
 			case UserOp:
 			// start or end an atomic function call
 			flag = user_state == start_user;
-			user_atom = play->get_user_info(op, arg, user_old, user_m, user_n);
+			user_atom = itr.user_info(user_old, user_m, user_n);
 			if( flag )
 			{	user_state = arg_user;
 				user_i     = 0;
