@@ -18,7 +18,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 namespace CppAD { namespace local { // BEGIN_CPPAD_LOCAL_NAMESPACE
 /*!
 \file player.hpp
-File used to define the player class.
+File used to define the player and player_const_iterator classes.
 */
 
 /*!
@@ -28,6 +28,9 @@ Class used to store and play back an operation sequence recording.
 These were AD< Base > operations when recorded. Operations during playback
 are done using the type Base .
 */
+
+template <class Base> class player_const_iterator;
+
 template <class Base>
 class player {
 private:
@@ -663,6 +666,19 @@ public:
 		     + op_vec_.size()        * sizeof(addr_t) * 3
 		;
 	}
+	typedef player_const_iterator<Base> const_iterator;
+	/// begin
+	const_iterator begin(void) const
+	{	size_t op_index = 0;
+		size_t num_var  = num_var_rec_;
+		return const_iterator(op_vec_, arg_vec_, num_var, op_index);
+	}
+	/// end
+	const_iterator end(void) const
+	{	size_t op_index = op_vec_.size();
+		size_t num_var  = num_var_rec_;
+		return const_iterator(op_vec_, arg_vec_, num_var, op_index);
+	}
 
 };
 
@@ -704,7 +720,7 @@ public:
 		/// number of variables in tape
 		size_t                    num_var    ,
 		/// operator index to start iterator at
-		/// must be first (0) or last (op_vec.size()-1)
+		/// must be 0 for begin() and op_vec.size() for end()
 		size_t                    op_index   )
 	:
 	size_op_vec_  ( op_vec.size() ),
@@ -718,16 +734,16 @@ public:
 			var_index_ = 0;
 		}
 		else
-		{	CPPAD_ASSERT_UNKNOWN(op_index == op_vec.size() - 1 );
-			op_index_  = op_vec.size() - 1;
-			arg_index_ = arg_vec.size() - 1;
-			var_index_ = num_var - 1;
+		{	CPPAD_ASSERT_UNKNOWN(op_index == op_vec.size());
+			op_index_  = op_vec.size();
+			arg_index_ = arg_vec.size();
+			var_index_ = num_var;
 		}
 	}
 	/*!
 	Advance iterator to next operator
 	*/
-	void next(void)
+	player_const_iterator<Base>& operator++(void)
 	{	CPPAD_ASSERT_UNKNOWN( op_index_ < size_op_vec_ );
 		OpCode op   = op_vec_data_[op_index_];
 		op_index_  += 1;
@@ -735,7 +751,7 @@ public:
 		var_index_ += NumRes(op);
 		bool done   = (op != CSumOp) & (op != CSkipOp);
 		if( done )
-			return;
+			return *this;
 		//
 		// number of arguments for this operator depends on argument data
 		CPPAD_ASSERT_UNKNOWN( NumArg(op) == 0 );
@@ -750,7 +766,7 @@ public:
 			// add actual number of arguments to arg_index_
 			arg_index_ += 4 + n_var;
 			//
-			return;
+			return *this;
 		}
 		//
 		// CSkip
@@ -762,17 +778,17 @@ public:
 			// add actual number of arguments to arg_index_
 			arg_index_ += 7 + n_skip;
 			//
-			return;
+			return *this;
 		}
 		CPPAD_ASSERT_UNKNOWN( false );
+		return *this;
 	}
 	/*!
 	Backup iterator to previous operator
 	*/
-	void previous(void)
+	player_const_iterator<Base>& operator--(void)
 	{	//
 		CPPAD_ASSERT_UNKNOWN( 1 <= op_index_ );
-		CPPAD_ASSERT_UNKNOWN( op_index_ < size_op_vec_ );
 		op_index_  -= 1;
 		OpCode op   = op_vec_data_[op_index_];
 		//
@@ -784,7 +800,7 @@ public:
 		//
 		bool done   = (op != CSumOp) & (op != CSkipOp);
 		if( done )
-			return;
+			return *this;
 		//
 		// CSumOp
 		if( op == CSumOp )
@@ -801,7 +817,7 @@ public:
 			const addr_t* arg = arg_vec_data_ + arg_index_;
 			CPPAD_ASSERT_UNKNOWN( arg[0] + arg[1] == n_var );
 # endif
-			return;
+			return *this;
 		}
 		//
 		// CSkip
@@ -819,9 +835,10 @@ public:
 			const addr_t* arg = arg_vec_data_ + arg_index_;
 			CPPAD_ASSERT_UNKNOWN( arg[4] + arg[5] == n_skip );
 # endif
-			return;
+			return *this;
 		}
 		CPPAD_ASSERT_UNKNOWN( false );
+		return *this;
 	}
 	/*!
 	\brief
@@ -846,15 +863,20 @@ public:
 		const addr_t*& op_arg     ,
 		size_t&        op_index   ,
 		size_t&        var_index  ) const
-	{	// check limits when NDEBUG  is not defined
-		CPPAD_ASSERT_UNKNOWN( op_index   < size_op_vec_ );
-		CPPAD_ASSERT_UNKNOWN( arg_index_ < size_arg_vec_ );
-		CPPAD_ASSERT_UNKNOWN( var_index_ < num_var_ );
+	{	// op
+		CPPAD_ASSERT_UNKNOWN( op_index_   < size_op_vec_ );
+		op        = op_vec_data_[op_index_];
 		//
-		op        = op_vec_data_[op_index];
+		// op_arg
+		CPPAD_ASSERT_UNKNOWN( arg_index_ + NumArg(op) <= size_arg_vec_ );
 		op_arg    = arg_vec_data_ + arg_index_;
+		//
+		// op_index
 		op_index  = op_index_;
-		var_index = var_index_;
+		//
+		// var_index
+		CPPAD_ASSERT_UNKNOWN( var_index_ + NumRes(op) <= num_var_ );
+		var_index = var_index_ + NumRes(op) - 1;
 	}
 	/*!
 	\brief
@@ -872,7 +894,7 @@ public:
 	\return
 	is a pointer to this user atomic function.
 	*/
-	atomic_base<Base>* get_user_info(
+	atomic_base<Base>* user_info(
 		size_t&          user_old   ,
 		size_t&          user_m     ,
 		size_t&          user_n     ) const
