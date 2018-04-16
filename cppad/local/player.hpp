@@ -687,20 +687,14 @@ public:
 template <class Base>
 class player_const_iterator {
 private:
-	/// size of op_vec_
-	const size_t size_op_vec_;
-
-	/// size of arg_vec_
-	const size_t size_arg_vec_;
-
 	/// number of variables in tape
 	const size_t num_var_;
 
 	/// op_vec_.data()
-	const OpCode* const op_vec_data_;
+	const pod_vector<OpCode>& op_vec_;
 
 	/// arg_vec_.data()
-	const addr_t* const arg_vec_data_;
+	const pod_vector<addr_t>& arg_vec_;
 
 	/// index of current operator
 	size_t op_index_;
@@ -723,11 +717,9 @@ public:
 		/// must be 0 for begin() and op_vec.size() for end()
 		size_t                    op_index   )
 	:
-	size_op_vec_  ( op_vec.size() ),
-	size_arg_vec_ ( arg_vec.size() ),
-	num_var_      ( num_var ),
-	op_vec_data_  ( op_vec.data() ),
-	arg_vec_data_ ( arg_vec.data() )
+	num_var_  ( num_var ),
+	op_vec_   ( op_vec ),
+	arg_vec_  ( arg_vec )
 	{	if( op_index == 0 )
 		{	op_index_  = 0;
 			arg_index_ = 0;
@@ -744,8 +736,8 @@ public:
 	Advance iterator to next operator
 	*/
 	player_const_iterator<Base>& operator++(void)
-	{	CPPAD_ASSERT_UNKNOWN( op_index_ < size_op_vec_ );
-		OpCode op   = op_vec_data_[op_index_];
+	{
+		OpCode op   = op_vec_[op_index_];
 		op_index_  += 1;
 		arg_index_ += NumArg(op);
 		var_index_ += NumRes(op);
@@ -755,7 +747,7 @@ public:
 		//
 		// number of arguments for this operator depends on argument data
 		CPPAD_ASSERT_UNKNOWN( NumArg(op) == 0 );
-		const addr_t* arg = arg_vec_data_ + arg_index_;
+		const addr_t* arg = arg_vec_.data() + arg_index_;
 		//
 		// CSumOp
 		if( op == CSumOp )
@@ -790,7 +782,7 @@ public:
 	{	//
 		CPPAD_ASSERT_UNKNOWN( 1 <= op_index_ );
 		op_index_  -= 1;
-		OpCode op   = op_vec_data_[op_index_];
+		OpCode op   = op_vec_[op_index_];
 		//
 		CPPAD_ASSERT_UNKNOWN( NumArg(op) <= arg_index_ );
 		arg_index_ -= NumArg(op);
@@ -809,12 +801,12 @@ public:
 			//
 			// number of variables is stored in last argument
 			CPPAD_ASSERT_UNKNOWN( 1 < arg_index_ );
-			addr_t n_var = arg_vec_data_[arg_index_ - 1];
+			addr_t n_var = arg_vec_[arg_index_ - 1];
 			//
 			// index of first argument to this operator
 			arg_index_ -= 4 + n_var;
 # ifndef NDEBUG
-			const addr_t* arg = arg_vec_data_ + arg_index_;
+			const addr_t* arg = arg_vec_.data() + arg_index_;
 			CPPAD_ASSERT_UNKNOWN( arg[0] + arg[1] == n_var );
 # endif
 			return *this;
@@ -827,12 +819,12 @@ public:
 			//
 			// number to possibly skip is stored in last argument
 			CPPAD_ASSERT_UNKNOWN( 1 < arg_index_ );
-			addr_t n_skip = arg_vec_data_[arg_index_ - 1];
+			addr_t n_skip = arg_vec_[arg_index_ - 1];
 			//
 			// index of frist argument to this operator
 			arg_index_ -= 7 + n_skip;
 # ifndef NDEBUG
-			const addr_t* arg = arg_vec_data_ + arg_index_;
+			const addr_t* arg = arg_vec_.data() + arg_index_;
 			CPPAD_ASSERT_UNKNOWN( arg[4] + arg[5] == n_skip );
 # endif
 			return *this;
@@ -864,12 +856,11 @@ public:
 		size_t&        op_index   ,
 		size_t&        var_index  ) const
 	{	// op
-		CPPAD_ASSERT_UNKNOWN( op_index_   < size_op_vec_ );
-		op        = op_vec_data_[op_index_];
+		op        = op_vec_[op_index_];
 		//
 		// op_arg
-		CPPAD_ASSERT_UNKNOWN( arg_index_ + NumArg(op) <= size_arg_vec_ );
-		op_arg    = arg_vec_data_ + arg_index_;
+		CPPAD_ASSERT_UNKNOWN( arg_index_ + NumArg(op) <= arg_vec_.size() );
+		op_arg    = arg_vec_.data() + arg_index_;
 		//
 		// op_index
 		op_index  = op_index_;
