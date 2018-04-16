@@ -30,6 +30,7 @@ are done using the type Base .
 */
 
 template <class Base> class player_const_iterator;
+template <class Base> class player_const_random_iterator;
 
 template <class Base>
 class player {
@@ -679,6 +680,12 @@ public:
 		size_t num_var  = num_var_rec_;
 		return const_iterator(op_vec_, arg_vec_, num_var, op_index);
 	}
+	typedef player_const_random_iterator<Base> const_random_iterator;
+	/// random
+	const_random_iterator any(void) const
+	{	size_t num_var  = num_var_rec_;
+		return const_random_iterator(op_vec_, arg_vec_, num_var);
+	}
 
 };
 
@@ -897,6 +904,192 @@ public:
 		size_t op_index;
 		size_t var_index;
 		op_info(op, op_arg, op_index, var_index);
+		//
+		CPPAD_ASSERT_UNKNOWN( op == UserOp );
+		CPPAD_ASSERT_NARG_NRES(op, 4, 0);
+		//
+		// return UserOp info
+		user_old = op_arg[1];
+		user_n   = op_arg[2];
+		user_m   = op_arg[3];
+		CPPAD_ASSERT_UNKNOWN( user_n > 0 );
+		//
+		size_t user_index = size_t( op_arg[0] );
+		user_atom = atomic_base<Base>::class_object(user_index);
+# ifndef NDEBUG
+		if( user_atom == CPPAD_NULL )
+		{	// user_atom is null so cannot use user_atom->afun_name()
+			std::string msg = atomic_base<Base>::class_name(user_index)
+				+ ": atomic_base function has been deleted";
+			CPPAD_ASSERT_KNOWN(false, msg.c_str() );
+		}
+# endif
+		//
+		return user_atom;
+	}
+};
+
+// ============================================================================
+/// const_random_iterator for a player object.
+template <class Base>
+class player_const_random_iterator {
+private:
+	/// size of op_vec_
+	const size_t size_op_vec_;
+
+	/// size of arg_vec_
+	const size_t size_arg_vec_;
+
+	/// number of variables in tape
+	const size_t num_var_;
+
+	/// op_vec_.data()
+	const pod_vector<OpCode>& op_vec_;
+
+	/// arg_vec_.data()
+	const pod_vector<addr_t>& arg_vec_;
+
+	/// mapping from operator index to argument index
+	/// (set by constructor and effectively const)
+	pod_vector<addr_t> op2arg_vec_;
+
+	/// mapping from operator index to variable index
+	/// (set by constructor and effectively const)
+	pod_vector<addr_t> op2var_vec_;
+
+public:
+	/// Create a iterator starting either at beginning or end of tape
+	player_const_random_iterator(
+		/// operators in this player
+		const pod_vector<OpCode>& op_vec     ,
+		/// operator arguments for this player
+		const pod_vector<addr_t>& arg_vec    ,
+		/// number of variables in tape
+		size_t                    num_var    )
+	:
+	num_var_  ( num_var ),
+	op_vec_   ( op_vec  ),
+	arg_vec_  ( arg_vec )
+	{	size_t num_op = op_vec.size();
+		//
+		// compute op2arg_vec_ and op2var_vec_;
+		op2arg_vec_.resize( num_op );
+		op2var_vec_.resize( num_op );
+		//
+		addr_t arg_index = 0;
+		addr_t var_index = 0;
+		for(size_t op_index = 0; op_index < num_op; ++op_index)
+		{	// this operator
+			OpCode op = op_vec_[op_index];
+			//
+			// index of first argument for this operator
+			op2arg_vec_[op_index] = arg_index;
+			arg_index            += NumArg(op);
+			//
+			var_index            += NumRes(op);
+			if( NumRes(op) == 0 )
+			{	// invalid variable index
+				op2var_vec_[op_index] = addr_t( num_var );
+			}
+			else
+			{	// index of last (primary) result for this operator
+				op2var_vec_[op_index] = var_index - 1;
+			}
+			//
+			// CSumOp
+			if( op == CSumOp )
+			{	CPPAD_ASSERT_UNKNOWN( NumArg(CSumOp) == 0 );
+				//
+				// pointer to first argument for this operator
+				addr_t* arg = arg_vec_.data() + arg_index;
+				//
+				// The actual number of arugments for this operator is
+				// arg[0] + arg[1] + 4.
+				// Correct index of first argument for next operator
+				arg_index += arg[0] + arg[1] + 4;
+			}
+			//
+			// CSkipOp
+			if( op == CSkipOp )
+			{	CPPAD_ASSERT_UNKNOWN( NumArg(CSumOp) == 0 );
+				//
+				// pointer to first argument for this operator
+				addr_t* arg = arg_vec_.data() + arg_index;
+				//
+				// The actual number of arugments for this operator is
+				// 7 + arg[4] + arg[5].
+				// Correct index of first argument for next operator.
+				arg_index += 7 + arg[4] + arg[5];
+			}
+		}
+	}
+	/*!
+	\brief
+	Get information corresponding to current operator.
+
+	\param op_index [in]
+	index for this operator
+
+	\param op [out]
+	op code for this operator.
+
+	\param op_arg [out]
+	pointer to the first arguement to this operator.
+
+	\param var_index [out]
+	index of the last variable (primary variable) for this operator.
+	If there is no primary variable for this operator, var_index
+	is not sepcified and could have any value.
+	*/
+	void op_info(
+		size_t         op_index   ,
+		OpCode&        op         ,
+		const addr_t*& op_arg     ,
+		size_t&        var_index  ) const
+	{	// op
+		CPPAD_ASSERT_UNKNOWN( op_index < op_vec_.size() );
+		op = op_vec_[op_index];
+		//
+		// op_arg
+		size_t arg_index = op2arg_vec_[op_index];
+		CPPAD_ASSERT_UNKNOWN( arg_index + NumArg(op) <= arg_vec_.size() );
+		op_arg    = arg_vec_.data() + arg_index;
+		//
+		// var_index
+		var_index = op2var_vec_[op_index];
+		CPPAD_ASSERT_UNKNOWN( var_index < num_var_ || NumRes(op) == 0 );
+	}
+	/*!
+	\brief
+	Unpack extra information when current op is a UserOp
+
+	\param op_index [in]
+	index for this operator
+
+	\param user_old [out]
+	is the extra information passed to the old style user atomic functions.
+
+	\param user_m [out]
+	is the number of results for this user atmoic function.
+
+	\param user_n [out]
+	is the number of arguments for this user atmoic function.
+
+	\return
+	is a pointer to this user atomic function.
+	*/
+	atomic_base<Base>* user_info(
+		size_t           op_index   ,
+		size_t&          user_old   ,
+		size_t&          user_m     ,
+		size_t&          user_n     ) const
+	{	atomic_base<Base>* user_atom;
+		//
+		// get operator infromation
+		OpCode op;
+		const addr_t* op_arg;
+		size_t var_index;
+		op_info(op_index, op, op_arg, var_index);
 		//
 		CPPAD_ASSERT_UNKNOWN( op == UserOp );
 		CPPAD_ASSERT_NARG_NRES(op, 4, 0);
