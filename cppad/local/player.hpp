@@ -931,20 +931,17 @@ public:
 template <class Base>
 class player_const_random_iterator {
 private:
-	/// size of op_vec_
-	const size_t size_op_vec_;
-
-	/// size of arg_vec_
-	const size_t size_arg_vec_;
-
 	/// number of variables in tape
 	const size_t num_var_;
 
-	/// op_vec_.data()
-	const pod_vector<OpCode>& op_vec_;
+	/// mapping from operator index to operator
+	const pod_vector<OpCode>* op_vec_;
 
-	/// arg_vec_.data()
-	const pod_vector<addr_t>& arg_vec_;
+	/// mapping from argument index to argument value
+	const pod_vector<addr_t>* arg_vec_;
+
+	/// mapping from subgraph index to operator index
+	const pod_vector<addr_t>* subgraph_;
 
 	/// mapping from operator index to argument index
 	/// (set by constructor and effectively const)
@@ -954,27 +951,42 @@ private:
 	/// (set by constructor and effectively const)
 	pod_vector<addr_t> op2var_vec_;
 
-	/// mapping from subgraph index to operator index
-	const pod_vector<addr_t>* subgraph_;
-
 	/// index of the current operator in the subgraph
 	size_t subgraph_index_;
 
 public:
-	/// Create a random access iterator
-	player_const_random_iterator(
+	// default constructor
+	player_const_random_iterator(void)
+	{	clear(); }
+	/// Clear all information in this iterator
+	void clear(void)
+	{	num_var_  = 0;
+		op_vec_   = CPPAD_NULL;
+		arg_vec_  = CPPAD_NULL;
+		subgraph_ = CPPAD_NULL;
+		op2arg_vec_.clear();
+		op2var_vec_.clear();
+	}
+	/*!
+	Set random access information corresponding to a player.
+	This goes through the operation sequence and makes a new
+	mapping from the operation index to the argument and variable indices.
+	It also clears any subgraph information.
+	*/
+	void set_random(
 		/// operators in this player
-		const pod_vector<OpCode>& op_vec     ,
+		const pod_vector<OpCode>* op_vec     ,
 		/// operator arguments for this player
-		const pod_vector<addr_t>& arg_vec    ,
+		const pod_vector<addr_t>* arg_vec    ,
 		/// number of variables in tape
 		size_t                    num_var    )
-	:
-	num_var_  ( num_var ),
-	op_vec_   ( op_vec  ),
-	arg_vec_  ( arg_vec ),
-	subgraph_ ( CPPAD_NULL )
-	{	size_t num_op = op_vec.size();
+	{	clear();
+		op_vec_  = op_vec;
+		arg_vec_ = arg_vec;
+		num_var_ = num_var;
+		//
+		// num_op
+		size_t num_op = op_vec->size();
 		//
 		// compute op2arg_vec_ and op2var_vec_;
 		op2arg_vec_.resize( num_op );
@@ -984,7 +996,7 @@ public:
 		addr_t var_index = 0;
 		for(size_t op_index = 0; op_index < num_op; ++op_index)
 		{	// this operator
-			OpCode op = op_vec_[op_index];
+			OpCode op = (*op_vec_)[op_index];
 			//
 			// index of first argument for this operator
 			op2arg_vec_[op_index] = arg_index;
@@ -1005,7 +1017,7 @@ public:
 			{	CPPAD_ASSERT_UNKNOWN( NumArg(CSumOp) == 0 );
 				//
 				// pointer to first argument for this operator
-				addr_t* arg = arg_vec_.data() + arg_index;
+				addr_t* arg = arg_vec_->data() + arg_index;
 				//
 				// The actual number of arugments for this operator is
 				// arg[0] + arg[1] + 4.
@@ -1018,7 +1030,7 @@ public:
 			{	CPPAD_ASSERT_UNKNOWN( NumArg(CSumOp) == 0 );
 				//
 				// pointer to first argument for this operator
-				addr_t* arg = arg_vec_.data() + arg_index;
+				addr_t* arg = arg_vec_->data() + arg_index;
 				//
 				// The actual number of arugments for this operator is
 				// 7 + arg[4] + arg[5].
@@ -1075,12 +1087,12 @@ public:
 		const addr_t*& op_arg     ,
 		size_t&        var_index  ) const
 	{	// op
-		op              = op_vec_[op_index];
+		op              = (*op_vec_)[op_index];
 		//
 		// op_arg
 		size_t arg_index = op2arg_vec_[op_index];
-		CPPAD_ASSERT_UNKNOWN( arg_index + NumArg(op) <= arg_vec_.size() );
-		op_arg = arg_vec_.data() + arg_index;
+		CPPAD_ASSERT_UNKNOWN( arg_index + NumArg(op) <= arg_vec_->size() );
+		op_arg = arg_vec_->data() + arg_index;
 		//
 		// var_index
 		var_index = op2var_vec_[op_index];
