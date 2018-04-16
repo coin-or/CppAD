@@ -1,7 +1,7 @@
 # ifndef CPPAD_LOCAL_FOR_JAC_SWEEP_HPP
 # define CPPAD_LOCAL_FOR_JAC_SWEEP_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -158,15 +158,17 @@ void for_jac_sweep(
 # endif
 
 	// skip the BeginOp at the beginning of the recording
-	i_op = 0;
-	play->get_op_info(i_op, op, arg, i_var);
+	typedef typename player<Base>::const_iterator iterator;
+	iterator itr = play->begin();
+	itr.op_info(op, arg, i_op, i_var);
 	CPPAD_ASSERT_UNKNOWN( op == BeginOp );
+	//
 	bool more_operators = true;
 	while(more_operators)
 	{	bool flag; // temporary for use in switch cases.
 
 		// this op
-		play->get_op_info(++i_op, op, arg, i_var);
+		(++itr).op_info(op, arg, i_op, i_var);
 
 		// rest of information depends on the case
 		switch( op )
@@ -609,7 +611,7 @@ void for_jac_sweep(
 				user_state == start_user || user_state == end_user
 			);
 			flag = user_state == start_user;
-			user_atom = play->get_user_info(op, arg, user_old, user_m, user_n);
+			user_atom = itr.user_info(user_old, user_m, user_n);
 			if( flag )
 			{	user_state = arg_user;
 				user_i     = 0;

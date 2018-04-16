@@ -254,7 +254,7 @@ void forward0sweep(
 	bool more_operators = true;
 	while(more_operators)
 	{
-		// this op
+		// next op
 		(++itr).op_info(op, arg, i_op, i_var);
 		CPPAD_ASSERT_UNKNOWN( i_op < play->num_op_rec() );
 

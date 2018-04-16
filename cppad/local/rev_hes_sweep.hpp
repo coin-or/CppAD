@@ -2,7 +2,7 @@
 # define CPPAD_LOCAL_REV_HES_SWEEP_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -177,10 +177,11 @@ void rev_hes_sweep(
 	const Base* parameter = CPPAD_NULL;
 	if( num_par > 0 )
 		parameter = play->GetPar();
-	//
-	// Initialize
-	i_op = play->num_op_rec();
-	play->get_op_info(--i_op, op, arg, i_var);
+
+	// skip the EndOp at the end of the recording
+	typedef typename player<Base>::const_iterator iterator;
+	iterator itr = play->end();
+	(--itr).op_info(op, arg, i_op, i_var);
 	CPPAD_ASSERT_UNKNOWN( op == EndOp );
 # if CPPAD_REV_HES_SWEEP_TRACE
 	std::cout << std::endl;
@@ -192,7 +193,7 @@ void rev_hes_sweep(
 	{	bool flag; // temporary for use in switch cases
 		//
 		// next op
-		play->get_op_info(--i_op, op, arg, i_var);
+		(--itr).op_info(op, arg, i_op, i_var);
 
 		// rest of information depends on the case
 		switch( op )
@@ -620,7 +621,7 @@ void rev_hes_sweep(
 				user_state == start_user || user_state == end_user
 			);
 			flag = user_state == end_user;
-			user_atom = play->get_user_info(op, arg, user_old, user_m, user_n);
+			user_atom = itr.user_info(user_old, user_m, user_n);
 			if( flag )
 			{	user_state = ret_user;
 				user_i     = user_m;

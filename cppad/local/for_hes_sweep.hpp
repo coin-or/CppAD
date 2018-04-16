@@ -2,7 +2,7 @@
 # define CPPAD_LOCAL_FOR_HES_SWEEP_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -170,11 +170,11 @@ void for_hes_sweep(
 	if( num_par > 0 )
 		parameter = play->GetPar();
 
-	// Initialize
-	i_op = 0;
-	play->get_op_info(i_op, op, arg, i_var);
+	// skip the BeginOp at the beginning of the recording
+	typedef typename player<Base>::const_iterator iterator;
+	iterator itr = play->begin();
+	itr.op_info(op, arg, i_op, i_var);
 	CPPAD_ASSERT_UNKNOWN( op == BeginOp );
-	bool more_operators = true;
 # if CPPAD_FOR_HES_SWEEP_TRACE
 	vector<size_t> user_usrrp; // parameter index for UsrrpOp operators
 	std::cout << std::endl;
@@ -182,10 +182,11 @@ void for_hes_sweep(
 	CppAD::vectorBool zh_value(limit * limit);
 # endif
 	bool flag; // temporary for use in switch cases below
+	bool more_operators = true;
 	while(more_operators)
 	{
 		// next op
-		play->get_op_info(++i_op, op, arg, i_var);
+		(++itr).op_info(op, arg, i_op, i_var);
 
 		// does the Hessian in question have a non-zero derivative
 		// with respect to this variable
@@ -355,7 +356,7 @@ void for_hes_sweep(
 				user_state == start_user || user_state == end_user
 			);
 			flag = user_state == start_user;
-			user_atom = play->get_user_info(op, arg, user_old, user_m, user_n);
+			user_atom = itr.user_info(user_old, user_m, user_n);
 			if( flag )
 			{	user_state = arg_user;
 				user_i     = 0;
