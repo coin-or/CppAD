@@ -849,9 +849,6 @@ public:
 	\param op_arg [out]
 	pointer to the first arguement to this operator.
 
-	\param op_index [out]
-	index for this operator
-
 	\param var_index [out]
 	index of the last variable (primary variable) for this operator.
 	If there is no primary variable for this operator, var_index
@@ -860,7 +857,6 @@ public:
 	void op_info(
 		OpCode&        op         ,
 		const addr_t*& op_arg     ,
-		size_t&        op_index   ,
 		size_t&        var_index  ) const
 	{	// op
 		op        = op_vec_[op_index_];
@@ -869,13 +865,13 @@ public:
 		CPPAD_ASSERT_UNKNOWN( arg_index_ + NumArg(op) <= arg_vec_.size() );
 		op_arg    = arg_vec_.data() + arg_index_;
 		//
-		// op_index
-		op_index  = op_index_;
-		//
 		// var_index
 		CPPAD_ASSERT_UNKNOWN( var_index_ + NumRes(op) <= num_var_ );
 		var_index = var_index_ + NumRes(op) - 1;
 	}
+	/// current operator index
+	size_t op_index(void)
+	{	return op_index_; }
 	/*!
 	\brief
 	Unpack extra information when current op is a UserOp
@@ -901,9 +897,8 @@ public:
 		// get operator infromation
 		OpCode op;
 		const addr_t* op_arg;
-		size_t op_index;
 		size_t var_index;
-		op_info(op, op_arg, op_index, var_index);
+		op_info(op, op_arg, var_index);
 		//
 		CPPAD_ASSERT_UNKNOWN( op == UserOp );
 		CPPAD_ASSERT_NARG_NRES(op, 4, 0);

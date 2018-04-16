@@ -236,9 +236,9 @@ void forward0sweep(
 	iterator itr = play->begin();
 	// op_info
 	OpCode op;
-	size_t i_op, i_var;
+	size_t i_var;
 	const addr_t* arg;
-	itr.op_info(op, arg, i_op, i_var);
+	itr.op_info(op, arg, i_var);
 	CPPAD_ASSERT_UNKNOWN( op == BeginOp );
 	//
 # if CPPAD_FORWARD0SWEEP_TRACE
@@ -249,11 +249,11 @@ void forward0sweep(
 	while(more_operators)
 	{
 		// next op
-		(++itr).op_info(op, arg, i_op, i_var);
-		CPPAD_ASSERT_UNKNOWN( i_op < play->num_op_rec() );
+		(++itr).op_info(op, arg, i_var);
+		CPPAD_ASSERT_UNKNOWN( itr.op_index() < play->num_op_rec() );
 
 		// check if we are skipping this operation
-		while( cskip_op[i_op] )
+		while( cskip_op[itr.op_index()] )
 		{	switch(op)
 			{
 				case UserOp:
@@ -265,7 +265,7 @@ void forward0sweep(
 					for(size_t i = 0; i < user_m + user_n + 1; ++i)
 						++itr;
 # ifndef NDEBUG
-					itr.op_info(op, arg, i_op, i_var);
+					itr.op_info(op, arg, i_var);
 					CPPAD_ASSERT_UNKNOWN( op == UserOp );
 # endif
 				}
@@ -274,7 +274,7 @@ void forward0sweep(
 				default:
 				break;
 			}
-			(++itr).op_info(op, arg, i_op, i_var);
+			(++itr).op_info(op, arg, i_var);
 		}
 
 		// action to take depends on the case
@@ -415,7 +415,7 @@ void forward0sweep(
 					compare_change_number, arg, parameter, J, taylor
 				);
 				{	if( compare_change_count == compare_change_number )
-						compare_change_op_index = i_op;
+						compare_change_op_index = itr.op_index();
 				}
 			}
 			break;
@@ -427,7 +427,7 @@ void forward0sweep(
 					compare_change_number, arg, parameter, J, taylor
 				);
 				{	if( compare_change_count == compare_change_number )
-						compare_change_op_index = i_op;
+						compare_change_op_index = itr.op_index();
 				}
 			}
 			break;
@@ -493,7 +493,7 @@ void forward0sweep(
 					compare_change_number, arg, parameter, J, taylor
 				);
 				{	if( compare_change_count == compare_change_number )
-						compare_change_op_index = i_op;
+						compare_change_op_index = itr.op_index();
 				}
 			}
 			break;
@@ -505,7 +505,7 @@ void forward0sweep(
 					compare_change_number, arg, parameter, J, taylor
 				);
 				{	if( compare_change_count == compare_change_number )
-						compare_change_op_index = i_op;
+						compare_change_op_index = itr.op_index();
 				}
 			}
 			break;
@@ -517,7 +517,7 @@ void forward0sweep(
 					compare_change_number, arg, parameter, J, taylor
 				);
 				{	if( compare_change_count == compare_change_number )
-						compare_change_op_index = i_op;
+						compare_change_op_index = itr.op_index();
 				}
 			}
 			break;
@@ -541,7 +541,7 @@ void forward0sweep(
 					compare_change_number, arg, parameter, J, taylor
 				);
 				{	if( compare_change_count == compare_change_number )
-						compare_change_op_index = i_op;
+						compare_change_op_index = itr.op_index();
 				}
 			}
 			break;
@@ -553,7 +553,7 @@ void forward0sweep(
 					compare_change_number, arg, parameter, J, taylor
 				);
 				{	if( compare_change_count == compare_change_number )
-						compare_change_op_index = i_op;
+						compare_change_op_index = itr.op_index();
 				}
 			}
 			break;
@@ -565,7 +565,7 @@ void forward0sweep(
 					compare_change_number, arg, parameter, J, taylor
 				);
 				{	if( compare_change_count == compare_change_number )
-						compare_change_op_index = i_op;
+						compare_change_op_index = itr.op_index();
 				}
 			}
 			break;
@@ -588,7 +588,7 @@ void forward0sweep(
 					compare_change_number, arg, parameter, J, taylor
 				);
 				{	if( compare_change_count == compare_change_number )
-						compare_change_op_index = i_op;
+						compare_change_op_index = itr.op_index();
 				}
 			}
 			break;
@@ -600,7 +600,7 @@ void forward0sweep(
 					compare_change_number, arg, parameter, J, taylor
 				);
 				{	if( compare_change_count == compare_change_number )
-						compare_change_op_index = i_op;
+						compare_change_op_index = itr.op_index();
 				}
 			}
 			break;
@@ -874,7 +874,7 @@ void forward0sweep(
 			CPPAD_ASSERT_UNKNOWN( op == UserOp );
 			CPPAD_ASSERT_UNKNOWN( NumArg(UsrrvOp) == 0 );
 			for(size_t i = 0; i < user_m; i++) if( user_iy[i] > 0 )
-			{	size_t i_tmp   = (i_op + i) - user_m;
+			{	size_t i_tmp   = (itr.op_index() + i) - user_m;
 				printOp(
 					std::cout,
 					play,
@@ -900,7 +900,7 @@ void forward0sweep(
 			printOp(
 				std::cout,
 				play,
-				i_op,
+				itr.op_index(),
 				i_var,
 				op,
 				arg

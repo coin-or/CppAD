@@ -156,9 +156,9 @@ void for_jac_sweep(
 	iterator itr = play->begin();
 	// op_info
 	OpCode op;
-	size_t i_op, i_var;
+	size_t i_var;
 	const addr_t* arg;
-	itr.op_info(op, arg, i_op, i_var);
+	itr.op_info(op, arg, i_var);
 	CPPAD_ASSERT_UNKNOWN( op == BeginOp );
 	//
 	bool more_operators = true;
@@ -166,7 +166,7 @@ void for_jac_sweep(
 	{	bool flag; // temporary for use in switch cases.
 
 		// this op
-		(++itr).op_info(op, arg, i_op, i_var);
+		(++itr).op_info(op, arg, i_var);
 
 		// rest of information depends on the case
 		switch( op )
@@ -728,7 +728,7 @@ void for_jac_sweep(
 		if( op == UserOp && user_state == start_user )
 		{	// print operators that have been delayed
 			CPPAD_ASSERT_UNKNOWN( user_m == user_iy.size() );
-			CPPAD_ASSERT_UNKNOWN( i_op > user_m );
+			CPPAD_ASSERT_UNKNOWN( itr.op_index() > user_m );
 			CPPAD_ASSERT_NARG_NRES(UsrrpOp, 1, 0);
 			CPPAD_ASSERT_NARG_NRES(UsrrvOp, 0, 1);
 			addr_t arg_tmp[1];
@@ -752,7 +752,7 @@ void for_jac_sweep(
 				printOp(
 					std::cout,
 					play,
-					i_op - user_m + i,
+					itr.op_index() - user_m + i,
 					j_var,
 					op_tmp,
 					arg_tmp
@@ -783,7 +783,7 @@ void for_jac_sweep(
 		{	 printOp(
 				std::cout,
 				play,
-				i_op,
+				itr.op_index(),
 				i_var,
 				op,
 				arg

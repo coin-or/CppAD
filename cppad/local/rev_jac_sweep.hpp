@@ -154,9 +154,9 @@ void rev_jac_sweep(
 	iterator itr = play->end();
 	// op_info
 	OpCode op;
-	size_t i_op, i_var;
+	size_t i_var;
 	const addr_t* arg;
-	(--itr).op_info(op, arg, i_op, i_var);
+	(--itr).op_info(op, arg, i_var);
 	CPPAD_ASSERT_UNKNOWN( op == EndOp );
 # if CPPAD_REV_JAC_SWEEP_TRACE
 	std::cout << std::endl;
@@ -167,7 +167,7 @@ void rev_jac_sweep(
 	{	bool flag; // temporary for use in switch cases
 		//
 		// next op
-		(--itr).op_info(op, arg, i_op, i_var);
+		(--itr).op_info(op, arg, i_var);
 
 		// rest of information depends on the case
 		switch( op )
@@ -728,7 +728,7 @@ void rev_jac_sweep(
 		printOp(
 			std::cout,
 			play,
-			i_op,
+			itr.op_index(),
 			i_var,
 			op,
 			arg
@@ -749,7 +749,7 @@ void rev_jac_sweep(
 	}
 # endif
 	// values corresponding to BeginOp
-	CPPAD_ASSERT_UNKNOWN( i_op == 0 );
+	CPPAD_ASSERT_UNKNOWN( itr.op_index() == 0 );
 	CPPAD_ASSERT_UNKNOWN( i_var == 0 );
 
 	return;
