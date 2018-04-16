@@ -159,17 +159,6 @@ void forward0sweep(
 	/*
 	<!-- define forward0sweep_code_define -->
 	*/
-	// op code for current instruction
-	OpCode op;
-
-	// index for current instruction
-	size_t i_op;
-
-	// next variables
-	size_t i_var;
-
-	// operation argument indices
-	const addr_t*   arg = CPPAD_NULL;
 
 	// initialize the comparision operator counter
 	if( p == 0 )
@@ -245,8 +234,13 @@ void forward0sweep(
 	// skip the BeginOp at the beginning of the recording
 	typedef typename player<Base>::const_iterator iterator;
 	iterator itr = play->begin();
+	// op_info
+	OpCode op;
+	size_t i_op, i_var;
+	const addr_t* arg;
 	itr.op_info(op, arg, i_op, i_var);
 	CPPAD_ASSERT_UNKNOWN( op == BeginOp );
+	//
 # if CPPAD_FORWARD0SWEEP_TRACE
 	std::cout << std::endl;
 # endif

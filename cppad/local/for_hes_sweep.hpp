@@ -98,12 +98,6 @@ void for_hes_sweep(
 	Vector_set&                for_hes_sparse
 )
 {
-	OpCode           op;
-	size_t         i_op;
-	size_t        i_var;
-
-	const addr_t*   arg = CPPAD_NULL;
-
 	// length of the parameter vector (used by CppAD assert macros)
 	const size_t num_par = play->num_par_rec();
 
@@ -173,6 +167,10 @@ void for_hes_sweep(
 	// skip the BeginOp at the beginning of the recording
 	typedef typename player<Base>::const_iterator iterator;
 	iterator itr = play->begin();
+	// op_info
+	OpCode op;
+	size_t i_op, i_var;
+	const addr_t* arg;
 	itr.op_info(op, arg, i_op, i_var);
 	CPPAD_ASSERT_UNKNOWN( op == BeginOp );
 # if CPPAD_FOR_HES_SWEEP_TRACE
