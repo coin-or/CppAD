@@ -932,7 +932,7 @@ template <class Base>
 class player_const_random_iterator {
 private:
 	/// number of variables in tape
-	const size_t num_var_;
+	size_t num_var_;
 
 	/// mapping from operator index to operator
 	const pod_vector<OpCode>* op_vec_;
@@ -958,6 +958,7 @@ public:
 	// default constructor
 	player_const_random_iterator(void)
 	{	clear(); }
+	//
 	/// Clear all information in this iterator
 	void clear(void)
 	{	num_var_  = 0;

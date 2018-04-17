@@ -1,7 +1,7 @@
 # ifndef CPPAD_CORE_SUBGRAPH_REVERSE_HPP
 # define CPPAD_CORE_SUBGRAPH_REVERSE_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -73,7 +73,7 @@ $codei%
 	const %BoolVector%& %select_domain%
 %$$
 It has size $latex n$$ and specifies which independent variables
-to include in the calculation.
+to include in future $code subgraph_reverse$$ calculations.
 If $icode%select_domain%[%j%]%$$ is false,
 it is assumed that $latex u^{(k)}_j = 0$$ for $latex k > 0$$; i.e.,
 the $th j$$ component of the Taylor coefficient for $latex x$$,

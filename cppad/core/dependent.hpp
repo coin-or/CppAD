@@ -2,7 +2,7 @@
 # define CPPAD_CORE_DEPENDENT_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -309,6 +309,9 @@ void ADFun<Base>::Dependent(local::ADTape<Base> *tape, const ADvector &y)
 	// for_jac_sparse_pack_, for_jac_sparse_set_
 	for_jac_sparse_pack_.resize(0, 0);
 	for_jac_sparse_set_.resize(0,0);
+
+	// clear the random iterator for this player
+	play_ran_itr_.clear();
 
 	// resize subgraph_info_
 	subgraph_info_.resize(

@@ -2,7 +2,7 @@
 # define CPPAD_CORE_FUN_CONSTRUCT_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -301,10 +301,13 @@ void ADFun<Base>::operator=(const ADFun<Base>& f)
 	taylor_                    = f.taylor_;
 	cskip_op_                  = f.cskip_op_;
 	load_op_                   = f.load_op_;
-	subgraph_info_             = f.subgraph_info_;
 	//
 	// player
 	play_                      = f.play_;
+	play_ran_itr_              = f.play_ran_itr_;
+	//
+	// subgraph
+	subgraph_info_             = f.subgraph_info_;
 	//
 	// sparse_pack
 	for_jac_sparse_pack_.resize(0, 0);

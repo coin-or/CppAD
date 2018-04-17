@@ -2,7 +2,7 @@
 # define CPPAD_CORE_AD_FUN_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -129,6 +129,7 @@ private:
 
 	/// the operation sequence corresponding to this object
 	local::player<Base> play_;
+	typename local::player<Base>::const_random_iterator play_ran_itr_;
 
 	/// Packed results of the forward mode Jacobian sparsity calculations.
 	/// for_jac_sparse_pack_.n_set() != 0  implies other sparsity results
@@ -695,6 +696,7 @@ public:
 
 	/// Deprecated: amount of memory for this object
 	/// Note that an approximation is used for the std::set<size_t> memory
+	/// play_ran_itr_ not included.
 	size_t Memory(void) const
 	{	size_t pervar  = cap_order_taylor_ * sizeof(Base)
 		+ for_jac_sparse_pack_.memory()

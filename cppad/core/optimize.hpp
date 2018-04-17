@@ -2,7 +2,7 @@
 # define CPPAD_CORE_OPTIMIZE_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -271,6 +271,9 @@ void ADFun<Base>::optimize(const std::string& options)
 	// resize and initilaize conditional skip vector
 	// (must use player size because it now has the recoreder information)
 	cskip_op_.resize( play_.num_op_rec() );
+
+	// clear the player random iterator
+	play_ran_itr_.clear();
 
 	// resize subgraph_info_
 	subgraph_info_.resize(

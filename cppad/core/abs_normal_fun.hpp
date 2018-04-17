@@ -1,7 +1,7 @@
 # ifndef CPPAD_CORE_ABS_NORMAL_FUN_HPP
 # define CPPAD_CORE_ABS_NORMAL_FUN_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -829,6 +829,9 @@ void ADFun<Base>::abs_normal_fun(ADFun<Base>& g, ADFun<Base>& a) const
 	// Transferring the recording swaps its vectors so do this last
 	// replace the recording in g (this ADFun object)
 	g.play_.get(rec, n + s);
+
+	// random iterator for this player
+	g.play_ran_itr_.clear();
 
 	// resize subgraph_info_
 	g.subgraph_info_.resize(

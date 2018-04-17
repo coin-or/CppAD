@@ -1,7 +1,7 @@
 # ifndef CPPAD_LOCAL_SUBGRAPH_INFO_HPP
 # define CPPAD_LOCAL_SUBGRAPH_INFO_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -101,7 +101,6 @@ public:
 	/// dependent variables that have been processed since previous init_rev
 	const pod_vector<bool>& process_range(void) const
 	{	return process_range_; }
-
 
 	/// amount of memory corresonding to this object
 	size_t memory(void) const
