@@ -682,7 +682,7 @@ public:
 	}
 	typedef player_const_random_iterator<Base> const_random_iterator;
 	/// random
-	const_random_iterator any(void) const
+	const_random_iterator all(void) const
 	{	size_t num_var  = num_var_rec_;
 		return const_random_iterator(op_vec_, arg_vec_, num_var);
 	}
@@ -947,9 +947,13 @@ private:
 	/// (set by constructor and effectively const)
 	pod_vector<addr_t> op2arg_vec_;
 
-	/// mapping from operator index to variable index
+	/// mapping from operator index to primary variable index
 	/// (set by constructor and effectively const)
 	pod_vector<addr_t> op2var_vec_;
+
+	/// mapping from primary variable index to operator index
+	/// (set by constructor and effectively const)
+	pod_vector<addr_t> var2op_vec_;
 
 	/// index of the current operator in the subgraph
 	size_t subgraph_index_;
@@ -967,11 +971,12 @@ public:
 		subgraph_ = CPPAD_NULL;
 		op2arg_vec_.clear();
 		op2var_vec_.clear();
+		var2op_vec_.clear();
 	}
 	/*!
 	Set random access information corresponding to a player.
 	This goes through the operation sequence and makes a new
-	mapping from the operation index to the argument and variable indices.
+	mapping for op2arg_vec_, op2var_vec_, and var2op_vec_.
 	It also clears any subgraph information.
 	*/
 	void set_random(
@@ -981,7 +986,9 @@ public:
 		const pod_vector<addr_t>* arg_vec    ,
 		/// number of variables in tape
 		size_t                    num_var    )
-	{	clear();
+	{	//
+		clear();
+		//
 		op_vec_  = op_vec;
 		arg_vec_ = arg_vec;
 		num_var_ = num_var;
@@ -989,9 +996,16 @@ public:
 		// num_op
 		size_t num_op = op_vec->size();
 		//
-		// compute op2arg_vec_ and op2var_vec_;
+		// compute op2arg_vec_, op2var_vec_, and var2op_vec_
 		op2arg_vec_.resize( num_op );
 		op2var_vec_.resize( num_op );
+		var2op_vec_.resize( num_var );
+# ifndef NDEBUG
+		// initialize all var2op values as invalid,
+		// only primary variables will be set to a valid value
+		for(size_t i = 0; i < num_var; ++i)
+			var2op_vec_[i] = addr_t( num_var );
+# endif
 		//
 		addr_t arg_index = 0;
 		addr_t var_index = 0;
@@ -1009,8 +1023,10 @@ public:
 				op2var_vec_[op_index] = addr_t( num_var );
 			}
 			else
-			{	// index of last (primary) result for this operator
-				op2var_vec_[op_index] = var_index - 1;
+			{	// index of primary (last) result for this operator
+				op2var_vec_[op_index]      = var_index - 1;
+				// operator for this primary variable
+				var2op_vec_[var_index - 1] = op_index;
 			}
 			//
 			// CSumOp
@@ -1039,6 +1055,22 @@ public:
 				arg_index += 7 + arg[4] + arg[5];
 			}
 		}
+	}
+	/// num_op
+	size_t num_op(void)
+	{	return op_vec_->size();
+	}
+	/// num_var
+	size_t num_var(void)
+	{	return num_var_;
+	}
+	/// get_op
+	OpCode get_op(size_t op_index)
+	{	return (*op_vec_)[op_index];
+	}
+	/// var2op
+	size_t var2op(size_t var_index)
+	{	return var2op_vec_[var_index];
 	}
 	/// Set the subgraph for ++ and -- to iterator over
 	void set_subgraph(
