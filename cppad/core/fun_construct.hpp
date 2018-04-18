@@ -304,7 +304,6 @@ void ADFun<Base>::operator=(const ADFun<Base>& f)
 	//
 	// player
 	play_                      = f.play_;
-	play_ran_itr_              = f.play_ran_itr_;
 	//
 	// subgraph
 	subgraph_info_             = f.subgraph_info_;

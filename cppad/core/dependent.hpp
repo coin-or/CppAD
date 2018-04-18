@@ -310,9 +310,6 @@ void ADFun<Base>::Dependent(local::ADTape<Base> *tape, const ADvector &y)
 	for_jac_sparse_pack_.resize(0, 0);
 	for_jac_sparse_set_.resize(0,0);
 
-	// clear the random iterator for this player
-	play_ran_itr_.clear();
-
 	// resize subgraph_info_
 	subgraph_info_.resize(
 		ind_taddr_.size(),   // n_dep

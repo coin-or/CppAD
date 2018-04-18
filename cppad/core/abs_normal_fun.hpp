@@ -830,9 +830,6 @@ void ADFun<Base>::abs_normal_fun(ADFun<Base>& g, ADFun<Base>& a) const
 	// replace the recording in g (this ADFun object)
 	g.play_.get(rec, n + s);
 
-	// random iterator for this player
-	g.play_ran_itr_.clear();
-
 	// resize subgraph_info_
 	g.subgraph_info_.resize(
 		g.ind_taddr_.size(),   // n_ind

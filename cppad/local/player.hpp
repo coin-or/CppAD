@@ -678,8 +678,9 @@ public:
 	typedef player_const_random_iterator<Base> const_random_iterator;
 	/// random
 	const_random_iterator random_iterator(void) const
-	{	size_t num_var  = num_var_rec_;
-		return const_random_iterator(op_vec_, arg_vec_, num_var);
+	{	return const_random_iterator(
+			&op_vec_, &arg_vec_, &op2arg_vec_, &op2var_vec_, &var2op_vec_
+		);
 	}
 
 };
@@ -925,146 +926,68 @@ public:
 template <class Base>
 class player_const_random_iterator {
 private:
-	/// number of variables in tape
-	size_t num_var_;
-
 	/// mapping from operator index to operator
-	const pod_vector<OpCode>* op_vec_;
+	const pod_vector<OpCode>* const op_vec_;
 
 	/// mapping from argument index to argument value
-	const pod_vector<addr_t>* arg_vec_;
+	const pod_vector<addr_t>* const arg_vec_;
+
+	/// mapping from operator index to argument index
+	const pod_vector<addr_t>* const op2arg_vec_;
+
+	/// mapping from operator index to primary variable index
+	const pod_vector<addr_t>* const op2var_vec_;
+
+	/// mapping from primary variable index to operator index
+	const pod_vector<addr_t>* const var2op_vec_;
 
 	/// mapping from subgraph index to operator index
 	const pod_vector<addr_t>* subgraph_;
-
-	/// mapping from operator index to argument index
-	/// (set by constructor and effectively const)
-	pod_vector<addr_t> op2arg_vec_;
-
-	/// mapping from operator index to primary variable index
-	/// (set by constructor and effectively const)
-	pod_vector<addr_t> op2var_vec_;
-
-	/// mapping from primary variable index to operator index
-	/// (set by constructor and effectively const)
-	pod_vector<addr_t> var2op_vec_;
 
 	/// index of the current operator in the subgraph
 	size_t subgraph_index_;
 
 public:
-	// default constructor
-	player_const_random_iterator(void)
-	{	clear(); }
-	//
-	/// Clear all information in this iterator
-	void clear(void)
-	{	num_var_  = 0;
-		op_vec_   = CPPAD_NULL;
-		arg_vec_  = CPPAD_NULL;
-		subgraph_ = CPPAD_NULL;
-		op2arg_vec_.clear();
-		op2var_vec_.clear();
-		var2op_vec_.clear();
-	}
 	/*!
 	Set random access information corresponding to a player.
 	This goes through the operation sequence and makes a new
 	mapping for op2arg_vec_, op2var_vec_, and var2op_vec_.
 	It also clears any subgraph information.
 	*/
-	void set_random(
+	player_const_random_iterator(
 		/// operators in this player
 		const pod_vector<OpCode>* op_vec     ,
 		/// operator arguments for this player
 		const pod_vector<addr_t>* arg_vec    ,
-		/// number of variables in tape
-		size_t                    num_var    )
-	{	//
-		clear();
-		//
-		op_vec_  = op_vec;
-		arg_vec_ = arg_vec;
-		num_var_ = num_var;
-		//
-		// num_op
-		size_t num_op = op_vec->size();
-		//
-		// compute op2arg_vec_, op2var_vec_, and var2op_vec_
-		op2arg_vec_.resize( num_op );
-		op2var_vec_.resize( num_op );
-		var2op_vec_.resize( num_var );
-# ifndef NDEBUG
-		// initialize all var2op values as invalid,
-		// only primary variables will be set to a valid value
-		for(size_t i = 0; i < num_var; ++i)
-			var2op_vec_[i] = addr_t( num_var );
-# endif
-		//
-		addr_t arg_index = 0;
-		addr_t var_index = 0;
-		for(size_t op_index = 0; op_index < num_op; ++op_index)
-		{	// this operator
-			OpCode op = (*op_vec_)[op_index];
-			//
-			// index of first argument for this operator
-			op2arg_vec_[op_index] = arg_index;
-			arg_index            += NumArg(op);
-			//
-			var_index            += NumRes(op);
-			if( NumRes(op) == 0 )
-			{	// invalid variable index
-				op2var_vec_[op_index] = addr_t( num_var );
-			}
-			else
-			{	// index of primary (last) result for this operator
-				op2var_vec_[op_index]      = var_index - 1;
-				// operator for this primary variable
-				var2op_vec_[var_index - 1] = op_index;
-			}
-			//
-			// CSumOp
-			if( op == CSumOp )
-			{	CPPAD_ASSERT_UNKNOWN( NumArg(CSumOp) == 0 );
-				//
-				// pointer to first argument for this operator
-				addr_t* arg = arg_vec_->data() + arg_index;
-				//
-				// The actual number of arugments for this operator is
-				// arg[0] + arg[1] + 4.
-				// Correct index of first argument for next operator
-				arg_index += arg[0] + arg[1] + 4;
-			}
-			//
-			// CSkipOp
-			if( op == CSkipOp )
-			{	CPPAD_ASSERT_UNKNOWN( NumArg(CSumOp) == 0 );
-				//
-				// pointer to first argument for this operator
-				addr_t* arg = arg_vec_->data() + arg_index;
-				//
-				// The actual number of arugments for this operator is
-				// 7 + arg[4] + arg[5].
-				// Correct index of first argument for next operator.
-				arg_index += 7 + arg[4] + arg[5];
-			}
-		}
-	}
+		/// mapping from operator to argument
+		const pod_vector<addr_t>* op2arg_vec ,
+		/// mapping from operator to variable
+		const pod_vector<addr_t>* op2var_vec ,
+		/// mapping from variable to operator
+		const pod_vector<addr_t>* var2op_vec )
+	:
+	arg_vec_        (arg_vec_)    ,
+	op2arg_vec_     (op2arg_vec)  ,
+	op2var_vec_     (op2var_vec)  ,
+	var2op_vec_     (var2op_vec)  ,
+	subgraph_       (CPPAD_NULL)  ,
+	subgraph_index_ (0)
+	{ }
 	/// num_op
-	size_t num_op(void)
+	size_t num_op(void) const
 	{	return op_vec_->size();
 	}
 	/// num_var
-	size_t num_var(void)
-	{	return num_var_;
+	size_t num_var(void) const
+	{	return var2op_vec_->size();
 	}
 	/// get_op
-	OpCode get_op(size_t op_index)
+	OpCode get_op(size_t op_index) const
 	{	return (*op_vec_)[op_index];
 	}
 	/// var2op
-	size_t var2op(size_t var_index)
-	{	return var2op_vec_[var_index];
+	size_t var2op(size_t var_index) const
+	{	return (*var2op_vec_)[var_index];
 	}
 	/// Set the subgraph for ++ and -- to iterator over
 	void set_subgraph(
@@ -1088,7 +1011,7 @@ public:
 		--subgraph_index_;
 	}
 	/// operator index for current operator in the subgraph
-	size_t op_index(void)
+	size_t op_index(void) const
 	{	return (*subgraph_)[subgraph_index_]; }
 	/*!
 	\brief
@@ -1117,14 +1040,15 @@ public:
 		op              = (*op_vec_)[op_index];
 		//
 		// op_arg
-		size_t arg_index = op2arg_vec_[op_index];
+		size_t arg_index = (*op2arg_vec_)[op_index];
 		CPPAD_ASSERT_UNKNOWN( arg_index + NumArg(op) <= arg_vec_->size() );
 		op_arg = arg_vec_->data() + arg_index;
 		//
 		// var_index
-		var_index = op2var_vec_[op_index];
+		var_index = (*op2var_vec_)[op_index];
 		CPPAD_ASSERT_UNKNOWN(
-			var_index < num_var_ || (NumRes(op) == 0 && var_index == num_var_)
+			var_index < var2op_vec_->size() ||
+			( NumRes(op) == 0 && var_index == var2op_vec_->size() )
 		);
 		return;
 	}

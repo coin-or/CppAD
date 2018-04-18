@@ -272,9 +272,6 @@ void ADFun<Base>::optimize(const std::string& options)
 	// (must use player size because it now has the recoreder information)
 	cskip_op_.resize( play_.num_op_rec() );
 
-	// clear the player random iterator
-	play_ran_itr_.clear();
-
 	// resize subgraph_info_
 	subgraph_info_.resize(
 		ind_taddr_.size(),    // n_ind
