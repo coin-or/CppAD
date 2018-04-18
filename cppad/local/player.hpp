@@ -1,3 +1,4 @@
+
 # ifndef CPPAD_LOCAL_PLAYER_HPP
 # define CPPAD_LOCAL_PLAYER_HPP
 
@@ -168,59 +169,53 @@ public:
 		op2var_vec_.resize( num_op );
 		var2op_vec_.resize( num_var_rec_ );
 # ifndef NDEBUG
-		// value of var2op for auxillary variables is op_vec_.size() (invalid)
+		// value of var2op for auxillary variables is num_op (invalid)
 		for(size_t i_var = 0; i_var < num_var_rec_; ++i_var)
-			var2op_vec_[i_var] = addr_t( op_vec_.size() );
+			var2op_vec_[i_var] = num_op;
+		// value of op2var is num_var (invalid) when NumRes(op) = 0
+		for(addr_t i_op = 0; i_op < num_op; ++i_op)
+			op2var_vec_[i_op] = addr_t( num_var_rec_ );
 # endif
 		for(addr_t i_op = 0; i_op < num_op; ++i_op)
 		{	OpCode  op          = op_vec_[i_op];
 			//
 			// index of first argument for this operator
 			op2arg_vec_[i_op]   = arg_index;
-			//
-			// index of first argument for next operator
 			arg_index          += addr_t( NumArg(op) );
 			//
 			// index of first result for next operator
-			var_index          += addr_t( NumRes(op) );
-			//
+			var_index  += addr_t( NumRes(op) );
 			if( NumRes(op) > 0 )
 			{	// index of last (primary) result for this operator
-				// when NumRes(op) > 0.
 				op2var_vec_[i_op] = var_index - 1;
 				//
-				// mapping from this primary variable to its operator
+				// mapping from primary variable to its operator
 				var2op_vec_[var_index - 1] = i_op;
-				//
-				if( op == CSumOp )
-				{	// phony number of arguments
-					CPPAD_ASSERT_UNKNOWN( NumArg(CSumOp) == 0 );
-					//
-					// pointer to first argument for this operator
-					addr_t* op_arg = arg_vec_.data() + arg_index;
-					//
-					// The actual number of arugments for this operator is
-					// op_arg[0] + op_arg[1] + 4. Correct index of
-					// first argument for next operator
-					arg_index += op_arg[0] + op_arg[1] + 4;
-				}
 			}
-			else
-			{	// invalid index, no result for this operator
-				op2var_vec_[i_op] = addr_t( num_var_rec_ );
+			// CSumOp
+			if( op == CSumOp )
+			{	CPPAD_ASSERT_UNKNOWN( NumArg(CSumOp) == 0 );
 				//
-				if( op == CSkipOp )
-				{	// phony number of arguments
-					CPPAD_ASSERT_UNKNOWN( NumArg(CSumOp) == 0 );
-					//
-					// pointer to first argument for this operator
-					addr_t* op_arg = arg_vec_.data() + arg_index;
-					//
-					// The actual number of arugments for this operator is
-					// 7 + op_arg[4] + op_arg[5]. Correct index of
-					// first argument for next operator.
-					arg_index += 7 + op_arg[4] + op_arg[5];
-				}
+				// pointer to first argument for this operator
+				addr_t* op_arg = arg_vec_.data() + arg_index;
+				//
+				// The actual number of arugments for this operator is
+				// op_arg[0] + op_arg[1] + 4
+				// Correct index of first argument for next operator
+				arg_index += op_arg[0] + op_arg[1] + 4;
+			}
+			//
+			// CSkip
+			if( op == CSkipOp )
+			{	CPPAD_ASSERT_UNKNOWN( NumArg(CSumOp) == 0 );
+				//
+				// pointer to first argument for this operator
+				addr_t* op_arg = arg_vec_.data() + arg_index;
+				//
+				// The actual number of arugments for this operator is
+				// 7 + op_arg[4] + op_arg[5].
+				// Correct index of first argument for next operator.
+				arg_index += 7 + op_arg[4] + op_arg[5];
 			}
 		}
 		check_inv_op(n_ind);
@@ -682,7 +677,7 @@ public:
 	}
 	typedef player_const_random_iterator<Base> const_random_iterator;
 	/// random
-	const_random_iterator all(void) const
+	const_random_iterator random_iterator(void) const
 	{	size_t num_var  = num_var_rec_;
 		return const_random_iterator(op_vec_, arg_vec_, num_var);
 	}
@@ -923,7 +918,6 @@ public:
 		return user_atom;
 	}
 };
-
 // ============================================================================
 /// This class provides both random accesss and subgraph accesss to a player.
 /// The subgraph access functions ++, --, op_info, and user_inf are designed
