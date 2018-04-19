@@ -31,7 +31,7 @@ are done using the type Base .
 */
 
 template <class Base> class player_const_iterator;
-template <class Base> class player_const_random_iterator;
+template <class Base> class player_const_subgraph_iterator;
 
 template <class Base>
 class player {
@@ -65,7 +65,8 @@ private:
 	pod_vector<addr_t> vecad_ind_vec_;
 
 	// ----------------------------------------------------------------------
-	// Information needed to use member functions that begin with random_.
+	// Information needed to use member functions that begin with random_
+	// and a const_subgraph_iterator.
 
 	/// index in arg_vec_ corresonding to the first argument for each operator
 	pod_vector<addr_t> op2arg_vec_;
@@ -395,8 +396,8 @@ public:
 		var2op_vec_.resize(0);
 	}
 	// =================================================================
-	/// Enable use of member functions that begin with random_
-	/// (no work if already setup).
+	/// Enable use of const_subgraph_iterator and member functions that begin
+	// with random_(no work if already setup).
 	void setup_random(void)
 	{	if( op2arg_vec_.size() != 0 )
 		{	CPPAD_ASSERT_UNKNOWN( op2arg_vec_.size() == op_vec_.size() );
@@ -468,6 +469,7 @@ public:
 		}
 	}
 	/// Free memory used for member functions that begin with random_
+	/// and const_subgraph_iterator.
 	void clear_random(void)
 	{	op2arg_vec_.clear();
 		op2var_vec_.clear();
@@ -695,11 +697,16 @@ public:
 		;
 	}
 	typedef player_const_iterator<Base> const_iterator;
+	typedef player_const_subgraph_iterator<Base> const_subgraph_iterator;
 	/// begin
 	const_iterator begin(void) const
 	{	size_t op_index = 0;
 		size_t num_var  = num_var_rec_;
 		return const_iterator(num_var, &op_vec_, &arg_vec_, op_index);
+	}
+	const_subgraph_iterator begin(pod_vector<addr_t>* subgraph) const
+	{	size_t subgraph_index = 0;
+		return const_subgraph_iterator(this, subgraph, subgraph_index);
 	}
 	/// end
 	const_iterator end(void) const
@@ -707,18 +714,16 @@ public:
 		size_t num_var  = num_var_rec_;
 		return const_iterator(num_var, &op_vec_, &arg_vec_, op_index);
 	}
-	typedef player_const_random_iterator<Base> const_random_iterator;
-	/// random
-	const_random_iterator random_iterator(void) const
-	{	return const_random_iterator(
-			&op_vec_, &arg_vec_, &op2arg_vec_, &op2var_vec_, &var2op_vec_
-		);
+	const_subgraph_iterator end(pod_vector<addr_t>* subgraph) const
+	{	size_t subgraph_index = subgraph->size();
+		return const_subgraph_iterator(this, subgraph, subgraph_index);
 	}
 
 };
 
 // ============================================================================
 /// const_iterator for a player object.
+/// Except for constructor, it has the same API as const_subgraph_iterator.
 template <class Base>
 class player_const_iterator {
 private:
@@ -750,7 +755,7 @@ public:
 		var_index_ = rhs.var_index_;
 		return;
 	}
-	/// Create a iterator starting either at beginning or end of tape
+	/// Create an iterator starting either at beginning or end of tape
 	player_const_iterator(
 		/// number of variables in tape
 		size_t                    num_var    ,
@@ -961,148 +966,63 @@ public:
 		return user_atom;
 	}
 };
+
 // ============================================================================
-/// This class provides both random accesss and subgraph accesss to a player.
-/// The subgraph access functions ++, --, op_info, and user_inf are designed
-/// to work like corresponding functions in player_const_iterator class.
+/// play_const_subgraph_iterator for a player object.
+/// Except for constructor, it has the same API as player_const_iterator.
 template <class Base>
-class player_const_random_iterator {
+class player_const_subgraph_iterator {
 private:
-	/// mapping from operator index to operator
-	const pod_vector<OpCode>* const op_vec_;
+	/// play_
+	const player<Base>*       play_;
 
-	/// mapping from argument index to argument value
-	const pod_vector<addr_t>* const arg_vec_;
-
-	/// mapping from operator index to argument index
-	const pod_vector<addr_t>* const op2arg_vec_;
-
-	/// mapping from operator index to primary variable index
-	const pod_vector<addr_t>* const op2var_vec_;
-
-	/// mapping from primary variable index to operator index
-	const pod_vector<addr_t>* const var2op_vec_;
-
-	/// mapping from subgraph index to operator index
+	/// subgraph_
 	const pod_vector<addr_t>* subgraph_;
 
-	/// index of the current operator in the subgraph
+	/// index in subgraph of current operator
 	size_t subgraph_index_;
 
 public:
-	/*!
-	Set random access information corresponding to a player.
-	This goes through the operation sequence and makes a new
-	mapping for op2arg_vec_, op2var_vec_, and var2op_vec_.
-	It also clears any subgraph information.
-	*/
-	player_const_random_iterator(
-		/// operators in this player
-		const pod_vector<OpCode>* op_vec     ,
-		/// operator arguments for this player
-		const pod_vector<addr_t>* arg_vec    ,
-		/// mapping from operator to argument
-		const pod_vector<addr_t>* op2arg_vec ,
-		/// mapping from operator to variable
-		const pod_vector<addr_t>* op2var_vec ,
-		/// mapping from variable to operator
-		const pod_vector<addr_t>* var2op_vec )
+	/// assignment operator
+	void operator=(const player_const_subgraph_iterator& rhs)
+	{	play_            = rhs.play_;
+		subgraph_        = rhs.subgraph_;
+		subgraph_index_  = rhs.subgraph_index_;
+		return;
+	}
+	/// Create an iterator starting either at beginning or end of subgraph
+	player_const_subgraph_iterator(
+		const player<Base>*       play             ,
+		const pod_vector<addr_t>* subgraph         ,
+		size_t                    subgraph_index   )
 	:
-	arg_vec_        (arg_vec_)    ,
-	op2arg_vec_     (op2arg_vec)  ,
-	op2var_vec_     (op2var_vec)  ,
-	var2op_vec_     (var2op_vec)  ,
-	subgraph_       (CPPAD_NULL)  ,
-	subgraph_index_ (0)
+	play_           ( play )            ,
+	subgraph_       ( subgraph )        ,
+	subgraph_index_ ( subgraph_index )
 	{ }
-	/// num_op
-	size_t num_op(void) const
-	{	return op_vec_->size();
+	/*!
+	Advance iterator to next operator
+	*/
+	player_const_subgraph_iterator<Base>& operator++(void)
+	{	++subgraph_index_;
+		return *this;
 	}
-	/// num_var
-	size_t num_var(void) const
-	{	return var2op_vec_->size();
+	/*!
+	Backup iterator to previous operator
+	*/
+	player_const_subgraph_iterator<Base>& operator--(void)
+	{	--subgraph_index_;
+		return *this;
 	}
-	/// get_op
-	OpCode get_op(size_t op_index) const
-	{	return (*op_vec_)[op_index];
-	}
-	/// var2op
-	size_t random_var2op(size_t var_index) const
-	{	return (*var2op_vec_)[var_index];
-	}
-	/// Set the subgraph for ++ and -- to iterator over
-	void set_subgraph(
-		/// pointer to map from subgraph index to operator index
-		const pod_vector<addr_t>* subgraph       ,
-		/// subgraph index to start ++ and  -- operators at
-		size_t                    subgraph_index )
-	{	subgraph_       = subgraph;
-		subgraph_index_ = subgraph_index;
-	}
-	/// advance to next operator in the subgraph
-	player_const_random_iterator& operator++(void)
-	{	CPPAD_ASSERT_UNKNOWN( subgraph_ != CPPAD_NULL );
-		CPPAD_ASSERT_UNKNOWN( subgraph_index_ + 1 < subgraph_->size() );
-		--subgraph_index_;
-	}
-	/// backup to previous operator in the subgraph
-	player_const_random_iterator& operator--(void)
-	{	CPPAD_ASSERT_UNKNOWN( subgraph_ != CPPAD_NULL );
-		CPPAD_ASSERT_UNKNOWN( 0 < subgraph_index_ );
-		--subgraph_index_;
-	}
-	/// operator index for current operator in the subgraph
-	size_t op_index(void) const
-	{	return (*subgraph_)[subgraph_index_]; }
 	/*!
 	\brief
-	random access of information any operator in the graph.
-
-	\param op_index
-	index for this operator [in]
+	Get information corresponding to current operator.
 
 	\param op [out]
 	op code for this operator.
 
 	\param op_arg [out]
 	pointer to the first arguement to this operator.
-
-	\param var_index [out]
-	index of the last variable (primary variable) for this operator.
-	If there is no primary variable for this operator, i_var not sepcified
-	and could have any value.
-	*/
-	void op_info(
-		size_t         op_index   ,
-		OpCode&        op         ,
-		const addr_t*& op_arg     ,
-		size_t&        var_index  ) const
-	{	// op
-		op              = (*op_vec_)[op_index];
-		//
-		// op_arg
-		size_t arg_index = (*op2arg_vec_)[op_index];
-		CPPAD_ASSERT_UNKNOWN( arg_index + NumArg(op) <= arg_vec_->size() );
-		op_arg = arg_vec_->data() + arg_index;
-		//
-		// var_index
-		var_index = (*op2var_vec_)[op_index];
-		CPPAD_ASSERT_UNKNOWN(
-			var_index < var2op_vec_->size() ||
-			( NumRes(op) == 0 && var_index == var2op_vec_->size() )
-		);
-		return;
-	}
-	/*!
-	\brief
-	Get information corresponding to current operator in the subgraph.
-
-	\param op [out]
-	op code for this operator.
-
-	\param op_arg [out]
-	pointer to the first arguement for this operator.
 
 	\param var_index [out]
 	index of the last variable (primary variable) for this operator.
@@ -1114,15 +1034,15 @@ public:
 		const addr_t*& op_arg     ,
 		size_t&        var_index  ) const
 	{	// op
-		size_t op_index = (*subgraph_)[subgraph_index_];
-		op_info(op_index, op, op_arg, var_index);
+		size_t i_op = (*subgraph_)[subgraph_index_];
+		play_->random_access(i_op, op, op_arg, var_index);
 	}
+	/// current operator index
+	size_t op_index(void)
+	{	return subgraph_[subgraph_index_]; }
 	/*!
 	\brief
-	random access of extra information when current operator is UserOp.
-
-	\param op_index
-	index for this operator [in]
+	Unpack extra information when current op is a UserOp
 
 	\param user_old [out]
 	is the extra information passed to the old style user atomic functions.
@@ -1137,7 +1057,6 @@ public:
 	is a pointer to this user atomic function.
 	*/
 	atomic_base<Base>* user_info(
-		size_t           op_index   ,
 		size_t&          user_old   ,
 		size_t&          user_m     ,
 		size_t&          user_n     ) const
@@ -1145,54 +1064,9 @@ public:
 		OpCode op;
 		const addr_t* op_arg;
 		size_t var_index;
-		op_info(op_index, op, op_arg, var_index);
+		op_info(op, op_arg, var_index);
 		//
-		CPPAD_ASSERT_UNKNOWN( op == UserOp );
-		CPPAD_ASSERT_NARG_NRES(op, 4, 0);
-		//
-		// return UserOp info
-		user_old = op_arg[1];
-		user_n   = op_arg[2];
-		user_m   = op_arg[3];
-		CPPAD_ASSERT_UNKNOWN( user_n > 0 );
-		//
-		size_t user_index = size_t( op_arg[0] );
-		atomic_base<Base>* user_atom =
-			atomic_base<Base>::class_object(user_index);
-# ifndef NDEBUG
-		if( user_atom == CPPAD_NULL )
-		{	// user_atom is null so cannot use user_atom->afun_name()
-			std::string msg = atomic_base<Base>::class_name(user_index)
-				+ ": atomic_base function has been deleted";
-			CPPAD_ASSERT_KNOWN(false, msg.c_str() );
-		}
-# endif
-		//
-		return user_atom;
-	}
-	/*!
-	\brief
-	Get extra information when current operator in the subgraph is UserOp.
-
-	\param user_old [out]
-	is the extra information passed to the old style user atomic functions.
-
-	\param user_m [out]
-	is the number of results for this user atmoic function.
-
-	\param user_n [out]
-	is the number of arguments for this user atmoic function.
-
-	\return
-	is a pointer to this user atomic function.
-	*/
-	atomic_base<Base>* user_info(
-		size_t&          user_old   ,
-		size_t&          user_m     ,
-		size_t&          user_n     ) const
-	{	// get operator infromation
-		size_t op_index = (*subgraph_)[subgraph_index_];
-		return user_info(op_index, user_old, user_m, user_n);
+		return play_->get_user_info(op, op_arg, user_old, user_m, user_n);
 	}
 };
 
