@@ -102,7 +102,7 @@ void match_op(
 	for(size_t j = 0; j < num_arg; ++j)
 	{	arg_match[j] = arg[j];
 		if( variable[j] )
-		{	size_t j_op     = play->var2op(arg[j]);
+		{	size_t j_op     = play->random_var2op(arg[j]);
 			size_t previous = opt_op_info[j_op].previous;
 			if( previous != 0 )
 			{	// a previous match, be the end of the line; i.e.,
@@ -145,7 +145,7 @@ void match_op(
 		{	for(size_t j = 0; j < num_arg; j++)
 			{	if( variable[j] )
 				{	size_t previous =
-						opt_op_info[ play->var2op(arg_c[j]) ].previous;
+						opt_op_info[ play->random_var2op(arg_c[j]) ].previous;
 					if( previous != 0 )
 					{	// must be end of the line for a previous match
 						CPPAD_ASSERT_UNKNOWN(
@@ -196,7 +196,7 @@ void match_op(
 			{	for(size_t j = 0; j < num_arg; j++)
 				{	CPPAD_ASSERT_UNKNOWN( variable[j] )
 					size_t previous =
-						opt_op_info[ play->var2op(arg_c[j]) ].previous;
+						opt_op_info[ play->random_var2op(arg_c[j]) ].previous;
 					if( previous != 0 )
 					{	CPPAD_ASSERT_UNKNOWN(
 							opt_op_info[previous].previous == 0

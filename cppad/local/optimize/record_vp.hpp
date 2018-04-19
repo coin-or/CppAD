@@ -76,7 +76,7 @@ struct_size_pair record_vp(
 	CPPAD_ASSERT_UNKNOWN( size_t(arg[1]) < npar  );
 	//
 	addr_t new_arg[2];
-	new_arg[0]   = old2new[ play->var2op(arg[0]) ].new_var;
+	new_arg[0]   = old2new[ play->random_var2op(arg[0]) ].new_var;
 	new_arg[1]   = rec->PutPar( par[arg[1]] );
 	rec->PutArg( new_arg[0], new_arg[1] );
 	//

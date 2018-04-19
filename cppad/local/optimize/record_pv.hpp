@@ -78,7 +78,7 @@ struct_size_pair record_pv(
 	//
 	addr_t new_arg[2];
 	new_arg[0]   = rec->PutPar( par[arg[0]] );
-	new_arg[1]   = old2new[ play->var2op(arg[1]) ].new_var;
+	new_arg[1]   = old2new[ play->random_var2op(arg[1]) ].new_var;
 	rec->PutArg( new_arg[0], new_arg[1] );
 	//
 	struct_size_pair ret;

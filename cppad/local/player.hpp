@@ -464,7 +464,7 @@ public:
 	\return
 	is the index of the operator corresponding to this primary variable.
 	*/
-	size_t var2op(size_t var_index) const
+	size_t random_var2op(size_t var_index) const
 	{	size_t i_op = var2op_vec_[var_index];
 		// check that var_index is a primary variable index
 		CPPAD_ASSERT_UNKNOWN( i_op < op_vec_.size() );
@@ -1003,7 +1003,7 @@ public:
 	{	return (*op_vec_)[op_index];
 	}
 	/// var2op
-	size_t var2op(size_t var_index) const
+	size_t random_var2op(size_t var_index) const
 	{	return (*var2op_vec_)[var_index];
 	}
 	/// Set the subgraph for ++ and -- to iterator over

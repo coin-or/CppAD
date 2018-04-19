@@ -167,7 +167,8 @@ subgraph[k] is an operator index and
 \code
 	play->num_op_rec() > subgraph[k] > subgraph[k-1]
 \endcode
-If i_var is a variable index, and play->var2op(i_var) is not in the subgraph,
+If i_var is a variable index, and play->random_var2op(i_var)
+is not in the subgraph,
 then the partials with respect to i_var are not modified and need to be
 initialized as zero. Note that this means the partial for the independent
 varaibles, that are not in the subgraph are not calculated.

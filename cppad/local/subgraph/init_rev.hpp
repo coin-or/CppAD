@@ -129,7 +129,7 @@ void subgraph_info::init_rev(
 			{	get_argument_variable(play, i_op, argument_variable, work);
 				for(size_t j = 0; j < argument_variable.size(); ++j)
 				{	size_t j_var = argument_variable[j];
-					size_t j_op  = play->var2op(j_var);
+					size_t j_op  = play->random_var2op(j_var);
 					j_op         = map_user_op_[j_op];
 					CPPAD_ASSERT_UNKNOWN( j_op < i_op );
 					if( in_subgraph_[j_op] == depend_yes )
@@ -149,7 +149,7 @@ void subgraph_info::init_rev(
 			{	get_argument_variable(play, i_op, argument_variable, work);
 				for(size_t j = 0; j < argument_variable.size(); ++j)
 				{	size_t j_var = argument_variable[j];
-					size_t j_op  = play->var2op(j_var);
+					size_t j_op  = play->random_var2op(j_var);
 					j_op         = map_user_op_[j_op];
 					CPPAD_ASSERT_UNKNOWN( j_op < i_op );
 					if( in_subgraph_[j_op] == depend_yes )

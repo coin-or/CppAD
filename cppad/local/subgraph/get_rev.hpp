@@ -106,7 +106,7 @@ void subgraph_info::get_rev(
 	size_t i_var = dep_taddr[i_dep];
 
 	// operator corresponding to this dependent variable
-	size_t i_op = play->var2op(i_var);
+	size_t i_op = play->random_var2op(i_var);
 	i_op        = map_user_op_[i_op];
 
 	// if this variable depends on the selected indepent variables
@@ -141,7 +141,7 @@ void subgraph_info::get_rev(
 		for(size_t j = 0; j < argument_variable.size(); ++j)
 		{	// add the corresponding operators to the subgraph
 			size_t j_var = argument_variable[j];
-			size_t j_op  = play->var2op(j_var);
+			size_t j_op  = play->random_var2op(j_var);
 			j_op         = map_user_op_[j_op];
 			bool add = in_subgraph_[j_op] <= depend_yes;
 			add     &= in_subgraph_[j_op] != i_dep;

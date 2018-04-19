@@ -163,7 +163,7 @@ void subgraph_sparsity(
 				// i_var is equal i_op becasue BeginOp and InvOp have 1 result
 				size_t i_var = i_op;       // tape index for this variable
 				size_t i_ind = i_var - 1;  // user index for this variable
-				CPPAD_ASSERT_UNKNOWN( play->var2op(i_var) == i_op );
+				CPPAD_ASSERT_UNKNOWN( play->random_var2op(i_var) == i_op );
 				CPPAD_ASSERT_UNKNOWN( select_domain[i_ind] );
 				//
 				// put this pair in the sparsity pattern

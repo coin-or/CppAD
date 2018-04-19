@@ -383,7 +383,7 @@ void ADFun<Base>::subgraph_reverse(
 		CPPAD_ASSERT_UNKNOWN( play_.GetOp(i_op) == local::InvOp );
 		//
 		size_t j = i_op - 1;
-		CPPAD_ASSERT_UNKNOWN( i_op == play_.var2op(ind_taddr_[j]) );
+		CPPAD_ASSERT_UNKNOWN( i_op == play_.random_var2op(ind_taddr_[j]) );
 		//
 		// return paritial for this independent variable
 		col[c] = j;
