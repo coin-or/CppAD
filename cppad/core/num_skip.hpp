@@ -2,7 +2,7 @@
 # define CPPAD_CORE_NUM_SKIP_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -71,10 +71,6 @@ namespace CppAD {
 template <typename Base>
 size_t ADFun<Base>::number_skip(void)
 {	// must pass through operation sequence to map operations to variables
-	local::OpCode op;
-	size_t        i_op;
-	size_t        i_var;
-	const addr_t* arg;
 
 	// information defined by forward_user
 	size_t user_old=0, user_m=0, user_n=0;
@@ -83,28 +79,31 @@ size_t ADFun<Base>::number_skip(void)
 	size_t num_var_skip = 0;
 
 	// start playback
-	i_op = 0;
-	play_.get_op_info(i_op, op, arg, i_var);
+	typename local::player<Base>::const_iterator itr = play_.begin();
+	local::OpCode op;
+	size_t        i_var;
+	const addr_t* arg;
+	itr.op_info(op, arg, i_var);
 	CPPAD_ASSERT_UNKNOWN(op == local::BeginOp)
 	while(op != local::EndOp)
 	{	// next op
-		play_.get_op_info(++i_op, op, arg, i_var);
+		(++itr).op_info(op, arg, i_var);
 		//
 		if( op == local::UserOp )
 		{	// skip only appears at front or back UserOp of user atomic call
-			bool skip_call = cskip_op_[i_op];
-			play_.get_user_info(op, arg, user_old, user_m, user_n);
+			bool skip_call = cskip_op_[ itr.op_index() ];
+			itr.user_info(user_old, user_m, user_n);
 			CPPAD_ASSERT_UNKNOWN( NumRes(op) == 0 );
 			size_t num_op = user_m + user_n + 1;
 			for(size_t i = 0; i < num_op; i++)
-			{	play_.get_op_info(++i_op, op, arg, i_var);
+			{	(++itr).op_info(op, arg, i_var);
 				if( skip_call )
 					num_var_skip += NumRes(op);
 			}
 			CPPAD_ASSERT_UNKNOWN( op == local::UserOp );
 		}
 		else
-		{	if( cskip_op_[i_op] )
+		{	if( cskip_op_[ itr.op_index() ] )
 				num_var_skip += NumRes(op);
 		}
 	}
