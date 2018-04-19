@@ -301,33 +301,22 @@ void ADFun<Base>::abs_normal_fun(ADFun<Base>& g, ADFun<Base>& a) const
 	//
 	OpCode        op;                 // this operator
 	const addr_t* arg = CPPAD_NULL;   // arguments for this operator
-	size_t        i_op;               // index of this operator
 	size_t        i_var;              // variable index for this operator
-	i_op = 0;
-	play_.get_op_info(i_op, op, arg, i_var);
+	typename local::player<Base>::const_iterator itr = play_.begin();
+	itr.op_info(op, arg, i_var);
 	CPPAD_ASSERT_UNKNOWN( op == BeginOp );
 	//
 	bool    more_operators = true;
-	while( more_operators )
+	while( op != EndOp )
 	{
 		// next op
-		play_.get_op_info(++i_op, op, arg, i_var);
+		(++itr).op_info(op, arg, i_var);
 		switch( op )
 		{	// absolute value operator
 			case AbsOp:
 			CPPAD_ASSERT_NARG_NRES(op, 1, 1);
 			f_abs_arg.push_back( arg[0] );
 			f_abs_res.push_back( i_var );
-			break;
-
-			case CSumOp:
-			break;
-
-			case CSkipOp:
-			break;
-
-			case EndOp:
-			more_operators = false;
 			break;
 
 			default:
@@ -353,8 +342,8 @@ void ADFun<Base>::abs_normal_fun(ADFun<Base>& g, ADFun<Base>& a) const
 		f2g_var[i_var] = addr_t( num_var ); // invalid (should not be used)
 	//
 	// record the independent variables in f
-	i_op = 0;
-	play_.get_op_info(i_op, op, arg, i_var);
+	itr = play_.begin();
+	itr.op_info(op, arg, i_var);
 	CPPAD_ASSERT_UNKNOWN( op == BeginOp );
 	more_operators   = true;
 	while( more_operators )
@@ -380,7 +369,7 @@ void ADFun<Base>::abs_normal_fun(ADFun<Base>& g, ADFun<Base>& a) const
 			break;
 		}
 		if( more_operators )
-			play_.get_op_info(++i_op, op, arg, i_var);
+			(++itr).op_info(op, arg, i_var);
 	}
 	// add one for the phantom variable
 	CPPAD_ASSERT_UNKNOWN( 1 + Domain() == i_var );
@@ -765,7 +754,7 @@ void ADFun<Base>::abs_normal_fun(ADFun<Base>& g, ADFun<Base>& a) const
 			CPPAD_ASSERT_UNKNOWN(false);
 		}
 		if( more_operators )
-			play_.get_op_info(++i_op, op, arg, i_var);
+			(++itr).op_info(op, arg, i_var);
 	}
 	// Check a few expected results
 	CPPAD_ASSERT_UNKNOWN( rec.num_op_rec() == play_.num_op_rec() );

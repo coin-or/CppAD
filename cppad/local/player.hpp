@@ -698,7 +698,7 @@ template <class Base>
 class player_const_iterator {
 private:
 	/// number of variables in tape
-	const size_t num_var_;
+	size_t num_var_;
 
 	/// op_vec_
 	const pod_vector<OpCode>* op_vec_;
@@ -715,6 +715,16 @@ private:
 	/// index of first result for current operator
 	size_t var_index_;
 public:
+	/// assignment operator
+	void operator=(const player_const_iterator& rhs)
+	{	num_var_   = rhs.num_var_;
+		op_vec_    = rhs.op_vec_;
+		arg_vec_   = rhs.arg_vec_;
+		op_index_  = rhs.op_index_;
+		arg_index_ = rhs.arg_index_;
+		var_index_ = rhs.var_index_;
+		return;
+	}
 	/// Create a iterator starting either at beginning or end of tape
 	player_const_iterator(
 		/// number of variables in tape
