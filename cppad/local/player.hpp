@@ -117,7 +117,7 @@ public:
 	in these vectors can be represented using the type addr_t:
 	op_vec_, vecad_ind_vec_, arg_vec_, par_vec_, text_vec_.
 	*/
-	void get(recorder<Base>& rec, size_t n_ind)
+	void get_recording(recorder<Base>& rec, size_t n_ind)
 	{
 # ifndef NDEBUG
 		size_t addr_t_max = size_t( std::numeric_limits<addr_t>::max() );
@@ -231,17 +231,21 @@ public:
 	{	return; }
 # else
 	void check_inv_op(size_t n_ind)
-	{	size_t num_op = op_vec_.size();
-		CPPAD_ASSERT_UNKNOWN( op_vec_[0] = BeginOp );
-		CPPAD_ASSERT_UNKNOWN( op_vec_[1] = InvOp   );
-		// start at second operator
-		for(size_t i_op = 1; i_op < num_op; ++i_op)
-		{	OpCode op = op_vec_[i_op];
+	{	const_iterator itr = begin();
+		OpCode        op;
+		const addr_t* op_arg;
+		size_t        var_index;
+		itr.op_info(op, op_arg, var_index);
+		CPPAD_ASSERT_UNKNOWN( op = BeginOp );
+		size_t i_op = 0;
+		while( op != EndOp )
+		{	// start at second operator
+			(++itr).op_info(op, op_arg, var_index);
+			++i_op;
 			CPPAD_ASSERT_UNKNOWN( (op == InvOp) == (i_op <= n_ind) );
 		}
 		return;
 	}
-
 # endif
 	// ----------------------------------------------------------------------
 	/*!
@@ -254,12 +258,16 @@ public:
 	{	return; }
 # else
 	void check_dag(void)
-	{
-		size_t  num_op       = op_vec_.size();
+	{	const_iterator itr = begin();
+		OpCode        op;
+		const addr_t* op_arg;
+		size_t        var_index;
+		itr.op_info(op, op_arg, var_index);
+		CPPAD_ASSERT_UNKNOWN( op = BeginOp );
+		//
 		addr_t arg_var_bound = 0;
-		for(size_t i = 0; i < num_op; i++)
-		{	OpCode op = op_vec_[i];
-			addr_t* op_arg = arg_vec_.data() + op2arg_vec_[i];
+		while( op != EndOp )
+		{	(++itr).op_info(op, op_arg, var_index);
 			switch(op)
 			{
 				// cases where nothing to do
@@ -393,15 +401,14 @@ public:
 
 			}
 			if( NumRes(op) > 0 )
-			{	addr_t var_index = op2var_vec_[i];
-				if( var_index > 0 )
-				{	CPPAD_ASSERT_UNKNOWN(arg_var_bound < var_index);
+			{	if( var_index > 0 )
+				{	CPPAD_ASSERT_UNKNOWN(size_t(arg_var_bound) < var_index);
 				}
 				else
-				{	CPPAD_ASSERT_UNKNOWN(arg_var_bound == var_index);
+				{	CPPAD_ASSERT_UNKNOWN(size_t(arg_var_bound) == var_index);
 				}
 				//
-				arg_var_bound = var_index;
+				arg_var_bound = addr_t(var_index);
 			}
 		}
 	}
