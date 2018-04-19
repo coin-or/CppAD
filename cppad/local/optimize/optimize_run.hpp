@@ -3,7 +3,7 @@
 # define CPPAD_LOCAL_OPTIMIZE_OPTIMIZE_RUN_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -249,7 +249,7 @@ void optimize_run(
 		//
 		// this operator information
 		size_t i_tmp;
-		play->get_op_info(i_op, op, arg, i_tmp);
+		play->random_access(i_op, op, arg, i_tmp);
 		if( NumRes(op) > 0 )
 			i_var = i_tmp;
 		//
@@ -844,7 +844,7 @@ void optimize_run(
 
 # ifndef NDEBUG
 	for(i_op = 0; i_op < num_op; i_op++)
-	{	play->get_op_info(i_op, op, arg, i_var);
+	{	play->random_access(i_op, op, arg, i_var);
 		if( NumRes(op) > 0 )
 			CPPAD_ASSERT_UNKNOWN(
 				size_t(old2new[i_op].new_op) < rec->num_op_rec()

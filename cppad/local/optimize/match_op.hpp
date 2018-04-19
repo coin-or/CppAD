@@ -1,7 +1,7 @@
 # ifndef CPPAD_LOCAL_OPTIMIZE_MATCH_OP_HPP
 # define CPPAD_LOCAL_OPTIMIZE_MATCH_OP_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -86,7 +86,7 @@ void match_op(
 	OpCode        op;
 	const addr_t* arg;
 	size_t        i_var;
-	play->get_op_info(current, op, arg, i_var);
+	play->random_access(current, op, arg, i_var);
 	CPPAD_ASSERT_UNKNOWN( 0 < NumArg(op) );
 	CPPAD_ASSERT_UNKNOWN( NumArg(op) <= 3 );
 	//
@@ -112,7 +112,7 @@ void match_op(
 				OpCode        op_p;
 				const addr_t* arg_p;
 				size_t        i_var_p;
-				play->get_op_info(previous, op_p, arg_p, i_var_p);
+				play->random_access(previous, op_p, arg_p, i_var_p);
 				//
 				CPPAD_ASSERT_UNKNOWN( NumRes(op_p) > 0 );
 				arg_match[j] = addr_t( i_var_p );
@@ -137,7 +137,7 @@ void match_op(
 		OpCode        op_c;
 		const addr_t* arg_c;
 		size_t        i_var_c;
-		play->get_op_info(candidate, op_c, arg_c, i_var_c);
+		play->random_access(candidate, op_c, arg_c, i_var_c);
 		//
 		// check for a match
 		bool match = op == op_c;
@@ -155,7 +155,7 @@ void match_op(
 						OpCode        op_p;
 						const addr_t* arg_p;
 						size_t        i_var_p;
-						play->get_op_info(previous, op_p, arg_p, i_var_p);
+						play->random_access(previous, op_p, arg_p, i_var_p);
 						//
 						match &= arg_match[j] == addr_t( i_var_p );
 					}
@@ -189,7 +189,7 @@ void match_op(
 			OpCode        op_c;
 			const addr_t* arg_c;
 			size_t        i_var_c;
-			play->get_op_info(candidate, op_c, arg_c, i_var_c);
+			play->random_access(candidate, op_c, arg_c, i_var_c);
 			//
 			bool match = op == op_c;
 			if( match )
@@ -205,7 +205,7 @@ void match_op(
 						OpCode        op_p;
 						const addr_t* arg_p;
 						size_t        i_var_p;
-						play->get_op_info(previous, op_p, arg_p, i_var_p);
+						play->random_access(previous, op_p, arg_p, i_var_p);
 						//
 						match &= arg_match[j] == addr_t( i_var_p );
 					}

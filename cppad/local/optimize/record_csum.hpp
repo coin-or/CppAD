@@ -1,7 +1,7 @@
 # ifndef CPPAD_LOCAL_OPTIMIZE_RECORD_CSUM_HPP
 # define CPPAD_LOCAL_OPTIMIZE_RECORD_CSUM_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -90,7 +90,7 @@ struct_size_pair record_csum(
 	// information corresponding to the root node in the cummulative summation
 	struct struct_csum_variable var;
 	size_t not_used;
-	play->get_op_info(i_op, var.op, var.arg, not_used);
+	play->random_access(i_op, var.op, var.arg, not_used);
 	var.add = true;  // was parrent operator positive or negative
 	//
 	// initialize stack as containing this one operator
@@ -145,7 +145,7 @@ struct_size_pair record_csum(
 				);
 				// push the operator corresponding to the first argument
 				size_t i_op_tmp = play->var2op(arg[0]);
-				play->get_op_info(i_op_tmp, var.op, var.arg, not_used);
+				play->random_access(i_op_tmp, var.op, var.arg, not_used);
 				// first argument has same sign as parent node
 				var.add = add;
 				work.op_stack.push( var );
@@ -188,7 +188,7 @@ struct_size_pair record_csum(
 				);
 				// push the operator corresoponding to the second arugment
 				size_t i_op_tmp = play->var2op(arg[1]);
-				play->get_op_info(i_op_tmp, var.op, var.arg, not_used);
+				play->random_access(i_op_tmp, var.op, var.arg, not_used);
 				var.add  = add;
 				work.op_stack.push( var );
 			}

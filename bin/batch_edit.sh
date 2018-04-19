@@ -31,11 +31,7 @@ move_list='
 move_sed='s|reverse_subgraph|subgraph_reverse|'
 #
 cat << EOF > junk.sed
-s|\\([^_]\\)op_rec_|\\1op_vec_|g
-s|\\([^_]\\)vec_ind_rec_|\\1vecad_ind_vec_|g
-s|\\([^_]\\)test_rec_|\\1test_vec_|g
-s|\\([^_]\\)par_rec_|\\1par_vec_|g
-s|\\([^_]\\)op_arg_rec_|\\1op_arg_vec_|g
+s|get_op_info(|random_access(|g
 EOF
 # -----------------------------------------------------------------------------
 if [ $0 != "bin/batch_edit.sh" ]

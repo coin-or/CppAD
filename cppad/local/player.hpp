@@ -488,7 +488,7 @@ public:
 	If there is no primary variable for this operator, i_var not sepcified
 	and could have any value.
 	*/
-	void get_op_info(
+	void random_access(
 		size_t         op_index   ,
 		OpCode&        op         ,
 		const addr_t*& op_arg     ,

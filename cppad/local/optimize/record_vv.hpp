@@ -1,7 +1,7 @@
 # ifndef CPPAD_LOCAL_OPTIMIZE_RECORD_VV_HPP
 # define CPPAD_LOCAL_OPTIMIZE_RECORD_VV_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -47,7 +47,7 @@ struct_size_pair record_vv(
 	OpCode        op;
 	const addr_t* arg;
 	size_t        i_var;
-	play->get_op_info(i_op, op, arg, i_var);
+	play->random_access(i_op, op, arg, i_var);
 	//
 # ifndef NDEBUG
 	switch(op)

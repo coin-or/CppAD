@@ -2,7 +2,7 @@
 # define CPPAD_LOCAL_REVERSE_SWEEP_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -240,7 +240,7 @@ void reverse_sweep(
 		OpCode        op;
 		const addr_t* arg;
 		size_t        i_var;
-		play->get_op_info(i_op, op, arg, i_var);
+		play->random_access(i_op, op, arg, i_var);
 		CPPAD_ASSERT_UNKNOWN( i_op < play->num_op_rec() );
 
 		// check if we are skipping this operation
@@ -266,7 +266,7 @@ void reverse_sweep(
 			CPPAD_ASSERT_UNKNOWN( 0 < i_op );
 			CPPAD_ASSERT_UNKNOWN( subgraph_index > 0 );
 			i_op = subgraph[--subgraph_index];
-			play->get_op_info(i_op, op, arg, i_var);
+			play->random_access(i_op, op, arg, i_var);
 		}
 # if CPPAD_REVERSE_SWEEP_TRACE
 		size_t       i_tmp  = i_var;

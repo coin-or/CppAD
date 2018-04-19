@@ -1,7 +1,7 @@
 # ifndef CPPAD_LOCAL_SUBGRAPH_ARG_VARIABLE_HPP
 # define CPPAD_LOCAL_SUBGRAPH_ARG_VARIABLE_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -55,7 +55,7 @@ void get_argument_variable(
 	OpCode        op;
 	const addr_t* op_arg;
 	size_t        i_var;
-	play->get_op_info(i_op, op, op_arg, i_var);
+	play->random_access(i_op, op, op_arg, i_var);
 	//
 	// partial check of assumptions on user function calls
 	CPPAD_ASSERT_UNKNOWN(
@@ -64,7 +64,7 @@ void get_argument_variable(
 	//
 	// we assume this is the first UserOp of the call
 	if( op == UserOp )
-	{	play->get_op_info(++i_op, op, op_arg, i_var);
+	{	play->random_access(++i_op, op, op_arg, i_var);
 		while( op != UserOp )
 		{	switch(op)
 			{
@@ -85,7 +85,7 @@ void get_argument_variable(
 				CPPAD_ASSERT_UNKNOWN(false);
 				break;
 			}
-			play->get_op_info(++i_op, op, op_arg, i_var);
+			play->random_access(++i_op, op, op_arg, i_var);
 		}
 		CPPAD_ASSERT_UNKNOWN( variable.size() > 0 );
 		return;
