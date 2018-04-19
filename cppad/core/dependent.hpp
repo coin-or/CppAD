@@ -296,6 +296,7 @@ void ADFun<Base>::Dependent(local::ADTape<Base> *tape, const ADvector &y)
 	// and there is a EndOp at the end of the tape, we can transfer the
 	// recording to the player and and erase the recording; i.e. ERASE Rec_.
 	play_.get_recording(tape->Rec_, n);
+	play_.setup_random();
 
 	// ind_taddr_
 	// Note that play_ has been set, we can use it to check operators

@@ -254,6 +254,7 @@ void ADFun<Base>::optimize(const std::string& options)
 
 	// now replace the recording
 	play_.get_recording(rec, n);
+	play_.setup_random();
 
 	// set flag so this function knows it has been optimized
 	has_been_optimized_ = true;

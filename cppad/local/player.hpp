@@ -65,8 +65,7 @@ private:
 	pod_vector<addr_t> vecad_ind_vec_;
 
 	// ----------------------------------------------------------------------
-	// Redundant information that simplifies and speeds up iterating through
-	// the operation sequence.
+	// Information needed to use member functions that begin with random_.
 
 	/// index in arg_vec_ corresonding to the first argument for each operator
 	pod_vector<addr_t> op2arg_vec_;
@@ -158,66 +157,10 @@ public:
 			CPPAD_ASSERT_UNKNOWN( i == vecad_ind_vec_.size() );
 		}
 
-		// op2arg_vec_, op2var_vec_, var2op_vec_
-		CPPAD_ASSERT_UNKNOWN( op_vec_[0] == BeginOp );
-		CPPAD_ASSERT_NARG_NRES(BeginOp, 1, 1);
-		addr_t  num_op    = addr_t( op_vec_.size() );
-		addr_t  var_index = 0;
-		addr_t  arg_index = 0;
-		//
-		op2arg_vec_.resize( num_op );
-		op2var_vec_.resize( num_op );
-		var2op_vec_.resize( num_var_rec_ );
-# ifndef NDEBUG
-		// value of var2op for auxillary variables is num_op (invalid)
-		for(size_t i_var = 0; i_var < num_var_rec_; ++i_var)
-			var2op_vec_[i_var] = num_op;
-		// value of op2var is num_var (invalid) when NumRes(op) = 0
-		for(addr_t i_op = 0; i_op < num_op; ++i_op)
-			op2var_vec_[i_op] = addr_t( num_var_rec_ );
-# endif
-		for(addr_t i_op = 0; i_op < num_op; ++i_op)
-		{	OpCode  op          = op_vec_[i_op];
-			//
-			// index of first argument for this operator
-			op2arg_vec_[i_op]   = arg_index;
-			arg_index          += addr_t( NumArg(op) );
-			//
-			// index of first result for next operator
-			var_index  += addr_t( NumRes(op) );
-			if( NumRes(op) > 0 )
-			{	// index of last (primary) result for this operator
-				op2var_vec_[i_op] = var_index - 1;
-				//
-				// mapping from primary variable to its operator
-				var2op_vec_[var_index - 1] = i_op;
-			}
-			// CSumOp
-			if( op == CSumOp )
-			{	CPPAD_ASSERT_UNKNOWN( NumArg(CSumOp) == 0 );
-				//
-				// pointer to first argument for this operator
-				addr_t* op_arg = arg_vec_.data() + arg_index;
-				//
-				// The actual number of arugments for this operator is
-				// op_arg[0] + op_arg[1] + 4
-				// Correct index of first argument for next operator
-				arg_index += op_arg[0] + op_arg[1] + 4;
-			}
-			//
-			// CSkip
-			if( op == CSkipOp )
-			{	CPPAD_ASSERT_UNKNOWN( NumArg(CSumOp) == 0 );
-				//
-				// pointer to first argument for this operator
-				addr_t* op_arg = arg_vec_.data() + arg_index;
-				//
-				// The actual number of arugments for this operator is
-				// 7 + op_arg[4] + op_arg[5].
-				// Correct index of first argument for next operator.
-				arg_index += 7 + op_arg[4] + op_arg[5];
-			}
-		}
+		// random access information
+		clear_random();
+
+		// some checks
 		check_inv_op(n_ind);
 		check_dag();
 	}
@@ -450,6 +393,88 @@ public:
 		op2arg_vec_.resize(0);
 		op2var_vec_.resize(0);
 		var2op_vec_.resize(0);
+	}
+	// =================================================================
+	/// Enable use of member functions that begin with random_
+	/// (no work if already setup).
+	void setup_random(void)
+	{	if( op2arg_vec_.size() != 0 )
+		{	CPPAD_ASSERT_UNKNOWN( op2arg_vec_.size() == op_vec_.size() );
+			CPPAD_ASSERT_UNKNOWN( op2var_vec_.size() == op_vec_.size() );
+			CPPAD_ASSERT_UNKNOWN( var2op_vec_.size() == num_var_rec_   );
+			return;
+		}
+		CPPAD_ASSERT_UNKNOWN( op2var_vec_.size() == 0  );
+		CPPAD_ASSERT_UNKNOWN( var2op_vec_.size() == 0  );
+		//
+		CPPAD_ASSERT_UNKNOWN( op_vec_[0] == BeginOp );
+		CPPAD_ASSERT_NARG_NRES(BeginOp, 1, 1);
+		addr_t  num_op    = addr_t( op_vec_.size() );
+		addr_t  var_index = 0;
+		addr_t  arg_index = 0;
+		//
+		op2arg_vec_.resize( op_vec_.size() );
+		op2var_vec_.resize( op_vec_.size() );
+		var2op_vec_.resize( num_var_rec_  );
+# ifndef NDEBUG
+		// value of var2op for auxillary variables is num_op (invalid)
+		for(size_t i_var = 0; i_var < num_var_rec_; ++i_var)
+			var2op_vec_[i_var] = num_op;
+		// value of op2var is num_var (invalid) when NumRes(op) = 0
+		for(addr_t i_op = 0; i_op < num_op; ++i_op)
+			op2var_vec_[i_op] = addr_t( num_var_rec_ );
+# endif
+		for(addr_t i_op = 0; i_op < num_op; ++i_op)
+		{	OpCode  op          = op_vec_[i_op];
+			//
+			// index of first argument for this operator
+			op2arg_vec_[i_op]   = arg_index;
+			arg_index          += addr_t( NumArg(op) );
+			//
+			// index of first result for next operator
+			var_index  += addr_t( NumRes(op) );
+			if( NumRes(op) > 0 )
+			{	// index of last (primary) result for this operator
+				op2var_vec_[i_op] = var_index - 1;
+				//
+				// mapping from primary variable to its operator
+				var2op_vec_[var_index - 1] = i_op;
+			}
+			// CSumOp
+			if( op == CSumOp )
+			{	CPPAD_ASSERT_UNKNOWN( NumArg(CSumOp) == 0 );
+				//
+				// pointer to first argument for this operator
+				addr_t* op_arg = arg_vec_.data() + arg_index;
+				//
+				// The actual number of arugments for this operator is
+				// op_arg[0] + op_arg[1] + 4
+				// Correct index of first argument for next operator
+				arg_index += op_arg[0] + op_arg[1] + 4;
+			}
+			//
+			// CSkip
+			if( op == CSkipOp )
+			{	CPPAD_ASSERT_UNKNOWN( NumArg(CSumOp) == 0 );
+				//
+				// pointer to first argument for this operator
+				addr_t* op_arg = arg_vec_.data() + arg_index;
+				//
+				// The actual number of arugments for this operator is
+				// 7 + op_arg[4] + op_arg[5].
+				// Correct index of first argument for next operator.
+				arg_index += 7 + op_arg[4] + op_arg[5];
+			}
+		}
+	}
+	/// Free memory used for member functions that begin with random_
+	void clear_random(void)
+	{	op2arg_vec_.clear();
+		op2var_vec_.clear();
+		var2op_vec_.clear();
+		CPPAD_ASSERT_UNKNOWN( op2arg_vec_.size() == 0  );
+		CPPAD_ASSERT_UNKNOWN( op2var_vec_.size() == 0  );
+		CPPAD_ASSERT_UNKNOWN( var2op_vec_.size() == 0  );
 	}
 	// ================================================================
 	// const functions that retrieve infromation from this player
