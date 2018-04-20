@@ -171,6 +171,10 @@ void ADFun<Base>::subgraph_sparsity(
 	bool                         transpose        ,
 	sparse_rc<SizeVector>&       pattern_out      )
 {
+	//
+	// make sure player is setup for random access
+	play_.setup_random();
+
 	// compute the sparsity pattern in row, col
     local::pod_vector<size_t> row;
     local::pod_vector<size_t> col;

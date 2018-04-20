@@ -174,6 +174,9 @@ template <typename Base>
 template <typename VectorBool>
 void ADFun<Base>::subgraph_reverse( const VectorBool& select_domain )
 {	using local::pod_vector;
+	//
+	// make sure player is setup for random access
+	play_.setup_random();
 
 	CPPAD_ASSERT_UNKNOWN(
 		dep_taddr_.size() == subgraph_info_.n_dep()
@@ -262,6 +265,9 @@ void ADFun<Base>::subgraph_reverse(
 	SizeVector& col ,
 	VectorBase& dw  )
 {	using local::pod_vector;
+	//
+	// make sure player is setup for random access
+	play_.setup_random();
 
 	// check VectorBase is Simple Vector class with Base type elements
 	CheckSimpleVector<Base, VectorBase>();
@@ -299,9 +305,15 @@ void ADFun<Base>::subgraph_reverse(
 	// for calls that have first operator in the subgraph
 	local::subgraph::entire_call(&play_, subgraph);
 
+	// First add the BeginOp and EndOp to the subgraph and then sort it
 	// sort the subgraph
+	addr_t i_op_begin_op = 0;
+	addr_t i_op_end_op   = addr_t( play_.num_op_rec() - 1);
+	subgraph.push_back(i_op_begin_op);
+	subgraph.push_back(i_op_end_op);
 	std::sort( subgraph.data(), subgraph.data() + subgraph.size() );
-
+	CPPAD_ASSERT_UNKNOWN( subgraph[0] == i_op_begin_op );
+	CPPAD_ASSERT_UNKNOWN( subgraph[subgraph.size()-1] == i_op_end_op );
 	/*
 	// Use this printout for debugging
 	std::cout << "{ ";
@@ -328,10 +340,11 @@ void ADFun<Base>::subgraph_reverse(
 				op == local::UserOp  ||
 				op == local::UsrapOp ||
 				op == local::UsravOp ||
-				op == local::UsrrpOp
+				op == local::UsrrpOp ||
+				op == local::EndOp
 			);
 		}
-		else
+		else if( op != local::BeginOp )
 		{	CPPAD_ASSERT_UNKNOWN( i_var >= NumRes(op) );
 			size_t j_var = i_var + 1 - NumRes(op);
 			for(size_t i = j_var; i <= i_var; ++i)
@@ -348,6 +361,8 @@ void ADFun<Base>::subgraph_reverse(
 	CPPAD_ASSERT_UNKNOWN( cskip_op_.size() == play_.num_op_rec() );
 	CPPAD_ASSERT_UNKNOWN( load_op_.size()  == play_.num_load_op_rec() );
 	size_t n = Domain();
+	typename local::player<Base>::const_subgraph_iterator
+		play_itr = play_.end(subgraph);
 	local::reverse_sweep(
 		q - 1,
 		n,
@@ -359,12 +374,15 @@ void ADFun<Base>::subgraph_reverse(
 		subgraph_partial_.data(),
 		cskip_op_.data(),
 		load_op_,
-		subgraph
+		play_itr
 	);
 
 	// number of non-zero in return value
 	size_t col_size       = 0;
 	size_t subgraph_index = 0;
+	CPPAD_ASSERT_UNKNOWN( subgraph[subgraph_index] == 0 );
+	// Skip BeginOp
+	++subgraph_index;
 	while( subgraph_index < subgraph.size() )
 	{	// check for InvOp
 		if( subgraph[subgraph_index] > addr_t(n) )
@@ -379,7 +397,7 @@ void ADFun<Base>::subgraph_reverse(
 	// return the derivative values
 	dw.resize(n * q);
 	for(size_t c = 0; c < col_size; ++c)
-	{	size_t i_op = subgraph[c];
+	{	size_t i_op = subgraph[c + 1];
 		CPPAD_ASSERT_UNKNOWN( play_.GetOp(i_op) == local::InvOp );
 		//
 		size_t j = i_op - 1;

@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -134,7 +134,6 @@ bool seq_property(void)
 	sum += npar   * sizeof(double);
 	sum += ntext  * sizeof(char);
 	sum += nvecad * sizeof(CPPAD_TAPE_ADDR_TYPE);
-	sum += nop    * sizeof(CPPAD_TAPE_ADDR_TYPE) * 3;
 	ok &= f.size_op_seq() == sum;
 
 	return ok;

@@ -66,7 +66,7 @@ private:
 
 	// ----------------------------------------------------------------------
 	// Information needed to use member functions that begin with random_
-	// and a const_subgraph_iterator.
+	// and for using const_subgraph_iterator.
 
 	/// index in arg_vec_ corresonding to the first argument for each operator
 	pod_vector<addr_t> op2arg_vec_;
@@ -681,19 +681,30 @@ public:
 	size_t Memory(void) const
 	{	// check assumptions made by ad_fun<Base>::size_op_seq()
 		CPPAD_ASSERT_UNKNOWN( op_vec_.size() == num_op_rec() );
-		CPPAD_ASSERT_UNKNOWN( op2arg_vec_.size() == num_op_rec() );
-		CPPAD_ASSERT_UNKNOWN( op2var_vec_.size() == num_op_rec() );
 		CPPAD_ASSERT_UNKNOWN( arg_vec_.size()    == num_op_arg_rec() );
 		CPPAD_ASSERT_UNKNOWN( par_vec_.size() == num_par_rec() );
 		CPPAD_ASSERT_UNKNOWN( text_vec_.size() == num_text_rec() );
 		CPPAD_ASSERT_UNKNOWN( vecad_ind_vec_.size() == num_vec_ind_rec() );
+# ifndef NDEBUG
+		if( op2arg_vec_.size() == 0 )
+		{	CPPAD_ASSERT_UNKNOWN( op2var_vec_.size() == 0 );
+			CPPAD_ASSERT_UNKNOWN( var2op_vec_.size() == 0 );
+		}
+		else
+		{	CPPAD_ASSERT_UNKNOWN( op2arg_vec_.size() == num_op_rec() );
+			CPPAD_ASSERT_UNKNOWN( op2var_vec_.size() == num_op_rec() );
+			CPPAD_ASSERT_UNKNOWN( var2op_vec_.size() == num_var_rec() );
+		}
+# endif
 		//
 		return op_vec_.size()        * sizeof(OpCode)
 		     + arg_vec_.size()       * sizeof(addr_t)
 		     + par_vec_.size()       * sizeof(Base)
 		     + text_vec_.size()      * sizeof(char)
 		     + vecad_ind_vec_.size() * sizeof(addr_t)
-		     + op_vec_.size()        * sizeof(addr_t) * 3
+		     + op2arg_vec_.size()    * sizeof(addr_t)
+		     + op2var_vec_.size()    * sizeof(addr_t)
+		     + var2op_vec_.size()    * sizeof(addr_t)
 		;
 	}
 	typedef player_const_iterator<Base> const_iterator;
@@ -714,9 +725,9 @@ public:
 		size_t num_var  = num_var_rec_;
 		return const_iterator(num_var, &op_vec_, &arg_vec_, op_index);
 	}
-	const_subgraph_iterator end(pod_vector<addr_t>* subgraph) const
-	{	size_t subgraph_index = subgraph->size();
-		return const_subgraph_iterator(this, subgraph, subgraph_index);
+	const_subgraph_iterator end(pod_vector<addr_t>& subgraph) const
+	{	size_t subgraph_index = subgraph.size();
+		return const_subgraph_iterator(this, &subgraph, subgraph_index);
 	}
 
 };
@@ -1039,7 +1050,7 @@ public:
 	}
 	/// current operator index
 	size_t op_index(void)
-	{	return subgraph_[subgraph_index_]; }
+	{	return (*subgraph_)[subgraph_index_]; }
 	/*!
 	\brief
 	Unpack extra information when current op is a UserOp

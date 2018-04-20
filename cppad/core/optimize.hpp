@@ -214,7 +214,12 @@ when compare_change is not used.
 */
 template <class Base>
 void ADFun<Base>::optimize(const std::string& options)
-{	// place to store the optimized version of the recording
+{
+	//
+	// make sure player is setup for random access
+	play_.setup_random();
+
+	// place to store the optimized version of the recording
 	local::recorder<Base> rec;
 
 	// number of independent variables
@@ -254,7 +259,6 @@ void ADFun<Base>::optimize(const std::string& options)
 
 	// now replace the recording
 	play_.get_recording(rec, n);
-	play_.setup_random();
 
 	// set flag so this function knows it has been optimized
 	has_been_optimized_ = true;

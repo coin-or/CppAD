@@ -160,13 +160,15 @@ It contains the variable index corresponding to each load instruction.
 In the case where the index is zero,
 the instruction corresponds to a parameter (not variable).
 
-\param subgraph
-is the set of operators over which the reverse mode calculations
-will be preformed. For k = 0, ... , subgraph.size() - 1,
-subgraph[k] is an operator index and
-\code
-	play->num_op_rec() > subgraph[k] > subgraph[k-1]
-\endcode
+\tparam Iterator
+This is either player::const_iteratoror player::const_subgraph_iterator.
+
+\param play_itr
+On input this is either play->end(), for the entire graph,
+or play->end(subgraph), for a subgraph.
+This routine mode will use --play_itr to iterate over the graph or subgraph.
+It is assumes that the iterator starts just past the EndOp and it will
+continue until it reaches the BeginOp.
 If i_var is a variable index, and play->random_var2op(i_var)
 is not in the subgraph,
 then the partials with respect to i_var are not modified and need to be
@@ -180,7 +182,7 @@ The first operator on the tape is a BeginOp,
 and the next \a n operators are InvOp operations for the
 corresponding independent variables; see play->check_inv_op(n_ind).
 */
-template <class Base>
+template <class Base, class Iterator>
 void reverse_sweep(
 	size_t                      d,
 	size_t                      n,
@@ -192,7 +194,7 @@ void reverse_sweep(
 	Base*                       Partial,
 	bool*                       cskip_op,
 	const pod_vector<addr_t>&   var_by_load_op,
-	const pod_vector<addr_t>&   subgraph
+	Iterator&                   play_itr
 )
 {
 	// check numvar argument
@@ -232,42 +234,40 @@ void reverse_sweep(
 # if CPPAD_REVERSE_SWEEP_TRACE
 	std::cout << std::endl;
 # endif
-	size_t subgraph_index = subgraph.size();
-	while(subgraph_index > 0)
+	OpCode        op;
+	const addr_t* arg;
+	size_t        i_var;
+	(--play_itr).op_info(op, arg, i_var);
+	CPPAD_ASSERT_UNKNOWN( op == EndOp );
+	while(op != BeginOp )
 	{	bool flag; // temporary for use in switch cases
 		//
 		// next op
-		size_t        i_op = subgraph[--subgraph_index];
-		OpCode        op;
-		const addr_t* arg;
-		size_t        i_var;
-		play->random_access(i_op, op, arg, i_var);
-		CPPAD_ASSERT_UNKNOWN( i_op < play->num_op_rec() );
+		(--play_itr).op_info(op, arg, i_var);
 
 		// check if we are skipping this operation
+		size_t i_op = play_itr.op_index();
 		while( cskip_op[i_op] )
 		{	switch(op)
 			{
 				case UserOp:
 				{	// get information for this user atomic call
 					CPPAD_ASSERT_UNKNOWN( user_state == end_user );
-					play->get_user_info(op, arg, user_old, user_m, user_n);
+					play_itr.user_info(user_old, user_m, user_n);
 					//
 					// skip to the first UserOp
-					CPPAD_ASSERT_UNKNOWN(subgraph_index > user_m + user_n);
-					subgraph_index -= user_m + user_n;
-					i_op            = subgraph[--subgraph_index];
-					CPPAD_ASSERT_UNKNOWN( play->GetOp(i_op) == UserOp );
+					for(size_t i = 0; i < user_m + user_n + 1; ++i)
+						--play_itr;
+					play_itr.op_info(op, arg, i_var);
+					CPPAD_ASSERT_UNKNOWN( op == UserOp );
 				}
 				break;
 
 				default:
 				break;
 			}
-			CPPAD_ASSERT_UNKNOWN( 0 < i_op );
-			CPPAD_ASSERT_UNKNOWN( subgraph_index > 0 );
-			i_op = subgraph[--subgraph_index];
-			play->random_access(i_op, op, arg, i_var);
+			(--play_itr).op_info(op, arg, i_var);
+			i_op = play_itr.op_index();
 		}
 # if CPPAD_REVERSE_SWEEP_TRACE
 		size_t       i_tmp  = i_var;
@@ -668,7 +668,7 @@ void reverse_sweep(
 			case UserOp:
 			// start or end an atomic function call
 			flag = user_state == end_user;
-			user_atom = play->get_user_info(op, arg, user_old, user_m, user_n);
+			user_atom = play_itr.user_info(user_old, user_m, user_n);
 			if( flag )
 			{	user_state = ret_user;
 				user_i     = user_m;
