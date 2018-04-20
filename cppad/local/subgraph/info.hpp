@@ -97,9 +97,19 @@ public:
 
 	/// amount of memory corresonding to this object
 	size_t memory(void) const
-	{	size_t sum = map_user_op_.size()  * sizeof(addr_t);
-		sum       += in_subgraph_.size()  * sizeof(addr_t);
+	{	size_t sum = map_user_op_.size()   * sizeof(addr_t);
+		sum       += in_subgraph_.size()   * sizeof(addr_t);
+		sum       += select_domain_.size() * sizeof(bool);
+		sum       += process_range_.size() * sizeof(bool);
 		return sum;
+	}
+
+	/// free memory used for calculating subgraph
+	void clear(void)
+	{	map_user_op_.clear();
+		in_subgraph_.clear();
+		select_domain_.clear();
+		process_range_.clear();
 	}
 	// -----------------------------------------------------------------------
 	/*!

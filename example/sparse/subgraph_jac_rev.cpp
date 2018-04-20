@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -56,6 +56,7 @@ bool subgraph_jac_rev(void)
 	//
 	// create f: x -> y and stop tape recording
 	CppAD::ADFun<double> f(a_x, a_y);
+	ok &= f.size_random() == 0;
 	//
 	// new value for the independent variable vector
 	d_vector x(n);
@@ -133,6 +134,9 @@ bool subgraph_jac_rev(void)
 		ok &= matrix_out.val()[ row_major[k] ] == check_val[k];
 	}
 	//
+	ok &= f.size_random() > 0;
+	f.clear_subgraph();
+	ok &= f.size_random() == 0;
 	return ok;
 }
 // END C++

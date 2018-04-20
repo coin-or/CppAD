@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -51,8 +51,7 @@ bool subgraph_sparsity(void)
 
 	// create f: x -> y and stop tape recording
 	CppAD::ADFun<double> f(ax, ay);
-
-
+	ok &= f.size_random() == 0;
 
 	// compute sparsite pattern for F'(x)
 	CPPAD_TESTVECTOR(bool) select_domain(n), select_range(m);
@@ -97,6 +96,9 @@ bool subgraph_sparsity(void)
 		ok &= col[ row_major[2] ] ==  1  && row[ row_major[2] ] ==  1;
 		ok &= col[ row_major[3] ] ==  2  && row[ row_major[3] ] ==  1;
 	}
+	ok &= f.size_random() > 0;
+	f.clear_subgraph();
+	ok &= f.size_random() == 0;
 	return ok;
 }
 // END C++

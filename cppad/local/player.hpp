@@ -471,7 +471,9 @@ public:
 	/// Free memory used for member functions that begin with random_
 	/// and const_subgraph_iterator.
 	void clear_random(void)
-	{	op2arg_vec_.clear();
+	{
+
+		op2arg_vec_.clear();
 		op2var_vec_.clear();
 		var2op_vec_.clear();
 		CPPAD_ASSERT_UNKNOWN( op2arg_vec_.size() == 0  );
@@ -675,16 +677,27 @@ public:
 	size_t num_text_rec(void) const
 	{	return text_vec_.size(); }
 
-	/// Fetch a rough measure of amount of memory used to store recording
-	/// using just lengths, not capacities; see the heading size_op_arg
-	/// in the file seq_property.omh.
-	size_t Memory(void) const
+	/// A measure of amount of memory used to store
+	/// the operation sequence, just lengths, not capacities.
+	/// In user api as f.size_op_seq(); see the file seq_property.omh.
+	size_t size_op_seq(void) const
 	{	// check assumptions made by ad_fun<Base>::size_op_seq()
 		CPPAD_ASSERT_UNKNOWN( op_vec_.size() == num_op_rec() );
 		CPPAD_ASSERT_UNKNOWN( arg_vec_.size()    == num_op_arg_rec() );
 		CPPAD_ASSERT_UNKNOWN( par_vec_.size() == num_par_rec() );
 		CPPAD_ASSERT_UNKNOWN( text_vec_.size() == num_text_rec() );
 		CPPAD_ASSERT_UNKNOWN( vecad_ind_vec_.size() == num_vec_ind_rec() );
+		return op_vec_.size()        * sizeof(OpCode)
+		     + arg_vec_.size()       * sizeof(addr_t)
+		     + par_vec_.size()       * sizeof(Base)
+		     + text_vec_.size()      * sizeof(char)
+		     + vecad_ind_vec_.size() * sizeof(addr_t)
+		;
+	}
+	/// A measure of amount of memory used for random access routine
+	/// In user api as f.size_random(); see the file seq_property.omh.
+	size_t size_random(void) const
+	{
 # ifndef NDEBUG
 		if( op2arg_vec_.size() == 0 )
 		{	CPPAD_ASSERT_UNKNOWN( op2var_vec_.size() == 0 );
@@ -696,17 +709,12 @@ public:
 			CPPAD_ASSERT_UNKNOWN( var2op_vec_.size() == num_var_rec() );
 		}
 # endif
-		//
-		return op_vec_.size()        * sizeof(OpCode)
-		     + arg_vec_.size()       * sizeof(addr_t)
-		     + par_vec_.size()       * sizeof(Base)
-		     + text_vec_.size()      * sizeof(char)
-		     + vecad_ind_vec_.size() * sizeof(addr_t)
-		     + op2arg_vec_.size()    * sizeof(addr_t)
-		     + op2var_vec_.size()    * sizeof(addr_t)
-		     + var2op_vec_.size()    * sizeof(addr_t)
+		return op2arg_vec_.size() * sizeof(addr_t)
+		     + op2var_vec_.size() * sizeof(addr_t)
+		     + var2op_vec_.size() * sizeof(addr_t)
 		;
 	}
+	// -----------------------------------------------------------------------
 	typedef player_const_iterator<Base> const_iterator;
 	typedef player_const_subgraph_iterator<Base> const_subgraph_iterator;
 	/// begin

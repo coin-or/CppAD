@@ -2,7 +2,7 @@
 # define CPPAD_CORE_SUBGRAPH_JAC_REV_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -37,6 +37,9 @@ $icode%f%.subgraph_jac_rev(%x%, %subset%)
 $icode%f%.subgraph_jac_rev(
 	%select_domain%, %select_range%, %x%, %matrix_out%
 )%$$
+
+$head See Also$$
+$cref/clear_subgraph/subgraph_reverse/clear_subgraph/$$.
 
 $head Purpose$$
 We use $latex F : \B{R}^n \rightarrow \B{R}^m$$ to denote the

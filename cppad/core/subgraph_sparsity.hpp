@@ -2,7 +2,7 @@
 # define CPPAD_CORE_SUBGRAPH_SPARSITY_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -28,6 +28,9 @@ $head Syntax$$
 $icode%f%.subgraph_sparsity(
 	%select_domain%, %select_range%, %transpose%, %pattern_out%
 )%$$
+
+$head See Also$$
+$cref/clear_subgraph/subgraph_reverse/clear_subgraph/$$.
 
 $head Notation$$
 We use $latex F : \B{R}^n \rightarrow \B{R}^m$$ to denote the

@@ -29,6 +29,8 @@ $icode%f%.subgraph_reverse(%select_domain%)
 %$$
 $icode%f%.subgraph_reverse(%q%, %ell%, %col%, %dw%)
 %$$
+$icode%f%.clear_subgraph()
+%$$
 
 $head Purpose$$
 We use $latex F : B^n \rightarrow B^m$$ to denote the
@@ -132,6 +134,15 @@ independent variable where $icode%j% = %col%[%c%]%$$.
 Note that this corresponds to the $cref reverse_any$$ convention when
 $cref/w/reverse_any/w/$$ has size $icode%m% * %q%$$.
 
+$head clear_subgraph$$
+Calling this routine will free memory that holds
+information between calls to subgraph calculations so that
+it does not need to be recalculated.
+(This memory is automatically freed when $icode f$$ is deleted.)
+You cannot free this memory between calls that select the domain
+and corresponding calls that compute reverse mode derivatives.
+Some of this information is also used by $cref subgraph_sparsity$$.
+
 $head Example$$
 $children%
 	example/sparse/subgraph_reverse.cpp
@@ -148,6 +159,14 @@ namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 \file subgraph_reverse.hpp
 Compute derivatvies using reverse mode and subgraphs.
 */
+
+/// clear all subgraph information
+template <typename Base>
+void ADFun<Base>::clear_subgraph(void)
+{	play_.clear_random();
+	subgraph_info_.clear();
+	subgraph_partial_.clear();
+}
 
 /*!
 Initialize reverse mode derivative computation on subgraphs.

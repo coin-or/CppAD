@@ -114,11 +114,6 @@ private:
 	/// results of the forward mode calculations
 	local::pod_vector<Base> taylor_;
 
-	/// Memory used for subgraph reverse mode calculations.
-	/// Declared here to avoid reallocation for each call to subgraph_reverse.
-	/// Not in subgraph_info_ because it depends on Base.
-	local::pod_vector<Base> subgraph_partial_;
-
 	/// which operations can be conditionally skipped
 	/// Set during forward pass of order zero
 	local::pod_vector<bool> cskip_op_;
@@ -141,6 +136,11 @@ private:
 
 	/// subgraph information for this object
 	local::subgraph::subgraph_info subgraph_info_;
+
+	/// used for subgraph reverse mode calculations.
+	/// Declared here to avoid reallocation for each call to subgraph_reverse.
+	/// Not in subgraph_info_ because it depends on Base.
+	local::pod_vector<Base> subgraph_partial_;
 
 // ------------------------------------------------------------
 // Private member functions
@@ -509,7 +509,12 @@ public:
 
 	/// amount of memory required for the operation sequence
 	size_t size_op_seq(void) const
-	{	return play_.Memory(); }
+	{	return play_.size_op_seq(); }
+
+	/// amount of memory currently allocated for random access
+	/// of the operation sequence
+	size_t size_random(void) const
+	{	return play_.size_random(); }
 
 	/// number of parameters in the operation sequence
 	size_t size_par(void) const
@@ -678,6 +683,9 @@ public:
 
 	// create abs-normal representation of the function f(x)
 	void abs_normal_fun( ADFun& g, ADFun& a ) const;
+
+	// clear all subgraph information
+	void clear_subgraph(void);
 	// ------------------- Deprecated -----------------------------
 
 	/// deprecated: assign a new operation sequence
@@ -698,9 +706,11 @@ public:
 	size_t Memory(void) const
 	{	size_t pervar  = cap_order_taylor_ * sizeof(Base)
 		+ for_jac_sparse_pack_.memory()
-		+ for_jac_sparse_set_.memory()
-		+ subgraph_info_.memory();
-		size_t total   = num_var_tape_  * pervar + play_.Memory();
+		+ for_jac_sparse_set_.memory();
+		size_t total   = num_var_tape_  * pervar;
+		total         += play_.size_op_seq();
+		total         += play_.size_random();
+		total         += subgraph_info_.memory();
 		return total;
 	}
 

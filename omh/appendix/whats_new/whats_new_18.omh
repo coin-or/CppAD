@@ -16,9 +16,24 @@ $spell
 	hes
 	Jacobian
 	rcv
+	subgraph
+	op
 $$
 
 $section Changes and Additions to CppAD During 2018$$
+
+$head 04-20$$
+A change was made in the way CppAD iterated over the operation sequence
+when subgraph operations were first added; see the heading
+$cref/11-20/whats_new_17/11-20/$$ in whats new for 2017.
+This caused CppAD to always use more memory for storing tapes.
+This has been fixed so this extra memory is only allocated when it is needed.
+In addition it can be freed; see
+$cref/size_random/seq_property/size_random/$$ and
+$cref/clear_subgraph/subgraph_reverse/clear_subgraph/$$.
+In addition, this changed the amount of memory returned by
+$cref/size_op_seq/seq_property/size_op_seq/$$ so that it
+no longer includes the part returned by $code size_random$$.
 
 $head 04-13$$
 The $cref speed_cppad$$ tests were modified to report the

@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -89,6 +89,7 @@ bool subgraph_hes2jac(void)
 	// create double version of g : x -> f'(x)
 	CppAD::ADFun<double> g;
 	g.Dependent(a1x, a1z);
+	ok &= g.size_random() == 0;
 	//
 	// Optimize this function to reduce future computations.
 	// Perhaps no optimization would be faster.
@@ -124,6 +125,9 @@ bool subgraph_hes2jac(void)
 			ok          &= NearEqual(v, check, eps, eps);
 		}
 	}
+	ok &= g.size_random() > 0;
+	g.clear_subgraph();
+	ok &= g.size_random() == 0;
 	return ok;
 }
 // END C++
