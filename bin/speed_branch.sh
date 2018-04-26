@@ -57,10 +57,16 @@ do
 	then
 		echo "Using existing build/speed/cppad/$branch.$option_list.out"
 	else
-		echo_eval git checkout $branch
+		# use --quiet to supress detachec HEAD message
+		echo_eval git checkout --quiet $branch
 		#
+		# versions of CppAD before 20170625 did not have --debug_none option
 		echo "bin/run_cmake.sh --debug_none > $branch.log"
-		bin/run_cmake.sh --debug_none > $branch.log
+		if ! bin/run_cmake.sh --debug_none > $branch.log
+		then
+			echo "bin/run_cmake.sh > $branch.log"
+			bin/run_cmake.sh > $branch.log
+		fi
 		#
 		echo_eval cd $dir
 		#
