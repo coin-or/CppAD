@@ -9,17 +9,23 @@
 # A copy of this license is included in the COPYING file of this distribution.
 # Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # -----------------------------------------------------------------------------
-if [ "$0" != "bin/speed_branch.sh" ]
+program="bin/speed_branch.sh"
+if [ "$0" != "$program" ]
 then
 	echo "bin/speed_branch.sh: must be executed from its parent directory"
 	exit 1
 fi
-if [ "$2" == '' ]
+if [ "$3" == '' ]
 then
 cat << EOF
-usage: bin/speed_branch.sh branch_one branch_two [option_1 [option_2 ...] ]
-where the possible options are:
-	atomic, boolsparsity, colpack, memory, onetape, optimize, revsparsity
+usage:
+$program branch_one branch_two test_name [option_1] [option_2] ...
+
+possible tests are:
+all, det_lu, det_minor, mat_mul ode, poly, sparse_hessian, sparse_jacobian
+
+possible options are:
+atomic, boolsparsity, colpack, memory, onetape, optimize, revsparsity
 EOF
 	exit 1
 fi
@@ -28,15 +34,16 @@ branch_one="$1"
 shift
 branch_two="$1"
 shift
-option_list='none'
+test_name="$1"
+if [ "$test_name" == 'all' ]
+then
+	test_name='speed'
+fi
+shift
+option_list="$test_name"
 for option in $*
 do
-	if [ "$option_list" == 'none' ]
-	then
-		option_list="$option"
-	else
-		option_list="${option_list}_$option"
-	fi
+	option_list="${option_list}_$option"
 done
 # ----------------------------------------------------------------------------
 build_dir='build/speed/cppad'
@@ -81,6 +88,7 @@ s|{|{\\n\\t// BEGIN_SIZES\\n\\t|
 s|\\n\\t}\$|\\n\\t// END_SIZES&|
 : skip
 EOF
+rm speed_branch.main.$$
 # -----------------------------------------------------------------------------
 for branch in $branch_one $branch_two
 do
@@ -99,11 +107,11 @@ do
 		mv speed_branch.main.$$ speed/main.cpp
 		#
 		# versions of CppAD before 20170625 did not have --debug_none option
-		echo "bin/run_cmake.sh --debug_none > $build_dir/$branch.log"
-		if ! bin/run_cmake.sh --debug_none > $build_dir/$branch.log
+		echo "bin/run_cmake.sh --debug_none >& $build_dir/$branch.log"
+		if ! bin/run_cmake.sh --debug_none >& $build_dir/$branch.log
 		then
-			echo "bin/run_cmake.sh > $build_dir/$branch.log"
-			bin/run_cmake.sh > $build_dir/$branch.log
+			echo "bin/run_cmake.sh >& $build_dir/$branch.log"
+			bin/run_cmake.sh >& $build_dir/$branch.log
 		fi
 		#
 		echo_eval cd $build_dir
@@ -111,8 +119,9 @@ do
 		echo "make check_speed_cppad >> $build_dir/$branch.log"
 		make check_speed_cppad >> $branch.log
 		#
-		echo "./speed_cppad speed 123 $* > $build_dir/$branch.$option_list.out"
-		./speed_cppad speed 123 $* > $branch.$option_list.out
+		file="$branch.$option_list.out"
+		echo "./speed_cppad $test_name 123 $* > $build_dir/$file"
+		./speed_cppad $test_name 123 $* > $file
 		#
 		cd ../../..
 		#
