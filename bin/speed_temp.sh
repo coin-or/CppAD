@@ -59,6 +59,9 @@ echo "older speed test results"
 ./speed_cppad sparse_hessian 125
 cd ../../..
 #
-echo 'Use git diff to see changes from newer to older results'
+number_lines=`git diff --unified=0 | grep -v '^@' | wc -l `
+number_lines=`expr $number_lines - 4`
+echo "Number of lines that are different is $number_lines"
+echo 'Use git diff to see the differences'
 echo 'bin/speed_temp.sh: OK'
 exit 0
