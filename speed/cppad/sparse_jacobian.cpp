@@ -119,10 +119,9 @@ bool link_sparse_jacobian(
 	// check global options
 	const char* valid[] = {
 		"memory", "onetape", "optimize", "subgraph",
-# if CPPAD_HAS_COLPACK
-		"boolsparsity", "revsparsity", "subsparsity", "colpack"
-# else
 		"boolsparsity", "revsparsity", "subsparsity"
+# if CPPAD_HAS_COLPACK
+		, "colpack"
 # endif
 	};
 	size_t n_valid = sizeof(valid) / sizeof(valid[0]);
@@ -138,7 +137,9 @@ bool link_sparse_jacobian(
 		}
 	}
 	if( global_option["subsparsity"] )
-	{	if( global_option["boolsparisty"] || global_option["revsparsity"] )
+	{	if( global_option["boolsparisty"]
+		||  global_option["revsparsity"]
+		||  global_option["colpack"]  )
 			return false;
 	}
 	// ---------------------------------------------------------------------

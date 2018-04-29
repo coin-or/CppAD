@@ -20,6 +20,15 @@ $$
 
 $section Changes and Additions to CppAD During 2018$$
 
+$head 04-29$$
+Change the $cref cppad_sparse_hessian.cpp$$ speed test to support the
+$cref/symmetric/speed_main/Sparsity Options/symmetric/$$ option
+for sparsity calculations.
+This was added because, even though the symmetric sparsity patterns
+are more efficient, they seem to take longer to calculation
+and hence general sparsity patterns may be faster; see the sparse hessian
+$cref/color_method/sparse_hessian/work/color_method/$$.
+
 $head 04-13$$
 The $cref speed_cppad$$ tests were modified to report the
 amount of memory allocated at the end of each tests.

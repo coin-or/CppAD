@@ -235,11 +235,14 @@ namespace {
 		{	// fun corresponds to f(x)
 			//
 			// coloring method
-			std::string coloring = "cppad.symmetric";
-# if CPPAD_HAS_COLPACK
+			std::string coloring = "cppad";
 			if( global_option["colpack"] )
-				coloring = "colpack.symmetric";
-# endif
+				coloring = "colpack";
+			if( global_option["symmetric"] )
+				coloring += ".symmetric";
+			else
+				coloring += ".general";
+			//
 			// only one function component
 			d_vector w(1);
 			w[0] = 1.0;
@@ -295,10 +298,11 @@ bool link_sparse_hessian(
 	// check global options
 	const char* valid[] = {
 		"memory", "onetape", "optimize", "hes2jac", "subgraph",
+		"boolsparsity", "revsparsity", "symmetric"
 # if CPPAD_HAS_COLPACK
-		"boolsparsity", "revsparsity", "subsparsity", "colpack"
+		, "colpack"
 # else
-		"boolsparsity", "revsparsity"
+		, "subsparsity"
 # endif
 	};
 	size_t n_valid = sizeof(valid) / sizeof(valid[0]);
@@ -323,6 +327,10 @@ bool link_sparse_hessian(
 	{	if( ! global_option["hes2jac"] )
 			return false;
 	}
+# if ! CPPAD_HAS_COLPACK
+	if( global_option["colpack"] )
+		return false;
+# endif
 	// -----------------------------------------------------------------------
 	// setup
 	size_t n = size;          // number of independent variables
