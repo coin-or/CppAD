@@ -16,7 +16,6 @@ then
 fi
 old_hash='b4c0e5'
 new_hash='611e98'
-echo_eval cd $HOME/repo/cppad.git
 # -----------------------------------------------------------------------------
 # get newer version of cppad
 git checkout --quiet $new_hash
@@ -45,6 +44,7 @@ list=`git diff --name-only $old_hash $new_hash | sed \
 	-e '/\/epsilon.hpp$/d' \
 	-e '/\/test_vector.hpp$/d' \
 	-e '/\/track_new_del.hpp$/d' \
+	-e '/^speed\//d' \
 	-e '/^cppad_ipopt\//d' \
 	-e '/^omh\//d' \
 	-e '/^test_more\//d' \
@@ -54,6 +54,17 @@ for file in $list
 do
 	git show $old_hash:$file > $file
 done
+#
+# define do nothing version of f.compare_change_count(count)
+cat << EOF > junk.sed
+/^# ifndef NDEBUG/! b skip
+: loop
+N
+/\\n# endif/! b loop
+s|$|\\nvoid compare_change_count(size_t count)\\n{ return; }|
+: skip
+EOF
+sed -i cppad/local/ad_fun.hpp -f junk.sed
 #
 # check speed tests
 cd build/speed/cppad
