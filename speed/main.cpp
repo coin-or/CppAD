@@ -255,7 +255,8 @@ Otherwise CppAD will use forward mode.
 $subhead subsparsity$$
 If this option is present,
 CppAD will use subgraphs to compute sparsity patterns.
-If either the $code boolsparsity$$ or $code revsparsity$$ is also present,
+If
+$code boolsparsity$$, $code revsparsity$$, or $code colpack$$ is also present,
 the CppAD speed tests will return false; i.e., these options are not
 supported by $cref subgraph_sparsity$$.
 
@@ -263,6 +264,15 @@ $subhead colpack$$
 If this option is present,
 CppAD will use $cref/colpack/colpack_prefix/$$ to do the coloring.
 Otherwise, it will use it's own coloring algorithm.
+
+$subhead symmetric$$
+If this option is present, CppAD will use a symmetric
+$cref/coloring method/sparse_hessian/work/color_method/$$
+for computing Hessian sparsity patterns.
+Otherwise, it will use a general coloring method.
+The CppAD
+$cref/sparse_hessian/link_sparse_hessian/$$ test
+is implemented for this option.
 
 $head Correctness Results$$
 One, but not both, of the following two output lines
@@ -378,7 +388,8 @@ namespace {
 		"boolsparsity",
 		"revsparsity",
 		"subsparsity",
-		"colpack"
+		"colpack",
+		"symmetric"
 	};
 	size_t num_option = sizeof(option_list) / sizeof( option_list[0] );
 	// ----------------------------------------------------------------
