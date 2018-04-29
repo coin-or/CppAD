@@ -65,6 +65,7 @@ var list_current0 = [
 'speed_main.htm#Sparsity Options.revsparsity',
 'speed_main.htm#Sparsity Options.subsparsity',
 'speed_main.htm#Sparsity Options.colpack',
+'speed_main.htm#Sparsity Options.symmetric',
 'speed_main.htm#Correctness Results',
 'speed_main.htm#Speed Results',
 'speed_main.htm#Speed Results.n_sweep',

@@ -193,10 +193,9 @@ See <a href="link_sparse_jacobian.htm" target="_top"><span style='white-space: n
      <i><font color="#9A1900">// check global options</font></i>
      <b><font color="#0000FF">const</font></b> <font color="#009900">char</font><font color="#990000">*</font> valid<font color="#990000">[]</font> <font color="#990000">=</font> <font color="#FF0000">{</font>
           <font color="#FF0000">"memory"</font><font color="#990000">,</font> <font color="#FF0000">"onetape"</font><font color="#990000">,</font> <font color="#FF0000">"optimize"</font><font color="#990000">,</font> <font color="#FF0000">"subgraph"</font><font color="#990000">,</font>
-<b><font color="#000080"># if</font></b> CPPAD_HAS_COLPACK
-          <font color="#FF0000">"boolsparsity"</font><font color="#990000">,</font> <font color="#FF0000">"revsparsity"</font><font color="#990000">,</font> <font color="#FF0000">"subsparsity"</font><font color="#990000">,</font> <font color="#FF0000">"colpack"</font>
-<b><font color="#000080"># else</font></b>
           <font color="#FF0000">"boolsparsity"</font><font color="#990000">,</font> <font color="#FF0000">"revsparsity"</font><font color="#990000">,</font> <font color="#FF0000">"subsparsity"</font>
+<b><font color="#000080"># if</font></b> CPPAD_HAS_COLPACK
+          <font color="#990000">,</font> <font color="#FF0000">"colpack"</font>
 <b><font color="#000080"># endif</font></b>
      <font color="#FF0000">}</font><font color="#990000">;</font>
      <font color="#008080">size_t</font> n_valid <font color="#990000">=</font> <b><font color="#0000FF">sizeof</font></b><font color="#990000">(</font>valid<font color="#990000">)</font> <font color="#990000">/</font> <b><font color="#0000FF">sizeof</font></b><font color="#990000">(</font>valid<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]);</font>
@@ -212,7 +211,9 @@ See <a href="link_sparse_jacobian.htm" target="_top"><span style='white-space: n
           <font color="#FF0000">}</font>
      <font color="#FF0000">}</font>
      <b><font color="#0000FF">if</font></b><font color="#990000">(</font> global_option<font color="#990000">[</font><font color="#FF0000">"subsparsity"</font><font color="#990000">]</font> <font color="#990000">)</font>
-     <font color="#FF0000">{</font>    <b><font color="#0000FF">if</font></b><font color="#990000">(</font> global_option<font color="#990000">[</font><font color="#FF0000">"boolsparisty"</font><font color="#990000">]</font> <font color="#990000">||</font> global_option<font color="#990000">[</font><font color="#FF0000">"revsparsity"</font><font color="#990000">]</font> <font color="#990000">)</font>
+     <font color="#FF0000">{</font>    <b><font color="#0000FF">if</font></b><font color="#990000">(</font> global_option<font color="#990000">[</font><font color="#FF0000">"boolsparisty"</font><font color="#990000">]</font>
+          <font color="#990000">||</font>  global_option<font color="#990000">[</font><font color="#FF0000">"revsparsity"</font><font color="#990000">]</font>
+          <font color="#990000">||</font>  global_option<font color="#990000">[</font><font color="#FF0000">"colpack"</font><font color="#990000">]</font>  <font color="#990000">)</font>
                <b><font color="#0000FF">return</font></b> <b><font color="#0000FF">false</font></b><font color="#990000">;</font>
      <font color="#FF0000">}</font>
      <i><font color="#9A1900">// ---------------------------------------------------------------------</font></i>

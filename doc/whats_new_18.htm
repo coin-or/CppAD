@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Changes and Additions to CppAD During 2018</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Changes and Additions to CppAD During 2018">
-<meta name="keywords" id="keywords" content=" changes additions to cppad during 2018 04-13 03-20 03-19 03-04 03-02 02-27 02-26 02-23 02-20 ">
+<meta name="keywords" id="keywords" content=" changes additions to cppad during 2018 04-29 04-13 03-20 03-19 03-04 03-02 02-27 02-26 02-23 02-20 ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -110,6 +110,7 @@ A:active { color : purple }
 <td>
 <select onchange='choose_current0(this)'>
 <option>Headings-&gt;</option>
+<option>04-29</option>
 <option>04-13</option>
 <option>03-20</option>
 <option>03-19</option>
@@ -132,6 +133,21 @@ A:active { color : purple }
 
 
 <center><b><big><big>Changes and Additions to CppAD During 2018</big></big></b></center>
+<br>
+<b><big><a name="04-29" id="04-29">04-29</a></big></b>
+<br>
+Change the <a href="cppad_sparse_hessian.cpp.htm" target="_top"><span style='white-space: nowrap'>cppad_sparse_hessian.cpp</span></a>
+ speed test to support the
+<a href="speed_main.htm#Sparsity Options.symmetric" target="_top"><span style='white-space: nowrap'>symmetric</span></a>
+ option
+for sparsity calculations.
+This was added because, even though the symmetric sparsity patterns
+are more efficient, they seem to take longer to calculation
+and hence general sparsity patterns may be faster; see the sparse hessian
+<a href="sparse_hessian.htm#work.color_method" target="_top"><span style='white-space: nowrap'>color_method</span></a>
+.
+
+<br>
 <br>
 <b><big><a name="04-13" id="04-13">04-13</a></big></b>
 <br>

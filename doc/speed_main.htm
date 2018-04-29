@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Running the Speed Test Program</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Running the Speed Test Program">
-<meta name="keywords" id="keywords" content=" running the speed test program cppad uniform_01 syntax purpose package ad double profile correct seed global options onetape memory optimize atomic hes2jac subgraph sparsity boolsparsity revsparsity subsparsity colpack correctness results n_sweep link functions ">
+<meta name="keywords" id="keywords" content=" running the speed test program cppad uniform_01 syntax purpose package ad double profile correct seed global options onetape memory optimize atomic hes2jac subgraph sparsity boolsparsity revsparsity subsparsity colpack symmetric correctness results n_sweep link functions ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -117,6 +117,7 @@ A:active { color : purple }
 <option>---..revsparsity</option>
 <option>---..subsparsity</option>
 <option>---..colpack</option>
+<option>---..symmetric</option>
 <option>Correctness Results</option>
 <option>Speed Results</option>
 <option>---..n_sweep</option>
@@ -431,7 +432,8 @@ Otherwise CppAD will use forward mode.
 <br>
 If this option is present,
 CppAD will use subgraphs to compute sparsity patterns.
-If either the <code><font color="blue">boolsparsity</font></code> or <code><font color="blue">revsparsity</font></code> is also present,
+If
+<code><font color="blue">boolsparsity</font></code>, <code><font color="blue">revsparsity</font></code>, or <code><font color="blue">colpack</font></code> is also present,
 the CppAD speed tests will return false; i.e., these options are not
 supported by <a href="subgraph_sparsity.htm" target="_top"><span style='white-space: nowrap'>subgraph_sparsity</span></a>
 .
@@ -444,6 +446,20 @@ If this option is present,
 CppAD will use <a href="colpack_prefix.htm" target="_top"><span style='white-space: nowrap'>colpack</span></a>
  to do the coloring.
 Otherwise, it will use it's own coloring algorithm.
+
+<br>
+<br>
+<big><a name="Sparsity Options.symmetric" id="Sparsity Options.symmetric">symmetric</a></big>
+<br>
+If this option is present, CppAD will use a symmetric
+<a href="sparse_hessian.htm#work.color_method" target="_top"><span style='white-space: nowrap'>coloring&nbsp;method</span></a>
+
+for computing Hessian sparsity patterns.
+Otherwise, it will use a general coloring method.
+The CppAD
+<a href="link_sparse_hessian.htm" target="_top"><span style='white-space: nowrap'>sparse_hessian</span></a>
+ test
+is implemented for this option.
 
 <br>
 <br>
