@@ -23,6 +23,21 @@ new_hash='611e98'
 git checkout --quiet $new_hash
 git reset --quiet --hard
 # -----------------------------------------------------------------------------
+# Simplify the det_lu speed test to isloate what is different
+# 1. Remove reverse mode sweep
+# 2. Remove forward mode sweep
+# 4. Remove creationg of ADFun object
+git checkout speed/cppad/det_lu.cpp
+sed -i speed/cppad/det_lu.cpp \
+	-e '/f\.Reverse/d' \
+	-e '/f\.Forward/d' \
+	-e 's|f.Dependent(.*|ADScalar::abort_recording();|'
+#
+# suppress det_lu correctness test
+git checkout speed/src/link_det_lu.cpp
+sed -i speed/src/link_det_lu.cpp \
+	-e 's/return ok;/return true;/'
+# -----------------------------------------------------------------------------
 # configure new_hash
 echo "bin/run_cmake.sh >& /dev/null"
 bin/run_cmake.sh >& /dev/null
