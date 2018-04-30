@@ -14,50 +14,71 @@ then
 	echo "bin/speed_temp.sh: must be executed from its parent directory"
 	exit 1
 fi
-old_hash='418ea1'
-new_hash='f3018c'
+old_hash='b4c0e5'
+new_hash='611e98'
+# -----------------------------------------------------------------------------
+# cd /home/bradbell/repo/cppad.git
 # -----------------------------------------------------------------------------
 # get newer version of cppad
 git checkout --quiet $new_hash
 git reset --quiet --hard
-#
-# configure
+# -----------------------------------------------------------------------------
+# configure new_hash
 echo "bin/run_cmake.sh >& /dev/null"
 bin/run_cmake.sh >& /dev/null
 #
-# check speed tests
+# check speed tests for new_hash
 cd build/speed/cppad
 echo "make check_speed_cppad > /dev/null"
 make check_speed_cppad > /dev/null
 #
-# run speed tests
+# run speed test for new_hash
 echo "newer speed test results"
-./speed_cppad sparse_hessian 125
+./speed_cppad det_lu 125
 cd ../../..
 #
-# change to older version
-# get files that different
+# necessary files that are different in old_hash
 list=`git diff --name-only $old_hash $new_hash | sed \
-	-e '/^omh\//d' \
-	-e '/^example\//d' \
-	-e '/^bin\//d' \
+	-e '/\/atomic_base.hpp$/d' \
+	-e '/\/checkpoint.hpp$/d' \
+	-e '/\/cond_exp.hpp$/d' \
+	-e '/\/discrete.hpp$/d' \
+	-e '/\/epsilon.hpp$/d' \
+	-e '/\/test_vector.hpp$/d' \
+	-e '/\/track_new_del.hpp$/d' \
 	-e '/^speed\//d' \
-	-e '/^cppad\/speed\//d'`
+	-e '/^cppad_ipopt\//d' \
+	-e '/^omh\//d' \
+	-e '/^test_more\//d' \
+	-e '/^bin\//d' \
+	-e '/^example\//d'`
 for file in $list
 do
 	git show $old_hash:$file > $file
 done
-#
-# check speed tests
+# -----------------------------------------------------------------------------
+# modify old_hash ad_fun.hpp so do not need old_hash speed directory
+cat << EOF > junk.sed
+/^# ifndef NDEBUG/! b skip
+: loop
+N
+/\\n# endif/! b loop
+s|$|\\nvoid compare_change_count(size_t count)\\n{ return; }|
+: skip
+EOF
+sed -i cppad/local/ad_fun.hpp -f junk.sed
+# -----------------------------------------------------------------------------
+# check speed tests for old_hash
 cd build/speed/cppad
 echo "make check_speed_cppad > /dev/null"
 make check_speed_cppad > /dev/null
 #
-# run speed tests
+# run speed tests for old_hash
 echo "older speed test results"
-./speed_cppad sparse_hessian 125
+./speed_cppad det_lu 125
 cd ../../..
 #
+# amount of difference from new_hash to old_hash
 number_lines=`git diff --unified=0 | grep -v '^@' | wc -l `
 number_lines=`expr $number_lines - 4`
 echo "Number of lines that are different is $number_lines"
