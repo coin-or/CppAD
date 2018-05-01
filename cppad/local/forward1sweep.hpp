@@ -308,7 +308,7 @@ void forward1sweep(
 				case UserOp:
 				{	// get information for this user atomic call
 					CPPAD_ASSERT_UNKNOWN( user_state == start_user );
-					itr.user_info(user_old, user_m, user_n);
+					itr.user_info(op, arg, user_old, user_m, user_n);
 					//
 					// skip to the second UserOp
 					for(i = 0; i < user_m + user_n + 1; ++i)
@@ -855,7 +855,7 @@ void forward1sweep(
 			case UserOp:
 			// start or end an atomic function call
 			flag = user_state == start_user;
-			user_atom = itr.user_info(user_old, user_m, user_n);
+			user_atom = itr.user_info(op, arg, user_old, user_m, user_n);
 			if( flag )
 			{	user_state = arg_user;
 				user_i     = 0;

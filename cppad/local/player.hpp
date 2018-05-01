@@ -938,6 +938,12 @@ public:
 	\brief
 	Unpack extra information when current op is a UserOp
 
+	\param op [in]
+	must be a UserOp
+
+	\param op_arg [in]
+	is the arguments for this operator
+
 	\param user_old [out]
 	is the extra information passed to the old style user atomic functions.
 
@@ -951,16 +957,12 @@ public:
 	is a pointer to this user atomic function.
 	*/
 	atomic_base<Base>* user_info(
+		const OpCode     op         ,
+		const addr_t*    op_arg     ,
 		size_t&          user_old   ,
 		size_t&          user_m     ,
 		size_t&          user_n     ) const
 	{	atomic_base<Base>* user_atom;
-		//
-		// get operator infromation
-		OpCode op;
-		const addr_t* op_arg;
-		size_t var_index;
-		op_info(op, op_arg, var_index);
 		//
 		CPPAD_ASSERT_UNKNOWN( op == UserOp );
 		CPPAD_ASSERT_NARG_NRES(op, 4, 0);
@@ -1063,6 +1065,12 @@ public:
 	\brief
 	Unpack extra information when current op is a UserOp
 
+	\param op [in]
+	must be a UserOp
+
+	\param op_arg [in]
+	is the arguments for this operator
+
 	\param user_old [out]
 	is the extra information passed to the old style user atomic functions.
 
@@ -1076,16 +1084,12 @@ public:
 	is a pointer to this user atomic function.
 	*/
 	atomic_base<Base>* user_info(
+		const OpCode     op         ,
+		const addr_t*    op_arg     ,
 		size_t&          user_old   ,
 		size_t&          user_m     ,
 		size_t&          user_n     ) const
-	{	// get operator infromation
-		OpCode op;
-		const addr_t* op_arg;
-		size_t var_index;
-		op_info(op, op_arg, var_index);
-		//
-		return play_->get_user_info(op, op_arg, user_old, user_m, user_n);
+	{	return play_->get_user_info(op, op_arg, user_old, user_m, user_n);
 	}
 };
 

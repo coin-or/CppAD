@@ -609,7 +609,7 @@ void for_jac_sweep(
 				user_state == start_user || user_state == end_user
 			);
 			flag = user_state == start_user;
-			user_atom = itr.user_info(user_old, user_m, user_n);
+			user_atom = itr.user_info(op, arg, user_old, user_m, user_n);
 			if( flag )
 			{	user_state = arg_user;
 				user_i     = 0;

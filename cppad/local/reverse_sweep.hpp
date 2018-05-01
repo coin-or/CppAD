@@ -253,7 +253,7 @@ void reverse_sweep(
 				case UserOp:
 				{	// get information for this user atomic call
 					CPPAD_ASSERT_UNKNOWN( user_state == end_user );
-					play_itr.user_info(user_old, user_m, user_n);
+					play_itr.user_info(op, arg, user_old, user_m, user_n);
 					//
 					// skip to the first UserOp
 					for(size_t i = 0; i < user_m + user_n + 1; ++i)
@@ -668,7 +668,7 @@ void reverse_sweep(
 			case UserOp:
 			// start or end an atomic function call
 			flag = user_state == end_user;
-			user_atom = play_itr.user_info(user_old, user_m, user_n);
+			user_atom = play_itr.user_info(op, arg, user_old, user_m, user_n);
 			if( flag )
 			{	user_state = ret_user;
 				user_i     = user_m;

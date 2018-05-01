@@ -92,7 +92,7 @@ size_t ADFun<Base>::number_skip(void)
 		if( op == local::UserOp )
 		{	// skip only appears at front or back UserOp of user atomic call
 			bool skip_call = cskip_op_[ itr.op_index() ];
-			itr.user_info(user_old, user_m, user_n);
+			itr.user_info(op, arg, user_old, user_m, user_n);
 			CPPAD_ASSERT_UNKNOWN( NumRes(op) == 0 );
 			size_t num_op = user_m + user_n + 1;
 			for(size_t i = 0; i < num_op; i++)
