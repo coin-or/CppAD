@@ -256,6 +256,7 @@ void for_jac_sweep(
 			// -------------------------------------------------
 
 			case CSkipOp:
+			itr.correct_before_increment();
 			break;
 			// -------------------------------------------------
 
@@ -263,6 +264,7 @@ void for_jac_sweep(
 			forward_sparse_jacobian_csum_op(
 				i_var, arg, var_sparsity
 			);
+			itr.correct_before_increment();
 			break;
 			// -------------------------------------------------
 

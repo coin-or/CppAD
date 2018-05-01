@@ -271,6 +271,11 @@ void forward0sweep(
 				}
 				break;
 
+				case CSkipOp:
+				case CSumOp:
+				itr.correct_before_increment();
+				break;
+
 				default:
 				break;
 			}
@@ -371,6 +376,7 @@ void forward0sweep(
 			forward_cskip_op_0(
 				i_var, arg, num_par, parameter, J, taylor, cskip_op
 			);
+			itr.correct_before_increment();
 			break;
 			// -------------------------------------------------
 
@@ -378,6 +384,7 @@ void forward0sweep(
 			forward_csum_op(
 				0, 0, i_var, arg, num_par, parameter, J, taylor
 			);
+			itr.correct_before_increment();
 			break;
 			// -------------------------------------------------
 

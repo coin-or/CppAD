@@ -308,6 +308,7 @@ public:
 					for(addr_t j = 0; j < num_add + num_sub; j++)
 						CPPAD_ASSERT_UNKNOWN(op_arg[3+j] <= arg_var_bound);
 				}
+				itr.correct_before_increment();
 				break;
 
 				// CExpOp
@@ -330,12 +331,13 @@ public:
 					CPPAD_ASSERT_UNKNOWN( op_arg[3] <= arg_var_bound);
 				break;
 
-				// CSkipOp, PriOp
+				// CSkipOp
 				case CSkipOp:
 				if( op_arg[1] & 1 )
 					CPPAD_ASSERT_UNKNOWN( op_arg[2] <= arg_var_bound);
 				if( op_arg[1] & 2 )
 					CPPAD_ASSERT_UNKNOWN( op_arg[3] <= arg_var_bound);
+				itr.correct_before_increment();
 				break;
 
 				default:
@@ -746,14 +748,14 @@ public:
 template <class Base>
 class player_const_iterator {
 private:
-	/// number of variables in tape
-	size_t num_var_;
-
 	/// op_vec_
 	const pod_vector<OpCode>* op_vec_;
 
 	/// arg_vec_
 	const pod_vector<addr_t>* arg_vec_;
+
+	/// number of variables in tape
+	size_t num_var_;
 
 	/// index of current operator
 	size_t op_index_;
@@ -766,9 +768,10 @@ private:
 public:
 	/// assignment operator
 	void operator=(const player_const_iterator& rhs)
-	{	num_var_   = rhs.num_var_;
+	{
 		op_vec_    = rhs.op_vec_;
 		arg_vec_   = rhs.arg_vec_;
+		num_var_   = rhs.num_var_;
 		op_index_  = rhs.op_index_;
 		arg_index_ = rhs.arg_index_;
 		var_index_ = rhs.var_index_;
@@ -786,9 +789,9 @@ public:
 		/// must be 0 for begin() and op_vec->size() for end()
 		size_t                    op_index   )
 	:
-	num_var_  ( num_var ),
 	op_vec_   ( op_vec ),
-	arg_vec_  ( arg_vec )
+	arg_vec_  ( arg_vec ),
+	num_var_  ( num_var )
 	{	if( op_index == 0 )
 		{	op_index_  = 0;
 			arg_index_ = 0;
@@ -807,13 +810,17 @@ public:
 	player_const_iterator<Base>& operator++(void)
 	{
 		OpCode op   = (*op_vec_)[op_index_];
-		op_index_  += 1;
+		++op_index_ ;
 		arg_index_ += NumArg(op);
 		var_index_ += NumRes(op);
-		bool done   = (op != CSumOp) & (op != CSkipOp);
-		if( done )
-			return *this;
-		//
+		return *this;
+	}
+	/*!
+	Correction applied before ++ operation when current operator
+	is CSumOp or CSkipOp.
+	*/
+	void correct_before_increment(void)
+	{	OpCode op   = (*op_vec_)[op_index_];
 		// number of arguments for this operator depends on argument data
 		CPPAD_ASSERT_UNKNOWN( NumArg(op) == 0 );
 		const addr_t* arg = arg_vec_->data() + arg_index_;
@@ -826,23 +833,19 @@ public:
 			//
 			// add actual number of arguments to arg_index_
 			arg_index_ += 4 + n_var;
-			//
-			return *this;
 		}
 		//
 		// CSkip
-		if ( op == CSkipOp )
-		{	//
+		else
+		{	CPPAD_ASSERT_UNKNOWN( op == CSkipOp );
+			//
 			addr_t n_skip     = arg[4] + arg[5];
 			CPPAD_ASSERT_UNKNOWN( n_skip == arg[6 + n_skip] );
 			//
 			// add actual number of arguments to arg_index_
 			arg_index_ += 7 + n_skip;
-			//
-			return *this;
 		}
-		CPPAD_ASSERT_UNKNOWN( false );
-		return *this;
+		return;
 	}
 	/*!
 	Backup iterator to previous operator
@@ -859,9 +862,17 @@ public:
 		CPPAD_ASSERT_UNKNOWN( NumRes(op) <= var_index_ );
 		var_index_ -= NumRes(op);
 		//
-		bool done   = (op != CSumOp) & (op != CSkipOp);
-		if( done )
-			return *this;
+		return *this;
+	}
+	/*!
+	Correction applied after -- operation when current operator
+	is CSumOp or CSkipOp.
+
+	\param op_arg [out]
+	corrected point to arguments for this operation.
+	*/
+	void correct_after_decrement(const addr_t*& op_arg)
+	{	OpCode op   = (*op_vec_)[op_index_];
 		//
 		// CSumOp
 		if( op == CSumOp )
@@ -874,16 +885,16 @@ public:
 			//
 			// index of first argument to this operator
 			arg_index_ -= 4 + n_var;
-# ifndef NDEBUG
-			const addr_t* arg = arg_vec_->data() + arg_index_;
-			CPPAD_ASSERT_UNKNOWN( arg[0] + arg[1] == n_var );
-# endif
-			return *this;
+			//
+			// corrected version of op_arg
+			op_arg    = arg_vec_->data() + arg_index_;
+			CPPAD_ASSERT_UNKNOWN( op_arg[0] + op_arg[1] == n_var );
 		}
 		//
 		// CSkip
-		if( op == CSkipOp )
-		{	// number of arguments for this operator depends on argument data
+		else
+		{	CPPAD_ASSERT_UNKNOWN( op == CSkipOp );
+			// number of arguments for this operator depends on argument data
 			CPPAD_ASSERT_UNKNOWN( NumArg(CSumOp) == 0 );
 			//
 			// number to possibly skip is stored in last argument
@@ -892,14 +903,11 @@ public:
 			//
 			// index of frist argument to this operator
 			arg_index_ -= 7 + n_skip;
-# ifndef NDEBUG
-			const addr_t* arg = arg_vec_->data() + arg_index_;
-			CPPAD_ASSERT_UNKNOWN( arg[4] + arg[5] == n_skip );
-# endif
-			return *this;
+			//
+			// corrected version of op_arg
+			op_arg    = arg_vec_->data() + arg_index_;
+			CPPAD_ASSERT_UNKNOWN( op_arg[4] + op_arg[5] == n_skip );
 		}
-		CPPAD_ASSERT_UNKNOWN( false );
-		return *this;
 	}
 	/*!
 	\brief
@@ -1028,6 +1036,9 @@ public:
 	{	++subgraph_index_;
 		return *this;
 	}
+	/// No correction necessary when using random access to player
+	void correct_before_increment(void)
+	{	return; }
 	/*!
 	Backup iterator to previous operator
 	*/
@@ -1035,6 +1046,14 @@ public:
 	{	--subgraph_index_;
 		return *this;
 	}
+	/*!
+	No correction necessary when using random access to player.
+
+	\param op_arg
+	not used or modified.
+	*/
+	void correct_after_decrement(const addr_t*& op_arg)
+	{	return; }
 	/*!
 	\brief
 	Get information corresponding to current operator.

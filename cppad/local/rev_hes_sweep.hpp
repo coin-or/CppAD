@@ -287,10 +287,12 @@ void rev_hes_sweep(
 			// -------------------------------------------------
 
 			case CSkipOp:
+			itr.correct_after_decrement(arg);
 			break;
 			// -------------------------------------------------
 
 			case CSumOp:
+			itr.correct_after_decrement(arg);
 			reverse_sparse_hessian_csum_op(
 				i_var, arg, RevJac, rev_hes_sparse
 			);

@@ -261,10 +261,12 @@ void for_hes_sweep(
 			// -------------------------------------------------
 
 			case CSkipOp:
+			itr.correct_before_increment();
 			break;
 			// -------------------------------------------------
 
 			case CSumOp:
+			itr.correct_before_increment();
 			break;
 			// -------------------------------------------------
 

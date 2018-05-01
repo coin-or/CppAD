@@ -382,10 +382,12 @@ void reverse_sweep(
 
 			case CSkipOp:
 			// CSkipOp has a zero order forward action.
+			play_itr.correct_after_decrement(arg);
 			break;
 			// -------------------------------------------------
 
 			case CSumOp:
+			play_itr.correct_after_decrement(arg);
 			reverse_csum_op(
 				d, i_var, arg, K, Partial
 			);

@@ -263,10 +263,12 @@ void rev_jac_sweep(
 			// -------------------------------------------------
 
 			case CSkipOp:
+			itr.correct_after_decrement(arg);
 			break;
 			// -------------------------------------------------
 
 			case CSumOp:
+			itr.correct_after_decrement(arg);
 			reverse_sparse_jacobian_csum_op(
 				i_var, arg, var_sparsity
 			);

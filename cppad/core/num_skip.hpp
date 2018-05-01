@@ -96,7 +96,10 @@ size_t ADFun<Base>::number_skip(void)
 			CPPAD_ASSERT_UNKNOWN( NumRes(op) == 0 );
 			size_t num_op = user_m + user_n + 1;
 			for(size_t i = 0; i < num_op; i++)
-			{	(++itr).op_info(op, arg, i_var);
+			{	CPPAD_ASSERT_UNKNOWN(
+					op != local::CSkipOp && op != local::CSumOp
+				);
+				(++itr).op_info(op, arg, i_var);
 				if( skip_call )
 					num_var_skip += NumRes(op);
 			}
@@ -105,6 +108,9 @@ size_t ADFun<Base>::number_skip(void)
 		else
 		{	if( cskip_op_[ itr.op_index() ] )
 				num_var_skip += NumRes(op);
+			//
+			if( (op == local::CSkipOp) | (op == local::CSumOp) )
+				itr.correct_before_increment();
 		}
 	}
 	return num_var_skip;

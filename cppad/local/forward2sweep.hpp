@@ -226,6 +226,11 @@ void forward2sweep(
 				}
 				break;
 
+				case CSkipOp:
+				case CSumOp:
+				itr.correct_before_increment();
+				break;
+
 				default:
 				break;
 			}
@@ -323,6 +328,7 @@ void forward2sweep(
 			case CSkipOp:
 			// CSkipOp only does somthing on order zero.
 			CPPAD_ASSERT_UNKNOWN( p > 0 );
+			itr.correct_before_increment();
 			break;
 			// -------------------------------------------------
 
@@ -330,6 +336,7 @@ void forward2sweep(
 			forward_csum_op_dir(
 				q, r, i_var, arg, num_par, parameter, J, taylor
 			);
+			itr.correct_before_increment();
 			break;
 			// -------------------------------------------------
 
