@@ -12,7 +12,7 @@
 program="bin/speed_branch.sh"
 if [ "$0" != "$program" ]
 then
-	echo "bin/speed_branch.sh: must be executed from its parent directory"
+	echo "$program: must be executed from its parent directory"
 	exit 1
 fi
 if [ "$3" == '' ]
@@ -35,16 +35,16 @@ shift
 branch_two="$1"
 shift
 test_name="$1"
-if [ "$test_name" == 'all' ]
-then
-	test_name='speed'
-fi
 shift
 option_list="$test_name"
 for option in $*
 do
 	option_list="${option_list}_$option"
 done
+if [ "$test_name" == 'all' ]
+then
+	test_name='speed'
+fi
 # ----------------------------------------------------------------------------
 build_dir='build/speed/cppad'
 if [ ! -e $build_dir ]
@@ -60,7 +60,7 @@ echo_eval() {
 # -----------------------------------------------------------------------------
 if [ ! -d '.git' ]
 then
-	echo 'speed_branch.sh: only implemented for git repository'
+	echo "$program: only implemented for git repository"
 	exit 1
 fi
 # -----------------------------------------------------------------------------

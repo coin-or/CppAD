@@ -731,12 +731,12 @@ public:
 	}
 	/// end
 	const_iterator end(void) const
-	{	size_t op_index = op_vec_.size();
+	{	size_t op_index = op_vec_.size() - 1;
 		size_t num_var  = num_var_rec_;
 		return const_iterator(num_var, &op_vec_, &arg_vec_, op_index);
 	}
 	const_subgraph_iterator end(pod_vector<addr_t>& subgraph) const
-	{	size_t subgraph_index = subgraph.size();
+	{	size_t subgraph_index = subgraph.size() - 1;
 		return const_subgraph_iterator(this, &subgraph, subgraph_index);
 	}
 
@@ -760,11 +760,14 @@ private:
 	/// index of current operator
 	size_t op_index_;
 
-	/// index of first argument for current operator
-	size_t arg_index_;
-
-	/// index of first result for current operator
+	/// index of last result for current operator
 	size_t var_index_;
+
+	/// first argument for current operator
+	const addr_t* op_arg_;
+
+	/// current operator
+	OpCode op_;
 public:
 	/// assignment operator
 	void operator=(const player_const_iterator& rhs)
@@ -773,8 +776,9 @@ public:
 		arg_vec_   = rhs.arg_vec_;
 		num_var_   = rhs.num_var_;
 		op_index_  = rhs.op_index_;
-		arg_index_ = rhs.arg_index_;
 		var_index_ = rhs.var_index_;
+		op_arg_    = rhs.op_arg_;
+		op_        = rhs.op_;
 		return;
 	}
 	/// Create an iterator starting either at beginning or end of tape
@@ -786,22 +790,36 @@ public:
 		/// operator arguments for this player
 		const pod_vector<addr_t>* arg_vec    ,
 		/// operator index to start iterator at
-		/// must be 0 for begin() and op_vec->size() for end()
+		/// must be 0 for begin() and op_vec->size() - 1 for end()
 		size_t                    op_index   )
 	:
 	op_vec_   ( op_vec ),
 	arg_vec_  ( arg_vec ),
 	num_var_  ( num_var )
 	{	if( op_index == 0 )
-		{	op_index_  = 0;
-			arg_index_ = 0;
+		{	// index of BeginOp
+			op_index_  = op_index;
+			// index of BeginOp result
 			var_index_ = 0;
+			// first argument to BeginOp
+			op_arg_    = arg_vec->data();
+			// BeginOp
+			op_        = (*op_vec)[op_index_];
+			CPPAD_ASSERT_UNKNOWN( op_ == BeginOp );
+			CPPAD_ASSERT_UNKNOWN( NumRes(op_) == 1 );
 		}
 		else
-		{	CPPAD_ASSERT_UNKNOWN(op_index == op_vec->size());
-			op_index_  = op_vec->size();
-			arg_index_ = arg_vec->size();
-			var_index_ = num_var;
+		{	CPPAD_ASSERT_UNKNOWN(op_index == op_vec->size() - 1);
+			// index of EndOp
+			op_index_  = op_index;
+			// EndOp has no result
+			var_index_ = num_var - 1;
+			// EndOp has no arguments
+			op_arg_ = arg_vec->data() + arg_vec->size();
+			// EndOp
+			op_        = (*op_vec)[op_index_];
+			CPPAD_ASSERT_UNKNOWN( op_ == EndOp );
+			CPPAD_ASSERT_UNKNOWN( NumArg(EndOp) == 0 );
 		}
 	}
 	/*!
@@ -809,10 +827,15 @@ public:
 	*/
 	player_const_iterator<Base>& operator++(void)
 	{
-		OpCode op   = (*op_vec_)[op_index_];
-		++op_index_ ;
-		arg_index_ += NumArg(op);
-		var_index_ += NumRes(op);
+		// first argument for next operator
+		op_arg_ += NumArg(op_);
+		//
+		// next operator
+		op_ = (*op_vec_)[++op_index_];
+		//
+		// last result for next operator
+		var_index_ += NumRes(op_);
+		//
 		return *this;
 	}
 	/*!
@@ -820,30 +843,29 @@ public:
 	is CSumOp or CSkipOp.
 	*/
 	void correct_before_increment(void)
-	{	OpCode op   = (*op_vec_)[op_index_];
-		// number of arguments for this operator depends on argument data
-		CPPAD_ASSERT_UNKNOWN( NumArg(op) == 0 );
-		const addr_t* arg = arg_vec_->data() + arg_index_;
+	{	// number of arguments for this operator depends on argument data
+		CPPAD_ASSERT_UNKNOWN( NumArg(op_) == 0 );
+		const addr_t* arg = op_arg_;
 		//
 		// CSumOp
-		if( op == CSumOp )
+		if( op_ == CSumOp )
 		{	//
 			addr_t n_var      = arg[0] + arg[1];
 			CPPAD_ASSERT_UNKNOWN( n_var == arg[3 + n_var] );
 			//
-			// add actual number of arguments to arg_index_
-			arg_index_ += 4 + n_var;
+			// add actual number of arguments to op_arg_
+			op_arg_ += 4 + n_var;
 		}
 		//
 		// CSkip
 		else
-		{	CPPAD_ASSERT_UNKNOWN( op == CSkipOp );
+		{	CPPAD_ASSERT_UNKNOWN( op_ == CSkipOp );
 			//
 			addr_t n_skip     = arg[4] + arg[5];
 			CPPAD_ASSERT_UNKNOWN( n_skip == arg[6 + n_skip] );
 			//
-			// add actual number of arguments to arg_index_
-			arg_index_ += 7 + n_skip;
+			// add actual number of arguments to op_arg_
+			op_arg_ += 7 + n_skip;
 		}
 		return;
 	}
@@ -852,15 +874,16 @@ public:
 	*/
 	player_const_iterator<Base>& operator--(void)
 	{	//
+		// last result for next operator
+		var_index_ -= NumRes(op_);
+		//
+		// next operator
 		CPPAD_ASSERT_UNKNOWN( 1 <= op_index_ );
-		op_index_  -= 1;
-		OpCode op   = (*op_vec_)[op_index_];
+		op_ = (*op_vec_)[--op_index_];
 		//
-		CPPAD_ASSERT_UNKNOWN( NumArg(op) <= arg_index_ );
-		arg_index_ -= NumArg(op);
-		//
-		CPPAD_ASSERT_UNKNOWN( NumRes(op) <= var_index_ );
-		var_index_ -= NumRes(op);
+		// first argument for next operator
+		op_arg_ -= NumArg(op_);
+		CPPAD_ASSERT_UNKNOWN( arg_vec_->data() <= op_arg_ );
 		//
 		return *this;
 	}
@@ -872,40 +895,31 @@ public:
 	corrected point to arguments for this operation.
 	*/
 	void correct_after_decrement(const addr_t*& op_arg)
-	{	OpCode op   = (*op_vec_)[op_index_];
-		//
+	{	// number of arguments for this operator depends on argument data
+		CPPAD_ASSERT_UNKNOWN( NumArg(op_) == 0 );
 		// CSumOp
-		if( op == CSumOp )
-		{	// number of arguments for this operator depends on argument data
-			CPPAD_ASSERT_UNKNOWN( NumArg(CSumOp) == 0 );
+		if( op_ == CSumOp )
+		{	// number of variables is stored in last argument
+			CPPAD_ASSERT_UNKNOWN( arg_vec_->data() < op_arg_ );
+			addr_t n_var = *(op_arg_ - 1);
 			//
-			// number of variables is stored in last argument
-			CPPAD_ASSERT_UNKNOWN( 1 < arg_index_ );
-			addr_t n_var = (*arg_vec_)[arg_index_ - 1];
+			// corrected index of first argument to this operator
+			op_arg = op_arg_ -= 4 + n_var;
 			//
-			// index of first argument to this operator
-			arg_index_ -= 4 + n_var;
-			//
-			// corrected version of op_arg
-			op_arg    = arg_vec_->data() + arg_index_;
 			CPPAD_ASSERT_UNKNOWN( op_arg[0] + op_arg[1] == n_var );
 		}
 		//
 		// CSkip
 		else
-		{	CPPAD_ASSERT_UNKNOWN( op == CSkipOp );
-			// number of arguments for this operator depends on argument data
-			CPPAD_ASSERT_UNKNOWN( NumArg(CSumOp) == 0 );
+		{	CPPAD_ASSERT_UNKNOWN( op_ == CSkipOp );
 			//
 			// number to possibly skip is stored in last argument
-			CPPAD_ASSERT_UNKNOWN( 1 < arg_index_ );
-			addr_t n_skip = (*arg_vec_)[arg_index_ - 1];
+			CPPAD_ASSERT_UNKNOWN( arg_vec_->data() < op_arg_ );
+			addr_t n_skip = *(op_arg_ - 1);
 			//
-			// index of frist argument to this operator
-			arg_index_ -= 7 + n_skip;
+			// corrected index of frist argument to this operator
+			op_arg = op_arg_ -= 7 + n_skip;
 			//
-			// corrected version of op_arg
-			op_arg    = arg_vec_->data() + arg_index_;
 			CPPAD_ASSERT_UNKNOWN( op_arg[4] + op_arg[5] == n_skip );
 		}
 	}
@@ -929,15 +943,17 @@ public:
 		const addr_t*& op_arg     ,
 		size_t&        var_index  ) const
 	{	// op
-		op        = (*op_vec_)[op_index_];
+		op        = op_;
 		//
 		// op_arg
-		CPPAD_ASSERT_UNKNOWN( arg_index_ + NumArg(op) <= arg_vec_->size() );
-		op_arg    = arg_vec_->data() + arg_index_;
+		op_arg = op_arg_;
+		CPPAD_ASSERT_UNKNOWN(
+			op_arg + NumArg(op_) <= arg_vec_->data() + arg_vec_->size()
+		);
 		//
 		// var_index
-		CPPAD_ASSERT_UNKNOWN( var_index_ + NumRes(op) <= num_var_ );
-		var_index = var_index_ + NumRes(op) - 1;
+		CPPAD_ASSERT_UNKNOWN( var_index_ < num_var_ || NumRes(op_) == 0 );
+		var_index = var_index_;
 	}
 	/// current operator index
 	size_t op_index(void)

@@ -237,7 +237,7 @@ void reverse_sweep(
 	OpCode        op;
 	const addr_t* arg;
 	size_t        i_var;
-	(--play_itr).op_info(op, arg, i_var);
+	play_itr.op_info(op, arg, i_var);
 	CPPAD_ASSERT_UNKNOWN( op == EndOp );
 	while(op != BeginOp )
 	{	bool flag; // temporary for use in switch cases

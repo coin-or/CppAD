@@ -156,7 +156,7 @@ void rev_jac_sweep(
 	OpCode op;
 	size_t i_var;
 	const addr_t* arg;
-	(--itr).op_info(op, arg, i_var);
+	itr.op_info(op, arg, i_var);
 	CPPAD_ASSERT_UNKNOWN( op == EndOp );
 # if CPPAD_REV_JAC_SWEEP_TRACE
 	std::cout << std::endl;
