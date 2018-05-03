@@ -92,9 +92,10 @@ rm speed_branch.main.$$
 # -----------------------------------------------------------------------------
 for branch in $branch_one $branch_two
 do
-	if [ -e "$build_dir/$branch.$option_list.out" ]
+	out_file="$branch.$option_list.out"
+	if [ -e "$build_dir/$out_file" ]
 	then
-		echo "Using existing $build_dir/$branch.$option_list.out"
+		echo "Using existing $build_dir/$out_file"
 	else
 		# use --quiet to supress detachec HEAD message
 		echo_eval git checkout --quiet $branch
@@ -119,9 +120,8 @@ do
 		echo "make check_speed_cppad >> $build_dir/$branch.log"
 		make check_speed_cppad >> $branch.log
 		#
-		file="$branch.$option_list.out"
-		echo "./speed_cppad $test_name 123 $* > $build_dir/$file"
-		./speed_cppad $test_name 123 $* > $file
+		echo "./speed_cppad $test_name 123 $* > $build_dir/$out_file"
+		./speed_cppad $test_name 123 $* > $out_file
 		#
 		cd ../../..
 		#

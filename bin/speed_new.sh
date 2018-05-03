@@ -69,8 +69,10 @@ do
 		echo_eval git_new.sh from
 	fi
 	out_file="$name.$option_list.out"
-	if [ ! -e "$build_dir/$out_file" ]
+	if [ -e "$build_dir/$out_file" ]
 	then
+		echo "Using existing $build_dir/$out_file"
+	else
 		# change into cppad speed directory
 		echo_eval cd $build_dir
 		#
