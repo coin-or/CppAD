@@ -22,8 +22,8 @@ $$
 
 $section Changes and Additions to CppAD During 2018$$
 
-$head reduce_tape branch$$
-$subhead 04-20$$
+$head 05-03$$
+The following was merged in from the $code reduce_tape$$ branch:
 A change was made in the way CppAD iterated over the operation sequence
 when subgraph operations were first added; see the heading
 $cref/11-20/whats_new_17/11-20/$$ in whats new for 2017.
