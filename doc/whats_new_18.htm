@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Changes and Additions to CppAD During 2018</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Changes and Additions to CppAD During 2018">
-<meta name="keywords" id="keywords" content=" changes additions to cppad during 2018 04-29 04-13 03-20 03-19 03-04 03-02 02-27 02-26 02-23 02-20 ">
+<meta name="keywords" id="keywords" content=" changes additions to cppad during 2018 05-03 04-29 04-13 03-20 03-19 03-04 03-02 02-27 02-26 02-23 02-20 ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -110,6 +110,7 @@ A:active { color : purple }
 <td>
 <select onchange='choose_current0(this)'>
 <option>Headings-&gt;</option>
+<option>05-03</option>
 <option>04-29</option>
 <option>04-13</option>
 <option>03-20</option>
@@ -133,6 +134,27 @@ A:active { color : purple }
 
 
 <center><b><big><big>Changes and Additions to CppAD During 2018</big></big></b></center>
+<br>
+<b><big><a name="05-03" id="05-03">05-03</a></big></b>
+<br>
+The following was merged in from the <code><font color="blue">reduce_tape</font></code> branch:
+A change was made in the way CppAD iterated over the operation sequence
+when subgraph operations were first added; see the heading
+<a href="whats_new_17.htm#11-20" target="_top"><span style='white-space: nowrap'>11-20</span></a>
+ in whats new for 2017.
+This caused CppAD to always use more memory for storing tapes.
+This has been fixed so this extra memory is only allocated when it is needed.
+In addition it can be freed; see
+<a href="seq_property.htm#size_random" target="_top"><span style='white-space: nowrap'>size_random</span></a>
+ and
+<a href="subgraph_reverse.htm#clear_subgraph" target="_top"><span style='white-space: nowrap'>clear_subgraph</span></a>
+.
+In addition, this changed the amount of memory returned by
+<a href="seq_property.htm#size_op_seq" target="_top"><span style='white-space: nowrap'>size_op_seq</span></a>
+ so that it
+no longer includes the part returned by <code><font color="blue">size_random</font></code>.
+
+<br>
 <br>
 <b><big><a name="04-29" id="04-29">04-29</a></big></b>
 <br>

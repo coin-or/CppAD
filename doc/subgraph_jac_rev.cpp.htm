@@ -129,6 +129,7 @@ A:active { color : purple }
      <i><font color="#9A1900">//</font></i>
      <i><font color="#9A1900">// create f: x -&gt; y and stop tape recording</font></i>
      CppAD<font color="#990000">::</font><font color="#008080">ADFun&lt;double&gt;</font> <b><font color="#000000">f</font></b><font color="#990000">(</font>a_x<font color="#990000">,</font> a_y<font color="#990000">);</font>
+     ok <font color="#990000">&amp;=</font> f<font color="#990000">.</font><b><font color="#000000">size_random</font></b><font color="#990000">()</font> <font color="#990000">==</font> <font color="#993399">0</font><font color="#990000">;</font>
      <i><font color="#9A1900">//</font></i>
      <i><font color="#9A1900">// new value for the independent variable vector</font></i>
      <font color="#008080">d_vector</font> <b><font color="#000000">x</font></b><font color="#990000">(</font>n<font color="#990000">);</font>
@@ -206,6 +207,9 @@ A:active { color : purple }
           ok <font color="#990000">&amp;=</font> matrix_out<font color="#990000">.</font><b><font color="#000000">val</font></b><font color="#990000">()[</font> row_major<font color="#990000">[</font>k<font color="#990000">]</font> <font color="#990000">]</font> <font color="#990000">==</font> check_val<font color="#990000">[</font>k<font color="#990000">];</font>
      <font color="#FF0000">}</font>
      <i><font color="#9A1900">//</font></i>
+     ok <font color="#990000">&amp;=</font> f<font color="#990000">.</font><b><font color="#000000">size_random</font></b><font color="#990000">()</font> <font color="#990000">&gt;</font> <font color="#993399">0</font><font color="#990000">;</font>
+     f<font color="#990000">.</font><b><font color="#000000">clear_subgraph</font></b><font color="#990000">();</font>
+     ok <font color="#990000">&amp;=</font> f<font color="#990000">.</font><b><font color="#000000">size_random</font></b><font color="#990000">()</font> <font color="#990000">==</font> <font color="#993399">0</font><font color="#990000">;</font>
      <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
 <font color="#FF0000">}</font></tt></pre>
 </font></code>

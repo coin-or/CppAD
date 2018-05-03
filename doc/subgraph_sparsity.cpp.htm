@@ -129,8 +129,7 @@ A:active { color : purple }
 
      <i><font color="#9A1900">// create f: x -&gt; y and stop tape recording</font></i>
      CppAD<font color="#990000">::</font><font color="#008080">ADFun&lt;double&gt;</font> <b><font color="#000000">f</font></b><font color="#990000">(</font>ax<font color="#990000">,</font> ay<font color="#990000">);</font>
-
-
+     ok <font color="#990000">&amp;=</font> f<font color="#990000">.</font><b><font color="#000000">size_random</font></b><font color="#990000">()</font> <font color="#990000">==</font> <font color="#993399">0</font><font color="#990000">;</font>
 
      <i><font color="#9A1900">// compute sparsite pattern for F'(x)</font></i>
      <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font><font color="#009900">bool</font><font color="#990000">)</font> <b><font color="#000000">select_domain</font></b><font color="#990000">(</font>n<font color="#990000">),</font> <b><font color="#000000">select_range</font></b><font color="#990000">(</font>m<font color="#990000">);</font>
@@ -175,6 +174,9 @@ A:active { color : purple }
           ok <font color="#990000">&amp;=</font> col<font color="#990000">[</font> row_major<font color="#990000">[</font><font color="#993399">2</font><font color="#990000">]</font> <font color="#990000">]</font> <font color="#990000">==</font>  <font color="#993399">1</font>  <font color="#990000">&amp;&amp;</font> row<font color="#990000">[</font> row_major<font color="#990000">[</font><font color="#993399">2</font><font color="#990000">]</font> <font color="#990000">]</font> <font color="#990000">==</font>  <font color="#993399">1</font><font color="#990000">;</font>
           ok <font color="#990000">&amp;=</font> col<font color="#990000">[</font> row_major<font color="#990000">[</font><font color="#993399">3</font><font color="#990000">]</font> <font color="#990000">]</font> <font color="#990000">==</font>  <font color="#993399">2</font>  <font color="#990000">&amp;&amp;</font> row<font color="#990000">[</font> row_major<font color="#990000">[</font><font color="#993399">3</font><font color="#990000">]</font> <font color="#990000">]</font> <font color="#990000">==</font>  <font color="#993399">1</font><font color="#990000">;</font>
      <font color="#FF0000">}</font>
+     ok <font color="#990000">&amp;=</font> f<font color="#990000">.</font><b><font color="#000000">size_random</font></b><font color="#990000">()</font> <font color="#990000">&gt;</font> <font color="#993399">0</font><font color="#990000">;</font>
+     f<font color="#990000">.</font><b><font color="#000000">clear_subgraph</font></b><font color="#990000">();</font>
+     ok <font color="#990000">&amp;=</font> f<font color="#990000">.</font><b><font color="#000000">size_random</font></b><font color="#990000">()</font> <font color="#990000">==</font> <font color="#993399">0</font><font color="#990000">;</font>
      <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
 <font color="#FF0000">}</font></tt></pre>
 </font></code>

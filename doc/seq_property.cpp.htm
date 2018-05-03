@@ -199,7 +199,6 @@ A:active { color : purple }
      sum <font color="#990000">+=</font> npar   <font color="#990000">*</font> <b><font color="#0000FF">sizeof</font></b><font color="#990000">(</font><font color="#009900">double</font><font color="#990000">);</font>
      sum <font color="#990000">+=</font> ntext  <font color="#990000">*</font> <b><font color="#0000FF">sizeof</font></b><font color="#990000">(</font><font color="#009900">char</font><font color="#990000">);</font>
      sum <font color="#990000">+=</font> nvecad <font color="#990000">*</font> <b><font color="#0000FF">sizeof</font></b><font color="#990000">(</font>CPPAD_TAPE_ADDR_TYPE<font color="#990000">);</font>
-     sum <font color="#990000">+=</font> nop    <font color="#990000">*</font> <b><font color="#0000FF">sizeof</font></b><font color="#990000">(</font>CPPAD_TAPE_ADDR_TYPE<font color="#990000">)</font> <font color="#990000">*</font> <font color="#993399">3</font><font color="#990000">;</font>
      ok <font color="#990000">&amp;=</font> f<font color="#990000">.</font><b><font color="#000000">size_op_seq</font></b><font color="#990000">()</font> <font color="#990000">==</font> sum<font color="#990000">;</font>
 
      <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>

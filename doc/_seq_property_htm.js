@@ -61,6 +61,7 @@ var list_current0 = [
 'seq_property.htm#size_text',
 'seq_property.htm#size_VecAD',
 'seq_property.htm#size_op_seq',
+'seq_property.htm#size_random',
 'seq_property.htm#Example'
 ];
 function choose_across0(item)

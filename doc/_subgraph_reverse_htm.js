@@ -57,6 +57,7 @@ var list_current0 = [
 'subgraph_reverse.htm#ell',
 'subgraph_reverse.htm#col',
 'subgraph_reverse.htm#dw',
+'subgraph_reverse.htm#clear_subgraph',
 'subgraph_reverse.htm#Example'
 ];
 function choose_across0(item)

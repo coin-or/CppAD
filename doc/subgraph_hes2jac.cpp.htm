@@ -157,6 +157,7 @@ A:active { color : purple }
      <i><font color="#9A1900">// create double version of g : x -&gt; f'(x)</font></i>
      CppAD<font color="#990000">::</font><font color="#008080">ADFun&lt;double&gt;</font> g<font color="#990000">;</font>
      g<font color="#990000">.</font><b><font color="#000000">Dependent</font></b><font color="#990000">(</font>a1x<font color="#990000">,</font> a1z<font color="#990000">);</font>
+     ok <font color="#990000">&amp;=</font> g<font color="#990000">.</font><b><font color="#000000">size_random</font></b><font color="#990000">()</font> <font color="#990000">==</font> <font color="#993399">0</font><font color="#990000">;</font>
      <i><font color="#9A1900">//</font></i>
      <i><font color="#9A1900">// Optimize this function to reduce future computations.</font></i>
      <i><font color="#9A1900">// Perhaps no optimization would be faster.</font></i>
@@ -192,6 +193,9 @@ A:active { color : purple }
                ok          <font color="#990000">&amp;=</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>v<font color="#990000">,</font> check<font color="#990000">,</font> eps<font color="#990000">,</font> eps<font color="#990000">);</font>
           <font color="#FF0000">}</font>
      <font color="#FF0000">}</font>
+     ok <font color="#990000">&amp;=</font> g<font color="#990000">.</font><b><font color="#000000">size_random</font></b><font color="#990000">()</font> <font color="#990000">&gt;</font> <font color="#993399">0</font><font color="#990000">;</font>
+     g<font color="#990000">.</font><b><font color="#000000">clear_subgraph</font></b><font color="#990000">();</font>
+     ok <font color="#990000">&amp;=</font> g<font color="#990000">.</font><b><font color="#000000">size_random</font></b><font color="#990000">()</font> <font color="#990000">==</font> <font color="#993399">0</font><font color="#990000">;</font>
      <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
 <font color="#FF0000">}</font></tt></pre>
 </font></code>

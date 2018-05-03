@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Reverse Mode Using Subgraphs</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Reverse Mode Using Subgraphs">
-<meta name="keywords" id="keywords" content=" reverse mode using subgraphs syntax purpose notation basevector boolvector sizevector select_domain q ell col dw example ">
+<meta name="keywords" id="keywords" content=" reverse mode using subgraphs syntax purpose notation basevector boolvector sizevector select_domain q ell col dw clear_subgraph example ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -112,6 +112,7 @@ A:active { color : purple }
 <option>ell</option>
 <option>col</option>
 <option>dw</option>
+<option>clear_subgraph</option>
 <option>Example</option>
 </select>
 </td>
@@ -132,6 +133,9 @@ A:active { color : purple }
 </span></font></code>
 
 <code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.subgraph_reverse(</span></font><i><font color="black"><span style='white-space: nowrap'>q</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ell</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>col</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>dw</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.clear_subgraph()<br>
 </span></font></code>
 <br>
 <b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
@@ -226,7 +230,7 @@ The argument
 It has size <small>@(@
 n
 @)@</small> and specifies which independent variables
-to include in the calculation.
+to include in future <code><font color="blue">subgraph_reverse</font></code> calculations.
 If 
 <code><i><font color="black"><span style='white-space: nowrap'>select_domain</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>j</span></font></i><font color="blue"><span style='white-space: nowrap'>]</span></font></code>
  is false,
@@ -341,6 +345,21 @@ Note that this corresponds to the <a href="reverse_any.htm" target="_top"><span 
 <a href="reverse_any.htm#w" target="_top"><span style='white-space: nowrap'>w</span></a>
  has size 
 <code><i><font color="black"><span style='white-space: nowrap'>m</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;*&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>q</span></font></i></code>
+.
+
+<br>
+<br>
+<b><big><a name="clear_subgraph" id="clear_subgraph">clear_subgraph</a></big></b>
+<br>
+Calling this routine will free memory that holds
+information between calls to subgraph calculations so that
+it does not need to be recalculated.
+(This memory is automatically freed when 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+ is deleted.)
+You cannot free this memory between calls that select the domain
+and corresponding calls that compute reverse mode derivatives.
+Some of this information is also used by <a href="subgraph_sparsity.htm" target="_top"><span style='white-space: nowrap'>subgraph_sparsity</span></a>
 .
 
 <br>

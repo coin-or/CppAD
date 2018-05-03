@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>ADFun Sequence Properties</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="ADFun Sequence Properties">
-<meta name="keywords" id="keywords" content=" adfun sequence properties syntax see also purpose f domain range parameter size_var size_par size_op size_op_arg size_text size_vecad size_op_seq example ">
+<meta name="keywords" id="keywords" content=" adfun sequence properties syntax see also purpose f domain range parameter size_var size_par size_op size_op_arg size_text size_vecad size_op_seq size_random example ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -116,6 +116,7 @@ A:active { color : purple }
 <option>size_text</option>
 <option>size_VecAD</option>
 <option>size_op_seq</option>
+<option>size_random</option>
 <option>Example</option>
 </select>
 </td>
@@ -160,6 +161,9 @@ A:active { color : purple }
 </span></font></code>
 
 <code><i><font color="black"><span style='white-space: nowrap'>s</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.size_op_seq()<br>
+</span></font></code>
+
+<code><i><font color="black"><span style='white-space: nowrap'>s</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.size_random()<br>
 </span></font></code>
 <br>
 <big><a name="Syntax.See Also" id="Syntax.See Also">See Also</a></big>
@@ -468,6 +472,35 @@ the information corresponding to an operation sequence.
 The actual amount of memory allocated (<a href="ta_inuse.htm" target="_top"><span style='white-space: nowrap'>inuse</span></a>
 )
 for the operations sequence may be larger.
+
+<br>
+<br>
+<b><big><a name="size_random" id="size_random">size_random</a></big></b>
+<br>
+The result 
+<code><i><font color="black"><span style='white-space: nowrap'>s</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>s</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+and is the amount of memory currently holding information
+for randomly access the operator sequence.
+Random access is only used by the following routines
+<a href="subgraph_sparsity.htm" target="_top"><span style='white-space: nowrap'>subgraph_sparsity</span></a>
+,
+<a href="subgraph_reverse.htm" target="_top"><span style='white-space: nowrap'>subgraph_reverse</span></a>
+, and
+<a href="optimize.htm" target="_top"><span style='white-space: nowrap'>optimize</span></a>
+.
+The optimize routine replaces the operation sequence, so the extra
+memory is automatically dropped.
+The subgraph routines hold onto this information
+so that it does not need to be recalculated between calls.
+The routine
+<a href="subgraph_reverse.htm#clear_subgraph" target="_top"><span style='white-space: nowrap'>clear_subgraph</span></a>
+
+will free this extra memory.
 
 <br>
 <br>
