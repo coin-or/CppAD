@@ -749,25 +749,25 @@ public:
 template <class Base>
 class player_const_iterator {
 private:
-	/// op_vec_
+	/// begin and end of operator vector
 	const OpCode* op_begin_;
 	const OpCode* op_end_;
 
-	/// begin and end of operator argument vector
+	/// begin and end of argument vector
 	const addr_t* arg_begin_;
 	const addr_t* arg_end_;
 
-	/// number of variables in tape
-	size_t num_var_;
-
-	/// index of last result for current operator
-	size_t var_index_;
+	/// current operator
+	const OpCode* op_;
 
 	/// first argument for current operator
 	const addr_t* arg_;
 
-	/// current operator
-	const OpCode* op_;
+	/// index of last result for current operator
+	size_t var_index_;
+
+	/// number of variables in tape
+	size_t num_var_;
 public:
 	/// assignment operator
 	void operator=(const player_const_iterator& rhs)
@@ -776,10 +776,10 @@ public:
 		op_end_    = rhs.op_end_;
 		arg_begin_ = rhs.arg_begin_;
 		arg_end_   = rhs.arg_end_;
-		num_var_   = rhs.num_var_;
-		var_index_ = rhs.var_index_;
-		arg_       = rhs.arg_;
 		op_        = rhs.op_;
+		arg_       = rhs.arg_;
+		var_index_ = rhs.var_index_;
+		num_var_   = rhs.num_var_;
 		return;
 	}
 	/// Create an iterator starting either at beginning or end of tape
@@ -791,7 +791,7 @@ public:
 		/// operator arguments for this player
 		const pod_vector<addr_t>* arg_vec    ,
 		/// operator index to start iterator at
-		/// must be 0 for begin() and op_vec->size() - 1 for end()
+		/// must be 0 for BeginOp or op_vec->size()-1 for EndOp
 		size_t                    op_index   )
 	:
 	op_begin_   ( op_vec->data() )                   ,
@@ -801,25 +801,30 @@ public:
 	num_var_    ( num_var )
 	{	if( op_index == 0 )
 		{
-			// index of BeginOp result
+			// index of last result for BeginOp
 			var_index_ = 0;
+			//
 			// first argument to BeginOp
 			arg_       = arg_vec->data();
+			//
 			// BeginOp
 			op_        = op_begin_;
 			CPPAD_ASSERT_UNKNOWN( *op_ == BeginOp );
-			CPPAD_ASSERT_UNKNOWN( NumRes(*op_) == 1 );
+			CPPAD_ASSERT_NARG_NRES(*op_, 1, 1);
 		}
 		else
-		{	CPPAD_ASSERT_UNKNOWN(op_index == op_vec->size() - 1);
-			// EndOp has no result
+		{	CPPAD_ASSERT_UNKNOWN(op_index == op_vec->size()-1);
+			//
+			// index of last result for EndOp
 			var_index_ = num_var - 1;
-			// EndOp has no arguments
+			//
+			// first argument to EndOp (has no arguments)
 			arg_ = arg_vec->data() + arg_vec->size();
+			//
 			// EndOp
 			op_        = op_end_ - 1;
 			CPPAD_ASSERT_UNKNOWN( *op_ == EndOp );
-			CPPAD_ASSERT_UNKNOWN( NumArg(*op_) == 0 );
+			CPPAD_ASSERT_NARG_NRES(*op_, 0, 0);
 		}
 	}
 	/*!
@@ -850,6 +855,7 @@ public:
 		// CSumOp
 		if( *op_ == CSumOp )
 		{	//
+			CPPAD_ASSERT_UNKNOWN( arg + 1 < arg_end_ );
 			addr_t n_var      = arg[0] + arg[1];
 			CPPAD_ASSERT_UNKNOWN( n_var == arg[3 + n_var] );
 			//
@@ -861,6 +867,7 @@ public:
 		else
 		{	CPPAD_ASSERT_UNKNOWN( *op_ == CSkipOp );
 			//
+			CPPAD_ASSERT_UNKNOWN( arg + 5 < arg_end_ );
 			addr_t n_skip     = arg[4] + arg[5];
 			CPPAD_ASSERT_UNKNOWN( n_skip == arg[6 + n_skip] );
 			//
@@ -878,7 +885,6 @@ public:
 		var_index_ -= NumRes(*op_);
 		//
 		// next operator
-		CPPAD_ASSERT_UNKNOWN( op_begin_ < op_ );
 		--op_;
 		//
 		// first argument for next operator
@@ -896,10 +902,13 @@ public:
 	void correct_after_decrement(const addr_t*& arg)
 	{	// number of arguments for this operator depends on argument data
 		CPPAD_ASSERT_UNKNOWN( NumArg(*op_) == 0 );
+		//
+		// infromation for number of arguments is stored in arg_ - 1
+		CPPAD_ASSERT_UNKNOWN( arg_begin_ < arg_ );
+		//
 		// CSumOp
 		if( *op_ == CSumOp )
 		{	// number of variables is stored in last argument
-			CPPAD_ASSERT_UNKNOWN( arg_begin_ < arg_ );
 			addr_t n_var = *(arg_ - 1);
 			//
 			// corrected index of first argument to this operator
@@ -913,7 +922,6 @@ public:
 		{	CPPAD_ASSERT_UNKNOWN( *op_ == CSkipOp );
 			//
 			// number to possibly skip is stored in last argument
-			CPPAD_ASSERT_UNKNOWN( arg_begin_ < arg_ );
 			addr_t n_skip = *(arg_ - 1);
 			//
 			// corrected index of frist argument to this operator
@@ -945,6 +953,7 @@ public:
 		size_t&        var_index  ) const
 	{	// op
 		op        = *op_;
+		CPPAD_ASSERT_UNKNOWN( op_begin_ <= op_ && op_ < op_end_ )
 		//
 		// arg
 		arg = arg_;
