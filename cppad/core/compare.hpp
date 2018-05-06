@@ -2,7 +2,7 @@
 # define CPPAD_CORE_COMPARE_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -127,47 +127,50 @@ template <class Base>
 CPPAD_INLINE_FRIEND_TEMPLATE_FUNCTION
 bool operator < (const AD<Base> &left , const AD<Base> &right)
 {	bool result    =  (left.value_ < right.value_);
-	bool var_left  = Variable(left);
-	bool var_right = Variable(right);
-
-	local::ADTape<Base> *tape = CPPAD_NULL;
-	if( var_left )
-	{	tape = left.tape_this();
-		if( var_right )
-		{	if( result )
-			{	tape->Rec_.PutOp(local::LtvvOp);
-				tape->Rec_.PutArg(left.taddr_, right.taddr_);
+	//
+	// check if we are recording compare operators
+	local::ADTape<Base> *tape = AD<Base>::tape_ptr();
+	if( tape != CPPAD_NULL && tape->Rec_.get_record_compare() )
+	{
+		bool var_left  = Variable(left);
+		bool var_right = Variable(right);
+		if( var_left )
+		{	CPPAD_ASSERT_UNKNOWN( tape == left.tape_this() );
+			if( var_right )
+			{	if( result )
+				{	tape->Rec_.PutOp(local::LtvvOp);
+					tape->Rec_.PutArg(left.taddr_, right.taddr_);
+				}
+				else
+				{	tape->Rec_.PutOp(local::LevvOp);
+					tape->Rec_.PutArg(right.taddr_, left.taddr_);
+				}
 			}
 			else
-			{	tape->Rec_.PutOp(local::LevvOp);
-				tape->Rec_.PutArg(right.taddr_, left.taddr_);
+			{	addr_t arg1 = tape->Rec_.PutPar(right.value_);
+				if( result )
+				{	tape->Rec_.PutOp(local::LtvpOp);
+					tape->Rec_.PutArg(left.taddr_, arg1);
+				}
+				else
+				{	tape->Rec_.PutOp(local::LepvOp);
+					tape->Rec_.PutArg(arg1, left.taddr_);
+				}
 			}
 		}
-		else
-		{	addr_t arg1 = tape->Rec_.PutPar(right.value_);
+		else if ( var_right )
+		{	CPPAD_ASSERT_UNKNOWN( tape == right.tape_this() );
+			addr_t arg0 = tape->Rec_.PutPar(left.value_);
 			if( result )
-			{	tape->Rec_.PutOp(local::LtvpOp);
-				tape->Rec_.PutArg(left.taddr_, arg1);
+			{	tape->Rec_.PutOp(local::LtpvOp);
+				tape->Rec_.PutArg(arg0, right.taddr_);
 			}
 			else
-			{	tape->Rec_.PutOp(local::LepvOp);
-				tape->Rec_.PutArg(arg1, left.taddr_);
+			{	tape->Rec_.PutOp(local::LevpOp);
+				tape->Rec_.PutArg(right.taddr_, arg0);
 			}
 		}
 	}
-	else if ( var_right )
-	{	tape = right.tape_this();
-		addr_t arg0 = tape->Rec_.PutPar(left.value_);
-		if( result )
-		{	tape->Rec_.PutOp(local::LtpvOp);
-			tape->Rec_.PutArg(arg0, right.taddr_);
-		}
-		else
-		{	tape->Rec_.PutOp(local::LevpOp);
-			tape->Rec_.PutArg(right.taddr_, arg0);
-		}
-	}
-
 	return result;
 }
 // convert other cases into the case above
@@ -178,47 +181,50 @@ template <class Base>
 CPPAD_INLINE_FRIEND_TEMPLATE_FUNCTION
 bool operator <= (const AD<Base> &left , const AD<Base> &right)
 {	bool result    =  (left.value_ <= right.value_);
-	bool var_left  = Variable(left);
-	bool var_right = Variable(right);
-
-	local::ADTape<Base> *tape = CPPAD_NULL;
-	if( var_left )
-	{	tape = left.tape_this();
-		if( var_right )
-		{	if( result )
-			{	tape->Rec_.PutOp(local::LevvOp);
-				tape->Rec_.PutArg(left.taddr_, right.taddr_);
+	//
+	// check if we are recording compare operators
+	local::ADTape<Base> *tape = AD<Base>::tape_ptr();
+	if( tape != CPPAD_NULL && tape->Rec_.get_record_compare() )
+	{
+		bool var_left  = Variable(left);
+		bool var_right = Variable(right);
+		if( var_left )
+		{	CPPAD_ASSERT_UNKNOWN( tape == left.tape_this() );
+			if( var_right )
+			{	if( result )
+				{	tape->Rec_.PutOp(local::LevvOp);
+					tape->Rec_.PutArg(left.taddr_, right.taddr_);
+				}
+				else
+				{	tape->Rec_.PutOp(local::LtvvOp);
+					tape->Rec_.PutArg(right.taddr_, left.taddr_);
+				}
 			}
 			else
-			{	tape->Rec_.PutOp(local::LtvvOp);
-				tape->Rec_.PutArg(right.taddr_, left.taddr_);
+			{	addr_t arg1 = tape->Rec_.PutPar(right.value_);
+				if( result )
+				{	tape->Rec_.PutOp(local::LevpOp);
+					tape->Rec_.PutArg(left.taddr_, arg1);
+				}
+				else
+				{	tape->Rec_.PutOp(local::LtpvOp);
+					tape->Rec_.PutArg(arg1, left.taddr_);
+				}
 			}
 		}
-		else
-		{	addr_t arg1 = tape->Rec_.PutPar(right.value_);
+		else if ( var_right )
+		{	CPPAD_ASSERT_UNKNOWN( tape == right.tape_this() );
+			addr_t arg0 = tape->Rec_.PutPar(left.value_);
 			if( result )
-			{	tape->Rec_.PutOp(local::LevpOp);
-				tape->Rec_.PutArg(left.taddr_, arg1);
+			{	tape->Rec_.PutOp(local::LepvOp);
+				tape->Rec_.PutArg(arg0, right.taddr_);
 			}
 			else
-			{	tape->Rec_.PutOp(local::LtpvOp);
-				tape->Rec_.PutArg(arg1, left.taddr_);
+			{	tape->Rec_.PutOp(local::LtvpOp);
+				tape->Rec_.PutArg(right.taddr_, arg0);
 			}
 		}
 	}
-	else if ( var_right )
-	{	tape = right.tape_this();
-		addr_t arg0 = tape->Rec_.PutPar(left.value_);
-		if( result )
-		{	tape->Rec_.PutOp(local::LepvOp);
-			tape->Rec_.PutArg(arg0, right.taddr_);
-		}
-		else
-		{	tape->Rec_.PutOp(local::LtvpOp);
-			tape->Rec_.PutArg(right.taddr_, arg0);
-		}
-	}
-
 	return result;
 }
 // convert other cases into the case above
@@ -229,47 +235,50 @@ template <class Base>
 CPPAD_INLINE_FRIEND_TEMPLATE_FUNCTION
 bool operator > (const AD<Base> &left , const AD<Base> &right)
 {	bool result    =  (left.value_ > right.value_);
-	bool var_left  = Variable(left);
-	bool var_right = Variable(right);
-
-	local::ADTape<Base> *tape = CPPAD_NULL;
-	if( var_left )
-	{	tape = left.tape_this();
-		if( var_right )
-		{	if( result )
-			{	tape->Rec_.PutOp(local::LtvvOp);
-				tape->Rec_.PutArg(right.taddr_, left.taddr_);
+	//
+	// check if we are recording compare operators
+	local::ADTape<Base> *tape = AD<Base>::tape_ptr();
+	if( tape != CPPAD_NULL && tape->Rec_.get_record_compare() )
+	{
+		bool var_left  = Variable(left);
+		bool var_right = Variable(right);
+		if( var_left )
+		{	CPPAD_ASSERT_UNKNOWN( tape == left.tape_this() );
+			if( var_right )
+			{	if( result )
+				{	tape->Rec_.PutOp(local::LtvvOp);
+					tape->Rec_.PutArg(right.taddr_, left.taddr_);
+				}
+				else
+				{	tape->Rec_.PutOp(local::LevvOp);
+					tape->Rec_.PutArg(left.taddr_, right.taddr_);
+				}
 			}
 			else
-			{	tape->Rec_.PutOp(local::LevvOp);
-				tape->Rec_.PutArg(left.taddr_, right.taddr_);
+			{	addr_t arg1 = tape->Rec_.PutPar(right.value_);
+				if( result )
+				{	tape->Rec_.PutOp(local::LtpvOp);
+					tape->Rec_.PutArg(arg1, left.taddr_);
+				}
+				else
+				{	tape->Rec_.PutOp(local::LevpOp);
+					tape->Rec_.PutArg(left.taddr_, arg1);
+				}
 			}
 		}
-		else
-		{	addr_t arg1 = tape->Rec_.PutPar(right.value_);
+		else if ( var_right )
+		{	CPPAD_ASSERT_UNKNOWN( tape == right.tape_this() );
+			addr_t arg0 = tape->Rec_.PutPar(left.value_);
 			if( result )
-			{	tape->Rec_.PutOp(local::LtpvOp);
-				tape->Rec_.PutArg(arg1, left.taddr_);
+			{	tape->Rec_.PutOp(local::LtvpOp);
+				tape->Rec_.PutArg(right.taddr_, arg0);
 			}
 			else
-			{	tape->Rec_.PutOp(local::LevpOp);
-				tape->Rec_.PutArg(left.taddr_, arg1);
+			{	tape->Rec_.PutOp(local::LepvOp);
+				tape->Rec_.PutArg(arg0, right.taddr_);
 			}
 		}
 	}
-	else if ( var_right )
-	{	tape = right.tape_this();
-		addr_t arg0 = tape->Rec_.PutPar(left.value_);
-		if( result )
-		{	tape->Rec_.PutOp(local::LtvpOp);
-			tape->Rec_.PutArg(right.taddr_, arg0);
-		}
-		else
-		{	tape->Rec_.PutOp(local::LepvOp);
-			tape->Rec_.PutArg(arg0, right.taddr_);
-		}
-	}
-
 	return result;
 }
 // convert other cases into the case above
@@ -280,47 +289,50 @@ template <class Base>
 CPPAD_INLINE_FRIEND_TEMPLATE_FUNCTION
 bool operator >= (const AD<Base> &left , const AD<Base> &right)
 {	bool result    =  (left.value_ >= right.value_);
-	bool var_left  = Variable(left);
-	bool var_right = Variable(right);
-
-	local::ADTape<Base> *tape = CPPAD_NULL;
-	if( var_left )
-	{	tape = left.tape_this();
-		if( var_right )
-		{	if( result )
-			{	tape->Rec_.PutOp(local::LevvOp);
-				tape->Rec_.PutArg(right.taddr_, left.taddr_);
+	//
+	// check if we are recording compare operators
+	local::ADTape<Base> *tape = AD<Base>::tape_ptr();
+	if( tape != CPPAD_NULL && tape->Rec_.get_record_compare() )
+	{
+		bool var_left  = Variable(left);
+		bool var_right = Variable(right);
+		if( var_left )
+		{	CPPAD_ASSERT_UNKNOWN( tape == left.tape_this() );
+			if( var_right )
+			{	if( result )
+				{	tape->Rec_.PutOp(local::LevvOp);
+					tape->Rec_.PutArg(right.taddr_, left.taddr_);
+				}
+				else
+				{	tape->Rec_.PutOp(local::LtvvOp);
+					tape->Rec_.PutArg(left.taddr_, right.taddr_);
+				}
 			}
 			else
-			{	tape->Rec_.PutOp(local::LtvvOp);
-				tape->Rec_.PutArg(left.taddr_, right.taddr_);
+			{	addr_t arg1 = tape->Rec_.PutPar(right.value_);
+				if( result )
+				{	tape->Rec_.PutOp(local::LepvOp);
+					tape->Rec_.PutArg(arg1, left.taddr_);
+				}
+				else
+				{	tape->Rec_.PutOp(local::LtvpOp);
+					tape->Rec_.PutArg(left.taddr_, arg1);
+				}
 			}
 		}
-		else
-		{	addr_t arg1 = tape->Rec_.PutPar(right.value_);
+		else if ( var_right )
+		{	CPPAD_ASSERT_UNKNOWN( tape == right.tape_this() );
+			addr_t arg0 = tape->Rec_.PutPar(left.value_);
 			if( result )
-			{	tape->Rec_.PutOp(local::LepvOp);
-				tape->Rec_.PutArg(arg1, left.taddr_);
+			{	tape->Rec_.PutOp(local::LevpOp);
+				tape->Rec_.PutArg(right.taddr_, arg0);
 			}
 			else
-			{	tape->Rec_.PutOp(local::LtvpOp);
-				tape->Rec_.PutArg(left.taddr_, arg1);
+			{	tape->Rec_.PutOp(local::LtpvOp);
+				tape->Rec_.PutArg(arg0, right.taddr_);
 			}
 		}
 	}
-	else if ( var_right )
-	{	tape = right.tape_this();
-		addr_t arg0 = tape->Rec_.PutPar(left.value_);
-		if( result )
-		{	tape->Rec_.PutOp(local::LevpOp);
-			tape->Rec_.PutArg(right.taddr_, arg0);
-		}
-		else
-		{	tape->Rec_.PutOp(local::LtpvOp);
-			tape->Rec_.PutArg(arg0, right.taddr_);
-		}
-	}
-
 	return result;
 }
 // convert other cases into the case above
@@ -331,38 +343,41 @@ template <class Base>
 CPPAD_INLINE_FRIEND_TEMPLATE_FUNCTION
 bool operator == (const AD<Base> &left , const AD<Base> &right)
 {	bool result    =  (left.value_ == right.value_);
-	bool var_left  = Variable(left);
-	bool var_right = Variable(right);
-
-	local::ADTape<Base> *tape = CPPAD_NULL;
-	if( var_left )
-	{	tape = left.tape_this();
-		if( var_right )
-		{	tape->Rec_.PutArg(left.taddr_, right.taddr_);
-			if( result )
-				tape->Rec_.PutOp(local::EqvvOp);
+	//
+	// check if we are recording compare operators
+	local::ADTape<Base> *tape = AD<Base>::tape_ptr();
+	if( tape != CPPAD_NULL && tape->Rec_.get_record_compare() )
+	{
+		bool var_left  = Variable(left);
+		bool var_right = Variable(right);
+		if( var_left )
+		{	CPPAD_ASSERT_UNKNOWN( tape == left.tape_this() );
+			if( var_right )
+			{	tape->Rec_.PutArg(left.taddr_, right.taddr_);
+				if( result )
+					tape->Rec_.PutOp(local::EqvvOp);
+				else
+					tape->Rec_.PutOp(local::NevvOp);
+			}
 			else
-				tape->Rec_.PutOp(local::NevvOp);
+			{	addr_t arg1 = tape->Rec_.PutPar(right.value_);
+				tape->Rec_.PutArg(arg1, left.taddr_);
+				if( result )
+					tape->Rec_.PutOp(local::EqpvOp);
+				else
+					tape->Rec_.PutOp(local::NepvOp);
+			}
 		}
-		else
-		{	addr_t arg1 = tape->Rec_.PutPar(right.value_);
-			tape->Rec_.PutArg(arg1, left.taddr_);
+		else if ( var_right )
+		{	CPPAD_ASSERT_UNKNOWN( tape == right.tape_this() );
+			addr_t arg0 = tape->Rec_.PutPar(left.value_);
+			tape->Rec_.PutArg(arg0, right.taddr_);
 			if( result )
 				tape->Rec_.PutOp(local::EqpvOp);
 			else
 				tape->Rec_.PutOp(local::NepvOp);
 		}
 	}
-	else if ( var_right )
-	{	tape = right.tape_this();
-		addr_t arg0 = tape->Rec_.PutPar(left.value_);
-		tape->Rec_.PutArg(arg0, right.taddr_);
-		if( result )
-			tape->Rec_.PutOp(local::EqpvOp);
-		else
-			tape->Rec_.PutOp(local::NepvOp);
-	}
-
 	return result;
 }
 // convert other cases into the case above
@@ -373,38 +388,41 @@ template <class Base>
 CPPAD_INLINE_FRIEND_TEMPLATE_FUNCTION
 bool operator != (const AD<Base> &left , const AD<Base> &right)
 {	bool result    =  (left.value_ != right.value_);
-	bool var_left  = Variable(left);
-	bool var_right = Variable(right);
-
-	local::ADTape<Base> *tape = CPPAD_NULL;
-	if( var_left )
-	{	tape = left.tape_this();
-		if( var_right )
-		{	tape->Rec_.PutArg(left.taddr_, right.taddr_);
-			if( result )
-				tape->Rec_.PutOp(local::NevvOp);
+	//
+	// check if we are recording compare operators
+	local::ADTape<Base> *tape = AD<Base>::tape_ptr();
+	if( tape != CPPAD_NULL && tape->Rec_.get_record_compare() )
+	{
+		bool var_left  = Variable(left);
+		bool var_right = Variable(right);
+		if( var_left )
+		{	CPPAD_ASSERT_UNKNOWN( tape = left.tape_this() );
+			if( var_right )
+			{	tape->Rec_.PutArg(left.taddr_, right.taddr_);
+				if( result )
+					tape->Rec_.PutOp(local::NevvOp);
+				else
+					tape->Rec_.PutOp(local::EqvvOp);
+			}
 			else
-				tape->Rec_.PutOp(local::EqvvOp);
+			{	addr_t arg1 = tape->Rec_.PutPar(right.value_);
+				tape->Rec_.PutArg(arg1, left.taddr_);
+				if( result )
+					tape->Rec_.PutOp(local::NepvOp);
+				else
+					tape->Rec_.PutOp(local::EqpvOp);
+			}
 		}
-		else
-		{	addr_t arg1 = tape->Rec_.PutPar(right.value_);
-			tape->Rec_.PutArg(arg1, left.taddr_);
+		else if ( var_right )
+		{	CPPAD_ASSERT_UNKNOWN( tape == right.tape_this() );
+			addr_t arg0 = tape->Rec_.PutPar(left.value_);
+			tape->Rec_.PutArg(arg0, right.taddr_);
 			if( result )
 				tape->Rec_.PutOp(local::NepvOp);
 			else
 				tape->Rec_.PutOp(local::EqpvOp);
 		}
 	}
-	else if ( var_right )
-	{	tape = right.tape_this();
-		addr_t arg0 = tape->Rec_.PutPar(left.value_);
-		tape->Rec_.PutArg(arg0, right.taddr_);
-		if( result )
-			tape->Rec_.PutOp(local::NepvOp);
-		else
-			tape->Rec_.PutOp(local::EqpvOp);
-	}
-
 	return result;
 }
 // convert other cases into the case above

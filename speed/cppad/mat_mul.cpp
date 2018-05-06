@@ -77,7 +77,8 @@ bool link_mat_mul(
 	}
 	// --------------------------------------------------------------------
 	// optimization options: no conditional skips or compare operators
-	std::string options="no_compare_op";
+	std::string optimize_options =
+		"no_conditional_skip no_compare_op no_print_for";
 	// -----------------------------------------------------
 	// setup
 	typedef CppAD::AD<double>           ADScalar;
@@ -103,6 +104,9 @@ bool link_mat_mul(
 		atom_mul.option( CppAD::atomic_base<double>::pack_sparsity_enum );
 	else
 		atom_mul.option( CppAD::atomic_base<double>::set_sparsity_enum );
+
+	// do not even record comparison operators
+	bool record_compare = false;
 	// ------------------------------------------------------
 	if( ! global_option["onetape"] ) while(repeat--)
 	{	// get the next matrix
@@ -111,7 +115,7 @@ bool link_mat_mul(
 			X[j] = x[j];
 
 		// declare independent variables
-		Independent(X);
+		Independent(X, record_compare);
 
 		// do computations
 		if( ! global_option["atomic"] )
@@ -134,7 +138,7 @@ bool link_mat_mul(
 		f.Dependent(X, Z);
 
 		if( global_option["optimize"] )
-			f.optimize(options);
+			f.optimize(optimize_options);
 
 		// skip comparison operators
 		f.compare_change_count(0);
@@ -150,7 +154,7 @@ bool link_mat_mul(
 			X[j] = x[j];
 
 		// declare independent variables
-		Independent(X);
+		Independent(X, record_compare);
 
 		// do computations
 		if( ! global_option["atomic"] )
@@ -171,7 +175,7 @@ bool link_mat_mul(
 		f.Dependent(X, Z);
 
 		if( global_option["optimize"] )
-			f.optimize(options);
+			f.optimize(optimize_options);
 
 		// skip comparison operators
 		f.compare_change_count(0);

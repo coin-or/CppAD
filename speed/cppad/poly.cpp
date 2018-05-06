@@ -78,7 +78,8 @@ bool link_poly(
 	}
 	// --------------------------------------------------------------------
 	// optimization options: no conditional skips or compare operators
-	std::string options="no_compare_op";
+	std::string optimize_options =
+		"no_conditional_skip no_compare_op no_print_for";
 	// -----------------------------------------------------
 	// setup
 	typedef CppAD::AD<double>     ADScalar;
@@ -106,6 +107,8 @@ bool link_poly(
 	// AD function object
 	CppAD::ADFun<double> f;
 
+	// do not even record comparison operators
+	bool record_compare = false;
 	// --------------------------------------------------------------------
 	if( ! global_option["onetape"] ) while(repeat--)
 	{
@@ -114,7 +117,7 @@ bool link_poly(
 		Z[0] = z[0];
 
 		// declare independent variables
-		Independent(Z);
+		Independent(Z, record_compare);
 
 		// AD computation of the function value
 		P[0] = CppAD::Poly(0, A, Z[0]);
@@ -123,7 +126,7 @@ bool link_poly(
 		f.Dependent(Z, P);
 
 		if( global_option["optimize"] )
-			f.optimize(options);
+			f.optimize(optimize_options);
 
 		// skip comparison operators
 		f.compare_change_count(0);
@@ -148,7 +151,7 @@ bool link_poly(
 		Z[0] = z[0];
 
 		// declare independent variables
-		Independent(Z);
+		Independent(Z, record_compare);
 
 		// AD computation of the function value
 		P[0] = CppAD::Poly(0, A, Z[0]);
@@ -157,7 +160,7 @@ bool link_poly(
 		f.Dependent(Z, P);
 
 		if( global_option["optimize"] )
-			f.optimize(options);
+			f.optimize(optimize_options);
 
 		// skip comparison operators
 		f.compare_change_count(0);

@@ -73,7 +73,8 @@ bool link_ode(
 	}
 	// --------------------------------------------------------------------
 	// optimization options: no conditional skips or compare operators
-	std::string options="no_compare_op";
+	std::string optimize_options =
+		"no_conditional_skip no_compare_op no_print_for";
 	// --------------------------------------------------------------------
 	// setup
 	assert( x.size() == size );
@@ -89,6 +90,8 @@ bool link_ode(
 	ADVector  X(n), Y(m);      // independent and dependent variables
 	CppAD::ADFun<double>  f;   // AD function
 
+	// do not even record comparison operators
+	bool record_compare = false;
 	// -------------------------------------------------------------
 	if( ! global_option["onetape"] ) while(repeat--)
 	{	// choose next x value
@@ -96,8 +99,8 @@ bool link_ode(
 		for(j = 0; j < n; j++)
 			X[j] = x[j];
 
-		// declare the independent variable vector
-		Independent(X);
+		// declare independent variables
+		Independent(X, record_compare);
 
 		// evaluate function
 		CppAD::ode_evaluate(X, p, Y);
@@ -106,7 +109,7 @@ bool link_ode(
 		f.Dependent(X, Y);
 
 		if( global_option["optimize"] )
-			f.optimize(options);
+			f.optimize(optimize_options);
 
 		// skip comparison operators
 		f.compare_change_count(0);
@@ -120,7 +123,7 @@ bool link_ode(
 			X[j] = x[j];
 
 		// declare the independent variable vector
-		Independent(X);
+		Independent(X, record_compare);
 
 		// evaluate function
 		CppAD::ode_evaluate(X, p, Y);
@@ -129,7 +132,7 @@ bool link_ode(
 		f.Dependent(X, Y);
 
 		if( global_option["optimize"] )
-			f.optimize(options);
+			f.optimize(optimize_options);
 
 		// skip comparison operators
 		f.compare_change_count(0);

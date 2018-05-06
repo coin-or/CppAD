@@ -70,9 +70,9 @@ bool link_det_lu(
 		}
 	}
 	// --------------------------------------------------------------------
-
-	// optimization options: no conditional skips or compare operators
-	std::string options="no_compare_op";
+	// optimization options:
+	std::string optimize_options =
+		"no_conditional_skip no_compare_op no_print_for";
 	// -----------------------------------------------------
 	// setup
 	typedef CppAD::AD<double>           ADScalar;
@@ -97,8 +97,11 @@ bool link_det_lu(
 		for( i = 0; i < n; i++)
 			A[i] = matrix[i];
 
+		// do not even record comparison operators
+		bool record_compare = false;
+
 		// declare independent variables
-		Independent(A);
+		Independent(A, record_compare);
 
 		// AD computation of the determinant
 		detA[0] = Det(A);
@@ -106,10 +109,7 @@ bool link_det_lu(
 		// create function object f : A -> detA
 		f.Dependent(A, detA);
 		if( global_option["optimize"] )
-			f.optimize(options);
-
-		// skip comparison operators
-		f.compare_change_count(0);
+			f.optimize(optimize_options);
 
 		// evaluate and return gradient using reverse mode
 		f.Forward(0, matrix);

@@ -2,7 +2,7 @@
 # define CPPAD_CORE_INDEPENDENT_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -31,6 +31,8 @@ $section Declare Independent Variables and Start Recording$$
 $head Syntax$$
 $codei%Independent(%x%)
 %$$
+$codei%Independent(%x%, %record_compare%)
+%$$
 $codei%Independent(%x%, %abort_op_index%)
 %$$
 
@@ -46,6 +48,7 @@ $head Start Recording$$
 An operation sequence recording is started by the commands
 $codei%
 	Independent(%x%)
+	Independent(%x%, %record_compare%)
 	Independent(%x%, %abort_op_index%)
 %$$
 
@@ -77,15 +80,33 @@ The size of the vector $icode x$$, must be greater than zero,
 and is the number of independent variables for this
 AD operation sequence.
 
+$head record_compare$$
+This argument has prototype
+$codei%
+	bool %record_compare%
+%$$
+If it is present,
+it specifies if AD $cref compare$$  operations are recorded.
+It takes extra time and memory to record these operations.
+On the other hand, they can be useful for detecting when and why
+a functions recording would change; see $icode abort_op_index$$ below and
+$cref compare_change$$.
+If this argument is not present, the default value $code true$$ is used
+for $icode record_compare$$.
+
 $head abort_op_index$$
-It specifies the operator index at which the execution is be aborted
+If this argument is present,
+it specifies the operator index at which the execution is be aborted
 by calling the CppAD $cref/error handler/ErrorHandler/$$.
 When this error handler leads to an assert, the user
 can inspect the call stack to see the source code corresponding to
 this operator index; see
 $cref/purpose/compare_change/op_index/Purpose/$$.
 No abort will occur if $icode abort_op_index$$ is zero,
-of if $cref/NDEBUG/Faq/Speed/NDEBUG/$$ is defined.
+if $cref/NDEBUG/Faq/Speed/NDEBUG/$$ is defined, or
+if the $icode record_compare$$ argument above is false.
+If this argument is not present, the default value zero is used
+for $icode abort_index$$.
 
 $head VectorAD$$
 The type $icode VectorAD$$ must be a $cref SimpleVector$$ class with
@@ -136,14 +157,20 @@ Declaration of independent variables.
 This is simple vector type with elements of type AD<Base>.
 
 \param x
-Vector of the independent variablerd.
+Vector of the independent variablers.
+
+\param record_compare
+should comparison operators be recorded.
 
 \param abort_op_index
 operator index at which execution will be aborted (during  the recording
 of operations). The value zero corresponds to not aborting (will not match).
 */
 template <typename VectorAD>
-inline void Independent(VectorAD &x, size_t abort_op_index)
+inline void Independent(
+	VectorAD &x           ,
+	bool record_compare   ,
+	size_t abort_op_index )
 {	typedef typename VectorAD::value_type ADBase;
 	typedef typename ADBase::value_type   Base;
 	CPPAD_ASSERT_KNOWN(
@@ -153,21 +180,51 @@ inline void Independent(VectorAD &x, size_t abort_op_index)
 		"AD<Base>::abort_recording() would abort this previous recording."
 	);
 	local::ADTape<Base>* tape = ADBase::tape_manage(tape_manage_new);
-	tape->Independent(x, abort_op_index);
+	tape->Independent(x, record_compare, abort_op_index);
 }
 /*!
-Declaration of independent variables without abort option.
+Declaration of independent variables using default for
+record_compare and abort_op_index.
 
 \tparam VectorAD
 This is simple vector type with elements of type AD<Base>.
 
 \param x
-Vector of the independent variablerd.
+Vector of the independent variablers.
 */
 template <typename VectorAD>
 inline void Independent(VectorAD &x)
+{	bool   record_compare = true;
+	size_t abort_op_index = 0;
+	Independent(x, record_compare, abort_op_index);
+}
+/*!
+Declaration of independent variables using default for abort_op_index.
+
+\tparam VectorAD
+This is simple vector type with elements of type AD<Base>.
+
+\param x
+Vector of the independent variablers.
+*/
+template <typename VectorAD>
+inline void Independent(VectorAD &x, bool record_compare)
 {	size_t abort_op_index = 0;
-	Independent(x, abort_op_index);
+	Independent(x, record_compare, abort_op_index);
+}
+/*!
+Declaration of independent variables using default for record_compare.
+
+\tparam VectorAD
+This is simple vector type with elements of type AD<Base>.
+
+\param x
+Vector of the independent variablers.
+*/
+template <typename VectorAD>
+inline void Independent(VectorAD &x, size_t abort_op_index)
+{	bool   record_compare = true;
+	Independent(x, record_compare, abort_op_index);
 }
 
 } // END_CPPAD_NAMESPACE

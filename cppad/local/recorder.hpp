@@ -1,7 +1,7 @@
 # ifndef CPPAD_LOCAL_RECORDER_HPP
 # define CPPAD_LOCAL_RECORDER_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -32,6 +32,9 @@ class recorder {
 	friend class player<Base>;
 
 private:
+	/// are comparison operators being recorded
+	bool record_compare_;
+
 	/// operator index at which to abort recording with an error
 	/// (do not abort when zero)
 	size_t abort_op_index_;
@@ -67,15 +70,23 @@ public:
 	thread_offset_( thread_alloc::thread_num() * CPPAD_HASH_TABLE_SIZE ) ,
 	num_var_rec_(0)      ,
 	num_load_op_rec_(0)
-	{
+	{	record_compare_ = true;
 		abort_op_index_ = 0;
 	}
+
+	/// Set record_compare optin
+	void set_record_compare(bool record_compare)
+	{	record_compare_ = record_compare; }
 
 	/// Set the abort index
 	void set_abort_op_index(size_t abort_op_index)
 	{	abort_op_index_ = abort_op_index; }
 
-	/// Get the abort index
+	/// Get record_compare option
+	size_t get_record_compare(void)
+	{	return record_compare_; }
+
+	/// Get the abort_op_index
 	size_t get_abort_op_index(void)
 	{	return abort_op_index_; }
 

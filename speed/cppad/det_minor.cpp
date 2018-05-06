@@ -71,9 +71,9 @@ bool link_det_minor(
 		}
 	}
 	// --------------------------------------------------------------------
-
 	// optimization options: no conditional skips or compare operators
-	std::string options="no_compare_op";
+	std::string optimize_options =
+		"no_conditional_skip no_compare_op no_print_for";
 	// -----------------------------------------------------
 	// setup
 
@@ -95,6 +95,9 @@ bool link_det_minor(
 	// the AD function object
 	CppAD::ADFun<double> f;
 
+	// do not even record comparison operators
+	bool record_compare = false;
+
 	// ---------------------------------------------------------------------
 	if( ! global_option["onetape"] ) while(repeat--)
 	{
@@ -104,7 +107,7 @@ bool link_det_minor(
 			A[i] = matrix[i];
 
 		// declare independent variables
-		Independent(A);
+		Independent(A, record_compare);
 
 		// AD computation of the determinant
 		detA[0] = Det(A);
@@ -113,7 +116,7 @@ bool link_det_minor(
 		f.Dependent(A, detA);
 
 		if( global_option["optimize"] )
-			f.optimize(options);
+			f.optimize(optimize_options);
 
 		// skip comparison operators
 		f.compare_change_count(0);
@@ -132,7 +135,7 @@ bool link_det_minor(
 			A[i] = matrix[i];
 
 		// declare independent variables
-		Independent(A);
+		Independent(A, record_compare);
 
 		// AD computation of the determinant
 		detA[0] = Det(A);
@@ -141,7 +144,7 @@ bool link_det_minor(
 		f.Dependent(A, detA);
 
 		if( global_option["optimize"] )
-			f.optimize(options);
+			f.optimize(optimize_options);
 
 		// skip comparison operators
 		f.compare_change_count(0);

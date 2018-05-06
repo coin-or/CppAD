@@ -3,7 +3,7 @@
 # define CPPAD_LOCAL_INDEPENDENT_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -27,14 +27,18 @@ This is simple vector type with elements of type AD<Base>.
 \param x
 Vector of the independent variablerd.
 
+\param record_compare
+should comparison operators be recorded.
+
 \param abort_op_index
 operator index at which execution will be aborted (during  the recording
 of operations). The value zero corresponds to not aborting (will not match).
 */
 template <typename Base>
 template <typename VectorAD>
-void ADTape<Base>::Independent(VectorAD &x, size_t abort_op_index)
-{
+void ADTape<Base>::Independent(
+	VectorAD &x, bool record_compare, size_t abort_op_index
+) {
 	// check VectorAD is Simple Vector class with AD<Base> elements
 	CheckSimpleVector< AD<Base>, VectorAD>();
 
@@ -46,7 +50,8 @@ void ADTape<Base>::Independent(VectorAD &x, size_t abort_op_index)
 	);
 	CPPAD_ASSERT_UNKNOWN( Rec_.num_var_rec() == 0 );
 
-	// set the abort index before doing anything else
+	// set record_compare and abort_op_index before doing anything else
+	Rec_.set_record_compare(record_compare);
 	Rec_.set_abort_op_index(abort_op_index);
 
 	// mark the beginning of the tape and skip the first variable index

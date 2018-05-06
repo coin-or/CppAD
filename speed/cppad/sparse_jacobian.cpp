@@ -144,7 +144,8 @@ bool link_sparse_jacobian(
 	}
 	// ---------------------------------------------------------------------
 	// optimization options: no conditional skips or compare operators
-	std::string options="no_compare_op";
+	std::string optimize_options =
+		"no_conditional_skip no_compare_op no_print_for";
 	// -----------------------------------------------------
 	// setup
 	typedef CppAD::AD<double>    a_double;
@@ -179,6 +180,10 @@ bool link_sparse_jacobian(
 # endif
 	//
 	// maximum number of colors at once
+	//
+	// do not even record comparison operators
+	bool record_compare = false;
+	//
 	size_t group_max = 25;
 	// ------------------------------------------------------
 	if( ! global_option["onetape"] ) while(repeat--)
@@ -186,9 +191,9 @@ bool link_sparse_jacobian(
 		CppAD::uniform_01(n, x);
 		for(size_t j = 0; j < n; j++)
 			a_x[j] = x[j];
-		//
+
 		// declare independent variables
-		Independent(a_x);
+		Independent(a_x, record_compare);
 		//
 		// AD computation of f(x)
 		CppAD::sparse_jac_fun<a_double>(m, n, a_x, row, col, order, a_y);
@@ -197,7 +202,7 @@ bool link_sparse_jacobian(
 		f.Dependent(a_x, a_y);
 		//
 		if( global_option["optimize"] )
-			f.optimize(options);
+			f.optimize(optimize_options);
 		//
 		// skip comparison operators
 		f.compare_change_count(0);
@@ -230,7 +235,7 @@ bool link_sparse_jacobian(
 			a_x[j] = x[j];
 		//
 		// declare independent variables
-		Independent(a_x);
+		Independent(a_x, record_compare);
 		//
 		// AD computation of f(x)
 		CppAD::sparse_jac_fun<a_double>(m, n, a_x, row, col, order, a_y);
@@ -239,7 +244,7 @@ bool link_sparse_jacobian(
 		f.Dependent(a_x, a_y);
 		//
 		if( global_option["optimize"] )
-			f.optimize(options);
+			f.optimize(optimize_options);
 		//
 		// skip comparison operators
 		f.compare_change_count(0);

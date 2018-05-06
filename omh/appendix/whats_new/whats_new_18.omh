@@ -22,6 +22,18 @@ $$
 
 $section Changes and Additions to CppAD During 2018$$
 
+$head 05-04$$
+The comparison operations were changed on
+$cref/2015-01-20/whats_new_15/01-20/$$ when the
+$cref/abort_op_index/Independent/abort_op_index/$$ option was added.
+This change caused a slow down CppAD
+because the $cref compare$$ operators used to not be recorded when
+$code NDEBUG$$ was defined.
+The $cref/record_compare/Independent/record_compare/$$ option has been
+added so that one can obtain this better performance
+(when one does not need  the $cref compare_change$$ function
+or the $cref/abort_op_index/Independent/abort_op_index/$$ feature).
+
 $head 05-03$$
 The following was merged in from the $code reduce_tape$$ branch:
 A change was made in the way CppAD iterated over the operation sequence
