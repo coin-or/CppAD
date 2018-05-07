@@ -132,7 +132,7 @@ public:
 	// public function only used by CppAD::Independent
 	template <typename VectorADBase>
 	void Independent(
-		VectorADBase &u, bool record_compare, size_t abort_op_index
+		VectorADBase &u, size_t abort_op_index, bool record_compare
 	);
 
 };

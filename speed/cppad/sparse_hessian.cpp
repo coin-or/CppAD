@@ -86,13 +86,13 @@ namespace {
 		size_t order = 0;
 		//
 		// do not even record comparison operators
-		bool record_compare = false;
+		size_t abort_op_index = 0;
+		bool record_compare   = false;
 		//
 		if( ! global_option["hes2jac"] )
 		{
 			// declare independent variables
-			Independent(a1x, record_compare);
-
+			Independent(a1x, abort_op_index, record_compare);
 			//
 			// AD computation of y
 			a1vector a1y(1);
@@ -114,7 +114,7 @@ namespace {
 		a2vector a2x(n);
 		for(size_t j = 0; j < n; j++)
 			a2x[j] = a1x[j];
-		Independent(a2x, record_compare);
+		Independent(a2x, abort_op_index, record_compare);
 		//
 		// a2double computation of y
 		a2vector a2y(1);
@@ -125,7 +125,7 @@ namespace {
 		a1f.Dependent(a2x, a2y);
 		//
 		// declare independent variables for g(x)
-		Independent(a1x, record_compare);
+		Independent(a1x, abort_op_index, record_compare);
 		//
 		// a1double computation of z
 		a1vector a1w(1), a1z(n);

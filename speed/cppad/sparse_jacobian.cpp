@@ -182,7 +182,8 @@ bool link_sparse_jacobian(
 	// maximum number of colors at once
 	//
 	// do not even record comparison operators
-	bool record_compare = false;
+	size_t abort_op_index = 0;
+	bool record_compare   = false;
 	//
 	size_t group_max = 25;
 	// ------------------------------------------------------
@@ -193,7 +194,7 @@ bool link_sparse_jacobian(
 			a_x[j] = x[j];
 
 		// declare independent variables
-		Independent(a_x, record_compare);
+		Independent(a_x, abort_op_index, record_compare);
 		//
 		// AD computation of f(x)
 		CppAD::sparse_jac_fun<a_double>(m, n, a_x, row, col, order, a_y);
@@ -235,7 +236,7 @@ bool link_sparse_jacobian(
 			a_x[j] = x[j];
 		//
 		// declare independent variables
-		Independent(a_x, record_compare);
+		Independent(a_x, abort_op_index, record_compare);
 		//
 		// AD computation of f(x)
 		CppAD::sparse_jac_fun<a_double>(m, n, a_x, row, col, order, a_y);

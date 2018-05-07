@@ -51,7 +51,7 @@ private :
 	// template friend functions where template parameter is not bound
 	template <class VectorAD>
 	friend void Independent(
-		VectorAD &x, bool record_compare, size_t abort_op_index
+		VectorAD &x, size_t abort_op_index, bool record_compare
 	);
 
 	// one argument functions

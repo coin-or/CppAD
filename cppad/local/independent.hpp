@@ -1,4 +1,3 @@
-// $Id$
 # ifndef CPPAD_LOCAL_INDEPENDENT_HPP
 # define CPPAD_LOCAL_INDEPENDENT_HPP
 
@@ -37,7 +36,7 @@ of operations). The value zero corresponds to not aborting (will not match).
 template <typename Base>
 template <typename VectorAD>
 void ADTape<Base>::Independent(
-	VectorAD &x, bool record_compare, size_t abort_op_index
+	VectorAD &x, size_t abort_op_index, bool record_compare
 ) {
 	// check VectorAD is Simple Vector class with AD<Base> elements
 	CheckSimpleVector< AD<Base>, VectorAD>();

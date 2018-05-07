@@ -91,7 +91,9 @@ bool link_ode(
 	CppAD::ADFun<double>  f;   // AD function
 
 	// do not even record comparison operators
-	bool record_compare = false;
+	size_t abort_op_index = 0;
+	bool record_compare   = false;
+
 	// -------------------------------------------------------------
 	if( ! global_option["onetape"] ) while(repeat--)
 	{	// choose next x value
@@ -100,7 +102,7 @@ bool link_ode(
 			X[j] = x[j];
 
 		// declare independent variables
-		Independent(X, record_compare);
+		Independent(X, abort_op_index, record_compare);
 
 		// evaluate function
 		CppAD::ode_evaluate(X, p, Y);
@@ -123,7 +125,7 @@ bool link_ode(
 			X[j] = x[j];
 
 		// declare the independent variable vector
-		Independent(X, record_compare);
+		Independent(X, abort_op_index, record_compare);
 
 		// evaluate function
 		CppAD::ode_evaluate(X, p, Y);

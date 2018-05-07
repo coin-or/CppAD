@@ -108,7 +108,9 @@ bool link_poly(
 	CppAD::ADFun<double> f;
 
 	// do not even record comparison operators
-	bool record_compare = false;
+	size_t abort_op_index = 0;
+	bool record_compare   = false;
+
 	// --------------------------------------------------------------------
 	if( ! global_option["onetape"] ) while(repeat--)
 	{
@@ -117,7 +119,7 @@ bool link_poly(
 		Z[0] = z[0];
 
 		// declare independent variables
-		Independent(Z, record_compare);
+		Independent(Z, abort_op_index, record_compare);
 
 		// AD computation of the function value
 		P[0] = CppAD::Poly(0, A, Z[0]);
@@ -151,7 +153,7 @@ bool link_poly(
 		Z[0] = z[0];
 
 		// declare independent variables
-		Independent(Z, record_compare);
+		Independent(Z, abort_op_index, record_compare);
 
 		// AD computation of the function value
 		P[0] = CppAD::Poly(0, A, Z[0]);

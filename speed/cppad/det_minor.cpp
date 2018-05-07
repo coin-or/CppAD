@@ -96,7 +96,8 @@ bool link_det_minor(
 	CppAD::ADFun<double> f;
 
 	// do not even record comparison operators
-	bool record_compare = false;
+	size_t abort_op_index = 0;
+	bool record_compare   = false;
 
 	// ---------------------------------------------------------------------
 	if( ! global_option["onetape"] ) while(repeat--)
@@ -107,7 +108,7 @@ bool link_det_minor(
 			A[i] = matrix[i];
 
 		// declare independent variables
-		Independent(A, record_compare);
+		Independent(A, abort_op_index, record_compare);
 
 		// AD computation of the determinant
 		detA[0] = Det(A);
@@ -135,7 +136,7 @@ bool link_det_minor(
 			A[i] = matrix[i];
 
 		// declare independent variables
-		Independent(A, record_compare);
+		Independent(A, abort_op_index, record_compare);
 
 		// AD computation of the determinant
 		detA[0] = Det(A);

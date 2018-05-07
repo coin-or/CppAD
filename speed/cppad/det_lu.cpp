@@ -90,6 +90,10 @@ bool link_det_lu(
 	CppAD::vector<double> w(1);
 	w[0] = 1.;
 
+	// do not even record comparison operators
+	size_t abort_op_index = 0;
+	bool record_compare   = false;
+
 	// ------------------------------------------------------
 	while(repeat--)
 	{	// get the next matrix
@@ -97,11 +101,8 @@ bool link_det_lu(
 		for( i = 0; i < n; i++)
 			A[i] = matrix[i];
 
-		// do not even record comparison operators
-		bool record_compare = false;
-
 		// declare independent variables
-		Independent(A, record_compare);
+		Independent(A, abort_op_index, record_compare);
 
 		// AD computation of the determinant
 		detA[0] = Det(A);
