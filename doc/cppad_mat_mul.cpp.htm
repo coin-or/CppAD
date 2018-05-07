@@ -185,7 +185,9 @@ See <a href="link_mat_mul.htm" target="_top"><span style='white-space: nowrap'>l
           atom_mul<font color="#990000">.</font><b><font color="#000000">option</font></b><font color="#990000">(</font> CppAD<font color="#990000">::</font>atomic_base<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;::</font>set_sparsity_enum <font color="#990000">);</font>
 
      <i><font color="#9A1900">// do not even record comparison operators</font></i>
-     <font color="#009900">bool</font> record_compare <font color="#990000">=</font> <b><font color="#0000FF">false</font></b><font color="#990000">;</font>
+     <font color="#008080">size_t</font> abort_op_index <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
+     <font color="#009900">bool</font> record_compare   <font color="#990000">=</font> <b><font color="#0000FF">false</font></b><font color="#990000">;</font>
+
      <i><font color="#9A1900">// ------------------------------------------------------</font></i>
      <b><font color="#0000FF">if</font></b><font color="#990000">(</font> <font color="#990000">!</font> global_option<font color="#990000">[</font><font color="#FF0000">"onetape"</font><font color="#990000">]</font> <font color="#990000">)</font> <b><font color="#0000FF">while</font></b><font color="#990000">(</font>repeat<font color="#990000">--)</font>
      <font color="#FF0000">{</font>    <i><font color="#9A1900">// get the next matrix</font></i>
@@ -194,7 +196,7 @@ See <a href="link_mat_mul.htm" target="_top"><span style='white-space: nowrap'>l
                X<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">=</font> x<font color="#990000">[</font>j<font color="#990000">];</font>
 
           <i><font color="#9A1900">// declare independent variables</font></i>
-          <b><font color="#000000">Independent</font></b><font color="#990000">(</font>X<font color="#990000">,</font> record_compare<font color="#990000">);</font>
+          <b><font color="#000000">Independent</font></b><font color="#990000">(</font>X<font color="#990000">,</font> abort_op_index<font color="#990000">,</font> record_compare<font color="#990000">);</font>
 
           <i><font color="#9A1900">// do computations</font></i>
           <b><font color="#0000FF">if</font></b><font color="#990000">(</font> <font color="#990000">!</font> global_option<font color="#990000">[</font><font color="#FF0000">"atomic"</font><font color="#990000">]</font> <font color="#990000">)</font>
@@ -233,7 +235,7 @@ See <a href="link_mat_mul.htm" target="_top"><span style='white-space: nowrap'>l
                X<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">=</font> x<font color="#990000">[</font>j<font color="#990000">];</font>
 
           <i><font color="#9A1900">// declare independent variables</font></i>
-          <b><font color="#000000">Independent</font></b><font color="#990000">(</font>X<font color="#990000">,</font> record_compare<font color="#990000">);</font>
+          <b><font color="#000000">Independent</font></b><font color="#990000">(</font>X<font color="#990000">,</font> abort_op_index<font color="#990000">,</font> record_compare<font color="#990000">);</font>
 
           <i><font color="#9A1900">// do computations</font></i>
           <b><font color="#0000FF">if</font></b><font color="#990000">(</font> <font color="#990000">!</font> global_option<font color="#990000">[</font><font color="#FF0000">"atomic"</font><font color="#990000">]</font> <font color="#990000">)</font>

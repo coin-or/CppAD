@@ -256,7 +256,8 @@ See <a href="link_sparse_jacobian.htm" target="_top"><span style='white-space: n
      <i><font color="#9A1900">// maximum number of colors at once</font></i>
      <i><font color="#9A1900">//</font></i>
      <i><font color="#9A1900">// do not even record comparison operators</font></i>
-     <font color="#009900">bool</font> record_compare <font color="#990000">=</font> <b><font color="#0000FF">false</font></b><font color="#990000">;</font>
+     <font color="#008080">size_t</font> abort_op_index <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
+     <font color="#009900">bool</font> record_compare   <font color="#990000">=</font> <b><font color="#0000FF">false</font></b><font color="#990000">;</font>
      <i><font color="#9A1900">//</font></i>
      <font color="#008080">size_t</font> group_max <font color="#990000">=</font> <font color="#993399">25</font><font color="#990000">;</font>
      <i><font color="#9A1900">// ------------------------------------------------------</font></i>
@@ -267,7 +268,7 @@ See <a href="link_sparse_jacobian.htm" target="_top"><span style='white-space: n
                a_x<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">=</font> x<font color="#990000">[</font>j<font color="#990000">];</font>
 
           <i><font color="#9A1900">// declare independent variables</font></i>
-          <b><font color="#000000">Independent</font></b><font color="#990000">(</font>a_x<font color="#990000">,</font> record_compare<font color="#990000">);</font>
+          <b><font color="#000000">Independent</font></b><font color="#990000">(</font>a_x<font color="#990000">,</font> abort_op_index<font color="#990000">,</font> record_compare<font color="#990000">);</font>
           <i><font color="#9A1900">//</font></i>
           <i><font color="#9A1900">// AD computation of f(x)</font></i>
           CppAD<font color="#990000">::</font>sparse_jac_fun<font color="#990000">&lt;</font>a_double<font color="#990000">&gt;(</font>m<font color="#990000">,</font> n<font color="#990000">,</font> a_x<font color="#990000">,</font> row<font color="#990000">,</font> col<font color="#990000">,</font> order<font color="#990000">,</font> a_y<font color="#990000">);</font>
@@ -309,7 +310,7 @@ See <a href="link_sparse_jacobian.htm" target="_top"><span style='white-space: n
                a_x<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">=</font> x<font color="#990000">[</font>j<font color="#990000">];</font>
           <i><font color="#9A1900">//</font></i>
           <i><font color="#9A1900">// declare independent variables</font></i>
-          <b><font color="#000000">Independent</font></b><font color="#990000">(</font>a_x<font color="#990000">,</font> record_compare<font color="#990000">);</font>
+          <b><font color="#000000">Independent</font></b><font color="#990000">(</font>a_x<font color="#990000">,</font> abort_op_index<font color="#990000">,</font> record_compare<font color="#990000">);</font>
           <i><font color="#9A1900">//</font></i>
           <i><font color="#9A1900">// AD computation of f(x)</font></i>
           CppAD<font color="#990000">::</font>sparse_jac_fun<font color="#990000">&lt;</font>a_double<font color="#990000">&gt;(</font>m<font color="#990000">,</font> n<font color="#990000">,</font> a_x<font color="#990000">,</font> row<font color="#990000">,</font> col<font color="#990000">,</font> order<font color="#990000">,</font> a_y<font color="#990000">);</font>

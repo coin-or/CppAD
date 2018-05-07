@@ -48,12 +48,11 @@ var list_down0 = [
 ];
 var list_current0 = [
 'independent.htm#Syntax',
-'independent.htm#Purpose',
 'independent.htm#Start Recording',
 'independent.htm#Stop Recording',
 'independent.htm#x',
-'independent.htm#record_compare',
 'independent.htm#abort_op_index',
+'independent.htm#record_compare',
 'independent.htm#VectorAD',
 'independent.htm#Parallel Mode',
 'independent.htm#Example'

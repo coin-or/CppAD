@@ -173,7 +173,9 @@ See <a href="link_ode.htm" target="_top"><span style='white-space: nowrap'>link_
      CppAD<font color="#990000">::</font><font color="#008080">ADFun&lt;double&gt;</font>  f<font color="#990000">;</font>   <i><font color="#9A1900">// AD function</font></i>
 
      <i><font color="#9A1900">// do not even record comparison operators</font></i>
-     <font color="#009900">bool</font> record_compare <font color="#990000">=</font> <b><font color="#0000FF">false</font></b><font color="#990000">;</font>
+     <font color="#008080">size_t</font> abort_op_index <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
+     <font color="#009900">bool</font> record_compare   <font color="#990000">=</font> <b><font color="#0000FF">false</font></b><font color="#990000">;</font>
+
      <i><font color="#9A1900">// -------------------------------------------------------------</font></i>
      <b><font color="#0000FF">if</font></b><font color="#990000">(</font> <font color="#990000">!</font> global_option<font color="#990000">[</font><font color="#FF0000">"onetape"</font><font color="#990000">]</font> <font color="#990000">)</font> <b><font color="#0000FF">while</font></b><font color="#990000">(</font>repeat<font color="#990000">--)</font>
      <font color="#FF0000">{</font>    <i><font color="#9A1900">// choose next x value</font></i>
@@ -182,7 +184,7 @@ See <a href="link_ode.htm" target="_top"><span style='white-space: nowrap'>link_
                X<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">=</font> x<font color="#990000">[</font>j<font color="#990000">];</font>
 
           <i><font color="#9A1900">// declare independent variables</font></i>
-          <b><font color="#000000">Independent</font></b><font color="#990000">(</font>X<font color="#990000">,</font> record_compare<font color="#990000">);</font>
+          <b><font color="#000000">Independent</font></b><font color="#990000">(</font>X<font color="#990000">,</font> abort_op_index<font color="#990000">,</font> record_compare<font color="#990000">);</font>
 
           <i><font color="#9A1900">// evaluate function</font></i>
           CppAD<font color="#990000">::</font><b><font color="#000000">ode_evaluate</font></b><font color="#990000">(</font>X<font color="#990000">,</font> p<font color="#990000">,</font> Y<font color="#990000">);</font>
@@ -205,7 +207,7 @@ See <a href="link_ode.htm" target="_top"><span style='white-space: nowrap'>link_
                X<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">=</font> x<font color="#990000">[</font>j<font color="#990000">];</font>
 
           <i><font color="#9A1900">// declare the independent variable vector</font></i>
-          <b><font color="#000000">Independent</font></b><font color="#990000">(</font>X<font color="#990000">,</font> record_compare<font color="#990000">);</font>
+          <b><font color="#000000">Independent</font></b><font color="#990000">(</font>X<font color="#990000">,</font> abort_op_index<font color="#990000">,</font> record_compare<font color="#990000">);</font>
 
           <i><font color="#9A1900">// evaluate function</font></i>
           CppAD<font color="#990000">::</font><b><font color="#000000">ode_evaluate</font></b><font color="#990000">(</font>X<font color="#990000">,</font> p<font color="#990000">,</font> Y<font color="#990000">);</font>

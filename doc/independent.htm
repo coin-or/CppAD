@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Declare Independent Variables and Start Recording</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Declare Independent Variables and Start Recording">
-<meta name="keywords" id="keywords" content=" declare independent variables start recording syntax purpose stop x record_compare abort_op_index vectorad parallel mode example ">
+<meta name="keywords" id="keywords" content=" declare independent variables start recording syntax stop x abort_op_index record_compare vectorad parallel mode example ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -103,12 +103,11 @@ A:active { color : purple }
 <select onchange='choose_current0(this)'>
 <option>Headings-&gt;</option>
 <option>Syntax</option>
-<option>Purpose</option>
 <option>Start Recording</option>
 <option>Stop Recording</option>
 <option>x</option>
-<option>record_compare</option>
 <option>abort_op_index</option>
+<option>record_compare</option>
 <option>VectorAD</option>
 <option>Parallel Mode</option>
 <option>Example</option>
@@ -130,15 +129,15 @@ A:active { color : purple }
 <code><font color="blue"><span style='white-space: nowrap'>Independent(</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
 </span></font></code>
 
-<code><font color="blue"><span style='white-space: nowrap'>Independent(</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>record_compare</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
-</span></font></code>
-
 <code><font color="blue"><span style='white-space: nowrap'>Independent(</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>abort_op_index</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
 </span></font></code>
+
+<code><font color="blue"><span style='white-space: nowrap'>Independent(</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>abort_op_index</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>record_compare</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
 <br>
-<b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
+<b><big><a name="Start Recording" id="Start Recording">Start Recording</a></big></b>
 <br>
-Start recording
+The syntax above starts recording
 <a href="glossary.htm#AD of Base" target="_top"><span style='white-space: nowrap'>AD&nbsp;of&nbsp;Base</span></a>
  operations
 with 
@@ -147,19 +146,9 @@ with
 Once the
 <a href="glossary.htm#Operation.Sequence" target="_top"><span style='white-space: nowrap'>operation&nbsp;sequence</span></a>
  is completed,
-it must be transferred to a function object; see below.
+it must be transferred to a function object or aborted; see below.
 
 <br>
-<br>
-<b><big><a name="Start Recording" id="Start Recording">Start Recording</a></big></b>
-<br>
-An operation sequence recording is started by the commands
-
-<code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Independent(</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Independent(</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>record_compare</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Independent(</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>abort_op_index</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
-</span></font></code>
 <br>
 <b><big><a name="Stop Recording" id="Stop Recording">Stop Recording</a></big></b>
 <br>
@@ -215,6 +204,29 @@ AD operation sequence.
 
 <br>
 <br>
+<b><big><a name="abort_op_index" id="abort_op_index">abort_op_index</a></big></b>
+<br>
+If this argument is present,
+it specifies the operator index at which the execution is be aborted
+by calling the CppAD <a href="errorhandler.htm" target="_top"><span style='white-space: nowrap'>error&nbsp;handler</span></a>
+.
+When this error handler leads to an assert, the user
+can inspect the call stack to see the source code corresponding to
+this operator index; see
+<a href="compare_change.htm#op_index.Purpose" target="_top"><span style='white-space: nowrap'>purpose</span></a>
+.
+No abort will occur if 
+<code><i><font color="black"><span style='white-space: nowrap'>abort_op_index</span></font></i></code>
+ is zero,
+if <a href="faq.htm#Speed.NDEBUG" target="_top"><span style='white-space: nowrap'>NDEBUG</span></a>
+ is defined.
+If this argument is not present, the default value zero is used
+for 
+<code><i><font color="black"><span style='white-space: nowrap'>abort_index</span></font></i></code>
+.
+
+<br>
+<br>
 <b><big><a name="record_compare" id="record_compare">record_compare</a></big></b>
 <br>
 This argument has prototype
@@ -236,32 +248,9 @@ If this argument is not present, the default value <code><font color="blue">true
 for 
 <code><i><font color="black"><span style='white-space: nowrap'>record_compare</span></font></i></code>
 .
-
-<br>
-<br>
-<b><big><a name="abort_op_index" id="abort_op_index">abort_op_index</a></big></b>
-<br>
-If this argument is present,
-it specifies the operator index at which the execution is be aborted
-by calling the CppAD <a href="errorhandler.htm" target="_top"><span style='white-space: nowrap'>error&nbsp;handler</span></a>
-.
-When this error handler leads to an assert, the user
-can inspect the call stack to see the source code corresponding to
-this operator index; see
-<a href="compare_change.htm#op_index.Purpose" target="_top"><span style='white-space: nowrap'>purpose</span></a>
-.
-No abort will occur if 
+If this argument is false, 
 <code><i><font color="black"><span style='white-space: nowrap'>abort_op_index</span></font></i></code>
- is zero,
-if <a href="faq.htm#Speed.NDEBUG" target="_top"><span style='white-space: nowrap'>NDEBUG</span></a>
- is defined, or
-if the 
-<code><i><font color="black"><span style='white-space: nowrap'>record_compare</span></font></i></code>
- argument above is false.
-If this argument is not present, the default value zero is used
-for 
-<code><i><font color="black"><span style='white-space: nowrap'>abort_index</span></font></i></code>
-.
+ must be zero.
 
 <br>
 <br>

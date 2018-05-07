@@ -162,13 +162,13 @@ See <a href="link_sparse_hessian.htm" target="_top"><span style='white-space: no
           <font color="#008080">size_t</font> order <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
           <i><font color="#9A1900">//</font></i>
           <i><font color="#9A1900">// do not even record comparison operators</font></i>
-          <font color="#009900">bool</font> record_compare <font color="#990000">=</font> <b><font color="#0000FF">false</font></b><font color="#990000">;</font>
+          <font color="#008080">size_t</font> abort_op_index <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
+          <font color="#009900">bool</font> record_compare   <font color="#990000">=</font> <b><font color="#0000FF">false</font></b><font color="#990000">;</font>
           <i><font color="#9A1900">//</font></i>
           <b><font color="#0000FF">if</font></b><font color="#990000">(</font> <font color="#990000">!</font> global_option<font color="#990000">[</font><font color="#FF0000">"hes2jac"</font><font color="#990000">]</font> <font color="#990000">)</font>
           <font color="#FF0000">{</font>
                <i><font color="#9A1900">// declare independent variables</font></i>
-               <b><font color="#000000">Independent</font></b><font color="#990000">(</font>a1x<font color="#990000">,</font> record_compare<font color="#990000">);</font>
-
+               <b><font color="#000000">Independent</font></b><font color="#990000">(</font>a1x<font color="#990000">,</font> abort_op_index<font color="#990000">,</font> record_compare<font color="#990000">);</font>
                <i><font color="#9A1900">//</font></i>
                <i><font color="#9A1900">// AD computation of y</font></i>
                <font color="#008080">a1vector</font> <b><font color="#000000">a1y</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">);</font>
@@ -190,7 +190,7 @@ See <a href="link_sparse_hessian.htm" target="_top"><span style='white-space: no
           <font color="#008080">a2vector</font> <b><font color="#000000">a2x</font></b><font color="#990000">(</font>n<font color="#990000">);</font>
           <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> n<font color="#990000">;</font> j<font color="#990000">++)</font>
                a2x<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">=</font> a1x<font color="#990000">[</font>j<font color="#990000">];</font>
-          <b><font color="#000000">Independent</font></b><font color="#990000">(</font>a2x<font color="#990000">,</font> record_compare<font color="#990000">);</font>
+          <b><font color="#000000">Independent</font></b><font color="#990000">(</font>a2x<font color="#990000">,</font> abort_op_index<font color="#990000">,</font> record_compare<font color="#990000">);</font>
           <i><font color="#9A1900">//</font></i>
           <i><font color="#9A1900">// a2double computation of y</font></i>
           <font color="#008080">a2vector</font> <b><font color="#000000">a2y</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">);</font>
@@ -201,7 +201,7 @@ See <a href="link_sparse_hessian.htm" target="_top"><span style='white-space: no
           a1f<font color="#990000">.</font><b><font color="#000000">Dependent</font></b><font color="#990000">(</font>a2x<font color="#990000">,</font> a2y<font color="#990000">);</font>
           <i><font color="#9A1900">//</font></i>
           <i><font color="#9A1900">// declare independent variables for g(x)</font></i>
-          <b><font color="#000000">Independent</font></b><font color="#990000">(</font>a1x<font color="#990000">,</font> record_compare<font color="#990000">);</font>
+          <b><font color="#000000">Independent</font></b><font color="#990000">(</font>a1x<font color="#990000">,</font> abort_op_index<font color="#990000">,</font> record_compare<font color="#990000">);</font>
           <i><font color="#9A1900">//</font></i>
           <i><font color="#9A1900">// a1double computation of z</font></i>
           <font color="#008080">a1vector</font> <b><font color="#000000">a1w</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">),</font> <b><font color="#000000">a1z</font></b><font color="#990000">(</font>n<font color="#990000">);</font>

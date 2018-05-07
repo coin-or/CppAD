@@ -176,7 +176,8 @@ See <a href="link_det_minor.htm" target="_top"><span style='white-space: nowrap'
      CppAD<font color="#990000">::</font><font color="#008080">ADFun&lt;double&gt;</font> f<font color="#990000">;</font>
 
      <i><font color="#9A1900">// do not even record comparison operators</font></i>
-     <font color="#009900">bool</font> record_compare <font color="#990000">=</font> <b><font color="#0000FF">false</font></b><font color="#990000">;</font>
+     <font color="#008080">size_t</font> abort_op_index <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
+     <font color="#009900">bool</font> record_compare   <font color="#990000">=</font> <b><font color="#0000FF">false</font></b><font color="#990000">;</font>
 
      <i><font color="#9A1900">// ---------------------------------------------------------------------</font></i>
      <b><font color="#0000FF">if</font></b><font color="#990000">(</font> <font color="#990000">!</font> global_option<font color="#990000">[</font><font color="#FF0000">"onetape"</font><font color="#990000">]</font> <font color="#990000">)</font> <b><font color="#0000FF">while</font></b><font color="#990000">(</font>repeat<font color="#990000">--)</font>
@@ -187,7 +188,7 @@ See <a href="link_det_minor.htm" target="_top"><span style='white-space: nowrap'
                A<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> matrix<font color="#990000">[</font>i<font color="#990000">];</font>
 
           <i><font color="#9A1900">// declare independent variables</font></i>
-          <b><font color="#000000">Independent</font></b><font color="#990000">(</font>A<font color="#990000">,</font> record_compare<font color="#990000">);</font>
+          <b><font color="#000000">Independent</font></b><font color="#990000">(</font>A<font color="#990000">,</font> abort_op_index<font color="#990000">,</font> record_compare<font color="#990000">);</font>
 
           <i><font color="#9A1900">// AD computation of the determinant</font></i>
           detA<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <b><font color="#000000">Det</font></b><font color="#990000">(</font>A<font color="#990000">);</font>
@@ -215,7 +216,7 @@ See <a href="link_det_minor.htm" target="_top"><span style='white-space: nowrap'
                A<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> matrix<font color="#990000">[</font>i<font color="#990000">];</font>
 
           <i><font color="#9A1900">// declare independent variables</font></i>
-          <b><font color="#000000">Independent</font></b><font color="#990000">(</font>A<font color="#990000">,</font> record_compare<font color="#990000">);</font>
+          <b><font color="#000000">Independent</font></b><font color="#990000">(</font>A<font color="#990000">,</font> abort_op_index<font color="#990000">,</font> record_compare<font color="#990000">);</font>
 
           <i><font color="#9A1900">// AD computation of the determinant</font></i>
           detA<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <b><font color="#000000">Det</font></b><font color="#990000">(</font>A<font color="#990000">);</font>
