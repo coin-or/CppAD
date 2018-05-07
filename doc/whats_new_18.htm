@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Changes and Additions to CppAD During 2018</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Changes and Additions to CppAD During 2018">
-<meta name="keywords" id="keywords" content=" changes additions to cppad during 2018 05-03 04-29 04-13 03-20 03-19 03-04 03-02 02-27 02-26 02-23 02-20 ">
+<meta name="keywords" id="keywords" content=" changes additions to cppad during 2018 05-04 05-03 04-29 04-13 03-20 03-19 03-04 03-02 02-27 02-26 02-23 02-20 ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -110,6 +110,7 @@ A:active { color : purple }
 <td>
 <select onchange='choose_current0(this)'>
 <option>Headings-&gt;</option>
+<option>05-04</option>
 <option>05-03</option>
 <option>04-29</option>
 <option>04-13</option>
@@ -134,6 +135,27 @@ A:active { color : purple }
 
 
 <center><b><big><big>Changes and Additions to CppAD During 2018</big></big></b></center>
+<br>
+<b><big><a name="05-04" id="05-04">05-04</a></big></b>
+<br>
+The comparison operations were changed on
+<a href="whats_new_15.htm#01-20" target="_top"><span style='white-space: nowrap'>2015-01-20</span></a>
+ when the
+<a href="independent.htm#abort_op_index" target="_top"><span style='white-space: nowrap'>abort_op_index</span></a>
+ option was added.
+This change caused a slow down CppAD
+because the <a href="compare.htm" target="_top"><span style='white-space: nowrap'>compare</span></a>
+ operators used to not be recorded when
+<code><font color="blue">NDEBUG</font></code> was defined.
+The <a href="independent.htm#record_compare" target="_top"><span style='white-space: nowrap'>record_compare</span></a>
+ option has been
+added so that one can obtain this better performance
+(when one does not need  the <a href="compare_change.htm" target="_top"><span style='white-space: nowrap'>compare_change</span></a>
+ function
+or the <a href="independent.htm#abort_op_index" target="_top"><span style='white-space: nowrap'>abort_op_index</span></a>
+ feature).
+
+<br>
 <br>
 <b><big><a name="05-03" id="05-03">05-03</a></big></b>
 <br>

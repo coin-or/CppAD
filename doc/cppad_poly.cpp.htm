@@ -153,7 +153,8 @@ See <a href="link_poly.htm" target="_top"><span style='white-space: nowrap'>link
      <font color="#FF0000">}</font>
      <i><font color="#9A1900">// --------------------------------------------------------------------</font></i>
      <i><font color="#9A1900">// optimization options: no conditional skips or compare operators</font></i>
-     std<font color="#990000">::</font><font color="#008080">string</font> options<font color="#990000">=</font><font color="#FF0000">"no_compare_op"</font><font color="#990000">;</font>
+     std<font color="#990000">::</font><font color="#008080">string</font> optimize_options <font color="#990000">=</font>
+          <font color="#FF0000">"no_conditional_skip no_compare_op no_print_for"</font><font color="#990000">;</font>
      <i><font color="#9A1900">// -----------------------------------------------------</font></i>
      <i><font color="#9A1900">// setup</font></i>
      <b><font color="#0000FF">typedef</font></b> CppAD<font color="#990000">::</font><font color="#008080">AD&lt;double&gt;</font>     ADScalar<font color="#990000">;</font>
@@ -181,6 +182,8 @@ See <a href="link_poly.htm" target="_top"><span style='white-space: nowrap'>link
      <i><font color="#9A1900">// AD function object</font></i>
      CppAD<font color="#990000">::</font><font color="#008080">ADFun&lt;double&gt;</font> f<font color="#990000">;</font>
 
+     <i><font color="#9A1900">// do not even record comparison operators</font></i>
+     <font color="#009900">bool</font> record_compare <font color="#990000">=</font> <b><font color="#0000FF">false</font></b><font color="#990000">;</font>
      <i><font color="#9A1900">// --------------------------------------------------------------------</font></i>
      <b><font color="#0000FF">if</font></b><font color="#990000">(</font> <font color="#990000">!</font> global_option<font color="#990000">[</font><font color="#FF0000">"onetape"</font><font color="#990000">]</font> <font color="#990000">)</font> <b><font color="#0000FF">while</font></b><font color="#990000">(</font>repeat<font color="#990000">--)</font>
      <font color="#FF0000">{</font>
@@ -189,7 +192,7 @@ See <a href="link_poly.htm" target="_top"><span style='white-space: nowrap'>link
           Z<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> z<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">];</font>
 
           <i><font color="#9A1900">// declare independent variables</font></i>
-          <b><font color="#000000">Independent</font></b><font color="#990000">(</font>Z<font color="#990000">);</font>
+          <b><font color="#000000">Independent</font></b><font color="#990000">(</font>Z<font color="#990000">,</font> record_compare<font color="#990000">);</font>
 
           <i><font color="#9A1900">// AD computation of the function value</font></i>
           P<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> CppAD<font color="#990000">::</font><b><font color="#000000">Poly</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">,</font> A<font color="#990000">,</font> Z<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]);</font>
@@ -198,7 +201,7 @@ See <a href="link_poly.htm" target="_top"><span style='white-space: nowrap'>link
           f<font color="#990000">.</font><b><font color="#000000">Dependent</font></b><font color="#990000">(</font>Z<font color="#990000">,</font> P<font color="#990000">);</font>
 
           <b><font color="#0000FF">if</font></b><font color="#990000">(</font> global_option<font color="#990000">[</font><font color="#FF0000">"optimize"</font><font color="#990000">]</font> <font color="#990000">)</font>
-               f<font color="#990000">.</font><b><font color="#000000">optimize</font></b><font color="#990000">(</font>options<font color="#990000">);</font>
+               f<font color="#990000">.</font><b><font color="#000000">optimize</font></b><font color="#990000">(</font>optimize_options<font color="#990000">);</font>
 
           <i><font color="#9A1900">// skip comparison operators</font></i>
           f<font color="#990000">.</font><b><font color="#000000">compare_change_count</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">);</font>
@@ -223,7 +226,7 @@ See <a href="link_poly.htm" target="_top"><span style='white-space: nowrap'>link
           Z<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> z<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">];</font>
 
           <i><font color="#9A1900">// declare independent variables</font></i>
-          <b><font color="#000000">Independent</font></b><font color="#990000">(</font>Z<font color="#990000">);</font>
+          <b><font color="#000000">Independent</font></b><font color="#990000">(</font>Z<font color="#990000">,</font> record_compare<font color="#990000">);</font>
 
           <i><font color="#9A1900">// AD computation of the function value</font></i>
           P<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> CppAD<font color="#990000">::</font><b><font color="#000000">Poly</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">,</font> A<font color="#990000">,</font> Z<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]);</font>
@@ -232,7 +235,7 @@ See <a href="link_poly.htm" target="_top"><span style='white-space: nowrap'>link
           f<font color="#990000">.</font><b><font color="#000000">Dependent</font></b><font color="#990000">(</font>Z<font color="#990000">,</font> P<font color="#990000">);</font>
 
           <b><font color="#0000FF">if</font></b><font color="#990000">(</font> global_option<font color="#990000">[</font><font color="#FF0000">"optimize"</font><font color="#990000">]</font> <font color="#990000">)</font>
-               f<font color="#990000">.</font><b><font color="#000000">optimize</font></b><font color="#990000">(</font>options<font color="#990000">);</font>
+               f<font color="#990000">.</font><b><font color="#000000">optimize</font></b><font color="#990000">(</font>optimize_options<font color="#990000">);</font>
 
           <i><font color="#9A1900">// skip comparison operators</font></i>
           f<font color="#990000">.</font><b><font color="#000000">compare_change_count</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">);</font>

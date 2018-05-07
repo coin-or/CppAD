@@ -151,9 +151,9 @@ See <a href="link_det_lu.htm" target="_top"><span style='white-space: nowrap'>li
           <font color="#FF0000">}</font>
      <font color="#FF0000">}</font>
      <i><font color="#9A1900">// --------------------------------------------------------------------</font></i>
-
-     <i><font color="#9A1900">// optimization options: no conditional skips or compare operators</font></i>
-     std<font color="#990000">::</font><font color="#008080">string</font> options<font color="#990000">=</font><font color="#FF0000">"no_compare_op"</font><font color="#990000">;</font>
+     <i><font color="#9A1900">// optimization options:</font></i>
+     std<font color="#990000">::</font><font color="#008080">string</font> optimize_options <font color="#990000">=</font>
+          <font color="#FF0000">"no_conditional_skip no_compare_op no_print_for"</font><font color="#990000">;</font>
      <i><font color="#9A1900">// -----------------------------------------------------</font></i>
      <i><font color="#9A1900">// setup</font></i>
      <b><font color="#0000FF">typedef</font></b> CppAD<font color="#990000">::</font><font color="#008080">AD&lt;double&gt;</font>           ADScalar<font color="#990000">;</font>
@@ -178,8 +178,11 @@ See <a href="link_det_lu.htm" target="_top"><span style='white-space: nowrap'>li
           <b><font color="#0000FF">for</font></b><font color="#990000">(</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> n<font color="#990000">;</font> i<font color="#990000">++)</font>
                A<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> matrix<font color="#990000">[</font>i<font color="#990000">];</font>
 
+          <i><font color="#9A1900">// do not even record comparison operators</font></i>
+          <font color="#009900">bool</font> record_compare <font color="#990000">=</font> <b><font color="#0000FF">false</font></b><font color="#990000">;</font>
+
           <i><font color="#9A1900">// declare independent variables</font></i>
-          <b><font color="#000000">Independent</font></b><font color="#990000">(</font>A<font color="#990000">);</font>
+          <b><font color="#000000">Independent</font></b><font color="#990000">(</font>A<font color="#990000">,</font> record_compare<font color="#990000">);</font>
 
           <i><font color="#9A1900">// AD computation of the determinant</font></i>
           detA<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <b><font color="#000000">Det</font></b><font color="#990000">(</font>A<font color="#990000">);</font>
@@ -187,10 +190,7 @@ See <a href="link_det_lu.htm" target="_top"><span style='white-space: nowrap'>li
           <i><font color="#9A1900">// create function object f : A -&gt; detA</font></i>
           f<font color="#990000">.</font><b><font color="#000000">Dependent</font></b><font color="#990000">(</font>A<font color="#990000">,</font> detA<font color="#990000">);</font>
           <b><font color="#0000FF">if</font></b><font color="#990000">(</font> global_option<font color="#990000">[</font><font color="#FF0000">"optimize"</font><font color="#990000">]</font> <font color="#990000">)</font>
-               f<font color="#990000">.</font><b><font color="#000000">optimize</font></b><font color="#990000">(</font>options<font color="#990000">);</font>
-
-          <i><font color="#9A1900">// skip comparison operators</font></i>
-          f<font color="#990000">.</font><b><font color="#000000">compare_change_count</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">);</font>
+               f<font color="#990000">.</font><b><font color="#000000">optimize</font></b><font color="#990000">(</font>optimize_options<font color="#990000">);</font>
 
           <i><font color="#9A1900">// evaluate and return gradient using reverse mode</font></i>
           f<font color="#990000">.</font><b><font color="#000000">Forward</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">,</font> matrix<font color="#990000">);</font>

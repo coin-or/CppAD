@@ -52,6 +52,7 @@ var list_current0 = [
 'independent.htm#Start Recording',
 'independent.htm#Stop Recording',
 'independent.htm#x',
+'independent.htm#record_compare',
 'independent.htm#abort_op_index',
 'independent.htm#VectorAD',
 'independent.htm#Parallel Mode',
