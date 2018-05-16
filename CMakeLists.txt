@@ -141,12 +141,12 @@ optional_package(colpack ${system_include} "colpack install prefix")
 #
 # ipopt_prefix
 optional_package(ipopt ${system_include} "ipopt install prefix")
-#
-# sacado_prefix
-optional_package(sacado ${system_include} "sacado install prefix")
 # -----------------------------------------------------------------------------
 # External package prefixes without warnings
 SET(system_include TRUE)
+#
+# sacado_prefix
+optional_package(sacado ${system_include} "sacado install prefix")
 #
 # eigen_prefix
 optional_package(eigen ${system_include} "eigen install prefix")
