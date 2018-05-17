@@ -22,6 +22,11 @@ $$
 
 $section Changes and Additions to CppAD During 2018$$
 
+$head 05-17$$
+The memory report for the CppAD matrix multiply speed test was changed
+to report the memory before clearing the atomic functions; see the end of
+$cref cppad_mat_mul.cpp$$.
+
 $head 05-04$$
 The comparison operations were changed on
 $cref/2015-01-20/whats_new_15/01-20/$$ when the

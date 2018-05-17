@@ -191,13 +191,14 @@ bool link_mat_mul(
 			dz = f.Reverse(1, w);
 		}
 	}
+	size_t thread                   = CppAD::thread_alloc::thread_num();
+	global_cppad_thread_alloc_inuse = CppAD::thread_alloc::inuse(thread);
 	// --------------------------------------------------------------------
 	// Free temporary work space (any future atomic_mat_mul constructors
 	// would create new temporary work space.)
 	CppAD::user_atomic<double>::clear();
+	// --------------------------------------------------------------------
 
-	size_t thread                   = CppAD::thread_alloc::thread_num();
-	global_cppad_thread_alloc_inuse = CppAD::thread_alloc::inuse(thread);
 	return true;
 }
 /* %$$
