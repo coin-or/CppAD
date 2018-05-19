@@ -59,6 +59,9 @@ echo_eval() {
 	eval $*
 }
 # ----------------------------------------------------------------------------
+echo "bin/run_cmake.sh --debug_none > /dev/null"
+bin/run_cmake.sh --debug_none > /dev/null
+#
 for name in cur new
 do
 	if [ "$name" == 'cur' ]
