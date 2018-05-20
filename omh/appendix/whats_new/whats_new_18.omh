@@ -17,10 +17,19 @@ $spell
 	Jacobian
 	rcv
 	subgraph
-	op
+	op_arg
+	enum
 $$
 
 $section Changes and Additions to CppAD During 2018$$
+
+$head 05-20$$
+The amount of memory used to store each operator was changed from
+the size of an enum type to the size of an $code unsigned char$$; i.e.,
+one byte.
+This changed $code CppAD::local::OpCode$$ to
+$code CPPAD_OP_CODE_TYPE$$ in the expression used to compute
+$cref/size_op_arg/seq_property/size_op_seq/$$.
 
 $head 05-17$$
 The memory report for the CppAD matrix multiply speed test was changed

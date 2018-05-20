@@ -242,23 +242,31 @@ AcoshOp  2                1  index of variable we are taking acosh of
 \endverbatim
 Note that the meaning of the arguments depends on the operator.
 */
-inline size_t NumArg( OpCode op)
+inline size_t NumArg(CPPAD_OP_CODE_TYPE op)
 {	CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL;
 
 # ifndef NDEBUG
 	// only do these checks once to save time
 	static bool first = true;
 	if( first )
-	{	CPPAD_ASSERT_UNKNOWN( size_t(NumberOp) + 1 ==
-			sizeof(NumArgTable) / sizeof(NumArgTable[0])
+	{	first = false;
+		CPPAD_ASSERT_UNKNOWN(
+			size_t(NumberOp)+1 == sizeof(NumArgTable) / sizeof(NumArgTable[0])
+		);
+		CPPAD_ASSERT_UNKNOWN( is_pod<CPPAD_OP_CODE_TYPE>() );
+		CPPAD_ASSERT_UNKNOWN(
+			size_t(NumberOp) < std::numeric_limits<CPPAD_OP_CODE_TYPE>::max()
 		);
 		first = false;
 	}
 	// do this check every time
 	CPPAD_ASSERT_UNKNOWN( size_t(op) < size_t(NumberOp) );
 # endif
-
+	//
 	return NumArgTable[op];
+}
+inline size_t NumArg(OpCode op)
+{	return NumArgTable[op];
 }
 
 // agreement with OpCode is checked by bin/check_op_code.sh
@@ -348,16 +356,11 @@ AcosOp   1                2  acos(x) and sqrt(1-x*x) are required for this op
 AcoshOp  2                2  acosh(x) and sqrt(x*x-1) are required for this op
 \endverbatim
 */
+inline size_t NumRes(CPPAD_OP_CODE_TYPE op)
+{	return NumResTable[op];
+}
 inline size_t NumRes(OpCode op)
-{	CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL;
-	// check ensuring conversion to size_t is as expected
-	CPPAD_ASSERT_UNKNOWN( size_t(NumberOp) + 1 ==
-		sizeof(NumResTable) / sizeof(NumResTable[0])
-	);
-	// this test ensures that all indices are within the table
-	CPPAD_ASSERT_UNKNOWN( size_t(op) < size_t(NumberOp) );
-
-	return NumResTable[op];
+{	return NumResTable[op];
 }
 
 

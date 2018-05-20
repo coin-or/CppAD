@@ -49,7 +49,7 @@ private:
 	size_t num_vecad_vec_rec_;
 
 	/// The operators in the recording.
-	pod_vector<OpCode> op_vec_;
+	pod_vector<CPPAD_OP_CODE_TYPE> op_vec_;
 
 	/// The operation argument indices in the recording
 	pod_vector<addr_t> arg_vec_;
@@ -410,7 +410,7 @@ public:
 		CPPAD_ASSERT_UNKNOWN( op2var_vec_.size() == 0  );
 		CPPAD_ASSERT_UNKNOWN( var2op_vec_.size() == 0  );
 		//
-		CPPAD_ASSERT_UNKNOWN( op_vec_[0] == BeginOp );
+		CPPAD_ASSERT_UNKNOWN( OpCode( op_vec_[0] ) == BeginOp );
 		CPPAD_ASSERT_NARG_NRES(BeginOp, 1, 1);
 		addr_t  num_op    = addr_t( op_vec_.size() );
 		addr_t  var_index = 0;
@@ -428,7 +428,7 @@ public:
 			op2var_vec_[i_op] = addr_t( num_var_rec_ );
 # endif
 		for(addr_t i_op = 0; i_op < num_op; ++i_op)
-		{	OpCode  op          = op_vec_[i_op];
+		{	OpCode  op          = OpCode( op_vec_[i_op] );
 			//
 			// index of first argument for this operator
 			op2arg_vec_[i_op]   = arg_index;
@@ -689,7 +689,7 @@ public:
 		CPPAD_ASSERT_UNKNOWN( par_vec_.size() == num_par_rec() );
 		CPPAD_ASSERT_UNKNOWN( text_vec_.size() == num_text_rec() );
 		CPPAD_ASSERT_UNKNOWN( vecad_ind_vec_.size() == num_vec_ind_rec() );
-		return op_vec_.size()        * sizeof(OpCode)
+		return op_vec_.size()        * sizeof(CPPAD_OP_CODE_TYPE)
 		     + arg_vec_.size()       * sizeof(addr_t)
 		     + par_vec_.size()       * sizeof(Base)
 		     + text_vec_.size()      * sizeof(char)
@@ -750,24 +750,24 @@ template <class Base>
 class player_const_iterator {
 private:
 	/// begin and end of operator vector
-	const OpCode* op_begin_;
-	const OpCode* op_end_;
+	const CPPAD_OP_CODE_TYPE* op_begin_;
+	const CPPAD_OP_CODE_TYPE* op_end_;
 
 	/// begin and end of argument vector
-	const addr_t* arg_begin_;
-	const addr_t* arg_end_;
+	const addr_t*             arg_begin_;
+	const addr_t*             arg_end_;
 
 	/// current operator
-	const OpCode* op_;
+	const CPPAD_OP_CODE_TYPE* op_;
 
 	/// first argument for current operator
-	const addr_t* arg_;
+	const addr_t*             arg_;
 
 	/// index of last result for current operator
-	size_t var_index_;
+	size_t                    var_index_;
 
 	/// number of variables in tape
-	size_t num_var_;
+	size_t                    num_var_;
 public:
 	/// assignment operator
 	void operator=(const player_const_iterator& rhs)
@@ -785,14 +785,14 @@ public:
 	/// Create an iterator starting either at beginning or end of tape
 	player_const_iterator(
 		/// number of variables in tape
-		size_t                    num_var    ,
+		size_t                                num_var    ,
 		/// operators in this player
-		const pod_vector<OpCode>* op_vec     ,
+		const pod_vector<CPPAD_OP_CODE_TYPE>* op_vec     ,
 		/// operator arguments for this player
-		const pod_vector<addr_t>* arg_vec    ,
+		const pod_vector<addr_t>* arg_vec                ,
 		/// operator index to start iterator at
 		/// must be 0 for BeginOp or op_vec->size()-1 for EndOp
-		size_t                    op_index   )
+		size_t                    op_index               )
 	:
 	op_begin_   ( op_vec->data() )                   ,
 	op_end_     ( op_vec->data() + op_vec->size() )  ,
@@ -952,16 +952,16 @@ public:
 		const addr_t*& arg        ,
 		size_t&        var_index  ) const
 	{	// op
-		op        = *op_;
+		op        = OpCode( *op_ );
 		CPPAD_ASSERT_UNKNOWN( op_begin_ <= op_ && op_ < op_end_ )
 		//
 		// arg
 		arg = arg_;
 		CPPAD_ASSERT_UNKNOWN( arg_begin_ <= arg );
-		CPPAD_ASSERT_UNKNOWN( arg + NumArg(*op_) <= arg_end_ );
+		CPPAD_ASSERT_UNKNOWN( arg + NumArg(op) <= arg_end_ );
 		//
 		// var_index
-		CPPAD_ASSERT_UNKNOWN( var_index_ < num_var_ || NumRes(*op_) == 0 );
+		CPPAD_ASSERT_UNKNOWN( var_index_ < num_var_ || NumRes(op) == 0 );
 		var_index = var_index_;
 	}
 	/// current operator index
