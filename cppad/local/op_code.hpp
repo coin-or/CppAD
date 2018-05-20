@@ -151,77 +151,76 @@ enum OpCode {
 /// specialize is_pod<OpCode> to be true
 template <> inline bool is_pod<OpCode>(void) { return true; }
 
-	// agreement with OpCode is checked by bin/check_op_code.sh
-	static const size_t NumArgTable[] = {
-		1, // AbsOp
-		1, // AcosOp
-		1, // AcoshOp
-		2, // AddpvOp
-		2, // AddvvOp
-		1, // AsinOp
-		1, // AsinhOp
-		1, // AtanOp
-		1, // AtanhOp
-		1, // BeginOp  offset first real argument to have index 1
-		6, // CExpOp
-		1, // CosOp
-		1, // CoshOp
-		0, // CSkipOp  (actually has a variable number of arguments, not zero)
-		0, // CSumOp   (actually has a variable number of arguments, not zero)
-		2, // DisOp
-		2, // DivpvOp
-		2, // DivvpOp
-		2, // DivvvOp
-		0, // EndOp
-		2, // EqpvOp
-		2, // EqvvOp
-		3, // ErfOp
-		1, // ExpOp
-		1, // Expm1Op
-		0, // InvOp
-		3, // LdpOp
-		3, // LdvOp
-		2, // LepvOp
-		2, // LevpOp
-		2, // LevvOp
-		1, // LogOp
-		1, // Log1pOp
-		2, // LtpvOp
-		2, // LtvpOp
-		2, // LtvvOp
-		2, // MulpvOp
-		2, // MulvvOp
-		2, // NepvOp
-		2, // NevvOp
-		1, // ParOp
-		2, // PowpvOp
-		2, // PowvpOp
-		2, // PowvvOp
-		5, // PriOp
-		1, // SignOp
-		1, // SinOp
-		1, // SinhOp
-		1, // SqrtOp
-		3, // StppOp
-		3, // StpvOp
-		3, // StvpOp
-		3, // StvvOp
-		2, // SubpvOp
-		2, // SubvpOp
-		2, // SubvvOp
-		1, // TanOp
-		1, // TanhOp
-		4, // UserOp
-		1, // UsrapOp
-		1, // UsravOp
-		1, // UsrrpOp
-		0, // UsrrvOp
-		2, // ZmulpvOp
-		2, // ZmulvpOp
-		2, // ZmulvvOp
-		0  // NumberOp not used
-	};
-
+// agreement with OpCode is checked by bin/check_op_code.sh
+static const size_t NumArgTable[] = {
+	1, // AbsOp
+	1, // AcosOp
+	1, // AcoshOp
+	2, // AddpvOp
+	2, // AddvvOp
+	1, // AsinOp
+	1, // AsinhOp
+	1, // AtanOp
+	1, // AtanhOp
+	1, // BeginOp  offset first real argument to have index 1
+	6, // CExpOp
+	1, // CosOp
+	1, // CoshOp
+	0, // CSkipOp  (actually has a variable number of arguments, not zero)
+	0, // CSumOp   (actually has a variable number of arguments, not zero)
+	2, // DisOp
+	2, // DivpvOp
+	2, // DivvpOp
+	2, // DivvvOp
+	0, // EndOp
+	2, // EqpvOp
+	2, // EqvvOp
+	3, // ErfOp
+	1, // ExpOp
+	1, // Expm1Op
+	0, // InvOp
+	3, // LdpOp
+	3, // LdvOp
+	2, // LepvOp
+	2, // LevpOp
+	2, // LevvOp
+	1, // LogOp
+	1, // Log1pOp
+	2, // LtpvOp
+	2, // LtvpOp
+	2, // LtvvOp
+	2, // MulpvOp
+	2, // MulvvOp
+	2, // NepvOp
+	2, // NevvOp
+	1, // ParOp
+	2, // PowpvOp
+	2, // PowvpOp
+	2, // PowvvOp
+	5, // PriOp
+	1, // SignOp
+	1, // SinOp
+	1, // SinhOp
+	1, // SqrtOp
+	3, // StppOp
+	3, // StpvOp
+	3, // StvpOp
+	3, // StvvOp
+	2, // SubpvOp
+	2, // SubvpOp
+	2, // SubvvOp
+	1, // TanOp
+	1, // TanhOp
+	4, // UserOp
+	1, // UsrapOp
+	1, // UsravOp
+	1, // UsrrpOp
+	0, // UsrrvOp
+	2, // ZmulpvOp
+	2, // ZmulvpOp
+	2, // ZmulvvOp
+	0  // NumberOp not used
+};
 /*!
 Number of arguments for a specified operator.
 
@@ -262,77 +261,76 @@ inline size_t NumArg( OpCode op)
 	return NumArgTable[op];
 }
 
-	// agreement with OpCode is checked by bin/check_op_code.sh
-	static const size_t NumResTable[] = {
-		1, // AbsOp
-		2, // AcosOp
-		2, // AcoshOp
-		1, // AddpvOp
-		1, // AddvvOp
-		2, // AsinOp
-		2, // AsinhOp
-		2, // AtanOp
-		2, // AtanhOp
-		1, // BeginOp  offsets first variable to have index one (not zero)
-		1, // CExpOp
-		2, // CosOp
-		2, // CoshOp
-		0, // CSkipOp
-		1, // CSumOp
-		1, // DisOp
-		1, // DivpvOp
-		1, // DivvpOp
-		1, // DivvvOp
-		0, // EndOp
-		0, // EqpvOp
-		0, // EqvvOp
-		5, // ErfOp
-		1, // ExpOp
-		1, // Expm1Op
-		1, // InvOp
-		1, // LdpOp
-		1, // LdvOp
-		0, // LepvOp
-		0, // LevpOp
-		0, // LevvOp
-		1, // LogOp
-		1, // Log1pOp
-		0, // LtpvOp
-		0, // LtvpOp
-		0, // LtvvOp
-		1, // MulpvOp
-		1, // MulvvOp
-		0, // NepvOp
-		0, // NevvOp
-		1, // ParOp
-		3, // PowpvOp
-		3, // PowvpOp
-		3, // PowvvOp
-		0, // PriOp
-		1, // SignOp
-		2, // SinOp
-		2, // SinhOp
-		1, // SqrtOp
-		0, // StppOp
-		0, // StpvOp
-		0, // StvpOp
-		0, // StvvOp
-		1, // SubpvOp
-		1, // SubvpOp
-		1, // SubvvOp
-		2, // TanOp
-		2, // TanhOp
-		0, // UserOp
-		0, // UsrapOp
-		0, // UsravOp
-		0, // UsrrpOp
-		1, // UsrrvOp
-		1, // ZmulpvOp
-		1, // ZmulvpOp
-		1, // ZmulvvOp
-		0  // NumberOp not used and avoids g++ 4.3.2 warn when pycppad builds
-	};
-
+// agreement with OpCode is checked by bin/check_op_code.sh
+static const size_t NumResTable[] = {
+	1, // AbsOp
+	2, // AcosOp
+	2, // AcoshOp
+	1, // AddpvOp
+	1, // AddvvOp
+	2, // AsinOp
+	2, // AsinhOp
+	2, // AtanOp
+	2, // AtanhOp
+	1, // BeginOp  offsets first variable to have index one (not zero)
+	1, // CExpOp
+	2, // CosOp
+	2, // CoshOp
+	0, // CSkipOp
+	1, // CSumOp
+	1, // DisOp
+	1, // DivpvOp
+	1, // DivvpOp
+	1, // DivvvOp
+	0, // EndOp
+	0, // EqpvOp
+	0, // EqvvOp
+	5, // ErfOp
+	1, // ExpOp
+	1, // Expm1Op
+	1, // InvOp
+	1, // LdpOp
+	1, // LdvOp
+	0, // LepvOp
+	0, // LevpOp
+	0, // LevvOp
+	1, // LogOp
+	1, // Log1pOp
+	0, // LtpvOp
+	0, // LtvpOp
+	0, // LtvvOp
+	1, // MulpvOp
+	1, // MulvvOp
+	0, // NepvOp
+	0, // NevvOp
+	1, // ParOp
+	3, // PowpvOp
+	3, // PowvpOp
+	3, // PowvvOp
+	0, // PriOp
+	1, // SignOp
+	2, // SinOp
+	2, // SinhOp
+	1, // SqrtOp
+	0, // StppOp
+	0, // StpvOp
+	0, // StvpOp
+	0, // StvvOp
+	1, // SubpvOp
+	1, // SubvpOp
+	1, // SubvvOp
+	2, // TanOp
+	2, // TanhOp
+	0, // UserOp
+	0, // UsrapOp
+	0, // UsravOp
+	0, // UsrrpOp
+	1, // UsrrvOp
+	1, // ZmulpvOp
+	1, // ZmulvpOp
+	1, // ZmulvvOp
+	0  // NumberOp not used and avoids g++ 4.3.2 warn when pycppad builds
+};
 /*!
 Number of variables resulting from the specified operation.
 
