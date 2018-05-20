@@ -79,7 +79,7 @@ bool link_poly(
 	// --------------------------------------------------------------------
 	// optimization options: no conditional skips or compare operators
 	std::string optimize_options =
-		"no_conditional_skip no_compare_op no_print_for";
+		"no_conditional_skip no_compare_op no_print_for_op";
 	// -----------------------------------------------------
 	// setup
 	typedef CppAD::AD<double>     ADScalar;

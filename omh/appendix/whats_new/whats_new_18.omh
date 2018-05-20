@@ -24,12 +24,19 @@ $$
 $section Changes and Additions to CppAD During 2018$$
 
 $head 05-20$$
+$list number$$
 The amount of memory used to store each operator was changed from
 the size of an enum type to the size of an $code unsigned char$$; i.e.,
 one byte.
 This changed $code CppAD::local::OpCode$$ to
 $code CPPAD_OP_CODE_TYPE$$ in the expression used to compute
 $cref/size_op_arg/seq_property/size_op_seq/$$.
+$lnext
+The was a bug the call to $code optimize$$ for the CppAD
+$cref speed_cppad$$ tests.
+To be specific $code no_print_for$$ was corrected to
+$cref/no_prior_for_op/optimize/options/no_print_for_op/$$.
+$lend
 
 $head 05-17$$
 The memory report for the CppAD matrix multiply speed test was changed

@@ -80,7 +80,7 @@ namespace {
 		//
 		// optimization options
 		std::string optimize_options =
-			"no_conditional_skip no_compare_op no_print_for";
+			"no_conditional_skip no_compare_op no_print_for_op";
 		//
 		// order of derivative in sparse_hes_fun
 		size_t order = 0;
