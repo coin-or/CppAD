@@ -145,11 +145,8 @@ enum OpCode {
 	ZmulvvOp, // azmul(variable, variable)
 	NumberOp  // number of operator codes (not an operator)
 };
-// Note that bin/check_op_code.sh assumes the pattern '^\tNumberOp$' occurs
+// Note that bin/check_op_code.sh assumes the pattern NumberOp occurs
 // at the end of this list and only at the end of this list.
-
-/// specialize is_pod<OpCode> to be true
-template <> inline bool is_pod<OpCode>(void) { return true; }
 
 /*!
 Number of arguments for a specified operator.
@@ -249,10 +246,16 @@ inline size_t NumArg( OpCode op)
 	// only do these checks once to save time
 	static bool first = true;
 	if( first )
-	{	CPPAD_ASSERT_UNKNOWN( size_t(NumberOp) + 1 ==
-			sizeof(NumArgTable) / sizeof(NumArgTable[0])
+	{	first = false;
+		// check that NumberOp is last value in op code table
+		CPPAD_ASSERT_UNKNOWN(
+			size_t(NumberOp) + 1 == sizeof(NumArgTable)/sizeof(NumArgTable[0])
 		);
-		first = false;
+		//Check that the type CPPAD_OP_CODE_TYPE as required by define.hpp
+		CPPAD_ASSERT_UNKNOWN( is_pod<CPPAD_OP_CODE_TYPE>() );
+		CPPAD_ASSERT_UNKNOWN(
+			size_t(NumberOp) < std::numeric_limits<CPPAD_OP_CODE_TYPE>::max()
+		);
 	}
 	// do this check every time
 	CPPAD_ASSERT_UNKNOWN( size_t(op) < size_t(NumberOp) );
