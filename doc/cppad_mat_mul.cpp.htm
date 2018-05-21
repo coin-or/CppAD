@@ -157,7 +157,7 @@ See <a href="link_mat_mul.htm" target="_top"><span style='white-space: nowrap'>l
      <i><font color="#9A1900">// --------------------------------------------------------------------</font></i>
      <i><font color="#9A1900">// optimization options: no conditional skips or compare operators</font></i>
      std<font color="#990000">::</font><font color="#008080">string</font> optimize_options <font color="#990000">=</font>
-          <font color="#FF0000">"no_conditional_skip no_compare_op no_print_for"</font><font color="#990000">;</font>
+          <font color="#FF0000">"no_conditional_skip no_compare_op no_print_for_op"</font><font color="#990000">;</font>
      <i><font color="#9A1900">// -----------------------------------------------------</font></i>
      <i><font color="#9A1900">// setup</font></i>
      <b><font color="#0000FF">typedef</font></b> CppAD<font color="#990000">::</font><font color="#008080">AD&lt;double&gt;</font>           ADScalar<font color="#990000">;</font>
@@ -270,13 +270,14 @@ See <a href="link_mat_mul.htm" target="_top"><span style='white-space: nowrap'>l
                dz <font color="#990000">=</font> f<font color="#990000">.</font><b><font color="#000000">Reverse</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">,</font> w<font color="#990000">);</font>
           <font color="#FF0000">}</font>
      <font color="#FF0000">}</font>
+     <font color="#008080">size_t</font> thread                   <font color="#990000">=</font> CppAD<font color="#990000">::</font>thread_alloc<font color="#990000">::</font><b><font color="#000000">thread_num</font></b><font color="#990000">();</font>
+     global_cppad_thread_alloc_inuse <font color="#990000">=</font> CppAD<font color="#990000">::</font>thread_alloc<font color="#990000">::</font><b><font color="#000000">inuse</font></b><font color="#990000">(</font>thread<font color="#990000">);</font>
      <i><font color="#9A1900">// --------------------------------------------------------------------</font></i>
      <i><font color="#9A1900">// Free temporary work space (any future atomic_mat_mul constructors</font></i>
      <i><font color="#9A1900">// would create new temporary work space.)</font></i>
      CppAD<font color="#990000">::</font>user_atomic<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;::</font><b><font color="#000000">clear</font></b><font color="#990000">();</font>
+     <i><font color="#9A1900">// --------------------------------------------------------------------</font></i>
 
-     <font color="#008080">size_t</font> thread                   <font color="#990000">=</font> CppAD<font color="#990000">::</font>thread_alloc<font color="#990000">::</font><b><font color="#000000">thread_num</font></b><font color="#990000">();</font>
-     global_cppad_thread_alloc_inuse <font color="#990000">=</font> CppAD<font color="#990000">::</font>thread_alloc<font color="#990000">::</font><b><font color="#000000">inuse</font></b><font color="#990000">(</font>thread<font color="#990000">);</font>
      <b><font color="#0000FF">return</font></b> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
 <font color="#FF0000">}</font></tt></pre>
 

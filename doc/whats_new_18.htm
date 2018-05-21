@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Changes and Additions to CppAD During 2018</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Changes and Additions to CppAD During 2018">
-<meta name="keywords" id="keywords" content=" changes additions to cppad during 2018 05-04 05-03 04-29 04-13 03-20 03-19 03-04 03-02 02-27 02-26 02-23 02-20 ">
+<meta name="keywords" id="keywords" content=" changes additions to cppad during 2018 05-20 05-17 05-04 05-03 04-29 04-13 03-20 03-19 03-04 03-02 02-27 02-26 02-23 02-20 ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -110,6 +110,8 @@ A:active { color : purple }
 <td>
 <select onchange='choose_current0(this)'>
 <option>Headings-&gt;</option>
+<option>05-20</option>
+<option>05-17</option>
 <option>05-04</option>
 <option>05-03</option>
 <option>04-29</option>
@@ -135,6 +137,38 @@ A:active { color : purple }
 
 
 <center><b><big><big>Changes and Additions to CppAD During 2018</big></big></b></center>
+<br>
+<b><big><a name="05-20" id="05-20">05-20</a></big></b>
+
+<ol type="1"><li>
+The amount of memory used to store each operator was changed from
+the size of an enum type to the size of an <code><font color="blue">unsigned char</font></code>; i.e.,
+one byte.
+This changed <code><font color="blue">CppAD::local::OpCode</font></code> to
+<code><font color="blue">CPPAD_OP_CODE_TYPE</font></code> in the expression used to compute
+<a href="seq_property.htm#size_op_seq" target="_top"><span style='white-space: nowrap'>size_op_arg</span></a>
+.
+</li><li>
+
+There was a bug in the call to <code><font color="blue">optimize</font></code> for the CppAD
+<a href="speed_cppad.htm" target="_top"><span style='white-space: nowrap'>speed_cppad</span></a>
+ tests.
+To be specific <code><font color="blue">no_print_for</font></code> was corrected to
+<a href="optimize.htm#options.no_print_for_op" target="_top"><span style='white-space: nowrap'>no_prior_for_op</span></a>
+.
+</li></ol>
+
+
+<br>
+<br>
+<b><big><a name="05-17" id="05-17">05-17</a></big></b>
+<br>
+The memory report for the CppAD matrix multiply speed test was changed
+to report the memory before clearing the atomic functions; see the end of
+<a href="cppad_mat_mul.cpp.htm" target="_top"><span style='white-space: nowrap'>cppad_mat_mul.cpp</span></a>
+.
+
+<br>
 <br>
 <b><big><a name="05-04" id="05-04">05-04</a></big></b>
 <br>
