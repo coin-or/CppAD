@@ -32,7 +32,7 @@ This changed $code CppAD::local::OpCode$$ to
 $code CPPAD_OP_CODE_TYPE$$ in the expression used to compute
 $cref/size_op_arg/seq_property/size_op_seq/$$.
 $lnext
-The was a bug the call to $code optimize$$ for the CppAD
+There was a bug in the call to $code optimize$$ for the CppAD
 $cref speed_cppad$$ tests.
 To be specific $code no_print_for$$ was corrected to
 $cref/no_prior_for_op/optimize/options/no_print_for_op/$$.
