@@ -758,7 +758,7 @@ private:
 	const addr_t*             arg_end_;
 
 	/// current operator
-	const CPPAD_OP_CODE_TYPE* op_;
+	const CPPAD_OP_CODE_TYPE* op_cur_;
 
 	/// first argument for current operator
 	const addr_t*             arg_;
@@ -776,7 +776,7 @@ public:
 		op_end_    = rhs.op_end_;
 		arg_begin_ = rhs.arg_begin_;
 		arg_end_   = rhs.arg_end_;
-		op_        = rhs.op_;
+		op_cur_    = rhs.op_cur_;
 		arg_       = rhs.arg_;
 		var_index_ = rhs.var_index_;
 		num_var_   = rhs.num_var_;
@@ -808,9 +808,9 @@ public:
 			arg_       = arg_vec->data();
 			//
 			// BeginOp
-			op_        = op_begin_;
-			CPPAD_ASSERT_UNKNOWN( *op_ == BeginOp );
-			CPPAD_ASSERT_NARG_NRES(*op_, 1, 1);
+			op_cur_    = op_begin_;
+			CPPAD_ASSERT_UNKNOWN( *op_cur_ == BeginOp );
+			CPPAD_ASSERT_NARG_NRES(*op_cur_, 1, 1);
 		}
 		else
 		{	CPPAD_ASSERT_UNKNOWN(op_index == op_vec->size()-1);
@@ -822,9 +822,9 @@ public:
 			arg_ = arg_vec->data() + arg_vec->size();
 			//
 			// EndOp
-			op_        = op_end_ - 1;
-			CPPAD_ASSERT_UNKNOWN( *op_ == EndOp );
-			CPPAD_ASSERT_NARG_NRES(*op_, 0, 0);
+			op_cur_    = op_end_ - 1;
+			CPPAD_ASSERT_UNKNOWN( *op_cur_ == EndOp );
+			CPPAD_ASSERT_NARG_NRES(*op_cur_, 0, 0);
 		}
 	}
 	/*!
@@ -833,13 +833,13 @@ public:
 	player_const_iterator<Base>& operator++(void)
 	{
 		// first argument for next operator
-		arg_ += NumArg(*op_);
+		arg_ += NumArg(*op_cur_);
 		//
 		// next operator
-		++op_;
+		++op_cur_;
 		//
 		// last result for next operator
-		var_index_ += NumRes(*op_);
+		var_index_ += NumRes(*op_cur_);
 		//
 		return *this;
 	}
@@ -849,11 +849,11 @@ public:
 	*/
 	void correct_before_increment(void)
 	{	// number of arguments for this operator depends on argument data
-		CPPAD_ASSERT_UNKNOWN( NumArg(*op_) == 0 );
+		CPPAD_ASSERT_UNKNOWN( NumArg(*op_cur_) == 0 );
 		const addr_t* arg = arg_;
 		//
 		// CSumOp
-		if( *op_ == CSumOp )
+		if( *op_cur_ == CSumOp )
 		{	//
 			CPPAD_ASSERT_UNKNOWN( arg + 1 < arg_end_ );
 			addr_t n_var      = arg[0] + arg[1];
@@ -865,7 +865,7 @@ public:
 		//
 		// CSkip
 		else
-		{	CPPAD_ASSERT_UNKNOWN( *op_ == CSkipOp );
+		{	CPPAD_ASSERT_UNKNOWN( *op_cur_ == CSkipOp );
 			//
 			CPPAD_ASSERT_UNKNOWN( arg + 5 < arg_end_ );
 			addr_t n_skip     = arg[4] + arg[5];
@@ -882,13 +882,13 @@ public:
 	player_const_iterator<Base>& operator--(void)
 	{	//
 		// last result for next operator
-		var_index_ -= NumRes(*op_);
+		var_index_ -= NumRes(*op_cur_);
 		//
 		// next operator
-		--op_;
+		--op_cur_;
 		//
 		// first argument for next operator
-		arg_ -= NumArg(*op_);
+		arg_ -= NumArg(*op_cur_);
 		//
 		return *this;
 	}
@@ -901,13 +901,13 @@ public:
 	*/
 	void correct_after_decrement(const addr_t*& arg)
 	{	// number of arguments for this operator depends on argument data
-		CPPAD_ASSERT_UNKNOWN( NumArg(*op_) == 0 );
+		CPPAD_ASSERT_UNKNOWN( NumArg(*op_cur_) == 0 );
 		//
 		// infromation for number of arguments is stored in arg_ - 1
 		CPPAD_ASSERT_UNKNOWN( arg_begin_ < arg_ );
 		//
 		// CSumOp
-		if( *op_ == CSumOp )
+		if( *op_cur_ == CSumOp )
 		{	// number of variables is stored in last argument
 			addr_t n_var = *(arg_ - 1);
 			//
@@ -919,7 +919,7 @@ public:
 		//
 		// CSkip
 		else
-		{	CPPAD_ASSERT_UNKNOWN( *op_ == CSkipOp );
+		{	CPPAD_ASSERT_UNKNOWN( *op_cur_ == CSkipOp );
 			//
 			// number to possibly skip is stored in last argument
 			addr_t n_skip = *(arg_ - 1);
@@ -930,7 +930,7 @@ public:
 			CPPAD_ASSERT_UNKNOWN( arg[4] + arg[5] == n_skip );
 		}
 		CPPAD_ASSERT_UNKNOWN( arg_begin_ <= arg );
-		CPPAD_ASSERT_UNKNOWN( arg + NumArg(*op_) <= arg_end_ );
+		CPPAD_ASSERT_UNKNOWN( arg + NumArg(*op_cur_) <= arg_end_ );
 	}
 	/*!
 	\brief
@@ -952,8 +952,8 @@ public:
 		const addr_t*& arg        ,
 		size_t&        var_index  ) const
 	{	// op
-		op        = OpCode( *op_ );
-		CPPAD_ASSERT_UNKNOWN( op_begin_ <= op_ && op_ < op_end_ )
+		op        = OpCode( *op_cur_ );
+		CPPAD_ASSERT_UNKNOWN( op_begin_ <= op_cur_ && op_cur_ < op_end_ )
 		//
 		// arg
 		arg = arg_;
@@ -966,7 +966,7 @@ public:
 	}
 	/// current operator index
 	size_t op_index(void)
-	{	return op_ - op_begin_; }
+	{	return op_cur_ - op_begin_; }
 	/*!
 	\brief
 	Unpack extra information when current op is a UserOp
