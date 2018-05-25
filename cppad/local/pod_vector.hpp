@@ -33,64 +33,118 @@ or destructors when Type is Plain Old Data (pod).
 template <class Type>
 class pod_vector {
 private:
-	/// number of elements currently in this vector
-	size_t length_;
-	//
+
 	/// maximum number of Type elements current allocation can hold
 	size_t capacity_;
-	//
+
+	/// number of elements currently in this vector
+	/// (byte_size_ <= byte_capacity_)
+	size_t length_;
+
 	/// pointer to the first type elements
-	/// (not defined and should not be used when capacity_ = 0)
+	/// (not defined and should not be used when byte_capacity_ = 0)
 	Type   *data_;
-	//
+
 	/// do not use the copy constructor
 	explicit pod_vector(const pod_vector& )
 	{	CPPAD_ASSERT_UNKNOWN(false); }
 public:
 	/// default constructor sets capacity_ = length_ = data_ = 0
 	pod_vector(void)
-	: length_(0), capacity_(0), data_(CPPAD_NULL)
+	: capacity_(0), length_(0), data_(CPPAD_NULL)
 	{	CPPAD_ASSERT_UNKNOWN( is_pod<size_t>() );
 	}
+
 	/// sizing constructor
 	pod_vector(
 		/// number of elements in this vector
-		size_t n
-	)   : length_(0), capacity_(0), data_(CPPAD_NULL)
+		size_t n )
+	: capacity_(0), length_(0), data_(CPPAD_NULL)
 	{	extend(n); }
-	// ----------------------------------------------------------------------
+
+
 	/// Destructor: returns allocated memory to thread_alloc;
-	/// see extend.  If this is not plain old data,
+	/// see extend and resize.  If this is not plain old data,
 	/// the destructor for each element is called.
 	~pod_vector(void)
 	{	if( capacity_ > 0 )
-		{	void* v_ptr = reinterpret_cast<void*>( data_ );
-			if( ! is_pod<Type>() )
+		{	if( ! is_pod<Type>() )
 			{	// call destructor for each element
 				for(size_t i = 0; i < capacity_; i++)
 					(data_ + i)->~Type();
 			}
+			void* v_ptr = reinterpret_cast<void*>( data_ );
 			thread_alloc::return_memory(v_ptr);
 		}
 	}
-	// ----------------------------------------------------------------------
+
 	/// current number of elements in this vector.
 	size_t size(void) const
 	{	return length_; }
-	//
+
 	/// current capacity (amount of allocated storage) for this vector.
 	size_t capacity(void) const
 	{	return capacity_; }
-	//
+
 	/// current data pointer is no longer valid after any of the following:
-	/// extend, erase, operator=, and ~pod_vector.
-	/// Take extreem care when using this function.
+	/// extend, resize, erase, clear, operator=, and ~pod_vector.
+	/// Take care when using this function.
 	Type* data(void)
 	{	return data_; }
-	//
+
 	/// const version of data pointer (see non-const documentation)
 	const Type* data(void) const
 	{	return data_; }
+
+	/// non-constant element access; i.e., we can change this element value
+	Type& operator[](
+		/// element index, must be less than length
+		size_t i
+	)
+	{	CPPAD_ASSERT_UNKNOWN( i < length_ );
+		return data_[i];
+	}
+
+	/// constant element access; i.e., we cannot change this element value
+	const Type& operator[](
+		/// element index, must be less than length
+		size_t i
+	) const
+	{	CPPAD_ASSERT_UNKNOWN( i < length_ );
+		return data_[i];
+	}
+
+	/// Remove all the elements from this vector but leave the capacity
+	// and data pointer as is.
+	void erase(void)
+	{	length_ = 0;
+		return;
+	}
+
+	/*!
+	Add an element to theh back of this vector
+
+	\param e
+	is the element we are adding to the back of the vector.
+	*/
+	void push_back(const Type& e)
+	{	size_t i = extend(1);
+		data_[i] = e;
+	}
+
+	/*!
+	Swap all properties of this vector with another.
+	This is useful when moving a vector that grows after it has reached
+	its final size (without copying every element).
+
+	\param other
+	is the other vector that we are swapping this vector with.
+	*/
+	void swap(pod_vector& other)
+	{	std::swap(capacity_, other.capacity_);
+		std::swap(length_,   other.length_);
+		std::swap(data_,     other.data_);
+	}
 	// ----------------------------------------------------------------------
 	/*!
 	Increase the number of elements the end of this vector
@@ -182,12 +236,12 @@ public:
 			//
 			// return old memory to available pool
 			if( capacity_ > 0 )
-			{	v_ptr = reinterpret_cast<void*>( data_ );
-				if( ! is_pod<Type>() )
+			{	if( ! is_pod<Type>() )
 				{	// call destructor for each old element
 					for(size_t i = 0; i < capacity_; i++)
 						(data_ + i)->~Type();
 				}
+				v_ptr = reinterpret_cast<void*>( data_ );
 				thread_alloc::return_memory(v_ptr);
 			}
 			//
@@ -208,45 +262,17 @@ public:
 		}
 	}
 	// ----------------------------------------------------------------------
-	/// non-constant element access; i.e., we can change this element value
-	Type& operator[](
-		/// element index, must be less than length
-		size_t i
-	)
-	{	CPPAD_ASSERT_UNKNOWN( i < length_ );
-		return data_[i];
-	}
-	// ----------------------------------------------------------------------
-	/// constant element access; i.e., we cannot change this element value
-	const Type& operator[](
-		/// element index, must be less than length
-		size_t i
-	) const
-	{	CPPAD_ASSERT_UNKNOWN( i < length_ );
-		return data_[i];
-	}
-	// ----------------------------------------------------------------------
-	/*!
-	Remove all the elements from this vector but leave the capacity
-	and data pointer as is.
-
-	*/
-	void erase(void)
-	{	length_ = 0;
-		return;
-	}
-	// ----------------------------------------------------------------------
 	/*!
 	Remove all the elements from this vector and free its memory.
 	*/
 	void clear(void)
 	{	if( capacity_ > 0 )
-		{	void* v_ptr = reinterpret_cast<void*>( data_ );
-			if( ! is_pod<Type>() )
+		{	if( ! is_pod<Type>() )
 			{	// call destructor for each element
 				for(size_t i = 0; i < capacity_; i++)
 					(data_ + i)->~Type();
 			}
+			void* v_ptr = reinterpret_cast<void*>( data_ );
 			thread_alloc::return_memory(v_ptr);
 		}
 		data_     = CPPAD_NULL;
@@ -267,12 +293,12 @@ public:
 		else
 		{	// free old memory and get new memory of sufficient length
 			if( capacity_ > 0 )
-			{	void* v_ptr = reinterpret_cast<void*>( data_ );
-				if( ! is_pod<Type>() )
+			{	if( ! is_pod<Type>() )
 				{	// call destructor for each element
 					for(size_t i = 0; i < capacity_; i++)
 						(data_ + i)->~Type();
 				}
+				void* v_ptr = reinterpret_cast<void*>( data_ );
 				thread_alloc::return_memory(v_ptr);
 			}
 			length_ = capacity_ = 0;
@@ -281,31 +307,6 @@ public:
 		CPPAD_ASSERT_UNKNOWN( length_   == x.length_ );
 		for(size_t i = 0; i < length_; i++)
 		{	data_[i] = x.data_[i]; }
-	}
-	// -----------------------------------------------------------------------
-	/*!
-	Swap all properties of this vector with another.
-	This is useful when moving a vector that grows after it has reached
-	its final size (without copying every element).
-
-	\param other
-	is the other vector that we are swapping this vector with.
-	*/
-	void swap(pod_vector& other)
-	{	std::swap(capacity_, other.capacity_);
-		std::swap(length_,   other.length_);
-		std::swap(data_,     other.data_);
-	}
-	// ------------------------------------------------------------------------
-	/*!
-	Add an element to theh back of this vector
-
-	\param e
-	is the element we are adding to the back of the vector.
-	*/
-	void push_back(const Type& e)
-	{	size_t i = extend(1);
-		data_[i] = e;
 	}
 };
 
