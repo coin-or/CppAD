@@ -2,7 +2,7 @@
 # define CPPAD_LOCAL_POD_VECTOR_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -59,16 +59,15 @@ public:
 	)   : length_(0), capacity_(0), data_(CPPAD_NULL)
 	{	extend(n); }
 	// ----------------------------------------------------------------------
-	/// Destructor: returns allocated memory to \c thread_alloc;
-	/// see \c extend.  If this is not plain old data,
+	/// Destructor: returns allocated memory to thread_alloc;
+	/// see extend.  If this is not plain old data,
 	/// the destructor for each element is called.
 	~pod_vector(void)
 	{	if( capacity_ > 0 )
 		{	void* v_ptr = reinterpret_cast<void*>( data_ );
 			if( ! is_pod<Type>() )
 			{	// call destructor for each element
-				size_t i;
-				for(i = 0; i < capacity_; i++)
+				for(size_t i = 0; i < capacity_; i++)
 					(data_ + i)->~Type();
 			}
 			thread_alloc::return_memory(v_ptr);
@@ -101,23 +100,22 @@ public:
 	is the number of elements to add to end of this vector.
 
 	\return
-	is the number  of elements in the vector before \c extend was extended.
+	is the number of elements in the vector before it was extended.
 	This is the index of the first new element added to the vector.
 
-	- If \c Type is plain old data, new elements are not initialized;
+	- If Type is plain old data, new elements are not initialized;
 	i.e., their constructor is not called. Otherwise, the constructor
 	is called for each new element.
 
 	- This and resize are the only routine that allocate memory for
-	\c pod_vector. They uses thread_alloc for this allocation, hence this
-	determines which thread corresponds to this vector (when in parallel mode).
+	pod_vector. They uses thread_alloc for this allocation.
 	*/
 	size_t extend(size_t n)
 	{	size_t old_length   = length_;
 		length_            += n;
 
 		// check if we can use current memory
-		if( capacity_ >= length_ )
+		if( length_ <= capacity_ )
 			return old_length;
 
 		// save more old information
@@ -130,30 +128,29 @@ public:
 		void* v_ptr = thread_alloc::get_memory(length_bytes, capacity_bytes);
 		capacity_   = capacity_bytes / sizeof(Type);
 		data_       = reinterpret_cast<Type*>(v_ptr);
-		CPPAD_ASSERT_UNKNOWN( length_ <= capacity_ );
 
-		size_t i;
 		if( ! is_pod<Type>() )
 		{	// call constructor for each new element
-			for(i = 0; i < capacity_; i++)
+			for(size_t i = 0; i < capacity_; i++)
 				new(data_ + i) Type();
 		}
 
-		// copy old data to new data
-		for(i = 0; i < old_length; i++)
+		// copy old data to new
+		for(size_t i = 0; i < old_length; i++)
 			data_[i] = old_data[i];
 
 		// return old memory to available pool
 		if( old_capacity > 0 )
-		{	v_ptr = reinterpret_cast<void*>( old_data );
-			if( ! is_pod<Type>() )
-			{	for(i = 0; i < old_capacity; i++)
+		{	if( ! is_pod<Type>() )
+			{	for(size_t i = 0; i < old_capacity; i++)
 					(old_data + i)->~Type();
 			}
+			v_ptr = reinterpret_cast<void*>( old_data );
 			thread_alloc::return_memory(v_ptr);
 		}
 
 		// return value for extend(n) is the old length
+		CPPAD_ASSERT_UNKNOWN( length_ <= capacity_ );
 		return old_length;
 	}
 	// ----------------------------------------------------------------------
@@ -169,13 +166,12 @@ public:
 	If n > capacity(), new memory is allocates and all the
 	data in the vector is lost.
 
-	- If \c Type is plain old data, new elements are not initialized;
+	- If  Type is plain old data, new elements are not initialized;
 	i.e., their constructor is not called. Otherwise, the constructor
 	is called for each new element.
 
 	- This and extend are the only routine that allocate memory for
-	\c pod_vector. They uses thread_alloc for this allocation, hence this
-	determines which thread corresponds to this vector (when in parallel mode).
+	pod_vector. They uses thread_alloc for this allocation.
 	*/
 	void resize(size_t n)
 	{	length_ = n;
@@ -248,8 +244,7 @@ public:
 		{	void* v_ptr = reinterpret_cast<void*>( data_ );
 			if( ! is_pod<Type>() )
 			{	// call destructor for each element
-				size_t i;
-				for(i = 0; i < capacity_; i++)
+				for(size_t i = 0; i < capacity_; i++)
 					(data_ + i)->~Type();
 			}
 			thread_alloc::return_memory(v_ptr);
@@ -264,8 +259,7 @@ public:
 		/// right hand size of the assingment operation
 		const pod_vector& x
 	)
-	{	size_t i;
-
+	{
 		if( x.length_ <= capacity_ )
 		{	// use existing allocation for this vector
 			length_ = x.length_;
@@ -276,7 +270,7 @@ public:
 			{	void* v_ptr = reinterpret_cast<void*>( data_ );
 				if( ! is_pod<Type>() )
 				{	// call destructor for each element
-					for(i = 0; i < capacity_; i++)
+					for(size_t i = 0; i < capacity_; i++)
 						(data_ + i)->~Type();
 				}
 				thread_alloc::return_memory(v_ptr);
@@ -285,7 +279,7 @@ public:
 			extend( x.length_ );
 		}
 		CPPAD_ASSERT_UNKNOWN( length_   == x.length_ );
-		for(i = 0; i < length_; i++)
+		for(size_t i = 0; i < length_; i++)
 		{	data_[i] = x.data_[i]; }
 	}
 	// -----------------------------------------------------------------------
