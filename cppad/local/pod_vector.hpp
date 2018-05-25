@@ -33,16 +33,14 @@ or destructors when Type is Plain Old Data (pod).
 template <class Type>
 class pod_vector {
 private:
-
 	/// maximum number of Type elements current allocation can hold
 	size_t capacity_;
 
 	/// number of elements currently in this vector
-	/// (byte_size_ <= byte_capacity_)
 	size_t length_;
 
 	/// pointer to the first type elements
-	/// (not defined and should not be used when byte_capacity_ = 0)
+	/// (not defined and should not be used when capacity_ = 0)
 	Type   *data_;
 
 	/// do not use the copy constructor
@@ -112,13 +110,6 @@ public:
 	) const
 	{	CPPAD_ASSERT_UNKNOWN( i < length_ );
 		return data_[i];
-	}
-
-	/// Remove all the elements from this vector but leave the capacity
-	// and data pointer as is.
-	void erase(void)
-	{	length_ = 0;
-		return;
 	}
 
 	/*!
