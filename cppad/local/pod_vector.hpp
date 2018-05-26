@@ -23,57 +23,41 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 namespace CppAD { namespace local { // BEGIN_CPPAD_LOCAL_NAMESPACE
 /*!
 \file pod_vector.hpp
-File used to define pod_vector classes
+File used to define pod_vector class
 */
-// ---------------------------------------------------------------------------
-/*!
-Base class used for pod_vector and pod_vector_maybe
-*/
-class pod_vector_base {
-// --------------------------------------------------------------------------
-private:
-	/// do not use the copy constructor
-	explicit pod_vector_base(const pod_vector_base& )
-	{	CPPAD_ASSERT_UNKNOWN(false); }
-
-// --------------------------------------------------------------------------
-protected:
-	/// maximum number of Type elements current allocation can hold
-	size_t capacity_;
-
-	/// number of elements currently in this vector
-	size_t length_;
-
-// --------------------------------------------------------------------------
-public:
-	/// default constructor sets capacity_ = length_ = 0
-	pod_vector_base(void)
-	: capacity_(0), length_(0)
-	{ }
-};
-
 // ---------------------------------------------------------------------------
 /*!
 A vector class with Type element that does not use element constructors
 or destructors when Type is Plain Old Data (pod).
 */
 template <class Type>
-class pod_vector : pod_vector_base {
+class pod_vector {
 private:
+	/// maximum number of Type elements current allocation can hold
+	size_t capacity_;
+
+	/// number of elements currently in this vector
+	size_t length_;
+
 	/// pointer to the first type elements
-	/// (not specified and should not be used when capacity_ = 0)
+	/// (not defined and should not be used when capacity_ = 0)
 	Type   *data_;
 
+	/// do not use the copy constructor
+	explicit pod_vector(const pod_vector& )
+	{	CPPAD_ASSERT_UNKNOWN(false); }
 public:
 	/// default constructor sets capacity_ = length_ = data_ = 0
-	pod_vector(void) : pod_vector_base(), data_(CPPAD_NULL)
-	{ }
+	pod_vector(void)
+	: capacity_(0), length_(0), data_(CPPAD_NULL)
+	{	CPPAD_ASSERT_UNKNOWN( is_pod<size_t>() );
+	}
 
 	/// sizing constructor
 	pod_vector(
 		/// number of elements in this vector
 		size_t n )
-	: pod_vector_base(), data_(CPPAD_NULL)
+	: capacity_(0), length_(0), data_(CPPAD_NULL)
 	{	extend(n); }
 
 
