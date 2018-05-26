@@ -1,6 +1,6 @@
 #! /bin/bash -e
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the
@@ -25,6 +25,7 @@ verbose='no'
 standard='c++11'
 profile_speed='no'
 clang='no'
+no_adolc='no'
 no_colpack='no'
 no_eigen='no'
 no_ipopt='no'
@@ -43,9 +44,11 @@ usage: bin/run_cmake.sh: \\
 	[--profile_speed] \\
 	[--callgrind] \\
 	[--clang ] \\
+	[--no_adolc] \\
 	[--no_colpack] \\
 	[--no_eigen] \\
 	[--no_ipopt] \\
+	[--no_sacado] \\
 	[--no_documentation] \\
 	[--<package>_vector] \\
 	[--debug_<which>]
@@ -78,6 +81,10 @@ EOF
 		clang='yes'
 		;;
 
+		--no_adolc)
+		no_adolc='yes'
+		;;
+
 		--no_colpack)
 		no_colpack='yes'
 		;;
@@ -88,6 +95,10 @@ EOF
 
 		--no_ipopt)
 		no_ipopt='yes'
+		;;
+
+		--no_sacado)
+		no_sacado='yes'
 		;;
 
 		--no_documentation)
@@ -128,6 +139,20 @@ EOF
 	esac
 	shift
 done
+# ---------------------------------------------------------------------------
+if [ "$standard" == 'c++98' ]
+then
+	if [ "$no_adolc" == 'no' ]
+	then
+		echo 'run_cmake.sh: --no_adolc required when --c++98 present'
+		exit 1
+	fi
+	if [ "$no_sacado" == 'no' ]
+	then
+		echo 'run_cmake.sh: --no_sacado required when --c++98 present'
+		exit 1
+	fi
+fi
 # ---------------------------------------------------------------------------
 if [ ! -e build ]
 then
@@ -183,7 +208,11 @@ then
 fi
 #
 # {package}_prefix
-package_list='fadbad adolc sacado'
+package_list='fadbad'
+if [ "$no_adolc" == 'no' ]
+then
+	package_list="$package_list adolc"
+fi
 if [ "$no_colpack" == 'no' ]
 then
 	package_list="$package_list colpack"
@@ -195,6 +224,10 @@ fi
 if [ "$no_ipopt" == 'no' ]
 then
 	package_list="$package_list ipopt"
+fi
+if [ "$no_sacado" == 'no' ]
+then
+	package_list="$package_list sacado"
 fi
 for package in $package_list
 do

@@ -77,10 +77,13 @@ fi
 # ---------------------------------------------------------------------------
 random_01 tarball
 echo "random_01_tarball = $random_01_tarball"
-random_01 debug_which
-echo "random_01_debug_which = $random_01_debug_which"
 random_01 standard
 echo "random_01_standard = $random_01_standard"
+if [ "$debug_all" == 'no' ]
+then
+	random_01 debug_which
+	echo "random_01_debug_which = $random_01_debug_which"
+fi
 # ---------------------------------------------------------------------------
 # Run automated checks for the form bin/check_*.sh with a few exceptions.
 # In addition, run ~bradbell/bin/check_copyright.sh.
@@ -129,7 +132,7 @@ else
 fi
 if [ "$random_01_standard" == '0' ]
 then
-	standard='--c++98'
+	standard='--c++98 --no_adolc --no_sacado'
 else
 	standard=''
 fi
