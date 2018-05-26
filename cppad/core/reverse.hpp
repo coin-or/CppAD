@@ -133,7 +133,7 @@ VectorBase ADFun<Base>::Reverse(size_t q, const VectorBase &w)
 	);
 
 	// initialize entire Partial matrix to zero
-	local::pod_vector<Base> Partial(num_var_tape_ * q);
+	local::pod_vector_maybe<Base> Partial(num_var_tape_ * q);
 	for(i = 0; i < num_var_tape_; i++)
 		for(j = 0; j < q; j++)
 			Partial[i * q + j] = zero;

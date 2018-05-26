@@ -2,7 +2,7 @@
 # define CPPAD_CORE_CAPACITY_ORDER_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -172,7 +172,7 @@ void ADFun<Base>::capacity_order(size_t c, size_t r)
 
 	// Allocate new taylor with requested number of orders and directions
 	size_t new_len   = ( (c-1)*r + 1 ) * num_var_tape_;
-	local::pod_vector<Base> new_taylor(new_len);
+	local::pod_vector_maybe<Base> new_taylor(new_len);
 
 	// number of orders to copy
 	size_t p = std::min(num_order_taylor_, c);

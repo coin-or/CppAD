@@ -31,32 +31,7 @@ move_list='
 move_sed='s|reverse_subgraph|subgraph_reverse|'
 #
 cat << EOF > junk.sed
-/CPPAD_ASSERT_UNKNOWN( *std::numeric_limits<addr_t>::max()/! b one
-#
-s|^\\(\\t*\\).*max() *\\(([>=]*\\)\$|\\1CPPAD_ASSERT_UNKNOWN(\\
-\\1\\tsize_t( std::numeric_limits<addr_t>::max() ) \\2|
-#
-s|^\\(\\t*\\).*max()*\\([^)]*\\));|\\1CPPAD_ASSERT_UNKNOWN(\\
-\\1\\tsize_t( std::numeric_limits<addr_t>::max() )\\2\\
-\\1);|
-b end
-#
-: one
-/CPPAD_ASSERT_KNOWN( *std::numeric_limits<addr_t>::max()/! b two
-#
-s|^\\(\\t*\\).*max() *\\([>=]*\\)\$|\\1CPPAD_ASSERT_KNOWN(\\
-\\1\\tsize_t( std::numeric_limits<addr_t>::max() ) \\2|
-#
-s|^\\(\\t*\\).*max()*\\([^)]*\\));|\\1CPPAD_ASSERT_KNOWN(\\
-\\1\\tsize_t( std::numeric_limits<addr_t>::max() )\\2\\
-\\1);|
-b end
-#
-: two
-/^\\t*std::numeric_limits<[a-z_]*>::max().*>/! b end
-s|std::numeric_limits<[a-z_]*>::max()|size_t( & )|
-#
-: end
+s|pod_vector<Base>|pod_vector_maybe<Base>|g
 EOF
 # -----------------------------------------------------------------------------
 if [ $0 != "bin/batch_edit.sh" ]

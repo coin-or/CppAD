@@ -122,8 +122,8 @@ private:
 
 	// place a VecAD object in the tape
 	size_t AddVec(
-		size_t                   length,
-		const pod_vector<Base>&  data
+		size_t                         length,
+		const pod_vector_maybe<Base>&  data
 	);
 
 public:
@@ -195,7 +195,7 @@ All these operates are preformed in \c Rec_, so we should
 move this routine from <tt>ADTape<Base></tt> to <tt>recorder<Base></tt>.
 */
 template <class Base>
-size_t ADTape<Base>::AddVec(size_t length, const pod_vector<Base>& data)
+size_t ADTape<Base>::AddVec(size_t length, const pod_vector_maybe<Base>& data)
 {	CPPAD_ASSERT_UNKNOWN( length > 0 );
 	size_t i;
 	size_t value_index;

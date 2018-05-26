@@ -112,7 +112,7 @@ private:
 	CppAD::vector<bool>   dep_parameter_;
 
 	/// results of the forward mode calculations
-	local::pod_vector<Base> taylor_;
+	local::pod_vector_maybe<Base> taylor_;
 
 	/// which operations can be conditionally skipped
 	/// Set during forward pass of order zero
@@ -140,7 +140,7 @@ private:
 	/// used for subgraph reverse mode calculations.
 	/// Declared here to avoid reallocation for each call to subgraph_reverse.
 	/// Not in subgraph_info_ because it depends on Base.
-	local::pod_vector<Base> subgraph_partial_;
+	local::pod_vector_maybe<Base> subgraph_partial_;
 
 // ------------------------------------------------------------
 // Private member functions

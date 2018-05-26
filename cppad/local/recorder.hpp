@@ -59,7 +59,7 @@ private:
 
 	/// The parameters in the recording.
 	/// Note that Base may not be plain old data, so use false in consructor.
-	pod_vector<Base> par_vec_;
+	pod_vector_maybe<Base> par_vec_;
 
 	/// Character strings ('\\0' terminated) in the recording.
 	pod_vector<char> text_vec_;

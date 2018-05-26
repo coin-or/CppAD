@@ -288,7 +288,7 @@ void ADFun<Base>::subgraph_jac_rev(
 	// nnz and row, column, and row_major vectors for subset
 	local::pod_vector<size_t> row_out;
 	local::pod_vector<size_t> col_out;
-	local::pod_vector<Base>   val_out;
+	local::pod_vector_maybe<Base>   val_out;
 	//
 	// initialize reverse mode computation on subgraphs
 	subgraph_reverse(select_domain);

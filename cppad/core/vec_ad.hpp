@@ -2,7 +2,7 @@
 # define CPPAD_CORE_VEC_AD_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -472,7 +472,7 @@ private:
 	const  size_t   length_;
 
 	/// elements of this vector
-	local::pod_vector<Base> data_;
+	local::pod_vector_maybe<Base> data_;
 
 	/// offset in cummulate vector corresponding to this object
 	size_t offset_;
