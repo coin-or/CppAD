@@ -147,6 +147,12 @@ do
 	if [ ! -d "$dir" ]
 	then
 		skip="$skip $package"
+	elif [ "$package" == 'adolc' ] || [ "$package" == 'sacado' ]
+	then
+		if [ "$standard" != '' ]
+		then
+			skip="$skip $package"
+		fi
 	fi
 done
 #
@@ -155,9 +161,12 @@ for option in onetape colpack optimize atomic memory boolsparsity
 do
 	echo_eval speed/cppad/speed_cppad correct 432 $option
 done
-echo_eval speed/adolc/speed_adolc correct         432 onetape
-echo_eval speed/adolc/speed_adolc sparse_jacobian 432 onetape colpack
-echo_eval speed/adolc/speed_adolc sparse_hessian  432 onetape colpack
+if echo "$skip_package" | grep 'adolc' > /dev/null
+then
+	echo_eval speed/adolc/speed_adolc correct         432 onetape
+	echo_eval speed/adolc/speed_adolc sparse_jacobian 432 onetape colpack
+	echo_eval speed/adolc/speed_adolc sparse_hessian  432 onetape colpack
+fi
 #
 # ----------------------------------------------------------------------------
 # extra multi_thread tests

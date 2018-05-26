@@ -19,9 +19,13 @@ $spell
 	subgraph
 	op_arg
 	enum
+	std
 $$
 
 $section Changes and Additions to CppAD During 2018$$
+
+$head 05-26$$
+Fix some warnings when testing with $code g++ -std=c++98$$.
 
 $head 05-20$$
 $list number$$

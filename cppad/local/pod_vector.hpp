@@ -29,7 +29,6 @@ File used to define pod_vector classes
 /*!
 Base class used for pod_vector and pod_vector_maybe
 */
-template <class Type>
 class pod_vector_base {
 // --------------------------------------------------------------------------
 private:
@@ -45,15 +44,11 @@ protected:
 	/// number of elements currently in this vector
 	size_t length_;
 
-	/// pointer to the first type elements
-	/// (not defined and should not be used when capacity_ = 0)
-	Type   *data_;
-
 // --------------------------------------------------------------------------
 public:
-	/// default constructor sets capacity_ = length_ = data_ = 0
+	/// default constructor sets capacity_ = length_ = 0
 	pod_vector_base(void)
-	: capacity_(0), length_(0), data_(CPPAD_NULL)
+	: capacity_(0), length_(0)
 	{ }
 };
 
@@ -63,17 +58,22 @@ A vector class with Type element that does not use element constructors
 or destructors when Type is Plain Old Data (pod).
 */
 template <class Type>
-class pod_vector : pod_vector_base<Type> {
+class pod_vector : pod_vector_base {
+private:
+	/// pointer to the first type elements
+	/// (not specified and should not be used when capacity_ = 0)
+	Type   *data_;
+
 public:
 	/// default constructor sets capacity_ = length_ = data_ = 0
-	pod_vector(void) : pod_vector_base<Type>()
+	pod_vector(void) : pod_vector_base(), data_(CPPAD_NULL)
 	{ }
 
 	/// sizing constructor
 	pod_vector(
 		/// number of elements in this vector
 		size_t n )
-	: pod_vector_base<Type>()
+	: pod_vector_base(), data_(CPPAD_NULL)
 	{	extend(n); }
 
 
@@ -81,42 +81,42 @@ public:
 	/// see extend and resize.  If this is not plain old data,
 	/// the destructor for each element is called.
 	~pod_vector(void)
-	{	if( this->capacity_ > 0 )
+	{	if( capacity_ > 0 )
 		{	if( ! is_pod<Type>() )
 			{	// call destructor for each element
-				for(size_t i = 0; i < this->capacity_; i++)
-					(this->data_ + i)->~Type();
+				for(size_t i = 0; i < capacity_; i++)
+					(data_ + i)->~Type();
 			}
-			void* v_ptr = reinterpret_cast<void*>( this->data_ );
+			void* v_ptr = reinterpret_cast<void*>( data_ );
 			thread_alloc::return_memory(v_ptr);
 		}
 	}
 
 	/// current number of elements in this vector.
 	size_t size(void) const
-	{	return this->length_; }
+	{	return length_; }
 
 	/// current capacity (amount of allocated storage) for this vector.
 	size_t capacity(void) const
-	{	return this->capacity_; }
+	{	return capacity_; }
 
 	/// current data pointer is no longer valid after any of the following:
 	/// extend, resize, erase, clear, operator=, and ~pod_vector.
 	/// Take care when using this function.
 	Type* data(void)
-	{	return this->data_; }
+	{	return data_; }
 
 	/// const version of data pointer (see non-const documentation)
 	const Type* data(void) const
-	{	return this->data_; }
+	{	return data_; }
 
 	/// non-constant element access; i.e., we can change this element value
 	Type& operator[](
 		/// element index, must be less than length
 		size_t i
 	)
-	{	CPPAD_ASSERT_UNKNOWN( i < this->length_ );
-		return this->data_[i];
+	{	CPPAD_ASSERT_UNKNOWN( i < length_ );
+		return data_[i];
 	}
 
 	/// constant element access; i.e., we cannot change this element value
@@ -124,8 +124,8 @@ public:
 		/// element index, must be less than length
 		size_t i
 	) const
-	{	CPPAD_ASSERT_UNKNOWN( i < this->length_ );
-		return this->data_[i];
+	{	CPPAD_ASSERT_UNKNOWN( i < length_ );
+		return data_[i];
 	}
 
 	/*!
@@ -135,8 +135,8 @@ public:
 	is the element we are adding to the back of the vector.
 	*/
 	void push_back(const Type& e)
-	{	size_t i       = extend(1);
-		this->data_[i] = e;
+	{	size_t i = extend(1);
+		data_[i] = e;
 	}
 
 	/*!
@@ -148,9 +148,9 @@ public:
 	is the other vector that we are swapping this vector with.
 	*/
 	void swap(pod_vector& other)
-	{	std::swap(this->capacity_, other.capacity_);
-		std::swap(this->length_,   other.length_);
-		std::swap(this->data_,     other.data_);
+	{	std::swap(capacity_, other.capacity_);
+		std::swap(length_,   other.length_);
+		std::swap(data_,     other.data_);
 	}
 	// ----------------------------------------------------------------------
 	/*!
@@ -172,33 +172,33 @@ public:
 	pod_vector. They uses thread_alloc for this allocation.
 	*/
 	size_t extend(size_t n)
-	{	size_t old_length   = this->length_;
-		this->length_      += n;
+	{	size_t old_length   = length_;
+		length_            += n;
 
 		// check if we can use current memory
-		if( this->length_ <= this->capacity_ )
+		if( length_ <= capacity_ )
 			return old_length;
 
 		// save more old information
-		size_t old_capacity = this->capacity_;
-		Type* old_data      = this->data_;
+		size_t old_capacity = capacity_;
+		Type* old_data      = data_;
 
 		// get new memory and set capacity
-		size_t length_bytes = this->length_ * sizeof(Type);
+		size_t length_bytes = length_ * sizeof(Type);
 		size_t capacity_bytes;
 		void* v_ptr = thread_alloc::get_memory(length_bytes, capacity_bytes);
-		this->capacity_   = capacity_bytes / sizeof(Type);
-		this->data_       = reinterpret_cast<Type*>(v_ptr);
+		capacity_   = capacity_bytes / sizeof(Type);
+		data_       = reinterpret_cast<Type*>(v_ptr);
 
 		if( ! is_pod<Type>() )
 		{	// call constructor for each new element
-			for(size_t i = 0; i < this->capacity_; i++)
-				new(this->data_ + i) Type();
+			for(size_t i = 0; i < capacity_; i++)
+				new(data_ + i) Type();
 		}
 
 		// copy old data to new
 		for(size_t i = 0; i < old_length; i++)
-			this->data_[i] = old_data[i];
+			data_[i] = old_data[i];
 
 		// return old memory to available pool
 		if( old_capacity > 0 )
@@ -211,7 +211,7 @@ public:
 		}
 
 		// return value for extend(n) is the old length
-		CPPAD_ASSERT_UNKNOWN( this->length_ <= this->capacity_ );
+		CPPAD_ASSERT_UNKNOWN( length_ <= capacity_ );
 		return old_length;
 	}
 	// ----------------------------------------------------------------------
@@ -235,36 +235,36 @@ public:
 	pod_vector. They uses thread_alloc for this allocation.
 	*/
 	void resize(size_t n)
-	{	this->length_ = n;
+	{	length_ = n;
 
 		// check if we must allocate new memory
-		if( this->capacity_ < this->length_ )
+		if( capacity_ < length_ )
 		{	void* v_ptr;
 			//
 			// return old memory to available pool
-			if( this->capacity_ > 0 )
+			if( capacity_ > 0 )
 			{	if( ! is_pod<Type>() )
 				{	// call destructor for each old element
-					for(size_t i = 0; i < this->capacity_; i++)
-						(this->data_ + i)->~Type();
+					for(size_t i = 0; i < capacity_; i++)
+						(data_ + i)->~Type();
 				}
-				v_ptr = reinterpret_cast<void*>( this->data_ );
+				v_ptr = reinterpret_cast<void*>( data_ );
 				thread_alloc::return_memory(v_ptr);
 			}
 			//
 			// get new memory and set capacity
-			size_t length_bytes = this->length_ * sizeof(Type);
+			size_t length_bytes = length_ * sizeof(Type);
 			size_t capacity_bytes;
 			v_ptr     = thread_alloc::get_memory(length_bytes, capacity_bytes);
-			this->capacity_ = capacity_bytes / sizeof(Type);
-			this->data_     = reinterpret_cast<Type*>(v_ptr);
+			capacity_ = capacity_bytes / sizeof(Type);
+			data_     = reinterpret_cast<Type*>(v_ptr);
 			//
-			CPPAD_ASSERT_UNKNOWN( this->length_ <= this->capacity_ );
+			CPPAD_ASSERT_UNKNOWN( length_ <= capacity_ );
 			//
 			if( ! is_pod<Type>() )
 			{	// call constructor for each new element
-				for(size_t i = 0; i < this->capacity_; i++)
-					new(this->data_ + i) Type();
+				for(size_t i = 0; i < capacity_; i++)
+					new(data_ + i) Type();
 			}
 		}
 	}
@@ -273,18 +273,18 @@ public:
 	Remove all the elements from this vector and free its memory.
 	*/
 	void clear(void)
-	{	if( this->capacity_ > 0 )
+	{	if( capacity_ > 0 )
 		{	if( ! is_pod<Type>() )
 			{	// call destructor for each element
-				for(size_t i = 0; i < this->capacity_; i++)
-					(this->data_ + i)->~Type();
+				for(size_t i = 0; i < capacity_; i++)
+					(data_ + i)->~Type();
 			}
-			void* v_ptr = reinterpret_cast<void*>( this->data_ );
+			void* v_ptr = reinterpret_cast<void*>( data_ );
 			thread_alloc::return_memory(v_ptr);
 		}
-		this->data_     = CPPAD_NULL;
-		this->capacity_ = 0;
-		this->length_   = 0;
+		data_     = CPPAD_NULL;
+		capacity_ = 0;
+		length_   = 0;
 	}
 	// -----------------------------------------------------------------------
 	/// vector assignment operator
@@ -293,27 +293,27 @@ public:
 		const pod_vector& x
 	)
 	{
-		if( x.length_ <= this->capacity_ )
+		if( x.length_ <= capacity_ )
 		{	// use existing allocation for this vector
-			this->length_ = x.length_;
+			length_ = x.length_;
 		}
 		else
 		{	// free old memory and get new memory of sufficient length
-			if( this->capacity_ > 0 )
+			if( capacity_ > 0 )
 			{	if( ! is_pod<Type>() )
 				{	// call destructor for each element
-					for(size_t i = 0; i < this->capacity_; i++)
-						(this->data_ + i)->~Type();
+					for(size_t i = 0; i < capacity_; i++)
+						(data_ + i)->~Type();
 				}
-				void* v_ptr = reinterpret_cast<void*>( this->data_ );
+				void* v_ptr = reinterpret_cast<void*>( data_ );
 				thread_alloc::return_memory(v_ptr);
 			}
-			this->length_ = this->capacity_ = 0;
+			length_ = capacity_ = 0;
 			extend( x.length_ );
 		}
-		CPPAD_ASSERT_UNKNOWN( this->length_   == x.length_ );
-		for(size_t i = 0; i < this->length_; i++)
-		{	this->data_[i] = x.data_[i]; }
+		CPPAD_ASSERT_UNKNOWN( length_   == x.length_ );
+		for(size_t i = 0; i < length_; i++)
+		{	data_[i] = x.data_[i]; }
 	}
 };
 
