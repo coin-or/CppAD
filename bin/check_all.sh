@@ -51,6 +51,11 @@ log_eval() {
 		exit 1
 	fi
 }
+random_01() {
+	set +e
+	eval random_01_$1="`expr $RANDOM % 2`"
+	set -e
+}
 if [ -e check_all.log ]
 then
 	echo "rm check_all.log"
@@ -58,14 +63,6 @@ then
 fi
 top_srcdir=`pwd`
 echo "top_srcdir = $top_srcdir"
-#
-if ! random_zero_one=`expr $RANDOM % 2`
-then
-	# expr exit status is 1 when the expression result is zero
-	# supress shell exit in this case
-	:
-fi
-echo "random_zero_one = $random_zero_one"
 # ---------------------------------------------------------------------------
 # circular shift program list and set program to first entry in list
 next_program() {
@@ -77,6 +74,13 @@ if [ -e "$HOME/prefix/cppad" ]
 then
 	echo_log_eval rm -r $HOME/prefix/cppad
 fi
+# ---------------------------------------------------------------------------
+random_01 tarball
+echo "random_01_tarball = $random_01_tarball"
+random_01 debug_which
+echo "random_01_debug_which = $random_01_debug_which"
+random_01 standard
+echo "random_01_standard = $random_01_standard"
 # ---------------------------------------------------------------------------
 # Run automated checks for the form bin/check_*.sh with a few exceptions.
 # In addition, run ~bradbell/bin/check_copyright.sh.
@@ -103,7 +107,7 @@ then
 	tarball="${list[0]}"
 	skip="$skip other_tarball"
 else
-	tarball="${list[$random_zero_one]}"
+	tarball="${list[$random_01_tarball]}"
 fi
 echo_log_eval rm -rf cppad-$version
 echo_log_eval tar -xzf $tarball
@@ -111,13 +115,25 @@ echo_log_eval cd cppad-$version
 # -----------------------------------------------------------------------------
 if [ "$debug_all" == 'yes' ]
 then
-	echo_log_eval bin/run_cmake.sh --cppad_vector --debug_all
-elif [ "$random_zero_one" == '0' ]
-then
-	echo_log_eval bin/run_cmake.sh --boost_vector --debug_odd
+	package_vector='--cppad_vector'
+	debug_which='--debug_all'
 else
-	echo_log_eval bin/run_cmake.sh --eigen_vector --debug_even
+	if [ "$random_01_debug_which" == '0' ]
+	then
+		package_vector='--boost_vector'
+		debug_which='--debug_even'
+	else
+		package_vector='--eigen_vector'
+		debug_which='--debug_odd'
+	fi
 fi
+if [ "$random_01_standard" == '0' ]
+then
+	standard='--c++98'
+else
+	standard=''
+fi
+echo_log_eval bin/run_cmake.sh $package_vector $debug_which $standard
 echo_log_eval cd build
 # -----------------------------------------------------------------------------
 echo_log_eval make check
