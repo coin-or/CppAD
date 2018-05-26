@@ -299,12 +299,14 @@ It increments by one for each call to PutVecInd..
 template <class Base>
 inline addr_t recorder<Base>::PutVecInd(size_t vec_ind)
 {	size_t i          = vecad_ind_vec_.extend(1);
-	CPPAD_ASSERT_UNKNOWN( std::numeric_limits<addr_t>::max() >= vec_ind );
+	CPPAD_ASSERT_UNKNOWN(
+		size_t( std::numeric_limits<addr_t>::max() ) >= vec_ind
+	);
 	vecad_ind_vec_[i] = addr_t( vec_ind );
 	CPPAD_ASSERT_UNKNOWN( vecad_ind_vec_.size() == i + 1 );
 
 	CPPAD_ASSERT_KNOWN(
-		std::numeric_limits<addr_t>::max() >= i,
+		size_t( std::numeric_limits<addr_t>::max() ) >= i,
 		"cppad_tape_addr_type maximum value has been exceeded"
 	);
 	return static_cast<addr_t>( i );
@@ -611,7 +613,7 @@ inline addr_t recorder<Base>::PutTxt(const char *text)
 	CPPAD_ASSERT_UNKNOWN( text_vec_.size() == i + n );
 
 	CPPAD_ASSERT_KNOWN(
-		std::numeric_limits<addr_t>::max() >= i,
+		size_t( std::numeric_limits<addr_t>::max() ) >= i,
 		"cppad_tape_addr_type maximum value has been exceeded"
 	);
 	//

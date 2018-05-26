@@ -219,7 +219,7 @@ void get_opt_op_info(
 	//
 	// initialize mapping from variable index to operator index
 	CPPAD_ASSERT_UNKNOWN(
-		std::numeric_limits<addr_t>::max() >= num_op
+		size_t( std::numeric_limits<addr_t>::max() ) >= num_op
 	);
 	//
 	// information set by forward_user

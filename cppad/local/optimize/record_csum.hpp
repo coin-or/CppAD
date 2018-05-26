@@ -213,7 +213,7 @@ struct_size_pair record_csum(
 	size_t n_sub = work.sub_stack.size();
 	//
 	CPPAD_ASSERT_UNKNOWN(
-		std::numeric_limits<addr_t>::max() >= n_add + n_sub
+		size_t( std::numeric_limits<addr_t>::max() ) >= n_add + n_sub
 	);
 	//
 	rec->PutArg( addr_t(n_add) );                // arg[0]

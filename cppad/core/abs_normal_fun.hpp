@@ -335,7 +335,7 @@ void ADFun<Base>::abs_normal_fun(ADFun<Base>& g, ADFun<Base>& a) const
 	//
 	// mapping from old variable index to new variable index
 	CPPAD_ASSERT_UNKNOWN(
-		std::numeric_limits<addr_t>::max() >= num_var
+		size_t( std::numeric_limits<addr_t>::max() ) >= num_var
 	);
 	CppAD::vector<addr_t> f2g_var(num_var);
 	for(i_var = 0; i_var < num_var; i_var++)

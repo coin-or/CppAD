@@ -2,7 +2,7 @@
 # define CPPAD_CORE_ATOMIC_BASE_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -562,7 +562,8 @@ void operator()(
 		// Operator that marks beginning of this atomic operation
 		CPPAD_ASSERT_UNKNOWN( local::NumRes(local::UserOp) == 0 );
 		CPPAD_ASSERT_UNKNOWN( local::NumArg(local::UserOp) == 4 );
-		CPPAD_ASSERT_KNOWN( std::numeric_limits<addr_t>::max() >=
+		CPPAD_ASSERT_KNOWN(
+			size_t( std::numeric_limits<addr_t>::max() ) >=
 			std::max( std::max( std::max(index_, id), n), m ),
 			"atomic_base: cppad_tape_addr_type maximum not large enough"
 		);
@@ -606,7 +607,8 @@ void operator()(
 		}
 
 		// Put a duplicate UserOp at end of UserOp sequence
-		CPPAD_ASSERT_KNOWN( std::numeric_limits<addr_t>::max() >=
+		CPPAD_ASSERT_KNOWN(
+			size_t( std::numeric_limits<addr_t>::max() ) >=
 			std::max( std::max( std::max(index_, id), n), m ),
 			"atomic_base: cppad_tape_addr_type maximum not large enough"
 		);

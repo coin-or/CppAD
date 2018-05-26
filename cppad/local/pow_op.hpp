@@ -2,7 +2,7 @@
 # define CPPAD_LOCAL_POW_OP_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -47,7 +47,9 @@ inline void forward_powvv_op(
 	CPPAD_ASSERT_UNKNOWN( NumRes(PowvvOp) == 3 );
 	CPPAD_ASSERT_UNKNOWN( q < cap_order );
 	CPPAD_ASSERT_UNKNOWN( p <= q );
-	CPPAD_ASSERT_UNKNOWN( std::numeric_limits<addr_t>::max() >= i_z );
+	CPPAD_ASSERT_UNKNOWN(
+		size_t( std::numeric_limits<addr_t>::max() ) >= i_z
+	);
 
 	// z_0 = log(x)
 	forward_log_op(p, q, i_z, arg[0], cap_order, taylor);
@@ -103,7 +105,9 @@ inline void forward_powvv_op_dir(
 	CPPAD_ASSERT_UNKNOWN( NumRes(PowvvOp) == 3 );
 	CPPAD_ASSERT_UNKNOWN( 0 < q );
 	CPPAD_ASSERT_UNKNOWN( q < cap_order );
-	CPPAD_ASSERT_UNKNOWN( std::numeric_limits<addr_t>::max() >= i_z );
+	CPPAD_ASSERT_UNKNOWN(
+		size_t( std::numeric_limits<addr_t>::max() ) >= i_z
+	);
 
 	// z_0 = log(x)
 	forward_log_op_dir(q, r, i_z, arg[0], cap_order, taylor);
@@ -192,7 +196,9 @@ inline void reverse_powvv_op(
 	CPPAD_ASSERT_UNKNOWN( NumRes(PowvvOp) == 3 );
 	CPPAD_ASSERT_UNKNOWN( d < cap_order );
 	CPPAD_ASSERT_UNKNOWN( d < nc_partial );
-	CPPAD_ASSERT_UNKNOWN( std::numeric_limits<addr_t>::max() >= i_z );
+	CPPAD_ASSERT_UNKNOWN(
+		size_t( std::numeric_limits<addr_t>::max() ) >= i_z
+	);
 
 	// z_2 = exp(z_1)
 	reverse_exp_op(
@@ -260,7 +266,7 @@ inline void forward_powpv_op(
 
 	// 2DO: remove requirement that i_z * cap_order <= max addr_t value
 	CPPAD_ASSERT_KNOWN(
-		std::numeric_limits<addr_t>::max() >= i_z * cap_order,
+		size_t( std::numeric_limits<addr_t>::max() ) >= i_z * cap_order,
 		"cppad_tape_addr_type maximum value has been exceeded\n"
 		"This is due to a kludge in the pow operation and should be fixed."
 	);
@@ -329,7 +335,7 @@ inline void forward_powpv_op_dir(
 
 	// 2DO: remove requirement i_z * num_taylor_per_var <= max addr_t value
 	CPPAD_ASSERT_KNOWN(
-		std::numeric_limits<addr_t>::max() >= i_z * num_taylor_per_var,
+		size_t( std::numeric_limits<addr_t>::max() ) >= i_z * num_taylor_per_var,
 		"cppad_tape_addr_type maximum value has been exceeded\n"
 		"This is due to a kludge in the pow operation and should be fixed."
 	);
@@ -435,7 +441,7 @@ inline void reverse_powpv_op(
 
 	// 2DO: remove requirement that i_z * cap_order <= max addr_t value
 	CPPAD_ASSERT_KNOWN(
-		std::numeric_limits<addr_t>::max() >= i_z * cap_order,
+		size_t( std::numeric_limits<addr_t>::max() ) >= i_z * cap_order,
 		"cppad_tape_addr_type maximum value has been exceeded\n"
 		"This is due to a kludge in the pow operation and should be fixed."
 	);
@@ -485,7 +491,9 @@ inline void forward_powvp_op(
 	CPPAD_ASSERT_UNKNOWN( NumRes(PowvpOp) == 3 );
 	CPPAD_ASSERT_UNKNOWN( q < cap_order );
 	CPPAD_ASSERT_UNKNOWN( p <= q );
-	CPPAD_ASSERT_UNKNOWN( std::numeric_limits<addr_t>::max() >= i_z );
+	CPPAD_ASSERT_UNKNOWN(
+		size_t( std::numeric_limits<addr_t>::max() ) >= i_z
+	);
 
 	// z_0 = log(x)
 	forward_log_op(p, q, i_z, arg[0], cap_order, taylor);
@@ -539,7 +547,9 @@ inline void forward_powvp_op_dir(
 	CPPAD_ASSERT_UNKNOWN( NumRes(PowvpOp) == 3 );
 	CPPAD_ASSERT_UNKNOWN( 0 < q );
 	CPPAD_ASSERT_UNKNOWN( q < cap_order );
-	CPPAD_ASSERT_UNKNOWN( std::numeric_limits<addr_t>::max() >= i_z );
+	CPPAD_ASSERT_UNKNOWN(
+		size_t( std::numeric_limits<addr_t>::max() ) >= i_z
+	);
 
 	// z_0 = log(x)
 	forward_log_op_dir(q, r, i_z, arg[0], cap_order, taylor);
@@ -634,7 +644,9 @@ inline void reverse_powvp_op(
 	CPPAD_ASSERT_UNKNOWN( NumRes(PowvpOp) == 3 );
 	CPPAD_ASSERT_UNKNOWN( d < cap_order );
 	CPPAD_ASSERT_UNKNOWN( d < nc_partial );
-	CPPAD_ASSERT_UNKNOWN( std::numeric_limits<addr_t>::max() >= i_z );
+	CPPAD_ASSERT_UNKNOWN(
+		size_t( std::numeric_limits<addr_t>::max() ) >= i_z
+	);
 
 	// z_2 = exp(z_1)
 	reverse_exp_op(

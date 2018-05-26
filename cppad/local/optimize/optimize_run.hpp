@@ -196,7 +196,7 @@ void optimize_run(
 
 	// initialize mapping from old VecAD index to new VecAD index
 	CPPAD_ASSERT_UNKNOWN(
-		std::numeric_limits<addr_t>::max() >= num_vecad_ind
+		size_t( std::numeric_limits<addr_t>::max() ) >= num_vecad_ind
 	);
 	CppAD::vector<addr_t> new_vecad_ind(num_vecad_ind);
 	for(size_t i = 0; i < num_vecad_ind; i++)
@@ -296,7 +296,7 @@ void optimize_run(
 		size_t         previous;
 		//
 		CPPAD_ASSERT_UNKNOWN(
-			std::numeric_limits<addr_t>::max() >= rec->num_op_rec()
+			size_t( std::numeric_limits<addr_t>::max() ) >= rec->num_op_rec()
 		);
 		//
 		if( opt_op_info[i_op].usage != yes_usage )
@@ -678,7 +678,7 @@ void optimize_run(
 			new_arg[0] = new_vecad_ind[ arg[0] ];
 			new_arg[1] = arg[1];
 			CPPAD_ASSERT_UNKNOWN(
-				std::numeric_limits<addr_t>::max() >= rec->num_load_op_rec()
+				size_t( std::numeric_limits<addr_t>::max() ) >= rec->num_load_op_rec()
 			);
 			new_arg[2] = addr_t( rec->num_load_op_rec() );
 			CPPAD_ASSERT_UNKNOWN( size_t(new_arg[0]) < num_vecad_ind );
@@ -697,7 +697,7 @@ void optimize_run(
 			new_arg[0] = new_vecad_ind[ arg[0] ];
 			new_arg[1] = old2new[ play->random_var2op(arg[1]) ].new_var;
 			CPPAD_ASSERT_UNKNOWN(
-				std::numeric_limits<addr_t>::max() >= rec->num_load_op_rec()
+				size_t( std::numeric_limits<addr_t>::max() ) >= rec->num_load_op_rec()
 			);
 			new_arg[2] = addr_t( rec->num_load_op_rec() );
 			CPPAD_ASSERT_UNKNOWN( size_t(new_arg[0]) < num_vecad_ind );

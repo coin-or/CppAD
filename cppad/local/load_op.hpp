@@ -2,7 +2,7 @@
 # define CPPAD_LOCAL_LOAD_OP_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -258,7 +258,9 @@ inline void forward_load_p_op_0(
 	CPPAD_ASSERT_UNKNOWN( NumRes(LdpOp) == 1 );
 	CPPAD_ASSERT_UNKNOWN( 0 < arg[0] );
 	CPPAD_ASSERT_UNKNOWN( size_t(arg[2]) < play->num_load_op_rec() );
-	CPPAD_ASSERT_UNKNOWN( std::numeric_limits<addr_t>::max() >= i_z );
+	CPPAD_ASSERT_UNKNOWN(
+		size_t( std::numeric_limits<addr_t>::max() ) >= i_z
+	);
 
 	// Because the index is a parameter, this indexing error should have been
 	// caught and reported to the user when the tape is recording.
@@ -302,7 +304,9 @@ inline void forward_load_v_op_0(
 	CPPAD_ASSERT_UNKNOWN( NumRes(LdvOp) == 1 );
 	CPPAD_ASSERT_UNKNOWN( 0 < arg[0] );
 	CPPAD_ASSERT_UNKNOWN( size_t(arg[2]) < play->num_load_op_rec() );
-	CPPAD_ASSERT_UNKNOWN( std::numeric_limits<addr_t>::max() >= i_z );
+	CPPAD_ASSERT_UNKNOWN(
+		size_t( std::numeric_limits<addr_t>::max() ) >= i_z
+	);
 
 	size_t i_vec = Integer( taylor[ arg[1] * cap_order + 0 ] );
 	CPPAD_ASSERT_KNOWN(

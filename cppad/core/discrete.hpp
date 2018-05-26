@@ -2,7 +2,7 @@
 # define CPPAD_CORE_DISCRETE_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -267,7 +267,7 @@ public:
 
 			// put operand addresses in the tape
 			CPPAD_ASSERT_KNOWN(
-				std::numeric_limits<addr_t>::max() >= index_,
+				size_t( std::numeric_limits<addr_t>::max() ) >= index_,
 				"discrete: cppad_tape_addr_type maximum not large enough"
 			);
 			tape->Rec_.PutArg(addr_t(index_), ax.taddr_);

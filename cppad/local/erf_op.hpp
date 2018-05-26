@@ -3,7 +3,7 @@
 # if CPPAD_USE_CPLUSPLUS_2011
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -107,7 +107,9 @@ inline void forward_erf_op(
 	CPPAD_ASSERT_UNKNOWN( NumRes(ErfOp) == 5 );
 	CPPAD_ASSERT_UNKNOWN( q < cap_order );
 	CPPAD_ASSERT_UNKNOWN( p <= q );
-	CPPAD_ASSERT_UNKNOWN( std::numeric_limits<addr_t>::max() >= i_z + 2 );
+	CPPAD_ASSERT_UNKNOWN(
+		size_t( std::numeric_limits<addr_t>::max() ) >= i_z + 2
+	);
 
 	// array used to pass parameter values for sub-operations
 	addr_t addr[2];
@@ -220,7 +222,9 @@ inline void forward_erf_op_0(
 	CPPAD_ASSERT_UNKNOWN( NumArg(ErfOp) == 3 );
 	CPPAD_ASSERT_UNKNOWN( NumRes(ErfOp) == 5 );
 	CPPAD_ASSERT_UNKNOWN( 0 < cap_order );
-	CPPAD_ASSERT_UNKNOWN( std::numeric_limits<addr_t>::max() >= i_z + 2 );
+	CPPAD_ASSERT_UNKNOWN(
+		size_t( std::numeric_limits<addr_t>::max() ) >= i_z + 2
+	);
 
 	// array used to pass parameter values for sub-operations
 	addr_t addr[2];
@@ -343,7 +347,9 @@ inline void forward_erf_op_dir(
 	CPPAD_ASSERT_UNKNOWN( NumRes(ErfOp) == 5 );
 	CPPAD_ASSERT_UNKNOWN( q < cap_order );
 	CPPAD_ASSERT_UNKNOWN( 0 < q );
-	CPPAD_ASSERT_UNKNOWN( std::numeric_limits<addr_t>::max() >= i_z + 2 );
+	CPPAD_ASSERT_UNKNOWN(
+		size_t( std::numeric_limits<addr_t>::max() ) >= i_z + 2
+	);
 
 	// array used to pass parameter values for sub-operations
 	addr_t addr[2];
@@ -490,7 +496,9 @@ inline void reverse_erf_op(
 	CPPAD_ASSERT_UNKNOWN( NumArg(ErfOp) == 3 );
 	CPPAD_ASSERT_UNKNOWN( NumRes(ErfOp) == 5 );
 	CPPAD_ASSERT_UNKNOWN( d < cap_order );
-	CPPAD_ASSERT_UNKNOWN( std::numeric_limits<addr_t>::max() >= i_z + 2 );
+	CPPAD_ASSERT_UNKNOWN(
+		size_t( std::numeric_limits<addr_t>::max() ) >= i_z + 2
+	);
 
 	// array used to pass parameter values for sub-operations
 	addr_t addr[2];
