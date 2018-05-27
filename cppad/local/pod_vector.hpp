@@ -28,7 +28,7 @@ File used to define pod_vector classes
 // ---------------------------------------------------------------------------
 /*!
 A vector class with that does not use element constructors or destructors
-(elements are Plain Old Data).
+(elements are Plain Old Data; i.e., is_pod<Type> must be true).
 */
 template <class Type>
 class pod_vector {
@@ -50,7 +50,7 @@ public:
 	/// default constructor sets capacity_ = length_ = data_ = 0
 	pod_vector(void)
 	: capacity_(0), length_(0), data_(CPPAD_NULL)
-	{	CPPAD_ASSERT_UNKNOWN( is_pod<size_t>() );
+	{	CPPAD_ASSERT_UNKNOWN( is_pod<Type>() );
 	}
 
 	/// sizing constructor
@@ -58,7 +58,9 @@ public:
 		/// number of elements in this vector
 		size_t n )
 	: capacity_(0), length_(0), data_(CPPAD_NULL)
-	{	extend(n); }
+	{	CPPAD_ASSERT_UNKNOWN( is_pod<Type>() );
+		extend(n);
+	}
 
 
 	/// Destructor: returns allocated memory to thread_alloc;
@@ -66,11 +68,7 @@ public:
 	/// the destructor for each element is called.
 	~pod_vector(void)
 	{	if( capacity_ > 0 )
-		{	if( ! is_pod<Type>() )
-			{	// call destructor for each element
-				for(size_t i = 0; i < capacity_; i++)
-					(data_ + i)->~Type();
-			}
+		{
 			void* v_ptr = reinterpret_cast<void*>( data_ );
 			thread_alloc::return_memory(v_ptr);
 		}
@@ -173,22 +171,13 @@ public:
 		capacity_   = capacity_bytes / sizeof(Type);
 		data_       = reinterpret_cast<Type*>(v_ptr);
 
-		if( ! is_pod<Type>() )
-		{	// call constructor for each new element
-			for(size_t i = 0; i < capacity_; i++)
-				new(data_ + i) Type();
-		}
-
 		// copy old data to new
 		for(size_t i = 0; i < old_length; i++)
 			data_[i] = old_data[i];
 
 		// return old memory to available pool
 		if( old_capacity > 0 )
-		{	if( ! is_pod<Type>() )
-			{	for(size_t i = 0; i < old_capacity; i++)
-					(old_data + i)->~Type();
-			}
+		{
 			v_ptr = reinterpret_cast<void*>( old_data );
 			thread_alloc::return_memory(v_ptr);
 		}
@@ -226,11 +215,7 @@ public:
 			//
 			// return old memory to available pool
 			if( capacity_ > 0 )
-			{	if( ! is_pod<Type>() )
-				{	// call destructor for each old element
-					for(size_t i = 0; i < capacity_; i++)
-						(data_ + i)->~Type();
-				}
+			{
 				v_ptr = reinterpret_cast<void*>( data_ );
 				thread_alloc::return_memory(v_ptr);
 			}
@@ -243,12 +228,6 @@ public:
 			data_     = reinterpret_cast<Type*>(v_ptr);
 			//
 			CPPAD_ASSERT_UNKNOWN( length_ <= capacity_ );
-			//
-			if( ! is_pod<Type>() )
-			{	// call constructor for each new element
-				for(size_t i = 0; i < capacity_; i++)
-					new(data_ + i) Type();
-			}
 		}
 	}
 	// ----------------------------------------------------------------------
@@ -257,11 +236,7 @@ public:
 	*/
 	void clear(void)
 	{	if( capacity_ > 0 )
-		{	if( ! is_pod<Type>() )
-			{	// call destructor for each element
-				for(size_t i = 0; i < capacity_; i++)
-					(data_ + i)->~Type();
-			}
+		{
 			void* v_ptr = reinterpret_cast<void*>( data_ );
 			thread_alloc::return_memory(v_ptr);
 		}
@@ -283,11 +258,7 @@ public:
 		else
 		{	// free old memory and get new memory of sufficient length
 			if( capacity_ > 0 )
-			{	if( ! is_pod<Type>() )
-				{	// call destructor for each element
-					for(size_t i = 0; i < capacity_; i++)
-						(data_ + i)->~Type();
-				}
+			{
 				void* v_ptr = reinterpret_cast<void*>( data_ );
 				thread_alloc::return_memory(v_ptr);
 			}

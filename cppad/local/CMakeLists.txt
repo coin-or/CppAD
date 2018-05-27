@@ -1,5 +1,5 @@
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the
@@ -21,7 +21,7 @@ SET(is_pod_default
 # -----------------------------------------------------------------------------
 # is_pod_specialize_98
 SET(is_pod_specialize_98 "")
-SET(pod_type_list "bool" "float" "double" "long double")
+SET(pod_type_list "bool" "char" "wchar_t" "float" "double" "long double")
 FOREACH(base_type "char" "short" "int" "long" )
 	FOREACH(sign signed unsigned)
 		add_to_list(pod_type_list "${sign} ${base_type}")
@@ -45,7 +45,7 @@ ENDFOREACH(pod_type)
 # -----------------------------------------------------------------------------
 # is_pod_specialize_11
 SET(is_pod_specialize_11 "")
-SET(pod_type_list "")
+SET(pod_type_list "char16_t" "char32_t")
 FOREACH(base_type "long long" )
 	FOREACH(sign signed unsigned)
 		add_to_list(pod_type_list "${sign} ${base_type}")
