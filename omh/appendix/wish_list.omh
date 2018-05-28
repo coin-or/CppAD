@@ -38,9 +38,55 @@ $spell
 	op
 	bool
 	vec
+	cmake
+	vcdir
+	vcvarsall
+	lic
+	tgz
+	mkdir
+	Makefiles
+	nmake
 $$
 
 $section The CppAD Wish List$$
+
+$head Windows Install$$
+The windows install procedures below have not been kept up to date.
+I would be good if someone took on the job of supporting an windows install.
+$list number$$
+Download and install the open source program
+$href%http://www.7-zip.org%$$.
+$lnext
+Download and install the Visual Studio Express; for example
+$href%http://www.microsoft.com/en-us/download/confirmation.aspx?id=44914
+	%Visual Studio 2013
+%$$
+$lnext
+In a command window, execute the following commands:
+$codei|
+	set PATH=|path_to_7_zip|;%PATH%
+	set PATH=|path_to_cmake|;%PATH%
+	set VCDIR=|path_to_vcdir|;%PATH%
+	call "%VCDIR%\vcvarsall.bat" x86
+|$$
+$lnext
+Use the following commands to extract the distribution from the
+compressed archive:
+$codei%
+	7z x cppad-%version%.%lic%.tgz
+	7z x cppad-%version%.%lic%.tar
+%$$
+The commands below are optional.
+They run the CppAD tests using the default $cref cmake$$ settings
+(except for the $cref/generator/cmake/generator/$$ option)
+$codei%
+	mkdir build
+	cd build
+	cmake -G "NMake Makefiles" ..
+	nmake check
+%$$
+$lend
+
 
 $head Dynamic Parameters$$
 It would be useful to have a means of changing the value of

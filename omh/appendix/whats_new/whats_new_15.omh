@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -356,11 +356,10 @@ have been modified to automatically skip installation
 when it has already been done.
 
 $head 09-21$$
-Improve discussion of
-$cref/windows download and testing
-	/download
-	/Windows File Extraction and Testing
-/$$.
+Improve discussion of windows download and testing.
+This discussion has since been removed; see
++$cref/05-20/whats_new_18/05-20/$$ in whats new for 2018.
+
 
 $head 09-20$$
 $list number$$

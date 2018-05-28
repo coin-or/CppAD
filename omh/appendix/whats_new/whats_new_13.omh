@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -103,9 +103,10 @@ $cref/cppad_deprecated/cmake/cppad_deprecated/$$
 option during the install procedure.
 
 $head 12-26$$
-Document fact that
-$cref/monthly versions/download/Monthly Versions/$$
+Document fact that monthly versions
 of the CppAD compressed tar file last till the end of the year.
+This is no longer the case; see
+$cref/05-20/whats_new_18/05-20/$$ in whats new for 2018.
 
 $head 12-24$$
 The interface to $cref/eigen/cppad_eigen.hpp/$$ defined a function

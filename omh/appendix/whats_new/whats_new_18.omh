@@ -24,6 +24,18 @@ $$
 
 $section Changes and Additions to CppAD During 2018$$
 
+$head 05-28$$
+$list number$$
+The Coin download page is not longer supporting monthly version.
+These versions are now supported by the
+$cref/source code control/download/Source Code Control/$$
+download procedure.
+$lnext
+The windows install procedures have not been kept up to date
+and so have been removed; see
+$cref/windows install/wish_list/Windows Install/$$ in the wish list.
+$lend
+
 $head 05-26$$
 Fix some warnings when testing with $code g++ -std=c++98$$.
 

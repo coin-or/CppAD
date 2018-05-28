@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -38,15 +38,6 @@ $codep
 $$
 This will build and run all of the tests that are support
 by your system and the $cref cmake$$ command options.
-
-$subhead Windows$$
-If you created $code nmake$$ makefiles, you will have
-to use $code nmake$$ instead of $code make$$ in the commands
-above and below; see
-$cref/windows file extraction and testing
-	/download
-	/Windows File Extraction and Testing
-/$$.
 
 $head Subsets of make check$$
 In unix, you can determine which subsets of $code make check$$ are available
