@@ -551,12 +551,12 @@ public:
 	\return
 	Is a pointer to this user atomic function.
 	*/
-	atomic_base<Base>* get_user_info(
+	static atomic_base<Base>* get_user_info(
 		const OpCode     op         ,
 		const addr_t*    op_arg     ,
 		size_t&          user_old   ,
 		size_t&          user_m     ,
-		size_t&          user_n     ) const
+		size_t&          user_n     )
 	{	atomic_base<Base>* user_atom;
 		//
 		CPPAD_ASSERT_UNKNOWN( op == UserOp );
