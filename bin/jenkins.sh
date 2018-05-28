@@ -1,6 +1,6 @@
 #! /bin/bash -e
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the
@@ -97,11 +97,13 @@ log_eval bin/get_ipopt.sh
 #	$trunk_dir/build/prefix/$libdir
 log_eval bin/get_colpack.sh
 # -------------------------------------------------------------------
+# Comment out because autotools build no longer supporing adolc
+#
 # Running bin/get_acolc.sh ensures its include files are in
 #	$trunk_dir/build/prefix/include/adolc
 # and library files in
 #	$trunk_dir/build/prefix/$libdir
-log_eval bin/get_adolc.sh
+# log_eval bin/get_adolc.sh
 # -------------------------------------------------------------------
 # something is wrong with the jenkins system or the autotools
 pushd build/prefix/$libdir
@@ -147,7 +149,6 @@ cat << EOF
 $trunk_dir/configure \\
 	$build_type \\
 	--disable-silent-rules \\
-	ADOLC_DIR="$trunk_dir/build/prefix" \\
 	EIGEN_DIR="$trunk_dir/build/prefix" \\
 	IPOPT_DIR="$trunk_dir/build/prefix" \\
 	FADBAD_DIR="$trunk_dir/build/prefix"  \\
@@ -157,7 +158,6 @@ $trunk_dir/configure \\
 EOF
 if ! $trunk_dir/configure $build_type \
 	--disable-silent-rules \
-	ADOLC_DIR="$trunk_dir/build/prefix" \
 	EIGEN_DIR="$trunk_dir/build/prefix" \
 	IPOPT_DIR="$trunk_dir/build/prefix" \
 	FADBAD_DIR="$trunk_dir/build/prefix" \
