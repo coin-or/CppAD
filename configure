@@ -5935,10 +5935,39 @@ cppad_cplusplus_201100_ok=0
 cppad_compiler_is_gnucxx=0
 
 
-is_pod_specialize_98="template <> inline bool is_pod<size_t>(void) { return true; }"
+is_pod_specialize_98="
+	template <> inline bool is_pod<bool>(void) { return true; }
+	template <> inline bool is_pod<char>(void) { return true; }
+	template <> inline bool is_pod<wchar_t>(void) { return true; }
+	template <> inline bool is_pod<float>(void) { return true; }
+	template <> inline bool is_pod<double>(void) { return true; }
+	template <> inline bool is_pod<long double>(void) { return true; }
+	template <> inline bool is_pod<signed char>(void) { return true; }
+	template <> inline bool is_pod<unsigned char>(void) { return true; }
+	template <> inline bool is_pod<signed short>(void) { return true; }
+	template <> inline bool is_pod<unsigned short>(void) { return true; }
+	template <> inline bool is_pod<signed int>(void) { return true; }
+	template <> inline bool is_pod<unsigned int>(void) { return true; }
+	template <> inline bool is_pod<signed long>(void) { return true; }
+	template <> inline bool is_pod<unsigned long>(void) { return true; }
+"
 
-
-is_pod_specialize_11=""
+is_pod_specialize_11="
+	template <> inline bool is_pod<bool>(void) { return true; }
+	template <> inline bool is_pod<char>(void) { return true; }
+	template <> inline bool is_pod<wchar_t>(void) { return true; }
+	template <> inline bool is_pod<float>(void) { return true; }
+	template <> inline bool is_pod<double>(void) { return true; }
+	template <> inline bool is_pod<long double>(void) { return true; }
+	template <> inline bool is_pod<signed char>(void) { return true; }
+	template <> inline bool is_pod<unsigned char>(void) { return true; }
+	template <> inline bool is_pod<signed short>(void) { return true; }
+	template <> inline bool is_pod<unsigned short>(void) { return true; }
+	template <> inline bool is_pod<signed int>(void) { return true; }
+	template <> inline bool is_pod<unsigned int>(void) { return true; }
+	template <> inline bool is_pod<signed long>(void) { return true; }
+	template <> inline bool is_pod<unsigned long>(void) { return true; }
+"
 
 
 if test "$stdvector$boostvector$eigenvector" = "nonono" ; then

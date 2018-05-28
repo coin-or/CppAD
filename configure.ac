@@ -502,12 +502,40 @@ AC_SUBST(cppad_cplusplus_201100_ok, 0)
 dnl autotools version does not check if using g++
 AC_SUBST(cppad_compiler_is_gnucxx, 0)
 
-dnl autotools version is slower because it does not specialize is_pod
+dnl autotools version sets is_pod without testing system, cmake is better
 dnl for the  Fundamental types
-AC_SUBST(is_pod_specialize_98,
-	"template <> inline bool is_pod<size_t>(void) { return true; }"
-)
-AC_SUBST(is_pod_specialize_11, "")
+AC_SUBST(is_pod_specialize_98,"
+	template <> inline bool is_pod<bool>(void) { return true; }
+	template <> inline bool is_pod<char>(void) { return true; }
+	template <> inline bool is_pod<wchar_t>(void) { return true; }
+	template <> inline bool is_pod<float>(void) { return true; }
+	template <> inline bool is_pod<double>(void) { return true; }
+	template <> inline bool is_pod<long double>(void) { return true; }
+	template <> inline bool is_pod<signed char>(void) { return true; }
+	template <> inline bool is_pod<unsigned char>(void) { return true; }
+	template <> inline bool is_pod<signed short>(void) { return true; }
+	template <> inline bool is_pod<unsigned short>(void) { return true; }
+	template <> inline bool is_pod<signed int>(void) { return true; }
+	template <> inline bool is_pod<unsigned int>(void) { return true; }
+	template <> inline bool is_pod<signed long>(void) { return true; }
+	template <> inline bool is_pod<unsigned long>(void) { return true; }
+" )
+AC_SUBST(is_pod_specialize_11, "
+	template <> inline bool is_pod<bool>(void) { return true; }
+	template <> inline bool is_pod<char>(void) { return true; }
+	template <> inline bool is_pod<wchar_t>(void) { return true; }
+	template <> inline bool is_pod<float>(void) { return true; }
+	template <> inline bool is_pod<double>(void) { return true; }
+	template <> inline bool is_pod<long double>(void) { return true; }
+	template <> inline bool is_pod<signed char>(void) { return true; }
+	template <> inline bool is_pod<unsigned char>(void) { return true; }
+	template <> inline bool is_pod<signed short>(void) { return true; }
+	template <> inline bool is_pod<unsigned short>(void) { return true; }
+	template <> inline bool is_pod<signed int>(void) { return true; }
+	template <> inline bool is_pod<unsigned int>(void) { return true; }
+	template <> inline bool is_pod<signed long>(void) { return true; }
+	template <> inline bool is_pod<unsigned long>(void) { return true; }
+" )
 
 dnl Determine which definition we are using for CPPAD_TESTVECTOR
 if test "$stdvector$boostvector$eigenvector" = "nonono" ; then
