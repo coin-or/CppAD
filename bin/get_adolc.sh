@@ -1,7 +1,7 @@
 #! /bin/bash -e
 # $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the
@@ -65,11 +65,7 @@ echo_eval() {
 }
 # -----------------------------------------------------------------------------
 echo 'Download adolc to build/external and install it to build/prefix'
-# ADOL-C verison 2.5.2 results in:
-#	adouble.h:74: error: 'badouble::badouble()' is protected
-# It apprears that newer versions of adolc assume some c++11 features; see
-#	http://list.coin-or.org/pipermail/adol-c/2014-December/001023.html
-version='2.4.1'
+version='2.6.3' # assumes c++11 or higher
 web_page="http://www.coin-or.org/download/source/ADOL-C"
 cppad_dir=`pwd`
 prefix="$cppad_dir/build/prefix"

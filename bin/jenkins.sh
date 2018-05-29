@@ -97,13 +97,11 @@ log_eval bin/get_ipopt.sh
 #	$trunk_dir/build/prefix/$libdir
 log_eval bin/get_colpack.sh
 # -------------------------------------------------------------------
-# Comment out because autotools build no longer supporing adolc
-#
 # Running bin/get_acolc.sh ensures its include files are in
 #	$trunk_dir/build/prefix/include/adolc
 # and library files in
 #	$trunk_dir/build/prefix/$libdir
-# log_eval bin/get_adolc.sh
+log_eval bin/get_adolc.sh
 # -------------------------------------------------------------------
 # something is wrong with the jenkins system or the autotools
 pushd build/prefix/$libdir
