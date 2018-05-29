@@ -2,7 +2,7 @@
 # define CPPAD_CORE_FOR_SPARSE_HES_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -216,7 +216,7 @@ void ADFun<Base>::ForSparseHesCase(
 	}
 	// compute forward Jacobiain sparsity pattern
 	bool dependency = false;
-	local::for_jac_sweep(
+	local::sweep::for_jac(
 		&play_,
 		dependency,
 		n,
@@ -235,7 +235,7 @@ void ADFun<Base>::ForSparseHesCase(
 	}
 	// compute reverse sparsity pattern for dependency analysis
 	// (note that we are only want non-zero derivatives not true dependency)
-	local::rev_jac_sweep(
+	local::sweep::rev_jac(
 		&play_,
 		dependency,
 		n,
@@ -247,7 +247,7 @@ void ADFun<Base>::ForSparseHesCase(
 	for_hes_pattern.resize(n+1, n+1);
 	//
 	// compute the Hessian sparsity patterns
-	local::for_hes_sweep(
+	local::sweep::for_hes(
 		&play_,
 		n,
 		num_var_tape_,
@@ -339,7 +339,7 @@ void ADFun<Base>::ForSparseHesCase(
 	}
 	// compute forward Jacobiain sparsity pattern
 	bool dependency = false;
-	local::for_jac_sweep(
+	local::sweep::for_jac(
 		&play_,
 		dependency,
 		n,
@@ -365,7 +365,7 @@ void ADFun<Base>::ForSparseHesCase(
 	//
 	// compute reverse sparsity pattern for dependency analysis
 	// (note that we are only want non-zero derivatives not true dependency)
-	local::rev_jac_sweep(
+	local::sweep::rev_jac(
 		&play_,
 		dependency,
 		n,
@@ -378,7 +378,7 @@ void ADFun<Base>::ForSparseHesCase(
 	for_hes_pattern.resize(n+1, n+1);
 	//
 	// compute the Hessian sparsity patterns
-	local::for_hes_sweep(
+	local::sweep::for_hes(
 		&play_,
 		n,
 		num_var_tape_,
@@ -523,7 +523,7 @@ void ADFun<Base>::ForSparseHesCheckpoint(
 	for_hes_pattern.resize(n+1, n+1);
 
 	// compute Hessian sparsity pattern for all variables
-	local::for_hes_sweep(
+	local::sweep::for_hes(
 		&play_,
 		n,
 		num_var_tape_,

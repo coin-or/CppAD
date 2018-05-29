@@ -1,5 +1,5 @@
-# ifndef CPPAD_LOCAL_FORWARD2SWEEP_HPP
-# define CPPAD_LOCAL_FORWARD2SWEEP_HPP
+# ifndef CPPAD_LOCAL_SWEEP_FORWARD2_HPP
+# define CPPAD_LOCAL_SWEEP_FORWARD2_HPP
 
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
@@ -12,9 +12,10 @@ A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 
-namespace CppAD { namespace local { // BEGIN_CPPAD_LOCAL_NAMESPACE
+// BEGIN_CPPAD_LOCAL_SWEEP_NAMESPACE
+namespace CppAD { namespace local { namespace sweep {
 /*!
-\file forward2sweep.hpp
+\file sweep/forward2.hpp
 Compute one Taylor coefficient for each direction requested.
 */
 
@@ -39,12 +40,12 @@ use with a different definition in other files.
 # endif
 
 /*!
-\def CPPAD_FORWARD2SWEEP_TRACE
+\def CPPAD_FORWARD2_TRACE
 This value is either zero or one.
 Zero is the normal operational value.
 If it is one, a trace of every forward2sweep computation is printed.
 */
-# define CPPAD_FORWARD2SWEEP_TRACE 0
+# define CPPAD_FORWARD2_TRACE 0
 
 /*!
 Compute multiple directions forward mode Taylor coefficients.
@@ -130,7 +131,7 @@ the instruction corresponds to a parameter (not variable).
 */
 
 template <class Base>
-void forward2sweep(
+void forward2(
 	const local::player<Base>*  play,
 	const size_t                q,
 	const size_t                r,
@@ -194,7 +195,7 @@ void forward2sweep(
 	const addr_t* arg;
 	itr.op_info(op, arg, i_var);
 	CPPAD_ASSERT_UNKNOWN( op == BeginOp );
-# if CPPAD_FORWARD2SWEEP_TRACE
+# if CPPAD_FORWARD2_TRACE
 	bool user_trace  = false;
 	std::cout << std::endl;
 	CppAD::vector<Base> Z_vec(q+1);
@@ -606,7 +607,7 @@ void forward2sweep(
 						}
 					}
 				}
-# if CPPAD_FORWARD2SWEEP_TRACE
+# if CPPAD_FORWARD2_TRACE
 				user_trace = true;
 # endif
 			}
@@ -709,7 +710,7 @@ void forward2sweep(
 			default:
 			CPPAD_ASSERT_UNKNOWN(0);
 		}
-# if CPPAD_FORWARD2SWEEP_TRACE
+# if CPPAD_FORWARD2_TRACE
 		if( user_trace )
 		{	user_trace = false;
 			CPPAD_ASSERT_UNKNOWN( op == UserOp );
@@ -784,8 +785,8 @@ void forward2sweep(
 }
 
 // preprocessor symbols that are local to this file
-# undef CPPAD_FORWARD2SWEEP_TRACE
+# undef CPPAD_FORWARD2_TRACE
 # undef CPPAD_ATOMIC_CALL
 
-} } // END_CPPAD_LOCAL_NAMESPACE
+} } } // END_CPPAD_LOCAL_SWEEP_NAMESPACE
 # endif

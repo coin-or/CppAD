@@ -1,5 +1,5 @@
-# ifndef CPPAD_LOCAL_REVERSE_SWEEP_HPP
-# define CPPAD_LOCAL_REVERSE_SWEEP_HPP
+# ifndef CPPAD_LOCAL_SWEEP_REVERSE_HPP
+# define CPPAD_LOCAL_SWEEP_REVERSE_HPP
 
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
@@ -13,9 +13,10 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 
 
-namespace CppAD { namespace local { // BEGIN_CPPAD_LOCAL_NAMESPACE
+// BEGIN_CPPAD_LOCAL_SWEEP_NAMESPACE
+namespace CppAD { namespace local { namespace sweep {
 /*!
-\file reverse_sweep.hpp
+\file sweep/reverse.hpp
 Compute derivatives of arbitrary order Taylor coefficients.
 */
 
@@ -40,12 +41,12 @@ use with a different definition in other files.
 # endif
 
 /*!
-\def CPPAD_REVERSE_SWEEP_TRACE
+\def CPPAD_REVERSE_TRACE
 This value is either zero or one.
 Zero is the normal operational value.
 If it is one, a trace of every reverse_sweep computation is printed.
 */
-# define CPPAD_REVERSE_SWEEP_TRACE 0
+# define CPPAD_REVERSE_TRACE 0
 
 /*!
 Compute derivative of arbitrary order forward mode Taylor coefficients.
@@ -183,7 +184,7 @@ and the next \a n operators are InvOp operations for the
 corresponding independent variables; see play->check_inv_op(n_ind).
 */
 template <class Base, class Iterator>
-void reverse_sweep(
+void reverse(
 	size_t                      d,
 	size_t                      n,
 	size_t                      numvar,
@@ -231,7 +232,7 @@ void reverse_sweep(
 	size_t j, ell;
 
 	// Initialize
-# if CPPAD_REVERSE_SWEEP_TRACE
+# if CPPAD_REVERSE_TRACE
 	std::cout << std::endl;
 # endif
 	OpCode        op;
@@ -269,7 +270,7 @@ void reverse_sweep(
 			(--play_itr).op_info(op, arg, i_var);
 			i_op = play_itr.op_index();
 		}
-# if CPPAD_REVERSE_SWEEP_TRACE
+# if CPPAD_REVERSE_TRACE
 		size_t       i_tmp  = i_var;
 		const Base*  Z_tmp  = Taylor + i_var * J;
 		const Base*  pZ_tmp = Partial + i_var * K;
@@ -809,15 +810,15 @@ void reverse_sweep(
 			CPPAD_ASSERT_UNKNOWN(false);
 		}
 	}
-# if CPPAD_REVERSE_SWEEP_TRACE
+# if CPPAD_REVERSE_TRACE
 	std::cout << std::endl;
 # endif
 }
 
-} } // END_CPPAD_LOCAL_NAMESPACE
+} } } // END_CPPAD_LOCAL_SWEEP_NAMESPACE
 
 // preprocessor symbols that are local to this file
-# undef CPPAD_REVERSE_SWEEP_TRACE
+# undef CPPAD_REVERSE_TRACE
 # undef CPPAD_ATOMIC_CALL
 
 # endif

@@ -1,5 +1,5 @@
-# ifndef CPPAD_LOCAL_FOR_HES_SWEEP_HPP
-# define CPPAD_LOCAL_FOR_HES_SWEEP_HPP
+# ifndef CPPAD_LOCAL_SWEEP_FOR_HES_HPP
+# define CPPAD_LOCAL_SWEEP_FOR_HES_HPP
 
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
@@ -12,19 +12,20 @@ A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 
-namespace CppAD { namespace local { // BEGIN_CPPAD_LOCAL_NAMESPACE
+// BEGIN_CPPAD_LOCAL_SWEEP_NAMESPACE
+namespace CppAD { namespace local { namespace sweep {
 /*!
-\file for_hes_sweep.hpp
+\file sweep/for_hes.hpp
 Compute Forward mode Hessian sparsity patterns.
 */
 
 /*!
-\def CPPAD_FOR_HES_SWEEP_TRACE
+\def CPPAD_FOR_HES_TRACE
 This value is either zero or one.
 Zero is the normal operational value.
 If it is one, a trace of every rev_hes_sweep computation is printed.
 */
-# define CPPAD_FOR_HES_SWEEP_TRACE 0
+# define CPPAD_FOR_HES_TRACE 0
 
 /*!
 Given the forward Jacobian sparsity pattern for all the variables,
@@ -89,7 +90,7 @@ in \a for_hes_sparse.
 */
 
 template <class Base, class Vector_set>
-void for_hes_sweep(
+void for_hes(
 	const local::player<Base>* play,
 	size_t                     n,
 	size_t                     numvar,
@@ -173,7 +174,7 @@ void for_hes_sweep(
 	const addr_t* arg;
 	itr.op_info(op, arg, i_var);
 	CPPAD_ASSERT_UNKNOWN( op == BeginOp );
-# if CPPAD_FOR_HES_SWEEP_TRACE
+# if CPPAD_FOR_HES_TRACE
 	vector<size_t> user_usrrp; // parameter index for UsrrpOp operators
 	std::cout << std::endl;
 	CppAD::vectorBool zf_value(limit);
@@ -365,7 +366,7 @@ void for_hes_sweep(
 				user_x.resize( user_n );
 				user_ix.resize( user_n );
 				user_iy.resize( user_m );
-# if CPPAD_FOR_HES_SWEEP_TRACE
+# if CPPAD_FOR_HES_TRACE
 				user_usrrp.resize( user_m );
 # endif
 			}
@@ -421,7 +422,7 @@ void for_hes_sweep(
 			CPPAD_ASSERT_UNKNOWN( size_t( arg[0] ) < num_par );
 			//
 			user_iy[user_i] = 0; // special variable used for parameters
-# if CPPAD_FOR_HES_SWEEP_TRACE
+# if CPPAD_FOR_HES_TRACE
 			// remember argument for delayed tracing
 			user_usrrp[user_i] = arg[0];
 # endif
@@ -457,7 +458,7 @@ void for_hes_sweep(
 			default:
 			CPPAD_ASSERT_UNKNOWN(0);
 		}
-# if CPPAD_FOR_HES_SWEEP_TRACE
+# if CPPAD_FOR_HES_TRACE
 		typedef typename Vector_set::const_iterator const_iterator;
 		if( op == UserOp && user_state == start_user )
 		{	// print operators that have been delayed
@@ -560,9 +561,9 @@ void for_hes_sweep(
 
 	return;
 }
-} } // END_CPPAD_LOCAL_NAMESPACE
+} } } // END_CPPAD_LOCAL_SWEEP_NAMESPACE
 
 // preprocessor symbols that are local to this file
-# undef CPPAD_FOR_HES_SWEEP_TRACE
+# undef CPPAD_FOR_HES_TRACE
 
 # endif

@@ -738,14 +738,14 @@ public:
 } // END_CPPAD_NAMESPACE
 
 // non-user interfaces
-# include <cppad/local/forward0sweep.hpp>
-# include <cppad/local/forward1sweep.hpp>
-# include <cppad/local/forward2sweep.hpp>
-# include <cppad/local/reverse_sweep.hpp>
-# include <cppad/local/for_jac_sweep.hpp>
-# include <cppad/local/rev_jac_sweep.hpp>
-# include <cppad/local/rev_hes_sweep.hpp>
-# include <cppad/local/for_hes_sweep.hpp>
+# include <cppad/local/sweep/forward0.hpp>
+# include <cppad/local/sweep/forward1.hpp>
+# include <cppad/local/sweep/forward2.hpp>
+# include <cppad/local/sweep/reverse.hpp>
+# include <cppad/local/sweep/for_jac.hpp>
+# include <cppad/local/sweep/rev_jac.hpp>
+# include <cppad/local/sweep/rev_hes.hpp>
+# include <cppad/local/sweep/for_hes.hpp>
 
 // user interfaces
 # include <cppad/core/parallel_ad.hpp>

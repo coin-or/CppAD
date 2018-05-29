@@ -238,11 +238,11 @@ nobase_myinclude_HEADERS =  \
 	cppad/local/erf_op.hpp \
 	cppad/local/expm1_op.hpp \
 	cppad/local/exp_op.hpp \
-	cppad/local/for_hes_sweep.hpp \
-	cppad/local/for_jac_sweep.hpp \
-	cppad/local/forward0sweep.hpp \
-	cppad/local/forward1sweep.hpp \
-	cppad/local/forward2sweep.hpp \
+	cppad/local/sweep/for_hes.hpp \
+	cppad/local/sweep/for_jac.hpp \
+	cppad/local/sweep/forward0.hpp \
+	cppad/local/sweep/forward1.hpp \
+	cppad/local/sweep/forward2.hpp \
 	cppad/local/hash_code.hpp \
 	cppad/local/independent.hpp \
 	cppad/local/load_op.hpp \
@@ -273,9 +273,9 @@ nobase_myinclude_HEADERS =  \
 	cppad/local/print_op.hpp \
 	cppad/local/prototype_op.hpp \
 	cppad/local/recorder.hpp \
-	cppad/local/reverse_sweep.hpp \
-	cppad/local/rev_hes_sweep.hpp \
-	cppad/local/rev_jac_sweep.hpp \
+	cppad/local/sweep/reverse.hpp \
+	cppad/local/sweep/rev_hes.hpp \
+	cppad/local/sweep/rev_jac.hpp \
 	cppad/local/set_get_in_parallel.hpp \
 	cppad/local/sign_op.hpp \
 	cppad/local/sinh_op.hpp \

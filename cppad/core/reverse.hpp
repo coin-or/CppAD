@@ -17,7 +17,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 /*!
-\file reverse.hpp
+\file core/reverse.hpp
 Compute derivatives using reverse mode.
 */
 
@@ -155,7 +155,7 @@ VectorBase ADFun<Base>::Reverse(size_t q, const VectorBase &w)
 	CPPAD_ASSERT_UNKNOWN( cskip_op_.size() == play_.num_op_rec() );
 	CPPAD_ASSERT_UNKNOWN( load_op_.size()  == play_.num_load_op_rec() );
 	typename local::player<Base>::const_iterator play_itr = play_.end();
-	local::reverse_sweep(
+	local::sweep::reverse(
 		q - 1,
 		n,
 		num_var_tape_,

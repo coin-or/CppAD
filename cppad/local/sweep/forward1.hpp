@@ -1,5 +1,5 @@
-# ifndef CPPAD_LOCAL_FORWARD1SWEEP_HPP
-# define CPPAD_LOCAL_FORWARD1SWEEP_HPP
+# ifndef CPPAD_LOCAL_SWEEP_FORWARD1_HPP
+# define CPPAD_LOCAL_SWEEP_FORWARD1_HPP
 
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
@@ -12,9 +12,10 @@ A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 
-namespace CppAD { namespace local { // BEGIN_CPPAD_LOCAL_NAMESPACE
+// BEGIN_CPPAD_LOCAL_SWEEP_NAMESPACE
+namespace CppAD { namespace local { namespace sweep {
 /*!
-\file forward1sweep.hpp
+\file sweep/forward1.hpp
 Compute one Taylor coefficient for each order requested.
 */
 
@@ -39,17 +40,17 @@ use with a different definition in other files.
 # endif
 
 /*!
-\def CPPAD_FORWARD1SWEEP_TRACE
+\def CPPAD_FORWARD1_TRACE
 This value is either zero or one.
 Zero is the normal operational value.
 If it is one, a trace of every forward1sweep computation is printed.
 */
-# define CPPAD_FORWARD1SWEEP_TRACE 0
+# define CPPAD_FORWARD1_TRACE 0
 
 /*!
 Compute arbitrary order forward mode Taylor coefficients.
 
-<!-- replace forward0sweep_doc_define -->
+<!-- replace forward0_doc_define -->
 \tparam Base
 The type used during the forward mode computations; i.e., the corresponding
 recording of operations used the type AD<Base>.
@@ -83,7 +84,7 @@ where \f$ n \f$ is the number of independent variables and
 Is the number of columns in the coefficient matrix taylor.
 This must be greater than or equal one.
 
-<!-- end forward0sweep_doc_define -->
+<!-- end forward0_doc_define -->
 
 \param cskip_op
 Is a vector with size play->num_op_rec().
@@ -178,7 +179,7 @@ play was recorded.
 */
 
 template <class Base>
-void forward1sweep(
+void forward1(
 	const local::player<Base>* play,
 	std::ostream&              s_out,
 	const bool                 print,
@@ -288,7 +289,7 @@ void forward1sweep(
 	itr.op_info(op, arg, i_var);
 	CPPAD_ASSERT_UNKNOWN( op == BeginOp );
 	//
-# if CPPAD_FORWARD1SWEEP_TRACE
+# if CPPAD_FORWARD1_TRACE
 	bool user_trace = false;
 	std::cout << std::endl;
 # endif
@@ -893,7 +894,7 @@ void forward1sweep(
 						for(k = p; k <= q; k++)
 							taylor[ user_iy[i] * J + k ] =
 								user_ty[ i * user_q1 + k ];
-# if CPPAD_FORWARD1SWEEP_TRACE
+# if CPPAD_FORWARD1_TRACE
 				user_trace = true;
 # endif
 			}
@@ -986,7 +987,7 @@ void forward1sweep(
 			default:
 			CPPAD_ASSERT_UNKNOWN(0);
 		}
-# if CPPAD_FORWARD1SWEEP_TRACE
+# if CPPAD_FORWARD1_TRACE
 		if( user_trace )
 		{	user_trace = false;
 
@@ -1046,8 +1047,8 @@ void forward1sweep(
 }
 
 // preprocessor symbols that are local to this file
-# undef CPPAD_FORWARD1SWEEP_TRACE
+# undef CPPAD_FORWARD1_TRACE
 # undef CPPAD_ATOMIC_CALL
 
-} } // END_CPPAD_LOCAL_NAMESPACE
+} } } // END_CPPAD_LOCAL_SWEEP_NAMESPACE
 # endif

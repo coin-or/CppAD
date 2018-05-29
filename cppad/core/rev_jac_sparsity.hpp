@@ -2,7 +2,7 @@
 # define CPPAD_CORE_REV_JAC_SPARSITY_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -204,7 +204,7 @@ void ADFun<Base>::rev_jac_sparsity(
 		);
 
 		// compute sparsity for other variables
-		local::rev_jac_sweep(
+		local::sweep::rev_jac(
 			&play_,
 			dependency,
 			n,
@@ -233,7 +233,7 @@ void ADFun<Base>::rev_jac_sparsity(
 		);
 
 		// compute sparsity for other variables
-		local::rev_jac_sweep(
+		local::sweep::rev_jac(
 			&play_,
 			dependency,
 			n,

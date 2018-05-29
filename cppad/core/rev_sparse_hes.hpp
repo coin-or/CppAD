@@ -2,7 +2,7 @@
 # define CPPAD_CORE_REV_SPARSE_HES_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -275,7 +275,7 @@ void ADFun<Base>::RevSparseHesCase(
 	rev_hes_pattern.resize(num_var_tape_, q);
 
 	// compute the Hessian sparsity patterns
-	local::rev_hes_sweep(
+	local::sweep::rev_hes(
 		&play_,
 		n,
 		num_var_tape_,
@@ -404,7 +404,7 @@ void ADFun<Base>::RevSparseHesCase(
 	rev_hes_pattern.resize(num_var_tape_, q);
 
 	// compute the Hessian sparsity patterns
-	local::rev_hes_sweep(
+	local::sweep::rev_hes(
 		&play_,
 		n,
 		num_var_tape_,
@@ -578,7 +578,7 @@ void ADFun<Base>::RevSparseHesCheckpoint(
 	rev_hes_pattern.resize(num_var_tape_, q);
 
 	// compute Hessian sparsity pattern for all variables
-	local::rev_hes_sweep(
+	local::sweep::rev_hes(
 		&play_,
 		n,
 		num_var_tape_,

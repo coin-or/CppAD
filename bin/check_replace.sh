@@ -1,7 +1,6 @@
 #! /bin/bash -e
-# $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the
@@ -38,7 +37,7 @@ EOF
 check_replace cond_op.hpp                        cond_op.hpp
 check_replace load_op.hpp                        load_op.hpp
 check_replace store_op.hpp                       store_op.hpp
-check_replace forward0sweep.hpp                  forward1sweep.hpp
+check_replace sweep/forward0.hpp                  sweep/forward1.hpp
 # -----------------------------------------------------------------------------
 echo "replace_html.sh: OK"
 exit 0

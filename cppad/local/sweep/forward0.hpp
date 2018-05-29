@@ -1,5 +1,5 @@
-# ifndef CPPAD_LOCAL_FORWARD0SWEEP_HPP
-# define CPPAD_LOCAL_FORWARD0SWEEP_HPP
+# ifndef CPPAD_LOCAL_SWEEP_FORWARD0_HPP
+# define CPPAD_LOCAL_SWEEP_FORWARD0_HPP
 
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
@@ -12,9 +12,10 @@ A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 
-namespace CppAD { namespace local { // BEGIN_CPPAD_LOCAL_NAMESPACE
+// BEGIN_CPPAD_LOCAL_SWEEP_NAMESPACE
+namespace CppAD { namespace local { namespace sweep {
 /*!
-\file forward0sweep.hpp
+\file sweep/forward0.hpp
 Compute zero order forward mode Taylor coefficients.
 */
 
@@ -39,18 +40,18 @@ use with a different definition in other files.
 # endif
 
 /*!
-\def CPPAD_FORWARD0SWEEP_TRACE
+\def CPPAD_FORWARD0_TRACE
 This value is either zero or one.
 Zero is the normal operational value.
 If it is one, a trace of every forward0sweep computation is printed.
-(Note that forward0sweep is not used if CPPAD_USE_FORWARD0SWEEP is zero).
+(Note that forward0sweep is not used if CPPAD_USE_FORWARD0 is zero).
 */
-# define CPPAD_FORWARD0SWEEP_TRACE 0
+# define CPPAD_FORWARD0_TRACE 0
 
 /*!
 Compute zero order forward mode Taylor coefficients.
 
-<!-- define forward0sweep_doc_define -->
+<!-- define forward0_doc_define -->
 \tparam Base
 The type used during the forward mode computations; i.e., the corresponding
 recording of operations used the type AD<Base>.
@@ -84,7 +85,7 @@ where \f$ n \f$ is the number of independent variables and
 Is the number of columns in the coefficient matrix taylor.
 This must be greater than or equal one.
 
-<!-- end forward0sweep_doc_define -->
+<!-- end forward0_doc_define -->
 
 \param taylor
 \n
@@ -135,7 +136,7 @@ play was recorded.
 */
 
 template <class Base>
-void forward0sweep(
+void forward0(
 	const local::player<Base>* play,
 	std::ostream&              s_out,
 	bool                       print,
@@ -222,7 +223,7 @@ void forward0sweep(
 	<!-- end forward0sweep_code_define -->
 	*/
 
-# if CPPAD_FORWARD0SWEEP_TRACE
+# if CPPAD_FORWARD0_TRACE
 	// flag as to when to trace user function values
 	bool user_trace            = false;
 
@@ -241,7 +242,7 @@ void forward0sweep(
 	itr.op_info(op, arg, i_var);
 	CPPAD_ASSERT_UNKNOWN( op == BeginOp );
 	//
-# if CPPAD_FORWARD0SWEEP_TRACE
+# if CPPAD_FORWARD0_TRACE
 	std::cout << std::endl;
 # endif
 	bool flag; // a temporary flag to use in switch cases
@@ -764,7 +765,7 @@ void forward0sweep(
 				//
 				user_tx.resize(user_n);
 				user_ty.resize(user_m);
-# if CPPAD_FORWARD0SWEEP_TRACE
+# if CPPAD_FORWARD0_TRACE
 				user_iy.resize(user_m);
 # endif
 			}
@@ -778,7 +779,7 @@ void forward0sweep(
 					CPPAD_ASSERT_KNOWN(false, msg.c_str() );
 				}
 # endif
-# if CPPAD_FORWARD0SWEEP_TRACE
+# if CPPAD_FORWARD0_TRACE
 				user_trace = true;
 # endif
 			}
@@ -830,7 +831,7 @@ void forward0sweep(
 			CPPAD_ASSERT_UNKNOWN( user_i < user_m );
 			CPPAD_ASSERT_UNKNOWN( user_j == user_n );
 			CPPAD_ASSERT_UNKNOWN( size_t( arg[0] ) < num_par );
-# if CPPAD_FORWARD0SWEEP_TRACE
+# if CPPAD_FORWARD0_TRACE
 			user_iy[user_i] = 0;
 # endif
 			user_i++;
@@ -844,7 +845,7 @@ void forward0sweep(
 			CPPAD_ASSERT_UNKNOWN( user_state == ret_user );
 			CPPAD_ASSERT_UNKNOWN( user_i < user_m );
 			CPPAD_ASSERT_UNKNOWN( user_j == user_n );
-# if CPPAD_FORWARD0SWEEP_TRACE
+# if CPPAD_FORWARD0_TRACE
 			user_iy[user_i] = i_var;
 # endif
 			taylor[ i_var * J + 0 ] = user_ty[user_i++];
@@ -873,7 +874,7 @@ void forward0sweep(
 			default:
 			CPPAD_ASSERT_UNKNOWN(false);
 		}
-# if CPPAD_FORWARD0SWEEP_TRACE
+# if CPPAD_FORWARD0_TRACE
 		size_t  d  = 0;
 		if( user_trace )
 		{	user_trace = false;
@@ -931,10 +932,10 @@ void forward0sweep(
 	return;
 }
 
-} } // END_CPPAD_LOCAL_NAMESPACE
+} } } // END_CPPAD_LOCAL_SWEEP_NAMESPACE
 
 // preprocessor symbols that are local to this file
-# undef CPPAD_FORWARD0SWEEP_TRACE
+# undef CPPAD_FORWARD0_TRACE
 # undef CPPAD_ATOMIC_CALL
 
 # endif

@@ -382,7 +382,7 @@ void ADFun<Base>::subgraph_reverse(
 	size_t n = Domain();
 	typename local::player<Base>::const_subgraph_iterator
 		play_itr = play_.end(subgraph);
-	local::reverse_sweep(
+	local::sweep::reverse(
 		q - 1,
 		n,
 		num_var_tape_,

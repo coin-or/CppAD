@@ -2,7 +2,7 @@
 # define CPPAD_CORE_FORWARD_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -155,7 +155,7 @@ VectorBase ADFun<Base>::Forward(
 	CPPAD_ASSERT_UNKNOWN( cskip_op_.size() == play_.num_op_rec() );
 	CPPAD_ASSERT_UNKNOWN( load_op_.size()  == play_.num_load_op_rec() );
 	if( q == 0 )
-	{	local::forward0sweep(&play_, s, true,
+	{	local::sweep::forward0(&play_, s, true,
 			n, num_var_tape_, C,
 			taylor_.data(), cskip_op_.data(), load_op_,
 			compare_change_count_,
@@ -164,7 +164,7 @@ VectorBase ADFun<Base>::Forward(
 		);
 	}
 	else
-	{	local::forward1sweep(&play_, s, true, p, q,
+	{	local::sweep::forward1(&play_, s, true, p, q,
 			n, num_var_tape_, C,
 			taylor_.data(), cskip_op_.data(), load_op_,
 			compare_change_count_,
@@ -383,7 +383,7 @@ VectorBase ADFun<Base>::Forward(
 	// evaluate the derivatives
 	CPPAD_ASSERT_UNKNOWN( cskip_op_.size() == play_.num_op_rec() );
 	CPPAD_ASSERT_UNKNOWN( load_op_.size()  == play_.num_load_op_rec() );
-	local::forward2sweep(
+	local::sweep::forward2(
 		&play_,
 		q,
 		r,

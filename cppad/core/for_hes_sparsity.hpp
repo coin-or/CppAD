@@ -2,7 +2,7 @@
 # define CPPAD_CORE_FOR_HES_SPARSITY_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -191,7 +191,7 @@ void ADFun<Base>::for_hes_sparsity(
 			internal_for_jac.add_element( ind_taddr_[j] , ind_taddr_[j] );
 		}
 		// forward Jacobian sparsity for all variables on tape
-		local::for_jac_sweep(
+		local::sweep::for_jac(
 			&play_,
 			dependency,
 			n,
@@ -207,7 +207,7 @@ void ADFun<Base>::for_hes_sparsity(
 			internal_rev_jac.add_element( dep_taddr_[i] , 0 );
 		}
 		// reverse Jacobian sparsity for all variables on tape
-		local::rev_jac_sweep(
+		local::sweep::rev_jac(
 			&play_,
 			dependency,
 			n,
@@ -219,7 +219,7 @@ void ADFun<Base>::for_hes_sparsity(
 		internal_for_hes.resize(n + 1, n + 1);
 		//
 		// compute forward Hessian sparsity pattern
-		local::for_hes_sweep(
+		local::sweep::for_hes(
 			&play_,
 			n,
 			num_var_tape_,
@@ -244,7 +244,7 @@ void ADFun<Base>::for_hes_sparsity(
 			internal_for_jac.add_element( ind_taddr_[j] , ind_taddr_[j] );
 		}
 		// forward Jacobian sparsity for all variables on tape
-		local::for_jac_sweep(
+		local::sweep::for_jac(
 			&play_,
 			dependency,
 			n,
@@ -261,7 +261,7 @@ void ADFun<Base>::for_hes_sparsity(
 			internal_rev_jac.add_element( dep_taddr_[i] , 0 );
 		}
 		// reverse Jacobian sparsity for all variables on tape
-		local::rev_jac_sweep(
+		local::sweep::rev_jac(
 			&play_,
 			dependency,
 			n,
@@ -273,7 +273,7 @@ void ADFun<Base>::for_hes_sparsity(
 		internal_for_hes.resize(n + 1, n + 1);
 		//
 		// compute forward Hessian sparsity pattern
-		local::for_hes_sweep(
+		local::sweep::for_hes(
 			&play_,
 			n,
 			num_var_tape_,
