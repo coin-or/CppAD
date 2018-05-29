@@ -41,10 +41,9 @@ var list_current0 = [
 'download.htm#Source Code Control',
 'download.htm#Source Code Control.Git',
 'download.htm#Source Code Control.Subversion',
-'download.htm#Monthly Versions',
-'download.htm#Windows File Extraction and Testing',
-'download.htm#Install Instructions',
-'download.htm#Building Documentation'
+'download.htm#Source Code Control.Version',
+'download.htm#Source Code Control.Documentation',
+'download.htm#Source Code Control.Building Documentation'
 ];
 function choose_across0(item)
 {	var index          = item.selectedIndex;

@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>The CppAD Wish List</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="The CppAD Wish List">
-<meta name="keywords" id="keywords" content=" the cppad wish list dynamic parameters multi-threading atomic subgraph new api sparsity element-wise operations check_finite test_boolofvoid eigen example optimization taping special operators memory checkpoint retape testing compilation speed base requirements adolc forward mode recomputation iterator interface operation sequence software guidelines tracing atan2 benderquad ">
+<meta name="keywords" id="keywords" content=" the cppad wish list windows install dynamic parameters multi-threading atomic subgraph new api sparsity element-wise operations check_finite test_boolofvoid eigen example optimization taping special operators memory checkpoint retape testing compilation speed base requirements adolc forward mode recomputation iterator interface operation sequence software guidelines tracing atan2 benderquad ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -88,6 +88,7 @@ A:active { color : purple }
 <td>
 <select onchange='choose_current0(this)'>
 <option>Headings-&gt;</option>
+<option>Windows Install</option>
 <option>Dynamic Parameters</option>
 <option>Multi-Threading</option>
 <option>Atomic</option>
@@ -129,6 +130,51 @@ A:active { color : purple }
 
 
 <center><b><big><big>The CppAD Wish List</big></big></b></center>
+<br>
+<b><big><a name="Windows Install" id="Windows Install">Windows Install</a></big></b>
+<br>
+The windows install procedures below have not been kept up to date.
+I would be good if someone took on the job of supporting an windows install.
+<ol type="1"><li>
+Download and install the open source program
+<a href="http://www.7-zip.org" target="_top"><span style='white-space: nowrap'>http://www.7-zip.org</span></a>
+.
+</li><li>
+
+Download and install the Visual Studio Express; for example
+<a href="http://www.microsoft.com/en-us/download/confirmation.aspx?id=44914" target="_top"><span style='white-space: nowrap'>Visual&nbsp;Studio&nbsp;2013</span></a>
+
+</li><li>
+
+In a command window, execute the following commands:
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;set&nbsp;PATH=</span></font><i><font color="black"><span style='white-space: nowrap'>path_to_7_zip</span></font></i><font color="blue"><span style='white-space: nowrap'>;%PATH%<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;set&nbsp;PATH=</span></font><i><font color="black"><span style='white-space: nowrap'>path_to_cmake</span></font></i><font color="blue"><span style='white-space: nowrap'>;%PATH%<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;set&nbsp;VCDIR=</span></font><i><font color="black"><span style='white-space: nowrap'>path_to_vcdir</span></font></i><font color="blue"><span style='white-space: nowrap'>;%PATH%<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;call&nbsp;&quot;%VCDIR%\vcvarsall.bat&quot;&nbsp;x86<br>
+</span></font></code>
+</li><li>
+Use the following commands to extract the distribution from the
+compressed archive:
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;7z&nbsp;x&nbsp;cppad-</span></font><i><font color="black"><span style='white-space: nowrap'>version</span></font></i><font color="blue"><span style='white-space: nowrap'>.</span></font><i><font color="black"><span style='white-space: nowrap'>lic</span></font></i><font color="blue"><span style='white-space: nowrap'>.tgz<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;7z&nbsp;x&nbsp;cppad-</span></font><i><font color="black"><span style='white-space: nowrap'>version</span></font></i><font color="blue"><span style='white-space: nowrap'>.</span></font><i><font color="black"><span style='white-space: nowrap'>lic</span></font></i><font color="blue"><span style='white-space: nowrap'>.tar<br>
+</span></font></code>
+The commands below are optional.
+They run the CppAD tests using the default <a href="cmake.htm" target="_top"><span style='white-space: nowrap'>cmake</span></a>
+ settings
+(except for the <a href="cmake.htm#generator" target="_top"><span style='white-space: nowrap'>generator</span></a>
+ option)
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;mkdir&nbsp;build<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cd&nbsp;build<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cmake&nbsp;-G&nbsp;&quot;NMake&nbsp;Makefiles&quot;&nbsp;..<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;nmake&nbsp;check<br>
+</span></font></code>
+</li></ol>
 <br>
 <b><big><a name="Dynamic Parameters" id="Dynamic Parameters">Dynamic Parameters</a></big></b>
 <br>

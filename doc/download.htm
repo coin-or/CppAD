@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Download The CppAD Source Code</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Download The CppAD Source Code">
-<meta name="keywords" id="keywords" content=" download the cppad source code purpose distribution directory version release license compressed archives coin github control git subversion monthly versions windows file extraction testing install instructions building documentation ">
+<meta name="keywords" id="keywords" content=" download the cppad source code purpose distribution directory version release license compressed archives coin github control git subversion documentation building ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -91,10 +91,9 @@ A:active { color : purple }
 <option>Source Code Control</option>
 <option>---..Git</option>
 <option>---..Subversion</option>
-<option>Monthly Versions</option>
-<option>Windows File Extraction and Testing</option>
-<option>Install Instructions</option>
-<option>Building Documentation</option>
+<option>---..Version</option>
+<option>---..Documentation</option>
+<option>---..Building Documentation</option>
 </select>
 </td>
 </tr></table><br>
@@ -189,9 +188,6 @@ and the Eclipse Public License is denoted by
 <br>
 The Coin compressed archives have the
 documentation built into them.
-If you downloading an old version using another method; see
-<a href="download.htm#Building Documentation" target="_top"><span style='white-space: nowrap'>building&nbsp;documentation</span></a>
-.
 
 
 <br>
@@ -274,104 +270,70 @@ the <a href="http://subversion.tigris.org/" target="_top"><span style='white-spa
  program
 is installed on your system.
 
-
 <br>
 <br>
-<b><big><a name="Monthly Versions" id="Monthly Versions">Monthly Versions</a></big></b>
+<big><a name="Source Code Control.Version" id="Source Code Control.Version">Version</a></big>
 <br>
-Monthly versions of the compressed tar files are available on the
-<a href="http://www.coin-or.org/download/source/CppAD/" target="_top"><span style='white-space: nowrap'>Coin&nbsp;download&nbsp;page</span></a>
-.
-These are kept until the end of the current year,
-when the next release is created.
-The monthly versions have the form
+After downloading the source code,
+and changing into the distribution directory,
+use the following command to determine the corresponding
+<a href="download.htm#Version" target="_top"><span style='white-space: nowrap'>version</span></a>
+:
+<code><font color='blue'><pre style='display:inline'> 
+     grep '^SET(cppad_version' CMakeLists.txt
+</pre></font></code>
+Use the following command to determine the git 
+<code><i><font color="black"><span style='white-space: nowrap'>hash</span></font></i></code>
+ code
+corresponding to this version:
+<code><font color='blue'><pre style='display:inline'> 
+     git show-ref | grep 'refs/heads/master'
+</pre></font></code>
+You can get an old version using the command
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cppad-</span></font><i><font color="black"><span style='white-space: nowrap'>yyyy</span></font></i><font color="blue"><span style='white-space: nowrap'>0101.</span></font><i><font color="black"><span style='white-space: nowrap'>lic</span></font></i><font color="blue"><span style='white-space: nowrap'>.tgz<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;git&nbsp;checkout&nbsp;-q&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>hash</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
+You can check the corresponding version number using the command
+<code><font color='blue'><pre style='display:inline'> 
+     grep '^SET(cppad_version' CMakeLists.txt
+</pre></font></code>
 <br>
-<b><big><a name="Windows File Extraction and Testing" id="Windows File Extraction and Testing">Windows File Extraction and Testing</a></big></b>
+<big><a name="Source Code Control.Documentation" id="Source Code Control.Documentation">Documentation</a></big>
 <br>
-If you know how to extract the distribution directory from
-the tar file, just do so. Otherwise, below is one way you can do it.
-(Note that if <code><font color="blue">7z.exe</font></code>, <code><font color="blue">cmake.exe</font></code>, and <code><font color="blue">nmake.exe</font></code> are you
-your execution path, you will not need to specify their paths below.)
-
-<ol type="1"><li>
-Download and install the open source program
-<a href="http://www.7-zip.org" target="_top"><span style='white-space: nowrap'>http://www.7-zip.org</span></a>
-.
-</li><li>
-
-Download and install the Visual Studio Express; for example
-<a href="http://www.microsoft.com/en-us/download/confirmation.aspx?id=44914" target="_top"><span style='white-space: nowrap'>Visual&nbsp;Studio&nbsp;2013</span></a>
-
-</li><li>
-
-In a command window, execute the following commands:
+The documentation at the web address
+<a href="https://coin-or.github.io/CppAD/doc/" target="_top"><span style='white-space: nowrap'>https://coin-or.github.io/CppAD/doc/</span></a>
+ is for the
+most recent version of CppAD.
+If you are using <code><font color="blue">git</font></code> source code control,
+starting with <code><font color="blue">cppad-20170716</font></code>, you can get the documentation
+for an other versions of CppAD.
+To do so, in the distribution directory execute the following commands:
+<code><font color='blue'><pre style='display:inline'> 
+     git checkout gh-pages
+     git log &gt; junk.log
+</pre></font></code>
+The file <code><font color="blue">junk.log</font></code> will contain the git 
+<code><i><font color="black"><span style='white-space: nowrap'>hash</span></font></i></code>
+ codes
+for different version of the documentation along with the date.
+Select the 
+<code><i><font color="black"><span style='white-space: nowrap'>hash</span></font></i></code>
+ for the version you are using, execute the command
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;set&nbsp;PATH=</span></font><i><font color="black"><span style='white-space: nowrap'>path_to_7_zip</span></font></i><font color="blue"><span style='white-space: nowrap'>;%PATH%<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;set&nbsp;PATH=</span></font><i><font color="black"><span style='white-space: nowrap'>path_to_cmake</span></font></i><font color="blue"><span style='white-space: nowrap'>;%PATH%<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;set&nbsp;VCDIR=</span></font><i><font color="black"><span style='white-space: nowrap'>path_to_vcdir</span></font></i><font color="blue"><span style='white-space: nowrap'>;%PATH%<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;call&nbsp;&quot;%VCDIR%\vcvarsall.bat&quot;&nbsp;x86<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;git&nbsp;checkout&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>hash</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
-For example, on one machine these paths had the following values:
-
-<code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>path_to_7_zip</span></font></i><font color="blue"><span style='white-space: nowrap'>=C:\Program&nbsp;Files\7-zip<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>path_to_cmake</span></font></i><font color="blue"><span style='white-space: nowrap'>=C:\Program&nbsp;Files&nbsp;(x86)\CMake\bin<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>path_to_vcdir</span></font></i><font color="blue"><span style='white-space: nowrap'>=C:\Program&nbsp;Files&nbsp;(x86)\Microsoft&nbsp;Visual&nbsp;Studio&nbsp;14.0\VC<br>
-</span></font></code>
-</li><li>
-Use the following commands to extract the distribution from the
-compressed archive:
-
-<code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;7z&nbsp;x&nbsp;cppad-</span></font><i><font color="black"><span style='white-space: nowrap'>version</span></font></i><font color="blue"><span style='white-space: nowrap'>.</span></font><i><font color="black"><span style='white-space: nowrap'>lic</span></font></i><font color="blue"><span style='white-space: nowrap'>.tgz<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;7z&nbsp;x&nbsp;cppad-</span></font><i><font color="black"><span style='white-space: nowrap'>version</span></font></i><font color="blue"><span style='white-space: nowrap'>.</span></font><i><font color="black"><span style='white-space: nowrap'>lic</span></font></i><font color="blue"><span style='white-space: nowrap'>.tar<br>
-</span></font></code>
-</li><li>
-To see if this has been done correctly, check for the following file:
-
-<code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cppad-</span></font><i><font color="black"><span style='white-space: nowrap'>version</span></font></i><font color="blue"><span style='white-space: nowrap'>\cppad\cppad.hpp<br>
-</span></font></code>
-</li><li>
-The commands below are optional.
-They run the CppAD tests using the default <a href="cmake.htm" target="_top"><span style='white-space: nowrap'>cmake</span></a>
- settings
-(except for the <a href="cmake.htm#generator" target="_top"><span style='white-space: nowrap'>generator</span></a>
- option)
-
-<code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;mkdir&nbsp;build<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cd&nbsp;build<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cmake&nbsp;-G&nbsp;&quot;NMake&nbsp;Makefiles&quot;&nbsp;..<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;nmake&nbsp;check<br>
-</span></font></code>
-</li></ol>
-<br>
-<b><big><a name="Install Instructions" id="Install Instructions">Install Instructions</a></big></b>
-<br>
-The <a href="install.htm" target="_top"><span style='white-space: nowrap'>install</span></a>
- instructions on this web site correspond to the
-current version of CppAD.
-If you are using an old version of CppAD
-these instructions may work.
-If you have trouble (or just to be careful),
-you should follow the instructions in
-the <code><font color="blue">doc</font></code> subdirectory of the distribution directory.
-If there is no such documentation, you can build it; see
-<a href="download.htm#Building Documentation" target="_top"><span style='white-space: nowrap'>building&nbsp;documentation</span></a>
-.
+You can then view documentation for version you are using by opening the file
+<code><font color="blue">doc/index.html</font></code> in a web browser.
 
 <br>
 <br>
-<b><big><a name="Building Documentation" id="Building Documentation">Building Documentation</a></big></b>
+<big><a name="Source Code Control.Building Documentation" id="Source Code Control.Building Documentation">Building Documentation</a></big>
 <br>
-If you are using one of these download methods,
-you can build the documentation to get the corresponding install instructions.
+If you are using <code><font color="blue">subversion</font></code> source code control,
+or you are using a version before <code><font color="blue">20170716</font></code>,
+you can build the documentation for the version you are using.
 The documentation for CppAD is built from the source code files using
 <a href="http://www.seanet.com/~bradbell/omhelp/" target="_top"><span style='white-space: nowrap'>OMhelp</span></a>
 .
@@ -386,8 +348,8 @@ in the distribution directory execute the following command:
 <code><font color="blue"><span style='white-space: nowrap'><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bin/run_omhelp.sh&nbsp;htm<br>
 </span></font></code>
-You will then be able to follow the install instructions in
-the <code><font color="blue">doc</font></code> subdirectory of the distribution directory.
+You can then view documentation for version you are using by opening the file
+<code><font color="blue">doc/index.html</font></code> in a web browser.
 
 
 

@@ -32,7 +32,6 @@ var list_down1 = [
 var list_current0 = [
 'cmake_check.htm#Purpose',
 'cmake_check.htm#Check All',
-'cmake_check.htm#Check All.Windows',
 'cmake_check.htm#Subsets of make check',
 'cmake_check.htm#First Level'
 ];
