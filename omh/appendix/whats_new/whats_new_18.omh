@@ -24,6 +24,10 @@ $$
 
 $section Changes and Additions to CppAD During 2018$$
 
+$head 05-29$$
+The $cref autotools$$ install procedure was not working since 05-26.
+This has been fixed.
+
 $head 05-28$$
 $list number$$
 The Coin download page is not longer supporting monthly version.
