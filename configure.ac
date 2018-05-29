@@ -536,6 +536,8 @@ AC_SUBST(is_pod_specialize_11, "
 	template <> inline bool is_pod<signed long>(void) { return true; }
 	template <> inline bool is_pod<unsigned long>(void) { return true; }
 " )
+AM_SUBST_NOTMAKE(is_pod_specialize_98)
+AM_SUBST_NOTMAKE(is_pod_specialize_11)
 
 dnl Determine which definition we are using for CPPAD_TESTVECTOR
 if test "$stdvector$boostvector$eigenvector" = "nonono" ; then

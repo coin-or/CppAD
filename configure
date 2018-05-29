@@ -5970,6 +5970,8 @@ is_pod_specialize_11="
 "
 
 
+
+
 if test "$stdvector$boostvector$eigenvector" = "nonono" ; then
 	cppad_cppadvector=1
 
