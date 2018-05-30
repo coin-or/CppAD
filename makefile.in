@@ -663,6 +663,7 @@ nobase_myinclude_HEADERS = \
 	cppad/local/parameter_op.hpp \
 	cppad/local/player.hpp \
 	cppad/local/play/user_op_info.hpp \
+	cppad/local/play/sequential_iterator.hpp \
 	cppad/local/pod_vector.hpp \
 	cppad/local/pow_op.hpp \
 	cppad/local/print_op.hpp \
