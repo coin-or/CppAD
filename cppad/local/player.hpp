@@ -1,3 +1,4 @@
+
 # ifndef CPPAD_LOCAL_PLAYER_HPP
 # define CPPAD_LOCAL_PLAYER_HPP
 
@@ -662,8 +663,8 @@ public:
 		;
 	}
 	// -----------------------------------------------------------------------
-	typedef play::const_sequential_iterator<Base> const_iterator;
-	typedef play::const_random_iterator<Base> const_subgraph_iterator;
+	typedef play::const_sequential_iterator<Base>     const_iterator;
+	typedef play::const_random_iterator<Base, addr_t> const_subgraph_iterator;
 	/// begin
 	const_iterator begin(void) const
 	{	size_t op_index = 0;
@@ -672,7 +673,15 @@ public:
 	}
 	const_subgraph_iterator begin(pod_vector<addr_t>* subgraph) const
 	{	size_t subgraph_index = 0;
-		return const_subgraph_iterator(this, subgraph, subgraph_index);
+		return const_subgraph_iterator(
+			&subgraph,
+			&op_vec_,
+			&arg_vec_,
+			&op2arg_vec_,
+			&op2var_vec_,
+			&var2op_vec_,
+			subgraph_index
+		);
 	}
 	/// end
 	const_iterator end(void) const
@@ -682,11 +691,18 @@ public:
 	}
 	const_subgraph_iterator end(pod_vector<addr_t>& subgraph) const
 	{	size_t subgraph_index = subgraph.size() - 1;
-		return const_subgraph_iterator(this, &subgraph, subgraph_index);
+		return const_subgraph_iterator(
+			&subgraph,
+			&op_vec_,
+			&arg_vec_,
+			&op2arg_vec_,
+			&op2var_vec_,
+			&var2op_vec_,
+			subgraph_index
+		);
 	}
 
 };
-
 
 } } // END_CPPAD_lOCAL_NAMESPACE
 # endif

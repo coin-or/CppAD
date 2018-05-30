@@ -29,6 +29,7 @@ File used to define pod_vector classes
 /*!
 A vector class with that does not use element constructors or destructors
 (elements are Plain Old Data; i.e., is_pod<Type> must be true).
+
 */
 template <class Type>
 class pod_vector {
@@ -62,7 +63,6 @@ public:
 		extend(n);
 	}
 
-
 	/// Destructor: returns allocated memory to thread_alloc;
 	/// see extend and resize.  If this is not plain old data,
 	/// the destructor for each element is called.
@@ -72,6 +72,25 @@ public:
 			void* v_ptr = reinterpret_cast<void*>( data_ );
 			thread_alloc::return_memory(v_ptr);
 		}
+	}
+
+	/*
+	Return a pointer to a pod_vector with a different type of element.
+
+	- This vector and the other share the same memory.
+
+	- The the other vector should not be deleted.
+
+	- The following operations work the same for this and the other vector:
+	swap, clear, assignment.
+	*/
+	template <class Other>
+	pod_vector<Other>* pod_vector_ptr(void)
+	{	return reinterpret_cast< pod_vector<Other>* >(this);
+	}
+	template <class Other>
+	const pod_vector<Other>* pod_vector_ptr(void) const
+	{	return reinterpret_cast< const pod_vector<Other>* >(this);
 	}
 
 	/// current number of elements in this vector.
