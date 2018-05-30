@@ -13,6 +13,8 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 
 
+# include <cppad/local/play/user_op_info.hpp>
+
 // BEGIN_CPPAD_LOCAL_SWEEP_NAMESPACE
 namespace CppAD { namespace local { namespace sweep {
 /*!
@@ -254,7 +256,7 @@ void reverse(
 				case UserOp:
 				{	// get information for this user atomic call
 					CPPAD_ASSERT_UNKNOWN( user_state == end_user );
-					play_itr.user_info(op, arg, user_old, user_m, user_n);
+					play::user_op_info<Base>(op, arg, user_old, user_m, user_n);
 					//
 					// skip to the first UserOp
 					for(size_t i = 0; i < user_m + user_n + 1; ++i)
@@ -671,7 +673,7 @@ void reverse(
 			case UserOp:
 			// start or end an atomic function call
 			flag = user_state == end_user;
-			user_atom = play_itr.user_info(op, arg, user_old, user_m, user_n);
+			user_atom = play::user_op_info<Base>(op, arg, user_old, user_m, user_n);
 			if( flag )
 			{	user_state = ret_user;
 				user_i     = user_m;

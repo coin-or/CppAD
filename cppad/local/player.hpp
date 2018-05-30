@@ -1,4 +1,3 @@
-
 # ifndef CPPAD_LOCAL_PLAYER_HPP
 # define CPPAD_LOCAL_PLAYER_HPP
 
@@ -531,59 +530,6 @@ public:
 	}
 	/*!
 	\brief
-	unpack extra information corresponding to a UserOp
-
-	\param op [in]
-	must be a UserOp
-
-	\param op_arg [in]
-	is the arguments for this operator
-
-	\param user_old [out]
-	is the extra information passed to the old style user atomic functions.
-
-	\param user_m   [out]
-	is the number of results for this user atmoic function.
-
-	\param user_n   [out]
-	is the number of arguments for this user atmoic function.
-
-	\return
-	Is a pointer to this user atomic function.
-	*/
-	static atomic_base<Base>* get_user_info(
-		const OpCode     op         ,
-		const addr_t*    op_arg     ,
-		size_t&          user_old   ,
-		size_t&          user_m     ,
-		size_t&          user_n     )
-	{	atomic_base<Base>* user_atom;
-		//
-		CPPAD_ASSERT_UNKNOWN( op == UserOp );
-		CPPAD_ASSERT_NARG_NRES(op, 4, 0);
-		//
-		user_old = op_arg[1];
-		user_n   = op_arg[2];
-		user_m   = op_arg[3];
-		CPPAD_ASSERT_UNKNOWN( user_n > 0 );
-		//
-		size_t user_index = size_t( op_arg[0] );
-		user_atom = atomic_base<Base>::class_object(user_index);
-# ifndef NDEBUG
-		if( user_atom == CPPAD_NULL )
-		{	// user_atom is null so cannot use user_atom->afun_name()
-			std::string msg = atomic_base<Base>::class_name(user_index)
-				+ ": atomic_base function has been deleted";
-			CPPAD_ASSERT_KNOWN(false, msg.c_str() );
-		}
-# endif
-		// the atomic_base object corresponding to this user function
-		user_atom = atomic_base<Base>::class_object(user_index);
-		CPPAD_ASSERT_UNKNOWN( user_atom != CPPAD_NULL );
-		return user_atom;
-	}
-	/*!
-	\brief
 	fetch an operator from the recording.
 
 	\return
@@ -975,58 +921,6 @@ public:
 	/// current operator index
 	size_t op_index(void)
 	{	return op_cur_ - op_begin_; }
-	/*!
-	\brief
-	Unpack extra information when current op is a UserOp
-
-	\param op [in]
-	must be a UserOp
-
-	\param arg [in]
-	is the arguments for this operator
-
-	\param user_old [out]
-	is the extra information passed to the old style user atomic functions.
-
-	\param user_m [out]
-	is the number of results for this user atmoic function.
-
-	\param user_n [out]
-	is the number of arguments for this user atmoic function.
-
-	\return
-	is a pointer to this user atomic function.
-	*/
-	atomic_base<Base>* user_info(
-		const OpCode     op         ,
-		const addr_t*    arg        ,
-		size_t&          user_old   ,
-		size_t&          user_m     ,
-		size_t&          user_n     ) const
-	{	atomic_base<Base>* user_atom;
-		//
-		CPPAD_ASSERT_UNKNOWN( op == UserOp );
-		CPPAD_ASSERT_NARG_NRES(op, 4, 0);
-		//
-		// return UserOp info
-		user_old = arg[1];
-		user_n   = arg[2];
-		user_m   = arg[3];
-		CPPAD_ASSERT_UNKNOWN( user_n > 0 );
-		//
-		size_t user_index = size_t( arg[0] );
-		user_atom = atomic_base<Base>::class_object(user_index);
-# ifndef NDEBUG
-		if( user_atom == CPPAD_NULL )
-		{	// user_atom is null so cannot use user_atom->afun_name()
-			std::string msg = atomic_base<Base>::class_name(user_index)
-				+ ": atomic_base function has been deleted";
-			CPPAD_ASSERT_KNOWN(false, msg.c_str() );
-		}
-# endif
-		//
-		return user_atom;
-	}
 };
 
 // ============================================================================
@@ -1113,36 +1007,6 @@ public:
 	/// current operator index
 	size_t op_index(void)
 	{	return (*subgraph_)[subgraph_index_]; }
-	/*!
-	\brief
-	Unpack extra information when current op is a UserOp
-
-	\param op [in]
-	must be a UserOp
-
-	\param op_arg [in]
-	is the arguments for this operator
-
-	\param user_old [out]
-	is the extra information passed to the old style user atomic functions.
-
-	\param user_m [out]
-	is the number of results for this user atmoic function.
-
-	\param user_n [out]
-	is the number of arguments for this user atmoic function.
-
-	\return
-	is a pointer to this user atomic function.
-	*/
-	atomic_base<Base>* user_info(
-		const OpCode     op         ,
-		const addr_t*    op_arg     ,
-		size_t&          user_old   ,
-		size_t&          user_m     ,
-		size_t&          user_n     ) const
-	{	return play_->get_user_info(op, op_arg, user_old, user_m, user_n);
-	}
 };
 
 } } // END_CPPAD_lOCAL_NAMESPACE

@@ -14,6 +14,8 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # include <set>
 # include <cppad/local/pod_vector.hpp>
 
+# include <cppad/local/play/user_op_info.hpp>
+
 // BEGIN_CPPAD_LOCAL_SWEEP_NAMESPACE
 namespace CppAD { namespace local { namespace sweep {
 /*!
@@ -612,7 +614,7 @@ void for_jac(
 				user_state == start_user || user_state == end_user
 			);
 			flag = user_state == start_user;
-			user_atom = itr.user_info(op, arg, user_old, user_m, user_n);
+			user_atom = play::user_op_info<Base>(op, arg, user_old, user_m, user_n);
 			if( flag )
 			{	user_state = arg_user;
 				user_i     = 0;

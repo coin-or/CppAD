@@ -32,7 +32,8 @@ move_list='
 move_sed='s|reverse_subgraph|subgraph_reverse|'
 #
 cat << EOF > junk.sed
-s|pod_vector<Base>|pod_vector_maybe<Base>|g
+s|play_itr.user_info(|play::user_op_info<Base>(|
+s|itr.user_info(|play::user_op_info<Base>(|
 EOF
 # -----------------------------------------------------------------------------
 if [ $0 != "bin/batch_edit.sh" ]
