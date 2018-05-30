@@ -20,10 +20,10 @@ namespace CppAD { namespace local { namespace play {
 */
 
 /*!
-Sequential iterator for a player object
+Constant sequential iterator for a player object.
 
-Except for constructor, the public API for this class also appears in the
-random_iterator class.
+Except for constructor, the public API for this class is a subset of
+the API for the random_iterator class.
 */
 template <class Base>
 class const_sequential_iterator {

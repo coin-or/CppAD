@@ -13,6 +13,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 
 # include <cppad/local/play/sequential_iterator.hpp>
+# include <cppad/local/play/random_iterator.hpp>
 # include <cppad/local/user_state.hpp>
 # include <cppad/local/is_pod.hpp>
 
@@ -29,8 +30,6 @@ Class used to store and play back an operation sequence recording.
 These were AD< Base > operations when recorded. Operations during playback
 are done using the type Base .
 */
-
-template <class Base> class player_const_subgraph_iterator;
 
 template <class Base>
 class player {
@@ -664,7 +663,7 @@ public:
 	}
 	// -----------------------------------------------------------------------
 	typedef play::const_sequential_iterator<Base> const_iterator;
-	typedef player_const_subgraph_iterator<Base> const_subgraph_iterator;
+	typedef play::const_random_iterator<Base> const_subgraph_iterator;
 	/// begin
 	const_iterator begin(void) const
 	{	size_t op_index = 0;
@@ -688,92 +687,6 @@ public:
 
 };
 
-
-// ============================================================================
-/// play_const_subgraph_iterator for a player object.
-/// Except for constructor, it has the same API as player_const_iterator.
-template <class Base>
-class player_const_subgraph_iterator {
-private:
-	/// play_
-	const player<Base>*       play_;
-
-	/// subgraph_
-	const pod_vector<addr_t>* subgraph_;
-
-	/// index in subgraph of current operator
-	size_t subgraph_index_;
-
-public:
-	/// assignment operator
-	void operator=(const player_const_subgraph_iterator& rhs)
-	{	play_            = rhs.play_;
-		subgraph_        = rhs.subgraph_;
-		subgraph_index_  = rhs.subgraph_index_;
-		return;
-	}
-	/// Create an iterator starting either at beginning or end of subgraph
-	player_const_subgraph_iterator(
-		const player<Base>*       play             ,
-		const pod_vector<addr_t>* subgraph         ,
-		size_t                    subgraph_index   )
-	:
-	play_           ( play )            ,
-	subgraph_       ( subgraph )        ,
-	subgraph_index_ ( subgraph_index )
-	{ }
-	/*!
-	Advance iterator to next operator
-	*/
-	player_const_subgraph_iterator<Base>& operator++(void)
-	{	++subgraph_index_;
-		return *this;
-	}
-	/// No correction necessary when using random access to player
-	void correct_before_increment(void)
-	{	return; }
-	/*!
-	Backup iterator to previous operator
-	*/
-	player_const_subgraph_iterator<Base>& operator--(void)
-	{	--subgraph_index_;
-		return *this;
-	}
-	/*!
-	No correction necessary when using random access to player.
-
-	\param op_arg
-	not used or modified.
-	*/
-	void correct_after_decrement(const addr_t*& op_arg)
-	{	return; }
-	/*!
-	\brief
-	Get information corresponding to current operator.
-
-	\param op [out]
-	op code for this operator.
-
-	\param op_arg [out]
-	pointer to the first arguement to this operator.
-
-	\param var_index [out]
-	index of the last variable (primary variable) for this operator.
-	If there is no primary variable for this operator, var_index
-	is not sepcified and could have any value.
-	*/
-	void op_info(
-		OpCode&        op         ,
-		const addr_t*& op_arg     ,
-		size_t&        var_index  ) const
-	{	// op
-		size_t i_op = (*subgraph_)[subgraph_index_];
-		play_->random_access(i_op, op, op_arg, var_index);
-	}
-	/// current operator index
-	size_t op_index(void)
-	{	return (*subgraph_)[subgraph_index_]; }
-};
 
 } } // END_CPPAD_lOCAL_NAMESPACE
 # endif
