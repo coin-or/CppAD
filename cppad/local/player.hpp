@@ -14,7 +14,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 
 # include <cppad/local/play/sequential_iterator.hpp>
-# include <cppad/local/play/random_iterator.hpp>
+# include <cppad/local/play/subgraph_iterator.hpp>
 # include <cppad/local/user_state.hpp>
 # include <cppad/local/is_pod.hpp>
 
@@ -663,8 +663,8 @@ public:
 		;
 	}
 	// -----------------------------------------------------------------------
-	typedef play::const_sequential_iterator<Base>     const_iterator;
-	typedef play::const_random_iterator<Base, addr_t> const_subgraph_iterator;
+	typedef play::const_sequential_iterator<Base>       const_iterator;
+	typedef play::const_subgraph_iterator<Base, addr_t> const_subgraph_iterator;
 	/// begin
 	const_iterator begin(void) const
 	{	size_t op_index = 0;
@@ -696,7 +696,6 @@ public:
 			&arg_vec_,
 			&op2arg_vec_,
 			&op2var_vec_,
-			&var2op_vec_,
 			subgraph_index
 		);
 	}
