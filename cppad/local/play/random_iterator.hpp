@@ -44,9 +44,6 @@ private:
 	/// mapping from operator index to index of primary (last) result
 	const pod_vector<Addr>* op2var_vec_;
 
-	/// mapping from primary results to correspinding operator indices
-	const pod_vector<Addr>* var2op_vec_;
-
 	/// index in subgraph of current operator
 	size_t subgraph_index_;
 
@@ -58,7 +55,6 @@ public:
 		op_vec_          = rhs.op_vec_;
 		op2arg_vec_      = rhs.op2arg_vec_;
 		op2var_vec_      = rhs.op2var_vec_;
-		var2op_vec_      = rhs.var2op_vec_;
 		subgraph_index_  = rhs.subgraph_index_;
 		return;
 	}
@@ -71,7 +67,6 @@ public:
 		const pod_vector<addr_t>*             arg_vec    , ///< arg_vec_
 		const pod_vector<addr_t>*             op2arg_vec , ///< op2ar_vec_
 		const pod_vector<addr_t>*             op2var_vec , ///< op2var_vec_
-		const pod_vector<addr_t>*             var2op_vec , ///< var2op_vec_
 		size_t subgraph_index                            ) ///< subgraph_index_
 	:
 	subgraph_        ( subgraph )                                  ,
@@ -79,7 +74,6 @@ public:
 	arg_vec_         ( arg_vec )                                   ,
 	op2arg_vec_      ( op2arg_vec->pod_vector_ptr<Addr>() )         ,
 	op2var_vec_      ( op2var_vec->pod_vector_ptr<Addr>() )         ,
-	var2op_vec_      ( var2op_vec->pod_vector_ptr<Addr>() )         ,
 	subgraph_index_  ( subgraph_index )
 	{ }
 	/*!
@@ -135,38 +129,6 @@ public:
 	/// current operator index
 	size_t op_index(void)
 	{	return (*subgraph_)[subgraph_index_]; }
-	/*!
-	\brief
-	Unpack extra information when current op is a UserOp
-
-	\param op [in]
-	must be a UserOp
-
-	\param op_arg [in]
-	is the arguments for this operator
-
-	\param user_old [out]
-	is the extra information passed to the old style user atomic functions.
-
-	\param user_m [out]
-	is the number of results for this user atmoic function.
-
-	\param user_n [out]
-	is the number of arguments for this user atmoic function.
-
-	\return
-	is a pointer to this user atomic function.
-	*/
-	atomic_base<Base>* user_info(
-		const OpCode     op         ,
-		const addr_t*    op_arg     ,
-		size_t&          user_old   ,
-		size_t&          user_m     ,
-		size_t&          user_n     ) const
-	{	return player<Base>::get_user_info(
-			op, op_arg, user_old, user_m, user_n
-		);
-	}
 };
 } } } // BEGIN_CPPAD_LOCAL_PLAY_NAMESPACE
 

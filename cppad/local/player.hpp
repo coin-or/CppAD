@@ -679,7 +679,6 @@ public:
 			&arg_vec_,
 			&op2arg_vec_,
 			&op2var_vec_,
-			&var2op_vec_,
 			subgraph_index
 		);
 	}
