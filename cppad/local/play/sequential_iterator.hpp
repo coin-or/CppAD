@@ -22,9 +22,6 @@ namespace CppAD { namespace local { namespace play {
 /*!
 Constant sequential iterator for a player object.
 
-\tparam Base
-This operation sequence was recorded using type AD<Base>.
-
 \tparam Addr
 An integer type capable of representing the largest value in the vectors
 arg_vec, op2arg_vec, op2var_vec, var2op_vec.
@@ -33,7 +30,6 @@ arg_vec, op2arg_vec, op2var_vec, var2op_vec.
 Except for constructor, the public API for this class is the same as
 for the subgraph_iterator class.
 */
-template <class Base>
 class const_sequential_iterator {
 private:
 	/// pointer to the first operator in the player, BeginOp = *op_begin_
@@ -153,7 +149,7 @@ public:
 	/*!
 	Advance iterator to next operator
 	*/
-	const_sequential_iterator<Base>& operator++(void)
+	const_sequential_iterator& operator++(void)
 	{
 		// first argument for next operator
 		arg_ += NumArg(op_);
@@ -203,7 +199,7 @@ public:
 	/*!
 	Backup iterator to previous operator
 	*/
-	const_sequential_iterator<Base>& operator--(void)
+	const_sequential_iterator& operator--(void)
 	{	//
 		// last result for next operator
 		var_index_ -= NumRes(op_);

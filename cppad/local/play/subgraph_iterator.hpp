@@ -24,9 +24,6 @@ namespace CppAD { namespace local { namespace play {
 /*!
 Constant subgraph iterator for a player object.
 
-\tparam Base
-This operation sequence was recorded using type AD<Base>.
-
 \tparam Addr
 An integer type capable of representing the largest value in the vectors
 arg_vec, op2arg_vec, op2var_vec, var2op_vec.
@@ -34,14 +31,14 @@ arg_vec, op2arg_vec, op2var_vec, var2op_vec.
 Except for constructor, the public API for this class is the same as
 for the sequential iterator class.
 */
-template <class Base, class Addr>
+template <class Addr>
 class const_subgraph_iterator {
 private:
 	/// sorted subset of operator indices that we will include
 	const pod_vector<addr_t>* subgraph_;
 
 	/// a random iterator used to access player information
-	const_random_iterator<Base, Addr> random_itr_;
+	const_random_iterator<Addr> random_itr_;
 
 	/// index in subgraph of current operator
 	/// The initial value for this index must be zero or subgraph.size()-1.
@@ -83,7 +80,7 @@ public:
 	/*!
 	Advance iterator to next operator
 	*/
-	const_subgraph_iterator<Base, Addr>& operator++(void)
+	const_subgraph_iterator<Addr>& operator++(void)
 	{	++subgraph_index_;
 		return *this;
 	}
@@ -93,7 +90,7 @@ public:
 	/*!
 	Backup iterator to previous operator
 	*/
-	const_subgraph_iterator<Base, Addr>& operator--(void)
+	const_subgraph_iterator<Addr>& operator--(void)
 	{	--subgraph_index_;
 		return *this;
 	}
