@@ -40,13 +40,20 @@ private:
 	/// sorted subset of operator indices that we will include
 	const pod_vector<addr_t>* subgraph_;
 
-	/// iterator used to access player information
+	/// a random iterator used to access player information
 	const_random_iterator<Base, Addr> random_itr_;
 
 	/// index in subgraph of current operator
+	/// The initial value for this index must be zero or subgraph.size()-1.
 	size_t subgraph_index_;
 
 public:
+	/// default constructor
+	const_subgraph_iterator(void) :
+	subgraph_(CPPAD_NULL)  ,
+	random_itr_()          ,
+	subgraph_index_(0)
+	{ }
 	/// default assignment operator
 	void operator=(const const_subgraph_iterator& rhs)
 	{
@@ -66,10 +73,13 @@ public:
 		const pod_vector<addr_t>*             op2var_vec , ///< op2var_vec_
 		size_t subgraph_index                            ) ///< subgraph_index_
 	:
-	subgraph_        ( subgraph )                                  ,
-	random_itr_      (op_vec, arg_vec, op2arg_vec, op2var_vec )    ,
+	subgraph_        ( subgraph )                                            ,
+	random_itr_      (op_vec, arg_vec, op2arg_vec, op2var_vec , CPPAD_NULL)  ,
 	subgraph_index_  ( subgraph_index )
-	{ }
+	{	CPPAD_ASSERT_UNKNOWN(
+			subgraph_index == 0 || subgraph_index == subgraph->size() - 1
+		);
+	}
 	/*!
 	Advance iterator to next operator
 	*/
