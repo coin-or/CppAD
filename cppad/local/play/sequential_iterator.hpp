@@ -54,15 +54,27 @@ private:
 	/// pointer to first argument for current operator
 	const addr_t*             arg_;
 
+	/// number of variables in tape (not const for assignment operator)
+	size_t                    num_var_;
+
 	/// index of last result for current operator
 	size_t                    var_index_;
-
-	/// number of variables in tape
-	size_t                    num_var_;
 
 	/// value of current operator; i.e. op_ = *op_cur_
 	OpCode                    op_;
 public:
+	/// default constructor
+	const_sequential_iterator(void) :
+	op_begin_(CPPAD_NULL)  ,
+	op_end_(CPPAD_NULL)    ,
+	arg_begin_(CPPAD_NULL) ,
+	arg_end_(CPPAD_NULL)   ,
+	op_cur_(CPPAD_NULL)    ,
+	arg_(CPPAD_NULL)       ,
+	num_var_(0)            ,
+	var_index_(0)          ,
+	op_(NumberOp)
+	{ }
 	/// assignment operator
 	void operator=(const const_sequential_iterator& rhs)
 	{
@@ -72,8 +84,8 @@ public:
 		arg_end_   = rhs.arg_end_;
 		op_cur_    = rhs.op_cur_;
 		arg_       = rhs.arg_;
-		var_index_ = rhs.var_index_;
 		num_var_   = rhs.num_var_;
+		var_index_ = rhs.var_index_;
 		op_        = rhs.op_;
 		return;
 	}

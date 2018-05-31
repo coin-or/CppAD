@@ -45,6 +45,13 @@ private:
 	const pod_vector<Addr>* op2var_vec_;
 
 public:
+	/// default constructor
+	const_random_iterator(void) :
+	op_vec_(CPPAD_NULL)     ,
+	arg_vec_(CPPAD_NULL)    ,
+	op2arg_vec_(CPPAD_NULL) ,
+	op2var_vec_(CPPAD_NULL)
+	{ }
 	/// default assignment operator
 	void operator=(const const_random_iterator& rhs)
 	{

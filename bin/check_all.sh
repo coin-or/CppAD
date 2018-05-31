@@ -43,13 +43,9 @@ echo_log_eval() {
 	fi
 	rm $top_srcdir/check_all.err
 }
-log_eval() {
+echo_log() {
+	echo $*
 	echo $* >> $top_srcdir/check_all.log
-	if ! eval $* >> $top_srcdir/check_all.log
-	then
-		echo "Error: check check_all.log"
-		exit 1
-	fi
 }
 random_01() {
 	set +e
@@ -75,15 +71,59 @@ then
 	echo_log_eval rm -r $HOME/prefix/cppad
 fi
 # ---------------------------------------------------------------------------
+version=`version.sh get`
+# ---------------------------------------------------------------------------
 random_01 tarball
-echo "random_01_tarball = $random_01_tarball"
-random_01 standard
-echo "random_01_standard = $random_01_standard"
-if [ "$debug_all" == 'no' ]
+if [ "$random_01_tarball" == '0' ]
 then
-	random_01 debug_which
-	echo "random_01_debug_which = $random_01_debug_which"
+	tarball="cppad-$version.epl.tgz"
+else
+	tarball="cppad-$version.gpl.tgz"
 fi
+#
+random_01 standard
+if [ "$random_01_standard" == '0' ]
+then
+	standard='--c++98 --no_adolc --no_sacado'
+	random_standard="$standard"
+else
+	standard=''
+	random_standard="--c++11"
+fi
+#
+if [ "$debug_all" == 'yes' ]
+then
+	package_vector='--cppad_vector'
+	debug_which='--debug_all'
+else
+	random_01 debug_which
+	if [ "$random_01_debug_which" == '0' ]
+	then
+		debug_which='--debug_even'
+	else
+		debug_which='--debug_odd'
+	fi
+	#
+	random_01 package_vector
+	if [ "$random_01_package_vector" == '0' ]
+	then
+		package_vector='--boost_vector'
+	else
+		package_vector='--eigen_vector'
+	fi
+fi
+cat << EOF
+tarball         = $tarball
+standard        = $random_standard
+debug_which     = $debug_which
+package_vector  = $package_vector
+EOF
+cat << EOF >> $top_srcdir/check_all.log
+tarball         = $tarball
+standard        = $random_standard
+debug_which     = $debug_which
+package_vector  = $package_vector
+EOF
 # ---------------------------------------------------------------------------
 # Run automated checks for the form bin/check_*.sh with a few exceptions.
 # In addition, run ~bradbell/bin/check_copyright.sh.
@@ -101,46 +141,17 @@ echo "bin/package.sh"
 bin/package.sh
 # -----------------------------------------------------------------------------
 # choose which tarball to use for testing
-skip=''
-version=`version.sh get`
 echo_log_eval cd build
-list=( `ls cppad-$version.*.tgz` )
-if [ "${#list[@]}" == '1' ]
-then
-	tarball="${list[0]}"
-	skip="$skip other_tarball"
-else
-	tarball="${list[$random_01_tarball]}"
-fi
 echo_log_eval rm -rf cppad-$version
 echo_log_eval tar -xzf $tarball
 echo_log_eval cd cppad-$version
 # -----------------------------------------------------------------------------
-if [ "$debug_all" == 'yes' ]
-then
-	package_vector='--cppad_vector'
-	debug_which='--debug_all'
-else
-	if [ "$random_01_debug_which" == '0' ]
-	then
-		package_vector='--boost_vector'
-		debug_which='--debug_even'
-	else
-		package_vector='--eigen_vector'
-		debug_which='--debug_odd'
-	fi
-fi
-if [ "$random_01_standard" == '0' ]
-then
-	standard='--c++98 --no_adolc --no_sacado'
-else
-	standard=''
-fi
 echo_log_eval bin/run_cmake.sh $package_vector $debug_which $standard
 echo_log_eval cd build
 # -----------------------------------------------------------------------------
 echo_log_eval make check
 # -----------------------------------------------------------------------------
+skip=''
 for package in adolc eigen ipopt fadbad sacado
 do
 	dir=$HOME/prefix/$package
