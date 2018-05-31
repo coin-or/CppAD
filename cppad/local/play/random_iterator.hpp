@@ -1,4 +1,3 @@
-
 # ifndef CPPAD_LOCAL_PLAY_RANDOM_ITERATOR_HPP
 # define CPPAD_LOCAL_PLAY_RANDOM_ITERATOR_HPP
 
@@ -22,6 +21,13 @@ namespace CppAD { namespace local { namespace play {
 
 /*!
 Constant random iterator for a player object.
+
+\tparam Base
+This operation sequence was recorded using type AD<Base>.
+
+\tparam Addr
+An integer type capable of representing the largest value in the vectors
+arg_vec, op2arg_vec, op2var_vec, var2op_vec.
 */
 template <class Base, class Addr>
 class const_random_iterator {
@@ -94,4 +100,3 @@ public:
 } } } // BEGIN_CPPAD_LOCAL_PLAY_NAMESPACE
 
 # endif
-

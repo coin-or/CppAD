@@ -22,6 +22,14 @@ namespace CppAD { namespace local { namespace play {
 /*!
 Constant sequential iterator for a player object.
 
+\tparam Base
+This operation sequence was recorded using type AD<Base>.
+
+\tparam Addr
+An integer type capable of representing the largest value in the vectors
+arg_vec, op2arg_vec, op2var_vec, var2op_vec.
+
+\par
 Except for constructor, the public API for this class is the same as
 for the subgraph_iterator class.
 */
