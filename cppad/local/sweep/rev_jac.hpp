@@ -153,8 +153,7 @@ void rev_jac(
 		parameter = play->GetPar();
 
 	// skip the EndOp at the end of the recording
-	typedef typename player<Base>::const_iterator iterator;
-	iterator itr = play->end();
+	play::const_sequential_iterator itr = play->end();
 	// op_info
 	OpCode op;
 	size_t i_var;

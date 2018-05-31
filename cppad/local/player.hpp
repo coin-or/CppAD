@@ -174,7 +174,7 @@ public:
 	{	return; }
 # else
 	void check_inv_op(size_t n_ind)
-	{	const_iterator itr = begin();
+	{	play::const_sequential_iterator itr = begin();
 		OpCode        op;
 		const addr_t* op_arg;
 		size_t        var_index;
@@ -201,7 +201,7 @@ public:
 	{	return; }
 # else
 	void check_dag(void)
-	{	const_iterator itr = begin();
+	{	play::const_sequential_iterator itr = begin();
 		OpCode        op;
 		const addr_t* op_arg;
 		size_t        var_index;
@@ -603,29 +603,29 @@ public:
 		;
 	}
 	// -----------------------------------------------------------------------
-	/// const seqeuntial iterator
-	typedef play::const_sequential_iterator       const_iterator;
-	//
 	/// const sequential iterator begin
-	const_iterator begin(void) const
+	play::const_sequential_iterator begin(void) const
 	{	size_t op_index = 0;
 		size_t num_var  = num_var_rec_;
-		return const_iterator(num_var, &op_vec_, &arg_vec_, op_index);
+		return play::const_sequential_iterator(
+			num_var, &op_vec_, &arg_vec_, op_index
+		);
 	}
 	/// const sequential iterator end
-	const_iterator end(void) const
+	play::const_sequential_iterator end(void) const
 	{	size_t op_index = op_vec_.size() - 1;
 		size_t num_var  = num_var_rec_;
-		return const_iterator(num_var, &op_vec_, &arg_vec_, op_index);
+		return play::const_sequential_iterator(
+			num_var, &op_vec_, &arg_vec_, op_index
+		);
 	}
 	// -----------------------------------------------------------------------
-	/// const subgraph iterator (requires random accesss)
-	typedef play::const_subgraph_iterator<addr_t> const_subgraph_iterator;
-	//
 	/// const subgraph iterator begin
-	const_subgraph_iterator begin(pod_vector<addr_t>* subgraph) const
+	play::const_subgraph_iterator<addr_t>  begin_subgraph(
+		const pod_vector<addr_t>& subgraph
+	) const
 	{	size_t subgraph_index = 0;
-		return const_subgraph_iterator(
+		return play::const_subgraph_iterator<addr_t>(
 			&subgraph,
 			&op_vec_,
 			&arg_vec_,
@@ -635,9 +635,11 @@ public:
 		);
 	}
 	/// const subgraph iterator end
-	const_subgraph_iterator end(pod_vector<addr_t>& subgraph) const
+	play::const_subgraph_iterator<addr_t>  end_subgraph(
+		const pod_vector<addr_t>& subgraph
+	) const
 	{	size_t subgraph_index = subgraph.size() - 1;
-		return const_subgraph_iterator(
+		return play::const_subgraph_iterator<addr_t>(
 			&subgraph,
 			&op_vec_,
 			&arg_vec_,
@@ -647,12 +649,9 @@ public:
 		);
 	}
 	// -----------------------------------------------------------------------
-	/// const random iterator (requires random accesss)
-	typedef play::const_random_iterator<addr_t> const_random_iterator;
-	//
 	/// const random iterator
-	const_random_iterator random(void) const
-	{	return const_random_iterator(
+	play::const_random_iterator<addr_t> random(void) const
+	{	return play::const_random_iterator<addr_t>(
 			&op_vec_,
 			&arg_vec_,
 			&op2arg_vec_,

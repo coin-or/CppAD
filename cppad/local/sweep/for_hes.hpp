@@ -168,8 +168,7 @@ void for_hes(
 		parameter = play->GetPar();
 
 	// skip the BeginOp at the beginning of the recording
-	typedef typename player<Base>::const_iterator iterator;
-	iterator itr = play->begin();
+	play::const_sequential_iterator itr = play->begin();
 	// op_info
 	OpCode op;
 	size_t i_var;

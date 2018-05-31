@@ -81,7 +81,7 @@ size_t ADFun<Base>::number_skip(void)
 	size_t num_var_skip = 0;
 
 	// start playback
-	typename local::player<Base>::const_iterator itr = play_.begin();
+	local::play::const_sequential_iterator itr = play_.begin();
 	local::OpCode op;
 	size_t        i_var;
 	const addr_t* arg;

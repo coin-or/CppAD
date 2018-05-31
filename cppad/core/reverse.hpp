@@ -14,6 +14,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 # include <algorithm>
 # include <cppad/local/pod_vector.hpp>
+# include <cppad/local/play/sequential_iterator.hpp>
 
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 /*!
@@ -154,7 +155,7 @@ VectorBase ADFun<Base>::Reverse(size_t q, const VectorBase &w)
 	// evaluate the derivatives
 	CPPAD_ASSERT_UNKNOWN( cskip_op_.size() == play_.num_op_rec() );
 	CPPAD_ASSERT_UNKNOWN( load_op_.size()  == play_.num_load_op_rec() );
-	typename local::player<Base>::const_iterator play_itr = play_.end();
+	local::play::const_sequential_iterator play_itr = play_.end();
 	local::sweep::reverse(
 		q - 1,
 		n,

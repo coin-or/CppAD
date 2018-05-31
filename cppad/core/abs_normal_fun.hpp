@@ -302,7 +302,7 @@ void ADFun<Base>::abs_normal_fun(ADFun<Base>& g, ADFun<Base>& a) const
 	OpCode        op;                 // this operator
 	const addr_t* arg = CPPAD_NULL;   // arguments for this operator
 	size_t        i_var;              // variable index for this operator
-	typename local::player<Base>::const_iterator itr = play_.begin();
+	local::play::const_sequential_iterator itr = play_.begin();
 	itr.op_info(op, arg, i_var);
 	CPPAD_ASSERT_UNKNOWN( op == BeginOp );
 	//

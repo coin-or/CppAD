@@ -380,8 +380,8 @@ void ADFun<Base>::subgraph_reverse(
 	CPPAD_ASSERT_UNKNOWN( cskip_op_.size() == play_.num_op_rec() );
 	CPPAD_ASSERT_UNKNOWN( load_op_.size()  == play_.num_load_op_rec() );
 	size_t n = Domain();
-	typename local::player<Base>::const_subgraph_iterator
-		play_itr = play_.end(subgraph);
+	typename local::play::const_subgraph_iterator<addr_t>
+		play_itr = play_.end_subgraph(subgraph);
 	local::sweep::reverse(
 		q - 1,
 		n,
