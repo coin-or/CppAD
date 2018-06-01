@@ -51,7 +51,7 @@ struct_size_pair record_vv(
 	OpCode        op;
 	const addr_t* arg;
 	size_t        i_var;
-	play->random_access(i_op, op, arg, i_var);
+	random_itr->op_info(i_op, op, arg, i_var);
 	//
 # ifndef NDEBUG
 	switch(op)

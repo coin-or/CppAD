@@ -23,8 +23,8 @@ Determine arguments that are variables.
 /*!
 Determine the set of arguments, for an operator, that are variables.
 
-\param play
-is the player for this operation sequence.
+\param random_itr
+is a random iterator for this operation sequence.
 
 \param i_op
 is the operator index. If this operator is part of a user function call,
@@ -41,12 +41,12 @@ this is work space used by arg_variable to make subsequent calls
 faster. It should not be used by the calling routine. In addition,
 it is better if work does not drop out of scope between calls.
 */
-template <typename Base>
+template <class Addr>
 void get_argument_variable(
-	const player<Base>*  play        ,
-	size_t               i_op        ,
-	pod_vector<size_t>&  variable    ,
-	pod_vector<bool>&    work        )
+	const play::const_random_iterator<Addr>* random_itr  ,
+	size_t                                   i_op        ,
+	pod_vector<size_t>&                      variable    ,
+	pod_vector<bool>&                        work        )
 {
 	// reset to size zero, but keep allocated memory
 	variable.resize(0);
@@ -55,7 +55,7 @@ void get_argument_variable(
 	OpCode        op;
 	const addr_t* op_arg;
 	size_t        i_var;
-	play->random_access(i_op, op, op_arg, i_var);
+	random_itr->op_info(i_op, op, op_arg, i_var);
 	//
 	// partial check of assumptions on user function calls
 	CPPAD_ASSERT_UNKNOWN(
@@ -64,7 +64,7 @@ void get_argument_variable(
 	//
 	// we assume this is the first UserOp of the call
 	if( op == UserOp )
-	{	play->random_access(++i_op, op, op_arg, i_var);
+	{	random_itr->op_info(++i_op, op, op_arg, i_var);
 		while( op != UserOp )
 		{	switch(op)
 			{
@@ -85,7 +85,7 @@ void get_argument_variable(
 				CPPAD_ASSERT_UNKNOWN(false);
 				break;
 			}
-			play->random_access(++i_op, op, op_arg, i_var);
+			random_itr->op_info(++i_op, op, op_arg, i_var);
 		}
 		CPPAD_ASSERT_UNKNOWN( variable.size() > 0 );
 		return;

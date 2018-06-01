@@ -357,7 +357,7 @@ void ADFun<Base>::subgraph_reverse(
 		local::OpCode        op;
 		const addr_t*        arg;
 		size_t               i_var;
-		play_.random_access(i_op, op, arg, i_var);
+		random_itr.op_info(i_op, op, arg, i_var);
 		if( NumRes(op) == 0 )
 		{	CPPAD_ASSERT_UNKNOWN(
 				op == local::UserOp  ||

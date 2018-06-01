@@ -94,7 +94,7 @@ struct_size_pair record_csum(
 	// information corresponding to the root node in the cummulative summation
 	struct struct_csum_variable var;
 	size_t not_used;
-	play->random_access(i_op, var.op, var.arg, not_used);
+	random_itr->op_info(i_op, var.op, var.arg, not_used);
 	var.add = true;  // was parrent operator positive or negative
 	//
 	// initialize stack as containing this one operator
@@ -151,7 +151,7 @@ struct_size_pair record_csum(
 				);
 				// push the operator corresponding to the first argument
 				size_t i_op_tmp = random_itr->var2op(arg[0]);
-				play->random_access(i_op_tmp, var.op, var.arg, not_used);
+				random_itr->op_info(i_op_tmp, var.op, var.arg, not_used);
 				// first argument has same sign as parent node
 				var.add = add;
 				work.op_stack.push( var );
@@ -194,7 +194,7 @@ struct_size_pair record_csum(
 				);
 				// push the operator corresoponding to the second arugment
 				size_t i_op_tmp = random_itr->var2op(arg[1]);
-				play->random_access(i_op_tmp, var.op, var.arg, not_used);
+				random_itr->op_info(i_op_tmp, var.op, var.arg, not_used);
 				var.add  = add;
 				work.op_stack.push( var );
 			}

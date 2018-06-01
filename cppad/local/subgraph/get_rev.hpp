@@ -142,7 +142,7 @@ void subgraph_info::get_rev(
 # endif
 		//
 		// which variables are connected to this operator
-		get_argument_variable(play, i_op, argument_variable, work);
+		get_argument_variable(random_itr, i_op, argument_variable, work);
 		for(size_t j = 0; j < argument_variable.size(); ++j)
 		{	// add the corresponding operators to the subgraph
 			size_t j_var = argument_variable[j];

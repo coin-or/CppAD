@@ -130,7 +130,7 @@ void subgraph_info::init_rev(
 			case UserOp:
 			begin_atomic_call  = not begin_atomic_call;
 			if( begin_atomic_call )
-			{	get_argument_variable(play, i_op, argument_variable, work);
+			{	get_argument_variable(random_itr, i_op, argument_variable, work);
 				for(size_t j = 0; j < argument_variable.size(); ++j)
 				{	size_t j_var = argument_variable[j];
 					size_t j_op  = random_itr->var2op(j_var);
@@ -150,7 +150,7 @@ void subgraph_info::init_rev(
 			default:
 			// Except for UserOp, only include when NumRes(op) > 0.
 			if( NumRes(op) > 0 )
-			{	get_argument_variable(play, i_op, argument_variable, work);
+			{	get_argument_variable(random_itr, i_op, argument_variable, work);
 				for(size_t j = 0; j < argument_variable.size(); ++j)
 				{	size_t j_var = argument_variable[j];
 					size_t j_op  = random_itr->var2op(j_var);

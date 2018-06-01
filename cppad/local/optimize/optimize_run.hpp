@@ -251,7 +251,7 @@ void optimize_run(
 		//
 		// this operator information
 		size_t i_tmp;
-		play->random_access(i_op, op, arg, i_tmp);
+		random_itr->op_info(i_op, op, arg, i_tmp);
 		if( NumRes(op) > 0 )
 			i_var = i_tmp;
 		//
@@ -853,7 +853,7 @@ void optimize_run(
 
 # ifndef NDEBUG
 	for(i_op = 0; i_op < num_op; i_op++)
-	{	play->random_access(i_op, op, arg, i_var);
+	{	random_itr->op_info(i_op, op, arg, i_var);
 		if( NumRes(op) > 0 )
 			CPPAD_ASSERT_UNKNOWN(
 				size_t(old2new[i_op].new_op) < rec->num_op_rec()

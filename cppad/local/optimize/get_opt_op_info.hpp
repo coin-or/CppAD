@@ -238,7 +238,7 @@ void get_opt_op_info(
 	size_t        i_op;   // operator index
 	size_t        i_var;  // variable index of first result
 	i_op = 0;
-	play->random_access(i_op, op, arg, i_var);
+	random_itr->op_info(i_op, op, arg, i_var);
 	CPPAD_ASSERT_UNKNOWN( op              == BeginOp );
 	CPPAD_ASSERT_UNKNOWN( NumRes(BeginOp) == 1 );
 	CPPAD_ASSERT_UNKNOWN( i_op            == 0 );
@@ -248,7 +248,7 @@ void get_opt_op_info(
 	user_state = start_user;
 	while(op != EndOp)
 	{	// next operator
-		play->random_access(++i_op, op, arg, i_var);
+		random_itr->op_info(++i_op, op, arg, i_var);
 		//
 		if( op == CExpOp )
 		{	// count the number of conditional expressions.
@@ -344,7 +344,7 @@ void get_opt_op_info(
 	{	--i_op;
 		//
 		// this operator information
-		play->random_access(i_op, op, arg, i_var);
+		random_itr->op_info(i_op, op, arg, i_var);
 		//
 		// Is the result of this operation used.
 		// (This only makes sense when NumRes(op) > 0.)
@@ -995,7 +995,7 @@ void get_opt_op_info(
 			opt_op_info[i].previous == 0 || opt_op_info[i].usage == yes_usage
 		);
 		i_op            = cexp2op[i];
-		play->random_access(i_op, op, arg, i_var);
+		random_itr->op_info(i_op, op, arg, i_var);
 		CPPAD_ASSERT_UNKNOWN( op == CExpOp );
 		//
 		struct_cexp_info info;

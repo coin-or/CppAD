@@ -459,34 +459,6 @@ public:
 	// ================================================================
 	/*!
 	\brief
-	fetch the information corresponding to an operator
-
-	\param op_index
-	index for this operator [in]
-
-	\param op [out]
-	op code for this operator.
-
-	\param op_arg [out]
-	pointer to the first arguement to this operator.
-
-	\param var_index [out]
-	index of the last variable (primary variable) for this operator.
-	If there is no primary variable for this operator, i_var not sepcified
-	and could have any value.
-	*/
-	void random_access(
-		size_t         op_index   ,
-		OpCode&        op         ,
-		const addr_t*& op_arg     ,
-		size_t&        var_index  ) const
-	{	op        = OpCode( op_vec_[op_index] );
-		op_arg    = op2arg_vec_[op_index] + arg_vec_.data();
-		var_index = op2var_vec_[op_index];
-		return;
-	}
-	/*!
-	\brief
 	fetch an operator from the recording.
 
 	\return
