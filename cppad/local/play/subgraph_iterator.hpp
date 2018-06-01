@@ -34,11 +34,11 @@ for the sequential iterator class.
 template <class Addr>
 class const_subgraph_iterator {
 private:
+	/// a random iterator used to access player information
+	const const_random_iterator<Addr>* random_itr_;
+
 	/// sorted subset of operator indices that we will include
 	const pod_vector<addr_t>* subgraph_;
-
-	/// a random iterator used to access player information
-	const_random_iterator<Addr> random_itr_;
 
 	/// index in subgraph of current operator
 	/// The initial value for this index must be zero or subgraph.size()-1.
@@ -47,8 +47,8 @@ private:
 public:
 	/// default constructor
 	const_subgraph_iterator(void) :
-	subgraph_(CPPAD_NULL)  ,
-	random_itr_()          ,
+	random_itr_(CPPAD_NULL) ,
+	subgraph_(CPPAD_NULL)   ,
 	subgraph_index_(0)
 	{ }
 	/// default assignment operator
@@ -63,15 +63,12 @@ public:
 	Create a subgraph iterator starting either at beginning or end of subgraph
 	*/
 	const_subgraph_iterator(
+		const const_random_iterator<Addr>*    random_itr , ///< random_itr_
 		const pod_vector<addr_t>*             subgraph   , ///< subgraph_
-		const pod_vector<CPPAD_OP_CODE_TYPE>* op_vec     , ///< op_vec_
-		const pod_vector<addr_t>*             arg_vec    , ///< arg_vec_
-		const pod_vector<addr_t>*             op2arg_vec , ///< op2ar_vec_
-		const pod_vector<addr_t>*             op2var_vec , ///< op2var_vec_
 		size_t subgraph_index                            ) ///< subgraph_index_
 	:
-	subgraph_        ( subgraph )                                            ,
-	random_itr_      (op_vec, arg_vec, op2arg_vec, op2var_vec , CPPAD_NULL)  ,
+	random_itr_      ( random_itr )        ,
+	subgraph_        ( subgraph )          ,
 	subgraph_index_  ( subgraph_index )
 	{	CPPAD_ASSERT_UNKNOWN(
 			subgraph_index == 0 || subgraph_index == subgraph->size() - 1
@@ -123,7 +120,7 @@ public:
 		size_t&        var_index  ) const
 	{	// op
 		size_t op_index = (*subgraph_)[subgraph_index_];
-		random_itr_.op_info(op_index, op, op_arg, var_index);
+		random_itr_->op_info(op_index, op, op_arg, var_index);
 	}
 	/// current operator index
 	size_t op_index(void)

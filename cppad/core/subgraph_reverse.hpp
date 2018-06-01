@@ -380,8 +380,13 @@ void ADFun<Base>::subgraph_reverse(
 	CPPAD_ASSERT_UNKNOWN( cskip_op_.size() == play_.num_op_rec() );
 	CPPAD_ASSERT_UNKNOWN( load_op_.size()  == play_.num_load_op_rec() );
 	size_t n = Domain();
-	typename local::play::const_subgraph_iterator<addr_t>
-		play_itr = play_.end_subgraph(subgraph);
+	//
+	typename local::play::const_random_iterator<addr_t> random_itr =
+		play_.random();
+	//
+	local::play::const_subgraph_iterator<addr_t> subgraph_itr =
+		play_.end_subgraph(&random_itr, &subgraph);
+	//
 	local::sweep::reverse(
 		q - 1,
 		n,
@@ -393,7 +398,7 @@ void ADFun<Base>::subgraph_reverse(
 		subgraph_partial_.data(),
 		cskip_op_.data(),
 		load_op_,
-		play_itr
+		subgraph_itr
 	);
 
 	// number of non-zero in return value
