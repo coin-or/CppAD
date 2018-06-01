@@ -96,7 +96,41 @@ public:
 	/// destructor
 	~player(void)
 	{ }
-
+	// ======================================================================
+	/// possible enum corresponding to type used for addressing
+	/// iterators for a player
+	enum addr_enum {
+		unsigned_char_enum   ,
+		unsigned_short_enum  ,
+		unsigned_int_enum    ,
+		size_t_enum
+	};
+	/// type used for addressing iterators for this player
+	addr_enum address_type(void) const
+	{	// required
+		size_t required = 0;
+		required = std::max(required, num_var_rec_   );  // number variables
+		required = std::max(required, op_vec_.size()  ); // number operators
+		required = std::max(required, arg_vec_.size() ); // number arguments
+		//
+		// unsigned char
+		if( required <= std::numeric_limits<unsigned char>::max() )
+			return unsigned_char_enum;
+		//
+		// unsigned short
+		if( required <= std::numeric_limits<unsigned short>::max() )
+			return unsigned_short_enum;
+		//
+		// unsigned int
+		if( required <= std::numeric_limits<unsigned int>::max() )
+			return unsigned_int_enum;
+		//
+		// unsigned size_t
+		CPPAD_ASSERT_UNKNOWN(
+			required <= std::numeric_limits<size_t>::max()
+		);
+		return size_t_enum;
+	}
 	// ===============================================================
 	/*!
 	Moving an operation sequence from a recorder to this player
@@ -170,10 +204,10 @@ public:
 	and there are n_ind of them.
 	*/
 # ifdef NDEBUG
-	void check_inv_op(size_t n_ind)
+	void check_inv_op(size_t n_ind) const
 	{	return; }
 # else
-	void check_inv_op(size_t n_ind)
+	void check_inv_op(size_t n_ind) const
 	{	play::const_sequential_iterator itr = begin();
 		OpCode        op;
 		const addr_t* op_arg;
@@ -197,10 +231,10 @@ public:
 	acyclic graph condition (DAG).
 	*/
 # ifdef NDEBUG
-	void check_dag(void)
+	void check_dag(void) const
 	{	return; }
 # else
-	void check_dag(void)
+	void check_dag(void) const
 	{	play::const_sequential_iterator itr = begin();
 		OpCode        op;
 		const addr_t* op_arg;
@@ -409,11 +443,10 @@ public:
 			var2op_vec_
 		);
 	}
-	/// Free memory used for member functions that begin with random_
-	/// and const_subgraph_iterator.
+	/// Free memory used for functions that begin with random_
+	/// and random iterators and subgraph iterators
 	void clear_random(void)
 	{
-
 		op2arg_vec_.clear();
 		op2var_vec_.clear();
 		var2op_vec_.clear();
