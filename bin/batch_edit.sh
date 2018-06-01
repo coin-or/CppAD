@@ -22,6 +22,7 @@
 # 10. Change http://www.coin-or.org/CppAD to new download server and figure
 #     a way to distribute gpl version of repository.
 # 11. Change UserOp -> AfunOpm Usr[ar][vp]Op -> Afun[ar][vp]Op
+# 12. Remove all doxygen \a commands (not used consistently)
 # -----------------------------------------------------------------------------
 spell_list='
 '

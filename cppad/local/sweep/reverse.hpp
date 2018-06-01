@@ -172,7 +172,7 @@ or play->end(subgraph), for a subgraph.
 This routine mode will use --play_itr to iterate over the graph or subgraph.
 It is assumes that the iterator starts just past the EndOp and it will
 continue until it reaches the BeginOp.
-If i_var is a variable index, and play->random_var2op(i_var)
+If i_var is a variable index, and the corresponding operator
 is not in the subgraph,
 then the partials with respect to i_var are not modified and need to be
 initialized as zero. Note that this means the partial for the independent

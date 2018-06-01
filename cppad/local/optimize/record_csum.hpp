@@ -24,6 +24,9 @@ Recording a cummulative cummulative summation.
 \param play
 player object corresponding to the old recroding.
 
+\param random_itr
+is a random iterator corresponding to the old operation sequence.
+
 \param opt_op_info
 mapping from old index to operator index to operator information
 
@@ -33,7 +36,7 @@ mapping from old operator index to information about the new recording.
 \param current
 is the index in the old operation sequence for
 the variable corresponding to the result for the current operator.
-We use the notation i_op = play->random_var2op(current).
+We use the notation i_op = random_itr->var2op(current).
 It follows that  NumRes( opt_op_info[i_op].op ) > 0.
 If 0 < j_op < i_op, either opt_op_info[j_op].usage == csum_usage,
 opt_op_info[j_op].usage = no_usage, or old2new[j_op].new_var != 0.
@@ -62,6 +65,7 @@ opt_op_info[i_op].
 template <class Base>
 struct_size_pair record_csum(
 	const player<Base>*                                play           ,
+	const play::const_random_iterator<addr_t>*         random_itr     ,
 	const vector<struct_opt_op_info>&                  opt_op_info    ,
 	const CppAD::vector<struct struct_old2new>&        old2new        ,
 	size_t                                             current        ,
@@ -84,7 +88,7 @@ struct_size_pair record_csum(
 	CPPAD_ASSERT_UNKNOWN( work.add_stack.empty() );
 	CPPAD_ASSERT_UNKNOWN( work.sub_stack.empty() );
 	//
-	size_t i_op = play->random_var2op(current);
+	size_t i_op = random_itr->var2op(current);
 	CPPAD_ASSERT_UNKNOWN( ! ( opt_op_info[i_op].usage == csum_usage ) );
 	//
 	// information corresponding to the root node in the cummulative summation
@@ -102,14 +106,14 @@ struct_size_pair record_csum(
 # ifndef NDEBUG
 	bool ok = false;
 	if( var.op == SubvpOp ) ok =
-		opt_op_info[ play->random_var2op(var.arg[0]) ].usage == csum_usage;
+		opt_op_info[ random_itr->var2op(var.arg[0]) ].usage == csum_usage;
 	if( var.op == AddpvOp || var.op == SubpvOp ) ok =
-		opt_op_info[ play->random_var2op(var.arg[1]) ].usage == csum_usage;
+		opt_op_info[ random_itr->var2op(var.arg[1]) ].usage == csum_usage;
 	if( var.op == AddvvOp || var.op == SubvvOp )
 	{	ok  =
-		opt_op_info[ play->random_var2op(var.arg[0]) ].usage == csum_usage;
+		opt_op_info[ random_itr->var2op(var.arg[0]) ].usage == csum_usage;
 		ok |=
-		opt_op_info[ play->random_var2op(var.arg[1]) ].usage == csum_usage;
+		opt_op_info[ random_itr->var2op(var.arg[1]) ].usage == csum_usage;
 	}
 	CPPAD_ASSERT_UNKNOWN( ok );
 # endif
@@ -141,12 +145,12 @@ struct_size_pair record_csum(
 			case SubvvOp:
 			//
 			// check if the first argument has csum usage
-			if( opt_op_info[play->random_var2op(arg[0])].usage == csum_usage )
+			if( opt_op_info[random_itr->var2op(arg[0])].usage == csum_usage )
 			{	CPPAD_ASSERT_UNKNOWN(
-				size_t( old2new[ play->random_var2op(arg[0]) ].new_var) == 0
+				size_t( old2new[ random_itr->var2op(arg[0]) ].new_var) == 0
 				);
 				// push the operator corresponding to the first argument
-				size_t i_op_tmp = play->random_var2op(arg[0]);
+				size_t i_op_tmp = random_itr->var2op(arg[0]);
 				play->random_access(i_op_tmp, var.op, var.arg, not_used);
 				// first argument has same sign as parent node
 				var.add = add;
@@ -184,12 +188,12 @@ struct_size_pair record_csum(
 			case AddvvOp:
 			case AddpvOp:
 			// check if the second argument has csum usage
-			if( opt_op_info[play->random_var2op(arg[1])].usage == csum_usage )
+			if( opt_op_info[random_itr->var2op(arg[1])].usage == csum_usage )
 			{	CPPAD_ASSERT_UNKNOWN(
-				size_t( old2new[ play->random_var2op(arg[1]) ].new_var) == 0
+				size_t( old2new[ random_itr->var2op(arg[1]) ].new_var) == 0
 				);
 				// push the operator corresoponding to the second arugment
-				size_t i_op_tmp = play->random_var2op(arg[1]);
+				size_t i_op_tmp = random_itr->var2op(arg[1]);
 				play->random_access(i_op_tmp, var.op, var.arg, not_used);
 				var.add  = add;
 				work.op_stack.push( var );
@@ -224,7 +228,7 @@ struct_size_pair record_csum(
 	for(size_t i = 0; i < n_add; i++)
 	{	CPPAD_ASSERT_UNKNOWN( ! work.add_stack.empty() );
 		size_t old_arg = work.add_stack.top();
-		new_arg        = old2new[ play->random_var2op(old_arg) ].new_var;
+		new_arg        = old2new[ random_itr->var2op(old_arg) ].new_var;
 		CPPAD_ASSERT_UNKNOWN( 0 < new_arg && size_t(new_arg) < current );
 		rec->PutArg(new_arg);         // arg[3+i]
 		work.add_stack.pop();
@@ -233,7 +237,7 @@ struct_size_pair record_csum(
 	for(size_t i = 0; i < n_sub; i++)
 	{	CPPAD_ASSERT_UNKNOWN( ! work.sub_stack.empty() );
 		size_t old_arg = work.sub_stack.top();
-		new_arg        = old2new[ play->random_var2op(old_arg) ].new_var;
+		new_arg        = old2new[ random_itr->var2op(old_arg) ].new_var;
 		CPPAD_ASSERT_UNKNOWN( 0 < new_arg && size_t(new_arg) < current );
 		rec->PutArg(new_arg);      // arg[3 + arg[0] + i]
 		work.sub_stack.pop();

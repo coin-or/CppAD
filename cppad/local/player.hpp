@@ -459,22 +459,6 @@ public:
 	// ================================================================
 	/*!
 	\brief
-	fetch the operator corresponding to a primary variable
-
-	\param var_index
-	must be the index of a primary variable.
-
-	\return
-	is the index of the operator corresponding to this primary variable.
-	*/
-	size_t random_var2op(size_t var_index) const
-	{	size_t i_op = var2op_vec_[var_index];
-		// check that var_index is a primary variable index
-		CPPAD_ASSERT_UNKNOWN( i_op < op_vec_.size() );
-		return i_op;
-	}
-	/*!
-	\brief
 	fetch the information corresponding to an operator
 
 	\param op_index
@@ -677,7 +661,7 @@ public:
 	}
 	// -----------------------------------------------------------------------
 	/// const random iterator
-	play::const_random_iterator<addr_t> random(void) const
+	play::const_random_iterator<addr_t> get_random(void) const
 	{	return play::const_random_iterator<addr_t>(
 			&op_vec_,
 			&arg_vec_,

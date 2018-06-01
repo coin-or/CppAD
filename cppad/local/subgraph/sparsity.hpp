@@ -1,7 +1,7 @@
 # ifndef CPPAD_LOCAL_SUBGRAPH_SPARSITY_HPP
 # define CPPAD_LOCAL_SUBGRAPH_SPARSITY_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -34,6 +34,10 @@ a simple vector class with elements of type bool.
 
 \param play
 is the operation sequence corresponding to the ADFun<Base> function.
+
+\param random_itr
+is a random iterator corresponding to operation sequence corresponding
+for the ADFun<Base> function.
 
 \param sub_info
 is the subgraph information for this ADFun object.
@@ -81,13 +85,14 @@ to to make the sparsity pattern more efficient.
 
 template <typename Base, typename BoolVector>
 void subgraph_sparsity(
-	const player<Base>*        play          ,
-	subgraph_info&             sub_info      ,
-	const vector<size_t>&      dep_taddr     ,
-	const BoolVector&          select_domain ,
-	const BoolVector&          select_range  ,
-	pod_vector<size_t>&        row_out       ,
-	pod_vector<size_t>&        col_out       )
+	const player<Base>*                        play          ,
+	const play::const_random_iterator<addr_t>* random_itr    ,
+	subgraph_info&                             sub_info      ,
+	const vector<size_t>&                      dep_taddr     ,
+	const BoolVector&                          select_domain ,
+	const BoolVector&                          select_range  ,
+	pod_vector<size_t>&                        row_out       ,
+	pod_vector<size_t>&                        col_out       )
 {
 	// check dimension assumptions
 	CPPAD_ASSERT_UNKNOWN(
@@ -123,7 +128,7 @@ void subgraph_sparsity(
 	pod_vector<addr_t> subgraph;
 
 	// initialize a reverse mode subgraph calculation
-	sub_info.init_rev(play, select_domain);
+	sub_info.init_rev(play, random_itr, select_domain);
 	CPPAD_ASSERT_UNKNOWN(
 		sub_info.in_subgraph().size() == play->num_op_rec()
 	);
@@ -144,7 +149,7 @@ void subgraph_sparsity(
 		//
 		// subgraph of operators connected to i_dep
 		sub_info.get_rev(
-			play, dep_taddr, addr_t(i_dep), subgraph
+			play, random_itr, dep_taddr, addr_t(i_dep), subgraph
 		);
 		//
 		for(size_t k = 0; k < subgraph.size(); k++)
@@ -163,7 +168,7 @@ void subgraph_sparsity(
 				// i_var is equal i_op becasue BeginOp and InvOp have 1 result
 				size_t i_var = i_op;       // tape index for this variable
 				size_t i_ind = i_var - 1;  // user index for this variable
-				CPPAD_ASSERT_UNKNOWN( play->random_var2op(i_var) == i_op );
+				CPPAD_ASSERT_UNKNOWN( random_itr->var2op(i_var) == i_op );
 				CPPAD_ASSERT_UNKNOWN( select_domain[i_ind] );
 				//
 				// put this pair in the sparsity pattern

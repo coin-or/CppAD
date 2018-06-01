@@ -28,6 +28,9 @@ for the current operator.
 \param play
 This is the old operation sequence.
 
+\param random_itr
+is a random iterator for the old operation sequence.
+
 \param opt_op_info
 Mapping from operator index to operator information.
 The input value of opt_op_info[current].previous is assumed to be zero.
@@ -67,10 +70,11 @@ and a match for the current operator is not found.
 */
 template <class Base>
 void match_op(
-	const player<Base>*            play           ,
-	vector<struct_opt_op_info>&    opt_op_info    ,
-	size_t                         current        ,
-	sparse_list&                   hash_table_op  )
+	const player<Base>*                         play           ,
+	const play::const_random_iterator<addr_t>*  random_itr     ,
+	vector<struct_opt_op_info>&                 opt_op_info    ,
+	size_t                                      current        ,
+	sparse_list&                                hash_table_op  )
 {	//
 	size_t num_op = play->num_op_rec();
 	//
@@ -102,7 +106,7 @@ void match_op(
 	for(size_t j = 0; j < num_arg; ++j)
 	{	arg_match[j] = arg[j];
 		if( variable[j] )
-		{	size_t j_op     = play->random_var2op(arg[j]);
+		{	size_t j_op     = random_itr->var2op(arg[j]);
 			size_t previous = opt_op_info[j_op].previous;
 			if( previous != 0 )
 			{	// a previous match, be the end of the line; i.e.,
@@ -145,7 +149,7 @@ void match_op(
 		{	for(size_t j = 0; j < num_arg; j++)
 			{	if( variable[j] )
 				{	size_t previous =
-						opt_op_info[ play->random_var2op(arg_c[j]) ].previous;
+						opt_op_info[ random_itr->var2op(arg_c[j]) ].previous;
 					if( previous != 0 )
 					{	// must be end of the line for a previous match
 						CPPAD_ASSERT_UNKNOWN(
@@ -196,7 +200,7 @@ void match_op(
 			{	for(size_t j = 0; j < num_arg; j++)
 				{	CPPAD_ASSERT_UNKNOWN( variable[j] )
 					size_t previous =
-						opt_op_info[ play->random_var2op(arg_c[j]) ].previous;
+						opt_op_info[ random_itr->var2op(arg_c[j]) ].previous;
 					if( previous != 0 )
 					{	CPPAD_ASSERT_UNKNOWN(
 							opt_op_info[previous].previous == 0

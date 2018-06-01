@@ -1,7 +1,7 @@
 # ifndef CPPAD_LOCAL_SUBGRAPH_GET_REV_HPP
 # define CPPAD_LOCAL_SUBGRAPH_GET_REV_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -32,6 +32,10 @@ this operation sequence was recording using AD<Base>.
 
 \param play
 is the operation sequence corresponding to the ADFun<Base> function.
+
+\param random_itr
+is the random iterator for operation sequence corresponding
+to the ADFun<Base> function.
 
 \param dep_taddr
 is the vector mapping user dependent variable indices
@@ -82,10 +86,11 @@ It is then set to have value true.
 */
 template <typename Base>
 void subgraph_info::get_rev(
-	const player<Base>*       play         ,
-	const vector<size_t>&     dep_taddr    ,
-	addr_t                    i_dep        ,
-	pod_vector<addr_t>&       subgraph     )
+	const player<Base>*                        play        ,
+	const play::const_random_iterator<addr_t>* random_itr  ,
+	const vector<size_t>&                      dep_taddr   ,
+	addr_t                                     i_dep       ,
+	pod_vector<addr_t>&                        subgraph    )
 {	// check sizes
 	CPPAD_ASSERT_UNKNOWN( map_user_op_.size()   == n_op_ );
 
@@ -106,7 +111,7 @@ void subgraph_info::get_rev(
 	size_t i_var = dep_taddr[i_dep];
 
 	// operator corresponding to this dependent variable
-	size_t i_op = play->random_var2op(i_var);
+	size_t i_op = random_itr->var2op(i_var);
 	i_op        = map_user_op_[i_op];
 
 	// if this variable depends on the selected indepent variables
@@ -141,7 +146,7 @@ void subgraph_info::get_rev(
 		for(size_t j = 0; j < argument_variable.size(); ++j)
 		{	// add the corresponding operators to the subgraph
 			size_t j_var = argument_variable[j];
-			size_t j_op  = play->random_var2op(j_var);
+			size_t j_op  = random_itr->var2op(j_var);
 			j_op         = map_user_op_[j_op];
 			bool add = in_subgraph_[j_op] <= depend_yes;
 			add     &= in_subgraph_[j_op] != i_dep;

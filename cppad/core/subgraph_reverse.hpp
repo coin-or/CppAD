@@ -194,8 +194,10 @@ template <typename VectorBool>
 void ADFun<Base>::subgraph_reverse( const VectorBool& select_domain )
 {	using local::pod_vector;
 	//
-	// make sure player is setup for random access
+	// random access iterator
 	play_.setup_random();
+	local::play::const_random_iterator<addr_t> random_itr =
+		play_.get_random();
 
 	CPPAD_ASSERT_UNKNOWN(
 		dep_taddr_.size() == subgraph_info_.n_dep()
@@ -215,7 +217,7 @@ void ADFun<Base>::subgraph_reverse( const VectorBool& select_domain )
 	);
 
 	// initialize for reverse mode subgraph computations
-	subgraph_info_.init_rev(&play_, select_domain);
+	subgraph_info_.init_rev(&play_, &random_itr, select_domain);
 	CPPAD_ASSERT_UNKNOWN(
 		subgraph_info_.in_subgraph().size() == play_.num_op_rec()
 	);
@@ -287,6 +289,8 @@ void ADFun<Base>::subgraph_reverse(
 	//
 	// make sure player is setup for random access
 	play_.setup_random();
+	typename local::play::const_random_iterator<addr_t> random_itr =
+		play_.get_random();
 
 	// check VectorBase is Simple Vector class with Base type elements
 	CheckSimpleVector<Base, VectorBase>();
@@ -317,7 +321,7 @@ void ADFun<Base>::subgraph_reverse(
 	// subgraph of operators connected to dependent variable ell
 	pod_vector<addr_t> subgraph;
 	subgraph_info_.get_rev(
-		&play_, dep_taddr_, addr_t(ell), subgraph
+		&play_, &random_itr, dep_taddr_, addr_t(ell), subgraph
 	);
 
 	// Add all the atomic function call operators
@@ -381,9 +385,6 @@ void ADFun<Base>::subgraph_reverse(
 	CPPAD_ASSERT_UNKNOWN( load_op_.size()  == play_.num_load_op_rec() );
 	size_t n = Domain();
 	//
-	typename local::play::const_random_iterator<addr_t> random_itr =
-		play_.random();
-	//
 	local::play::const_subgraph_iterator<addr_t> subgraph_itr =
 		play_.end_subgraph(&random_itr, &subgraph);
 	//
@@ -425,7 +426,7 @@ void ADFun<Base>::subgraph_reverse(
 		CPPAD_ASSERT_UNKNOWN( play_.GetOp(i_op) == local::InvOp );
 		//
 		size_t j = i_op - 1;
-		CPPAD_ASSERT_UNKNOWN( i_op == play_.random_var2op(ind_taddr_[j]) );
+		CPPAD_ASSERT_UNKNOWN( i_op == random_itr.var2op( ind_taddr_[j] ) );
 		//
 		// return paritial for this independent variable
 		col[c] = j;

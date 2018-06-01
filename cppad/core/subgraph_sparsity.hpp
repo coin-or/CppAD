@@ -177,12 +177,15 @@ void ADFun<Base>::subgraph_sparsity(
 	//
 	// make sure player is setup for random access
 	play_.setup_random();
+	local::play::const_random_iterator<addr_t> random_itr =
+		play_.get_random();
 
 	// compute the sparsity pattern in row, col
     local::pod_vector<size_t> row;
     local::pod_vector<size_t> col;
 	local::subgraph::subgraph_sparsity(
 		&play_,
+		&random_itr,
 		subgraph_info_,
 		dep_taddr_,
 		select_domain,

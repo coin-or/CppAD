@@ -1,9 +1,8 @@
-
 # ifndef CPPAD_LOCAL_SUBGRAPH_INIT_REV_HPP
 # define CPPAD_LOCAL_SUBGRAPH_INIT_REV_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -34,6 +33,10 @@ this operation sequence was recording using AD<Base>.
 is the operation sequence corresponding to the ADFun<Base> function
 (it must correspond to map_user_op_).
 
+\param random_itr
+is a random iterator for operation sequence corresponding to the
+ADFun<Base> function (it must correspond to map_user_op_).
+
 \param select_domain
 is a vector with, size equal to the number of independent variables
 in the recording. It determines the selected independent variables.
@@ -63,8 +66,9 @@ This vector is to to size n_dep_ and its values are set to false
 */
 template <typename Base, typename BoolVector>
 void subgraph_info::init_rev(
-	const player<Base>*  play                ,
-	const BoolVector&    select_domain       )
+	const player<Base>*                        play          ,
+	const play::const_random_iterator<addr_t>* random_itr    ,
+	const BoolVector&                          select_domain )
 {
 	// check sizes
 	CPPAD_ASSERT_UNKNOWN( map_user_op_.size()   == n_op_ );
@@ -129,7 +133,7 @@ void subgraph_info::init_rev(
 			{	get_argument_variable(play, i_op, argument_variable, work);
 				for(size_t j = 0; j < argument_variable.size(); ++j)
 				{	size_t j_var = argument_variable[j];
-					size_t j_op  = play->random_var2op(j_var);
+					size_t j_op  = random_itr->var2op(j_var);
 					j_op         = map_user_op_[j_op];
 					CPPAD_ASSERT_UNKNOWN( j_op < i_op );
 					if( in_subgraph_[j_op] == depend_yes )
@@ -149,7 +153,7 @@ void subgraph_info::init_rev(
 			{	get_argument_variable(play, i_op, argument_variable, work);
 				for(size_t j = 0; j < argument_variable.size(); ++j)
 				{	size_t j_var = argument_variable[j];
-					size_t j_op  = play->random_var2op(j_var);
+					size_t j_op  = random_itr->var2op(j_var);
 					j_op         = map_user_op_[j_op];
 					CPPAD_ASSERT_UNKNOWN( j_op < i_op );
 					if( in_subgraph_[j_op] == depend_yes )

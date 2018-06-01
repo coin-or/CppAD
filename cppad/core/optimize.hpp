@@ -215,9 +215,10 @@ when compare_change is not used.
 template <class Base>
 void ADFun<Base>::optimize(const std::string& options)
 {
-	//
-	// make sure player is setup for random access
+	// get a random iterator for this player
 	play_.setup_random();
+	local::play::const_random_iterator<addr_t> random_itr =
+		play_.get_random();
 
 	// place to store the optimized version of the recording
 	local::recorder<Base> rec;
@@ -252,7 +253,9 @@ void ADFun<Base>::optimize(const std::string& options)
 # endif
 
 	// create the optimized recording
-	local::optimize::optimize_run<Base>(options, n, dep_taddr_, &play_, &rec);
+	local::optimize::optimize_run<Base>(
+		options, n, dep_taddr_, &play_, &random_itr, &rec
+	);
 
 	// number of variables in the recording
 	num_var_tape_  = rec.num_var_rec();

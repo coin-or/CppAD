@@ -126,7 +126,7 @@ public:
 		CPPAD_ASSERT_UNKNOWN( var2op_vec_ != CPPAD_NULL );
 		//
 		// operator index
-		size_t op_index = var2op_vec_[var_index];
+		size_t op_index = size_t( (*var2op_vec_)[var_index] );
 		//
 		// check that var_index is a primary variable index (see random_setup)
 		CPPAD_ASSERT_UNKNOWN( op_index < op_vec_->size() );

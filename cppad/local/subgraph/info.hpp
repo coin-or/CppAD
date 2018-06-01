@@ -283,17 +283,19 @@ public:
 	// see init_rev.hpp
 	template <typename Base, typename BoolVector>
 	void init_rev(
-		const player<Base>*  play                ,
-		const BoolVector&    select_domain
+		const player<Base>*                        play          ,
+		const play::const_random_iterator<addr_t>* random_itr    ,
+		const BoolVector&                          select_domain
 	);
 	// -----------------------------------------------------------------------
 	// see get_rev.hpp
 	template <typename Base>
 	void get_rev(
-		const player<Base>*       play         ,
-		const vector<size_t>&     dep_taddr    ,
-		addr_t                    i_dep        ,
-		pod_vector<addr_t>&       subgraph
+		const player<Base>*                        play         ,
+		const play::const_random_iterator<addr_t>* random_itr   ,
+		const vector<size_t>&                      dep_taddr    ,
+		addr_t                                     i_dep        ,
+		pod_vector<addr_t>&                        subgraph
 	);
 };
 
