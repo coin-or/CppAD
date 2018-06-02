@@ -2,7 +2,7 @@
 # define CPPAD_LOCAL_OPTIMIZE_HASH_CODE_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -38,10 +38,11 @@ containing the corresponding argument indices for this operator.
 is a hash code that is between zero and CPPAD_HASH_TABLE_SIZE - 1.
 */
 
+template <class Addr>
 inline size_t optimize_hash_code(
 	OpCode        op      ,
 	size_t        num_arg ,
-	const addr_t* arg     )
+	const Addr*   arg     )
 {
 	// there is only one case where num_arg == 3
 	CPPAD_ASSERT_UNKNOWN( op == ErfOp || num_arg <= 2 );

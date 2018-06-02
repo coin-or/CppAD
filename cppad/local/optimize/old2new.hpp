@@ -2,7 +2,7 @@
 # ifndef CPPAD_LOCAL_OPTIMIZE_OLD2NEW_HPP
 # define CPPAD_LOCAL_OPTIMIZE_OLD2NEW_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -21,12 +21,13 @@ namespace CppAD { namespace local { namespace optimize  {
 /*!
 Information that maps old an old operator to a new opeator and new variable.
 */
+template <class Addr>
 struct struct_old2new {
 	/// New operator index for this old operator.
-	addr_t  new_op;
+	Addr  new_op;
 
 	/// New varaible index for this old operator.
-	addr_t  new_var;
+	Addr  new_var;
 };
 
 } } } // END_CPPAD_LOCAL_OPTIMIZE_NAMESPACE

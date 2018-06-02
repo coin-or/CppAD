@@ -227,7 +227,7 @@ void optimize_run(
 	//
 	// Mapping from old operator index to new operator information
 	// (zero is invalid except for old2new[0].new_op and old2new[0].i_var)
-	vector<struct_old2new> old2new(num_op);
+	vector< struct_old2new<Addr> > old2new(num_op);
 	for(size_t i = 0; i < num_op; i++)
 	{	old2new[i].new_op  = 0;
 		old2new[i].new_var = 0;

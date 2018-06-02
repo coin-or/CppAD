@@ -67,7 +67,7 @@ struct_size_pair record_csum(
 	const player<Base>*                                play           ,
 	const play::const_random_iterator<Addr>*           random_itr     ,
 	const vector<struct_opt_op_info>&                  opt_op_info    ,
-	const CppAD::vector<struct struct_old2new>&        old2new        ,
+	const CppAD::vector< struct_old2new<Addr> >&       old2new        ,
 	size_t                                             current        ,
 	recorder<Base>*                                    rec            ,
 	// local information passed so stacks need not be allocated for every call
