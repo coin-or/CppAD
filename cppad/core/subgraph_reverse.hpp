@@ -326,7 +326,7 @@ void ADFun<Base>::subgraph_reverse(
 
 	// Add all the atomic function call operators
 	// for calls that have first operator in the subgraph
-	local::subgraph::entire_call(&play_, subgraph);
+	local::subgraph::entire_call(&random_itr, subgraph);
 
 	// First add the BeginOp and EndOp to the subgraph and then sort it
 	// sort the subgraph

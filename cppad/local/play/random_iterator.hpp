@@ -113,7 +113,7 @@ public:
 	}
 	/*!
 	\brief
-	fetch the operator corresponding to a primary variable
+	map variable index to operator index.
 
 	\param var_index
 	must be the index of a primary variable.
@@ -132,6 +132,10 @@ public:
 		CPPAD_ASSERT_UNKNOWN( op_index < op_vec_->size() );
 		//
 		return op_index;
+	}
+	/// get operator corresponding to operator index
+	OpCode get_op(size_t op_index) const
+	{	return OpCode( (*op_vec_)[op_index] );
 	}
 };
 

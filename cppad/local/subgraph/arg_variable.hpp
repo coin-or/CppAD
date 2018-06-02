@@ -23,6 +23,9 @@ Determine arguments that are variables.
 /*!
 Determine the set of arguments, for an operator, that are variables.
 
+\tparam Addr
+Type used for indices in random iterator.
+
 \param random_itr
 is a random iterator for this operation sequence.
 
