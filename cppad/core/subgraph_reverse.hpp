@@ -321,7 +321,7 @@ void ADFun<Base>::subgraph_reverse(
 	// subgraph of operators connected to dependent variable ell
 	pod_vector<addr_t> subgraph;
 	subgraph_info_.get_rev(
-		&play_, &random_itr, dep_taddr_, addr_t(ell), subgraph
+		&random_itr, dep_taddr_, addr_t(ell), subgraph
 	);
 
 	// Add all the atomic function call operators

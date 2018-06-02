@@ -289,10 +289,9 @@ public:
 	);
 	// -----------------------------------------------------------------------
 	// see get_rev.hpp
-	template <typename Base>
+	template <typename Addr>
 	void get_rev(
-		const player<Base>*                        play         ,
-		const play::const_random_iterator<addr_t>* random_itr   ,
+		const play::const_random_iterator<Addr>*   random_itr   ,
 		const vector<size_t>&                      dep_taddr    ,
 		addr_t                                     i_dep        ,
 		pod_vector<addr_t>&                        subgraph

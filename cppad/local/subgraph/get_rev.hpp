@@ -27,15 +27,11 @@ Get subgraph corresponding to a dependent variable.
 Get the subgraph corresponding to a dependent variables
 (and a selected set of independent variables).
 
-\tparam Base
-this operation sequence was recording using AD<Base>.
-
-\param play
-is the operation sequence corresponding to the ADFun<Base> function.
+\tparam Addr
+Type used for indices in the random iterator.
 
 \param random_itr
-is the random iterator for operation sequence corresponding
-to the ADFun<Base> function.
+is a random iterator for this operation sequence.
 
 \param dep_taddr
 is the vector mapping user dependent variable indices
@@ -84,10 +80,9 @@ will be changed to in_subgraph[i_op] = i_dep.
 The value process_range_[i_dep] is checked to make sure it is false.
 It is then set to have value true.
 */
-template <typename Base>
+template <typename Addr>
 void subgraph_info::get_rev(
-	const player<Base>*                        play        ,
-	const play::const_random_iterator<addr_t>* random_itr  ,
+	const play::const_random_iterator<Addr>*   random_itr  ,
 	const vector<size_t>&                      dep_taddr   ,
 	addr_t                                     i_dep       ,
 	pod_vector<addr_t>&                        subgraph    )
@@ -137,7 +132,7 @@ void subgraph_info::get_rev(
 		//
 		// There must be a result for this operator
 # ifndef NDEBUG
-		OpCode op = play->GetOp(i_op);
+		OpCode op = random_itr->get_op(i_op);
 		CPPAD_ASSERT_UNKNOWN(op == UserOp || NumRes(op) > 0 );
 # endif
 		//
@@ -150,7 +145,7 @@ void subgraph_info::get_rev(
 			j_op         = map_user_op_[j_op];
 			bool add = in_subgraph_[j_op] <= depend_yes;
 			add     &= in_subgraph_[j_op] != i_dep;
-			if( play->GetOp(j_op) == InvOp )
+			if( random_itr->get_op(j_op) == InvOp )
 			{	CPPAD_ASSERT_UNKNOWN( j_op == j_var );
 				add &= select_domain_[j_var - 1];
 			}

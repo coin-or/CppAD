@@ -149,7 +149,7 @@ void subgraph_sparsity(
 		//
 		// subgraph of operators connected to i_dep
 		sub_info.get_rev(
-			play, random_itr, dep_taddr, addr_t(i_dep), subgraph
+			random_itr, dep_taddr, addr_t(i_dep), subgraph
 		);
 		//
 		for(size_t k = 0; k < subgraph.size(); k++)
