@@ -2,7 +2,7 @@
 # ifndef CPPAD_LOCAL_OPTIMIZE_CSUM_STACKS_HPP
 # define CPPAD_LOCAL_OPTIMIZE_CSUM_STACKS_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -24,13 +24,15 @@ namespace CppAD { namespace local { namespace optimize  {
 /*!
 Information about one cumulative summation operation.
 */
+
+template <class Addr>
 struct struct_csum_stacks {
 	/// old operator indices for this cummulative summation
-	std::stack<struct struct_csum_variable>     op_stack;
+	std::stack< struct struct_csum_variable<Addr> >  op_stack;
 	/// old variable indices to be added
-	std::stack<size_t >                         add_stack;
+	std::stack<size_t >                              add_stack;
 	/// old variavle indices to be subtracted
-	std::stack<size_t >                         sub_stack;
+	std::stack<size_t >                              sub_stack;
 };
 
 } } } // END_CPPAD_LOCAL_OPTIMIZE_NAMESPACE

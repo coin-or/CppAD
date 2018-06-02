@@ -71,7 +71,7 @@ struct_size_pair record_csum(
 	size_t                                             current        ,
 	recorder<Base>*                                    rec            ,
 	// local information passed so stacks need not be allocated for every call
-	struct_csum_stacks&                                work           )
+	struct_csum_stacks<Addr>&                          work           )
 {
 # ifndef NDEBUG
 	// number of parameters corresponding to the old operation sequence.
@@ -92,7 +92,7 @@ struct_size_pair record_csum(
 	CPPAD_ASSERT_UNKNOWN( ! ( opt_op_info[i_op].usage == csum_usage ) );
 	//
 	// information corresponding to the root node in the cummulative summation
-	struct struct_csum_variable var;
+	struct struct_csum_variable<Addr> var;
 	size_t not_used;
 	random_itr->op_info(i_op, var.op, var.arg, not_used);
 	var.add = true;  // was parrent operator positive or negative

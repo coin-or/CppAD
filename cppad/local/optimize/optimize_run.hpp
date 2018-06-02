@@ -239,7 +239,7 @@ void optimize_run(
 
 	// temporary work space used by record_csum
 	// (decalared here to avoid realloaction of memory)
-	struct_csum_stacks csum_work;
+	struct_csum_stacks<Addr> csum_work;
 
 	// tempory used to hold a size_pair
 	struct_size_pair size_pair;
