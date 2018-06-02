@@ -129,11 +129,11 @@ void optimize_run(
 	size_t num_vecad_vec   = play->num_vecad_vec_rec();
 
 	// operator information
-	vector<struct_cexp_info>  cexp_info;
-	sparse_list               skip_op_true;
-	sparse_list               skip_op_false;
-	vector<bool>              vecad_used;
-	vector<struct_opt_op_info>    opt_op_info;
+	vector<struct_cexp_info>              cexp_info;
+	sparse_list                           skip_op_true;
+	sparse_list                           skip_op_false;
+	vector<bool>                          vecad_used;
+	vector< struct_opt_op_info<Addr> >    opt_op_info;
 	get_opt_op_info(
 		conditional_skip,
 		compare_op,

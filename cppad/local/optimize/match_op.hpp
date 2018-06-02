@@ -72,7 +72,7 @@ template <class Base, class Addr>
 void match_op(
 	const player<Base>*                         play           ,
 	const play::const_random_iterator<Addr>*    random_itr     ,
-	vector<struct_opt_op_info>&                 opt_op_info    ,
+	vector< struct_opt_op_info<Addr> >&         opt_op_info    ,
 	size_t                                      current        ,
 	sparse_list&                                hash_table_op  )
 {	//
