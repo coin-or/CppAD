@@ -217,7 +217,7 @@ void ADFun<Base>::subgraph_reverse( const VectorBool& select_domain )
 	);
 
 	// initialize for reverse mode subgraph computations
-	subgraph_info_.init_rev(&play_, &random_itr, select_domain);
+	subgraph_info_.init_rev(&random_itr, select_domain);
 	CPPAD_ASSERT_UNKNOWN(
 		subgraph_info_.in_subgraph().size() == play_.num_op_rec()
 	);

@@ -128,7 +128,7 @@ void subgraph_sparsity(
 	pod_vector<addr_t> subgraph;
 
 	// initialize a reverse mode subgraph calculation
-	sub_info.init_rev(play, random_itr, select_domain);
+	sub_info.init_rev(random_itr, select_domain);
 	CPPAD_ASSERT_UNKNOWN(
 		sub_info.in_subgraph().size() == play->num_op_rec()
 	);

@@ -137,6 +137,9 @@ public:
 	OpCode get_op(size_t op_index) const
 	{	return OpCode( (*op_vec_)[op_index] );
 	}
+	/// number of operators
+	size_t num_op(void) const
+	{	return op_vec_->size(); }
 };
 
 } } } // BEGIN_CPPAD_LOCAL_PLAY_NAMESPACE
