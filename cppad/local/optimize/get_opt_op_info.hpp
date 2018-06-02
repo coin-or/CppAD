@@ -199,13 +199,13 @@ have been set to the values corresponding to the i-th operator
 in the operation sequence.
 */
 
-template <class Base>
+template <class Base, class Addr>
 void get_opt_op_info(
 	bool                                        conditional_skip    ,
 	bool                                        compare_op          ,
 	bool                                        print_for_op        ,
 	const player<Base>*                         play                ,
-	const play::const_random_iterator<addr_t>*  random_itr          ,
+	const play::const_random_iterator<Addr>*    random_itr          ,
 	const vector<size_t>&                       dep_taddr           ,
 	vector<struct_cexp_info>&                   cexp_info           ,
 	sparse_list&                                skip_op_true        ,
@@ -223,7 +223,7 @@ void get_opt_op_info(
 	//
 	// initialize mapping from variable index to operator index
 	CPPAD_ASSERT_UNKNOWN(
-		size_t( std::numeric_limits<addr_t>::max() ) >= num_op
+		size_t( std::numeric_limits<Addr>::max() ) >= num_op
 	);
 	//
 	// information set by forward_user
@@ -234,7 +234,7 @@ void get_opt_op_info(
 	// Forward pass to determine num_cexp_op
 	// ----------------------------------------------------------------------
 	OpCode        op;     // operator
-	const addr_t* arg;    // arguments
+	const Addr*   arg;    // arguments
 	size_t        i_op;   // operator index
 	size_t        i_var;  // variable index of first result
 	i_op = 0;

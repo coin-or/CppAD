@@ -253,7 +253,7 @@ void ADFun<Base>::optimize(const std::string& options)
 # endif
 
 	// create the optimized recording
-	local::optimize::optimize_run<Base>(
+	local::optimize::optimize_run(
 		options, n, dep_taddr_, &play_, &random_itr, &rec
 	);
 

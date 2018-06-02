@@ -40,17 +40,17 @@ is the object that will record the new operations.
 \return
 is the operator and variable indices in the new operation sequence.
 */
-template <class Base>
+template <class Base, class Addr>
 struct_size_pair record_pv(
 	const player<Base>*                                play           ,
-	const play::const_random_iterator<addr_t>*         random_itr     ,
+	const play::const_random_iterator<Addr>*           random_itr     ,
 	const CppAD::vector<struct struct_old2new>&        old2new        ,
 	size_t                                             i_op           ,
 	recorder<Base>*                                    rec            )
 {
 	// get_op_info
 	OpCode        op;
-	const addr_t* arg;
+	const Addr*   arg;
 	size_t        i_var;
 	random_itr->op_info(i_op, op, arg, i_var);
 	//
@@ -80,7 +80,7 @@ struct_size_pair record_pv(
 	CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < npar  );
 	CPPAD_ASSERT_UNKNOWN( size_t(arg[1]) < i_var ); // DAG condition
 	//
-	addr_t new_arg[2];
+	Addr new_arg[2];
 	new_arg[0]   = rec->PutPar( par[arg[0]] );
 	new_arg[1]   = old2new[ random_itr->var2op(arg[1]) ].new_var;
 	rec->PutArg( new_arg[0], new_arg[1] );

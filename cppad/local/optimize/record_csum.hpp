@@ -62,10 +62,10 @@ j_op that corresponds to a variable that is an argument to
 opt_op_info[i_op].
 */
 
-template <class Base>
+template <class Base, class Addr>
 struct_size_pair record_csum(
 	const player<Base>*                                play           ,
-	const play::const_random_iterator<addr_t>*         random_itr     ,
+	const play::const_random_iterator<Addr>*           random_itr     ,
 	const vector<struct_opt_op_info>&                  opt_op_info    ,
 	const CppAD::vector<struct struct_old2new>&        old2new        ,
 	size_t                                             current        ,
@@ -124,7 +124,7 @@ struct_size_pair record_csum(
 		var     = work.op_stack.top();
 		work.op_stack.pop();
 		OpCode        op      = var.op;
-		const addr_t* arg     = var.arg;
+		const Addr*   arg     = var.arg;
 		bool          add     = var.add;
 		//
 		// process first argument to this operator
@@ -217,12 +217,12 @@ struct_size_pair record_csum(
 	size_t n_sub = work.sub_stack.size();
 	//
 	CPPAD_ASSERT_UNKNOWN(
-		size_t( std::numeric_limits<addr_t>::max() ) >= n_add + n_sub
+		size_t( std::numeric_limits<Addr>::max() ) >= n_add + n_sub
 	);
 	//
-	rec->PutArg( addr_t(n_add) );                // arg[0]
-	rec->PutArg( addr_t(n_sub) );                // arg[1]
-	addr_t new_arg = rec->PutPar(sum_par);
+	rec->PutArg( Addr(n_add) );                // arg[0]
+	rec->PutArg( Addr(n_sub) );                // arg[1]
+	Addr new_arg = rec->PutPar(sum_par);
 	rec->PutArg(new_arg);              // arg[2]
 	// addition arguments
 	for(size_t i = 0; i < n_add; i++)
@@ -243,7 +243,7 @@ struct_size_pair record_csum(
 		work.sub_stack.pop();
 	}
 	// number of additions plus number of subtractions
-	rec->PutArg( addr_t(n_add + n_sub) );      // arg[3 + arg[0] + arg[1]]
+	rec->PutArg( Addr(n_add + n_sub) );      // arg[3 + arg[0] + arg[1]]
 	//
 	// return value
 	struct_size_pair ret;

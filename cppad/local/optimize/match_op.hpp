@@ -68,10 +68,10 @@ and opt_op_info[i_op] does not match any other element of set[j].
 An entry will be added each time match_op is called
 and a match for the current operator is not found.
 */
-template <class Base>
+template <class Base, class Addr>
 void match_op(
 	const player<Base>*                         play           ,
-	const play::const_random_iterator<addr_t>*  random_itr     ,
+	const play::const_random_iterator<Addr>*    random_itr     ,
 	vector<struct_opt_op_info>&                 opt_op_info    ,
 	size_t                                      current        ,
 	sparse_list&                                hash_table_op  )
@@ -88,7 +88,7 @@ void match_op(
 	//
 	// current operator
 	OpCode        op;
-	const addr_t* arg;
+	const Addr*   arg;
 	size_t        i_var;
 	random_itr->op_info(current, op, arg, i_var);
 	CPPAD_ASSERT_UNKNOWN( 0 < NumArg(op) );
@@ -101,7 +101,7 @@ void match_op(
 	// If j-th argument to current operator has a previous operator,
 	// this is the j-th argument for previous operator.
 	// Otherwise, it is the j-th argument for the current operator.
-	addr_t arg_match[3];
+	Addr arg_match[3];
 	size_t num_arg = NumArg(op);
 	for(size_t j = 0; j < num_arg; ++j)
 	{	arg_match[j] = arg[j];
@@ -114,12 +114,12 @@ void match_op(
 				CPPAD_ASSERT_UNKNOWN( opt_op_info[previous].previous == 0 );
 				//
 				OpCode        op_p;
-				const addr_t* arg_p;
+				const Addr*   arg_p;
 				size_t        i_var_p;
 				random_itr->op_info(previous, op_p, arg_p, i_var_p);
 				//
 				CPPAD_ASSERT_UNKNOWN( NumRes(op_p) > 0 );
-				arg_match[j] = addr_t( i_var_p );
+				arg_match[j] = Addr( i_var_p );
 			}
 		}
 	}
@@ -139,7 +139,7 @@ void match_op(
 		CPPAD_ASSERT_UNKNOWN( opt_op_info[candidate].previous == 0 );
 		//
 		OpCode        op_c;
-		const addr_t* arg_c;
+		const Addr*   arg_c;
 		size_t        i_var_c;
 		random_itr->op_info(candidate, op_c, arg_c, i_var_c);
 		//
@@ -157,11 +157,11 @@ void match_op(
 						);
 						//
 						OpCode        op_p;
-						const addr_t* arg_p;
+						const Addr*   arg_p;
 						size_t        i_var_p;
 						random_itr->op_info(previous, op_p, arg_p, i_var_p);
 						//
-						match &= arg_match[j] == addr_t( i_var_p );
+						match &= arg_match[j] == Addr( i_var_p );
 					}
 					else match &= arg_match[j] == arg_c[j];
 				}
@@ -171,7 +171,7 @@ void match_op(
 			}
 		}
 		if( match )
-		{	opt_op_info[current].previous = static_cast<addr_t>( candidate );
+		{	opt_op_info[current].previous = static_cast<Addr>( candidate );
 			return;
 		}
 		++itr;
@@ -191,7 +191,7 @@ void match_op(
 			CPPAD_ASSERT_UNKNOWN( opt_op_info[candidate].previous == 0 );
 			//
 			OpCode        op_c;
-			const addr_t* arg_c;
+			const Addr*   arg_c;
 			size_t        i_var_c;
 			random_itr->op_info(candidate, op_c, arg_c, i_var_c);
 			//
@@ -207,18 +207,18 @@ void match_op(
 						);
 						//
 						OpCode        op_p;
-						const addr_t* arg_p;
+						const Addr*   arg_p;
 						size_t        i_var_p;
 						random_itr->op_info(previous, op_p, arg_p, i_var_p);
 						//
-						match &= arg_match[j] == addr_t( i_var_p );
+						match &= arg_match[j] == Addr( i_var_p );
 					}
 					else
 						match &= arg_match[j] == arg_c[j];
 				}
 			}
 			if( match )
-			{	opt_op_info[current].previous = static_cast<addr_t>(candidate);
+			{	opt_op_info[current].previous = static_cast<Addr>(candidate);
 				return;
 			}
 			++itr_swap;
