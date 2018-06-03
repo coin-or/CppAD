@@ -180,7 +180,7 @@ comparision operation that has a different result from when the information in
 play was recorded.
 */
 
-template <class Base, class Addr>
+template <class Addr, class Base>
 void forward1(
 	const local::player<Base>* play,
 	std::ostream&              s_out,

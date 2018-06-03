@@ -33,9 +33,8 @@ move_list='
 move_sed='s|reverse_subgraph|subgraph_reverse|'
 #
 cat << EOF > junk.sed
-s|get_argument_variable(play,|get_argument_variable(random_itr,|
-s|play->random_access(|random_itr->op_info(|
-s|play_.random_access(|random_itr.op_info(|
+s|<class Base, class Addr|<class Addr, class Base|
+s|<typename Base, typename Addr|<typename Addr, typename Base|
 EOF
 # -----------------------------------------------------------------------------
 if [ $0 != "bin/batch_edit.sh" ]

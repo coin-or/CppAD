@@ -185,7 +185,7 @@ The first operator on the tape is a BeginOp,
 and the next \a n operators are InvOp operations for the
 corresponding independent variables; see play->check_inv_op(n_ind).
 */
-template <class Base, class Addr, class Iterator>
+template <class Addr, class Base, class Iterator>
 void reverse(
 	size_t                      d,
 	size_t                      n,

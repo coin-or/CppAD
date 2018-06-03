@@ -132,7 +132,7 @@ the instruction corresponds to a parameter (not variable).
 
 */
 
-template <class Base, class Addr>
+template <class Addr, class Base>
 void forward2(
 	const local::player<Base>*  play,
 	const size_t                q,

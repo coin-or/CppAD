@@ -40,7 +40,7 @@ is the object that will record the new operations.
 \return
 is the operator and variable indices in the new operation sequence.
 */
-template <class Base, class Addr>
+template <class Addr, class Base>
 struct_size_pair record_pv(
 	const player<Base>*                                play           ,
 	const play::const_random_iterator<Addr>*           random_itr     ,

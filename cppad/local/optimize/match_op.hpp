@@ -68,7 +68,7 @@ and opt_op_info[i_op] does not match any other element of set[j].
 An entry will be added each time match_op is called
 and a match for the current operator is not found.
 */
-template <class Base, class Addr>
+template <class Addr, class Base>
 void match_op(
 	const player<Base>*                         play           ,
 	const play::const_random_iterator<Addr>*    random_itr     ,

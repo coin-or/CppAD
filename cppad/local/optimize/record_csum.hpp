@@ -62,7 +62,7 @@ j_op that corresponds to a variable that is an argument to
 opt_op_info[i_op].
 */
 
-template <class Base, class Addr>
+template <class Addr, class Base>
 struct_size_pair record_csum(
 	const player<Base>*                                play           ,
 	const play::const_random_iterator<Addr>*           random_itr     ,

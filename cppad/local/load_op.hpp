@@ -140,7 +140,7 @@ Note that, if x is a parameter,
 the corresponding vector index and it does not change.
 In this case, the error above should be detected during tape recording.
 */
-template <class Base, class Addr>
+template <class Addr, class Base>
 inline void forward_load_op_0(
 	const local::player<Base>* play,
 	size_t         i_z         ,
@@ -243,7 +243,7 @@ Zero order forward mode implementation of op = LdpOp.
 
 \copydetails CppAD::local::forward_load_op_0
 */
-template <class Base, class Addr>
+template <class Addr, class Base>
 inline void forward_load_p_op_0(
 	const local::player<Base>* play,
 	size_t         i_z         ,
@@ -289,7 +289,7 @@ Zero order forward mode implementation of op = LdvOp.
 
 \copydetails CppAD::local::forward_load_op_0
 */
-template <class Base, class Addr>
+template <class Addr, class Base>
 inline void forward_load_v_op_0(
 	const local::player<Base>* play,
 	size_t         i_z         ,
@@ -414,7 +414,7 @@ for k = p , ... , q,
 <code>taylor[ i_z * tpv + (k-1)*r+1+ell ]</code>
 is set to the k-order Taylor coefficient for z in the ell-th direction.
 */
-template <class Base, class Addr>
+template <class Addr, class Base>
 inline void forward_load_op(
 	const local::player<Base>* play,
 	OpCode               op                   ,
@@ -547,7 +547,7 @@ the instruction corresponds to a parameter (not variable).
 \li d < cap_order
 \li size_t(arg[2]) < i_z
 */
-template <class Base, class Addr>
+template <class Addr, class Base>
 inline void reverse_load_op(
 	OpCode         op          ,
 	size_t         d           ,

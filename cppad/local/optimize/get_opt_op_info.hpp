@@ -87,7 +87,7 @@ If cexp_set.n_set() != 0 and opt_op_info[i_arg].usage != no_usage,
 the output value of set[i_arg] is the intersection of
 its input value and set[i_result].
 */
-template <class Base, class Addr>
+template <class Addr, class Base>
 inline void usage_cexp_result2arg(
 	const player<Base>*                 play           ,
 	bool                                sum_result     ,
@@ -199,7 +199,7 @@ have been set to the values corresponding to the i-th operator
 in the operation sequence.
 */
 
-template <class Base, class Addr>
+template <class Addr, class Base>
 void get_opt_op_info(
 	bool                                        conditional_skip    ,
 	bool                                        compare_op          ,

@@ -81,7 +81,7 @@ Upon return, it contains an optimized verison of the
 operation sequence corresponding to \a play.
 */
 
-template <class Base, class Addr>
+template <class Addr, class Base>
 void optimize_run(
 	const std::string&                         options    ,
 	size_t                                     n          ,
