@@ -305,7 +305,7 @@ void ADFun<Base>::ForSparseJacCase(
 		for_jac_sparse_pack_.process_post( ind_taddr_[j] );
 
 	// evaluate the sparsity patterns
-	local::sweep::for_jac(
+	local::sweep::for_jac<addr_t>(
 		&play_,
 		dependency,
 		n,
@@ -452,7 +452,7 @@ void ADFun<Base>::ForSparseJacCase(
 		for_jac_sparse_set_.process_post( ind_taddr_[j] );
 
 	// evaluate the sparsity patterns
-	local::sweep::for_jac(
+	local::sweep::for_jac<addr_t>(
 		&play_,
 		dependency,
 		n,
@@ -701,7 +701,7 @@ void ADFun<Base>::ForSparseJacCheckpoint(
 		for_jac_sparse_set_.process_post( ind_taddr_[j] );
 
 	// evaluate the sparsity pattern for all variables
-	local::sweep::for_jac(
+	local::sweep::for_jac<addr_t>(
 		&play_,
 		dependency,
 		n,

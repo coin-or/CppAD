@@ -84,7 +84,7 @@ the sparsity pattern for the dependent variable with index (j-1)
 is given by the set with index index j in \a var_sparsity.
 */
 
-template <class Base, class Vector_set>
+template <class Addr, class Base, class Vector_set>
 void rev_jac(
 	const local::player<Base>* play,
 	bool                       dependency,
@@ -157,7 +157,7 @@ void rev_jac(
 	// op_info
 	OpCode op;
 	size_t i_var;
-	const addr_t* arg;
+	const Addr*   arg;
 	itr.op_info(op, arg, i_var);
 	CPPAD_ASSERT_UNKNOWN( op == EndOp );
 # if CPPAD_REV_JAC_TRACE

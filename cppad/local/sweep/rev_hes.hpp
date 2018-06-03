@@ -94,7 +94,7 @@ The values in the rest of \a rev_hes_sparse are not specified; i.e.,
 they are used for temporary work space.
 */
 
-template <class Base, class Vector_set>
+template <class Addr, class Base, class Vector_set>
 void rev_hes(
 	const local::player<Base>* play,
 	size_t                     n,
@@ -180,7 +180,7 @@ void rev_hes(
 	// op_info
 	OpCode op;
 	size_t i_var;
-	const addr_t* arg;
+	const Addr*   arg;
 	itr.op_info(op, arg, i_var);
 	CPPAD_ASSERT_UNKNOWN( op == EndOp );
 # if CPPAD_REV_HES_TRACE

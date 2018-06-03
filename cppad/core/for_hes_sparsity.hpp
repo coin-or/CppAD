@@ -191,7 +191,7 @@ void ADFun<Base>::for_hes_sparsity(
 			internal_for_jac.add_element( ind_taddr_[j] , ind_taddr_[j] );
 		}
 		// forward Jacobian sparsity for all variables on tape
-		local::sweep::for_jac(
+		local::sweep::for_jac<addr_t>(
 			&play_,
 			dependency,
 			n,
@@ -207,7 +207,7 @@ void ADFun<Base>::for_hes_sparsity(
 			internal_rev_jac.add_element( dep_taddr_[i] , 0 );
 		}
 		// reverse Jacobian sparsity for all variables on tape
-		local::sweep::rev_jac(
+		local::sweep::rev_jac<addr_t>(
 			&play_,
 			dependency,
 			n,
@@ -219,7 +219,7 @@ void ADFun<Base>::for_hes_sparsity(
 		internal_for_hes.resize(n + 1, n + 1);
 		//
 		// compute forward Hessian sparsity pattern
-		local::sweep::for_hes(
+		local::sweep::for_hes<addr_t>(
 			&play_,
 			n,
 			num_var_tape_,
@@ -244,7 +244,7 @@ void ADFun<Base>::for_hes_sparsity(
 			internal_for_jac.add_element( ind_taddr_[j] , ind_taddr_[j] );
 		}
 		// forward Jacobian sparsity for all variables on tape
-		local::sweep::for_jac(
+		local::sweep::for_jac<addr_t>(
 			&play_,
 			dependency,
 			n,
@@ -261,7 +261,7 @@ void ADFun<Base>::for_hes_sparsity(
 			internal_rev_jac.add_element( dep_taddr_[i] , 0 );
 		}
 		// reverse Jacobian sparsity for all variables on tape
-		local::sweep::rev_jac(
+		local::sweep::rev_jac<addr_t>(
 			&play_,
 			dependency,
 			n,
@@ -273,7 +273,7 @@ void ADFun<Base>::for_hes_sparsity(
 		internal_for_hes.resize(n + 1, n + 1);
 		//
 		// compute forward Hessian sparsity pattern
-		local::sweep::for_hes(
+		local::sweep::for_hes<addr_t>(
 			&play_,
 			n,
 			num_var_tape_,

@@ -91,7 +91,7 @@ with index (j-1) is given by the set with index j
 in \a for_hes_sparse.
 */
 
-template <class Base, class Vector_set>
+template <class Addr, class Base, class Vector_set>
 void for_hes(
 	const local::player<Base>* play,
 	size_t                     n,
@@ -172,7 +172,7 @@ void for_hes(
 	// op_info
 	OpCode op;
 	size_t i_var;
-	const addr_t* arg;
+	const Addr*   arg;
 	itr.op_info(op, arg, i_var);
 	CPPAD_ASSERT_UNKNOWN( op == BeginOp );
 # if CPPAD_FOR_HES_TRACE

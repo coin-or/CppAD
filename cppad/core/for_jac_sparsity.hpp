@@ -248,7 +248,7 @@ void ADFun<Base>::for_jac_sparsity(
 		);
 
 		// compute sparsity for other variables
-		local::sweep::for_jac(
+		local::sweep::for_jac<addr_t>(
 			&play_,
 			dependency,
 			n,
@@ -278,7 +278,7 @@ void ADFun<Base>::for_jac_sparsity(
 		);
 
 		// compute sparsity for other variables
-		local::sweep::for_jac(
+		local::sweep::for_jac<addr_t>(
 			&play_,
 			dependency,
 			n,

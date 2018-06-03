@@ -81,7 +81,7 @@ corresponds to the set with index i in \a var_sparsity.
 \li numvar == play->num_var_rec()
 */
 
-template <class Base, class Vector_set>
+template <class Addr, class Base, class Vector_set>
 void for_jac(
 	const local::player<Base>* play,
 	bool                       dependency        ,
@@ -159,7 +159,7 @@ void for_jac(
 	// op_info
 	OpCode op;
 	size_t i_var;
-	const addr_t* arg;
+	const Addr*   arg;
 	itr.op_info(op, arg, i_var);
 	CPPAD_ASSERT_UNKNOWN( op == BeginOp );
 	//
