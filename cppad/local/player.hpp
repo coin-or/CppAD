@@ -633,8 +633,9 @@ public:
 	}
 	// -----------------------------------------------------------------------
 	/// const random iterator
+	template <class Addr>
 	play::const_random_iterator<addr_t> get_random(void) const
-	{	return play::const_random_iterator<addr_t>(
+	{	return play::const_random_iterator<Addr>(
 			&op_vec_,
 			&arg_vec_,
 			&op2arg_vec_,

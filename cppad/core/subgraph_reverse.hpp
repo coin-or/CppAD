@@ -197,7 +197,7 @@ void ADFun<Base>::subgraph_reverse( const VectorBool& select_domain )
 	// random access iterator
 	play_.setup_random();
 	local::play::const_random_iterator<addr_t> random_itr =
-		play_.get_random();
+		play_.template get_random<addr_t>();
 
 	CPPAD_ASSERT_UNKNOWN(
 		dep_taddr_.size() == subgraph_info_.n_dep()
@@ -290,7 +290,7 @@ void ADFun<Base>::subgraph_reverse(
 	// make sure player is setup for random access
 	play_.setup_random();
 	typename local::play::const_random_iterator<addr_t> random_itr =
-		play_.get_random();
+		play_.template get_random<addr_t>();
 
 	// check VectorBase is Simple Vector class with Base type elements
 	CheckSimpleVector<Base, VectorBase>();

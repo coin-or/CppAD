@@ -218,7 +218,7 @@ void ADFun<Base>::optimize(const std::string& options)
 	// get a random iterator for this player
 	play_.setup_random();
 	local::play::const_random_iterator<addr_t> random_itr =
-		play_.get_random();
+		play_.template get_random<addr_t>();
 
 	// place to store the optimized version of the recording
 	local::recorder<Base> rec;
