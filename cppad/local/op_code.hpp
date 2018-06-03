@@ -911,9 +911,10 @@ In the case of CSumOp,
 \endcode
 and all the other is_variable values are false.
 */
+template <class Addr>
 inline size_t arg_is_variable(
 	OpCode            op          ,
-	const addr_t*     arg         ,
+	const Addr*       arg         ,
 	pod_vector<bool>& is_variable )
 {	size_t num_arg = NumArg(op);
 	if( is_variable.size() < num_arg )

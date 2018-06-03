@@ -551,7 +551,7 @@ void optimize_run(
 				else	new_arg[i] = Addr( rec->PutPar(
 						play->GetPar( arg[i] )
 				) );
-				mask = mask << 1;
+				mask = Addr( mask << 1 );
 			}
 			rec->PutArg(
 				new_arg[0] ,

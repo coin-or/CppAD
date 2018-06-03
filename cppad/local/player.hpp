@@ -12,6 +12,7 @@ A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 
+# include <cppad/local/play/addr_enum.hpp>
 # include <cppad/local/play/sequential_iterator.hpp>
 # include <cppad/local/play/subgraph_iterator.hpp>
 # include <cppad/local/play/random_setup.hpp>
@@ -97,45 +98,35 @@ public:
 	~player(void)
 	{ }
 	// ======================================================================
-	/// possible enum corresponding to type used for addressing
-	/// iterators for a player
-	enum addr_enum {
-		unsigned_char_enum   ,
-		unsigned_short_enum  ,
-		unsigned_int_enum    ,
-		size_t_enum
-	};
 	/// type used for addressing iterators for this player
-	addr_enum address_type(void) const
-	{
-		// --------------------------------------------------------------------
-		// maximum address requires for this player object
+	play::addr_enum address_type(void) const
+	{	// 2DO: the following is for refactoring, remove when done.
+		if( true )
+			return play::addr_t_enum;
+
+		// required
 		size_t required = 0;
-		required = std::max(required, num_var_rec_   );
-		required = std::max(required, op_vec_.size()  );
-		required = std::max(required, arg_vec_.size() );
-		required = std::max(required, par_vec_.size() );
-		required = std::max(required, text_vec_.size() );
-		required = std::max(required, vecad_ind_vec_.size() );
-		// --------------------------------------------------------------------
+		required = std::max(required, num_var_rec_   );  // number variables
+		required = std::max(required, op_vec_.size()  ); // number operators
+		required = std::max(required, arg_vec_.size() ); // number arguments
 		//
 		// unsigned char
 		if( required <= std::numeric_limits<unsigned char>::max() )
-			return unsigned_char_enum;
+			return play::unsigned_char_enum;
 		//
 		// unsigned short
 		if( required <= std::numeric_limits<unsigned short>::max() )
-			return unsigned_short_enum;
+			return play::unsigned_short_enum;
 		//
 		// unsigned int
 		if( required <= std::numeric_limits<unsigned int>::max() )
-			return unsigned_int_enum;
+			return play::unsigned_int_enum;
 		//
 		// unsigned size_t
 		CPPAD_ASSERT_UNKNOWN(
 			required <= std::numeric_limits<size_t>::max()
 		);
-		return size_t_enum;
+		return play::size_t_enum;
 	}
 	// ===============================================================
 	/*!
@@ -640,7 +631,7 @@ public:
 	// -----------------------------------------------------------------------
 	/// const random iterator
 	template <class Addr>
-	play::const_random_iterator<addr_t> get_random(void) const
+	play::const_random_iterator<Addr> get_random(void) const
 	{	return play::const_random_iterator<Addr>(
 			&op_vec_,
 			&arg_vec_,

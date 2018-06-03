@@ -268,6 +268,7 @@ nobase_myinclude_HEADERS =  \
 	cppad/local/optimize/usage.hpp \
 	cppad/local/parameter_op.hpp \
 	cppad/local/player.hpp \
+	cppad/local/play/addr_enum.hpp \
 	cppad/local/play/user_op_info.hpp \
 	cppad/local/play/sequential_iterator.hpp \
 	cppad/local/play/random_iterator.hpp \
