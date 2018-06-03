@@ -140,17 +140,17 @@ Note that, if x is a parameter,
 the corresponding vector index and it does not change.
 In this case, the error above should be detected during tape recording.
 */
-template <class Base>
+template <class Base, class Addr>
 inline void forward_load_op_0(
 	const local::player<Base>* play,
 	size_t         i_z         ,
-	const addr_t*  arg         ,
+	const Addr*    arg         ,
 	const Base*    parameter   ,
 	size_t         cap_order   ,
 	Base*          taylor      ,
 	bool*          isvar_by_ind   ,
 	size_t*        index_by_ind   ,
-	addr_t*        var_by_load_op )
+	Addr*          var_by_load_op )
 {
 	// This routine is only for documentaiton, it should not be used
 	CPPAD_ASSERT_UNKNOWN( false );
@@ -223,11 +223,11 @@ the sparsity pattern for z is added to the sparsity pattern for v.
 \li \a arg[0] < \a num_combined
 \li i_v       < \a vecad_sparsity.n_set()
 */
-template <class Vector_set>
+template <class Vector_set, class Addr>
 inline void sparse_load_op(
 	OpCode              op             ,
 	size_t              i_z            ,
-	const addr_t*        arg           ,
+	const Addr*          arg           ,
 	size_t              num_combined   ,
 	const size_t*       combined       ,
 	Vector_set&         var_sparsity   ,
@@ -243,17 +243,17 @@ Zero order forward mode implementation of op = LdpOp.
 
 \copydetails CppAD::local::forward_load_op_0
 */
-template <class Base>
+template <class Base, class Addr>
 inline void forward_load_p_op_0(
 	const local::player<Base>* play,
 	size_t         i_z         ,
-	const addr_t*  arg         ,
+	const Addr*    arg         ,
 	const Base*    parameter   ,
 	size_t         cap_order   ,
 	Base*          taylor      ,
 	bool*          isvar_by_ind   ,
 	size_t*        index_by_ind   ,
-	addr_t*        var_by_load_op )
+	Addr*          var_by_load_op )
 {	CPPAD_ASSERT_UNKNOWN( NumArg(LdpOp) == 3 );
 	CPPAD_ASSERT_UNKNOWN( NumRes(LdpOp) == 1 );
 	CPPAD_ASSERT_UNKNOWN( 0 < arg[0] );
@@ -289,17 +289,17 @@ Zero order forward mode implementation of op = LdvOp.
 
 \copydetails CppAD::local::forward_load_op_0
 */
-template <class Base>
+template <class Base, class Addr>
 inline void forward_load_v_op_0(
 	const local::player<Base>* play,
 	size_t         i_z         ,
-	const addr_t*  arg         ,
+	const Addr*    arg         ,
 	const Base*    parameter   ,
 	size_t         cap_order   ,
 	Base*          taylor      ,
 	bool*          isvar_by_ind   ,
 	size_t*        index_by_ind   ,
-	addr_t*        var_by_load_op )
+	Addr*          var_by_load_op )
 {	CPPAD_ASSERT_UNKNOWN( NumArg(LdvOp) == 3 );
 	CPPAD_ASSERT_UNKNOWN( NumRes(LdvOp) == 1 );
 	CPPAD_ASSERT_UNKNOWN( 0 < arg[0] );
@@ -414,7 +414,7 @@ for k = p , ... , q,
 <code>taylor[ i_z * tpv + (k-1)*r+1+ell ]</code>
 is set to the k-order Taylor coefficient for z in the ell-th direction.
 */
-template <class Base>
+template <class Base, class Addr>
 inline void forward_load_op(
 	const local::player<Base>* play,
 	OpCode               op                   ,
@@ -423,8 +423,8 @@ inline void forward_load_op(
 	size_t               r                    ,
 	size_t               cap_order            ,
 	size_t               i_z                  ,
-	const addr_t*        arg                  ,
-	const addr_t*        var_by_load_op       ,
+	const Addr*          arg                  ,
+	const Addr*          var_by_load_op       ,
 	      Base*          taylor               )
 {
 	CPPAD_ASSERT_UNKNOWN( NumArg(op) == 3 );
@@ -547,17 +547,17 @@ the instruction corresponds to a parameter (not variable).
 \li d < cap_order
 \li size_t(arg[2]) < i_z
 */
-template <class Base>
+template <class Base, class Addr>
 inline void reverse_load_op(
 	OpCode         op          ,
 	size_t         d           ,
 	size_t         i_z         ,
-	const addr_t*  arg         ,
+	const Addr*    arg         ,
 	size_t         cap_order   ,
 	const Base*    taylor      ,
 	size_t         nc_partial  ,
 	Base*          partial     ,
-	const addr_t*        var_by_load_op )
+	const Addr*          var_by_load_op )
 {	size_t i_load = size_t( var_by_load_op[ arg[2] ] );
 
 	CPPAD_ASSERT_UNKNOWN( NumArg(op) == 3 );
@@ -584,12 +584,12 @@ is this a dependency (or sparsity) calculation.
 
 \copydetails CppAD::local::sparse_load_op
 */
-template <class Vector_set>
+template <class Vector_set, class Addr>
 inline void forward_sparse_load_op(
 	bool               dependency     ,
 	OpCode             op             ,
 	size_t             i_z            ,
-	const addr_t*      arg            ,
+	const Addr*        arg            ,
 	size_t             num_combined   ,
 	const size_t*      combined       ,
 	Vector_set&        var_sparsity   ,
@@ -618,12 +618,12 @@ is this a dependency (or sparsity) calculation.
 
 \copydetails CppAD::local::sparse_load_op
 */
-template <class Vector_set>
+template <class Vector_set, class Addr>
 inline void reverse_sparse_jacobian_load_op(
 	bool               dependency     ,
 	OpCode             op             ,
 	size_t             i_z            ,
-	const addr_t*      arg            ,
+	const Addr*        arg            ,
 	size_t             num_combined   ,
 	const size_t*      combined       ,
 	Vector_set&        var_sparsity   ,
@@ -662,11 +662,11 @@ On input, it corresponds to the function G,
 and on output it corresponds to the function H.
 
 */
-template <class Vector_set>
+template <class Vector_set, class Addr>
 inline void reverse_sparse_hessian_load_op(
 	OpCode             op             ,
 	size_t             i_z            ,
-	const addr_t*      arg            ,
+	const Addr*        arg            ,
 	size_t             num_combined   ,
 	const size_t*      combined       ,
 	Vector_set&        var_sparsity   ,
