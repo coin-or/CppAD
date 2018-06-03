@@ -185,7 +185,7 @@ The first operator on the tape is a BeginOp,
 and the next \a n operators are InvOp operations for the
 corresponding independent variables; see play->check_inv_op(n_ind).
 */
-template <class Base, class Iterator>
+template <class Base, class Addr, class Iterator>
 void reverse(
 	size_t                      d,
 	size_t                      n,
@@ -196,7 +196,7 @@ void reverse(
 	size_t                      K,
 	Base*                       Partial,
 	bool*                       cskip_op,
-	const pod_vector<addr_t>&   var_by_load_op,
+	const pod_vector<Addr>&     var_by_load_op,
 	Iterator&                   play_itr
 )
 {
@@ -238,7 +238,7 @@ void reverse(
 	std::cout << std::endl;
 # endif
 	OpCode        op;
-	const addr_t* arg;
+	const Addr*   arg;
 	size_t        i_var;
 	play_itr.op_info(op, arg, i_var);
 	CPPAD_ASSERT_UNKNOWN( op == EndOp );

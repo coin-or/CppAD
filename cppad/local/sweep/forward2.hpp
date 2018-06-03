@@ -132,7 +132,7 @@ the instruction corresponds to a parameter (not variable).
 
 */
 
-template <class Base>
+template <class Base, class Addr>
 void forward2(
 	const local::player<Base>*  play,
 	const size_t                q,
@@ -142,7 +142,7 @@ void forward2(
 	const size_t                J,
 	Base*                       taylor,
 	const bool*                 cskip_op,
-	const pod_vector<addr_t>&   var_by_load_op
+	const pod_vector<Addr>&     var_by_load_op
 )
 {
 	CPPAD_ASSERT_UNKNOWN( q > 0 );
@@ -193,7 +193,7 @@ void forward2(
 	// op_info
 	OpCode op;
 	size_t i_var;
-	const addr_t* arg;
+	const Addr*   arg;
 	itr.op_info(op, arg, i_var);
 	CPPAD_ASSERT_UNKNOWN( op == BeginOp );
 # if CPPAD_FORWARD2_TRACE

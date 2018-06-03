@@ -137,7 +137,7 @@ comparision operation that has a different result from when the information in
 play was recorded.
 */
 
-template <class Base>
+template <class Base, class Addr>
 void forward0(
 	const local::player<Base>* play,
 	std::ostream&              s_out,
@@ -147,7 +147,7 @@ void forward0(
 	size_t                     J,
 	Base*                      taylor,
 	bool*                      cskip_op,
-	pod_vector<addr_t>&        var_by_load_op,
+	pod_vector<Addr>&          var_by_load_op,
 	size_t                     compare_change_count,
 	size_t&                    compare_change_number,
 	size_t&                    compare_change_op_index
@@ -239,7 +239,7 @@ void forward0(
 	// op_info
 	OpCode op;
 	size_t i_var;
-	const addr_t* arg;
+	const Addr*   arg;
 	itr.op_info(op, arg, i_var);
 	CPPAD_ASSERT_UNKNOWN( op == BeginOp );
 	//
