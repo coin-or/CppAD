@@ -107,11 +107,17 @@ public:
 	};
 	/// type used for addressing iterators for this player
 	addr_enum address_type(void) const
-	{	// required
+	{
+		// --------------------------------------------------------------------
+		// maximum address requires for this player object
 		size_t required = 0;
-		required = std::max(required, num_var_rec_   );  // number variables
-		required = std::max(required, op_vec_.size()  ); // number operators
-		required = std::max(required, arg_vec_.size() ); // number arguments
+		required = std::max(required, num_var_rec_   );
+		required = std::max(required, op_vec_.size()  );
+		required = std::max(required, arg_vec_.size() );
+		required = std::max(required, par_vec_.size() );
+		required = std::max(required, text_vec_.size() );
+		required = std::max(required, vecad_ind_vec_.size() );
+		// --------------------------------------------------------------------
 		//
 		// unsigned char
 		if( required <= std::numeric_limits<unsigned char>::max() )
