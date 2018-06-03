@@ -87,7 +87,7 @@ void optimize_run(
 	size_t                                     n          ,
 	CppAD::vector<size_t>&                     dep_taddr  ,
 	const player<Base>*                        play       ,
-	const play::const_random_iterator<Addr>*   random_itr ,
+	const play::const_random_iterator<Addr>&   random_itr ,
 	recorder<Base>*                            rec        )
 {
 	bool conditional_skip = true;
@@ -251,7 +251,7 @@ void optimize_run(
 		//
 		// this operator information
 		size_t i_tmp;
-		random_itr->op_info(i_op, op, arg, i_tmp);
+		random_itr.op_info(i_op, op, arg, i_tmp);
 		if( NumRes(op) > 0 )
 			i_var = i_tmp;
 		//
@@ -344,13 +344,13 @@ void optimize_run(
 			}
 			else
 			{	//
-				new_arg[0]   = old2new[ random_itr->var2op(arg[0]) ].new_var;
+				new_arg[0]   = old2new[ random_itr.var2op(arg[0]) ].new_var;
 				rec->PutArg( new_arg[0] );
 				//
 				old2new[i_op].new_op  = Addr( rec->num_op_rec() );
 				old2new[i_op].new_var = rec->PutOp(op);
 				CPPAD_ASSERT_UNKNOWN(
-					new_arg[0] < old2new[random_itr->var2op(i_var)].new_var
+					new_arg[0] < old2new[random_itr.var2op(i_var)].new_var
 				);
 				if( op == ErfOp )
 				{	CPPAD_ASSERT_NARG_NRES(op, 3, 5);
@@ -377,7 +377,7 @@ void optimize_run(
 			// check if this is the top of a csum connection
 			if( opt_op_info[i_op].usage == csum_usage )
 				break;
-			if( opt_op_info[ random_itr->var2op(arg[0]) ].usage == csum_usage )
+			if( opt_op_info[ random_itr.var2op(arg[0]) ].usage == csum_usage )
 			{
 				// convert to a sequence of summation operators
 				size_pair = record_csum(
@@ -427,13 +427,13 @@ void optimize_run(
 			else
 			{	//
 				new_arg[0] = arg[0];
-				new_arg[1] = old2new[ random_itr->var2op(arg[1]) ].new_var;
+				new_arg[1] = old2new[ random_itr.var2op(arg[1]) ].new_var;
 				rec->PutArg( new_arg[0], new_arg[1] );
 				//
 				old2new[i_op].new_op  = Addr( rec->num_op_rec() );
 				old2new[i_op].new_var = rec->PutOp(op);
 				CPPAD_ASSERT_UNKNOWN(
-					new_arg[1] < old2new[random_itr->var2op(i_var)].new_var
+					new_arg[1] < old2new[random_itr.var2op(i_var)].new_var
 				);
 			}
 			break;
@@ -445,7 +445,7 @@ void optimize_run(
 			// check if this is the top of a csum connection
 			if( opt_op_info[i_op].usage == csum_usage )
 				break;
-			if( opt_op_info[ random_itr->var2op(arg[1]) ].usage == csum_usage )
+			if( opt_op_info[ random_itr.var2op(arg[1]) ].usage == csum_usage )
 			{
 				// convert to a sequence of summation operators
 				size_pair = record_csum(
@@ -492,9 +492,9 @@ void optimize_run(
 			if( opt_op_info[i_op].usage == csum_usage )
 				break;
 			if(
-				opt_op_info[ random_itr->var2op(arg[0]) ].usage == csum_usage
+				opt_op_info[ random_itr.var2op(arg[0]) ].usage == csum_usage
 				||
-				opt_op_info[ random_itr->var2op(arg[1]) ].usage == csum_usage
+				opt_op_info[ random_itr.var2op(arg[1]) ].usage == csum_usage
 			)
 			{
 				// convert to a sequence of summation operators
@@ -543,7 +543,7 @@ void optimize_run(
 			mask = 1;
 			for(size_t i = 2; i < 6; i++)
 			{	if( arg[1] & mask )
-				{	new_arg[i] = old2new[ random_itr->var2op(arg[i]) ].new_var;
+				{	new_arg[i] = old2new[ random_itr.var2op(arg[i]) ].new_var;
 					CPPAD_ASSERT_UNKNOWN(
 						size_t(new_arg[i]) < num_var
 					);
@@ -590,7 +590,7 @@ void optimize_run(
 			case NepvOp:
 			CPPAD_ASSERT_NARG_NRES(op, 2, 0);
 			new_arg[0] = rec->PutPar( play->GetPar(arg[0]) );
-			new_arg[1] = old2new[ random_itr->var2op(arg[1]) ].new_var;
+			new_arg[1] = old2new[ random_itr.var2op(arg[1]) ].new_var;
 			rec->PutArg(new_arg[0], new_arg[1]);
 			old2new[i_op].new_op = Addr( rec->num_op_rec() );
 			rec->PutOp(op);
@@ -599,7 +599,7 @@ void optimize_run(
 			case LevpOp:
 			case LtvpOp:
 			CPPAD_ASSERT_NARG_NRES(op, 2, 0);
-			new_arg[0] = old2new[ random_itr->var2op(arg[0]) ].new_var;
+			new_arg[0] = old2new[ random_itr.var2op(arg[0]) ].new_var;
 			new_arg[1] = rec->PutPar( play->GetPar(arg[1]) );
 			rec->PutArg(new_arg[0], new_arg[1]);
 			old2new[i_op].new_op = Addr( rec->num_op_rec() );
@@ -611,8 +611,8 @@ void optimize_run(
 			case EqvvOp:
 			case NevvOp:
 			CPPAD_ASSERT_NARG_NRES(op, 2, 0);
-			new_arg[0] = old2new[ random_itr->var2op(arg[0]) ].new_var;
-			new_arg[1] = old2new[ random_itr->var2op(arg[1]) ].new_var;
+			new_arg[0] = old2new[ random_itr.var2op(arg[0]) ].new_var;
+			new_arg[1] = old2new[ random_itr.var2op(arg[1]) ].new_var;
 			rec->PutArg(new_arg[0], new_arg[1]);
 			old2new[i_op].new_op = Addr( rec->num_op_rec() );
 			rec->PutOp(op);
@@ -646,7 +646,7 @@ void optimize_run(
 			//
 			// arg[1]
 			if( arg[0] & 1 )
-			{	new_arg[1] = old2new[ random_itr->var2op(arg[1]) ].new_var;
+			{	new_arg[1] = old2new[ random_itr.var2op(arg[1]) ].new_var;
 				CPPAD_ASSERT_UNKNOWN( size_t(new_arg[1]) < num_var );
 			}
 			else
@@ -655,7 +655,7 @@ void optimize_run(
 			//
 			// arg[3]
 			if( arg[0] & 2 )
-			{	new_arg[3] = old2new[ random_itr->var2op(arg[3]) ].new_var;
+			{	new_arg[3] = old2new[ random_itr.var2op(arg[3]) ].new_var;
 				CPPAD_ASSERT_UNKNOWN( size_t(new_arg[3]) < num_var );
 			}
 			else
@@ -703,7 +703,7 @@ void optimize_run(
 			case LdvOp:
 			CPPAD_ASSERT_NARG_NRES(op, 3, 1);
 			new_arg[0] = new_vecad_ind[ arg[0] ];
-			new_arg[1] = old2new[ random_itr->var2op(arg[1]) ].new_var;
+			new_arg[1] = old2new[ random_itr.var2op(arg[1]) ].new_var;
 			CPPAD_ASSERT_UNKNOWN(
 				size_t( std::numeric_limits<Addr>::max() ) >= rec->num_load_op_rec()
 			);
@@ -739,7 +739,7 @@ void optimize_run(
 			case StvpOp:
 			CPPAD_ASSERT_NARG_NRES(op, 3, 0);
 			new_arg[0] = new_vecad_ind[ arg[0] ];
-			new_arg[1] = old2new[ random_itr->var2op(arg[1]) ].new_var;
+			new_arg[1] = old2new[ random_itr.var2op(arg[1]) ].new_var;
 			new_arg[2] = rec->PutPar( play->GetPar(arg[2]) );
 			CPPAD_ASSERT_UNKNOWN( size_t(new_arg[0]) < num_vecad_ind );
 			CPPAD_ASSERT_UNKNOWN( size_t(new_arg[1]) < num_var );
@@ -757,7 +757,7 @@ void optimize_run(
 			CPPAD_ASSERT_NARG_NRES(op, 3, 0);
 			new_arg[0] = new_vecad_ind[ arg[0] ];
 			new_arg[1] = rec->PutPar( play->GetPar(arg[1]) );
-			new_arg[2] = old2new[ random_itr->var2op(arg[2]) ].new_var;
+			new_arg[2] = old2new[ random_itr.var2op(arg[2]) ].new_var;
 			CPPAD_ASSERT_UNKNOWN( size_t(new_arg[0]) < num_vecad_ind );
 			CPPAD_ASSERT_UNKNOWN( size_t(new_arg[2]) < num_var );
 			rec->PutArg(
@@ -773,8 +773,8 @@ void optimize_run(
 			case StvvOp:
 			CPPAD_ASSERT_NARG_NRES(op, 3, 0);
 			new_arg[0] = new_vecad_ind[ arg[0] ];
-			new_arg[1] = old2new[ random_itr->var2op(arg[1]) ].new_var;
-			new_arg[2] = old2new[ random_itr->var2op(arg[2]) ].new_var;
+			new_arg[1] = old2new[ random_itr.var2op(arg[1]) ].new_var;
+			new_arg[2] = old2new[ random_itr.var2op(arg[2]) ].new_var;
 			CPPAD_ASSERT_UNKNOWN( size_t(new_arg[0]) < num_vecad_ind );
 			CPPAD_ASSERT_UNKNOWN( size_t(new_arg[1]) < num_var );
 			CPPAD_ASSERT_UNKNOWN( size_t(new_arg[2]) < num_var );
@@ -808,7 +808,7 @@ void optimize_run(
 
 			case UsravOp:
 			CPPAD_ASSERT_NARG_NRES(op, 1, 0);
-			new_arg[0] = old2new[ random_itr->var2op(arg[0]) ].new_var;
+			new_arg[0] = old2new[ random_itr.var2op(arg[0]) ].new_var;
 			if( size_t(new_arg[0]) < num_var )
 			{	rec->PutArg(new_arg[0]);
 				old2new[i_op].new_op = Addr( rec->num_op_rec() );
@@ -847,13 +847,13 @@ void optimize_run(
 	}
 	// modify the dependent variable vector to new indices
 	for(size_t i = 0; i < dep_taddr.size(); i++ )
-	{	dep_taddr[i] = old2new[ random_itr->var2op(dep_taddr[i]) ].new_var;
+	{	dep_taddr[i] = old2new[ random_itr.var2op(dep_taddr[i]) ].new_var;
 		CPPAD_ASSERT_UNKNOWN( size_t(dep_taddr[i]) < num_var );
 	}
 
 # ifndef NDEBUG
 	for(i_op = 0; i_op < num_op; i_op++)
-	{	random_itr->op_info(i_op, op, arg, i_var);
+	{	random_itr.op_info(i_op, op, arg, i_var);
 		if( NumRes(op) > 0 )
 			CPPAD_ASSERT_UNKNOWN(
 				size_t(old2new[i_op].new_op) < rec->num_op_rec()

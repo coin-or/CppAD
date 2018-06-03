@@ -82,7 +82,7 @@ It is then set to have value true.
 */
 template <typename Addr>
 void subgraph_info::get_rev(
-	const play::const_random_iterator<Addr>*   random_itr  ,
+	const play::const_random_iterator<Addr>&   random_itr  ,
 	const vector<size_t>&                      dep_taddr   ,
 	addr_t                                     i_dep       ,
 	pod_vector<addr_t>&                        subgraph    )
@@ -106,7 +106,7 @@ void subgraph_info::get_rev(
 	size_t i_var = dep_taddr[i_dep];
 
 	// operator corresponding to this dependent variable
-	size_t i_op = random_itr->var2op(i_var);
+	size_t i_op = random_itr.var2op(i_var);
 	i_op        = map_user_op_[i_op];
 
 	// if this variable depends on the selected indepent variables
@@ -132,7 +132,7 @@ void subgraph_info::get_rev(
 		//
 		// There must be a result for this operator
 # ifndef NDEBUG
-		OpCode op = random_itr->get_op(i_op);
+		OpCode op = random_itr.get_op(i_op);
 		CPPAD_ASSERT_UNKNOWN(op == UserOp || NumRes(op) > 0 );
 # endif
 		//
@@ -141,11 +141,11 @@ void subgraph_info::get_rev(
 		for(size_t j = 0; j < argument_variable.size(); ++j)
 		{	// add the corresponding operators to the subgraph
 			size_t j_var = argument_variable[j];
-			size_t j_op  = random_itr->var2op(j_var);
+			size_t j_op  = random_itr.var2op(j_var);
 			j_op         = map_user_op_[j_op];
 			bool add = in_subgraph_[j_op] <= depend_yes;
 			add     &= in_subgraph_[j_op] != i_dep;
-			if( random_itr->get_op(j_op) == InvOp )
+			if( random_itr.get_op(j_op) == InvOp )
 			{	CPPAD_ASSERT_UNKNOWN( j_op == j_var );
 				add &= select_domain_[j_var - 1];
 			}

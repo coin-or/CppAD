@@ -217,7 +217,7 @@ void ADFun<Base>::subgraph_reverse( const VectorBool& select_domain )
 	);
 
 	// initialize for reverse mode subgraph computations
-	subgraph_info_.init_rev(&random_itr, select_domain);
+	subgraph_info_.init_rev(random_itr, select_domain);
 	CPPAD_ASSERT_UNKNOWN(
 		subgraph_info_.in_subgraph().size() == play_.num_op_rec()
 	);
@@ -321,12 +321,12 @@ void ADFun<Base>::subgraph_reverse(
 	// subgraph of operators connected to dependent variable ell
 	pod_vector<addr_t> subgraph;
 	subgraph_info_.get_rev(
-		&random_itr, dep_taddr_, addr_t(ell), subgraph
+		random_itr, dep_taddr_, addr_t(ell), subgraph
 	);
 
 	// Add all the atomic function call operators
 	// for calls that have first operator in the subgraph
-	local::subgraph::entire_call(&random_itr, subgraph);
+	local::subgraph::entire_call(random_itr, subgraph);
 
 	// First add the BeginOp and EndOp to the subgraph and then sort it
 	// sort the subgraph
@@ -386,7 +386,7 @@ void ADFun<Base>::subgraph_reverse(
 	size_t n = Domain();
 	//
 	local::play::const_subgraph_iterator<addr_t> subgraph_itr =
-		play_.end_subgraph(&random_itr, &subgraph);
+		play_.end_subgraph(random_itr, &subgraph);
 	//
 	local::sweep::reverse(
 		q - 1,

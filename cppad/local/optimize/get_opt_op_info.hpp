@@ -205,7 +205,7 @@ void get_opt_op_info(
 	bool                                        compare_op          ,
 	bool                                        print_for_op        ,
 	const player<Base>*                         play                ,
-	const play::const_random_iterator<Addr>*    random_itr          ,
+	const play::const_random_iterator<Addr>&    random_itr          ,
 	const vector<size_t>&                       dep_taddr           ,
 	vector<struct_cexp_info>&                   cexp_info           ,
 	sparse_list&                                skip_op_true        ,
@@ -238,7 +238,7 @@ void get_opt_op_info(
 	size_t        i_op;   // operator index
 	size_t        i_var;  // variable index of first result
 	i_op = 0;
-	random_itr->op_info(i_op, op, arg, i_var);
+	random_itr.op_info(i_op, op, arg, i_var);
 	CPPAD_ASSERT_UNKNOWN( op              == BeginOp );
 	CPPAD_ASSERT_UNKNOWN( NumRes(BeginOp) == 1 );
 	CPPAD_ASSERT_UNKNOWN( i_op            == 0 );
@@ -248,7 +248,7 @@ void get_opt_op_info(
 	user_state = start_user;
 	while(op != EndOp)
 	{	// next operator
-		random_itr->op_info(++i_op, op, arg, i_var);
+		random_itr.op_info(++i_op, op, arg, i_var);
 		//
 		if( op == CExpOp )
 		{	// count the number of conditional expressions.
@@ -331,7 +331,7 @@ void get_opt_op_info(
 	for(size_t i = 0; i < num_op; i++)
 		opt_op_info[i].usage = no_usage;
 	for(size_t i = 0; i < dep_taddr.size(); i++)
-	{	i_op                = random_itr->var2op(dep_taddr[i]);
+	{	i_op                = random_itr.var2op(dep_taddr[i]);
 		opt_op_info[i_op].usage = yes_usage;    // dependent variables
 	}
 	//
@@ -344,7 +344,7 @@ void get_opt_op_info(
 	{	--i_op;
 		//
 		// this operator information
-		random_itr->op_info(i_op, op, arg, i_var);
+		random_itr.op_info(i_op, op, arg, i_var);
 		//
 		// Is the result of this operation used.
 		// (This only makes sense when NumRes(op) > 0.)
@@ -386,7 +386,7 @@ void get_opt_op_info(
 			case ZmulvpOp:
 			CPPAD_ASSERT_UNKNOWN( NumRes(op) > 0 );
 			if( use_result != no_usage )
-			{	size_t j_op = random_itr->var2op(arg[0]);
+			{	size_t j_op = random_itr.var2op(arg[0]);
 				usage_cexp_result2arg(
 					play, sum_op, i_op, j_op, opt_op_info, cexp_set
 				);
@@ -405,7 +405,7 @@ void get_opt_op_info(
 			case ZmulpvOp:
 			CPPAD_ASSERT_UNKNOWN( NumRes(op) > 0 );
 			if( use_result != no_usage )
-			{	size_t j_op = random_itr->var2op(arg[1]);
+			{	size_t j_op = random_itr.var2op(arg[1]);
 				usage_cexp_result2arg(
 					play, sum_op, i_op, j_op, opt_op_info, cexp_set
 				);
@@ -424,7 +424,7 @@ void get_opt_op_info(
 			CPPAD_ASSERT_UNKNOWN( NumRes(op) > 0 );
 			if( use_result != no_usage )
 			{	for(size_t i = 0; i < 2; i++)
-				{	size_t j_op = random_itr->var2op(arg[i]);
+				{	size_t j_op = random_itr.var2op(arg[i]);
 					usage_cexp_result2arg(
 						play, sum_op, i_op, j_op, opt_op_info, cexp_set
 					);
@@ -442,14 +442,14 @@ void get_opt_op_info(
 			{	CPPAD_ASSERT_UNKNOWN( NumArg(CExpOp) == 6 );
 				// propgate from result to left argument
 				if( arg[1] & 1 )
-				{	size_t j_op = random_itr->var2op(arg[2]);
+				{	size_t j_op = random_itr.var2op(arg[2]);
 					usage_cexp_result2arg(
 						play, sum_op, i_op, j_op, opt_op_info, cexp_set
 					);
 				}
 				// propgate from result to right argument
 				if( arg[1] & 2 )
-				{	size_t j_op = random_itr->var2op(arg[3]);
+				{	size_t j_op = random_itr.var2op(arg[3]);
 					usage_cexp_result2arg(
 							play, sum_op, i_op, j_op, opt_op_info, cexp_set
 					);
@@ -460,7 +460,7 @@ void get_opt_op_info(
 				//
 				// if_true
 				if( arg[1] & 4 )
-				{	size_t j_op = random_itr->var2op(arg[4]);
+				{	size_t j_op = random_itr.var2op(arg[4]);
 					bool can_skip = conditional_skip & (! same_variable);
 					can_skip     &= opt_op_info[j_op].usage == no_usage;
 					usage_cexp_result2arg(
@@ -479,7 +479,7 @@ void get_opt_op_info(
 				//
 				// if_false
 				if( arg[1] & 8 )
-				{	size_t j_op = random_itr->var2op(arg[5]);
+				{	size_t j_op = random_itr.var2op(arg[5]);
 					bool can_skip = conditional_skip & (! same_variable);
 					can_skip     &= opt_op_info[j_op].usage == no_usage;
 					usage_cexp_result2arg(
@@ -518,14 +518,14 @@ void get_opt_op_info(
 			{	opt_op_info[i_op].usage = yes_usage;
 				if( arg[0] & 1 )
 				{	// arg[1] is a variable
-					size_t j_op = random_itr->var2op(arg[1]);
+					size_t j_op = random_itr.var2op(arg[1]);
 					usage_cexp_result2arg(
 						play, sum_op, i_op, j_op, opt_op_info, cexp_set
 					);
 				}
 				if( arg[0] & 2 )
 				{	// arg[3] is a variable
-					size_t j_op = random_itr->var2op(arg[3]);
+					size_t j_op = random_itr.var2op(arg[3]);
 					usage_cexp_result2arg(
 						play, sum_op, i_op, j_op, opt_op_info, cexp_set
 					);
@@ -546,7 +546,7 @@ void get_opt_op_info(
 			if( compare_op )
 			{	opt_op_info[i_op].usage = yes_usage;
 				//
-				size_t j_op = random_itr->var2op(arg[1]);
+				size_t j_op = random_itr.var2op(arg[1]);
 				usage_cexp_result2arg(
 					play, sum_op, i_op, j_op, opt_op_info, cexp_set
 				);
@@ -560,7 +560,7 @@ void get_opt_op_info(
 			if( compare_op )
 			{	opt_op_info[i_op].usage = yes_usage;
 				//
-				size_t j_op = random_itr->var2op(arg[0]);
+				size_t j_op = random_itr.var2op(arg[0]);
 				usage_cexp_result2arg(
 					play, sum_op, i_op, j_op, opt_op_info, cexp_set
 				);
@@ -578,7 +578,7 @@ void get_opt_op_info(
 			{	opt_op_info[i_op].usage = yes_usage;
 				//
 				for(size_t i = 0; i < 2; i++)
-				{	size_t j_op = random_itr->var2op(arg[i]);
+				{	size_t j_op = random_itr.var2op(arg[i]);
 					usage_cexp_result2arg(
 						play, sum_op, i_op, j_op, opt_op_info, cexp_set
 					);
@@ -606,7 +606,7 @@ void get_opt_op_info(
 			{	size_t i_vec = arg2vecad[ arg[0] ];
 				vecad_used[i_vec] = true;
 				//
-				size_t j_op = random_itr->var2op(arg[1]);
+				size_t j_op = random_itr.var2op(arg[1]);
 				opt_op_info[j_op].usage = yes_usage;
 			}
 			break; // --------------------------------------------
@@ -617,7 +617,7 @@ void get_opt_op_info(
 			if( vecad_used[ arg2vecad[ arg[0] ] ] )
 			{	opt_op_info[i_op].usage = yes_usage;
 				//
-				size_t j_op = random_itr->var2op(arg[2]);
+				size_t j_op = random_itr.var2op(arg[2]);
 				opt_op_info[j_op].usage = yes_usage;
 			}
 			break; // --------------------------------------------
@@ -628,9 +628,9 @@ void get_opt_op_info(
 			if( vecad_used[ arg2vecad[ arg[0] ] ] )
 			{	opt_op_info[i_op].usage = yes_usage;
 				//
-				size_t j_op = random_itr->var2op(arg[1]);
+				size_t j_op = random_itr.var2op(arg[1]);
 				opt_op_info[j_op].usage = yes_usage;
-				size_t k_op = random_itr->var2op(arg[2]);
+				size_t k_op = random_itr.var2op(arg[2]);
 				opt_op_info[k_op].usage = yes_usage;
 			}
 			break; // -----------------------------------------------------
@@ -644,7 +644,7 @@ void get_opt_op_info(
 				size_t num_add = size_t( arg[0] );
 				size_t num_sub = size_t( arg[1] );
 				for(size_t i = 0; i < num_add + num_sub; i++)
-				{	size_t j_op = random_itr->var2op( arg[3 + i] );
+				{	size_t j_op = random_itr.var2op( arg[3 + i] );
 					usage_cexp_result2arg(
 						play, sum_op, i_op, j_op, opt_op_info, cexp_set
 					);
@@ -786,7 +786,7 @@ void get_opt_op_info(
 							use_arg_j = true;
 					}
 					if( use_arg_j )
-					{	size_t j_op = random_itr->var2op(user_ix[j]);
+					{	size_t j_op = random_itr.var2op(user_ix[j]);
 						usage_cexp_result2arg(play,
 							sum_op, last_user_i_op, j_op, opt_op_info, cexp_set
 						);
@@ -995,7 +995,7 @@ void get_opt_op_info(
 			opt_op_info[i].previous == 0 || opt_op_info[i].usage == yes_usage
 		);
 		i_op            = cexp2op[i];
-		random_itr->op_info(i_op, op, arg, i_var);
+		random_itr.op_info(i_op, op, arg, i_var);
 		CPPAD_ASSERT_UNKNOWN( op == CExpOp );
 		//
 		struct_cexp_info info;

@@ -42,7 +42,7 @@ is the operator and variable indices in the new operation sequence.
 template <class Addr, class Base>
 struct_size_pair record_vv(
 	const player<Base>*                                play           ,
-	const play::const_random_iterator<Addr>*           random_itr     ,
+	const play::const_random_iterator<Addr>&           random_itr     ,
 	const CppAD::vector< struct_old2new<Addr> >&       old2new        ,
 	size_t                                             i_op           ,
 	recorder<Base>*                                    rec            )
@@ -51,7 +51,7 @@ struct_size_pair record_vv(
 	OpCode        op;
 	const Addr*   arg;
 	size_t        i_var;
-	random_itr->op_info(i_op, op, arg, i_var);
+	random_itr.op_info(i_op, op, arg, i_var);
 	//
 # ifndef NDEBUG
 	switch(op)
@@ -72,8 +72,8 @@ struct_size_pair record_vv(
 	CPPAD_ASSERT_UNKNOWN( size_t(arg[1]) < i_var ); // DAG condition
 	//
 	Addr new_arg[2];
-	new_arg[0]   = old2new[ random_itr->var2op(arg[0]) ].new_var;
-	new_arg[1]   = old2new[ random_itr->var2op(arg[1]) ].new_var;
+	new_arg[0]   = old2new[ random_itr.var2op(arg[0]) ].new_var;
+	new_arg[1]   = old2new[ random_itr.var2op(arg[1]) ].new_var;
 	rec->PutArg( new_arg[0], new_arg[1] );
 	//
 	struct_size_pair ret;

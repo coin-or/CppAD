@@ -46,7 +46,7 @@ it is better if work does not drop out of scope between calls.
 */
 template <class Addr>
 void get_argument_variable(
-	const play::const_random_iterator<Addr>* random_itr  ,
+	const play::const_random_iterator<Addr>& random_itr  ,
 	size_t                                   i_op        ,
 	pod_vector<size_t>&                      variable    ,
 	pod_vector<bool>&                        work        )
@@ -58,7 +58,7 @@ void get_argument_variable(
 	OpCode        op;
 	const addr_t* op_arg;
 	size_t        i_var;
-	random_itr->op_info(i_op, op, op_arg, i_var);
+	random_itr.op_info(i_op, op, op_arg, i_var);
 	//
 	// partial check of assumptions on user function calls
 	CPPAD_ASSERT_UNKNOWN(
@@ -67,7 +67,7 @@ void get_argument_variable(
 	//
 	// we assume this is the first UserOp of the call
 	if( op == UserOp )
-	{	random_itr->op_info(++i_op, op, op_arg, i_var);
+	{	random_itr.op_info(++i_op, op, op_arg, i_var);
 		while( op != UserOp )
 		{	switch(op)
 			{
@@ -88,7 +88,7 @@ void get_argument_variable(
 				CPPAD_ASSERT_UNKNOWN(false);
 				break;
 			}
-			random_itr->op_info(++i_op, op, op_arg, i_var);
+			random_itr.op_info(++i_op, op, op_arg, i_var);
 		}
 		CPPAD_ASSERT_UNKNOWN( variable.size() > 0 );
 		return;

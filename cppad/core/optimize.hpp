@@ -254,7 +254,7 @@ void ADFun<Base>::optimize(const std::string& options)
 
 	// create the optimized recording
 	local::optimize::optimize_run(
-		options, n, dep_taddr_, &play_, &random_itr, &rec
+		options, n, dep_taddr_, &play_, random_itr, &rec
 	);
 
 	// number of variables in the recording

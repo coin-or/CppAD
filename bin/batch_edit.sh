@@ -33,8 +33,11 @@ move_list='
 move_sed='s|reverse_subgraph|subgraph_reverse|'
 #
 cat << EOF > junk.sed
-s|<class Base, class Addr|<class Addr, class Base|
-s|<typename Base, typename Addr|<typename Addr, typename Base|
+s|<Addr>\\*\\( *random_itr *\\),|<Addr>\\&\\1,|
+s|<addr_t>\\*\\( *random_itr *\\),|<addr_t>\\&\\1,|
+s|random_itr->|random_itr.|
+s|&random_itr |random_itr  |
+s|&random_itr|random_itr|
 EOF
 # -----------------------------------------------------------------------------
 if [ $0 != "bin/batch_edit.sh" ]

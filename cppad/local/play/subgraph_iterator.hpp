@@ -63,11 +63,11 @@ public:
 	Create a subgraph iterator starting either at beginning or end of subgraph
 	*/
 	const_subgraph_iterator(
-		const const_random_iterator<Addr>*    random_itr , ///< random_itr_
+		const const_random_iterator<Addr>&    random_itr , ///< random_itr_
 		const pod_vector<addr_t>*             subgraph   , ///< subgraph_
 		size_t subgraph_index                            ) ///< subgraph_index_
 	:
-	random_itr_      ( random_itr )        ,
+	random_itr_      ( &random_itr )       ,
 	subgraph_        ( subgraph )          ,
 	subgraph_index_  ( subgraph_index )
 	{	CPPAD_ASSERT_UNKNOWN(

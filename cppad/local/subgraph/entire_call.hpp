@@ -37,7 +37,7 @@ The other call operators are included in the subgraph.
 */
 template <typename Addr>
 void entire_call(
-	const play::const_random_iterator<Addr>* random_itr ,
+	const play::const_random_iterator<Addr>& random_itr ,
 	pod_vector<addr_t>&                      subgraph   )
 {
 	// add extra operators corresponding to rest of atomic function calls
@@ -45,10 +45,10 @@ void entire_call(
 	for(size_t k = 0; k < n_sub; ++k)
 	{	size_t i_op = subgraph[k];
 		//
-		if( random_itr->get_op(i_op) == UserOp )
+		if( random_itr.get_op(i_op) == UserOp )
 		{	// This is the first UserOp of this atomic function call
-			while( random_itr->get_op(++i_op) != UserOp )
-			{	switch(random_itr->get_op(i_op))
+			while( random_itr.get_op(++i_op) != UserOp )
+			{	switch(random_itr.get_op(i_op))
 				{
 					case UsravOp:
 					case UsrrvOp:

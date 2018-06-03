@@ -185,7 +185,7 @@ void ADFun<Base>::subgraph_sparsity(
     local::pod_vector<size_t> col;
 	local::subgraph::subgraph_sparsity(
 		&play_,
-		&random_itr,
+		random_itr,
 		subgraph_info_,
 		dep_taddr_,
 		select_domain,

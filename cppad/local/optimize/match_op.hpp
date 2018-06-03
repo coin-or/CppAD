@@ -71,7 +71,7 @@ and a match for the current operator is not found.
 template <class Addr, class Base>
 void match_op(
 	const player<Base>*                         play           ,
-	const play::const_random_iterator<Addr>*    random_itr     ,
+	const play::const_random_iterator<Addr>&    random_itr     ,
 	vector< struct_opt_op_info<Addr> >&         opt_op_info    ,
 	size_t                                      current        ,
 	sparse_list&                                hash_table_op  )
@@ -90,7 +90,7 @@ void match_op(
 	OpCode        op;
 	const Addr*   arg;
 	size_t        i_var;
-	random_itr->op_info(current, op, arg, i_var);
+	random_itr.op_info(current, op, arg, i_var);
 	CPPAD_ASSERT_UNKNOWN( 0 < NumArg(op) );
 	CPPAD_ASSERT_UNKNOWN( NumArg(op) <= 3 );
 	//
@@ -106,7 +106,7 @@ void match_op(
 	for(size_t j = 0; j < num_arg; ++j)
 	{	arg_match[j] = arg[j];
 		if( variable[j] )
-		{	size_t j_op     = random_itr->var2op(arg[j]);
+		{	size_t j_op     = random_itr.var2op(arg[j]);
 			size_t previous = opt_op_info[j_op].previous;
 			if( previous != 0 )
 			{	// a previous match, be the end of the line; i.e.,
@@ -116,7 +116,7 @@ void match_op(
 				OpCode        op_p;
 				const Addr*   arg_p;
 				size_t        i_var_p;
-				random_itr->op_info(previous, op_p, arg_p, i_var_p);
+				random_itr.op_info(previous, op_p, arg_p, i_var_p);
 				//
 				CPPAD_ASSERT_UNKNOWN( NumRes(op_p) > 0 );
 				arg_match[j] = Addr( i_var_p );
@@ -141,7 +141,7 @@ void match_op(
 		OpCode        op_c;
 		const Addr*   arg_c;
 		size_t        i_var_c;
-		random_itr->op_info(candidate, op_c, arg_c, i_var_c);
+		random_itr.op_info(candidate, op_c, arg_c, i_var_c);
 		//
 		// check for a match
 		bool match = op == op_c;
@@ -149,7 +149,7 @@ void match_op(
 		{	for(size_t j = 0; j < num_arg; j++)
 			{	if( variable[j] )
 				{	size_t previous =
-						opt_op_info[ random_itr->var2op(arg_c[j]) ].previous;
+						opt_op_info[ random_itr.var2op(arg_c[j]) ].previous;
 					if( previous != 0 )
 					{	// must be end of the line for a previous match
 						CPPAD_ASSERT_UNKNOWN(
@@ -159,7 +159,7 @@ void match_op(
 						OpCode        op_p;
 						const Addr*   arg_p;
 						size_t        i_var_p;
-						random_itr->op_info(previous, op_p, arg_p, i_var_p);
+						random_itr.op_info(previous, op_p, arg_p, i_var_p);
 						//
 						match &= arg_match[j] == Addr( i_var_p );
 					}
@@ -193,14 +193,14 @@ void match_op(
 			OpCode        op_c;
 			const Addr*   arg_c;
 			size_t        i_var_c;
-			random_itr->op_info(candidate, op_c, arg_c, i_var_c);
+			random_itr.op_info(candidate, op_c, arg_c, i_var_c);
 			//
 			bool match = op == op_c;
 			if( match )
 			{	for(size_t j = 0; j < num_arg; j++)
 				{	CPPAD_ASSERT_UNKNOWN( variable[j] )
 					size_t previous =
-						opt_op_info[ random_itr->var2op(arg_c[j]) ].previous;
+						opt_op_info[ random_itr.var2op(arg_c[j]) ].previous;
 					if( previous != 0 )
 					{	CPPAD_ASSERT_UNKNOWN(
 							opt_op_info[previous].previous == 0
@@ -209,7 +209,7 @@ void match_op(
 						OpCode        op_p;
 						const Addr*   arg_p;
 						size_t        i_var_p;
-						random_itr->op_info(previous, op_p, arg_p, i_var_p);
+						random_itr.op_info(previous, op_p, arg_p, i_var_p);
 						//
 						match &= arg_match[j] == Addr( i_var_p );
 					}

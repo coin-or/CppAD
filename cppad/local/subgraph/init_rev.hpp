@@ -61,12 +61,12 @@ This vector is to to size n_dep_ and its values are set to false
 */
 template <typename Addr, typename BoolVector>
 void subgraph_info::init_rev(
-	const play::const_random_iterator<Addr>*   random_itr    ,
+	const play::const_random_iterator<Addr>&   random_itr    ,
 	const BoolVector&                          select_domain )
 {
 	// check sizes
 	CPPAD_ASSERT_UNKNOWN( map_user_op_.size()   == n_op_ );
-	CPPAD_ASSERT_UNKNOWN( random_itr->num_op()  == n_op_ );
+	CPPAD_ASSERT_UNKNOWN( random_itr.num_op()  == n_op_ );
 	CPPAD_ASSERT_UNKNOWN( size_t( select_domain.size() ) == n_ind_ );
 
 	// depend_yes and depend_no
@@ -97,7 +97,7 @@ void subgraph_info::init_rev(
 # endif
 	bool begin_atomic_call = false;
 	for(size_t i_op = 0; i_op < n_op_; ++i_op)
-	{	OpCode op = random_itr->get_op(i_op);
+	{	OpCode op = random_itr.get_op(i_op);
 		//
 		// default value for this operator
 		in_subgraph_[i_op] = depend_no;
@@ -127,7 +127,7 @@ void subgraph_info::init_rev(
 			{	get_argument_variable(random_itr, i_op, argument_variable, work);
 				for(size_t j = 0; j < argument_variable.size(); ++j)
 				{	size_t j_var = argument_variable[j];
-					size_t j_op  = random_itr->var2op(j_var);
+					size_t j_op  = random_itr.var2op(j_var);
 					j_op         = map_user_op_[j_op];
 					CPPAD_ASSERT_UNKNOWN( j_op < i_op );
 					if( in_subgraph_[j_op] == depend_yes )
@@ -147,7 +147,7 @@ void subgraph_info::init_rev(
 			{	get_argument_variable(random_itr, i_op, argument_variable, work);
 				for(size_t j = 0; j < argument_variable.size(); ++j)
 				{	size_t j_var = argument_variable[j];
-					size_t j_op  = random_itr->var2op(j_var);
+					size_t j_op  = random_itr.var2op(j_var);
 					j_op         = map_user_op_[j_op];
 					CPPAD_ASSERT_UNKNOWN( j_op < i_op );
 					if( in_subgraph_[j_op] == depend_yes )

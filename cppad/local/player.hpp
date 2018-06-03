@@ -611,7 +611,7 @@ public:
 	// -----------------------------------------------------------------------
 	/// const subgraph iterator begin
 	play::const_subgraph_iterator<addr_t>  begin_subgraph(
-		const play::const_random_iterator<addr_t>* random_itr ,
+		const play::const_random_iterator<addr_t>& random_itr ,
 		const pod_vector<addr_t>*                  subgraph   ) const
 	{	size_t subgraph_index = 0;
 		return play::const_subgraph_iterator<addr_t>(
@@ -622,7 +622,7 @@ public:
 	}
 	/// const subgraph iterator end
 	play::const_subgraph_iterator<addr_t>  end_subgraph(
-		const play::const_random_iterator<addr_t>* random_itr ,
+		const play::const_random_iterator<addr_t>& random_itr ,
 		const pod_vector<addr_t>*                  subgraph   ) const
 	{	size_t subgraph_index = subgraph->size() - 1;
 		return play::const_subgraph_iterator<addr_t>(
