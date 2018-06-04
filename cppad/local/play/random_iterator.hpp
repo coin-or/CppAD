@@ -72,17 +72,17 @@ public:
 	function is not used.
 	*/
 	const_random_iterator(
-		const pod_vector<CPPAD_OP_CODE_TYPE>* op_vec     , ///< op_vec_
-		const pod_vector<addr_t>*             arg_vec    , ///< arg_vec_
-		const pod_vector<addr_t>*             op2arg_vec , ///< op2ar_vec_
-		const pod_vector<addr_t>*             op2var_vec , ///< op2var_vec_
-		const pod_vector<addr_t>*             var2op_vec ) ///< var2op_vec_
+		const pod_vector<CPPAD_OP_CODE_TYPE>& op_vec     , ///< op_vec_
+		const pod_vector<addr_t>&             arg_vec    , ///< arg_vec_
+		const pod_vector<Addr>*               op2arg_vec , ///< op2ar_vec_
+		const pod_vector<Addr>*               op2var_vec , ///< op2var_vec_
+		const pod_vector<Addr>*               var2op_vec ) ///< var2op_vec_
 	:
-	op_vec_          ( op_vec )                                    ,
-	arg_vec_         ( arg_vec )                                   ,
-	op2arg_vec_      ( op2arg_vec->pod_vector_ptr<Addr>() )        ,
-	op2var_vec_      ( op2var_vec->pod_vector_ptr<Addr>() )        ,
-	var2op_vec_      ( var2op_vec->pod_vector_ptr<Addr>() )
+	op_vec_          ( &op_vec    )   ,
+	arg_vec_         ( &arg_vec   )   ,
+	op2arg_vec_      ( op2arg_vec )   ,
+	op2var_vec_      ( op2var_vec )   ,
+	var2op_vec_      ( var2op_vec )
 	{ }
 	/*!
 	\brief

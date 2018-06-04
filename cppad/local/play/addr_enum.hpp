@@ -20,8 +20,6 @@ namespace CppAD { namespace local { namespace play {
 */
 /// enum corresponding to type used for addressing iterators for a player
 enum addr_enum {
-	addr_t_enum          , // 2DO: for refactoring, remove when done
-	unsigned_char_enum   ,
 	unsigned_short_enum  ,
 	unsigned_int_enum    ,
 	size_t_enum

@@ -250,18 +250,6 @@ void ADFun<Base>::optimize(const std::string& options)
 	// create the optimized recording
 	switch( play_.address_type() )
 	{
-		case local::play::addr_t_enum:
-		local::optimize::optimize_run<addr_t>(
-			options, n, dep_taddr_, &play_, &rec
-		);
-		break;
-
-		case local::play::unsigned_char_enum:
-		local::optimize::optimize_run<unsigned char>(
-			options, n, dep_taddr_, &play_, &rec
-		);
-		break;
-
 		case local::play::unsigned_short_enum:
 		local::optimize::optimize_run<unsigned short>(
 			options, n, dep_taddr_, &play_, &rec

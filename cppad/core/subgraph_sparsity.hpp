@@ -181,30 +181,6 @@ void ADFun<Base>::subgraph_sparsity(
 	// create the optimized recording
 	switch( play_.address_type() )
 	{
-		case local::play::addr_t_enum:
-		local::subgraph::subgraph_sparsity<addr_t>(
-			&play_,
-			subgraph_info_,
-			dep_taddr_,
-			select_domain,
-			select_range,
-			row,
-			col
-		);
-		break;
-
-		case local::play::unsigned_char_enum:
-		local::subgraph::subgraph_sparsity<unsigned char>(
-			&play_,
-			subgraph_info_,
-			dep_taddr_,
-			select_domain,
-			select_range,
-			row,
-			col
-		);
-		break;
-
 		case local::play::unsigned_short_enum:
 		local::subgraph::subgraph_sparsity<unsigned short>(
 			&play_,

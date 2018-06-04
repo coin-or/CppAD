@@ -69,7 +69,7 @@ private:
 	// and for using const_subgraph_iterator.
 
 	/// index in arg_vec_ corresonding to the first argument for each operator
-	pod_vector<addr_t> op2arg_vec_;
+	pod_vector<unsigned char> op2arg_vec_;
 
 	/*!
 	Index of the result variable for each operator. If the operator has
@@ -78,12 +78,12 @@ private:
 	is the primary result; i.e., the last result. Auxillary are only used by
 	the operator and not used by other operators.
 	*/
-	pod_vector<addr_t> op2var_vec_;
+	pod_vector<unsigned char> op2var_vec_;
 
 	/// Mapping from primary variable index to corresponding operator index.
 	/// This is used to traverse sub-graphs of the operation sequence.
 	/// This value is valid (invalid) for primary (auxillary) variables.
-	pod_vector<addr_t> var2op_vec_;
+	pod_vector<unsigned char> var2op_vec_;
 
 public:
 	// =================================================================
@@ -100,19 +100,12 @@ public:
 	// ======================================================================
 	/// type used for addressing iterators for this player
 	play::addr_enum address_type(void) const
-	{	// 2DO: the following is for refactoring, remove when done.
-		if( true )
-			return play::addr_t_enum;
-
+	{
 		// required
 		size_t required = 0;
 		required = std::max(required, num_var_rec_   );  // number variables
 		required = std::max(required, op_vec_.size()  ); // number operators
 		required = std::max(required, arg_vec_.size() ); // number arguments
-		//
-		// unsigned char
-		if( required <= std::numeric_limits<unsigned char>::max() )
-			return play::unsigned_char_enum;
 		//
 		// unsigned short
 		if( required <= std::numeric_limits<unsigned short>::max() )
@@ -579,14 +572,33 @@ public:
 			CPPAD_ASSERT_UNKNOWN( var2op_vec_.size() == 0 );
 		}
 		else
-		{	CPPAD_ASSERT_UNKNOWN( op2arg_vec_.size() == num_op_rec() );
-			CPPAD_ASSERT_UNKNOWN( op2var_vec_.size() == num_op_rec() );
-			CPPAD_ASSERT_UNKNOWN( var2op_vec_.size() == num_var_rec() );
+		{	size_t size = 0;
+			switch( address_type() )
+			{	case play::unsigned_short_enum:
+				size = sizeof(unsigned short);
+				break;
+				//
+				case play::unsigned_int_enum:
+				size = sizeof(unsigned int);
+				break;
+				//
+				case play::size_t_enum:
+				size = sizeof(size_t);
+				break;
+
+				default:
+				CPPAD_ASSERT_UNKNOWN(false);
+				break;
+			}
+			CPPAD_ASSERT_UNKNOWN( op2arg_vec_.size()/size  == num_op_rec() );
+			CPPAD_ASSERT_UNKNOWN( op2var_vec_.size()/size  == num_op_rec() );
+			CPPAD_ASSERT_UNKNOWN( var2op_vec_.size()/size  == num_var_rec() );
 		}
 # endif
-		return op2arg_vec_.size() * sizeof(addr_t)
-		     + op2var_vec_.size() * sizeof(addr_t)
-		     + var2op_vec_.size() * sizeof(addr_t)
+		CPPAD_ASSERT_UNKNOWN( sizeof(unsigned char) == 1 );
+		return op2arg_vec_.size()
+		     + op2var_vec_.size()
+		     + var2op_vec_.size()
 		;
 	}
 	// -----------------------------------------------------------------------
@@ -635,11 +647,11 @@ public:
 	template <class Addr>
 	play::const_random_iterator<Addr> get_random(void) const
 	{	return play::const_random_iterator<Addr>(
-			&op_vec_,
-			&arg_vec_,
-			&op2arg_vec_,
-			&op2var_vec_,
-			&var2op_vec_
+			op_vec_,
+			arg_vec_,
+			op2arg_vec_.pod_vector_ptr<Addr>(),
+			op2var_vec_.pod_vector_ptr<Addr>(),
+			var2op_vec_.pod_vector_ptr<Addr>()
 		);
 	}
 };

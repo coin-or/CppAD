@@ -214,14 +214,6 @@ void ADFun<Base>::subgraph_reverse( const VectorBool& select_domain )
 	// initialize for reverse mode subgraph computations
 	switch( play_.address_type() )
 	{
-		case local::play::addr_t_enum:
-		subgraph_info_.init_rev<addr_t>(&play_, select_domain);
-		break;
-
-		case local::play::unsigned_char_enum:
-		subgraph_info_.init_rev<unsigned char>(&play_, select_domain);
-		break;
-
 		case local::play::unsigned_short_enum:
 		subgraph_info_.init_rev<unsigned short>(&play_, select_domain);
 		break;
@@ -476,14 +468,6 @@ void ADFun<Base>::subgraph_reverse(
 	// call proper version of helper function
 	switch( play_.address_type() )
 	{
-		case local::play::addr_t_enum:
-		subgraph_reverse_helper<addr_t>(q, ell, col, dw);
-		break;
-
-		case local::play::unsigned_char_enum:
-		subgraph_reverse_helper<unsigned char>(q, ell, col, dw);
-		break;
-
 		case local::play::unsigned_short_enum:
 		subgraph_reverse_helper<unsigned short>(q, ell, col, dw);
 		break;
