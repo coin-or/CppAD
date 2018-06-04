@@ -306,8 +306,8 @@ void ADFun<Base>::subgraph_reverse_helper(
 	VectorBase& dw  )
 {	using local::pod_vector;
 	//
-	// make sure player is setup for random access
-	play_.setup_random();
+	// get a random iterator for this player
+	play_.template setup_random<Addr>();
 	typename local::play::const_random_iterator<Addr> random_itr =
 		play_.template get_random<Addr>();
 

@@ -210,7 +210,7 @@ void subgraph_info::init_rev(
 	const BoolVector&   select_domain )
 {
 	// get random access iterator for this player
-	play->setup_random();
+	play->template setup_random<Addr>();
 	local::play::const_random_iterator<Addr> random_itr =
 		play->template get_random<Addr>();
 	//

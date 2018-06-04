@@ -96,7 +96,7 @@ void subgraph_sparsity(
 	pod_vector<size_t>&                        col_out       )
 {
 	// get random access iterator for this player
-	play->setup_random();
+	play->template setup_random<Addr>();
 	local::play::const_random_iterator<Addr> random_itr =
 		play->template get_random<Addr>();
 

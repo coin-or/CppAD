@@ -91,7 +91,7 @@ void optimize_run(
 	recorder<Base>*                            rec        )
 {
 	// get a random iterator for this player
-	play->setup_random();
+	play->template setup_random<Addr>();
 	local::play::const_random_iterator<Addr> random_itr =
 		play->template get_random<Addr>();
 

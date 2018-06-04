@@ -430,14 +430,15 @@ public:
 	// =================================================================
 	/// Enable use of const_subgraph_iterator and member functions that begin
 	// with random_(no work if already setup).
+	template <class Addr>
 	void setup_random(void)
 	{	play::random_setup(
-			num_var_rec_        ,
-			op_vec_             ,
-			arg_vec_            ,
-			op2arg_vec_         ,
-			op2var_vec_         ,
-			var2op_vec_
+			num_var_rec_                               ,
+			op_vec_                                    ,
+			arg_vec_                                   ,
+			op2arg_vec_.pod_vector_ptr<Addr>()         ,
+			op2var_vec_.pod_vector_ptr<Addr>()         ,
+			var2op_vec_.pod_vector_ptr<Addr>()
 		);
 	}
 	/// Free memory used for functions that begin with random_
