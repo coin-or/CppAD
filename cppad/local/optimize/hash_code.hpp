@@ -38,11 +38,10 @@ containing the corresponding argument indices for this operator.
 is a hash code that is between zero and CPPAD_HASH_TABLE_SIZE - 1.
 */
 
-template <class Addr>
 inline size_t optimize_hash_code(
 	OpCode        op      ,
 	size_t        num_arg ,
-	const Addr*   arg     )
+	const addr_t* arg     )
 {
 	// there is only one case where num_arg == 3
 	CPPAD_ASSERT_UNKNOWN( op == ErfOp || num_arg <= 2 );

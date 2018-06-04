@@ -1,4 +1,3 @@
-// $Id$
 # ifndef CPPAD_LOCAL_OPTIMIZE_OLD2NEW_HPP
 # define CPPAD_LOCAL_OPTIMIZE_OLD2NEW_HPP
 /* --------------------------------------------------------------------------
@@ -21,13 +20,12 @@ namespace CppAD { namespace local { namespace optimize  {
 /*!
 Information that maps old an old operator to a new opeator and new variable.
 */
-template <class Addr>
 struct struct_old2new {
 	/// New operator index for this old operator.
-	Addr  new_op;
+	addr_t  new_op;
 
 	/// New varaible index for this old operator.
-	Addr  new_var;
+	addr_t  new_var;
 };
 
 } } } // END_CPPAD_LOCAL_OPTIMIZE_NAMESPACE

@@ -87,14 +87,14 @@ If cexp_set.n_set() != 0 and opt_op_info[i_arg].usage != no_usage,
 the output value of set[i_arg] is the intersection of
 its input value and set[i_result].
 */
-template <class Addr, class Base>
+template <class Base>
 inline void usage_cexp_result2arg(
-	const player<Base>*                 play           ,
-	bool                                sum_result     ,
-	size_t                              i_result       ,
-	size_t                              i_arg          ,
-	vector< struct_opt_op_info<Addr> >& opt_op_info    ,
-	sparse_list&                        cexp_set       )
+	const player<Base>*         play           ,
+	bool                        sum_result     ,
+	size_t                      i_result       ,
+	size_t                      i_arg          ,
+	vector<struct_opt_op_info>& opt_op_info    ,
+	sparse_list&                cexp_set       )
 {
 	// cexp_set
 	if( cexp_set.n_set() > 0 )
@@ -199,19 +199,19 @@ have been set to the values corresponding to the i-th operator
 in the operation sequence.
 */
 
-template <class Addr, class Base>
+template <class Base>
 void get_opt_op_info(
 	bool                                        conditional_skip    ,
 	bool                                        compare_op          ,
 	bool                                        print_for_op        ,
 	const player<Base>*                         play                ,
-	const play::const_random_iterator<Addr>&    random_itr          ,
+	const play::const_random_iterator<addr_t>&  random_itr          ,
 	const vector<size_t>&                       dep_taddr           ,
 	vector<struct_cexp_info>&                   cexp_info           ,
 	sparse_list&                                skip_op_true        ,
 	sparse_list&                                skip_op_false       ,
 	vector<bool>&                               vecad_used          ,
-	vector< struct_opt_op_info<Addr> >&         opt_op_info         )
+	vector<struct_opt_op_info>&                 opt_op_info         )
 {
 	CPPAD_ASSERT_UNKNOWN( cexp_info.size() == 0 );
 	CPPAD_ASSERT_UNKNOWN( vecad_used.size() == 0 );
@@ -223,7 +223,7 @@ void get_opt_op_info(
 	//
 	// initialize mapping from variable index to operator index
 	CPPAD_ASSERT_UNKNOWN(
-		size_t( std::numeric_limits<Addr>::max() ) >= num_op
+		size_t( std::numeric_limits<addr_t>::max() ) >= num_op
 	);
 	//
 	// information set by forward_user
@@ -234,7 +234,7 @@ void get_opt_op_info(
 	// Forward pass to determine num_cexp_op
 	// ----------------------------------------------------------------------
 	OpCode        op;     // operator
-	const Addr*   arg;    // arguments
+	const addr_t* arg;    // arguments
 	size_t        i_op;   // operator index
 	size_t        i_var;  // variable index of first result
 	i_op = 0;

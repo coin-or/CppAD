@@ -62,16 +62,16 @@ j_op that corresponds to a variable that is an argument to
 opt_op_info[i_op].
 */
 
-template <class Addr, class Base>
+template <class Base>
 struct_size_pair record_csum(
 	const player<Base>*                                play           ,
-	const play::const_random_iterator<Addr>&           random_itr     ,
-	const vector< struct_opt_op_info<Addr> >&          opt_op_info    ,
-	const CppAD::vector< struct_old2new<Addr> >&       old2new        ,
+	const play::const_random_iterator<addr_t>&         random_itr     ,
+	const vector<struct_opt_op_info>&                  opt_op_info    ,
+	const CppAD::vector<struct struct_old2new>&        old2new        ,
 	size_t                                             current        ,
 	recorder<Base>*                                    rec            ,
 	// local information passed so stacks need not be allocated for every call
-	struct_csum_stacks<Addr>&                          work           )
+	struct_csum_stacks&                                work           )
 {
 # ifndef NDEBUG
 	// number of parameters corresponding to the old operation sequence.
@@ -92,7 +92,7 @@ struct_size_pair record_csum(
 	CPPAD_ASSERT_UNKNOWN( ! ( opt_op_info[i_op].usage == csum_usage ) );
 	//
 	// information corresponding to the root node in the cummulative summation
-	struct struct_csum_variable<Addr> var;
+	struct struct_csum_variable var;
 	size_t not_used;
 	random_itr.op_info(i_op, var.op, var.arg, not_used);
 	var.add = true;  // was parrent operator positive or negative
@@ -124,7 +124,7 @@ struct_size_pair record_csum(
 		var     = work.op_stack.top();
 		work.op_stack.pop();
 		OpCode        op      = var.op;
-		const Addr*   arg     = var.arg;
+		const addr_t* arg     = var.arg;
 		bool          add     = var.add;
 		//
 		// process first argument to this operator
@@ -217,12 +217,12 @@ struct_size_pair record_csum(
 	size_t n_sub = work.sub_stack.size();
 	//
 	CPPAD_ASSERT_UNKNOWN(
-		size_t( std::numeric_limits<Addr>::max() ) >= n_add + n_sub
+		size_t( std::numeric_limits<addr_t>::max() ) >= n_add + n_sub
 	);
 	//
-	rec->PutArg( Addr(n_add) );                // arg[0]
-	rec->PutArg( Addr(n_sub) );                // arg[1]
-	Addr new_arg = rec->PutPar(sum_par);
+	rec->PutArg( addr_t(n_add) );                // arg[0]
+	rec->PutArg( addr_t(n_sub) );                // arg[1]
+	addr_t new_arg = rec->PutPar(sum_par);
 	rec->PutArg(new_arg);              // arg[2]
 	// addition arguments
 	for(size_t i = 0; i < n_add; i++)
@@ -243,7 +243,7 @@ struct_size_pair record_csum(
 		work.sub_stack.pop();
 	}
 	// number of additions plus number of subtractions
-	rec->PutArg( Addr(n_add + n_sub) );      // arg[3 + arg[0] + arg[1]]
+	rec->PutArg( addr_t(n_add + n_sub) );      // arg[3 + arg[0] + arg[1]]
 	//
 	// return value
 	struct_size_pair ret;

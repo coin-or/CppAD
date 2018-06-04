@@ -18,7 +18,6 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 namespace CppAD { namespace local { namespace optimize {
 
 /// information for one operator
-template <class Addr>
 struct struct_opt_op_info {
 	/*!
 	previous operator that can be used in place of this operator.
@@ -29,7 +28,7 @@ struct struct_opt_op_info {
 	opt_op_info[pevious].previous == 0 and
 	opt_op_info[previous].usage == yes_usage.
 	*/
-	Addr previous;
+	addr_t previous;
 
 	/// How is this operator used to compute the dependent variables.
 	/// If usage = csum_usage or usage = no_usage, previous = 0.

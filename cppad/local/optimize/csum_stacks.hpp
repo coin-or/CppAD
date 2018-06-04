@@ -1,4 +1,3 @@
-// $Id$
 # ifndef CPPAD_LOCAL_OPTIMIZE_CSUM_STACKS_HPP
 # define CPPAD_LOCAL_OPTIMIZE_CSUM_STACKS_HPP
 /* --------------------------------------------------------------------------
@@ -24,15 +23,13 @@ namespace CppAD { namespace local { namespace optimize  {
 /*!
 Information about one cumulative summation operation.
 */
-
-template <class Addr>
 struct struct_csum_stacks {
 	/// old operator indices for this cummulative summation
-	std::stack< struct struct_csum_variable<Addr> >  op_stack;
+	std::stack<struct struct_csum_variable>     op_stack;
 	/// old variable indices to be added
-	std::stack<size_t >                              add_stack;
+	std::stack<size_t >                         add_stack;
 	/// old variavle indices to be subtracted
-	std::stack<size_t >                              sub_stack;
+	std::stack<size_t >                         sub_stack;
 };
 
 } } } // END_CPPAD_LOCAL_OPTIMIZE_NAMESPACE
