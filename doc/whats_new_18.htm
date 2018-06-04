@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Changes and Additions to CppAD During 2018</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Changes and Additions to CppAD During 2018">
-<meta name="keywords" id="keywords" content=" changes additions to cppad during 2018 05-29 05-28 05-26 05-20 05-17 05-04 05-03 04-29 04-13 03-20 03-19 03-04 03-02 02-27 02-26 02-23 02-20 ">
+<meta name="keywords" id="keywords" content=" changes additions to cppad during 2018 05-29 06-04 05-28 05-26 05-20 05-17 05-04 05-03 04-29 04-13 03-20 03-19 03-04 03-02 02-27 02-26 02-23 02-20 ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -111,6 +111,7 @@ A:active { color : purple }
 <select onchange='choose_current0(this)'>
 <option>Headings-&gt;</option>
 <option>05-29</option>
+<option>06-04</option>
 <option>05-28</option>
 <option>05-26</option>
 <option>05-20</option>
@@ -146,6 +147,23 @@ A:active { color : purple }
 The <a href="autotools.htm" target="_top"><span style='white-space: nowrap'>autotools</span></a>
  install procedure was not working since 05-26.
 This has been fixed.
+
+<br>
+<br>
+<b><big><a name="06-04" id="06-04">06-04</a></big></b>
+<br>
+The memory used during
+<a href="subgraph_reverse.htm" target="_top"><span style='white-space: nowrap'>subgraph_reverse</span></a>
+, <a href="subgraph_sparsity.htm" target="_top"><span style='white-space: nowrap'>subgraph_sparsity</span></a>
+, and
+<a href="optimize.htm" target="_top"><span style='white-space: nowrap'>optimize</span></a>
+ was changed to use the smallest addressing type possible
+for the tape in question.
+To be specific the smallest type from the set
+<code><font color="blue">unsigned short</font></code>,
+<code><font color="blue">unsigned int</font></code>,
+<code><font color="blue">size_t</font></code>, in that order.
+
 
 <br>
 <br>
