@@ -194,11 +194,6 @@ template <typename VectorBool>
 void ADFun<Base>::subgraph_reverse( const VectorBool& select_domain )
 {	using local::pod_vector;
 	//
-	// random access iterator
-	play_.setup_random();
-	local::play::const_random_iterator<addr_t> random_itr =
-		play_.template get_random<addr_t>();
-
 	CPPAD_ASSERT_UNKNOWN(
 		dep_taddr_.size() == subgraph_info_.n_dep()
 	);
@@ -217,7 +212,31 @@ void ADFun<Base>::subgraph_reverse( const VectorBool& select_domain )
 	);
 
 	// initialize for reverse mode subgraph computations
-	subgraph_info_.init_rev(random_itr, select_domain);
+	switch( play_.address_type() )
+	{
+		case local::play::addr_t_enum:
+		subgraph_info_.init_rev<addr_t>(&play_, select_domain);
+		break;
+
+		case local::play::unsigned_char_enum:
+		subgraph_info_.init_rev<unsigned char>(&play_, select_domain);
+		break;
+
+		case local::play::unsigned_short_enum:
+		subgraph_info_.init_rev<unsigned short>(&play_, select_domain);
+		break;
+
+		case local::play::unsigned_int_enum:
+		subgraph_info_.init_rev<unsigned int>(&play_, select_domain);
+		break;
+
+		case local::play::size_t_enum:
+		subgraph_info_.init_rev<size_t>(&play_, select_domain);
+		break;
+
+		default:
+		CPPAD_ASSERT_UNKNOWN(false);
+	}
 	CPPAD_ASSERT_UNKNOWN(
 		subgraph_info_.in_subgraph().size() == play_.num_op_rec()
 	);

@@ -281,10 +281,10 @@ public:
 	}
 	// -----------------------------------------------------------------------
 	// see init_rev.hpp
-	template <typename Addr, typename BoolVector>
+	template <typename Addr, typename Base, typename BoolVector>
 	void init_rev(
-		const play::const_random_iterator<Addr>&   random_itr    ,
-		const BoolVector&                          select_domain
+		player<Base>*       play          ,
+		const BoolVector&   select_domain
 	);
 	// -----------------------------------------------------------------------
 	// see get_rev.hpp

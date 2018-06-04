@@ -26,11 +26,13 @@ initialize for a reverse mode subgraph calculation
 Initialize in_subgraph corresponding to a single dependent variable
 (and a selected set of independent variables).
 
-\tparam Addr
-Type used for indices in the random iterator.
+\tparam Base
+this operation sequence was recording using AD<Base>.
 
-\param random_itr
-is a random iterator for this operation sequence.
+\param play
+is the operation sequence corresponding to the ADFun<Base> function
+(it must correspond to map_user_op_).
+This is effectively const except that play->setup_random is called.
 
 \param select_domain
 is a vector with, size equal to the number of independent variables
@@ -59,14 +61,19 @@ This vector is is set equal to the select_domain argument.
 \par process_range_
 This vector is to to size n_dep_ and its values are set to false
 */
-template <typename Addr, typename BoolVector>
+template <typename Addr, typename Base, typename BoolVector>
 void subgraph_info::init_rev(
-	const play::const_random_iterator<Addr>&   random_itr    ,
-	const BoolVector&                          select_domain )
+	player<Base>*                        play          ,
+	const BoolVector&                    select_domain )
 {
+	// get a random access iterator for this player
+	play->setup_random();
+	local::play::const_random_iterator<addr_t> random_itr =
+		play->template get_random<Addr>();
+
 	// check sizes
 	CPPAD_ASSERT_UNKNOWN( map_user_op_.size()   == n_op_ );
-	CPPAD_ASSERT_UNKNOWN( random_itr.num_op()  == n_op_ );
+	CPPAD_ASSERT_UNKNOWN( play->num_op_rec()    == n_op_ );
 	CPPAD_ASSERT_UNKNOWN( size_t( select_domain.size() ) == n_ind_ );
 
 	// depend_yes and depend_no
@@ -97,7 +104,7 @@ void subgraph_info::init_rev(
 # endif
 	bool begin_atomic_call = false;
 	for(size_t i_op = 0; i_op < n_op_; ++i_op)
-	{	OpCode op = random_itr.get_op(i_op);
+	{	OpCode op = play->GetOp(i_op);
 		//
 		// default value for this operator
 		in_subgraph_[i_op] = depend_no;
