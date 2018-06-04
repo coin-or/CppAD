@@ -24,10 +24,6 @@ $$
 
 $section Changes and Additions to CppAD During 2018$$
 
-$head 05-29$$
-The $cref autotools$$ install procedure was not working since 05-26.
-This has been fixed.
-
 $head 06-04$$
 The memory used during
 $cref subgraph_reverse$$, $cref subgraph_sparsity$$, and
@@ -38,6 +34,9 @@ $code unsigned short$$,
 $code unsigned int$$,
 $code size_t$$, in that order.
 
+$head 05-29$$
+The $cref autotools$$ install procedure was not working since 05-26.
+This has been fixed.
 
 $head 05-28$$
 $list number$$
