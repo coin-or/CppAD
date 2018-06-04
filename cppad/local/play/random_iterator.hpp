@@ -33,7 +33,8 @@ private:
 	const pod_vector<CPPAD_OP_CODE_TYPE>* op_vec_;
 
 	/// vector of arguments for all the operators
-	const pod_vector<Addr>* arg_vec_;
+	/// (note that this is same type as used in recorder; i.e., addr_t)
+	const pod_vector<addr_t>* arg_vec_;
 
 	/// mapping from operator index to index of first argument in arg_vec_
 	const pod_vector<Addr>* op2arg_vec_;
@@ -104,7 +105,7 @@ public:
 	void op_info(
 		size_t         op_index   ,
 		OpCode&        op         ,
-		const Addr*&   op_arg     ,
+		const addr_t*& op_arg     ,
 		size_t&        var_index  ) const
 	{	op        = OpCode( (*op_vec_)[op_index] );
 		op_arg    = (*op2arg_vec_)[op_index] + arg_vec_->data();

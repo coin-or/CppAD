@@ -35,11 +35,14 @@ namespace CppAD { namespace local { namespace optimize  {
 /*!
 Convert a player object to an optimized recorder object
 
+\tparam Addr
+Type to use with player random iterators. Must correspond to the
+result for play->addr_type().
+
 \tparam Base
 base type for the operator; i.e., this operation was recorded
 using AD< \a Base > and computations by this routine are done using type
 \a Base.
-
 
 \param options
 \li
@@ -71,9 +74,7 @@ the operation sequence corresponding to \a rec.
 
 \param play
 This is the operation sequence that we are optimizing.
-
-\param random_itr
-This is a random iterator for the player.
+It is const except for the fact that play->setup_random is called.
 
 \param rec
 The input contents of this recording does not matter.
@@ -81,15 +82,19 @@ Upon return, it contains an optimized verison of the
 operation sequence corresponding to \a play.
 */
 
-template <class Base>
+template <class Addr, class Base>
 void optimize_run(
 	const std::string&                         options    ,
 	size_t                                     n          ,
 	CppAD::vector<size_t>&                     dep_taddr  ,
-	const player<Base>*                        play       ,
-	const play::const_random_iterator<addr_t>& random_itr ,
+	player<Base>*                              play       ,
 	recorder<Base>*                            rec        )
 {
+	// get a random iterator for this player
+	play->setup_random();
+	local::play::const_random_iterator<Addr> random_itr =
+		play->template get_random<Addr>();
+
 	bool conditional_skip = true;
 	bool compare_op       = true;
 	bool print_for_op     = true;

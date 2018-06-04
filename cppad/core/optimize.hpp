@@ -215,11 +215,6 @@ when compare_change is not used.
 template <class Base>
 void ADFun<Base>::optimize(const std::string& options)
 {
-	// get a random iterator for this player
-	play_.setup_random();
-	local::play::const_random_iterator<addr_t> random_itr =
-		play_.template get_random<addr_t>();
-
 	// place to store the optimized version of the recording
 	local::recorder<Base> rec;
 
@@ -253,9 +248,41 @@ void ADFun<Base>::optimize(const std::string& options)
 # endif
 
 	// create the optimized recording
-	local::optimize::optimize_run(
-		options, n, dep_taddr_, &play_, random_itr, &rec
-	);
+	switch( play_.address_type() )
+	{
+		case local::play::addr_t_enum:
+		local::optimize::optimize_run<addr_t>(
+			options, n, dep_taddr_, &play_, &rec
+		);
+		break;
+
+		case local::play::unsigned_char_enum:
+		local::optimize::optimize_run<unsigned char>(
+			options, n, dep_taddr_, &play_, &rec
+		);
+		break;
+
+		case local::play::unsigned_short_enum:
+		local::optimize::optimize_run<unsigned short>(
+			options, n, dep_taddr_, &play_, &rec
+		);
+		break;
+
+		case local::play::unsigned_int_enum:
+		local::optimize::optimize_run<unsigned int>(
+			options, n, dep_taddr_, &play_, &rec
+		);
+		break;
+
+		case local::play::size_t_enum:
+		local::optimize::optimize_run<size_t>(
+			options, n, dep_taddr_, &play_, &rec
+		);
+		break;
+
+		default:
+		CPPAD_ASSERT_UNKNOWN(false);
+	}
 
 	// number of variables in the recording
 	num_var_tape_  = rec.num_var_rec();

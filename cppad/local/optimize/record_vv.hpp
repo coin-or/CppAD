@@ -39,10 +39,10 @@ is the object that will record the new operations.
 \return
 is the operator and variable indices in the new operation sequence.
 */
-template <class Base>
+template <class Addr, class Base>
 struct_size_pair record_vv(
 	const player<Base>*                                play           ,
-	const play::const_random_iterator<addr_t>&         random_itr     ,
+	const play::const_random_iterator<Addr>&           random_itr     ,
 	const CppAD::vector<struct struct_old2new>&        old2new        ,
 	size_t                                             i_op           ,
 	recorder<Base>*                                    rec            )

@@ -199,13 +199,13 @@ have been set to the values corresponding to the i-th operator
 in the operation sequence.
 */
 
-template <class Base>
+template <class Addr, class Base>
 void get_opt_op_info(
 	bool                                        conditional_skip    ,
 	bool                                        compare_op          ,
 	bool                                        print_for_op        ,
 	const player<Base>*                         play                ,
-	const play::const_random_iterator<addr_t>&  random_itr          ,
+	const play::const_random_iterator<Addr>&    random_itr          ,
 	const vector<size_t>&                       dep_taddr           ,
 	vector<struct_cexp_info>&                   cexp_info           ,
 	sparse_list&                                skip_op_true        ,
