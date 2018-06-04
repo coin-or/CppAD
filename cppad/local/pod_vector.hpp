@@ -15,6 +15,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # if CPPAD_CSTDINT_HAS_8_TO_64
 # include <cstdint>
 # endif
+# include <cstring>
 # include <algorithm>
 # include <cppad/utility/thread_alloc.hpp>
 # include <cppad/core/cppad_assert.hpp>
