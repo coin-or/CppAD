@@ -26,6 +26,10 @@ Compute dependency sparsity pattern using subgraph technique.
 /*!
 Compute dependency sparsity pattern for an ADFun<Base> function.
 
+\tparam Addr
+type used for indices in random iterator
+(must correspond to play->addr_type())
+
 \tparam Base
 the operation sequence was recorded using AD<Base>.
 
@@ -34,10 +38,8 @@ a simple vector class with elements of type bool.
 
 \param play
 is the operation sequence corresponding to the ADFun<Base> function.
+It is effectively const except that play->setup_random() is called.
 
-\param random_itr
-is a random iterator corresponding to operation sequence corresponding
-for the ADFun<Base> function.
 
 \param sub_info
 is the subgraph information for this ADFun object.
@@ -83,10 +85,9 @@ to be connected.
 to to make the sparsity pattern more efficient.
 */
 
-template <typename Base, typename BoolVector>
+template <typename Addr, typename Base, typename BoolVector>
 void subgraph_sparsity(
-	const player<Base>*                        play          ,
-	const play::const_random_iterator<addr_t>& random_itr    ,
+	player<Base>*                              play          ,
 	subgraph_info&                             sub_info      ,
 	const vector<size_t>&                      dep_taddr     ,
 	const BoolVector&                          select_domain ,
@@ -94,6 +95,11 @@ void subgraph_sparsity(
 	pod_vector<size_t>&                        row_out       ,
 	pod_vector<size_t>&                        col_out       )
 {
+	// get random access iterator for this player
+	play->setup_random();
+	local::play::const_random_iterator<Addr> random_itr =
+		play->template get_random<Addr>();
+
 	// check dimension assumptions
 	CPPAD_ASSERT_UNKNOWN(
 		dep_taddr.size() == sub_info.n_dep()

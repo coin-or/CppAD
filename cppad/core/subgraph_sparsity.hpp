@@ -174,25 +174,77 @@ void ADFun<Base>::subgraph_sparsity(
 	bool                         transpose        ,
 	sparse_rc<SizeVector>&       pattern_out      )
 {
-	//
-	// make sure player is setup for random access
-	play_.setup_random();
-	local::play::const_random_iterator<addr_t> random_itr =
-		play_.template get_random<addr_t>();
-
 	// compute the sparsity pattern in row, col
     local::pod_vector<size_t> row;
     local::pod_vector<size_t> col;
-	local::subgraph::subgraph_sparsity(
-		&play_,
-		random_itr,
-		subgraph_info_,
-		dep_taddr_,
-		select_domain,
-		select_range,
-		row,
-		col
-	);
+
+	// create the optimized recording
+	switch( play_.address_type() )
+	{
+		case local::play::addr_t_enum:
+		local::subgraph::subgraph_sparsity<addr_t>(
+			&play_,
+			subgraph_info_,
+			dep_taddr_,
+			select_domain,
+			select_range,
+			row,
+			col
+		);
+		break;
+
+		case local::play::unsigned_char_enum:
+		local::subgraph::subgraph_sparsity<unsigned char>(
+			&play_,
+			subgraph_info_,
+			dep_taddr_,
+			select_domain,
+			select_range,
+			row,
+			col
+		);
+		break;
+
+		case local::play::unsigned_short_enum:
+		local::subgraph::subgraph_sparsity<unsigned short>(
+			&play_,
+			subgraph_info_,
+			dep_taddr_,
+			select_domain,
+			select_range,
+			row,
+			col
+		);
+		break;
+
+		case local::play::unsigned_int_enum:
+		local::subgraph::subgraph_sparsity<unsigned int>(
+			&play_,
+			subgraph_info_,
+			dep_taddr_,
+			select_domain,
+			select_range,
+			row,
+			col
+		);
+		break;
+
+		case local::play::size_t_enum:
+		local::subgraph::subgraph_sparsity<size_t>(
+			&play_,
+			subgraph_info_,
+			dep_taddr_,
+			select_domain,
+			select_range,
+			row,
+			col
+		);
+		break;
+
+		default:
+		CPPAD_ASSERT_UNKNOWN(false);
+	}
+
 	CPPAD_ASSERT_UNKNOWN( row.size() == col.size() );
 
 	// return the sparsity pattern
