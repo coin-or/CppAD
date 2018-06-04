@@ -11,6 +11,7 @@ A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 
+# include <cppad/local/play/random_iterator.hpp>
 # include <cppad/local/pod_vector.hpp>
 # include <cppad/local/subgraph/arg_variable.hpp>
 
@@ -281,10 +282,15 @@ public:
 	}
 	// -----------------------------------------------------------------------
 	// see init_rev.hpp
+	template <typename Addr, typename BoolVector>
+	void init_rev(
+		const play::const_random_iterator<Addr>& random_itr ,
+		const BoolVector&                        select_domain
+	);
 	template <typename Addr, typename Base, typename BoolVector>
 	void init_rev(
-		player<Base>*       play          ,
-		const BoolVector&   select_domain
+		player<Base>*        play          ,
+		const BoolVector&    select_domain
 	);
 	// -----------------------------------------------------------------------
 	// see get_rev.hpp

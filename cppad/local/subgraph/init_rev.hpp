@@ -26,13 +26,11 @@ initialize for a reverse mode subgraph calculation
 Initialize in_subgraph corresponding to a single dependent variable
 (and a selected set of independent variables).
 
-\tparam Base
-this operation sequence was recording using AD<Base>.
+\tparam Addr
+is the type used for indices in the random iterator.
 
-\param play
-is the operation sequence corresponding to the ADFun<Base> function
-(it must correspond to map_user_op_).
-This is effectively const except that play->setup_random is called.
+\param random_itr
+Is a random iterator for this operation sequence.
 
 \param select_domain
 is a vector with, size equal to the number of independent variables
@@ -61,19 +59,14 @@ This vector is is set equal to the select_domain argument.
 \par process_range_
 This vector is to to size n_dep_ and its values are set to false
 */
-template <typename Addr, typename Base, typename BoolVector>
+template <typename Addr, typename BoolVector>
 void subgraph_info::init_rev(
-	player<Base>*                        play          ,
-	const BoolVector&                    select_domain )
+	const local::play::const_random_iterator<Addr>&  random_itr    ,
+	const BoolVector&                                select_domain )
 {
-	// get a random access iterator for this player
-	play->setup_random();
-	local::play::const_random_iterator<addr_t> random_itr =
-		play->template get_random<Addr>();
-
 	// check sizes
 	CPPAD_ASSERT_UNKNOWN( map_user_op_.size()   == n_op_ );
-	CPPAD_ASSERT_UNKNOWN( play->num_op_rec()    == n_op_ );
+	CPPAD_ASSERT_UNKNOWN( random_itr.num_op()   == n_op_ );
 	CPPAD_ASSERT_UNKNOWN( size_t( select_domain.size() ) == n_ind_ );
 
 	// depend_yes and depend_no
@@ -104,7 +97,7 @@ void subgraph_info::init_rev(
 # endif
 	bool begin_atomic_call = false;
 	for(size_t i_op = 0; i_op < n_op_; ++i_op)
-	{	OpCode op = play->GetOp(i_op);
+	{	OpCode op = random_itr.get_op(i_op);
 		//
 		// default value for this operator
 		in_subgraph_[i_op] = depend_no;
@@ -170,6 +163,62 @@ void subgraph_info::init_rev(
 	//
 	return;
 }
+// -----------------------------------------------------------------------
+/*!
+Initialize in_subgraph corresponding to a single dependent variable
+(and a selected set of independent variables).
+
+\tparam Addr
+is the type used for indices in the random iterator.
+
+\tparam Base
+this recording was made using ADFun<Base>
+
+\param play
+is a player for this ADFun<Base> object.
+
+\param select_domain
+is a vector with, size equal to the number of independent variables
+in the recording. It determines the selected independent variables.
+
+\par in_subgraph_
+We use depend_yes (depend_no) for the value n_dep_ (n_dep_ + 1).
+The important properties are that depend_yes < depend_no and
+for a valid indpendent variable index i_ind < depend_yes.
+The input size and elements of in_subgraph_ do not matter.
+If in_subgraph_[i_op] == depend_yes (depend_no),
+the result for this operator depends (does not depend)
+on the selected independent variables.
+Note that for user function call operators i_op,
+in_subgraph[i_op] is depend_no except for the first UserOp in the
+atomic function call sequence. For the first UserOp,
+it is depend_yes (depend_no) if any of the results for the call sequence
+depend (do not depend) on the selected independent variables.
+Except for UserOP, only operators with NumRes(op) > 0 have in_subgraph_
+value depend_yes;
+e.g., comparision operators have in_subgraph_ value depend_no.
+
+\par select_domain_
+This vector is is set equal to the select_domain argument.
+
+\par process_range_
+This vector is to to size n_dep_ and its values are set to false
+*/
+template <typename Addr, typename Base, typename BoolVector>
+void subgraph_info::init_rev(
+	player<Base>*       play          ,
+	const BoolVector&   select_domain )
+{
+	// get random access iterator for this player
+	play->setup_random();
+	local::play::const_random_iterator<Addr> random_itr =
+		play->template get_random<Addr>();
+	//
+	init_rev(random_itr, select_domain);
+	//
+	return;
+}
+
 
 } } } // END_CPPAD_LOCAL_SUBGRAPH_NAMESPACE
 
