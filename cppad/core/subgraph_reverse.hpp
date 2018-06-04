@@ -298,8 +298,8 @@ some of the elements of this vector are set to have value ell
 the ell-th dependent variable).
 */
 template <typename Base>
-template <typename VectorBase, typename SizeVector>
-void ADFun<Base>::subgraph_reverse(
+template <typename Addr, typename VectorBase, typename SizeVector>
+void ADFun<Base>::subgraph_reverse_helper(
 	size_t      q   ,
 	size_t      ell ,
 	SizeVector& col ,
@@ -308,8 +308,8 @@ void ADFun<Base>::subgraph_reverse(
 	//
 	// make sure player is setup for random access
 	play_.setup_random();
-	typename local::play::const_random_iterator<addr_t> random_itr =
-		play_.template get_random<addr_t>();
+	typename local::play::const_random_iterator<Addr> random_itr =
+		play_.template get_random<Addr>();
 
 	// check VectorBase is Simple Vector class with Base type elements
 	CheckSimpleVector<Base, VectorBase>();
@@ -404,7 +404,7 @@ void ADFun<Base>::subgraph_reverse(
 	CPPAD_ASSERT_UNKNOWN( load_op_.size()  == play_.num_load_op_rec() );
 	size_t n = Domain();
 	//
-	local::play::const_subgraph_iterator<addr_t> subgraph_itr =
+	local::play::const_subgraph_iterator<Addr> subgraph_itr =
 		play_.end_subgraph(random_itr, &subgraph);
 	//
 	local::sweep::reverse(
@@ -457,6 +457,48 @@ void ADFun<Base>::subgraph_reverse(
 		"f.subgraph_reverse(dw, q, ell): dw has a nan,\n"
 		"but none of f's Taylor coefficents are nan."
 	);
+	//
+	return;
+}
+/*!
+\copydoc subgraph_reverse_helper
+
+*/
+template <typename Base>
+template <typename VectorBase, typename SizeVector>
+void ADFun<Base>::subgraph_reverse(
+	size_t      q   ,
+	size_t      ell ,
+	SizeVector& col ,
+	VectorBase& dw  )
+{	using local::pod_vector;
+	//
+	// call proper version of helper function
+	switch( play_.address_type() )
+	{
+		case local::play::addr_t_enum:
+		subgraph_reverse_helper<addr_t>(q, ell, col, dw);
+		break;
+
+		case local::play::unsigned_char_enum:
+		subgraph_reverse_helper<unsigned char>(q, ell, col, dw);
+		break;
+
+		case local::play::unsigned_short_enum:
+		subgraph_reverse_helper<unsigned short>(q, ell, col, dw);
+		break;
+
+		case local::play::unsigned_int_enum:
+		subgraph_reverse_helper<unsigned int>(q, ell, col, dw);
+		break;
+
+		case local::play::size_t_enum:
+		subgraph_reverse_helper<size_t>(q, ell, col, dw);
+		break;
+
+		default:
+		CPPAD_ASSERT_UNKNOWN(false);
+	}
 	//
 	return;
 }

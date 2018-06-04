@@ -343,6 +343,13 @@ public:
 	void subgraph_reverse(
 		const VectorBool&                   select_domain
 	);
+	template <typename Addr, typename VectorBase, typename SizeVector>
+	void subgraph_reverse_helper(
+		size_t                               q         ,
+		size_t                               ell       ,
+		SizeVector&                          col       ,
+		VectorBase&                          dw
+	);
 	template <typename VectorBase, typename SizeVector>
 	void subgraph_reverse(
 		size_t                               q         ,
