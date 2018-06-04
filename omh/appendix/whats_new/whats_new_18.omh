@@ -28,6 +28,17 @@ $head 05-29$$
 The $cref autotools$$ install procedure was not working since 05-26.
 This has been fixed.
 
+$head 06-04$$
+The memory used during
+$cref subgraph_reverse$$, $cref subgraph_sparsity$$, and
+$cref optimize$$ was changed to use the smallest addressing type possible
+for the tape in question.
+To be specific the smallest type from the set
+$code unsigned short$$,
+$code unsigned int$$,
+$code size_t$$, in that order.
+
+
 $head 05-28$$
 $list number$$
 The Coin download page is not longer supporting monthly version.

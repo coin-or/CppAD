@@ -21,6 +21,7 @@ echo_eval() {
 	eval $*
 }
 # -----------------------------------------------------------------------------
+addr_t_size_t='no'
 verbose='no'
 standard='c++11'
 profile_speed='no'
@@ -39,6 +40,7 @@ do
 		cat << EOF
 usage: bin/run_cmake.sh: \\
 	[--help] \\
+	[--addr_t_size_t] \\
 	[--verbose] \\
 	[--c++98] \\
 	[--profile_speed] \\
@@ -60,6 +62,10 @@ EOF
 		exit 0
 	fi
 	case "$1" in
+
+		--addr_t_size_t)
+		addr_t_size_t='yes'
+		;;
 
 		--verbose)
 		verbose='yes'
@@ -267,9 +273,15 @@ fi
 # simple options
 cmake_args="$cmake_args -D cppad_testvector=$testvector"
 cmake_args="$cmake_args -D cppad_debug_which=$debug_which"
-cmake_args="$cmake_args -D cppad_tape_id_type='int32_t'"
-cmake_args="$cmake_args -D cppad_tape_addr_type=int32_t"
 cmake_args="$cmake_args -D cppad_max_num_threads=48"
+if [ "$addr_t_size_t" == 'yes' ]
+then
+	cmake_args="$cmake_args -D cppad_tape_id_type='size_t'"
+	cmake_args="$cmake_args -D cppad_tape_addr_type=size_t"
+else
+	cmake_args="$cmake_args -D cppad_tape_id_type='int32_t'"
+	cmake_args="$cmake_args -D cppad_tape_addr_type=int32_t"
+fi
 #
 echo_eval cmake $cmake_args ..
 #

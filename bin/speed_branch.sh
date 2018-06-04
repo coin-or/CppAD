@@ -25,7 +25,7 @@ possible tests are:
 all, det_lu, det_minor, mat_mul ode, poly, sparse_hessian, sparse_jacobian
 
 possible options are:
-atomic, boolsparsity, colpack, memory, onetape, optimize, revsparsity
+atomic, boolsparsity, colpack, memory, onetape, optimize, revsparsity, subgraph
 EOF
 	exit 1
 fi
