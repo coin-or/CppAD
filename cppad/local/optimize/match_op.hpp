@@ -31,25 +31,28 @@ This is the old operation sequence.
 \param random_itr
 is a random iterator for the old operation sequence.
 
-\param opt_op_info
-Mapping from operator index to operator information.
-The input value of opt_op_info[current].previous is assumed to be zero.
+\param op_previous
+Mapping from operator index to previous operator that can replace this one.
+The input value of op_previous[current] is assumed to be zero.
 If a match if found,
-the output value of opt_op_info[current].previous is set to the
+the output value of op_previous[current] is set to the
 matching operator index, otherwise it is left as is.
-Note that opt_op_info[current].previous < current.
+Note that op_previous[current] < current.
+
+\param op_usage
+2DO: this is not used and should be removed.
 
 \param current
 is the index of the current operator which must be an unary
 or binary operator. Note that NumArg(ErfOp) == 3 but it is effectivey
-a unary operator and is allowed otherwise NumArg( opt_op_info[current].op) < 3.
+a unary operator and is allowed otherwise NumArg( random_itr.get_op[current]) < 3.
 It is assumed that hash_table_op is initialized as a vector of emtpy
 sets. After this initialization, the value of current inceases with
 each call to match_op.
 
 \li
 This must be a unary or binary
-operator; hence, NumArg( opt_op_info[current].op ) is one or two.
+operator; hence, NumArg( random_itr.get_op[current] ) is one or two.
 There is one exception, NumRes( ErfOp ) == 3, but arg[0]
 is the only true arguments (the others are always the same).
 
@@ -61,25 +64,28 @@ It also must not be an independent variable operator InvOp.
 \param hash_table_op
 is a vector of sets,
 hash_table_op.n_set() == CPPAD_HASH_TABLE_SIZE and
-hash_table_op.end() == opt_op_info.size().
+hash_table_op.end() == op_previous.size().
+hash_table_op.end() == op_usage.size().
 If i_op is an element of set[j],
-then the operation opt_op_info[i_op] has hash code j,
-and opt_op_info[i_op] does not match any other element of set[j].
-An entry will be added each time match_op is called
+then the operation op_previous[i_op] has hash code j,
+and op_previous[i_op] does not match any other element of set[j].
+An entry to set[j] is added each time match_op is called
 and a match for the current operator is not found.
 */
 template <class Addr, class Base>
 void match_op(
 	const player<Base>*                         play           ,
 	const play::const_random_iterator<Addr>&    random_itr     ,
-	vector<struct_opt_op_info>&                 opt_op_info    ,
+	vector<addr_t>&                             op_previous    ,
+	vector<enum_usage>&                         op_usage       ,
 	size_t                                      current        ,
 	sparse_list&                                hash_table_op  )
 {	//
 	size_t num_op = play->num_op_rec();
 	//
-	CPPAD_ASSERT_UNKNOWN( num_op == opt_op_info.size() );
-	CPPAD_ASSERT_UNKNOWN( opt_op_info[current].previous == 0 );
+	CPPAD_ASSERT_UNKNOWN( num_op == op_previous.size() );
+	CPPAD_ASSERT_UNKNOWN( num_op == op_usage.size() );
+	CPPAD_ASSERT_UNKNOWN( op_previous[current] == 0 );
 	CPPAD_ASSERT_UNKNOWN(
 		hash_table_op.n_set() == CPPAD_HASH_TABLE_SIZE
 	);
@@ -107,11 +113,11 @@ void match_op(
 	{	arg_match[j] = arg[j];
 		if( variable[j] )
 		{	size_t j_op     = random_itr.var2op(arg[j]);
-			size_t previous = opt_op_info[j_op].previous;
+			size_t previous = op_previous[j_op];
 			if( previous != 0 )
 			{	// a previous match, be the end of the line; i.e.,
 				// it does not have a previous match.
-				CPPAD_ASSERT_UNKNOWN( opt_op_info[previous].previous == 0 );
+				CPPAD_ASSERT_UNKNOWN( op_previous[previous] == 0 );
 				//
 				OpCode        op_p;
 				const addr_t* arg_p;
@@ -136,7 +142,7 @@ void match_op(
 		// candidate previous for current operator
 		size_t  candidate  = *itr;
 		CPPAD_ASSERT_UNKNOWN( candidate < current );
-		CPPAD_ASSERT_UNKNOWN( opt_op_info[candidate].previous == 0 );
+		CPPAD_ASSERT_UNKNOWN( op_previous[candidate] == 0 );
 		//
 		OpCode        op_c;
 		const addr_t* arg_c;
@@ -149,11 +155,11 @@ void match_op(
 		{	for(size_t j = 0; j < num_arg; j++)
 			{	if( variable[j] )
 				{	size_t previous =
-						opt_op_info[ random_itr.var2op(arg_c[j]) ].previous;
+						op_previous[ random_itr.var2op(arg_c[j]) ];
 					if( previous != 0 )
 					{	// must be end of the line for a previous match
 						CPPAD_ASSERT_UNKNOWN(
-							opt_op_info[previous].previous == 0
+							op_previous[previous] == 0
 						);
 						//
 						OpCode        op_p;
@@ -171,7 +177,7 @@ void match_op(
 			}
 		}
 		if( match )
-		{	opt_op_info[current].previous = static_cast<addr_t>( candidate );
+		{	op_previous[current] = static_cast<addr_t>( candidate );
 			return;
 		}
 		++itr;
@@ -188,7 +194,7 @@ void match_op(
 		{
 			size_t candidate  = *itr_swap;
 			CPPAD_ASSERT_UNKNOWN( candidate < current );
-			CPPAD_ASSERT_UNKNOWN( opt_op_info[candidate].previous == 0 );
+			CPPAD_ASSERT_UNKNOWN( op_previous[candidate] == 0 );
 			//
 			OpCode        op_c;
 			const addr_t* arg_c;
@@ -200,10 +206,10 @@ void match_op(
 			{	for(size_t j = 0; j < num_arg; j++)
 				{	CPPAD_ASSERT_UNKNOWN( variable[j] )
 					size_t previous =
-						opt_op_info[ random_itr.var2op(arg_c[j]) ].previous;
+						op_previous[ random_itr.var2op(arg_c[j]) ];
 					if( previous != 0 )
 					{	CPPAD_ASSERT_UNKNOWN(
-							opt_op_info[previous].previous == 0
+							op_previous[previous] == 0
 						);
 						//
 						OpCode        op_p;
@@ -218,7 +224,7 @@ void match_op(
 				}
 			}
 			if( match )
-			{	opt_op_info[current].previous = static_cast<addr_t>(candidate);
+			{	op_previous[current] = static_cast<addr_t>(candidate);
 				return;
 			}
 			++itr_swap;

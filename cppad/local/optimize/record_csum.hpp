@@ -27,8 +27,11 @@ player object corresponding to the old recroding.
 \param random_itr
 is a random iterator corresponding to the old operation sequence.
 
-\param opt_op_info
-mapping from old index to operator index to operator information
+\param op_previous
+2DO: not used and should be removed.
+
+\param op_usage
+mapping from old index to how it is used.
 
 \param old2new
 mapping from old operator index to information about the new recording.
@@ -37,9 +40,9 @@ mapping from old operator index to information about the new recording.
 is the index in the old operation sequence for
 the variable corresponding to the result for the current operator.
 We use the notation i_op = random_itr.var2op(current).
-It follows that  NumRes( opt_op_info[i_op].op ) > 0.
-If 0 < j_op < i_op, either opt_op_info[j_op].usage == csum_usage,
-opt_op_info[j_op].usage = no_usage, or old2new[j_op].new_var != 0.
+It follows that  NumRes( random_itr.get_op[i_op] ) > 0.
+If 0 < j_op < i_op, either op_usage[j_op] == csum_usage,
+op_usage[j_op] = no_usage, or old2new[j_op].new_var != 0.
 
 \param rec
 is the object that will record the new operations.
@@ -54,19 +57,20 @@ These stacks are passed in so that they are created once
 and then be reused with calls to record_csum.
 
 \par Assumptions
-opt_op_info[i_o].op
+random_itr.get_op[i_op]
 must be one of AddpvOp, AddvvOp, SubpvOp, SubvpOp, SubvvOp.
-opt_op_info[i_op].usage != no_usage and ! opt_op_info[i_op].usage == csum_usage.
-Furthermore opt_op_info[j_op].usage == csum_usage is true from some
+op_usage[i_op] != no_usage and ! op_usage[i_op] == csum_usage.
+Furthermore op_usage[j_op] == csum_usage is true from some
 j_op that corresponds to a variable that is an argument to
-opt_op_info[i_op].
+random_itr.get_op[i_op].
 */
 
 template <class Addr, class Base>
 struct_size_pair record_csum(
 	const player<Base>*                                play           ,
 	const play::const_random_iterator<Addr>&           random_itr     ,
-	const vector<struct_opt_op_info>&                  opt_op_info    ,
+	const vector<addr_t>&                              op_previous    ,
+	const vector<enum_usage>&                          op_usage       ,
 	const CppAD::vector<struct struct_old2new>&        old2new        ,
 	size_t                                             current        ,
 	recorder<Base>*                                    rec            ,
@@ -89,7 +93,7 @@ struct_size_pair record_csum(
 	CPPAD_ASSERT_UNKNOWN( work.sub_stack.empty() );
 	//
 	size_t i_op = random_itr.var2op(current);
-	CPPAD_ASSERT_UNKNOWN( ! ( opt_op_info[i_op].usage == csum_usage ) );
+	CPPAD_ASSERT_UNKNOWN( ! ( op_usage[i_op] == csum_usage ) );
 	//
 	// information corresponding to the root node in the cummulative summation
 	struct struct_csum_variable var;
@@ -106,14 +110,14 @@ struct_size_pair record_csum(
 # ifndef NDEBUG
 	bool ok = false;
 	if( var.op == SubvpOp ) ok =
-		opt_op_info[ random_itr.var2op(var.arg[0]) ].usage == csum_usage;
+		op_usage[ random_itr.var2op(var.arg[0]) ] == csum_usage;
 	if( var.op == AddpvOp || var.op == SubpvOp ) ok =
-		opt_op_info[ random_itr.var2op(var.arg[1]) ].usage == csum_usage;
+		op_usage[ random_itr.var2op(var.arg[1]) ] == csum_usage;
 	if( var.op == AddvvOp || var.op == SubvvOp )
 	{	ok  =
-		opt_op_info[ random_itr.var2op(var.arg[0]) ].usage == csum_usage;
+		op_usage[ random_itr.var2op(var.arg[0]) ] == csum_usage;
 		ok |=
-		opt_op_info[ random_itr.var2op(var.arg[1]) ].usage == csum_usage;
+		op_usage[ random_itr.var2op(var.arg[1]) ] == csum_usage;
 	}
 	CPPAD_ASSERT_UNKNOWN( ok );
 # endif
@@ -145,7 +149,7 @@ struct_size_pair record_csum(
 			case SubvvOp:
 			//
 			// check if the first argument has csum usage
-			if( opt_op_info[random_itr.var2op(arg[0])].usage == csum_usage )
+			if( op_usage[random_itr.var2op(arg[0])] == csum_usage )
 			{	CPPAD_ASSERT_UNKNOWN(
 				size_t( old2new[ random_itr.var2op(arg[0]) ].new_var) == 0
 				);
@@ -188,7 +192,7 @@ struct_size_pair record_csum(
 			case AddvvOp:
 			case AddpvOp:
 			// check if the second argument has csum usage
-			if( opt_op_info[random_itr.var2op(arg[1])].usage == csum_usage )
+			if( op_usage[random_itr.var2op(arg[1])] == csum_usage )
 			{	CPPAD_ASSERT_UNKNOWN(
 				size_t( old2new[ random_itr.var2op(arg[1]) ].new_var) == 0
 				);
