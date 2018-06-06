@@ -390,7 +390,6 @@ void optimize_run(
 				size_pair = record_csum(
 					play                ,
 					random_itr          ,
-					op_previous         ,
 					op_usage            ,
 					old2new             ,
 					i_var               ,
@@ -459,7 +458,6 @@ void optimize_run(
 				size_pair = record_csum(
 					play                ,
 					random_itr          ,
-					op_previous         ,
 					op_usage            ,
 					old2new             ,
 					i_var               ,
@@ -510,7 +508,6 @@ void optimize_run(
 				size_pair = record_csum(
 					play                ,
 					random_itr          ,
-					op_previous         ,
 					op_usage            ,
 					old2new             ,
 					i_var               ,

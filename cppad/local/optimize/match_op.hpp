@@ -39,9 +39,6 @@ the output value of op_previous[current] is set to the
 matching operator index, otherwise it is left as is.
 Note that op_previous[current] < current.
 
-\param op_usage
-2DO: this is not used and should be removed.
-
 \param current
 is the index of the current operator which must be an unary
 or binary operator. Note that NumArg(ErfOp) == 3 but it is effectivey
@@ -65,7 +62,6 @@ It also must not be an independent variable operator InvOp.
 is a vector of sets,
 hash_table_op.n_set() == CPPAD_HASH_TABLE_SIZE and
 hash_table_op.end() == op_previous.size().
-hash_table_op.end() == op_usage.size().
 If i_op is an element of set[j],
 then the operation op_previous[i_op] has hash code j,
 and op_previous[i_op] does not match any other element of set[j].
@@ -77,14 +73,12 @@ void match_op(
 	const player<Base>*                         play           ,
 	const play::const_random_iterator<Addr>&    random_itr     ,
 	vector<addr_t>&                             op_previous    ,
-	vector<enum_usage>&                         op_usage       ,
 	size_t                                      current        ,
 	sparse_list&                                hash_table_op  )
 {	//
 	size_t num_op = play->num_op_rec();
 	//
 	CPPAD_ASSERT_UNKNOWN( num_op == op_previous.size() );
-	CPPAD_ASSERT_UNKNOWN( num_op == op_usage.size() );
 	CPPAD_ASSERT_UNKNOWN( op_previous[current] == 0 );
 	CPPAD_ASSERT_UNKNOWN(
 		hash_table_op.n_set() == CPPAD_HASH_TABLE_SIZE

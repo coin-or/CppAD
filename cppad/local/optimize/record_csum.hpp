@@ -27,9 +27,6 @@ player object corresponding to the old recroding.
 \param random_itr
 is a random iterator corresponding to the old operation sequence.
 
-\param op_previous
-2DO: not used and should be removed.
-
 \param op_usage
 mapping from old index to how it is used.
 
@@ -69,7 +66,6 @@ template <class Addr, class Base>
 struct_size_pair record_csum(
 	const player<Base>*                                play           ,
 	const play::const_random_iterator<Addr>&           random_itr     ,
-	const vector<addr_t>&                              op_previous    ,
 	const vector<enum_usage>&                          op_usage       ,
 	const CppAD::vector<struct struct_old2new>&        old2new        ,
 	size_t                                             current        ,

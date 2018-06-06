@@ -12,11 +12,10 @@ A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 /*!
-\file opt_op_info.hpp
+\file get_opt_op_info.hpp
 Create operator information tables
 */
 
-# include <cppad/local/optimize/opt_op_info.hpp>
 # include <cppad/local/optimize/match_op.hpp>
 # include <cppad/local/optimize/cexp_info.hpp>
 # include <cppad/local/optimize/usage.hpp>
@@ -61,9 +60,6 @@ is the operator index for the result operator.
 \param i_arg
 is the operator index for the argument to the result operator.
 
-\param op_previous
-2DO: remove this parameter.
-
 \param op_usage
 structure that holds the information for each of the operators.
 The output value of op_usage[i_arg] is increased; to be specific,
@@ -96,7 +92,6 @@ inline void usage_cexp_result2arg(
 	bool                        sum_result     ,
 	size_t                      i_result       ,
 	size_t                      i_arg          ,
-	vector<addr_t>&             op_previous    ,
 	vector<enum_usage>&         op_usage       ,
 	sparse_list&                cexp_set       )
 {
@@ -403,7 +398,7 @@ void get_opt_op_info(
 			if( use_result != no_usage )
 			{	size_t j_op = random_itr.var2op(arg[0]);
 				usage_cexp_result2arg(
-					play, sum_op, i_op, j_op, op_previous, op_usage, cexp_set
+					play, sum_op, i_op, j_op, op_usage, cexp_set
 				);
 			}
 			break; // --------------------------------------------
@@ -422,7 +417,7 @@ void get_opt_op_info(
 			if( use_result != no_usage )
 			{	size_t j_op = random_itr.var2op(arg[1]);
 				usage_cexp_result2arg(
-					play, sum_op, i_op, j_op, op_previous, op_usage, cexp_set
+					play, sum_op, i_op, j_op, op_usage, cexp_set
 				);
 			}
 			break; // --------------------------------------------
@@ -441,7 +436,7 @@ void get_opt_op_info(
 			{	for(size_t i = 0; i < 2; i++)
 				{	size_t j_op = random_itr.var2op(arg[i]);
 					usage_cexp_result2arg(
-						play, sum_op, i_op, j_op, op_previous, op_usage, cexp_set
+						play, sum_op, i_op, j_op, op_usage, cexp_set
 					);
 				}
 			}
@@ -459,14 +454,14 @@ void get_opt_op_info(
 				if( arg[1] & 1 )
 				{	size_t j_op = random_itr.var2op(arg[2]);
 					usage_cexp_result2arg(
-						play, sum_op, i_op, j_op, op_previous, op_usage, cexp_set
+						play, sum_op, i_op, j_op, op_usage, cexp_set
 					);
 				}
 				// propgate from result to right argument
 				if( arg[1] & 2 )
 				{	size_t j_op = random_itr.var2op(arg[3]);
 					usage_cexp_result2arg(
-							play, sum_op, i_op, j_op, op_previous, op_usage, cexp_set
+							play, sum_op, i_op, j_op, op_usage, cexp_set
 					);
 				}
 				// are if_true and if_false cases the same variable
@@ -479,7 +474,7 @@ void get_opt_op_info(
 					bool can_skip = conditional_skip & (! same_variable);
 					can_skip     &= op_usage[j_op] == no_usage;
 					usage_cexp_result2arg(
-						play, sum_op, i_op, j_op, op_previous, op_usage, cexp_set
+						play, sum_op, i_op, j_op, op_usage, cexp_set
 					);
 					if( can_skip )
 					{	// j_op corresponds to the value used when the
@@ -498,7 +493,7 @@ void get_opt_op_info(
 					bool can_skip = conditional_skip & (! same_variable);
 					can_skip     &= op_usage[j_op] == no_usage;
 					usage_cexp_result2arg(
-						play, sum_op, i_op, j_op, op_previous, op_usage, cexp_set
+						play, sum_op, i_op, j_op, op_usage, cexp_set
 					);
 					if( can_skip )
 					{	// j_op corresponds to the value used when the
@@ -535,14 +530,14 @@ void get_opt_op_info(
 				{	// arg[1] is a variable
 					size_t j_op = random_itr.var2op(arg[1]);
 					usage_cexp_result2arg(
-						play, sum_op, i_op, j_op, op_previous, op_usage, cexp_set
+						play, sum_op, i_op, j_op, op_usage, cexp_set
 					);
 				}
 				if( arg[0] & 2 )
 				{	// arg[3] is a variable
 					size_t j_op = random_itr.var2op(arg[3]);
 					usage_cexp_result2arg(
-						play, sum_op, i_op, j_op, op_previous, op_usage, cexp_set
+						play, sum_op, i_op, j_op, op_usage, cexp_set
 					);
 				}
 			}
@@ -563,7 +558,7 @@ void get_opt_op_info(
 				//
 				size_t j_op = random_itr.var2op(arg[1]);
 				usage_cexp_result2arg(
-					play, sum_op, i_op, j_op, op_previous, op_usage, cexp_set
+					play, sum_op, i_op, j_op, op_usage, cexp_set
 				);
 			}
 			break; // ----------------------------------------------
@@ -577,7 +572,7 @@ void get_opt_op_info(
 				//
 				size_t j_op = random_itr.var2op(arg[0]);
 				usage_cexp_result2arg(
-					play, sum_op, i_op, j_op, op_previous, op_usage, cexp_set
+					play, sum_op, i_op, j_op, op_usage, cexp_set
 				);
 			}
 			break; // ----------------------------------------------
@@ -595,7 +590,7 @@ void get_opt_op_info(
 				for(size_t i = 0; i < 2; i++)
 				{	size_t j_op = random_itr.var2op(arg[i]);
 					usage_cexp_result2arg(
-						play, sum_op, i_op, j_op, op_previous, op_usage, cexp_set
+						play, sum_op, i_op, j_op, op_usage, cexp_set
 					);
 				}
 			}
@@ -661,7 +656,7 @@ void get_opt_op_info(
 				for(size_t i = 0; i < num_add + num_sub; i++)
 				{	size_t j_op = random_itr.var2op( arg[3 + i] );
 					usage_cexp_result2arg(
-						play, sum_op, i_op, j_op, op_previous, op_usage, cexp_set
+						play, sum_op, i_op, j_op, op_usage, cexp_set
 					);
 				}
 			}
@@ -803,7 +798,7 @@ void get_opt_op_info(
 					if( use_arg_j )
 					{	size_t j_op = random_itr.var2op(user_ix[j]);
 						usage_cexp_result2arg(play,
-							sum_op, last_user_i_op, j_op, op_previous, op_usage, cexp_set
+							sum_op, last_user_i_op, j_op, op_usage, cexp_set
 						);
 					}
 				}
@@ -872,7 +867,7 @@ void get_opt_op_info(
 					user_r_pack[user_i] = true;
 				//
 				usage_cexp_result2arg(
-					play, sum_op, i_op, last_user_i_op, op_previous, op_usage, cexp_set
+					play, sum_op, i_op, last_user_i_op, op_usage, cexp_set
 				);
 			}
 			break; // --------------------------------------------------------
@@ -981,14 +976,14 @@ void get_opt_op_info(
 			case ZmulvpOp:
 			case ZmulvvOp:
 			// check for a previous match
-			match_op(play, random_itr, op_previous, op_usage, i_op, hash_table_op );
+			match_op(play, random_itr, op_previous, i_op, hash_table_op );
 			if( op_previous[i_op] != 0 )
 			{	// like a unary operator that assigns i_op equal to previous.
 				size_t previous = op_previous[i_op];
 				bool sum_op = false;
 				CPPAD_ASSERT_UNKNOWN( previous < i_op );
 				usage_cexp_result2arg(
-					play, sum_op, i_op, previous, op_previous, op_usage, cexp_set
+					play, sum_op, i_op, previous, op_usage, cexp_set
 				);
 			}
 			break;
