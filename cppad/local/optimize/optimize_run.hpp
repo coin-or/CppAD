@@ -390,7 +390,6 @@ void optimize_run(
 					play                ,
 					random_itr          ,
 					op_usage            ,
-					new_op              ,
 					new_var             ,
 					i_var               ,
 					rec                 ,
@@ -414,7 +413,6 @@ void optimize_run(
 				size_pair = record_vp(
 					play                ,
 					random_itr          ,
-					new_op              ,
 					new_var             ,
 					i_op                ,
 					rec
@@ -460,7 +458,6 @@ void optimize_run(
 					play                ,
 					random_itr          ,
 					op_usage            ,
-					new_op              ,
 					new_var             ,
 					i_var               ,
 					rec                 ,
@@ -485,7 +482,6 @@ void optimize_run(
 				size_pair = record_pv(
 					play                ,
 					random_itr          ,
-					new_op              ,
 					new_var             ,
 					i_op                ,
 					rec
@@ -512,7 +508,6 @@ void optimize_run(
 					play                ,
 					random_itr          ,
 					op_usage            ,
-					new_op              ,
 					new_var             ,
 					i_var               ,
 					rec                 ,
@@ -537,7 +532,6 @@ void optimize_run(
 				size_pair = record_vv(
 					play                ,
 					random_itr          ,
-					new_op              ,
 					new_var             ,
 					i_op                ,
 					rec

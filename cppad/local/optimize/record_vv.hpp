@@ -25,9 +25,6 @@ player object corresponding to the old recroding.
 \param random_itr
 random iterator corresponding to the old recording.
 
-\param new_op
-mapping from old operator index to operator index in new recording.
-
 \param new_var
 mapping from old operator index to variable index in new recording.
 
@@ -46,7 +43,6 @@ template <class Addr, class Base>
 struct_size_pair record_vv(
 	const player<Base>*                                play           ,
 	const play::const_random_iterator<Addr>&           random_itr     ,
-	const CppAD::vector<addr_t>&                       new_op         ,
 	const CppAD::vector<addr_t>&                       new_var        ,
 	size_t                                             i_op           ,
 	recorder<Base>*                                    rec            )

@@ -29,9 +29,6 @@ is a random iterator corresponding to the old operation sequence.
 \param op_usage
 mapping from old index to how it is used.
 
-\param new_op
-mapping from old operator index to operator index in new recording.
-
 \param new_var
 mapping from old operator index to variable index in new recording.
 
@@ -69,7 +66,6 @@ struct_size_pair record_csum(
 	const player<Base>*                                play           ,
 	const play::const_random_iterator<Addr>&           random_itr     ,
 	const vector<enum_usage>&                          op_usage       ,
-	const CppAD::vector<addr_t>&                       new_op         ,
 	const CppAD::vector<addr_t>&                       new_var        ,
 	size_t                                             current        ,
 	recorder<Base>*                                    rec            ,
