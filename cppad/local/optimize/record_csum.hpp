@@ -14,7 +14,6 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 \file record_csum.hpp
 Recording a cummulative cummulative summation.
 */
-# include <cppad/local/optimize/old2new.hpp>
 
 // BEGIN_CPPAD_LOCAL_OPTIMIZE_NAMESPACE
 namespace CppAD { namespace local { namespace optimize  {
@@ -30,8 +29,11 @@ is a random iterator corresponding to the old operation sequence.
 \param op_usage
 mapping from old index to how it is used.
 
-\param old2new
-mapping from old operator index to information about the new recording.
+\param new_op
+mapping from old operator index to operator index in new recording.
+
+\param new_var
+mapping from old operator index to variable index in new recording.
 
 \param current
 is the index in the old operation sequence for
@@ -39,7 +41,7 @@ the variable corresponding to the result for the current operator.
 We use the notation i_op = random_itr.var2op(current).
 It follows that  NumRes( random_itr.get_op[i_op] ) > 0.
 If 0 < j_op < i_op, either op_usage[j_op] == csum_usage,
-op_usage[j_op] = no_usage, or old2new[j_op].new_var != 0.
+op_usage[j_op] = no_usage, or new_var[j_op] != 0.
 
 \param rec
 is the object that will record the new operations.
@@ -67,7 +69,8 @@ struct_size_pair record_csum(
 	const player<Base>*                                play           ,
 	const play::const_random_iterator<Addr>&           random_itr     ,
 	const vector<enum_usage>&                          op_usage       ,
-	const CppAD::vector<struct struct_old2new>&        old2new        ,
+	const CppAD::vector<addr_t>&                       new_op         ,
+	const CppAD::vector<addr_t>&                       new_var        ,
 	size_t                                             current        ,
 	recorder<Base>*                                    rec            ,
 	// local information passed so stacks need not be allocated for every call
@@ -147,7 +150,7 @@ struct_size_pair record_csum(
 			// check if the first argument has csum usage
 			if( op_usage[random_itr.var2op(arg[0])] == csum_usage )
 			{	CPPAD_ASSERT_UNKNOWN(
-				size_t( old2new[ random_itr.var2op(arg[0]) ].new_var) == 0
+				size_t( new_var[ random_itr.var2op(arg[0]) ]) == 0
 				);
 				// push the operator corresponding to the first argument
 				size_t i_op_tmp = random_itr.var2op(arg[0]);
@@ -190,7 +193,7 @@ struct_size_pair record_csum(
 			// check if the second argument has csum usage
 			if( op_usage[random_itr.var2op(arg[1])] == csum_usage )
 			{	CPPAD_ASSERT_UNKNOWN(
-				size_t( old2new[ random_itr.var2op(arg[1]) ].new_var) == 0
+				size_t( new_var[ random_itr.var2op(arg[1]) ]) == 0
 				);
 				// push the operator corresoponding to the second arugment
 				size_t i_op_tmp = random_itr.var2op(arg[1]);
@@ -228,7 +231,7 @@ struct_size_pair record_csum(
 	for(size_t i = 0; i < n_add; i++)
 	{	CPPAD_ASSERT_UNKNOWN( ! work.add_stack.empty() );
 		size_t old_arg = work.add_stack.top();
-		new_arg        = old2new[ random_itr.var2op(old_arg) ].new_var;
+		new_arg        = new_var[ random_itr.var2op(old_arg) ];
 		CPPAD_ASSERT_UNKNOWN( 0 < new_arg && size_t(new_arg) < current );
 		rec->PutArg(new_arg);         // arg[3+i]
 		work.add_stack.pop();
@@ -237,7 +240,7 @@ struct_size_pair record_csum(
 	for(size_t i = 0; i < n_sub; i++)
 	{	CPPAD_ASSERT_UNKNOWN( ! work.sub_stack.empty() );
 		size_t old_arg = work.sub_stack.top();
-		new_arg        = old2new[ random_itr.var2op(old_arg) ].new_var;
+		new_arg        = new_var[ random_itr.var2op(old_arg) ];
 		CPPAD_ASSERT_UNKNOWN( 0 < new_arg && size_t(new_arg) < current );
 		rec->PutArg(new_arg);      // arg[3 + arg[0] + i]
 		work.sub_stack.pop();

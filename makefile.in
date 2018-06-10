@@ -651,7 +651,6 @@ nobase_myinclude_HEADERS = \
 	cppad/local/optimize/get_opt_op_info.hpp \
 	cppad/local/optimize/hash_code.hpp \
 	cppad/local/optimize/match_op.hpp \
-	cppad/local/optimize/old2new.hpp \
 	cppad/local/optimize/optimize_run.hpp \
 	cppad/local/optimize/record_csum.hpp \
 	cppad/local/optimize/record_pv.hpp \
