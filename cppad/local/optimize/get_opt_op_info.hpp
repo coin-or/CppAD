@@ -976,7 +976,7 @@ void get_opt_op_info(
 			case ZmulvpOp:
 			case ZmulvvOp:
 			// check for a previous match
-			match_op(play, random_itr, op_previous, i_op, hash_table_op );
+			match_op(random_itr, op_previous, i_op, hash_table_op );
 			if( op_previous[i_op] != 0 )
 			{	// like a unary operator that assigns i_op equal to previous.
 				size_t previous = op_previous[i_op];

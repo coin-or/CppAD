@@ -25,9 +25,6 @@ and the argument has previous match,
 the previous match for the argument is used when checking for a match
 for the current operator.
 
-\param play
-This is the old operation sequence.
-
 \param random_itr
 is a random iterator for the old operation sequence.
 
@@ -68,15 +65,14 @@ and op_previous[i_op] does not match any other element of set[j].
 An entry to set[j] is added each time match_op is called
 and a match for the current operator is not found.
 */
-template <class Addr, class Base>
+template <class Addr>
 void match_op(
-	const player<Base>*                         play           ,
 	const play::const_random_iterator<Addr>&    random_itr     ,
 	vector<addr_t>&                             op_previous    ,
 	size_t                                      current        ,
 	sparse_list&                                hash_table_op  )
 {	//
-	size_t num_op = play->num_op_rec();
+	size_t num_op = random_itr.num_op();
 	//
 	CPPAD_ASSERT_UNKNOWN( num_op == op_previous.size() );
 	CPPAD_ASSERT_UNKNOWN( op_previous[current] == 0 );
@@ -91,6 +87,7 @@ void match_op(
 	const addr_t* arg;
 	size_t        i_var;
 	random_itr.op_info(current, op, arg, i_var);
+	//
 	CPPAD_ASSERT_UNKNOWN( 0 < NumArg(op) );
 	CPPAD_ASSERT_UNKNOWN( NumArg(op) <= 3 );
 	//
