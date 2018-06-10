@@ -93,9 +93,10 @@ void get_argument_variable(
 		CPPAD_ASSERT_UNKNOWN( variable.size() > 0 );
 		return;
 	}
-	// is_varialbe is a reference to work with a better name
+	// is_variable is a reference to work with a better name
 	pod_vector<bool>& is_variable(work);
-	size_t num_arg = arg_is_variable(op, op_arg, is_variable);
+	arg_is_variable(op, op_arg, is_variable);
+	size_t num_arg = is_variable.size();
 	for(size_t j = 0; j < num_arg; ++j)
 	{	if( is_variable[j] )
 		{	size_t j_var = op_arg[j];

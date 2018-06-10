@@ -881,44 +881,39 @@ is the argument vector for this operator.
 
 \param is_variable
 If the input value of the elements in this vector do not matter.
-Upon return, for j < NumArg(op), the j-th argument for this operator is a
+Upon return, resize has been used to set its size to the true number
+of arguments to this operator.
+If op != CSkipOp and op != CSumOp, is_variable.size() = NumArg(op).
+The j-th argument for this operator is a
 variable index if and only if is_variable[j] is true. Note that the variable
 index 0, for the BeginOp, does not correspond to a real variable and false
 is returned for this case.
 
-\return
-The return value is the true number of arguments num_arg.
-If op is CSkipOp or CSumOp, see below.
-Otherwise the true number of arguments num_arg = NumArg(op).
-If the input size of is_variable is less than num_arg,
-is_variable.extend is used to increase its size to be num_arg.
-
 \par CSkipOp
 In the case of CSkipOp,
 \code
-		num_arg        = 7 + arg[4] + arg[5];
-		is_variable[2] = (arg[1] & 1) != 0;
-		is_variable[3] = (arg[1] & 2) != 0;
+		is_variable.size()  = 7 + arg[4] + arg[5];
+		is_variable[2]      = (arg[1] & 1) != 0;
+		is_variable[3]      = (arg[1] & 2) != 0;
 \endcode
-and all the other is_variable values are false.
+and all the other is_variable[j] values are false.
 
 \par CSumOp
 In the case of CSumOp,
 \code
-		num_arg = 4 + arg[0] + arg[1];
-		for(size_t i = 3; i < num_arg - 1; ++i)
-			is_variable[i] = true;
+		is_variable.size() = 4 + arg[0] + arg[1];
+		for(size_t j = 3; j < is_variable.size() - 1; ++j)
+			is_variable[j] = true;
 \endcode
 and all the other is_variable values are false.
 */
 template <class Addr>
-inline size_t arg_is_variable(
+inline void arg_is_variable(
 	OpCode            op          ,
 	const Addr*       arg         ,
 	pod_vector<bool>& is_variable )
 {	size_t num_arg = NumArg(op);
-	if( is_variable.size() < num_arg )
-		is_variable.extend( num_arg - is_variable.size() );
+	is_variable.resize( num_arg );
 	//
 	switch(op)
 	{
@@ -1089,8 +1084,7 @@ inline size_t arg_is_variable(
 		//
 		// true number of arguments
 		num_arg = 7 + arg[4] + arg[5];
-		if( is_variable.size() < num_arg )
-			is_variable.extend( num_arg - is_variable.size() );
+		is_variable.resize(num_arg);
 		is_variable[0] = false;
 		is_variable[1] = false;
 		is_variable[2] = (arg[1] & 1) != 0;
@@ -1106,8 +1100,7 @@ inline size_t arg_is_variable(
 		//
 		// true number of arguments
 		num_arg = 4 + arg[0] + arg[1];
-		if( is_variable.size() < num_arg )
-			is_variable.extend( num_arg - is_variable.size() );
+		is_variable.resize( num_arg );
 		is_variable[0] = false;
 		is_variable[1] = false;
 		is_variable[2] = false;
@@ -1121,7 +1114,7 @@ inline size_t arg_is_variable(
 		CPPAD_ASSERT_UNKNOWN(false);
 		break;
 	}
-	return num_arg;
+	return;
 }
 
 } } // END_CPPAD_LOCAL_NAMESPACE

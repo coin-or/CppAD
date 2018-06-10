@@ -88,18 +88,18 @@ void match_op(
 	size_t        i_var;
 	random_itr.op_info(current, op, arg, i_var);
 	//
-	CPPAD_ASSERT_UNKNOWN( 0 < NumArg(op) );
-	CPPAD_ASSERT_UNKNOWN( NumArg(op) <= 3 );
+	size_t num_arg = NumArg(op);
+	CPPAD_ASSERT_UNKNOWN( 0 < num_arg );
+	CPPAD_ASSERT_UNKNOWN( num_arg <= 3 );
 	//
-	pod_vector<bool>  variable(3);
+	pod_vector<bool>  variable;
 	arg_is_variable(op, arg, variable);
-	CPPAD_ASSERT_UNKNOWN( variable.size() == 3 );
+	CPPAD_ASSERT_UNKNOWN( variable.size() == num_arg );
 	//
 	// If j-th argument to current operator has a previous operator,
 	// this is the j-th argument for previous operator.
 	// Otherwise, it is the j-th argument for the current operator.
 	addr_t arg_match[3];
-	size_t num_arg = NumArg(op);
 	for(size_t j = 0; j < num_arg; ++j)
 	{	arg_match[j] = arg[j];
 		if( variable[j] )
