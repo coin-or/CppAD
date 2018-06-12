@@ -76,7 +76,8 @@ This is the operation sequence that we are optimizing.
 It is const except for the fact that play->setup_random is called.
 
 \param rec
-The input contents of this recording does not matter.
+The input contents of this recording must be empty; i.e.,
+it corresponds to directly after the default constructor.
 Upon return, it contains an optimized verison of the
 operation sequence corresponding to \a play.
 */
@@ -88,7 +89,8 @@ void optimize_run(
 	CppAD::vector<size_t>&                     dep_taddr  ,
 	player<Base>*                              play       ,
 	recorder<Base>*                            rec        )
-{
+{	CPPAD_ASSERT_UNKNOWN( rec->num_op_rec() == 0 );
+	//
 	// get a random iterator for this player
 	play->template setup_random<Addr>();
 	local::play::const_random_iterator<Addr> random_itr =
@@ -198,9 +200,6 @@ void optimize_run(
 	for(size_t i = 0; i < num_cexp; i++)
 		cskip_new[i].i_arg = 0;
 	// -------------------------------------------------------------
-
-	// Erase all information in the old recording
-	rec->free();
 
 	// initialize mapping from old VecAD index to new VecAD index
 	CPPAD_ASSERT_UNKNOWN(

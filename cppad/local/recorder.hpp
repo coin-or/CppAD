@@ -39,9 +39,6 @@ private:
 	/// (do not abort when zero)
 	size_t abort_op_index_;
 
-	/// offset for this thread in the static hash table
-	const size_t thread_offset_;
-
 	/// Number of variables in the recording.
 	size_t    num_var_rec_;
 
@@ -57,19 +54,22 @@ private:
 	/// The argument indices in the recording
 	pod_vector<addr_t> arg_vec_;
 
+	/// Character strings ('\\0' terminated) in the recording.
+	pod_vector<char> text_vec_;
+
 	/// The parameters in the recording.
 	/// Note that Base may not be plain old data, so use false in consructor.
 	pod_vector_maybe<Base> par_vec_;
 
-	/// Character strings ('\\0' terminated) in the recording.
-	pod_vector<char> text_vec_;
+	/// Hash table used to reduced number of duplicate parameters in par_vec_
+	pod_vector<addr_t> par_hash_table_;
 // ---------------------- Public Functions -----------------------------------
 public:
 	/// Default constructor
 	recorder(void) :
-	thread_offset_( thread_alloc::thread_num() * CPPAD_HASH_TABLE_SIZE ) ,
-	num_var_rec_(0)      ,
-	num_load_op_rec_(0)
+	num_var_rec_(0)                          ,
+	num_load_op_rec_(0)                      ,
+	par_hash_table_( CPPAD_HASH_TABLE_SIZE )
 	{	record_compare_ = true;
 		abort_op_index_ = 0;
 	}
@@ -94,23 +94,6 @@ public:
 	~recorder(void)
 	{ }
 
-	/*!
-	Frees all information in recording.
-
-	Frees the operation sequence store in this recording
-	(the operation sequence is empty after this operation).
-	The buffers used to store the current recording are returned
-	to the system (so as to conserve on memory).
-	*/
-	void free(void)
-	{	num_var_rec_     = 0;
-		num_load_op_rec_ = 0;
-		op_vec_.clear();
-		vecad_ind_vec_.clear();
-		arg_vec_.clear();
-		par_vec_.clear();
-		text_vec_.clear();
-	}
 	/// Put next operator in the operation sequence.
 	inline addr_t PutOp(OpCode op);
 	/// Put a vecad load operator in the operation sequence (special case)
@@ -325,44 +308,33 @@ This value is not necessarily placed at the end of the vector
 */
 template <class Base>
 addr_t recorder<Base>::PutPar(const Base &par)
-{	static size_t   hash_table[CPPAD_HASH_TABLE_SIZE * CPPAD_MAX_NUM_THREADS];
-	size_t          i;
-	size_t          code;
-
-	CPPAD_ASSERT_UNKNOWN(
-		thread_offset_ / CPPAD_HASH_TABLE_SIZE
-		==
-		thread_alloc::thread_num()
-	);
-
+{
 	// get hash code for this value
-	code = static_cast<size_t>( hash_code(par) );
-	CPPAD_ASSERT_UNKNOWN( code < CPPAD_HASH_TABLE_SIZE );
+	size_t code  = static_cast<size_t>( hash_code(par) );
 
-	// If we have a match, return the parameter index
-	i = hash_table[code + thread_offset_];
-	if( i < par_vec_.size() && IdenticalEqualPar(par_vec_[i], par) )
-	{	CPPAD_ASSERT_KNOWN(
-			static_cast<size_t>( std::numeric_limits<addr_t>::max() ) >= i,
-			"cppad_tape_addr_type maximum value has been exceeded"
-		)
-		return static_cast<addr_t>( i );
+	// current index in par_vec_ corresponding to this hash code
+	size_t index = static_cast<size_t>( par_hash_table_[code] );
+
+	// check if the old parameter matches the new one
+	if( index < par_vec_.size() )
+	{	if( IdenticalEqualPar(par_vec_[index], par) )
+		return static_cast<addr_t>( index );
 	}
 
-	// place a new value in the table
-	i           = par_vec_.extend(1);
-	par_vec_[i] = par;
-	CPPAD_ASSERT_UNKNOWN( par_vec_.size() == i + 1 );
+	// place the new paramerter in par_vec_
+	index           = par_vec_.extend(1);
+	par_vec_[index] = par;
+	CPPAD_ASSERT_UNKNOWN( par_vec_.size() == index + 1 );
 
-	// make the hash code point to this new value
-	hash_table[code + thread_offset_] = i;
+	// change the hash table for this code to point to new value
+	par_hash_table_[code] = static_cast<addr_t>( index );
 
 	// return the parameter index
 	CPPAD_ASSERT_KNOWN(
-		static_cast<size_t>( std::numeric_limits<addr_t>::max() ) >= i,
+		static_cast<size_t>( std::numeric_limits<addr_t>::max() ) >= index,
 		"cppad_tape_addr_type maximum value has been exceeded"
 	)
-	return static_cast<addr_t>( i );
+	return static_cast<addr_t>( index );
 }
 // -------------------------- PutArg --------------------------------------
 /*!
