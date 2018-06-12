@@ -209,8 +209,8 @@ local::ADTape<Base>*  AD<Base>::tape_manage(tape_manage_job job)
 	}
 
 	// id and tape for this thread
-	tape_id_t*            tape_id  = tape_id_ptr(thread);
-	local::ADTape<Base>** tape     = tape_handle(thread);
+	tape_id_t*            tape_id_p  = tape_id_ptr(thread);
+	local::ADTape<Base>** tape_h     = tape_handle(thread);
 
 	// check if there is no tape currently attached to this thread
 	if( tape_table[thread] == CPPAD_NULL )
@@ -225,51 +225,51 @@ local::ADTape<Base>*  AD<Base>::tape_manage(tape_manage_job job)
 		}
 		// if tape id is zero, initialize it so that
 		// thread == tape id % CPPAD_MAX_NUM_THREADS
-		if( *tape_id == 0 )
+		if( *tape_id_p == 0 )
 		{	size_t new_tape_id = thread + CPPAD_MAX_NUM_THREADS;
 			CPPAD_ASSERT_KNOWN(
 				size_t( std::numeric_limits<tape_id_t>::max() ) >= new_tape_id,
 				"cppad_tape_id_type maximum value has been execeeded"
 			);
-			*tape_id = static_cast<tape_id_t>( new_tape_id );
+			*tape_id_p = static_cast<tape_id_t>( new_tape_id );
 		}
 	}
 
 	// make sure tape_id value is valid for this thread
 	CPPAD_ASSERT_UNKNOWN(
-		size_t( *tape_id % CPPAD_MAX_NUM_THREADS ) == thread
+		size_t( *tape_id_p % CPPAD_MAX_NUM_THREADS ) == thread
 	);
 
 	switch(job)
 	{	case tape_manage_new:
 		// tape for this thread must be null at the start
-		CPPAD_ASSERT_UNKNOWN( *tape  == CPPAD_NULL );
+		CPPAD_ASSERT_UNKNOWN( *tape_h  == CPPAD_NULL );
 		// current id and pointer to this tape
-		tape_table[thread]->id_ = *tape_id;
+		tape_table[thread]->id_ = *tape_id_p;
 		//
-		*tape = tape_table[thread];
+		*tape_h = tape_table[thread];
 		break;
 
 		case tape_manage_delete:
-		CPPAD_ASSERT_UNKNOWN( *tape  == tape_table[thread] );
+		CPPAD_ASSERT_UNKNOWN( *tape_h  == tape_table[thread] );
 		CPPAD_ASSERT_KNOWN(
 			std::numeric_limits<CPPAD_TAPE_ID_TYPE>::max()
-			- CPPAD_MAX_NUM_THREADS > *tape_id,
+			- CPPAD_MAX_NUM_THREADS > *tape_id_p,
 			"To many different tapes given the type used for "
 			"CPPAD_TAPE_ID_TYPE"
 		);
 		// advance tape identfier so all AD<Base> variables become parameters
-		*tape_id  += CPPAD_MAX_NUM_THREADS;
+		*tape_id_p  += CPPAD_MAX_NUM_THREADS;
 		// free memory corresponding to recording in the old tape
 		tape_table[thread]->Rec_.free();
 		// inform rest of CppAD that no tape recording for this thread
-		*tape = CPPAD_NULL;
+		*tape_h = CPPAD_NULL;
 		break;
 
 		case tape_manage_clear:
 		CPPAD_ASSERT_UNKNOWN(false);
 	}
-	return *tape;
+	return *tape_h;
 }
 
 /*!
