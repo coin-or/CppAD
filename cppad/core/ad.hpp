@@ -26,8 +26,7 @@ namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 
 typedef enum {
 	tape_manage_new,
-	tape_manage_delete,
-	tape_manage_clear
+	tape_manage_delete
 } tape_manage_job;
 
 template <class Base>

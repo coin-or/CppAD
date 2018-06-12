@@ -105,7 +105,6 @@ void parallel_ad(void)
 	// statics that depend on the value of Base
 	AD<Base>::tape_id_ptr(0);
 	AD<Base>::tape_handle(0);
-	AD<Base>::tape_manage(tape_manage_clear);
 	discrete<Base>::List();
 	CheckSimpleVector< Base, CppAD::vector<Base> >();
 	CheckSimpleVector< AD<Base>, CppAD::vector< AD<Base> > >();
