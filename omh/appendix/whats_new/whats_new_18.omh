@@ -24,6 +24,13 @@ $$
 
 $section Changes and Additions to CppAD During 2018$$
 
+$head 06-12$$
+There was false sharing in the
+hash table used to detect identical parameter values during
+the recording of $codei%AD<%Base%>%$$ operations.
+This has been fixed and should result in a speed up when multiple
+threads are recording at the same time.
+
 $head 06-04$$
 The memory used during
 $cref subgraph_reverse$$, $cref subgraph_sparsity$$, and
