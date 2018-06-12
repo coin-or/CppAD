@@ -1,8 +1,7 @@
-// $Id$
 # ifndef CPPAD_CORE_PARALLEL_AD_HPP
 # define CPPAD_CORE_PARALLEL_AD_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -104,7 +103,7 @@ void parallel_ad(void)
 	++itr;                                  // has static data
 
 	// statics that depend on the value of Base
-	AD<Base>::tape_id_handle(0);
+	AD<Base>::tape_id_ptr(0);
 	AD<Base>::tape_handle(0);
 	AD<Base>::tape_manage(tape_manage_clear);
 	discrete<Base>::List();

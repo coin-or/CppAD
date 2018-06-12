@@ -284,8 +284,7 @@ private:
 	inline local::ADTape<Base>* tape_this(void) const;
 	//
 	// static
-	inline static tape_id_t**    tape_id_handle(size_t thread);
-	inline static tape_id_t*     tape_id_ptr(size_t thread);
+	inline static tape_id_t*            tape_id_ptr(size_t thread);
 	inline static local::ADTape<Base>** tape_handle(size_t thread);
 	static local::ADTape<Base>*         tape_manage(tape_manage_job job);
 	inline static local::ADTape<Base>*  tape_ptr(void);
