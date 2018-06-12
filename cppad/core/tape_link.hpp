@@ -48,9 +48,8 @@ inline tape_id_t* AD<Base>::tape_id_ptr(size_t thread)
 {	CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL;
 	static tape_id_t tape_id_table[CPPAD_MAX_NUM_THREADS];
 	CPPAD_ASSERT_UNKNOWN(
-	(! thread_alloc::in_parallel()) || thread == thread_alloc::thread_num()
+		(! thread_alloc::in_parallel()) || thread == thread_alloc::thread_num()
 	);
-
 	return tape_id_table + thread;
 }
 
@@ -64,20 +63,19 @@ is the base type for this AD<Base> class.
 \param thread
 is the thread number; i.e.,
 \code
-thread == thread_alloc::thread_num()
+(! thread_alloc::in_parallel()) || thread == thread_alloc::thread_num()
 \endcode
-If this condition is not satisfied, and \c NDEBUG is not defined,
-a CPPAD_ASSERT_UNKNOWN is generated.
 
 \return
-is a handle for the  AD<Base> class and the specified thread.
+is a handle for the tape for this AD<Base> class and the specified thread.
 */
 template <class Base>
 inline local::ADTape<Base>** AD<Base>::tape_handle(size_t thread)
 {	CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL;
 	static local::ADTape<Base>* tape_table[CPPAD_MAX_NUM_THREADS];
-	CPPAD_ASSERT_UNKNOWN( thread == thread_alloc::thread_num() );
-
+	CPPAD_ASSERT_UNKNOWN(
+		(! thread_alloc::in_parallel()) || thread == thread_alloc::thread_num()
+	);
 	return tape_table + thread;
 }
 
@@ -94,7 +92,7 @@ is the base type corresponding to AD<Base> operations.
 \return
 is a pointer to the tape that is currently recording AD<Base> operations
 for the current thread.
-If this value is \c CPPAD_NULL, there is no tape currently
+If this value is CPPAD_NULL, there is no tape currently
 recording AD<Base> operations for this thread.
 */
 template <class Base>
@@ -180,9 +178,6 @@ local::ADTape<Base>*  AD<Base>::tape_manage(tape_manage_job job)
 {	// this routine has static variables so first call cannot be in parallel
 	CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL
 
-	// The tape for the master thread
-	static local::ADTape<Base>  tape_zero;
-
 	// Pointer to the tape for each thread
 	static local::ADTape<Base>* tape_table[CPPAD_MAX_NUM_THREADS];
 
@@ -197,11 +192,7 @@ local::ADTape<Base>*  AD<Base>::tape_manage(tape_manage_job job)
 		{	// if this thread has a tape
 			if( tape_table[thread] != CPPAD_NULL )
 			{
-				// delete all but the master thread
-				if( thread != 0 )
-					delete( tape_table[thread] );
-
-				// set the tape pointer to null
+				delete tape_table[thread];
 				tape_table[thread]   = CPPAD_NULL;
 			}
 		}
@@ -215,14 +206,8 @@ local::ADTape<Base>*  AD<Base>::tape_manage(tape_manage_job job)
 	// check if there is no tape currently attached to this thread
 	if( tape_table[thread] == CPPAD_NULL )
 	{	// allocate separate memroy to avoid false sharing
-		if( thread == 0 )
-		{	// mastert tape is a static in this routine
-			tape_table[thread] = &tape_zero;
-		}
-		else
-		{	// other tapes are allocated
-			tape_table[thread] = new local::ADTape<Base>();
-		}
+		tape_table[thread] = new local::ADTape<Base>();
+
 		// if tape id is zero, initialize it so that
 		// thread == tape id % CPPAD_MAX_NUM_THREADS
 		if( *tape_id_p == 0 )
