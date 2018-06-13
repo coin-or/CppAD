@@ -20,9 +20,19 @@ $spell
 	op_arg
 	enum
 	std
+	addr
+	cppad
 $$
 
 $section Changes and Additions to CppAD During 2018$$
+
+$head 06-13$$
+Reduce the amount of extra memory used during the $cref optimize$$ process.
+To be more specific, two vectors that were separate now share the same memory.
+These vectors have size equal to
+$cref/size_op/seq_property/size_op/$$
+for the old operation sequence, and element type
+$cref/cppad_tape_addr_type/cmake/cppad_tape_addr_type/$$.
 
 $head 06-12$$
 There was false sharing in the

@@ -229,15 +229,6 @@ void optimize_run(
 		}
 		CPPAD_ASSERT_UNKNOWN( j == num_vecad_ind );
 	}
-	//
-	// Mapping from old operator index to new operator information
-	// (zero is invalid except for new_op[0] and old2new[0].i_var)
-	vector<addr_t> new_op(num_op), new_var(num_op);
-	for(size_t i = 0; i < num_op; i++)
-	{	new_op[i]  = 0;
-		new_var[i] = 0;
-	}
-
 
 	// temporary buffer for new argument values
 	addr_t new_arg[6];
@@ -248,11 +239,31 @@ void optimize_run(
 
 	// tempory used to hold a size_pair
 	struct_size_pair size_pair;
-
+	//
+	// Mapping from old operator index to new variable index,
+	// zero is invalid except for new_var[0].
+	vector<addr_t> new_var(num_op);
+	for(size_t i = 0; i < num_op; i++)
+		new_var[i] = 0;
+	//
+	// Mapping from old operator index to new operator index will share
+	// memory with op_previous. Must get op_previous[i_op] for this operator
+	// before over writting it with new_op[i_op].
+	vector<addr_t>& new_op( op_previous );
+	CPPAD_ASSERT_UNKNOWN( new_op.size() == num_op );
+	//
 	user_state = start_user;
 	i_var      = 0;
 	for(i_op = 0; i_op < num_op; ++i_op)
-	{	addr_t mask; // temporary used in some switch cases
+	{	// if non-zero, use previous result in place of this operator.
+		// Must get this information before writing new_op[i_op].
+		size_t previous = op_previous[i_op];
+		//
+		// zero is invalid except for new_op[0].
+		new_op[i_op] = 0;
+		//
+		// temporary used in some switch cases
+		addr_t mask;
 		//
 		// this operator information
 		size_t i_tmp;
@@ -300,7 +311,6 @@ void optimize_run(
 				user_state = start_user;
 			}
 		}
-		size_t         previous;
 		//
 		CPPAD_ASSERT_UNKNOWN(
 			size_t( std::numeric_limits<addr_t>::max() ) >= rec->num_op_rec()
@@ -342,7 +352,6 @@ void optimize_run(
 			case SqrtOp:
 			case TanOp:
 			case TanhOp:
-			previous = op_previous[i_op];
 			if( previous > 0 )
 			{	size_t j_op = previous;
 				new_var[i_op] = new_var[j_op];
@@ -402,7 +411,6 @@ void optimize_run(
 			case DivvpOp:
 			case PowvpOp:
 			case ZmulvpOp:
-			previous = op_previous[i_op];
 			if( previous > 0 )
 			{	size_t j_op = previous;
 				new_var[i_op] = new_var[j_op];
@@ -424,7 +432,6 @@ void optimize_run(
 			// Binary operators, left index, right variable, one result
 			case DisOp:
 			CPPAD_ASSERT_NARG_NRES(op, 2, 1);
-			previous = op_previous[i_op];
 			if( previous > 0 )
 			{	size_t j_op = previous;
 				new_var[i_op] = new_var[j_op];
@@ -471,7 +478,6 @@ void optimize_run(
 			case MulpvOp:
 			case PowpvOp:
 			case ZmulpvOp:
-			previous = op_previous[i_op];
 			if( previous > 0 )
 			{	size_t j_op = previous;
 				new_var[i_op] = new_var[j_op];
@@ -521,7 +527,6 @@ void optimize_run(
 			case MulvvOp:
 			case PowvvOp:
 			case ZmulvvOp:
-			previous = op_previous[i_op];
 			if( previous > 0 )
 			{	size_t j_op = previous;
 				new_var[i_op] = new_var[j_op];
