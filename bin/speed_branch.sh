@@ -90,7 +90,7 @@ then
 fi
 # -----------------------------------------------------------------------------
 # copy this file to a separate name so can restore it when done
-cp bin/speed_branch.sh speed_branch.copy.$$
+mv bin/speed_branch.sh speed_branch.copy.$$
 git checkout bin/speed_branch.sh
 # ----------------------------------------------------------------------------
 build_dir='build/speed/cppad'
@@ -155,8 +155,10 @@ do
 		#
 		echo_eval cd $build_dir
 		#
-		echo "make check_speed_cppad >> $build_dir/$log_file"
-		make check_speed_cppad >> $log_file
+		echo "make check_speed_cppad >>& $build_dir/$log_file"
+		make check_speed_cppad >& speed_branch.log.$$
+		cat speed_branch.log.$$ >> $log_file
+		rm speed_branch.log.$$
 		#
 		echo "./speed_cppad $test_name 123 $* > $build_dir/$out_file"
 		./speed_cppad $test_name 123 $* > $out_file
