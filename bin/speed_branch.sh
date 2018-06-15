@@ -28,10 +28,16 @@ possible_options='
 	revsparsity
 	subgraph
 '
+# ----------------------------------------------------------------------------
 program="bin/speed_branch.sh"
 if [ "$0" != "$program" ]
 then
 	echo "$program: must be executed from its parent directory"
+	exit 1
+fi
+if ! git branch | grep '^\* master' > /dev/null
+then
+	echo 'bin/speed_branch.sh: must start execution from master branch'
 	exit 1
 fi
 if [ "$3" == '' ]
@@ -169,6 +175,8 @@ do
 		git checkout speed/main.cpp
 	fi
 done
+# return to master (branch where we started)
+echo_eval git checkout --quiet master
 rm speed_branch.sed.$$
 rm speed_branch.size.$$
 mv speed_branch.copy.$$ bin/speed_branch.sh
