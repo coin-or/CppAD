@@ -144,6 +144,21 @@ do
 		# use --quiet to supress detached HEAD message
 		echo_eval git checkout --quiet $branch
 		#
+		day=`git log -1 --date=iso | grep '^Date:' | \
+			sed -e 's|Date: *||' -e 's|-||g' -e 's| .*||'`
+		if [ "$test_name" == 'speed' ] || [ "$test_name" == 'sparse_hessian' ]
+		then
+			if [ "$day" -le '20150130' ]
+			then
+				echo "test_name is all or sparse_hessian"
+				echo "and branch $branch came on or before 20150130"
+				echo "when bug was fixed in the sparse_hessian speed test."
+				echo_eval git checkout --force --quiet master
+				mv speed_branch.copy.$$ bin/speed_branch.sh
+				exit 1
+			fi
+		fi
+		#
 		# changes sizes in speed/main.cpp to be same as in master branch
 		sed -i speed/main.cpp -f speed_branch.sed.$$
 		sed  speed/main.cpp  -n -e '1,/BEGIN_SIZES/p' > speed_branch.main.$$
