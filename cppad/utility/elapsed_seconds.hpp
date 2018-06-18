@@ -1,9 +1,8 @@
-// $Id$
 # ifndef CPPAD_UTILITY_ELAPSED_SECONDS_HPP
 # define CPPAD_UTILITY_ELAPSED_SECONDS_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -77,7 +76,7 @@ $end
 # include <cppad/core/cppad_assert.hpp>
 
 // define CPPAD_NULL
-# include <cppad/core/define.hpp>
+# include <cppad/local/define.hpp>
 
 // needed before one can use CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL
 # include <cppad/utility/thread_alloc.hpp>

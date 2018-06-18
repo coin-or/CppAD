@@ -2,7 +2,7 @@
 # define CPPAD_LOCAL_SPARSE_INTERNAL_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -13,7 +13,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 
 // necessary definitions
-# include <cppad/core/define.hpp>
+# include <cppad/local/define.hpp>
 # include <cppad/local/sparse_pack.hpp>
 # include <cppad/local/sparse_list.hpp>
 # include <cppad/local/sparse_sizevec.hpp>

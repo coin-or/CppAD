@@ -29,11 +29,13 @@ spell_list='
 revert_list='
 '
 move_list='
+	cppad/core/define.hpp
 '
-move_sed='s|reverse_subgraph|subgraph_reverse|'
+move_sed='s|/core/|/local/|'
 #
 cat << EOF > junk.sed
-s|get_random()|template get_random<addr_t>()|
+s|cppad/core/define.hpp|cppad/local/define.hpp|
+s|CPPAD_CORE_DEFINE_HPP|CPPAD_LOCAL_DEFINE_HPP|
 EOF
 # -----------------------------------------------------------------------------
 if [ $0 != "bin/batch_edit.sh" ]

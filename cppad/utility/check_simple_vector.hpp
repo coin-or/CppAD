@@ -2,7 +2,7 @@
 # define CPPAD_UTILITY_CHECK_SIMPLE_VECTOR_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -99,7 +99,7 @@ $end
 
 # include <cstddef>
 # include <cppad/core/cppad_assert.hpp>
-# include <cppad/core/define.hpp>
+# include <cppad/local/define.hpp>
 # include <cppad/utility/thread_alloc.hpp>
 
 namespace CppAD {

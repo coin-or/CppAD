@@ -524,7 +524,7 @@ nobase_myinclude_HEADERS = \
 	cppad/core/cond_exp.hpp \
 	cppad/core/convert.hpp \
 	cppad/core/cppad_assert.hpp \
-	cppad/core/define.hpp \
+	cppad/local/define.hpp \
 	cppad/core/dependent.hpp \
 	cppad/core/discrete.hpp \
 	cppad/core/div_eq.hpp \

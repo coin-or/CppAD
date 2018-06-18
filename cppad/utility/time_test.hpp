@@ -1,9 +1,8 @@
-// $Id$
 # ifndef CPPAD_UTILITY_TIME_TEST_HPP
 # define CPPAD_UTILITY_TIME_TEST_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -142,7 +141,7 @@ $end
 # include <cstddef>
 # include <cmath>
 # include <cppad/utility/elapsed_seconds.hpp>
-# include <cppad/core/define.hpp>
+# include <cppad/local/define.hpp>
 
 # define CPPAD_EXTRA_RUN_BEFORE_TIMING 0
 

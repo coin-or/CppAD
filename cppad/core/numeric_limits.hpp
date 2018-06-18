@@ -1,7 +1,7 @@
 # ifndef CPPAD_CORE_NUMERIC_LIMITS_HPP
 # define CPPAD_CORE_NUMERIC_LIMITS_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -140,7 +140,7 @@ $end
 # include <iostream>
 
 # include <cppad/configure.hpp>
-# include <cppad/core/define.hpp>
+# include <cppad/local/define.hpp>
 # include <cppad/core/cppad_assert.hpp>
 # include <cppad/local/declare_ad.hpp>
 

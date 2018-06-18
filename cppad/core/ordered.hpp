@@ -1,9 +1,8 @@
-// $Id$
 # ifndef CPPAD_CORE_ORDERED_HPP
 # define CPPAD_CORE_ORDERED_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -13,7 +12,7 @@ A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 
-# include <cppad/core/define.hpp>
+# include <cppad/local/define.hpp>
 
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 
@@ -99,4 +98,3 @@ bool abs_geq(const AD<Base>& x, const AD<Base>& y)
 // ============================================================================
 } // END_CPPAD_NAMESPACE
 # endif
-

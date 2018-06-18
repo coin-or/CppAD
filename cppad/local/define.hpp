@@ -1,5 +1,5 @@
-# ifndef CPPAD_CORE_DEFINE_HPP
-# define CPPAD_CORE_DEFINE_HPP
+# ifndef CPPAD_LOCAL_DEFINE_HPP
+# define CPPAD_LOCAL_DEFINE_HPP
 
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell

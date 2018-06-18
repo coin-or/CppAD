@@ -2,7 +2,7 @@
 # define CPPAD_UTILITY_TRACK_NEW_DEL_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -235,7 +235,7 @@ It returns true, if it succeeds, and false otherwise.
 $end
 ------------------------------------------------------------------------------
 */
-# include <cppad/core/define.hpp>
+# include <cppad/local/define.hpp>
 # include <cppad/core/cppad_assert.hpp>
 # include <cppad/utility/thread_alloc.hpp>
 # include <sstream>

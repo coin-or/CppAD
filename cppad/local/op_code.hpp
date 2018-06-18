@@ -15,7 +15,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # include <sstream>
 # include <iomanip>
 
-# include <cppad/core/define.hpp>
+# include <cppad/local/define.hpp>
 # include <cppad/core/cppad_assert.hpp>
 # include <cppad/local/pod_vector.hpp>
 
