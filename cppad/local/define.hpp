@@ -18,17 +18,16 @@ Define processor symbols and macros that are used by CppAD.
 */
 
 /*!
-\def CPPAD_OP_CODE_TYPE
-Is the type used to store the enum OpCode values for the entire
-operation sequence. If not the same as OpCode, then
-sizeof(CPPAD_OP_CODE_TYPE) should be less than sizeof( enum OpCode )
-to conserve memory.  The following checks should be in op_code.hpp
+\def CPPAD_VEC_EMUM_TYPE
+Is the type used to store vectors of enum values when the vector
+may be large and we want to conserve memory. The following must hold for
+any enum_value that is stored using the type CPPAD_VEC_ENUM_TYPE:
 <code>
-		size_t(NumberOp) <= std::numeric_limits<CPPAD_OP_CODE_TYPE>::max()
-		&& is_pod<CPPAD_OP_CODE_TYPE>
+		size_t(enum_value) <= std::numeric_limits<CPPAD_VEC_ENUM_TYPE>::max()
+		&& is_pod<CPPAD_VEC_ENUM_TYPE>
 </code>
 */
-# define CPPAD_OP_CODE_TYPE unsigned char
+# define CPPAD_VEC_ENUM_TYPE unsigned char
 
 // ----------------------------------------------------------------------------
 /*!

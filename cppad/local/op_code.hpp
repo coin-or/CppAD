@@ -251,10 +251,10 @@ inline size_t NumArg( OpCode op)
 		CPPAD_ASSERT_UNKNOWN(
 			size_t(NumberOp) + 1 == sizeof(NumArgTable)/sizeof(NumArgTable[0])
 		);
-		//Check that the type CPPAD_OP_CODE_TYPE as required by define.hpp
-		CPPAD_ASSERT_UNKNOWN( is_pod<CPPAD_OP_CODE_TYPE>() );
+		//Check that the type CPPAD_VEC_ENUM_TYPE as required by define.hpp
+		CPPAD_ASSERT_UNKNOWN( is_pod<CPPAD_VEC_ENUM_TYPE>() );
 		CPPAD_ASSERT_UNKNOWN(
-			size_t(NumberOp) < std::numeric_limits<CPPAD_OP_CODE_TYPE>::max()
+			size_t(NumberOp) < std::numeric_limits<CPPAD_VEC_ENUM_TYPE>::max()
 		);
 	}
 	// do this check every time

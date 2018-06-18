@@ -62,7 +62,7 @@ indices.
 template <class Addr>
 void random_setup(
 	size_t                                    num_var    ,
-	const pod_vector<CPPAD_OP_CODE_TYPE>&     op_vec     ,
+	const pod_vector<CPPAD_VEC_ENUM_TYPE>&    op_vec     ,
 	const pod_vector<addr_t>&                 arg_vec    ,
 	pod_vector<Addr>*                         op2arg_vec ,
 	pod_vector<Addr>*                         op2var_vec ,

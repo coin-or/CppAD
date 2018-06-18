@@ -29,13 +29,12 @@ spell_list='
 revert_list='
 '
 move_list='
-	cppad/core/define.hpp
 '
 move_sed='s|/core/|/local/|'
 #
 cat << EOF > junk.sed
-s|cppad/core/define.hpp|cppad/local/define.hpp|
-s|CPPAD_CORE_DEFINE_HPP|CPPAD_LOCAL_DEFINE_HPP|
+s|CPPAD_OP_CODE_TYPE>&  |CPPAD_VEC_ENUM_TYPE>\& |
+s|CPPAD_OP_CODE_TYPE|CPPAD_VEC_ENUM_TYPE|g
 EOF
 # -----------------------------------------------------------------------------
 if [ $0 != "bin/batch_edit.sh" ]

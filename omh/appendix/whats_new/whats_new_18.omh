@@ -76,7 +76,7 @@ The amount of memory used to store each operator was changed from
 the size of an enum type to the size of an $code unsigned char$$; i.e.,
 one byte.
 This changed $code CppAD::local::OpCode$$ to
-$code CPPAD_OP_CODE_TYPE$$ in the expression used to compute
+$code CPPAD_VEC_ENUM_TYPE$$ in the expression used to compute
 $cref/size_op_arg/seq_property/size_op_seq/$$.
 $lnext
 There was a bug in the call to $code optimize$$ for the CppAD

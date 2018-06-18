@@ -33,10 +33,10 @@ for the subgraph_iterator class.
 class const_sequential_iterator {
 private:
 	/// pointer to the first operator in the player, BeginOp = *op_begin_
-	const CPPAD_OP_CODE_TYPE* op_begin_;
+	const CPPAD_VEC_ENUM_TYPE* op_begin_;
 
 	/// pointer one past last operator in the player, EndOp = *(op_end_ - 1)
-	const CPPAD_OP_CODE_TYPE* op_end_;
+	const CPPAD_VEC_ENUM_TYPE* op_end_;
 
 	/// pointer to the first argument for the first operator
 	const addr_t*             arg_begin_;
@@ -45,7 +45,7 @@ private:
 	const addr_t*             arg_end_;
 
 	/// pointer to current operator
-	const CPPAD_OP_CODE_TYPE* op_cur_;
+	const CPPAD_VEC_ENUM_TYPE* op_cur_;
 
 	/// pointer to first argument for current operator
 	const addr_t*             arg_;
@@ -107,7 +107,7 @@ public:
 	*/
 	const_sequential_iterator(
 		size_t                                num_var    ,
-		const pod_vector<CPPAD_OP_CODE_TYPE>* op_vec     ,
+		const pod_vector<CPPAD_VEC_ENUM_TYPE>* op_vec     ,
 		const pod_vector<addr_t>*             arg_vec    ,
 		size_t                                op_index   )
 	:
