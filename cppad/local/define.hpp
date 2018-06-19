@@ -18,7 +18,7 @@ Define processor symbols and macros that are used by CppAD.
 */
 
 /*!
-\def CPPAD_VEC_EMUM_TYPE
+\def CPPAD_VEC_ENUM_TYPE
 Is the type used to store vectors of enum values when the vector
 may be large and we want to conserve memory. The following must hold for
 any enum_value that is stored using the type CPPAD_VEC_ENUM_TYPE:

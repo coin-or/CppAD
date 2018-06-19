@@ -64,8 +64,8 @@ is the operator index for the argument to the result operator.
 structure that holds the information for each of the operators.
 The output value of op_usage[i_arg] is increased; to be specific,
 If sum_result is true and the input value of op_usage[i_arg]
-is no_usage, its output value is csum_usage.
-Otherwise, the output value of op_usage[i_arg] is yes_usage.
+is usage_type(no_usage), its output value is usage_type(csum_usage).
+Otherwise, the output value of op_usage[i_arg] is usage_type(yes_usage).
 
 \param cexp_set
 This is a vector of sets with one set for each operator. We denote
@@ -76,13 +76,13 @@ In the special case where cexp_set.n_set() is zero,
 cexp_set is not changed.
 
 \li
-If cexp_set.n_set() != 0 and op_usage[i_arg] == no_usage,
+If cexp_set.n_set() != 0 and op_usage[i_arg] == usage_type(no_usage),
 the input value of set[i_arg] must be empty.
 In this case the output value if set[i_arg] is equal to set[i_result]
 (which may also be empty).
 
 \li
-If cexp_set.n_set() != 0 and op_usage[i_arg] != no_usage,
+If cexp_set.n_set() != 0 and op_usage[i_arg] != usage_type(no_usage),
 the output value of set[i_arg] is the intersection of
 its input value and set[i_result].
 */
@@ -92,12 +92,12 @@ inline void usage_cexp_result2arg(
 	bool                        sum_result     ,
 	size_t                      i_result       ,
 	size_t                      i_arg          ,
-	vector<enum_usage>&         op_usage       ,
+	vector<usage_type>&         op_usage       ,
 	sparse_list&                cexp_set       )
 {
 	// cexp_set
 	if( cexp_set.n_set() > 0 )
-	{	if( op_usage[i_arg] == no_usage )
+	{	if( op_usage[i_arg] == usage_type(no_usage) )
 		{	// set[i_arg] = set[i_result]
 			cexp_set.assignment(i_arg, i_result, cexp_set);
 		}
@@ -107,15 +107,15 @@ inline void usage_cexp_result2arg(
 		}
 	}
 	// usage
-	bool csum = sum_result && op_usage[i_arg] == no_usage;
+	bool csum = sum_result && op_usage[i_arg] == usage_type(no_usage);
 	if( csum )
 	{	OpCode op_a = play->GetOp(i_arg);
 		csum = add_or_subtract( op_a );
 	}
 	if( csum )
-		op_usage[i_arg] = csum_usage;
+		op_usage[i_arg] = usage_type(csum_usage);
 	else
-		op_usage[i_arg] = yes_usage;
+		op_usage[i_arg] = usage_type(yes_usage);
 	//
 	return;
 }
@@ -194,7 +194,7 @@ The input size of this vector must be zero.
 Upon return it has size equal to the number of operators
 in the operation sequence; i.e., num_op = play->nun_var_rec().
 If op_previous[i] == 0, no replacement was found for the i-th operator.
-If op_previous[i] != 0, op_usage[ op_previous[i] ] == yes_usage.
+If op_previous[i] != 0, op_usage[ op_previous[i] ] == usage_type(yes_usage).
 
 
 \param op_usage
@@ -219,7 +219,7 @@ void get_opt_op_info(
 	sparse_list&                                skip_op_false       ,
 	vector<bool>&                               vecad_used          ,
 	vector<addr_t>&                             op_previous         ,
-	vector<enum_usage>&                         op_usage            )
+	vector<usage_type>&                         op_usage            )
 {
 	CPPAD_ASSERT_UNKNOWN( cexp_info.size() == 0 );
 	CPPAD_ASSERT_UNKNOWN( vecad_used.size() == 0 );
@@ -320,7 +320,7 @@ void get_opt_op_info(
 	// Set of conditional expressions comparisons that usage of each
 	/// operator depends on. The operator can be skipped if any of the
 	// comparisons results in the set holds. A set for operator i_op is
-	// not defined and left empty when op_usage[i_op] = no_usage.
+	// not defined and left empty when op_usage[i_op] = usage_type(no_usage).
 	/// It is also left empty for the result of any VecAD operations.
 	sparse_list cexp_set;
 	//
@@ -339,10 +339,10 @@ void get_opt_op_info(
 	//
 	// initialize operator usage
 	for(size_t i = 0; i < num_op; i++)
-		op_usage[i] = no_usage;
+		op_usage[i] = usage_type(no_usage);
 	for(size_t i = 0; i < dep_taddr.size(); i++)
 	{	i_op                = random_itr.var2op(dep_taddr[i]);
-		op_usage[i_op] = yes_usage;    // dependent variables
+		op_usage[i_op] = usage_type(yes_usage);    // dependent variables
 	}
 	//
 	// Initialize reverse pass
@@ -358,7 +358,7 @@ void get_opt_op_info(
 		//
 		// Is the result of this operation used.
 		// (This only makes sense when NumRes(op) > 0.)
-		enum_usage use_result = op_usage[i_op];
+		usage_type use_result = op_usage[i_op];
 		//
 		bool sum_op = false;
 		switch( op )
@@ -395,7 +395,7 @@ void get_opt_op_info(
 			case TanhOp:
 			case ZmulvpOp:
 			CPPAD_ASSERT_UNKNOWN( NumRes(op) > 0 );
-			if( use_result != no_usage )
+			if( use_result != usage_type(no_usage) )
 			{	size_t j_op = random_itr.var2op(arg[0]);
 				usage_cexp_result2arg(
 					play, sum_op, i_op, j_op, op_usage, cexp_set
@@ -414,7 +414,7 @@ void get_opt_op_info(
 			case PowpvOp:
 			case ZmulpvOp:
 			CPPAD_ASSERT_UNKNOWN( NumRes(op) > 0 );
-			if( use_result != no_usage )
+			if( use_result != usage_type(no_usage) )
 			{	size_t j_op = random_itr.var2op(arg[1]);
 				usage_cexp_result2arg(
 					play, sum_op, i_op, j_op, op_usage, cexp_set
@@ -432,7 +432,7 @@ void get_opt_op_info(
 			case PowvvOp:
 			case ZmulvvOp:
 			CPPAD_ASSERT_UNKNOWN( NumRes(op) > 0 );
-			if( use_result != no_usage )
+			if( use_result != usage_type(no_usage) )
 			{	for(size_t i = 0; i < 2; i++)
 				{	size_t j_op = random_itr.var2op(arg[i]);
 					usage_cexp_result2arg(
@@ -448,7 +448,7 @@ void get_opt_op_info(
 			--cexp_index;
 			cexp2op[ cexp_index ] = i_op;
 			CPPAD_ASSERT_UNKNOWN( NumRes(op) > 0 );
-			if( use_result != no_usage )
+			if( use_result != usage_type(no_usage) )
 			{	CPPAD_ASSERT_UNKNOWN( NumArg(CExpOp) == 6 );
 				// propgate from result to left argument
 				if( arg[1] & 1 )
@@ -472,7 +472,7 @@ void get_opt_op_info(
 				if( arg[1] & 4 )
 				{	size_t j_op = random_itr.var2op(arg[4]);
 					bool can_skip = conditional_skip & (! same_variable);
-					can_skip     &= op_usage[j_op] == no_usage;
+					can_skip     &= op_usage[j_op] == usage_type(no_usage);
 					usage_cexp_result2arg(
 						play, sum_op, i_op, j_op, op_usage, cexp_set
 					);
@@ -483,7 +483,7 @@ void get_opt_op_info(
 						size_t element = 2 * cexp_index + 0;
 						cexp_set.add_element(j_op, element);
 						//
-						op_usage[j_op] = yes_usage;
+						op_usage[j_op] = usage_type(yes_usage);
 					}
 				}
 				//
@@ -491,7 +491,7 @@ void get_opt_op_info(
 				if( arg[1] & 8 )
 				{	size_t j_op = random_itr.var2op(arg[5]);
 					bool can_skip = conditional_skip & (! same_variable);
-					can_skip     &= op_usage[j_op] == no_usage;
+					can_skip     &= op_usage[j_op] == usage_type(no_usage);
 					usage_cexp_result2arg(
 						play, sum_op, i_op, j_op, op_usage, cexp_set
 					);
@@ -502,7 +502,7 @@ void get_opt_op_info(
 						size_t element = 2 * cexp_index + 1;
 						cexp_set.add_element(j_op, element);
 						//
-						op_usage[j_op] = yes_usage;
+						op_usage[j_op] = usage_type(yes_usage);
 					}
 				}
 			}
@@ -518,14 +518,14 @@ void get_opt_op_info(
 			case InvOp:
 			case BeginOp:
 			case EndOp:
-			op_usage[i_op] = yes_usage;
+			op_usage[i_op] = usage_type(yes_usage);
 			break;  // -----------------------------------------------
 
 			// The print forward operator
 			case PriOp:
 			CPPAD_ASSERT_NARG_NRES(op, 5, 0);
 			if( print_for_op )
-			{	op_usage[i_op] = yes_usage;
+			{	op_usage[i_op] = usage_type(yes_usage);
 				if( arg[0] & 1 )
 				{	// arg[1] is a variable
 					size_t j_op = random_itr.var2op(arg[1]);
@@ -554,7 +554,7 @@ void get_opt_op_info(
 			case NepvOp:
 			CPPAD_ASSERT_UNKNOWN( NumRes(op) == 0 );
 			if( compare_op )
-			{	op_usage[i_op] = yes_usage;
+			{	op_usage[i_op] = usage_type(yes_usage);
 				//
 				size_t j_op = random_itr.var2op(arg[1]);
 				usage_cexp_result2arg(
@@ -568,7 +568,7 @@ void get_opt_op_info(
 			case LtvpOp:
 			CPPAD_ASSERT_UNKNOWN( NumRes(op) == 0 );
 			if( compare_op )
-			{	op_usage[i_op] = yes_usage;
+			{	op_usage[i_op] = usage_type(yes_usage);
 				//
 				size_t j_op = random_itr.var2op(arg[0]);
 				usage_cexp_result2arg(
@@ -585,7 +585,7 @@ void get_opt_op_info(
 			if( compare_op )
 			CPPAD_ASSERT_UNKNOWN( NumRes(op) == 0 );
 			if( compare_op )
-			{	op_usage[i_op] = yes_usage;
+			{	op_usage[i_op] = usage_type(yes_usage);
 				//
 				for(size_t i = 0; i < 2; i++)
 				{	size_t j_op = random_itr.var2op(arg[i]);
@@ -603,7 +603,7 @@ void get_opt_op_info(
 			// load operator using a parameter index
 			case LdpOp:
 			CPPAD_ASSERT_UNKNOWN( NumRes(op) > 0 );
-			if( use_result != no_usage )
+			if( use_result != usage_type(no_usage) )
 			{	size_t i_vec = arg2vecad[ arg[0] ];
 				vecad_used[i_vec] = true;
 			}
@@ -612,12 +612,12 @@ void get_opt_op_info(
 			// load operator using a variable index
 			case LdvOp:
 			CPPAD_ASSERT_UNKNOWN( NumRes(op) > 0 );
-			if( use_result != no_usage )
+			if( use_result != usage_type(no_usage) )
 			{	size_t i_vec = arg2vecad[ arg[0] ];
 				vecad_used[i_vec] = true;
 				//
 				size_t j_op = random_itr.var2op(arg[1]);
-				op_usage[j_op] = yes_usage;
+				op_usage[j_op] = usage_type(yes_usage);
 			}
 			break; // --------------------------------------------
 
@@ -625,10 +625,10 @@ void get_opt_op_info(
 			case StpvOp:
 			CPPAD_ASSERT_UNKNOWN( NumRes(op) == 0 );
 			if( vecad_used[ arg2vecad[ arg[0] ] ] )
-			{	op_usage[i_op] = yes_usage;
+			{	op_usage[i_op] = usage_type(yes_usage);
 				//
 				size_t j_op = random_itr.var2op(arg[2]);
-				op_usage[j_op] = yes_usage;
+				op_usage[j_op] = usage_type(yes_usage);
 			}
 			break; // --------------------------------------------
 
@@ -636,12 +636,12 @@ void get_opt_op_info(
 			case StvvOp:
 			CPPAD_ASSERT_UNKNOWN( NumRes(op) == 0 );
 			if( vecad_used[ arg2vecad[ arg[0] ] ] )
-			{	op_usage[i_op] = yes_usage;
+			{	op_usage[i_op] = usage_type(yes_usage);
 				//
 				size_t j_op = random_itr.var2op(arg[1]);
-				op_usage[j_op] = yes_usage;
+				op_usage[j_op] = usage_type(yes_usage);
 				size_t k_op = random_itr.var2op(arg[2]);
-				op_usage[k_op] = yes_usage;
+				op_usage[k_op] = usage_type(yes_usage);
 			}
 			break; // -----------------------------------------------------
 
@@ -680,7 +680,7 @@ void get_opt_op_info(
 				last_user_i_op = i_op;
 				CPPAD_ASSERT_UNKNOWN( i_op > user_n + user_m + 1 );
 				CPPAD_ASSERT_UNKNOWN(
-					op_usage[last_user_i_op] == no_usage
+					op_usage[last_user_i_op] == usage_type(no_usage)
 				);
 # ifndef NDEBUG
 				if( cexp_set.n_set() > 0 )
@@ -778,7 +778,7 @@ void get_opt_op_info(
 					CPPAD_ASSERT_KNOWN(false, s.c_str() );
 				}
 
-				if( op_usage[last_user_i_op] != no_usage )
+				if( op_usage[last_user_i_op] != usage_type(no_usage) )
 				for(size_t j = 0; j < user_n; j++)
 				if( user_ix[j] > 0 )
 				{	// This user argument is a variable
@@ -899,7 +899,7 @@ void get_opt_op_info(
 	for(i_op = 0; i_op < num_op; ++i_op)
 	{	op_previous[i_op] = 0;
 
-		if( op_usage[i_op] == yes_usage )
+		if( op_usage[i_op] == usage_type(yes_usage) )
 		switch( play->GetOp(i_op) )
 		{
 			case NumberOp:
@@ -1002,7 +1002,7 @@ void get_opt_op_info(
 	//
 	for(size_t i = 0; i < num_cexp_op; i++)
 	{	CPPAD_ASSERT_UNKNOWN(
-			op_previous[i] == 0 || op_usage[i] == yes_usage
+			op_previous[i] == 0 || op_usage[i] == usage_type(yes_usage)
 		);
 		i_op            = cexp2op[i];
 		random_itr.op_info(i_op, op, arg, i_var);
@@ -1030,8 +1030,8 @@ void get_opt_op_info(
 	i_op = 0;
 	while(i_op < num_op)
 	{	size_t j_op = i_op;
-		bool keep = op_usage[i_op] != no_usage;
-		keep     &= op_usage[i_op] != csum_usage;
+		bool keep = op_usage[i_op] != usage_type(no_usage);
+		keep     &= op_usage[i_op] != usage_type(csum_usage);
 		keep     &= op_previous[i_op] == 0;
 		if( keep )
 		{	sparse_list_const_iterator itr(cexp_set, i_op);

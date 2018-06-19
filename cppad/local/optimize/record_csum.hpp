@@ -37,8 +37,8 @@ is the index in the old operation sequence for
 the variable corresponding to the result for the current operator.
 We use the notation i_op = random_itr.var2op(current).
 It follows that  NumRes( random_itr.get_op[i_op] ) > 0.
-If 0 < j_op < i_op, either op_usage[j_op] == csum_usage,
-op_usage[j_op] = no_usage, or new_var[j_op] != 0.
+If 0 < j_op < i_op, either op_usage[j_op] == usage_type(csum_usage),
+op_usage[j_op] = usage_type(no_usage), or new_var[j_op] != 0.
 
 \param rec
 is the object that will record the new operations.
@@ -55,8 +55,8 @@ and then be reused with calls to record_csum.
 \par Assumptions
 random_itr.get_op[i_op]
 must be one of AddpvOp, AddvvOp, SubpvOp, SubvpOp, SubvvOp.
-op_usage[i_op] != no_usage and ! op_usage[i_op] == csum_usage.
-Furthermore op_usage[j_op] == csum_usage is true from some
+op_usage[i_op] != usage_type(no_usage) and ! op_usage[i_op] == usage_type(csum_usage).
+Furthermore op_usage[j_op] == usage_type(csum_usage) is true from some
 j_op that corresponds to a variable that is an argument to
 random_itr.get_op[i_op].
 */
@@ -65,7 +65,7 @@ template <class Addr, class Base>
 struct_size_pair record_csum(
 	const player<Base>*                                play           ,
 	const play::const_random_iterator<Addr>&           random_itr     ,
-	const vector<enum_usage>&                          op_usage       ,
+	const vector<usage_type>&                          op_usage       ,
 	const CppAD::vector<addr_t>&                       new_var        ,
 	size_t                                             current        ,
 	recorder<Base>*                                    rec            ,
@@ -88,7 +88,7 @@ struct_size_pair record_csum(
 	CPPAD_ASSERT_UNKNOWN( work.sub_stack.empty() );
 	//
 	size_t i_op = random_itr.var2op(current);
-	CPPAD_ASSERT_UNKNOWN( ! ( op_usage[i_op] == csum_usage ) );
+	CPPAD_ASSERT_UNKNOWN( ! ( op_usage[i_op] == usage_type(csum_usage) ) );
 	//
 	// information corresponding to the root node in the cummulative summation
 	struct struct_csum_variable var;
@@ -105,14 +105,14 @@ struct_size_pair record_csum(
 # ifndef NDEBUG
 	bool ok = false;
 	if( var.op == SubvpOp ) ok =
-		op_usage[ random_itr.var2op(var.arg[0]) ] == csum_usage;
+		op_usage[ random_itr.var2op(var.arg[0]) ] == usage_type(csum_usage);
 	if( var.op == AddpvOp || var.op == SubpvOp ) ok =
-		op_usage[ random_itr.var2op(var.arg[1]) ] == csum_usage;
+		op_usage[ random_itr.var2op(var.arg[1]) ] == usage_type(csum_usage);
 	if( var.op == AddvvOp || var.op == SubvvOp )
 	{	ok  =
-		op_usage[ random_itr.var2op(var.arg[0]) ] == csum_usage;
+		op_usage[ random_itr.var2op(var.arg[0]) ] == usage_type(csum_usage);
 		ok |=
-		op_usage[ random_itr.var2op(var.arg[1]) ] == csum_usage;
+		op_usage[ random_itr.var2op(var.arg[1]) ] == usage_type(csum_usage);
 	}
 	CPPAD_ASSERT_UNKNOWN( ok );
 # endif
@@ -144,7 +144,7 @@ struct_size_pair record_csum(
 			case SubvvOp:
 			//
 			// check if the first argument has csum usage
-			if( op_usage[random_itr.var2op(arg[0])] == csum_usage )
+			if( op_usage[random_itr.var2op(arg[0])] == usage_type(csum_usage) )
 			{	CPPAD_ASSERT_UNKNOWN(
 				size_t( new_var[ random_itr.var2op(arg[0]) ]) == 0
 				);
@@ -187,7 +187,7 @@ struct_size_pair record_csum(
 			case AddvvOp:
 			case AddpvOp:
 			// check if the second argument has csum usage
-			if( op_usage[random_itr.var2op(arg[1])] == csum_usage )
+			if( op_usage[random_itr.var2op(arg[1])] == usage_type(csum_usage) )
 			{	CPPAD_ASSERT_UNKNOWN(
 				size_t( new_var[ random_itr.var2op(arg[1]) ]) == 0
 				);

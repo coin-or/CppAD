@@ -33,8 +33,11 @@ move_list='
 move_sed='s|/core/|/local/|'
 #
 cat << EOF > junk.sed
-s|CPPAD_OP_CODE_TYPE>&  |CPPAD_VEC_ENUM_TYPE>\& |
-s|CPPAD_OP_CODE_TYPE|CPPAD_VEC_ENUM_TYPE|g
+s|vector<enum_usage>|vector<usage_type>|
+s|no_usage|usage_type(no_usage)|
+s|yes_usage|usage_type(yes_usage)|
+s|csum_usage|usage_type(csum_usage)|
+s|enum_usage use_result|usage_type use_result|
 EOF
 # -----------------------------------------------------------------------------
 if [ $0 != "bin/batch_edit.sh" ]

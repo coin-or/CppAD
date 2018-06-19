@@ -22,9 +22,17 @@ $spell
 	std
 	addr
 	cppad
+	enums
 $$
 
 $section Changes and Additions to CppAD During 2018$$
+
+$head 06-19$$
+Another (smaller) reduction in the amount of extra memory used during the
+$cref optimize$$ process.
+This time a vector of length
+$cref/size_op/seq_property/size_op/$$ was converted from the type
+used for C++ enums to a type that only used one byte.
 
 $head 06-13$$
 Reduce the amount of extra memory used during the $cref optimize$$ process.
