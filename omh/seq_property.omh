@@ -220,6 +220,8 @@ Note that this is the minimal amount of memory that can hold
 the information corresponding to an operation sequence.
 The actual amount of memory allocated ($cref/inuse/ta_inuse/$$)
 for the operations sequence may be larger.
+Also note that $code CPPAD_VEC_ENUM_TYPE$$ is not part
+of the CppAD API and may change.
 
 $head size_random$$
 The result $icode s$$ has prototype

@@ -86,6 +86,7 @@ one byte.
 This changed $code CppAD::local::OpCode$$ to
 $code CPPAD_VEC_ENUM_TYPE$$ in the expression used to compute
 $cref/size_op_arg/seq_property/size_op_seq/$$.
+Note $code CPPAD_VEC_ENUM_TYPE$$ is not in CppAD API and may change.
 $lnext
 There was a bug in the call to $code optimize$$ for the CppAD
 $cref speed_cppad$$ tests.

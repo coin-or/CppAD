@@ -128,6 +128,8 @@ bool seq_property(void)
 	ok &= f.size_par()    == npar;
 	ok &= f.size_text()   == ntext;
 	ok &= f.size_VecAD()  == nvecad;
+	//
+	// Note that CPPAD_VEC_ENUM_TYPE is not part of CppAD API and may change
 	size_t sum = 0;
 	sum += nop    * sizeof(CPPAD_VEC_ENUM_TYPE);
 	sum += narg   * sizeof(CPPAD_TAPE_ADDR_TYPE);

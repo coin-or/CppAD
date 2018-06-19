@@ -30,7 +30,7 @@ template <class Addr>
 class const_random_iterator {
 private:
 	/// vector of operators on the tape
-	const pod_vector<CPPAD_VEC_ENUM_TYPE>* op_vec_;
+	const pod_vector<opcode_t>* op_vec_;
 
 	/// vector of arguments for all the operators
 	/// (note that this is same type as used in recorder; i.e., addr_t)
@@ -72,7 +72,7 @@ public:
 	function is not used.
 	*/
 	const_random_iterator(
-		const pod_vector<CPPAD_VEC_ENUM_TYPE>& op_vec     , ///< op_vec_
+		const pod_vector<opcode_t>&           op_vec     , ///< op_vec_
 		const pod_vector<addr_t>&             arg_vec    , ///< arg_vec_
 		const pod_vector<Addr>*               op2arg_vec , ///< op2ar_vec_
 		const pod_vector<Addr>*               op2var_vec , ///< op2var_vec_

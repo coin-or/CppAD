@@ -29,6 +29,9 @@ Defines the OpCode enum type and functions related to it.
 
 */
 
+/// type used to store OpCodes in vectors
+typedef CPPAD_VEC_ENUM_TYPE opcode_t;
+
 
 /*!
 Type used to distinguish different AD< \a Base > atomic operations.
@@ -252,9 +255,9 @@ inline size_t NumArg( OpCode op)
 			size_t(NumberOp) + 1 == sizeof(NumArgTable)/sizeof(NumArgTable[0])
 		);
 		//Check that the type CPPAD_VEC_ENUM_TYPE as required by define.hpp
-		CPPAD_ASSERT_UNKNOWN( is_pod<CPPAD_VEC_ENUM_TYPE>() );
+		CPPAD_ASSERT_UNKNOWN( is_pod<opcode_t>() );
 		CPPAD_ASSERT_UNKNOWN(
-			size_t(NumberOp) < std::numeric_limits<CPPAD_VEC_ENUM_TYPE>::max()
+			size_t(NumberOp) < std::numeric_limits<opcode_t>::max()
 		);
 	}
 	// do this check every time
