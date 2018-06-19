@@ -15,7 +15,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 // BEGIN_CPPAD_LOCAL_OPTIMIZE_NAMESPACE
 namespace CppAD { namespace local { namespace optimize {
 
-typedef CPPAD_VEC_ENUM_TYPE usage_type;
+typedef CPPAD_VEC_ENUM_TYPE usage_t;
 
 enum enum_usage {
 	/// This operator is not used.

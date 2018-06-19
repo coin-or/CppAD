@@ -140,7 +140,7 @@ void optimize_run(
 	sparse_list               skip_op_false;
 	vector<bool>              vecad_used;
 	vector<addr_t>            op_previous;
-	vector<usage_type>        op_usage;
+	vector<usage_t>           op_usage;
 	get_opt_op_info(
 		conditional_skip,
 		compare_op,
@@ -316,7 +316,7 @@ void optimize_run(
 			size_t( std::numeric_limits<addr_t>::max() ) >= rec->num_op_rec()
 		);
 		//
-		if( op_usage[i_op] != usage_type(yes_usage) )
+		if( op_usage[i_op] != usage_t(yes_usage) )
 		{	if( op == CExpOp )
 				++cexp_next;
 		}
@@ -389,9 +389,9 @@ void optimize_run(
 			// Binary operators, left variable, right parameter, one result
 			case SubvpOp:
 			// check if this is the top of a csum connection
-			if( op_usage[i_op] == usage_type(csum_usage) )
+			if( op_usage[i_op] == usage_t(csum_usage) )
 				break;
-			if( op_usage[ random_itr.var2op(arg[0]) ] == usage_type(csum_usage) )
+			if( op_usage[ random_itr.var2op(arg[0]) ] == usage_t(csum_usage) )
 			{
 				// convert to a sequence of summation operators
 				size_pair = record_csum(
@@ -455,9 +455,9 @@ void optimize_run(
 			case SubpvOp:
 			case AddpvOp:
 			// check if this is the top of a csum connection
-			if( op_usage[i_op] == usage_type(csum_usage) )
+			if( op_usage[i_op] == usage_t(csum_usage) )
 				break;
-			if( op_usage[ random_itr.var2op(arg[1]) ] == usage_type(csum_usage) )
+			if( op_usage[ random_itr.var2op(arg[1]) ] == usage_t(csum_usage) )
 			{
 				// convert to a sequence of summation operators
 				size_pair = record_csum(
@@ -500,12 +500,12 @@ void optimize_run(
 			case AddvvOp:
 			case SubvvOp:
 			// check if this is the top of a csum connection
-			if( op_usage[i_op] == usage_type(csum_usage) )
+			if( op_usage[i_op] == usage_t(csum_usage) )
 				break;
 			if(
-				op_usage[ random_itr.var2op(arg[0]) ] == usage_type(csum_usage)
+				op_usage[ random_itr.var2op(arg[0]) ] == usage_t(csum_usage)
 				||
-				op_usage[ random_itr.var2op(arg[1]) ] == usage_type(csum_usage)
+				op_usage[ random_itr.var2op(arg[1]) ] == usage_t(csum_usage)
 			)
 			{
 				// convert to a sequence of summation operators
@@ -892,7 +892,7 @@ void optimize_run(
 			sparse_list::const_iterator itr_true(skip_op_true, i);
 			while( *itr_true != skip_op_true.end() )
 			{	i_op = *itr_true;
-				// op_usage[i_op] == usage_type(yes_usage)
+				// op_usage[i_op] == usage_t(yes_usage)
 				CPPAD_ASSERT_UNKNOWN( new_op[i_op] != 0 );
 				rec->ReplaceArg(i_arg++, new_op[i_op] );
 				//
@@ -901,7 +901,7 @@ void optimize_run(
 			sparse_list::const_iterator itr_false(skip_op_false, i);
 			while( *itr_false != skip_op_false.end() )
 			{	i_op   = *itr_false;
-				// op_usage[i_op] == usage_type(yes_usage)
+				// op_usage[i_op] == usage_t(yes_usage)
 				CPPAD_ASSERT_UNKNOWN( new_op[i_op] != 0 );
 				rec->ReplaceArg(i_arg++, new_op[i_op] );
 				//

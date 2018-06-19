@@ -33,11 +33,10 @@ move_list='
 move_sed='s|/core/|/local/|'
 #
 cat << EOF > junk.sed
-s|vector<enum_usage>|vector<usage_type>|
-s|no_usage|usage_type(no_usage)|
-s|yes_usage|usage_type(yes_usage)|
-s|csum_usage|usage_type(csum_usage)|
-s|enum_usage use_result|usage_type use_result|
+s|usage_type  |usage_t     |
+s|<usage_type>  |<usage_t>     |
+s|<usage_type>&  |<usage_t>\\&     |
+s|usage_type|usage_t|
 EOF
 # -----------------------------------------------------------------------------
 if [ $0 != "bin/batch_edit.sh" ]
