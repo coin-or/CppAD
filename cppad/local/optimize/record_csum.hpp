@@ -66,7 +66,7 @@ struct_size_pair record_csum(
 	const player<Base>*                                play           ,
 	const play::const_random_iterator<Addr>&           random_itr     ,
 	const pod_vector<usage_t>&                         op_usage       ,
-	const CppAD::vector<addr_t>&                       new_var        ,
+	const pod_vector<addr_t>&                          new_var        ,
 	size_t                                             current        ,
 	recorder<Base>*                                    rec            ,
 	// local information passed so stacks need not be allocated for every call

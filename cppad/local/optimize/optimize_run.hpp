@@ -242,7 +242,7 @@ void optimize_run(
 	//
 	// Mapping from old operator index to new variable index,
 	// zero is invalid except for new_var[0].
-	vector<addr_t> new_var(num_op);
+	pod_vector<addr_t> new_var(num_op);
 	for(size_t i = 0; i < num_op; i++)
 		new_var[i] = 0;
 	//

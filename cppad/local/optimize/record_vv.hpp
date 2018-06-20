@@ -43,7 +43,7 @@ template <class Addr, class Base>
 struct_size_pair record_vv(
 	const player<Base>*                                play           ,
 	const play::const_random_iterator<Addr>&           random_itr     ,
-	const CppAD::vector<addr_t>&                       new_var        ,
+	const pod_vector<addr_t>&                          new_var        ,
 	size_t                                             i_op           ,
 	recorder<Base>*                                    rec            )
 {
