@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Changes and Additions to CppAD During 2018</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Changes and Additions to CppAD During 2018">
-<meta name="keywords" id="keywords" content=" changes additions to cppad during 2018 06-13 06-12 06-04 05-29 05-28 05-26 05-20 05-17 05-04 05-03 04-29 04-13 03-20 03-19 03-04 03-02 02-27 02-26 02-23 02-20 ">
+<meta name="keywords" id="keywords" content=" changes additions to cppad during 2018 06-20 06-19 06-13 06-12 06-04 05-29 05-28 05-26 05-20 05-17 05-04 05-03 04-29 04-13 03-20 03-19 03-04 03-02 02-27 02-26 02-23 02-20 ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -110,6 +110,8 @@ A:active { color : purple }
 <td>
 <select onchange='choose_current0(this)'>
 <option>Headings-&gt;</option>
+<option>06-20</option>
+<option>06-19</option>
 <option>06-13</option>
 <option>06-12</option>
 <option>06-04</option>
@@ -143,6 +145,28 @@ A:active { color : purple }
 
 
 <center><b><big><big>Changes and Additions to CppAD During 2018</big></big></b></center>
+<br>
+<b><big><a name="06-20" id="06-20">06-20</a></big></b>
+<br>
+Worked more on reducing memory and increasing the speed of the
+<a href="optimize.htm" target="_top"><span style='white-space: nowrap'>optimization</span></a>
+ of 
+<code><font color="blue"><span style='white-space: nowrap'>ADFun&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code>
+ objects.
+
+<br>
+<br>
+<b><big><a name="06-19" id="06-19">06-19</a></big></b>
+<br>
+Another (smaller) reduction in the amount of extra memory used during the
+<a href="optimize.htm" target="_top"><span style='white-space: nowrap'>optimize</span></a>
+ process.
+This time a vector of length
+<a href="seq_property.htm#size_op" target="_top"><span style='white-space: nowrap'>size_op</span></a>
+ was converted from the type
+used for C++ enums to a type that only used one byte.
+
+<br>
 <br>
 <b><big><a name="06-13" id="06-13">06-13</a></big></b>
 <br>
@@ -226,9 +250,10 @@ The amount of memory used to store each operator was changed from
 the size of an enum type to the size of an <code><font color="blue">unsigned char</font></code>; i.e.,
 one byte.
 This changed <code><font color="blue">CppAD::local::OpCode</font></code> to
-<code><font color="blue">CPPAD_OP_CODE_TYPE</font></code> in the expression used to compute
+<code><font color="blue">CPPAD_VEC_ENUM_TYPE</font></code> in the expression used to compute
 <a href="seq_property.htm#size_op_seq" target="_top"><span style='white-space: nowrap'>size_op_arg</span></a>
 .
+Note <code><font color="blue">CPPAD_VEC_ENUM_TYPE</font></code> is not in CppAD API and may change.
 </li><li>
 
 There was a bug in the call to <code><font color="blue">optimize</font></code> for the CppAD

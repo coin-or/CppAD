@@ -458,7 +458,7 @@ For the current version of CppAD, this is given by
 
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>s</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.size_op()&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;sizeof(CPPAD_OP_CODE_TYPE)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>s</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.size_op()&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;sizeof(CPPAD_VEC_ENUM_TYPE)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.size_op_arg()&nbsp;*&nbsp;sizeof(</span></font><i><font color="black"><span style='white-space: nowrap'>tape_addr_type</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.size_par()&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;sizeof(</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.size_text()&nbsp;&nbsp;&nbsp;*&nbsp;sizeof(char)<br>
@@ -472,6 +472,8 @@ the information corresponding to an operation sequence.
 The actual amount of memory allocated (<a href="ta_inuse.htm" target="_top"><span style='white-space: nowrap'>inuse</span></a>
 )
 for the operations sequence may be larger.
+Also note that <code><font color="blue">CPPAD_VEC_ENUM_TYPE</font></code> is not part
+of the CppAD API and may change.
 
 <br>
 <br>

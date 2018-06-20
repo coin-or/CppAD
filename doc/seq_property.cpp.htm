@@ -193,8 +193,10 @@ A:active { color : purple }
      ok <font color="#990000">&amp;=</font> f<font color="#990000">.</font><b><font color="#000000">size_par</font></b><font color="#990000">()</font>    <font color="#990000">==</font> npar<font color="#990000">;</font>
      ok <font color="#990000">&amp;=</font> f<font color="#990000">.</font><b><font color="#000000">size_text</font></b><font color="#990000">()</font>   <font color="#990000">==</font> ntext<font color="#990000">;</font>
      ok <font color="#990000">&amp;=</font> f<font color="#990000">.</font><b><font color="#000000">size_VecAD</font></b><font color="#990000">()</font>  <font color="#990000">==</font> nvecad<font color="#990000">;</font>
+     <i><font color="#9A1900">//</font></i>
+     <i><font color="#9A1900">// Note that CPPAD_VEC_ENUM_TYPE is not part of CppAD API and may change</font></i>
      <font color="#008080">size_t</font> sum <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
-     sum <font color="#990000">+=</font> nop    <font color="#990000">*</font> <b><font color="#0000FF">sizeof</font></b><font color="#990000">(</font>CPPAD_OP_CODE_TYPE<font color="#990000">);</font>
+     sum <font color="#990000">+=</font> nop    <font color="#990000">*</font> <b><font color="#0000FF">sizeof</font></b><font color="#990000">(</font>CPPAD_VEC_ENUM_TYPE<font color="#990000">);</font>
      sum <font color="#990000">+=</font> narg   <font color="#990000">*</font> <b><font color="#0000FF">sizeof</font></b><font color="#990000">(</font>CPPAD_TAPE_ADDR_TYPE<font color="#990000">);</font>
      sum <font color="#990000">+=</font> npar   <font color="#990000">*</font> <b><font color="#0000FF">sizeof</font></b><font color="#990000">(</font><font color="#009900">double</font><font color="#990000">);</font>
      sum <font color="#990000">+=</font> ntext  <font color="#990000">*</font> <b><font color="#0000FF">sizeof</font></b><font color="#990000">(</font><font color="#009900">char</font><font color="#990000">);</font>
