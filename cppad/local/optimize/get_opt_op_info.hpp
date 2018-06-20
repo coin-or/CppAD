@@ -94,28 +94,32 @@ inline void increase_arg_usage(
 	size_t                      i_arg          ,
 	pod_vector<usage_t>&        op_usage       ,
 	sparse_list&                cexp_set       )
-{
+{	// value of argument input on input to this routine
+	enum_usage arg_usage = enum_usage( op_usage[i_arg] );
+	//
+	// new value for usage
+	op_usage[i_arg] = usage_t(yes_usage);
+	if( sum_result )
+	{	if( arg_usage == no_usage )
+		{	OpCode op_a = play->GetOp(i_arg);
+			if( add_or_subtract( op_a ) )
+			{	op_usage[i_arg] = usage_t(csum_usage);
+			}
+		}
+	}
+	//
 	// cexp_set
-	if( cexp_set.n_set() > 0 )
-	{	if( op_usage[i_arg] == usage_t(no_usage) )
-		{	// set[i_arg] = set[i_result]
-			cexp_set.assignment(i_arg, i_result, cexp_set);
-		}
-		else
-		{	// set[i_arg] = set[i_arg] intersect set[i_result]
-			cexp_set.binary_intersection(i_arg, i_arg, i_result, cexp_set);
-		}
+	if( cexp_set.n_set() == 0 )
+		return;
+	//
+	if( arg_usage == no_usage )
+	{	// set[i_arg] = set[i_result]
+		cexp_set.assignment(i_arg, i_result, cexp_set);
 	}
-	// usage
-	bool csum = sum_result && op_usage[i_arg] == usage_t(no_usage);
-	if( csum )
-	{	OpCode op_a = play->GetOp(i_arg);
-		csum = add_or_subtract( op_a );
-	}
-	if( csum )
-		op_usage[i_arg] = usage_t(csum_usage);
 	else
-		op_usage[i_arg] = usage_t(yes_usage);
+	{	// set[i_arg] = set[i_arg] intersect set[i_result]
+		cexp_set.binary_intersection(i_arg, i_arg, i_result, cexp_set);
+	}
 	//
 	return;
 }
