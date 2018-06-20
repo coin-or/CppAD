@@ -138,9 +138,9 @@ void optimize_run(
 	vector<struct_cexp_info>  cexp_info;
 	sparse_list               skip_op_true;
 	sparse_list               skip_op_false;
-	vector<bool>              vecad_used;
-	vector<addr_t>            op_previous;
-	vector<usage_t>           op_usage;
+	pod_vector<bool>          vecad_used;
+	pod_vector<addr_t>        op_previous;
+	pod_vector<usage_t>       op_usage;
 	get_opt_op_info(
 		conditional_skip,
 		compare_op,
@@ -249,7 +249,7 @@ void optimize_run(
 	// Mapping from old operator index to new operator index will share
 	// memory with op_previous. Must get op_previous[i_op] for this operator
 	// before over writting it with new_op[i_op].
-	vector<addr_t>& new_op( op_previous );
+	pod_vector<addr_t>& new_op( op_previous );
 	CPPAD_ASSERT_UNKNOWN( new_op.size() == num_op );
 	//
 	user_state = start_user;

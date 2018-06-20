@@ -65,7 +65,7 @@ template <class Addr, class Base>
 struct_size_pair record_csum(
 	const player<Base>*                                play           ,
 	const play::const_random_iterator<Addr>&           random_itr     ,
-	const vector<usage_t>&                             op_usage       ,
+	const pod_vector<usage_t>&                         op_usage       ,
 	const CppAD::vector<addr_t>&                       new_var        ,
 	size_t                                             current        ,
 	recorder<Base>*                                    rec            ,

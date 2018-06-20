@@ -92,7 +92,7 @@ inline void increase_arg_usage(
 	bool                        sum_result     ,
 	size_t                      i_result       ,
 	size_t                      i_arg          ,
-	vector<usage_t>&            op_usage       ,
+	pod_vector<usage_t>&        op_usage       ,
 	sparse_list&                cexp_set       )
 {
 	// cexp_set
@@ -217,9 +217,9 @@ void get_opt_op_info(
 	vector<struct_cexp_info>&                   cexp_info           ,
 	sparse_list&                                skip_op_true        ,
 	sparse_list&                                skip_op_false       ,
-	vector<bool>&                               vecad_used          ,
-	vector<addr_t>&                             op_previous         ,
-	vector<usage_t>&                            op_usage            )
+	pod_vector<bool>&                           vecad_used          ,
+	pod_vector<addr_t>&                         op_previous         ,
+	pod_vector<usage_t>&                        op_usage            )
 {
 	CPPAD_ASSERT_UNKNOWN( cexp_info.size() == 0 );
 	CPPAD_ASSERT_UNKNOWN( vecad_used.size() == 0 );

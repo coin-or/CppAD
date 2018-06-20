@@ -68,7 +68,7 @@ and a match for the current operator is not found.
 template <class Addr>
 void match_op(
 	const play::const_random_iterator<Addr>&    random_itr     ,
-	vector<addr_t>&                             op_previous    ,
+	pod_vector<addr_t>&                         op_previous    ,
 	size_t                                      current        ,
 	sparse_list&                                hash_table_op  )
 {	//
