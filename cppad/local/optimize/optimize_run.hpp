@@ -86,7 +86,7 @@ template <class Addr, class Base>
 void optimize_run(
 	const std::string&                         options    ,
 	size_t                                     n          ,
-	CppAD::vector<size_t>&                     dep_taddr  ,
+	vector<size_t>&                            dep_taddr  ,
 	player<Base>*                              play       ,
 	recorder<Base>*                            rec        )
 {	CPPAD_ASSERT_UNKNOWN( rec->num_op_rec() == 0 );
@@ -135,7 +135,7 @@ void optimize_run(
 	size_t num_vecad_vec   = play->num_vecad_vec_rec();
 
 	// operator information
-	vector<struct_cexp_info>  cexp_info;
+	vector<struct_cexp_info>  cexp_info; // struct_cexp_info not POD
 	sparse_list               skip_op_true;
 	sparse_list               skip_op_false;
 	pod_vector<bool>          vecad_used;
@@ -180,7 +180,7 @@ void optimize_run(
 	// this is the conditional skip order
 	vector<size_t> cskip_order(num_cexp);
 	if( num_cexp > 0 )
-	{	CppAD::vector<size_t> keys(num_cexp);
+	{	vector<size_t> keys(num_cexp);
 		for(size_t i = 0; i < num_cexp; i++)
 			keys[i] = cexp_info[i].max_left_right;
 		CppAD::index_sort(keys, cskip_order);
@@ -193,7 +193,7 @@ void optimize_run(
 
 	// mapping from conditional expression index to conditional skip
 	// information on new tape
-	vector<struct_cskip_new> cskip_new(num_cexp);
+	pod_vector<struct_cskip_new> cskip_new(num_cexp);
 	//
 	// flag used to indicate that there is no conditional skip
 	// for this conditional expression
@@ -205,7 +205,7 @@ void optimize_run(
 	CPPAD_ASSERT_UNKNOWN(
 		size_t( std::numeric_limits<addr_t>::max() ) >= num_vecad_ind
 	);
-	CppAD::vector<addr_t> new_vecad_ind(num_vecad_ind);
+	pod_vector<addr_t> new_vecad_ind(num_vecad_ind);
 	for(size_t i = 0; i < num_vecad_ind; i++)
 		new_vecad_ind[i] = addr_t( num_vecad_ind ); // invalid index
 	{
