@@ -235,30 +235,17 @@ void get_opt_op_info(
 	CPPAD_ASSERT_UNKNOWN(
 		size_t( std::numeric_limits<addr_t>::max() ) >= num_op
 	);
-	//
-	// information about atomic function calls
-	size_t user_old=0, user_m=0, user_n=0, user_i=0, user_j=0;
-	enum_user_state user_state;
-	//
+	// -----------------------------------------------------------------------
 	// information about current operator
 	OpCode        op;     // operator
 	const addr_t* arg;    // arguments
 	size_t        i_op;   // operator index
 	size_t        i_var;  // variable index of first result
+	// -----------------------------------------------------------------------
+	// information about atomic function calls
+	size_t user_old=0, user_m=0, user_n=0, user_i=0, user_j=0;
+	enum_user_state user_state;
 	//
-	// count number of Conditional expression operators
-	size_t num_cexp_op = 0;
-	for(i_op = 0; i_op < num_op; ++i_op)
-	{	if( random_itr.get_op(i_op) == CExpOp )
-		{	// count the number of conditional expressions.
-			++num_cexp_op;
-		}
-	}
-	// vector that maps conditional expression index to operator index
-	vector<size_t> cexp2op( num_cexp_op );
-	// ----------------------------------------------------------------------
-	// Reverse pass to compute usage and cexp_set for each operator
-	// ----------------------------------------------------------------------
 	// work space used by user defined atomic functions
 	typedef std::set<size_t> size_set;
 	vector<Base>     user_x;       // parameters in x as integers
@@ -274,6 +261,12 @@ void get_opt_op_info(
 	bool               user_pack = false;      // sparsity pattern type is pack
 	bool               user_bool = false;      // sparsity pattern type is bool
 	bool               user_set  = false;      // sparsity pattern type is set
+	//
+	// parameter information (used by atomic function calls)
+	size_t num_par = play->num_par_rec();
+	const Base* parameter = CPPAD_NULL;
+	if( num_par > 0 )
+		parameter = play->GetPar();
 	// -----------------------------------------------------------------------
 	// vecad information
 	size_t num_vecad      = play->num_vecad_vec_rec();
@@ -300,12 +293,28 @@ void get_opt_op_info(
 	}
 	CPPAD_ASSERT_UNKNOWN( arg_0 == num_vecad_ind + 1 );
 	// -----------------------------------------------------------------------
-	// parameter information (used by atomic function calls)
-	size_t num_par = play->num_par_rec();
-	const Base* parameter = CPPAD_NULL;
-	if( num_par > 0 )
-		parameter = play->GetPar();
+	// initilaize operator usage for reverse dependency analysis
+	// and count the number of conditional expressions.
+	// and initialize op_usage to no_usage.
+	size_t num_cexp_op = 0;
+	for(i_op = 0; i_op < num_op; ++i_op)
+	{	op_usage[i_op] = usage_t(no_usage);
+		//
+		if( random_itr.get_op(i_op) == CExpOp )
+		{	// count the number of conditional expressions.
+			++num_cexp_op;
+		}
+	}
+	for(size_t i = 0; i < dep_taddr.size(); i++)
+	{	i_op           = random_itr.var2op(dep_taddr[i]);
+		op_usage[i_op] = usage_t(yes_usage);    // dependent variables
+	}
 	// -----------------------------------------------------------------------
+	// conditional expression information
+	//
+	// vector that maps conditional expression index to operator index
+	vector<size_t> cexp2op( num_cexp_op );
+	//
 	// Set of conditional expressions comparisons that usage of each
 	/// operator depends on. The operator can be skipped if any of the
 	// comparisons results in the set holds. A set for operator i_op is
@@ -324,15 +333,10 @@ void get_opt_op_info(
 	//
 	if( num_set > 0 )
 		cexp_set.resize(num_set, end_set);
-	// -----------------------------------------------------------------------
 	//
-	// initialize operator usage
-	for(size_t i = 0; i < num_op; i++)
-		op_usage[i] = usage_t(no_usage);
-	for(size_t i = 0; i < dep_taddr.size(); i++)
-	{	i_op                = random_itr.var2op(dep_taddr[i]);
-		op_usage[i_op] = usage_t(yes_usage);    // dependent variables
-	}
+	// ----------------------------------------------------------------------
+	// Reverse pass to compute usage and cexp_set for each operator
+	// ----------------------------------------------------------------------
 	//
 	// Initialize reverse pass
 	size_t last_user_i_op = 0;
