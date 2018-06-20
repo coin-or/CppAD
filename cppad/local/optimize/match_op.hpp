@@ -64,14 +64,19 @@ then the operation op_previous[i_op] has hash code j,
 and op_previous[i_op] does not match any other element of set[j].
 An entry to set[j] is added each time match_op is called
 and a match for the current operator is not found.
+
+\param work
+work space that is used by match_op to reduce re-allocation of memory
 */
 template <class Addr>
 void match_op(
 	const play::const_random_iterator<Addr>&    random_itr     ,
 	pod_vector<addr_t>&                         op_previous    ,
 	size_t                                      current        ,
-	sparse_list&                                hash_table_op  )
+	sparse_list&                                hash_table_op  ,
+	pod_vector<bool>&                           work           )
 {	//
+	// num_op
 	size_t num_op = random_itr.num_op();
 	//
 	CPPAD_ASSERT_UNKNOWN( num_op == op_previous.size() );
@@ -82,17 +87,20 @@ void match_op(
 	CPPAD_ASSERT_UNKNOWN( hash_table_op.end() == num_op );
 	CPPAD_ASSERT_UNKNOWN( current < num_op );
 	//
-	// current operator
+	// op, arg, i_var
 	OpCode        op;
 	const addr_t* arg;
 	size_t        i_var;
 	random_itr.op_info(current, op, arg, i_var);
 	//
+	// num_arg
 	size_t num_arg = NumArg(op);
 	CPPAD_ASSERT_UNKNOWN( 0 < num_arg );
 	CPPAD_ASSERT_UNKNOWN( num_arg <= 3 );
 	//
-	pod_vector<bool>  variable;
+	// variable is a reference to, and better name for, work
+	pod_vector<bool>&  variable(work);
+	//
 	arg_is_variable(op, arg, variable);
 	CPPAD_ASSERT_UNKNOWN( variable.size() == num_arg );
 	//
@@ -149,9 +157,7 @@ void match_op(
 						op_previous[ random_itr.var2op(arg_c[j]) ];
 					if( previous != 0 )
 					{	// must be end of the line for a previous match
-						CPPAD_ASSERT_UNKNOWN(
-							op_previous[previous] == 0
-						);
+						CPPAD_ASSERT_UNKNOWN( op_previous[previous] == 0 );
 						//
 						OpCode        op_p;
 						const addr_t* arg_p;
@@ -199,9 +205,7 @@ void match_op(
 					size_t previous =
 						op_previous[ random_itr.var2op(arg_c[j]) ];
 					if( previous != 0 )
-					{	CPPAD_ASSERT_UNKNOWN(
-							op_previous[previous] == 0
-						);
+					{	CPPAD_ASSERT_UNKNOWN( op_previous[previous] == 0 );
 						//
 						OpCode        op_p;
 						const addr_t* arg_p;

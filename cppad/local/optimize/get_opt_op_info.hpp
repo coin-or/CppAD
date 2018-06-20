@@ -893,6 +893,7 @@ void get_opt_op_info(
 	sparse_list  hash_table_op;
 	hash_table_op.resize(CPPAD_HASH_TABLE_SIZE, num_op);
 	//
+	pod_vector<bool> match_work;
 	user_state = start_user;
 	for(i_op = 0; i_op < num_op; ++i_op)
 	{	op_previous[i_op] = 0;
@@ -974,7 +975,7 @@ void get_opt_op_info(
 			case ZmulvpOp:
 			case ZmulvvOp:
 			// check for a previous match
-			match_op(random_itr, op_previous, i_op, hash_table_op );
+			match_op(random_itr, op_previous, i_op, hash_table_op, match_work);
 			if( op_previous[i_op] != 0 )
 			{	// like a unary operator that assigns i_op equal to previous.
 				size_t previous = op_previous[i_op];
