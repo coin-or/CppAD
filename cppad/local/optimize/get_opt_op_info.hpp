@@ -293,27 +293,20 @@ void get_opt_op_info(
 	}
 	CPPAD_ASSERT_UNKNOWN( arg_0 == num_vecad_ind + 1 );
 	// -----------------------------------------------------------------------
-	// initilaize operator usage for reverse dependency analysis
-	// and count the number of conditional expressions.
-	// and initialize op_usage to no_usage.
-	size_t num_cexp_op = 0;
-	for(i_op = 0; i_op < num_op; ++i_op)
-	{	op_usage[i_op] = usage_t(no_usage);
-		//
-		if( random_itr.get_op(i_op) == CExpOp )
-		{	// count the number of conditional expressions.
-			++num_cexp_op;
-		}
-	}
-	for(size_t i = 0; i < dep_taddr.size(); i++)
-	{	i_op           = random_itr.var2op(dep_taddr[i]);
-		op_usage[i_op] = usage_t(yes_usage);    // dependent variables
-	}
-	// -----------------------------------------------------------------------
 	// conditional expression information
 	//
+	size_t num_cexp_op = 0;
+	if( conditional_skip )
+	{	for(i_op = 0; i_op < num_op; ++i_op)
+		{	if( random_itr.get_op(i_op) == CExpOp )
+			{	// count the number of conditional expressions.
+				++num_cexp_op;
+			}
+		}
+	}
+	//
 	// vector that maps conditional expression index to operator index
-	vector<size_t> cexp2op( num_cexp_op );
+	pod_vector<addr_t> cexp2op( num_cexp_op );
 	//
 	// Set of conditional expressions comparisons that usage of each
 	/// operator depends on. The operator can be skipped if any of the
@@ -333,7 +326,14 @@ void get_opt_op_info(
 	//
 	if( num_set > 0 )
 		cexp_set.resize(num_set, end_set);
-	//
+	// -----------------------------------------------------------------------
+	// initilaize operator usage for reverse dependency analysis.
+	for(i_op = 0; i_op < num_op; ++i_op)
+		op_usage[i_op] = usage_t(no_usage);
+	for(size_t i = 0; i < dep_taddr.size(); i++)
+	{	i_op           = random_itr.var2op(dep_taddr[i]);
+		op_usage[i_op] = usage_t(yes_usage);    // dependent variables
+	}
 	// ----------------------------------------------------------------------
 	// Reverse pass to compute usage and cexp_set for each operator
 	// ----------------------------------------------------------------------
@@ -438,9 +438,11 @@ void get_opt_op_info(
 			// Conditional expression operators
 			// arg[2], arg[3], arg[4], arg[5] are parameters or variables
 			case CExpOp:
-			--cexp_index;
-			cexp2op[ cexp_index ] = i_op;
 			CPPAD_ASSERT_UNKNOWN( NumRes(op) > 0 );
+			if( conditional_skip )
+			{	--cexp_index;
+				cexp2op[ cexp_index ] = addr_t(i_op);
+			}
 			if( use_result != usage_t(no_usage) )
 			{	CPPAD_ASSERT_UNKNOWN( NumArg(CExpOp) == 6 );
 				// propgate from result to left argument
