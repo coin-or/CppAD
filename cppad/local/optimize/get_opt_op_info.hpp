@@ -236,31 +236,20 @@ void get_opt_op_info(
 		size_t( std::numeric_limits<addr_t>::max() ) >= num_op
 	);
 	//
-	// information set by forward_user
+	// information about atomic function calls
 	size_t user_old=0, user_m=0, user_n=0, user_i=0, user_j=0;
 	enum_user_state user_state;
 	//
-	// ----------------------------------------------------------------------
-	// Forward pass to determine num_cexp_op
-	// ----------------------------------------------------------------------
+	// information about current operator
 	OpCode        op;     // operator
 	const addr_t* arg;    // arguments
 	size_t        i_op;   // operator index
 	size_t        i_var;  // variable index of first result
-	i_op = 0;
-	random_itr.op_info(i_op, op, arg, i_var);
-	CPPAD_ASSERT_UNKNOWN( op              == BeginOp );
-	CPPAD_ASSERT_UNKNOWN( NumRes(BeginOp) == 1 );
-	CPPAD_ASSERT_UNKNOWN( i_op            == 0 );
-	CPPAD_ASSERT_UNKNOWN( i_var           == 0 );
 	//
+	// count number of Conditional expression operators
 	size_t num_cexp_op = 0;
-	user_state = start_user;
-	while(op != EndOp)
-	{	// next operator
-		random_itr.op_info(++i_op, op, arg, i_var);
-		//
-		if( op == CExpOp )
+	for(i_op = 0; i_op < num_op; ++i_op)
+	{	if( random_itr.get_op(i_op) == CExpOp )
 		{	// count the number of conditional expressions.
 			++num_cexp_op;
 		}
