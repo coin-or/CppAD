@@ -65,7 +65,7 @@ public:
 		return;
 	}
 	/*!
-	Create a random iterator starting either at beginning or end of subgraph
+	Create a random iterator
 
 	\par var2op_vec
 	This variable is not needed and can be null if the var2op member
