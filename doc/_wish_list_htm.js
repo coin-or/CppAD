@@ -38,6 +38,7 @@ var list_down1 = [
 'license.htm'
 ];
 var list_current0 = [
+'wish_list.htm#Abs-normal',
 'wish_list.htm#Windows Install',
 'wish_list.htm#Dynamic Parameters',
 'wish_list.htm#Multi-Threading',

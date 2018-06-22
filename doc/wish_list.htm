@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>The CppAD Wish List</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="The CppAD Wish List">
-<meta name="keywords" id="keywords" content=" the cppad wish list windows install dynamic parameters multi-threading atomic subgraph new api sparsity element-wise operations check_finite test_boolofvoid eigen example optimization taping special operators memory checkpoint retape testing compilation speed base requirements adolc forward mode recomputation iterator interface operation sequence software guidelines tracing atan2 benderquad ">
+<meta name="keywords" id="keywords" content=" the cppad wish list abs-normal windows install dynamic parameters multi-threading atomic subgraph new api sparsity element-wise operations check_finite test_boolofvoid eigen example optimization taping special operators memory checkpoint retape testing compilation speed base requirements adolc forward mode recomputation iterator interface operation sequence software guidelines tracing atan2 benderquad ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -88,6 +88,7 @@ A:active { color : purple }
 <td>
 <select onchange='choose_current0(this)'>
 <option>Headings-&gt;</option>
+<option>Abs-normal</option>
 <option>Windows Install</option>
 <option>Dynamic Parameters</option>
 <option>Multi-Threading</option>
@@ -130,6 +131,37 @@ A:active { color : purple }
 
 
 <center><b><big><big>The CppAD Wish List</big></big></b></center>
+<br>
+<b><big><a name="Abs-normal" id="Abs-normal">Abs-normal</a></big></b>
+<br>
+Change the <a href="abs_normal_fun.htm" target="_top"><span style='white-space: nowrap'>abs_normal_fun</span></a>
+ to return the functions
+<a href="abs_normal_fun.htm#g.z(x, u)" target="_top"><span style='white-space: nowrap'>z(x,&nbsp;u)</span></a>
+ and
+<a href="abs_normal_fun.htm#g.y(x, u)" target="_top"><span style='white-space: nowrap'>y(x,&nbsp;u)</span></a>
+ instead of
+<small>@(@
+g(x, u)
+@)@</small> and <small>@(@
+a(x)
+@)@</small>.
+We can add a utility that computes <small>@(@
+a(x)
+@)@</small> using
+<small>@(@
+z(x, u)
+@)@</small>, <small>@(@
+a_i (x) = | z_i (x, a(x) ) |
+@)@</small>
+and <small>@(@
+z_i
+@)@</small> does not depends on <small>@(@
+u_j
+@)@</small> for <small>@(@
+j \geq i
+@)@</small>.
+
+<br>
 <br>
 <b><big><a name="Windows Install" id="Windows Install">Windows Install</a></big></b>
 <br>
