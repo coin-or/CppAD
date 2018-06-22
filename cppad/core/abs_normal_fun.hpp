@@ -202,7 +202,7 @@ f(x)
 y ( x , a(x ) )
 =
 y [ \hat{x} ] ( x , a[ \hat{x} ] ( x ) )
-+ o( \Delta x )
++ o( x - \hat{x} )
 \] $$
 
 $head Correspondence to Literature$$

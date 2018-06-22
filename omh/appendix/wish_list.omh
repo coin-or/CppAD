@@ -50,6 +50,15 @@ $$
 
 $section The CppAD Wish List$$
 
+$head Abs-normal$$
+Change the $cref abs_normal_fun$$ to return the functions
+$cref/z(x, u)/abs_normal_fun/g/z(x, u)/$$ and
+$cref/y(x, u)/abs_normal_fun/g/y(x, u)/$$ instead of
+$latex g(x, u)$$ and $latex a(x)$$.
+We can add a utility that computes $latex a(x)$$ using
+$latex z(x, u)$$, $latex a_i (x) = | z_i (x, a(x) ) |$$
+and $latex z_i$$ does not depends on $latex u_j$$ for $latex j \geq i$$.
+
 $head Windows Install$$
 The windows install procedures below have not been kept up to date.
 I would be good if someone took on the job of supporting an windows install.

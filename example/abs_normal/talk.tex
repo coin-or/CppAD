@@ -89,6 +89,49 @@ g(x, u) = \left[ \begin{array}{c} y(x, u) \\ z(x, y) \end{array} \right]
 \]
 \end{block}
 
+\end{frame}
+% ----------------------------------------------------------------------------
+\begin{frame}{Approximating $a(x)$}
+
+\[
+z[ \hat{x} ]( x , u )
+=
+z ( \hat{x}, a( \hat{x} ) )
+	+ \partial_x z ( \hat{x}, a( \hat{x} ) ) ( x - \hat{x} )
+	+ \partial_u z ( \hat{x}, a( \hat{x} ) ) ( u - a( \hat{x} ) )
+\]
+\pause
+
+Note that $z_0 ( x , u )$ does not depend on $u$:
+\[
+a_0 [ \hat{x} ]( x )
+=
+\left|
+	z_0 ( \hat{x}, a( \hat{x} ) )
+	+ \partial_x z_0 ( \hat{x}, a( \hat{x} ) ) ( x - \hat{x} )
+\right|
+\]
+\pause
+
+\begin{eqnarray*}
+a_i [ \hat{x} ]( x )
+& = &
+\left | \vphantom{ \sum_{j < i} } z_i ( \hat{x}, a( \hat{x} ) )
+	+ \partial_x z_i ( \hat{x}, a( \hat{x} ) ) ( x - \hat{x} )
+\right.
+\\
+& + &
+\left. \sum_{j < i} \partial_{u(j)} z_i ( \hat{x}, a( \hat{x} ) )
+			( a_j [ \hat{x} ] ( x )  - a_j ( \hat{x} ) )
+\right|
+\end{eqnarray*}
+\pause
+
+\[
+a(x) = a[ \hat{x} ]( x ) + o( x - \hat{x} )
+\phantom{\rule{1in}{1pt}}
+\]
+
 
 \end{frame}
 % ----------------------------------------------------------------------------
@@ -101,23 +144,52 @@ for $g(x, u)$ and $a(x)$ respectively.
 \end{block}
 \pause
 
-\begin{block}{ \texttt{abs\_eval(n, m, s, g\_hat , g\_jac , delta\_x)} }
-Evaluates the first order abs-normal approximation for
-$f( \hat{x} + \Delta x )$ where
-\texttt{g\_hat} is $g[ \hat{x} , a( \hat{x} ) ]$
-(also $f( \hat{x} ) )$,
-\texttt{g\_jac} is $g^{(1)} [ \hat{x} , a( \hat{x} ) ]$, and
-\texttt{delta\_x} is $\Delta x$.
-\end{block}
-\pause
-
 \begin{block}{Advantages}
-Any AD operation can be computed for the function \texttt{g}; e.g.,
+Any AD operation can be computed for the smooth function \texttt{g}; e.g.,
 any order forward and reverse mode, sparsity patterns, and sparse derivatives.
 \end{block}
 
 \end{frame}
 % ----------------------------------------------------------------------------
+\begin{frame}{Approximating $f(x)$}
 
+\[
+y[ \hat{x} ]( x , u )
+=
+y ( \hat{x}, a( \hat{x} ) )
+	+ \partial_x y ( \hat{x}, a( \hat{x} ) ) ( x - \hat{x} )
+	+ \partial_u y ( \hat{x}, a( \hat{x} ) ) ( u - a( \hat{x} ) )
+\]
+\pause
+
+
+\[
+f(x) = y[ \hat{x} ] ( x , a[ \hat{x} ] (x) ) + o ( x - \hat{x} )
+\phantom{\rule{1.3in}{1pt}}
+\]
+
+\begin{block}{ \texttt{abs\_eval(n, m, s, g\_hat , g\_jac , delta\_x)} }
+Evaluates $y[ \hat{x} ] ( x , a[ \hat{x} ] (x) )$
+\end{block}
+\pause
+
+\begin{itemize}
+
+\item
+\texttt{g\_hat} is $g[ \hat{x} , a( \hat{x} ) ]$
+\pause
+
+\item
+\texttt{g\_jac} is $g^{(1)} [ \hat{x} , a( \hat{x} ) ]$
+\pause
+
+\item
+\texttt{delta\_x} is $x - \hat{x}$
+
+\end{itemize}
+
+
+\end{frame}
+% ----------------------------------------------------------------------------
 
 \end{document}

@@ -27,6 +27,9 @@ $$
 
 $section Changes and Additions to CppAD During 2018$$
 
+$head 06-22$$
+Add an $cref/abs-normal/wish_list/Abs-normal/$$ wish list item.
+
 $head 06-20$$
 Worked more on reducing memory and increasing the speed of the
 $cref/optimization/optimize/$$ of $codei%ADFun<%Base%>%$$ objects.
