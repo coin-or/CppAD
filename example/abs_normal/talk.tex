@@ -1,0 +1,123 @@
+% -----------------------------------------------------------------------------
+% CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+%
+% CppAD is distributed under multiple licenses. This distribution is under
+% the terms of the
+%                     Eclipse Public License Version 1.0.
+%
+% A copy of this license is included in the COPYING file of this distribution.
+% Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
+% -----------------------------------------------------------------------------
+\documentclass{beamer}
+
+% needed for fonts; see %https://tex.stackexchange.com/questions/58087/
+% how-to-remove-the-warnings-font-shape-ot1-cmss-m-n-in-size-4-not-available
+\usepackage{lmodern}% http://ctan.org/pkg/lm
+
+% macros
+\newcommand{\B}[1]{{\bf #1}}
+\newcommand{\Section}[1]{
+	\section[Section]{#1}
+	\begin{frame}
+	\begin{center}
+	\Large{#1}
+	\end{center}
+	\end{frame}
+}
+
+
+\title[CppAD]{CppAD's Abs-normal Representation}
+\institute{
+	\begin{tabular}{c}
+		{\Large Bradley M. Bell} \\
+		\\
+		Applied Physics Laboratory and \\
+		Institute for Health Metrics and Evaluation, \\
+		University of Washington, \\
+		{\tt bradbell@uw.edu}
+	\end{tabular}
+}
+
+\begin{document}
+
+\begin{frame}
+	\titlepage
+\end{frame}
+
+% ============================================================================
+\Section{Notation}
+% ----------------------------------------------------------------------------
+\begin{frame}{Non-Smooth Functions}
+
+\begin{block}{$f(x)$}
+$ f : \B{R}^n \rightarrow \B{R}^m $ where the only non-smooth
+nodes in its computational graph are $| \cdot |$.
+\end{block}
+\pause
+
+\begin{block}{$a(x)$}
+Let $s$ be number of $| \cdot |$ in $f$.
+We define
+$a : \B{R}^n \rightarrow \B{R}^s$ where
+$a_i (x)$ is the result for the $i$-th absolute value.
+\end{block}
+
+\end{frame}
+% ----------------------------------------------------------------------------
+\begin{frame}{Smooth Functions}
+
+\begin{block}{$z(x,u)$}
+There is a smooth
+$z : \B{R}^{n + s} \rightarrow \B{R}^s$ where
+$z_i (x, u)$ is argument to $i$-th absolute value
+when $u_j = a_j (x)$ for $j < i$.
+\end{block}
+\pause
+
+\begin{block}{$y(x,u)$}
+There is a smooth
+$y : \B{R}^{n + s} \rightarrow \B{R}^m$ where
+$y(x , u) = f(x)$ when $u = a (x)$ for all $i$.
+\end{block}
+\pause
+
+\begin{block}{$g(x,u)$}
+The function
+$g : \B{R}^{n + s} \rightarrow \B{R}^{m + s}$ is defined by
+\[
+g(x, u) = \left[ \begin{array}{c} y(x, u) \\ z(x, y) \end{array} \right]
+\]
+\end{block}
+
+
+\end{frame}
+% ----------------------------------------------------------------------------
+\begin{frame}{Representation}
+
+\begin{block}{ \texttt{f.abs\_normal\_fun(g, a)} }
+Given the \texttt{ADFun<Base>} object \texttt{f} for $f(x)$,
+this creates the two \texttt{ADFun<Base>} objects \texttt{g}, \texttt{a}
+for $g(x, u)$ and $a(x)$ respectively.
+\end{block}
+\pause
+
+\begin{block}{ \texttt{abs\_eval(n, m, s, g\_hat , g\_jac , delta\_x)} }
+Evaluates the first order abs-normal approximation for
+$f( \hat{x} + \Delta x )$ where
+\texttt{g\_hat} is $g[ \hat{x} , a( \hat{x} ) ]$
+(also $f( \hat{x} ) )$,
+\texttt{g\_jac} is $g^{(1)} [ \hat{x} , a( \hat{x} ) ]$, and
+\texttt{delta\_x} is $\Delta x$.
+\end{block}
+\pause
+
+\begin{block}{Advantages}
+Any AD operation can be computed for the function \texttt{g}; e.g.,
+any order forward and reverse mode, sparsity patterns, and sparse derivatives.
+\end{block}
+
+\end{frame}
+% ----------------------------------------------------------------------------
+
+
+\end{document}
