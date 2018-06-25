@@ -15,6 +15,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # include <stack>
 # include <iterator>
 # include <cppad/local/optimize/get_usage.hpp>
+# include <cppad/local/optimize/get_previous.hpp>
 # include <cppad/local/optimize/get_opt_op_info.hpp>
 # include <cppad/local/optimize/size_pair.hpp>
 # include <cppad/local/optimize/csum_variable.hpp>
@@ -151,26 +152,30 @@ void optimize_run(
 		vecad_used,
 		op_usage
 	);
+	pod_vector<addr_t>        op_previous;
+	get_previous(
+		play,
+		random_itr,
+		cexp_set,
+		op_previous,
+		op_usage
+	);
+	size_t num_cexp = cexp2op.size();
+	CPPAD_ASSERT_UNKNOWN( conditional_skip || num_cexp == 0 );
 	vector<struct_cexp_info>  cexp_info; // struct_cexp_info not POD
 	sparse_list               skip_op_true;
 	sparse_list               skip_op_false;
-	pod_vector<addr_t>        op_previous;
 	//
-	get_opt_op_info(
-		conditional_skip,
-		compare_op,
-		print_for_op,
+	if( cexp2op.size() > 0 ) get_opt_op_info(
 		play,
 		random_itr,
-		dep_taddr,
+		op_previous,
+		op_usage,
 		cexp2op,
 		cexp_set,
 		cexp_info,
 		skip_op_true,
-		skip_op_false,
-		vecad_used,
-		op_previous,
-		op_usage
+		skip_op_false
 	);
 
 	// nan with type Base
@@ -190,8 +195,6 @@ void optimize_run(
 	// Size of the conditional expression information structure.
 	// This is equal to the number of conditional expressions when
 	// conditional_skip is true, otherwise it is zero.
-	size_t num_cexp = cexp_info.size();
-	CPPAD_ASSERT_UNKNOWN( conditional_skip || num_cexp == 0 );
 	//
 	// sort the conditional expression information by max_left_right
 	// this is the conditional skip order

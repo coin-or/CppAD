@@ -24,29 +24,15 @@ Create operator information tables
 namespace CppAD { namespace local { namespace optimize {
 
 /*!
-Get variable to operator map and operator basic operator information
+Convert conditional expression skip information from sets for each
+operation to sets for each conditional expression operator.
+Do not call this routine unless you are optimizing conditional expressions
+and there are conditional expressions in the operation sequence.
 
 \tparam Base
 base type for the operator; i.e., this operation was recorded
 using AD< \a Base > and computations by this routine are done using type
 \a Base.
-
-\param conditional_skip
-If conditional_skip this is true, the conditional expression information
-cexp_info will be calculated.
-This may be time intensive and may not have much benefit in the optimized
-recording.
-
-\param compare_op
-if this is true, arguments are considered used if they appear in compare
-operators. This is a side effect because compare operators have boolean
-results (and the result is not in the tape; i.e. NumRes(op) is zero
-for these operators. (This is an example of a side effect.)
-
-\param print_for_op
-if this is true, arguments are considered used if they appear in
-print forward operators; i.e., PriOp.
-This is also a side effect; i.e. NumRes(PriOp) is zero.
 
 \param play
 This is the old operation sequence.
@@ -54,18 +40,12 @@ This is the old operation sequence.
 \param random_itr
 This is a random iterator for the old operation sequence.
 
-\param dep_taddr
-is a vector of variable indices for the dependent variables.
-
 \param cexp2op
-The input size of this vector must be zero.
-Upon retun it has size equal to the number of conditional expressions,
-CExpOp operators. The value $icode%cexp2op[%j%]%$$ is the operator
-index corresponding to the $th j$$ operator.
+This is the number of conditional expressions in the operation sequence
+and must be non-zero.
 
 \param cexp_set
 This is a vector of sets that is empty on input.
-If conditional_skip is false, cexp_usage is not modified.
 Otherwise, set[i] is a set of elements for the i-th operator.
 Suppose that e is an element of set[i], j = e / 2, k = e % 2.
 If the comparision for the j-th conditional expression is equal to bool(k),
@@ -74,7 +54,6 @@ Note the the j indexs the CExpOp operators in the operation sequence.
 
 \param cexp_info
 The input size of this vector must be zero.
-If conditional_skip is false, cexp_info is not changed.
 Otherwise,
 upon return cexp_info has size equal to the number of conditional expressions
 in the operation sequence; i.e., the number of CExpOp operators.
@@ -100,20 +79,12 @@ comparison result for cexp_info[j] is false.
 Note that UsrapOp, UsravOp, UsrrpOp, and UsrrvOp, are not in this
 set and should be skipped when the corresponding UserOp are skipped.
 
-\param vecad_used
-The input size of this vector must be zero.
-Upon retun it has size equal to the number of VecAD vectors
-in the operations sequences; i.e., play->num_vecad_vec_rec().
-The VecAD vectors are indexed in the order that thier indices apprear
-in the one large play->GetVecInd that holds all the VecAD vectors.
-
 \param op_previous
 The input size of this vector must be zero.
 Upon return it has size equal to the number of operators
 in the operation sequence; i.e., num_op = play->nun_var_rec().
 If op_previous[i] == 0, no replacement was found for the i-th operator.
 If op_previous[i] != 0, op_usage[ op_previous[i] ] == usage_t(yes_usage).
-
 
 \param op_usage
 The input size of this vector must be zero.
@@ -126,29 +97,23 @@ the i-th operator in the operation sequence.
 
 template <class Addr, class Base>
 void get_opt_op_info(
-	bool                                        conditional_skip    ,
-	bool                                        compare_op          ,
-	bool                                        print_for_op        ,
 	const player<Base>*                         play                ,
 	const play::const_random_iterator<Addr>&    random_itr          ,
-	const vector<size_t>&                       dep_taddr           ,
+	const pod_vector<addr_t>&                   op_previous         ,
+	const pod_vector<usage_t>&                  op_usage            ,
 	const pod_vector<addr_t>&                   cexp2op             ,
-	sparse_list&                                cexp_set            ,
+	const sparse_list&                          cexp_set            ,
 	vector<struct_cexp_info>&                   cexp_info           ,
 	sparse_list&                                skip_op_true        ,
-	sparse_list&                                skip_op_false       ,
-	pod_vector<bool>&                           vecad_used          ,
-	pod_vector<addr_t>&                         op_previous         ,
-	pod_vector<usage_t>&                        op_usage            )
+	sparse_list&                                skip_op_false       )
 {
+	CPPAD_ASSERT_UNKNOWN( cexp_set.n_set() > 0  );
 	CPPAD_ASSERT_UNKNOWN( cexp_info.size() == 0 );
-	CPPAD_ASSERT_UNKNOWN( op_previous.size() == 0 );
 
 	// number of operators in the tape
 	const size_t num_op = play->num_op_rec();
-	op_usage.resize( num_op );
-	op_previous.resize( num_op );
 	CPPAD_ASSERT_UNKNOWN( op_usage.size() == num_op );
+	CPPAD_ASSERT_UNKNOWN( op_previous.size() == num_op );
 	//
 	// number of conditional expressions in the tape
 	size_t num_cexp_op = cexp2op.size();
@@ -157,117 +122,9 @@ void get_opt_op_info(
 	CPPAD_ASSERT_UNKNOWN(
 		size_t( std::numeric_limits<addr_t>::max() ) >= num_op
 	);
-	// -----------------------------------------------------------------------
-	// information about current operator
-	OpCode        op;     // operator
-	const addr_t* arg;    // arguments
-	size_t        i_op;   // operator index
-	size_t        i_var;  // variable index of first result
-	// ----------------------------------------------------------------------
-	// compute op_previous
-	// ----------------------------------------------------------------------
-	sparse_list  hash_table_op;
-	hash_table_op.resize(CPPAD_HASH_TABLE_SIZE, num_op);
-	//
-	pod_vector<bool> match_work;
-	for(i_op = 0; i_op < num_op; ++i_op)
-	{	op_previous[i_op] = 0;
-
-		if( op_usage[i_op] == usage_t(yes_usage) )
-		switch( play->GetOp(i_op) )
-		{
-			case NumberOp:
-			CPPAD_ASSERT_UNKNOWN(false);
-			break;
-
-			case BeginOp:
-			case CExpOp:
-			case CSkipOp:
-			case CSumOp:
-			case EndOp:
-			case InvOp:
-			case LdpOp:
-			case LdvOp:
-			case ParOp:
-			case PriOp:
-			case StppOp:
-			case StpvOp:
-			case StvpOp:
-			case StvvOp:
-			case UserOp:
-			case UsrapOp:
-			case UsravOp:
-			case UsrrpOp:
-			case UsrrvOp:
-			// these operators never match pevious operators
-			break;
-
-			case AbsOp:
-			case AcosOp:
-			case AcoshOp:
-			case AddpvOp:
-			case AddvvOp:
-			case AsinOp:
-			case AsinhOp:
-			case AtanOp:
-			case AtanhOp:
-			case CosOp:
-			case CoshOp:
-			case DisOp:
-			case DivpvOp:
-			case DivvpOp:
-			case DivvvOp:
-			case EqpvOp:
-			case EqvvOp:
-			case ErfOp:
-			case ExpOp:
-			case Expm1Op:
-			case LepvOp:
-			case LevpOp:
-			case LevvOp:
-			case LogOp:
-			case Log1pOp:
-			case LtpvOp:
-			case LtvpOp:
-			case LtvvOp:
-			case MulpvOp:
-			case MulvvOp:
-			case NepvOp:
-			case NevvOp:
-			case PowpvOp:
-			case PowvpOp:
-			case PowvvOp:
-			case SignOp:
-			case SinOp:
-			case SinhOp:
-			case SqrtOp:
-			case SubpvOp:
-			case SubvpOp:
-			case SubvvOp:
-			case TanOp:
-			case TanhOp:
-			case ZmulpvOp:
-			case ZmulvpOp:
-			case ZmulvvOp:
-			// check for a previous match
-			match_op(random_itr, op_previous, i_op, hash_table_op, match_work);
-			if( op_previous[i_op] != 0 )
-			{	// like a unary operator that assigns i_op equal to previous.
-				size_t previous = op_previous[i_op];
-				bool sum_op = false;
-				CPPAD_ASSERT_UNKNOWN( previous < i_op );
-				increase_arg_usage(
-					play, sum_op, i_op, previous, op_usage, cexp_set
-				);
-			}
-			break;
-		}
-	}
 	// ----------------------------------------------------------------------
 	// compute cexp_info
 	// ----------------------------------------------------------------------
-	if( cexp_set.n_set() == 0 )
-		return;
 	//
 	// initialize information for each conditional expression
 	cexp_info.resize(num_cexp_op);
@@ -275,10 +132,13 @@ void get_opt_op_info(
 	skip_op_false.resize(num_cexp_op, num_op);
 	//
 	for(size_t i = 0; i < num_cexp_op; i++)
-	{	CPPAD_ASSERT_UNKNOWN(
-			op_previous[i] == 0 || op_usage[i] == usage_t(yes_usage)
+	{	size_t i_op  = cexp2op[i];
+		CPPAD_ASSERT_UNKNOWN(
+			op_previous[i_op] == 0 || op_usage[i_op] == usage_t(yes_usage)
 		);
-		i_op            = cexp2op[i];
+		OpCode        op;     // operator
+		const addr_t* arg;    // arguments
+		size_t        i_var;  // variable index of first result
 		random_itr.op_info(i_op, op, arg, i_var);
 		CPPAD_ASSERT_UNKNOWN( op == CExpOp );
 		//
@@ -301,7 +161,7 @@ void get_opt_op_info(
 		cexp_info[i] = info;
 	};
 	// Determine which operators can be conditionally skipped
-	i_op = 0;
+	size_t i_op = 0;
 	while(i_op < num_op)
 	{	size_t j_op = i_op;
 		bool keep = op_usage[i_op] != usage_t(no_usage);
