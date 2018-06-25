@@ -16,7 +16,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # include <iterator>
 # include <cppad/local/optimize/get_usage.hpp>
 # include <cppad/local/optimize/get_previous.hpp>
-# include <cppad/local/optimize/get_opt_op_info.hpp>
+# include <cppad/local/optimize/get_cexp_info.hpp>
 # include <cppad/local/optimize/size_pair.hpp>
 # include <cppad/local/optimize/csum_variable.hpp>
 # include <cppad/local/optimize/csum_stacks.hpp>
@@ -166,7 +166,7 @@ void optimize_run(
 	sparse_list               skip_op_true;
 	sparse_list               skip_op_false;
 	//
-	if( cexp2op.size() > 0 ) get_opt_op_info(
+	if( cexp2op.size() > 0 ) get_cexp_info(
 		play,
 		random_itr,
 		op_previous,

@@ -1,5 +1,5 @@
-# ifndef CPPAD_LOCAL_OPTIMIZE_GET_OPT_OP_INFO_HPP
-# define CPPAD_LOCAL_OPTIMIZE_GET_OPT_OP_INFO_HPP
+# ifndef CPPAD_LOCAL_OPTIMIZE_GET_CEXP_INFO_HPP
+# define CPPAD_LOCAL_OPTIMIZE_GET_CEXP_INFO_HPP
 
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
@@ -12,7 +12,7 @@ A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 /*!
-\file get_opt_op_info.hpp
+\file get_cexp_info.hpp
 Create operator information tables
 */
 
@@ -96,7 +96,7 @@ the i-th operator in the operation sequence.
 */
 
 template <class Addr, class Base>
-void get_opt_op_info(
+void get_cexp_info(
 	const player<Base>*                         play                ,
 	const play::const_random_iterator<Addr>&    random_itr          ,
 	const pod_vector<addr_t>&                   op_previous         ,

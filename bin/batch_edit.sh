@@ -29,14 +29,13 @@ spell_list='
 revert_list='
 '
 move_list='
+	cppad/local/optimize/get_opt_op_info.hpp
 '
-move_sed='s|/core/|/local/|'
+move_sed='s|get_opt_op_info|get_cexp_info|'
 #
 cat << EOF > junk.sed
-s|usage_type  |usage_t     |
-s|<usage_type>  |<usage_t>     |
-s|<usage_type>&  |<usage_t>\\&     |
-s|usage_type|usage_t|
+s|get_opt_op_info|get_cexp_info|
+s|GET_OPT_OP_INFO|GET_CEXP_INFO|
 EOF
 # -----------------------------------------------------------------------------
 if [ $0 != "bin/batch_edit.sh" ]

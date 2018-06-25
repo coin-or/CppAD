@@ -254,7 +254,7 @@ nobase_myinclude_HEADERS =  \
 	cppad/local/optimize/cexp_info.hpp \
 	cppad/local/optimize/csum_stacks.hpp \
 	cppad/local/optimize/csum_variable.hpp \
-	cppad/local/optimize/get_opt_op_info.hpp \
+	cppad/local/optimize/get_cexp_info.hpp \
 	cppad/local/optimize/get_previous.hpp \
 	cppad/local/optimize/get_usage.hpp \
 	cppad/local/optimize/hash_code.hpp \
