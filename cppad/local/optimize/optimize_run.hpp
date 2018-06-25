@@ -14,7 +14,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 # include <stack>
 # include <iterator>
-# include <cppad/local/optimize/usage.hpp>
+# include <cppad/local/optimize/get_usage.hpp>
 # include <cppad/local/optimize/get_opt_op_info.hpp>
 # include <cppad/local/optimize/size_pair.hpp>
 # include <cppad/local/optimize/csum_variable.hpp>
@@ -135,12 +135,27 @@ void optimize_run(
 	size_t num_vecad_vec   = play->num_vecad_vec_rec();
 
 	// operator information
+	pod_vector<addr_t>        cexp2op;
+	sparse_list               cexp_set;
+	pod_vector<bool>          vecad_used;
+	pod_vector<usage_t>       op_usage;
+	get_usage(
+		conditional_skip,
+		compare_op,
+		print_for_op,
+		play,
+		random_itr,
+		dep_taddr,
+		cexp2op,
+		cexp_set,
+		vecad_used,
+		op_usage
+	);
 	vector<struct_cexp_info>  cexp_info; // struct_cexp_info not POD
 	sparse_list               skip_op_true;
 	sparse_list               skip_op_false;
-	pod_vector<bool>          vecad_used;
 	pod_vector<addr_t>        op_previous;
-	pod_vector<usage_t>       op_usage;
+	//
 	get_opt_op_info(
 		conditional_skip,
 		compare_op,
@@ -148,6 +163,8 @@ void optimize_run(
 		play,
 		random_itr,
 		dep_taddr,
+		cexp2op,
+		cexp_set,
 		cexp_info,
 		skip_op_true,
 		skip_op_false,
