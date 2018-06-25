@@ -192,4 +192,45 @@ Evaluates $y[ \hat{x} ] ( x , a[ \hat{x} ] (x) )$
 \end{frame}
 % ----------------------------------------------------------------------------
 
+\begin{frame}{Minimizing Approximation}
+
+\begin{block}{Problem}
+minimize $\tilde{f} ( x ) = y[ \hat{x} ] ( x , a( \hat{x} ) )$ w.r.t
+$x$ subject to $-b \leq x \leq b$.
+\end{block}
+\pause
+
+\begin{enumerate}
+
+\item
+Start at with point  $x = \hat{x}$ and $C$ an empty set of
+cutting planes.
+\pause
+
+\item
+\label{NextIterationItem}
+Compute derivative of $\tilde{f} ( x )$.
+If it is near zero return $x$ as solution.
+\pause
+
+\item
+Add affine apprimation for $\tilde{f} ( x )$ at $x$ to $C$.
+\pause
+
+
+\item
+Minimize w.r.t $x$ the maximum of the affine functions in $C$
+subject to $-b \leq x \leq b$ (this is an LP).
+\pause
+
+
+\item
+Goto step \ref{NextIterationItem}.
+
+\end{enumerate}
+
+
+\end{frame}
+
+
 \end{document}
