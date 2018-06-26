@@ -51,6 +51,7 @@ $$
 $section The CppAD Wish List$$
 
 $head Abs-normal$$
+$list number$$
 Change the $cref abs_normal_fun$$ to return the functions
 $cref/z(x, u)/abs_normal_fun/g/z(x, u)/$$ and
 $cref/y(x, u)/abs_normal_fun/g/y(x, u)/$$ instead of
@@ -58,6 +59,14 @@ $latex g(x, u)$$ and $latex a(x)$$.
 We can add a utility that computes $latex a(x)$$ using
 $latex z(x, u)$$, $latex a_i (x) = | z_i (x, a(x) ) |$$
 and $latex z_i$$ does not depends on $latex u_j$$ for $latex j \geq i$$.
+$lnext
+Avoid cancellation when computing the difference in the absolute value
+function at the current point $latex \hat{x}$$ the displaced point
+$latex x = \hat{x} + \Delta x$$; i.e.,
+$latex \[
+	|z_i (x, \tilde{a}(x) ) | - |z_i (\hat{x}, a(\hat{x}) ) |
+\] $$
+$lend
 
 $head Windows Install$$
 The windows install procedures below have not been kept up to date.
