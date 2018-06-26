@@ -178,6 +178,10 @@ void optimize_run(
 		skip_op_false
 	);
 
+	// We no longer need cexp_set, and cexp2op, so free their memory
+	cexp_set.resize(0, 0);
+	cexp2op.clear();
+
 	// nan with type Base
 	Base base_nan = Base( std::numeric_limits<double>::quiet_NaN() );
 
