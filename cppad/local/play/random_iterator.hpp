@@ -141,6 +141,10 @@ public:
 	/// number of operators
 	size_t num_op(void) const
 	{	return op_vec_->size(); }
+	//
+	/// number of variables
+	size_t num_var(void) const
+	{	return var2op_vec_->size(); }
 };
 
 } } } // BEGIN_CPPAD_LOCAL_PLAY_NAMESPACE

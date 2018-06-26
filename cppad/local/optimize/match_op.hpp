@@ -65,8 +65,16 @@ and op_previous[i_op] does not match any other element of set[j].
 An entry to set[j] is added each time match_op is called
 and a match for the current operator is not found.
 
-\param work
-work space that is used by match_op to reduce re-allocation of memory
+\param work_bool
+work space that is used by match_op between calls to increase speed.
+Should be empty on first call for this forward passs of the operation
+sequence and not modified untill forward pass is done
+
+\param work_addr_t
+work space that is used by match_op between calls to increase speed.
+Should be empty on first call for this forward passs of the operation
+sequence and not modified untill forward pass is done
+
 */
 template <class Addr>
 void match_op(
@@ -74,11 +82,27 @@ void match_op(
 	pod_vector<addr_t>&                         op_previous    ,
 	size_t                                      current        ,
 	sparse_list&                                hash_table_op  ,
-	pod_vector<bool>&                           work           )
+	pod_vector<bool>&                           work_bool      ,
+	pod_vector<addr_t>&                         work_addr_t    )
 {	//
 	// num_op
 	size_t num_op = random_itr.num_op();
 	//
+	// num_var
+	size_t num_var = random_itr.num_var();
+	//
+	// variable is a reference to, and better name for, work_bool
+	pod_vector<bool>&  variable(work_bool);
+	//
+	// var2previous_var is a reference to, and better name for, work_addr_t
+	pod_vector<addr_t>&  var2previous_var(work_addr_t);
+	if( var2previous_var.size() == 0 )
+	{	var2previous_var.resize(num_var);
+		for(size_t i = 0; i < num_var; ++i)
+			var2previous_var[i] = addr_t(i);
+	}
+	//
+	CPPAD_ASSERT_UNKNOWN( var2previous_var.size() == num_var );
 	CPPAD_ASSERT_UNKNOWN( num_op == op_previous.size() );
 	CPPAD_ASSERT_UNKNOWN( op_previous[current] == 0 );
 	CPPAD_ASSERT_UNKNOWN(
@@ -98,36 +122,19 @@ void match_op(
 	CPPAD_ASSERT_UNKNOWN( 0 < num_arg );
 	CPPAD_ASSERT_UNKNOWN( num_arg <= 3 );
 	//
-	// variable is a reference to, and better name for, work
-	pod_vector<bool>&  variable(work);
-	//
 	arg_is_variable(op, arg, variable);
 	CPPAD_ASSERT_UNKNOWN( variable.size() == num_arg );
 	//
-	// If j-th argument to current operator has a previous operator,
-	// this is the j-th argument for previous operator.
-	// Otherwise, it is the j-th argument for the current operator.
+	// If j-th argument to this operator is a variable, and a previous
+	// variable will be used in its place, use the previous variable for
+	// hash coding and matching.
 	addr_t arg_match[3];
 	for(size_t j = 0; j < num_arg; ++j)
 	{	arg_match[j] = arg[j];
 		if( variable[j] )
-		{	size_t j_op     = random_itr.var2op(arg[j]);
-			size_t previous = op_previous[j_op];
-			if( previous != 0 )
-			{	// a previous match, be the end of the line; i.e.,
-				// it does not have a previous match.
-				CPPAD_ASSERT_UNKNOWN( op_previous[previous] == 0 );
-				//
-				OpCode        op_p;
-				const addr_t* arg_p;
-				size_t        i_var_p;
-				random_itr.op_info(previous, op_p, arg_p, i_var_p);
-				//
-				CPPAD_ASSERT_UNKNOWN( NumRes(op_p) > 0 );
-				arg_match[j] = addr_t( i_var_p );
-			}
-		}
+			arg_match[j] = var2previous_var[ arg[j] ];
 	}
+	//
 	size_t code = optimize_hash_code(op, num_arg, arg_match);
 	//
 	// iterator for the set with this hash code
@@ -150,31 +157,18 @@ void match_op(
 		//
 		// check for a match
 		bool match = op == op_c;
-		if( match )
-		{	for(size_t j = 0; j < num_arg; j++)
-			{	if( variable[j] )
-				{	size_t previous =
-						op_previous[ random_itr.var2op(arg_c[j]) ];
-					if( previous != 0 )
-					{	// must be end of the line for a previous match
-						CPPAD_ASSERT_UNKNOWN( op_previous[previous] == 0 );
-						//
-						OpCode        op_p;
-						const addr_t* arg_p;
-						size_t        i_var_p;
-						random_itr.op_info(previous, op_p, arg_p, i_var_p);
-						//
-						match &= arg_match[j] == addr_t( i_var_p );
-					}
-					else match &= arg_match[j] == arg_c[j];
-				}
-				else
-				{	match &= arg_match[j] == arg_c[j];
-				}
-			}
+		size_t j   = 0;
+		while( match & (j < num_arg) )
+		{	if( variable[j] )
+				match &= arg_match[j] == var2previous_var[ arg_c[j] ];
+			else
+				match &= arg_match[j] == arg_c[j];
+			++j;
 		}
 		if( match )
 		{	op_previous[current] = static_cast<addr_t>( candidate );
+			CPPAD_ASSERT_UNKNOWN( i_var_c < i_var );
+			var2previous_var[i_var] = addr_t( i_var_c );
 			return;
 		}
 		++itr;
@@ -199,27 +193,16 @@ void match_op(
 			random_itr.op_info(candidate, op_c, arg_c, i_var_c);
 			//
 			bool match = op == op_c;
-			if( match )
-			{	for(size_t j = 0; j < num_arg; j++)
-				{	CPPAD_ASSERT_UNKNOWN( variable[j] )
-					size_t previous =
-						op_previous[ random_itr.var2op(arg_c[j]) ];
-					if( previous != 0 )
-					{	CPPAD_ASSERT_UNKNOWN( op_previous[previous] == 0 );
-						//
-						OpCode        op_p;
-						const addr_t* arg_p;
-						size_t        i_var_p;
-						random_itr.op_info(previous, op_p, arg_p, i_var_p);
-						//
-						match &= arg_match[j] == addr_t( i_var_p );
-					}
-					else
-						match &= arg_match[j] == arg_c[j];
-				}
+			size_t j   = 0;
+			while( match & (j < num_arg) )
+			{	CPPAD_ASSERT_UNKNOWN( variable[j] )
+				match &= arg_match[j] == var2previous_var[ arg_c[j] ];
+				++j;
 			}
 			if( match )
 			{	op_previous[current] = static_cast<addr_t>(candidate);
+				CPPAD_ASSERT_UNKNOWN( i_var_c < i_var );
+				var2previous_var[i_var] = addr_t( i_var_c );
 				return;
 			}
 			++itr_swap;

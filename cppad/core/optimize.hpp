@@ -12,6 +12,8 @@ A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 
+# define CPPAD_CORE_OPTIMIZE_PRINT_RESULT 0
+
 /*
 $begin optimize$$
 $spell
@@ -215,6 +217,11 @@ when compare_change is not used.
 template <class Base>
 void ADFun<Base>::optimize(const std::string& options)
 {
+# if CPPAD_CORE_OPTIMIZE_PRINT_RESULT
+	// size of operation sequence before optimizatiton
+	size_t size_op_before = size_op();
+# endif
+
 	// place to store the optimized version of the recording
 	local::recorder<Base> rec;
 
@@ -327,6 +334,12 @@ void ADFun<Base>::optimize(const std::string& options)
 		// same final state for this object (from users perspective)
 		num_order_taylor_     = 0;
 	}
+# endif
+# if CPPAD_CORE_OPTIMIZE_PRINT_RESULT
+	// size of operation sequence after optimizatiton
+	size_t size_op_after = size_op();
+	std::cout << "optimize: size_op:  before = " <<
+	size_op_before << ", after = " << size_op_after << "\n";
 # endif
 }
 

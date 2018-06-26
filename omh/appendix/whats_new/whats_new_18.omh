@@ -27,6 +27,12 @@ $$
 
 $section Changes and Additions to CppAD During 2018$$
 
+$head 06-26$$
+Simplify the step in the $cref optimize$$ procedure
+where it recognizes identical expressions.
+This may speed up the optimization for large cases where
+multiple expressions have the same hash code.
+
 $head 06-22$$
 Add an $cref/abs-normal/wish_list/Abs-normal/$$ wish list item.
 
