@@ -27,9 +27,10 @@ $$
 
 $section Changes and Additions to CppAD During 2018$$
 
-$head 06-26$$
-Simplify the step in the $cref optimize$$ procedure
-where it recognizes identical expressions.
+$head 06-27$$
+Simplify the process in the $cref optimize$$ procedure
+where it recognizes identical expressions
+(and do more error checking of this process).
 This may speed up the optimization for large cases where
 multiple expressions have the same hash code.
 
