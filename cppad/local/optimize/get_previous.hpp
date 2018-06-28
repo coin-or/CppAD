@@ -51,7 +51,15 @@ The input size of this vector must be zero.
 Upon return it has size equal to the number of operators
 in the operation sequence; i.e., num_op = play->nun_var_rec().
 If op_previous[i] == 0, no replacement was found for the i-th operator.
-If op_previous[i] != 0, op_usage[ op_previous[i] ] == usage_t(yes_usage).
+If op_previous[i] != 0, op_usage[ op_previous[i] ] == usage_t(yes_usage)
+i-th operator has NumArg(op) <= 3, 0 < NumRes(op), is not one of the following:
+	- PriOp, ParOp, InvOp, EndOp, CexpOp, BeginOp.
+
+	- it is not one of the load store op
+	LtpvOp, LtvpOp, LtvvOp, StppOp, StpvOp, StvpOp, StvvOp.
+
+	- it is not a user atomic fucntion op
+	UserOp, UsrapOp, UsravOp, UsrrpOp, UsrrvOp.
 
 \param op_usage
 The size of this vector is the number of operators in the
@@ -73,7 +81,7 @@ void get_previous(
 	CPPAD_ASSERT_UNKNOWN( op_previous.size() == 0 );
 
 	// number of operators in the tape
-	const size_t num_op = play->num_op_rec();
+	const size_t num_op = random_itr.num_op();
 	op_usage.resize( num_op );
 	op_previous.resize( num_op );
 	CPPAD_ASSERT_UNKNOWN( op_usage.size() == num_op );
@@ -96,7 +104,7 @@ void get_previous(
 	{	op_previous[i_op] = 0;
 
 		if( op_usage[i_op] == usage_t(yes_usage) )
-		switch( play->GetOp(i_op) )
+		switch( random_itr.get_op(i_op) )
 		{
 			case NumberOp:
 			CPPAD_ASSERT_UNKNOWN(false);

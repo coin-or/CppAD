@@ -38,8 +38,10 @@ Note that op_previous[current] < current.
 
 \param current
 is the index of the current operator which must be an unary
-or binary operator. Note that NumArg(ErfOp) == 3 but it is effectivey
-a unary operator and is allowed otherwise NumArg( random_itr.get_op[current]) < 3.
+or binary operator with NumRes(op) > 0.
+Note that NumArg(ErfOp) == 3 but it is effectivey
+a unary operator and is allowed otherwise
+NumArg( random_itr.get_op[current]) < 3.
 It is assumed that hash_table_op is initialized as a vector of emtpy
 sets. After this initialization, the value of current inceases with
 each call to match_op.
@@ -116,10 +118,10 @@ void match_op(
 	const addr_t* arg;
 	size_t        i_var;
 	random_itr.op_info(current, op, arg, i_var);
+	CPPAD_ASSERT_UNKNOWN( 0 < NumArg(op) );
 	//
 	// num_arg
 	size_t num_arg = NumArg(op);
-	CPPAD_ASSERT_UNKNOWN( 0 < num_arg );
 	CPPAD_ASSERT_UNKNOWN( num_arg <= 3 );
 	//
 	arg_is_variable(op, arg, variable);
@@ -167,8 +169,10 @@ void match_op(
 		}
 		if( match )
 		{	op_previous[current] = static_cast<addr_t>( candidate );
-			CPPAD_ASSERT_UNKNOWN( i_var_c < i_var );
-			var2previous_var[i_var] = addr_t( i_var_c );
+			if( NumRes(op) > 0 )
+			{	CPPAD_ASSERT_UNKNOWN( i_var_c < i_var );
+				var2previous_var[i_var] = addr_t( i_var_c );
+			}
 			return;
 		}
 		++itr;
@@ -201,8 +205,10 @@ void match_op(
 			}
 			if( match )
 			{	op_previous[current] = static_cast<addr_t>(candidate);
-				CPPAD_ASSERT_UNKNOWN( i_var_c < i_var );
-				var2previous_var[i_var] = addr_t( i_var_c );
+				if( NumRes(op) > 0 )
+				{	CPPAD_ASSERT_UNKNOWN( i_var_c < i_var );
+					var2previous_var[i_var] = addr_t( i_var_c );
+				}
 				return;
 			}
 			++itr_swap;

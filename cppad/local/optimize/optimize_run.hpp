@@ -267,8 +267,6 @@ void optimize_run(
 	// Mapping from old operator index to new variable index,
 	// zero is invalid except for new_var[0].
 	pod_vector<addr_t> new_var(num_op);
-	for(size_t i = 0; i < num_op; i++)
-		new_var[i] = 0;
 	//
 	// Mapping from old operator index to new operator index will share
 	// memory with op_previous. Must get op_previous[i_op] for this operator
@@ -286,6 +284,12 @@ void optimize_run(
 		// zero is invalid except for new_op[0].
 		new_op[i_op] = 0;
 		//
+		// Zero is invalid except for new_var[0] and previous is zero unless
+		// this operator is replace by a previous operator.
+		new_var[i_op] = 0;
+		if( op_usage[i_op] == usage_t(yes_usage) )
+			new_var[i_op] = new_var[previous];
+		//
 		// temporary used in some switch cases
 		addr_t mask;
 		//
@@ -297,34 +301,36 @@ void optimize_run(
 		//
 		// determine if we should insert a conditional skip here
 		bool skip  = conditional_skip;
-		skip      &= cskip_order_next < num_cexp;
-		skip      &= op != BeginOp;
-		skip      &= op != InvOp;
-		skip      &= user_state == start_user;
 		if( skip )
-		{	size_t j = cskip_order[cskip_order_next];
-			if( NumRes(op) > 0 )
-				skip &= cexp_info[j].max_left_right < i_var;
-			else
-				skip &= cexp_info[j].max_left_right <= i_var;
-		}
-		if( skip )
-		{	size_t j = cskip_order[cskip_order_next];
-			cskip_order_next++;
-			size_t n_true   = skip_op_true.number_elements(j);
-			size_t n_false  = skip_op_false.number_elements(j);
-			skip &= n_true > 0 || n_false > 0;
+		{	skip      &= cskip_order_next < num_cexp;
+			skip      &= op != BeginOp;
+			skip      &= op != InvOp;
+			skip      &= user_state == start_user;
 			if( skip )
-			{	CPPAD_ASSERT_UNKNOWN( NumRes(CSkipOp) == 0 );
-				size_t n_arg   = 7 + n_true + n_false;
-				// reserve space for the arguments to this operator but
-				// delay setting them until we have all the new addresses
-				cskip_new[j].i_arg = rec->ReserveArg(n_arg);
-				// i_arg == 0 is used to check if conditional expression
-				// has been skipped.
-				CPPAD_ASSERT_UNKNOWN( cskip_new[j].i_arg > 0 );
-				// There is no corresponding old operator in this case
-				rec->PutOp(CSkipOp);
+			{	size_t j = cskip_order[cskip_order_next];
+				if( NumRes(op) > 0 )
+					skip &= cexp_info[j].max_left_right < i_var;
+				else
+					skip &= cexp_info[j].max_left_right <= i_var;
+			}
+			if( skip )
+			{	size_t j = cskip_order[cskip_order_next];
+				cskip_order_next++;
+				size_t n_true   = skip_op_true.number_elements(j);
+				size_t n_false  = skip_op_false.number_elements(j);
+				skip &= n_true > 0 || n_false > 0;
+				if( skip )
+				{	CPPAD_ASSERT_UNKNOWN( NumRes(CSkipOp) == 0 );
+					size_t n_arg   = 7 + n_true + n_false;
+					// reserve space for the arguments to this operator but
+					// delay setting them until we have all the new addresses
+					cskip_new[j].i_arg = rec->ReserveArg(n_arg);
+					// i_arg == 0 is used to check if conditional expression
+					// has been skipped.
+					CPPAD_ASSERT_UNKNOWN( cskip_new[j].i_arg > 0 );
+					// There is no corresponding old operator in this case
+					rec->PutOp(CSkipOp);
+				}
 			}
 		}
 		if( op == UserOp )
@@ -345,8 +351,10 @@ void optimize_run(
 				++cexp_next;
 		}
 		else switch( op )
-		{
+		{	// op_usage[i_op] == usage_t(yes_usage)
+
 			case BeginOp:
+			CPPAD_ASSERT_UNKNOWN( previous == 0 );
 			CPPAD_ASSERT_NARG_NRES(op, 1, 1);
 			// Put BeginOp at beginning of recording
 			new_op[i_op]  = addr_t( rec->num_op_rec() );
@@ -376,11 +384,7 @@ void optimize_run(
 			case SqrtOp:
 			case TanOp:
 			case TanhOp:
-			if( previous > 0 )
-			{	size_t j_op = previous;
-				new_var[i_op] = new_var[j_op];
-			}
-			else
+			if( previous == 0 )
 			{	//
 				new_arg[0]   = new_var[ random_itr.var2op(arg[0]) ];
 				rec->PutArg( new_arg[0] );
@@ -413,10 +417,9 @@ void optimize_run(
 			// Binary operators, left variable, right parameter, one result
 			case SubvpOp:
 			// check if this is the top of a csum connection
-			if( op_usage[i_op] == usage_t(csum_usage) )
-				break;
 			if( op_usage[ random_itr.var2op(arg[0]) ] == usage_t(csum_usage) )
-			{
+			{	CPPAD_ASSERT_UNKNOWN( previous == 0 );
+				//
 				// convert to a sequence of summation operators
 				size_pair = record_csum(
 					play                ,
@@ -435,11 +438,7 @@ void optimize_run(
 			case DivvpOp:
 			case PowvpOp:
 			case ZmulvpOp:
-			if( previous > 0 )
-			{	size_t j_op = previous;
-				new_var[i_op] = new_var[j_op];
-			}
-			else
+			if( previous == 0 )
 			{	//
 				size_pair = record_vp(
 					play                ,
@@ -456,11 +455,7 @@ void optimize_run(
 			// Binary operators, left index, right variable, one result
 			case DisOp:
 			CPPAD_ASSERT_NARG_NRES(op, 2, 1);
-			if( previous > 0 )
-			{	size_t j_op = previous;
-				new_var[i_op] = new_var[j_op];
-			}
-			else
+			if( previous == 0 )
 			{	//
 				new_arg[0] = arg[0];
 				new_arg[1] = new_var[ random_itr.var2op(arg[1]) ];
@@ -479,10 +474,9 @@ void optimize_run(
 			case SubpvOp:
 			case AddpvOp:
 			// check if this is the top of a csum connection
-			if( op_usage[i_op] == usage_t(csum_usage) )
-				break;
 			if( op_usage[ random_itr.var2op(arg[1]) ] == usage_t(csum_usage) )
-			{
+			{	CPPAD_ASSERT_UNKNOWN( previous == 0 );
+				//
 				// convert to a sequence of summation operators
 				size_pair = record_csum(
 					play                ,
@@ -502,11 +496,7 @@ void optimize_run(
 			case MulpvOp:
 			case PowpvOp:
 			case ZmulpvOp:
-			if( previous > 0 )
-			{	size_t j_op = previous;
-				new_var[i_op] = new_var[j_op];
-			}
-			else
+			if( previous == 0 )
 			{	//
 				size_pair = record_pv(
 					play                ,
@@ -524,14 +514,13 @@ void optimize_run(
 			case AddvvOp:
 			case SubvvOp:
 			// check if this is the top of a csum connection
-			if( op_usage[i_op] == usage_t(csum_usage) )
-				break;
 			if(
 				op_usage[ random_itr.var2op(arg[0]) ] == usage_t(csum_usage)
 				||
 				op_usage[ random_itr.var2op(arg[1]) ] == usage_t(csum_usage)
 			)
-			{
+			{	CPPAD_ASSERT_UNKNOWN( previous == 0 );
+				//
 				// convert to a sequence of summation operators
 				size_pair = record_csum(
 					play                ,
@@ -551,11 +540,7 @@ void optimize_run(
 			case MulvvOp:
 			case PowvvOp:
 			case ZmulvvOp:
-			if( previous > 0 )
-			{	size_t j_op = previous;
-				new_var[i_op] = new_var[j_op];
-			}
-			else
+			if( previous == 0 )
 			{	//
 				size_pair = record_vv(
 					play                ,
@@ -571,6 +556,7 @@ void optimize_run(
 			// ---------------------------------------------------
 			// Conditional expression operators
 			case CExpOp:
+			CPPAD_ASSERT_UNKNOWN( previous == 0 );
 			CPPAD_ASSERT_NARG_NRES(op, 6, 1);
 			new_arg[0] = arg[0];
 			new_arg[1] = arg[1];
@@ -612,49 +598,60 @@ void optimize_run(
 			// ---------------------------------------------------
 			// Operations with no arguments and no results
 			case EndOp:
+			CPPAD_ASSERT_UNKNOWN( previous == 0 );
 			CPPAD_ASSERT_NARG_NRES(op, 0, 0);
 			new_op[i_op] = addr_t( rec->num_op_rec() );
 			rec->PutOp(op);
 			break;
 			// ---------------------------------------------------
-			// Operations with two arguments and no results
+			// Comparison operations: two arguments and no results
 			case LepvOp:
 			case LtpvOp:
 			case EqpvOp:
 			case NepvOp:
+			CPPAD_ASSERT_UNKNOWN( compare_op );
 			CPPAD_ASSERT_NARG_NRES(op, 2, 0);
-			new_arg[0] = rec->PutPar( play->GetPar(arg[0]) );
-			new_arg[1] = new_var[ random_itr.var2op(arg[1]) ];
-			rec->PutArg(new_arg[0], new_arg[1]);
-			new_op[i_op] = addr_t( rec->num_op_rec() );
-			rec->PutOp(op);
+			if( previous == 0 )
+			{	new_arg[0] = rec->PutPar( play->GetPar(arg[0]) );
+				new_arg[1] = new_var[ random_itr.var2op(arg[1]) ];
+				rec->PutArg(new_arg[0], new_arg[1]);
+				new_op[i_op] = addr_t( rec->num_op_rec() );
+				rec->PutOp(op);
+			}
 			break;
 			//
 			case LevpOp:
 			case LtvpOp:
+			CPPAD_ASSERT_UNKNOWN( compare_op );
 			CPPAD_ASSERT_NARG_NRES(op, 2, 0);
-			new_arg[0] = new_var[ random_itr.var2op(arg[0]) ];
-			new_arg[1] = rec->PutPar( play->GetPar(arg[1]) );
-			rec->PutArg(new_arg[0], new_arg[1]);
-			new_op[i_op] = addr_t( rec->num_op_rec() );
-			rec->PutOp(op);
+			if( previous == 0 )
+			{	new_arg[0] = new_var[ random_itr.var2op(arg[0]) ];
+				new_arg[1] = rec->PutPar( play->GetPar(arg[1]) );
+				rec->PutArg(new_arg[0], new_arg[1]);
+				new_op[i_op] = addr_t( rec->num_op_rec() );
+				rec->PutOp(op);
+			}
 			break;
 			//
 			case LevvOp:
 			case LtvvOp:
 			case EqvvOp:
 			case NevvOp:
+			CPPAD_ASSERT_UNKNOWN( compare_op );
 			CPPAD_ASSERT_NARG_NRES(op, 2, 0);
-			new_arg[0] = new_var[ random_itr.var2op(arg[0]) ];
-			new_arg[1] = new_var[ random_itr.var2op(arg[1]) ];
-			rec->PutArg(new_arg[0], new_arg[1]);
-			new_op[i_op] = addr_t( rec->num_op_rec() );
-			rec->PutOp(op);
+			if( previous == 0 )
+			{	new_arg[0] = new_var[ random_itr.var2op(arg[0]) ];
+				new_arg[1] = new_var[ random_itr.var2op(arg[1]) ];
+				rec->PutArg(new_arg[0], new_arg[1]);
+				new_op[i_op] = addr_t( rec->num_op_rec() );
+				rec->PutOp(op);
+			}
 			break;
 
 			// ---------------------------------------------------
 			// Operations with no arguments and one result
 			case InvOp:
+			CPPAD_ASSERT_UNKNOWN( previous == 0 );
 			CPPAD_ASSERT_NARG_NRES(op, 0, 1);
 			new_op[i_op]  = addr_t( rec->num_op_rec() );
 			new_var[i_op] = rec->PutOp(op);
@@ -663,6 +660,7 @@ void optimize_run(
 			// ---------------------------------------------------
 			// Unary operators, argument a parameter, one result
 			case ParOp:
+			CPPAD_ASSERT_UNKNOWN( previous == 0 );
 			CPPAD_ASSERT_NARG_NRES(op, 1, 1);
 			new_arg[0] = rec->PutPar( play->GetPar(arg[0] ) );
 			rec->PutArg( new_arg[0] );
@@ -674,6 +672,7 @@ void optimize_run(
 			// ---------------------------------------------------
 			// print forward operator
 			case PriOp:
+			CPPAD_ASSERT_UNKNOWN( previous == 0 );
 			CPPAD_ASSERT_NARG_NRES(op, 5, 0);
 			// arg[0]
 			new_arg[0] = arg[0];
@@ -716,6 +715,7 @@ void optimize_run(
 
 			// Load using a parameter index
 			case LdpOp:
+			CPPAD_ASSERT_UNKNOWN( previous == 0 );
 			CPPAD_ASSERT_NARG_NRES(op, 3, 1);
 			new_arg[0] = new_vecad_ind[ arg[0] ];
 			new_arg[1] = arg[1];
@@ -735,6 +735,7 @@ void optimize_run(
 
 			// Load using a variable index
 			case LdvOp:
+			CPPAD_ASSERT_UNKNOWN( previous == 0 );
 			CPPAD_ASSERT_NARG_NRES(op, 3, 1);
 			new_arg[0] = new_vecad_ind[ arg[0] ];
 			new_arg[1] = new_var[ random_itr.var2op(arg[1]) ];
@@ -755,6 +756,7 @@ void optimize_run(
 
 			// Store a parameter using a parameter index
 			case StppOp:
+			CPPAD_ASSERT_UNKNOWN( previous == 0 );
 			CPPAD_ASSERT_NARG_NRES(op, 3, 0);
 			new_arg[0] = new_vecad_ind[ arg[0] ];
 			new_arg[1] = rec->PutPar( play->GetPar(arg[1]) );
@@ -771,6 +773,7 @@ void optimize_run(
 
 			// Store a parameter using a variable index
 			case StvpOp:
+			CPPAD_ASSERT_UNKNOWN( previous == 0 );
 			CPPAD_ASSERT_NARG_NRES(op, 3, 0);
 			new_arg[0] = new_vecad_ind[ arg[0] ];
 			new_arg[1] = new_var[ random_itr.var2op(arg[1]) ];
@@ -788,6 +791,7 @@ void optimize_run(
 
 			// Store a variable using a parameter index
 			case StpvOp:
+			CPPAD_ASSERT_UNKNOWN( previous == 0 );
 			CPPAD_ASSERT_NARG_NRES(op, 3, 0);
 			new_arg[0] = new_vecad_ind[ arg[0] ];
 			new_arg[1] = rec->PutPar( play->GetPar(arg[1]) );
@@ -805,6 +809,7 @@ void optimize_run(
 
 			// Store a variable using a variable index
 			case StvvOp:
+			CPPAD_ASSERT_UNKNOWN( previous == 0 );
 			CPPAD_ASSERT_NARG_NRES(op, 3, 0);
 			new_arg[0] = new_vecad_ind[ arg[0] ];
 			new_arg[1] = new_var[ random_itr.var2op(arg[1]) ];
@@ -825,6 +830,7 @@ void optimize_run(
 			// user atomic function call operators
 
 			case UserOp:
+			CPPAD_ASSERT_UNKNOWN( previous == 0 );
 			CPPAD_ASSERT_NARG_NRES(op, 4, 0);
 			// user_old, user_n, user_m
 			rec->PutArg(arg[0], arg[1], arg[2], arg[3]);
@@ -833,6 +839,7 @@ void optimize_run(
 			break;
 
 			case UsrapOp:
+			CPPAD_ASSERT_UNKNOWN( previous == 0 );
 			CPPAD_ASSERT_NARG_NRES(op, 1, 0);
 			new_arg[0] = rec->PutPar( play->GetPar(arg[0]) );
 			rec->PutArg(new_arg[0]);
@@ -841,6 +848,7 @@ void optimize_run(
 			break;
 
 			case UsravOp:
+			CPPAD_ASSERT_UNKNOWN( previous == 0 );
 			CPPAD_ASSERT_NARG_NRES(op, 1, 0);
 			new_arg[0] = new_var[ random_itr.var2op(arg[0]) ];
 			if( size_t(new_arg[0]) < num_var )
@@ -859,6 +867,7 @@ void optimize_run(
 			break;
 
 			case UsrrpOp:
+			CPPAD_ASSERT_UNKNOWN( previous == 0 );
 			CPPAD_ASSERT_NARG_NRES(op, 1, 0);
 			new_arg[0] = rec->PutPar( play->GetPar(arg[0]) );
 			rec->PutArg(new_arg[0]);
@@ -867,6 +876,7 @@ void optimize_run(
 			break;
 
 			case UsrrvOp:
+			CPPAD_ASSERT_UNKNOWN( previous == 0 );
 			CPPAD_ASSERT_NARG_NRES(op, 0, 1);
 			new_op[i_op]  = addr_t( rec->num_op_rec() );
 			new_var[i_op] = rec->PutOp(UsrrvOp);
