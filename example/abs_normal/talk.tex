@@ -188,10 +188,13 @@ Evaluates $y[ \hat{x} ] ( x , a[ \hat{x} ] (x) )$
 
 \begin{block}{Problem}
 minimize $\tilde{f} ( x ) = y[ \hat{x} ] ( x , a( \hat{x} ) )$ w.r.t
-$x$ subject to $-b \leq x \leq b$.
+$x$ subject to $-b \leq x \leq b$ using the assumption
+that $\tilde{f} (x)$ is convex.
 \end{block}
 \pause
 
+
+\begin{block}{Algorithm}
 \begin{enumerate}
 
 \item
@@ -201,11 +204,6 @@ cutting planes.
 
 \item
 \label{NextIterationItem}
-Compute derivative of $\tilde{f} ( x )$.
-If it is near zero return $x$ as solution.
-\pause
-
-\item
 Add affine apprimation for $\tilde{f} ( x )$ at $x$ to $C$.
 \pause
 
@@ -217,9 +215,11 @@ subject to $-b \leq x \leq b$ (this is an LP).
 
 
 \item
-Goto step \ref{NextIterationItem}.
+If change in $x$ for this this iteration is small, return $x$ as solution.
+Otherwise, goto step \ref{NextIterationItem}.
 
 \end{enumerate}
+\end{block}
 
 
 \end{frame}
