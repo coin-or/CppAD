@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -794,7 +794,7 @@ and improve its documentation.
 $pre
 
 $$
-Correct the syntax for the $cref/Parameter and Variable/ParVar/$$
+Correct the syntax for the $cref/Parameter and Variable/par_var_dyn/$$
 functions.
 
 
@@ -856,7 +856,7 @@ this list is no longer necessary (a tape id number is used in its place)
 $pre
 
 $$
-During the process above, the function $cref/Variable/ParVar/$$ was added.
+During the process above, the function $cref/Variable/par_var_dyn/$$ was added.
 
 
 $head 04-20$$

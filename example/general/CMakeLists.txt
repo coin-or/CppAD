@@ -1,5 +1,5 @@
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the
@@ -105,7 +105,7 @@ SET(source_list
 	ode_stiff.cpp
 	ode_taylor.cpp
 	opt_val_hes.cpp
-	par_var.cpp
+	par_var_dyn.cpp
 	poly.cpp
 	pow.cpp
 	pow_int.cpp

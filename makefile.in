@@ -564,7 +564,7 @@ nobase_myinclude_HEADERS = \
 	cppad/core/opt_val_hes.hpp \
 	cppad/core/ordered.hpp \
 	cppad/core/parallel_ad.hpp \
-	cppad/core/par_var.hpp \
+	cppad/core/par_var_dyn.hpp \
 	cppad/core/pow.hpp \
 	cppad/core/print_for.hpp \
 	cppad/core/reverse.hpp \

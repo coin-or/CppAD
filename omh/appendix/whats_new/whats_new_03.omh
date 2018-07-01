@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -368,7 +368,7 @@ $code State$$,
 $code Order$$,
 $code Required$$,
 $code Dependent$$, and
-$cref/Parameter/ParVar/$$.
+$cref/Parameter/par_var_dyn/$$.
 
 $head 09-20$$
 The functions $code Grad$$ and $code Hess$$ were

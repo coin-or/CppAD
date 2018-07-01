@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -910,7 +910,7 @@ $cref/old Dependent syntax/FunDeprecated/Dependent/$$.
 
 $subhead 02-16$$
 Added $codei%VecAD<%Base%>%$$ as a valid argument type for the
-$cref/Parameter and Variable/ParVar/$$ functions.
+$cref/Parameter and Variable/par_var_dyn/$$ functions.
 In addition, $cref/size_t indexing/VecAD/size_t Indexing/$$
 is was extended to be allowed during taping so long as the
 VecAD object is a parameter.
@@ -966,4 +966,3 @@ not existing for a period of time.
 The automated tests have been extended so that this should not happen again.
 
 $end
-

@@ -128,7 +128,7 @@ $codei%
 no matter what the types of $icode z$$, $icode u$$, and $icode v$$.
 
 $lnext
-The $cref/Parameter and Variable/ParVar/$$ functions cannot be used with
+The $cref/Parameter and Variable/par_var_dyn/$$ functions cannot be used with
 $codei%VecAD<%Base%>::reference%$$ arguments like $icode r$$,
 use the entire $codei%VecAD<%Base%>%$$ vector instead; i.e. $icode v$$.
 
@@ -180,7 +180,7 @@ $codei%
 %$$
 as $code size_t$$ indexing of a $code VecAD$$ object.
 This indexing is only valid if the vector $icode v$$ is a
-$cref/parameter/ParVar/$$; i.e.,
+$cref/parameter/par_var_dyn/$$; i.e.,
 it does not depend on the independent variables.
 
 $subhead i$$

@@ -23,19 +23,23 @@
 #     a way to distribute gpl version of repository.
 # 11. Change UserOp -> AfunOpm Usr[ar][vp]Op -> Afun[ar][vp]Op
 # 12. Remove all doxygen \a commands (not used consistently)
+# 13. Remove CPPAD_INLINE_FRIEND_TEMPLATE_FUNCTION
 # -----------------------------------------------------------------------------
 spell_list='
 '
 revert_list='
 '
 move_list='
-	cppad/local/optimize/get_opt_op_info.hpp
+	cppad/core/par_var.hpp
+	example/general/par_var.cpp
 '
-move_sed='s|get_opt_op_info|get_cexp_info|'
+move_sed='s|par_var|par_var_dyn|'
 #
 cat << EOF > junk.sed
-s|get_opt_op_info|get_cexp_info|
-s|GET_OPT_OP_INFO|GET_CEXP_INFO|
+s|ParVar|par_var_dyn|g
+s|/parvar/|/par_var_dyn/|g
+s|par_var.hpp|par_var_dyn.hpp|g
+s|par_var.cpp|par_var_dyn.cpp|g
 EOF
 # -----------------------------------------------------------------------------
 if [ $0 != "bin/batch_edit.sh" ]

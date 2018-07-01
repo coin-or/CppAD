@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -878,12 +878,12 @@ The request was implemented on $cref/06-19/whats_new_06/06-19/$$
 and the entry was removed from the wish list.
 
 $head 03-31$$
-Add examples for the $cref/Parameter, Variable/ParVar/$$ and
+Add examples for the $cref/Parameter, Variable/par_var_dyn/$$ and
 $cref Independent$$ functions.
 $pre
 
 $$
-Move the $cref/Parameter and Variable/ParVar/$$ functions from
+Move the $cref/Parameter and Variable/par_var_dyn/$$ functions from
 the $cref ADFun$$ section to the $cref AD$$ section.
 $pre
 

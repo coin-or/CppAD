@@ -1,8 +1,7 @@
-// $Id$
 # ifndef CPPAD_CORE_BASE_HASH_HPP
 # define CPPAD_CORE_BASE_HASH_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -32,7 +31,7 @@ CppAD uses a table of $icode Base$$ type values when recording
 $codei%AD<%Base%>%$$ operations.
 A hashing function is used to reduce number of values stored in this table;
 for example, it is not necessary to store the value 3.0 every
-time it is used as a $cref/parameter/parvar/$$.
+time it is used as a $cref/parameter/par_var_dyn/$$.
 
 $head Default$$
 The default hashing function works with the set of bits that correspond

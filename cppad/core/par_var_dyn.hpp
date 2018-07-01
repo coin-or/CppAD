@@ -1,5 +1,5 @@
-# ifndef CPPAD_CORE_PAR_VAR_HPP
-# define CPPAD_CORE_PAR_VAR_HPP
+# ifndef CPPAD_CORE_PAR_VAR_DYN_HPP
+# define CPPAD_CORE_PAR_VAR_DYN_HPP
 
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
@@ -14,7 +14,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 ---------------------------------------------------------------------------
 
-$begin ParVar$$
+$begin par_var_dyn$$
 $spell
 	VecAD
 	const
@@ -66,10 +66,10 @@ $cref/operation sequence/glossary/Operation/Sequence/$$.
 
 $head Example$$
 $children%
-	example/general/par_var.cpp
+	example/general/par_var_dyn.cpp
 %$$
 The file
-$cref par_var.cpp$$
+$cref par_var_dyn.cpp$$
 contains an example and test of these functions.
 It returns true if it succeeds and false otherwise.
 

@@ -123,7 +123,7 @@ extern bool num_limits(void);
 extern bool OdeStiff(void);
 extern bool ode_taylor(void);
 extern bool opt_val_hes(void);
-extern bool ParVar(void);
+extern bool par_var_dyn(void);
 extern bool Poly(void);
 extern bool pow_int(void);
 extern bool pow(void);
@@ -233,7 +233,7 @@ int main(void)
 	Run( OdeStiff,          "OdeStiff"         );
 	Run( ode_taylor,        "ode_taylor"       );
 	Run( opt_val_hes,       "opt_val_hes"      );
-	Run( ParVar,            "ParVar"           );
+	Run( par_var_dyn,       "par_var_dyn"      );
 	Run( Poly,              "Poly"             );
 	Run( pow_int,           "pow_int"          );
 	Run( pow,               "pow"              );
