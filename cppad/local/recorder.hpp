@@ -40,10 +40,13 @@ private:
 	size_t abort_op_index_;
 
 	/// Number of variables in the recording.
-	size_t    num_var_rec_;
+	size_t num_var_rec_;
+
+	/// Number of dynamic parameters in the recording
+	size_t num_dynamic_;
 
 	/// Number vecad load operations (LdpOp or LdvOp) currently in recording.
-	size_t	num_load_op_rec_;
+	size_t num_load_op_rec_;
 
 	/// The operators in the recording.
 	pod_vector<opcode_t> op_vec_;
@@ -68,13 +71,14 @@ public:
 	/// Default constructor
 	recorder(void) :
 	num_var_rec_(0)                          ,
+	num_dynamic_(0)                          ,
 	num_load_op_rec_(0)                      ,
 	par_hash_table_( CPPAD_HASH_TABLE_SIZE )
 	{	record_compare_ = true;
 		abort_op_index_ = 0;
 	}
 
-	/// Set record_compare optin
+	/// Set record_compare option
 	void set_record_compare(bool record_compare)
 	{	record_compare_ = record_compare; }
 
@@ -82,13 +86,21 @@ public:
 	void set_abort_op_index(size_t abort_op_index)
 	{	abort_op_index_ = abort_op_index; }
 
+	/// Set number of dynamic parameters
+	void set_num_dynamic(size_t num_dynamic)
+	{	num_dynamic_ = num_dynamic; }
+
 	/// Get record_compare option
-	size_t get_record_compare(void)
+	size_t get_record_compare(void) const
 	{	return record_compare_; }
 
 	/// Get the abort_op_index
-	size_t get_abort_op_index(void)
+	size_t get_abort_op_index(void) const
 	{	return abort_op_index_; }
+
+	/// Get number of dynamic parameters
+	size_t get_num_dynamic(void) const
+	{	return num_dynamic_; }
 
 	/// Destructor
 	~recorder(void)

@@ -2,7 +2,7 @@
 # define CPPAD_LOCAL_DECLARE_AD_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -59,11 +59,13 @@ namespace CppAD {
 	// functions with one VecAD<Base> argument
 	template <class Base> bool Parameter         (const VecAD<Base> &u);
 	template <class Base> bool Variable          (const VecAD<Base> &u);
+	template <class Base> bool Dynamic           (const VecAD<Base> &u);
 
 	// functions with one AD<Base> argument
 	template <class Base> int  Integer           (const AD<Base> &u);
 	template <class Base> bool Parameter         (const AD<Base> &u);
 	template <class Base> bool Variable          (const AD<Base> &u);
+	template <class Base> bool Dynamic           (const AD<Base> &u);
 	template <class Base> bool IdenticalZero     (const AD<Base> &u);
 	template <class Base> bool IdenticalOne      (const AD<Base> &u);
 	template <class Base> bool IdenticalPar      (const AD<Base> &u);

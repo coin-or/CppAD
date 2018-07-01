@@ -54,7 +54,10 @@ private :
 	// template friend functions where template parameter is not bound
 	template <class VectorAD>
 	friend void Independent(
-		VectorAD &x, size_t abort_op_index, bool record_compare
+		VectorAD&  x              ,
+		size_t     abort_op_index ,
+		bool       record_compare ,
+		VectorAD&  dynamic
 	);
 
 	// one argument functions
@@ -62,10 +65,17 @@ private :
 		(const AD<Base>    &u);
 	friend bool Parameter          <Base>
 		(const VecAD<Base> &u);
+	//
 	friend bool Variable           <Base>
 		(const AD<Base>    &u);
 	friend bool Variable           <Base>
 		(const VecAD<Base> &u);
+	//
+	friend bool Dynamic            <Base>
+		(const AD<Base>    &u);
+	friend bool Dynamic            <Base>
+		(const VecAD<Base> &u);
+	//
 	friend int  Integer            <Base>
 		(const AD<Base>    &u);
 	friend AD   Var2Par            <Base>

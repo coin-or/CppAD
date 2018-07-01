@@ -25,9 +25,6 @@ $spell
 $$
 
 $section Glossary$$
-$mindex efficient$$
-
-
 
 $head AD Function$$
 Given an $cref ADFun$$ object $icode f$$

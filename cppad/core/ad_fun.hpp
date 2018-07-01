@@ -312,6 +312,10 @@ public:
 	template <typename ADvector>
 	void Dependent(const ADvector &x, const ADvector &y);
 
+	/// new_dynamic user API
+	template <typename VectorBase>
+	void new_dynamic(const VectorBase& dynamic);
+
 	/// forward mode user API, one order multiple directions.
 	template <typename VectorBase>
 	VectorBase Forward(size_t q, size_t r, const VectorBase& x);

@@ -127,12 +127,13 @@ private:
 	);
 
 public:
-	// default constructor and destructor
-
 	// public function only used by CppAD::Independent
 	template <typename VectorADBase>
 	void Independent(
-		VectorADBase &u, size_t abort_op_index, bool record_compare
+		VectorADBase&   x              ,
+		size_t          abort_op_index ,
+		bool            record_compare ,
+		VectorADBase&   dynamic
 	);
 
 };

@@ -161,6 +161,7 @@ nobase_myinclude_HEADERS =  \
 	cppad/core/mul_eq.hpp \
 	cppad/core/mul.hpp \
 	cppad/core/near_equal_ext.hpp \
+	cppad/core/new_dynamic.hpp \
 	cppad/core/numeric_limits.hpp \
 	cppad/core/num_skip.hpp \
 	cppad/core/old_atomic.hpp \

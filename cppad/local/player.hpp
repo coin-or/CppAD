@@ -39,6 +39,9 @@ private:
 	// ----------------------------------------------------------------------
 	// information that defines the recording
 
+	/// Number of dynamic parameters
+	size_t num_dynamic_;
+
 	/// Number of variables in the recording.
 	size_t num_var_rec_;
 
@@ -146,6 +149,7 @@ public:
 		size_t addr_t_max = size_t( std::numeric_limits<addr_t>::max() );
 # endif
 		// just set size_t values
+		num_dynamic_        = rec.num_dynamic_;
 		num_var_rec_        = rec.num_var_rec_;
 		num_load_op_rec_    = rec.num_load_op_rec_;
 
@@ -512,6 +516,10 @@ public:
 	{	CPPAD_ASSERT_UNKNOWN(i < text_vec_.size() );
 		return text_vec_.data() + i;
 	}
+
+	/// Fetch number of dynamic parameters in the recording
+	size_t num_dynamic(void) const
+	{	return num_dynamic_; }
 
 	/// Fetch number of variables in the recording.
 	size_t num_var_rec(void) const
