@@ -42,7 +42,7 @@ returns true iff \c x is identically a parameter.
 template <class Base>
 CPPAD_INLINE_FRIEND_TEMPLATE_FUNCTION
 bool IdenticalPar(const AD<Base> &x)
-{	return Parameter(x) && IdenticalPar(x.value_); }
+{	return Parameter(x) & (! Dynamic(x)) & IdenticalPar(x.value_); }
 // Zero ==============================================================
 /*!
 Determine if an AD<Base> is equal to zero,
@@ -58,7 +58,7 @@ returns true if and only if
 template <class Base>
 CPPAD_INLINE_FRIEND_TEMPLATE_FUNCTION
 bool IdenticalZero(const AD<Base> &x)
-{	return Parameter(x) && IdenticalZero(x.value_); }
+{	return Parameter(x) & (! Dynamic(x)) & IdenticalZero(x.value_); }
 // One ==============================================================
 /*!
 Determine if an AD<Base> is equal to one,
@@ -74,7 +74,7 @@ returns true if and only if
 template <class Base>
 CPPAD_INLINE_FRIEND_TEMPLATE_FUNCTION
 bool IdenticalOne(const AD<Base> &x)
-{	return Parameter(x) && IdenticalOne(x.value_); }
+{	return Parameter(x) & (! Dynamic(x)) & IdenticalOne(x.value_); }
 // Equal ===================================================================
 /*!
 Determine if two AD<Base> objects are equal,
@@ -94,9 +94,10 @@ template <class Base>
 CPPAD_INLINE_FRIEND_TEMPLATE_FUNCTION
 bool IdenticalEqualPar
 (const AD<Base> &x, const AD<Base> &y)
-{	bool parameter;
-	parameter = ( Parameter(x) & Parameter(y) );
-	return parameter  && IdenticalEqualPar(x.value_, y.value_);
+{	bool constant;
+	constant  = ( Parameter(x) & Parameter(y) );
+	constant &= ! ( Dynamic(x) | Dynamic(y) );
+	return constant  & IdenticalEqualPar(x.value_, y.value_);
 }
 // ==========================================================================
 

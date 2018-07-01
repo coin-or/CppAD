@@ -89,6 +89,7 @@ void ADTape<Base>::Independent(
 	{	CPPAD_ASSERT_UNKNOWN( ! Dynamic( dynamic[j] ) );
 		CPPAD_ASSERT_UNKNOWN( Parameter( dynamic[j] ) );
 # ifndef NDEBUG
+		// dynamic parameters can not match previous parameters so i == j
 		size_t i = Rec_.PutPar( dynamic[j].value_ );
 		CPPAD_ASSERT_UNKNOWN(i == j );
 # else

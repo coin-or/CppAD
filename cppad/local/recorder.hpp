@@ -321,6 +321,15 @@ This value is not necessarily placed at the end of the vector
 template <class Base>
 addr_t recorder<Base>::PutPar(const Base &par)
 {
+	// ---------------------------------------------------------------------
+	// dynamic parameters come first
+	if( par_vec_.size() < num_dynamic_ )
+	{	par_vec_.push_back( par );
+		return static_cast<addr_t>( par_vec_.size() - 1 );
+	}
+	// ---------------------------------------------------------------------
+	// check for a match with a previous parameter
+	//
 	// get hash code for this value
 	size_t code  = static_cast<size_t>( hash_code(par) );
 
@@ -328,19 +337,20 @@ addr_t recorder<Base>::PutPar(const Base &par)
 	size_t index = static_cast<size_t>( par_hash_table_[code] );
 
 	// check if the old parameter matches the new one
-	if( index < par_vec_.size() )
+	if( (num_dynamic_ <= index) & ( index < par_vec_.size() ) )
 	{	if( IdenticalEqualPar(par_vec_[index], par) )
 		return static_cast<addr_t>( index );
 	}
-
-	// place the new paramerter in par_vec_
+	// ---------------------------------------------------------------------
+	// put paramerter in par_vec_ and replace hash table entry for this codee
+	//
 	index           = par_vec_.extend(1);
 	par_vec_[index] = par;
 	CPPAD_ASSERT_UNKNOWN( par_vec_.size() == index + 1 );
-
+	//
 	// change the hash table for this code to point to new value
 	par_hash_table_[code] = static_cast<addr_t>( index );
-
+	//
 	// return the parameter index
 	CPPAD_ASSERT_KNOWN(
 		static_cast<size_t>( std::numeric_limits<addr_t>::max() ) >= index,
