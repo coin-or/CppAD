@@ -117,6 +117,7 @@ extern bool mul_level_ode(void);
 extern bool mul_level(void);
 extern bool Mul(void);
 extern bool NearEqualExt(void);
+extern bool new_dynamic(void);
 extern bool number_skip(void);
 extern bool NumericType(void);
 extern bool num_limits(void);
@@ -227,6 +228,7 @@ int main(void)
 	Run( mul_level_ode,     "mul_level_ode"    );
 	Run( Mul,               "Mul"              );
 	Run( NearEqualExt,      "NearEqualExt"     );
+	Run( new_dynamic,       "new_dynamic"      );
 	Run( number_skip,       "number_skip"      );
 	Run( NumericType,       "NumericType"      );
 	Run( num_limits,        "num_limits"       );

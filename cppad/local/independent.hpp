@@ -95,7 +95,7 @@ void ADTape<Base>::Independent(
 # else
 		Rec_.PutPar( dynamic[j].value_ );
 # endif
-		dynamic[j].taddr_   = 0;
+		dynamic[j].taddr_   = static_cast<addr_t>(j);
 		dynamic[j].tape_id_ = id_;
 		dynamic[j].dynamic_ = true;
 		CPPAD_ASSERT_UNKNOWN( Dynamic( dynamic[j] ) );

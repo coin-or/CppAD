@@ -395,6 +395,7 @@ public:
 	*/
 	void operator=(const player& play)
 	{
+		num_dynamic_        = play.num_dynamic_;
 		num_var_rec_        = play.num_var_rec_;
 		num_load_op_rec_    = play.num_load_op_rec_;
 		op_vec_             = play.op_vec_;
@@ -411,6 +412,7 @@ public:
 	/// Erase the recording stored in the player
 	void Erase(void)
 	{
+		num_dynamic_       = 0;
 		num_var_rec_       = 0;
 		num_load_op_rec_   = 0;
 		num_vecad_vec_rec_ = 0;
@@ -448,6 +450,11 @@ public:
 		CPPAD_ASSERT_UNKNOWN( op2arg_vec_.size() == 0  );
 		CPPAD_ASSERT_UNKNOWN( op2var_vec_.size() == 0  );
 		CPPAD_ASSERT_UNKNOWN( var2op_vec_.size() == 0  );
+	}
+	/// Set a dynamic parameter value
+	void set_dynamic(size_t i, const Base par)
+	{	CPPAD_ASSERT_UNKNOWN( i < num_dynamic_ );
+		par_vec_[i] = par;
 	}
 	// ================================================================
 	// const functions that retrieve infromation from this player

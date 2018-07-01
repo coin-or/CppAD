@@ -55,11 +55,11 @@ The Taylor coefficients computed by previous calls to
 $cref/f.Forward/Forward/$$ are lost after this operation; including the
 order zero coefficients (because they may depend on the dynamic parameters).
 
-$comment%
-	example/general/dynamic.cpp
+$children%
+	example/general/new_dynamic.cpp
 %$$
 $head Example$$
-The file $code dynamic_parameter.cpp$$
+The file $cref new_dynamic.cpp$$
 contains an example and test of this operation.
 It returns true if it succeeds and false otherwise.
 
@@ -87,12 +87,9 @@ void ADFun<Base>::new_dynamic(const VectorBase& dynamic)
 	// check VectorBase is Simple Vector class with Base elements
 	CheckSimpleVector<Base, VectorBase>();
 
-	// get pointer to parameter vector in play_
-	Base* parameter = play_.parameter();
-
 	// set the dynamic parameters
 	for(size_t j = 0; j < play_.num_dynamic(); ++j)
-		parameter[j] = dynamic[j];
+		play_.set_dynamic(j, dynamic[j]);
 
 	// we now have zero taylor_ coefficient orders per variable
 	num_order_taylor_ = 0;

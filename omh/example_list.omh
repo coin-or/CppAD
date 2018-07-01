@@ -222,6 +222,7 @@ $rref multi_newton.cpp$$
 $rref nan.cpp$$
 $rref near_equal.cpp$$
 $rref near_equal_ext.cpp$$
+$rref new_dynamic.cpp$$
 $rref number_skip.cpp$$
 $rref numeric_type.cpp$$
 $rref num_limits.cpp$$
