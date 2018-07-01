@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -70,6 +70,16 @@ $head Base Type$$
 If $icode x$$ is an $codei%AD<%Base%>%$$ object,
 $icode Base$$ is referred to as the base type for $icode x$$.
 
+$head Dynamic Parameter$$
+An $codei%AD<%Base%>%$$ object $icode u$$ is a dynamic parameter if
+it is a $cref/Parameter/glossary/Parameter/$$ and its value depends
+on the independent parameter vector for
+a currently $cref/active tape/glossary/Tape/Active/$$.
+If $icode u$$ is a dynamic parameter,
+$cref/Dynamic(u)/ParVar/$$ returns true,
+$cref/Parameter(u)/ParVar/$$ returns true, and
+$cref/Variable(u)/ParVar/$$ returns false.
+
 $head Elementary Vector$$
 The $th j$$ elementary vector $latex e^j \in B^m$$ is defined by
 $latex \[
@@ -134,8 +144,9 @@ its value does not depend on the value of
 an $cref Independent$$ variable vector for an
 $cref/active tape/glossary/Tape/Active/$$.
 If $icode u$$ is a parameter, the function
-$cref/Parameter(u)/ParVar/$$ returns true
-and $cref/Variable(u)/ParVar/$$ returns false.
+$cref/Parameter(u)/ParVar/$$ returns true,
+$cref/Dynamic(u)/ParVar/$$ may be true or false, and
+$cref/Variable(u)/ParVar/$$ returns false.
 
 $head Row-major Representation$$
 A $cref SimpleVector$$ $icode v$$ is a row-major representation of a matrix
@@ -234,8 +245,9 @@ An $codei%AD<%Base%>%$$ object $icode u$$ is a variable if
 its value depends on an independent variable vector for
 a currently $cref/active tape/glossary/Tape/Active/$$.
 If $icode u$$ is a variable,
-$cref/Variable(u)/ParVar/$$ returns true and
-$cref/Parameter(u)/ParVar/$$ returns false.
+$cref/Variable(u)/ParVar/$$ returns true,
+$cref/Parameter(u)/ParVar/$$ returns false, and
+$cref/Dynamic(u)/ParVar/$$ returns false.
 For example,
 directly after the code sequence
 $codei%
@@ -250,7 +262,7 @@ $codei%
 	%u% = 5;
 %$$
 $icode u$$  is currently a $cref/parameter/glossary/Parameter/$$
-(not a variable).
+and not a dynamic parameter or a variable.
 $pre
 
 $$

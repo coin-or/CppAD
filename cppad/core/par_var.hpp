@@ -2,7 +2,7 @@
 # define CPPAD_CORE_PAR_VAR_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -21,19 +21,21 @@ $spell
 	bool
 $$
 
-$section Is an AD Object a Parameter or Variable$$
+$section Is an AD Object a Parameter, Variable, or Dynamic Parameter$$
 
 $head Syntax$$
-$icode%b% = Parameter(%x%)%$$
-$pre
-$$
-$icode%b% = Variable(%x%)%$$
-
+$icode%b% = Parameter(%x%)
+%$$
+$icode%b% = Variable(%x%)
+%$$
+$icode%b% = Dynamic(%x%)
+%$$
 
 $head Purpose$$
 Determine if $icode x$$ is a
-$cref/parameter/glossary/Parameter/$$ or
-$cref/variable/glossary/Variable/$$.
+$cref/parameter/glossary/Parameter/$$,
+$cref/variable/glossary/Variable/$$ or
+$cref/dynamic parameter/glossary/Dynamic Parameter/$$.
 
 $head x$$
 The argument $icode x$$ has prototype
@@ -47,11 +49,13 @@ The return value $icode b$$ has prototype
 $codei%
 	bool %b%
 %$$
-The return value for $code Parameter$$ ($code Variable$$)
-is true if and only if $icode x$$ is a parameter (variable).
-Note that a $cref/VecAD<Base>/VecAD/$$ object
+The return value for $code Parameter$$, $code Variable$$, and $code Dynamic$$
+is true if and only if $icode x$$ is a
+parameter, variable, dynamic parameter respectively.
+Note that a dynamic parameter is also a parameter.
+Also note that a $cref/VecAD<Base>/VecAD/$$ object
 is a variable if any element of the vector depends on the independent
-variables.
+variables and it cannot have dynamic parameters.
 
 $head Operation Sequence$$
 The result of this operation is not an
@@ -74,11 +78,12 @@ $end
 */
 
 namespace CppAD {
+	// -----------------------------------------------------------------------
 	// Parameter
 	template <class Base>
 	CPPAD_INLINE_FRIEND_TEMPLATE_FUNCTION
 	bool Parameter(const AD<Base> &x)
-	{	if( x.tape_id_ == 0 )
+	{	if( (x.tape_id_ == 0) | x.dynamic_ )
 			return true;
 		size_t thread = size_t(x.tape_id_ % CPPAD_MAX_NUM_THREADS);
 		return x.tape_id_ != *AD<Base>::tape_id_ptr(thread);
@@ -93,11 +98,12 @@ namespace CppAD {
 		return x.tape_id_ != *AD<Base>::tape_id_ptr(thread);
 	}
 
+	// -----------------------------------------------------------------------
 	// Variable
 	template <class Base>
 	CPPAD_INLINE_FRIEND_TEMPLATE_FUNCTION
 	bool Variable(const AD<Base> &x)
-	{	if( x.tape_id_ == 0 )
+	{	if( (x.tape_id_ == 0) | x.dynamic_ )
 			return false;
 		size_t thread = size_t(x.tape_id_ % CPPAD_MAX_NUM_THREADS);
 		return x.tape_id_ == *AD<Base>::tape_id_ptr(thread);
@@ -111,6 +117,23 @@ namespace CppAD {
 		size_t thread = size_t(x.tape_id_ % CPPAD_MAX_NUM_THREADS);
 		return x.tape_id_ == *AD<Base>::tape_id_ptr(thread);
 	}
+
+	// -----------------------------------------------------------------------
+	// Dynamic
+	template <class Base>
+	CPPAD_INLINE_FRIEND_TEMPLATE_FUNCTION
+	bool Dynamic(const AD<Base> &x)
+	{	if( (x.tape_id_ == 0) | (! x.dynamic_ ) )
+			return false;
+		size_t thread = size_t(x.tape_id_ % CPPAD_MAX_NUM_THREADS);
+		return x.tape_id_ == *AD<Base>::tape_id_ptr(thread);
+	}
+
+	template <class Base>
+	CPPAD_INLINE_FRIEND_TEMPLATE_FUNCTION
+	bool Dynamic(const VecAD<Base> &x)
+	{	return false; }
+
 }
 // END CppAD namespace
 

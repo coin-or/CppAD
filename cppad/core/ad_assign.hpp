@@ -2,7 +2,7 @@
 # define CPPAD_CORE_AD_ASSIGN_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -78,6 +78,7 @@ inline AD<Base>& AD<Base>::operator=(const AD<Base> &right)
 {	value_    = right.value_;
 	tape_id_  = right.tape_id_;
 	taddr_    = right.taddr_;
+	dynamic_  = right.dynamic_;
 
 	return *this;
 }

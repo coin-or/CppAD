@@ -2,7 +2,7 @@
 # define CPPAD_CORE_AD_CTOR_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -91,6 +91,7 @@ inline AD<Base>::AD(const AD &x)
 	value_    = x.value_;
 	tape_id_  = x.tape_id_;
 	taddr_    = x.taddr_;
+	dynamic_  = x.dynmaic_;
 
 	return;
 }
@@ -108,6 +109,7 @@ inline AD<Base>::AD(void)
 : value_()
 , tape_id_(0)
 , taddr_(0)
+, dynamic_(false)
 { }
 
 // --------------------------------------------------------------------------
@@ -128,6 +130,7 @@ inline AD<Base>::AD(const double &d)
 : value_( Base(d) )
 , tape_id_(0)
 , taddr_(0)
+, dynamic_(false)
 {	// check that this is a parameter
 	CPPAD_ASSERT_UNKNOWN( Parameter(*this) );
 }
@@ -153,6 +156,7 @@ inline AD<Base>::AD(const Base &b)
 : value_(b)
 , tape_id_(0)
 , taddr_(0)
+, dynamic_(false)
 {	// check that this is a parameter
 	CPPAD_ASSERT_UNKNOWN( Parameter(*this) );
 }
@@ -189,6 +193,7 @@ inline AD<Base>::AD(const T &t)
 : value_(Base(t))
 , tape_id_(0)
 , taddr_(0)
+, dynamic_(false)
 { }
 
 } // END_CPPAD_NAMESPACE

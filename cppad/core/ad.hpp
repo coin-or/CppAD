@@ -39,8 +39,12 @@ private :
 	// Tape identifier corresponding to taddr
 	tape_id_t tape_id_;
 
-	// taddr_ in tape for this variable
+	// taddr_ in tape for this or dynamic parameter
 	addr_t taddr_;
+
+	// is this a dynamic parameter (or a variable)
+	// when tape is current tape and taddr_ is non-zero.
+	bool   dynamic_;
 	// -----------------------------------------------------------------------
 
 	// enable use of AD<Base> in parallel mode
@@ -273,8 +277,9 @@ private:
 	{	CPPAD_ASSERT_UNKNOWN( Parameter(*this) ); // currently a par
 		CPPAD_ASSERT_UNKNOWN( taddr > 0 );        // sure valid taddr
 
-		taddr_   = taddr;
 		tape_id_ = id;
+		taddr_   = taddr;
+		dynamic_ = false;
 	}
 	// ---------------------------------------------------------------
 	// tape linking functions
