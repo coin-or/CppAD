@@ -2,7 +2,7 @@
 # define CPPAD_CORE_AZMUL_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -102,11 +102,20 @@ azmul(const AD<Base>& x, const AD<Base>& y)
 	if( tape == CPPAD_NULL )
 		return result;
 	tape_id_t tape_id = tape->id_;
-
 	// tape_id cannot match the default value for tape_id_; i.e., 0
 	CPPAD_ASSERT_UNKNOWN( tape_id > 0 );
-	bool var_x = x.tape_id_ == tape_id;
-	bool var_y = y.tape_id_ == tape_id;
+
+	// check if x and y tapes match
+	bool match_x  = x.tape_id_  == tape_id;
+	bool match_y  = y.tape_id_  == tape_id;
+
+	// check if x and y are dynamic parameters
+	bool dyn_x  = match_x  & x.dynamic_;
+	bool dyn_y  = match_y  & y.dynamic_;
+
+	// check if x and y are  variables
+	bool var_x  = match_x  & (! x.dynamic_);
+	bool var_y  = match_y  & (! y.dynamic_);
 
 	if( var_x )
 	{	if( var_y )
@@ -136,7 +145,9 @@ azmul(const AD<Base>& x, const AD<Base>& y)
 			CPPAD_ASSERT_UNKNOWN( local::NumArg(local::ZmulvpOp) == 2 );
 
 			// put operand addresses in tape
-			addr_t p = tape->Rec_.PutPar(y.value_);
+			addr_t p = y.taddr_;
+			if( ! dyn_y )
+				p = tape->Rec_.PutPar(y.value_);
 			tape->Rec_.PutArg(x.taddr_, p);
 
 			// put operator in the tape
@@ -160,7 +171,9 @@ azmul(const AD<Base>& x, const AD<Base>& y)
 			CPPAD_ASSERT_UNKNOWN( local::NumArg(local::ZmulpvOp) == 2 );
 
 			// put operand addresses in tape
-			addr_t p = tape->Rec_.PutPar(x.value_);
+			addr_t p = x.taddr_;
+			if( ! dyn_x )
+				p = tape->Rec_.PutPar(x.value_);
 			tape->Rec_.PutArg(p, y.taddr_);
 
 			// put operator in the tape
@@ -169,6 +182,11 @@ azmul(const AD<Base>& x, const AD<Base>& y)
 			// make result a variable
 			result.tape_id_ = tape_id;
 		}
+	}
+	else
+	{	CPPAD_ASSERT_KNOWN( ! (dyn_x | dyn_y) ,
+		"azmul: one operand is a dynamic parameter and other not a variable"
+		);
 	}
 	return result;
 }
