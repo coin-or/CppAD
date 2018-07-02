@@ -17,8 +17,9 @@ bool new_dynamic(void)
 	using CppAD::AD;
 	using CppAD::NearEqual;
 	using CppAD::azmul;
+	using CppAD::CondExpLt;
 	double eps = 10. * std::numeric_limits<double>::epsilon();
-	size_t n   = 10;
+	size_t n   = 11;
 
 	// dynamic parameter vector
 	CPPAD_TESTVECTOR(AD<double>) adynamic(n);
@@ -61,6 +62,8 @@ bool new_dynamic(void)
 	ay[k]  = pow(ax[k], adynamic[k]) + pow(adynamic[k], ax[k]);
 	++k;
 	ay[k]  = azmul(ax[k], adynamic[k]) + azmul(adynamic[k], ax[k]);
+	++k;
+	ay[k]  = CondExpLt(ax[k], adynamic[k], ax[k], adynamic[k]);
 	++k;
 	ok &= size_t(k) == n;
 
@@ -108,6 +111,9 @@ bool new_dynamic(void)
 	check  = azmul(x[k], Value(adynamic[k])) + azmul(Value(adynamic[k]), x[k]);
 	ok    &= NearEqual(y[k] , check, eps, eps);
 	++k;
+	check  = CondExpLt( x[k], Value(adynamic[k]), x[k], Value(adynamic[k]) );
+	ok    &= NearEqual(y[k] , check, eps, eps);
+	++k;
 	ok &= size_t(k) == n;
 
 	// change the dynamic parameter values
@@ -146,6 +152,9 @@ bool new_dynamic(void)
 	ok    &= NearEqual(y[k] , check, eps, eps);
 	++k;
 	check  = azmul(x[k], dynamic[k]) + azmul(dynamic[k], x[k]);
+	ok    &= NearEqual(y[k] , check, eps, eps);
+	++k;
+	check  = CondExpLt(x[k], dynamic[k], x[k], dynamic[k]);
 	ok    &= NearEqual(y[k] , check, eps, eps);
 	++k;
 	ok &= size_t(k) == n;

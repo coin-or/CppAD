@@ -2,7 +2,7 @@
 # define CPPAD_CORE_COND_EXP_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -231,12 +231,23 @@ AD<Base> CondExpOp(
 	local::ADTape<Base> *tape = CPPAD_NULL;
 	if( Variable(left) )
 		tape = left.tape_this();
-	if( Variable(right) )
+	else if( Variable(right) )
 		tape = right.tape_this();
-	if( Variable(if_true) )
+	else if( Variable(if_true) )
 		tape = if_true.tape_this();
-	if( Variable(if_false) )
+	else if( Variable(if_false) )
 		tape = if_false.tape_this();
+	else
+	{	bool one_dynamic = false;
+		one_dynamic |= Dynamic(left);
+		one_dynamic |= Dynamic(right);
+		one_dynamic |= Dynamic(if_true);
+		one_dynamic |= Dynamic(if_false);
+		CPPAD_ASSERT_KNOWN( ! one_dynamic,
+			"Arguments to conditional expression:\n"
+			"one is a dynamic parameter argument and none are variables."
+		);
+	}
 
 	// add this operation to the tape
 	if( tape != CPPAD_NULL )
@@ -279,7 +290,11 @@ void local::ADTape<Base>::RecordCondExp(
 
 	// ind[2] = left address
 	if( Parameter(left) )
-		ind2 = Rec_.PutPar(left.value_);
+	{	if( Dynamic(left) )
+			ind2 = left.taddr_;
+		else
+			ind2 = Rec_.PutPar(left.value_);
+	}
 	else
 	{	ind1 += 1;
 		ind2 = left.taddr_;
@@ -287,7 +302,11 @@ void local::ADTape<Base>::RecordCondExp(
 
 	// ind[3] = right address
 	if( Parameter(right) )
-		ind3 = Rec_.PutPar(right.value_);
+	{	if( Dynamic(right) )
+			ind3 = right.taddr_;
+		else
+			ind3 = Rec_.PutPar(right.value_);
+	}
 	else
 	{	ind1 += 2;
 		ind3 = right.taddr_;
@@ -295,7 +314,11 @@ void local::ADTape<Base>::RecordCondExp(
 
 	// ind[4] = if_true address
 	if( Parameter(if_true) )
-		ind4 = Rec_.PutPar(if_true.value_);
+	{	if( Dynamic(if_true) )
+			ind4 = if_true.taddr_;
+		else
+			ind4 = Rec_.PutPar(if_true.value_);
+	}
 	else
 	{	ind1 += 4;
 		ind4 = if_true.taddr_;
@@ -303,7 +326,11 @@ void local::ADTape<Base>::RecordCondExp(
 
 	// ind[5] =  if_false address
 	if( Parameter(if_false) )
-		ind5 = Rec_.PutPar(if_false.value_);
+	{	if( Dynamic(if_false) )
+			ind5 = if_false.taddr_;
+		else
+			ind5 = Rec_.PutPar(if_false.value_);
+	}
 	else
 	{	ind1 += 8;
 		ind5 = if_false.taddr_;
