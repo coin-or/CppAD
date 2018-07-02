@@ -2,7 +2,7 @@
 # define CPPAD_CORE_VALUE_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -54,13 +54,11 @@ AD of $icode Base$$
 $cref/operation sequence/glossary/Operation/Sequence/$$.
 
 $head Restriction$$
-If the argument $icode x$$ is a
-$cref/variable/glossary/Variable/$$ its dependency information
-would not be included in the $code Value$$ result (see above).
-For this reason,
-the argument $icode x$$ must be a $cref/parameter/glossary/Parameter/$$; i.e.,
-it cannot depend on the current
-$cref/independent variables/glossary/Tape/Independent Variable/$$.
+The argument $icode x$$ must not be a
+$cref/variable/glossary/Variable/$$ or
+$cref/dynamic parameter/glossary/Dynamic Parameter/$$
+because its dependency information
+would not be included in the $code Value$$ result $icode b$$.
 
 $head Example$$
 $children%
@@ -81,15 +79,13 @@ template <class Base>
 CPPAD_INLINE_FRIEND_TEMPLATE_FUNCTION
 Base Value(const AD<Base> &x)
 {	Base result;
-
+	//
 	CPPAD_ASSERT_KNOWN(
-		Parameter(x) ,
-		"Value: argument is a variable (not a parameter)"
+		! ( Variable(x) | Dynamic(x) ) ,
+		"Value: argument is a variable or dynamic parameter"
 	);
-
-
+	//
 	result = x.value_;
-
 	return result;
 }
 

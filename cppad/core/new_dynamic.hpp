@@ -28,11 +28,11 @@ $icode%f%.new_dynamic(%dynamic%)%$$
 $head Purpose$$
 Often one is only interested in computing derivatives with respect
 to a subset of arguments to a function.
-In this case one could make all the arguments to the function
+In this case, it is easier to make all the arguments to the function
 $cref/independent variables/glossary/Tape/Independent Variable/$$.
 It is more efficient to for the independent variables to be the
 arguments we are computing derivatives w.r.t and for the other arguments to be
-$cref/dynamic parameters/glossary/Dynamic Parameters/$$.
+$cref/dynamic parameters/glossary/Dynamic Parameter/$$.
 This function is used to change the value of the dynamic parameters.
 
 $head f$$
@@ -67,6 +67,12 @@ order zero coefficients (because they may depend on the dynamic parameters).
 In order words;
 $cref/f.size_order/size_order/$$ returns zero directly after
 $icode%f%.new_dynamic%$$ is called.
+
+$head Restrictions$$
+Dynamic parameters are only allowed in operations where one of the other
+operands is a $cref/Variable/glossary/Variable/$$.
+You must include all the parameters that depend on dynamic parameters in the
+$cref/dynamic/Independent/dynamic/$$ argument to $code Independent$$.
 
 $children%
 	example/general/new_dynamic.cpp

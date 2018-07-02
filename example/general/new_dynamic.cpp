@@ -51,6 +51,10 @@ bool new_dynamic(void)
 	bool   record_compare = true;
 	CppAD::Independent(ax, abort_op_index, record_compare, adynamic);
 
+	// check that elements of adynamic are currently dynamic parameters
+	for(size_t j = 0; j < nd; ++j)
+		ok &= Dynamic( adynamic[j] );
+
 	// range space vector
 	size_t ny = 1;
 	CPPAD_TESTVECTOR(AD<double>) ay(ny);
@@ -60,6 +64,10 @@ bool new_dynamic(void)
 
 	// create f: x -> y and stop tape recording
 	CppAD::ADFun<double> f(ax, ay);
+
+	// check that elements of adynamic are no longer dynamic parameters
+	for(size_t j = 0; j < nd; ++j)
+		ok &= ! Dynamic( adynamic[j] );
 
 	// zero order forward mode
 	CPPAD_TESTVECTOR(double) x(nx), y(ny);
