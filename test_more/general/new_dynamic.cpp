@@ -17,7 +17,7 @@ bool new_dynamic(void)
 	using CppAD::AD;
 	using CppAD::NearEqual;
 	double eps = 10. * std::numeric_limits<double>::epsilon();
-	size_t n   = 5;
+	size_t n   = 8;
 
 	// dynamic parameter vector
 	CPPAD_TESTVECTOR(AD<double>) adynamic(n);
@@ -47,6 +47,17 @@ bool new_dynamic(void)
 	++k;
 	ay[k]  = ax[k];
 	ay[k] += adynamic[k];
+	++k;
+	ay[k]  = ax[k];
+	ay[k] -= adynamic[k];
+	++k;
+	ay[k]  = ax[k];
+	ay[k] *= adynamic[k];
+	++k;
+	ay[k]  = ax[k];
+	ay[k] /= adynamic[k];
+	++k;
+	ok &= size_t(k) == n;
 
 	// create f: x -> y and stop tape recording
 	CppAD::ADFun<double> f(ax, ay);
@@ -76,6 +87,17 @@ bool new_dynamic(void)
 	++k;
 	check  = x[k] + Value(adynamic[k]);
 	ok    &= NearEqual(y[k] , check, eps, eps);
+	++k;
+	check  = x[k] - Value(adynamic[k]);
+	ok    &= NearEqual(y[k] , check, eps, eps);
+	++k;
+	check  = x[k] * Value(adynamic[k]);
+	ok    &= NearEqual(y[k] , check, eps, eps);
+	++k;
+	check  = x[k] / Value(adynamic[k]);
+	ok    &= NearEqual(y[k] , check, eps, eps);
+	++k;
+	ok &= size_t(k) == n;
 
 	// change the dynamic parameter values
 	CPPAD_TESTVECTOR(double) dynamic(n);
@@ -99,6 +121,17 @@ bool new_dynamic(void)
 	++k;
 	check = x[k] + dynamic[k];
 	ok   &= NearEqual(y[k] , check, eps, eps);
+	++k;
+	check = x[k] - dynamic[k];
+	ok   &= NearEqual(y[k] , check, eps, eps);
+	++k;
+	check = x[k] * dynamic[k];
+	ok   &= NearEqual(y[k] , check, eps, eps);
+	++k;
+	check = x[k] / dynamic[k];
+	ok   &= NearEqual(y[k] , check, eps, eps);
+	++k;
+	ok &= size_t(k) == n;
 	//
 	return ok;
 }

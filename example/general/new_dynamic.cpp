@@ -66,6 +66,7 @@ bool new_dynamic(void)
 	x[0] = 3.;
 	x[1] = 4.;
 	y    = f.Forward(0, x);
+	ok  &= f.size_order() == 1;
 	double check;
 	check  = Value( adynamic[0] ) + x[0];
 	check *= Value( adynamic[1] ) + x[0];
@@ -78,8 +79,10 @@ bool new_dynamic(void)
 	dynamic[1] = 3.0;
 	dynamic[2] = 4.0;
 	f.new_dynamic(dynamic);
+	ok  &= f.size_order() == 0;
 	//
 	y    = f.Forward(0, x);
+	ok  &= f.size_order() == 1;
 	check  = dynamic[0] + x[0];
 	check *= dynamic[1] + x[0];
 	check *= dynamic[2] + x[1];
@@ -90,6 +93,7 @@ bool new_dynamic(void)
 	dx[0] = 1.0;
 	dx[1] = 0.0;
 	dy    = f.Forward(1, dx);
+	ok   &= f.size_order() == 2;
 	check = (dynamic[2] +  x[1]) * (dynamic[0] + x[0] + dynamic[1] + x[0]);
 	ok  &= NearEqual(dy[0] , check, eps, eps);
 	//

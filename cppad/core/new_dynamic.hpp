@@ -20,10 +20,20 @@ $spell
 	cpp
 $$
 
-$section Change Value of Dynamic Parameters$$
+$section Change the Dynamic Parameters$$
 
 $head Syntax$$
 $icode%f%.new_dynamic(%dynamic%)%$$
+
+$head Purpose$$
+Often one is only interested in computing derivatives with respect
+to a subset of arguments to a function.
+In this case one could make all the arguments to the function
+$cref/independent variables/glossary/Tape/Independent Variable/$$.
+It is more efficient to for the independent variables to be the
+arguments we are computing derivatives w.r.t and for the other arguments to be
+$cref/dynamic parameters/glossary/Dynamic Parameters/$$.
+This function is used to change the value of the dynamic parameters.
 
 $head f$$
 The object $icode f$$ has prototype
@@ -50,10 +60,13 @@ The type $icode VectorBase$$ must be a $cref SimpleVector$$ class with
 $cref/elements of type/SimpleVector/Elements of Specified Type/$$
 $icode Base$$.
 
-$head Forward$$
+$head Taylor Coefficients$$
 The Taylor coefficients computed by previous calls to
 $cref/f.Forward/Forward/$$ are lost after this operation; including the
 order zero coefficients (because they may depend on the dynamic parameters).
+In order words;
+$cref/f.size_order/size_order/$$ returns zero directly after
+$icode%f%.new_dynamic%$$ is called.
 
 $children%
 	example/general/new_dynamic.cpp

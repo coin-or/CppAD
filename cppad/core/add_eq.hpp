@@ -36,7 +36,9 @@ AD<Base>& AD<Base>::operator += (const AD<Base> &right)
 	bool match_right = right.tape_id_ == tape_id;
 
 	// check if left and right are dynamic parameters
+# ifndef NDEBUG
 	bool dyn_left  = match_left  & dynamic_;
+# endif
 	bool dyn_right = match_right & right.dynamic_;
 
 	// check if left and right are  variables

@@ -1,9 +1,8 @@
-// $Id$
 # ifndef CPPAD_CORE_SUB_EQ_HPP
 # define CPPAD_CORE_SUB_EQ_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -29,11 +28,22 @@ AD<Base>& AD<Base>::operator -= (const AD<Base> &right)
 	if( tape == CPPAD_NULL )
 		return *this;
 	tape_id_t tape_id = tape->id_;
-
 	// tape_id cannot match the default value for tape_id_; i.e., 0
 	CPPAD_ASSERT_UNKNOWN( tape_id > 0 );
-	bool var_left  = tape_id_       == tape_id;
-	bool var_right = right.tape_id_ == tape_id;
+
+	// check if left and right tapes match
+	bool match_left  = tape_id_       == tape_id;
+	bool match_right = right.tape_id_ == tape_id;
+
+	// check if left and right are dynamic parameters
+# ifndef NDEBUG
+	bool dyn_left  = match_left  & dynamic_;
+# endif
+	bool dyn_right = match_right & right.dynamic_;
+
+	// check if left and right are  variables
+	bool var_left  = match_left  & (! dynamic_);
+	bool var_right = match_right & (! right.dynamic_);
 
 	if( var_left )
 	{	if( var_right )
@@ -57,7 +67,9 @@ AD<Base>& AD<Base>::operator -= (const AD<Base> &right)
 			CPPAD_ASSERT_UNKNOWN( local::NumArg(local::SubvpOp) == 2 );
 
 			// put operand addresses in tape
-			addr_t p = tape->Rec_.PutPar(right.value_);
+			addr_t p = right.taddr_;
+			if( ! dyn_right )
+				p = tape->Rec_.PutPar(right.value_);
 			tape->Rec_.PutArg(taddr_, p);
 			// put operator in the tape
 			taddr_ = tape->Rec_.PutOp(local::SubvpOp);
@@ -71,12 +83,20 @@ AD<Base>& AD<Base>::operator -= (const AD<Base> &right)
 		CPPAD_ASSERT_UNKNOWN( local::NumArg(local::SubpvOp) == 2 );
 
 		// put operand addresses in tape
+		CPPAD_ASSERT_KNOWN( ! dyn_left,
+			"binary -=: left operand is a dynamic parameter"
+		);
 		addr_t p = tape->Rec_.PutPar(left);
 		tape->Rec_.PutArg(p, right.taddr_);
 		// put operator in the tape
 		taddr_ = tape->Rec_.PutOp(local::SubpvOp);
 		// make this a variable
 		tape_id_ = tape_id;
+	}
+	else
+	{	CPPAD_ASSERT_KNOWN( ! (dyn_left | dyn_right) ,
+		"binary -=: one operand is a dynamic parameter and other not a variable"
+		);
 	}
 	return *this;
 }
