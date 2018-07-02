@@ -36,8 +36,8 @@ AD<Base> operator + (const AD<Base> &left , const AD<Base> &right)
 	bool match_right = right.tape_id_ == tape_id;
 
 	// check if left and right are dynamic parameters
-	bool dyn_left  = match_left & left.dynamic_;
-	bool dyn_right = match_left & left.dynamic_;
+	bool dyn_left  = match_left  & left.dynamic_;
+	bool dyn_right = match_right & right.dynamic_;
 
 	// check if left and right are  variables
 	bool var_left  = match_left  & (! left.dynamic_);

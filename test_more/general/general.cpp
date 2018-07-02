@@ -84,6 +84,7 @@ extern bool mul_zdouble(void);
 extern bool MulZeroOne(void);
 extern bool NearEqualExt(void);
 extern bool Neg(void);
+extern bool new_dynamic(void);
 extern bool num_limits(void);
 extern bool ode_err_control(void);
 extern bool optimize(void);
@@ -190,6 +191,7 @@ int main(void)
 	Run( MulZeroOne,      "MulZeroOne"     );
 	Run( NearEqualExt,    "NearEqualExt"   );
 	Run( Neg,             "Neg"            );
+	Run( new_dynamic,     "new_dynamic"    );
 	Run( num_limits,      "num_limits"     );
 	Run( ode_err_control, "ode_err_control");
 	Run( optimize,        "optimize"       );

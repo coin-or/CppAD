@@ -100,6 +100,7 @@ SET(source_list
 	mul_zero_one.cpp
 	near_equal_ext.cpp
 	neg.cpp
+	new_dynamic.cpp
 	num_limits.cpp
 	ode_err_control.cpp
 	optimize.cpp

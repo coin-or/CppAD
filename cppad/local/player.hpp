@@ -452,7 +452,7 @@ public:
 		CPPAD_ASSERT_UNKNOWN( var2op_vec_.size() == 0  );
 	}
 	/// Set a dynamic parameter value
-	void set_dynamic(size_t i, const Base par)
+	void set_dynamic(size_t i, const Base& par)
 	{	CPPAD_ASSERT_UNKNOWN( i < num_dynamic_ );
 		par_vec_[i] = par;
 	}
