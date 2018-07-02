@@ -17,9 +17,9 @@ bool new_dynamic(void)
 	using CppAD::AD;
 	using CppAD::NearEqual;
 	double eps = 10. * std::numeric_limits<double>::epsilon();
+	size_t n   = 3;
 
 	// dynamic parameter vector
-	size_t n = 2;
 	CPPAD_TESTVECTOR(AD<double>) adynamic(n);
 	for(size_t j = 0; j < n; ++j)
 		adynamic[j] = 2.0;
@@ -36,8 +36,12 @@ bool new_dynamic(void)
 
 	// range space vector
 	CPPAD_TESTVECTOR(AD<double>) ay(n);
-	ay[0] = (adynamic[0] + ax[0]) * (ax[0] + adynamic[0]);
-	ay[1] = (adynamic[1] - ax[1]) * (ax[1] - adynamic[1]);
+	int k = 0;
+	ay[k] = double(-k-1)*(adynamic[k] + ax[k]) * (ax[k] + adynamic[k]);
+	++k;
+	ay[k] = double(-k-1)*(adynamic[k] - ax[k]) * (ax[k] - adynamic[k]);
+	++k;
+	ay[k] = double(-k-1)*(adynamic[k] * ax[k]) * (ax[k] * adynamic[k]);
 
 	// create f: x -> y and stop tape recording
 	CppAD::ADFun<double> f(ax, ay);
@@ -48,22 +52,35 @@ bool new_dynamic(void)
 		x[j] = double(j + 1);
 	y    = f.Forward(0, x);
 	double check;
-	check = ( Value(adynamic[0]) + x[0] ) * ( x[0] + Value(adynamic[0]) );
-	ok  &= NearEqual(y[0] , check, eps, eps);
-	check = ( Value(adynamic[1]) - x[1] ) * ( x[1] - Value(adynamic[1]) );
-	ok  &= NearEqual(y[1] , check, eps, eps);
+	k = 0;
+	check  = ( Value(adynamic[k]) + x[k] ) * ( x[k] + Value(adynamic[k]) );
+	check *= double(-k-1);
+	ok    &= NearEqual(y[k] , check, eps, eps);
+	++k;
+	check  = ( Value(adynamic[k]) - x[k] ) * ( x[k] - Value(adynamic[k]) );
+	check *= double(-k-1);
+	ok    &= NearEqual(y[k] , check, eps, eps);
+	++k;
+	check  = ( Value(adynamic[k]) * x[k] ) * ( x[k] * Value(adynamic[k]) );
+	check *= double(-k-1);
+	ok    &= NearEqual(y[k] , check, eps, eps);
 
 	// change the dynamic parameter values
 	CPPAD_TESTVECTOR(double) dynamic(n);
 	for(size_t j = 0; j < n; j++)
-		dynamic[j] = 3.0;
+		dynamic[j] = double(2 * j + 1);
 	f.new_dynamic(dynamic);
 	//
-	y    = f.Forward(0, x);
-	check = ( dynamic[0] + x[0] ) * ( x[0] + dynamic[0] );
-	ok  &= NearEqual(y[0] , check, eps, eps);
-	check = ( dynamic[1] - x[1] ) * ( x[1] - dynamic[1] );
-	ok  &= NearEqual(y[1] , check, eps, eps);
+	y = f.Forward(0, x);
+	k     = 0;
+	check = double(-k-1)*( dynamic[k] + x[k] ) * ( x[k] + dynamic[k] );
+	ok   &= NearEqual(y[k] , check, eps, eps);
+	++k;
+	check = double(-k-1)*( dynamic[k] - x[k] ) * ( x[k] - dynamic[k] );
+	ok   &= NearEqual(y[k] , check, eps, eps);
+	++k;
+	check = double(-k-1)*( dynamic[k] * x[k] ) * ( x[k] * dynamic[k] );
+	ok   &= NearEqual(y[k] , check, eps, eps);
 	//
 	return ok;
 }
