@@ -100,10 +100,8 @@ template <class Base>
 inline AD<Base>& AD<Base>::operator=(const Base &b)
 {	value_   = b;
 	tape_id_ = 0;
-
-	// check that this is a parameter
-	CPPAD_ASSERT_UNKNOWN( Parameter(*this) );
-
+	//
+	CPPAD_ASSERT_UNKNOWN( ! ( Variable(*this) | Dynamic(*this) ) );
 	return *this;
 }
 
@@ -115,7 +113,10 @@ Base type for this AD object.
 */
 template <class Base>
 inline AD<Base>& AD<Base>::operator=(const VecAD_reference<Base> &x)
-{	return *this = x.ADBase(); }
+{	*this = x.ADBase();
+	CPPAD_ASSERT_UNKNOWN( ! Dynamic(*this) );
+	return *this;
+}
 
 /*!
 Assignment from any other type, converts to Base type, and then uses assignment
@@ -134,7 +135,10 @@ is the object that is being assigned to an AD<Base> object.
 template <class Base>
 template <class T>
 inline AD<Base>& AD<Base>::operator=(const T &t)
-{	return *this = Base(t); }
+{	*this = Base(t);
+	CPPAD_ASSERT_UNKNOWN( ! ( Variable(*this) | Dynamic(*this) ) );
+	return *this;
+}
 
 
 } // END_CPPAD_NAMESPACE

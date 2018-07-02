@@ -390,7 +390,8 @@ public:
 	/// Conversion from VecAD_reference to AD<Base>.
 	/// puts the correspond vecad load instruction in the tape.
 	AD<Base> ADBase(void) const
-	{	AD<Base> result;
+	{	// start with default construtor (hence dynamic_ is false).
+		AD<Base> result;
 
 		size_t i = static_cast<size_t>( Integer(ind_) );
 		CPPAD_ASSERT_UNKNOWN( i < vec_->length_ );

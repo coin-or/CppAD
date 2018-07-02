@@ -1,9 +1,8 @@
-// $Id$
 # ifndef CPPAD_CORE_STANDARD_MATH_HPP
 # define CPPAD_CORE_STANDARD_MATH_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -111,7 +110,6 @@ $end
 # include <cppad/core/erf.hpp>
 # include <cppad/core/expm1.hpp>
 # include <cppad/core/log1p.hpp>
-# include <cppad/core/sign.hpp>
 # include <cppad/core/sign.hpp>
 
 /*

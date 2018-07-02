@@ -2,7 +2,7 @@
 # define CPPAD_CORE_ABS_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -103,7 +103,11 @@ AD<Base> AD<Base>::abs_me (void) const
 
 template <class Base>
 inline AD<Base> abs(const AD<Base> &x)
-{	return x.abs_me(); }
+{	CPPAD_ASSERT_KNOWN( ! Dynamic(x),
+		"abs: argument is a dynamic parameter"
+	);
+	return x.abs_me();
+}
 
 template <class Base>
 inline AD<Base> abs(const VecAD_reference<Base> &x)

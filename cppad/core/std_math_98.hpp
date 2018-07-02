@@ -2,7 +2,7 @@
 # define CPPAD_CORE_STD_MATH_98_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -492,7 +492,11 @@ acos, asin, atan, cos, cosh, exp, fabs, log, sin, sinh, sqrt, tan, tanh.
 # define CPPAD_STANDARD_MATH_UNARY_AD(Name, Op)                   \
     template <class Base>                                         \
     inline AD<Base> Name(const AD<Base> &x)                       \
-    {   return x.Name##_me(); }                                   \
+    {   CPPAD_ASSERT_KNOWN( ! Dynamic(x),                         \
+             #Name " arugment is a dynamic parameter"             \
+        );                                                        \
+        return x.Name##_me();                                     \
+    }                                                             \
     template <class Base>                                         \
     inline AD<Base> AD<Base>::Name##_me (void) const              \
     {                                                             \
@@ -542,7 +546,11 @@ namespace CppAD {
 	// Error function is a special case
 	template <class Base>
 	inline AD<Base> erf(const AD<Base> &x)
-	{	return x.erf_me(); }
+	{	CPPAD_ASSERT_KNOWN( ! Dynamic(x),
+			"erf argument is a dynamic parameter"
+		);
+		return x.erf_me();
+	}
 	template <class Base>
 	inline AD<Base> AD<Base>::erf_me (void) const
 	{

@@ -2,7 +2,7 @@
 # define CPPAD_CORE_INTEGER_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -101,7 +101,11 @@ namespace CppAD {
 	template <class Base>
 	CPPAD_INLINE_FRIEND_TEMPLATE_FUNCTION
 	int Integer(const AD<Base> &x)
-	{	return Integer(x.value_); }
+	{	CPPAD_ASSERT_KNOWN( ! Dynamic(x),
+			"Integer: argument is a dynamic parameter"
+		);
+		return Integer(x.value_);
+	}
 
 	template <class Base>
 	CPPAD_INLINE_FRIEND_TEMPLATE_FUNCTION
@@ -109,4 +113,3 @@ namespace CppAD {
 	{	return Integer( x.ADBase() ); }
 }
 # endif
-

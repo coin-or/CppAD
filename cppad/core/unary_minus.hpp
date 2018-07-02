@@ -2,7 +2,7 @@
 # define CPPAD_CORE_UNARY_MINUS_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -82,12 +82,14 @@ namespace CppAD {
 // Broken g++ compiler inhibits declaring unary minus a member or friend
 template <class Base>
 inline AD<Base> AD<Base>::operator - (void) const
-{	// should make a more efficient version by adding unary minus to
-	// Operator.h (some day)
+{	// 2DO: make a more efficient by adding unary minus to op_code.h (some day)
+	//
+	CPPAD_ASSERT_KNOWN( ! Dynamic(*this),
+		"unary - cannot operate on a dynamic parameter"
+	);
+	//
 	AD<Base> result(0);
-
 	result  -= *this;
-
 	return result;
 }
 

@@ -2,7 +2,7 @@
 # define CPPAD_CORE_SIGN_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -92,7 +92,11 @@ AD<Base> AD<Base>::sign_me (void) const
 
 template <class Base>
 inline AD<Base> sign(const AD<Base> &x)
-{	return x.sign_me(); }
+{	CPPAD_ASSERT_KNOWN( ! Dynamic(x),
+		"sign: argument is a dynmaic parameter"
+	);
+	return x.sign_me();
+}
 
 template <class Base>
 inline AD<Base> sign(const VecAD_reference<Base> &x)
