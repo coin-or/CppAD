@@ -53,6 +53,7 @@ var list_current0 = [
 'independent.htm#x',
 'independent.htm#abort_op_index',
 'independent.htm#record_compare',
+'independent.htm#dynamic',
 'independent.htm#VectorAD',
 'independent.htm#Parallel Mode',
 'independent.htm#Example'

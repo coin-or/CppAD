@@ -12,10 +12,10 @@ MathJax.Hub.Config({
 >
 </script>
 <head>
-<title>Is an AD Object a Parameter or Variable</title>
+<title>Is an AD Object a Parameter, Variable, or Dynamic Parameter</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
-<meta name="description" id="description" content="Is an AD Object a Parameter or Variable">
-<meta name="keywords" id="keywords" content=" is ad object parameter variable syntax purpose x b operation sequence example ">
+<meta name="description" id="description" content="Is an AD Object a Parameter, Variable, or Dynamic Parameter">
+<meta name="keywords" id="keywords" content=" is ad object parameter variable dynamic syntax purpose x b operation sequence example ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -23,7 +23,7 @@ A:link { color : blue }
 A:visited { color : purple }
 A:active { color : purple }
 </style>
-<script type='text/javascript' language='JavaScript' src='_parvar_htm.js'>
+<script type='text/javascript' language='JavaScript' src='_par_var_dyn_htm.js'>
 </script>
 </head>
 <body>
@@ -32,7 +32,7 @@ A:active { color : purple }
 <a href="https://github.com/coin-or/cppad" target="_top"><img border="0" src="_image.gif"></a>
 </td>
 <td><a href="bool_fun.cpp.htm" target="_top">Prev</a>
-</td><td><a href="par_var.cpp.htm" target="_top">Next</a>
+</td><td><a href="par_var_dyn.cpp.htm" target="_top">Next</a>
 </td><td>
 <select onchange='choose_across0(this)'>
 <option>Index-&gt;</option>
@@ -49,7 +49,7 @@ A:active { color : purple }
 <option>CppAD</option>
 <option>AD</option>
 <option>BoolValued</option>
-<option>ParVar</option>
+<option>par_var_dyn</option>
 </select>
 </td>
 <td>
@@ -86,14 +86,14 @@ A:active { color : purple }
 <option>Compare</option>
 <option>NearEqualExt</option>
 <option>BoolFun</option>
-<option>ParVar</option>
+<option>par_var_dyn</option>
 <option>EqualOpSeq</option>
 </select>
 </td>
 <td>
 <select onchange='choose_down0(this)'>
-<option>ParVar-&gt;</option>
-<option>par_var.cpp</option>
+<option>par_var_dyn-&gt;</option>
+<option>par_var_dyn.cpp</option>
 </select>
 </td>
 <td>
@@ -114,21 +114,20 @@ A:active { color : purple }
 \newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
 \newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
 \newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
-\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>Is an AD Object a Parameter or Variable</big></big></b></center>
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>Is an AD Object a Parameter, Variable, or Dynamic Parameter</big></big></b></center>
 <br>
 <b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
 
 <br>
 
-<code><i><font color="black"><span style='white-space: nowrap'>b</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;Parameter(</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+<code><i><font color="black"><span style='white-space: nowrap'>b</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;Parameter(</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
 
-<code><span style='white-space: nowrap'><br>
-</span></code>
-<code><i><font color="black"><span style='white-space: nowrap'>b</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;Variable(</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+<code><i><font color="black"><span style='white-space: nowrap'>b</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;Variable(</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
 
-
-
-<br>
+<code><i><font color="black"><span style='white-space: nowrap'>b</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;Dynamic(</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
 <br>
 <b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
 <br>
@@ -136,8 +135,10 @@ Determine if
 <code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
  is a
 <a href="glossary.htm#Parameter" target="_top"><span style='white-space: nowrap'>parameter</span></a>
- or
+,
 <a href="glossary.htm#Variable" target="_top"><span style='white-space: nowrap'>variable</span></a>
+ or
+<a href="glossary.htm#Dynamic Parameter" target="_top"><span style='white-space: nowrap'>dynamic&nbsp;parameter</span></a>
 .
 
 <br>
@@ -162,14 +163,16 @@ The return value
 <code><font color="blue"><span style='white-space: nowrap'><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bool&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>b</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
-The return value for <code><font color="blue">Parameter</font></code> (<code><font color="blue">Variable</font></code>)
+The return value for <code><font color="blue">Parameter</font></code>, <code><font color="blue">Variable</font></code>, and <code><font color="blue">Dynamic</font></code>
 is true if and only if 
 <code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
- is a parameter (variable).
-Note that a <a href="vecad.htm" target="_top"><span style='white-space: nowrap'>VecAD&lt;Base&gt;</span></a>
+ is a
+parameter, variable, dynamic parameter respectively.
+Note that a dynamic parameter is also a parameter.
+Also note that a <a href="vecad.htm" target="_top"><span style='white-space: nowrap'>VecAD&lt;Base&gt;</span></a>
  object
 is a variable if any element of the vector depends on the independent
-variables.
+variables and it cannot have dynamic parameters.
 
 <br>
 <br>
@@ -191,13 +194,13 @@ AD of
 
 <br>
 The file
-<a href="par_var.cpp.htm" target="_top"><span style='white-space: nowrap'>par_var.cpp</span></a>
+<a href="par_var_dyn.cpp.htm" target="_top"><span style='white-space: nowrap'>par_var_dyn.cpp</span></a>
 
 contains an example and test of these functions.
 It returns true if it succeeds and false otherwise.
 
 
-<hr>Input File: cppad/core/par_var.hpp
+<hr>Input File: cppad/core/par_var_dyn.hpp
 
 </body>
 </html>

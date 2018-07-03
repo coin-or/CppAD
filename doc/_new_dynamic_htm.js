@@ -7,29 +7,59 @@ var list_across0 = [
 ];
 var list_up0 = [
 'cppad.htm',
-'ad.htm',
-'boolvalued.htm',
-'compare.htm',
-'compare.cpp.htm'
+'adfun.htm',
+'forward.htm',
+'new_dynamic.htm'
 ];
 var list_down3 = [
-'ad_ctor.htm',
-'ad_assign.htm',
-'convert.htm',
-'advalued.htm',
-'boolvalued.htm',
-'vecad.htm',
-'base_require.htm'
+'install.htm',
+'introduction.htm',
+'ad.htm',
+'adfun.htm',
+'preprocessor.htm',
+'multi_thread.htm',
+'utility.htm',
+'ipopt_solve.htm',
+'example.htm',
+'speed.htm',
+'appendix.htm'
 ];
 var list_down2 = [
-'compare.htm',
-'nearequalext.htm',
-'boolfun.htm',
-'par_var_dyn.htm',
-'equalopseq.htm'
+'record_adfun.htm',
+'drivers.htm',
+'forward.htm',
+'reverse.htm',
+'sparsity_pattern.htm',
+'sparse_derivative.htm',
+'optimize.htm',
+'abs_normal.htm',
+'funcheck.htm',
+'check_for_nan.htm'
 ];
 var list_down1 = [
-'compare.cpp.htm'
+'new_dynamic.htm',
+'forward_zero.htm',
+'forward_one.htm',
+'forward_two.htm',
+'forward_order.htm',
+'forward_dir.htm',
+'size_order.htm',
+'compare_change.htm',
+'capacity_order.htm',
+'number_skip.htm'
+];
+var list_down0 = [
+'new_dynamic.cpp.htm'
+];
+var list_current0 = [
+'new_dynamic.htm#Syntax',
+'new_dynamic.htm#Purpose',
+'new_dynamic.htm#f',
+'new_dynamic.htm#dynamic',
+'new_dynamic.htm#VectorBase',
+'new_dynamic.htm#Taylor Coefficients',
+'new_dynamic.htm#Restrictions',
+'new_dynamic.htm#Example'
 ];
 function choose_across0(item)
 {	var index          = item.selectedIndex;

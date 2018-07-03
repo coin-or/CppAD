@@ -56,6 +56,7 @@ var list_current0 = [
 'seq_property.htm#Parameter',
 'seq_property.htm#size_var',
 'seq_property.htm#size_par',
+'seq_property.htm#size_dynamic',
 'seq_property.htm#size_op',
 'seq_property.htm#size_op_arg',
 'seq_property.htm#size_text',

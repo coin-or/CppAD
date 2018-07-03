@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Declare Independent Variables and Start Recording</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Declare Independent Variables and Start Recording">
-<meta name="keywords" id="keywords" content=" declare independent variables start recording syntax stop x abort_op_index record_compare vectorad parallel mode example ">
+<meta name="keywords" id="keywords" content=" declare independent variables start recording syntax stop x abort_op_index record_compare dynamic vectorad parallel mode example ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -108,6 +108,7 @@ A:active { color : purple }
 <option>x</option>
 <option>abort_op_index</option>
 <option>record_compare</option>
+<option>dynamic</option>
 <option>VectorAD</option>
 <option>Parallel Mode</option>
 <option>Example</option>
@@ -133,6 +134,9 @@ A:active { color : purple }
 </span></font></code>
 
 <code><font color="blue"><span style='white-space: nowrap'>Independent(</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>abort_op_index</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>record_compare</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+
+<code><font color="blue"><span style='white-space: nowrap'>Independent(</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>abort_op_index</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>record_compare</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>dynamic</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
 </span></font></code>
 <br>
 <b><big><a name="Start Recording" id="Start Recording">Start Recording</a></big></b>
@@ -241,7 +245,7 @@ It takes extra time and memory to record these operations.
 On the other hand, they can be useful for detecting when and why
 a functions recording would change; see 
 <code><i><font color="black"><span style='white-space: nowrap'>abort_op_index</span></font></i></code>
- below and
+ above and
 <a href="compare_change.htm" target="_top"><span style='white-space: nowrap'>compare_change</span></a>
 .
 If this argument is not present, the default value <code><font color="blue">true</font></code> is used
@@ -251,6 +255,29 @@ for
 If this argument is false, 
 <code><i><font color="black"><span style='white-space: nowrap'>abort_op_index</span></font></i></code>
  must be zero.
+
+<br>
+<br>
+<b><big><a name="dynamic" id="dynamic">dynamic</a></big></b>
+<br>
+If this argument is present, it has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>VectorAD</span></font></i><font color="blue"><span style='white-space: nowrap'>&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>dynamic</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+(see 
+<code><i><font color="black"><span style='white-space: nowrap'>Vector</span></font></i></code>
+ below).
+It specifies the
+<a href="glossary.htm#Dynamic Parameter" target="_top"><span style='white-space: nowrap'>dynamic&nbsp;parameter</span></a>
+ vector.
+The value of these parameters,
+in the <a href="adfun.htm" target="_top"><span style='white-space: nowrap'>ADFun</span></a>
+ object 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+,
+that can be changed using <a href="new_dynamic.htm" target="_top"><span style='white-space: nowrap'>new_dynamic</span></a>
+.
 
 <br>
 <br>

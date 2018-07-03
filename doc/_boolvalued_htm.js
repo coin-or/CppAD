@@ -36,7 +36,7 @@ var list_down0 = [
 'compare.htm',
 'nearequalext.htm',
 'boolfun.htm',
-'parvar.htm',
+'par_var_dyn.htm',
 'equalopseq.htm'
 ];
 function choose_across0(item)

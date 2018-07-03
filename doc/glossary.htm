@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Glossary</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Glossary">
-<meta name="keywords" id="keywords" content=" efficient ad function base type above elementary vector operation atomic sequence dependent independent parameter row-major representation sparsity pattern row column index vectors boolean sets tape active inactive variable variables taylor coefficient ">
+<meta name="keywords" id="keywords" content=" ad function base type above dynamic parameter elementary vector operation atomic sequence dependent independent row-major representation sparsity pattern row column index vectors boolean sets tape active inactive variable variables taylor coefficient ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -93,6 +93,7 @@ A:active { color : purple }
 <option>AD Type Above Base</option>
 <option>Base Function</option>
 <option>Base Type</option>
+<option>Dynamic Parameter</option>
 <option>Elementary Vector</option>
 <option>Operation</option>
 <option>---..Atomic</option>
@@ -236,6 +237,30 @@ If
  is referred to as the base type for 
 <code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
 .
+
+<br>
+<br>
+<b><big><a name="Dynamic Parameter" id="Dynamic Parameter">Dynamic Parameter</a></big></b>
+<br>
+An 
+<code><font color="blue"><span style='white-space: nowrap'>AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code>
+ object 
+<code><i><font color="black"><span style='white-space: nowrap'>u</span></font></i></code>
+ is a dynamic parameter if
+it is a <a href="glossary.htm#Parameter" target="_top"><span style='white-space: nowrap'>Parameter</span></a>
+ and its value depends
+on the independent parameter vector for
+a currently <a href="glossary.htm#Tape.Active" target="_top"><span style='white-space: nowrap'>active&nbsp;tape</span></a>
+.
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>u</span></font></i></code>
+ is a dynamic parameter,
+<a href="par_var_dyn.htm" target="_top"><span style='white-space: nowrap'>Dynamic(u)</span></a>
+ returns true,
+<a href="par_var_dyn.htm" target="_top"><span style='white-space: nowrap'>Parameter(u)</span></a>
+ returns true, and
+<a href="par_var_dyn.htm" target="_top"><span style='white-space: nowrap'>Variable(u)</span></a>
+ returns false.
 
 <br>
 <br>
@@ -394,9 +419,11 @@ an <a href="independent.htm" target="_top"><span style='white-space: nowrap'>Ind
 If 
 <code><i><font color="black"><span style='white-space: nowrap'>u</span></font></i></code>
  is a parameter, the function
-<a href="parvar.htm" target="_top"><span style='white-space: nowrap'>Parameter(u)</span></a>
- returns true
-and <a href="parvar.htm" target="_top"><span style='white-space: nowrap'>Variable(u)</span></a>
+<a href="par_var_dyn.htm" target="_top"><span style='white-space: nowrap'>Parameter(u)</span></a>
+ returns true,
+<a href="par_var_dyn.htm" target="_top"><span style='white-space: nowrap'>Dynamic(u)</span></a>
+ may be true or false, and
+<a href="par_var_dyn.htm" target="_top"><span style='white-space: nowrap'>Variable(u)</span></a>
  returns false.
 
 <br>
@@ -629,9 +656,11 @@ a currently <a href="glossary.htm#Tape.Active" target="_top"><span style='white-
 If 
 <code><i><font color="black"><span style='white-space: nowrap'>u</span></font></i></code>
  is a variable,
-<a href="parvar.htm" target="_top"><span style='white-space: nowrap'>Variable(u)</span></a>
- returns true and
-<a href="parvar.htm" target="_top"><span style='white-space: nowrap'>Parameter(u)</span></a>
+<a href="par_var_dyn.htm" target="_top"><span style='white-space: nowrap'>Variable(u)</span></a>
+ returns true,
+<a href="par_var_dyn.htm" target="_top"><span style='white-space: nowrap'>Parameter(u)</span></a>
+ returns false, and
+<a href="par_var_dyn.htm" target="_top"><span style='white-space: nowrap'>Dynamic(u)</span></a>
  returns false.
 For example,
 directly after the code sequence
@@ -656,7 +685,7 @@ Directly after the code sequence
 <code><i><font color="black"><span style='white-space: nowrap'>u</span></font></i></code>
   is currently a <a href="glossary.htm#Parameter" target="_top"><span style='white-space: nowrap'>parameter</span></a>
 
-(not a variable).
+and not a dynamic parameter or a variable.
 <code><span style='white-space: nowrap'><br>
 <br>
 </span></code>Note that we often drop the word currently and

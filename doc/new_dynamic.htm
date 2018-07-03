@@ -1,0 +1,255 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=default'
+>
+</script>
+<head>
+<title>Change the Dynamic Parameters</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Change the Dynamic Parameters">
+<meta name="keywords" id="keywords" content=" change the dynamic parameters syntax purpose f vectorbase taylor coefficients restrictions example ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_new_dynamic_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="https://github.com/coin-or/cppad" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="forward.htm" target="_top">Prev</a>
+</td><td><a href="new_dynamic.cpp.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>ADFun</option>
+<option>Forward</option>
+<option>new_dynamic</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>CppAD-&gt;</option>
+<option>Install</option>
+<option>Introduction</option>
+<option>AD</option>
+<option>ADFun</option>
+<option>preprocessor</option>
+<option>multi_thread</option>
+<option>utility</option>
+<option>ipopt_solve</option>
+<option>Example</option>
+<option>speed</option>
+<option>Appendix</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>ADFun-&gt;</option>
+<option>record_adfun</option>
+<option>drivers</option>
+<option>Forward</option>
+<option>Reverse</option>
+<option>sparsity_pattern</option>
+<option>sparse_derivative</option>
+<option>optimize</option>
+<option>abs_normal</option>
+<option>FunCheck</option>
+<option>check_for_nan</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>Forward-&gt;</option>
+<option>new_dynamic</option>
+<option>forward_zero</option>
+<option>forward_one</option>
+<option>forward_two</option>
+<option>forward_order</option>
+<option>forward_dir</option>
+<option>size_order</option>
+<option>compare_change</option>
+<option>capacity_order</option>
+<option>number_skip</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down0(this)'>
+<option>new_dynamic-&gt;</option>
+<option>new_dynamic.cpp</option>
+</select>
+</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Syntax</option>
+<option>Purpose</option>
+<option>f</option>
+<option>dynamic</option>
+<option>VectorBase</option>
+<option>Taylor Coefficients</option>
+<option>Restrictions</option>
+<option>Example</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>Change the Dynamic Parameters</big></big></b></center>
+<br>
+<b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
+
+<br>
+
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.new_dynamic(</span></font><i><font color="black"><span style='white-space: nowrap'>dynamic</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+
+
+<br>
+<br>
+<b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
+<br>
+Often one is only interested in computing derivatives with respect
+to a subset of arguments to a function.
+In this case, it is easier to make all the arguments to the function
+<a href="glossary.htm#Tape.Independent Variable" target="_top"><span style='white-space: nowrap'>independent&nbsp;variables</span></a>
+.
+It is more efficient
+(will use less memory and be faster)
+if the independent variables are just the
+arguments we are computing derivatives w.r.t
+and for the other arguments are
+<a href="glossary.htm#Dynamic Parameter" target="_top"><span style='white-space: nowrap'>dynamic&nbsp;parameters</span></a>
+.
+The <a href="new_dynamic.htm" target="_top"><span style='white-space: nowrap'>new_dynamic</span></a>
+ can be used to change the value
+of the dynamic parameters in 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+..
+
+<br>
+<br>
+<b><big><a name="f" id="f">f</a></big></b>
+<br>
+The object 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ADFun&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+Note that the <a href="adfun.htm" target="_top"><span style='white-space: nowrap'>ADFun</span></a>
+ object 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+ is not <code><font color="blue">const</font></code>.
+
+<br>
+<br>
+<b><big><a name="dynamic" id="dynamic">dynamic</a></big></b>
+<br>
+This argument has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>VectorBase</span></font></i><font color="blue"><span style='white-space: nowrap'>&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>dynamic</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+(see 
+<code><i><font color="black"><span style='white-space: nowrap'>VectorBase</span></font></i></code>
+ below).
+It specifies a new value for the
+<a href="glossary.htm#Dynamic Parameter" target="_top"><span style='white-space: nowrap'>dynamic&nbsp;parameter</span></a>
+ vector.
+It size must be the same as the size of the
+<a href="independent.htm#dynamic" target="_top"><span style='white-space: nowrap'>dynamic</span></a>
+ parameter vector
+in the call to <code><font color="blue">Independent</font></code> that started
+the recording for 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+; see
+<a href="seq_property.htm#size_dynamic" target="_top"><span style='white-space: nowrap'>size_dynamic</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="VectorBase" id="VectorBase">VectorBase</a></big></b>
+<br>
+The type 
+<code><i><font color="black"><span style='white-space: nowrap'>VectorBase</span></font></i></code>
+ must be a <a href="simplevector.htm" target="_top"><span style='white-space: nowrap'>SimpleVector</span></a>
+ class with
+<a href="simplevector.htm#Elements of Specified Type" target="_top"><span style='white-space: nowrap'>elements&nbsp;of&nbsp;type</span></a>
+
+
+<code><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i></code>
+.
+
+<br>
+<br>
+<b><big><a name="Taylor Coefficients" id="Taylor Coefficients">Taylor Coefficients</a></big></b>
+<br>
+The Taylor coefficients computed by previous calls to
+<a href="forward.htm" target="_top"><span style='white-space: nowrap'>f.Forward</span></a>
+ are lost after this operation; including the
+order zero coefficients (because they may depend on the dynamic parameters).
+In order words;
+<a href="size_order.htm" target="_top"><span style='white-space: nowrap'>f.size_order</span></a>
+ returns zero directly after
+
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.new_dynamic</span></font></code>
+ is called.
+
+<br>
+<br>
+<b><big><a name="Restrictions" id="Restrictions">Restrictions</a></big></b>
+<br>
+Dynamic parameters are only allowed in operations where one of the other
+operands is a <a href="glossary.htm#Variable" target="_top"><span style='white-space: nowrap'>Variable</span></a>
+.
+You must compute all the parameters that depend on dynamic parameters
+before the call to <a href="independent.htm" target="_top"><span style='white-space: nowrap'>Independent</span></a>
+ and include them as part of the
+<a href="independent.htm#dynamic" target="_top"><span style='white-space: nowrap'>dynamic</span></a>
+ parameter vector.
+
+
+<br>
+<br>
+<b><big><a name="Example" id="Example">Example</a></big></b>
+<br>
+The file <a href="new_dynamic.cpp.htm" target="_top"><span style='white-space: nowrap'>new_dynamic.cpp</span></a>
+
+contains an example and test of this operation.
+It returns true if it succeeds and false otherwise.
+
+
+<hr>Input File: cppad/core/new_dynamic.hpp
+
+</body>
+</html>

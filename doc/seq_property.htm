@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>ADFun Sequence Properties</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="ADFun Sequence Properties">
-<meta name="keywords" id="keywords" content=" adfun sequence properties syntax see also purpose f domain range parameter size_var size_par size_op size_op_arg size_text size_vecad size_op_seq size_random example ">
+<meta name="keywords" id="keywords" content=" adfun sequence properties syntax see also purpose f domain range parameter size_var size_par size_dynamic size_op size_op_arg size_text size_vecad size_op_seq size_random example ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -111,6 +111,7 @@ A:active { color : purple }
 <option>Parameter</option>
 <option>size_var</option>
 <option>size_par</option>
+<option>size_dynamic</option>
 <option>size_op</option>
 <option>size_op_arg</option>
 <option>size_text</option>
@@ -146,6 +147,9 @@ A:active { color : purple }
 </span></font></code>
 
 <code><i><font color="black"><span style='white-space: nowrap'>s</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.size_par()<br>
+</span></font></code>
+
+<code><i><font color="black"><span style='white-space: nowrap'>s</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.size_dynamic()<br>
 </span></font></code>
 
 <code><i><font color="black"><span style='white-space: nowrap'>s</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.size_op()<br>
@@ -369,6 +373,25 @@ considered extra data in the function object
 Note that one 
 <code><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i></code>
  value is required for each parameter.
+
+<br>
+<br>
+<b><big><a name="size_dynamic" id="size_dynamic">size_dynamic</a></big></b>
+<br>
+The result 
+<code><i><font color="black"><span style='white-space: nowrap'>s</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>s</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+and is the number of
+<a href="glossary.htm#Dynamic Parameter" target="_top"><span style='white-space: nowrap'>dynamic&nbsp;parameters</span></a>
+
+in the operation sequence.
+The value of these parameters can be changed using the
+<a href="new_dynamic.htm" target="_top"><span style='white-space: nowrap'>new_dynamic</span></a>
+ function.
 
 <br>
 <br>

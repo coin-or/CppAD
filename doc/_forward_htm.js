@@ -36,6 +36,7 @@ var list_down1 = [
 'check_for_nan.htm'
 ];
 var list_down0 = [
+'new_dynamic.htm',
 'forward_zero.htm',
 'forward_one.htm',
 'forward_two.htm',

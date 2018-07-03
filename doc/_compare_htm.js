@@ -37,7 +37,7 @@ var list_down1 = [
 'compare.htm',
 'nearequalext.htm',
 'boolfun.htm',
-'parvar.htm',
+'par_var_dyn.htm',
 'equalopseq.htm'
 ];
 var list_down0 = [

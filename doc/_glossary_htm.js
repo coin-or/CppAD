@@ -43,6 +43,7 @@ var list_current0 = [
 'glossary.htm#AD Type Above Base',
 'glossary.htm#Base Function',
 'glossary.htm#Base Type',
+'glossary.htm#Dynamic Parameter',
 'glossary.htm#Elementary Vector',
 'glossary.htm#Operation',
 'glossary.htm#Operation.Atomic',
