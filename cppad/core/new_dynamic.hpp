@@ -30,14 +30,13 @@ Often one is only interested in computing derivatives with respect
 to a subset of arguments to a function.
 In this case, it is easier to make all the arguments to the function
 $cref/independent variables/glossary/Tape/Independent Variable/$$.
-It is more efficient
-(will use less memory and be faster)
-if the independent variables are just the
-arguments we are computing derivatives w.r.t
-and for the other arguments are
+It is more efficient,
+will use less memory and be faster,
+if the only the argument were are computing derivatives with respect to
+are independent variables and the other arguments are
 $cref/dynamic parameters/glossary/Dynamic Parameter/$$.
-The $cref new_dynamic$$ can be used to change the value
-of the dynamic parameters in $icode f$$..
+The $code new_dynamic$$ method is used to change the value
+of the dynamic parameters in $icode f$$.
 
 $head f$$
 The object $icode f$$ has prototype
