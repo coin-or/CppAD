@@ -248,9 +248,12 @@ An
 <code><i><font color="black"><span style='white-space: nowrap'>u</span></font></i></code>
  is a dynamic parameter if
 it is a <a href="glossary.htm#Parameter" target="_top"><span style='white-space: nowrap'>Parameter</span></a>
- and its value depends
-on the independent parameter vector for
-a currently <a href="glossary.htm#Tape.Active" target="_top"><span style='white-space: nowrap'>active&nbsp;tape</span></a>
+ and it is included in the
+<a href="independent.htm#dynamic" target="_top"><span style='white-space: nowrap'>dynamic</span></a>
+ argument for the call to
+<a href="independent.htm" target="_top"><span style='white-space: nowrap'>Independent</span></a>
+ that started the
+currently <a href="glossary.htm#Tape.Active" target="_top"><span style='white-space: nowrap'>active&nbsp;tape</span></a>
 .
 If 
 <code><i><font color="black"><span style='white-space: nowrap'>u</span></font></i></code>
@@ -556,23 +559,20 @@ recorded on this active tape.
 <br>
 <big><a name="Tape.Inactive" id="Tape.Inactive">Inactive</a></big>
 <br>
-The
-<a href="glossary.htm#Operation.Sequence" target="_top"><span style='white-space: nowrap'>operation&nbsp;sequence</span></a>
+The <a href="glossary.htm#Operation.Sequence" target="_top"><span style='white-space: nowrap'>operation&nbsp;sequence</span></a>
 
-stored in a tape must be transferred to a function object using the syntax
-(see <a href="funconstruct.htm" target="_top"><span style='white-space: nowrap'>ADFun&lt;Base&gt;&nbsp;f(x,&nbsp;y)</span></a>
-)
+stored in a tape can be transferred to a function object using the syntax
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ADFun&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>(&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
-</span></font></code>
-or using the syntax (see <a href="dependent.htm" target="_top"><span style='white-space: nowrap'>f.Dependent(x,&nbsp;y)</span></a>
-)
-
-<code><font color="blue"><span style='white-space: nowrap'><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.Dependent(&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
 </span></font></code>
+see <a href="funconstruct.htm" target="_top"><span style='white-space: nowrap'>FunConstruct</span></a>
+.
 After such a transfer, the tape becomes inactive.
+The tape becomes inactive, without storing the operation sequence,
+after a call to <a href="abort_recording.htm" target="_top"><span style='white-space: nowrap'>abort_recording</span></a>
+.
 
 <br>
 <br>
