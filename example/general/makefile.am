@@ -143,6 +143,7 @@ general_SOURCES   = \
 	mul_level.cpp \
 	mul_level_ode.cpp \
 	near_equal_ext.cpp \
+	new_dynamic.cpp \
 	number_skip.cpp \
 	numeric_type.cpp \
 	num_limits.cpp \

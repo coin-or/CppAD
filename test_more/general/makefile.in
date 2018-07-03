@@ -125,9 +125,9 @@ am__general_SOURCES_DIST = base_adolc.cpp ipopt_solve.cpp \
 	forward_order.cpp from_base.cpp fun_check.cpp hes_sparsity.cpp \
 	jacobian.cpp log10.cpp log1p.cpp log.cpp mul_cond_rev.cpp \
 	mul.cpp mul_cskip.cpp mul_eq.cpp mul_level.cpp mul_zdouble.cpp \
-	mul_zero_one.cpp near_equal_ext.cpp neg.cpp num_limits.cpp \
-	ode_err_control.cpp optimize.cpp parameter.cpp poly.cpp \
-	pow.cpp pow_int.cpp print_for.cpp reverse.cpp \
+	mul_zero_one.cpp near_equal_ext.cpp neg.cpp new_dynamic.cpp \
+	num_limits.cpp ode_err_control.cpp optimize.cpp parameter.cpp \
+	poly.cpp pow.cpp pow_int.cpp print_for.cpp reverse.cpp \
 	rev_sparse_jac.cpp rev_two.cpp romberg_one.cpp rosen_34.cpp \
 	runge_45.cpp simple_vector.cpp sin_cos.cpp sin.cpp sinh.cpp \
 	sparse_hessian.cpp sparse_jacobian.cpp sparse_jac_work.cpp \
@@ -161,10 +161,11 @@ am_general_OBJECTS = $(am__objects_1) $(am__objects_2) \
 	mul_cond_rev.$(OBJEXT) mul.$(OBJEXT) mul_cskip.$(OBJEXT) \
 	mul_eq.$(OBJEXT) mul_level.$(OBJEXT) mul_zdouble.$(OBJEXT) \
 	mul_zero_one.$(OBJEXT) near_equal_ext.$(OBJEXT) neg.$(OBJEXT) \
-	num_limits.$(OBJEXT) ode_err_control.$(OBJEXT) \
-	optimize.$(OBJEXT) parameter.$(OBJEXT) poly.$(OBJEXT) \
-	pow.$(OBJEXT) pow_int.$(OBJEXT) print_for.$(OBJEXT) \
-	reverse.$(OBJEXT) rev_sparse_jac.$(OBJEXT) rev_two.$(OBJEXT) \
+	new_dynamic.$(OBJEXT) num_limits.$(OBJEXT) \
+	ode_err_control.$(OBJEXT) optimize.$(OBJEXT) \
+	parameter.$(OBJEXT) poly.$(OBJEXT) pow.$(OBJEXT) \
+	pow_int.$(OBJEXT) print_for.$(OBJEXT) reverse.$(OBJEXT) \
+	rev_sparse_jac.$(OBJEXT) rev_two.$(OBJEXT) \
 	romberg_one.$(OBJEXT) rosen_34.$(OBJEXT) runge_45.$(OBJEXT) \
 	simple_vector.$(OBJEXT) sin_cos.$(OBJEXT) sin.$(OBJEXT) \
 	sinh.$(OBJEXT) sparse_hessian.$(OBJEXT) \
@@ -557,6 +558,7 @@ general_SOURCES = \
 	mul_zero_one.cpp \
 	near_equal_ext.cpp \
 	neg.cpp \
+	new_dynamic.cpp \
 	num_limits.cpp \
 	ode_err_control.cpp \
 	optimize.cpp \
@@ -713,6 +715,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mul_zero_one.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/near_equal_ext.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/neg.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/new_dynamic.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/num_limits.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ode_err_control.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/optimize.Po@am__quote@
