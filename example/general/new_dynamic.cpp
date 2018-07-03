@@ -65,6 +65,9 @@ bool new_dynamic(void)
 	// create f: x -> y and stop tape recording
 	CppAD::ADFun<double> f(ax, ay);
 
+	// check the number of dynamic parameters in f
+	ok &= f.size_dynamic() == nd;
+
 	// check that elements of adynamic are no longer dynamic parameters
 	for(size_t j = 0; j < nd; ++j)
 		ok &= ! Dynamic( adynamic[j] );

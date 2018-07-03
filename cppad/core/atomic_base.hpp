@@ -483,6 +483,17 @@ void operator()(
 	{	msg += "ax.size() or ay.size() is zero";
 		CPPAD_ASSERT_KNOWN(false, msg.c_str() );
 	}
+	bool has_dynamic   = false;
+	bool has_variable  = false;
+	for(j = 0; j < n; ++j)
+	{	has_dynamic  |= Dynamic( ax[j] );
+		has_variable |= Variable( ax[j] );
+	}
+	if( has_dynamic & (! has_variable) )
+	{	msg +=
+		"\nat least one arguments is a dynamic parameter, none are variables";
+		CPPAD_ASSERT_KNOWN(false, msg.c_str() );
+	}
 # endif
 	size_t thread = thread_alloc::thread_num();
 	allocate_work(thread);
@@ -501,7 +512,7 @@ void operator()(
 	}
 	//
 	// Determine tape corresponding to variables in ax
-	tape_id_t     tape_id  = 0;
+	tape_id_t            tape_id  = 0;
 	local::ADTape<Base>* tape     = CPPAD_NULL;
 	for(j = 0; j < n; j++)
 	{	tx[j]  = ax[j].value_;
@@ -583,7 +594,9 @@ void operator()(
 			}
 			else
 			{	// information for an argument that is parameter
-				addr_t par = tape->Rec_.PutPar(ax[j].value_);
+				addr_t par = ax[j].taddr_;
+				if( ! Dynamic( ax[j] ) )
+					par = tape->Rec_.PutPar(ax[j].value_);
 				tape->Rec_.PutArg(par);
 				tape->Rec_.PutOp(local::UsrapOp);
 			}
@@ -600,7 +613,8 @@ void operator()(
 				ay[i].tape_id_  = tape_id;
 			}
 			else
-			{	addr_t par = tape->Rec_.PutPar(ay[i].value_);
+			{	CPPAD_ASSERT_UNKNOWN( ! Dynamic( ay[i] ) );
+				addr_t par = tape->Rec_.PutPar(ay[i].value_);
 				tape->Rec_.PutArg(par);
 				tape->Rec_.PutOp(local::UsrrpOp);
 			}

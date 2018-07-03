@@ -30,10 +30,14 @@ Often one is only interested in computing derivatives with respect
 to a subset of arguments to a function.
 In this case, it is easier to make all the arguments to the function
 $cref/independent variables/glossary/Tape/Independent Variable/$$.
-It is more efficient to for the independent variables to be the
-arguments we are computing derivatives w.r.t and for the other arguments to be
+It is more efficient
+(will use less memory and be faster)
+if the independent variables are just the
+arguments we are computing derivatives w.r.t
+and for the other arguments are
 $cref/dynamic parameters/glossary/Dynamic Parameter/$$.
-This function is used to change the value of the dynamic parameters.
+The $cref new_dynamic$$ can be used to change the value
+of the dynamic parameters in $icode f$$..
 
 $head f$$
 The object $icode f$$ has prototype
@@ -53,7 +57,8 @@ $cref/dynamic parameter/glossary/Dynamic Parameter/$$ vector.
 It size must be the same as the size of the
 $cref/dynamic/Independent/dynamic/$$ parameter vector
 in the call to $code Independent$$ that started
-the recording for $icode f$$.
+the recording for $icode f$$; see
+$cref/size_dynamic/seq_property/size_dynamic/$$.
 
 $head VectorBase$$
 The type $icode VectorBase$$ must be a $cref SimpleVector$$ class with
@@ -71,8 +76,9 @@ $icode%f%.new_dynamic%$$ is called.
 $head Restrictions$$
 Dynamic parameters are only allowed in operations where one of the other
 operands is a $cref/Variable/glossary/Variable/$$.
-You must include all the parameters that depend on dynamic parameters in the
-$cref/dynamic/Independent/dynamic/$$ argument to $code Independent$$.
+You must compute all the parameters that depend on dynamic parameters
+before the call to $cref Independent$$ and include them as part of the
+$cref/dynamic/Independent/dynamic/$$ parameter vector.
 
 $children%
 	example/general/new_dynamic.cpp

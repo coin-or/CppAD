@@ -257,8 +257,15 @@ public:
 	the return value is called \c ay above.
 	*/
 	AD<Base> ad(const AD<Base> &ax) const
-	{	AD<Base> ay;
-
+	{
+# ifndef NDEBUG
+		if( Dynamic(ax) )
+		{	std::string msg = name_
+			+ ": argument to this discrete function is a dynamic parameter";
+			CPPAD_ASSERT_KNOWN(false, msg.c_str());
+		}
+# endif
+		AD<Base> ay;
 		ay.value_ = f_(ax.value_);
 		if( Variable(ax) )
 		{	local::ADTape<Base> *tape = ax.tape_this();

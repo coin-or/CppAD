@@ -39,6 +39,8 @@ $icode%s% = %f%.size_var()
 %$$
 $icode%s% = %f%.size_par()
 %$$
+$icode%s% = %f%.size_dynamic()
+%$$
 $icode%s% = %f%.size_op()
 %$$
 $icode%s% = %f%.size_op_arg()
@@ -153,6 +155,17 @@ These parameters are considered part of the operation
 sequence, as opposed to the Taylor coefficients which are
 considered extra data in the function object $icode f$$.
 Note that one $icode Base$$ value is required for each parameter.
+
+$head size_dynamic$$
+The result $icode s$$ has prototype
+$codei%
+	size_t %s%
+%$$
+and is the number of
+$cref/dynamic parameters/glossary/Dynamic Parameter/$$
+in the operation sequence.
+The value of these parameters can be changed using the
+$cref new_dynamic$$ function.
 
 $head size_op$$
 The result $icode s$$ has prototype

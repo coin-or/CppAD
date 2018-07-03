@@ -27,6 +27,10 @@ $$
 
 $section Changes and Additions to CppAD During 2018$$
 
+$head 07-02$$
+Add a special type of parameter that can change value,
+see $cref/purpose/new_dynamic/Purpose/$$ for dynamic parameters.
+
 $head 06-27$$
 Simplify the process in the $cref optimize$$ procedure
 where it recognizes identical expressions
