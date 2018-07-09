@@ -9,116 +9,141 @@
 # A copy of this license is included in the COPYING file of this distribution.
 # Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # -----------------------------------------------------------------------------
-if [ $0 != "bin/package.sh" ]
+# Bradley M. Bell has given permission to use this script to generate
+# a distribution of CppAD that has "GNU General Public License Version 3"
+# in place of "Eclipse Public License Version 1.0.". Other's are free to
+# keep or change this premission in their versions of the source code.
+# -----------------------------------------------------------------------------
+if [ "$0" != "bin/package.sh" ]
 then
 	echo "bin/package.sh: must be executed from its parent directory"
 	exit 1
 fi
-echo_log_eval() {
-	echo $*
-	echo $* >> $top_srcdir/package.log
-	if ! eval $* >> $top_srcdir/package.log
-	then
-		echo "Error: check package.log"
-		exit 1
-	fi
+echo_eval() {
+     echo $*
+     eval $*
 }
-log_eval() {
-	echo $* >> $top_srcdir/package.log
-	if ! eval $* >> $top_srcdir/package.log
-	then
-		echo "Error: check package.log"
-		exit 1
-	fi
-}
-if [ -e package.log ]
-then
-	echo "rm package.log"
-	rm package.log
-fi
-top_srcdir=`pwd`
-# ----------------------------------------------------------------------------
-# Remove old packages and corresponding directories
-echo_eval rm -rf build/cppad-*
-# ----------------------------------------------------------------------------
-this_license=`\
-	grep '$verbatim%' omh/appendix/license.omh | sed -e 's|$verbatim%\(...\).*|\1|'`
-if [ "$this_license" == 'epl' ]
-then
-	remove_list='gpl-3.0.txt bin/gpl_license.sh'
-elif [ "$this_license" == 'gpl' ]
-then
-	remove_list='epl-v10.txt epl-v10.html bin/gpl_license.sh'
-else
-	echo 'bin/package.sh: cannot find license in omh/appendix/license.omh'
-	exit 1
-fi
-# ----------------------------------------------------------------------------
-# Make sure that version number is the same in all files
-echo_log_eval version.sh check
-#
-# Get version number and make sure all copies agree
-version=`version.sh get`
-echo_log_eval version.sh get
-# ----------------------------------------------------------------------------
-# Create the package directory
-package_dir="build/cppad-$version"
-echo_log_eval mkdir -p $package_dir
 # -----------------------------------------------------------------------------
-# Source file that are coppied to the package directory
-file_list=`bin/ls_files.sh`
-#
-# Copy the files, creating sub-directories when necessary
-echo_log_eval echo "copy files to $package_dir"
-for file in $file_list $other_files
-do
-	sub_dir=`echo $file | sed -e 's|\(.*\)/[^/]*$|\1|'`
-	if [ "$sub_dir" != "$file" ]
-	then
-		if [ ! -e "$package_dir/$sub_dir" ]
-		then
-			log_eval mkdir -p $package_dir/$sub_dir
-		fi
-	fi
-	log_eval cp $file $package_dir/$file
-done
-echo_log_eval echo "remove certain files from $package_dir"
-for file in $remove_list
-do
-	if [ -e $package_dir/$file ]
-	then
-		echo_log_eval rm $package_dir/$file
-	fi
-done
-# ----------------------------------------------------------------------------
-# build the xml version of documentation for this distribution
-echo_log_eval cd $package_dir
-#
-# This command creates omhelp.doc.log in current directory (and says so)
-echo_log_eval echo "run_omhelp.sh doc"
-if ! run_omhelp.sh doc
+src_dir=`pwd`
+branch=`git rev-parse --abbrev-ref HEAD`
+version=`version.sh get`
+# -----------------------------------------------------------------------------
+# doc
+echo 'create ./doc'
+if [ -e 'doc' ]
 then
-	echo_log_eval cp omhelp.doc.log $top_srcdir/omhelp.doc.log
-	exit 1
+	echo_eval rm -r doc
 fi
-# Copy the log to the directory where the package.sh command was executed
-echo_log_eval cp omhelp.doc.log $top_srcdir/omhelp.doc.log
-# ----------------------------------------------------------------------------
-# change back to the package parent directory and create the tarball
-echo_log_eval cd ..
-echo_log_eval tar -czf cppad-$version.$this_license.tgz cppad-$version
-# ----------------------------------------------------------------------------
-# create gpl version of package
-echo_log_eval cd $top_srcdir
-if [ -e 'bin/gpl_license.sh' ]
+cat << EOF > $src_dir/package.$$
+/^commit/! b end
+N
+N
+N
+N
+/version $version/! b end
+s|\\nAuthor:.*||
+s|commit *||
+p
+: end
+EOF
+#
+# use gh-pages if they exist for this version
+git_hash=`git log gh-pages | sed -n -f $src_dir/package.$$ | head -1`
+if [ "$git_hash" != '' ]
 then
-	if [ "$this_license" != 'epl' ]
-	then
-		echo 'package.sh: bin/gpl_license.sh found in gpl verison of source.'
-		exit 1
-	fi
-	echo_log_eval bin/gpl_license.sh cppad-$version build build
+	mkdir doc
+	list=`git ls-tree --name-only $git_hash:doc`
+	for file in $list
+	do
+		git show $git_hash:doc/$file > doc/$file
+	done
+else
+	# no gh-pages so build documentation (requires omhelp)
+	run_omhelp.sh doc
 fi
+# -----------------------------------------------------------------------------
+# change_list
+cat << EOF > $src_dir/package.$$
+/^.gitignore\$/d
+/^authors\$/d
+/^bin\\/colpack.sh\$/d
+/^compile\$/d
+/^config.guess\$/d
+/^config.sub\$/d
+/^configure\$/d
+/^depcomp\$/d
+/^epl-v10.html\$/d
+/^epl-v10.txt\$/d
+/^gpl-3.0.txt\$/d
+/^install-sh\$/d
+/^missing\$/d
+/^uw_copy_040507.html\$/d
+EOF
+change_list=`git ls-files | sed -f $src_dir/package.$$`
 # ----------------------------------------------------------------------------
-echo "$0: OK"
+# clean up old results
+if [ ! -e 'build' ]
+then
+	echo_eval mkdir build
+fi
+echo_eval rm -rf build/cppad-*
+# -----------------------------------------------------------------------------
+# cppad-$version.tgz
+git archive \
+	--format tar \
+	--prefix="cppad-$version/" \
+	HEAD \
+	| gzip > build/cppad-$version.tgz
+# -----------------------------------------------------------------------------
+# cppad-$version and cppad-$version.epl.tgz
+echo "create build/cppad-$version.epl.tgz"
+cd build
+tar -xzf cppad-$version.tgz
+rm cppad-$version.tgz
+rm cppad-$version/gpl-3.0.txt
+cp -r ../doc cppad-$version/doc
+tar --create cppad-$version --gzip --file=cppad-$version.epl.tgz
+# -----------------------------------------------------------------------------
+# cppad-$version and cppad-$version.gpl.tgz
+echo "create build/cppad-$version.gpl.tgz"
+#
+# restore gpl file
+cp ../gpl-3.0.txt cppad-$version/gpl-3.0.txt
+#
+# change EPL to GPL
+cat << EOF > $src_dir/package.$$
+s|Eclipse Public License Version 1.0|GNU General Public License Version 3|
+EOF
+#
+cd cppad-$version
+#
+# remove epl files
+for file in epl-v10.html epl-v10.txt
+do
+	rm $file
+done
+#
+# change license in COPYING
+sed -i COPYING -e '12,$d'
+cat gpl-3.0.txt >> COPYING
+#
+# Change short copyright message at top of every file
+for file in $change_list
+do
+	sed -i $file -f $src_dir/package.$$
+	if ! grep 'GNU General Public License Version 3' $file > /dev/null
+	then
+		echo "package.sh: Cannot change $file"
+	fi
+done
+rm $src_dir/package.$$
+#
+# cppad-$version.gpl.tgz
+cd ..
+tar --create cppad-$version --gzip --file=cppad-$version.gpl.tgz
+# ----------------------------------------------------------------------------
+# remove cppad-$version
+rm -r cppad-$version
+#
+echo 'package.sh: OK'
 exit 0
