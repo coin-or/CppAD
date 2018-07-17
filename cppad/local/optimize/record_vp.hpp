@@ -10,6 +10,7 @@ the terms of the
 A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
+# include <cppad/local/optimize/par_play2rec.hpp>
 /*!
 \file record_vp.hpp
 Record an operation of the form (variable op parameter).
@@ -73,7 +74,6 @@ struct_size_pair record_vp(
 	// vector of length npar containing the parameters the old operation
 	// sequence; i.e., given a parameter index i < npar, the corresponding
 	// parameter value is par[i].
-	const Base* par = play->GetPar();
 	//
 	CPPAD_ASSERT_UNKNOWN( NumRes(op) > 0 );
 	CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < i_var ); // DAG condition
@@ -81,7 +81,7 @@ struct_size_pair record_vp(
 	//
 	addr_t new_arg[2];
 	new_arg[0]   = new_var[ random_itr.var2op(arg[0]) ];
-	new_arg[1]   = rec->PutPar( par[arg[1]] );
+	new_arg[1]   = par_play2rec(rec, play, arg[1] );
 	rec->PutArg( new_arg[0], new_arg[1] );
 	//
 	struct_size_pair ret;

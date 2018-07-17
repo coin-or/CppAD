@@ -25,7 +25,6 @@ echo_eval() {
 }
 # -----------------------------------------------------------------------------
 src_dir=`pwd`
-branch=`git rev-parse --abbrev-ref HEAD`
 version=`version.sh get`
 # -----------------------------------------------------------------------------
 # doc
@@ -48,7 +47,7 @@ p
 EOF
 #
 # use gh-pages if they exist for this version
-git_hash=`git log gh-pages | sed -n -f $src_dir/package.$$ | head -1`
+git_hash=`git log origin/gh-pages | sed -n -f $src_dir/package.$$ | head -1`
 if [ "$git_hash" != '' ]
 then
 	mkdir doc
@@ -87,21 +86,19 @@ then
 	echo_eval mkdir build
 fi
 echo_eval rm -rf build/cppad-*
+echo_eval mkdir build/cppad-$version
 # -----------------------------------------------------------------------------
 # cppad-$version.tgz
-git archive \
-	--format tar \
-	--prefix="cppad-$version/" \
-	HEAD \
-	| gzip > build/cppad-$version.tgz
+git ls-files -z | xargs -0 tar -czvf build/cppad-$version/tar.tgz
 # -----------------------------------------------------------------------------
 # cppad-$version and cppad-$version.epl.tgz
 echo "create build/cppad-$version.epl.tgz"
-cd build
-tar -xzf cppad-$version.tgz
-rm cppad-$version.tgz
-rm cppad-$version/gpl-3.0.txt
-cp -r ../doc cppad-$version/doc
+cd build/cppad-$version
+tar -xzf tar.tgz
+rm tar.tgz
+rm gpl-3.0.txt
+cp -r ../../doc doc
+cd ..
 tar --create cppad-$version --gzip --file=cppad-$version.epl.tgz
 # -----------------------------------------------------------------------------
 # cppad-$version and cppad-$version.gpl.tgz
