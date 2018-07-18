@@ -84,12 +84,16 @@ enum OpCode {
 	// arg[6+arg[4]] -> arg[5+arg[4]+arg[5]] = skip operations if false
 	// arg[6+arg[4]+arg[5]] = arg[4] + arg[5]
 	CSumOp,   // Cummulative summation
-	// arg[0] = number of addition variables in summation
-	// arg[1] = number of subtraction variables in summation
-	// arg[2] = index of parameter that initializes summation
-	// arg[3] -> arg[2+arg[0]] = index for positive variables
-	// arg[3+arg[0]] -> arg[2+arg[0]+arg[1]] = index for minus variables
-	// arg[3+arg[0]+arg[1]] = arg[0] + arg[1]
+	// arg[0] = index of parameter that initializes summation
+	// arg[1] = end in arg of addition variables in summation
+	// arg[2] = end in arg of subtraction variables in summation
+	// arg[3] = end in arg of addition dynamic parameters in summation
+	// arg[4] = end in arg of subtraction dynamic parameters in summation
+	// arg[5],      ... , arg[arg[1]-1]: indices for addition variables
+	// arg[arg[1]], ... , arg[arg[2]-1]: indices for subtraction variables
+	// arg[arg[2]], ... , arg[arg[3]-1]: indices for additon dynamics
+	// arg[arg[3]], ... , arg[arg[4]-1]: indices for subtraction dynamics
+	// arg[arg[4]] = arg[4]
 	DisOp,    // discrete::eval(index, variable)
 	DivpvOp,  // parameter  / variable
 	DivvpOp,  // variable   / parameter
@@ -624,19 +628,27 @@ void printOp(
 
 		case CSumOp:
 		/*
-		ind[0] = number of addition variables in summation
-		ind[1] = number of subtraction variables in summation
-		ind[2] = index of parameter that initializes summation
-		ind[3], ... , ind[2+ind[0]] = index for positive variables
-		ind[3+ind[0]], ..., ind[2+ind[0]+ind[1]] = negative variables
-		ind[3+ind[0]+ind[1]] == ind[0] + ind[1]
+		ind[0] = index of parameter that initializes summation
+		ind[1] = end in ind of addition variables in summation
+		ind[2] = end in ind of subtraction variables in summation
+		ind[3] = end in ind of addition dynamic parameters in summation
+		ind[4] = end in ind of subtraction dynamic parameters in summation
+		ind[5],      ... , ind[ind[1]-1]: indices for addition variables
+		ind[ind[1]], ... , ind[ind[2]-1]: indices for subtraction variables
+		ind[ind[2]], ... , ind[ind[3]-1]: indices for additon dynamics
+		ind[ind[3]], ... , ind[ind[4]-1]: indices for subtraction dynamics
+		ind[ind[4]] = ind[4]
 		*/
-		CPPAD_ASSERT_UNKNOWN( ind[3+ind[0]+ind[1]] == ind[0]+ind[1] );
-		printOpField(os, " pr=", play->GetPar(ind[2]), ncol);
-		for(i = 0; i < size_t(ind[0]); i++)
-			 printOpField(os, " +v=", ind[3+i], ncol);
-		for(i = 0; i < size_t(ind[1]); i++)
-			 printOpField(os, " -v=", ind[3+ind[0]+i], ncol);
+		CPPAD_ASSERT_UNKNOWN( ind[ind[4]] == ind[4] );
+		printOpField(os, " pr=", play->GetPar(ind[0]), ncol);
+		for(i = 5; i < size_t(ind[1]); i++)
+			 printOpField(os, " +v=", ind[i], ncol);
+		for(i = size_t(ind[1]); i < size_t(ind[2]); i++)
+			 printOpField(os, " -v=", ind[i], ncol);
+		for(i = size_t(ind[2]); i < size_t(ind[3]); i++)
+			 printOpField(os, " +d=", play->GetPar(ind[i]), ncol);
+		for(i = size_t(ind[3]); i < size_t(ind[4]); i++)
+			 printOpField(os, " -d=", play->GetPar(ind[i]), ncol);
 		break;
 
 		case LdpOp:
@@ -904,8 +916,8 @@ and all the other is_variable[j] values are false.
 \par CSumOp
 In the case of CSumOp,
 \code
-		is_variable.size() = 4 + arg[0] + arg[1];
-		for(size_t j = 3; j < is_variable.size() - 1; ++j)
+		is_variable.size() = arg[4]
+		for(size_t j = 5; j < arg[2]; ++j)
 			is_variable[j] = true;
 \endcode
 and all the other is_variable values are false.
@@ -1102,14 +1114,11 @@ inline void arg_is_variable(
 		CPPAD_ASSERT_UNKNOWN( NumArg(op) == 0 )
 		//
 		// true number of arguments
-		num_arg = 4 + arg[0] + arg[1];
+		num_arg = arg[4];
+		//
 		is_variable.resize( num_arg );
-		is_variable[0] = false;
-		is_variable[1] = false;
-		is_variable[2] = false;
-		for(size_t i = 3; i < num_arg - 1; ++i)
-			is_variable[i] = true;
-		is_variable[num_arg - 1] = false;
+		for(size_t i = 0; i < num_arg; ++i)
+			is_variable[i] = (5 <= i) & (i < size_t(arg[2]));
 		break;
 
 		// --------------------------------------------------------------------

@@ -119,9 +119,9 @@ void random_setup(
 			const addr_t* op_arg = arg_vec.data() + arg_index;
 			//
 			// The actual number of arugments for this operator is
-			// op_arg[0] + op_arg[1] + 4
+			// op_arg[4] + 1
 			// Correct index of first argument for next operator
-			arg_index += op_arg[0] + op_arg[1] + 4;
+			arg_index += op_arg[4] + 1;
 		}
 		//
 		// CSkip

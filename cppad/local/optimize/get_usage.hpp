@@ -619,10 +619,8 @@ void get_usage(
 			case CSumOp:
 			CPPAD_ASSERT_UNKNOWN( NumRes(op) == 1 );
 			{
-				size_t num_add = size_t( arg[0] );
-				size_t num_sub = size_t( arg[1] );
-				for(size_t i = 0; i < num_add + num_sub; i++)
-				{	size_t j_op = random_itr.var2op( arg[3 + i] );
+				for(size_t i = 5; i < size_t(arg[2]); i++)
+				{	size_t j_op = random_itr.var2op( arg[i] );
 					increase_arg_usage(
 						play, sum_op, i_op, j_op, op_usage, cexp_set
 					);

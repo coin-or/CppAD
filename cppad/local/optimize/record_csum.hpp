@@ -219,17 +219,21 @@ struct_size_pair record_csum(
 		size_t( std::numeric_limits<addr_t>::max() ) >= n_add + n_sub
 	);
 	//
-	rec->PutArg( addr_t(n_add) );                // arg[0]
-	rec->PutArg( addr_t(n_sub) );                // arg[1]
 	addr_t new_arg = rec->PutPar(sum_par);
-	rec->PutArg(new_arg);              // arg[2]
+	rec->PutArg(new_arg);            // arg[0]
+	size_t end   = n_add + 5;
+	rec->PutArg( addr_t(end) );      // arg[1]
+	end           += n_sub;
+	rec->PutArg( addr_t(end) );      // arg[2]
+	rec->PutArg( addr_t(end) );      // arg[3]
+	rec->PutArg( addr_t(end) );      // arg[4]
 	// addition arguments
 	for(size_t i = 0; i < n_add; i++)
 	{	CPPAD_ASSERT_UNKNOWN( ! work.add_stack.empty() );
 		size_t old_arg = work.add_stack.top();
 		new_arg        = new_var[ random_itr.var2op(old_arg) ];
 		CPPAD_ASSERT_UNKNOWN( 0 < new_arg && size_t(new_arg) < current );
-		rec->PutArg(new_arg);         // arg[3+i]
+		rec->PutArg(new_arg);         // arg[5+i]
 		work.add_stack.pop();
 	}
 	// subtraction arguments
@@ -238,11 +242,11 @@ struct_size_pair record_csum(
 		size_t old_arg = work.sub_stack.top();
 		new_arg        = new_var[ random_itr.var2op(old_arg) ];
 		CPPAD_ASSERT_UNKNOWN( 0 < new_arg && size_t(new_arg) < current );
-		rec->PutArg(new_arg);      // arg[3 + arg[0] + i]
+		rec->PutArg(new_arg);      // arg[5 + n_add + i]
 		work.sub_stack.pop();
 	}
 	// number of additions plus number of subtractions
-	rec->PutArg( addr_t(n_add + n_sub) );      // arg[3 + arg[0] + arg[1]]
+	rec->PutArg( addr_t(end) );    // arg[end] = end
 	//
 	// return value
 	struct_size_pair ret;

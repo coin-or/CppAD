@@ -174,13 +174,8 @@ public:
 		//
 		// CSumOp
 		if( op_ == CSumOp )
-		{	//
-			CPPAD_ASSERT_UNKNOWN( arg + 1 < arg_end_ );
-			addr_t n_var      = arg[0] + arg[1];
-			CPPAD_ASSERT_UNKNOWN( n_var == arg[3 + n_var] );
-			//
-			// add actual number of arguments to arg_
-			arg_ += 4 + n_var;
+		{	// add actual number of arguments to arg_
+			arg_ += arg[4] + 1;
 		}
 		//
 		// CSkip
@@ -229,13 +224,13 @@ public:
 		//
 		// CSumOp
 		if( op_ == CSumOp )
-		{	// number of variables is stored in last argument
-			addr_t n_var = *(arg_ - 1);
+		{	// index of arg[4]
+			addr_t arg_4 = *(arg_ - 1);
 			//
 			// corrected index of first argument to this operator
-			arg = arg_ -= 4 + n_var;
+			arg = arg_ -= arg_4 + 1;
 			//
-			CPPAD_ASSERT_UNKNOWN( arg[0] + arg[1] == n_var );
+			CPPAD_ASSERT_UNKNOWN( arg[arg[4] ] == arg[4] );
 		}
 		//
 		// CSkip

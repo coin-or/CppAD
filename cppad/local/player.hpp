@@ -330,10 +330,9 @@ public:
 
 				// CSumOp
 				case CSumOp:
-				{	addr_t num_add = op_arg[0];
-					addr_t num_sub = op_arg[1];
-					for(addr_t j = 0; j < num_add + num_sub; j++)
-						CPPAD_ASSERT_UNKNOWN(op_arg[3+j] <= arg_var_bound);
+				{	CPPAD_ASSERT_UNKNOWN( 5 < op_arg[2] );
+					for(addr_t j = 5; j < op_arg[2]; j++)
+						CPPAD_ASSERT_UNKNOWN(op_arg[j] <= arg_var_bound);
 				}
 				itr.correct_before_increment();
 				break;
