@@ -30,16 +30,11 @@ spell_list='
 revert_list='
 '
 move_list='
-	cppad/core/par_var.hpp
-	example/general/par_var.cpp
 '
 move_sed='s|par_var|par_var_dyn|'
 #
 cat << EOF > junk.sed
-s|ParVar|par_var_dyn|g
-s|/parvar/|/par_var_dyn/|g
-s|par_var.hpp|par_var_dyn.hpp|g
-s|par_var.cpp|par_var_dyn.cpp|g
+s|cummulative|cumulative|g
 EOF
 # -----------------------------------------------------------------------------
 if [ $0 != "bin/batch_edit.sh" ]

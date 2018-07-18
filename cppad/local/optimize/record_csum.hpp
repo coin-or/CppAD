@@ -125,17 +125,30 @@ struct_size_pair record_csum(
 		OpCode        op      = info.op;
 		const addr_t* arg     = info.arg;
 		bool          add     = info.add;
-		//
+		// -------------------------------------------------------------------
 		// process first argument to this operator
+		// (first argument has same sign as parent node)
+		// -------------------------------------------------------------------
 		switch(op)
 		{	// cases where first argument is a parameter
 			case AddpvOp:
 			case SubpvOp:
 			CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < npar );
-			// first argument has same sign as parent node
-			if( add )
-				sum_par += par[arg[0]];
-			else	sum_par -= par[arg[0]];
+			if( play->num_dynamic() <= size_t(arg[0]) )
+			{	// first argument is not a dynamic parameter
+				if( add )
+					sum_par += par[arg[0]];
+				else
+					sum_par -= par[arg[0]];
+			}
+			else
+			{	// first argument is a dynamic parameter
+				// (can't yet be a result, so no nodes below)
+				if( add )
+					stack.add_dyn.push(arg[0]);
+				else
+					stack.sub_dyn.push(arg[0]);
+			}
 			break;
 
 			// cases where first argument is a variable
@@ -151,7 +164,6 @@ struct_size_pair record_csum(
 				// push the operator corresponding to the first argument
 				size_t i_op_tmp = random_itr.var2op(arg[0]);
 				random_itr.op_info(i_op_tmp, info.op, info.arg, not_used);
-				// first argument has same sign as parent node
 				info.add = add;
 				stack.op_info.push( info );
 			}
@@ -160,22 +172,38 @@ struct_size_pair record_csum(
 				CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < current );
 				if( add )
 					stack.add_var.push(arg[0]);
-				else	stack.sub_var.push(arg[0]);
+				else
+					stack.sub_var.push(arg[0]);
 			}
 			break;
 
 			default:
 			CPPAD_ASSERT_UNKNOWN(false);
 		}
+		// -------------------------------------------------------------------
 		// process second argument to this operator
+		// (second arugment switches sign if subtracting)
+		// -------------------------------------------------------------------
 		switch(op)
 		{	// cases where second argument is a parameter
 			case SubvpOp:
-			CPPAD_ASSERT_UNKNOWN( size_t(arg[1]) < npar );
 			// second argument has opposite sign of parent node
-			if( add )
-				sum_par -= par[arg[1]];
-			else	sum_par += par[arg[1]];
+			CPPAD_ASSERT_UNKNOWN( size_t(arg[1]) < npar );
+			if( play->num_dynamic() <= size_t(arg[1]) )
+			{	// second argument is not a dynamic parameter
+				if( add )
+					sum_par -= par[arg[1]];
+				else
+					sum_par += par[arg[1]];
+			}
+			else
+			{	// second argument is a dynamic parmaeter
+				// (can't yet be a result, so no nodes below)
+				if( add )
+					stack.sub_dyn.push(arg[1]);
+				else
+					stack.add_dyn.push(arg[1]);
+			}
 			break;
 
 			// cases where second argument is a variable and has opposite sign
@@ -202,7 +230,8 @@ struct_size_pair record_csum(
 				CPPAD_ASSERT_UNKNOWN( size_t(arg[1]) < current );
 				if( add )
 					stack.add_var.push(arg[1]);
-				else	stack.sub_var.push(arg[1]);
+				else
+					stack.sub_var.push(arg[1]);
 			}
 			break;
 
@@ -211,42 +240,67 @@ struct_size_pair record_csum(
 		}
 	}
 	// number of variables to add in this cummulative sum operator
-	size_t n_add = stack.add_var.size();
+	size_t n_add_var = stack.add_var.size();
+
 	// number of variables to subtract in this cummulative sum operator
-	size_t n_sub = stack.sub_var.size();
-	//
-	CPPAD_ASSERT_UNKNOWN(
-		size_t( std::numeric_limits<addr_t>::max() ) >= n_add + n_sub
-	);
-	//
+	size_t n_sub_var = stack.sub_var.size();
+
+	// number of dynamics to add in this cummulative sum operator
+	size_t n_add_dyn = stack.add_dyn.size();
+
+	// number of dynamics to subtract in this cummulative sum operator
+	size_t n_sub_dyn = stack.sub_dyn.size();
+
+	// first five arguements to cumulative sum operator
 	addr_t new_arg = rec->PutPar(sum_par);
-	rec->PutArg(new_arg);            // arg[0]
-	size_t end   = n_add + 5;
-	rec->PutArg( addr_t(end) );      // arg[1]
-	end           += n_sub;
-	rec->PutArg( addr_t(end) );      // arg[2]
-	rec->PutArg( addr_t(end) );      // arg[3]
-	rec->PutArg( addr_t(end) );      // arg[4]
-	// addition arguments
-	for(size_t i = 0; i < n_add; i++)
+	rec->PutArg(new_arg);            // arg[0]: initial sum
+	size_t end   = n_add_var + 5;
+	rec->PutArg( addr_t(end) );      // arg[1]: end for add variables
+	end           += n_sub_var;
+	rec->PutArg( addr_t(end) );      // arg[2]: end for sub variables
+	end           += n_add_dyn;
+	rec->PutArg( addr_t(end) );      // arg[3]: end for add dynamics
+	end           += n_sub_dyn;
+	rec->PutArg( addr_t(end) );      // arg[4]: end for sub dynamics
+
+	// addition variable arguments
+	for(size_t i = 0; i < n_add_var; i++)
 	{	CPPAD_ASSERT_UNKNOWN( ! stack.add_var.empty() );
-		size_t old_arg = stack.add_var.top();
+		addr_t old_arg = stack.add_var.top();
 		new_arg        = new_var[ random_itr.var2op(old_arg) ];
 		CPPAD_ASSERT_UNKNOWN( 0 < new_arg && size_t(new_arg) < current );
 		rec->PutArg(new_arg);         // arg[5+i]
 		stack.add_var.pop();
 	}
-	// subtraction arguments
-	for(size_t i = 0; i < n_sub; i++)
+
+	// subtraction variable arguments
+	for(size_t i = 0; i < n_sub_var; i++)
 	{	CPPAD_ASSERT_UNKNOWN( ! stack.sub_var.empty() );
-		size_t old_arg = stack.sub_var.top();
+		addr_t old_arg = stack.sub_var.top();
 		new_arg        = new_var[ random_itr.var2op(old_arg) ];
 		CPPAD_ASSERT_UNKNOWN( 0 < new_arg && size_t(new_arg) < current );
-		rec->PutArg(new_arg);      // arg[5 + n_add + i]
+		rec->PutArg(new_arg);      // arg[arg[1] + i]
 		stack.sub_var.pop();
 	}
+
+	// addition dynamic arguments
+	for(size_t i = 0; i < n_add_dyn; ++i)
+	{	addr_t old_arg = stack.add_dyn.top();
+		new_arg        = old_arg;
+		rec->PutArg(new_arg);      // arg[arg[2] + i]
+		stack.add_dyn.pop();
+	}
+
+	// subtraction dynamic arguments
+	for(size_t i = 0; i < n_sub_dyn; ++i)
+	{	addr_t old_arg = stack.sub_dyn.top();
+		new_arg        = old_arg;
+		rec->PutArg(new_arg);      // arg[arg[3] + i]
+		stack.sub_dyn.pop();
+	}
+
 	// number of additions plus number of subtractions
-	rec->PutArg( addr_t(end) );    // arg[end] = end
+	rec->PutArg( addr_t(end) );    // arg[arg[4]] = arg[4]
 	//
 	// return value
 	struct_size_pair ret;

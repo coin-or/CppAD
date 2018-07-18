@@ -394,7 +394,7 @@ void reverse(
 			reverse_csum_op(
 				d, i_var, arg, K, Partial
 			);
-			// end of a cummulative summation
+			// end of a cumulative summation
 			break;
 			// -------------------------------------------------
 

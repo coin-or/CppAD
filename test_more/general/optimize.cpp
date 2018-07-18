@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -1015,9 +1015,9 @@ namespace {
 		return ok;
 	}
 	// ====================================================================
-	bool cummulative_sum(void)
+	bool cumulative_sum(void)
 	{	// test conversion of a sequence of additions and subtraction
-		// to a cummulative summation sequence.
+		// to a cumulative summation sequence.
 		bool ok = true;
 		using CppAD::AD;
 		using CppAD::NearEqual;
@@ -2067,8 +2067,8 @@ bool optimize(void)
 		ok     &= duplicate_two();
 		ok     &= duplicate_three();
 		ok     &= duplicate_four();
-		// convert sequence of additions to cummulative summation
-		ok     &= cummulative_sum();
+		// convert sequence of additions to cumulative summation
+		ok     &= cumulative_sum();
 		ok     &= forward_csum();
 		ok     &= reverse_csum();
 		// sparsity patterns

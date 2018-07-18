@@ -113,7 +113,15 @@ inline void forward_csum_op(
 	for(size_t k = p; k <= q; k++)
 		z[k] = zero;
 	if( p == 0 )
+	{	// normal parameters in the sum
 		z[p] = parameter[ arg[0] ];
+		// addition dynamic parameters
+		for(size_t i = size_t(arg[2]); i < size_t(arg[3]); ++i)
+			z[p] += parameter[ arg[i] ];
+		// subtraction dynamic parameters
+		for(size_t i = size_t(arg[3]); i < size_t(arg[4]); ++i)
+			z[p] -= parameter[ arg[i] ];
+	}
 	Base* x;
 	for(size_t i = 5; i < size_t(arg[1]); ++i)
 	{	CPPAD_ASSERT_UNKNOWN( size_t(arg[i]) < i_z );

@@ -98,7 +98,7 @@ void for_jac(
 	// length of the parameter vector (used by CppAD assert macros)
 	const size_t num_par = play->num_par_rec();
 
-	// cum_sparsity accumulates sparsity pattern a cummulative sum
+	// cum_sparsity accumulates sparsity pattern a cumulative sum
 	size_t limit = var_sparsity.end();
 
 	// vecad_sparsity contains a sparsity pattern from each VecAD object

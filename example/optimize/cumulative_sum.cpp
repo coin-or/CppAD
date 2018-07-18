@@ -1,6 +1,5 @@
-// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -38,7 +37,7 @@ namespace {
 		after.n_var  = 1 + x.size(); after.n_op   = 2 + x.size();
 
 		// operators that are identical, and that will be made part of the
-		// cummulative summation. Make sure do not replace second variable
+		// cumulative summation. Make sure do not replace second variable
 		// using the first and then remove the first as part of the
 		// cumulative summation.
 		scalar first  = x[0] + x[1];
