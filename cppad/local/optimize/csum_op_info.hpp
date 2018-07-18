@@ -1,5 +1,5 @@
-# ifndef CPPAD_LOCAL_OPTIMIZE_CSUM_VARIABLE_HPP
-# define CPPAD_LOCAL_OPTIMIZE_CSUM_VARIABLE_HPP
+# ifndef CPPAD_LOCAL_OPTIMIZE_CSUM_OP_INFO_HPP
+# define CPPAD_LOCAL_OPTIMIZE_CSUM_OP_INFO_HPP
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
@@ -14,7 +14,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # include <cppad/local/declare_ad.hpp> // defines addr_t
 
 /*!
-\file csum_variable.hpp
+\file csum_op_info.hpp
 Information about one old variable that is part of a new CSumOp operation.
 */
 
@@ -23,7 +23,7 @@ namespace CppAD { namespace local { namespace optimize  {
 /*!
 Information about one old variable that is part of a new CSumOp operation.
 */
-struct struct_csum_variable {
+struct struct_csum_op_info {
 	/// Pointer to first argument (child) for this old operator.
 	/// Set by the reverse sweep at beginning of optimization.
 	const addr_t*       arg;

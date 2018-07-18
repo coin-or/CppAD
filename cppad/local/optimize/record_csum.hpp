@@ -46,9 +46,9 @@ is the object that will record the new operations.
 \return
 is the operator and variable indices in the new operation sequence.
 
-\param work
+\param stack
 Is temporary work space. On input and output,
-work.op_stack, work.add_stack, and work.sub_stack, are all empty.
+stack.op_info, stack.add_var, and stack.sub_var, are all empty.
 These stacks are passed in so that they are created once
 and then be reused with calls to record_csum.
 
@@ -70,7 +70,7 @@ struct_size_pair record_csum(
 	size_t                                             current        ,
 	recorder<Base>*                                    rec            ,
 	// local information passed so stacks need not be allocated for every call
-	struct_csum_stacks&                                work           )
+	struct_csum_stacks&                                stack          )
 {
 # ifndef NDEBUG
 	// number of parameters corresponding to the old operation sequence.
@@ -83,48 +83,48 @@ struct_size_pair record_csum(
 	const Base* par = play->GetPar();
 
 	// check assumption about work space
-	CPPAD_ASSERT_UNKNOWN( work.op_stack.empty() );
-	CPPAD_ASSERT_UNKNOWN( work.add_stack.empty() );
-	CPPAD_ASSERT_UNKNOWN( work.sub_stack.empty() );
+	CPPAD_ASSERT_UNKNOWN( stack.op_info.empty() );
+	CPPAD_ASSERT_UNKNOWN( stack.add_var.empty() );
+	CPPAD_ASSERT_UNKNOWN( stack.sub_var.empty() );
 	//
 	size_t i_op = random_itr.var2op(current);
 	CPPAD_ASSERT_UNKNOWN( ! ( op_usage[i_op] == usage_t(csum_usage) ) );
 	//
 	// information corresponding to the root node in the cummulative summation
-	struct struct_csum_variable var;
+	struct struct_csum_op_info info;
 	size_t not_used;
-	random_itr.op_info(i_op, var.op, var.arg, not_used);
-	var.add = true;  // was parrent operator positive or negative
+	random_itr.op_info(i_op, info.op, info.arg, not_used);
+	info.add = true;  // was parrent operator positive or negative
 	//
 	// initialize stack as containing this one operator
-	work.op_stack.push( var );
+	stack.op_info.push( info );
 	//
 	// initialize sum of parameter values as zero
 	Base sum_par(0);
 	//
 # ifndef NDEBUG
 	bool ok = false;
-	if( var.op == SubvpOp ) ok =
-		op_usage[ random_itr.var2op(var.arg[0]) ] == usage_t(csum_usage);
-	if( var.op == AddpvOp || var.op == SubpvOp ) ok =
-		op_usage[ random_itr.var2op(var.arg[1]) ] == usage_t(csum_usage);
-	if( var.op == AddvvOp || var.op == SubvvOp )
+	if( info.op == SubvpOp ) ok =
+		op_usage[ random_itr.var2op(info.arg[0]) ] == usage_t(csum_usage);
+	if( info.op == AddpvOp || info.op == SubpvOp ) ok =
+		op_usage[ random_itr.var2op(info.arg[1]) ] == usage_t(csum_usage);
+	if( info.op == AddvvOp || info.op == SubvvOp )
 	{	ok  =
-		op_usage[ random_itr.var2op(var.arg[0]) ] == usage_t(csum_usage);
+		op_usage[ random_itr.var2op(info.arg[0]) ] == usage_t(csum_usage);
 		ok |=
-		op_usage[ random_itr.var2op(var.arg[1]) ] == usage_t(csum_usage);
+		op_usage[ random_itr.var2op(info.arg[1]) ] == usage_t(csum_usage);
 	}
 	CPPAD_ASSERT_UNKNOWN( ok );
 # endif
 	//
 	// while there are operators left on the stack
-	while( ! work.op_stack.empty() )
+	while( ! stack.op_info.empty() )
 	{	// get this summation operator
-		var     = work.op_stack.top();
-		work.op_stack.pop();
-		OpCode        op      = var.op;
-		const addr_t* arg     = var.arg;
-		bool          add     = var.add;
+		info = stack.op_info.top();
+		stack.op_info.pop();
+		OpCode        op      = info.op;
+		const addr_t* arg     = info.arg;
+		bool          add     = info.add;
 		//
 		// process first argument to this operator
 		switch(op)
@@ -150,17 +150,17 @@ struct_size_pair record_csum(
 				);
 				// push the operator corresponding to the first argument
 				size_t i_op_tmp = random_itr.var2op(arg[0]);
-				random_itr.op_info(i_op_tmp, var.op, var.arg, not_used);
+				random_itr.op_info(i_op_tmp, info.op, info.arg, not_used);
 				// first argument has same sign as parent node
-				var.add = add;
-				work.op_stack.push( var );
+				info.add = add;
+				stack.op_info.push( info );
 			}
 			else
 			{	// there are no nodes below this one
 				CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < current );
 				if( add )
-					work.add_stack.push(arg[0]);
-				else	work.sub_stack.push(arg[0]);
+					stack.add_var.push(arg[0]);
+				else	stack.sub_var.push(arg[0]);
 			}
 			break;
 
@@ -193,16 +193,16 @@ struct_size_pair record_csum(
 				);
 				// push the operator corresoponding to the second arugment
 				size_t i_op_tmp = random_itr.var2op(arg[1]);
-				random_itr.op_info(i_op_tmp, var.op, var.arg, not_used);
-				var.add  = add;
-				work.op_stack.push( var );
+				random_itr.op_info(i_op_tmp, info.op, info.arg, not_used);
+				info.add  = add;
+				stack.op_info.push( info );
 			}
 			else
 			{	// there are no nodes below this one
 				CPPAD_ASSERT_UNKNOWN( size_t(arg[1]) < current );
 				if( add )
-					work.add_stack.push(arg[1]);
-				else	work.sub_stack.push(arg[1]);
+					stack.add_var.push(arg[1]);
+				else	stack.sub_var.push(arg[1]);
 			}
 			break;
 
@@ -211,9 +211,9 @@ struct_size_pair record_csum(
 		}
 	}
 	// number of variables to add in this cummulative sum operator
-	size_t n_add = work.add_stack.size();
+	size_t n_add = stack.add_var.size();
 	// number of variables to subtract in this cummulative sum operator
-	size_t n_sub = work.sub_stack.size();
+	size_t n_sub = stack.sub_var.size();
 	//
 	CPPAD_ASSERT_UNKNOWN(
 		size_t( std::numeric_limits<addr_t>::max() ) >= n_add + n_sub
@@ -229,21 +229,21 @@ struct_size_pair record_csum(
 	rec->PutArg( addr_t(end) );      // arg[4]
 	// addition arguments
 	for(size_t i = 0; i < n_add; i++)
-	{	CPPAD_ASSERT_UNKNOWN( ! work.add_stack.empty() );
-		size_t old_arg = work.add_stack.top();
+	{	CPPAD_ASSERT_UNKNOWN( ! stack.add_var.empty() );
+		size_t old_arg = stack.add_var.top();
 		new_arg        = new_var[ random_itr.var2op(old_arg) ];
 		CPPAD_ASSERT_UNKNOWN( 0 < new_arg && size_t(new_arg) < current );
 		rec->PutArg(new_arg);         // arg[5+i]
-		work.add_stack.pop();
+		stack.add_var.pop();
 	}
 	// subtraction arguments
 	for(size_t i = 0; i < n_sub; i++)
-	{	CPPAD_ASSERT_UNKNOWN( ! work.sub_stack.empty() );
-		size_t old_arg = work.sub_stack.top();
+	{	CPPAD_ASSERT_UNKNOWN( ! stack.sub_var.empty() );
+		size_t old_arg = stack.sub_var.top();
 		new_arg        = new_var[ random_itr.var2op(old_arg) ];
 		CPPAD_ASSERT_UNKNOWN( 0 < new_arg && size_t(new_arg) < current );
 		rec->PutArg(new_arg);      // arg[5 + n_add + i]
-		work.sub_stack.pop();
+		stack.sub_var.pop();
 	}
 	// number of additions plus number of subtractions
 	rec->PutArg( addr_t(end) );    // arg[end] = end

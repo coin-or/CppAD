@@ -11,7 +11,7 @@ A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 # include <stack>
-# include <cppad/local/optimize/csum_variable.hpp>
+# include <cppad/local/optimize/csum_op_info.hpp>
 
 /*!
 \file csum_stacks.hpp
@@ -25,11 +25,11 @@ Information about one cumulative summation operation.
 */
 struct struct_csum_stacks {
 	/// old operator indices for this cummulative summation
-	std::stack<struct struct_csum_variable>     op_stack;
+	std::stack<struct struct_csum_op_info>      op_info;
 	/// old variable indices to be added
-	std::stack<size_t >                         add_stack;
+	std::stack<size_t >                         add_var;
 	/// old variavle indices to be subtracted
-	std::stack<size_t >                         sub_stack;
+	std::stack<size_t >                         sub_var;
 };
 
 } } } // END_CPPAD_LOCAL_OPTIMIZE_NAMESPACE

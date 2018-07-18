@@ -18,7 +18,6 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # include <cppad/local/optimize/get_previous.hpp>
 # include <cppad/local/optimize/get_cexp_info.hpp>
 # include <cppad/local/optimize/size_pair.hpp>
-# include <cppad/local/optimize/csum_variable.hpp>
 # include <cppad/local/optimize/csum_stacks.hpp>
 # include <cppad/local/optimize/cexp_info.hpp>
 # include <cppad/local/optimize/record_pv.hpp>
