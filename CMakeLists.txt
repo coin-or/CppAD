@@ -16,7 +16,7 @@ SET(CMAKE_LEGACY_CYGWIN_WIN32 0) # remove when version below >= 2.8.4
 #
 # Set the minimum required version of cmake for this project.
 # see http://www.cmake.org/pipermail/cmake/2013-January/053213.html
-CMAKE_MINIMUM_REQUIRED(VERSION 3.1)
+CMAKE_MINIMUM_REQUIRED(VERSION 2.8.4)
 #
 # https://gitlab.kitware.com/cmake/cmake/issues/17292
 if(POLICY CMP0054)

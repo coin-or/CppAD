@@ -27,6 +27,10 @@ $$
 
 $section Changes and Additions to CppAD During 2018$$
 
+$head 07-23$$
+Change the required version of $cref cmake$$ from greater than
+or equal 3.1 to greater than or equal 2.8.4.
+
 $head 07-18$$
 Fix a bug (introduced on $cref/07-02/whats_new_18/07-02/$$)
 in $cref optimize$$ routine when dynamic parameters are present.
