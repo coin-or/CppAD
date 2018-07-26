@@ -84,17 +84,16 @@ void ADTape<Base>::Independent(
 	// done specifying all of the independent variables
 	size_independent_ = n;
 
-	// Place the dynamic parameters at the beginning of the parameter vector
+	// Place independent dynamic parameters at beginning of parameter vector
 	for(size_t j = 0; j < Rec_.get_num_ind_dynamic(); ++j)
 	{	CPPAD_ASSERT_UNKNOWN( ! Dynamic( dynamic[j] ) );
 		CPPAD_ASSERT_UNKNOWN( Parameter( dynamic[j] ) );
-# ifndef NDEBUG
-		// dynamic parameters can not match previous parameters so i == j
-		size_t i = Rec_.put_con_par( dynamic[j].value_ );
+		//
+		// dynamic parameters are placed at the end, so i == j
+		size_t i = Rec_.put_dyn_par(dynamic[j].value_ , InvOp);
 		CPPAD_ASSERT_UNKNOWN(i == j );
-# else
-		Rec_.put_con_par( dynamic[j].value_ );
-# endif
+		//
+		// make this parameter dynamic
 		dynamic[j].taddr_   = static_cast<addr_t>(j);
 		dynamic[j].tape_id_ = id_;
 		dynamic[j].dynamic_ = true;

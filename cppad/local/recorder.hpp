@@ -60,12 +60,23 @@ private:
 	/// Character strings ('\\0' terminated) in the recording.
 	pod_vector<char> text_vec_;
 
-	/// The constant parameters in the recording.
+	/// Hash table to reduced number of duplicate parameters in all_par_vec_
+	pod_vector<addr_t> par_hash_table_;
+
+	/// Vector containing all the parameters in the recording.
 	/// Use pod_vector_maybe because Base may not be plain old data.
 	pod_vector_maybe<Base> all_par_vec_;
 
-	/// Hash table to reduced number of duplicate parameters in all_par_vec_
-	pod_vector<addr_t> par_hash_table_;
+	/// Which elements of all_par_vec_ are dynamic parameters
+	/// (same size are all_par_vec_)
+	pod_vector<bool> dyn_par_is_;
+
+	/// operators for just the dynamic parameters in all_par_vec_
+	pod_vector<opcode_t> dyn_par_op_;
+
+	/// arguments for the dynamic parameter operators
+	pod_vector<addr_t> dyn_par_arg_;
+
 // ---------------------- Public Functions -----------------------------------
 public:
 	/// Default constructor
@@ -106,13 +117,17 @@ public:
 	~recorder(void)
 	{ }
 
+	/// Put a dynamic parameter in all_par_vec_.
+	addr_t put_dyn_par(const Base &par, OpCode op);
+
+
 	/// Put next operator in the operation sequence.
 	inline addr_t PutOp(OpCode op);
 	/// Put a vecad load operator in the operation sequence (special case)
 	inline addr_t PutLoadOp(OpCode op);
 	/// Add a value to the end of the current vector of VecAD indices.
 	inline addr_t PutVecInd(size_t vec_ind);
-	/// Find or add a parameter to the current vector of parameters.
+	/// Find or add a constant parameter to the vector of all parameters.
 	inline addr_t put_con_par(const Base &par);
 	/// Put one operation argument index in the recording
 	inline void PutArg(size_t arg0);
@@ -308,7 +323,32 @@ inline addr_t recorder<Base>::PutVecInd(size_t vec_ind)
 }
 
 /*!
-Find or add a parameter to the current vector of parameters.
+Put a dynamic parameter at the end of the vector for all parameters.
+
+\param par
+is value of dynamic parameter to be placed at the end of the vector.
+
+\param op
+is the operator for this dynamic parameter.
+There are no arguments to this function, so NumArg(op) == 0.
+
+\return
+is the index in the parameter vector corresponding to this parameter value.
+*/
+template <class Base>
+addr_t recorder<Base>::put_dyn_par(const Base &par, OpCode op)
+{	// independent parameters come first
+	CPPAD_ASSERT_UNKNOWN(
+		(OpCode(op) != InvOp) || all_par_vec_.size() < num_ind_dynamic_
+	);
+	CPPAD_ASSERT_UNKNOWN( NumArg(op) == 0 );
+	all_par_vec_.push_back( par );
+	dyn_par_is_.push_back(true);
+	dyn_par_op_.push_back( opcode_t(op) );
+	return static_cast<addr_t>( all_par_vec_.size() - 1 );
+}
+/*!
+Find or add a constant parameter to the current vector of all parameters.
 
 \param par
 is the parameter to be found or placed in the vector of parameters.
@@ -321,12 +361,9 @@ This value is not necessarily placed at the end of the vector
 template <class Base>
 addr_t recorder<Base>::put_con_par(const Base &par)
 {
-	// ---------------------------------------------------------------------
-	// dynamic parameters come first
-	if( all_par_vec_.size() < num_ind_dynamic_ )
-	{	all_par_vec_.push_back( par );
-		return static_cast<addr_t>( all_par_vec_.size() - 1 );
-	}
+	// independent parameters come first
+	CPPAD_ASSERT_UNKNOWN( num_ind_dynamic_ <= all_par_vec_.size() );
+
 	// ---------------------------------------------------------------------
 	// check for a match with a previous parameter
 	//
@@ -344,9 +381,9 @@ addr_t recorder<Base>::put_con_par(const Base &par)
 	// ---------------------------------------------------------------------
 	// put paramerter in all_par_vec_ and replace hash entry for this codee
 	//
-	index               = all_par_vec_.extend(1);
-	all_par_vec_[index] = par;
-	CPPAD_ASSERT_UNKNOWN( all_par_vec_.size() == index + 1 );
+	index = all_par_vec_.size();
+	all_par_vec_.push_back( par );
+	dyn_par_is_.push_back(false);
 	//
 	// change the hash table for this code to point to new value
 	par_hash_table_[code] = static_cast<addr_t>( index );

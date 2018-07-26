@@ -57,15 +57,25 @@ private:
 	/// The operation argument indices in the recording
 	pod_vector<addr_t> arg_vec_;
 
-	/// The parameters in the recording.
-	/// Note that Base may not be plain old data, so use false in consructor.
-	pod_vector_maybe<Base> par_vec_;
-
 	/// Character strings ('\\0' terminated) in the recording.
 	pod_vector<char> text_vec_;
 
 	/// The VecAD indices in the recording.
 	pod_vector<addr_t> vecad_ind_vec_;
+
+	/// All of the parameters in the recording.
+	/// Use pod_maybe because Base may not be plain old data.
+	pod_vector_maybe<Base> par_vec_;
+
+	/// Which elements of par_vec_ are dynamic parameters
+	/// (same size are par_vec_)
+	pod_vector<bool> dyn_par_is_;
+
+	/// operators for just the dynamic parameters in par_vec_
+	pod_vector<opcode_t> dyn_par_op_;
+
+	/// arguments for the dynamic parameter operators
+	pod_vector<addr_t> dyn_par_arg_;
 
 	// ----------------------------------------------------------------------
 	// Information needed to use member functions that begin with random_
@@ -141,7 +151,7 @@ public:
 	Use an assert to check that the length of the following vectors is
 	less than the maximum possible value for addr_t; i.e., that an index
 	in these vectors can be represented using the type addr_t:
-	op_vec_, vecad_ind_vec_, arg_vec_, par_vec_, text_vec_.
+	op_vec_, vecad_ind_vec_, arg_vec_, test_vec_, par_vec_, text_vec_.
 	*/
 	void get_recording(recorder<Base>& rec, size_t n_ind)
 	{
@@ -164,6 +174,11 @@ public:
 		// par_vec_
 		par_vec_.swap(rec.all_par_vec_);
 		CPPAD_ASSERT_UNKNOWN(par_vec_.size() < addr_t_max );
+
+		// dyn_par_is_, dyn_par_op_, dyn_par_arg_
+		dyn_par_is_.swap( rec.dyn_par_is_ );
+		dyn_par_op_.swap( rec.dyn_par_op_ );
+		dyn_par_arg_.swap( rec.dyn_par_arg_ );
 
 		// text_rec_
 		text_vec_.swap(rec.text_vec_);
