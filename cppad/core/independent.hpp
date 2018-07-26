@@ -109,7 +109,7 @@ $codei%
 %$$
 (see $icode Vector$$ below).
 It specifies the
-$cref/dynamic parameter/glossary/Dynamic Parameter/$$ vector.
+$cref/dynamic/glossary/Parameter/Dynamic/$$ parameter vector.
 The value of these parameters,
 in the $cref ADFun$$ object $icode f$$,
 that can be changed using $cref new_dynamic$$.

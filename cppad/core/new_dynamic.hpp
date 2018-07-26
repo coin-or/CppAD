@@ -34,7 +34,7 @@ It is more efficient,
 will use less memory and be faster,
 if the only the argument were are computing derivatives with respect to
 are independent variables and the other arguments are
-$cref/dynamic parameters/glossary/Dynamic Parameter/$$.
+$cref/dynamic/glossary/Parameter/Dynamic/$$ parameters.
 The $code new_dynamic$$ method is used to change the value
 of the dynamic parameters in $icode f$$.
 
@@ -52,7 +52,7 @@ $codei%
 %$$
 (see $icode VectorBase$$ below).
 It specifies a new value for the
-$cref/dynamic parameter/glossary/Dynamic Parameter/$$ vector.
+$cref/dynamic/glossary/Parameter/Dynamic/$$ parameter vector.
 It size must be the same as the size of the
 $cref/dynamic/Independent/dynamic/$$ parameter vector
 in the call to $code Independent$$ that started

@@ -35,7 +35,7 @@ $head Purpose$$
 Determine if $icode x$$ is a
 $cref/parameter/glossary/Parameter/$$,
 $cref/variable/glossary/Variable/$$ or
-$cref/dynamic parameter/glossary/Dynamic Parameter/$$.
+$cref/dynamic/glossary/Parameter/Dynamic/$$ parameter.
 
 $head x$$
 The argument $icode x$$ has prototype

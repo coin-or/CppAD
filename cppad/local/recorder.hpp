@@ -60,11 +60,11 @@ private:
 	/// Character strings ('\\0' terminated) in the recording.
 	pod_vector<char> text_vec_;
 
-	/// The parameters in the recording.
-	/// Note that Base may not be plain old data, so use false in consructor.
-	pod_vector_maybe<Base> par_vec_;
+	/// The constant parameters in the recording.
+	/// Use pod_vector_maybe because Base may not be plain old data.
+	pod_vector_maybe<Base> con_par_vec_;
 
-	/// Hash table used to reduced number of duplicate parameters in par_vec_
+	/// Hash table to reduced number of duplicate parameters in con_par_vec_
 	pod_vector<addr_t> par_hash_table_;
 // ---------------------- Public Functions -----------------------------------
 public:
@@ -155,7 +155,7 @@ public:
 	{	return op_vec_.capacity()        * sizeof(opcode_t)
 		     + vecad_ind_vec_.capacity() * sizeof(size_t)
 		     + arg_vec_.capacity()       * sizeof(addr_t)
-		     + par_vec_.capacity()       * sizeof(Base)
+		     + con_par_vec_.capacity()   * sizeof(Base)
 		     + text_vec_.capacity()      * sizeof(char);
 	}
 };
@@ -323,9 +323,9 @@ addr_t recorder<Base>::PutPar(const Base &par)
 {
 	// ---------------------------------------------------------------------
 	// dynamic parameters come first
-	if( par_vec_.size() < num_dynamic_ )
-	{	par_vec_.push_back( par );
-		return static_cast<addr_t>( par_vec_.size() - 1 );
+	if( con_par_vec_.size() < num_dynamic_ )
+	{	con_par_vec_.push_back( par );
+		return static_cast<addr_t>( con_par_vec_.size() - 1 );
 	}
 	// ---------------------------------------------------------------------
 	// check for a match with a previous parameter
@@ -333,20 +333,20 @@ addr_t recorder<Base>::PutPar(const Base &par)
 	// get hash code for this value
 	size_t code  = static_cast<size_t>( hash_code(par) );
 
-	// current index in par_vec_ corresponding to this hash code
+	// current index in con_par_vec_ corresponding to this hash code
 	size_t index = static_cast<size_t>( par_hash_table_[code] );
 
 	// check if the old parameter matches the new one
-	if( (num_dynamic_ <= index) & ( index < par_vec_.size() ) )
-	{	if( IdenticalEqualPar(par_vec_[index], par) )
+	if( (num_dynamic_ <= index) & ( index < con_par_vec_.size() ) )
+	{	if( IdenticalEqualPar(con_par_vec_[index], par) )
 		return static_cast<addr_t>( index );
 	}
 	// ---------------------------------------------------------------------
-	// put paramerter in par_vec_ and replace hash table entry for this codee
+	// put paramerter in con_par_vec_ and replace hash entry for this codee
 	//
-	index           = par_vec_.extend(1);
-	par_vec_[index] = par;
-	CPPAD_ASSERT_UNKNOWN( par_vec_.size() == index + 1 );
+	index               = con_par_vec_.extend(1);
+	con_par_vec_[index] = par;
+	CPPAD_ASSERT_UNKNOWN( con_par_vec_.size() == index + 1 );
 	//
 	// change the hash table for this code to point to new value
 	par_hash_table_[code] = static_cast<addr_t>( index );

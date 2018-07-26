@@ -56,7 +56,7 @@ $cref/operation sequence/glossary/Operation/Sequence/$$.
 $head Restriction$$
 The argument $icode x$$ must not be a
 $cref/variable/glossary/Variable/$$ or
-$cref/dynamic parameter/glossary/Dynamic Parameter/$$
+$cref/dynamic/glossary/Parameter/Dynamic/$$ parameter
 because its dependency information
 would not be included in the $code Value$$ result $icode b$$.
 

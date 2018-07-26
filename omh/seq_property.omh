@@ -162,7 +162,7 @@ $codei%
 	size_t %s%
 %$$
 and is the number of
-$cref/dynamic parameters/glossary/Dynamic Parameter/$$
+$cref/dynamic/glossary/Parameter/Dynamic/$$ parameters
 in the operation sequence.
 The value of these parameters can be changed using the
 $cref new_dynamic$$ function.
