@@ -34,8 +34,9 @@ move_list='
 move_sed='s|par_var|par_var_dyn|'
 #
 cat << EOF > junk.sed
-s|\$cref/dynamic parameters/glossary/Dynamic Parameter/\$\\\$|\$cref/dynamic/glossary/Parameter/Dynamic/\$\$ parameters|
-s|\$cref/dynamic parameter/glossary/Dynamic Parameter/\$\\\$|\$cref/dynamic/glossary/Parameter/Dynamic/\$\$ parameter|
+s|num_dynamic_    \\( *=\\)|num_ind_dynamic_\\1|
+s|num_dynamic|num_ind_dynamic|g
+s|number of dynamic parameters|number of independent dynamic parameters|
 EOF
 # -----------------------------------------------------------------------------
 if [ $0 != "bin/batch_edit.sh" ]

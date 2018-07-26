@@ -234,9 +234,9 @@ void optimize_run(
 
 	// -----------------------------------------------------------------------
 	// put dynamic parameters in new recording
-	size_t num_dynamic = play->num_dynamic();
-	rec->set_num_dynamic(num_dynamic);
-	for(size_t j = 0; j < num_dynamic; ++j)
+	size_t num_ind_dynamic = play->num_ind_dynamic();
+	rec->set_num_ind_dynamic(num_ind_dynamic);
+	for(size_t j = 0; j < num_ind_dynamic; ++j)
 	{	Base value = play->GetPar(j);
 # ifndef NDEBUG
 		size_t i = rec->PutPar(value);

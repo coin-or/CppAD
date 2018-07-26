@@ -49,8 +49,8 @@ addr_t par_play2rec(
 	const player<Base>*   play       ,
 	addr_t                index      )
 {	// dynamic parameters have same index in play and rec
-	if( size_t( index ) < play->num_dynamic() )
-	{	CPPAD_ASSERT_UNKNOWN( rec->get_num_dynamic() == play->num_dynamic() );
+	if( size_t( index ) < play->num_ind_dynamic() )
+	{	CPPAD_ASSERT_UNKNOWN( rec->get_num_ind_dynamic() == play->num_ind_dynamic() );
 		return addr_t( index );
 	}
 	//

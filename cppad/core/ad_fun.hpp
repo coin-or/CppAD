@@ -531,9 +531,9 @@ public:
 	size_t size_par(void) const
 	{	return play_.num_par_rec(); }
 
-	/// number of dynamic parameters
+	/// number of independent dynamic parameters
 	size_t size_dynamic(void) const
-	{	return play_.num_dynamic(); }
+	{	return play_.num_ind_dynamic(); }
 
 	/// number taylor coefficient orders calculated
 	size_t size_order(void) const

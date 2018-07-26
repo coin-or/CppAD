@@ -26,7 +26,7 @@ bool test_repeat(void)
 	// number of normal parameter repeats
 	size_t n_repeat = 17;
 
-	// number of dynamic parameters
+	// number of independent dynamic parameters
 	size_t n_dynamic = 5;
 
 	// independent variable vector

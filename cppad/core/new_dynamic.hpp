@@ -104,16 +104,16 @@ is the vector of new values for the dynamic parameters.
 template <typename Base>
 template <typename VectorBase>
 void ADFun<Base>::new_dynamic(const VectorBase& dynamic)
-{	// num_dynamic
-	size_t num_dynamic = play_.num_dynamic();
-	CPPAD_ASSERT_UNKNOWN( size_t( dynamic.size() ) == num_dynamic );
-	CPPAD_ASSERT_UNKNOWN( num_dynamic <= play_.num_par_rec() );
+{	// num_ind_dynamic
+	size_t num_ind_dynamic = play_.num_ind_dynamic();
+	CPPAD_ASSERT_UNKNOWN( size_t( dynamic.size() ) == num_ind_dynamic );
+	CPPAD_ASSERT_UNKNOWN( num_ind_dynamic <= play_.num_par_rec() );
 
 	// check VectorBase is Simple Vector class with Base elements
 	CheckSimpleVector<Base, VectorBase>();
 
 	// set the dynamic parameters
-	for(size_t j = 0; j < num_dynamic; ++j)
+	for(size_t j = 0; j < num_ind_dynamic; ++j)
 		play_.set_dynamic(j, dynamic[j]);
 
 	// we now have zero taylor_ coefficient orders per variable

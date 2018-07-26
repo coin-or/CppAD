@@ -43,7 +43,7 @@ private:
 	size_t num_var_rec_;
 
 	/// Number of dynamic parameters in the recording
-	size_t num_dynamic_;
+	size_t num_ind_dynamic_;
 
 	/// Number vecad load operations (LdpOp or LdvOp) currently in recording.
 	size_t num_load_op_rec_;
@@ -71,7 +71,7 @@ public:
 	/// Default constructor
 	recorder(void) :
 	num_var_rec_(0)                          ,
-	num_dynamic_(0)                          ,
+	num_ind_dynamic_(0)                          ,
 	num_load_op_rec_(0)                      ,
 	par_hash_table_( CPPAD_HASH_TABLE_SIZE )
 	{	record_compare_ = true;
@@ -86,9 +86,9 @@ public:
 	void set_abort_op_index(size_t abort_op_index)
 	{	abort_op_index_ = abort_op_index; }
 
-	/// Set number of dynamic parameters
-	void set_num_dynamic(size_t num_dynamic)
-	{	num_dynamic_ = num_dynamic; }
+	/// Set number of independent dynamic parameters
+	void set_num_ind_dynamic(size_t num_ind_dynamic)
+	{	num_ind_dynamic_ = num_ind_dynamic; }
 
 	/// Get record_compare option
 	size_t get_record_compare(void) const
@@ -98,9 +98,9 @@ public:
 	size_t get_abort_op_index(void) const
 	{	return abort_op_index_; }
 
-	/// Get number of dynamic parameters
-	size_t get_num_dynamic(void) const
-	{	return num_dynamic_; }
+	/// Get number of independent dynamic parameters
+	size_t get_num_ind_dynamic(void) const
+	{	return num_ind_dynamic_; }
 
 	/// Destructor
 	~recorder(void)
@@ -323,7 +323,7 @@ addr_t recorder<Base>::PutPar(const Base &par)
 {
 	// ---------------------------------------------------------------------
 	// dynamic parameters come first
-	if( con_par_vec_.size() < num_dynamic_ )
+	if( con_par_vec_.size() < num_ind_dynamic_ )
 	{	con_par_vec_.push_back( par );
 		return static_cast<addr_t>( con_par_vec_.size() - 1 );
 	}
@@ -337,7 +337,7 @@ addr_t recorder<Base>::PutPar(const Base &par)
 	size_t index = static_cast<size_t>( par_hash_table_[code] );
 
 	// check if the old parameter matches the new one
-	if( (num_dynamic_ <= index) & ( index < con_par_vec_.size() ) )
+	if( (num_ind_dynamic_ <= index) & ( index < con_par_vec_.size() ) )
 	{	if( IdenticalEqualPar(con_par_vec_[index], par) )
 		return static_cast<addr_t>( index );
 	}
