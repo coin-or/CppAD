@@ -410,7 +410,7 @@ void ADFun<Base>::abs_normal_fun(ADFun<Base>& g, ADFun<Base>& a) const
 			// Unary operators, argument a parameter, one result
 			case ParOp:
 			CPPAD_ASSERT_NARG_NRES(op, 1, 1);
-			new_arg[0] = rec.PutPar( f_parameter[ arg[0] ] );
+			new_arg[0] = rec.put_con_par( f_parameter[ arg[0] ] );
 			rec.PutArg( new_arg[0] );
 			f2g_var[i_var] = rec.PutOp(op);
 			break;
@@ -452,8 +452,8 @@ void ADFun<Base>::abs_normal_fun(ADFun<Base>& g, ADFun<Base>& a) const
 			// Error function is a special case
 			// second argument is always the parameter 0
 			// third argument is always the parameter 2 / sqrt(pi)
-			rec.PutArg( rec.PutPar( Base(0.0) ) );
-			rec.PutArg( rec.PutPar(
+			rec.PutArg( rec.put_con_par( Base(0.0) ) );
+			rec.PutArg( rec.put_con_par(
 				Base( 1.0 / std::sqrt( std::atan(1.0) ) )
 			) );
 			f2g_var[i_var] = rec.PutOp(op);
@@ -467,7 +467,7 @@ void ADFun<Base>::abs_normal_fun(ADFun<Base>& g, ADFun<Base>& a) const
 			CPPAD_ASSERT_NARG_NRES(op, 2, 1);
 			CPPAD_ASSERT_UNKNOWN( size_t( f2g_var[ arg[0] ] ) < num_var );
 			new_arg[0] = f2g_var[ arg[0] ];
-			new_arg[1] = rec.PutPar( f_parameter[ arg[1] ] );
+			new_arg[1] = rec.put_con_par( f_parameter[ arg[1] ] );
 			rec.PutArg( new_arg[0], new_arg[1] );
 			f2g_var[i_var] = rec.PutOp(op);
 			break;
@@ -491,7 +491,7 @@ void ADFun<Base>::abs_normal_fun(ADFun<Base>& g, ADFun<Base>& a) const
 			case ZmulpvOp:
 			CPPAD_ASSERT_NARG_NRES(op, 2, 1);
 			CPPAD_ASSERT_UNKNOWN( size_t( f2g_var[ arg[1] ] ) < num_var );
-			new_arg[0] = rec.PutPar( f_parameter[ arg[0] ] );
+			new_arg[0] = rec.put_con_par( f_parameter[ arg[0] ] );
 			new_arg[1] = f2g_var[ arg[1] ];
 			rec.PutArg( new_arg[0], new_arg[1] );
 			f2g_var[i_var] = rec.PutOp(op);
@@ -524,7 +524,7 @@ void ADFun<Base>::abs_normal_fun(ADFun<Base>& g, ADFun<Base>& a) const
 					new_arg[i] = f2g_var[ arg[i] ];
 				}
 				else
-					new_arg[i] = rec.PutPar( f_parameter[ arg[i] ] );
+					new_arg[i] = rec.put_con_par( f_parameter[ arg[i] ] );
 				mask = mask << 1;
 			}
 			rec.PutArg(
@@ -553,7 +553,7 @@ void ADFun<Base>::abs_normal_fun(ADFun<Base>& g, ADFun<Base>& a) const
 			case EqpvOp:
 			case NepvOp:
 			CPPAD_ASSERT_NARG_NRES(op, 2, 0);
-			new_arg[0] = rec.PutPar( f_parameter[ arg[0] ] );
+			new_arg[0] = rec.put_con_par( f_parameter[ arg[0] ] );
 			new_arg[1] = f2g_var[ arg[1] ];
 			rec.PutArg(new_arg[0], new_arg[1]);
 			rec.PutOp(op);
@@ -563,7 +563,7 @@ void ADFun<Base>::abs_normal_fun(ADFun<Base>& g, ADFun<Base>& a) const
 			case LtvpOp:
 			CPPAD_ASSERT_NARG_NRES(op, 2, 0);
 			new_arg[0] = f2g_var[ arg[0] ];
-			new_arg[1] = rec.PutPar( f_parameter[ arg[1] ] );
+			new_arg[1] = rec.put_con_par( f_parameter[ arg[1] ] );
 			rec.PutArg(new_arg[0], new_arg[1]);
 			rec.PutOp(op);
 			break;
@@ -594,7 +594,7 @@ void ADFun<Base>::abs_normal_fun(ADFun<Base>& g, ADFun<Base>& a) const
 				new_arg[1] = f2g_var[ arg[1] ];
 			}
 			else
-			{	new_arg[1] = rec.PutPar( f_parameter[ arg[1] ] );
+			{	new_arg[1] = rec.put_con_par( f_parameter[ arg[1] ] );
 			}
 			//
 			// arg[3]
@@ -604,7 +604,7 @@ void ADFun<Base>::abs_normal_fun(ADFun<Base>& g, ADFun<Base>& a) const
 				new_arg[3] = f2g_var[ arg[3] ];
 			}
 			else
-			{	new_arg[3] = rec.PutPar( f_parameter[ arg[3] ] );
+			{	new_arg[3] = rec.put_con_par( f_parameter[ arg[3] ] );
 			}
 			new_arg[2] = rec.PutTxt( play_.GetTxt( arg[2] ) );
 			new_arg[4] = rec.PutTxt( play_.GetTxt( arg[4] ) );
@@ -656,8 +656,8 @@ void ADFun<Base>::abs_normal_fun(ADFun<Base>& g, ADFun<Base>& a) const
 			case StppOp:
 			CPPAD_ASSERT_NARG_NRES(op, 3, 0);
 			new_arg[0] = arg[0];
-			new_arg[1] = rec.PutPar( f_parameter[ arg[1] ] );
-			new_arg[2] = rec.PutPar( f_parameter[ arg[2] ] );
+			new_arg[1] = rec.put_con_par( f_parameter[ arg[1] ] );
+			new_arg[2] = rec.put_con_par( f_parameter[ arg[2] ] );
 			rec.PutArg(
 				new_arg[0],
 				new_arg[1],
@@ -672,7 +672,7 @@ void ADFun<Base>::abs_normal_fun(ADFun<Base>& g, ADFun<Base>& a) const
 			CPPAD_ASSERT_UNKNOWN( size_t( f2g_var[ arg[1] ] ) < num_var );
 			new_arg[0] = arg[0];
 			new_arg[1] = f2g_var[ arg[1] ];
-			new_arg[2] = rec.PutPar( f_parameter[ arg[2] ] );
+			new_arg[2] = rec.put_con_par( f_parameter[ arg[2] ] );
 			rec.PutArg(
 				new_arg[0],
 				new_arg[1],
@@ -686,7 +686,7 @@ void ADFun<Base>::abs_normal_fun(ADFun<Base>& g, ADFun<Base>& a) const
 			CPPAD_ASSERT_NARG_NRES(op, 3, 0);
 			CPPAD_ASSERT_UNKNOWN( size_t( f2g_var[ arg[2] ] ) < num_var );
 			new_arg[0] = arg[0];
-			new_arg[1] = rec.PutPar( f_parameter[ arg[1] ] );
+			new_arg[1] = rec.put_con_par( f_parameter[ arg[1] ] );
 			new_arg[2] = f2g_var[ arg[2] ];
 			rec.PutArg(
 				new_arg[0],
@@ -723,7 +723,7 @@ void ADFun<Base>::abs_normal_fun(ADFun<Base>& g, ADFun<Base>& a) const
 
 			case UsrapOp:
 			CPPAD_ASSERT_NARG_NRES(op, 1, 0);
-			new_arg[0] = rec.PutPar( f_parameter[ arg[0] ] );
+			new_arg[0] = rec.put_con_par( f_parameter[ arg[0] ] );
 			rec.PutArg(new_arg[0]);
 			rec.PutOp(UsrapOp);
 			break;
@@ -738,7 +738,7 @@ void ADFun<Base>::abs_normal_fun(ADFun<Base>& g, ADFun<Base>& a) const
 
 			case UsrrpOp:
 			CPPAD_ASSERT_NARG_NRES(op, 1, 0);
-			new_arg[0] = rec.PutPar( f_parameter[ arg[0] ] );
+			new_arg[0] = rec.put_con_par( f_parameter[ arg[0] ] );
 			rec.PutArg(new_arg[0]);
 			rec.PutOp(UsrrpOp);
 			break;

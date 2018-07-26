@@ -2,7 +2,7 @@
 # define CPPAD_CORE_PRINT_FOR_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -158,7 +158,7 @@ namespace CppAD {
 
 		// ind[1] = address for pos
 		if( Parameter(pos) )
-			ind1  = tape->Rec_.PutPar(pos.value_);
+			ind1  = tape->Rec_.put_con_par(pos.value_);
 		else
 		{	ind0 += 1;
 			ind1  = pos.taddr_;
@@ -169,7 +169,7 @@ namespace CppAD {
 
 		// ind[3] = address for var
 		if( Parameter(var) )
-			ind3  = tape->Rec_.PutPar(var.value_);
+			ind3  = tape->Rec_.put_con_par(var.value_);
 		else
 		{	ind0 += 2;
 			ind3  = var.taddr_;

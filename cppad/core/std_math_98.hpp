@@ -564,10 +564,10 @@ namespace CppAD {
 			// arg[0] = argument to erf function
 			tape->Rec_.PutArg(taddr_);
 			// arg[1] = zero
-			addr_t p  = tape->Rec_.PutPar( Base(0.0) );
+			addr_t p  = tape->Rec_.put_con_par( Base(0.0) );
 			tape->Rec_.PutArg(p);
 			// arg[2] = 2 / sqrt(pi)
-			p = tape->Rec_.PutPar(Base(
+			p = tape->Rec_.put_con_par(Base(
 				1.0 / std::sqrt( std::atan(1.0) )
 			));
 			tape->Rec_.PutArg(p);

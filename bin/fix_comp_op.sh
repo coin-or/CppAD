@@ -1,4 +1,3 @@
-
 #! /bin/bash -e
 # -----------------------------------------------------------------------------
 # CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
@@ -226,14 +225,14 @@ s|^|\\t\\t\\t// -------------------------------------------------------------\\
 				CPPAD_ASSERT_UNKNOWN( size_t(new_arg[2]) < num_var );\\
 			}\\
 			else\\
-			{	new_arg[2] = rec->PutPar( play->GetPar( arg[2] ) );\\
+			{	new_arg[2] = rec->put_con_par( play->GetPar( arg[2] ) );\\
 			}\\
 			if( arg[1] \\& 4 )\\
 			{	new_arg[3] = tape[arg[3]].new_var;\\
 				CPPAD_ASSERT_UNKNOWN( size_t(new_arg[3]) < num_var );\\
 			}\\
 			else\\
-			{	new_arg[3] = rec->PutPar( play->GetPar( arg[3] ) );\\
+			{	new_arg[3] = rec->put_con_par( play->GetPar( arg[3] ) );\\
 			}\\
 			rec->PutArg(new_arg[0], new_arg[1], new_arg[2], new_arg[3]);\\
 			rec->PutOp(op);\\

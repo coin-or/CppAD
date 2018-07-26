@@ -68,7 +68,7 @@ AD<Base> operator - (const AD<Base> &left , const AD<Base> &right)
 			// put operand addresses in tape
 			addr_t p = right.taddr_;
 			if( ! dyn_right )
-				p = tape->Rec_.PutPar(right.value_);
+				p = tape->Rec_.put_con_par(right.value_);
 			tape->Rec_.PutArg(left.taddr_, p);
 			// put operator in the tape
 			result.taddr_ = tape->Rec_.PutOp(local::SubvpOp);
@@ -84,7 +84,7 @@ AD<Base> operator - (const AD<Base> &left , const AD<Base> &right)
 		// put operand addresses in tape
 		addr_t p = left.taddr_;
 		if( ! dyn_left )
-			p = tape->Rec_.PutPar(left.value_);
+			p = tape->Rec_.put_con_par(left.value_);
 		tape->Rec_.PutArg(p, right.taddr_);
 		// put operator in the tape
 		result.taddr_ = tape->Rec_.PutOp(local::SubpvOp);

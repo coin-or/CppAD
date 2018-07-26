@@ -680,7 +680,7 @@ void VecAD_reference<Base>::operator=(const Base &y)
 	CPPAD_ASSERT_UNKNOWN( tape != CPPAD_NULL );
 
 	// put value of the parameter y in the tape
-	addr_t p = tape->Rec_.PutPar(y);
+	addr_t p = tape->Rec_.put_con_par(y);
 
 	// record the setting of this array element
 	CPPAD_ASSERT_UNKNOWN( vec_->offset_ > 0 );

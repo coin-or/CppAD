@@ -55,7 +55,7 @@ addr_t par_play2rec(
 	}
 	//
 	// put this paramerer in the recording and return its rec index
-	return rec->PutPar( play->GetPar(index) );
+	return rec->put_con_par( play->GetPar(index) );
 }
 
 } } } // END_CPPAD_LOCAL_OPTIMIZE_NAMESPACE

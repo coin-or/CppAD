@@ -148,7 +148,7 @@ pow(const AD<Base>& x, const AD<Base>& y)
 			// put operand addresses in tape
 			addr_t p = y.taddr_;
 			if( ! dyn_y )
-				p = tape->Rec_.PutPar(y.value_);
+				p = tape->Rec_.put_con_par(y.value_);
 			tape->Rec_.PutArg(x.taddr_, p);
 
 			// put operator in the tape
@@ -170,7 +170,7 @@ pow(const AD<Base>& x, const AD<Base>& y)
 			// put operand addresses in tape
 			addr_t p = x.taddr_;
 			if( ! dyn_x )
-				p = tape->Rec_.PutPar(x.value_);
+				p = tape->Rec_.put_con_par(x.value_);
 			tape->Rec_.PutArg(p, y.taddr_);
 
 			// put operator in the tape

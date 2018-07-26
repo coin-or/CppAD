@@ -62,9 +62,9 @@ private:
 
 	/// The constant parameters in the recording.
 	/// Use pod_vector_maybe because Base may not be plain old data.
-	pod_vector_maybe<Base> con_par_vec_;
+	pod_vector_maybe<Base> all_par_vec_;
 
-	/// Hash table to reduced number of duplicate parameters in con_par_vec_
+	/// Hash table to reduced number of duplicate parameters in all_par_vec_
 	pod_vector<addr_t> par_hash_table_;
 // ---------------------- Public Functions -----------------------------------
 public:
@@ -113,7 +113,7 @@ public:
 	/// Add a value to the end of the current vector of VecAD indices.
 	inline addr_t PutVecInd(size_t vec_ind);
 	/// Find or add a parameter to the current vector of parameters.
-	inline addr_t PutPar(const Base &par);
+	inline addr_t put_con_par(const Base &par);
 	/// Put one operation argument index in the recording
 	inline void PutArg(size_t arg0);
 	/// Put two operation argument index in the recording
@@ -155,7 +155,7 @@ public:
 	{	return op_vec_.capacity()        * sizeof(opcode_t)
 		     + vecad_ind_vec_.capacity() * sizeof(size_t)
 		     + arg_vec_.capacity()       * sizeof(addr_t)
-		     + con_par_vec_.capacity()   * sizeof(Base)
+		     + all_par_vec_.capacity()   * sizeof(Base)
 		     + text_vec_.capacity()      * sizeof(char);
 	}
 };
@@ -319,13 +319,13 @@ This value is not necessarily placed at the end of the vector
 (because values that are identically equal may be reused).
 */
 template <class Base>
-addr_t recorder<Base>::PutPar(const Base &par)
+addr_t recorder<Base>::put_con_par(const Base &par)
 {
 	// ---------------------------------------------------------------------
 	// dynamic parameters come first
-	if( con_par_vec_.size() < num_ind_dynamic_ )
-	{	con_par_vec_.push_back( par );
-		return static_cast<addr_t>( con_par_vec_.size() - 1 );
+	if( all_par_vec_.size() < num_ind_dynamic_ )
+	{	all_par_vec_.push_back( par );
+		return static_cast<addr_t>( all_par_vec_.size() - 1 );
 	}
 	// ---------------------------------------------------------------------
 	// check for a match with a previous parameter
@@ -333,20 +333,20 @@ addr_t recorder<Base>::PutPar(const Base &par)
 	// get hash code for this value
 	size_t code  = static_cast<size_t>( hash_code(par) );
 
-	// current index in con_par_vec_ corresponding to this hash code
+	// current index in all_par_vec_ corresponding to this hash code
 	size_t index = static_cast<size_t>( par_hash_table_[code] );
 
 	// check if the old parameter matches the new one
-	if( (num_ind_dynamic_ <= index) & ( index < con_par_vec_.size() ) )
-	{	if( IdenticalEqualPar(con_par_vec_[index], par) )
+	if( (num_ind_dynamic_ <= index) & ( index < all_par_vec_.size() ) )
+	{	if( IdenticalEqualPar(all_par_vec_[index], par) )
 		return static_cast<addr_t>( index );
 	}
 	// ---------------------------------------------------------------------
-	// put paramerter in con_par_vec_ and replace hash entry for this codee
+	// put paramerter in all_par_vec_ and replace hash entry for this codee
 	//
-	index               = con_par_vec_.extend(1);
-	con_par_vec_[index] = par;
-	CPPAD_ASSERT_UNKNOWN( con_par_vec_.size() == index + 1 );
+	index               = all_par_vec_.extend(1);
+	all_par_vec_[index] = par;
+	CPPAD_ASSERT_UNKNOWN( all_par_vec_.size() == index + 1 );
 	//
 	// change the hash table for this code to point to new value
 	par_hash_table_[code] = static_cast<addr_t>( index );

@@ -239,10 +239,10 @@ void optimize_run(
 	for(size_t j = 0; j < num_ind_dynamic; ++j)
 	{	Base value = play->GetPar(j);
 # ifndef NDEBUG
-		size_t i = rec->PutPar(value);
+		size_t i = rec->put_con_par(value);
 		CPPAD_ASSERT_UNKNOWN(i == j );
 # else
-		rec->PutPar(value);
+		rec->put_con_par(value);
 # endif
 	}
 	// ------------------------------------------------------------------------
@@ -419,8 +419,8 @@ void optimize_run(
 					// second argument is always the parameter 0
 					// third argument is always the parameter 2 / sqrt(pi)
 					CPPAD_ASSERT_UNKNOWN( NumArg(ErfOp) == 3 );
-					rec->PutArg( rec->PutPar( Base(0.0) ) );
-					rec->PutArg( rec->PutPar(
+					rec->PutArg( rec->put_con_par( Base(0.0) ) );
+					rec->PutArg( rec->put_con_par(
 						Base( 1.0 / std::sqrt( std::atan(1.0) ) )
 					) );
 				}
@@ -876,7 +876,7 @@ void optimize_run(
 			else
 			{	// This argument does not affect the result and
 				// has been optimized out so use nan in its place.
-				new_arg[0] = rec->PutPar( base_nan );
+				new_arg[0] = rec->put_con_par( base_nan );
 				rec->PutArg(new_arg[0]);
 				new_op[i_op] = addr_t( rec->num_op_rec() );
 				rec->PutOp(UsrapOp);

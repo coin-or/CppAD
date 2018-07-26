@@ -69,7 +69,7 @@ AD<Base>& AD<Base>::operator -= (const AD<Base> &right)
 			// put operand addresses in tape
 			addr_t p = right.taddr_;
 			if( ! dyn_right )
-				p = tape->Rec_.PutPar(right.value_);
+				p = tape->Rec_.put_con_par(right.value_);
 			tape->Rec_.PutArg(taddr_, p);
 			// put operator in the tape
 			taddr_ = tape->Rec_.PutOp(local::SubvpOp);
@@ -86,7 +86,7 @@ AD<Base>& AD<Base>::operator -= (const AD<Base> &right)
 		CPPAD_ASSERT_KNOWN( ! dyn_left,
 			"binary -=: left operand is a dynamic parameter"
 		);
-		addr_t p = tape->Rec_.PutPar(left);
+		addr_t p = tape->Rec_.put_con_par(left);
 		tape->Rec_.PutArg(p, right.taddr_);
 		// put operator in the tape
 		taddr_ = tape->Rec_.PutOp(local::SubpvOp);

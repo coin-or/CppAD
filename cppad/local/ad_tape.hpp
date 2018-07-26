@@ -164,7 +164,7 @@ addr_t ADTape<Base>::RecordParOp(const Base &z)
 	CPPAD_ASSERT_UNKNOWN( NumRes(ParOp) == 1 );
 	CPPAD_ASSERT_UNKNOWN( NumArg(ParOp) == 1 );
 	z_taddr = Rec_.PutOp(ParOp);
-	ind     = Rec_.PutPar(z);
+	ind     = Rec_.put_con_par(z);
 	Rec_.PutArg(ind);
 
 	return z_taddr;
@@ -207,7 +207,7 @@ size_t ADTape<Base>::AddVec(size_t length, const pod_vector_maybe<Base>& data)
 	// store indices of the values in VecInd
 	for(i = 0; i < length; i++)
 	{
-		value_index = Rec_.PutPar( data[i] );
+		value_index = Rec_.put_con_par( data[i] );
 		Rec_.PutVecInd( value_index );
 	}
 

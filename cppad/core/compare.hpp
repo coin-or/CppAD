@@ -147,7 +147,7 @@ bool operator < (const AD<Base> &left , const AD<Base> &right)
 				}
 			}
 			else
-			{	addr_t arg1 = tape->Rec_.PutPar(right.value_);
+			{	addr_t arg1 = tape->Rec_.put_con_par(right.value_);
 				if( result )
 				{	tape->Rec_.PutOp(local::LtvpOp);
 					tape->Rec_.PutArg(left.taddr_, arg1);
@@ -160,7 +160,7 @@ bool operator < (const AD<Base> &left , const AD<Base> &right)
 		}
 		else if ( var_right )
 		{	CPPAD_ASSERT_UNKNOWN( tape == right.tape_this() );
-			addr_t arg0 = tape->Rec_.PutPar(left.value_);
+			addr_t arg0 = tape->Rec_.put_con_par(left.value_);
 			if( result )
 			{	tape->Rec_.PutOp(local::LtpvOp);
 				tape->Rec_.PutArg(arg0, right.taddr_);
@@ -201,7 +201,7 @@ bool operator <= (const AD<Base> &left , const AD<Base> &right)
 				}
 			}
 			else
-			{	addr_t arg1 = tape->Rec_.PutPar(right.value_);
+			{	addr_t arg1 = tape->Rec_.put_con_par(right.value_);
 				if( result )
 				{	tape->Rec_.PutOp(local::LevpOp);
 					tape->Rec_.PutArg(left.taddr_, arg1);
@@ -214,7 +214,7 @@ bool operator <= (const AD<Base> &left , const AD<Base> &right)
 		}
 		else if ( var_right )
 		{	CPPAD_ASSERT_UNKNOWN( tape == right.tape_this() );
-			addr_t arg0 = tape->Rec_.PutPar(left.value_);
+			addr_t arg0 = tape->Rec_.put_con_par(left.value_);
 			if( result )
 			{	tape->Rec_.PutOp(local::LepvOp);
 				tape->Rec_.PutArg(arg0, right.taddr_);
@@ -255,7 +255,7 @@ bool operator > (const AD<Base> &left , const AD<Base> &right)
 				}
 			}
 			else
-			{	addr_t arg1 = tape->Rec_.PutPar(right.value_);
+			{	addr_t arg1 = tape->Rec_.put_con_par(right.value_);
 				if( result )
 				{	tape->Rec_.PutOp(local::LtpvOp);
 					tape->Rec_.PutArg(arg1, left.taddr_);
@@ -268,7 +268,7 @@ bool operator > (const AD<Base> &left , const AD<Base> &right)
 		}
 		else if ( var_right )
 		{	CPPAD_ASSERT_UNKNOWN( tape == right.tape_this() );
-			addr_t arg0 = tape->Rec_.PutPar(left.value_);
+			addr_t arg0 = tape->Rec_.put_con_par(left.value_);
 			if( result )
 			{	tape->Rec_.PutOp(local::LtvpOp);
 				tape->Rec_.PutArg(right.taddr_, arg0);
@@ -309,7 +309,7 @@ bool operator >= (const AD<Base> &left , const AD<Base> &right)
 				}
 			}
 			else
-			{	addr_t arg1 = tape->Rec_.PutPar(right.value_);
+			{	addr_t arg1 = tape->Rec_.put_con_par(right.value_);
 				if( result )
 				{	tape->Rec_.PutOp(local::LepvOp);
 					tape->Rec_.PutArg(arg1, left.taddr_);
@@ -322,7 +322,7 @@ bool operator >= (const AD<Base> &left , const AD<Base> &right)
 		}
 		else if ( var_right )
 		{	CPPAD_ASSERT_UNKNOWN( tape == right.tape_this() );
-			addr_t arg0 = tape->Rec_.PutPar(left.value_);
+			addr_t arg0 = tape->Rec_.put_con_par(left.value_);
 			if( result )
 			{	tape->Rec_.PutOp(local::LevpOp);
 				tape->Rec_.PutArg(right.taddr_, arg0);
@@ -360,7 +360,7 @@ bool operator == (const AD<Base> &left , const AD<Base> &right)
 					tape->Rec_.PutOp(local::NevvOp);
 			}
 			else
-			{	addr_t arg1 = tape->Rec_.PutPar(right.value_);
+			{	addr_t arg1 = tape->Rec_.put_con_par(right.value_);
 				tape->Rec_.PutArg(arg1, left.taddr_);
 				if( result )
 					tape->Rec_.PutOp(local::EqpvOp);
@@ -370,7 +370,7 @@ bool operator == (const AD<Base> &left , const AD<Base> &right)
 		}
 		else if ( var_right )
 		{	CPPAD_ASSERT_UNKNOWN( tape == right.tape_this() );
-			addr_t arg0 = tape->Rec_.PutPar(left.value_);
+			addr_t arg0 = tape->Rec_.put_con_par(left.value_);
 			tape->Rec_.PutArg(arg0, right.taddr_);
 			if( result )
 				tape->Rec_.PutOp(local::EqpvOp);
@@ -405,7 +405,7 @@ bool operator != (const AD<Base> &left , const AD<Base> &right)
 					tape->Rec_.PutOp(local::EqvvOp);
 			}
 			else
-			{	addr_t arg1 = tape->Rec_.PutPar(right.value_);
+			{	addr_t arg1 = tape->Rec_.put_con_par(right.value_);
 				tape->Rec_.PutArg(arg1, left.taddr_);
 				if( result )
 					tape->Rec_.PutOp(local::NepvOp);
@@ -415,7 +415,7 @@ bool operator != (const AD<Base> &left , const AD<Base> &right)
 		}
 		else if ( var_right )
 		{	CPPAD_ASSERT_UNKNOWN( tape == right.tape_this() );
-			addr_t arg0 = tape->Rec_.PutPar(left.value_);
+			addr_t arg0 = tape->Rec_.put_con_par(left.value_);
 			tape->Rec_.PutArg(arg0, right.taddr_);
 			if( result )
 				tape->Rec_.PutOp(local::NepvOp);

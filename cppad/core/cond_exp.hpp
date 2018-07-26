@@ -293,7 +293,7 @@ void local::ADTape<Base>::RecordCondExp(
 	{	if( Dynamic(left) )
 			ind2 = left.taddr_;
 		else
-			ind2 = Rec_.PutPar(left.value_);
+			ind2 = Rec_.put_con_par(left.value_);
 	}
 	else
 	{	ind1 += 1;
@@ -305,7 +305,7 @@ void local::ADTape<Base>::RecordCondExp(
 	{	if( Dynamic(right) )
 			ind3 = right.taddr_;
 		else
-			ind3 = Rec_.PutPar(right.value_);
+			ind3 = Rec_.put_con_par(right.value_);
 	}
 	else
 	{	ind1 += 2;
@@ -317,7 +317,7 @@ void local::ADTape<Base>::RecordCondExp(
 	{	if( Dynamic(if_true) )
 			ind4 = if_true.taddr_;
 		else
-			ind4 = Rec_.PutPar(if_true.value_);
+			ind4 = Rec_.put_con_par(if_true.value_);
 	}
 	else
 	{	ind1 += 4;
@@ -329,7 +329,7 @@ void local::ADTape<Base>::RecordCondExp(
 	{	if( Dynamic(if_false) )
 			ind5 = if_false.taddr_;
 		else
-			ind5 = Rec_.PutPar(if_false.value_);
+			ind5 = Rec_.put_con_par(if_false.value_);
 	}
 	else
 	{	ind1 += 8;

@@ -162,7 +162,7 @@ public:
 		CPPAD_ASSERT_UNKNOWN(arg_vec_.size()    < addr_t_max );
 
 		// par_vec_
-		par_vec_.swap(rec.con_par_vec_);
+		par_vec_.swap(rec.all_par_vec_);
 		CPPAD_ASSERT_UNKNOWN(par_vec_.size() < addr_t_max );
 
 		// text_rec_

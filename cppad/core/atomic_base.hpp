@@ -596,7 +596,7 @@ void operator()(
 			{	// information for an argument that is parameter
 				addr_t par = ax[j].taddr_;
 				if( ! Dynamic( ax[j] ) )
-					par = tape->Rec_.PutPar(ax[j].value_);
+					par = tape->Rec_.put_con_par(ax[j].value_);
 				tape->Rec_.PutArg(par);
 				tape->Rec_.PutOp(local::UsrapOp);
 			}
@@ -614,7 +614,7 @@ void operator()(
 			}
 			else
 			{	CPPAD_ASSERT_UNKNOWN( ! Dynamic( ay[i] ) );
-				addr_t par = tape->Rec_.PutPar(ay[i].value_);
+				addr_t par = tape->Rec_.put_con_par(ay[i].value_);
 				tape->Rec_.PutArg(par);
 				tape->Rec_.PutOp(local::UsrrpOp);
 			}
