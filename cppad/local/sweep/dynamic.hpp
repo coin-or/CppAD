@@ -59,10 +59,10 @@ The type of the parameters.
 \param num_ind_dynamic
 number of independent dynamic parameters
 
-\param par_vec
-the vector of all the parameters are inputs.
+\param all_par_vec
+is the vector of all the parameters.
+Ths constant parameters and the independent dynamic parameters are inputs.
 The other dynamic parameters are outputs.
-All of the constant parmaeters are inputs.
 
 \param dyn_par_is
 is a vector with the same length as par_vec.
@@ -87,7 +87,7 @@ lower than the index value for the parameter.
 template <class Base>
 void dynamic(
 	size_t                        num_ind_dynamic ,
-	pod_vector_maybe<Base>&       par_vec         ,
+	pod_vector_maybe<Base>&       all_par_vec     ,
 	const pod_vector<bool>&       dyn_par_is      ,
 	const pod_vector<opcode_t>&   dyn_par_op      ,
 	const pod_vector<addr_t>&     dyn_par_arg     )
@@ -100,16 +100,16 @@ void dynamic(
 # endif
 	size_t i_op  = num_ind_dynamic;
 	size_t i_arg = 0;
-	for(size_t i = num_ind_dynamic; i < par_vec.size(); ++i)
-	if( dyn_par_is[i] )
-	{	OpCode op = OpCode( dyn_par_op[i_op++];
+	for(size_t i_par = num_ind_dynamic; i_par < all_par_vec.size(); ++i_par)
+	if( dyn_par_is[i_par] )
+	{	OpCode op = OpCode( dyn_par_op[i_op++] );
 # ifndef NDEBUG
 		for(size_t j = 0; j < NumArg(op); ++j)
-			CPPAD_ASSERT_UNKNOWN( size_t( dyn_par_arg[i_arg + j] ) < i );
+			CPPAD_ASSERT_UNKNOWN( size_t( dyn_par_arg[i_arg + j] ) < i_par );
 # endif
 		switch(op)
 		{	case AbsOp:
-			par_vec[i] = abs( dyn_par_arg[i_arg+0] );
+			all_par_vec[i_par] = abs( all_par_vec[ dyn_par_arg[i_arg + 0] ] );
 			break;
 
 			default:
@@ -122,3 +122,5 @@ void dynamic(
 }
 
 } } } // END_CPPAD_LOCAL_SWEEP_NAMESPACE
+
+# endif

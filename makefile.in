@@ -633,6 +633,7 @@ nobase_myinclude_HEADERS = \
 	cppad/local/erf_op.hpp \
 	cppad/local/expm1_op.hpp \
 	cppad/local/exp_op.hpp \
+	cppad/local/sweep/dynamic.hpp \
 	cppad/local/sweep/for_hes.hpp \
 	cppad/local/sweep/for_jac.hpp \
 	cppad/local/sweep/forward0.hpp \

@@ -361,7 +361,7 @@ This value is not necessarily placed at the end of the vector
 template <class Base>
 addr_t recorder<Base>::put_con_par(const Base &par)
 {
-	// independent parameters come first
+	// independent dynamic parameters come first
 	CPPAD_ASSERT_UNKNOWN( num_ind_dynamic_ <= all_par_vec_.size() );
 
 	// ---------------------------------------------------------------------

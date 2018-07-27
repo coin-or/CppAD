@@ -65,13 +65,13 @@ private:
 
 	/// All of the parameters in the recording.
 	/// Use pod_maybe because Base may not be plain old data.
-	pod_vector_maybe<Base> par_vec_;
+	pod_vector_maybe<Base> all_par_vec_;
 
-	/// Which elements of par_vec_ are dynamic parameters
-	/// (same size are par_vec_)
-	pod_vector<bool> dyn_par_is_;
+	/// Which elements of all_par_vec_ are dynamic parameters
+	/// (same size are all_par_vec_)
+	pod_vector<bool>     dyn_par_is_;
 
-	/// operators for just the dynamic parameters in par_vec_
+	/// operators for just the dynamic parameters
 	pod_vector<opcode_t> dyn_par_op_;
 
 	/// arguments for the dynamic parameter operators
@@ -151,7 +151,8 @@ public:
 	Use an assert to check that the length of the following vectors is
 	less than the maximum possible value for addr_t; i.e., that an index
 	in these vectors can be represented using the type addr_t:
-	op_vec_, vecad_ind_vec_, arg_vec_, test_vec_, par_vec_, text_vec_.
+	op_vec_, vecad_ind_vec_, arg_vec_, test_vec_, all_par_vec_, text_vec_,
+	dyn_par_arg_.
 	*/
 	void get_recording(recorder<Base>& rec, size_t n_ind)
 	{
@@ -171,14 +172,15 @@ public:
 		arg_vec_.swap(rec.arg_vec_);
 		CPPAD_ASSERT_UNKNOWN(arg_vec_.size()    < addr_t_max );
 
-		// par_vec_
-		par_vec_.swap(rec.all_par_vec_);
-		CPPAD_ASSERT_UNKNOWN(par_vec_.size() < addr_t_max );
+		// all_par_vec_
+		all_par_vec_.swap(rec.all_par_vec_);
+		CPPAD_ASSERT_UNKNOWN(all_par_vec_.size() < addr_t_max );
 
 		// dyn_par_is_, dyn_par_op_, dyn_par_arg_
 		dyn_par_is_.swap( rec.dyn_par_is_ );
 		dyn_par_op_.swap( rec.dyn_par_op_ );
 		dyn_par_arg_.swap( rec.dyn_par_arg_ );
+		CPPAD_ASSERT_UNKNOWN(dyn_par_arg_.size() < addr_t_max );
 
 		// text_rec_
 		text_vec_.swap(rec.text_vec_);
@@ -416,7 +418,7 @@ public:
 		num_vecad_vec_rec_  = play.num_vecad_vec_rec_;
 		vecad_ind_vec_      = play.vecad_ind_vec_;
 		arg_vec_            = play.arg_vec_;
-		par_vec_            = play.par_vec_;
+		all_par_vec_        = play.all_par_vec_;
 		text_vec_           = play.text_vec_;
 		op2arg_vec_         = play.op2arg_vec_;
 		op2var_vec_         = play.op2var_vec_;
@@ -434,7 +436,10 @@ public:
 		op_vec_.resize(0);
 		vecad_ind_vec_.resize(0);
 		arg_vec_.resize(0);
-		par_vec_.resize(0);
+		all_par_vec_.resize(0);
+		dyn_par_is_.resize(0);
+		dyn_par_op_.resize(0);
+		dyn_par_arg_.resize(0);
 		text_vec_.resize(0);
 		op2arg_vec_.resize(0);
 		op2var_vec_.resize(0);
@@ -465,14 +470,21 @@ public:
 		CPPAD_ASSERT_UNKNOWN( op2var_vec_.size() == 0  );
 		CPPAD_ASSERT_UNKNOWN( var2op_vec_.size() == 0  );
 	}
-	/// Set a dynamic parameter value
-	void set_dynamic(size_t i, const Base& par)
-	{	CPPAD_ASSERT_UNKNOWN( i < num_ind_dynamic_ );
-		par_vec_[i] = par;
-	}
+	/// get non-const version of all_par_vec
+	pod_vector_maybe<Base>& all_par_vec(void)
+	{	return all_par_vec_; }
 	// ================================================================
 	// const functions that retrieve infromation from this player
 	// ================================================================
+	/// const version of dynamic parameter flag
+	const pod_vector<bool>& dyn_par_is(void) const
+	{	return dyn_par_is_; }
+	/// const version of dynamic parameter operator
+	const pod_vector<opcode_t>& dyn_par_op(void) const
+	{	return dyn_par_op_; }
+	/// const version of dynamic parameter arguments
+	const pod_vector<addr_t>& dyn_par_arg(void) const
+	{	return dyn_par_arg_; }
 	/*!
 	\brief
 	fetch an operator from the recording.
@@ -510,7 +522,7 @@ public:
 	the index of the parameter in recording
 	*/
 	Base GetPar(size_t i) const
-	{	return par_vec_[i]; }
+	{	return all_par_vec_[i]; }
 
 	/*!
 	\brief
@@ -521,7 +533,7 @@ public:
 
 	*/
 	const Base* GetPar(void) const
-	{	return par_vec_.data(); }
+	{	return all_par_vec_.data(); }
 
 	/*!
 	\brief
@@ -568,7 +580,7 @@ public:
 
 	/// Fetch number of parameters in the recording.
 	size_t num_par_rec(void) const
-	{	return par_vec_.size(); }
+	{	return all_par_vec_.size(); }
 
 	/// Fetch number of characters (representing strings) in the recording.
 	size_t num_text_rec(void) const
@@ -581,12 +593,12 @@ public:
 	{	// check assumptions made by ad_fun<Base>::size_op_seq()
 		CPPAD_ASSERT_UNKNOWN( op_vec_.size() == num_op_rec() );
 		CPPAD_ASSERT_UNKNOWN( arg_vec_.size()    == num_op_arg_rec() );
-		CPPAD_ASSERT_UNKNOWN( par_vec_.size() == num_par_rec() );
+		CPPAD_ASSERT_UNKNOWN( all_par_vec_.size() == num_par_rec() );
 		CPPAD_ASSERT_UNKNOWN( text_vec_.size() == num_text_rec() );
 		CPPAD_ASSERT_UNKNOWN( vecad_ind_vec_.size() == num_vec_ind_rec() );
 		return op_vec_.size()        * sizeof(opcode_t)
 		     + arg_vec_.size()       * sizeof(addr_t)
-		     + par_vec_.size()       * sizeof(Base)
+		     + all_par_vec_.size()   * sizeof(Base)
 		     + text_vec_.size()      * sizeof(char)
 		     + vecad_ind_vec_.size() * sizeof(addr_t)
 		;

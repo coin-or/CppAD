@@ -72,12 +72,13 @@ In order words;
 $cref/f.size_order/size_order/$$ returns zero directly after
 $icode%f%.new_dynamic%$$ is called.
 
-$head Restrictions$$
-Dynamic parameters are only allowed in operations where one of the other
-operands is a $cref/Variable/glossary/Variable/$$.
-You must compute all the parameters that depend on dynamic parameters
-before the call to $cref Independent$$ and include them as part of the
-$cref/dynamic/Independent/dynamic/$$ parameter vector.
+$head Remove Restriction$$
+It used to be that Dynamic parameters were only allowed in operations
+where one of the other operands is a $cref/Variable/glossary/Variable/$$.
+This restriction is in the process of being removed; i.e,
+some but not all operations are allowed
+(see $code operation_with_parameter$$ in the file
+$code test_more/general/new_dynamic.cpp$$.)
 
 $children%
 	example/general/new_dynamic.cpp
@@ -89,6 +90,8 @@ It returns true if it succeeds and false otherwise.
 
 $end
 */
+# include <cppad/local/sweep/dynamic.hpp>
+
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 /*!
 \file new_dynamic.hpp
@@ -112,11 +115,19 @@ void ADFun<Base>::new_dynamic(const VectorBase& dynamic)
 	// check VectorBase is Simple Vector class with Base elements
 	CheckSimpleVector<Base, VectorBase>();
 
-	// set the dynamic parameters
+	// set the independent  dynamic parameters
+	local::pod_vector_maybe<Base>& all_par_vec( play_.all_par_vec() );
+# ifndef NDEBUG
+	const local::pod_vector<bool>& dyn_par_is( play_.dyn_par_is() );
+	const local::pod_vector<local::opcode_t>& dyn_par_op( play_.dyn_par_op() );
+# endif
 	for(size_t j = 0; j < num_ind_dynamic; ++j)
-		play_.set_dynamic(j, dynamic[j]);
+	{	CPPAD_ASSERT_UNKNOWN( dyn_par_is[j] );
+		CPPAD_ASSERT_UNKNOWN( local::OpCode( dyn_par_op[j] ) == local::InvOp );
+		all_par_vec[j] = dynamic[j];
+	}
 
-	// we now have zero taylor_ coefficient orders per variable
+	// the existing Taylor coefficients are no longer valid
 	num_order_taylor_ = 0;
 
 	return;
