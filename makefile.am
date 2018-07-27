@@ -252,6 +252,7 @@ nobase_myinclude_HEADERS =  \
 	cppad/local/log_op.hpp \
 	cppad/local/mul_op.hpp \
 	cppad/local/op_code.hpp \
+	cppad/local/op_code_dyn.hpp \
 	cppad/local/op.hpp \
 	cppad/local/optimize/cexp_info.hpp \
 	cppad/local/optimize/csum_stacks.hpp \

@@ -95,28 +95,28 @@ void dynamic(
 # ifndef NDEBUG
 	for(size_t j = 0; j < num_ind_dynamic; ++j)
 		CPPAD_ASSERT_UNKNOWN(
-			dyn_par_is[j] && OpCode( dyn_par_op[j] ) == InvOp
+			dyn_par_is[j] && op_code_dyn( dyn_par_op[j] ) == inv_dyn
 	);
 # endif
+	const Base* par[2];
 	size_t i_op  = num_ind_dynamic;
 	size_t i_arg = 0;
 	for(size_t i_par = num_ind_dynamic; i_par < all_par_vec.size(); ++i_par)
 	if( dyn_par_is[i_par] )
-	{	OpCode op = OpCode( dyn_par_op[i_op++] );
-# ifndef NDEBUG
-		for(size_t j = 0; j < NumArg(op); ++j)
-			CPPAD_ASSERT_UNKNOWN( size_t( dyn_par_arg[i_arg + j] ) < i_par );
-# endif
+	{	op_code_dyn op = op_code_dyn( dyn_par_op[i_op] );
+		for(size_t j = 0; j < num_arg_dyn(op); ++j)
+			par[j] = & all_par_vec[ dyn_par_arg[i_arg + j] ];
 		switch(op)
-		{	case AbsOp:
-			all_par_vec[i_par] = abs( all_par_vec[ dyn_par_arg[i_arg + 0] ] );
+		{	case addpp_dyn:
+			all_par_vec[i_par] = *par[0] + *par[1];
 			break;
 
 			default:
-			CPPAD_ASSERT_KNOWN(false, OpName(op) );
+			CPPAD_ASSERT_UNKNOWN(false);
 			break;
 		}
-		i_arg += NumArg(op);
+		++i_op;
+		i_arg += num_arg_dyn(op);
 	}
 	return;
 }

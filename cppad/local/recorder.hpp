@@ -118,7 +118,7 @@ public:
 	{ }
 
 	/// Put a dynamic parameter in all_par_vec_.
-	addr_t put_dyn_par(const Base &par, OpCode op);
+	addr_t put_dyn_par(const Base &par, op_code_dyn op);
 
 
 	/// Put next operator in the operation sequence.
@@ -336,12 +336,10 @@ There are no arguments to this function, so NumArg(op) == 0.
 is the index in the parameter vector corresponding to this parameter value.
 */
 template <class Base>
-addr_t recorder<Base>::put_dyn_par(const Base &par, OpCode op)
+addr_t recorder<Base>::put_dyn_par(const Base &par, op_code_dyn op)
 {	// independent parameters come first
-	CPPAD_ASSERT_UNKNOWN(
-		(OpCode(op) != InvOp) || all_par_vec_.size() < num_ind_dynamic_
-	);
-	CPPAD_ASSERT_UNKNOWN( NumArg(op) == 0 );
+	CPPAD_ASSERT_UNKNOWN( op == inv_dyn );
+	CPPAD_ASSERT_UNKNOWN( num_arg_dyn(op) == 0 );
 	all_par_vec_.push_back( par );
 	dyn_par_is_.push_back(true);
 	dyn_par_op_.push_back( opcode_t(op) );

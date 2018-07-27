@@ -107,7 +107,8 @@ is the vector of new values for the dynamic parameters.
 template <typename Base>
 template <typename VectorBase>
 void ADFun<Base>::new_dynamic(const VectorBase& dynamic)
-{	// num_ind_dynamic
+{	using local::pod_vector;
+	// num_ind_dynamic
 	size_t num_ind_dynamic = play_.num_ind_dynamic();
 	CPPAD_ASSERT_UNKNOWN( size_t( dynamic.size() ) == num_ind_dynamic );
 	CPPAD_ASSERT_UNKNOWN( num_ind_dynamic <= play_.num_par_rec() );
@@ -115,17 +116,29 @@ void ADFun<Base>::new_dynamic(const VectorBase& dynamic)
 	// check VectorBase is Simple Vector class with Base elements
 	CheckSimpleVector<Base, VectorBase>();
 
-	// set the independent  dynamic parameters
-	local::pod_vector_maybe<Base>& all_par_vec( play_.all_par_vec() );
-# ifndef NDEBUG
-	const local::pod_vector<bool>& dyn_par_is( play_.dyn_par_is() );
-	const local::pod_vector<local::opcode_t>& dyn_par_op( play_.dyn_par_op() );
-# endif
+	// retrieve player information about the dynamic parameters
+	local::pod_vector_maybe<Base>&     all_par_vec( play_.all_par_vec() );
+	const pod_vector<bool>&            dyn_par_is ( play_.dyn_par_is()  );
+	const pod_vector<local::opcode_t>& dyn_par_op ( play_.dyn_par_op()  );
+	const pod_vector<addr_t>&          dyn_par_arg( play_.dyn_par_arg() );
+
+	// set the independent dynamic parameters
 	for(size_t j = 0; j < num_ind_dynamic; ++j)
 	{	CPPAD_ASSERT_UNKNOWN( dyn_par_is[j] );
-		CPPAD_ASSERT_UNKNOWN( local::OpCode( dyn_par_op[j] ) == local::InvOp );
+		CPPAD_ASSERT_UNKNOWN(
+			local::op_code_dyn( dyn_par_op[j] ) == local::inv_dyn
+		);
 		all_par_vec[j] = dynamic[j];
 	}
+
+	// set the dependent dynamic parameters
+	local::sweep::dynamic(
+		num_ind_dynamic ,
+		all_par_vec     ,
+		dyn_par_is      ,
+		dyn_par_op      ,
+		dyn_par_arg
+	);
 
 	// the existing Taylor coefficients are no longer valid
 	num_order_taylor_ = 0;

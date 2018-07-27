@@ -17,6 +17,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # include <cppad/core/identical.hpp>
 
 // define the template classes that are used by the AD template class
+# include <cppad/local/op_code_dyn.hpp>
 # include <cppad/local/op_code.hpp>
 # include <cppad/local/recorder.hpp>
 # include <cppad/local/player.hpp>

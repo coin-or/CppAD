@@ -91,10 +91,10 @@ void ADTape<Base>::Independent(
 		//
 		// dynamic parameters are placed at the end, so i == j
 # ifndef NDEBUG
-		size_t i = Rec_.put_dyn_par(dynamic[j].value_ , InvOp);
+		size_t i = Rec_.put_dyn_par(dynamic[j].value_ , inv_dyn);
 		CPPAD_ASSERT_UNKNOWN(i == j );
 # else
-		Rec_.put_dyn_par(dynamic[j].value_ , InvOp);
+		Rec_.put_dyn_par(dynamic[j].value_ , inv_dyn);
 # endif
 		//
 		// make this parameter dynamic
