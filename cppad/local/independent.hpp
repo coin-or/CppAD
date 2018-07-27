@@ -90,8 +90,12 @@ void ADTape<Base>::Independent(
 		CPPAD_ASSERT_UNKNOWN( Parameter( dynamic[j] ) );
 		//
 		// dynamic parameters are placed at the end, so i == j
+# ifndef NDEBUG
 		size_t i = Rec_.put_dyn_par(dynamic[j].value_ , InvOp);
 		CPPAD_ASSERT_UNKNOWN(i == j );
+# else
+		Rec_.put_dyn_par(dynamic[j].value_ , InvOp);
+# endif
 		//
 		// make this parameter dynamic
 		dynamic[j].taddr_   = static_cast<addr_t>(j);
