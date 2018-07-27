@@ -33,7 +33,7 @@ bool new_dynamic(void)
 	using CppAD::NearEqual;
 	double eps = 10. * std::numeric_limits<double>::epsilon();
 
-	// dynamic parameter vector
+	// independent dynamic parameter vector
 	size_t nd = 3;
 	CPPAD_TESTVECTOR(AD<double>) adynamic(nd);
 	adynamic[0] = 1.0;
@@ -51,16 +51,20 @@ bool new_dynamic(void)
 	bool   record_compare = true;
 	CppAD::Independent(ax, abort_op_index, record_compare, adynamic);
 
+	// create a dependent dynamic parameter
+	AD<double> adependent_dyn = adynamic[0] + 2.0;
+
 	// check that elements of adynamic are currently dynamic parameters
 	for(size_t j = 0; j < nd; ++j)
 		ok &= Dynamic( adynamic[j] );
+	ok &= Dynamic( adependent_dyn );
 
 	// range space vector
 	size_t ny = 1;
 	CPPAD_TESTVECTOR(AD<double>) ay(ny);
-	ay[0]  = adynamic[0] + ax[0];
-	ay[0] *= adynamic[1] + ax[0];
-	ay[0] *= adynamic[2] + ax[1];
+	ay[0]  = adependent_dyn  + ax[0];
+	ay[0] *= adynamic[1]     + ax[0];
+	ay[0] *= adynamic[2]     + ax[1];
 
 	// create f: x -> y and stop tape recording
 	CppAD::ADFun<double> f(ax, ay);
@@ -68,9 +72,10 @@ bool new_dynamic(void)
 	// check the number of independent dynamic parameters in f
 	ok &= f.size_dynamic() == nd;
 
-	// check that elements of adynamic are no longer dynamic parameters
+	// check that these are no longer dynamic parameters
 	for(size_t j = 0; j < nd; ++j)
 		ok &= ! Dynamic( adynamic[j] );
+	ok &= ! Dynamic( adependent_dyn );
 
 	// zero order forward mode
 	CPPAD_TESTVECTOR(double) x(nx), y(ny);
@@ -79,7 +84,7 @@ bool new_dynamic(void)
 	y    = f.Forward(0, x);
 	ok  &= f.size_order() == 1;
 	double check;
-	check  = Value( adynamic[0] ) + x[0];
+	check  = Value( adynamic[0] ) + 2.0 + x[0];
 	check *= Value( adynamic[1] ) + x[0];
 	check *= Value( adynamic[2] ) + x[1];
 	ok  &= NearEqual(y[0] , check, eps, eps);
@@ -94,7 +99,7 @@ bool new_dynamic(void)
 	//
 	y    = f.Forward(0, x);
 	ok  &= f.size_order() == 1;
-	check  = dynamic[0] + x[0];
+	check  = dynamic[0] + 2.0 + x[0];
 	check *= dynamic[1] + x[0];
 	check *= dynamic[2] + x[1];
 	ok  &= NearEqual(y[0] , check, eps, eps);
@@ -105,7 +110,7 @@ bool new_dynamic(void)
 	dx[1] = 0.0;
 	dy    = f.Forward(1, dx);
 	ok   &= f.size_order() == 2;
-	check = (dynamic[2] +  x[1]) * (dynamic[0] + x[0] + dynamic[1] + x[0]);
+	check = (dynamic[2] + x[1])*(dynamic[0] + 2.0 + x[0] + dynamic[1] + x[0]);
 	ok  &= NearEqual(dy[0] , check, eps, eps);
 	//
 	return ok;

@@ -98,10 +98,20 @@ AD<Base> operator + (const AD<Base> &left , const AD<Base> &right)
 			result.tape_id_ = tape_id;
 		}
 	}
-	else
-	{	CPPAD_ASSERT_KNOWN( ! (dyn_left | dyn_right) ,
-		"binary +: one operand is a dynamic parameter and other not a variable"
+	else if( dyn_left | dyn_right )
+	{	addr_t arg0 = left.taddr_;
+		addr_t arg1 = right.taddr_;
+		if( ! dyn_left )
+			arg0 = tape->Rec_.put_con_par(left.value_);
+		if( ! dyn_right )
+			arg1 = tape->Rec_.put_con_par(right.value_);
+		//
+		// add parameters with a dynamic parameter result
+		result.taddr_   = tape->Rec_.put_dyn_par(
+			result.value_, local::addpp_dyn, arg0, arg1
 		);
+		result.tape_id_ = tape_id;
+		result.dynamic_ = true;
 	}
 	return result;
 }

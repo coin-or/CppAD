@@ -119,6 +119,9 @@ public:
 
 	/// Put a dynamic parameter in all_par_vec_.
 	addr_t put_dyn_par(const Base &par, op_code_dyn op);
+	addr_t put_dyn_par(
+		const Base &par, op_code_dyn op, addr_t arg0, addr_t arg1
+	);
 
 
 	/// Put next operator in the operation sequence.
@@ -322,6 +325,7 @@ inline addr_t recorder<Base>::PutVecInd(size_t vec_ind)
 	return static_cast<addr_t>( i );
 }
 
+// ---------------------------------------------------------------------------
 /*!
 Put a dynamic parameter at the end of the vector for all parameters.
 
@@ -330,10 +334,10 @@ is value of dynamic parameter to be placed at the end of the vector.
 
 \param op
 is the operator for this dynamic parameter.
-There are no arguments to this function, so NumArg(op) == 0.
+There are no arguments to this operator, so numarg(op) == 0.
 
 \return
-is the index in the parameter vector corresponding to this parameter value.
+is the index in all_par_vec_ corresponding to this dynamic parameter value.
 */
 template <class Base>
 addr_t recorder<Base>::put_dyn_par(const Base &par, op_code_dyn op)
@@ -345,6 +349,42 @@ addr_t recorder<Base>::put_dyn_par(const Base &par, op_code_dyn op)
 	dyn_par_op_.push_back( opcode_t(op) );
 	return static_cast<addr_t>( all_par_vec_.size() - 1 );
 }
+/*!
+Put a dynamic parameter at the end of the vector for all parameters.
+
+\param par
+is value of dynamic parameter to be placed at the end of the vector.
+
+\param op
+is the operator for this dynamic parameter.
+There are two arguments to this operator, so numarg(op) == 2.
+
+\param arg0
+this is the first argument to the operator represented
+as an index in the all_par_vec_ vector.
+
+\param arg1
+this is the second argument to the operator represented
+as an index in the all_par_vec_ vector.
+One of the two arguments must be a dynamic parameter.
+
+\return
+is the index in all_par_vec_ corresponding to this dynamic parameter value.
+*/
+template <class Base>
+addr_t recorder<Base>::put_dyn_par(
+	const Base &par, op_code_dyn op, addr_t arg0, addr_t arg1
+)
+{	// independent parameters come first
+	CPPAD_ASSERT_UNKNOWN( num_arg_dyn(op) == 2 );
+	all_par_vec_.push_back( par );
+	dyn_par_is_.push_back(true);
+	dyn_par_op_.push_back( opcode_t(op) );
+	dyn_par_arg_.push_back(arg0);
+	dyn_par_arg_.push_back(arg1);
+	return static_cast<addr_t>( all_par_vec_.size() - 1 );
+}
+
 /*!
 Find or add a constant parameter to the current vector of all parameters.
 
