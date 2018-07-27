@@ -233,16 +233,17 @@ void optimize_run(
 	CPPAD_ASSERT_UNKNOWN( rec->num_op_rec() == 0 );
 
 	// -----------------------------------------------------------------------
-	// put dynamic parameters in new recording
-	size_t num_ind_dynamic = play->num_ind_dynamic();
-	rec->set_num_ind_dynamic(num_ind_dynamic);
-	for(size_t j = 0; j < num_ind_dynamic; ++j)
+	// put independent dynamic parameters in new recording
+	// (not yet handeling dependent dynamic parameters)
+	size_t num_dynamic_ind = play->num_dynamic_ind();
+	rec->set_num_dynamic_ind(num_dynamic_ind);
+	for(size_t j = 0; j < num_dynamic_ind; ++j)
 	{	Base value = play->GetPar(j);
 # ifndef NDEBUG
 		size_t i = rec->put_con_par(value);
 		CPPAD_ASSERT_UNKNOWN(i == j );
 # else
-		rec->put_con_par(value);
+		rec->put_dyn_par(value, inv_dyn);
 # endif
 	}
 	// ------------------------------------------------------------------------

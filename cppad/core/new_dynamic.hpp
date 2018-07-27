@@ -18,6 +18,8 @@ $spell
 	const
 	Taylor
 	cpp
+	dyn
+	ind
 $$
 
 $section Change the Dynamic Parameters$$
@@ -51,13 +53,13 @@ $codei%
 	const %VectorBase%& %dynamic%
 %$$
 (see $icode VectorBase$$ below).
-It specifies a new value for the
-$cref/dynamic/glossary/Parameter/Dynamic/$$ parameter vector.
+It specifies a new value for the independent
+$cref/dynamic/glossary/Parameter/Dynamic/$$ parameters.
 It size must be the same as the size of the
 $cref/dynamic/Independent/dynamic/$$ parameter vector
 in the call to $code Independent$$ that started
 the recording for $icode f$$; see
-$cref/size_dynamic/seq_property/size_dynamic/$$.
+$cref/size_dyn_ind/seq_property/size_dyn_ind/$$.
 
 $head VectorBase$$
 The type $icode VectorBase$$ must be a $cref SimpleVector$$ class with
@@ -108,10 +110,10 @@ template <typename Base>
 template <typename VectorBase>
 void ADFun<Base>::new_dynamic(const VectorBase& dynamic)
 {	using local::pod_vector;
-	// num_ind_dynamic
-	size_t num_ind_dynamic = play_.num_ind_dynamic();
-	CPPAD_ASSERT_UNKNOWN( size_t( dynamic.size() ) == num_ind_dynamic );
-	CPPAD_ASSERT_UNKNOWN( num_ind_dynamic <= play_.num_par_rec() );
+	// num_dynamic_ind
+	size_t num_dynamic_ind = play_.num_dynamic_ind();
+	CPPAD_ASSERT_UNKNOWN( size_t( dynamic.size() ) == num_dynamic_ind );
+	CPPAD_ASSERT_UNKNOWN( num_dynamic_ind <= play_.num_par_rec() );
 
 	// check VectorBase is Simple Vector class with Base elements
 	CheckSimpleVector<Base, VectorBase>();
@@ -123,7 +125,7 @@ void ADFun<Base>::new_dynamic(const VectorBase& dynamic)
 	const pod_vector<addr_t>&          dyn_par_arg( play_.dyn_par_arg() );
 
 	// set the independent dynamic parameters
-	for(size_t j = 0; j < num_ind_dynamic; ++j)
+	for(size_t j = 0; j < num_dynamic_ind; ++j)
 	{	CPPAD_ASSERT_UNKNOWN( dyn_par_is[j] );
 		CPPAD_ASSERT_UNKNOWN(
 			local::op_code_dyn( dyn_par_op[j] ) == local::inv_dyn
@@ -133,7 +135,7 @@ void ADFun<Base>::new_dynamic(const VectorBase& dynamic)
 
 	// set the dependent dynamic parameters
 	local::sweep::dynamic(
-		num_ind_dynamic ,
+		num_dynamic_ind ,
 		all_par_vec     ,
 		dyn_par_is      ,
 		dyn_par_op      ,

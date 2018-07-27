@@ -70,7 +70,10 @@ bool new_dynamic(void)
 	CppAD::ADFun<double> f(ax, ay);
 
 	// check the number of independent dynamic parameters in f
-	ok &= f.size_dynamic() == nd;
+	ok &= f.size_dyn_ind() == nd;
+
+	// total number of independent dynamic parameters in f
+	ok &= f.size_dyn_par() == nd + 1;
 
 	// check that these are no longer dynamic parameters
 	for(size_t j = 0; j < nd; ++j)

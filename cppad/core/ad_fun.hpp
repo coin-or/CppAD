@@ -532,8 +532,16 @@ public:
 	{	return play_.num_par_rec(); }
 
 	/// number of independent dynamic parameters
-	size_t size_dynamic(void) const
-	{	return play_.num_ind_dynamic(); }
+	size_t size_dyn_ind(void) const
+	{	return play_.num_dynamic_ind(); }
+
+	/// number of dynamic parameters
+	size_t size_dyn_par(void) const
+	{	return play_.num_dynamic_par(); }
+
+	/// number of dynamic parameters arguments
+	size_t size_dyn_arg(void) const
+	{	return play_.num_dynamic_arg(); }
 
 	/// number taylor coefficient orders calculated
 	size_t size_order(void) const

@@ -23,9 +23,24 @@ $spell
 	addr
 	cppad
 	enums
+	dyn
+	ind
 $$
 
 $section Changes and Additions to CppAD During 2018$$
+
+$head Dynamic Branch$$
+
+$subhead 07-27$$
+We are adding the dependent dynamic parameters; i.e.,
+parameters that depend on the independent
+$cref/dynamic/Independent/dynamic/$$ parameters
+in a call to Independent.
+For this reason the function
+$icode%f%.size_dynamic()%$$ has been replaced by
+$cref/size_dyn_ind/seq_property/size_dyn_ind/$$,
+$cref/size_dyn_par/seq_property/size_dyn_par/$$, and
+$cref/size_dyn_arg/seq_property/size_dyn_arg/$$.
 
 $head 07-23$$
 Change the required version of $cref cmake$$ from greater than

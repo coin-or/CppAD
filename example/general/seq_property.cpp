@@ -46,6 +46,12 @@ bool seq_property(void)
 	// Use npar to track the number of parameters in the operation sequence.
 	size_t npar = 0;
 
+	// Use ndyn to track the number of dynamic parameters.
+	size_t ndyn = 0;
+
+	// Use ndyn to track number of arguments to dynamic parameter operators.
+	size_t ndyn_arg = 0;
+
 	// Start with one for operator corresponding to phantom variable
 	size_t nop  = 1;
 
@@ -71,10 +77,19 @@ bool seq_property(void)
 	x[0]     = 0.;
 	x[1]     = 1.;
 
+	// dynamic parameter vector
+	CPPAD_TESTVECTOR(AD<double>) dynamic(1);
+	dynamic[0] = 1.;
+
+
 	// declare independent variables and start tape recording
-	CppAD::Independent(x);
+	size_t abort_op_index = 0;
+	size_t record_compare = true;
+	CppAD::Independent(x, abort_op_index, record_compare, dynamic);
 	nvar    += n;
 	nop     += n;
+	ndyn    += dynamic.size();
+	npar    += ndyn;
 
 	// a computation that adds to the operation sequence
 	AD<double> I = 0;
@@ -117,25 +132,32 @@ bool seq_property(void)
 	nop   += 1;   // special operator at the end of operation sequence
 
 	// check the sequence property functions
-	ok &= f.Domain()      == n;
-	ok &= f.Range()       == m;
-	ok &= f.Parameter(0)  == true;
-	ok &= f.Parameter(1)  == false;
-	ok &= f.Parameter(2)  == false;
-	ok &= f.size_var()    == nvar;
-	ok &= f.size_op()     == nop;
-	ok &= f.size_op_arg() == narg;
-	ok &= f.size_par()    == npar;
-	ok &= f.size_text()   == ntext;
-	ok &= f.size_VecAD()  == nvecad;
+	ok &= f.Domain()        == n;
+	ok &= f.Range()         == m;
+	ok &= f.Parameter(0)    == true;
+	ok &= f.Parameter(1)    == false;
+	ok &= f.Parameter(2)    == false;
+	ok &= f.size_var()      == nvar;
+	ok &= f.size_op()       == nop;
+	ok &= f.size_op_arg()   == narg;
+	ok &= f.size_par()      == npar;
+	ok &= f.size_text()     == ntext;
+	ok &= f.size_VecAD()    == nvecad;
+	ok &= f.size_dyn_ind()  == ndyn;
+	ok &= f.size_dyn_par()  == ndyn;
+	ok &= f.size_dyn_arg()  == ndyn_arg;
+
 	//
 	// Note that CPPAD_VEC_ENUM_TYPE is not part of CppAD API and may change
 	size_t sum = 0;
-	sum += nop    * sizeof(CPPAD_VEC_ENUM_TYPE);
-	sum += narg   * sizeof(CPPAD_TAPE_ADDR_TYPE);
-	sum += npar   * sizeof(double);
-	sum += ntext  * sizeof(char);
-	sum += nvecad * sizeof(CPPAD_TAPE_ADDR_TYPE);
+	sum += nop        * sizeof(CPPAD_VEC_ENUM_TYPE);
+	sum += narg       * sizeof(CPPAD_TAPE_ADDR_TYPE);
+	sum += npar       * sizeof(double);
+	sum += npar       * sizeof(bool);
+	sum += ndyn       * sizeof(CPPAD_VEC_ENUM_TYPE);
+	sum += ndyn_arg   * sizeof(CPPAD_TAPE_ADDR_TYPE);
+	sum += ntext      * sizeof(char);
+	sum += nvecad     * sizeof(CPPAD_TAPE_ADDR_TYPE);
 	ok &= f.size_op_seq() == sum;
 
 	return ok;

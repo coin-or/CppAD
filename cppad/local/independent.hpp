@@ -56,12 +56,12 @@ void ADTape<Base>::Independent(
 	CPPAD_ASSERT_UNKNOWN( Rec_.num_var_rec() == 0 );
 	CPPAD_ASSERT_UNKNOWN( Rec_.get_abort_op_index() == 0 );
 	CPPAD_ASSERT_UNKNOWN( Rec_.get_record_compare() == true );
-	CPPAD_ASSERT_UNKNOWN( Rec_.get_num_ind_dynamic()    == 0 );
+	CPPAD_ASSERT_UNKNOWN( Rec_.get_num_dynamic_ind()    == 0 );
 
 	// set record_compare and abort_op_index before doing anything else
 	Rec_.set_record_compare(record_compare);
 	Rec_.set_abort_op_index(abort_op_index);
-	Rec_.set_num_ind_dynamic( dynamic.size() );
+	Rec_.set_num_dynamic_ind( dynamic.size() );
 
 	// mark the beginning of the tape and skip the first variable index
 	// (zero) because parameters use taddr zero
@@ -85,7 +85,7 @@ void ADTape<Base>::Independent(
 	size_independent_ = n;
 
 	// Place independent dynamic parameters at beginning of parameter vector
-	for(size_t j = 0; j < Rec_.get_num_ind_dynamic(); ++j)
+	for(size_t j = 0; j < Rec_.get_num_dynamic_ind(); ++j)
 	{	CPPAD_ASSERT_UNKNOWN( ! Dynamic( dynamic[j] ) );
 		CPPAD_ASSERT_UNKNOWN( Parameter( dynamic[j] ) );
 		//

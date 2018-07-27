@@ -134,7 +134,7 @@ struct_size_pair record_csum(
 			case AddpvOp:
 			case SubpvOp:
 			CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < npar );
-			if( play->num_ind_dynamic() <= size_t(arg[0]) )
+			if( play->num_dynamic_ind() <= size_t(arg[0]) )
 			{	// first argument is not a dynamic parameter
 				if( add )
 					sum_par += par[arg[0]];
@@ -189,7 +189,7 @@ struct_size_pair record_csum(
 			case SubvpOp:
 			// second argument has opposite sign of parent node
 			CPPAD_ASSERT_UNKNOWN( size_t(arg[1]) < npar );
-			if( play->num_ind_dynamic() <= size_t(arg[1]) )
+			if( play->num_dynamic_ind() <= size_t(arg[1]) )
 			{	// second argument is not a dynamic parameter
 				if( add )
 					sum_par -= par[arg[1]];

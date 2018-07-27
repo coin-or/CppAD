@@ -24,6 +24,8 @@ $spell
 	var
 	VecAD
 	subgraph
+	dyn
+	ind
 $$
 
 $section ADFun Sequence Properties$$
@@ -39,8 +41,6 @@ $icode%s% = %f%.size_var()
 %$$
 $icode%s% = %f%.size_par()
 %$$
-$icode%s% = %f%.size_dynamic()
-%$$
 $icode%s% = %f%.size_op()
 %$$
 $icode%s% = %f%.size_op_arg()
@@ -49,9 +49,15 @@ $icode%s% = %f%.size_text()
 %$$
 $icode%s% = %f%.size_VecAD()
 %$$
-$icode%s% = %f%.size_op_seq()
-%$$
 $icode%s% = %f%.size_random()
+%$$
+$icode%s% = %f%.size_dyn_ind()
+%$$
+$icode%s% = %f%.size_dyn_par()
+%$$
+$icode%s% = %f%.size_dyn_arg()
+%$$
+$icode%s% = %f%.size_op_seq()
 %$$
 
 $subhead See Also$$
@@ -156,17 +162,6 @@ sequence, as opposed to the Taylor coefficients which are
 considered extra data in the function object $icode f$$.
 Note that one $icode Base$$ value is required for each parameter.
 
-$head size_dynamic$$
-The result $icode s$$ has prototype
-$codei%
-	size_t %s%
-%$$
-and is the number of
-$cref/dynamic/glossary/Parameter/Dynamic/$$ parameters
-in the operation sequence.
-The value of these parameters can be changed using the
-$cref new_dynamic$$ function.
-
 $head size_op$$
 The result $icode s$$ has prototype
 $codei%
@@ -211,31 +206,6 @@ plus the number of elements in the vectors.
 Only $code VecAD$$ vectors that depend on the
 independent variables are stored in the operation sequence.
 
-$head size_op_seq$$
-The result $icode s$$ has prototype
-$codei%
-	size_t %s%
-%$$
-and is the amount of memory required to store the operation sequence
-(not counting a small amount of memory required for every operation sequence).
-For the current version of CppAD, this is given by
-$comment see size_t player::Memory(void)$$
-$codei%
-	%s% = %f%.size_op()     * sizeof(CPPAD_VEC_ENUM_TYPE)
-	    + %f%.size_op_arg() * sizeof(%tape_addr_type%)
-	    + %f%.size_par()    * sizeof(%Base%)
-	    + %f%.size_text()   * sizeof(char)
-	    + %f%.size_VecAD()  * sizeof(%tape_addr_type%)
-	    + %f%.size_op()     * sizeof(%tape_addr_type%) * 3
-%$$
-see $cref/tape_addr_type/cmake/cppad_tape_addr_type/$$.
-Note that this is the minimal amount of memory that can hold
-the information corresponding to an operation sequence.
-The actual amount of memory allocated ($cref/inuse/ta_inuse/$$)
-for the operations sequence may be larger.
-Also note that $code CPPAD_VEC_ENUM_TYPE$$ is not part
-of the CppAD API and may change.
-
 $head size_random$$
 The result $icode s$$ has prototype
 $codei%
@@ -254,6 +224,68 @@ so that it does not need to be recalculated between calls.
 The routine
 $cref/clear_subgraph/subgraph_reverse/clear_subgraph/$$
 will free this extra memory.
+
+$head size_dyn_ind$$
+The result $icode s$$ has prototype
+$codei%
+	size_t %s%
+%$$
+and is the number of independent
+$cref/dynamic/glossary/Parameter/Dynamic/$$ parameters
+in the operation sequence.
+This is the size of the
+$cref/dynamic/Independent/dynamic/$$ parameter in the
+corresponding call to $code Independent$$.
+
+$head size_dyn_par$$
+The result $icode s$$ has prototype
+$codei%
+	size_t %s%
+%$$
+and is the number of
+$cref/dynamic/glossary/Parameter/Dynamic/$$ parameters.
+The dynamic parameters depend on the value of
+the independent dynamic parameters but not on the value of the variables.
+This includes the independent dynamic parameters.
+
+$head size_dyn_arg$$
+The result $icode s$$ has prototype
+$codei%
+	size_t %s%
+%$$
+and is the total number of dynamic parameter operator arguments
+in the operation sequence.
+For example, Binary operators (e.g. addition) have two arguments.
+Note that one integer index is stored in the operation sequence
+for each argument.
+
+
+$head size_op_seq$$
+The result $icode s$$ has prototype
+$codei%
+	size_t %s%
+%$$
+and is the amount of memory required to store the operation sequence
+(not counting a small amount of memory required for every operation sequence).
+For the current version of CppAD, this is given by
+$comment see size_t player::Memory(void)$$
+$codei%
+	%s% = %f%.size_op()      * sizeof(CPPAD_VEC_ENUM_TYPE)
+	    + %f%.size_op_arg()  * sizeof(%tape_addr_type%)
+	    + %f%.size_par()     * sizeof(%Base%)
+	    + %f%.size_par()     * sizeof(bool)
+	    + %f%.size_dyn_par() * sizeof(CPPAD_VEC_ENUM_TYPE)
+	    + %f%.size_dyn_arg() * sizeof(%tape_addr_type%)
+	    + %f%.size_text()    * sizeof(char)
+	    + %f%.size_VecAD()   * sizeof(%tape_addr_type%)
+%$$
+see $cref/tape_addr_type/cmake/cppad_tape_addr_type/$$.
+Note that this is the minimal amount of memory that can hold
+the information corresponding to an operation sequence.
+The actual amount of memory allocated ($cref/inuse/ta_inuse/$$)
+for the operations sequence may be larger.
+Also note that $code CPPAD_VEC_ENUM_TYPE$$ is not part
+of the CppAD API and may change.
 
 $head Example$$
 $children%

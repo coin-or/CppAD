@@ -40,7 +40,7 @@ private:
 	// information that defines the recording
 
 	/// Number of dynamic parameters
-	size_t num_ind_dynamic_;
+	size_t num_dynamic_ind_;
 
 	/// Number of variables in the recording.
 	size_t num_var_rec_;
@@ -160,7 +160,7 @@ public:
 		size_t addr_t_max = size_t( std::numeric_limits<addr_t>::max() );
 # endif
 		// just set size_t values
-		num_ind_dynamic_    = rec.num_ind_dynamic_;
+		num_dynamic_ind_    = rec.num_dynamic_ind_;
 		num_var_rec_        = rec.num_var_rec_;
 		num_load_op_rec_    = rec.num_load_op_rec_;
 
@@ -411,7 +411,7 @@ public:
 	*/
 	void operator=(const player& play)
 	{
-		num_ind_dynamic_    = play.num_ind_dynamic_;
+		num_dynamic_ind_    = play.num_dynamic_ind_;
 		num_var_rec_        = play.num_var_rec_;
 		num_load_op_rec_    = play.num_load_op_rec_;
 		op_vec_             = play.op_vec_;
@@ -428,7 +428,7 @@ public:
 	/// Erase the recording stored in the player
 	void Erase(void)
 	{
-		num_ind_dynamic_   = 0;
+		num_dynamic_ind_   = 0;
 		num_var_rec_       = 0;
 		num_load_op_rec_   = 0;
 		num_vecad_vec_rec_ = 0;
@@ -551,8 +551,19 @@ public:
 	}
 
 	/// Fetch number of independent dynamic parameters in the recording
-	size_t num_ind_dynamic(void) const
-	{	return num_ind_dynamic_; }
+	size_t num_dynamic_ind(void) const
+	{	return num_dynamic_ind_; }
+
+	/// Fetch number of dynamic parameters in the recording
+	size_t num_dynamic_par(void) const
+	{	size_t result = num_dynamic_ind_;
+		for(size_t i = num_dynamic_ind_; i < num_par_rec(); ++i)
+			result += size_t( dyn_par_is_[i] );
+		return result;
+	}
+	/// Fetch number of dynamic parameters operator arguments in the recording
+	size_t num_dynamic_arg(void) const
+	{	return dyn_par_arg_.size(); }
 
 	/// Fetch number of variables in the recording.
 	size_t num_var_rec(void) const
@@ -599,6 +610,9 @@ public:
 		return op_vec_.size()        * sizeof(opcode_t)
 		     + arg_vec_.size()       * sizeof(addr_t)
 		     + all_par_vec_.size()   * sizeof(Base)
+		     + dyn_par_is_.size()    * sizeof(bool)
+		     + dyn_par_op_.size()    * sizeof(opcode_t)
+		     + dyn_par_arg_.size()   * sizeof(addr_t)
 		     + text_vec_.size()      * sizeof(char)
 		     + vecad_ind_vec_.size() * sizeof(addr_t)
 		;

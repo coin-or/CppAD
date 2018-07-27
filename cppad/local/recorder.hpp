@@ -43,7 +43,7 @@ private:
 	size_t num_var_rec_;
 
 	/// Number of dynamic parameters in the recording
-	size_t num_ind_dynamic_;
+	size_t num_dynamic_ind_;
 
 	/// Number vecad load operations (LdpOp or LdvOp) currently in recording.
 	size_t num_load_op_rec_;
@@ -82,7 +82,7 @@ public:
 	/// Default constructor
 	recorder(void) :
 	num_var_rec_(0)                          ,
-	num_ind_dynamic_(0)                          ,
+	num_dynamic_ind_(0)                          ,
 	num_load_op_rec_(0)                      ,
 	par_hash_table_( CPPAD_HASH_TABLE_SIZE )
 	{	record_compare_ = true;
@@ -98,8 +98,8 @@ public:
 	{	abort_op_index_ = abort_op_index; }
 
 	/// Set number of independent dynamic parameters
-	void set_num_ind_dynamic(size_t num_ind_dynamic)
-	{	num_ind_dynamic_ = num_ind_dynamic; }
+	void set_num_dynamic_ind(size_t num_dynamic_ind)
+	{	num_dynamic_ind_ = num_dynamic_ind; }
 
 	/// Get record_compare option
 	size_t get_record_compare(void) const
@@ -110,8 +110,8 @@ public:
 	{	return abort_op_index_; }
 
 	/// Get number of independent dynamic parameters
-	size_t get_num_ind_dynamic(void) const
-	{	return num_ind_dynamic_; }
+	size_t get_num_dynamic_ind(void) const
+	{	return num_dynamic_ind_; }
 
 	/// Destructor
 	~recorder(void)
@@ -400,7 +400,7 @@ template <class Base>
 addr_t recorder<Base>::put_con_par(const Base &par)
 {
 	// independent dynamic parameters come first
-	CPPAD_ASSERT_UNKNOWN( num_ind_dynamic_ <= all_par_vec_.size() );
+	CPPAD_ASSERT_UNKNOWN( num_dynamic_ind_ <= all_par_vec_.size() );
 
 	// ---------------------------------------------------------------------
 	// check for a match with a previous parameter
@@ -412,7 +412,7 @@ addr_t recorder<Base>::put_con_par(const Base &par)
 	size_t index = static_cast<size_t>( par_hash_table_[code] );
 
 	// check if the old parameter matches the new one
-	if( (num_ind_dynamic_ <= index) & ( index < all_par_vec_.size() ) )
+	if( (num_dynamic_ind_ <= index) & ( index < all_par_vec_.size() ) )
 	{	if( IdenticalEqualPar(all_par_vec_[index], par) )
 		return static_cast<addr_t>( index );
 	}
