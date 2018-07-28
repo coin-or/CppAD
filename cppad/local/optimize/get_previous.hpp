@@ -193,7 +193,7 @@ void get_previous(
 				size_t previous = op_previous[i_op];
 				bool sum_op = false;
 				CPPAD_ASSERT_UNKNOWN( previous < i_op );
-				increase_arg_usage(
+				op_inc_arg_usage(
 					play, sum_op, i_op, previous, op_usage, cexp_set
 				);
 			}

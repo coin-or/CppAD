@@ -14,7 +14,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 # include <stack>
 # include <iterator>
-# include <cppad/local/optimize/get_usage.hpp>
+# include <cppad/local/optimize/get_op_usage.hpp>
 # include <cppad/local/optimize/get_previous.hpp>
 # include <cppad/local/optimize/get_cexp_info.hpp>
 # include <cppad/local/optimize/size_pair.hpp>
@@ -143,7 +143,7 @@ void optimize_run(
 	sparse_list               cexp_set;
 	pod_vector<bool>          vecad_used;
 	pod_vector<usage_t>       op_usage;
-	get_usage(
+	get_op_usage(
 		conditional_skip,
 		compare_op,
 		print_for_op,

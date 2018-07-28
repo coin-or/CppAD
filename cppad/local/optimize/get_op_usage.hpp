@@ -1,5 +1,5 @@
-# ifndef CPPAD_LOCAL_OPTIMIZE_GET_USAGE_HPP
-# define CPPAD_LOCAL_OPTIMIZE_GET_USAGE_HPP
+# ifndef CPPAD_LOCAL_OPTIMIZE_GET_OP_USAGE_HPP
+# define CPPAD_LOCAL_OPTIMIZE_GET_OP_USAGE_HPP
 
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
@@ -23,7 +23,7 @@ Create operator information tables
 namespace CppAD { namespace local { namespace optimize {
 
 /// Is this an addition or subtraction operator
-inline bool add_or_subtract(
+inline bool op_add_or_sub(
 	OpCode op ///< operator we are checking
 )
 {	bool result;
@@ -52,7 +52,7 @@ is the player for the old operation sequence.
 
 \param sum_result
 is result an addition or subtraction operator (passed for speed so
-do not need to call add_or_subtract for result).
+do not need to call op_add_or_sub for result).
 
 \param i_result
 is the operator index for the result operator.
@@ -87,7 +87,7 @@ the output value of set[i_arg] is the intersection of
 its input value and set[i_result].
 */
 template <class Base>
-inline void increase_arg_usage(
+inline void op_inc_arg_usage(
 	const player<Base>*         play           ,
 	bool                        sum_result     ,
 	size_t                      i_result       ,
@@ -102,7 +102,7 @@ inline void increase_arg_usage(
 	if( sum_result )
 	{	if( arg_usage == no_usage )
 		{	OpCode op_a = play->GetOp(i_arg);
-			if( add_or_subtract( op_a ) )
+			if( op_add_or_sub( op_a ) )
 			{	op_usage[i_arg] = usage_t(csum_usage);
 			}
 		}
@@ -193,7 +193,7 @@ the i-th operator in the operation sequence.
 */
 
 template <class Addr, class Base>
-void get_usage(
+void get_op_usage(
 	bool                                        conditional_skip    ,
 	bool                                        compare_op          ,
 	bool                                        print_for_op        ,
@@ -364,7 +364,7 @@ void get_usage(
 			CPPAD_ASSERT_UNKNOWN( NumRes(op) > 0 );
 			if( use_result != usage_t(no_usage) )
 			{	size_t j_op = random_itr.var2op(arg[0]);
-				increase_arg_usage(
+				op_inc_arg_usage(
 					play, sum_op, i_op, j_op, op_usage, cexp_set
 				);
 			}
@@ -383,7 +383,7 @@ void get_usage(
 			CPPAD_ASSERT_UNKNOWN( NumRes(op) > 0 );
 			if( use_result != usage_t(no_usage) )
 			{	size_t j_op = random_itr.var2op(arg[1]);
-				increase_arg_usage(
+				op_inc_arg_usage(
 					play, sum_op, i_op, j_op, op_usage, cexp_set
 				);
 			}
@@ -402,7 +402,7 @@ void get_usage(
 			if( use_result != usage_t(no_usage) )
 			{	for(size_t i = 0; i < 2; i++)
 				{	size_t j_op = random_itr.var2op(arg[i]);
-					increase_arg_usage(
+					op_inc_arg_usage(
 						play, sum_op, i_op, j_op, op_usage, cexp_set
 					);
 				}
@@ -422,14 +422,14 @@ void get_usage(
 				// propgate from result to left argument
 				if( arg[1] & 1 )
 				{	size_t j_op = random_itr.var2op(arg[2]);
-					increase_arg_usage(
+					op_inc_arg_usage(
 						play, sum_op, i_op, j_op, op_usage, cexp_set
 					);
 				}
 				// propgate from result to right argument
 				if( arg[1] & 2 )
 				{	size_t j_op = random_itr.var2op(arg[3]);
-					increase_arg_usage(
+					op_inc_arg_usage(
 							play, sum_op, i_op, j_op, op_usage, cexp_set
 					);
 				}
@@ -442,7 +442,7 @@ void get_usage(
 				{	size_t j_op = random_itr.var2op(arg[4]);
 					bool can_skip = conditional_skip & (! same_variable);
 					can_skip     &= op_usage[j_op] == usage_t(no_usage);
-					increase_arg_usage(
+					op_inc_arg_usage(
 						play, sum_op, i_op, j_op, op_usage, cexp_set
 					);
 					if( can_skip )
@@ -461,7 +461,7 @@ void get_usage(
 				{	size_t j_op = random_itr.var2op(arg[5]);
 					bool can_skip = conditional_skip & (! same_variable);
 					can_skip     &= op_usage[j_op] == usage_t(no_usage);
-					increase_arg_usage(
+					op_inc_arg_usage(
 						play, sum_op, i_op, j_op, op_usage, cexp_set
 					);
 					if( can_skip )
@@ -498,14 +498,14 @@ void get_usage(
 				if( arg[0] & 1 )
 				{	// arg[1] is a variable
 					size_t j_op = random_itr.var2op(arg[1]);
-					increase_arg_usage(
+					op_inc_arg_usage(
 						play, sum_op, i_op, j_op, op_usage, cexp_set
 					);
 				}
 				if( arg[0] & 2 )
 				{	// arg[3] is a variable
 					size_t j_op = random_itr.var2op(arg[3]);
-					increase_arg_usage(
+					op_inc_arg_usage(
 						play, sum_op, i_op, j_op, op_usage, cexp_set
 					);
 				}
@@ -526,7 +526,7 @@ void get_usage(
 			{	op_usage[i_op] = usage_t(yes_usage);
 				//
 				size_t j_op = random_itr.var2op(arg[1]);
-				increase_arg_usage(
+				op_inc_arg_usage(
 					play, sum_op, i_op, j_op, op_usage, cexp_set
 				);
 			}
@@ -540,7 +540,7 @@ void get_usage(
 			{	op_usage[i_op] = usage_t(yes_usage);
 				//
 				size_t j_op = random_itr.var2op(arg[0]);
-				increase_arg_usage(
+				op_inc_arg_usage(
 					play, sum_op, i_op, j_op, op_usage, cexp_set
 				);
 			}
@@ -557,7 +557,7 @@ void get_usage(
 				//
 				for(size_t i = 0; i < 2; i++)
 				{	size_t j_op = random_itr.var2op(arg[i]);
-					increase_arg_usage(
+					op_inc_arg_usage(
 						play, sum_op, i_op, j_op, op_usage, cexp_set
 					);
 				}
@@ -621,7 +621,7 @@ void get_usage(
 			{
 				for(size_t i = 5; i < size_t(arg[2]); i++)
 				{	size_t j_op = random_itr.var2op( arg[i] );
-					increase_arg_usage(
+					op_inc_arg_usage(
 						play, sum_op, i_op, j_op, op_usage, cexp_set
 					);
 				}
@@ -763,7 +763,7 @@ void get_usage(
 					}
 					if( use_arg_j )
 					{	size_t j_op = random_itr.var2op(user_ix[j]);
-						increase_arg_usage(play,
+						op_inc_arg_usage(play,
 							sum_op, last_user_i_op, j_op, op_usage, cexp_set
 						);
 					}
@@ -832,7 +832,7 @@ void get_usage(
 				if( user_pack )
 					user_r_pack[user_i] = true;
 				//
-				increase_arg_usage(
+				op_inc_arg_usage(
 					play, sum_op, i_op, last_user_i_op, op_usage, cexp_set
 				);
 			}
