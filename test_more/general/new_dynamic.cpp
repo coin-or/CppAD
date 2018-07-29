@@ -447,7 +447,38 @@ bool dynamic_compare(void)
 	f.new_dynamic(dynamic);
 	y  = f.Forward(0, x);
 	ok = f.compare_change_number() == 1;
+
+	// ----------------------------------------------------------
+	// operators: >, >=
+	adynamic[0] = 0.5;
+	CppAD::Independent(ax, abort_op_index, record_compare, adynamic);
 	//
+	// >
+	if( adynamic[0] > 0.4 )
+		ay[0] = 1.0;
+	else
+		ay[0] = 0.0;
+	//
+	// >=
+	if( adynamic[0] >= 0.4 )
+		ay[1] = 1.0;
+	else
+		ay[1] = 0.0;
+
+	// create f: x -> y and stop tape recording
+	f.Dependent(ax, ay);
+	//
+	dynamic[0] = Value( adynamic[0] );
+	f.new_dynamic(dynamic);
+	y  = f.Forward(0, x);
+	ok = f.compare_change_number() == 0;
+	//
+	dynamic[0] = 0.3;
+	f.new_dynamic(dynamic);
+	y  = f.Forward(0, x);
+	ok = f.compare_change_number() == 2;
+	//
+	// ----------------------------------------------------------
 	return ok;
 }
 
