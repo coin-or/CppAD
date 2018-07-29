@@ -261,8 +261,10 @@ public:
 				// cases where nothing to do
 				case BeginOp:
 				case EndOp:
+				case EqppOp:
 				case InvOp:
 				case LdpOp:
+				case NeppOp:
 				case ParOp:
 				case UserOp:
 				case UsrapOp:

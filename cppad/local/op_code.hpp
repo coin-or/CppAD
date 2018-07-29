@@ -99,6 +99,7 @@ enum OpCode {
 	DivvpOp,  // variable   / parameter
 	DivvvOp,  // variable   / variable
 	EndOp,    // used to mark the end of the tape
+	EqppOp,   // parameter  == parameter
 	EqpvOp,   // parameter  == variable
 	EqvvOp,   // variable   == variable
 	ErfOp,    // erf(variable)
@@ -117,6 +118,7 @@ enum OpCode {
 	LtvvOp,   // variable  < variable
 	MulpvOp,  // parameter  * variable
 	MulvvOp,  // variable   * variable
+	NeppOp,   // parameter  != parameter
 	NepvOp,   // parameter  != variable
 	NevvOp,   // variable   != variable
 	ParOp,    // parameter
@@ -201,6 +203,7 @@ inline size_t NumArg( OpCode op)
 		2, // DivvpOp
 		2, // DivvvOp
 		0, // EndOp
+		2, // EqppOp
 		2, // EqpvOp
 		2, // EqvvOp
 		3, // ErfOp
@@ -219,6 +222,7 @@ inline size_t NumArg( OpCode op)
 		2, // LtvvOp
 		2, // MulpvOp
 		2, // MulvvOp
+		2, // NeppOp
 		2, // NepvOp
 		2, // NevvOp
 		1, // ParOp
@@ -313,6 +317,7 @@ inline size_t NumRes(OpCode op)
 		1, // DivvpOp
 		1, // DivvvOp
 		0, // EndOp
+		0, // EqppOp
 		0, // EqpvOp
 		0, // EqvvOp
 		5, // ErfOp
@@ -331,6 +336,7 @@ inline size_t NumRes(OpCode op)
 		0, // LtvvOp
 		1, // MulpvOp
 		1, // MulvvOp
+		0, // NeppOp
 		0, // NepvOp
 		0, // NevvOp
 		1, // ParOp
@@ -404,6 +410,7 @@ inline const char* OpName(OpCode op)
 		"Divvp" ,
 		"Divvv" ,
 		"End"   ,
+		"Eqpp"  ,
 		"Eqpv"  ,
 		"Eqvv"  ,
 		"Erf"   ,
@@ -422,6 +429,7 @@ inline const char* OpName(OpCode op)
 		"Ltvv"  ,
 		"Mulpv" ,
 		"Mulvv" ,
+		"Nepp"  ,
 		"Nepv"  ,
 		"Nevv"  ,
 		"Par"   ,
@@ -829,6 +837,13 @@ void printOp(
 		else	printOpField(os, " pf=", play->GetPar(ind[5]), ncol);
 		break;
 
+		case EqppOp:
+		case NeppOp:
+		CPPAD_ASSERT_UNKNOWN( NumArg(op) == 2 );
+		printOpField(os, " pl=", play->GetPar(ind[0]), ncol);
+		printOpField(os, " pr=", play->GetPar(ind[1]), ncol);
+		break;
+
 		default:
 		CPPAD_ASSERT_UNKNOWN(0);
 	}
@@ -1119,6 +1134,13 @@ inline void arg_is_variable(
 		is_variable.resize( num_arg );
 		for(size_t i = 0; i < num_arg; ++i)
 			is_variable[i] = (5 <= i) & (i < size_t(arg[2]));
+		break;
+
+		case EqppOp:
+		case NeppOp:
+		CPPAD_ASSERT_UNKNOWN( NumArg(op) == 2 );
+		is_variable[0] = false;
+		is_variable[1] = false;
 		break;
 
 		// --------------------------------------------------------------------

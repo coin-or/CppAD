@@ -398,6 +398,7 @@ void for_jac(
 			break;
 			// -------------------------------------------------
 
+			case EqppOp:
 			case EqpvOp:
 			case EqvvOp:
 			case LtpvOp:
@@ -406,6 +407,7 @@ void for_jac(
 			case LepvOp:
 			case LevpOp:
 			case LevvOp:
+			case NeppOp:
 			case NepvOp:
 			case NevvOp:
 			CPPAD_ASSERT_NARG_NRES(op, 2, 0);

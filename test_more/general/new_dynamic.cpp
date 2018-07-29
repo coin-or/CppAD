@@ -163,7 +163,7 @@ bool operator_with_variable(void)
 	//
 	return ok;
 }
-bool operator_with_dynamic(void)
+bool dynamic_operator(void)
 {	bool ok = true;
 	using CppAD::AD;
 	using CppAD::NearEqual;
@@ -361,6 +361,61 @@ bool operator_with_dynamic(void)
 	//
 	return ok;
 }
+bool dynamic_compare(void)
+{	bool ok = true;
+	using CppAD::AD;
+
+	// independent dynamic parameter vector
+	size_t nd  = 1;
+	CPPAD_TESTVECTOR(AD<double>) adynamic(nd);
+	adynamic[0] = 0.5;
+
+	// domain space vector
+	size_t nx = 1;
+	CPPAD_TESTVECTOR(AD<double>) ax(nx);
+	ax[0] = 0.25;
+
+	// declare independent variables, dynamic parammeters, starting recording
+	size_t abort_op_index = 0;
+	bool   record_compare = true;
+	CppAD::Independent(ax, abort_op_index, record_compare, adynamic);
+
+	// range space vector
+	size_t ny = 2;
+	CPPAD_TESTVECTOR(AD<double>) ay(ny);
+	// ----------------------------------------------------------
+	// EqppOp
+	if( adynamic[0] == 0.5 )
+		ay[0] = 1.0;
+	else
+		ay[0] = 0.0;
+	//
+	// NeppOp
+	if( adynamic[0] != 0.5 )
+		ay[1] = 1.0;
+	else
+		ay[1] = 0.0;
+	// ----------------------------------------------------------
+
+	// create f: x -> y and stop tape recording
+	CppAD::ADFun<double> f(ax, ay);
+
+	// change the dynamic parameter values
+	CPPAD_TESTVECTOR(double) dynamic(nd), x(nx), y(ny);
+	x[0] = 1.0;
+	//
+	dynamic[0] = Value( adynamic[0] );
+	f.new_dynamic(dynamic);
+	y  = f.Forward(0, x);
+	ok = f.compare_change_number() == 0;
+	//
+	dynamic[0] = 1.0;
+	f.new_dynamic(dynamic);
+	y  = f.Forward(0, x);
+	ok = f.compare_change_number() == 2;
+	//
+	return ok;
+}
 
 } // END_EMPTY_NAMESPACE
 
@@ -368,7 +423,8 @@ bool operator_with_dynamic(void)
 bool new_dynamic(void)
 {	bool ok = true;
 	ok     &= operator_with_variable();
-	ok     &= operator_with_dynamic();
+	ok     &= dynamic_operator();
+	ok     &= dynamic_compare();
 
 	return ok;
 }

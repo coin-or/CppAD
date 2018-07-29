@@ -418,6 +418,18 @@ void forward0(
 			break;
 			// -------------------------------------------------
 
+			case EqppOp:
+			if( compare_change_count )
+			{	forward_eqpp_op_0(
+					compare_change_number, arg, parameter
+				);
+				{	if( compare_change_count == compare_change_number )
+						compare_change_op_index = itr.op_index();
+				}
+			}
+			break;
+			// -------------------------------------------------
+
 			case EqpvOp:
 			if( compare_change_count )
 			{	forward_eqpv_op_0(
@@ -588,6 +600,18 @@ void forward0(
 
 			case MulvvOp:
 			forward_mulvv_op_0(i_var, arg, parameter, J, taylor);
+			break;
+			// -------------------------------------------------
+
+			case NeppOp:
+			if( compare_change_count )
+			{	forward_nepp_op_0(
+					compare_change_number, arg, parameter
+				);
+				{	if( compare_change_count == compare_change_number )
+						compare_change_op_index = itr.op_index();
+				}
+			}
 			break;
 			// -------------------------------------------------
 

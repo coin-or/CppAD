@@ -34,8 +34,8 @@ move_list='
 move_sed='s|par_var|par_var_dyn|'
 #
 cat << EOF > junk.sed
-s|PutPar(|put_con_par(|g
-s|con_par_vec_|all_par_vec_|g
+s|are  variables|are variables|'
+s|on differrent tapes|on different threads|'
 EOF
 # -----------------------------------------------------------------------------
 if [ $0 != "bin/batch_edit.sh" ]

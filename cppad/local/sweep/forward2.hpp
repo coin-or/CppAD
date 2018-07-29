@@ -412,6 +412,7 @@ void forward2(
 			break;
 			// ---------------------------------------------------
 
+			case EqppOp:
 			case EqpvOp:
 			case EqvvOp:
 			case LtpvOp:
@@ -420,6 +421,7 @@ void forward2(
 			case LepvOp:
 			case LevpOp:
 			case LevvOp:
+			case NeppOp:
 			case NepvOp:
 			case NevvOp:
 			CPPAD_ASSERT_UNKNOWN(q > 0 );

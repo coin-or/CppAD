@@ -1,9 +1,8 @@
-// $Id$
 # ifndef CPPAD_LOCAL_COMP_OP_HPP
 # define CPPAD_LOCAL_COMP_OP_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -209,6 +208,35 @@ inline void forward_ltvv_op_0(
 /*!
 Zero order forward mode comparison check that left == right
 
+\param count
+It the condition is not true, ths counter is incremented by one.
+
+\param arg
+parameter[ arg[0] ] is the left operand and
+parameter[ arg[1] ] is the right operand.
+
+\param parameter
+vector of parameter values.
+*/
+template <class Base>
+inline void forward_eqpp_op_0(
+	size_t&       count       ,
+	const addr_t* arg         ,
+	const Base*   parameter   )
+{
+	// check assumptions
+	CPPAD_ASSERT_UNKNOWN( NumArg(EqppOp) == 2 );
+	CPPAD_ASSERT_UNKNOWN( NumRes(EqppOp) == 0 );
+
+	// Taylor coefficients corresponding to arguments and result
+	Base x = parameter[ arg[0] ];
+	Base y = parameter[ arg[1] ];
+
+	count += (x != y);
+}
+/*!
+Zero order forward mode comparison check that left == right
+
 \copydetails CppAD::local::forward_lepv_op_0
 */
 template <class Base>
@@ -253,6 +281,35 @@ inline void forward_eqvv_op_0(
 	count += (x[0] != y[0]);
 }
 // -------------------------------- != -----------------------------------
+/*!
+Zero order forward mode comparison check that left != right
+
+\param count
+It the condition is not true, ths counter is incremented by one.
+
+\param arg
+parameter[ arg[0] ] is the left operand and
+parameter[ arg[1] ] is the right operand.
+
+\param parameter
+vector of parameter values.
+*/
+template <class Base>
+inline void forward_nepp_op_0(
+	size_t&       count       ,
+	const addr_t* arg         ,
+	const Base*   parameter   )
+{
+	// check assumptions
+	CPPAD_ASSERT_UNKNOWN( NumArg(NeppOp) == 2 );
+	CPPAD_ASSERT_UNKNOWN( NumRes(NeppOp) == 0 );
+
+	// Taylor coefficients corresponding to arguments and result
+	Base x = parameter[ arg[0] ];
+	Base y = parameter[ arg[1] ];
+
+	count += (x == y);
+}
 /*!
 Zero order forward mode comparison check that left != right
 

@@ -306,6 +306,7 @@ void for_hes(
 
 			// -------------------------------------------------
 			// logical comparision operators
+			case EqppOp:
 			case EqpvOp:
 			case EqvvOp:
 			case LtpvOp:
@@ -315,6 +316,7 @@ void for_hes(
 			case LevpOp:
 			case LevvOp:
 			case NepvOp:
+			case NeppOp:
 			case NevvOp:
 			CPPAD_ASSERT_NARG_NRES(op, 2, 0);
 			break;
