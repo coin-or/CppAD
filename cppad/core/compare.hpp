@@ -362,13 +362,13 @@ bool operator == (const AD<Base> &left , const AD<Base> &right)
 	bool dyn_left  = match_left  & left.dynamic_;
 	bool dyn_right = match_right & right.dynamic_;
 
-	// check if left and right are  variables
+	// check if left and right are variables
 	bool var_left  = match_left  & (! left.dynamic_);
 	bool var_right = match_right & (! right.dynamic_);
 
 	CPPAD_ASSERT_KNOWN(
 		left.tape_id_ == right.tape_id_ || ! match_left || ! match_right ,
-		"==: AD variables and/or dynamic parameters on different tapes."
+		"==: AD variables or dynamic parameters on different threads."
 	);
 	if( var_left )
 	{	if( var_right )
@@ -446,13 +446,13 @@ bool operator != (const AD<Base> &left , const AD<Base> &right)
 	bool dyn_left  = match_left  & left.dynamic_;
 	bool dyn_right = match_right & right.dynamic_;
 
-	// check if left and right are  variables
+	// check if left and right are variables
 	bool var_left  = match_left  & (! left.dynamic_);
 	bool var_right = match_right & (! right.dynamic_);
 
 	CPPAD_ASSERT_KNOWN(
 		left.tape_id_ == right.tape_id_ || ! match_left || ! match_right ,
-		"!=: AD variables and/or dynamic parameters on different tapes."
+		"!=: AD variables or dynamic parameters on different threads."
 	);
 	if( var_left )
 	{	if( var_right )

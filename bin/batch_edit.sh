@@ -34,8 +34,9 @@ move_list='
 move_sed='s|par_var|par_var_dyn|'
 #
 cat << EOF > junk.sed
-s|are  variables|are variables|'
-s|on differrent tapes|on different threads|'
+s|are  variables|are variables|
+s|on different tapes|on different threads|
+s|and/or dynamic|or dynamic|
 EOF
 # -----------------------------------------------------------------------------
 if [ $0 != "bin/batch_edit.sh" ]

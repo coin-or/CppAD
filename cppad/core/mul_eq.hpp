@@ -41,7 +41,7 @@ AD<Base>& AD<Base>::operator *= (const AD<Base> &right)
 # endif
 	bool dyn_right = match_right & right.dynamic_;
 
-	// check if left and right are  variables
+	// check if left and right are variables
 	bool var_left  = match_left  & (! dynamic_);
 	bool var_right = match_right & (! right.dynamic_);
 

@@ -118,13 +118,13 @@ pow(const AD<Base>& x, const AD<Base>& y)
 	bool dyn_x  = match_x  & x.dynamic_;
 	bool dyn_y  = match_y  & y.dynamic_;
 
-	// check if x and y are  variables
+	// check if x and y are variables
 	bool var_x  = match_x  & (! x.dynamic_);
 	bool var_y  = match_y  & (! y.dynamic_);
 
 	CPPAD_ASSERT_KNOWN(
 		x.tape_id_ == y.tape_id_ || ! match_x || ! match_y ,
-		"pow: AD variables and/or dynamic parameters on different tapes."
+		"pow: AD variables or dynamic parameters on different threads."
 	);
 	if( var_x )
 	{	if( var_y )
