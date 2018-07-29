@@ -116,7 +116,7 @@ void dynamic(
 			all_par_vec[i_par] = fabs( *par[0] );
 			break;
 
-			case addpp_dyn:
+			case add_dyn:
 			all_par_vec[i_par] = *par[0] + *par[1];
 			break;
 

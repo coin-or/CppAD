@@ -108,7 +108,7 @@ AD<Base> operator + (const AD<Base> &left , const AD<Base> &right)
 		//
 		// add parameters with a dynamic parameter result
 		result.taddr_   = tape->Rec_.put_dyn_par(
-			result.value_, local::addpp_dyn, arg0, arg1
+			result.value_, local::add_dyn,   arg0, arg1
 		);
 		result.tape_id_ = tape_id;
 		result.dynamic_ = true;
