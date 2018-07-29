@@ -187,7 +187,10 @@ bool operator_with_dynamic(void)
 	CppAD::Independent(ax, abort_op_index, record_compare, adynamic);
 
 	// range space vector
-	size_t ny = 27;
+	size_t ny = 21;
+# if CPPAD_USE_CPLUSPLUS_2011
+	ny += 6;
+# endif
 	CPPAD_TESTVECTOR(AD<double>) ay(ny);
 	int k = 0;
 	// ----------------------------------------------------------
