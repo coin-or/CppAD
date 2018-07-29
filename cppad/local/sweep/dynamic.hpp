@@ -260,14 +260,33 @@ void dynamic(
 			all_par_vec[i_par] = *par[0] * *par[1];
 			break;
 
+			// pow
+			case pow_dyn:
+			CPPAD_ASSERT_UNKNOWN( n_arg == 2 );
+			all_par_vec[i_par] = pow( *par[0], *par[1] );
+			break;
+
+			// sign
+			case sign_dyn:
+			CPPAD_ASSERT_UNKNOWN( n_arg == 1 );
+			all_par_vec[i_par] = sign( *par[0] );
+			break;
+
 			// sub
 			case sub_dyn:
 			CPPAD_ASSERT_UNKNOWN( n_arg == 2 );
 			all_par_vec[i_par] = *par[0] - *par[1];
 			break;
 
+			// zmul
+			case zmul_dyn:
+			CPPAD_ASSERT_UNKNOWN( n_arg == 2 );
+			all_par_vec[i_par] = azmul( *par[0],  *par[1] );
+			break;
+
 			// ---------------------------------------------------------------
 			default:
+			std::cerr << "op_code_dyn = " << op_name_dyn(op) << std::endl;
 			CPPAD_ASSERT_UNKNOWN(false);
 			break;
 		}

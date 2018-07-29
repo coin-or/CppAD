@@ -117,6 +117,10 @@ azmul(const AD<Base>& x, const AD<Base>& y)
 	bool var_x  = match_x  & (! x.dynamic_);
 	bool var_y  = match_y  & (! y.dynamic_);
 
+	CPPAD_ASSERT_KNOWN(
+		x.tape_id_ == y.tape_id_ || ! match_x || ! match_y ,
+		"azmul: AD variables and/or dynamic parameters on different tapes."
+	);
 	if( var_x )
 	{	if( var_y )
 		{	// result = azmul(variable, variable)
@@ -183,10 +187,20 @@ azmul(const AD<Base>& x, const AD<Base>& y)
 			result.tape_id_ = tape_id;
 		}
 	}
-	else
-	{	CPPAD_ASSERT_KNOWN( ! (dyn_x | dyn_y) ,
-		"azmul: one operand is a dynamic parameter and other not a variable"
+	else if( dyn_x | dyn_y )
+	{	addr_t arg0 = x.taddr_;
+		addr_t arg1 = y.taddr_;
+		if( ! dyn_x )
+			arg0 = tape->Rec_.put_con_par(x.value_);
+		if( ! dyn_y )
+			arg1 = tape->Rec_.put_con_par(y.value_);
+		//
+		// parameters with a dynamic parameter result
+		result.taddr_   = tape->Rec_.put_dyn_par(
+			result.value_, local::zmul_dyn,   arg0, arg1
 		);
+		result.tape_id_ = tape_id;
+		result.dynamic_ = true;
 	}
 	return result;
 }

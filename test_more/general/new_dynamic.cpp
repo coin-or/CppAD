@@ -168,6 +168,7 @@ bool operator_with_dynamic(void)
 	using CppAD::AD;
 	using CppAD::NearEqual;
 	using CppAD::azmul;
+	using CppAD::sign;
 	double eps = 10. * std::numeric_limits<double>::epsilon();
 
 	// independent dynamic parameter vector
@@ -186,7 +187,7 @@ bool operator_with_dynamic(void)
 	CppAD::Independent(ax, abort_op_index, record_compare, adynamic);
 
 	// range space vector
-	size_t ny = 25;
+	size_t ny = 27;
 	CPPAD_TESTVECTOR(AD<double>) ay(ny);
 	int k = 0;
 	// ----------------------------------------------------------
@@ -244,7 +245,11 @@ bool operator_with_dynamic(void)
 	++k;
 	ay[k] = pow(adynamic[0], 2.0);
 	++k;
+	ay[k] = sign(adynamic[0]);
+	++k;
 	ay[k] = adynamic[0] - 2.0;
+	++k;
+	ay[k] = azmul(2.0, adynamic[0]);
 	++k;
 	// ----------------------------------------------------------
 	ok &= size_t(k) == ny;
@@ -339,7 +344,13 @@ bool operator_with_dynamic(void)
 	check = pow(dynamic[0], 2.0);
 	ok   &= NearEqual(y[k], check, eps, eps);
 	++k;
+	check = sign(dynamic[0]);
+	ok   &= NearEqual(y[k], check, eps, eps);
+	++k;
 	check = dynamic[0] - 2.0;
+	ok   &= NearEqual(y[k], check, eps, eps);
+	++k;
+	check = azmul(2.0, dynamic[0]);
 	ok   &= NearEqual(y[k], check, eps, eps);
 	++k;
 	// ----------------------------------------------------------

@@ -74,30 +74,45 @@ AD<Base> AD<Base>::sign_me (void) const
 	result.value_ = sign(value_);
 	CPPAD_ASSERT_UNKNOWN( Parameter(result) );
 
-	if( Variable(*this) )
-	{	// add this operation to the tape
+	// check if there is a recording in progress
+	local::ADTape<Base>* tape = AD<Base>::tape_ptr();
+	if( tape == CPPAD_NULL )
+		return result;
+
+	// check if operand is a constant paramerer
+	if( tape_id_ != tape->id_ )
+		return result;
+
+	if( dynamic_ )
+	{	// dynamic paramter argument
+		result.taddr_   = tape->Rec_.put_dyn_par(
+			result.value_, local::sign_dyn, taddr_
+		);
+		result.tape_id_  = tape_id_;
+		result.dynamic_  = true;
+	}
+	else
+	{	// variable argument
 		CPPAD_ASSERT_UNKNOWN( local::NumRes(local::SignOp) == 1 );
 		CPPAD_ASSERT_UNKNOWN( local::NumArg(local::SignOp) == 1 );
-		local::ADTape<Base> *tape = tape_this();
 
 		// corresponding operand address
 		tape->Rec_.PutArg(taddr_);
+
 		// put operator in the tape
 		result.taddr_ = tape->Rec_.PutOp(local::SignOp);
+
 		// make result a variable
-		result.tape_id_    = tape->id_;
+		result.tape_id_ = tape->id_;
+		result.dynamic_ = false;
 	}
 	return result;
 }
 
 template <class Base>
 inline AD<Base> sign(const AD<Base> &x)
-{	CPPAD_ASSERT_KNOWN( ! Dynamic(x),
-		"sign: argument is a dynmaic parameter"
-	);
-	return x.sign_me();
+{	return x.sign_me();
 }
-
 template <class Base>
 inline AD<Base> sign(const VecAD_reference<Base> &x)
 {	return x.ADBase().sign_me(); }
