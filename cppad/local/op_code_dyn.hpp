@@ -44,6 +44,7 @@ enum op_code_dyn {
 	sin_dyn,    // sin(parameter)
 	sinh_dyn,   // sinh(parameter)
 	sqrt_dyn,   // sqrt(parameter)
+	sub_dyn,    // parameter - parameter
 	tan_dyn,    // tan(parameter)
 	tanh_dyn,   // tan(parameter)
 	zmul_dyn,   // azmul(parameter, parameter)
@@ -82,6 +83,7 @@ inline size_t num_arg_dyn(op_code_dyn op)
 		1, // sin_dyn
 		1, // sinh_dyn
 		1, // sqrt_dyn
+		2, // sub_dyn
 		1, // tan_dyn
 		1, // tanh_dyn
 		2, // zmul_dyn
@@ -126,6 +128,7 @@ inline const char* op_name_dyn(op_code_dyn op)
 		"sin",
 		"sinh",
 		"sqrt",
+		"sub",
 		"tan",
 		"tanh",
 		"zmul",

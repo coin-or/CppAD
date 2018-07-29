@@ -248,6 +248,24 @@ void dynamic(
 			all_par_vec[i_par] = *par[0] + *par[1];
 			break;
 
+			// div
+			case div_dyn:
+			CPPAD_ASSERT_UNKNOWN( n_arg == 2 );
+			all_par_vec[i_par] = *par[0] / *par[1];
+			break;
+
+			// mul
+			case mul_dyn:
+			CPPAD_ASSERT_UNKNOWN( n_arg == 2 );
+			all_par_vec[i_par] = *par[0] * *par[1];
+			break;
+
+			// sub
+			case sub_dyn:
+			CPPAD_ASSERT_UNKNOWN( n_arg == 2 );
+			all_par_vec[i_par] = *par[0] - *par[1];
+			break;
+
 			// ---------------------------------------------------------------
 			default:
 			CPPAD_ASSERT_UNKNOWN(false);
