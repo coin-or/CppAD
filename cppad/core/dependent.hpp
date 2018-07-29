@@ -258,7 +258,7 @@ void ADFun<Base>::Dependent(local::ADTape<Base> *tape, const ADvector &y)
 	{	dep_parameter_[i] = CppAD::Parameter(y[i]);
 		if( dep_parameter_[i] )
 		{	// make a tape copy of dependent variables that are parameters,
-			y_taddr = tape->RecordParOp( y[i].value_ );
+			y_taddr = tape->RecordParOp( y[i] );
 		}
 		else	y_taddr = y[i].taddr_;
 

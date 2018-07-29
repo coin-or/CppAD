@@ -85,29 +85,44 @@ AD<Base> AD<Base>::abs_me (void) const
 	result.value_ = abs(value_);
 	CPPAD_ASSERT_UNKNOWN( Parameter(result) );
 
-	if( Variable(*this) )
-	{	// add this operation to the tape
+	// check if there is a recording in progress
+	local::ADTape<Base>* tape = AD<Base>::tape_ptr();
+	if( tape == CPPAD_NULL )
+		return result;
+
+	// check if operand is a constant paramerer
+	if( tape_id_ != tape->id_ )
+		return result;
+
+	if( dynamic_ )
+	{	// dynamic paramter argument
+		result.taddr_   = tape->Rec_.put_dyn_par(
+			result.value_, local::abs_dyn, taddr_
+		);
+		result.tape_id_  = tape_id_;
+		result.dynamic_  = true;
+	}
+	else
+	{	// variable argument
 		CPPAD_ASSERT_UNKNOWN( local::NumRes(local::AbsOp) == 1 );
 		CPPAD_ASSERT_UNKNOWN( local::NumArg(local::AbsOp) == 1 );
-		local::ADTape<Base> *tape = tape_this();
 
 		// corresponding operand address
 		tape->Rec_.PutArg(taddr_);
+
 		// put operator in the tape
-		result.taddr_ = tape->Rec_.PutOp(local::AbsOp);
+		result.taddr_    = tape->Rec_.PutOp(local::AbsOp);
+
 		// make result a variable
-		result.tape_id_    = tape->id_;
+		result.tape_id_  = tape_id_;
+		result.dynamic_  = false;
 	}
 	return result;
 }
 
 template <class Base>
 inline AD<Base> abs(const AD<Base> &x)
-{	CPPAD_ASSERT_KNOWN( ! Dynamic(x),
-		"abs: argument is a dynamic parameter"
-	);
-	return x.abs_me();
-}
+{	return x.abs_me(); }
 
 template <class Base>
 inline AD<Base> abs(const VecAD_reference<Base> &x)

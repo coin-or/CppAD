@@ -108,7 +108,7 @@ private:
 	// private functions
 	//
 	// add a parameter to the tape
-	addr_t RecordParOp(const Base &x);
+	addr_t RecordParOp(const AD<Base>& y);
 
 	// see CondExp.h
 	void RecordCondExp(
@@ -142,13 +142,13 @@ public:
 //
 
 /*!
-Place a parameter in the tape.
+Place a parameter in the tape as a variable.
 
 On rare occations it is necessary to place a parameter in the tape; e.g.,
 when it is one of the dependent variabes.
 
-\param z
-value of the parameter that we are placing in the tape.
+\param y
+value of the parameter that we are placing in the tape as a variable.
 
 \return
 variable index (for this recording) correpsonding to the parameter.
@@ -158,15 +158,18 @@ All these operates are preformed in \c Rec_, so we should
 move this routine from <tt>ADTape<Base></tt> to <tt>recorder<Base></tt>.
 */
 template <class Base>
-addr_t ADTape<Base>::RecordParOp(const Base &z)
-{	addr_t z_taddr;
-	addr_t ind;
-	CPPAD_ASSERT_UNKNOWN( NumRes(ParOp) == 1 );
+addr_t ADTape<Base>::RecordParOp(const AD<Base>& y)
+{	CPPAD_ASSERT_UNKNOWN( NumRes(ParOp) == 1 );
 	CPPAD_ASSERT_UNKNOWN( NumArg(ParOp) == 1 );
-	z_taddr = Rec_.PutOp(ParOp);
-	ind     = Rec_.put_con_par(z);
-	Rec_.PutArg(ind);
-
+	addr_t z_taddr = Rec_.PutOp(ParOp);
+	if( Dynamic(y) )
+	{	addr_t ind  = y.taddr_;
+		Rec_.PutArg(ind);
+	}
+	else
+	{	addr_t ind  = Rec_.put_con_par(y.value_);
+		Rec_.PutArg(ind);
+	}
 	return z_taddr;
 }
 

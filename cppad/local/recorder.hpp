@@ -119,6 +119,7 @@ public:
 
 	/// Put a dynamic parameter in all_par_vec_.
 	addr_t put_dyn_par(const Base &par, op_code_dyn op);
+	addr_t put_dyn_par(const Base &par, op_code_dyn op, addr_t arg0);
 	addr_t put_dyn_par(
 		const Base &par, op_code_dyn op, addr_t arg0, addr_t arg1
 	);
@@ -347,6 +348,35 @@ addr_t recorder<Base>::put_dyn_par(const Base &par, op_code_dyn op)
 	all_par_vec_.push_back( par );
 	dyn_par_is_.push_back(true);
 	dyn_par_op_.push_back( opcode_t(op) );
+	return static_cast<addr_t>( all_par_vec_.size() - 1 );
+}
+/*!
+Put a dynamic parameter at the end of the vector for all parameters.
+
+\param par
+is value of dynamic parameter to be placed at the end of the vector.
+
+\param op
+is the operator for this dynamic parameter.
+There is one argument to this operator, so numarg(op) == 1.
+
+\param arg0
+this is the argument to the operator represented
+as an index in the all_par_vec_ vector.
+
+\return
+is the index in all_par_vec_ corresponding to this dynamic parameter value.
+*/
+template <class Base>
+addr_t recorder<Base>::put_dyn_par(
+	const Base &par, op_code_dyn op, addr_t arg0
+)
+{	// independent parameters come first
+	CPPAD_ASSERT_UNKNOWN( num_arg_dyn(op) == 1 );
+	all_par_vec_.push_back( par );
+	dyn_par_is_.push_back(true);
+	dyn_par_op_.push_back( opcode_t(op) );
+	dyn_par_arg_.push_back(arg0);
 	return static_cast<addr_t>( all_par_vec_.size() - 1 );
 }
 /*!

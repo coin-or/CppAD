@@ -20,7 +20,8 @@ Defines the op_code_dyn enum type
 
 /// Parameter only op codes, at least one operand is a dynamic parameter.
 enum op_code_dyn {
-	abs_dyn,    // fabs(parameter)
+	abs_dyn,    // abs(parameter)
+	fabs_dyn,   // fabs(parameter)
 	acos_dyn,   // acos(parameter)
 	acosh_dyn,  // acosh(parameter)
 	addpp_dyn,  // parameter + parameter
@@ -38,7 +39,6 @@ enum op_code_dyn {
 	log_dyn,    // log(parameter)
 	log1p_dyn,  // log1p(parameter)
 	mulpp_dyn,  // parameter * parameter
-	Par_dyn,    // parameter
 	powpp_dyn,  // pow(parameter,    parameter)
 	sign_dyn,   // sign(parameter)
 	sin_dyn,    // sin(parameter)
@@ -58,9 +58,34 @@ inline size_t num_arg_dyn(op_code_dyn op)
 {	CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL;
 
 	static const size_t num_arg_table[] = {
+		1, // abs_dyn
+		1, // fabs_dyn
+		1, // acos_dyn
+		1, // acosh_dyn
 		2, // addpp_dyn
+		1, // asin_dyn
+		1, // asinh_dyn
+		1, // atan_dyn
+		1, // atanh_dyn
+		1, // cos_dyn
+		1, // cosh_dyn
+		2, // divpp_dyn
+		1, // erf_dyn
+		1, // exp_dyn
+		1, // expm1_dyn
 		0, // inv_dyn
-		0  // number_dyn not used
+		1, // log_dyn
+		1, // log1p_dyn
+		2, // mulpp_dyn
+		2, // powpp_dyn
+		1, // sign_dyn
+		1, // sin_dyn
+		1, // sinh_dyn
+		1, // sqrt_dyn
+		1, // tan_dyn
+		1, // tanh_dyn
+		2, // zmulpp_dyn
+		0  // number_dyn (not used)
 	};
 	static bool first = true;
 	if( first )
@@ -70,6 +95,50 @@ inline size_t num_arg_dyn(op_code_dyn op)
 		first = false;
 	}
 	return num_arg_table[op];
+}
+
+/// name for each operator
+inline const char* op_name_dyn(op_code_dyn op)
+{	CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL;
+
+	static const char* op_name_table[] = {
+		"abs",
+		"fabs",
+		"acos",
+		"acosh",
+		"addpp",
+		"asin",
+		"asinh",
+		"atan",
+		"atanh",
+		"cos",
+		"cosh",
+		"divpp",
+		"erf",
+		"exp",
+		"expm1",
+		"inv",
+		"log",
+		"log1p",
+		"mulpp",
+		"powpp",
+		"sign",
+		"sin",
+		"sinh",
+		"sqrt",
+		"tan",
+		"tanh",
+		"zmulpp",
+		"number"
+	};
+	static bool first = true;
+	if( first )
+	{	CPPAD_ASSERT_UNKNOWN(
+		size_t(number_dyn)+1 == sizeof(op_name_table)/sizeof(op_name_table[0])
+		);
+		first = false;
+	}
+	return op_name_table[op];
 }
 
 } } // END_CPPAD_LOCAL_NAMESPACE

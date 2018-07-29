@@ -492,10 +492,7 @@ acos, asin, atan, cos, cosh, exp, fabs, log, sin, sinh, sqrt, tan, tanh.
 # define CPPAD_STANDARD_MATH_UNARY_AD(Name, Op)                   \
     template <class Base>                                         \
     inline AD<Base> Name(const AD<Base> &x)                       \
-    {   CPPAD_ASSERT_KNOWN( ! Dynamic(x),                         \
-             #Name " arugment is a dynamic parameter"             \
-        );                                                        \
-        return x.Name##_me();                                     \
+    {   return x.Name##_me();                                     \
     }                                                             \
     template <class Base>                                         \
     inline AD<Base> AD<Base>::Name##_me (void) const              \
@@ -504,12 +501,26 @@ acos, asin, atan, cos, cosh, exp, fabs, log, sin, sinh, sqrt, tan, tanh.
         result.value_ = CppAD::Name(value_);                      \
         CPPAD_ASSERT_UNKNOWN( Parameter(result) );                \
                                                                   \
-        if( Variable(*this) )                                     \
+        local::ADTape<Base>* tape = AD<Base>::tape_ptr();         \
+        if( tape == CPPAD_NULL )                                  \
+            return result;                                        \
+                                                                  \
+        if( tape_id_ != tape->id_ )                               \
+            return result;                                        \
+                                                                  \
+        if( dynamic_ )                                            \
+        {   result.taddr_ = tape->Rec_.put_dyn_par(               \
+                result.value_, local::Name##_dyn, taddr_          \
+            );                                                    \
+            result.tape_id_ = tape_id_;                           \
+            result.dynamic_ = true;                               \
+        }                                                         \
+        else                                                      \
         {   CPPAD_ASSERT_UNKNOWN( NumArg(Op) == 1 );              \
-            local::ADTape<Base> *tape = tape_this();              \
             tape->Rec_.PutArg(taddr_);                            \
-            result.taddr_ = tape->Rec_.PutOp(Op);                 \
-            result.tape_id_    = tape->id_;                       \
+            result.taddr_    = tape->Rec_.PutOp(Op);              \
+            result.tape_id_  = tape->id_;                         \
+			result.dynamic_  = false;                             \
         }                                                         \
         return result;                                            \
     }                                                             \

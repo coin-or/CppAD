@@ -45,8 +45,7 @@ use with a different definition in other files.
 \def CPPAD_DYNAMIC_TRACE
 This value is either zero or one.
 Zero is the normal operational value.
-If it is one, a trace of every forward0sweep computation is printed.
-(Note that forward0sweep is not used if CPPAD_USE_DYNAMIC is zero).
+If it is one, a trace for each dynamic parameter is printed.
 */
 # define CPPAD_DYNAMIC_TRACE 0
 
@@ -98,23 +97,52 @@ void dynamic(
 			dyn_par_is[j] && op_code_dyn( dyn_par_op[j] ) == inv_dyn
 	);
 # endif
+# if CPPAD_DYNAMIC_TRACE
+	std::cout << std::endl;
+# endif
 	const Base* par[2];
 	size_t i_op  = num_ind_dynamic;
 	size_t i_arg = 0;
 	for(size_t i_par = num_ind_dynamic; i_par < all_par_vec.size(); ++i_par)
 	if( dyn_par_is[i_par] )
 	{	op_code_dyn op = op_code_dyn( dyn_par_op[i_op] );
-		for(size_t j = 0; j < num_arg_dyn(op); ++j)
-			par[j] = & all_par_vec[ dyn_par_arg[i_arg + j] ];
+		size_t n_arg   = num_arg_dyn(op);
+		CPPAD_ASSERT_UNKNOWN( 0 < n_arg && n_arg < 3 );
+		par[0] = & all_par_vec[ dyn_par_arg[i_arg + 0] ];
+		if( 1 < n_arg )
+			par[1] = & all_par_vec[ dyn_par_arg[i_arg + 1] ];
 		switch(op)
-		{	case addpp_dyn:
+		{	case abs_dyn:
+			all_par_vec[i_par] = fabs( *par[0] );
+			break;
+
+			case addpp_dyn:
 			all_par_vec[i_par] = *par[0] + *par[1];
+			break;
+
+			case fabs_dyn:
+			all_par_vec[i_par] = fabs( *par[0] );
+			break;
+
+			case sin_dyn:
+			all_par_vec[i_par] = sin( *par[0] );
 			break;
 
 			default:
 			CPPAD_ASSERT_UNKNOWN(false);
 			break;
 		}
+# if CPPAD_DYNAMIC_TRACE
+		using std::setw;
+		using std::left;
+		using std::right;
+		std::cout << setw(10) << left << all_par_vec[i_par]
+		<< " = " << setw(8) << right << op_name_dyn(op)
+		<< "(" << setw(8) << right << *par[0];
+		if( 1 < n_arg )
+			std::cout << ", " << setw(8) << right << *par[1];
+		std::cout << ")" << std::endl;
+# endif
 		++i_op;
 		i_arg += num_arg_dyn(op);
 	}
