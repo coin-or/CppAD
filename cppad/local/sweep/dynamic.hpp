@@ -116,26 +116,139 @@ void dynamic(
 			par[1] = CPPAD_NULL;
 		}
 		switch(op)
-		{	case abs_dyn:
+		{
+			// ---------------------------------------------------------------
+			// standard_math_98
+			// acos
+			case acos_dyn:
 			CPPAD_ASSERT_UNKNOWN( n_arg == 1 );
-			all_par_vec[i_par] = fabs( *par[0] );
+			all_par_vec[i_par] = acos( *par[0] );
 			break;
 
-			case add_dyn:
-			CPPAD_ASSERT_UNKNOWN( n_arg == 2 );
-			all_par_vec[i_par] = *par[0] + *par[1];
+			// asin
+			case asin_dyn:
+			CPPAD_ASSERT_UNKNOWN( n_arg == 1 );
+			all_par_vec[i_par] = asin( *par[0] );
 			break;
 
+			// atan
+			case atan_dyn:
+			CPPAD_ASSERT_UNKNOWN( n_arg == 1 );
+			all_par_vec[i_par] = atan( *par[0] );
+			break;
+
+			// cos
+			case cos_dyn:
+			CPPAD_ASSERT_UNKNOWN( n_arg == 1 );
+			all_par_vec[i_par] = cos( *par[0] );
+			break;
+
+			// cosh
+			case cosh_dyn:
+			CPPAD_ASSERT_UNKNOWN( n_arg == 1 );
+			all_par_vec[i_par] = cosh( *par[0] );
+			break;
+
+			// exp
+			case exp_dyn:
+			CPPAD_ASSERT_UNKNOWN( n_arg == 1 );
+			all_par_vec[i_par] = exp( *par[0] );
+			break;
+
+			// fabs
 			case fabs_dyn:
 			CPPAD_ASSERT_UNKNOWN( n_arg == 1 );
 			all_par_vec[i_par] = fabs( *par[0] );
 			break;
 
+			// log
+			case log_dyn:
+			CPPAD_ASSERT_UNKNOWN( n_arg == 1 );
+			all_par_vec[i_par] = log( *par[0] );
+			break;
+
+			// sin
 			case sin_dyn:
 			CPPAD_ASSERT_UNKNOWN( n_arg == 1 );
 			all_par_vec[i_par] = sin( *par[0] );
 			break;
 
+			// sinh
+			case sinh_dyn:
+			CPPAD_ASSERT_UNKNOWN( n_arg == 1 );
+			all_par_vec[i_par] = sinh( *par[0] );
+			break;
+
+			// sqrt
+			case sqrt_dyn:
+			CPPAD_ASSERT_UNKNOWN( n_arg == 1 );
+			all_par_vec[i_par] = sqrt( *par[0] );
+			break;
+
+			// tan
+			case tan_dyn:
+			CPPAD_ASSERT_UNKNOWN( n_arg == 1 );
+			all_par_vec[i_par] = tan( *par[0] );
+			break;
+
+			// tanh
+			case tanh_dyn:
+			CPPAD_ASSERT_UNKNOWN( n_arg == 1 );
+			all_par_vec[i_par] = tanh( *par[0] );
+			break;
+
+# if CPPAD_USE_CPLUSPLUS_2011
+			// ---------------------------------------------------------------
+			// asinh
+			case asinh_dyn:
+			CPPAD_ASSERT_UNKNOWN( n_arg == 1 );
+			all_par_vec[i_par] = asinh( *par[0] );
+			break;
+
+			// acosh
+			case acosh_dyn:
+			CPPAD_ASSERT_UNKNOWN( n_arg == 1 );
+			all_par_vec[i_par] = acosh( *par[0] );
+			break;
+
+			// atanh
+			case atanh_dyn:
+			CPPAD_ASSERT_UNKNOWN( n_arg == 1 );
+			all_par_vec[i_par] = atanh( *par[0] );
+			break;
+
+			// expm1
+			case expm1_dyn:
+			CPPAD_ASSERT_UNKNOWN( n_arg == 1 );
+			all_par_vec[i_par] = expm1( *par[0] );
+			break;
+
+			// erf
+			case erf_dyn:
+			CPPAD_ASSERT_UNKNOWN( n_arg == 1 );
+			all_par_vec[i_par] = erf( *par[0] );
+			break;
+
+			// log1p
+			case log1p_dyn:
+			CPPAD_ASSERT_UNKNOWN( n_arg == 1 );
+			all_par_vec[i_par] = log1p( *par[0] );
+			break;
+# endif
+			// ---------------------------------------------------------------
+			// abs
+			case abs_dyn:
+			CPPAD_ASSERT_UNKNOWN( n_arg == 1 );
+			all_par_vec[i_par] = fabs( *par[0] );
+			break;
+
+			// add
+			case add_dyn:
+			CPPAD_ASSERT_UNKNOWN( n_arg == 2 );
+			all_par_vec[i_par] = *par[0] + *par[1];
+			break;
+
+			// ---------------------------------------------------------------
 			default:
 			CPPAD_ASSERT_UNKNOWN(false);
 			break;

@@ -12,7 +12,9 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # include <limits>
 # include <cppad/cppad.hpp>
 
-bool new_dynamic(void)
+namespace { // BEGIN_EMPTY_NAMESPACE
+
+bool operator_with_variable(void)
 {	bool ok = true;
 	using CppAD::AD;
 	using CppAD::NearEqual;
@@ -159,5 +161,180 @@ bool new_dynamic(void)
 	++k;
 	ok &= size_t(k) == n;
 	//
+	return ok;
+}
+bool operator_with_dynamic(void)
+{	bool ok = true;
+	using CppAD::AD;
+	using CppAD::NearEqual;
+	using CppAD::azmul;
+	double eps = 10. * std::numeric_limits<double>::epsilon();
+
+	// independent dynamic parameter vector
+	size_t nd  = 1;
+	CPPAD_TESTVECTOR(AD<double>) adynamic(nd);
+	adynamic[0] = 0.5;
+
+	// domain space vector
+	size_t nx = 1;
+	CPPAD_TESTVECTOR(AD<double>) ax(nx);
+	ax[0] = 0.25;
+
+	// declare independent variables, dynamic parammeters, starting recording
+	size_t abort_op_index = 0;
+	bool   record_compare = true;
+	CppAD::Independent(ax, abort_op_index, record_compare, adynamic);
+
+	// range space vector
+	size_t ny = 21;
+	CPPAD_TESTVECTOR(AD<double>) ay(ny);
+	int k = 0;
+	// ----------------------------------------------------------
+	// 98 standard math
+	ay[k] = acos(adynamic[0]);
+	++k;
+	ay[k] = asin(adynamic[0]);
+	++k;
+	ay[k] = atan(adynamic[0]);
+	++k;
+	ay[k] = cos(adynamic[0]);
+	++k;
+	ay[k] = cosh(adynamic[0]);
+	++k;
+	ay[k] = exp(adynamic[0]);
+	++k;
+	ay[k] = acos(adynamic[0]);
+	++k;
+	ay[k] = log(adynamic[0]);
+	++k;
+	ay[k] = sin(adynamic[0]);
+	++k;
+	ay[k] = sinh(adynamic[0]);
+	++k;
+	ay[k] = sqrt(adynamic[0]);
+	++k;
+	ay[k] = tan(adynamic[0]);
+	++k;
+	ay[k] = tanh(adynamic[0]);
+	++k;
+	// ----------------------------------------------------------
+	// 2011 standard math
+# if CPPAD_USE_CPLUSPLUS_2011
+	ay[k] = asinh(adynamic[0]);
+	++k;
+	ay[k] = acosh(adynamic[0] + 1.0);
+	++k;
+	ay[k] = atanh(adynamic[0]);
+	++k;
+	ay[k] = expm1(adynamic[0]);
+	++k;
+	ay[k] = erf(adynamic[0]);
+	++k;
+	ay[k] = log1p(adynamic[0]);
+	++k;
+# endif
+	// ----------------------------------------------------------
+	ay[k] = abs(adynamic[0]);
+	++k;
+	ay[k] = 2.0 + adynamic[0];
+	++k;
+	// ----------------------------------------------------------
+	ok &= size_t(k) == ny;
+
+	// create f: x -> y and stop tape recording
+	CppAD::ADFun<double> f(ax, ay);
+
+	// change the dynamic parameter values
+	CPPAD_TESTVECTOR(double) dynamic(nd);
+	dynamic[0] = 0.75;
+	f.new_dynamic(dynamic);
+	//
+	CPPAD_TESTVECTOR(double) x(nx), y(ny);
+	y = f.Forward(0, x);
+	k = 0;
+	// ----------------------------------------------------------
+	// 98 standard math
+	double check = acos(dynamic[0]);
+	ok   &= NearEqual(y[k], check, eps, eps);
+	++k;
+	check = asin(dynamic[0]);
+	ok   &= NearEqual(y[k], check, eps, eps);
+	++k;
+	check = atan(dynamic[0]);
+	ok   &= NearEqual(y[k], check, eps, eps);
+	++k;
+	check = cos(dynamic[0]);
+	ok   &= NearEqual(y[k], check, eps, eps);
+	++k;
+	check = cosh(dynamic[0]);
+	ok   &= NearEqual(y[k], check, eps, eps);
+	++k;
+	check = exp(dynamic[0]);
+	ok   &= NearEqual(y[k], check, eps, eps);
+	++k;
+	check = acos(dynamic[0]);
+	ok   &= NearEqual(y[k], check, eps, eps);
+	++k;
+	check = log(dynamic[0]);
+	ok   &= NearEqual(y[k], check, eps, eps);
+	++k;
+	check = sin(dynamic[0]);
+	ok   &= NearEqual(y[k], check, eps, eps);
+	++k;
+	check = sinh(dynamic[0]);
+	ok   &= NearEqual(y[k], check, eps, eps);
+	++k;
+	check = sqrt(dynamic[0]);
+	ok   &= NearEqual(y[k], check, eps, eps);
+	++k;
+	check = tan(dynamic[0]);
+	ok   &= NearEqual(y[k], check, eps, eps);
+	++k;
+	check = tanh(dynamic[0]);
+	ok   &= NearEqual(y[k], check, eps, eps);
+	++k;
+	// ----------------------------------------------------------
+	// 2011 standard math
+# if CPPAD_USE_CPLUSPLUS_2011
+	check = asinh(dynamic[0]);
+	ok   &= NearEqual(y[k], check, eps, eps);
+	++k;
+	check = acosh(dynamic[0] + 1.0);
+	ok   &= NearEqual(y[k], check, eps, eps);
+	++k;
+	check = atanh(dynamic[0]);
+	ok   &= NearEqual(y[k], check, eps, eps);
+	++k;
+	check = expm1(dynamic[0]);
+	ok   &= NearEqual(y[k], check, eps, eps);
+	++k;
+	check = erf(dynamic[0]);
+	ok   &= NearEqual(y[k], check, eps, eps);
+	++k;
+	check = log1p(dynamic[0]);
+	ok   &= NearEqual(y[k], check, eps, eps);
+	++k;
+# endif
+	// ----------------------------------------------------------
+	check = abs(dynamic[0]);
+	ok   &= NearEqual(y[k], check, eps, eps);
+	++k;
+	check = 2.0 + dynamic[0];
+	ok   &= NearEqual(y[k], check, eps, eps);
+	++k;
+	// ----------------------------------------------------------
+	ok &= size_t(k) == ny;
+	//
+	return ok;
+}
+
+} // END_EMPTY_NAMESPACE
+
+
+bool new_dynamic(void)
+{	bool ok = true;
+	ok     &= operator_with_variable();
+	ok     &= operator_with_dynamic();
+
 	return ok;
 }
