@@ -415,9 +415,11 @@ void forward2(
 			case EqppOp:
 			case EqpvOp:
 			case EqvvOp:
+			case LtppOp:
 			case LtpvOp:
 			case LtvpOp:
 			case LtvvOp:
+			case LeppOp:
 			case LepvOp:
 			case LevpOp:
 			case LevvOp:

@@ -368,41 +368,45 @@ bool dynamic_compare(void)
 	// independent dynamic parameter vector
 	size_t nd  = 1;
 	CPPAD_TESTVECTOR(AD<double>) adynamic(nd);
-	adynamic[0] = 0.5;
 
 	// domain space vector
 	size_t nx = 1;
 	CPPAD_TESTVECTOR(AD<double>) ax(nx);
-	ax[0] = 0.25;
-
-	// declare independent variables, dynamic parammeters, starting recording
-	size_t abort_op_index = 0;
-	bool   record_compare = true;
-	CppAD::Independent(ax, abort_op_index, record_compare, adynamic);
+	ax[0] = 0.0; // value does not matter for this example;
 
 	// range space vector
 	size_t ny = 2;
 	CPPAD_TESTVECTOR(AD<double>) ay(ny);
+
+	// not using abort_op_index, are recording compare operators
+	size_t abort_op_index = 0;
+	bool   record_compare = true;
+
+	// Function object
+	CppAD::ADFun<double> f;
+
+	// vectors used for new_dynamic and Forward.
+	CPPAD_TESTVECTOR(double) dynamic(nd), x(nx), y(ny);
+
 	// ----------------------------------------------------------
-	// EqppOp
+	// operators: ==, !=
+	adynamic[0] = 0.5;
+	CppAD::Independent(ax, abort_op_index, record_compare, adynamic);
+	//
+	// ==
 	if( adynamic[0] == 0.5 )
 		ay[0] = 1.0;
 	else
 		ay[0] = 0.0;
 	//
-	// NeppOp
+	// !=
 	if( adynamic[0] != 0.5 )
 		ay[1] = 1.0;
 	else
 		ay[1] = 0.0;
-	// ----------------------------------------------------------
 
 	// create f: x -> y and stop tape recording
-	CppAD::ADFun<double> f(ax, ay);
-
-	// change the dynamic parameter values
-	CPPAD_TESTVECTOR(double) dynamic(nd), x(nx), y(ny);
-	x[0] = 1.0;
+	f.Dependent(ax, ay);
 	//
 	dynamic[0] = Value( adynamic[0] );
 	f.new_dynamic(dynamic);
@@ -413,6 +417,36 @@ bool dynamic_compare(void)
 	f.new_dynamic(dynamic);
 	y  = f.Forward(0, x);
 	ok = f.compare_change_number() == 2;
+
+	// ----------------------------------------------------------
+	// operators: <, <=
+	adynamic[0] = 0.5;
+	CppAD::Independent(ax, abort_op_index, record_compare, adynamic);
+	//
+	// <
+	if( adynamic[0] < 0.5 )
+		ay[0] = 0.0;
+	else
+		ay[0] = 1.0;
+	//
+	// <=
+	if( adynamic[0] <= 0.5 )
+		ay[1] = 1.0;
+	else
+		ay[1] = 0.0;
+
+	// create f: x -> y and stop tape recording
+	f.Dependent(ax, ay);
+	//
+	dynamic[0] = Value( adynamic[0] );
+	f.new_dynamic(dynamic);
+	y  = f.Forward(0, x);
+	ok = f.compare_change_number() == 0;
+	//
+	dynamic[0] = 1.0;
+	f.new_dynamic(dynamic);
+	y  = f.Forward(0, x);
+	ok = f.compare_change_number() == 1;
 	//
 	return ok;
 }

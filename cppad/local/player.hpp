@@ -310,7 +310,9 @@ public:
 				case DivpvOp:
 				case EqpvOp:
 				case LdvOp:
+				case LeppOp:
 				case LepvOp:
+				case LtppOp:
 				case LtpvOp:
 				case MulpvOp:
 				case NepvOp:

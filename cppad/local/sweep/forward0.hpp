@@ -508,6 +508,17 @@ void forward0(
 			break;
 			// -------------------------------------------------
 
+			case LeppOp:
+			if( compare_change_count )
+			{	forward_lepp_op_0(
+					compare_change_number, arg, parameter
+				);
+				{	if( compare_change_count == compare_change_number )
+						compare_change_op_index = itr.op_index();
+				}
+			}
+			break;
+			// -------------------------------------------------
 			case LepvOp:
 			if( compare_change_count )
 			{	forward_lepv_op_0(
@@ -556,6 +567,17 @@ void forward0(
 # endif
 			// -------------------------------------------------
 
+			case LtppOp:
+			if( compare_change_count )
+			{	forward_ltpp_op_0(
+					compare_change_number, arg, parameter
+				);
+				{	if( compare_change_count == compare_change_number )
+						compare_change_op_index = itr.op_index();
+				}
+			}
+			break;
+			// -------------------------------------------------
 			case LtpvOp:
 			if( compare_change_count )
 			{	forward_ltpv_op_0(

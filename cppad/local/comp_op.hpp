@@ -28,6 +28,35 @@ It the condition is not true, ths counter is incremented by one.
 
 \param arg
 parameter[ arg[0] ] is the left operand and
+parameter[ arg[1] ] is the right operand.
+
+\param parameter
+vector of parameter values.
+*/
+template <class Base>
+inline void forward_lepp_op_0(
+	size_t&       count       ,
+	const addr_t* arg         ,
+	const Base*   parameter   )
+{
+	// check assumptions
+	CPPAD_ASSERT_UNKNOWN( NumArg(LeppOp) == 2 );
+	CPPAD_ASSERT_UNKNOWN( NumRes(LeppOp) == 0 );
+
+	// Taylor coefficients corresponding to arguments and result
+	Base x = parameter[ arg[0] ];
+	Base y = parameter[ arg[1] ];
+
+	count += GreaterThanZero(x - y);
+}
+/*!
+Zero order forward mode comparison check that left <= right
+
+\param count
+It the condition is not true, ths counter is incremented by one.
+
+\param arg
+parameter[ arg[0] ] is the left operand and
 taylor[ arg[1] * cap_order + 0 ] is the zero order Taylor coefficient
 for the right operand.
 
@@ -135,6 +164,35 @@ inline void forward_levv_op_0(
 	count += GreaterThanZero(x[0] - y[0]);
 }
 // ------------------------------- < -------------------------------------
+/*!
+Zero order forward mode comparison check that left < right
+
+\param count
+It the condition is not true, ths counter is incremented by one.
+
+\param arg
+parameter[ arg[0] ] is the left operand and
+parameter[ arg[1] ] is the right operand.
+
+\param parameter
+vector of parameter values.
+*/
+template <class Base>
+inline void forward_ltpp_op_0(
+	size_t&       count       ,
+	const addr_t* arg         ,
+	const Base*   parameter   )
+{
+	// check assumptions
+	CPPAD_ASSERT_UNKNOWN( NumArg(LtppOp) == 2 );
+	CPPAD_ASSERT_UNKNOWN( NumRes(LtppOp) == 0 );
+
+	// Taylor coefficients corresponding to arguments and result
+	Base x = parameter[ arg[0] ];
+	Base y = parameter[ arg[1] ];
+
+	count += GreaterThanOrZero(x - y);
+}
 /*!
 Zero order forward mode comparison check that left < right
 

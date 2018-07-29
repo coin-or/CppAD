@@ -19,6 +19,8 @@ Defines the op_code_dyn enum type
 */
 
 /// Parameter only op codes, at least one operand is a dynamic parameter.
+/// The following dynamic parameter operators as in the OpCode enum type:
+/// EqppOp, NeppOp, LtppOp, LeppOp
 enum op_code_dyn {
 	abs_dyn,    // abs(parameter)
 	fabs_dyn,   // fabs(parameter)
@@ -51,7 +53,7 @@ enum op_code_dyn {
 	number_dyn  // number of operator codes (not an operator)
 };
 // 2DO: Following operators in OpCode need to be extended to parameter only:
-// CExpOp, UserOp, EqppOp, LeppOp, NeppOp
+// CExpOp, UserOp
 
 
 /// number of arguments for each dynamic parameter operator

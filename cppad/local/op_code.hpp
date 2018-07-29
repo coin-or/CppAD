@@ -108,11 +108,13 @@ enum OpCode {
 	InvOp,    // independent variable
 	LdpOp,    // z[parameter] (parameter converted to index)
 	LdvOp,    // z[variable]
+	LeppOp,   // parameter <= parameter
 	LepvOp,   // parameter <= variable
 	LevpOp,   // variable  <= parameter
 	LevvOp,   // variable  <= variable
 	LogOp,    // log(variable)
 	Log1pOp,  // log1p(variable)
+	LtppOp,   // parameter < parameter
 	LtpvOp,   // parameter < variable
 	LtvpOp,   // variable  < parameter
 	LtvvOp,   // variable  < variable
@@ -212,11 +214,13 @@ inline size_t NumArg( OpCode op)
 		0, // InvOp
 		3, // LdpOp
 		3, // LdvOp
+		2, // LeppOp
 		2, // LepvOp
 		2, // LevpOp
 		2, // LevvOp
 		1, // LogOp
 		1, // Log1pOp
+		2, // LtppOp
 		2, // LtpvOp
 		2, // LtvpOp
 		2, // LtvvOp
@@ -326,11 +330,13 @@ inline size_t NumRes(OpCode op)
 		1, // InvOp
 		1, // LdpOp
 		1, // LdvOp
+		0, // LeppOp
 		0, // LepvOp
 		0, // LevpOp
 		0, // LevvOp
 		1, // LogOp
 		1, // Log1pOp
+		0, // LtppOp
 		0, // LtpvOp
 		0, // LtvpOp
 		0, // LtvvOp
@@ -419,11 +425,13 @@ inline const char* OpName(OpCode op)
 		"Inv"   ,
 		"Ldp"   ,
 		"Ldv"   ,
+		"Lepp"  ,
 		"Lepv"  ,
 		"Levp"  ,
 		"Levv"  ,
 		"Log"   ,
 		"Log1p" ,
+		"Ltpp"  ,
 		"Ltpv"  ,
 		"Ltvp"  ,
 		"Ltvv"  ,
@@ -838,6 +846,8 @@ void printOp(
 		break;
 
 		case EqppOp:
+		case LeppOp:
+		case LtppOp:
 		case NeppOp:
 		CPPAD_ASSERT_UNKNOWN( NumArg(op) == 2 );
 		printOpField(os, " pl=", play->GetPar(ind[0]), ncol);
@@ -1137,6 +1147,8 @@ inline void arg_is_variable(
 		break;
 
 		case EqppOp:
+		case LeppOp:
+		case LtppOp:
 		case NeppOp:
 		CPPAD_ASSERT_UNKNOWN( NumArg(op) == 2 );
 		is_variable[0] = false;
