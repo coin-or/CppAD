@@ -111,20 +111,28 @@ void dynamic(
 		par[0] = & all_par_vec[ dyn_par_arg[i_arg + 0] ];
 		if( 1 < n_arg )
 			par[1] = & all_par_vec[ dyn_par_arg[i_arg + 1] ];
+		else
+		{	// to avoid warning about may not be initialized
+			par[1] = CPPAD_NULL;
+		}
 		switch(op)
 		{	case abs_dyn:
+			CPPAD_ASSERT_UNKNOWN( n_arg == 1 );
 			all_par_vec[i_par] = fabs( *par[0] );
 			break;
 
 			case add_dyn:
+			CPPAD_ASSERT_UNKNOWN( n_arg == 2 );
 			all_par_vec[i_par] = *par[0] + *par[1];
 			break;
 
 			case fabs_dyn:
+			CPPAD_ASSERT_UNKNOWN( n_arg == 1 );
 			all_par_vec[i_par] = fabs( *par[0] );
 			break;
 
 			case sin_dyn:
+			CPPAD_ASSERT_UNKNOWN( n_arg == 1 );
 			all_par_vec[i_par] = sin( *par[0] );
 			break;
 
