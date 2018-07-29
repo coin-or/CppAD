@@ -106,10 +106,8 @@ void get_previous(
 		if( op_usage[i_op] == usage_t(yes_usage) )
 		switch( random_itr.get_op(i_op) )
 		{
-			case NumberOp:
-			CPPAD_ASSERT_UNKNOWN(false);
-			break;
-
+			// ----------------------------------------------------------------
+			// these operators never match pevious operators
 			case BeginOp:
 			case CExpOp:
 			case CSkipOp:
@@ -129,9 +127,10 @@ void get_previous(
 			case UsravOp:
 			case UsrrpOp:
 			case UsrrvOp:
-			// these operators never match pevious operators
 			break;
 
+			// ----------------------------------------------------------------
+			// check for a previous match
 			case AbsOp:
 			case AcosOp:
 			case AcoshOp:
@@ -179,7 +178,6 @@ void get_previous(
 			case ZmulpvOp:
 			case ZmulvpOp:
 			case ZmulvvOp:
-			// check for a previous match
 			match_op(
 				random_itr,
 				op_previous,
@@ -197,6 +195,11 @@ void get_previous(
 					play, sum_op, i_op, previous, op_usage, cexp_set
 				);
 			}
+			break;
+
+			// ----------------------------------------------------------------
+			default:
+			CPPAD_ASSERT_UNKNOWN(false);
 			break;
 		}
 	}
