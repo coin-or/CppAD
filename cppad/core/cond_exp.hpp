@@ -180,8 +180,8 @@ AD<Base> CondExpOp(
 	const AD<Base> &if_true   ,
 	const AD<Base> &if_false  )
 {
-	AD<Base> returnValue;
-	CPPAD_ASSERT_UNKNOWN( Parameter(returnValue) );
+	AD<Base> result;
+	CPPAD_ASSERT_UNKNOWN( Parameter(result) );
 
 	// check first case where do not need to tape
 	if( IdenticalPar(left) & IdenticalPar(right) )
@@ -189,43 +189,43 @@ AD<Base> CondExpOp(
 		{
 			case CompareLt:
 			if( left.value_ < right.value_ )
-				returnValue = if_true;
-			else	returnValue = if_false;
+				result = if_true;
+			else	result = if_false;
 			break;
 
 			case CompareLe:
 			if( left.value_ <= right.value_ )
-				returnValue = if_true;
-			else	returnValue = if_false;
+				result = if_true;
+			else	result = if_false;
 			break;
 
 			case CompareEq:
 			if( left.value_ == right.value_ )
-				returnValue = if_true;
-			else	returnValue = if_false;
+				result = if_true;
+			else	result = if_false;
 			break;
 
 			case CompareGe:
 			if( left.value_ >= right.value_ )
-				returnValue = if_true;
-			else	returnValue = if_false;
+				result = if_true;
+			else	result = if_false;
 			break;
 
 			case CompareGt:
 			if( left.value_ > right.value_ )
-				returnValue = if_true;
-			else	returnValue = if_false;
+				result = if_true;
+			else	result = if_false;
 			break;
 
 			default:
 			CPPAD_ASSERT_UNKNOWN(0);
-			returnValue = if_true;
+			result = if_true;
 		}
-		return returnValue;
+		return result;
 	}
 
 	// must use CondExp incase Base is an AD type and recording
-	returnValue.value_ = CondExpOp(cop,
+	result.value_ = CondExpOp(cop,
 		left.value_, right.value_, if_true.value_, if_false.value_);
 
 	local::ADTape<Base> *tape = CPPAD_NULL;
@@ -252,29 +252,29 @@ AD<Base> CondExpOp(
 	// add this operation to the tape
 	if( tape != CPPAD_NULL )
 		tape->RecordCondExp(cop,
-			returnValue, left, right, if_true, if_false);
+			result, left, right, if_true, if_false);
 
-	return returnValue;
+	return result;
 }
 
-// --- RecordCondExp(cop, returnValue, left, right, if_true, if_false) -----
+// --- RecordCondExp(cop, result, left, right, if_true, if_false) -----
 
 /// All these operations are done in \c Rec_, so we should move this
 /// routine to <tt>recorder<Base></tt>.
 template <class Base>
 void local::ADTape<Base>::RecordCondExp(
 	enum CompareOp  cop         ,
-	AD<Base>       &returnValue ,
+	AD<Base>       &result ,
 	const AD<Base> &left        ,
 	const AD<Base> &right       ,
 	const AD<Base> &if_true     ,
 	const AD<Base> &if_false    )
 {	addr_t   ind0, ind1, ind2, ind3, ind4, ind5;
-	addr_t   returnValue_taddr;
+	addr_t   result_taddr;
 
 	// taddr_ of this variable
 	CPPAD_ASSERT_UNKNOWN( NumRes(CExpOp) == 1 );
-	returnValue_taddr = Rec_.PutOp(CExpOp);
+	result_taddr = Rec_.PutOp(CExpOp);
 
 	// ind[0] = cop
 	ind0 = addr_t( cop );
@@ -283,10 +283,10 @@ void local::ADTape<Base>::RecordCondExp(
 	// [Var(left), Var(right), Var(if_true), Var(if_false)]
 	ind1 = 0;
 
-	// Make sure returnValue is in the list of variables and set its taddr
-	if( Parameter(returnValue) )
-		returnValue.make_variable(id_, returnValue_taddr );
-	else	returnValue.taddr_ = returnValue_taddr;
+	// Make sure result is in the list of variables and set its taddr
+	if( Parameter(result) )
+		result.make_variable(id_, result_taddr );
+	else	result.taddr_ = result_taddr;
 
 	// ind[2] = left address
 	if( Parameter(left) )
@@ -340,8 +340,8 @@ void local::ADTape<Base>::RecordCondExp(
 	CPPAD_ASSERT_UNKNOWN( ind1 > 0 );
 	Rec_.PutArg(ind0, ind1, ind2, ind3, ind4, ind5);
 
-	// check that returnValue is a dependent variable
-	CPPAD_ASSERT_UNKNOWN( Variable(returnValue) );
+	// check that result is a dependent variable
+	CPPAD_ASSERT_UNKNOWN( Variable(result) );
 }
 
 // ------------ CondExpOp(left, right, if_true, if_false) ----------------
