@@ -71,7 +71,7 @@ namespace CppAD {
 	template <class Base> int  Integer           (const AD<Base> &u);
 	template <class Base> bool IdenticalZero     (const AD<Base> &u);
 	template <class Base> bool IdenticalOne      (const AD<Base> &u);
-	template <class Base> bool IdenticalPar      (const AD<Base> &u);
+	template <class Base> bool IdenticalCon      (const AD<Base> &u);
 	template <class Base> bool LessThanZero      (const AD<Base> &u);
 	template <class Base> bool LessThanOrZero    (const AD<Base> &u);
 	template <class Base> bool GreaterThanZero   (const AD<Base> &u);
@@ -142,9 +142,9 @@ namespace CppAD {
 		const AD<Base>  &falseCase
 	);
 
-	// IdenticalEqualPar
+	// IdenticalEqualCon
 	template <class Base>
-	bool IdenticalEqualPar (const AD<Base> &u, const AD<Base> &v);
+	bool IdenticalEqualCon (const AD<Base> &u, const AD<Base> &v);
 
 	// EqualOpSeq
 	template <class Base>

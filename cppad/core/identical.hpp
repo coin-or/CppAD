@@ -40,9 +40,8 @@ values that we are checking for identically a pamameter.
 returns true iff \c x is identically a parameter.
 */
 template <class Base>
-CPPAD_INLINE_FRIEND_TEMPLATE_FUNCTION
-bool IdenticalPar(const AD<Base> &x)
-{	return Parameter(x) & (! Dynamic(x)) & IdenticalPar(x.value_); }
+bool IdenticalCon(const AD<Base> &x)
+{	return Constant(x) & IdenticalCon(x.value_); }
 // Zero ==============================================================
 /*!
 Determine if an AD<Base> is equal to zero,
@@ -53,12 +52,11 @@ object that we are checking.
 
 \return
 returns true if and only if
-\c x is equals zero and is identically a parameter \ref CppAD::IdenticalPar.
+\c x is equals zero and is identically a parameter \ref CppAD::IdenticalCon.
 */
 template <class Base>
-CPPAD_INLINE_FRIEND_TEMPLATE_FUNCTION
 bool IdenticalZero(const AD<Base> &x)
-{	return Parameter(x) & (! Dynamic(x)) & IdenticalZero(x.value_); }
+{	return Constant(x) & IdenticalZero(x.value_); }
 // One ==============================================================
 /*!
 Determine if an AD<Base> is equal to one,
@@ -69,12 +67,11 @@ object that we are checking.
 
 \return
 returns true if and only if
-\c x is equals one and is identically a parameter \ref CppAD::IdenticalPar.
+\c x is equals one and is identically a parameter \ref CppAD::IdenticalCon.
 */
 template <class Base>
-CPPAD_INLINE_FRIEND_TEMPLATE_FUNCTION
 bool IdenticalOne(const AD<Base> &x)
-{	return Parameter(x) & (! Dynamic(x)) & IdenticalOne(x.value_); }
+{	return Constant(x) & IdenticalOne(x.value_); }
 // Equal ===================================================================
 /*!
 Determine if two AD<Base> objects are equal,
@@ -88,16 +85,14 @@ second of two objects we are checking for equal.
 
 \return
 returns true if and only if
-the arguments are equal and both identically parameters \ref CppAD::IdenticalPar.
+the arguments are equal and both identically parameters \ref CppAD::IdenticalCon.
 */
 template <class Base>
-CPPAD_INLINE_FRIEND_TEMPLATE_FUNCTION
-bool IdenticalEqualPar
+bool IdenticalEqualCon
 (const AD<Base> &x, const AD<Base> &y)
 {	bool constant;
-	constant  = ( Parameter(x) & Parameter(y) );
-	constant &= ! ( Dynamic(x) | Dynamic(y) );
-	return constant  & IdenticalEqualPar(x.value_, y.value_);
+	constant  = Constant(x) & Constant(y);
+	return constant  & IdenticalEqualCon(x.value_, y.value_);
 }
 // ==========================================================================
 

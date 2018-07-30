@@ -1,7 +1,7 @@
 # ifndef CPPAD_CORE_BASE_COMPLEX_HPP
 # define CPPAD_CORE_BASE_COMPLEX_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -129,13 +129,13 @@ Complex numbers do not carry operation sequence information.
 Thus they are all parameters so the identical functions just check values.
 $srccode%cpp% */
 namespace CppAD {
-	inline bool IdenticalPar(const std::complex<double> &x)
+	inline bool IdenticalCon(const std::complex<double> &x)
 	{	return true; }
 	inline bool IdenticalZero(const std::complex<double> &x)
 	{	return (x == std::complex<double>(0., 0.) ); }
 	inline bool IdenticalOne(const std::complex<double> &x)
 	{	return (x == std::complex<double>(1., 0.) ); }
-	inline bool IdenticalEqualPar(
+	inline bool IdenticalEqualCon(
 		const std::complex<double> &x, const std::complex<double> &y)
 	{	return (x == y); }
 }
@@ -326,13 +326,13 @@ namespace CppAD {
 	{	return x == y;
 	}
 	// Identical ------------------------------------------------------
-	inline bool IdenticalPar(const std::complex<float> &x)
+	inline bool IdenticalCon(const std::complex<float> &x)
 	{	return true; }
 	inline bool IdenticalZero(const std::complex<float> &x)
 	{	return (x == std::complex<float>(0., 0.) ); }
 	inline bool IdenticalOne(const std::complex<float> &x)
 	{	return (x == std::complex<float>(1., 0.) ); }
-	inline bool IdenticalEqualPar(
+	inline bool IdenticalEqualCon(
 		const std::complex<float> &x, const std::complex<float> &y)
 	{	return (x == y); }
 	// Ordered --------------------------------------------------------

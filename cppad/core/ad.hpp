@@ -94,10 +94,10 @@ private :
 		(const AD<Base>& x, const AD<Base>& y);
 
 	// The identical property functions, see identical.hpp
-	friend bool IdenticalPar      <Base> (const AD<Base> &x);
+	friend bool IdenticalCon      <Base> (const AD<Base> &x);
 	friend bool IdenticalZero     <Base> (const AD<Base> &x);
 	friend bool IdenticalOne      <Base> (const AD<Base> &x);
-	friend bool IdenticalEqualPar <Base>
+	friend bool IdenticalEqualCon <Base>
 		(const AD<Base> &x, const AD<Base> &y);
 
 	// EqualOpSeq function

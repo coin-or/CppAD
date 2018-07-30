@@ -489,7 +489,7 @@ $lnext
 $cref base_require$$:
 The $code IdenticalEqual$$ function,
 in the $cref base_require$$ specification,
-was changed to $code IdenticalEqualPar$$
+was changed to $code IdenticalEqualCon$$
 (note the $cref/API warning/base_require/API Warning/$$ in the
 $icode Base$$ requirement specifications).
 $lnext

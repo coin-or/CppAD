@@ -413,7 +413,7 @@ public:
 			CPPAD_ASSERT_UNKNOWN( vec_->offset_ > 0  );
 
 			size_t load_op_index = tape->Rec_.num_load_op_rec();
-			if( IdenticalPar(ind_) )
+			if( IdenticalCon(ind_) )
 			{	CPPAD_ASSERT_UNKNOWN( local::NumRes(local::LdpOp) == 1 );
 				CPPAD_ASSERT_UNKNOWN( local::NumArg(local::LdpOp) == 3 );
 

@@ -1,7 +1,7 @@
 # ifndef CPPAD_EXAMPLE_BASE_ADOLC_HPP
 # define CPPAD_EXAMPLE_BASE_ADOLC_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -179,13 +179,13 @@ $code adouble$$ depends on the independent variables.
 To be safe (but slow) return $code false$$ in all the cases below.
 $srccode%cpp% */
 namespace CppAD {
-	inline bool IdenticalPar(const adouble &x)
+	inline bool IdenticalCon(const adouble &x)
 	{	return false; }
 	inline bool IdenticalZero(const adouble &x)
 	{	return false; }
 	inline bool IdenticalOne(const adouble &x)
 	{	return false; }
-	inline bool IdenticalEqualPar(const adouble &x, const adouble &y)
+	inline bool IdenticalEqualCon(const adouble &x, const adouble &y)
 	{	return false; }
 }
 /* %$$
@@ -361,4 +361,3 @@ $code adouble$$ independent variables (and hence can change).
 $end
 */
 # endif
-

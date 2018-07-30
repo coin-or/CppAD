@@ -1,7 +1,7 @@
 # ifndef CPPAD_CORE_ZDOUBLE_HPP
 # define CPPAD_CORE_ZDOUBLE_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -422,13 +422,13 @@ inline bool EqualOpSeq(const zdouble& x, const zdouble& y)
 {	return x == y; }
 
 /// Base type requirement: Identical
-inline bool IdenticalPar(const zdouble& x)
+inline bool IdenticalCon(const zdouble& x)
 {	return true; }
 inline bool IdenticalZero(const zdouble& x)
 {	return (x == 0.0); }
 inline bool IdenticalOne(const zdouble& x)
 {	return (x == 1.); }
-inline bool IdenticalEqualPar(const zdouble& x, const zdouble& y)
+inline bool IdenticalEqualCon(const zdouble& x, const zdouble& y)
 {	return (x == y); }
 
 /// Base type requirement: output operator

@@ -1,8 +1,7 @@
-// $Id$
 # ifndef CPPAD_CORE_BASE_FLOAT_HPP
 # define CPPAD_CORE_BASE_FLOAT_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -95,13 +94,13 @@ $head Identical$$
 The type $code float$$ is simple (in this respect) and so we define
 $srccode%cpp% */
 namespace CppAD {
-	inline bool IdenticalPar(const float& x)
+	inline bool IdenticalCon(const float& x)
 	{	return true; }
 	inline bool IdenticalZero(const float& x)
 	{	return (x == 0.f); }
 	inline bool IdenticalOne(const float& x)
 	{	return (x == 1.f); }
-	inline bool IdenticalEqualPar(const float& x, const float& y)
+	inline bool IdenticalEqualCon(const float& x, const float& y)
 	{	return (x == y); }
 }
 /* %$$

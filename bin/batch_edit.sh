@@ -30,19 +30,12 @@ spell_list='
 revert_list='
 '
 move_list='
-	cppad/core/par_var_dyn.hpp
-	example/general/par_var_dyn.cpp
 '
 move_sed='s|par_var_dyn|con_dyn_var|'
 #
 cat << EOF > junk.sed
-s|par_var_dyn|con_dyn_var|g
-s|PAR_VAR_DYN|CON_DYN_VAR|g
-s|\$cref/parameter/con_dyn_var/|\$cref/parameter/con_dyn_var/Parameter/|g
-s|\$cref/Parameter/con_dyn_var/|\$cref/Parameter/con_dyn_var/Parameter/|g
-s|\$cref/variable/con_dyn_var/|\$cref/variable/con_dyn_var/Variable/|g
-s|\$cref/Variable/con_dyn_var/|\$cref/Variable/con_dyn_var/Variable/|g
-s|\$cref/Parameter and Variable/con_dyn_var/\$\\\$|\$cref/Parameter/con_dyn_var/Parameter/\$\$\\nand \$cref/Variable/con_dyn_var/Variable/\$\$|g
+s|IdenticalPar|IdenticalCon|g
+s|IdenticalEqualPar|IdenticalEqualCon|g
 EOF
 # -----------------------------------------------------------------------------
 if [ $0 != "bin/batch_edit.sh" ]

@@ -1,7 +1,7 @@
 # ifndef CPPAD_EXAMPLE_GENERAL_BASE_ALLOC_HPP
 # define CPPAD_EXAMPLE_GENERAL_BASE_ALLOC_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -219,13 +219,13 @@ $head Identical$$
 The type $code base_alloc$$ is simple (in this respect) and so we define
 $srccode%cpp% */
 namespace CppAD {
-	inline bool IdenticalPar(const base_alloc& x)
+	inline bool IdenticalCon(const base_alloc& x)
 	{	return true; }
 	inline bool IdenticalZero(const base_alloc& x)
 	{	return (*x.ptrdbl_ == 0.0); }
 	inline bool IdenticalOne(const base_alloc& x)
 	{	return (*x.ptrdbl_ == 1.0); }
-	inline bool IdenticalEqualPar(const base_alloc& x, const base_alloc& y)
+	inline bool IdenticalEqualCon(const base_alloc& x, const base_alloc& y)
 	{	return (*x.ptrdbl_ == *y.ptrdbl_); }
 }
 /* %$$

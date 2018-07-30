@@ -2,7 +2,7 @@
 # define CPPAD_LOCAL_CSKIP_OP_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -149,7 +149,7 @@ inline void forward_cskip_op_0(
 	{	CPPAD_ASSERT_UNKNOWN( size_t(arg[3]) < num_par );
 		right = parameter[ arg[3] ];
 	}
-	bool ok_to_skip = IdenticalPar(left) & IdenticalPar(right);
+	bool ok_to_skip = IdenticalCon(left) & IdenticalCon(right);
 	if( ! ok_to_skip )
 		return;
 
@@ -197,4 +197,3 @@ inline void forward_cskip_op_0(
 }
 } } // END_CPPAD_LOCAL_NAMESPACE
 # endif
-

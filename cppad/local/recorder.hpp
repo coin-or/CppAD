@@ -443,7 +443,7 @@ addr_t recorder<Base>::put_con_par(const Base &par)
 
 	// check if the old parameter matches the new one
 	if( (num_dynamic_ind_ <= index) & ( index < all_par_vec_.size() ) )
-	{	if( IdenticalEqualPar(all_par_vec_[index], par) )
+	{	if( IdenticalEqualCon(all_par_vec_[index], par) )
 		return static_cast<addr_t>( index );
 	}
 	// ---------------------------------------------------------------------
