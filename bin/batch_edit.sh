@@ -21,9 +21,10 @@
 # 9. Change Vector<T> -> <T>Vector for T = Base, Size, Bool (T != Set)
 # 10. Change http://www.coin-or.org/CppAD to new download server and figure
 #     a way to distribute gpl version of repository.
-# 11. Change UserOp -> AfunOpm Usr[ar][vp]Op -> Afun[ar][vp]Op
+# 11. Change UserOp -> AfunOp, Usr[ar][vp]Op -> Afun[ar][vp]Op
 # 12. Remove all doxygen \a commands (not used consistently)
 # 13. Remove CPPAD_INLINE_FRIEND_TEMPLATE_FUNCTION
+# 14. Remove all inlines for functions that depend on template parameters.
 # -----------------------------------------------------------------------------
 spell_list='
 '
