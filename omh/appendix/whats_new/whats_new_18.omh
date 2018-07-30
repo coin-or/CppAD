@@ -23,9 +23,15 @@ $spell
 	addr
 	cppad
 	enums
+	uninstalled
 $$
 
 $section Changes and Additions to CppAD During 2018$$
+
+$head 07-30$$
+The some errors in the
+$code cppad.pc$$ and $code cppad-uninstalled.pc$$ files were
+corrected.
 
 $head 07-23$$
 Change the required version of $cref cmake$$ from greater than

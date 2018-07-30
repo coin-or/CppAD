@@ -1,6 +1,5 @@
-// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -23,6 +22,7 @@ $spell
 	cppad
 	pkgconfig
 	uninstalled
+	colpack
 $$
 
 $section CppAD pkg-config Files$$
@@ -69,14 +69,14 @@ $icode Cflags$$ $cnext
 	The necessary flags for using any of the CppAD include files.
 $rnext
 $icode Libs$$ $cnext
-	If $cref ipopt_prefix$$ is specified,
+	If $cref ipopt_prefix$$ ( $cref colpack_prefix$$ ) is specified,
 	the necessary flags for using the $cref/cppad_ipopt/cppad_ipopt_nlp/$$
-	library
+	library (colpack library) are included.
 $rnext
 $icode Requires$$ $cnext
 	If $cref ipopt_prefix$$ is specified,
 	the packages required to use the $cref/cppad_ipopt/cppad_ipopt_nlp/$$
-	library
+	library.
 $tend
 
 $head CppAD Configuration Files$$
