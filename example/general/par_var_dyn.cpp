@@ -41,55 +41,65 @@ bool par_var_dyn(void)
 	y[0]        = 1.0;
 	dynamic[0]  = 2.0;
 	//
+	ok &= Constant(x[0]);
 	ok &= Parameter(x[0]);
-	ok &= ! Variable(x[0]);
 	ok &= ! Dynamic(x[0]);
+	ok &= ! Variable(x[0]);
 	//
+	ok &= Constant(y[0]);
 	ok &= Parameter(y[0]);
-	ok &= ! Variable(y[0]);
 	ok &= ! Dynamic(y[0]);
+	ok &= ! Variable(y[0]);
 	//
+	ok &= Constant(dynamic[0]);
 	ok &= Parameter(dynamic[0]);
-	ok &= ! Variable(dynamic[0]);
 	ok &= ! Dynamic(dynamic[0]);
+	ok &= ! Variable(dynamic[0]);
 
 	// declare independent variables and start recording
 	size_t abort_op_index = 0;
 	bool   record_compare = true;
 	CppAD::Independent(x, abort_op_index, record_compare, dynamic);
 	//
-	ok &= ! Parameter(x[0]);
 	ok &= Variable(x[0]);
+	ok &= ! Constant(x[0]);
 	ok &= ! Dynamic(x[0]);
+	ok &= ! Parameter(x[0]);
 	//
+	ok &= Constant(y[0]);
 	ok &= Parameter(y[0]);
-	ok &= ! Variable(y[0]);
 	ok &= ! Dynamic(y[0]);
+	ok &= ! Variable(y[0]);
 	//
-	ok &= Parameter(dynamic[0]);
-	ok &= ! Variable(dynamic[0]);
 	ok &= Dynamic(dynamic[0]);
+	ok &= Parameter(dynamic[0]);
+	ok &= ! Constant(dynamic[0]);
+	ok &= ! Variable(dynamic[0]);
 
 	// a dependent variable
 	y[0] = fabs(x[0]) * dynamic[0];
-	ok  &= ! Parameter(y[0]);
 	ok  &= Variable(y[0]);
+	ok  &= ! Constant(y[0]);
 	ok  &= ! Dynamic(y[0]);
+	ok  &= ! Parameter(y[0]);
 
 	// create f: x -> y and stop tape recording
 	CppAD::ADFun<double> f(x, y);
 	//
+	ok &= Constant(x[0]);
 	ok &= Parameter(x[0]);
-	ok &= ! Variable(x[0]);
 	ok &= ! Dynamic(x[0]);
+	ok &= ! Variable(x[0]);
 	//
+	ok &= Constant(y[0]);
 	ok &= Parameter(y[0]);
-	ok &= ! Variable(y[0]);
 	ok &= ! Dynamic(y[0]);
+	ok &= ! Variable(y[0]);
 	//
+	ok &= Constant(dynamic[0]);
 	ok &= Parameter(dynamic[0]);
-	ok &= ! Variable(dynamic[0]);
 	ok &= ! Dynamic(dynamic[0]);
+	ok &= ! Variable(dynamic[0]);
 
 	return ok;
 }

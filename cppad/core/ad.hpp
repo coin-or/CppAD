@@ -62,26 +62,21 @@ private :
 	);
 
 	// one argument functions
-	friend bool Parameter          <Base>
-		(const AD<Base>    &u);
-	friend bool Parameter          <Base>
-		(const VecAD<Base> &u);
+	friend bool Constant  <Base> (const AD<Base>    &u);
+	friend bool Constant  <Base> (const VecAD<Base> &u);
 	//
-	friend bool Variable           <Base>
-		(const AD<Base>    &u);
-	friend bool Variable           <Base>
-		(const VecAD<Base> &u);
+	friend bool Dynamic   <Base> (const AD<Base>    &u);
+	friend bool Dynamic   <Base> (const VecAD<Base> &u);
 	//
-	friend bool Dynamic            <Base>
-		(const AD<Base>    &u);
-	friend bool Dynamic            <Base>
-		(const VecAD<Base> &u);
+	friend bool Parameter <Base> (const AD<Base>    &u);
+	friend bool Parameter <Base> (const VecAD<Base> &u);
 	//
-	friend int  Integer            <Base>
-		(const AD<Base>    &u);
-	friend AD   Var2Par            <Base>
-		(const AD<Base>    &u);
-
+	friend bool Variable  <Base> (const AD<Base>    &u);
+	friend bool Variable  <Base> (const VecAD<Base> &u);
+	//
+	friend int  Integer   <Base> (const AD<Base>    &u);
+	friend AD   Var2Par   <Base> (const AD<Base>    &u);
+	//
 	// power function
 	friend AD pow <Base>
 		(const AD<Base> &x, const AD<Base> &y);

@@ -57,15 +57,18 @@ namespace CppAD {
 	template <class Base> class VecAD_reference;
 
 	// functions with one VecAD<Base> argument
+	template <class Base> bool Constant          (const VecAD<Base> &u);
+	template <class Base> bool Dynamic           (const VecAD<Base> &u);
 	template <class Base> bool Parameter         (const VecAD<Base> &u);
 	template <class Base> bool Variable          (const VecAD<Base> &u);
-	template <class Base> bool Dynamic           (const VecAD<Base> &u);
 
 	// functions with one AD<Base> argument
-	template <class Base> int  Integer           (const AD<Base> &u);
+	template <class Base> bool Constant          (const AD<Base> &u);
+	template <class Base> bool Dynamic           (const AD<Base> &u);
 	template <class Base> bool Parameter         (const AD<Base> &u);
 	template <class Base> bool Variable          (const AD<Base> &u);
-	template <class Base> bool Dynamic           (const AD<Base> &u);
+	//
+	template <class Base> int  Integer           (const AD<Base> &u);
 	template <class Base> bool IdenticalZero     (const AD<Base> &u);
 	template <class Base> bool IdenticalOne      (const AD<Base> &u);
 	template <class Base> bool IdenticalPar      (const AD<Base> &u);
