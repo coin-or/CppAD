@@ -30,7 +30,7 @@ $$
 $section Changes and Additions to CppAD During 2018$$
 
 $head 07-30$$
-The $cref/Constant/par_var_dyn/Constant/$$ function was added.
+The $cref/Constant/con_dyn_var/Constant/$$ function was added.
 
 $head 07-27$$
 We are adding the dependent dynamic parameters; i.e.,

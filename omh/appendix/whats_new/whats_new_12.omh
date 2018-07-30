@@ -512,7 +512,7 @@ $href%
 %$$
 $lnext
 Fix bug whereby a newly constructed $cref VecAD$$ object was a
-$cref/variable/par_var_dyn/$$ (instead of a parameter) directly after construction
+$cref/variable/con_dyn_var/Variable/$$ (instead of a parameter) directly after construction
 (when no previous $cref/ADFun/FunConstruct/$$ object had been created).
 $lnext
 Change a $code ok != a == 0.$$ to $code ok &= a == 0.$$ in

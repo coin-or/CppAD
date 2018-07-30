@@ -794,7 +794,8 @@ and improve its documentation.
 $pre
 
 $$
-Correct the syntax for the $cref/Parameter and Variable/par_var_dyn/$$
+Correct the syntax for the $cref/Parameter/con_dyn_var/Parameter/$$
+and $cref/Variable/con_dyn_var/Variable/$$
 functions.
 
 
@@ -856,7 +857,7 @@ this list is no longer necessary (a tape id number is used in its place)
 $pre
 
 $$
-During the process above, the function $cref/Variable/par_var_dyn/$$ was added.
+During the process above, the function $cref/Variable/con_dyn_var/Variable/$$ was added.
 
 
 $head 04-20$$

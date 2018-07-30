@@ -132,10 +132,11 @@ its value does not depend on the value of
 the $cref Independent$$ variable vector
 or the $cref/dynamic/Independent/dynamic/$$ parameter vector
 for an $cref/active tape/glossary/Tape/Active/$$.
-If $icode u$$ is a constant parameter, the function
-$cref/Parameter(u)/par_var_dyn/$$ returns true,
-$cref/Dynamic(u)/par_var_dyn/$$ returns false,
-$cref/Variable(u)/par_var_dyn/$$ returns false.
+If $icode u$$ is a constant parameter,
+$cref/Constant(u)/con_dyn_var/Constant/$$ returns true,
+$cref/Parameter(u)/con_dyn_var/Parameter/$$ returns true,
+$cref/Dynamic(u)/con_dyn_var/Dynamic/$$ returns false, and
+$cref/Variable(u)/con_dyn_var/Variable/$$ returns false.
 
 $subhead Dynamic$$
 An $codei%AD<%Base%>%$$ object $icode u$$ is a dynamic parameter if
@@ -144,9 +145,10 @@ the $cref Independent$$ variable vector, but its value does depend
 on the $cref/dynamic/Independent/dynamic/$$ parameter vector,
 for an $cref/active tape/glossary/Tape/Active/$$.
 If $icode u$$ is a dynamic parameter, the function
-$cref/Parameter(u)/par_var_dyn/$$ returns true,
-$cref/Dynamic(u)/par_var_dyn/$$ returns true,
-$cref/Variable(u)/par_var_dyn/$$ returns false.
+$cref/Dynamic(u)/con_dyn_var/Dynamic/$$ returns true
+$cref/Parameter(u)/con_dyn_var/Parameter/$$ returns true,
+$cref/Constant(u)/con_dyn_var/Constant/$$ returns false, and
+$cref/Variable(u)/con_dyn_var/Variable/$$ returns false.
 
 $head Row-major Representation$$
 A $cref SimpleVector$$ $icode v$$ is a row-major representation of a matrix
@@ -243,9 +245,10 @@ An $codei%AD<%Base%>%$$ object $icode u$$ is a variable if
 its value depends on an independent variable vector for
 a currently $cref/active tape/glossary/Tape/Active/$$.
 If $icode u$$ is a variable,
-$cref/Variable(u)/par_var_dyn/$$ returns true,
-$cref/Parameter(u)/par_var_dyn/$$ returns false, and
-$cref/Dynamic(u)/par_var_dyn/$$ returns false.
+$cref/Variable(u)/con_dyn_var/Variable/$$ returns true,
+$cref/Constant(u)/con_dyn_var/Constant/$$ returns false,
+$cref/Dynamic(u)/con_dyn_var/Dynamic/$$ returns false, and
+$cref/Parameter(u)/con_dyn_var/Parameter/$$ returns false.
 For example,
 directly after the code sequence
 $codei%
@@ -259,8 +262,9 @@ $codei%
 	AD<double> %u% = %x%[0];
 	%u% = 5;
 %$$
-$icode u$$  is currently a $cref/parameter/glossary/Parameter/$$
-and not a dynamic parameter or a variable.
+$icode u$$  is currently a
+$cref/constant/glossary/Parameter/Constant/$$ parameter,
+not a dynamic parameter or a variable.
 $pre
 
 $$

@@ -883,7 +883,7 @@ $lnext
 There was a bug in the
 $cref/multiple direction forward/forward_dir/$$ routine.
 Results for function values that are
-$cref/parameter/par_var_dyn/$$ were not being computed properly
+$cref/parameter/con_dyn_var/Parameter/$$ were not being computed properly
 (all the derivatives are zero in this case).
 This has been fixed.
 $lend

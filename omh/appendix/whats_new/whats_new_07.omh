@@ -910,7 +910,8 @@ $cref/old Dependent syntax/FunDeprecated/Dependent/$$.
 
 $subhead 02-16$$
 Added $codei%VecAD<%Base%>%$$ as a valid argument type for the
-$cref/Parameter and Variable/par_var_dyn/$$ functions.
+$cref/Parameter/con_dyn_var/Parameter/$$
+and $cref/Variable/con_dyn_var/Variable/$$ functions.
 In addition, $cref/size_t indexing/VecAD/size_t Indexing/$$
 is was extended to be allowed during taping so long as the
 VecAD object is a parameter.

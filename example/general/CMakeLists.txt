@@ -106,7 +106,7 @@ SET(source_list
 	ode_stiff.cpp
 	ode_taylor.cpp
 	opt_val_hes.cpp
-	par_var_dyn.cpp
+	con_dyn_var.cpp
 	poly.cpp
 	pow.cpp
 	pow_int.cpp

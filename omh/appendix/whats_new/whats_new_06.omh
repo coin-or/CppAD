@@ -878,12 +878,13 @@ The request was implemented on $cref/06-19/whats_new_06/06-19/$$
 and the entry was removed from the wish list.
 
 $head 03-31$$
-Add examples for the $cref/Parameter, Variable/par_var_dyn/$$ and
+Add examples for the $cref/Parameter, Variable/con_dyn_var/$$ and
 $cref Independent$$ functions.
 $pre
 
 $$
-Move the $cref/Parameter and Variable/par_var_dyn/$$ functions from
+Move the $cref/Parameter/con_dyn_var/Parameter/$$
+and $cref/Variable/con_dyn_var/Variable/$$ functions from
 the $cref ADFun$$ section to the $cref AD$$ section.
 $pre
 

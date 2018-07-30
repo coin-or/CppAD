@@ -25,14 +25,14 @@ $children%
 	cppad/core/compare.hpp%
 	cppad/core/near_equal_ext.hpp%
 	cppad/core/bool_fun.hpp%
-	cppad/core/par_var_dyn.hpp%
+	cppad/core/con_dyn_var.hpp%
 	cppad/core/equal_op_seq.hpp
 %$$
 $table
 $rref Compare$$
 $rref NearEqualExt$$
 $rref BoolFun$$
-$rref par_var_dyn$$
+$rref con_dyn_var$$
 $rref EqualOpSeq$$
 $tend
 
@@ -43,7 +43,7 @@ $end
 # include <cppad/core/compare.hpp>
 # include <cppad/core/near_equal_ext.hpp>
 # include <cppad/core/bool_fun.hpp>
-# include <cppad/core/par_var_dyn.hpp>
+# include <cppad/core/con_dyn_var.hpp>
 # include <cppad/core/equal_op_seq.hpp>
 
 # endif

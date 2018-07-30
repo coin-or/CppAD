@@ -31,7 +31,7 @@ CppAD uses a table of $icode Base$$ type values when recording
 $codei%AD<%Base%>%$$ operations.
 A hashing function is used to reduce number of values stored in this table;
 for example, it is not necessary to store the value 3.0 every
-time it is used as a $cref/parameter/par_var_dyn/$$.
+time it is used as a $cref/parameter/con_dyn_var/Parameter/$$.
 
 $head Default$$
 The default hashing function works with the set of bits that correspond

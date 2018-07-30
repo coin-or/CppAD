@@ -10,7 +10,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 
 /*
-$begin par_var_dyn.cpp$$
+$begin con_dyn_var.cpp$$
 
 $section AD Parameter and Variable Functions: Example and Test$$
 
@@ -18,7 +18,7 @@ $section AD Parameter and Variable Functions: Example and Test$$
 
 
 $code
-$srcfile%example/general/par_var_dyn.cpp%0%// BEGIN C++%// END C++%1%$$
+$srcfile%example/general/con_dyn_var.cpp%0%// BEGIN C++%// END C++%1%$$
 $$
 
 $end
@@ -27,7 +27,7 @@ $end
 
 # include <cppad/cppad.hpp>
 
-bool par_var_dyn(void)
+bool con_dyn_var(void)
 {	bool ok = true;
 
 	using CppAD::AD;
