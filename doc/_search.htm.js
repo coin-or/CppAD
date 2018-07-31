@@ -25,7 +25,7 @@ Keyword =
 'get_sacado.sh  Download and Install Sacado in Build Directory  ',' syntax purpose distribution external prefix reuse ',
 'cppad_testvector  Choosing the CppAD Test Vector Template Class  ',' purpose std boost eigen ',
 'cmake_check  Checking the CppAD Examples and Tests  ',' purpose all subsets first level ',
-'pkgconfig  CppAD pkg-config Files  ',' pc purpose usage defined fields configuration ',
+'pkgconfig  CppAD pkg-config Files  ',' pc purpose usage defined fields configuration paths ',
 'Introduction  An Introduction by Example to Algorithmic Differentiation  ',' ad automatic purpose preface forward mode reverse operation count efficiency outline reference ',
 'exp_2  Second Order Exponential Approximation  ',' example algorithm syntax purpose mathematical form include type implementation test exercises ',
 'exp_2.hpp  exp_2: Implementation  ',' ',

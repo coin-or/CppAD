@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>CppAD pkg-config Files</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="CppAD pkg-config Files">
-<meta name="keywords" id="keywords" content=" cppad pkg-config files pc purpose usage defined fields configuration ">
+<meta name="keywords" id="keywords" content=" cppad pkg-config files pc purpose usage defined fields configuration paths ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -83,7 +83,7 @@ A:active { color : purple }
 <option>Purpose</option>
 <option>Usage</option>
 <option>Defined Fields</option>
-<option>CppAD Configuration Files</option>
+<option>CppAD Configuration Paths</option>
 </select>
 </td>
 </tr></table><br>
@@ -115,24 +115,20 @@ be obtained with the command
 <code><font color='blue'><pre style='display:inline'> 
      pkg-config --cflags cppad
 </pre></font></code>
-Note that this command assumes <a href="pkgconfig.htm" target="_top"><span style='white-space: nowrap'>cppad.pc</span></a>
- is in
-the search path <code><font color="blue">PKG_CONFIG_PATH</font></code>.
-If <a href="ipopt_prefix.htm" target="_top"><span style='white-space: nowrap'>ipopt_prefix</span></a>
- is specified,
-the necessary flags for linking <a href="cppad_ipopt_nlp.htm" target="_top"><span style='white-space: nowrap'>cppad_ipopt</span></a>
-
-can be obtained with the commands
+The flags for linking can be obtains with the command
 <code><font color='blue'><pre style='display:inline'> 
      pkg-config --libs cppad
 </pre></font></code>
-Note that this command assumes <code><font color="blue">ipopt.pc</font></code> is in
+Note that this command assumes <a href="pkgconfig.htm" target="_top"><span style='white-space: nowrap'>cppad.pc</span></a>
+ is in
 the search path <code><font color="blue">PKG_CONFIG_PATH</font></code>.
 
 <br>
 <br>
 <b><big><a name="Defined Fields" id="Defined Fields">Defined Fields</a></big></b>
-
+<br>
+The <code><font color="blue">pkg-config</font></code> files <code><font color="blue">cppad.pc</font></code> and
+<code><font color="blue">cppad-uninstalled.pc</font></code> contain the following information:
 <table><tr><td align='left'  valign='top'>
 
 
@@ -174,12 +170,7 @@ the search path <code><font color="blue">PKG_CONFIG_PATH</font></code>.
 <code><i><font color="black"><span style='white-space: nowrap'>Libs</span></font></i></code>
  </td><td align='left'  valign='top'>
 
-	If <a href="ipopt_prefix.htm" target="_top"><span style='white-space: nowrap'>ipopt_prefix</span></a>
- ( <a href="colpack_prefix.htm" target="_top"><span style='white-space: nowrap'>colpack_prefix</span></a>
- ) is specified,
-	the necessary flags for using the <a href="cppad_ipopt_nlp.htm" target="_top"><span style='white-space: nowrap'>cppad_ipopt</span></a>
-
-	library (colpack library) are included.
+	The flags necessary for linking programs that use CppAD include files.
 </td></tr><tr><td align='left'  valign='top'>
 
 
@@ -194,39 +185,61 @@ the search path <code><font color="blue">PKG_CONFIG_PATH</font></code>.
 </td></tr>
 </table>
 <br>
-<b><big><a name="CppAD Configuration Files" id="CppAD Configuration Files">CppAD Configuration Files</a></big></b>
+<b><big><a name="CppAD Configuration Paths" id="CppAD Configuration Paths">CppAD Configuration Paths</a></big></b>
 <br>
-In the table below,
-
-<code><i><font color="black"><span style='white-space: nowrap'>builddir</span></font></i></code>
- is the build directory; i.e., the directory where
-the CppAD
-<a href="cmake.htm#CMake Command" target="_top"><span style='white-space: nowrap'>cmake&nbsp;command</span></a>
- is executed.
-The directory 
-<code><i><font color="black"><span style='white-space: nowrap'>prefix</span></font></i></code>
- is the value of
-<a href="cmake.htm#cppad_prefix" target="_top"><span style='white-space: nowrap'>cppad_prefix</span></a>
- during configuration.
-The directory 
-<code><i><font color="black"><span style='white-space: nowrap'>datadir</span></font></i></code>
- is the value of
-<a href="cmake.htm#cmake_install_datadir" target="_top"><span style='white-space: nowrap'>cmake_install_datadir</span></a>
-.
-The following configuration files contain the information above
+The location of <code><font color="blue">cppad.pc</font></code> and <code><font color="blue">cppad-uninstalled.pc</font></code>
+are given below.
+Note that <code><font color="blue">cppad.pc</font></code> is placed in two locations.
 <table><tr><td align='left'  valign='top'>
 
+<b>Path</b> </td><td align='left'  valign='top'>
+ <b>Description</b>
+</td></tr><tr><td align='left'  valign='top'>
 
-<code><i><font color="black"><span style='white-space: nowrap'>File</span></font></i></code>
-             </td><td align='left'  valign='top'>
 
-	
-<code><i><font color="black"><span style='white-space: nowrap'>Description</span></font></i></code>
- </td></tr><tr><td align='left'  valign='top'>
+<code><i><font color="black"><span style='white-space: nowrap'>builddir</span></font></i></code>
+  </td><td align='left'  valign='top'>
+
+	directory where the
+	<a href="cmake.htm#CMake Command" target="_top"><span style='white-space: nowrap'>cmake&nbsp;command</span></a>
+ is executed.
+</td></tr><tr><td align='left'  valign='top'>
+
+
+<code><i><font color="black"><span style='white-space: nowrap'>prefix</span></font></i></code>
+ </td><td align='left'  valign='top'>
+
+	value of <a href="cmake.htm#cppad_prefix" target="_top"><span style='white-space: nowrap'>cppad_prefix</span></a>
+ during configuration.
+</td></tr><tr><td align='left'  valign='top'>
+
+
+<code><i><font color="black"><span style='white-space: nowrap'>datadir</span></font></i></code>
+ </td><td align='left'  valign='top'>
+
+	value of <a href="cmake.htm#cmake_install_datadir" target="_top"><span style='white-space: nowrap'>cmake_install_datadir</span></a>
+.
+</td></tr><tr><td align='left'  valign='top'>
+
+
+<code><i><font color="black"><span style='white-space: nowrap'>libdir</span></font></i></code>
+ </td><td align='left'  valign='top'>
+
+	first directory in
+	<a href="cmake.htm#cmake_install_libdirs" target="_top"><span style='white-space: nowrap'>cmake_install_libdirs</span></a>
+.
+</td></tr><tr><td align='left'  valign='top'>
+
+
+<code><i><font color="black"><span style='white-space: nowrap'>builddir</span></font></i><font color="blue"><span style='white-space: nowrap'>/pkgconfig/cppad-uninstalled.pc</span></font></code>
+ </td><td align='left'  valign='top'>
+
+	for testing before <code><font color="blue">make install</font></code>
+</td></tr><tr><td align='left'  valign='top'>
 
 
 <code><i><font color="black"><span style='white-space: nowrap'>prefix</span></font></i><font color="blue"><span style='white-space: nowrap'>/</span></font><i><font color="black"><span style='white-space: nowrap'>datadir</span></font></i><font color="blue"><span style='white-space: nowrap'>/pkgconfig/cppad.pc</span></font></code>
-              </td><td align='left'  valign='top'>
+ </td><td align='left'  valign='top'>
 
 	for use after
 	<a href="install.htm#Instructions.Step 4: Installation" target="_top"><span style='white-space: nowrap'>make&nbsp;install</span></a>
@@ -234,10 +247,9 @@ The following configuration files contain the information above
 </td></tr><tr><td align='left'  valign='top'>
 
 
-<code><i><font color="black"><span style='white-space: nowrap'>builddir</span></font></i><font color="blue"><span style='white-space: nowrap'>/pkgconfig/cppad-uninstalled.pc</span></font></code>
-       </td><td align='left'  valign='top'>
+<code><i><font color="black"><span style='white-space: nowrap'>prefix</span></font></i><font color="blue"><span style='white-space: nowrap'>/</span></font><i><font color="black"><span style='white-space: nowrap'>libdir</span></font></i><font color="blue"><span style='white-space: nowrap'>/pkgconfig/cppad.pc</span></font></code>
+ </td><td align='left'  valign='top'>
 
-	for testing before <code><font color="blue">make install</font></code>
 </td></tr>
 </table>
 

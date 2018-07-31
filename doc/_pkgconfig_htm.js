@@ -33,7 +33,7 @@ var list_current0 = [
 'pkgconfig.htm#Purpose',
 'pkgconfig.htm#Usage',
 'pkgconfig.htm#Defined Fields',
-'pkgconfig.htm#CppAD Configuration Files'
+'pkgconfig.htm#CppAD Configuration Paths'
 ];
 function choose_across0(item)
 {	var index          = item.selectedIndex;
