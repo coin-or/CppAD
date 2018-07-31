@@ -25,6 +25,7 @@ $spell
 	enums
 	dyn
 	ind
+	uninstalled
 $$
 
 $section Changes and Additions to CppAD During 2018$$
@@ -41,6 +42,10 @@ and $code IdenticalEqualPar$$ was change to
 $code IdenticalEqualCon$$.
 This was done because the value of
 $cref/dynamic/glossary/Parameter/Dynamic/$$ parameters can change.
+$lnext
+The some errors in the $cref pkgconfig$$ files
+$code cppad.pc$$ and $code cppad-uninstalled.pc$$ were
+corrected.
 $lend
 
 $head 07-27$$
@@ -53,6 +58,7 @@ $icode%f%.size_dynamic()%$$ has been replaced by
 $cref/size_dyn_ind/seq_property/size_dyn_ind/$$,
 $cref/size_dyn_par/seq_property/size_dyn_par/$$, and
 $cref/size_dyn_arg/seq_property/size_dyn_arg/$$.
+
 
 $head 07-23$$
 Change the required version of $cref cmake$$ from greater than

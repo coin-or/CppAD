@@ -1,6 +1,5 @@
-# $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the
@@ -10,20 +9,14 @@
 # Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # -----------------------------------------------------------------------------
 # This file is used with pkg-config to include CppAD after it is installed
-
-# -------------------------------------------------------------------------
-# HACK: With no specifications as to what will work in the future, set the
-# values 'includedir' and 'prefix' so cppad.pc works with the 2015-01-21
-# verison of https://build.opensuse.org/package/view_file/
-#	windows:mingw:win32/mingw32-filesystem/mingw32-install-post.sh?expand=1
-prefix=@cppad_prefix@
-includedir=@cppad_abs_includedir@
-# -------------------------------------------------------------------------
-
+#
+# Entries set by top source directory CMakeLists.txt file
 Name:         cppad
 Description:  @cppad_description@
 Version:      @cppad_version@
 URL:          @cppad_url@
+#
+# Entries set by pkgconfig/CMakeLists.txt file
 Cflags:       @cppad_pkgconfig_cflags@
 Libs:         @cppad_pkgconfig_libs@
 Requires:     @cppad_pkgconfig_requires@

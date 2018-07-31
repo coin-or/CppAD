@@ -24,7 +24,7 @@ if(POLICY CMP0054)
 endif()
 #
 # cppad_version is used by version.sh to get the version number.
-SET(cppad_version "20180724")
+SET(cppad_version "20180730")
 SET(cppad_url          "http://www.coin-or.org/CppAD" )
 SET(cppad_description  "Differentiation of C++ Algorithms" )
 #
@@ -51,6 +51,9 @@ INCLUDE(CheckCXXSourceRuns)
 # ============================================================================
 # Some local cmake language
 # ============================================================================
+# join strings together
+INCLUDE(cmake/join.cmake)
+#
 # dos_path_to_unix(dos_path unix_path)
 INCLUDE(cmake/dos_path_to_unix.cmake)
 #
@@ -104,11 +107,11 @@ command_line_arg(cppad_prefix /usr PATH
 SET(CMAKE_INSTALL_PREFIX "${cppad_prefix}"
 	CACHE PATH "value copied from cppad_prefix" FORCE
 )
-IF( cppad_has_cmake_install )
+IF( cmake_install_prefix )
 	MESSAGE(FATAL_ERROR
 		"cmake_install_prefix has been changed to cppad_prefix"
 	)
-ENDIF( cppad_has_cmake_install )
+ENDIF( cmake_install_prefix )
 # -----------------------------------------------------------------------------
 # cppad_postfix
 command_line_arg(cppad_postfix NOTFOUND STRING
@@ -186,11 +189,8 @@ command_line_arg(cppad_debug_which "debug_all" STRING
 	"debug_even, debug_odd, debug_all, or debug_none"
 )
 # cppad_deprecated
-command_line_arg(cppad_deprecated NO BOOL
-	"this symbol must be NO and is not currently being used"
-)
 IF( cppad_deprecated )
-	MESSAGE(FATAL_ERROR "cppad_deprecated must be NO" )
+	MESSAGE(FATAL_ERROR "cppad_deprecated has been removed" )
 ENDIF( cppad_deprecated )
 # =============================================================================
 # colpack_libs, cppad_lib
@@ -212,24 +212,29 @@ IF ( cppad_cxx_flags MATCHES "/W[0-9]" )
 ENDIF ( cppad_cxx_flags MATCHES "/W[0-9]" )
 print_variable(CMAKE_CXX_FLAGS)
 # -----------------------------------------------------------------------------
-# set cppad_abs_${middle_name} for middle_name equal to:
-#	includedir, liddir, datadir, docdir
-FOREACH(middle_names includedirs libdirs datadir docdir)
-	STRING(REGEX REPLACE "dirs" "dir" middle_name ${middle_names})
-	SET(middle_value NOTFOUND)
-	FOREACH(dir ${cmake_install_${middle_names}})
-		IF( NOT middle_value )
-			SET(middle_value ${dir})
-		ENDIF( NOT middle_value )
-	ENDFOREACH(dir ${cmake_install_${middle_names}})
+# cppad_abs_includedir, cppad_abs_libdir, cppad_abs_datadir, cppad_abs_docdir
+#
+# for dir_types = includedirs, libdirs, datadir, docdir
+FOREACH(dir_types includedirs libdirs datadir docdir)
+	# set dir_type = dir_types with  "dirs" -> "dir"
+	STRING(REGEX REPLACE "dirs" "dir" dir_type ${dir_types})
 	#
-	SET(tmp "${cppad_prefix}/${middle_value}" )
-	IF ( cppad_postfix )
-		SET(cppad_abs_${middle_name} ${tmp}/${cppad_postfix})
-	ELSE ( cppad_postfix )
-		SET(cppad_abs_${middle_name} ${tmp})
-	ENDIF ( cppad_postfix )
-ENDFOREACH(middle_names includedirs libdirs datadir docdir)
+	# set dir_name to first directory in cmake_install_${dir_types}
+	SET(dir_name NOTFOUND)
+	FOREACH(dir ${cmake_install_${dir_types}})
+		IF( NOT dir_name )
+			SET(dir_name ${dir})
+		ENDIF( NOT dir_name )
+	ENDFOREACH(dir ${cmake_install_${dir_types}})
+	#
+	# set cppad_abs_${dir_type}
+	SET(cppad_abs_${dir_type} "${cppad_prefix}/${dir_name}" )
+	#
+	# check if we need to add a postfix to it
+	IF( cppad_postfix )
+		SET(cppad_abs_${dir_type} ${cppad_abs_${dir_type}}/${cppad_postfix} )
+	ENDIF( cppad_postfix )
+ENDFOREACH(dir_types includedirs libdirs datadir docdir)
 # -----------------------------------------------------------------------------
 # boost_prefix
 FIND_PACKAGE(Boost)
