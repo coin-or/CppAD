@@ -18,6 +18,8 @@ $spell
 	Cflags
 	Dir
 	builddir
+	libdir
+	libdirs
 	prefixdir
 	cppad
 	pkgconfig
@@ -40,18 +42,16 @@ be obtained with the command
 $codep
 	pkg-config --cflags cppad
 $$
-Note that this command assumes $cref/cppad.pc/pkgconfig/$$ is in
-the search path $code PKG_CONFIG_PATH$$.
-If $cref ipopt_prefix$$ is specified,
-the necessary flags for linking $cref/cppad_ipopt/cppad_ipopt_nlp/$$
-can be obtained with the commands
+The flags for linking can be obtains with the command
 $codep
 	pkg-config --libs cppad
 $$
-Note that this command assumes $code ipopt.pc$$ is in
+Note that this command assumes $cref/cppad.pc/pkgconfig/$$ is in
 the search path $code PKG_CONFIG_PATH$$.
 
 $head Defined Fields$$
+The $code pkg-config$$ files $code cppad.pc$$ and
+$code cppad-uninstalled.pc$$ contain the following information:
 $table
 $icode Name$$ $cnext
 	A human-readable name for the CppAD package.
@@ -69,9 +69,7 @@ $icode Cflags$$ $cnext
 	The necessary flags for using any of the CppAD include files.
 $rnext
 $icode Libs$$ $cnext
-	If $cref ipopt_prefix$$ ( $cref colpack_prefix$$ ) is specified,
-	the necessary flags for using the $cref/cppad_ipopt/cppad_ipopt_nlp/$$
-	library (colpack library) are included.
+	The flags necessary for linking programs that use CppAD include files.
 $rnext
 $icode Requires$$ $cnext
 	If $cref ipopt_prefix$$ is specified,
@@ -79,25 +77,35 @@ $icode Requires$$ $cnext
 	library.
 $tend
 
-$head CppAD Configuration Files$$
-In the table below,
-$icode builddir$$ is the build directory; i.e., the directory where
-the CppAD
-$cref/cmake command/cmake/CMake Command/$$ is executed.
-The directory $icode prefix$$ is the value of
-$cref/cppad_prefix/cmake/cppad_prefix/$$ during configuration.
-The directory $icode datadir$$ is the value of
-$cref/cmake_install_datadir/cmake/cmake_install_datadir/$$.
-The following configuration files contain the information above
+$head CppAD Configuration Paths$$
+The location of $code cppad.pc$$ and $code cppad-uninstalled.pc$$
+are given below.
+Note that $code cppad.pc$$ is placed in two locations.
 $table
-$icode File$$             $cnext
-	$icode Description$$ $rnext
-$icode%prefix%/%datadir%/pkgconfig/cppad.pc%$$              $cnext
+$bold Path$$ $cnext $bold Description$$
+$rnext
+$icode builddir$$  $cnext
+	directory where the
+	$cref/cmake command/cmake/CMake Command/$$ is executed.
+$rnext
+$icode prefix$$ $cnext
+	value of $cref/cppad_prefix/cmake/cppad_prefix/$$ during configuration.
+$rnext
+$icode datadir$$ $cnext
+	value of $cref/cmake_install_datadir/cmake/cmake_install_datadir/$$.
+$rnext
+$icode libdir$$ $cnext
+	first directory in
+	$cref/cmake_install_libdirs/cmake/cmake_install_libdirs/$$.
+$rnext
+$icode%builddir%/pkgconfig/cppad-uninstalled.pc%$$ $cnext
+	for testing before $code make install$$
+$rnext
+$icode%prefix%/%datadir%/pkgconfig/cppad.pc%$$ $cnext
 	for use after
 	$cref/make install/install/Instructions/Step 4: Installation/$$
 $rnext
-$icode%builddir%/pkgconfig/cppad-uninstalled.pc%$$       $cnext
-	for testing before $code make install$$
+$icode%prefix%/%libdir%/pkgconfig/cppad.pc%$$ $cnext
 $tend
 
 $end
