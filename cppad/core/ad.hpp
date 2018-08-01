@@ -125,6 +125,7 @@ private :
 
 	// classes
 	friend class local::ADTape<Base>;
+	friend class local::recorder<Base>;
 	friend class ADFun<Base>;
 	friend class atomic_base<Base>;
 	friend class discrete<Base>;

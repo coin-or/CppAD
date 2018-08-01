@@ -250,98 +250,11 @@ AD<Base> CondExpOp(
 	}
 
 	// add this operation to the tape
-	if( tape != CPPAD_NULL )
-		tape->RecordCondExp(cop,
-			result, left, right, if_true, if_false);
+	if( tape != CPPAD_NULL ) tape->Rec_.cond_exp(
+			tape->id_, cop, result, left, right, if_true, if_false
+	);
 
 	return result;
-}
-
-// --- RecordCondExp(cop, result, left, right, if_true, if_false) -----
-
-/// All these operations are done in \c Rec_, so we should move this
-/// routine to <tt>recorder<Base></tt>.
-template <class Base>
-void local::ADTape<Base>::RecordCondExp(
-	enum CompareOp  cop         ,
-	AD<Base>       &result ,
-	const AD<Base> &left        ,
-	const AD<Base> &right       ,
-	const AD<Base> &if_true     ,
-	const AD<Base> &if_false    )
-{	addr_t   ind0, ind1, ind2, ind3, ind4, ind5;
-	addr_t   result_taddr;
-
-	// taddr_ of this variable
-	CPPAD_ASSERT_UNKNOWN( NumRes(CExpOp) == 1 );
-	result_taddr = Rec_.PutOp(CExpOp);
-
-	// ind[0] = cop
-	ind0 = addr_t( cop );
-
-	// ind[1] = base 2 represenation of the value
-	// [Var(left), Var(right), Var(if_true), Var(if_false)]
-	ind1 = 0;
-
-	// Make sure result is in the list of variables and set its taddr
-	if( Parameter(result) )
-		result.make_variable(id_, result_taddr );
-	else	result.taddr_ = result_taddr;
-
-	// ind[2] = left address
-	if( Parameter(left) )
-	{	if( Dynamic(left) )
-			ind2 = left.taddr_;
-		else
-			ind2 = Rec_.put_con_par(left.value_);
-	}
-	else
-	{	ind1 += 1;
-		ind2 = left.taddr_;
-	}
-
-	// ind[3] = right address
-	if( Parameter(right) )
-	{	if( Dynamic(right) )
-			ind3 = right.taddr_;
-		else
-			ind3 = Rec_.put_con_par(right.value_);
-	}
-	else
-	{	ind1 += 2;
-		ind3 = right.taddr_;
-	}
-
-	// ind[4] = if_true address
-	if( Parameter(if_true) )
-	{	if( Dynamic(if_true) )
-			ind4 = if_true.taddr_;
-		else
-			ind4 = Rec_.put_con_par(if_true.value_);
-	}
-	else
-	{	ind1 += 4;
-		ind4 = if_true.taddr_;
-	}
-
-	// ind[5] =  if_false address
-	if( Parameter(if_false) )
-	{	if( Dynamic(if_false) )
-			ind5 = if_false.taddr_;
-		else
-			ind5 = Rec_.put_con_par(if_false.value_);
-	}
-	else
-	{	ind1 += 8;
-		ind5 = if_false.taddr_;
-	}
-
-	CPPAD_ASSERT_UNKNOWN( NumArg(CExpOp) == 6 );
-	CPPAD_ASSERT_UNKNOWN( ind1 > 0 );
-	Rec_.PutArg(ind0, ind1, ind2, ind3, ind4, ind5);
-
-	// check that result is a dependent variable
-	CPPAD_ASSERT_UNKNOWN( Variable(result) );
 }
 
 // ------------ CondExpOp(left, right, if_true, if_false) ----------------
