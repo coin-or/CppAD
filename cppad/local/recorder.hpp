@@ -770,19 +770,17 @@ void recorder<Base>::cond_exp(
 	const AD<Base> &right       ,
 	const AD<Base> &if_true     ,
 	const AD<Base> &if_false    )
-{	addr_t   ind0, ind1, ind2, ind3, ind4, ind5;
-	addr_t   result_taddr;
-
-	// taddr_ of this variable
+{
+	// taddr_ for the result of the recording
 	CPPAD_ASSERT_UNKNOWN( NumRes(CExpOp) == 1 );
-	result_taddr = PutOp(CExpOp);
+	addr_t result_taddr = PutOp(CExpOp);
 
 	// ind[0] = cop
-	ind0 = addr_t( cop );
+	addr_t ind0 = addr_t( cop );
 
 	// ind[1] = base 2 represenation of the value
 	// [Var(left), Var(right), Var(if_true), Var(if_false)]
-	ind1 = 0;
+	addr_t ind1 = 0;
 
 	// Make sure result is in the list of variables and set its taddr
 	if( Parameter(result) )
@@ -790,52 +788,36 @@ void recorder<Base>::cond_exp(
 	else	result.taddr_ = result_taddr;
 
 	// ind[2] = left address
-	if( Parameter(left) )
-	{	if( Dynamic(left) )
-			ind2 = left.taddr_;
-		else
-			ind2 = put_con_par(left.value_);
-	}
-	else
-	{	ind1 += 1;
-		ind2 = left.taddr_;
-	}
+	// set first bit in ind1
+	addr_t ind2 = left.taddr_;
+	if( Constant(left) )
+		ind2 = put_con_par(left.value_);
+	else if( ! left.dynamic_ )
+		ind1 += 1;
 
 	// ind[3] = right address
-	if( Parameter(right) )
-	{	if( Dynamic(right) )
-			ind3 = right.taddr_;
-		else
-			ind3 = put_con_par(right.value_);
-	}
-	else
-	{	ind1 += 2;
-		ind3 = right.taddr_;
-	}
+	// set second bit in ind1
+	addr_t ind3 = right.taddr_;
+	if( Constant(right) )
+		ind3 = put_con_par(right.value_);
+	else if( ! right.dynamic_ )
+		ind1 += 2;
 
 	// ind[4] = if_true address
-	if( Parameter(if_true) )
-	{	if( Dynamic(if_true) )
-			ind4 = if_true.taddr_;
-		else
-			ind4 = put_con_par(if_true.value_);
-	}
-	else
-	{	ind1 += 4;
-		ind4 = if_true.taddr_;
-	}
+	// set third bit in ind1
+	addr_t ind4 = if_true.taddr_;
+	if( Constant(if_true) )
+		ind4 = put_con_par(if_true.value_);
+	else if( ! if_true.dynamic_ )
+		ind1 += 4;
 
 	// ind[5] =  if_false address
-	if( Parameter(if_false) )
-	{	if( Dynamic(if_false) )
-			ind5 = if_false.taddr_;
-		else
-			ind5 = put_con_par(if_false.value_);
-	}
-	else
-	{	ind1 += 8;
-		ind5 = if_false.taddr_;
-	}
+	// set fourth bit in ind1
+	addr_t ind5 = if_false.taddr_;
+	if( Constant(if_false) )
+		ind5 = put_con_par(if_false.value_);
+	else if( ! if_false.dynamic_ )
+		ind1 += 8;
 
 	CPPAD_ASSERT_UNKNOWN( NumArg(CExpOp) == 6 );
 	CPPAD_ASSERT_UNKNOWN( ind1 > 0 );
