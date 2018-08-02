@@ -100,15 +100,31 @@ void dynamic(
 # if CPPAD_DYNAMIC_TRACE
 	std::cout << std::endl;
 # endif
+	// used to hold the first two parameter arguments
 	const Base* par[2];
+	//
+	// Initialize index for this dynamic parameter.
+	// Skip the independent dynamic parameters (they are inputs).
 	size_t i_op  = num_ind_dynamic;
+	//
+	// Initialize index in all_par_vec (none used inv_dyn operators).
 	size_t i_arg = 0;
+	//
+	// Loop the parameters skipping independent dynamics at beginning.
+	// Also skip parameters that are not dynamic parameters.
 	for(size_t i_par = num_ind_dynamic; i_par < all_par_vec.size(); ++i_par)
 	if( dyn_par_is[i_par] )
-	{	op_code_dyn op = op_code_dyn( dyn_par_op[i_op] );
+	{	//
+		// operator for this dynamic parameter
+		op_code_dyn op = op_code_dyn( dyn_par_op[i_op] );
+		//
+		// number of arguments
 		size_t n_arg   = num_arg_dyn(op);
-		CPPAD_ASSERT_UNKNOWN( 0 < n_arg && n_arg < 3 );
+		//
+		// first arguments
 		par[0] = & all_par_vec[ dyn_par_arg[i_arg + 0] ];
+		//
+		// second argument if this operator has a second argument
 		if( 1 < n_arg )
 			par[1] = & all_par_vec[ dyn_par_arg[i_arg + 1] ];
 		else
@@ -282,6 +298,13 @@ void dynamic(
 			case zmul_dyn:
 			CPPAD_ASSERT_UNKNOWN( n_arg == 2 );
 			all_par_vec[i_par] = azmul( *par[0],  *par[1] );
+			break;
+
+			// ---------------------------------------------------------------
+			// cond_exp(cop, left, right, if_true, if_false)
+			// (not yet implemented)
+			case cond_exp_dyn:
+			CPPAD_ASSERT_UNKNOWN(false);
 			break;
 
 			// ---------------------------------------------------------------

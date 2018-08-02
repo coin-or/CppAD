@@ -751,6 +751,8 @@ Which comparision operator: <, <=, ==, >=, >, or !=.
 
 \param result
 the result for this operation.
+The result.value_ is an input and result must be a constant on input.
+All of the fields, except result.value_, are outputs.
 
 \param left
 value of the left operand in the comparison.
@@ -775,6 +777,9 @@ void recorder<Base>::cond_exp(
 	const AD<Base> &if_false    )
 {	// check for invalid tape_id
 	CPPAD_ASSERT_UNKNOWN( tape_id != 0 );
+
+	// check input result
+	CPPAD_ASSERT_UNKNOWN( Constant(result) );
 
 	// ind[0] = cop
 	addr_t ind0 = addr_t( cop );
@@ -834,24 +839,46 @@ void recorder<Base>::cond_exp(
 		if( ! if_false.dynamic_ )
 			ind1 += 8;
 	}
+	if( ind1 == 0 )
+	{	// none of the arguments are variables, record cond_exp_dyn
 
-	CPPAD_ASSERT_UNKNOWN( NumArg(CExpOp) == 6 );
-	CPPAD_ASSERT_UNKNOWN( ind1 > 0 );
-	CPPAD_ASSERT_UNKNOWN( NumRes(CExpOp) == 1 );
+		// put the result at the end of the parameter vector as dynamic
+		result.taddr_   = addr_t( all_par_vec_.size() );
+		result.dynamic_ = true;
+		all_par_vec_.push_back( result.value_ );
+		dyn_par_is_.push_back(true);
 
-	// put operator in tape
-	addr_t result_taddr = PutOp(CExpOp);
-	PutArg(ind0, ind1, ind2, ind3, ind4, ind5);
+		// record the op code for the conditional expression
+		dyn_par_op_.push_back( opcode_t( cond_exp_dyn ) );
 
-	// Make sure result is in the list of variables and set its taddr
-	if( Parameter(result) )
-		result.make_variable(tape_id, result_taddr );
-	else	result.taddr_ = result_taddr;
+		// cond_exp(cop, left, right, if_true, if_false)
+		CPPAD_ASSERT_UNKNOWN( num_arg_dyn( cond_exp_dyn ) == 5 );
+		dyn_par_arg_.push_back(ind0); // skip ind1 (it is zero)
+		dyn_par_arg_.push_back(ind2);
+		dyn_par_arg_.push_back(ind3);
+		dyn_par_arg_.push_back(ind4);
+		dyn_par_arg_.push_back(ind5);
 
-	// check that result is a dependent variable
-	CPPAD_ASSERT_UNKNOWN( Variable(result) );
+		// check that result is a dynamic parameter
+		CPPAD_ASSERT_UNKNOWN( Dynamic(result) );
+	}
+	else
+	{	CPPAD_ASSERT_UNKNOWN( NumArg(CExpOp) == 6 );
+		CPPAD_ASSERT_UNKNOWN( NumRes(CExpOp) == 1 );
+
+		// put operator in tape
+		result.taddr_ = PutOp(CExpOp);
+		PutArg(ind0, ind1, ind2, ind3, ind4, ind5);
+
+		// make result a variable
+		CPPAD_ASSERT_UNKNOWN( result.dynamic_ == false );
+		result.dynamic_ = false;
+		result.tape_id_ = tape_id;
+
+		// check that result is a variable
+		CPPAD_ASSERT_UNKNOWN( Variable(result) );
+	}
 }
-
 
 } } // END_CPPAD_LOCAL_NAMESPACE
 # endif

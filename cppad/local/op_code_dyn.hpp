@@ -22,35 +22,36 @@ Defines the op_code_dyn enum type
 /// The following dynamic parameter operators as in the OpCode enum type:
 /// EqppOp, NeppOp, LtppOp, LeppOp
 enum op_code_dyn {
-	abs_dyn,    // abs(parameter)
-	fabs_dyn,   // fabs(parameter)
-	acos_dyn,   // acos(parameter)
-	acosh_dyn,  // acosh(parameter)
-	add_dyn,    // parameter + parameter
-	asin_dyn,   // asin(parameter)
-	asinh_dyn,  // asinh(parameter)
-	atan_dyn,   // atan(parameter)
-	atanh_dyn,  // atanh(parameter)
-	cos_dyn,    // cos(parameter)
-	cosh_dyn,   // cosh(parameter)
-	div_dyn,    // parameter / parameter
-	erf_dyn,    // erf(parameter)
-	exp_dyn,    // exp(parameter)
-	expm1_dyn,  // expm1(parameter)
-	inv_dyn,    // independent parameter
-	log_dyn,    // log(parameter)
-	log1p_dyn,  // log1p(parameter)
-	mul_dyn,    // parameter * parameter
-	pow_dyn,    // pow(parameter,    parameter)
-	sign_dyn,   // sign(parameter)
-	sin_dyn,    // sin(parameter)
-	sinh_dyn,   // sinh(parameter)
-	sqrt_dyn,   // sqrt(parameter)
-	sub_dyn,    // parameter - parameter
-	tan_dyn,    // tan(parameter)
-	tanh_dyn,   // tan(parameter)
-	zmul_dyn,   // azmul(parameter, parameter)
-	number_dyn  // number of operator codes (not an operator)
+	abs_dyn,       // abs(parameter)
+	fabs_dyn,      // fabs(parameter)
+	acos_dyn,      // acos(parameter)
+	acosh_dyn,     // acosh(parameter)
+	add_dyn,       // parameter + parameter
+	asin_dyn,      // asin(parameter)
+	asinh_dyn,     // asinh(parameter)
+	atan_dyn,      // atan(parameter)
+	atanh_dyn,     // atanh(parameter)
+	cond_exp_dyn,  // cond_exp(cop, left, right, if_true, if_false)
+	cos_dyn,       // cos(parameter)
+	cosh_dyn,      // cosh(parameter)
+	div_dyn,       // parameter / parameter
+	erf_dyn,       // erf(parameter)
+	exp_dyn,       // exp(parameter)
+	expm1_dyn,     // expm1(parameter)
+	inv_dyn,       // independent parameter
+	log_dyn,       // log(parameter)
+	log1p_dyn,     // log1p(parameter)
+	mul_dyn,       // parameter * parameter
+	pow_dyn,       // pow(parameter,    parameter)
+	sign_dyn,      // sign(parameter)
+	sin_dyn,       // sin(parameter)
+	sinh_dyn,      // sinh(parameter)
+	sqrt_dyn,      // sqrt(parameter)
+	sub_dyn,       // parameter - parameter
+	tan_dyn,       // tan(parameter)
+	tanh_dyn,      // tan(parameter)
+	zmul_dyn,      // azmul(parameter, parameter)
+	number_dyn     // number of operator codes (not an operator)
 };
 // 2DO: Following operators in OpCode need to be extended to parameter only:
 // CExpOp, UserOp
@@ -70,6 +71,7 @@ inline size_t num_arg_dyn(op_code_dyn op)
 		1, // asinh_dyn
 		1, // atan_dyn
 		1, // atanh_dyn
+		5, // cond_exp_dyn
 		1, // cos_dyn
 		1, // cosh_dyn
 		2, // div_dyn
