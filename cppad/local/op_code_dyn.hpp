@@ -23,7 +23,6 @@ Defines the op_code_dyn enum type
 /// EqppOp, NeppOp, LtppOp, LeppOp
 enum op_code_dyn {
 	abs_dyn,       // abs(parameter)
-	fabs_dyn,      // fabs(parameter)
 	acos_dyn,      // acos(parameter)
 	acosh_dyn,     // acosh(parameter)
 	add_dyn,       // parameter + parameter
@@ -38,6 +37,7 @@ enum op_code_dyn {
 	erf_dyn,       // erf(parameter)
 	exp_dyn,       // exp(parameter)
 	expm1_dyn,     // expm1(parameter)
+	fabs_dyn,      // fabs(parameter)
 	inv_dyn,       // independent parameter
 	log_dyn,       // log(parameter)
 	log1p_dyn,     // log1p(parameter)
@@ -63,7 +63,6 @@ inline size_t num_arg_dyn(op_code_dyn op)
 
 	static const size_t num_arg_table[] = {
 		1, // abs_dyn
-		1, // fabs_dyn
 		1, // acos_dyn
 		1, // acosh_dyn
 		2, // add_dyn
@@ -78,6 +77,7 @@ inline size_t num_arg_dyn(op_code_dyn op)
 		1, // erf_dyn
 		1, // exp_dyn
 		1, // expm1_dyn
+		1, // fabs_dyn
 		0, // inv_dyn
 		1, // log_dyn
 		1, // log1p_dyn
@@ -109,7 +109,6 @@ inline const char* op_name_dyn(op_code_dyn op)
 
 	static const char* op_name_table[] = {
 		"abs",
-		"fabs",
 		"acos",
 		"acosh",
 		"add",
@@ -124,6 +123,7 @@ inline const char* op_name_dyn(op_code_dyn op)
 		"erf",
 		"exp",
 		"expm1",
+		"fabs",
 		"inv",
 		"log",
 		"log1p",
