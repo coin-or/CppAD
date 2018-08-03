@@ -844,9 +844,10 @@ void recorder<Base>::cond_exp(
 
 		// put the result at the end of the parameter vector as dynamic
 		result.taddr_   = addr_t( all_par_vec_.size() );
-		result.dynamic_ = true;
 		all_par_vec_.push_back( result.value_ );
 		dyn_par_is_.push_back(true);
+		result.dynamic_ = true;
+		result.tape_id_ = tape_id;
 
 		// record the op code for the conditional expression
 		dyn_par_op_.push_back( opcode_t( cond_exp_dyn ) );

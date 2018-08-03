@@ -91,14 +91,22 @@ void dynamic(
 	const pod_vector<opcode_t>&   dyn_par_op      ,
 	const pod_vector<addr_t>&     dyn_par_arg     )
 {
+# if CPPAD_DYNAMIC_TRACE
+	std::cout << std::endl;
+	const char* cond_exp_name[] = {
+		"CondExpLt",
+		"CondExpLe",
+		"CondExpEq",
+		"CondExpGe",
+		"CondExpGt",
+		"CondExpNe"
+	};
+# endif
 # ifndef NDEBUG
 	for(size_t j = 0; j < num_ind_dynamic; ++j)
 		CPPAD_ASSERT_UNKNOWN(
 			dyn_par_is[j] && op_code_dyn( dyn_par_op[j] ) == inv_dyn
 	);
-# endif
-# if CPPAD_DYNAMIC_TRACE
-	std::cout << std::endl;
 # endif
 	// used to hold the first two parameter arguments
 	const Base* par[2];
@@ -304,7 +312,25 @@ void dynamic(
 			// cond_exp(cop, left, right, if_true, if_false)
 			// (not yet implemented)
 			case cond_exp_dyn:
-			CPPAD_ASSERT_UNKNOWN(false);
+			all_par_vec[i_par] = CondExpOp(
+				CompareOp(   dyn_par_arg[i_arg + 0] ) , // cop
+				all_par_vec[ dyn_par_arg[i_arg + 1] ] , // left
+				all_par_vec[ dyn_par_arg[i_arg + 2] ] , // right
+				all_par_vec[ dyn_par_arg[i_arg + 3] ] , // if_true
+				all_par_vec[ dyn_par_arg[i_arg + 4] ]   // if_false
+			);
+# if CPPAD_DYNAMIC_TRACE
+			std::cout << std::setw(10) << std::left << all_par_vec[i_par]
+			<< " = " << std::right << std::setw(10)
+			<< cond_exp_name[ dyn_par_arg[i_arg + 0] ] << "(";
+			for(size_t i = 1; i < 5; ++i)
+			{	std::cout << std::setw(10) << std::right
+				<< all_par_vec[ dyn_par_arg[i_arg + i] ];
+				if( i < 4 )
+					std::cout << ",";
+			}
+			std::cout << ")" << std::endl;
+# endif
 			break;
 
 			// ---------------------------------------------------------------
@@ -314,15 +340,14 @@ void dynamic(
 			break;
 		}
 # if CPPAD_DYNAMIC_TRACE
-		using std::setw;
-		using std::left;
-		using std::right;
-		std::cout << setw(10) << left << all_par_vec[i_par]
-		<< " = " << setw(8) << right << op_name_dyn(op)
-		<< "(" << setw(8) << right << *par[0];
-		if( 1 < n_arg )
-			std::cout << ", " << setw(8) << right << *par[1];
-		std::cout << ")" << std::endl;
+		if( op != cond_exp_dyn )
+		{	std::cout << std::setw(10) << std::left << all_par_vec[i_par]
+			<< " = " << std::setw(10) << std::right << op_name_dyn(op)
+			<< "(" << std::setw(10) << std::right << *par[0];
+			if( 1 < n_arg )
+				std::cout << ", " << std::setw(8) << std::right << *par[1];
+			std::cout << ")" << std::endl;
+		}
 # endif
 		++i_op;
 		i_arg += num_arg_dyn(op);

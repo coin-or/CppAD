@@ -172,7 +172,6 @@ $end
 namespace CppAD {
 
 template <class Base>
-CPPAD_INLINE_FRIEND_TEMPLATE_FUNCTION
 AD<Base> CondExpOp(
 	enum  CompareOp cop       ,
 	const AD<Base> &left      ,
@@ -228,26 +227,7 @@ AD<Base> CondExpOp(
 	result.value_ = CondExpOp(cop,
 		left.value_, right.value_, if_true.value_, if_false.value_);
 
-	local::ADTape<Base> *tape = CPPAD_NULL;
-	if( Variable(left) )
-		tape = left.tape_this();
-	else if( Variable(right) )
-		tape = right.tape_this();
-	else if( Variable(if_true) )
-		tape = if_true.tape_this();
-	else if( Variable(if_false) )
-		tape = if_false.tape_this();
-	else
-	{	bool one_dynamic = false;
-		one_dynamic |= Dynamic(left);
-		one_dynamic |= Dynamic(right);
-		one_dynamic |= Dynamic(if_true);
-		one_dynamic |= Dynamic(if_false);
-		CPPAD_ASSERT_KNOWN( ! one_dynamic,
-			"Arguments to conditional expression:\n"
-			"one is a dynamic parameter argument and none are variables."
-		);
-	}
+	local::ADTape<Base> *tape = AD<Base>::tape_ptr();
 
 	// add this operation to the tape
 	if( tape != CPPAD_NULL ) tape->Rec_.cond_exp(

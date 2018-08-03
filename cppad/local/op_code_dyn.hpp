@@ -117,6 +117,7 @@ inline const char* op_name_dyn(op_code_dyn op)
 		"asinh",
 		"atan",
 		"atanh",
+		"cond_exp",
 		"cos",
 		"cosh",
 		"div",
