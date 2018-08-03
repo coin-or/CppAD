@@ -203,9 +203,9 @@ Fix bug in $cref optimize$$ and $cref subgraph_sparsity$$
 when using C++11 $cref erf$$ function.
 
 $head 03-19$$
-Add more detail to the
-$cref/dynamic parameters/wish_list/Dynamic Parameters/$$
-whish list item.
+Add more detail to the dynamic parameter whish list item.
+This item has been implemented and removed from the wish list; see
+$cref new_dynamic$$.
 
 $head 03-04$$
 The $code example/abs_normal$$ directory was missing from the

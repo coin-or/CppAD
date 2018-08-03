@@ -46,10 +46,65 @@ $spell
 	mkdir
 	Makefiles
 	nmake
+	vx
+	vy
 $$
 
 $section The CppAD Wish List$$
+$comment ------------------------------------------------------------------- $$
+$head Atomic$$
 
+$subhead Subgraph$$
+The $cref subgraph_sparsity$$ calculation treats
+each atomic function call as if
+all of its outputs depend on all of its inputs;
+see $cref/atomic function/subgraph_sparsity/Atomic Function/$$.
+These sparsity patterns could be made more efficient
+(could have fewer possibly non-zeros entries)
+by using the sparsity patterns for the atomic functions.
+
+$subhead New API$$
+A new API for atomic functions could be created:
+
+$list number$$
+The atomic functions would be more efficient if
+the $cref/vx/atomic_forward/vx/$$ and $cref/vy/atomic_forward/vy/$$
+arguments had three possible values (instead of two):
+constant parameter, dynamic parameter, and variable.
+$lnext
+Use $cref sparse_rc$$ for sparsity patterns and calculate sparsity patterns
+using
+$codei%
+	%afun%.jac_sparsity(%select_domain%, %select_range%, %pattern_out%)
+	%afun%.hes_sparsity(%select_domain%, %select_range%, %pattern_out%)
+%$$
+see $cref subgraph_sparsity$$.
+This would be simpler for the user.
+$lnext
+Add a $cref/dependency/for_jac_sparsity/dependency/$$ argument
+to the forward and reverse Jacobian sparsity patterns.
+$lend
+
+$subhead Sparsity$$
+Add an $cref atomic_option$$ that checks if the sparsity patterns calculated
+by user atomic functions have
+elements for arguments that are know to be parameters and
+could be more efficient.
+For example, the user's version of $code for_sparse_jac$$ could check
+$cref/x/atomic_for_sparse_jac/Implementation/x/$$ to see for which components
+are variables;
+i.e., $cref/isnan(x[j])/nan/isnan/$$ is true for a particular call.
+Note that
+$cref/vx/atomic_for_sparse_hes/Implementation/vx/$$ should be removed,
+because the method above can be used to determine this information.
+
+$subhead Element-wise Operations$$
+Add user atomic functions for element-wise addition, subtraction,
+multiplication, and division.
+Where the operands are $cref/simple vectors/SimpleVector/$$
+with elements of type $codei%AD<%Base%>%$$.
+
+$comment ------------------------------------------------------------------- $$
 $head Abs-normal$$
 $list number$$
 Change the $cref abs_normal_fun$$ to return the functions
@@ -106,55 +161,6 @@ $codei%
 $lend
 
 
-$head Dynamic Parameters$$
-It would be useful to have a means of changing the value of
-some of the $cref/parameters/glossary/Parameter/$$ in an
-$cref ADFun$$ object.
-$list number$$
-Perhaps
-$codei%
-	Independent(%x%, %abort_op_index%, %dynamic_par_vec%)
-%$$
-could be used to specify the independent dynamic parameters during taping.
-Note that $icode abort_op_index$$ equal to zero does not abort on any
-operation index.
-$lnext
-All operations that use dynamic parameters need to be taped.
-If the other operand is a parameter (variable),
-the result is a dynamic parameter (variable).
-$lnext
-We could add an extra field to $code%AD<%Base%>%$$,
-(e.g., $code dynamic_id_$$ )
-that identifies the index of a dynamic parameter in the parameter vector.
-If this index is zero, or the tape_id is does not correspond to this thread,
-it is not a dynamic parameter.
-$lnext
-After creating an $cref ADFun$$ object,
-the value corresponding to the independent dynamic parameters
-could be changed using
-$codei%
-	%f%.dynamic_parameter(%dynamic_par_vec%)
-%$$
-$lnext
-A function would be added to detect a dynamic parameter; i.e.,
-$codei%
-	Dynamic(%x%)
-%$$
-where $icode x$$ has type $codei%AD<%Base>%$$ and the result is a $code bool$$.
-The detection could be similar to variables; i.e.,
-right tape id and dynamic id is not zero.
-$lnext
-The independent dynamic parameters could correspond to the initial parameters
-in the tape (possibly excluding the parameter with index zero).
-When the independent dynamic parameters change, a special forward pass
-on the dynamic parameter operations would set the value for all
-the other dynamic parameters in the tape.
-$lnext
-The identical functions need to be changed so that dynamic
-parameters were never be identically equal other values.
-$lend
-
-
 $head Multi-Threading$$
 The TMB packages has a special version of the
 $cref checkpoint$$ class
@@ -164,46 +170,6 @@ to allow for this.
 In addition, perhaps a multi-threading version of an ADFun object would
 be useful.
 
-$comment ------------------------------------------------------------------- $$
-$head Atomic$$
-
-$subhead Subgraph$$
-The $cref subgraph_sparsity$$ calculation treats
-each atomic function call as if
-all of its outputs depend on all of its inputs;
-see $cref/atomic function/subgraph_sparsity/Atomic Function/$$.
-These sparsity patterns could be made more efficient
-(could have fewer possibly non-zeros entries)
-by using the sparsity patterns for the atomic functions.
-
-$subhead New API$$
-A new API for atomic functions could be created that uses
-$cref sparse_rc$$ for sparsity patterns and an interface like
-$codei%
-	%afun%.jac_sparsity(%select_domain%, %select_range%, %pattern_out%)
-	%afun%.hes_sparsity(%select_domain%, %select_range%, %pattern_out%)
-%$$
-see $cref subgraph_sparsity$$.
-This would be simpler for the user.
-
-$subhead Sparsity$$
-Add an $cref atomic_option$$ that checks if the sparsity patterns calculated
-by user atomic functions have
-elements for arguments that are know to be parameters and
-could be more efficient.
-For example, the user's version of $code for_sparse_jac$$ could check
-$cref/x/atomic_for_sparse_jac/Implementation/x/$$ to see for which components
-are variables;
-i.e., $cref/isnan(x[j])/nan/isnan/$$ is true for a particular call.
-Note that
-$cref/vx/atomic_for_sparse_hes/Implementation/vx/$$ should be removed,
-because the method above can be used to determine this information.
-
-$subhead Element-wise Operations$$
-Add user atomic functions for element-wise addition, subtraction,
-multiplication, and division.
-Where the operands are $cref/simple vectors/SimpleVector/$$
-with elements of type $codei%AD<%Base%>%$$.
 
 $comment ------------------------------------------------------------------- $$
 

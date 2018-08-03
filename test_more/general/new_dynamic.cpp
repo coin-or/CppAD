@@ -492,6 +492,47 @@ bool dynamic_compare(void)
 	return ok;
 }
 
+typedef CPPAD_TESTVECTOR( CppAD::AD<double> )  ADvector;
+void g_algo(const ADvector& ax, ADvector& ay)
+{	ay[0] = ax[0] * ax[1];
+}
+bool dynamic_atomic(void)
+{	bool ok = true;
+
+	// checkpoint version of g(x) = x[0] * x[1];
+	ADvector ax(2), ay(1);
+	ax[0] = 2.0;
+	ax[1] = 3.0;
+	CppAD::checkpoint<double> atom_g("g_algo", g_algo, ax, ay);
+
+	// record the function f(x) = dynamic[0] * dynamic[1]
+	// using atom_g to compute the product
+	ADvector adynamic(2);
+	adynamic[0] = 1.0;
+	adynamic[1] = 2.0;
+	size_t abort_op_index = 0;
+	size_t record_compare = true;
+	Independent(ax, abort_op_index, record_compare, adynamic);
+	atom_g(adynamic, ay);
+	CppAD::ADFun<double> f(ax, ay);
+
+	// change the dynamic parameter values
+	CPPAD_TESTVECTOR(double) x(2), y(1), dynamic(2);
+	dynamic[0] = 4.0;
+	dynamic[1] = 5.0;
+	f.new_dynamic(dynamic);
+
+	// check zero order forward
+	x[0] = std::numeric_limits<double>::quiet_NaN();
+	x[1] = std::numeric_limits<double>::quiet_NaN();
+	y    = f.Forward(0, x);
+	ok  &= y[0] == dynamic[0] * dynamic[1];
+
+
+	return ok;
+}
+
+
 } // END_EMPTY_NAMESPACE
 
 
@@ -500,6 +541,7 @@ bool new_dynamic(void)
 	ok     &= operator_with_variable();
 	ok     &= dynamic_operator();
 	ok     &= dynamic_compare();
+	ok     &= dynamic_atomic();
 
 	return ok;
 }

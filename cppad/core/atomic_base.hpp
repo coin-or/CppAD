@@ -483,17 +483,6 @@ void operator()(
 	{	msg += "ax.size() or ay.size() is zero";
 		CPPAD_ASSERT_KNOWN(false, msg.c_str() );
 	}
-	bool has_dynamic   = false;
-	bool has_variable  = false;
-	for(j = 0; j < n; ++j)
-	{	has_dynamic  |= Dynamic( ax[j] );
-		has_variable |= Variable( ax[j] );
-	}
-	if( has_dynamic & (! has_variable) )
-	{	msg +=
-		"\nat least one arguments is a dynamic parameter, none are variables";
-		CPPAD_ASSERT_KNOWN(false, msg.c_str() );
-	}
 # endif
 	size_t thread = thread_alloc::thread_num();
 	allocate_work(thread);
@@ -516,7 +505,7 @@ void operator()(
 	local::ADTape<Base>* tape     = CPPAD_NULL;
 	for(j = 0; j < n; j++)
 	{	tx[j]  = ax[j].value_;
-		vx[j]  = Variable( ax[j] );
+		vx[j]  = ! Constant( ax[j] );
 		if( vx[j] )
 		{
 			if( tape_id == 0 )
@@ -587,7 +576,7 @@ void operator()(
 		CPPAD_ASSERT_UNKNOWN( local::NumArg(local::UsravOp) == 1 );
 		CPPAD_ASSERT_UNKNOWN( local::NumArg(local::UsrapOp) == 1 );
 		for(j = 0; j < n; j++)
-		{	if( vx[j] )
+		{	if( Variable(ax[j]) )
 			{	// information for an argument that is a variable
 				tape->Rec_.PutArg(ax[j].taddr_);
 				tape->Rec_.PutOp(local::UsravOp);
@@ -698,6 +687,7 @@ $icode%vx%.size() == %n%$$, and
 for $latex j = 0 , \ldots , n-1$$,
 $icode%vx%[%j%]%$$ is true if and only if
 $icode%ax%[%j%]%$$ is a $cref/variable/glossary/Variable/$$
+or $cref/dynamic parameter/glossary/Parameter/Dynamic/$$
 in the corresponding call to
 $codei%
 	%afun%(%ax%, %ay%)
@@ -719,6 +709,7 @@ are not specified (must not matter).
 Upon return, for $latex j = 0 , \ldots , m-1$$,
 $icode%vy%[%i%]%$$ is true if and only if
 $icode%ay%[%i%]%$$ is a variable
+or dynamic parameter
 (CppAD uses $icode vy$$ to reduce the necessary computations).
 
 $head tx$$
@@ -1661,6 +1652,7 @@ $icode%vx%.size() == %n%$$, and
 for $latex j = 0 , \ldots , n-1$$,
 $icode%vx%[%j%]%$$ is true if and only if
 $icode%ax%[%j%]%$$ is a $cref/variable/glossary/Variable/$$
+or $cref/dynamic parameter/glossary/Parameter/Dynamic/$$
 in the corresponding call to
 $codei%
 	%afun%(%ax%, %ay%)
@@ -1994,6 +1986,7 @@ $icode%vx%.size() == %n%$$, and
 for $latex j = 0 , \ldots , n-1$$,
 $icode%vx%[%j%]%$$ is true if and only if
 $icode%ax%[%j%]%$$ is a $cref/variable/glossary/Variable/$$
+or $cref/dynamic parameter/glossary/Parameter/Dynamic/$$
 in the corresponding call to
 $codei%
 	%afun%(%ax%, %ay%)
