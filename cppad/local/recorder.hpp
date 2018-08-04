@@ -119,9 +119,14 @@ public:
 
 	/// Put a dynamic parameter in all_par_vec_.
 	addr_t put_dyn_par(const Base &par, op_code_dyn op);
-	addr_t put_dyn_par(const Base &par, op_code_dyn op, addr_t arg0);
-	addr_t put_dyn_par(
-		const Base &par, op_code_dyn op, addr_t arg0, addr_t arg1
+	addr_t put_dyn_par(const Base &par, op_code_dyn op,
+		addr_t arg0
+	);
+	addr_t put_dyn_par(const Base &par, op_code_dyn op,
+		addr_t arg0, addr_t arg1
+	);
+	addr_t put_dyn_cond_exp(const Base &par, CompareOp cop,
+		addr_t left, addr_t right, addr_t if_true, addr_t if_false
 	);
 
 
@@ -429,7 +434,50 @@ addr_t recorder<Base>::put_dyn_par(
 	dyn_par_arg_.push_back(arg1);
 	return static_cast<addr_t>( all_par_vec_.size() - 1 );
 }
+/*!
+Put a dynamic parameter, that is result of conditional expression,
+at the end of the vector for all parameters.
 
+\param par
+is value of dynamic parameter to be placed at the end of the vector.
+
+\param cop
+is the operator comparision operator; i.e., Lt, Le, Eq, Ge, Gt, Ne.
+
+\param left
+is the left argument in conditional expression (which is a parameter).
+
+\param right
+is the right argument in conditional expression (which is a parameter).
+
+\param if_true
+is the if_true argument in conditional expression (which is a parameter).
+
+\param if_false
+is the if_false argument in conditional expression (which is a parameter).
+
+\return
+is the index in all_par_vec_ corresponding to this dynamic parameter value.
+*/
+template <class Base>
+addr_t recorder<Base>::put_dyn_cond_exp(const Base &par, CompareOp cop,
+	addr_t left, addr_t right, addr_t if_true, addr_t if_false
+)
+{	// independent parameters come first
+	CPPAD_ASSERT_UNKNOWN( num_arg_dyn(cond_exp_dyn) == 5 );
+	addr_t ret = addr_t( all_par_vec_.size() );
+	all_par_vec_.push_back( par );
+	dyn_par_is_.push_back(true);
+	dyn_par_op_.push_back( opcode_t(cond_exp_dyn) );
+	dyn_par_arg_.push_back( addr_t(cop) );
+	dyn_par_arg_.push_back(left);
+	dyn_par_arg_.push_back(right);
+	dyn_par_arg_.push_back(if_true);
+	dyn_par_arg_.push_back(if_false);
+	return ret;
+}
+
+// ---------------------------------------------------------------------------
 /*!
 Find or add a constant parameter to the current vector of all parameters.
 
@@ -843,22 +891,12 @@ void recorder<Base>::cond_exp(
 	{	// none of the arguments are variables, record cond_exp_dyn
 
 		// put the result at the end of the parameter vector as dynamic
-		result.taddr_   = addr_t( all_par_vec_.size() );
-		all_par_vec_.push_back( result.value_ );
-		dyn_par_is_.push_back(true);
+		// put_dyn_cond_exp(par, cop, left, right, if_true, if_false)
+		result.taddr_   = put_dyn_cond_exp(
+			result.value_, CompareOp(ind0), ind2, ind3, ind4, ind5
+		);
 		result.dynamic_ = true;
 		result.tape_id_ = tape_id;
-
-		// record the op code for the conditional expression
-		dyn_par_op_.push_back( opcode_t( cond_exp_dyn ) );
-
-		// cond_exp(cop, left, right, if_true, if_false)
-		CPPAD_ASSERT_UNKNOWN( num_arg_dyn( cond_exp_dyn ) == 5 );
-		dyn_par_arg_.push_back(ind0); // skip ind1 (it is zero)
-		dyn_par_arg_.push_back(ind2);
-		dyn_par_arg_.push_back(ind3);
-		dyn_par_arg_.push_back(ind4);
-		dyn_par_arg_.push_back(ind5);
 
 		// check that result is a dynamic parameter
 		CPPAD_ASSERT_UNKNOWN( Dynamic(result) );
