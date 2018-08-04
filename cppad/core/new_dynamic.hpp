@@ -74,14 +74,6 @@ In order words;
 $cref/f.size_order/size_order/$$ returns zero directly after
 $icode%f%.new_dynamic%$$ is called.
 
-$head Remove Restriction$$
-It used to be that Dynamic parameters were only allowed in operations
-where one of the other operands is a $cref/Variable/glossary/Variable/$$.
-This restriction is in the process of being removed; i.e,
-some but not all operations are allowed
-(see $code operation_with_parameter$$ in the file
-$code test_more/general/new_dynamic.cpp$$.)
-
 $children%
 	example/general/new_dynamic.cpp
 %$$

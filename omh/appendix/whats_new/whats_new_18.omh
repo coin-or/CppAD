@@ -26,9 +26,15 @@ $spell
 	dyn
 	ind
 	uninstalled
+	Vec
 $$
 
 $section Changes and Additions to CppAD During 2018$$
+
+$head 08-04$$
+Remove the restrictions on dynamic parameters.
+They can now be used anywhere except as indices and values in
+$cref/VecAD/VecAD/Dynamic Parameters/$$ vectors.
 
 $head 07-30$$
 $list number$$

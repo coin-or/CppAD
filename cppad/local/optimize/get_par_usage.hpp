@@ -15,6 +15,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 \file get_cexp_info.hpp
 Create operator information tables
 */
+# include <cppad/local/optimize/get_op_usage.hpp>
 
 // BEGIN_CPPAD_LOCAL_OPTIMIZE_NAMESPACE
 namespace CppAD { namespace local { namespace optimize {
@@ -117,6 +118,43 @@ void get_par_usage(
 		//
 		if( op_usage[i_op] != no_usage ) switch( op )
 		{
+			// add or subtrace with left a parameter and right a variable
+			case AddpvOp:
+			case SubpvOp:
+			if( dyn_par_is[ arg[0] ] )
+				par_usage[ arg[0] ] = true;
+			else
+			{	// determine if this parameter will be absorbed by csum
+				 if( ! (op_usage[i_op] == csum_usage) )
+				{	// determine operator corresponding to variable
+					size_t j_op = random_itr.var2op( arg[1] );
+					CPPAD_ASSERT_UNKNOWN( op_usage[j_op] != no_usage );
+					OpCode op_j = random_itr.get_op(j_op);
+					if( ! op_add_or_sub(op_j) )
+						par_usage[ arg[0] ] = true;
+				}
+			}
+			break;
+
+			// subtract with left a variable and right a parameter
+			case SubvpOp:
+			if( dyn_par_is[ arg[1] ] )
+				par_usage[ arg[1] ] = true;
+			else
+			{	// determine if this parameter will be absorbed by csum
+				 if( ! (op_usage[i_op] == csum_usage) )
+				{	// determine operator corresponding to variable
+					size_t j_op = random_itr.var2op( arg[0] );
+					CPPAD_ASSERT_UNKNOWN( op_usage[j_op] != no_usage );
+					OpCode op_j = random_itr.get_op(j_op);
+					if( ! op_add_or_sub(op_j) )
+						par_usage[ arg[1] ] = true;
+				}
+			}
+			break;
+
+
+
 			// cases with no parameter arguments
 			case AbsOp:
 			case AcosOp:
@@ -175,7 +213,6 @@ void get_par_usage(
 			// cases where only first argument is a parameter
 			case CSumOp:
 			case EqpvOp:
-			case AddpvOp:
 			case DivpvOp:
 			case LepvOp:
 			case LtpvOp:
@@ -183,7 +220,6 @@ void get_par_usage(
 			case NepvOp:
 			case ParOp:
 			case PowpvOp:
-			case SubpvOp:
 			case UsrapOp:
 			case UsrrpOp:
 			case ZmulpvOp:
@@ -196,7 +232,6 @@ void get_par_usage(
 			case LevpOp:
 			case LtvpOp:
 			case PowvpOp:
-			case SubvpOp:
 			case ZmulvpOp:
 			CPPAD_ASSERT_UNKNOWN( 2 <= NumArg(op) )
 			par_usage[arg[1]] = true;

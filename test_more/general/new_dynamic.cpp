@@ -538,8 +538,8 @@ bool dynamic_optimize(void)
 	double eps = 10. * std::numeric_limits<double>::epsilon();
 
 	// independent dynamic parameter vector
-	size_t nd  = 2;
-	CPPAD_TESTVECTOR(AD<double>) adynamic(nd);
+	size_t num_dyn_ind  = 2;
+	CPPAD_TESTVECTOR(AD<double>) adynamic(num_dyn_ind);
 
 	// domain space vector
 	size_t nx = 1;
@@ -562,43 +562,48 @@ bool dynamic_optimize(void)
 	adynamic[1] = 2.0;
 	CppAD::Independent(ax, abort_op_index, record_compare, adynamic);
 	//
+	// create three constant parameters that are only used in a cumulative
+	// summation and will be optimized to just one constant parameter
+	ay[0] = 3.0 - ax[0];
+	ay[0] = ay[0] - 4.0;
+	ay[0] = ay[0] + 5.0;
+	//
 	// create a dependent dynamic parameter that is not used
 	AD<double> adp1 = adynamic[0] + adynamic[1];
-	ay[0] = ax[0];
 	//
-	// create a dependent dynamic parameter tiat is used
+	// create a dependent dynamic parameter that is used
 	AD<double> adp2 = adynamic[1] - adynamic[0];
 	ay[1] = ax[0] + adp2;
 	//
 	// create f: x -> y and stop tape recording
 	f.Dependent(ax, ay);
-	ok &= f.size_dyn_ind() == nd;
-	ok &= f.size_dyn_par() == nd + 2;
-	ok &= f.size_par()     == nd + 2;
+	ok &= f.size_dyn_ind() == num_dyn_ind;
+	ok &= f.size_dyn_par() == num_dyn_ind + 2;
+	ok &= f.size_par()     == num_dyn_ind + 2 + 3;
 	// -------------------------------------------------------------
 	// vectors used for new_dynamic and Forward.
-	CPPAD_TESTVECTOR(double) dynamic(nd), x(nx), y(ny);
+	CPPAD_TESTVECTOR(double) dynamic(num_dyn_ind), x(nx), y(ny);
 	dynamic[0] = 3.0;
 	dynamic[1] = 4.0;
 	f.new_dynamic(dynamic);
 	x[0] = 5.0;
 	y    = f.Forward(0, x);
-	double check = x[0];
+	double check = 3.0 - x[0] - 4.0 + 5.0;
 	ok   &= NearEqual(y[0], check, eps, eps);
 	check = x[0] + dynamic[1] - dynamic[0];
 	ok   &= NearEqual(y[1], check, eps, eps);
 	// -------------------------------------------------------------
 	// optimize and re-test
 	f.optimize();
-	ok &= f.size_dyn_ind() == nd;
-	ok &= f.size_dyn_par() == nd + 1;
-	ok &= f.size_par()     == nd + 1;
+	ok &= f.size_dyn_ind() == num_dyn_ind;
+	ok &= f.size_dyn_par() == num_dyn_ind + 1;
+	ok &= f.size_par()     == num_dyn_ind + 1 + 1;
 	dynamic[0] = 0.3;
 	dynamic[1] = 0.4;
 	f.new_dynamic(dynamic);
 	x[0] = 0.5;
 	y    = f.Forward(0, x);
-	check = x[0];
+	check = 3.0 - x[0] - 4.0 + 5.0;
 	ok   &= NearEqual(y[0], check, eps, eps);
 	check = x[0] + dynamic[1] - dynamic[0];
 	ok   &= NearEqual(y[1], check, eps, eps);

@@ -250,6 +250,12 @@ As a reference, $icode r$$ is no longer valid once the
 destructor for $icode v$$ is called; for example,
 when $icode v$$ falls out of scope.
 
+$head Dynamic Parameters$$
+The index $icode x$$,
+and the value $icode z$$ assigned to
+$icode%v%[%x%]%$$ or $icode%v%[%i%]%$$,
+cannot be $cref/dynamic parameters/glossary/Parameter/Dynamic/$$.
+
 $head Example$$
 $children%
 	example/general/vec_ad.cpp
@@ -373,7 +379,10 @@ public:
 	*/
 	VecAD_reference(VecAD<Base> *vec, const AD<Base>& ind)
 		: vec_( vec ) , ind_(ind)
-	{ }
+	{	CPPAD_ASSERT_KNOWN( ! Dynamic(ind),
+			"index for element of this VecAD object is a dynamic paramerer"
+		);
+	}
 
 	// assignment operators
 	inline void operator = (const VecAD_reference<Base> &right);
@@ -597,6 +606,10 @@ value that element is set to.
 template <class Base>
 void VecAD_reference<Base>::operator=(const AD<Base> &y)
 {
+	CPPAD_ASSERT_KNOWN( ! Dynamic(y),
+		"value assigned to element of VecAD object is a dynamic paramerer"
+	);
+
 	if( Parameter(y) )
 	{	// fold into the Base type assignment
 		*this = y.value_;
