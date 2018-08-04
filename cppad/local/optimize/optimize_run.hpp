@@ -15,6 +15,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # include <stack>
 # include <iterator>
 # include <cppad/local/optimize/get_op_usage.hpp>
+# include <cppad/local/optimize/get_par_usage.hpp>
 # include <cppad/local/optimize/get_previous.hpp>
 # include <cppad/local/optimize/get_cexp_info.hpp>
 # include <cppad/local/optimize/size_pair.hpp>
@@ -132,12 +133,19 @@ void optimize_run(
 	// number of variables in the player
 	const size_t num_var = play->num_var_rec();
 
+	// number of parameter in the player
+	const size_t num_par = play->num_par_rec();
+
 	// number of  VecAD indices
 	size_t num_vecad_ind   = play->num_vec_ind_rec();
 
 	// number of VecAD vectors
 	size_t num_vecad_vec   = play->num_vecad_vec_rec();
 
+	// number of independent dynamic parameters
+	size_t num_dynamic_ind = play->num_dynamic_ind();
+
+	// -----------------------------------------------------------------------
 	// operator information
 	pod_vector<addr_t>        cexp2op;
 	sparse_list               cexp_set;
@@ -184,18 +192,21 @@ void optimize_run(
 	// We no longer need cexp_set, and cexp2op, so free their memory
 	cexp_set.resize(0, 0);
 	cexp2op.clear();
+	// -----------------------------------------------------------------------
+	// dynamic parameter information
+	pod_vector<bool> par_usage;
+	get_par_usage(
+		play,
+		random_itr,
+		op_usage,
+		vecad_used,
+		par_usage
+	);
+	// -----------------------------------------------------------------------
 
 	// nan with type Base
 	Base base_nan = Base( std::numeric_limits<double>::quiet_NaN() );
 
-	// -------------------------------------------------------------
-	// information for current operator
-	size_t        i_op;   // index
-	OpCode        op;     // operator
-	const addr_t* arg;    // arguments
-	size_t        i_var;  // variable index of primary (last) result
-
-	enum_user_state user_state;
 	// -------------------------------------------------------------
 	// conditional expression information
 	//
@@ -233,18 +244,100 @@ void optimize_run(
 	CPPAD_ASSERT_UNKNOWN( rec->num_op_rec() == 0 );
 
 	// -----------------------------------------------------------------------
-	// put independent dynamic parameters in new recording
-	// (not yet handeling dependent dynamic parameters)
-	size_t num_dynamic_ind = play->num_dynamic_ind();
-	rec->set_num_dynamic_ind(num_dynamic_ind);
-	for(size_t j = 0; j < num_dynamic_ind; ++j)
-	{	Base value = play->GetPar(j);
+	// set mapping from old parameter indices to new parameter indices
+	// for all parameters that get used.
+	//
+	// dynamic parameter information in player
+	const pod_vector<bool>&     dyn_par_is( play->dyn_par_is() );
+	const pod_vector<opcode_t>& dyn_par_op( play->dyn_par_op() );
+	const pod_vector<addr_t>&   dyn_par_arg( play->dyn_par_arg() );
+	//
+	// initialize to invalid value
+	addr_t addr_t_max = std::numeric_limits<addr_t>::max();
+	pod_vector<addr_t> new_par( num_par );
+	for(size_t j = 0; j < num_par; ++j)
+		new_par[j] = addr_t_max;
+	//
+	// independent dynamic parameters are always incldued and must go at front
+	for(size_t i_par = 0; i_par < num_dynamic_ind; ++i_par)
+	{	// value of this independent dynamic parameter in player
+		Base par       = play->GetPar(i_par);
+		new_par[i_par] = rec->put_dyn_par(par, inv_dyn);
+		CPPAD_ASSERT_UNKNOWN( size_t( new_par[i_par] ) == i_par );
+	}
+	//
+	// set new_par for constant parameters that get used
+	for(size_t i_par = 0; i_par < num_par; ++i_par)
+	{	if( ! dyn_par_is[i_par] & par_usage[i_par] )
+		{	// value of this constant parameter in player
+			Base par       = play->GetPar(i_par);
+			new_par[i_par] = rec->put_con_par(par);
+		}
+	}
+	//
+	// set new_par for dynamic parameters that get used
+	size_t i_op  = 0;  // dynamic parameter operator index
+	size_t i_arg = 0;  // dynamic parameter argument index
+	//
+	for(size_t i_par = 0; i_par < num_par; ++i_par)
+	if( dyn_par_is[i_par] )
+	{	// i_par is the paramerer index
+		//
+		// operator for this dynamic parameter
+		op_code_dyn op = op_code_dyn( dyn_par_op[i_op] );
+		//
+		// number of arguments for this dynamic parameter
+		size_t n_arg   = num_arg_dyn(op);
+		//
+		// value of this dynamic parameter in player
+		Base par       = play->GetPar(i_par);
+		if( par_usage[i_par] )
+		{
 # ifndef NDEBUG
-		size_t i = rec->put_con_par(value);
-		CPPAD_ASSERT_UNKNOWN(i == j );
-# else
-		rec->put_dyn_par(value, inv_dyn);
+			// check dag and usage conditions
+			for(size_t i = 1; i < n_arg; ++i) CPPAD_ASSERT_UNKNOWN(
+				new_par[ dyn_par_arg[i_arg + i] ] != addr_t_max
+			);
+			// in cond_exp case: first argument is not a parameter
+			if( op != inv_dyn && op != cond_exp_dyn ) CPPAD_ASSERT_UNKNOWN(
+				new_par[ dyn_par_arg[i_arg + 0] ] != addr_t_max
+			);
 # endif
+			if( op == cond_exp_dyn )
+			{	// cond_exp_dyn
+				CPPAD_ASSERT_UNKNOWN( num_dynamic_ind <= i_par );
+				CPPAD_ASSERT_UNKNOWN( n_arg = 5 );
+				new_par[i_par] = rec->put_dyn_cond_exp(
+					par                                ,   // par
+					CompareOp( dyn_par_arg[i_arg + 0] ),   // cop
+					new_par[ dyn_par_arg[i_arg + 1] ]  ,   // left
+					new_par[ dyn_par_arg[i_arg + 2] ]  ,   // right
+					new_par[ dyn_par_arg[i_arg + 3] ]  ,   // if_true
+					new_par[ dyn_par_arg[i_arg + 4] ]      // if_false
+				);
+			}
+			else if( n_arg == 1 )
+			{	// cases with one argument
+				CPPAD_ASSERT_UNKNOWN( num_dynamic_ind <= i_par );
+				new_par[i_par] = rec->put_dyn_par( par, op,
+					new_par[ dyn_par_arg[i_arg + 0] ]
+				);
+			}
+			else if( n_arg == 2 )
+			{	// cases with two arguments
+				CPPAD_ASSERT_UNKNOWN( num_dynamic_ind <= i_par );
+				new_par[i_par] = rec->put_dyn_par( par, op,
+					new_par[ dyn_par_arg[i_arg + 0] ],
+					new_par[ dyn_par_arg[i_arg + 1] ]
+				);
+			}
+			else
+			{	// independent dynamic parmaeter case
+				CPPAD_ASSERT_UNKNOWN( op == inv_dyn )
+				CPPAD_ASSERT_UNKNOWN( i_par < num_dynamic_ind );
+				CPPAD_ASSERT_UNKNOWN( n_arg == 0 );
+			}
+		}
 	}
 	// ------------------------------------------------------------------------
 	// initialize mapping from old VecAD index to new VecAD index
@@ -293,6 +386,13 @@ void optimize_run(
 	// before over writting it with new_op[i_op].
 	pod_vector<addr_t>& new_op( op_previous );
 	CPPAD_ASSERT_UNKNOWN( new_op.size() == num_op );
+	// -------------------------------------------------------------
+	// information for current operator
+	// size_t       i_op;   // index
+	OpCode          op;     // operator
+	const addr_t*   arg;    // arguments
+	size_t          i_var;  // variable index of primary (last) result
+	enum_user_state user_state;
 	//
 	user_state = start_user;
 	i_var      = 0;
@@ -929,10 +1029,11 @@ void optimize_run(
 	for(size_t i = 0; i < num_cexp; i++)
 	{	// if cskip_new[i].i_arg == 0, this conditional expression was skipped
 		if( cskip_new[i].i_arg > 0 )
-		{	struct_cexp_info info = cexp_info[i];
+		{	// size_t i_arg
+			struct_cexp_info info = cexp_info[i];
 			size_t n_true  = skip_op_true.number_elements(i);
 			size_t n_false = skip_op_false.number_elements(i);
-			size_t i_arg   = cskip_new[i].i_arg;
+			i_arg          = cskip_new[i].i_arg;
 			size_t left    = cskip_new[i].left;
 			size_t right   = cskip_new[i].right;
 			rec->ReplaceArg(i_arg++, info.cop   );

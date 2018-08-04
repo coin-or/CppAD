@@ -312,6 +312,7 @@ void dynamic(
 			// cond_exp(cop, left, right, if_true, if_false)
 			// (not yet implemented)
 			case cond_exp_dyn:
+			CPPAD_ASSERT_UNKNOWN( n_arg == 5 );
 			all_par_vec[i_par] = CondExpOp(
 				CompareOp(   dyn_par_arg[i_arg + 0] ) , // cop
 				all_par_vec[ dyn_par_arg[i_arg + 1] ] , // left
@@ -352,6 +353,8 @@ void dynamic(
 		++i_op;
 		i_arg += num_arg_dyn(op);
 	}
+	CPPAD_ASSERT_UNKNOWN( i_op  == dyn_par_op.size() )
+	CPPAD_ASSERT_UNKNOWN( i_arg == dyn_par_arg.size() )
 	return;
 }
 
