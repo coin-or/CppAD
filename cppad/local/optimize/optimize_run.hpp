@@ -259,6 +259,7 @@ void optimize_run(
 		new_par[j] = addr_t_max;
 	//
 	// independent dynamic parameters are always incldued and must go at front
+	rec->set_num_dynamic_ind(num_dynamic_ind);
 	for(size_t i_par = 0; i_par < num_dynamic_ind; ++i_par)
 	{	// value of this independent dynamic parameter in player
 		Base par       = play->GetPar(i_par);
@@ -268,7 +269,7 @@ void optimize_run(
 	//
 	// set new_par for constant parameters that get used
 	for(size_t i_par = 0; i_par < num_par; ++i_par)
-	{	if( ! dyn_par_is[i_par] & par_usage[i_par] )
+	{	if( ( ! dyn_par_is[i_par] ) & par_usage[i_par] )
 		{	// value of this constant parameter in player
 			Base par       = play->GetPar(i_par);
 			new_par[i_par] = rec->put_con_par(par);
@@ -338,6 +339,8 @@ void optimize_run(
 				CPPAD_ASSERT_UNKNOWN( n_arg == 0 );
 			}
 		}
+		++i_op;
+		i_arg += num_arg_dyn(op);
 	}
 	// ------------------------------------------------------------------------
 	// initialize mapping from old VecAD index to new VecAD index
