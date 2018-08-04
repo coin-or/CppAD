@@ -145,7 +145,6 @@ void get_par_usage(
 			case LtvvOp:
 			case MulvvOp:
 			case NevvOp:
-			case ParOp:
 			case PowvvOp:
 			case SignOp:
 			case SinOp:
@@ -182,6 +181,7 @@ void get_par_usage(
 			case LtpvOp:
 			case MulpvOp:
 			case NepvOp:
+			case ParOp:
 			case PowpvOp:
 			case SubpvOp:
 			case UsrapOp:
