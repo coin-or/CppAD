@@ -264,7 +264,6 @@ nobase_myinclude_HEADERS =  \
 	cppad/local/optimize/hash_code.hpp \
 	cppad/local/optimize/match_op.hpp \
 	cppad/local/optimize/optimize_run.hpp \
-	cppad/local/optimize/par_play2rec.hpp \
 	cppad/local/optimize/record_csum.hpp \
 	cppad/local/optimize/record_pv.hpp \
 	cppad/local/optimize/record_vp.hpp \

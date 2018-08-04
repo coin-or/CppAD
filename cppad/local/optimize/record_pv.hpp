@@ -10,7 +10,6 @@ the terms of the
 A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
-# include <cppad/local/optimize/par_play2rec.hpp>
 /*!
 \file record_pv.hpp
 Record an operation of the form (parameter op variable).
@@ -26,6 +25,9 @@ player object corresponding to the old recroding.
 
 \param random_itr
 random iterator corresponding to old recording.
+
+\param new_par
+mapping from old parameter index to parameter index in new recording.
 
 \param new_var
 mapping from old operator index to variable index in new recording.
@@ -45,6 +47,7 @@ template <class Addr, class Base>
 struct_size_pair record_pv(
 	const player<Base>*                                play           ,
 	const play::const_random_iterator<Addr>&           random_itr     ,
+	const pod_vector<addr_t>&                          new_par        ,
 	const pod_vector<addr_t>&                          new_var        ,
 	size_t                                             i_op           ,
 	recorder<Base>*                                    rec            )
@@ -81,7 +84,7 @@ struct_size_pair record_pv(
 	CPPAD_ASSERT_UNKNOWN( size_t(arg[1]) < i_var ); // DAG condition
 	//
 	addr_t new_arg[2];
-	new_arg[0]   = par_play2rec(rec, play, arg[0] );
+	new_arg[0]   = new_par[ arg[0] ];
 	new_arg[1]   = new_var[ random_itr.var2op(arg[1]) ];
 	rec->PutArg( new_arg[0], new_arg[1] );
 	//

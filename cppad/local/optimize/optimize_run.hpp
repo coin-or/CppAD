@@ -25,7 +25,6 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # include <cppad/local/optimize/record_vp.hpp>
 # include <cppad/local/optimize/record_vv.hpp>
 # include <cppad/local/optimize/record_csum.hpp>
-# include <cppad/local/optimize/par_play2rec.hpp>
 
 /*!
 \file optimize_run.hpp
@@ -566,6 +565,7 @@ void optimize_run(
 				size_pair = record_vp(
 					play                ,
 					random_itr          ,
+					new_par             ,
 					new_var             ,
 					i_op                ,
 					rec
@@ -624,6 +624,7 @@ void optimize_run(
 				size_pair = record_pv(
 					play                ,
 					random_itr          ,
+					new_par             ,
 					new_var             ,
 					i_op                ,
 					rec
