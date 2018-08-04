@@ -29,6 +29,9 @@ is a random iterator corresponding to the old operation sequence.
 \param op_usage
 mapping from old index to how it is used.
 
+\param new_par
+mapping from old parameter index to parameter index in new recording.
+
 \param new_var
 mapping from old operator index to variable index in new recording.
 
@@ -66,6 +69,7 @@ struct_size_pair record_csum(
 	const player<Base>*                                play           ,
 	const play::const_random_iterator<Addr>&           random_itr     ,
 	const pod_vector<usage_t>&                         op_usage       ,
+	const pod_vector<addr_t>&                          new_par        ,
 	const pod_vector<addr_t>&                          new_var        ,
 	size_t                                             current        ,
 	recorder<Base>*                                    rec            ,
@@ -81,6 +85,9 @@ struct_size_pair record_csum(
 	// sequence; i.e., given a parameter index i < npar, the corresponding
 	// parameter value is par[i].
 	const Base* par = play->GetPar();
+
+	// which parameters are dynamic
+	const pod_vector<bool>& dyn_par_is( play->dyn_par_is() );
 
 	// check assumption about work space
 	CPPAD_ASSERT_UNKNOWN( stack.op_info.empty() );
@@ -134,20 +141,21 @@ struct_size_pair record_csum(
 			case AddpvOp:
 			case SubpvOp:
 			CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < npar );
-			if( play->num_dynamic_ind() <= size_t(arg[0]) )
-			{	// first argument is not a dynamic parameter
-				if( add )
-					sum_par += par[arg[0]];
-				else
-					sum_par -= par[arg[0]];
-			}
-			else
+			//
+			if( dyn_par_is[ arg[0] ] )
 			{	// first argument is a dynamic parameter
 				// (can't yet be a result, so no nodes below)
 				if( add )
 					stack.add_dyn.push(arg[0]);
 				else
 					stack.sub_dyn.push(arg[0]);
+			}
+			else
+			{	// first argument is not a dynamic parameter
+				if( add )
+					sum_par += par[arg[0]];
+				else
+					sum_par -= par[arg[0]];
 			}
 			break;
 
@@ -189,20 +197,21 @@ struct_size_pair record_csum(
 			case SubvpOp:
 			// second argument has opposite sign of parent node
 			CPPAD_ASSERT_UNKNOWN( size_t(arg[1]) < npar );
-			if( play->num_dynamic_ind() <= size_t(arg[1]) )
-			{	// second argument is not a dynamic parameter
-				if( add )
-					sum_par -= par[arg[1]];
-				else
-					sum_par += par[arg[1]];
-			}
-			else
+			//
+			if( dyn_par_is[ arg[1] ] )
 			{	// second argument is a dynamic parmaeter
 				// (can't yet be a result, so no nodes below)
 				if( add )
 					stack.sub_dyn.push(arg[1]);
 				else
 					stack.add_dyn.push(arg[1]);
+			}
+			else
+			{	// second argument is not a dynamic parameter
+				if( add )
+					sum_par -= par[arg[1]];
+				else
+					sum_par += par[arg[1]];
 			}
 			break;
 
@@ -286,7 +295,7 @@ struct_size_pair record_csum(
 	// addition dynamic arguments
 	for(size_t i = 0; i < n_add_dyn; ++i)
 	{	addr_t old_arg = stack.add_dyn.top();
-		new_arg        = old_arg;
+		new_arg        = new_par[ old_arg ];
 		rec->PutArg(new_arg);      // arg[arg[2] + i]
 		stack.add_dyn.pop();
 	}
@@ -294,7 +303,7 @@ struct_size_pair record_csum(
 	// subtraction dynamic arguments
 	for(size_t i = 0; i < n_sub_dyn; ++i)
 	{	addr_t old_arg = stack.sub_dyn.top();
-		new_arg        = old_arg;
+		new_arg        = new_par[ old_arg ];
 		rec->PutArg(new_arg);      // arg[arg[3] + i]
 		stack.sub_dyn.pop();
 	}

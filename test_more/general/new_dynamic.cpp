@@ -590,9 +590,6 @@ bool dynamic_optimize(void)
 	// -------------------------------------------------------------
 	// optimize and re-test
 	f.optimize();
-	/*
-	Note yet passing this test
-	//
 	ok &= f.size_dyn_ind() == nd;
 	ok &= f.size_dyn_par() == nd + 1;
 	ok &= f.size_par()     == nd + 1;
@@ -605,7 +602,6 @@ bool dynamic_optimize(void)
 	ok   &= NearEqual(y[0], check, eps, eps);
 	check = x[0] + dynamic[1] - dynamic[0];
 	ok   &= NearEqual(y[1], check, eps, eps);
-	*/
 	//
 	return ok;
 }
