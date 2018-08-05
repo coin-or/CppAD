@@ -129,8 +129,7 @@ void get_par_usage(
 				{	// determine operator corresponding to variable
 					size_t j_op = random_itr.var2op( arg[1] );
 					CPPAD_ASSERT_UNKNOWN( op_usage[j_op] != no_usage );
-					OpCode op_j = random_itr.get_op(j_op);
-					if( ! op_add_or_sub(op_j) )
+					if( op_usage[j_op] != csum_usage )
 						par_usage[ arg[0] ] = true;
 				}
 			}
@@ -146,8 +145,7 @@ void get_par_usage(
 				{	// determine operator corresponding to variable
 					size_t j_op = random_itr.var2op( arg[0] );
 					CPPAD_ASSERT_UNKNOWN( op_usage[j_op] != no_usage );
-					OpCode op_j = random_itr.get_op(j_op);
-					if( ! op_add_or_sub(op_j) )
+					if( op_usage[j_op] != csum_usage )
 						par_usage[ arg[1] ] = true;
 				}
 			}
