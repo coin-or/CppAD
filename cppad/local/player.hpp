@@ -207,7 +207,8 @@ public:
 
 		// some checks
 		check_inv_op(n_ind);
-		check_dag();
+		check_variable_dag();
+		check_dynamic_dag();
 	}
 	// ----------------------------------------------------------------------
 	/*!
@@ -237,15 +238,15 @@ public:
 # endif
 	// ----------------------------------------------------------------------
 	/*!
-	Check arguments that are variables, to make sure the have value less
+	Check variable graph to make sure arguments have value less
 	than or equal to the previously created variable. This is the directed
 	acyclic graph condition (DAG).
 	*/
 # ifdef NDEBUG
-	void check_dag(void) const
+	void check_variable_dag(void) const
 	{	return; }
 # else
-	void check_dag(void) const
+	void check_variable_dag(void) const
 	{	play::const_sequential_iterator itr = begin();
 		OpCode        op;
 		const addr_t* op_arg;
@@ -404,6 +405,51 @@ public:
 				arg_var_bound = addr_t(var_index);
 			}
 		}
+		return;
+	}
+# endif
+	// ----------------------------------------------------------------------
+	/*!
+	Check dynamic parameter graph to make sure arguments have value less
+	than or equal to the previously created dynamic parameter.
+	This is the directed acyclic graph condition (DAG).
+	*/
+# ifdef NDEBUG
+	void check_dynamic_dag(void) const
+	{	return; }
+# else
+	void check_dynamic_dag(void) const
+	{	// number of parameters
+		size_t num_par = all_par_vec_.size();
+		//
+		size_t i_op = 0;  // initialize dynamic parameter operator index
+		size_t i_arg = 0; // initialize dynamic parameter argument index
+		for(size_t i_par = 0; i_par < num_par; ++i_par)
+		if( dyn_par_is_[i_par] )
+		{	// i_par is parameter index
+			//
+			// operator for this dynamic parameter
+			op_code_dyn op = op_code_dyn( dyn_par_op_[i_op] );
+			//
+			// number of arguments for this dynamic parameter
+			size_t n_arg = num_arg_dyn(op);
+			//
+			if( op == cond_exp_dyn )
+			{	for(size_t i = 1; i < n_arg; ++i) CPPAD_ASSERT_UNKNOWN(
+					size_t( dyn_par_arg_[i_arg + i] ) < i_par
+				);
+			}
+			else
+			{	for(size_t i = 0; i < n_arg; ++i) CPPAD_ASSERT_UNKNOWN(
+					size_t( dyn_par_arg_[i_arg + i] ) < i_par
+				);
+			}
+			//
+			// next dynamic parameter
+			++i_op;
+			i_arg += n_arg;
+		}
+		return;
 	}
 # endif
 	// ===============================================================
@@ -423,6 +469,9 @@ public:
 		vecad_ind_vec_      = play.vecad_ind_vec_;
 		arg_vec_            = play.arg_vec_;
 		all_par_vec_        = play.all_par_vec_;
+		dyn_par_is_         = play.dyn_par_is_;
+		dyn_par_op_         = play.dyn_par_op_;
+		dyn_par_arg_        = play.dyn_par_arg_;
 		text_vec_           = play.text_vec_;
 		op2arg_vec_         = play.op2arg_vec_;
 		op2var_vec_         = play.op2var_vec_;

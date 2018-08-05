@@ -293,16 +293,6 @@ void optimize_run(
 		Base par       = play->GetPar(i_par);
 		if( par_usage[i_par] )
 		{
-# ifndef NDEBUG
-			// check dag and usage conditions
-			for(size_t i = 1; i < n_arg; ++i) CPPAD_ASSERT_UNKNOWN(
-				new_par[ dyn_par_arg[i_arg + i] ] != addr_t_max
-			);
-			// in cond_exp case: first argument is not a parameter
-			if( op != inv_dyn && op != cond_exp_dyn ) CPPAD_ASSERT_UNKNOWN(
-				new_par[ dyn_par_arg[i_arg + 0] ] != addr_t_max
-			);
-# endif
 			if( op == cond_exp_dyn )
 			{	// cond_exp_dyn
 				CPPAD_ASSERT_UNKNOWN( num_dynamic_ind <= i_par );
