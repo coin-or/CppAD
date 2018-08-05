@@ -38,7 +38,7 @@ enum op_code_dyn {
 	exp_dyn,       // exp(parameter)
 	expm1_dyn,     // expm1(parameter)
 	fabs_dyn,      // fabs(parameter)
-	inv_dyn,       // independent parameter
+	ind_dyn,       // independent parameter
 	log_dyn,       // log(parameter)
 	log1p_dyn,     // log1p(parameter)
 	mul_dyn,       // parameter * parameter
@@ -78,7 +78,7 @@ inline size_t num_arg_dyn(op_code_dyn op)
 		1, // exp_dyn
 		1, // expm1_dyn
 		1, // fabs_dyn
-		0, // inv_dyn
+		0, // ind_dyn
 		1, // log_dyn
 		1, // log1p_dyn
 		2, // mul_dyn

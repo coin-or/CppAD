@@ -120,7 +120,7 @@ void ADFun<Base>::new_dynamic(const VectorBase& dynamic)
 	for(size_t j = 0; j < num_dynamic_ind; ++j)
 	{	CPPAD_ASSERT_UNKNOWN( dyn_par_is[j] );
 		CPPAD_ASSERT_UNKNOWN(
-			local::op_code_dyn( dyn_par_op[j] ) == local::inv_dyn
+			local::op_code_dyn( dyn_par_op[j] ) == local::ind_dyn
 		);
 		all_par_vec[j] = dynamic[j];
 	}

@@ -262,7 +262,7 @@ void optimize_run(
 	for(size_t i_par = 0; i_par < num_dynamic_ind; ++i_par)
 	{	// value of this independent dynamic parameter in player
 		Base par       = play->GetPar(i_par);
-		new_par[i_par] = rec->put_dyn_par(par, inv_dyn);
+		new_par[i_par] = rec->put_dyn_par(par, ind_dyn);
 		CPPAD_ASSERT_UNKNOWN( size_t( new_par[i_par] ) == i_par );
 	}
 	//
@@ -323,7 +323,7 @@ void optimize_run(
 			}
 			else
 			{	// independent dynamic parmaeter case
-				CPPAD_ASSERT_UNKNOWN( op == inv_dyn )
+				CPPAD_ASSERT_UNKNOWN( op == ind_dyn )
 				CPPAD_ASSERT_UNKNOWN( i_par < num_dynamic_ind );
 				CPPAD_ASSERT_UNKNOWN( n_arg == 0 );
 			}

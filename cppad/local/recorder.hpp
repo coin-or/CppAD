@@ -363,7 +363,7 @@ is the index in all_par_vec_ corresponding to this dynamic parameter value.
 template <class Base>
 addr_t recorder<Base>::put_dyn_par(const Base &par, op_code_dyn op)
 {	// independent parameters come first
-	CPPAD_ASSERT_UNKNOWN( op == inv_dyn );
+	CPPAD_ASSERT_UNKNOWN( op == ind_dyn );
 	CPPAD_ASSERT_UNKNOWN( num_arg_dyn(op) == 0 );
 	all_par_vec_.push_back( par );
 	dyn_par_is_.push_back(true);

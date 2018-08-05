@@ -105,7 +105,7 @@ void dynamic(
 # ifndef NDEBUG
 	for(size_t j = 0; j < num_ind_dynamic; ++j)
 		CPPAD_ASSERT_UNKNOWN(
-			dyn_par_is[j] && op_code_dyn( dyn_par_op[j] ) == inv_dyn
+			dyn_par_is[j] && op_code_dyn( dyn_par_op[j] ) == ind_dyn
 	);
 # endif
 	// used to hold the first two parameter arguments
@@ -115,7 +115,7 @@ void dynamic(
 	// Skip the independent dynamic parameters (they are inputs).
 	size_t i_op  = num_ind_dynamic;
 	//
-	// Initialize index in all_par_vec (none used inv_dyn operators).
+	// Initialize index in all_par_vec (none used ind_dyn operators).
 	size_t i_arg = 0;
 	//
 	// Loop the parameters skipping independent dynamics at beginning.
