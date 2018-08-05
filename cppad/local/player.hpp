@@ -39,7 +39,7 @@ private:
 	// ----------------------------------------------------------------------
 	// information that defines the recording
 
-	/// Number of dynamic parameters
+	/// Number of independent dynamic parameters
 	size_t num_dynamic_ind_;
 
 	/// Number of variables in the recording.
@@ -68,10 +68,15 @@ private:
 	pod_vector_maybe<Base> all_par_vec_;
 
 	/// Which elements of all_par_vec_ are dynamic parameters
-	/// (same size are all_par_vec_)
-	pod_vector<bool>     dyn_par_is_;
+	/// (size equal number of parametrers)
+	pod_vector<bool> dyn_par_is_;
+
+	/// mapping from dynamic parameter index to parameter index
+	/// (size equal to number of dynamic parameters)
+	pod_vector<addr_t> dyn_ind2par_ind_;
 
 	/// operators for just the dynamic parameters
+	/// (size equal number of dynamic parameters)
 	pod_vector<opcode_t> dyn_par_op_;
 
 	/// arguments for the dynamic parameter operators
@@ -201,6 +206,17 @@ public:
 			}
 			CPPAD_ASSERT_UNKNOWN( i == vecad_ind_vec_.size() );
 		}
+
+		// mapping from dynamic parameter index to parameter index
+		dyn_ind2par_ind_.resize( dyn_par_op_.size() );
+		size_t i_dyn = 0;
+		for(size_t i_par = 0; i_par < all_par_vec_.size(); ++i_par)
+		{	if( dyn_par_is_[i_par] )
+			{	dyn_ind2par_ind_[i_dyn] = addr_t( i_par );
+				++i_dyn;
+			}
+		}
+		CPPAD_ASSERT_UNKNOWN( i_dyn == dyn_ind2par_ind_.size() );
 
 		// random access information
 		clear_random();
@@ -419,34 +435,33 @@ public:
 	{	return; }
 # else
 	void check_dynamic_dag(void) const
-	{	// number of parameters
-		size_t num_par = all_par_vec_.size();
+	{	// number of dynamic parameters
+		size_t num_dyn = dyn_par_op_.size();
 		//
-		size_t i_op = 0;  // initialize dynamic parameter operator index
 		size_t i_arg = 0; // initialize dynamic parameter argument index
-		for(size_t i_par = 0; i_par < num_par; ++i_par)
-		if( dyn_par_is_[i_par] )
+		for(size_t i_dyn = 0; i_dyn < num_dyn; ++i_dyn)
 		{	// i_par is parameter index
+			addr_t i_par = dyn_ind2par_ind_[i_dyn];
+			CPPAD_ASSERT_UNKNOWN( dyn_par_is_[i_par] );
 			//
 			// operator for this dynamic parameter
-			op_code_dyn op = op_code_dyn( dyn_par_op_[i_op] );
+			op_code_dyn op = op_code_dyn( dyn_par_op_[i_dyn] );
 			//
 			// number of arguments for this dynamic parameter
 			size_t n_arg = num_arg_dyn(op);
 			//
 			if( op == cond_exp_dyn )
 			{	for(size_t i = 1; i < n_arg; ++i) CPPAD_ASSERT_UNKNOWN(
-					size_t( dyn_par_arg_[i_arg + i] ) < i_par
+					dyn_par_arg_[i_arg + i] < i_par
 				);
 			}
 			else
 			{	for(size_t i = 0; i < n_arg; ++i) CPPAD_ASSERT_UNKNOWN(
-					size_t( dyn_par_arg_[i_arg + i] ) < i_par
+					dyn_par_arg_[i_arg + i] < i_par
 				);
 			}
 			//
 			// next dynamic parameter
-			++i_op;
 			i_arg += n_arg;
 		}
 		return;
@@ -470,6 +485,7 @@ public:
 		arg_vec_            = play.arg_vec_;
 		all_par_vec_        = play.all_par_vec_;
 		dyn_par_is_         = play.dyn_par_is_;
+		dyn_ind2par_ind_    = play.dyn_ind2par_ind_;
 		dyn_par_op_         = play.dyn_par_op_;
 		dyn_par_arg_        = play.dyn_par_arg_;
 		text_vec_           = play.text_vec_;
@@ -491,6 +507,7 @@ public:
 		arg_vec_.resize(0);
 		all_par_vec_.resize(0);
 		dyn_par_is_.resize(0);
+		dyn_ind2par_ind_.resize(0);
 		dyn_par_op_.resize(0);
 		dyn_par_arg_.resize(0);
 		text_vec_.resize(0);
@@ -532,6 +549,9 @@ public:
 	/// const version of dynamic parameter flag
 	const pod_vector<bool>& dyn_par_is(void) const
 	{	return dyn_par_is_; }
+	/// const version of dynamic parameter index to parameter index
+	const pod_vector<addr_t>& dyn_ind2par_ind(void) const
+	{	return dyn_ind2par_ind_; }
 	/// const version of dynamic parameter operator
 	const pod_vector<opcode_t>& dyn_par_op(void) const
 	{	return dyn_par_op_; }
@@ -609,11 +629,8 @@ public:
 
 	/// Fetch number of dynamic parameters in the recording
 	size_t num_dynamic_par(void) const
-	{	size_t result = num_dynamic_ind_;
-		for(size_t i = num_dynamic_ind_; i < num_par_rec(); ++i)
-			result += size_t( dyn_par_is_[i] );
-		return result;
-	}
+	{	return dyn_par_op_.size(); }
+
 	/// Fetch number of dynamic parameters operator arguments in the recording
 	size_t num_dynamic_arg(void) const
 	{	return dyn_par_arg_.size(); }
@@ -664,6 +681,7 @@ public:
 		     + arg_vec_.size()       * sizeof(addr_t)
 		     + all_par_vec_.size()   * sizeof(Base)
 		     + dyn_par_is_.size()    * sizeof(bool)
+		     + dyn_ind2par_ind_.size() * sizeof(addr_t)
 		     + dyn_par_op_.size()    * sizeof(opcode_t)
 		     + dyn_par_arg_.size()   * sizeof(addr_t)
 		     + text_vec_.size()      * sizeof(char)

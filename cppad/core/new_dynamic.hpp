@@ -115,6 +115,7 @@ void ADFun<Base>::new_dynamic(const VectorBase& dynamic)
 	const pod_vector<bool>&            dyn_par_is ( play_.dyn_par_is()  );
 	const pod_vector<local::opcode_t>& dyn_par_op ( play_.dyn_par_op()  );
 	const pod_vector<addr_t>&          dyn_par_arg( play_.dyn_par_arg() );
+	const pod_vector<addr_t>&     dyn_ind2par_ind ( play_.dyn_ind2par_ind() );
 
 	// set the independent dynamic parameters
 	for(size_t j = 0; j < num_dynamic_ind; ++j)
@@ -130,6 +131,7 @@ void ADFun<Base>::new_dynamic(const VectorBase& dynamic)
 		num_dynamic_ind ,
 		all_par_vec     ,
 		dyn_par_is      ,
+		dyn_ind2par_ind ,
 		dyn_par_op      ,
 		dyn_par_arg
 	);

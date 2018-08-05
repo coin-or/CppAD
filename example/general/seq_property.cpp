@@ -155,6 +155,7 @@ bool seq_property(void)
 	sum += npar       * sizeof(double);
 	sum += npar       * sizeof(bool);
 	sum += ndyn       * sizeof(CPPAD_VEC_ENUM_TYPE);
+	sum += ndyn       * sizeof(CPPAD_TAPE_ADDR_TYPE);
 	sum += ndyn_arg   * sizeof(CPPAD_TAPE_ADDR_TYPE);
 	sum += ntext      * sizeof(char);
 	sum += nvecad     * sizeof(CPPAD_TAPE_ADDR_TYPE);

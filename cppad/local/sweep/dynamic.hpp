@@ -67,6 +67,13 @@ The other dynamic parameters are outputs.
 is a vector with the same length as par_vec.
 The i-th parameter is dynamic if and only if dyn_par_is[i] is true.
 
+\param dyn_ind2par_ind
+is a vector with length equal to the number of dynamic parameters.
+The element dyn_ind2par_ind[j] is the index in all_par_vec corresponding
+to the j-th dynamic parameter.
+Note that if dyn_par_is[i] is false, the i-th parameter does not
+appear in this vector.
+
 \param dyn_par_op
 is a vector with length equal to the number of dynamic parameters.
 The element dyn_par_op_[j] is the operator for the j-th dynamic parameter.
@@ -88,6 +95,7 @@ void dynamic(
 	size_t                        num_ind_dynamic ,
 	pod_vector_maybe<Base>&       all_par_vec     ,
 	const pod_vector<bool>&       dyn_par_is      ,
+	const pod_vector<addr_t>&     dyn_ind2par_ind ,
 	const pod_vector<opcode_t>&   dyn_par_op      ,
 	const pod_vector<addr_t>&     dyn_par_arg     )
 {
@@ -111,20 +119,20 @@ void dynamic(
 	// used to hold the first two parameter arguments
 	const Base* par[2];
 	//
-	// Initialize index for this dynamic parameter.
-	// Skip the independent dynamic parameters (they are inputs).
-	size_t i_op  = num_ind_dynamic;
-	//
 	// Initialize index in all_par_vec (none used ind_dyn operators).
 	size_t i_arg = 0;
 	//
-	// Loop the parameters skipping independent dynamics at beginning.
-	// Also skip parameters that are not dynamic parameters.
-	for(size_t i_par = num_ind_dynamic; i_par < all_par_vec.size(); ++i_par)
-	if( dyn_par_is[i_par] )
-	{	//
+	// number of dynamic parameters
+	size_t num_dynamic_par = dyn_ind2par_ind.size();
+	CPPAD_ASSERT_UNKNOWN( num_ind_dynamic <= num_dynamic_par );
+	//
+	// Loop the dynamic parameters skipping independent dynamics at beginning.
+	for(size_t i_dyn = num_ind_dynamic; i_dyn < num_dynamic_par; ++i_dyn)
+	{	// parametere index for this dynamic parameter
+		size_t i_par = dyn_ind2par_ind[i_dyn];
+		//
 		// operator for this dynamic parameter
-		op_code_dyn op = op_code_dyn( dyn_par_op[i_op] );
+		op_code_dyn op = op_code_dyn( dyn_par_op[i_dyn] );
 		//
 		// number of arguments
 		size_t n_arg   = num_arg_dyn(op);
@@ -350,10 +358,8 @@ void dynamic(
 			std::cout << ")" << std::endl;
 		}
 # endif
-		++i_op;
 		i_arg += num_arg_dyn(op);
 	}
-	CPPAD_ASSERT_UNKNOWN( i_op  == dyn_par_op.size() )
 	CPPAD_ASSERT_UNKNOWN( i_arg == dyn_par_arg.size() )
 	return;
 }

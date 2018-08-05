@@ -31,6 +31,10 @@ $$
 
 $section Changes and Additions to CppAD During 2018$$
 
+$head 08-05$$
+The amount of memory in an operation sequence has changed; see
+$cref/f.size_op_seq/seq_property/size_op_seq/$$.
+
 $head 08-04$$
 Remove the restrictions on dynamic parameters.
 They can now be used anywhere except as indices and values in

@@ -72,6 +72,9 @@ void get_par_usage(
 	// number of parameters in the tape
 	const size_t num_par = play->num_par_rec();
 	//
+	// number of dynamic parameters
+	const size_t num_dynamic_par = play->num_dynamic_par();
+	//
 	// number of VecAD vectors
 	size_t num_vecad_vec = play->num_vecad_vec_rec();
 	//
@@ -79,6 +82,7 @@ void get_par_usage(
 	const pod_vector<bool>&      dyn_par_is( play->dyn_par_is() );
 	const pod_vector<opcode_t>&  dyn_par_op( play->dyn_par_op() );
 	const pod_vector<addr_t>&    dyn_par_arg( play->dyn_par_arg() );
+	const pod_vector<addr_t>&    dyn_ind2par_ind( play->dyn_ind2par_ind() );
 	// -----------------------------------------------------------------------
 	// initialize par_usage as false
 	par_usage.resize(num_par);
@@ -276,40 +280,40 @@ void get_par_usage(
 	}
 	// -----------------------------------------------------------------------
 	// reverse pass to determine which dynamic parameters are necessary
-	size_t i_par = num_par;            // number of parameters
-	size_t i_op  = dyn_par_op.size();  // #  of dynamic parameter operators
-	size_t i_arg = dyn_par_arg.size(); // # of dynamic parameter arguments
-	while(i_par)
-	{	// next parameter in reverse order
-		--i_par;
-		if( dyn_par_is[i_par] )
-		{	// next dynamic parameter in reverse order
-			--i_op;
-			op_code_dyn op = op_code_dyn( dyn_par_op[i_op] );
-			//
-			// number of argumens to this operator
-			size_t n_arg = num_arg_dyn(op);
-			//
-			// index of first argument for this operator
-			i_arg -= n_arg;
-			//
-			// if this dynamic parameter is needed
-			if( par_usage[i_par] )
-			{	// neeed dynamic parameters that are used to generate this one
-				if( op == cond_exp_dyn )
-				{	// special case
-					CPPAD_ASSERT_UNKNOWN( n_arg == 5 );
-					for(size_t i = 1; i < 5; ++i)
-						par_usage[ dyn_par_arg[i_arg + i] ] = true;
-				}
-				else
-				{	for(size_t i = 0; i < n_arg; ++i)
+	size_t i_arg = dyn_par_arg.size(); // index in dyn_par_arg
+	size_t i_dyn = num_dynamic_par;    // index in dyn_ind2par_ind
+	while(i_dyn)
+	{	// next dynamic parameter in reverse order
+		--i_dyn;
+		//
+		// corresponding parameter index
+		size_t i_par = dyn_ind2par_ind[i_dyn];
+		CPPAD_ASSERT_UNKNOWN( dyn_par_is[i_par] );
+		//
+		// next dynamic parameter in reverse order
+		op_code_dyn op = op_code_dyn( dyn_par_op[i_dyn] );
+		//
+		// number of argumens to this operator
+		size_t n_arg = num_arg_dyn(op);
+		//
+		// index of first argument for this operator
+		i_arg -= n_arg;
+		//
+		// if this dynamic parameter is needed
+		if( par_usage[i_par] )
+		{	// neeed dynamic parameters that are used to generate this one
+			if( op == cond_exp_dyn )
+			{	// special case
+				CPPAD_ASSERT_UNKNOWN( n_arg == 5 );
+				for(size_t i = 1; i < 5; ++i)
 					par_usage[ dyn_par_arg[i_arg + i] ] = true;
-				}
+			}
+			else
+			{	for(size_t i = 0; i < n_arg; ++i)
+				par_usage[ dyn_par_arg[i_arg + i] ] = true;
 			}
 		}
 	}
-	CPPAD_ASSERT_UNKNOWN( i_op == 0 );
 	CPPAD_ASSERT_UNKNOWN( i_arg == 0 );
 	//
 	return;

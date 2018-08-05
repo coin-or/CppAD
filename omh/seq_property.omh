@@ -275,6 +275,7 @@ $codei%
 	    + %f%.size_par()     * sizeof(%Base%)
 	    + %f%.size_par()     * sizeof(bool)
 	    + %f%.size_dyn_par() * sizeof(CPPAD_VEC_ENUM_TYPE)
+	    + %f%.size_dyn_par() * sizeof(%tape_addr_type%)
 	    + %f%.size_dyn_arg() * sizeof(%tape_addr_type%)
 	    + %f%.size_text()    * sizeof(char)
 	    + %f%.size_VecAD()   * sizeof(%tape_addr_type%)

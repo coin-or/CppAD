@@ -144,6 +144,10 @@ void optimize_run(
 	// number of independent dynamic parameters
 	size_t num_dynamic_ind = play->num_dynamic_ind();
 
+	// number of dynamic parameters
+	size_t num_dynamic_par = play->num_dynamic_par();
+	CPPAD_ASSERT_UNKNOWN( num_dynamic_ind <= num_dynamic_par );
+
 	// -----------------------------------------------------------------------
 	// operator information
 	pod_vector<addr_t>        cexp2op;
@@ -248,6 +252,7 @@ void optimize_run(
 	//
 	// dynamic parameter information in player
 	const pod_vector<bool>&     dyn_par_is( play->dyn_par_is() );
+	const pod_vector<addr_t>&   dyn_ind2par_ind( play->dyn_ind2par_ind() );
 	const pod_vector<opcode_t>& dyn_par_op( play->dyn_par_op() );
 	const pod_vector<addr_t>&   dyn_par_arg( play->dyn_par_arg() );
 	//
@@ -276,15 +281,13 @@ void optimize_run(
 	}
 	//
 	// set new_par for dynamic parameters that get used
-	size_t i_op  = 0;  // dynamic parameter operator index
 	size_t i_arg = 0;  // dynamic parameter argument index
-	//
-	for(size_t i_par = 0; i_par < num_par; ++i_par)
-	if( dyn_par_is[i_par] )
+	for(size_t i_dyn = 0; i_dyn < num_dynamic_par; ++i_dyn)
 	{	// i_par is the paramerer index
+		size_t i_par = dyn_ind2par_ind[i_dyn];
 		//
 		// operator for this dynamic parameter
-		op_code_dyn op = op_code_dyn( dyn_par_op[i_op] );
+		op_code_dyn op = op_code_dyn( dyn_par_op[i_dyn] );
 		//
 		// number of arguments for this dynamic parameter
 		size_t n_arg   = num_arg_dyn(op);
@@ -328,7 +331,6 @@ void optimize_run(
 				CPPAD_ASSERT_UNKNOWN( n_arg == 0 );
 			}
 		}
-		++i_op;
 		i_arg += num_arg_dyn(op);
 	}
 	// ------------------------------------------------------------------------
@@ -380,7 +382,7 @@ void optimize_run(
 	CPPAD_ASSERT_UNKNOWN( new_op.size() == num_op );
 	// -------------------------------------------------------------
 	// information for current operator
-	// size_t       i_op;   // index
+	size_t          i_op;   // index
 	OpCode          op;     // operator
 	const addr_t*   arg;    // arguments
 	size_t          i_var;  // variable index of primary (last) result
