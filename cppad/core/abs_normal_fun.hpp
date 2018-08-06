@@ -286,7 +286,11 @@ This is effectively const except that the play back state play_
 is used.
 */
 
-# define NOT_YET_COMPILING 0
+# ifndef NDEBUG
+# define CPPAD_J_PAR_EQUAL_REC j_par = rec
+# else
+# define CPPAD_J_PAR_EQUAL_REC rec
+# endif
 
 template <class Base>
 void ADFun<Base>::abs_normal_fun(ADFun<Base>& g, ADFun<Base>& a) const
@@ -326,8 +330,76 @@ void ADFun<Base>::abs_normal_fun(ADFun<Base>& g, ADFun<Base>& a) const
 	// ------------------------------------------------------------------------
 	// Forward sweep to create new recording
 	// ------------------------------------------------------------------------
+	// dynamic parameter information in player
+	const pod_vector<bool>&     dyn_par_is( play_.dyn_par_is() );
+	const pod_vector<opcode_t>& dyn_par_op( play_.dyn_par_op() );
+	const pod_vector<addr_t>&   dyn_par_arg( play_.dyn_par_arg() );
+	//
 	// recorder for new operation sequence
 	recorder<Base> rec;
+	//
+	// number of parameters in both operation sequences
+	size_t num_par = play_.num_par_rec();
+	//
+	// number of independent dynamic parameters
+	size_t num_dynamic_ind = play_.num_dynamic_par();
+	rec.set_num_dynamic_ind(num_dynamic_ind);
+	//
+	// set all parameter to be exactly the same in rec as in play
+	size_t i_dyn = 0; // dynamic parameter index
+	size_t i_arg = 0; // dynamic parameter operator argument index
+	for(size_t i_par = 0; i_par < num_par; ++i_par)
+	{
+# ifndef NDEBUG
+		size_t j_par = 0;
+# endif
+		// value of this parameter
+		Base par = play_.GetPar(i_par);
+		if( ! dyn_par_is[i_par] )
+			CPPAD_J_PAR_EQUAL_REC.put_con_par(par);
+		else
+		{	// operator for this dynamic parameter
+			op_code_dyn op_dyn = op_code_dyn( dyn_par_op[i_dyn] );
+			//
+			// number of arguments for this dynamic parameter
+			size_t n_arg = num_arg_dyn(op_dyn);
+			//
+			switch(n_arg)
+			{	case 0:
+				CPPAD_J_PAR_EQUAL_REC.put_dyn_par(par, op_dyn);
+				break;
+
+				case 1:
+				CPPAD_J_PAR_EQUAL_REC.put_dyn_par(par, op_dyn,
+					dyn_par_arg[i_arg + 0]
+				);
+				break;
+
+				case 2:
+				CPPAD_J_PAR_EQUAL_REC.put_dyn_par(par, op_dyn,
+					dyn_par_arg[i_arg + 0] ,
+					dyn_par_arg[i_arg + 1]
+				);
+				break;
+
+				case 5:
+				CPPAD_J_PAR_EQUAL_REC.put_dyn_cond_exp(par,
+					CompareOp( dyn_par_arg[i_arg + 0] )  ,
+					dyn_par_arg[i_arg + 1]               ,
+					dyn_par_arg[i_arg + 2]               ,
+					dyn_par_arg[i_arg + 3]               ,
+					dyn_par_arg[i_arg + 4]
+				);
+				break;
+
+				default:
+				CPPAD_ASSERT_UNKNOWN(false);
+			}
+			++i_dyn;
+			i_arg += n_arg;
+		}
+		CPPAD_ASSERT_UNKNOWN( j_par == i_par );
+	}
 	//
 	// number of variables in both operation sequences
 	// (the AbsOp operators are replace by InvOp operators)
@@ -382,9 +454,6 @@ void ADFun<Base>::abs_normal_fun(ADFun<Base>& g, ADFun<Base>& a) const
 	// used to hold new argument vector
 	addr_t new_arg[6];
 	//
-	// Parameters in recording of f
-	const Base* f_parameter = play_.GetPar();
-	//
 	// now loop through the rest of the
 	more_operators = true;
 	index_abs      = 0;
@@ -410,7 +479,7 @@ void ADFun<Base>::abs_normal_fun(ADFun<Base>& g, ADFun<Base>& a) const
 			// Unary operators, argument a parameter, one result
 			case ParOp:
 			CPPAD_ASSERT_NARG_NRES(op, 1, 1);
-			new_arg[0] = rec.put_con_par( f_parameter[ arg[0] ] );
+			new_arg[0] = arg[0]; // parameter
 			rec.PutArg( new_arg[0] );
 			f2g_var[i_var] = rec.PutOp(op);
 			break;
@@ -452,10 +521,8 @@ void ADFun<Base>::abs_normal_fun(ADFun<Base>& g, ADFun<Base>& a) const
 			// Error function is a special case
 			// second argument is always the parameter 0
 			// third argument is always the parameter 2 / sqrt(pi)
-			rec.PutArg( rec.put_con_par( Base(0.0) ) );
-			rec.PutArg( rec.put_con_par(
-				Base( 1.0 / std::sqrt( std::atan(1.0) ) )
-			) );
+			rec.PutArg( arg[1] ); // parameter
+			rec.PutArg( arg[2] ); // parameter
 			f2g_var[i_var] = rec.PutOp(op);
 			break;
 			// --------------------------------------------------------------
@@ -467,7 +534,7 @@ void ADFun<Base>::abs_normal_fun(ADFun<Base>& g, ADFun<Base>& a) const
 			CPPAD_ASSERT_NARG_NRES(op, 2, 1);
 			CPPAD_ASSERT_UNKNOWN( size_t( f2g_var[ arg[0] ] ) < num_var );
 			new_arg[0] = f2g_var[ arg[0] ];
-			new_arg[1] = rec.put_con_par( f_parameter[ arg[1] ] );
+			new_arg[1] = arg[1]; // parameter
 			rec.PutArg( new_arg[0], new_arg[1] );
 			f2g_var[i_var] = rec.PutOp(op);
 			break;
@@ -491,7 +558,7 @@ void ADFun<Base>::abs_normal_fun(ADFun<Base>& g, ADFun<Base>& a) const
 			case ZmulpvOp:
 			CPPAD_ASSERT_NARG_NRES(op, 2, 1);
 			CPPAD_ASSERT_UNKNOWN( size_t( f2g_var[ arg[1] ] ) < num_var );
-			new_arg[0] = rec.put_con_par( f_parameter[ arg[0] ] );
+			new_arg[0] = arg[0]; // parameter
 			new_arg[1] = f2g_var[ arg[1] ];
 			rec.PutArg( new_arg[0], new_arg[1] );
 			f2g_var[i_var] = rec.PutOp(op);
@@ -524,7 +591,7 @@ void ADFun<Base>::abs_normal_fun(ADFun<Base>& g, ADFun<Base>& a) const
 					new_arg[i] = f2g_var[ arg[i] ];
 				}
 				else
-					new_arg[i] = rec.put_con_par( f_parameter[ arg[i] ] );
+					new_arg[i] = arg[i]; // parameter
 				mask = mask << 1;
 			}
 			rec.PutArg(
@@ -553,7 +620,7 @@ void ADFun<Base>::abs_normal_fun(ADFun<Base>& g, ADFun<Base>& a) const
 			case EqpvOp:
 			case NepvOp:
 			CPPAD_ASSERT_NARG_NRES(op, 2, 0);
-			new_arg[0] = rec.put_con_par( f_parameter[ arg[0] ] );
+			new_arg[0] = arg[0]; // parameter
 			new_arg[1] = f2g_var[ arg[1] ];
 			rec.PutArg(new_arg[0], new_arg[1]);
 			rec.PutOp(op);
@@ -563,7 +630,7 @@ void ADFun<Base>::abs_normal_fun(ADFun<Base>& g, ADFun<Base>& a) const
 			case LtvpOp:
 			CPPAD_ASSERT_NARG_NRES(op, 2, 0);
 			new_arg[0] = f2g_var[ arg[0] ];
-			new_arg[1] = rec.put_con_par( f_parameter[ arg[1] ] );
+			new_arg[1] = arg[1]; // parameter
 			rec.PutArg(new_arg[0], new_arg[1]);
 			rec.PutOp(op);
 			break;
@@ -594,7 +661,7 @@ void ADFun<Base>::abs_normal_fun(ADFun<Base>& g, ADFun<Base>& a) const
 				new_arg[1] = f2g_var[ arg[1] ];
 			}
 			else
-			{	new_arg[1] = rec.put_con_par( f_parameter[ arg[1] ] );
+			{	new_arg[1] = arg[1]; // parameter
 			}
 			//
 			// arg[3]
@@ -604,7 +671,7 @@ void ADFun<Base>::abs_normal_fun(ADFun<Base>& g, ADFun<Base>& a) const
 				new_arg[3] = f2g_var[ arg[3] ];
 			}
 			else
-			{	new_arg[3] = rec.put_con_par( f_parameter[ arg[3] ] );
+			{	new_arg[3] = arg[3]; // parameter
 			}
 			new_arg[2] = rec.PutTxt( play_.GetTxt( arg[2] ) );
 			new_arg[4] = rec.PutTxt( play_.GetTxt( arg[4] ) );
@@ -656,8 +723,8 @@ void ADFun<Base>::abs_normal_fun(ADFun<Base>& g, ADFun<Base>& a) const
 			case StppOp:
 			CPPAD_ASSERT_NARG_NRES(op, 3, 0);
 			new_arg[0] = arg[0];
-			new_arg[1] = rec.put_con_par( f_parameter[ arg[1] ] );
-			new_arg[2] = rec.put_con_par( f_parameter[ arg[2] ] );
+			new_arg[1] = arg[1]; // parameter
+			new_arg[2] = arg[2]; // parameter
 			rec.PutArg(
 				new_arg[0],
 				new_arg[1],
@@ -672,7 +739,7 @@ void ADFun<Base>::abs_normal_fun(ADFun<Base>& g, ADFun<Base>& a) const
 			CPPAD_ASSERT_UNKNOWN( size_t( f2g_var[ arg[1] ] ) < num_var );
 			new_arg[0] = arg[0];
 			new_arg[1] = f2g_var[ arg[1] ];
-			new_arg[2] = rec.put_con_par( f_parameter[ arg[2] ] );
+			new_arg[2] = arg[2]; // parameter
 			rec.PutArg(
 				new_arg[0],
 				new_arg[1],
@@ -686,7 +753,7 @@ void ADFun<Base>::abs_normal_fun(ADFun<Base>& g, ADFun<Base>& a) const
 			CPPAD_ASSERT_NARG_NRES(op, 3, 0);
 			CPPAD_ASSERT_UNKNOWN( size_t( f2g_var[ arg[2] ] ) < num_var );
 			new_arg[0] = arg[0];
-			new_arg[1] = rec.put_con_par( f_parameter[ arg[1] ] );
+			new_arg[1] = arg[1]; // parameter
 			new_arg[2] = f2g_var[ arg[2] ];
 			rec.PutArg(
 				new_arg[0],
@@ -723,7 +790,7 @@ void ADFun<Base>::abs_normal_fun(ADFun<Base>& g, ADFun<Base>& a) const
 
 			case UsrapOp:
 			CPPAD_ASSERT_NARG_NRES(op, 1, 0);
-			new_arg[0] = rec.put_con_par( f_parameter[ arg[0] ] );
+			new_arg[0] = arg[0]; // parameter
 			rec.PutArg(new_arg[0]);
 			rec.PutOp(UsrapOp);
 			break;
@@ -738,7 +805,7 @@ void ADFun<Base>::abs_normal_fun(ADFun<Base>& g, ADFun<Base>& a) const
 
 			case UsrrpOp:
 			CPPAD_ASSERT_NARG_NRES(op, 1, 0);
-			new_arg[0] = rec.put_con_par( f_parameter[ arg[0] ] );
+			new_arg[0] = arg[0]; // parameter
 			rec.PutArg(new_arg[0]);
 			rec.PutOp(UsrrpOp);
 			break;
