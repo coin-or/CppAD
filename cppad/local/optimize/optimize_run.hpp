@@ -145,8 +145,7 @@ void optimize_run(
 	size_t num_dynamic_ind = play->num_dynamic_ind();
 
 	// number of dynamic parameters
-	size_t num_dynamic_par = play->num_dynamic_par();
-	CPPAD_ASSERT_UNKNOWN( num_dynamic_ind <= num_dynamic_par );
+	CPPAD_ASSERT_UNKNOWN( num_dynamic_ind <= play->num_dynamic_par () );
 
 	// -----------------------------------------------------------------------
 	// operator information
@@ -252,50 +251,40 @@ void optimize_run(
 	//
 	// dynamic parameter information in player
 	const pod_vector<bool>&     dyn_par_is( play->dyn_par_is() );
-	const pod_vector<addr_t>&   dyn_ind2par_ind( play->dyn_ind2par_ind() );
 	const pod_vector<opcode_t>& dyn_par_op( play->dyn_par_op() );
 	const pod_vector<addr_t>&   dyn_par_arg( play->dyn_par_arg() );
 	//
-	// initialize to invalid value
-	addr_t addr_t_max = std::numeric_limits<addr_t>::max();
-	pod_vector<addr_t> new_par( num_par );
-	for(size_t j = 0; j < num_par; ++j)
-		new_par[j] = addr_t_max;
-	//
 	// independent dynamic parameters are always incldued and must go at front
-	rec->set_num_dynamic_ind(num_dynamic_ind);
-	for(size_t i_par = 0; i_par < num_dynamic_ind; ++i_par)
-	{	// value of this independent dynamic parameter in player
-		Base par       = play->GetPar(i_par);
-		new_par[i_par] = rec->put_dyn_par(par, ind_dyn);
-		CPPAD_ASSERT_UNKNOWN( size_t( new_par[i_par] ) == i_par );
-	}
 	//
-	// set new_par for constant parameters that get used
+	// set new_par
+	pod_vector<addr_t> new_par( num_par );
+	addr_t addr_t_max = std::numeric_limits<addr_t>::max();
+	rec->set_num_dynamic_ind(num_dynamic_ind);
+	size_t i_dyn = 0;  // dynamic parmaeter index
+	size_t i_arg = 0;  // dynamic parameter argument index
 	for(size_t i_par = 0; i_par < num_par; ++i_par)
-	{	if( ( ! dyn_par_is[i_par] ) & par_usage[i_par] )
-		{	// value of this constant parameter in player
+	if( ! dyn_par_is[i_par] )
+	{	CPPAD_ASSERT_UNKNOWN( num_dynamic_ind <= i_par );
+		if( par_usage[i_par] )
+		{	// value of this parameter
 			Base par       = play->GetPar(i_par);
 			new_par[i_par] = rec->put_con_par(par);
 		}
+		else
+			new_par[i_par] = addr_t_max;
 	}
-	//
-	// set new_par for dynamic parameters that get used
-	size_t i_arg = 0;  // dynamic parameter argument index
-	for(size_t i_dyn = 0; i_dyn < num_dynamic_par; ++i_dyn)
-	{	// i_par is the paramerer index
-		size_t i_par = dyn_ind2par_ind[i_dyn];
-		//
+	else
+	{	//
 		// operator for this dynamic parameter
 		op_code_dyn op = op_code_dyn( dyn_par_op[i_dyn] );
 		//
 		// number of arguments for this dynamic parameter
 		size_t n_arg   = num_arg_dyn(op);
 		//
-		// value of this dynamic parameter in player
-		Base par       = play->GetPar(i_par);
 		if( par_usage[i_par] )
-		{
+		{	// value of this parameter
+			Base par       = play->GetPar(i_par);
+			//
 			if( op == cond_exp_dyn )
 			{	// cond_exp_dyn
 				CPPAD_ASSERT_UNKNOWN( num_dynamic_ind <= i_par );
@@ -329,9 +318,11 @@ void optimize_run(
 				CPPAD_ASSERT_UNKNOWN( op == ind_dyn )
 				CPPAD_ASSERT_UNKNOWN( i_par < num_dynamic_ind );
 				CPPAD_ASSERT_UNKNOWN( n_arg == 0 );
+				new_par[i_par] = rec->put_dyn_par( par, op);
 			}
 		}
-		i_arg += num_arg_dyn(op);
+		++i_dyn;
+		i_arg += n_arg;
 	}
 	// ------------------------------------------------------------------------
 	// initialize mapping from old VecAD index to new VecAD index

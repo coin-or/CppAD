@@ -53,6 +53,7 @@ Upon return it has size equal to the number of parameters
 in the operation sequence; i.e., play->num_par_rec();
 The value par_usage[i] is true if an only if
 the i-th parameter is used.
+(Independent dynamic parameters are always used.)
 */
 
 template <class Addr, class Base>
@@ -75,6 +76,9 @@ void get_par_usage(
 	// number of dynamic parameters
 	const size_t num_dynamic_par = play->num_dynamic_par();
 	//
+	// number of independent dynamic parameters
+	size_t num_dynamic_ind = play->num_dynamic_ind();
+	//
 	// number of VecAD vectors
 	size_t num_vecad_vec = play->num_vecad_vec_rec();
 	//
@@ -84,11 +88,14 @@ void get_par_usage(
 	const pod_vector<addr_t>&    dyn_par_arg( play->dyn_par_arg() );
 	const pod_vector<addr_t>&    dyn_ind2par_ind( play->dyn_ind2par_ind() );
 	// -----------------------------------------------------------------------
-	// initialize par_usage as false
+	// initialize par_usage
 	par_usage.resize(num_par);
-	for(size_t i_par = 0; i_par < num_par; ++i_par)
-		par_usage[i_par] = false;
+	for(size_t i_par = 0; i_par < num_dynamic_ind; ++i_par)
+		par_usage[i_par] = true;  // true for independent dynamic parameters
+	for(size_t i_par = num_dynamic_par; i_par < num_par; ++i_par)
+		par_usage[i_par] = false; // initialize as false for other parameters
 	//
+	// -----------------------------------------------------------------------
 	// set usage to true for VecAD parameters that get used
 	size_t start_this_vector = 0;
 	for(size_t i_vec = 0; i_vec < num_vecad_vec; ++i_vec)
