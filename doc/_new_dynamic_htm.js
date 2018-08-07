@@ -58,7 +58,6 @@ var list_current0 = [
 'new_dynamic.htm#dynamic',
 'new_dynamic.htm#VectorBase',
 'new_dynamic.htm#Taylor Coefficients',
-'new_dynamic.htm#Restrictions',
 'new_dynamic.htm#Example'
 ];
 function choose_across0(item)

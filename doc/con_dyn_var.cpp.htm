@@ -23,7 +23,7 @@ A:link { color : blue }
 A:visited { color : purple }
 A:active { color : purple }
 </style>
-<script type='text/javascript' language='JavaScript' src='_par_var_dyn.cpp_htm.js'>
+<script type='text/javascript' language='JavaScript' src='_con_dyn_var.cpp_htm.js'>
 </script>
 </head>
 <body>
@@ -31,7 +31,7 @@ A:active { color : purple }
 <td>
 <a href="https://github.com/coin-or/cppad" target="_top"><img border="0" src="_image.gif"></a>
 </td>
-<td><a href="par_var_dyn.htm" target="_top">Prev</a>
+<td><a href="con_dyn_var.htm" target="_top">Prev</a>
 </td><td><a href="equalopseq.htm" target="_top">Next</a>
 </td><td>
 <select onchange='choose_across0(this)'>
@@ -49,8 +49,8 @@ A:active { color : purple }
 <option>CppAD</option>
 <option>AD</option>
 <option>BoolValued</option>
-<option>par_var_dyn</option>
-<option>par_var_dyn.cpp</option>
+<option>con_dyn_var</option>
+<option>con_dyn_var.cpp</option>
 </select>
 </td>
 <td>
@@ -71,17 +71,17 @@ A:active { color : purple }
 <option>Compare</option>
 <option>NearEqualExt</option>
 <option>BoolFun</option>
-<option>par_var_dyn</option>
+<option>con_dyn_var</option>
 <option>EqualOpSeq</option>
 </select>
 </td>
 <td>
 <select onchange='choose_down1(this)'>
-<option>par_var_dyn-&gt;</option>
-<option>par_var_dyn.cpp</option>
+<option>con_dyn_var-&gt;</option>
+<option>con_dyn_var.cpp</option>
 </select>
 </td>
-<td>par_var_dyn.cpp</td>
+<td>con_dyn_var.cpp</td>
 <td>Headings</td>
 </tr></table><br>
 @(@\newcommand{\W}[1]{ \; #1 \; }
@@ -96,7 +96,7 @@ A:active { color : purple }
 <code><font color="blue"><pre><tt>
 <b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/cppad.hpp&gt;</font>
 
-<font color="#009900">bool</font> <b><font color="#000000">par_var_dyn</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
+<font color="#009900">bool</font> <b><font color="#000000">con_dyn_var</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
 <font color="#FF0000">{</font>    <font color="#009900">bool</font> ok <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
 
      <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>AD<font color="#990000">;</font>
@@ -110,61 +110,71 @@ A:active { color : purple }
      y<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font>        <font color="#990000">=</font> <font color="#993399">1.0</font><font color="#990000">;</font>
      dynamic<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font>  <font color="#990000">=</font> <font color="#993399">2.0</font><font color="#990000">;</font>
      <i><font color="#9A1900">//</font></i>
+     ok <font color="#990000">&amp;=</font> <b><font color="#000000">Constant</font></b><font color="#990000">(</font>x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]);</font>
      ok <font color="#990000">&amp;=</font> <b><font color="#000000">Parameter</font></b><font color="#990000">(</font>x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]);</font>
-     ok <font color="#990000">&amp;=</font> <font color="#990000">!</font> <b><font color="#000000">Variable</font></b><font color="#990000">(</font>x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]);</font>
      ok <font color="#990000">&amp;=</font> <font color="#990000">!</font> <b><font color="#000000">Dynamic</font></b><font color="#990000">(</font>x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]);</font>
+     ok <font color="#990000">&amp;=</font> <font color="#990000">!</font> <b><font color="#000000">Variable</font></b><font color="#990000">(</font>x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]);</font>
      <i><font color="#9A1900">//</font></i>
+     ok <font color="#990000">&amp;=</font> <b><font color="#000000">Constant</font></b><font color="#990000">(</font>y<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]);</font>
      ok <font color="#990000">&amp;=</font> <b><font color="#000000">Parameter</font></b><font color="#990000">(</font>y<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]);</font>
-     ok <font color="#990000">&amp;=</font> <font color="#990000">!</font> <b><font color="#000000">Variable</font></b><font color="#990000">(</font>y<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]);</font>
      ok <font color="#990000">&amp;=</font> <font color="#990000">!</font> <b><font color="#000000">Dynamic</font></b><font color="#990000">(</font>y<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]);</font>
+     ok <font color="#990000">&amp;=</font> <font color="#990000">!</font> <b><font color="#000000">Variable</font></b><font color="#990000">(</font>y<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]);</font>
      <i><font color="#9A1900">//</font></i>
+     ok <font color="#990000">&amp;=</font> <b><font color="#000000">Constant</font></b><font color="#990000">(</font>dynamic<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]);</font>
      ok <font color="#990000">&amp;=</font> <b><font color="#000000">Parameter</font></b><font color="#990000">(</font>dynamic<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]);</font>
-     ok <font color="#990000">&amp;=</font> <font color="#990000">!</font> <b><font color="#000000">Variable</font></b><font color="#990000">(</font>dynamic<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]);</font>
      ok <font color="#990000">&amp;=</font> <font color="#990000">!</font> <b><font color="#000000">Dynamic</font></b><font color="#990000">(</font>dynamic<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]);</font>
+     ok <font color="#990000">&amp;=</font> <font color="#990000">!</font> <b><font color="#000000">Variable</font></b><font color="#990000">(</font>dynamic<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]);</font>
 
      <i><font color="#9A1900">// declare independent variables and start recording</font></i>
      <font color="#008080">size_t</font> abort_op_index <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
      <font color="#009900">bool</font>   record_compare <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
      CppAD<font color="#990000">::</font><b><font color="#000000">Independent</font></b><font color="#990000">(</font>x<font color="#990000">,</font> abort_op_index<font color="#990000">,</font> record_compare<font color="#990000">,</font> dynamic<font color="#990000">);</font>
      <i><font color="#9A1900">//</font></i>
-     ok <font color="#990000">&amp;=</font> <font color="#990000">!</font> <b><font color="#000000">Parameter</font></b><font color="#990000">(</font>x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]);</font>
      ok <font color="#990000">&amp;=</font> <b><font color="#000000">Variable</font></b><font color="#990000">(</font>x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]);</font>
+     ok <font color="#990000">&amp;=</font> <font color="#990000">!</font> <b><font color="#000000">Constant</font></b><font color="#990000">(</font>x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]);</font>
      ok <font color="#990000">&amp;=</font> <font color="#990000">!</font> <b><font color="#000000">Dynamic</font></b><font color="#990000">(</font>x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]);</font>
+     ok <font color="#990000">&amp;=</font> <font color="#990000">!</font> <b><font color="#000000">Parameter</font></b><font color="#990000">(</font>x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]);</font>
      <i><font color="#9A1900">//</font></i>
+     ok <font color="#990000">&amp;=</font> <b><font color="#000000">Constant</font></b><font color="#990000">(</font>y<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]);</font>
      ok <font color="#990000">&amp;=</font> <b><font color="#000000">Parameter</font></b><font color="#990000">(</font>y<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]);</font>
-     ok <font color="#990000">&amp;=</font> <font color="#990000">!</font> <b><font color="#000000">Variable</font></b><font color="#990000">(</font>y<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]);</font>
      ok <font color="#990000">&amp;=</font> <font color="#990000">!</font> <b><font color="#000000">Dynamic</font></b><font color="#990000">(</font>y<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]);</font>
+     ok <font color="#990000">&amp;=</font> <font color="#990000">!</font> <b><font color="#000000">Variable</font></b><font color="#990000">(</font>y<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]);</font>
      <i><font color="#9A1900">//</font></i>
-     ok <font color="#990000">&amp;=</font> <b><font color="#000000">Parameter</font></b><font color="#990000">(</font>dynamic<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]);</font>
-     ok <font color="#990000">&amp;=</font> <font color="#990000">!</font> <b><font color="#000000">Variable</font></b><font color="#990000">(</font>dynamic<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]);</font>
      ok <font color="#990000">&amp;=</font> <b><font color="#000000">Dynamic</font></b><font color="#990000">(</font>dynamic<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]);</font>
+     ok <font color="#990000">&amp;=</font> <b><font color="#000000">Parameter</font></b><font color="#990000">(</font>dynamic<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]);</font>
+     ok <font color="#990000">&amp;=</font> <font color="#990000">!</font> <b><font color="#000000">Constant</font></b><font color="#990000">(</font>dynamic<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]);</font>
+     ok <font color="#990000">&amp;=</font> <font color="#990000">!</font> <b><font color="#000000">Variable</font></b><font color="#990000">(</font>dynamic<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]);</font>
 
      <i><font color="#9A1900">// a dependent variable</font></i>
      y<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <b><font color="#000000">fabs</font></b><font color="#990000">(</font>x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">])</font> <font color="#990000">*</font> dynamic<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">];</font>
-     ok  <font color="#990000">&amp;=</font> <font color="#990000">!</font> <b><font color="#000000">Parameter</font></b><font color="#990000">(</font>y<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]);</font>
      ok  <font color="#990000">&amp;=</font> <b><font color="#000000">Variable</font></b><font color="#990000">(</font>y<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]);</font>
+     ok  <font color="#990000">&amp;=</font> <font color="#990000">!</font> <b><font color="#000000">Constant</font></b><font color="#990000">(</font>y<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]);</font>
      ok  <font color="#990000">&amp;=</font> <font color="#990000">!</font> <b><font color="#000000">Dynamic</font></b><font color="#990000">(</font>y<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]);</font>
+     ok  <font color="#990000">&amp;=</font> <font color="#990000">!</font> <b><font color="#000000">Parameter</font></b><font color="#990000">(</font>y<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]);</font>
 
      <i><font color="#9A1900">// create f: x -&gt; y and stop tape recording</font></i>
      CppAD<font color="#990000">::</font><font color="#008080">ADFun&lt;double&gt;</font> <b><font color="#000000">f</font></b><font color="#990000">(</font>x<font color="#990000">,</font> y<font color="#990000">);</font>
      <i><font color="#9A1900">//</font></i>
+     ok <font color="#990000">&amp;=</font> <b><font color="#000000">Constant</font></b><font color="#990000">(</font>x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]);</font>
      ok <font color="#990000">&amp;=</font> <b><font color="#000000">Parameter</font></b><font color="#990000">(</font>x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]);</font>
-     ok <font color="#990000">&amp;=</font> <font color="#990000">!</font> <b><font color="#000000">Variable</font></b><font color="#990000">(</font>x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]);</font>
      ok <font color="#990000">&amp;=</font> <font color="#990000">!</font> <b><font color="#000000">Dynamic</font></b><font color="#990000">(</font>x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]);</font>
+     ok <font color="#990000">&amp;=</font> <font color="#990000">!</font> <b><font color="#000000">Variable</font></b><font color="#990000">(</font>x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]);</font>
      <i><font color="#9A1900">//</font></i>
+     ok <font color="#990000">&amp;=</font> <b><font color="#000000">Constant</font></b><font color="#990000">(</font>y<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]);</font>
      ok <font color="#990000">&amp;=</font> <b><font color="#000000">Parameter</font></b><font color="#990000">(</font>y<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]);</font>
-     ok <font color="#990000">&amp;=</font> <font color="#990000">!</font> <b><font color="#000000">Variable</font></b><font color="#990000">(</font>y<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]);</font>
      ok <font color="#990000">&amp;=</font> <font color="#990000">!</font> <b><font color="#000000">Dynamic</font></b><font color="#990000">(</font>y<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]);</font>
+     ok <font color="#990000">&amp;=</font> <font color="#990000">!</font> <b><font color="#000000">Variable</font></b><font color="#990000">(</font>y<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]);</font>
      <i><font color="#9A1900">//</font></i>
+     ok <font color="#990000">&amp;=</font> <b><font color="#000000">Constant</font></b><font color="#990000">(</font>dynamic<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]);</font>
      ok <font color="#990000">&amp;=</font> <b><font color="#000000">Parameter</font></b><font color="#990000">(</font>dynamic<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]);</font>
-     ok <font color="#990000">&amp;=</font> <font color="#990000">!</font> <b><font color="#000000">Variable</font></b><font color="#990000">(</font>dynamic<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]);</font>
      ok <font color="#990000">&amp;=</font> <font color="#990000">!</font> <b><font color="#000000">Dynamic</font></b><font color="#990000">(</font>dynamic<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]);</font>
+     ok <font color="#990000">&amp;=</font> <font color="#990000">!</font> <b><font color="#000000">Variable</font></b><font color="#990000">(</font>dynamic<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]);</font>
 
      <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
 <font color="#FF0000">}</font>
 </tt></pre>
 </font></code>
-<hr>Input File: example/general/par_var_dyn.cpp
+<hr>Input File: example/general/con_dyn_var.cpp
 
 </body>
 </html>

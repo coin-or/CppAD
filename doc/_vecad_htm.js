@@ -51,6 +51,7 @@ var list_current0 = [
 'vecad.htm#AD Indexing',
 'vecad.htm#AD Indexing.x',
 'vecad.htm#AD Indexing.r',
+'vecad.htm#Dynamic Parameters',
 'vecad.htm#Example',
 'vecad.htm#Speed and Memory'
 ];

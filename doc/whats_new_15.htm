@@ -1057,7 +1057,7 @@ This would generate an assert of the form:
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Error&nbsp;detected&nbsp;by&nbsp;false&nbsp;result&nbsp;for<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;IdenticalPar(</span></font><i><font color="black"><span style='white-space: nowrap'>side</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;IdenticalCon(</span></font><i><font color="black"><span style='white-space: nowrap'>side</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;at&nbsp;line&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>number</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;in&nbsp;the&nbsp;file<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>...</span></font></i><font color="blue"><span style='white-space: nowrap'>/cppad/local/cskip_op.hpp<br>
 </span></font></code>
@@ -1310,7 +1310,7 @@ The example <a href="cond_exp.cpp.htm" target="_top"><span style='white-space: n
  was changed to reflect this
 (a check for <code><font color="blue">nan</font></code> was changed to a check for zero).
 Note that this fix only works when
-<a href="base_identical.htm#Identical.IdenticalPar" target="_top"><span style='white-space: nowrap'>IdenticalPar</span></a>
+<a href="base_identical.htm#Identical.IdenticalCon" target="_top"><span style='white-space: nowrap'>IdenticalCon</span></a>
  is true for the
 base type of the result in the conditional expression; e.g.,
 one can still get a <code><font color="blue">nan</font></code> effect from the case that is not selected
@@ -1571,7 +1571,7 @@ There was a bug in the
 <a href="forward_dir.htm" target="_top"><span style='white-space: nowrap'>multiple&nbsp;direction&nbsp;forward</span></a>
  routine.
 Results for function values that are
-<a href="par_var_dyn.htm" target="_top"><span style='white-space: nowrap'>parameter</span></a>
+<a href="con_dyn_var.htm#Parameter" target="_top"><span style='white-space: nowrap'>parameter</span></a>
  were not being computed properly
 (all the derivatives are zero in this case).
 This has been fixed.

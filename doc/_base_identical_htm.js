@@ -49,7 +49,7 @@ var list_current0 = [
 'base_identical.htm#EqualOpSeq.The Simple Case',
 'base_identical.htm#EqualOpSeq.More Complicated Cases',
 'base_identical.htm#Identical',
-'base_identical.htm#Identical.IdenticalPar',
+'base_identical.htm#Identical.IdenticalCon',
 'base_identical.htm#Identical.Prototypes',
 'base_identical.htm#Identical.Identical Functions',
 'base_identical.htm#Identical.Examples'

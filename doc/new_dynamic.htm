@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Change the Dynamic Parameters</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Change the Dynamic Parameters">
-<meta name="keywords" id="keywords" content=" change the dynamic parameters syntax purpose f vectorbase taylor coefficients restrictions example ">
+<meta name="keywords" id="keywords" content=" change the dynamic parameters syntax purpose f vectorbase taylor coefficients example ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -113,7 +113,6 @@ A:active { color : purple }
 <option>dynamic</option>
 <option>VectorBase</option>
 <option>Taylor Coefficients</option>
-<option>Restrictions</option>
 <option>Example</option>
 </select>
 </td>
@@ -146,8 +145,8 @@ It is more efficient,
 will use less memory and be faster,
 if the only the argument were are computing derivatives with respect to
 are independent variables and the other arguments are
-<a href="glossary.htm#Dynamic Parameter" target="_top"><span style='white-space: nowrap'>dynamic&nbsp;parameters</span></a>
-.
+<a href="glossary.htm#Parameter.Dynamic" target="_top"><span style='white-space: nowrap'>dynamic</span></a>
+ parameters.
 The <code><font color="blue">new_dynamic</font></code> method is used to change the value
 of the dynamic parameters in 
 <code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
@@ -181,9 +180,9 @@ This argument has prototype
 (see 
 <code><i><font color="black"><span style='white-space: nowrap'>VectorBase</span></font></i></code>
  below).
-It specifies a new value for the
-<a href="glossary.htm#Dynamic Parameter" target="_top"><span style='white-space: nowrap'>dynamic&nbsp;parameter</span></a>
- vector.
+It specifies a new value for the independent
+<a href="glossary.htm#Parameter.Dynamic" target="_top"><span style='white-space: nowrap'>dynamic</span></a>
+ parameters.
 It size must be the same as the size of the
 <a href="independent.htm#dynamic" target="_top"><span style='white-space: nowrap'>dynamic</span></a>
  parameter vector
@@ -191,7 +190,7 @@ in the call to <code><font color="blue">Independent</font></code> that started
 the recording for 
 <code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
 ; see
-<a href="seq_property.htm#size_dynamic" target="_top"><span style='white-space: nowrap'>size_dynamic</span></a>
+<a href="seq_property.htm#size_dyn_ind" target="_top"><span style='white-space: nowrap'>size_dyn_ind</span></a>
 .
 
 <br>
@@ -222,19 +221,6 @@ In order words;
 
 <code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.new_dynamic</span></font></code>
  is called.
-
-<br>
-<br>
-<b><big><a name="Restrictions" id="Restrictions">Restrictions</a></big></b>
-<br>
-Dynamic parameters are only allowed in operations where one of the other
-operands is a <a href="glossary.htm#Variable" target="_top"><span style='white-space: nowrap'>Variable</span></a>
-.
-You must compute all the parameters that depend on dynamic parameters
-before the call to <a href="independent.htm" target="_top"><span style='white-space: nowrap'>Independent</span></a>
- and include them as part of the
-<a href="independent.htm#dynamic" target="_top"><span style='white-space: nowrap'>dynamic</span></a>
- parameter vector.
 
 
 <br>

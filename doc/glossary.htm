@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Glossary</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Glossary">
-<meta name="keywords" id="keywords" content=" ad function base type above dynamic parameter elementary vector operation atomic sequence dependent independent row-major representation sparsity pattern row column index vectors boolean sets tape active inactive variable variables taylor coefficient ">
+<meta name="keywords" id="keywords" content=" ad function base type above elementary vector operation atomic sequence dependent independent parameter constant dynamic row-major representation sparsity pattern row column index vectors boolean sets tape active inactive variable variables taylor coefficient ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -93,7 +93,6 @@ A:active { color : purple }
 <option>AD Type Above Base</option>
 <option>Base Function</option>
 <option>Base Type</option>
-<option>Dynamic Parameter</option>
 <option>Elementary Vector</option>
 <option>Operation</option>
 <option>---..Atomic</option>
@@ -101,6 +100,8 @@ A:active { color : purple }
 <option>---..Dependent</option>
 <option>---..Independent</option>
 <option>Parameter</option>
+<option>---..Constant</option>
+<option>---..Dynamic</option>
 <option>Row-major Representation</option>
 <option>Sparsity Pattern</option>
 <option>---..Row and Column Index Vectors</option>
@@ -237,33 +238,6 @@ If
  is referred to as the base type for 
 <code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
 .
-
-<br>
-<br>
-<b><big><a name="Dynamic Parameter" id="Dynamic Parameter">Dynamic Parameter</a></big></b>
-<br>
-An 
-<code><font color="blue"><span style='white-space: nowrap'>AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code>
- object 
-<code><i><font color="black"><span style='white-space: nowrap'>u</span></font></i></code>
- is a dynamic parameter if
-it is a <a href="glossary.htm#Parameter" target="_top"><span style='white-space: nowrap'>Parameter</span></a>
- and it is included in the
-<a href="independent.htm#dynamic" target="_top"><span style='white-space: nowrap'>dynamic</span></a>
- argument for the call to
-<a href="independent.htm" target="_top"><span style='white-space: nowrap'>Independent</span></a>
- that started the
-currently <a href="glossary.htm#Tape.Active" target="_top"><span style='white-space: nowrap'>active&nbsp;tape</span></a>
-.
-If 
-<code><i><font color="black"><span style='white-space: nowrap'>u</span></font></i></code>
- is a dynamic parameter,
-<a href="par_var_dyn.htm" target="_top"><span style='white-space: nowrap'>Dynamic(u)</span></a>
- returns true,
-<a href="par_var_dyn.htm" target="_top"><span style='white-space: nowrap'>Parameter(u)</span></a>
- returns true, and
-<a href="par_var_dyn.htm" target="_top"><span style='white-space: nowrap'>Variable(u)</span></a>
- returns false.
 
 <br>
 <br>
@@ -405,28 +379,62 @@ is independent of
 <br>
 <br>
 <b><big><a name="Parameter" id="Parameter">Parameter</a></big></b>
+
+
 <br>
-All 
-<code><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i></code>
- objects are parameters.
+<br>
+<big><a name="Parameter.Constant" id="Parameter.Constant">Constant</a></big>
+<br>
 An 
 <code><font color="blue"><span style='white-space: nowrap'>AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code>
  object 
 <code><i><font color="black"><span style='white-space: nowrap'>u</span></font></i></code>
- is currently a parameter if
+ is a constant parameter if
 its value does not depend on the value of
-an <a href="independent.htm" target="_top"><span style='white-space: nowrap'>Independent</span></a>
- variable vector for an
-<a href="glossary.htm#Tape.Active" target="_top"><span style='white-space: nowrap'>active&nbsp;tape</span></a>
+the <a href="independent.htm" target="_top"><span style='white-space: nowrap'>Independent</span></a>
+ variable vector
+or the <a href="independent.htm#dynamic" target="_top"><span style='white-space: nowrap'>dynamic</span></a>
+ parameter vector
+for an <a href="glossary.htm#Tape.Active" target="_top"><span style='white-space: nowrap'>active&nbsp;tape</span></a>
 .
 If 
 <code><i><font color="black"><span style='white-space: nowrap'>u</span></font></i></code>
- is a parameter, the function
-<a href="par_var_dyn.htm" target="_top"><span style='white-space: nowrap'>Parameter(u)</span></a>
+ is a constant parameter,
+<a href="con_dyn_var.htm#Constant" target="_top"><span style='white-space: nowrap'>Constant(u)</span></a>
  returns true,
-<a href="par_var_dyn.htm" target="_top"><span style='white-space: nowrap'>Dynamic(u)</span></a>
- may be true or false, and
-<a href="par_var_dyn.htm" target="_top"><span style='white-space: nowrap'>Variable(u)</span></a>
+<a href="con_dyn_var.htm#Parameter" target="_top"><span style='white-space: nowrap'>Parameter(u)</span></a>
+ returns true,
+<a href="con_dyn_var.htm#Dynamic" target="_top"><span style='white-space: nowrap'>Dynamic(u)</span></a>
+ returns false, and
+<a href="con_dyn_var.htm#Variable" target="_top"><span style='white-space: nowrap'>Variable(u)</span></a>
+ returns false.
+
+<br>
+<br>
+<big><a name="Parameter.Dynamic" id="Parameter.Dynamic">Dynamic</a></big>
+<br>
+An 
+<code><font color="blue"><span style='white-space: nowrap'>AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code>
+ object 
+<code><i><font color="black"><span style='white-space: nowrap'>u</span></font></i></code>
+ is a dynamic parameter if
+its value does not depend on the value of
+the <a href="independent.htm" target="_top"><span style='white-space: nowrap'>Independent</span></a>
+ variable vector, but its value does depend
+on the <a href="independent.htm#dynamic" target="_top"><span style='white-space: nowrap'>dynamic</span></a>
+ parameter vector,
+for an <a href="glossary.htm#Tape.Active" target="_top"><span style='white-space: nowrap'>active&nbsp;tape</span></a>
+.
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>u</span></font></i></code>
+ is a dynamic parameter, the function
+<a href="con_dyn_var.htm#Dynamic" target="_top"><span style='white-space: nowrap'>Dynamic(u)</span></a>
+ returns true
+<a href="con_dyn_var.htm#Parameter" target="_top"><span style='white-space: nowrap'>Parameter(u)</span></a>
+ returns true,
+<a href="con_dyn_var.htm#Constant" target="_top"><span style='white-space: nowrap'>Constant(u)</span></a>
+ returns false, and
+<a href="con_dyn_var.htm#Variable" target="_top"><span style='white-space: nowrap'>Variable(u)</span></a>
  returns false.
 
 <br>
@@ -656,11 +664,13 @@ a currently <a href="glossary.htm#Tape.Active" target="_top"><span style='white-
 If 
 <code><i><font color="black"><span style='white-space: nowrap'>u</span></font></i></code>
  is a variable,
-<a href="par_var_dyn.htm" target="_top"><span style='white-space: nowrap'>Variable(u)</span></a>
+<a href="con_dyn_var.htm#Variable" target="_top"><span style='white-space: nowrap'>Variable(u)</span></a>
  returns true,
-<a href="par_var_dyn.htm" target="_top"><span style='white-space: nowrap'>Parameter(u)</span></a>
+<a href="con_dyn_var.htm#Constant" target="_top"><span style='white-space: nowrap'>Constant(u)</span></a>
+ returns false,
+<a href="con_dyn_var.htm#Dynamic" target="_top"><span style='white-space: nowrap'>Dynamic(u)</span></a>
  returns false, and
-<a href="par_var_dyn.htm" target="_top"><span style='white-space: nowrap'>Dynamic(u)</span></a>
+<a href="con_dyn_var.htm#Parameter" target="_top"><span style='white-space: nowrap'>Parameter(u)</span></a>
  returns false.
 For example,
 directly after the code sequence
@@ -683,9 +693,10 @@ Directly after the code sequence
 </span></font></code>
 
 <code><i><font color="black"><span style='white-space: nowrap'>u</span></font></i></code>
-  is currently a <a href="glossary.htm#Parameter" target="_top"><span style='white-space: nowrap'>parameter</span></a>
-
-and not a dynamic parameter or a variable.
+  is currently a
+<a href="glossary.htm#Parameter.Constant" target="_top"><span style='white-space: nowrap'>constant</span></a>
+ parameter,
+not a dynamic parameter or a variable.
 <code><span style='white-space: nowrap'><br>
 <br>
 </span></code>Note that we often drop the word currently and

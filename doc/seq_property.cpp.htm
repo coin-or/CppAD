@@ -111,6 +111,12 @@ A:active { color : purple }
      <i><font color="#9A1900">// Use npar to track the number of parameters in the operation sequence.</font></i>
      <font color="#008080">size_t</font> npar <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
 
+     <i><font color="#9A1900">// Use ndyn to track the number of dynamic parameters.</font></i>
+     <font color="#008080">size_t</font> ndyn <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
+
+     <i><font color="#9A1900">// Use ndyn to track number of arguments to dynamic parameter operators.</font></i>
+     <font color="#008080">size_t</font> ndyn_arg <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
+
      <i><font color="#9A1900">// Start with one for operator corresponding to phantom variable</font></i>
      <font color="#008080">size_t</font> nop  <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font>
 
@@ -136,10 +142,19 @@ A:active { color : purple }
      x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font>     <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">.;</font>
      x<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font>     <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">.;</font>
 
+     <i><font color="#9A1900">// dynamic parameter vector</font></i>
+     <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font>AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;)</font> <b><font color="#000000">dynamic</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">);</font>
+     dynamic<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">.;</font>
+
+
      <i><font color="#9A1900">// declare independent variables and start tape recording</font></i>
-     CppAD<font color="#990000">::</font><b><font color="#000000">Independent</font></b><font color="#990000">(</font>x<font color="#990000">);</font>
+     <font color="#008080">size_t</font> abort_op_index <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
+     <font color="#008080">size_t</font> record_compare <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
+     CppAD<font color="#990000">::</font><b><font color="#000000">Independent</font></b><font color="#990000">(</font>x<font color="#990000">,</font> abort_op_index<font color="#990000">,</font> record_compare<font color="#990000">,</font> dynamic<font color="#990000">);</font>
      nvar    <font color="#990000">+=</font> n<font color="#990000">;</font>
      nop     <font color="#990000">+=</font> n<font color="#990000">;</font>
+     ndyn    <font color="#990000">+=</font> dynamic<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">();</font>
+     npar    <font color="#990000">+=</font> ndyn<font color="#990000">;</font>
 
      <i><font color="#9A1900">// a computation that adds to the operation sequence</font></i>
      <font color="#008080">AD&lt;double&gt;</font> I <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
@@ -182,25 +197,33 @@ A:active { color : purple }
      nop   <font color="#990000">+=</font> <font color="#993399">1</font><font color="#990000">;</font>   <i><font color="#9A1900">// special operator at the end of operation sequence</font></i>
 
      <i><font color="#9A1900">// check the sequence property functions</font></i>
-     ok <font color="#990000">&amp;=</font> f<font color="#990000">.</font><b><font color="#000000">Domain</font></b><font color="#990000">()</font>      <font color="#990000">==</font> n<font color="#990000">;</font>
-     ok <font color="#990000">&amp;=</font> f<font color="#990000">.</font><b><font color="#000000">Range</font></b><font color="#990000">()</font>       <font color="#990000">==</font> m<font color="#990000">;</font>
-     ok <font color="#990000">&amp;=</font> f<font color="#990000">.</font><b><font color="#000000">Parameter</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">)</font>  <font color="#990000">==</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
-     ok <font color="#990000">&amp;=</font> f<font color="#990000">.</font><b><font color="#000000">Parameter</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">)</font>  <font color="#990000">==</font> <b><font color="#0000FF">false</font></b><font color="#990000">;</font>
-     ok <font color="#990000">&amp;=</font> f<font color="#990000">.</font><b><font color="#000000">Parameter</font></b><font color="#990000">(</font><font color="#993399">2</font><font color="#990000">)</font>  <font color="#990000">==</font> <b><font color="#0000FF">false</font></b><font color="#990000">;</font>
-     ok <font color="#990000">&amp;=</font> f<font color="#990000">.</font><b><font color="#000000">size_var</font></b><font color="#990000">()</font>    <font color="#990000">==</font> nvar<font color="#990000">;</font>
-     ok <font color="#990000">&amp;=</font> f<font color="#990000">.</font><b><font color="#000000">size_op</font></b><font color="#990000">()</font>     <font color="#990000">==</font> nop<font color="#990000">;</font>
-     ok <font color="#990000">&amp;=</font> f<font color="#990000">.</font><b><font color="#000000">size_op_arg</font></b><font color="#990000">()</font> <font color="#990000">==</font> narg<font color="#990000">;</font>
-     ok <font color="#990000">&amp;=</font> f<font color="#990000">.</font><b><font color="#000000">size_par</font></b><font color="#990000">()</font>    <font color="#990000">==</font> npar<font color="#990000">;</font>
-     ok <font color="#990000">&amp;=</font> f<font color="#990000">.</font><b><font color="#000000">size_text</font></b><font color="#990000">()</font>   <font color="#990000">==</font> ntext<font color="#990000">;</font>
-     ok <font color="#990000">&amp;=</font> f<font color="#990000">.</font><b><font color="#000000">size_VecAD</font></b><font color="#990000">()</font>  <font color="#990000">==</font> nvecad<font color="#990000">;</font>
+     ok <font color="#990000">&amp;=</font> f<font color="#990000">.</font><b><font color="#000000">Domain</font></b><font color="#990000">()</font>        <font color="#990000">==</font> n<font color="#990000">;</font>
+     ok <font color="#990000">&amp;=</font> f<font color="#990000">.</font><b><font color="#000000">Range</font></b><font color="#990000">()</font>         <font color="#990000">==</font> m<font color="#990000">;</font>
+     ok <font color="#990000">&amp;=</font> f<font color="#990000">.</font><b><font color="#000000">Parameter</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">)</font>    <font color="#990000">==</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
+     ok <font color="#990000">&amp;=</font> f<font color="#990000">.</font><b><font color="#000000">Parameter</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">)</font>    <font color="#990000">==</font> <b><font color="#0000FF">false</font></b><font color="#990000">;</font>
+     ok <font color="#990000">&amp;=</font> f<font color="#990000">.</font><b><font color="#000000">Parameter</font></b><font color="#990000">(</font><font color="#993399">2</font><font color="#990000">)</font>    <font color="#990000">==</font> <b><font color="#0000FF">false</font></b><font color="#990000">;</font>
+     ok <font color="#990000">&amp;=</font> f<font color="#990000">.</font><b><font color="#000000">size_var</font></b><font color="#990000">()</font>      <font color="#990000">==</font> nvar<font color="#990000">;</font>
+     ok <font color="#990000">&amp;=</font> f<font color="#990000">.</font><b><font color="#000000">size_op</font></b><font color="#990000">()</font>       <font color="#990000">==</font> nop<font color="#990000">;</font>
+     ok <font color="#990000">&amp;=</font> f<font color="#990000">.</font><b><font color="#000000">size_op_arg</font></b><font color="#990000">()</font>   <font color="#990000">==</font> narg<font color="#990000">;</font>
+     ok <font color="#990000">&amp;=</font> f<font color="#990000">.</font><b><font color="#000000">size_par</font></b><font color="#990000">()</font>      <font color="#990000">==</font> npar<font color="#990000">;</font>
+     ok <font color="#990000">&amp;=</font> f<font color="#990000">.</font><b><font color="#000000">size_text</font></b><font color="#990000">()</font>     <font color="#990000">==</font> ntext<font color="#990000">;</font>
+     ok <font color="#990000">&amp;=</font> f<font color="#990000">.</font><b><font color="#000000">size_VecAD</font></b><font color="#990000">()</font>    <font color="#990000">==</font> nvecad<font color="#990000">;</font>
+     ok <font color="#990000">&amp;=</font> f<font color="#990000">.</font><b><font color="#000000">size_dyn_ind</font></b><font color="#990000">()</font>  <font color="#990000">==</font> ndyn<font color="#990000">;</font>
+     ok <font color="#990000">&amp;=</font> f<font color="#990000">.</font><b><font color="#000000">size_dyn_par</font></b><font color="#990000">()</font>  <font color="#990000">==</font> ndyn<font color="#990000">;</font>
+     ok <font color="#990000">&amp;=</font> f<font color="#990000">.</font><b><font color="#000000">size_dyn_arg</font></b><font color="#990000">()</font>  <font color="#990000">==</font> ndyn_arg<font color="#990000">;</font>
+
      <i><font color="#9A1900">//</font></i>
      <i><font color="#9A1900">// Note that CPPAD_VEC_ENUM_TYPE is not part of CppAD API and may change</font></i>
      <font color="#008080">size_t</font> sum <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
-     sum <font color="#990000">+=</font> nop    <font color="#990000">*</font> <b><font color="#0000FF">sizeof</font></b><font color="#990000">(</font>CPPAD_VEC_ENUM_TYPE<font color="#990000">);</font>
-     sum <font color="#990000">+=</font> narg   <font color="#990000">*</font> <b><font color="#0000FF">sizeof</font></b><font color="#990000">(</font>CPPAD_TAPE_ADDR_TYPE<font color="#990000">);</font>
-     sum <font color="#990000">+=</font> npar   <font color="#990000">*</font> <b><font color="#0000FF">sizeof</font></b><font color="#990000">(</font><font color="#009900">double</font><font color="#990000">);</font>
-     sum <font color="#990000">+=</font> ntext  <font color="#990000">*</font> <b><font color="#0000FF">sizeof</font></b><font color="#990000">(</font><font color="#009900">char</font><font color="#990000">);</font>
-     sum <font color="#990000">+=</font> nvecad <font color="#990000">*</font> <b><font color="#0000FF">sizeof</font></b><font color="#990000">(</font>CPPAD_TAPE_ADDR_TYPE<font color="#990000">);</font>
+     sum <font color="#990000">+=</font> nop        <font color="#990000">*</font> <b><font color="#0000FF">sizeof</font></b><font color="#990000">(</font>CPPAD_VEC_ENUM_TYPE<font color="#990000">);</font>
+     sum <font color="#990000">+=</font> narg       <font color="#990000">*</font> <b><font color="#0000FF">sizeof</font></b><font color="#990000">(</font>CPPAD_TAPE_ADDR_TYPE<font color="#990000">);</font>
+     sum <font color="#990000">+=</font> npar       <font color="#990000">*</font> <b><font color="#0000FF">sizeof</font></b><font color="#990000">(</font><font color="#009900">double</font><font color="#990000">);</font>
+     sum <font color="#990000">+=</font> npar       <font color="#990000">*</font> <b><font color="#0000FF">sizeof</font></b><font color="#990000">(</font><font color="#009900">bool</font><font color="#990000">);</font>
+     sum <font color="#990000">+=</font> ndyn       <font color="#990000">*</font> <b><font color="#0000FF">sizeof</font></b><font color="#990000">(</font>CPPAD_VEC_ENUM_TYPE<font color="#990000">);</font>
+     sum <font color="#990000">+=</font> ndyn       <font color="#990000">*</font> <b><font color="#0000FF">sizeof</font></b><font color="#990000">(</font>CPPAD_TAPE_ADDR_TYPE<font color="#990000">);</font>
+     sum <font color="#990000">+=</font> ndyn_arg   <font color="#990000">*</font> <b><font color="#0000FF">sizeof</font></b><font color="#990000">(</font>CPPAD_TAPE_ADDR_TYPE<font color="#990000">);</font>
+     sum <font color="#990000">+=</font> ntext      <font color="#990000">*</font> <b><font color="#0000FF">sizeof</font></b><font color="#990000">(</font><font color="#009900">char</font><font color="#990000">);</font>
+     sum <font color="#990000">+=</font> nvecad     <font color="#990000">*</font> <b><font color="#0000FF">sizeof</font></b><font color="#990000">(</font>CPPAD_TAPE_ADDR_TYPE<font color="#990000">);</font>
      ok <font color="#990000">&amp;=</font> f<font color="#990000">.</font><b><font color="#000000">size_op_seq</font></b><font color="#990000">()</font> <font color="#990000">==</font> sum<font color="#990000">;</font>
 
      <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>

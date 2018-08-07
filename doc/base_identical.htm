@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Base Type Requirements for Identically Equal Comparisons</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Base Type Requirements for Identically Equal Comparisons">
-<meta name="keywords" id="keywords" content=" base type requirements identically equal comparisons require equalopseq the simple case more complicated cases identical identicalpar prototypes functions examples ">
+<meta name="keywords" id="keywords" content=" base type requirements identically equal comparisons require equalopseq the simple case more complicated cases identical identicalcon prototypes functions examples ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -102,7 +102,7 @@ A:active { color : purple }
 <option>---..The Simple Case</option>
 <option>---..More Complicated Cases</option>
 <option>Identical</option>
-<option>---..IdenticalPar</option>
+<option>---..IdenticalCon</option>
 <option>---..Prototypes</option>
 <option>---..Identical Functions</option>
 <option>---..Examples</option>
@@ -223,12 +223,13 @@ For example, see
 
 <br>
 <br>
-<big><a name="Identical.IdenticalPar" id="Identical.IdenticalPar">IdenticalPar</a></big>
+<big><a name="Identical.IdenticalCon" id="Identical.IdenticalCon">IdenticalCon</a></big>
 <br>
 A 
 <code><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i></code>
- is a <a href="glossary.htm#Parameter" target="_top"><span style='white-space: nowrap'>parameter</span></a>
-
+ object is a
+<a href="glossary.htm#Parameter.Constant" target="_top"><span style='white-space: nowrap'>constant</span></a>
+ parameter
 when used in an 
 <code><font color="blue"><span style='white-space: nowrap'>AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code>
  operation sequence.
@@ -238,9 +239,9 @@ the
 <code><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i></code>
  value 
 <code><i><font color="black"><span style='white-space: nowrap'>u</span></font></i></code>
- is not identically a parameter
-equal in the following case
-(which CppAD automatically defines <code><font color="blue">IdenticalPar</font></code> for):
+ is not identically constant
+in the following case
+(which CppAD automatically defines <code><font color="blue">IdenticalCon</font></code> for):
 The type 
 <code><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i></code>
  is 
@@ -302,7 +303,7 @@ The type
 </td></tr><tr><td align='left'  valign='top'>
 
 
-<code><i><font color="black"><span style='white-space: nowrap'>b</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;IdenticalPar(</span></font><i><font color="black"><span style='white-space: nowrap'>u</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+<code><i><font color="black"><span style='white-space: nowrap'>b</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;IdenticalCon(</span></font><i><font color="black"><span style='white-space: nowrap'>u</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
  <code><span style='white-space: nowrap'>&nbsp;&nbsp;</span></code>
 	</td><td align='left'  valign='top'>
  the 
@@ -317,7 +318,7 @@ The type
  
 <code><i><font color="black"><span style='white-space: nowrap'>u</span></font></i></code>
  equals zero and 
-<code><font color="blue"><span style='white-space: nowrap'>IdenticalPar(</span></font><i><font color="black"><span style='white-space: nowrap'>u</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+<code><font color="blue"><span style='white-space: nowrap'>IdenticalCon(</span></font><i><font color="black"><span style='white-space: nowrap'>u</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
 
 </td></tr><tr><td align='left'  valign='top'>
 
@@ -328,12 +329,12 @@ The type
  
 <code><i><font color="black"><span style='white-space: nowrap'>u</span></font></i></code>
  equals one and 
-<code><font color="blue"><span style='white-space: nowrap'>IdenticalPar(</span></font><i><font color="black"><span style='white-space: nowrap'>u</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+<code><font color="blue"><span style='white-space: nowrap'>IdenticalCon(</span></font><i><font color="black"><span style='white-space: nowrap'>u</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
 
 </td></tr><tr><td align='left'  valign='top'>
 
 
-<code><i><font color="black"><span style='white-space: nowrap'>b</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;IdenticalEqualPar(</span></font><i><font color="black"><span style='white-space: nowrap'>u</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>v</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+<code><i><font color="black"><span style='white-space: nowrap'>b</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;IdenticalEqualCon(</span></font><i><font color="black"><span style='white-space: nowrap'>u</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>v</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
  <code><span style='white-space: nowrap'>&nbsp;&nbsp;</span></code>
 	</td><td align='left'  valign='top'>
  
@@ -342,10 +343,10 @@ The type
 <code><i><font color="black"><span style='white-space: nowrap'>v</span></font></i></code>
 ,
 	
-<code><font color="blue"><span style='white-space: nowrap'>IdenticalPar(</span></font><i><font color="black"><span style='white-space: nowrap'>u</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+<code><font color="blue"><span style='white-space: nowrap'>IdenticalCon(</span></font><i><font color="black"><span style='white-space: nowrap'>u</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
  and
 	
-<code><font color="blue"><span style='white-space: nowrap'>IdenticalPar(</span></font><i><font color="black"><span style='white-space: nowrap'>v</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+<code><font color="blue"><span style='white-space: nowrap'>IdenticalCon(</span></font><i><font color="black"><span style='white-space: nowrap'>v</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
 
 </td></tr>
 </table>

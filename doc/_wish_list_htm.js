@@ -38,15 +38,14 @@ var list_down1 = [
 'license.htm'
 ];
 var list_current0 = [
-'wish_list.htm#Abs-normal',
-'wish_list.htm#Windows Install',
-'wish_list.htm#Dynamic Parameters',
-'wish_list.htm#Multi-Threading',
 'wish_list.htm#Atomic',
 'wish_list.htm#Atomic.Subgraph',
 'wish_list.htm#Atomic.New API',
 'wish_list.htm#Atomic.Sparsity',
 'wish_list.htm#Atomic.Element-wise Operations',
+'wish_list.htm#Abs-normal',
+'wish_list.htm#Windows Install',
+'wish_list.htm#Multi-Threading',
 'wish_list.htm#check_finite',
 'wish_list.htm#test_boolofvoid',
 'wish_list.htm#Eigen',

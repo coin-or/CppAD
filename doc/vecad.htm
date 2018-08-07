@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>AD Vectors that Record Index Operations</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="AD Vectors that Record Index Operations">
-<meta name="keywords" id="keywords" content=" ad vectors that record index operations Vecad tape reference Vecad&lt;base&gt; syntax purpose alternatives vecad&lt;base&gt;::reference exceptions constructor v n size size_t indexing i b x r example speed memory ">
+<meta name="keywords" id="keywords" content=" ad vectors that record index operations Vecad tape reference Vecad&lt;base&gt; syntax purpose alternatives vecad&lt;base&gt;::reference exceptions constructor v n size size_t indexing i b x r dynamic parameters example speed memory ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -103,6 +103,7 @@ A:active { color : purple }
 <option>AD Indexing</option>
 <option>---..x</option>
 <option>---..r</option>
+<option>Dynamic Parameters</option>
 <option>Example</option>
 <option>Speed and Memory</option>
 </select>
@@ -301,7 +302,9 @@ no matter what the types of
 
 </li><li>
 
-The <a href="par_var_dyn.htm" target="_top"><span style='white-space: nowrap'>Parameter&nbsp;and&nbsp;Variable</span></a>
+The <a href="con_dyn_var.htm#Parameter" target="_top"><span style='white-space: nowrap'>Parameter</span></a>
+
+and <a href="con_dyn_var.htm#Variable" target="_top"><span style='white-space: nowrap'>Variable</span></a>
  functions cannot be used with
 
 <code><font color="blue"><span style='white-space: nowrap'>VecAD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;::reference</span></font></code>
@@ -405,7 +408,7 @@ as <code><font color="blue">size_t</font></code> indexing of a <code><font color
 This indexing is only valid if the vector 
 <code><i><font color="black"><span style='white-space: nowrap'>v</span></font></i></code>
  is a
-<a href="par_var_dyn.htm" target="_top"><span style='white-space: nowrap'>parameter</span></a>
+<a href="con_dyn_var.htm#Parameter" target="_top"><span style='white-space: nowrap'>parameter</span></a>
 ; i.e.,
 it does not depend on the independent variables.
 
@@ -551,6 +554,24 @@ destructor for
 when 
 <code><i><font color="black"><span style='white-space: nowrap'>v</span></font></i></code>
  falls out of scope.
+
+<br>
+<br>
+<b><big><a name="Dynamic Parameters" id="Dynamic Parameters">Dynamic Parameters</a></big></b>
+<br>
+The index 
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+,
+and the value 
+<code><i><font color="black"><span style='white-space: nowrap'>z</span></font></i></code>
+ assigned to
+
+<code><i><font color="black"><span style='white-space: nowrap'>v</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>]</span></font></code>
+ or 
+<code><i><font color="black"><span style='white-space: nowrap'>v</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>]</span></font></code>
+,
+cannot be <a href="glossary.htm#Parameter.Dynamic" target="_top"><span style='white-space: nowrap'>dynamic&nbsp;parameters</span></a>
+.
 
 <br>
 <br>

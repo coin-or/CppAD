@@ -56,13 +56,15 @@ var list_current0 = [
 'seq_property.htm#Parameter',
 'seq_property.htm#size_var',
 'seq_property.htm#size_par',
-'seq_property.htm#size_dynamic',
 'seq_property.htm#size_op',
 'seq_property.htm#size_op_arg',
 'seq_property.htm#size_text',
 'seq_property.htm#size_VecAD',
-'seq_property.htm#size_op_seq',
 'seq_property.htm#size_random',
+'seq_property.htm#size_dyn_ind',
+'seq_property.htm#size_dyn_par',
+'seq_property.htm#size_dyn_arg',
+'seq_property.htm#size_op_seq',
 'seq_property.htm#Example'
 ];
 function choose_across0(item)

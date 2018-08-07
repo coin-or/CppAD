@@ -9,10 +9,22 @@ var list_up0 = [
 'cppad.htm',
 'ad.htm',
 'boolvalued.htm',
-'par_var_dyn.htm',
-'par_var_dyn.cpp.htm'
+'con_dyn_var.htm'
 ];
 var list_down3 = [
+'install.htm',
+'introduction.htm',
+'ad.htm',
+'adfun.htm',
+'preprocessor.htm',
+'multi_thread.htm',
+'utility.htm',
+'ipopt_solve.htm',
+'example.htm',
+'speed.htm',
+'appendix.htm'
+];
+var list_down2 = [
 'ad_ctor.htm',
 'ad_assign.htm',
 'convert.htm',
@@ -21,15 +33,26 @@ var list_down3 = [
 'vecad.htm',
 'base_require.htm'
 ];
-var list_down2 = [
+var list_down1 = [
 'compare.htm',
 'nearequalext.htm',
 'boolfun.htm',
-'par_var_dyn.htm',
+'con_dyn_var.htm',
 'equalopseq.htm'
 ];
-var list_down1 = [
-'par_var_dyn.cpp.htm'
+var list_down0 = [
+'con_dyn_var.cpp.htm'
+];
+var list_current0 = [
+'con_dyn_var.htm#Syntax',
+'con_dyn_var.htm#x',
+'con_dyn_var.htm#b',
+'con_dyn_var.htm#Constant',
+'con_dyn_var.htm#Dynamic',
+'con_dyn_var.htm#Parameter',
+'con_dyn_var.htm#Variable',
+'con_dyn_var.htm#Operation Sequence',
+'con_dyn_var.htm#Example'
 ];
 function choose_across0(item)
 {	var index          = item.selectedIndex;

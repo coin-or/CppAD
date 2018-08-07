@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Changes and Additions to CppAD During 2018</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Changes and Additions to CppAD During 2018">
-<meta name="keywords" id="keywords" content=" changes additions to cppad during 2018 07-30 07-23 07-18 07-02 06-27 06-22 06-20 06-19 06-13 06-12 06-04 05-29 05-28 05-26 05-20 05-17 05-04 05-03 04-29 04-13 03-20 03-19 03-04 03-02 02-27 02-26 02-23 02-20 ">
+<meta name="keywords" id="keywords" content=" changes additions to cppad during 2018 08-05 08-04 07-30 07-27 07-23 07-18 07-02 06-27 06-22 06-20 06-19 06-13 06-12 06-04 05-29 05-28 05-26 05-20 05-17 05-04 05-03 04-29 04-13 03-20 03-19 03-04 03-02 02-27 02-26 02-23 02-20 ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -110,7 +110,10 @@ A:active { color : purple }
 <td>
 <select onchange='choose_current0(this)'>
 <option>Headings-&gt;</option>
+<option>08-05</option>
+<option>08-04</option>
 <option>07-30</option>
+<option>07-27</option>
 <option>07-23</option>
 <option>07-18</option>
 <option>07-02</option>
@@ -152,11 +155,72 @@ A:active { color : purple }
 
 <center><b><big><big>Changes and Additions to CppAD During 2018</big></big></b></center>
 <br>
-<b><big><a name="07-30" id="07-30">07-30</a></big></b>
+<b><big><a name="08-05" id="08-05">08-05</a></big></b>
 <br>
-The some errors in the
-<code><font color="blue">cppad.pc</font></code> and <code><font color="blue">cppad-uninstalled.pc</font></code> files were
+The amount of memory in an operation sequence has changed; see
+<a href="seq_property.htm#size_op_seq" target="_top"><span style='white-space: nowrap'>f.size_op_seq</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="08-04" id="08-04">08-04</a></big></b>
+<br>
+Remove the restrictions on dynamic parameters.
+They can now be used anywhere except as indices and values in
+<a href="vecad.htm#Dynamic Parameters" target="_top"><span style='white-space: nowrap'>VecAD</span></a>
+ vectors.
+
+<br>
+<br>
+<b><big><a name="07-30" id="07-30">07-30</a></big></b>
+
+<ol type="1"><li>
+The <a href="con_dyn_var.htm#Constant" target="_top"><span style='white-space: nowrap'>Constant</span></a>
+ function was added.
+</li><li>
+
+<a href="base_require.htm#API Warning" target="_top"><span style='white-space: nowrap'>API&nbsp;Warning</span></a>
+
+for uses who define there own 
+<code><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i></code>
+ type.
+The function <code><font color="blue">IdenticalPar</font></code> was changed to
+<a href="base_identical.htm#Identical.IdenticalCon" target="_top"><span style='white-space: nowrap'>IdenticalCon</span></a>
+
+and <code><font color="blue">IdenticalEqualPar</font></code> was change to
+<code><font color="blue">IdenticalEqualCon</font></code>.
+This was done because the value of
+<a href="glossary.htm#Parameter.Dynamic" target="_top"><span style='white-space: nowrap'>dynamic</span></a>
+ parameters can change.
+</li><li>
+
+The some errors in the <a href="pkgconfig.htm" target="_top"><span style='white-space: nowrap'>pkgconfig</span></a>
+ files
+<code><font color="blue">cppad.pc</font></code> and <code><font color="blue">cppad-uninstalled.pc</font></code> were
 corrected.
+</li></ol>
+
+
+<br>
+<br>
+<b><big><a name="07-27" id="07-27">07-27</a></big></b>
+<br>
+We are adding the dependent dynamic parameters; i.e.,
+parameters that depend on the independent
+<a href="independent.htm#dynamic" target="_top"><span style='white-space: nowrap'>dynamic</span></a>
+ parameters
+in a call to Independent.
+For this reason the function
+
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.size_dynamic()</span></font></code>
+ has been replaced by
+<a href="seq_property.htm#size_dyn_ind" target="_top"><span style='white-space: nowrap'>size_dyn_ind</span></a>
+,
+<a href="seq_property.htm#size_dyn_par" target="_top"><span style='white-space: nowrap'>size_dyn_par</span></a>
+, and
+<a href="seq_property.htm#size_dyn_arg" target="_top"><span style='white-space: nowrap'>size_dyn_arg</span></a>
+.
+
 
 <br>
 <br>
@@ -411,10 +475,10 @@ when using C++11 <a href="erf.htm" target="_top"><span style='white-space: nowra
 <br>
 <b><big><a name="03-19" id="03-19">03-19</a></big></b>
 <br>
-Add more detail to the
-<a href="wish_list.htm#Dynamic Parameters" target="_top"><span style='white-space: nowrap'>dynamic&nbsp;parameters</span></a>
-
-whish list item.
+Add more detail to the dynamic parameter whish list item.
+This item has been implemented and removed from the wish list; see
+<a href="new_dynamic.htm" target="_top"><span style='white-space: nowrap'>new_dynamic</span></a>
+.
 
 <br>
 <br>
