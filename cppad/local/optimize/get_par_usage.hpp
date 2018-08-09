@@ -277,7 +277,7 @@ void get_par_usage(
 			if( (arg[0] & 1) == 0 )
 				par_usage[arg[1]] = true;
 			if( (arg[0] & 2) == 0 )
-				par_usage[arg[2]] = true;
+				par_usage[arg[3]] = true;
 			CPPAD_ASSERT_UNKNOWN( 5 == NumArg(op) )
 			break;
 

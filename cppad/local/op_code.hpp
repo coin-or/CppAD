@@ -127,7 +127,13 @@ enum OpCode {
 	PowpvOp,  // pow(parameter,   variable)
 	PowvpOp,  // pow(variable,    parameter)
 	PowvvOp,  // pow(variable,    variable)
-	PriOp,    // PrintFor(text, parameter or variable, parameter or variable)
+	PriOp,    // PrintFor(pos, before, value, after)
+	// arg[0] & 1 = is pos a variable
+	// arg[0] & 2 = is value a varialbe
+	// arg[1]     = index corresponding to pos
+	// arg[2]     = index corresponding to before
+	// arg[3]     = index corresponding to value
+	// arg[4]     = index corresponding to after
 	SignOp,   // sign(variable)
 	SinOp,    // sin(variable)
 	SinhOp,   // sinh(variable)

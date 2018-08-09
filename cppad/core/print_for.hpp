@@ -30,9 +30,9 @@ $mindex print text output debug$$
 $head Syntax$$
 $icode%f%.Forward(0, %x%)
 %$$
-$codei%PrintFor(%before%, %var%)
+$codei%PrintFor(%before%, %value%)
 %$$
-$codei%PrintFor(%pos%, %before%, %var%, %after%)
+$codei%PrintFor(%pos%, %before%, %value%, %after%)
 %$$
 
 $head Purpose$$
@@ -71,22 +71,23 @@ $codei%
 %$$
 This text is written to $code std::cout$$ before $icode var$$.
 
-$head var$$
-The argument $icode var$$ has one of the following prototypes
+$head value$$
+The argument $icode value$$ has one of the following prototypes
 $codei%
 	const AD<%Base%>&               %var%
 	const VecAD<%Base%>::reference& %var%
 %$$
-The value of $icode var$$, that corresponds to $icode x$$,
+The value of $icode value$$, that corresponds to $icode x$$,
 is written to $code std::cout$$ during the execution of
 $codei%
 	%f%.Forward(0, %x%)
 %$$
-Note that $icode var$$ may be a
+Note that $icode value$$ may be a
 $cref/variable/glossary/Variable/$$ or
 $cref/parameter/glossary/Parameter/$$.
-(A parameters value does not depend on the value of
-the independent variable vector $icode x$$.)
+If a parameter is
+$cref/dynamic/glossary/Parameter/Dynamic/$$ its value
+will depend on the previous call to $cref new_dynamic$$.
 
 $head after$$
 The argument $icode after$$ has prototype

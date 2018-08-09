@@ -1829,6 +1829,7 @@ namespace {
 		}
 		return ok;
 	}
+	// -----------------------------------------------------------------------
 	// Test case where an expression depends on both the true
 	// and false cases (bug fixed 2014-12-22)
 	bool cond_exp_both_true_and_false(void)
@@ -1923,6 +1924,7 @@ namespace {
 		return ok;
 	}
 
+	// -----------------------------------------------------------------------
 	// Test case where if_false case is not used by conditional expression
 	// but is use after conditional expression.
 	// (bug fixed 2017-04-02)
@@ -1973,6 +1975,7 @@ namespace {
 		return ok;
 	}
 
+	// -----------------------------------------------------------------------
 	// Test case where only varaible arguments were being checked for
 	// a complete match once hash_codes were equal.
 	// (*bug fixed 2017-11-23)
@@ -2020,12 +2023,53 @@ namespace {
 		//
 		return ok;
 	}
+
+	// -----------------------------------------------------------------------
+	// Test case with print operator in optimized f
+	bool check_print_for(void)
+	{	bool ok = true;
+		using CppAD::AD;
+		using CppAD::vector;
+		//
+		double eps99 = 99.0 * std::numeric_limits<double>::epsilon();
+		//
+		vector< AD<double> > ax(1), ay(1);
+		ax[0] = 1.0;
+		CppAD::Independent(ax);
+		//
+		// check case where value is a parameter
+		AD<double>  pos    = ax[0];
+		const char* before = "long text before: value = ";
+		AD<double>  value  = 2.0;
+		const char* after  = "\n";
+		CppAD::PrintFor(pos, before, value, after);
+		CppAD::PrintFor(pos, before, value, after);
+		//
+		ay[0] = ax[0];
+		CppAD::ADFun<double> f;
+		f.Dependent(ax, ay);
+		//
+		// value of x where we are computing derivative
+		std::stringstream s;
+		vector<double> x(1), y_before(1), y_after(1);
+		x[0]     = -0.1;
+		y_before = f.Forward(0, x, s);
+		f.optimize();
+		y_after  = f.Forward(0, x, s);
+		//
+		ok &= CppAD::NearEqual(y_before[0], y_after[0], eps99, eps99);
+		//
+		return ok;
+	}
 }
 
 bool optimize(void)
 {	bool ok = true;
 	conditional_skip_       = true;
 	atomic_sparsity_option_ = CppAD::atomic_base<double>::bool_sparsity_enum;
+
+	// check optimization with print_for operations
+	ok     &= check_print_for();
 
 	// optimize an example ODE
 	ok &= optimize_ode();

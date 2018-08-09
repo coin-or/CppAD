@@ -312,9 +312,10 @@ void ADFun<Base>::optimize(const std::string& options)
 
 # ifndef NDEBUG
 	if( check_zero_order )
-	{
+	{	std::stringstream s;
+		//
 		// zero order forward calculation using new operation sequence
-		check = Forward(0, x);
+		check = Forward(0, x, s);
 
 		// check results
 		Base eps99 = Base(99) * CppAD::numeric_limits<Base>::epsilon();

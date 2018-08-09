@@ -36,9 +36,16 @@ $head 08-08$$
 $list number$$
 Fix a bug in the $code CppAD::local::pod_vector$$ template class
 (not part of the user API) that wasted memory.
+This bug was part of the $cref/06-04/whats_new_18/06-04/$$ change this year.
+$lnext
+Fix very recent bug in the optimization of dynamic parameters
+in $cref PrintFor$$ statements.
 $lnext
 Fix some $code valgrind$$ warnings about use of values that have
 not be initialized or set.
+$lnext
+Suppress printing of $cref PrintFor$$ operations
+during the $cref optimize$$ process.
 $lend
 
 $head 08-05$$
