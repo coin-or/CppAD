@@ -36,13 +36,13 @@ private :
 	// -----------------------------------------------------------------------
 	// value_ corresponding to this object
 	Base value_;
-
+	//
 	// Tape identifier corresponding to taddr
 	tape_id_t tape_id_;
-
+	//
 	// taddr_ in tape for this or dynamic parameter
 	addr_t taddr_;
-
+	//
 	// is this a dynamic parameter (or a variable)
 	// when tape is current tape and taddr_ is non-zero.
 	bool   dynamic_;
@@ -76,6 +76,8 @@ private :
 	//
 	friend int  Integer   <Base> (const AD<Base>    &u);
 	friend AD   Var2Par   <Base> (const AD<Base>    &u);
+	//
+	friend unsigned short hash_code <Base> (const AD<Base> &u);
 	//
 	// power function
 	friend AD pow <Base>

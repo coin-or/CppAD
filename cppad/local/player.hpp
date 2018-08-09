@@ -107,9 +107,13 @@ private:
 public:
 	// =================================================================
 	/// constructor
+	// set all scalars to zero to avoid valgraind warning when ani assignment
+	// occures before values get set.
 	player(void) :
+	num_dynamic_ind_(0)  ,
 	num_var_rec_(0)      ,
-	num_load_op_rec_(0)
+	num_load_op_rec_(0)  ,
+	num_vecad_vec_rec_(0)
 	{ }
 
 	// =================================================================
@@ -480,16 +484,17 @@ public:
 		num_dynamic_ind_    = play.num_dynamic_ind_;
 		num_var_rec_        = play.num_var_rec_;
 		num_load_op_rec_    = play.num_load_op_rec_;
-		op_vec_             = play.op_vec_;
 		num_vecad_vec_rec_  = play.num_vecad_vec_rec_;
-		vecad_ind_vec_      = play.vecad_ind_vec_;
+		//
+		op_vec_             = play.op_vec_;
 		arg_vec_            = play.arg_vec_;
+		text_vec_           = play.text_vec_;
+		vecad_ind_vec_      = play.vecad_ind_vec_;
 		all_par_vec_        = play.all_par_vec_;
 		dyn_par_is_         = play.dyn_par_is_;
 		dyn_ind2par_ind_    = play.dyn_ind2par_ind_;
 		dyn_par_op_         = play.dyn_par_op_;
 		dyn_par_arg_        = play.dyn_par_arg_;
-		text_vec_           = play.text_vec_;
 		op2arg_vec_         = play.op2arg_vec_;
 		op2var_vec_         = play.op2var_vec_;
 		var2op_vec_         = play.var2op_vec_;
@@ -502,16 +507,16 @@ public:
 		num_var_rec_       = 0;
 		num_load_op_rec_   = 0;
 		num_vecad_vec_rec_ = 0;
-
+		//
 		op_vec_.resize(0);
-		vecad_ind_vec_.resize(0);
 		arg_vec_.resize(0);
+		text_vec_.resize(0);
+		vecad_ind_vec_.resize(0);
 		all_par_vec_.resize(0);
 		dyn_par_is_.resize(0);
 		dyn_ind2par_ind_.resize(0);
 		dyn_par_op_.resize(0);
 		dyn_par_arg_.resize(0);
-		text_vec_.resize(0);
 		op2arg_vec_.resize(0);
 		op2var_vec_.resize(0);
 		var2op_vec_.resize(0);

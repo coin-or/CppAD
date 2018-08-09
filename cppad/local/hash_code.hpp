@@ -2,7 +2,7 @@
 # define CPPAD_LOCAL_HASH_CODE_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -122,8 +122,8 @@ template <class Base>
 unsigned short local_hash_code(
 	OpCode        op      ,
 	const addr_t* arg     ,
-	size_t npar           ,
-	const Base* par       )
+	size_t        npar    ,
+	const Base*   par     )
 {	CPPAD_ASSERT_UNKNOWN(
 		std::numeric_limits<unsigned short>::max()
 		>=
@@ -140,9 +140,6 @@ unsigned short local_hash_code(
 
 	// number of shorts per addr_t value
 	size_t short_addr_t   = sizeof(addr_t) / 2;
-
-	// number of shorts per Base value
-	size_t short_base     = sizeof(Base) /  2;
 
 	// initialize with value that separates operators as much as possible
 	unsigned short code = static_cast<unsigned short>(
@@ -166,10 +163,8 @@ unsigned short local_hash_code(
 		case SubpvOp:
 		case ZmulpvOp:
 		CPPAD_ASSERT_UNKNOWN( NumArg(op) == 2 );
-		v = reinterpret_cast<const unsigned short*>(par + arg[0]);
-		i = short_base;
-		while(i--)
-			code += v[i];
+		code += hash_code( par[arg[0]] );
+		//
 		v = reinterpret_cast<const unsigned short*>(arg + 1);
 		i = short_addr_t;
 		while(i--)
@@ -204,10 +199,7 @@ unsigned short local_hash_code(
 		i = short_addr_t;
 		while(i--)
 			code += v[i];
-		v = reinterpret_cast<const unsigned short*>(par + arg[1]);
-		i = short_base;
-		while(i--)
-			code += v[i];
+		code += hash_code( par[arg[1]] );
 		break;
 
 		// Unary operators

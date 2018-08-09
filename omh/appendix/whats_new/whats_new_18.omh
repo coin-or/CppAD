@@ -27,9 +27,19 @@ $spell
 	ind
 	uninstalled
 	Vec
+	valgrind
 $$
 
 $section Changes and Additions to CppAD During 2018$$
+
+$head 08-08$$
+$list number$$
+Fix a bug in the $code CppAD::local::pod_vector$$ template class
+(not part of the user API) that wasted memory.
+$lnext
+Fix some $code valgrind$$ warnings about use of values that have
+not be initialized or set.
+$lend
 
 $head 08-05$$
 The amount of memory in an operation sequence has changed; see

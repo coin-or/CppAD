@@ -1,9 +1,8 @@
-// $Id$
 # ifndef CPPAD_CORE_HASH_CODE_HPP
 # define CPPAD_CORE_HASH_CODE_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -44,6 +43,26 @@ is a hash code that is between zero and CPPAD_HASH_TABLE_SIZE - 1.
 template <class Value>
 unsigned short hash_code(const Value& value)
 {	return local::local_hash_code(value); }
+
+/*!
+hash code for an AD<Base> object.
+
+\tparam Base
+is the base type for this AD value.
+
+\param u
+the AD value that we are generating a hash code for.
+
+\return
+is a hash code that is between zero and CPPAD_HASH_TABLE_SIZE - 1.
+*/
+template <class Base>
+unsigned short hash_code(const AD<Base>& u)
+{	size_t code = hash_code(u.value_);
+	code       += size_t(u.taddr_);
+	code       += size_t(u.dynamic_);
+	return (unsigned short)(code % CPPAD_HASH_TABLE_SIZE);
+}
 
 } // END_CPPAD_NAMESPACE
 

@@ -82,11 +82,17 @@ public:
 	/// Default constructor
 	recorder(void) :
 	num_var_rec_(0)                          ,
-	num_dynamic_ind_(0)                          ,
+	num_dynamic_ind_(0)                      ,
 	num_load_op_rec_(0)                      ,
 	par_hash_table_( CPPAD_HASH_TABLE_SIZE )
 	{	record_compare_ = true;
 		abort_op_index_ = 0;
+		// It does not matter if unitialized hash codes match but this
+		// initilaization is here to avoid valgrind warnings.
+		void*  ptr   = static_cast<void*>( par_hash_table_.data() );
+		int    value = 0;
+		size_t num   = CPPAD_HASH_TABLE_SIZE * sizeof(addr_t);
+		std::memset(ptr, value, num);
 	}
 
 	/// Set record_compare option

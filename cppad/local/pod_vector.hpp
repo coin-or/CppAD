@@ -260,7 +260,8 @@ public:
 		/// right hand size of the assingment operation
 		const pod_vector& x
 	)
-	{	resize( x.byte_length_ );
+	{	CPPAD_ASSERT_UNKNOWN( x.byte_length_ % sizeof(Type) == 0 );
+		resize( x.byte_length_ / sizeof(Type) );
 		if( byte_length_ > 0 )
 		{
 			void* v_ptr   = reinterpret_cast<void*>( data_ );

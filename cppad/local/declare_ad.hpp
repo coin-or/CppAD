@@ -90,6 +90,8 @@ namespace CppAD {
 	template <class Base> AD<Base> sinh          (const AD<Base> &u);
 	template <class Base> AD<Base> sqrt          (const AD<Base> &u);
 	template <class Base> AD<Base> tan           (const AD<Base> &u);
+	//
+	template <class Base> unsigned short hash_code(const AD<Base>& u);
 
 	// arithematic operators
 	template <class Base> AD<Base> operator + (
