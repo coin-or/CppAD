@@ -52,7 +52,7 @@ var list_current0 = [
 'printfor.htm#f.Forward(0, x)',
 'printfor.htm#pos',
 'printfor.htm#before',
-'printfor.htm#var',
+'printfor.htm#value',
 'printfor.htm#after',
 'printfor.htm#Redirecting Output',
 'printfor.htm#Discussion',

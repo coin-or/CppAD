@@ -161,10 +161,23 @@ A:active { color : purple }
 <ol type="1"><li>
 Fix a bug in the <code><font color="blue">CppAD::local::pod_vector</font></code> template class
 (not part of the user API) that wasted memory.
+This bug was part of the <a href="whats_new_18.htm#06-04" target="_top"><span style='white-space: nowrap'>06-04</span></a>
+ change this year.
+</li><li>
+
+Fix very recent bug in the optimization of dynamic parameters
+in <a href="printfor.htm" target="_top"><span style='white-space: nowrap'>PrintFor</span></a>
+ statements.
 </li><li>
 
 Fix some <code><font color="blue">valgrind</font></code> warnings about use of values that have
 not be initialized or set.
+</li><li>
+
+Suppress printing of <a href="printfor.htm" target="_top"><span style='white-space: nowrap'>PrintFor</span></a>
+ operations
+during the <a href="optimize.htm" target="_top"><span style='white-space: nowrap'>optimize</span></a>
+ process.
 </li></ol>
 
 

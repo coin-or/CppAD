@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Printing AD Values During Forward Mode</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Printing AD Values During Forward Mode">
-<meta name="keywords" id="keywords" content=" printing ad values during forward mode print text output debug syntax purpose f.forward(0 x) pos before var after redirecting discussion alternative example ">
+<meta name="keywords" id="keywords" content=" printing ad values during forward mode print text output debug syntax purpose f.forward(0 x) pos before value after redirecting discussion alternative example ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -107,7 +107,7 @@ A:active { color : purple }
 <option>f.Forward(0, x)</option>
 <option>pos</option>
 <option>before</option>
-<option>var</option>
+<option>value</option>
 <option>after</option>
 <option>Redirecting Output</option>
 <option>Discussion</option>
@@ -131,10 +131,10 @@ A:active { color : purple }
 <code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.Forward(0,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
 </span></font></code>
 
-<code><font color="blue"><span style='white-space: nowrap'>PrintFor(</span></font><i><font color="black"><span style='white-space: nowrap'>before</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>var</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+<code><font color="blue"><span style='white-space: nowrap'>PrintFor(</span></font><i><font color="black"><span style='white-space: nowrap'>before</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>value</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
 </span></font></code>
 
-<code><font color="blue"><span style='white-space: nowrap'>PrintFor(</span></font><i><font color="black"><span style='white-space: nowrap'>pos</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>before</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>var</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>after</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+<code><font color="blue"><span style='white-space: nowrap'>PrintFor(</span></font><i><font color="black"><span style='white-space: nowrap'>pos</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>before</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>value</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>after</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
 </span></font></code>
 <br>
 <b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
@@ -214,10 +214,10 @@ This text is written to <code><font color="blue">std::cout</font></code> before
 
 <br>
 <br>
-<b><big><a name="var" id="var">var</a></big></b>
+<b><big><a name="value" id="value">value</a></big></b>
 <br>
 The argument 
-<code><i><font color="black"><span style='white-space: nowrap'>var</span></font></i></code>
+<code><i><font color="black"><span style='white-space: nowrap'>value</span></font></i></code>
  has one of the following prototypes
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
@@ -225,7 +225,7 @@ The argument
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;VecAD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;::reference&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>var</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 The value of 
-<code><i><font color="black"><span style='white-space: nowrap'>var</span></font></i></code>
+<code><i><font color="black"><span style='white-space: nowrap'>value</span></font></i></code>
 , that corresponds to 
 <code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
 ,
@@ -235,16 +235,17 @@ is written to <code><font color="blue">std::cout</font></code> during the execut
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.Forward(0,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
 </span></font></code>
 Note that 
-<code><i><font color="black"><span style='white-space: nowrap'>var</span></font></i></code>
+<code><i><font color="black"><span style='white-space: nowrap'>value</span></font></i></code>
  may be a
 <a href="glossary.htm#Variable" target="_top"><span style='white-space: nowrap'>variable</span></a>
  or
 <a href="glossary.htm#Parameter" target="_top"><span style='white-space: nowrap'>parameter</span></a>
 .
-(A parameters value does not depend on the value of
-the independent variable vector 
-<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
-.)
+If a parameter is
+<a href="glossary.htm#Parameter.Dynamic" target="_top"><span style='white-space: nowrap'>dynamic</span></a>
+ its value
+will depend on the previous call to <a href="new_dynamic.htm" target="_top"><span style='white-space: nowrap'>new_dynamic</span></a>
+.
 
 <br>
 <br>

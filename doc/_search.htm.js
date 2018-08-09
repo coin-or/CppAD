@@ -71,7 +71,7 @@ Keyword =
 'ad_output  AD Output Stream Operator  ',' << syntax purpose assumption result operation sequence example ',
 'ad_input.cpp  AD Output Operator: Example and Test  ',' << ',
 'ad_output.cpp  AD Output Operator: Example and Test  ',' << ',
-'PrintFor  Printing AD Values During Forward Mode  ',' text output debug syntax purpose f.forward(0 x) before var after redirecting discussion alternative example ',
+'PrintFor  Printing AD Values During Forward Mode  ',' text output debug syntax purpose f.forward(0 x) before after redirecting discussion alternative example ',
 'print_for_cout.cpp  Printing During Forward Mode: Example and Test  ',' running source code output ',
 'print_for_string.cpp  Print During Zero Order Forward Mode: Example and Test  ',' ',
 'Var2Par  Convert an AD Variable to a Parameter  ',' syntax see also purpose example ',
