@@ -2,7 +2,7 @@
 # define CPPAD_LOCAL_DIV_OP_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -50,8 +50,8 @@ inline void forward_divvv_op(
 	CPPAD_ASSERT_UNKNOWN( p <= q );
 
 	// Taylor coefficients corresponding to arguments and result
-	Base* x = taylor + arg[0] * cap_order;
-	Base* y = taylor + arg[1] * cap_order;
+	Base* x = taylor + size_t(arg[0]) * cap_order;
+	Base* y = taylor + size_t(arg[1]) * cap_order;
 	Base* z = taylor + i_z    * cap_order;
 
 
@@ -141,8 +141,8 @@ inline void forward_divvv_op_0(
 	CPPAD_ASSERT_UNKNOWN( NumRes(DivvvOp) == 1 );
 
 	// Taylor coefficients corresponding to arguments and result
-	Base* x = taylor + arg[0] * cap_order;
-	Base* y = taylor + arg[1] * cap_order;
+	Base* x = taylor + size_t(arg[0]) * cap_order;
+	Base* y = taylor + size_t(arg[1]) * cap_order;
 	Base* z = taylor + i_z    * cap_order;
 
 	z[0] = x[0] / y[0];
@@ -180,7 +180,7 @@ inline void reverse_divvv_op(
 	CPPAD_ASSERT_UNKNOWN( d < nc_partial );
 
 	// Arguments
-	const Base* y  = taylor + arg[1] * cap_order;
+	const Base* y  = taylor + size_t(arg[1]) * cap_order;
 	const Base* z  = taylor + i_z    * cap_order;
 
 	// Partial derivatives corresponding to arguments and result
@@ -240,7 +240,7 @@ inline void forward_divpv_op(
 	CPPAD_ASSERT_UNKNOWN( p <= q );
 
 	// Taylor coefficients corresponding to arguments and result
-	Base* y = taylor + arg[1] * cap_order;
+	Base* y = taylor + size_t(arg[1]) * cap_order;
 	Base* z = taylor + i_z    * cap_order;
 
 	// Paraemter value
@@ -334,7 +334,7 @@ inline void forward_divpv_op_0(
 	Base x = parameter[ arg[0] ];
 
 	// Taylor coefficients corresponding to arguments and result
-	Base* y = taylor + arg[1] * cap_order;
+	Base* y = taylor + size_t(arg[1]) * cap_order;
 	Base* z = taylor + i_z    * cap_order;
 
 	z[0] = x / y[0];
@@ -371,7 +371,7 @@ inline void reverse_divpv_op(
 	CPPAD_ASSERT_UNKNOWN( d < nc_partial );
 
 	// Arguments
-	const Base* y = taylor + arg[1] * cap_order;
+	const Base* y = taylor + size_t(arg[1]) * cap_order;
 	const Base* z = taylor + i_z    * cap_order;
 
 	// Partial derivatives corresponding to arguments and result
@@ -430,7 +430,7 @@ inline void forward_divvp_op(
 	CPPAD_ASSERT_UNKNOWN( p <= q );
 
 	// Taylor coefficients corresponding to arguments and result
-	Base* x = taylor + arg[0] * cap_order;
+	Base* x = taylor + size_t(arg[0]) * cap_order;
 	Base* z = taylor + i_z    * cap_order;
 
 	// Parameter value
@@ -515,7 +515,7 @@ inline void forward_divvp_op_0(
 	Base y = parameter[ arg[1] ];
 
 	// Taylor coefficients corresponding to arguments and result
-	Base* x = taylor + arg[0] * cap_order;
+	Base* x = taylor + size_t(arg[0]) * cap_order;
 	Base* z = taylor + i_z    * cap_order;
 
 	z[0] = x[0] / y;

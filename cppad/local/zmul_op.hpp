@@ -2,7 +2,7 @@
 # define CPPAD_LOCAL_ZMUL_OP_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -50,8 +50,8 @@ inline void forward_zmulvv_op(
 	CPPAD_ASSERT_UNKNOWN( p <= q );
 
 	// Taylor coefficients corresponding to arguments and result
-	Base* x = taylor + arg[0] * cap_order;
-	Base* y = taylor + arg[1] * cap_order;
+	Base* x = taylor + size_t(arg[0]) * cap_order;
+	Base* y = taylor + size_t(arg[1]) * cap_order;
 	Base* z = taylor + i_z    * cap_order;
 
 	size_t k;
@@ -133,8 +133,8 @@ inline void forward_zmulvv_op_0(
 	CPPAD_ASSERT_UNKNOWN( NumRes(ZmulvvOp) == 1 );
 
 	// Taylor coefficients corresponding to arguments and result
-	Base* x = taylor + arg[0] * cap_order;
-	Base* y = taylor + arg[1] * cap_order;
+	Base* x = taylor + size_t(arg[0]) * cap_order;
+	Base* y = taylor + size_t(arg[1]) * cap_order;
 	Base* z = taylor + i_z    * cap_order;
 
 	z[0] = azmul(x[0], y[0]);
@@ -172,8 +172,8 @@ inline void reverse_zmulvv_op(
 	CPPAD_ASSERT_UNKNOWN( d < nc_partial );
 
 	// Arguments
-	const Base* x  = taylor + arg[0] * cap_order;
-	const Base* y  = taylor + arg[1] * cap_order;
+	const Base* x  = taylor + size_t(arg[0]) * cap_order;
+	const Base* y  = taylor + size_t(arg[1]) * cap_order;
 
 	// Partial derivatives corresponding to arguments and result
 	Base* px = partial + arg[0] * nc_partial;
@@ -223,7 +223,7 @@ inline void forward_zmulpv_op(
 	CPPAD_ASSERT_UNKNOWN( p <= q );
 
 	// Taylor coefficients corresponding to arguments and result
-	Base* y = taylor + arg[1] * cap_order;
+	Base* y = taylor + size_t(arg[1]) * cap_order;
 	Base* z = taylor + i_z    * cap_order;
 
 	// Paraemter value
@@ -302,7 +302,7 @@ inline void forward_zmulpv_op_0(
 	Base x = parameter[ arg[0] ];
 
 	// Taylor coefficients corresponding to arguments and result
-	Base* y = taylor + arg[1] * cap_order;
+	Base* y = taylor + size_t(arg[1]) * cap_order;
 	Base* z = taylor + i_z    * cap_order;
 
 	z[0] = azmul(x, y[0]);
@@ -383,7 +383,7 @@ inline void forward_zmulvp_op(
 	CPPAD_ASSERT_UNKNOWN( p <= q );
 
 	// Taylor coefficients corresponding to arguments and result
-	Base* x = taylor + arg[0] * cap_order;
+	Base* x = taylor + size_t(arg[0]) * cap_order;
 	Base* z = taylor + i_z    * cap_order;
 
 	// Paraemter value
@@ -462,7 +462,7 @@ inline void forward_zmulvp_op_0(
 	Base y = parameter[ arg[1] ];
 
 	// Taylor coefficients corresponding to arguments and result
-	Base* x = taylor + arg[0] * cap_order;
+	Base* x = taylor + size_t(arg[0]) * cap_order;
 	Base* z = taylor + i_z    * cap_order;
 
 	z[0] = azmul(x[0], y);

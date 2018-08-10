@@ -125,13 +125,13 @@ inline void forward_csum_op(
 	Base* x;
 	for(size_t i = 5; i < size_t(arg[1]); ++i)
 	{	CPPAD_ASSERT_UNKNOWN( size_t(arg[i]) < i_z );
-		x     = taylor + arg[i] * cap_order;
+		x     = taylor + size_t(arg[i]) * cap_order;
 		for(size_t k = p; k <= q; k++)
 			z[k] += x[k];
 	}
 	for(size_t i = size_t(arg[1]); i < size_t(arg[2]); ++i)
 	{	CPPAD_ASSERT_UNKNOWN( size_t(arg[i]) < i_z );
-		x     = taylor + arg[i] * cap_order;
+		x     = taylor + size_t(arg[i]) * cap_order;
 		for(size_t k = p; k <= q; k++)
 			z[k] -= x[k];
 	}

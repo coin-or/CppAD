@@ -297,7 +297,7 @@ void reverse(
 		{
 			case AbsOp:
 			reverse_abs_op(
-				d, i_var, arg[0], J, Taylor, K, Partial
+				d, i_var, size_t(arg[0]), J, Taylor, K, Partial
 			);
 			break;
 			// --------------------------------------------------
@@ -306,7 +306,7 @@ void reverse(
 			// sqrt(1 - x * x), acos(x)
 			CPPAD_ASSERT_UNKNOWN( i_var < numvar );
 			reverse_acos_op(
-				d, i_var, arg[0], J, Taylor, K, Partial
+				d, i_var, size_t(arg[0]), J, Taylor, K, Partial
 			);
 			break;
 			// --------------------------------------------------
@@ -316,7 +316,7 @@ void reverse(
 			// sqrt(x * x - 1), acosh(x)
 			CPPAD_ASSERT_UNKNOWN( i_var < numvar );
 			reverse_acosh_op(
-				d, i_var, arg[0], J, Taylor, K, Partial
+				d, i_var, size_t(arg[0]), J, Taylor, K, Partial
 			);
 			break;
 # endif
@@ -341,7 +341,7 @@ void reverse(
 			// sqrt(1 - x * x), asin(x)
 			CPPAD_ASSERT_UNKNOWN( i_var < numvar );
 			reverse_asin_op(
-				d, i_var, arg[0], J, Taylor, K, Partial
+				d, i_var, size_t(arg[0]), J, Taylor, K, Partial
 			);
 			break;
 			// --------------------------------------------------
@@ -351,7 +351,7 @@ void reverse(
 			// sqrt(1 + x * x), asinh(x)
 			CPPAD_ASSERT_UNKNOWN( i_var < numvar );
 			reverse_asinh_op(
-				d, i_var, arg[0], J, Taylor, K, Partial
+				d, i_var, size_t(arg[0]), J, Taylor, K, Partial
 			);
 			break;
 # endif
@@ -361,7 +361,7 @@ void reverse(
 			// 1 + x * x, atan(x)
 			CPPAD_ASSERT_UNKNOWN( i_var < numvar );
 			reverse_atan_op(
-				d, i_var, arg[0], J, Taylor, K, Partial
+				d, i_var, size_t(arg[0]), J, Taylor, K, Partial
 			);
 			break;
 			// -------------------------------------------------
@@ -371,7 +371,7 @@ void reverse(
 			// 1 - x * x, atanh(x)
 			CPPAD_ASSERT_UNKNOWN( i_var < numvar );
 			reverse_atanh_op(
-				d, i_var, arg[0], J, Taylor, K, Partial
+				d, i_var, size_t(arg[0]), J, Taylor, K, Partial
 			);
 			break;
 # endif
@@ -416,7 +416,7 @@ void reverse(
 			case CosOp:
 			CPPAD_ASSERT_UNKNOWN( i_var < numvar );
 			reverse_cos_op(
-				d, i_var, arg[0], J, Taylor, K, Partial
+				d, i_var, size_t(arg[0]), J, Taylor, K, Partial
 			);
 			break;
 			// --------------------------------------------------
@@ -424,7 +424,7 @@ void reverse(
 			case CoshOp:
 			CPPAD_ASSERT_UNKNOWN( i_var < numvar );
 			reverse_cosh_op(
-				d, i_var, arg[0], J, Taylor, K, Partial
+				d, i_var, size_t(arg[0]), J, Taylor, K, Partial
 			);
 			break;
 			// --------------------------------------------------
@@ -476,7 +476,7 @@ void reverse(
 
 			case ExpOp:
 			reverse_exp_op(
-				d, i_var, arg[0], J, Taylor, K, Partial
+				d, i_var, size_t(arg[0]), J, Taylor, K, Partial
 			);
 			break;
 			// --------------------------------------------------
@@ -484,7 +484,7 @@ void reverse(
 # if CPPAD_USE_CPLUSPLUS_2011
 			case Expm1Op:
 			reverse_expm1_op(
-				d, i_var, arg[0], J, Taylor, K, Partial
+				d, i_var, size_t(arg[0]), J, Taylor, K, Partial
 			);
 			break;
 # endif
@@ -527,7 +527,7 @@ void reverse(
 
 			case LogOp:
 			reverse_log_op(
-				d, i_var, arg[0], J, Taylor, K, Partial
+				d, i_var, size_t(arg[0]), J, Taylor, K, Partial
 			);
 			break;
 			// --------------------------------------------------
@@ -535,7 +535,7 @@ void reverse(
 # if CPPAD_USE_CPLUSPLUS_2011
 			case Log1pOp:
 			reverse_log1p_op(
-				d, i_var, arg[0], J, Taylor, K, Partial
+				d, i_var, size_t(arg[0]), J, Taylor, K, Partial
 			);
 			break;
 # endif
@@ -591,7 +591,7 @@ void reverse(
 			case SignOp:
 			CPPAD_ASSERT_UNKNOWN( i_var < numvar );
 			reverse_sign_op(
-				d, i_var, arg[0], J, Taylor, K, Partial
+				d, i_var, size_t(arg[0]), J, Taylor, K, Partial
 			);
 			break;
 			// -------------------------------------------------
@@ -599,7 +599,7 @@ void reverse(
 			case SinOp:
 			CPPAD_ASSERT_UNKNOWN( i_var < numvar );
 			reverse_sin_op(
-				d, i_var, arg[0], J, Taylor, K, Partial
+				d, i_var, size_t(arg[0]), J, Taylor, K, Partial
 			);
 			break;
 			// -------------------------------------------------
@@ -607,14 +607,14 @@ void reverse(
 			case SinhOp:
 			CPPAD_ASSERT_UNKNOWN( i_var < numvar );
 			reverse_sinh_op(
-				d, i_var, arg[0], J, Taylor, K, Partial
+				d, i_var, size_t(arg[0]), J, Taylor, K, Partial
 			);
 			break;
 			// --------------------------------------------------
 
 			case SqrtOp:
 			reverse_sqrt_op(
-				d, i_var, arg[0], J, Taylor, K, Partial
+				d, i_var, size_t(arg[0]), J, Taylor, K, Partial
 			);
 			break;
 			// --------------------------------------------------
@@ -661,7 +661,7 @@ void reverse(
 			case TanOp:
 			CPPAD_ASSERT_UNKNOWN( i_var < numvar );
 			reverse_tan_op(
-				d, i_var, arg[0], J, Taylor, K, Partial
+				d, i_var, size_t(arg[0]), J, Taylor, K, Partial
 			);
 			break;
 			// -------------------------------------------------
@@ -669,7 +669,7 @@ void reverse(
 			case TanhOp:
 			CPPAD_ASSERT_UNKNOWN( i_var < numvar );
 			reverse_tanh_op(
-				d, i_var, arg[0], J, Taylor, K, Partial
+				d, i_var, size_t(arg[0]), J, Taylor, K, Partial
 			);
 			break;
 			// --------------------------------------------------

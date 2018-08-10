@@ -83,7 +83,7 @@ inline void forward_lepv_op_0(
 
 	// Taylor coefficients corresponding to arguments and result
 	Base  x = parameter[ arg[0] ];
-	Base* y = taylor + arg[1] * cap_order;
+	Base* y = taylor + size_t(arg[1]) * cap_order;
 
 	count += GreaterThanZero(x - y[0]);
 }
@@ -119,7 +119,7 @@ inline void forward_levp_op_0(
 	CPPAD_ASSERT_UNKNOWN( NumRes(LevpOp) == 0 );
 
 	// Taylor coefficients corresponding to arguments and result
-	Base* x = taylor + arg[0] * cap_order;
+	Base* x = taylor + size_t(arg[0]) * cap_order;
 	Base  y = parameter[ arg[1] ];
 
 	count += GreaterThanZero(x[0] - y);
@@ -158,8 +158,8 @@ inline void forward_levv_op_0(
 	CPPAD_ASSERT_UNKNOWN( NumRes(LevvOp) == 0 );
 
 	// Taylor coefficients corresponding to arguments and result
-	Base* x = taylor + arg[0] * cap_order;
-	Base* y = taylor + arg[1] * cap_order;
+	Base* x = taylor + size_t(arg[0]) * cap_order;
+	Base* y = taylor + size_t(arg[1]) * cap_order;
 
 	count += GreaterThanZero(x[0] - y[0]);
 }
@@ -212,7 +212,7 @@ inline void forward_ltpv_op_0(
 
 	// Taylor coefficients corresponding to arguments and result
 	Base  x = parameter[ arg[0] ];
-	Base* y = taylor + arg[1] * cap_order;
+	Base* y = taylor + size_t(arg[1]) * cap_order;
 
 	count += GreaterThanOrZero(x - y[0]);
 }
@@ -234,7 +234,7 @@ inline void forward_ltvp_op_0(
 	CPPAD_ASSERT_UNKNOWN( NumRes(LtvpOp) == 0 );
 
 	// Taylor coefficients corresponding to arguments and result
-	Base* x = taylor + arg[0] * cap_order;
+	Base* x = taylor + size_t(arg[0]) * cap_order;
 	Base  y = parameter[ arg[1] ];
 
 	count += GreaterThanOrZero(x[0] - y);
@@ -257,8 +257,8 @@ inline void forward_ltvv_op_0(
 	CPPAD_ASSERT_UNKNOWN( NumRes(LtvvOp) == 0 );
 
 	// Taylor coefficients corresponding to arguments and result
-	Base* x = taylor + arg[0] * cap_order;
-	Base* y = taylor + arg[1] * cap_order;
+	Base* x = taylor + size_t(arg[0]) * cap_order;
+	Base* y = taylor + size_t(arg[1]) * cap_order;
 
 	count += GreaterThanOrZero(x[0] - y[0]);
 }
@@ -311,7 +311,7 @@ inline void forward_eqpv_op_0(
 
 	// Taylor coefficients corresponding to arguments and result
 	Base  x = parameter[ arg[0] ];
-	Base* y = taylor + arg[1] * cap_order;
+	Base* y = taylor + size_t(arg[1]) * cap_order;
 
 	count += (x != y[0]);
 }
@@ -333,8 +333,8 @@ inline void forward_eqvv_op_0(
 	CPPAD_ASSERT_UNKNOWN( NumRes(EqvvOp) == 0 );
 
 	// Taylor coefficients corresponding to arguments and result
-	Base* x = taylor + arg[0] * cap_order;
-	Base* y = taylor + arg[1] * cap_order;
+	Base* x = taylor + size_t(arg[0]) * cap_order;
+	Base* y = taylor + size_t(arg[1]) * cap_order;
 
 	count += (x[0] != y[0]);
 }
@@ -387,7 +387,7 @@ inline void forward_nepv_op_0(
 
 	// Taylor coefficients corresponding to arguments and result
 	Base  x = parameter[ arg[0] ];
-	Base* y = taylor + arg[1] * cap_order;
+	Base* y = taylor + size_t(arg[1]) * cap_order;
 
 	count += (x == y[0]);
 }
@@ -409,8 +409,8 @@ inline void forward_nevv_op_0(
 	CPPAD_ASSERT_UNKNOWN( NumRes(NevvOp) == 0 );
 
 	// Taylor coefficients corresponding to arguments and result
-	Base* x = taylor + arg[0] * cap_order;
-	Base* y = taylor + arg[1] * cap_order;
+	Base* x = taylor + size_t(arg[0]) * cap_order;
+	Base* y = taylor + size_t(arg[1]) * cap_order;
 
 	count += (x[0] == y[0]);
 }

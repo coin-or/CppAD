@@ -288,7 +288,7 @@ void forward0(
 		switch( op )
 		{
 			case AbsOp:
-			forward_abs_op_0(i_var, arg[0], J, taylor);
+			forward_abs_op_0(i_var, size_t(arg[0]), J, taylor);
 			break;
 			// -------------------------------------------------
 
@@ -306,7 +306,7 @@ void forward0(
 			case AcosOp:
 			// sqrt(1 - x * x), acos(x)
 			CPPAD_ASSERT_UNKNOWN( i_var < numvar  );
-			forward_acos_op_0(i_var, arg[0], J, taylor);
+			forward_acos_op_0(i_var, size_t(arg[0]), J, taylor);
 			break;
 			// -------------------------------------------------
 
@@ -314,7 +314,7 @@ void forward0(
 			case AcoshOp:
 			// sqrt(x * x - 1), acosh(x)
 			CPPAD_ASSERT_UNKNOWN( i_var < numvar  );
-			forward_acosh_op_0(i_var, arg[0], J, taylor);
+			forward_acosh_op_0(i_var, size_t(arg[0]), J, taylor);
 			break;
 # endif
 			// -------------------------------------------------
@@ -322,7 +322,7 @@ void forward0(
 			case AsinOp:
 			// sqrt(1 - x * x), asin(x)
 			CPPAD_ASSERT_UNKNOWN( i_var < numvar  );
-			forward_asin_op_0(i_var, arg[0], J, taylor);
+			forward_asin_op_0(i_var, size_t(arg[0]), J, taylor);
 			break;
 			// -------------------------------------------------
 
@@ -330,7 +330,7 @@ void forward0(
 			case AsinhOp:
 			// sqrt(1 + x * x), asinh(x)
 			CPPAD_ASSERT_UNKNOWN( i_var < numvar  );
-			forward_asinh_op_0(i_var, arg[0], J, taylor);
+			forward_asinh_op_0(i_var, size_t(arg[0]), J, taylor);
 			break;
 # endif
 			// -------------------------------------------------
@@ -338,7 +338,7 @@ void forward0(
 			case AtanOp:
 			// 1 + x * x, atan(x)
 			CPPAD_ASSERT_UNKNOWN( i_var < numvar  );
-			forward_atan_op_0(i_var, arg[0], J, taylor);
+			forward_atan_op_0(i_var, size_t(arg[0]), J, taylor);
 			break;
 			// -------------------------------------------------
 
@@ -346,7 +346,7 @@ void forward0(
 			case AtanhOp:
 			// 1 - x * x, atanh(x)
 			CPPAD_ASSERT_UNKNOWN( i_var < numvar  );
-			forward_atanh_op_0(i_var, arg[0], J, taylor);
+			forward_atanh_op_0(i_var, size_t(arg[0]), J, taylor);
 			break;
 # endif
 			// -------------------------------------------------
@@ -363,14 +363,14 @@ void forward0(
 			case CosOp:
 			// sin(x), cos(x)
 			CPPAD_ASSERT_UNKNOWN( i_var < numvar  );
-			forward_cos_op_0(i_var, arg[0], J, taylor);
+			forward_cos_op_0(i_var, size_t(arg[0]), J, taylor);
 			break;
 			// ---------------------------------------------------
 
 			case CoshOp:
 			// sinh(x), cosh(x)
 			CPPAD_ASSERT_UNKNOWN( i_var < numvar  );
-			forward_cosh_op_0(i_var, arg[0], J, taylor);
+			forward_cosh_op_0(i_var, size_t(arg[0]), J, taylor);
 			break;
 			// -------------------------------------------------
 
@@ -462,13 +462,13 @@ void forward0(
 			// -------------------------------------------------
 
 			case ExpOp:
-			forward_exp_op_0(i_var, arg[0], J, taylor);
+			forward_exp_op_0(i_var, size_t(arg[0]), J, taylor);
 			break;
 			// -------------------------------------------------
 
 # if CPPAD_USE_CPLUSPLUS_2011
 			case Expm1Op:
-			forward_expm1_op_0(i_var, arg[0], J, taylor);
+			forward_expm1_op_0(i_var, size_t(arg[0]), J, taylor);
 			break;
 # endif
 			// -------------------------------------------------
@@ -556,13 +556,13 @@ void forward0(
 			// -------------------------------------------------
 
 			case LogOp:
-			forward_log_op_0(i_var, arg[0], J, taylor);
+			forward_log_op_0(i_var, size_t(arg[0]), J, taylor);
 			break;
 			// -------------------------------------------------
 
 # if CPPAD_USE_CPLUSPLUS_2011
 			case Log1pOp:
-			forward_log1p_op_0(i_var, arg[0], J, taylor);
+			forward_log1p_op_0(i_var, size_t(arg[0]), J, taylor);
 			break;
 # endif
 			// -------------------------------------------------
@@ -695,26 +695,26 @@ void forward0(
 			case SignOp:
 			// cos(x), sin(x)
 			CPPAD_ASSERT_UNKNOWN( i_var < numvar  );
-			forward_sign_op_0(i_var, arg[0], J, taylor);
+			forward_sign_op_0(i_var, size_t(arg[0]), J, taylor);
 			break;
 			// -------------------------------------------------
 
 			case SinOp:
 			// cos(x), sin(x)
 			CPPAD_ASSERT_UNKNOWN( i_var < numvar  );
-			forward_sin_op_0(i_var, arg[0], J, taylor);
+			forward_sin_op_0(i_var, size_t(arg[0]), J, taylor);
 			break;
 			// -------------------------------------------------
 
 			case SinhOp:
 			// cosh(x), sinh(x)
 			CPPAD_ASSERT_UNKNOWN( i_var < numvar  );
-			forward_sinh_op_0(i_var, arg[0], J, taylor);
+			forward_sinh_op_0(i_var, size_t(arg[0]), J, taylor);
 			break;
 			// -------------------------------------------------
 
 			case SqrtOp:
-			forward_sqrt_op_0(i_var, arg[0], J, taylor);
+			forward_sqrt_op_0(i_var, size_t(arg[0]), J, taylor);
 			break;
 			// -------------------------------------------------
 
@@ -790,14 +790,14 @@ void forward0(
 			case TanOp:
 			// tan(x)^2, tan(x)
 			CPPAD_ASSERT_UNKNOWN( i_var < numvar  );
-			forward_tan_op_0(i_var, arg[0], J, taylor);
+			forward_tan_op_0(i_var, size_t(arg[0]), J, taylor);
 			break;
 			// -------------------------------------------------
 
 			case TanhOp:
 			// tanh(x)^2, tanh(x)
 			CPPAD_ASSERT_UNKNOWN( i_var < numvar  );
-			forward_tanh_op_0(i_var, arg[0], J, taylor);
+			forward_tanh_op_0(i_var, size_t(arg[0]), J, taylor);
 			break;
 			// -------------------------------------------------
 
