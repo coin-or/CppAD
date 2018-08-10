@@ -93,8 +93,8 @@ inline void forward_mulvv_op_dir(
 
 	// Taylor coefficients corresponding to arguments and result
 	size_t num_taylor_per_var = (cap_order-1) * r + 1;
-	Base* x = taylor + arg[0] * num_taylor_per_var;
-	Base* y = taylor + arg[1] * num_taylor_per_var;
+	Base* x = taylor + size_t(arg[0]) * num_taylor_per_var;
+	Base* y = taylor + size_t(arg[1]) * num_taylor_per_var;
 	Base* z = taylor +    i_z * num_taylor_per_var;
 
 	size_t k, ell, m;
@@ -265,7 +265,7 @@ inline void forward_mulpv_op_dir(
 	// Taylor coefficients corresponding to arguments and result
 	size_t num_taylor_per_var = (cap_order-1) * r + 1;
 	size_t m                  = (q-1) * r + 1;
-	Base* y = taylor + arg[1] * num_taylor_per_var + m;
+	Base* y = taylor + size_t(arg[1]) * num_taylor_per_var + m;
 	Base* z = taylor + i_z    * num_taylor_per_var + m;
 
 	// Paraemter value

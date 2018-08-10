@@ -240,13 +240,13 @@ inline void forward_csum_op_dir(
 	Base* x;
 	for(size_t i = 5; i < size_t(arg[1]); ++i)
 	{	CPPAD_ASSERT_UNKNOWN( size_t(arg[i]) < i_z );
-		x = taylor + arg[i] * num_taylor_per_var + m;
+		x = taylor + size_t(arg[i]) * num_taylor_per_var + m;
 		for(size_t ell = 0; ell < r; ell++)
 			z[ell] += x[ell];
 	}
 	for(size_t i = size_t(arg[1]); i < size_t(arg[2]); ++i)
 	{	CPPAD_ASSERT_UNKNOWN( size_t(arg[i]) < i_z );
-		x = taylor + arg[i] * num_taylor_per_var + m;
+		x = taylor + size_t(arg[i]) * num_taylor_per_var + m;
 		for(size_t ell = 0; ell < r; ell++)
 			z[ell] -= x[ell];
 	}

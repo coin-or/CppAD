@@ -501,7 +501,7 @@ inline void forward_cond_op_dir(
 
 	if( arg[1] & 1 )
 	{
-		y_0 = taylor[ arg[2] * num_taylor_per_var + 0 ];
+		y_0 = taylor[ size_t(arg[2]) * num_taylor_per_var + 0 ];
 	}
 	else
 	{	CPPAD_ASSERT_UNKNOWN( size_t(arg[2]) < num_par );
@@ -509,7 +509,7 @@ inline void forward_cond_op_dir(
 	}
 	if( arg[1] & 2 )
 	{
-		y_1 = taylor[ arg[3] * num_taylor_per_var + 0 ];
+		y_1 = taylor[ size_t(arg[3]) * num_taylor_per_var + 0 ];
 	}
 	else
 	{	CPPAD_ASSERT_UNKNOWN( size_t(arg[3]) < num_par );
@@ -519,12 +519,12 @@ inline void forward_cond_op_dir(
 	for(size_t ell = 0; ell < r; ell++)
 	{	if( arg[1] & 4 )
 		{
-			y_2 = taylor[ arg[4] * num_taylor_per_var + m + ell];
+			y_2 = taylor[ size_t(arg[4]) * num_taylor_per_var + m + ell];
 		}
 		else	y_2 = zero;
 		if( arg[1] & 8 )
 		{
-			y_3 = taylor[ arg[5] * num_taylor_per_var + m + ell];
+			y_3 = taylor[ size_t(arg[5]) * num_taylor_per_var + m + ell];
 		}
 		else	y_3 = zero;
 		z[m+ell] = CondExpOp(

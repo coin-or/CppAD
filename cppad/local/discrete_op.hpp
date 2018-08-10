@@ -2,7 +2,7 @@
 # define CPPAD_LOCAL_DISCRETE_OP_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -104,7 +104,7 @@ inline void forward_dis_op(
 
 	// Taylor coefficients corresponding to argument and result
 	size_t num_taylor_per_var = (cap_order-1) * r + 1;
-	Base* x = taylor + arg[1] * num_taylor_per_var;
+	Base* x = taylor + size_t(arg[1]) * num_taylor_per_var;
 	Base* z = taylor +    i_z * num_taylor_per_var;
 
 	if( p == 0 )

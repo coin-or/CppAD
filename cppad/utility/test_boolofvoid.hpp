@@ -121,7 +121,7 @@ public:
 			name.size() < width_ ,
 			"test_boolofvoid: name does not have less characters than width"
 		);
-		std::cout.width( width_ );
+		std::cout.width( int(width_) );
 		std::cout.setf( std::ios_base::left );
 		std::cout << name;
 		//
@@ -145,7 +145,7 @@ public:
 	/// summary
 	bool summary(bool memory_ok )
 	{
-		std::cout.width( width_ );
+		std::cout.width( int(width_) );
 		std::cout.setf( std::ios_base::left );
 		std::cout << "memory_leak";
 		//
