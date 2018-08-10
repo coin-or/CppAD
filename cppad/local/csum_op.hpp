@@ -345,14 +345,14 @@ inline void reverse_csum_op(
 	size_t d1 = d + 1;
 	for(size_t i = 5; i < size_t(arg[1]); ++i)
 	{	CPPAD_ASSERT_UNKNOWN( size_t(arg[i]) < i_z );
-		px    = partial + arg[i] * nc_partial;
+		px    = partial + size_t(arg[i]) * nc_partial;
 		size_t k = d1;
 		while(k--)
 			px[k] += pz[k];
 	}
 	for(size_t i = size_t(arg[1]); i < size_t(arg[2]); ++i)
 	{	CPPAD_ASSERT_UNKNOWN( size_t(arg[i]) < i_z );
-		px    = partial + arg[i] * nc_partial;
+		px    = partial + size_t(arg[i]) * nc_partial;
 		size_t k = d1;
 		while(k--)
 			px[k] -= pz[k];

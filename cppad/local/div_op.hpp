@@ -184,8 +184,8 @@ inline void reverse_divvv_op(
 	const Base* z  = taylor + i_z    * cap_order;
 
 	// Partial derivatives corresponding to arguments and result
-	Base* px = partial + arg[0] * nc_partial;
-	Base* py = partial + arg[1] * nc_partial;
+	Base* px = partial + size_t(arg[0]) * nc_partial;
+	Base* py = partial + size_t(arg[1]) * nc_partial;
 	Base* pz = partial + i_z    * nc_partial;
 
 	// Using CondExp, it can make sense to divide by zero
@@ -375,7 +375,7 @@ inline void reverse_divpv_op(
 	const Base* z = taylor + i_z    * cap_order;
 
 	// Partial derivatives corresponding to arguments and result
-	Base* py = partial + arg[1] * nc_partial;
+	Base* py = partial + size_t(arg[1]) * nc_partial;
 	Base* pz = partial + i_z    * nc_partial;
 
 	// Using CondExp, it can make sense to divide by zero so do not
@@ -555,7 +555,7 @@ inline void reverse_divvp_op(
 	Base  y = parameter[ arg[1] ];
 
 	// Partial derivatives corresponding to arguments and result
-	Base* px = partial + arg[0] * nc_partial;
+	Base* px = partial + size_t(arg[0]) * nc_partial;
 	Base* pz = partial + i_z    * nc_partial;
 
 	// Using CondExp, it can make sense to divide by zero

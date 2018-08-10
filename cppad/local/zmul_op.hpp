@@ -176,8 +176,8 @@ inline void reverse_zmulvv_op(
 	const Base* y  = taylor + size_t(arg[1]) * cap_order;
 
 	// Partial derivatives corresponding to arguments and result
-	Base* px = partial + arg[0] * nc_partial;
-	Base* py = partial + arg[1] * nc_partial;
+	Base* px = partial + size_t(arg[0]) * nc_partial;
+	Base* py = partial + size_t(arg[1]) * nc_partial;
 	Base* pz = partial + i_z    * nc_partial;
 
 	// number of indices to access
@@ -342,7 +342,7 @@ inline void reverse_zmulpv_op(
 	Base x  = parameter[ arg[0] ];
 
 	// Partial derivatives corresponding to arguments and result
-	Base* py = partial + arg[1] * nc_partial;
+	Base* py = partial + size_t(arg[1]) * nc_partial;
 	Base* pz = partial + i_z    * nc_partial;
 
 	// number of indices to access
@@ -502,7 +502,7 @@ inline void reverse_zmulvp_op(
 	Base y  = parameter[ arg[1] ];
 
 	// Partial derivatives corresponding to arguments and result
-	Base* px = partial + arg[0] * nc_partial;
+	Base* px = partial + size_t(arg[0]) * nc_partial;
 	Base* pz = partial + i_z    * nc_partial;
 
 	// number of indices to access

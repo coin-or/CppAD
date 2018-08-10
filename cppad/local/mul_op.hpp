@@ -176,8 +176,8 @@ inline void reverse_mulvv_op(
 	const Base* y  = taylor + size_t(arg[1]) * cap_order;
 
 	// Partial derivatives corresponding to arguments and result
-	Base* px = partial + arg[0] * nc_partial;
-	Base* py = partial + arg[1] * nc_partial;
+	Base* px = partial + size_t(arg[0]) * nc_partial;
+	Base* py = partial + size_t(arg[1]) * nc_partial;
 	Base* pz = partial + i_z    * nc_partial;
 
 
@@ -343,7 +343,7 @@ inline void reverse_mulpv_op(
 	Base x  = parameter[ arg[0] ];
 
 	// Partial derivatives corresponding to arguments and result
-	Base* py = partial + arg[1] * nc_partial;
+	Base* py = partial + size_t(arg[1]) * nc_partial;
 	Base* pz = partial + i_z    * nc_partial;
 
 	// number of indices to access
