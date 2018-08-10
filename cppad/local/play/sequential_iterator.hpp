@@ -282,7 +282,7 @@ public:
 	}
 	/// current operator index
 	size_t op_index(void)
-	{	return op_cur_ - op_begin_; }
+	{	return size_t(op_cur_ - op_begin_); }
 };
 
 } } } // BEGIN_CPPAD_LOCAL_PLAY_NAMESPACE

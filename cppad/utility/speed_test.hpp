@@ -2,7 +2,7 @@
 # define CPPAD_UTILITY_SPEED_TEST_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -402,8 +402,8 @@ inline void SpeedTest(
 			maxSize = size;
 
 		// next size
-		if( ((int) size) + inc > 0 )
-			size += inc;
+		if( int(size) + inc > 0 )
+			size = size_t( int(size) + inc );
 		else	size  = 0;
 	}
 	SpeedTestNdigit(maxSize, maxSizeDigit, pow10);
@@ -459,8 +459,8 @@ inline void SpeedTest(
 		cout << endl;
 
 		// next size
-		if( ((int) size) + inc > 0 )
-			size += inc;
+		if( int(size) + inc > 0 )
+			size = size_t( int(size) + inc );
 		else	size  = 0;
 	}
 	return;
