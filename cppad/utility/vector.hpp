@@ -2,7 +2,7 @@
 # define CPPAD_UTILITY_VECTOR_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -110,6 +110,8 @@ plus the following:
 $pre
 
 $$
+This operation is defined where $icode i$$ is $code int$$
+(as well as $code size_t$$) with out implicit conversion.
 The object $icode%x%[%i%]%$$ has type $icode Scalar$$
 (is not possibly a different type that can be converted to $icode Scalar$$).
 $pre
@@ -465,6 +467,7 @@ public:
 		return *this;
 	}
 # endif
+	// --------------------------------------------------------------------
 	/// non-constant element access; i.e., we can change this element value
 	Type& operator[](
 		/// element index, must be less than length
@@ -476,6 +479,18 @@ public:
 		);
 		return data_[i];
 	}
+	/// non-constant element access; i.e., we can change this element value
+	Type& operator[](
+		/// element index, must be less than length
+		int i
+	)
+	{	CPPAD_ASSERT_KNOWN(
+			size_t(i) < length_,
+			"vector: index greater than or equal vector size"
+		);
+		return data_[i];
+	}
+	// --------------------------------------------------------------------
 	/// constant element access; i.e., we cannot change this element value
 	const Type& operator[](
 		/// element index, must be less than length
@@ -487,6 +502,18 @@ public:
 		);
 		return data_[i];
 	}
+	/// constant element access; i.e., we cannot change this element value
+	const Type& operator[](
+		/// element index, must be less than length
+		int i
+	) const
+	{	CPPAD_ASSERT_KNOWN(
+			size_t(i) < length_,
+			"vector: index greater than or equal vector size"
+		);
+		return data_[i];
+	}
+	// --------------------------------------------------------------------
 	/// add an element to the back of this vector
 	void push_back(
 		/// value of the element

@@ -81,7 +81,7 @@ i_vec is defined by
 If this is the LdvOp operation (if x is a variable),
 i_vec is defined by
 \verbatim
-	i_vec = floor( taylor[ arg[1] * cap_order + 0 ] )
+	i_vec = floor( taylor[ size_t(arg[1]) * cap_order + 0 ] )
 \endverbatim
 where floor(c) is the greatest integer less that or equal c.
 \n
@@ -101,7 +101,7 @@ number of columns in the matrix containing the Taylor coefficients.
 \n
 Input
 \n
-In LdvOp case, <code>taylor[ arg[1] * cap_order + 0 ]</code>
+In LdvOp case, <code>taylor[ size_t(arg[1]) * cap_order + 0 ]</code>
 is used to compute the index in the definition of i_vec above.
 If v[x] is a variable, <code>taylor[ i_v_x * cap_order + 0 ]</code>
 is the zero order Taylor coefficient for v[x].
@@ -308,7 +308,7 @@ inline void forward_load_v_op_0(
 		size_t( std::numeric_limits<addr_t>::max() ) >= i_z
 	);
 
-	size_t i_vec = Integer( taylor[ arg[1] * cap_order + 0 ] );
+	size_t i_vec = Integer( taylor[ size_t(arg[1]) * cap_order + 0 ] );
 	CPPAD_ASSERT_KNOWN(
 		i_vec < index_by_ind[ arg[0] - 1 ] ,
 		"VecAD: index during zero order forward sweep is out of range"

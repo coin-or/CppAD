@@ -111,6 +111,7 @@ public:
 	const Type* data(void) const
 	{	return data_; }
 
+	//  ----------------------------------------------------------------------
 	/// non-constant element access; i.e., we can change this element value
 	Type& operator[](
 		/// element index, must be less than length
@@ -119,7 +120,16 @@ public:
 	{	CPPAD_ASSERT_UNKNOWN( i * sizeof(Type) < byte_length_ );
 		return data_[i];
 	}
+	/// non-constant element access; i.e., we can change this element value
+	Type& operator[](
+		/// element index, must be less than length
+		int i
+	)
+	{	CPPAD_ASSERT_UNKNOWN( size_t(i) * sizeof(Type) < byte_length_ );
+		return data_[i];
+	}
 
+	//  ----------------------------------------------------------------------
 	/// constant element access; i.e., we cannot change this element value
 	const Type& operator[](
 		/// element index, must be less than length
@@ -128,6 +138,15 @@ public:
 	{	CPPAD_ASSERT_UNKNOWN( i * sizeof(Type) < byte_length_ );
 		return data_[i];
 	}
+	/// constant element access; i.e., we cannot change this element value
+	const Type& operator[](
+		/// element index, must be less than length
+		int i
+	) const
+	{	CPPAD_ASSERT_UNKNOWN( size_t(i) * sizeof(Type) < byte_length_ );
+		return data_[i];
+	}
+	//  ----------------------------------------------------------------------
 
 	/*!
 	Add an element to theh back of this vector

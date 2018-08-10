@@ -1,9 +1,8 @@
-// $Id$
 # ifndef CPPAD_LOCAL_PRINT_OP_HPP
 # define CPPAD_LOCAL_PRINT_OP_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -48,7 +47,7 @@ If this is zero, \a var is a parameter. Otherwise it is a variable.
 \a arg[1]
 \n
 If \a pos is a parameter, <code>parameter[arg[1]]</code> is its value.
-Othwise <code>taylor[ arg[1] * cap_order + 0 ]</code> is the zero
+Othwise <code>taylor[ size_t(arg[1]) * cap_order + 0 ]</code> is the zero
 order Taylor coefficient for \a pos.
 \n
 \n
@@ -61,7 +60,7 @@ if \a pos is not a positive value.
 \a arg[3]
 \n
 If \a var is a parameter, <code>parameter[arg[3]]</code> is its value.
-Othwise <code>taylor[ arg[3] * cap_order + 0 ]</code> is the zero
+Othwise <code>taylor[ size_t(arg[3]) * cap_order + 0 ]</code> is the zero
 order Taylor coefficient for \a var.
 \n
 \n
@@ -116,7 +115,7 @@ inline void forward_pri_0(
 
 	// pos
 	if( arg[0] & 1 )
-	{	pos = taylor[ arg[1] * cap_order + 0 ];
+	{	pos = taylor[ size_t(arg[1]) * cap_order + 0 ];
 	}
 	else
 	{	CPPAD_ASSERT_UNKNOWN( size_t(arg[1]) < num_par );
@@ -129,7 +128,7 @@ inline void forward_pri_0(
 
 	// var
 	if( arg[0] & 2 )
-	{	var = taylor[ arg[3] * cap_order + 0 ];
+	{	var = taylor[ size_t(arg[3]) * cap_order + 0 ];
 	}
 	else
 	{	CPPAD_ASSERT_UNKNOWN( size_t(arg[3]) < num_par );

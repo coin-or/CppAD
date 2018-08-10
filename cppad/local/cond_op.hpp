@@ -1,8 +1,7 @@
-// $Id$
 # ifndef CPPAD_LOCAL_COND_OP_HPP
 # define CPPAD_LOCAL_COND_OP_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -307,7 +306,7 @@ inline void forward_cond_op(
 
 	if( arg[1] & 1 )
 	{
-		y_0 = taylor[ arg[2] * cap_order + 0 ];
+		y_0 = taylor[ size_t(arg[2]) * cap_order + 0 ];
 	}
 	else
 	{	CPPAD_ASSERT_UNKNOWN( size_t(arg[2]) < num_par );
@@ -315,7 +314,7 @@ inline void forward_cond_op(
 	}
 	if( arg[1] & 2 )
 	{
-		y_1 = taylor[ arg[3] * cap_order + 0 ];
+		y_1 = taylor[ size_t(arg[3]) * cap_order + 0 ];
 	}
 	else
 	{	CPPAD_ASSERT_UNKNOWN( size_t(arg[3]) < num_par );
@@ -324,7 +323,7 @@ inline void forward_cond_op(
 	if( p == 0 )
 	{	if( arg[1] & 4 )
 		{
-			y_2 = taylor[ arg[4] * cap_order + 0 ];
+			y_2 = taylor[ size_t(arg[4]) * cap_order + 0 ];
 		}
 		else
 		{	CPPAD_ASSERT_UNKNOWN( size_t(arg[4]) < num_par );
@@ -332,7 +331,7 @@ inline void forward_cond_op(
 		}
 		if( arg[1] & 8 )
 		{
-			y_3 = taylor[ arg[5] * cap_order + 0 ];
+			y_3 = taylor[ size_t(arg[5]) * cap_order + 0 ];
 		}
 		else
 		{	CPPAD_ASSERT_UNKNOWN( size_t(arg[5]) < num_par );
@@ -350,12 +349,12 @@ inline void forward_cond_op(
 	for(size_t d = p; d <= q; d++)
 	{	if( arg[1] & 4 )
 		{
-			y_2 = taylor[ arg[4] * cap_order + d];
+			y_2 = taylor[ size_t(arg[4]) * cap_order + d];
 		}
 		else	y_2 = zero;
 		if( arg[1] & 8 )
 		{
-			y_3 = taylor[ arg[5] * cap_order + d];
+			y_3 = taylor[ size_t(arg[5]) * cap_order + d];
 		}
 		else	y_3 = zero;
 		z[d] = CondExpOp(
@@ -645,7 +644,7 @@ inline void forward_cond_op_0(
 
 	if( arg[1] & 1 )
 	{
-		y_0 = taylor[ arg[2] * cap_order + 0 ];
+		y_0 = taylor[ size_t(arg[2]) * cap_order + 0 ];
 	}
 	else
 	{	CPPAD_ASSERT_UNKNOWN( size_t(arg[2]) < num_par );
@@ -653,7 +652,7 @@ inline void forward_cond_op_0(
 	}
 	if( arg[1] & 2 )
 	{
-		y_1 = taylor[ arg[3] * cap_order + 0 ];
+		y_1 = taylor[ size_t(arg[3]) * cap_order + 0 ];
 	}
 	else
 	{	CPPAD_ASSERT_UNKNOWN( size_t(arg[3]) < num_par );
@@ -661,7 +660,7 @@ inline void forward_cond_op_0(
 	}
 	if( arg[1] & 4 )
 	{
-		y_2 = taylor[ arg[4] * cap_order + 0 ];
+		y_2 = taylor[ size_t(arg[4]) * cap_order + 0 ];
 	}
 	else
 	{	CPPAD_ASSERT_UNKNOWN( size_t(arg[4]) < num_par );
@@ -669,7 +668,7 @@ inline void forward_cond_op_0(
 	}
 	if( arg[1] & 8 )
 	{
-		y_3 = taylor[ arg[5] * cap_order + 0 ];
+		y_3 = taylor[ size_t(arg[5]) * cap_order + 0 ];
 	}
 	else
 	{	CPPAD_ASSERT_UNKNOWN( size_t(arg[5]) < num_par );
@@ -835,7 +834,7 @@ inline void reverse_cond_op(
 	pz = partial + i_z * nc_partial + 0;
 	if( arg[1] & 1 )
 	{
-		y_0 = taylor[ arg[2] * cap_order + 0 ];
+		y_0 = taylor[ size_t(arg[2]) * cap_order + 0 ];
 	}
 	else
 	{	CPPAD_ASSERT_UNKNOWN( size_t(arg[2]) < num_par );
@@ -843,7 +842,7 @@ inline void reverse_cond_op(
 	}
 	if( arg[1] & 2 )
 	{
-		y_1 = taylor[ arg[3] * cap_order + 0 ];
+		y_1 = taylor[ size_t(arg[3]) * cap_order + 0 ];
 	}
 	else
 	{	CPPAD_ASSERT_UNKNOWN( size_t(arg[3]) < num_par );
@@ -851,7 +850,7 @@ inline void reverse_cond_op(
 	}
 	if( arg[1] & 4 )
 	{
-		py_2 = partial + arg[4] * nc_partial;
+		py_2 = partial + size_t(arg[4]) * nc_partial;
 		size_t j = d + 1;
 		while(j--)
 		{	py_2[j] += CondExpOp(
@@ -865,7 +864,7 @@ inline void reverse_cond_op(
 	}
 	if( arg[1] & 8 )
 	{
-		py_3 = partial + arg[5] * nc_partial;
+		py_3 = partial + size_t(arg[5]) * nc_partial;
 		size_t j = d + 1;
 		while(j--)
 		{	py_3[j] += CondExpOp(

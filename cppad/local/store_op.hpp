@@ -1,9 +1,8 @@
-// $Id$
 # ifndef CPPAD_LOCAL_STORE_OP_HPP
 # define CPPAD_LOCAL_STORE_OP_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -79,7 +78,7 @@ i_vec is defined by
 If this is a StvpOp or StvvOp operation (if x is a variable),
 i_vec is defined by
 \verbatim
-	i_vec = floor( taylor[ arg[1] * cap_order + 0 ] )
+	i_vec = floor( taylor[ size_t(arg[1]) * cap_order + 0 ] )
 \endverbatim
 where floor(c) is the greatest integer less that or equal c.
 \n
@@ -97,7 +96,7 @@ is the total number of parameters on the tape
 number of columns in the matrix containing the Taylor coefficients.
 
 \param taylor
-In StvpOp and StvvOp cases, <code><taylor[ arg[1] * cap_order + 0 ]</code>
+In StvpOp and StvvOp cases, <code><taylor[ size_t(arg[1]) * cap_order + 0 ]</code>
 is used to compute the index in the definition of i_vec above.
 
 \param isvar_by_ind
@@ -282,7 +281,7 @@ inline void forward_store_vp_op_0(
 	bool*          isvar_by_ind   ,
 	size_t*        index_by_ind   )
 {
-	size_t i_vec = Integer( taylor[ arg[1] * cap_order + 0 ] );
+	size_t i_vec = Integer( taylor[ size_t(arg[1]) * cap_order + 0 ] );
 	CPPAD_ASSERT_KNOWN(
 		i_vec < index_by_ind[ arg[0] - 1 ] ,
 		"VecAD: index during zero order forward sweep is out of range"
@@ -312,7 +311,7 @@ inline void forward_store_vv_op_0(
 	bool*          isvar_by_ind   ,
 	size_t*        index_by_ind   )
 {
-	size_t i_vec = Integer( taylor[ arg[1] * cap_order + 0 ] );
+	size_t i_vec = Integer( taylor[ size_t(arg[1]) * cap_order + 0 ] );
 	CPPAD_ASSERT_KNOWN(
 		i_vec < index_by_ind[ arg[0] - 1 ] ,
 		"VecAD: index during zero order forward sweep is out of range"

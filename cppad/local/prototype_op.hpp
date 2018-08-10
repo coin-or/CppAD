@@ -1,9 +1,8 @@
-// $Id$
 # ifndef CPPAD_LOCAL_PROTOTYPE_OP_HPP
 # define CPPAD_LOCAL_PROTOTYPE_OP_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -617,12 +616,12 @@ maximum number of orders that will fit in the \c taylor array.
 
 \param taylor
 \b Input: If x is a variable,
-<code>taylor [ arg[0] * cap_order + k ]</code>,
+<code>taylor [ size_t(arg[0]) * cap_order + k ]</code>,
 for k = 0 , ... , q,
 is the k-th order Taylor coefficient corresponding to x.
 \n
 \b Input: If y is a variable,
-<code>taylor [ arg[1] * cap_order + k ]</code>,
+<code>taylor [ size_t(arg[1]) * cap_order + k ]</code>,
 for k = 0 , ... , q,
 is the k-th order Taylor coefficient corresponding to y.
 \n
@@ -965,12 +964,12 @@ maximum number of orders that will fit in the \c taylor array.
 
 \param taylor
 \b Input: If x is a variable,
-<code>taylor [ arg[0] * cap_order + k ]</code>
+<code>taylor [ size_t(arg[0]) * cap_order + k ]</code>
 for k = 0 , ... , q,
 is the k-th order Taylor coefficient corresponding to x.
 \n
 \b Input: If y is a variable,
-<code>taylor [ arg[1] * cap_order + k ]</code>
+<code>taylor [ size_t(arg[1]) * cap_order + k ]</code>
 for k = 0 , ... , q
 is the k-th order Taylor coefficient corresponding to y.
 \n

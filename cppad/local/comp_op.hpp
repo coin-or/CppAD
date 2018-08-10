@@ -57,7 +57,7 @@ It the condition is not true, ths counter is incremented by one.
 
 \param arg
 parameter[ arg[0] ] is the left operand and
-taylor[ arg[1] * cap_order + 0 ] is the zero order Taylor coefficient
+taylor[ size_t(arg[1]) * cap_order + 0 ] is the zero order Taylor coefficient
 for the right operand.
 
 \param parameter
@@ -94,7 +94,7 @@ Zero order forward mode comparison check that left <= right
 It the condition is not true, ths counter is incremented by one.
 
 \param arg
-taylor[ arg[0] * cap_order + 0 ] is the zero order Taylor coefficient
+taylor[ size_t(arg[0]) * cap_order + 0 ] is the zero order Taylor coefficient
 for the left operand and  parameter[ arg[1] ] is the right operand
 
 \param parameter
@@ -131,9 +131,9 @@ Zero order forward mode comparison check that left <= right
 It the condition is not true, ths counter is incremented by one.
 
 \param arg
-taylor[ arg[0] * cap_order + 0 ] is the zero order Taylor coefficient
+taylor[ size_t(arg[0]) * cap_order + 0 ] is the zero order Taylor coefficient
 for the left operand and
-taylor[ arg[1] * cap_order + 0 ] is the zero order Taylor coefficient
+taylor[ size_t(arg[1]) * cap_order + 0 ] is the zero order Taylor coefficient
 for the right operand.
 
 \param parameter

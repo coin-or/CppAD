@@ -64,7 +64,7 @@ maximum number of orders that will fit in the \c taylor array.
 
 \param taylor
 \b Input:
-taylor [ arg[0] * cap_order + k ]
+taylor [ size_t(arg[0]) * cap_order + k ]
 for k = 0 , ... , q,
 is the k-th order Taylor coefficient corresponding to x.
 \n
@@ -191,7 +191,7 @@ maximum number of orders that will fit in the \c taylor array.
 
 \param taylor
 \b Input:
-taylor [ arg[0] * cap_order + 0 ]
+taylor [ size_t(arg[0]) * cap_order + 0 ]
 is the zero order Taylor coefficient corresponding to x.
 \n
 \b Input:
@@ -436,7 +436,7 @@ maximum number of orders that will fit in the \c taylor array.
 
 \param taylor
 \b Input:
-taylor [ arg[0] * cap_order + k ]
+taylor [ size_t(arg[0]) * cap_order + k ]
 for k = 0 , ... , d,
 is the k-th order Taylor coefficient corresponding to x.
 \n
@@ -451,7 +451,7 @@ number of columns in the matrix containing all the partial derivatives
 
 \param partial
 \b Input:
-partial [ arg[0] * nc_partial + k ]
+partial [ size_t(arg[0]) * nc_partial + k ]
 for k = 0 , ... , d,
 is the partial derivative of G( z , x , w , u , ... ) with respect to
 the k-th order Taylor coefficient for x.
@@ -464,7 +464,7 @@ is the partial derivative of G( z , x , w , u , ... ) with respect to
 the k-th order Taylor coefficient for the j-th result of this operation.
 \n
 \b Output:
-partial [ arg[0] * nc_partial + k ]
+partial [ size_t(arg[0]) * nc_partial + k ]
 for k = 0 , ... , d,
 is the partial derivative of H( x , w , u , ... ) with respect to
 the k-th order Taylor coefficient for x.
@@ -517,7 +517,7 @@ inline void reverse_erf_op(
 
 	// Taylor coefficients and partials corresponding to x
 	const Base* x  = taylor  + arg[0]  * cap_order;
-	Base* px       = partial + arg[0] * nc_partial;
+	Base* px       = partial + size_t(arg[0]) * nc_partial;
 
 	// Taylor coefficients and partials corresponding to z_3
 	const Base* z_3  = taylor  + (i_z+3) * cap_order;

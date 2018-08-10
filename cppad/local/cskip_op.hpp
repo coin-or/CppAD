@@ -104,10 +104,10 @@ number of columns in the matrix containing the Taylor coefficients.
 
 \param taylor [in]
 If left is an AD<Base> variable,
-<code>taylor [ arg[2] * cap_order + 0 ]</code>
+<code>taylor [ size_t(arg[2]) * cap_order + 0 ]</code>
 is the zeroth order Taylor coefficient corresponding to left.
 If right is an AD<Base> variable,
-<code>taylor [ arg[3] * cap_order + 0 ]</code>
+<code>taylor [ size_t(arg[3]) * cap_order + 0 ]</code>
 is the zeroth order Taylor coefficient corresponding to right.
 
 \param cskip_op [in,out]
@@ -133,7 +133,7 @@ inline void forward_cskip_op_0(
 	{	// If variable arg[2] <= i_z, it has already been computed,
 		// but it will be skipped for higher orders.
 		CPPAD_ASSERT_UNKNOWN( size_t(arg[2]) <= i_z );
-		left = taylor[ arg[2] * cap_order + 0 ];
+		left = taylor[ size_t(arg[2]) * cap_order + 0 ];
 	}
 	else
 	{	CPPAD_ASSERT_UNKNOWN( size_t(arg[2]) < num_par );
@@ -143,7 +143,7 @@ inline void forward_cskip_op_0(
 	{	// If variable arg[3] <= i_z, it has already been computed,
 		// but it will be skipped for higher orders.
 		CPPAD_ASSERT_UNKNOWN( size_t(arg[3]) <= i_z );
-		right = taylor[ arg[3] * cap_order + 0 ];
+		right = taylor[ size_t(arg[3]) * cap_order + 0 ];
 	}
 	else
 	{	CPPAD_ASSERT_UNKNOWN( size_t(arg[3]) < num_par );
