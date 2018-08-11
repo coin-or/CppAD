@@ -426,7 +426,7 @@ void optimize_run(
 				skip &= n_true > 0 || n_false > 0;
 				if( skip )
 				{	CPPAD_ASSERT_UNKNOWN( NumRes(CSkipOp) == 0 );
-					size_t n_arg   = 7 + n_true + n_false;
+					size_t n_arg   = 7 + size_t(n_true) + size_t(n_false);
 					// reserve space for the arguments to this operator but
 					// delay setting them until we have all the new addresses
 					cskip_new[j].i_arg = rec->ReserveArg(n_arg);
@@ -1054,7 +1054,7 @@ void optimize_run(
 			}
 			rec->ReplaceArg(i_arg++, n_true + n_false);
 # ifndef NDEBUG
-			size_t n_arg   = 7 + n_true + n_false;
+			size_t n_arg   = 7 + size_t(n_true) + size_t(n_false);
 			CPPAD_ASSERT_UNKNOWN( cskip_new[i].i_arg + n_arg == i_arg );
 # endif
 		}
