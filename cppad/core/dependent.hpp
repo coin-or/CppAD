@@ -237,8 +237,6 @@ void ADFun<Base>::Dependent(local::ADTape<Base> *tape, const ADvector &y)
 {
 	size_t   m = y.size();
 	size_t   n = tape->size_independent_;
-	size_t   i, j;
-	size_t   y_taddr;
 
 	// check ADvector is Simple Vector class with AD<Base> elements
 	CheckSimpleVector< AD<Base>, ADvector>();
@@ -254,8 +252,9 @@ void ADFun<Base>::Dependent(local::ADTape<Base> *tape, const ADvector &y)
 	CPPAD_ASSERT_UNKNOWN( local::NumRes(local::ParOp) == 1 );
 	dep_parameter_.resize(m);
 	dep_taddr_.resize(m);
-	for(i = 0; i < m; i++)
+	for(size_t i = 0; i < m; i++)
 	{	dep_parameter_[i] = CppAD::Parameter(y[i]);
+		addr_t y_taddr;
 		if( dep_parameter_[i] )
 		{	// make a tape copy of dependent variables that are parameters,
 			y_taddr = tape->RecordParOp( y[i] );
@@ -263,7 +262,7 @@ void ADFun<Base>::Dependent(local::ADTape<Base> *tape, const ADvector &y)
 		else	y_taddr = y[i].taddr_;
 
 		CPPAD_ASSERT_UNKNOWN( y_taddr > 0 );
-		dep_taddr_[i] = y_taddr;
+		dep_taddr_[i] = size_t( y_taddr );
 	}
 
 	// put an EndOp at the end of the tape
@@ -301,7 +300,7 @@ void ADFun<Base>::Dependent(local::ADTape<Base> *tape, const ADvector &y)
 	// Note that play_ has been set, we can use it to check operators
 	ind_taddr_.resize(n);
 	CPPAD_ASSERT_UNKNOWN( n < num_var_tape_);
-	for(j = 0; j < n; j++)
+	for(size_t j = 0; j < n; j++)
 	{	CPPAD_ASSERT_UNKNOWN( play_.GetOp(j+1) == local::InvOp );
 		ind_taddr_[j] = j+1;
 	}
