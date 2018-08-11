@@ -103,7 +103,7 @@ void random_setup(
 		arg_index            += NumArg(op);
 		//
 		// index of first result for next operator
-		var_index  += addr_t( NumRes(op) );
+		var_index  += NumRes(op);
 		if( NumRes(op) > 0 )
 		{	// index of last (primary) result for this operator
 			(*op2var_vec)[i_op] = Addr( var_index - 1 );
@@ -121,7 +121,7 @@ void random_setup(
 			// The actual number of arugments for this operator is
 			// op_arg[4] + 1
 			// Correct index of first argument for next operator
-			arg_index += op_arg[4] + 1;
+			arg_index += size_t(op_arg[4] + 1);
 		}
 		//
 		// CSkip
@@ -134,7 +134,7 @@ void random_setup(
 			// The actual number of arugments for this operator is
 			// 7 + op_arg[4] + op_arg[5].
 			// Correct index of first argument for next operator.
-			arg_index += 7 + op_arg[4] + op_arg[5];
+			arg_index += size_t(7 + op_arg[4] + op_arg[5]);
 		}
 	}
 }

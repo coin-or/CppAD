@@ -527,8 +527,8 @@ void printOpField(
 	// length of the string
 	size_t len = str.size();
 	if( len > width )
-	{	size_t i;
-		for(i = 0; i < width-1; i++)
+	{
+		for(size_t i = 0; i < width-1; i++)
 			os << str[i];
 		os << "*";
 		return;
@@ -583,7 +583,7 @@ void printOp(
 	size_t                 i_var  ,
 	OpCode                 op     ,
 	const addr_t*          ind    )
-{	size_t i;
+{
 	CPPAD_ASSERT_KNOWN(
 		! thread_alloc::in_parallel() ,
 		"cannot print trace of AD operations in parallel mode"
@@ -628,21 +628,21 @@ void printOp(
 			printOpField(os, " vr=", ind[3], ncol);
 		else	printOpField(os, " pr=", play->GetPar(ind[3]), ncol);
 		if( size_t(ind[4]) < 3 )
-		{	for(i = 0; i < size_t(ind[4]); i++)
+		{	for(addr_t i = 0; i < ind[4]; i++)
 				printOpField(os, " ot=", ind[6+i], ncol);
 		}
 		else
 		{	printOpField(os, "\n\tot=", ind[6+0], ncol);
-			for(i = 1; i < size_t(ind[4]); i++)
+			for(addr_t i = 1; i < ind[4]; i++)
 				printOpField(os, " ot=", ind[6+i], ncol);
 		}
 		if( size_t(ind[5]) < 3 )
-		{	for(i = 0; i < size_t(ind[5]); i++)
+		{	for(addr_t i = 0; i < ind[5]; i++)
 				printOpField(os, " of=", ind[6+ind[4]+i], ncol);
 		}
 		else
 		{	printOpField(os, "\n\tof=", ind[6+ind[4]+0], ncol);
-			{	for(i = 1; i < size_t(ind[5]); i++)
+			{	for(addr_t i = 1; i < ind[5]; i++)
 					printOpField(os, " of=", ind[6+ind[4]+i], ncol);
 			}
 		}
@@ -663,13 +663,13 @@ void printOp(
 		*/
 		CPPAD_ASSERT_UNKNOWN( ind[ind[4]] == ind[4] );
 		printOpField(os, " pr=", play->GetPar(ind[0]), ncol);
-		for(i = 5; i < size_t(ind[1]); i++)
+		for(addr_t i = 5; i < ind[1]; i++)
 			 printOpField(os, " +v=", ind[i], ncol);
-		for(i = size_t(ind[1]); i < size_t(ind[2]); i++)
+		for(addr_t i = ind[1]; i < ind[2]; i++)
 			 printOpField(os, " -v=", ind[i], ncol);
-		for(i = size_t(ind[2]); i < size_t(ind[3]); i++)
+		for(addr_t i = ind[2]; i < ind[3]; i++)
 			 printOpField(os, " +d=", play->GetPar(ind[i]), ncol);
-		for(i = size_t(ind[3]); i < size_t(ind[4]); i++)
+		for(addr_t i = ind[3]; i < ind[4]; i++)
 			 printOpField(os, " -d=", play->GetPar(ind[i]), ncol);
 		break;
 
