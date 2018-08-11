@@ -363,7 +363,7 @@ void get_op_usage(
 			case ZmulvpOp:
 			CPPAD_ASSERT_UNKNOWN( NumRes(op) > 0 );
 			if( use_result != usage_t(no_usage) )
-			{	size_t j_op = random_itr.var2op(arg[0]);
+			{	size_t j_op = random_itr.var2op(size_t(arg[0]));
 				op_inc_arg_usage(
 					play, sum_op, i_op, j_op, op_usage, cexp_set
 				);
@@ -382,7 +382,7 @@ void get_op_usage(
 			case ZmulpvOp:
 			CPPAD_ASSERT_UNKNOWN( NumRes(op) > 0 );
 			if( use_result != usage_t(no_usage) )
-			{	size_t j_op = random_itr.var2op(arg[1]);
+			{	size_t j_op = random_itr.var2op(size_t(arg[1]));
 				op_inc_arg_usage(
 					play, sum_op, i_op, j_op, op_usage, cexp_set
 				);
@@ -401,7 +401,7 @@ void get_op_usage(
 			CPPAD_ASSERT_UNKNOWN( NumRes(op) > 0 );
 			if( use_result != usage_t(no_usage) )
 			{	for(size_t i = 0; i < 2; i++)
-				{	size_t j_op = random_itr.var2op(arg[i]);
+				{	size_t j_op = random_itr.var2op(size_t(arg[i]));
 					op_inc_arg_usage(
 						play, sum_op, i_op, j_op, op_usage, cexp_set
 					);
@@ -421,14 +421,14 @@ void get_op_usage(
 			{	CPPAD_ASSERT_UNKNOWN( NumArg(CExpOp) == 6 );
 				// propgate from result to left argument
 				if( arg[1] & 1 )
-				{	size_t j_op = random_itr.var2op(arg[2]);
+				{	size_t j_op = random_itr.var2op(size_t(arg[2]));
 					op_inc_arg_usage(
 						play, sum_op, i_op, j_op, op_usage, cexp_set
 					);
 				}
 				// propgate from result to right argument
 				if( arg[1] & 2 )
-				{	size_t j_op = random_itr.var2op(arg[3]);
+				{	size_t j_op = random_itr.var2op(size_t(arg[3]));
 					op_inc_arg_usage(
 							play, sum_op, i_op, j_op, op_usage, cexp_set
 					);
@@ -439,7 +439,7 @@ void get_op_usage(
 				//
 				// if_true
 				if( arg[1] & 4 )
-				{	size_t j_op = random_itr.var2op(arg[4]);
+				{	size_t j_op = random_itr.var2op(size_t(arg[4]));
 					bool can_skip = conditional_skip & (! same_variable);
 					can_skip     &= op_usage[j_op] == usage_t(no_usage);
 					op_inc_arg_usage(
@@ -458,7 +458,7 @@ void get_op_usage(
 				//
 				// if_false
 				if( arg[1] & 8 )
-				{	size_t j_op = random_itr.var2op(arg[5]);
+				{	size_t j_op = random_itr.var2op(size_t(arg[5]));
 					bool can_skip = conditional_skip & (! same_variable);
 					can_skip     &= op_usage[j_op] == usage_t(no_usage);
 					op_inc_arg_usage(
@@ -497,14 +497,14 @@ void get_op_usage(
 			{	op_usage[i_op] = usage_t(yes_usage);
 				if( arg[0] & 1 )
 				{	// arg[1] is a variable
-					size_t j_op = random_itr.var2op(arg[1]);
+					size_t j_op = random_itr.var2op(size_t(arg[1]));
 					op_inc_arg_usage(
 						play, sum_op, i_op, j_op, op_usage, cexp_set
 					);
 				}
 				if( arg[0] & 2 )
 				{	// arg[3] is a variable
-					size_t j_op = random_itr.var2op(arg[3]);
+					size_t j_op = random_itr.var2op(size_t(arg[3]));
 					op_inc_arg_usage(
 						play, sum_op, i_op, j_op, op_usage, cexp_set
 					);
@@ -525,7 +525,7 @@ void get_op_usage(
 			if( compare_op )
 			{	op_usage[i_op] = usage_t(yes_usage);
 				//
-				size_t j_op = random_itr.var2op(arg[1]);
+				size_t j_op = random_itr.var2op(size_t(arg[1]));
 				op_inc_arg_usage(
 					play, sum_op, i_op, j_op, op_usage, cexp_set
 				);
@@ -539,7 +539,7 @@ void get_op_usage(
 			if( compare_op )
 			{	op_usage[i_op] = usage_t(yes_usage);
 				//
-				size_t j_op = random_itr.var2op(arg[0]);
+				size_t j_op = random_itr.var2op(size_t(arg[0]));
 				op_inc_arg_usage(
 					play, sum_op, i_op, j_op, op_usage, cexp_set
 				);
@@ -556,7 +556,7 @@ void get_op_usage(
 			{	op_usage[i_op] = usage_t(yes_usage);
 				//
 				for(size_t i = 0; i < 2; i++)
-				{	size_t j_op = random_itr.var2op(arg[i]);
+				{	size_t j_op = random_itr.var2op(size_t(arg[i]));
 					op_inc_arg_usage(
 						play, sum_op, i_op, j_op, op_usage, cexp_set
 					);
@@ -584,7 +584,7 @@ void get_op_usage(
 			{	size_t i_vec = arg2vecad[ arg[0] ];
 				vecad_used[i_vec] = true;
 				//
-				size_t j_op = random_itr.var2op(arg[1]);
+				size_t j_op = random_itr.var2op(size_t(arg[1]));
 				op_usage[j_op] = usage_t(yes_usage);
 			}
 			break; // --------------------------------------------
@@ -595,7 +595,7 @@ void get_op_usage(
 			if( vecad_used[ arg2vecad[ arg[0] ] ] )
 			{	op_usage[i_op] = usage_t(yes_usage);
 				//
-				size_t j_op = random_itr.var2op(arg[2]);
+				size_t j_op = random_itr.var2op(size_t(arg[2]));
 				op_usage[j_op] = usage_t(yes_usage);
 			}
 			break; // --------------------------------------------
@@ -606,9 +606,9 @@ void get_op_usage(
 			if( vecad_used[ arg2vecad[ arg[0] ] ] )
 			{	op_usage[i_op] = usage_t(yes_usage);
 				//
-				size_t j_op = random_itr.var2op(arg[1]);
+				size_t j_op = random_itr.var2op(size_t(arg[1]));
 				op_usage[j_op] = usage_t(yes_usage);
-				size_t k_op = random_itr.var2op(arg[2]);
+				size_t k_op = random_itr.var2op(size_t(arg[2]));
 				op_usage[k_op] = usage_t(yes_usage);
 			}
 			break; // -----------------------------------------------------
@@ -620,7 +620,7 @@ void get_op_usage(
 			CPPAD_ASSERT_UNKNOWN( NumRes(op) == 1 );
 			{
 				for(size_t i = 5; i < size_t(arg[2]); i++)
-				{	size_t j_op = random_itr.var2op( arg[i] );
+				{	size_t j_op = random_itr.var2op(size_t(arg[i]));
 					op_inc_arg_usage(
 						play, sum_op, i_op, j_op, op_usage, cexp_set
 					);

@@ -165,12 +165,12 @@ struct_size_pair record_csum(
 			case SubvvOp:
 			//
 			// check if the first argument has csum usage
-			if( op_usage[random_itr.var2op(arg[0])] == usage_t(csum_usage) )
+			if( op_usage[random_itr.var2op(size_t(arg[0]))] == usage_t(csum_usage) )
 			{	CPPAD_ASSERT_UNKNOWN(
-				size_t( new_var[ random_itr.var2op(arg[0]) ]) == 0
+				size_t( new_var[ random_itr.var2op(size_t(arg[0])) ]) == 0
 				);
 				// push the operator corresponding to the first argument
-				size_t i_op_tmp = random_itr.var2op(arg[0]);
+				size_t i_op_tmp = random_itr.var2op(size_t(arg[0]));
 				random_itr.op_info(i_op_tmp, info.op, info.arg, not_used);
 				info.add = add;
 				stack.op_info.push( info );
@@ -224,12 +224,12 @@ struct_size_pair record_csum(
 			case AddvvOp:
 			case AddpvOp:
 			// check if the second argument has csum usage
-			if( op_usage[random_itr.var2op(arg[1])] == usage_t(csum_usage) )
+			if( op_usage[random_itr.var2op(size_t(arg[1]))] == usage_t(csum_usage) )
 			{	CPPAD_ASSERT_UNKNOWN(
-				size_t( new_var[ random_itr.var2op(arg[1]) ]) == 0
+				size_t( new_var[ random_itr.var2op(size_t(arg[1])) ]) == 0
 				);
 				// push the operator corresoponding to the second arugment
-				size_t i_op_tmp = random_itr.var2op(arg[1]);
+				size_t i_op_tmp = random_itr.var2op(size_t(arg[1]));
 				random_itr.op_info(i_op_tmp, info.op, info.arg, not_used);
 				info.add  = add;
 				stack.op_info.push( info );

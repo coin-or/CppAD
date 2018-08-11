@@ -203,17 +203,17 @@ size_t ADTape<Base>::AddVec(size_t length, const pod_vector_maybe<Base>& data)
 {	CPPAD_ASSERT_UNKNOWN( length > 0 );
 
 	// store the length in VecInd
-	size_t start = size_t( Rec_.PutVecInd(length) );
+	addr_t start = Rec_.PutVecInd( addr_t(length) );
 
 	// store indices of the values in VecInd
 	for(size_t i = 0; i < length; i++)
 	{
-		size_t value_index = size_t( Rec_.put_con_par( data[i] ) );
+		addr_t value_index = Rec_.put_con_par( data[i] );
 		Rec_.PutVecInd( value_index );
 	}
 
 	// return the taddr of the length (where the vector starts)
-	return start;
+	return size_t(start);
 }
 
 } } // END_CPPAD_LOCAL_NAMESPACE

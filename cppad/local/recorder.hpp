@@ -141,7 +141,7 @@ public:
 	/// Put a vecad load operator in the operation sequence (special case)
 	inline addr_t PutLoadOp(OpCode op);
 	/// Add a value to the end of the current vector of VecAD indices.
-	inline addr_t PutVecInd(size_t vec_ind);
+	inline addr_t PutVecInd(addr_t vec_ind);
 	/// Find or add a constant parameter to the vector of all parameters.
 	inline addr_t put_con_par(const Base &par);
 	/// Put one operation argument index in the recording
@@ -337,12 +337,12 @@ and after each call to Erase.
 It increments by one for each call to PutVecInd..
 */
 template <class Base>
-inline addr_t recorder<Base>::PutVecInd(size_t vec_ind)
+inline addr_t recorder<Base>::PutVecInd(addr_t vec_ind)
 {	size_t i          = vecad_ind_vec_.extend(1);
 	CPPAD_ASSERT_UNKNOWN(
-		size_t( std::numeric_limits<addr_t>::max() ) >= vec_ind
+		std::numeric_limits<addr_t>::max() >= vec_ind
 	);
-	vecad_ind_vec_[i] = addr_t( vec_ind );
+	vecad_ind_vec_[i] = vec_ind;
 	CPPAD_ASSERT_UNKNOWN( vecad_ind_vec_.size() == i + 1 );
 
 	CPPAD_ASSERT_KNOWN(

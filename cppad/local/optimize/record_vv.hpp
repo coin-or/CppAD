@@ -72,8 +72,8 @@ struct_size_pair record_vv(
 	CPPAD_ASSERT_UNKNOWN( size_t(arg[1]) < i_var ); // DAG condition
 	//
 	addr_t new_arg[2];
-	new_arg[0]   = new_var[ random_itr.var2op(arg[0]) ];
-	new_arg[1]   = new_var[ random_itr.var2op(arg[1]) ];
+	new_arg[0]   = new_var[ random_itr.var2op(size_t(arg[0])) ];
+	new_arg[1]   = new_var[ random_itr.var2op(size_t(arg[1])) ];
 	rec->PutArg( new_arg[0], new_arg[1] );
 	//
 	struct_size_pair ret;

@@ -36,10 +36,7 @@ move_list='
 move_sed='s|par_var_dyn|con_dyn_var|'
 #
 cat << EOF > junk.sed
-s|arg\\[\\(.\\)\\] *\\* *J|size_t(arg[\\1]) * J|
-s|arg\\[\\(.\\)\\] *\\* *cap_order|size_t(arg[\\1]) * cap_order|
-s|i += vecad_ind_vec_\\[i\\] + 1;|i += size_t( vecad_ind_vec_[i] ) + 1;|
-s|return vecad_ind_vec_\\[i\\];|return size_t( vecad_ind_vec_[i] );|
+s|GetTxt( *arg\\[\\(.\\)\\] *)|GetTxt(size_t(arg[\\1]))|
 EOF
 # -----------------------------------------------------------------------------
 if [ $0 != "bin/batch_edit.sh" ]

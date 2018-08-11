@@ -673,8 +673,8 @@ void ADFun<Base>::abs_normal_fun(ADFun<Base>& g, ADFun<Base>& a) const
 			else
 			{	new_arg[3] = arg[3]; // parameter
 			}
-			new_arg[2] = rec.PutTxt( play_.GetTxt( arg[2] ) );
-			new_arg[4] = rec.PutTxt( play_.GetTxt( arg[4] ) );
+			new_arg[2] = rec.PutTxt( play_.GetTxt(size_t(arg[2])) );
+			new_arg[4] = rec.PutTxt( play_.GetTxt(size_t(arg[4])) );
 			//
 			rec.PutArg(
 				new_arg[0] ,

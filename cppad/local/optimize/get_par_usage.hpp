@@ -138,7 +138,7 @@ void get_par_usage(
 			{	// determine if this parameter will be absorbed by csum
 				 if( ! (op_usage[i_op] == csum_usage) )
 				{	// determine operator corresponding to variable
-					size_t j_op = random_itr.var2op( arg[1] );
+					size_t j_op = random_itr.var2op(size_t(arg[1]));
 					CPPAD_ASSERT_UNKNOWN( op_usage[j_op] != no_usage );
 					if( op_usage[j_op] != csum_usage )
 						par_usage[ arg[0] ] = true;
@@ -154,7 +154,7 @@ void get_par_usage(
 			{	// determine if this parameter will be absorbed by csum
 				 if( ! (op_usage[i_op] == csum_usage) )
 				{	// determine operator corresponding to variable
-					size_t j_op = random_itr.var2op( arg[0] );
+					size_t j_op = random_itr.var2op(size_t(arg[0]));
 					CPPAD_ASSERT_UNKNOWN( op_usage[j_op] != no_usage );
 					if( op_usage[j_op] != csum_usage )
 						par_usage[ arg[1] ] = true;
