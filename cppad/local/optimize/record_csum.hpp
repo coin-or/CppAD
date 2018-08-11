@@ -280,7 +280,7 @@ struct_size_pair record_csum(
 	for(size_t i = 0; i < n_add_var; i++)
 	{	CPPAD_ASSERT_UNKNOWN( ! stack.add_var.empty() );
 		addr_t old_arg = stack.add_var.top();
-		new_arg        = new_var[ random_itr.var2op(old_arg) ];
+		new_arg        = new_var[ random_itr.var2op(size_t(old_arg)) ];
 		CPPAD_ASSERT_UNKNOWN( 0 < new_arg && size_t(new_arg) < current );
 		rec->PutArg(new_arg);         // arg[5+i]
 		stack.add_var.pop();
@@ -290,7 +290,7 @@ struct_size_pair record_csum(
 	for(size_t i = 0; i < n_sub_var; i++)
 	{	CPPAD_ASSERT_UNKNOWN( ! stack.sub_var.empty() );
 		addr_t old_arg = stack.sub_var.top();
-		new_arg        = new_var[ random_itr.var2op(old_arg) ];
+		new_arg        = new_var[ random_itr.var2op(size_t(old_arg)) ];
 		CPPAD_ASSERT_UNKNOWN( 0 < new_arg && size_t(new_arg) < current );
 		rec->PutArg(new_arg);      // arg[arg[1] + i]
 		stack.sub_var.pop();
@@ -318,7 +318,7 @@ struct_size_pair record_csum(
 	// return value
 	struct_size_pair ret;
 	ret.i_op  = rec->num_op_rec();
-	ret.i_var = rec->PutOp(CSumOp);
+	ret.i_var = size_t(rec->PutOp(CSumOp));
 	//
 	return ret;
 }

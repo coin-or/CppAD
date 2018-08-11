@@ -294,7 +294,7 @@ void get_par_usage(
 		--i_dyn;
 		//
 		// corresponding parameter index
-		size_t i_par = dyn_ind2par_ind[i_dyn];
+		size_t i_par = size_t( dyn_ind2par_ind[i_dyn] );
 		CPPAD_ASSERT_UNKNOWN( dyn_par_is[i_par] );
 		//
 		// next dynamic parameter in reverse order
