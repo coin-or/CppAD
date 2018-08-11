@@ -604,7 +604,7 @@ inline void forward_sparse_load_op(
 
 	var_sparsity.assignment(i_z, i_v, vecad_sparsity);
 	if( dependency & (op == LdvOp) )
-		var_sparsity.binary_union(i_z, i_z, arg[1], var_sparsity);
+		var_sparsity.binary_union(i_z, i_z, size_t(arg[1]), var_sparsity);
 
 	return;
 }
@@ -638,7 +638,7 @@ inline void reverse_sparse_jacobian_load_op(
 
 	vecad_sparsity.binary_union(i_v, i_v, i_z, var_sparsity);
 	if( dependency & (op == LdvOp) )
-		var_sparsity.binary_union(arg[1], arg[1], i_z, var_sparsity);
+		var_sparsity.binary_union( size_t(arg[1]), size_t(arg[1]), i_z, var_sparsity);
 
 	return;
 }

@@ -1129,7 +1129,7 @@ inline void arg_is_variable(
 		CPPAD_ASSERT_UNKNOWN( NumArg(op) == 0 )
 		//
 		// true number of arguments
-		num_arg = 7 + arg[4] + arg[5];
+		num_arg = size_t(7 + arg[4] + arg[5]);
 		is_variable.resize(num_arg);
 		is_variable[0] = false;
 		is_variable[1] = false;
@@ -1145,7 +1145,7 @@ inline void arg_is_variable(
 		CPPAD_ASSERT_UNKNOWN( NumArg(op) == 0 )
 		//
 		// true number of arguments
-		num_arg = arg[4];
+		num_arg = size_t(arg[4]);
 		//
 		is_variable.resize( num_arg );
 		for(size_t i = 0; i < num_arg; ++i)

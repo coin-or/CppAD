@@ -366,10 +366,10 @@ inline void forward_sparse_store_op(
 	CPPAD_ASSERT_UNKNOWN( size_t(arg[2]) < var_sparsity.n_set() );
 
 	if( dependency & ( (op == StvvOp) | (op == StvpOp) ) )
-		vecad_sparsity.binary_union(i_v, i_v, arg[1], var_sparsity);
+		vecad_sparsity.binary_union(i_v, i_v, size_t(arg[1]), var_sparsity);
 
 	if( (op == StpvOp) | (op == StvvOp ) )
-		vecad_sparsity.binary_union(i_v, i_v, arg[2], var_sparsity);
+		vecad_sparsity.binary_union(i_v, i_v, size_t(arg[2]), var_sparsity);
 
 	return;
 }
@@ -422,9 +422,9 @@ inline void reverse_sparse_jacobian_store_op(
 	CPPAD_ASSERT_UNKNOWN( size_t(arg[2]) < var_sparsity.n_set() );
 
 	if( dependency & ( (op == StvpOp) | (op == StvvOp) ) )
-		var_sparsity.binary_union(arg[1], arg[1], i_v, vecad_sparsity);
+		var_sparsity.binary_union( size_t(arg[1]), size_t(arg[1]), i_v, vecad_sparsity);
 	if( (op == StpvOp) | (op == StvvOp) )
-		var_sparsity.binary_union(arg[2], arg[2], i_v, vecad_sparsity);
+		var_sparsity.binary_union( size_t(arg[2]), size_t(arg[2]), i_v, vecad_sparsity);
 
 	return;
 }
@@ -486,7 +486,7 @@ inline void reverse_sparse_hessian_store_op(
 	CPPAD_ASSERT_UNKNOWN( i_v < vecad_sparsity.n_set() );
 	CPPAD_ASSERT_UNKNOWN( size_t(arg[2]) < var_sparsity.n_set() );
 
-	var_sparsity.binary_union(arg[2], arg[2], i_v, vecad_sparsity);
+	var_sparsity.binary_union( size_t(arg[2]), size_t(arg[2]), i_v, vecad_sparsity);
 
 	var_jacobian[ arg[2] ] |= vecad_jacobian[i_v];
 

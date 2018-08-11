@@ -999,14 +999,14 @@ inline void forward_sparse_jacobian_cond_op(
 	sparsity.clear(i_z);
 	if( dependency )
 	{	if( arg[1] & 1 )
-			sparsity.binary_union(i_z, i_z, arg[2], sparsity);
+			sparsity.binary_union(i_z, i_z, size_t(arg[2]), sparsity);
 		if( arg[1] & 2 )
-			sparsity.binary_union(i_z, i_z, arg[3], sparsity);
+			sparsity.binary_union(i_z, i_z, size_t(arg[3]), sparsity);
 	}
 	if( arg[1] & 4 )
-		sparsity.binary_union(i_z, i_z, arg[4], sparsity);
+		sparsity.binary_union(i_z, i_z, size_t(arg[4]), sparsity);
 	if( arg[1] & 8 )
-		sparsity.binary_union(i_z, i_z, arg[5], sparsity);
+		sparsity.binary_union(i_z, i_z, size_t(arg[5]), sparsity);
 	return;
 }
 
@@ -1139,15 +1139,15 @@ inline void reverse_sparse_jacobian_cond_op(
 # endif
 	if( dependency )
 	{	if( arg[1] & 1 )
-			sparsity.binary_union(arg[2], arg[2], i_z, sparsity);
+			sparsity.binary_union( size_t(arg[2]), size_t(arg[2]), i_z, sparsity);
 		if( arg[1] & 2 )
-			sparsity.binary_union(arg[3], arg[3], i_z, sparsity);
+			sparsity.binary_union( size_t(arg[3]), size_t(arg[3]), i_z, sparsity);
 	}
 	// --------------------------------------------------------------------
 	if( arg[1] & 4 )
-		sparsity.binary_union(arg[4], arg[4], i_z, sparsity);
+		sparsity.binary_union( size_t(arg[4]), size_t(arg[4]), i_z, sparsity);
 	if( arg[1] & 8 )
-		sparsity.binary_union(arg[5], arg[5], i_z, sparsity);
+		sparsity.binary_union( size_t(arg[5]), size_t(arg[5]), i_z, sparsity);
 	return;
 }
 
@@ -1297,12 +1297,12 @@ inline void reverse_sparse_hessian_cond_op(
 # endif
 	if( arg[1] & 4 )
 	{
-		hes_sparsity.binary_union(arg[4], arg[4], i_z, hes_sparsity);
+		hes_sparsity.binary_union( size_t(arg[4]), size_t(arg[4]), i_z, hes_sparsity);
 		jac_reverse[ arg[4] ] |= jac_reverse[i_z];
 	}
 	if( arg[1] & 8 )
 	{
-		hes_sparsity.binary_union(arg[5], arg[5], i_z, hes_sparsity);
+		hes_sparsity.binary_union( size_t(arg[5]), size_t(arg[5]), i_z, hes_sparsity);
 		jac_reverse[ arg[5] ] |= jac_reverse[i_z];
 	}
 	return;

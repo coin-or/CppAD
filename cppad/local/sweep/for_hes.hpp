@@ -411,7 +411,7 @@ void for_hes(
 			//
 			// arguemnt variables not avaialbe during sparisty calculations
 			user_x[user_j] = CppAD::numeric_limits<Base>::quiet_NaN();
-			user_ix[user_j] = arg[0]; // variable for this argument
+			user_ix[user_j] = size_t(arg[0]); // variable for this argument
 			//
 			++user_j;
 			if( user_j == user_n )
