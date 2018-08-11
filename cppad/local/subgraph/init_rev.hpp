@@ -128,7 +128,7 @@ void subgraph_info::init_rev(
 				for(size_t j = 0; j < argument_variable.size(); ++j)
 				{	size_t j_var = argument_variable[j];
 					size_t j_op  = random_itr.var2op(j_var);
-					j_op         = map_user_op_[j_op];
+					j_op         = size_t( map_user_op_[j_op] );
 					CPPAD_ASSERT_UNKNOWN( j_op < i_op );
 					if( in_subgraph_[j_op] == depend_yes )
 						in_subgraph_[i_op] =  depend_yes;
@@ -148,7 +148,7 @@ void subgraph_info::init_rev(
 				for(size_t j = 0; j < argument_variable.size(); ++j)
 				{	size_t j_var = argument_variable[j];
 					size_t j_op  = random_itr.var2op(j_var);
-					j_op         = map_user_op_[j_op];
+					j_op         = size_t( map_user_op_[j_op] );
 					CPPAD_ASSERT_UNKNOWN( j_op < i_op );
 					if( in_subgraph_[j_op] == depend_yes )
 						in_subgraph_[i_op] =  depend_yes;

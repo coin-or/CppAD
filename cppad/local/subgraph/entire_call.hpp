@@ -43,7 +43,7 @@ void entire_call(
 	// add extra operators corresponding to rest of atomic function calls
 	size_t n_sub = subgraph.size();
 	for(size_t k = 0; k < n_sub; ++k)
-	{	size_t i_op = subgraph[k];
+	{	size_t i_op = size_t( subgraph[k] );
 		//
 		if( random_itr.get_op(i_op) == UserOp )
 		{	// This is the first UserOp of this atomic function call

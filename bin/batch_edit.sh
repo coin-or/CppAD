@@ -36,9 +36,9 @@ move_list='
 move_sed='s|par_var_dyn|con_dyn_var|'
 #
 cat << EOF > junk.sed
-s|((int) size)|int(size)|
-s|size += inc;|size = size_t( int(size) + inc );|
-s|op_cur_ - op_begin_|size_t(&)|
+s|i_op = subgraph\\[sub_index\\];|i_op = size_t( subgraph[sub_index] );|
+s|\\(j_op *= *\\)map_user_op_\\[j_op\\];|\\1size_t( map_user_op_[j_op] );|
+s|\\(i_op *= *\\)map_user_op_\\[i_op\\];|\\1size_t( map_user_op_[i_op] );|
 EOF
 # -----------------------------------------------------------------------------
 if [ $0 != "bin/batch_edit.sh" ]

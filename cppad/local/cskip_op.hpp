@@ -186,11 +186,11 @@ inline void forward_cskip_op_0(
 		CPPAD_ASSERT_UNKNOWN(false);
 	}
 	if( true_case )
-	{	for(size_t i = 0; i < size_t(arg[4]); i++)
+	{	for(addr_t i = 0; i < arg[4]; i++)
 			cskip_op[ arg[6+i] ] = true;
 	}
 	else
-	{	for(size_t i = 0; i < size_t(arg[5]); i++)
+	{	for(addr_t i = 0; i < arg[5]; i++)
 			cskip_op[ arg[6+arg[4]+i] ] = true;
 	}
 	return;

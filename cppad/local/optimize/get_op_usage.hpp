@@ -634,10 +634,10 @@ void get_op_usage(
 			// start or end atomic operation sequence
 			if( user_state == end_user )
 			{	// revese_user using random_itr instead of play
-				size_t user_index = arg[0];
-				user_old          = arg[1];
-				user_n            = arg[2];
-				user_m            = arg[3];
+				size_t user_index = size_t(arg[0]);
+				user_old          = size_t(arg[1]);
+				user_n            = size_t(arg[2]);
+				user_m            = size_t(arg[3]);
 				user_j            = user_n;
 				user_i            = user_m;
 				user_state        = ret_user;
@@ -807,7 +807,7 @@ void get_op_usage(
 			if( user_j == 0 )
 				user_state = start_user;
 			// -------------------------------------------------------------
-			user_ix[user_j] = arg[0];
+			user_ix[user_j] = size_t(arg[0]);
 			//
 			// variable arguments as parameters
 			user_x[user_j] = CppAD::numeric_limits<Base>::quiet_NaN();

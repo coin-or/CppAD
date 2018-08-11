@@ -433,7 +433,7 @@ void ADFun<Base>::subgraph_reverse_helper(
 	// return the derivative values
 	dw.resize(n * q);
 	for(size_t c = 0; c < col_size; ++c)
-	{	size_t i_op = subgraph[c + 1];
+	{	size_t i_op = size_t( subgraph[c + 1] );
 		CPPAD_ASSERT_UNKNOWN( play_.GetOp(i_op) == local::InvOp );
 		//
 		size_t j = i_op - 1;

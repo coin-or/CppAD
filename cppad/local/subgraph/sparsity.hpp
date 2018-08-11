@@ -159,7 +159,7 @@ void subgraph_sparsity(
 		);
 		//
 		for(size_t k = 0; k < subgraph.size(); k++)
-		{	size_t i_op = subgraph[k];
+		{	size_t i_op = size_t( subgraph[k] );
 			//
 			// operator corresponding to this index
 			OpCode op = play->GetOp(i_op);

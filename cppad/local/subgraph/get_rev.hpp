@@ -107,7 +107,7 @@ void subgraph_info::get_rev(
 
 	// operator corresponding to this dependent variable
 	size_t i_op = random_itr.var2op(i_var);
-	i_op        = map_user_op_[i_op];
+	i_op        = size_t( map_user_op_[i_op] );
 
 	// if this variable depends on the selected indepent variables
 	// process its subgraph
@@ -127,7 +127,7 @@ void subgraph_info::get_rev(
 	size_t sub_index = 0;
 	while(sub_index < subgraph.size() )
 	{	// this operator connected to this dependent and selected independent
-		i_op = subgraph[sub_index];
+		i_op = size_t( subgraph[sub_index] );
 		CPPAD_ASSERT_UNKNOWN( in_subgraph_[i_op] == i_dep );
 		//
 		// There must be a result for this operator
@@ -142,7 +142,7 @@ void subgraph_info::get_rev(
 		{	// add the corresponding operators to the subgraph
 			size_t j_var = argument_variable[j];
 			size_t j_op  = random_itr.var2op(j_var);
-			j_op         = map_user_op_[j_op];
+			j_op         = size_t( map_user_op_[j_op] );
 			bool add = in_subgraph_[j_op] <= depend_yes;
 			add     &= in_subgraph_[j_op] != i_dep;
 			if( random_itr.get_op(j_op) == InvOp )

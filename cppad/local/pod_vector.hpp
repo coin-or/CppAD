@@ -121,14 +121,12 @@ public:
 		return data_[i];
 	}
 	/// non-constant element access; i.e., we can change this element value
+	template <class Index>
 	Type& operator[](
-		/// element index, must be less than length
-		int i
+		/// element index, must be less than length and convertable to size_t
+		Index i
 	)
-	{	CPPAD_ASSERT_UNKNOWN( size_t(i) * sizeof(Type) < byte_length_ );
-		return data_[i];
-	}
-
+	{	return (*this)[size_t(i)]; }
 	//  ----------------------------------------------------------------------
 	/// constant element access; i.e., we cannot change this element value
 	const Type& operator[](
@@ -139,13 +137,12 @@ public:
 		return data_[i];
 	}
 	/// constant element access; i.e., we cannot change this element value
+	template <class Index>
 	const Type& operator[](
-		/// element index, must be less than length
-		int i
+		/// element index, must be less than length and convertable to size_t
+		Index i
 	) const
-	{	CPPAD_ASSERT_UNKNOWN( size_t(i) * sizeof(Type) < byte_length_ );
-		return data_[i];
-	}
+	{	return (*this)[size_t(i)]; }
 	//  ----------------------------------------------------------------------
 
 	/*!
@@ -357,7 +354,7 @@ public:
 	/// const version of data pointer (see non-const documentation)
 	const Type* data(void) const
 	{	return data_; }
-
+	// ----------------------------------------------------------------------
 	/// non-constant element access; i.e., we can change this element value
 	Type& operator[](
 		/// element index, must be less than length
@@ -366,7 +363,15 @@ public:
 	{	CPPAD_ASSERT_UNKNOWN( i < length_ );
 		return data_[i];
 	}
+	/// non-constant element access; i.e., we can change this element value
+	template <class Index>
+	Type& operator[](
+		/// element index, must be less than length and convertable to size_t
+		Index i
+	)
+	{	return (*this)[size_t(i)]; }
 
+	// ----------------------------------------------------------------------
 	/// constant element access; i.e., we cannot change this element value
 	const Type& operator[](
 		/// element index, must be less than length
@@ -375,7 +380,15 @@ public:
 	{	CPPAD_ASSERT_UNKNOWN( i < length_ );
 		return data_[i];
 	}
+	/// constant element access; i.e., we cannot change this element value
+	template <class Index>
+	const Type& operator[](
+		/// element index, must be less than length and convertable to size_t
+		Index i
+	) const
+	{	return (*this)[size_t(i)]; }
 
+	// ----------------------------------------------------------------------
 	/*!
 	Add an element to theh back of this vector
 

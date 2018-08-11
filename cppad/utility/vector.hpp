@@ -110,8 +110,8 @@ plus the following:
 $pre
 
 $$
-This operation is defined where $icode i$$ is $code int$$
-(as well as $code size_t$$) with out implicit conversion.
+This operation is defined for any $icode i$$
+that has a conversion to $code size_t$$.
 The object $icode%x%[%i%]%$$ has type $icode Scalar$$
 (is not possibly a different type that can be converted to $icode Scalar$$).
 $pre
@@ -480,20 +480,16 @@ public:
 		return data_[i];
 	}
 	/// non-constant element access; i.e., we can change this element value
+	template <class Index>
 	Type& operator[](
 		/// element index, must be less than length
-		int i
+		Index i
 	)
-	{	CPPAD_ASSERT_KNOWN(
-			size_t(i) < length_,
-			"vector: index greater than or equal vector size"
-		);
-		return data_[i];
-	}
+	{	return (*this)[size_t(i)]; }
 	// --------------------------------------------------------------------
 	/// constant element access; i.e., we cannot change this element value
 	const Type& operator[](
-		/// element index, must be less than length
+		/// element index, must be less than length and convertable to size_t
 		size_t i
 	) const
 	{	CPPAD_ASSERT_KNOWN(
@@ -503,16 +499,12 @@ public:
 		return data_[i];
 	}
 	/// constant element access; i.e., we cannot change this element value
+	template <class Index>
 	const Type& operator[](
-		/// element index, must be less than length
-		int i
+		/// element index, must be less than length and convertable to size_t
+		Index i
 	) const
-	{	CPPAD_ASSERT_KNOWN(
-			size_t(i) < length_,
-			"vector: index greater than or equal vector size"
-		);
-		return data_[i];
-	}
+	{	return (*this)[size_t(i)]; }
 	// --------------------------------------------------------------------
 	/// add an element to the back of this vector
 	void push_back(

@@ -53,9 +53,9 @@ atomic_base<Base>* user_op_info(
 	CPPAD_ASSERT_UNKNOWN( op == UserOp );
 	CPPAD_ASSERT_NARG_NRES(op, 4, 0);
 	//
-	user_old = op_arg[1];
-	user_n   = op_arg[2];
-	user_m   = op_arg[3];
+	user_old = size_t(op_arg[1]);
+	user_n   = size_t(op_arg[2]);
+	user_m   = size_t(op_arg[3]);
 	CPPAD_ASSERT_UNKNOWN( user_n > 0 );
 	//
 	size_t user_index = size_t( op_arg[0] );

@@ -264,9 +264,9 @@ inline void forward_load_p_op_0(
 
 	// Because the index is a parameter, this indexing error should have been
 	// caught and reported to the user when the tape is recording.
-	size_t i_vec = arg[1];
-	CPPAD_ASSERT_UNKNOWN( i_vec < index_by_ind[ arg[0] - 1 ] );
-	CPPAD_ASSERT_UNKNOWN( arg[0] + i_vec < play->num_vec_ind_rec() );
+	addr_t i_vec = arg[1];
+	CPPAD_ASSERT_UNKNOWN( size_t(i_vec) < index_by_ind[ arg[0] - 1 ] );
+	CPPAD_ASSERT_UNKNOWN( size_t(arg[0] + i_vec) < play->num_vec_ind_rec() );
 
 	size_t i_v_x  = index_by_ind[ arg[0] + i_vec ];
 	Base* z       = taylor + i_z * cap_order;
@@ -308,12 +308,12 @@ inline void forward_load_v_op_0(
 		size_t( std::numeric_limits<addr_t>::max() ) >= i_z
 	);
 
-	size_t i_vec = Integer( taylor[ size_t(arg[1]) * cap_order + 0 ] );
+	addr_t i_vec = addr_t(Integer(taylor[ size_t(arg[1]) * cap_order + 0 ] ));
 	CPPAD_ASSERT_KNOWN(
-		i_vec < index_by_ind[ arg[0] - 1 ] ,
+		size_t(i_vec) < index_by_ind[ arg[0] - 1 ] ,
 		"VecAD: index during zero order forward sweep is out of range"
 	);
-	CPPAD_ASSERT_UNKNOWN( arg[0] + i_vec < play->num_vec_ind_rec() );
+	CPPAD_ASSERT_UNKNOWN( size_t(arg[0] + i_vec) < play->num_vec_ind_rec() );
 
 	size_t i_v_x  = index_by_ind[ arg[0] + i_vec ];
 	Base* z       = taylor + i_z * cap_order;

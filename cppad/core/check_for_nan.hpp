@@ -2,7 +2,7 @@
 # define CPPAD_CORE_CHECK_FOR_NAN_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -181,7 +181,7 @@ is the file where the vector is stored
 template <class Base>
 void put_check_for_nan(const CppAD::vector<Base>& vec, std::string& file_name)
 {
-	size_t char_size       = sizeof(Base) * vec.size();
+	size_t char_size = sizeof(Base) * vec.size();
 	const char* char_ptr   = reinterpret_cast<const char*>( vec.data() );
 # if CPPAD_HAS_MKSTEMP
 	char pattern[] = "/tmp/fileXXXXXX";
@@ -221,8 +221,7 @@ is the file where the vector is stored
 template <class Base>
 void get_check_for_nan(CppAD::vector<Base>& vec, const std::string& file_name)
 {	//
-	size_t n = vec.size();
-	size_t char_size = sizeof(Base) * n;
+	std::streamsize char_size = std::streamsize( sizeof(Base) * vec.size() );
 	char* char_ptr   = reinterpret_cast<char*>( vec.data() );
 	//
 	std::fstream file_in(file_name.c_str(), std::ios::in|std::ios::binary );

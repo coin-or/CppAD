@@ -129,7 +129,7 @@ void dynamic(
 	// Loop the dynamic parameters skipping independent dynamics at beginning.
 	for(size_t i_dyn = num_ind_dynamic; i_dyn < num_dynamic_par; ++i_dyn)
 	{	// parametere index for this dynamic parameter
-		size_t i_par = dyn_ind2par_ind[i_dyn];
+		size_t i_par = size_t( dyn_ind2par_ind[i_dyn] );
 		//
 		// operator for this dynamic parameter
 		op_code_dyn op = op_code_dyn( dyn_par_op[i_dyn] );

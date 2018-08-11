@@ -989,7 +989,7 @@ inline void forward_sparse_jacobian_cond_op(
 	CPPAD_ASSERT_UNKNOWN( NumRes(CExpOp) == 1 );
 	CPPAD_ASSERT_UNKNOWN( arg[1] != 0 );
 # ifndef NDEBUG
-	size_t k = 1;
+	addr_t k = 1;
 	for( size_t j = 0; j < 4; j++)
 	{	if( ! ( arg[1] & k ) )
 			CPPAD_ASSERT_UNKNOWN( size_t(arg[2+j]) < num_par );
@@ -1130,7 +1130,7 @@ inline void reverse_sparse_jacobian_cond_op(
 	CPPAD_ASSERT_UNKNOWN( NumRes(CExpOp) == 1 );
 	CPPAD_ASSERT_UNKNOWN( arg[1] != 0 );
 # ifndef NDEBUG
-	size_t k = 1;
+	addr_t k = 1;
 	for( size_t j = 0; j < 4; j++)
 	{	if( ! ( arg[1] & k ) )
 			CPPAD_ASSERT_UNKNOWN( size_t(arg[2+j]) < num_par );
@@ -1288,7 +1288,7 @@ inline void reverse_sparse_hessian_cond_op(
 	CPPAD_ASSERT_UNKNOWN( NumRes(CExpOp) == 1 );
 	CPPAD_ASSERT_UNKNOWN( arg[1] != 0 );
 # ifndef NDEBUG
-	size_t k = 1;
+	addr_t k = 1;
 	for( size_t j = 0; j < 4; j++)
 	{	if( ! ( arg[1] & k ) )
 			CPPAD_ASSERT_UNKNOWN( size_t(arg[2+j]) < num_par );

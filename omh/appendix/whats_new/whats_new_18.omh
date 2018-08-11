@@ -32,6 +32,11 @@ $$
 
 $section Changes and Additions to CppAD During 2018$$
 
+$head 08-10$$
+Extend the CppAD vector class to enable
+$cref/element access/CppAD_vector/Element Access/$$
+using any index type that has a conversion to the type $code size_t$$.
+
 $head 08-08$$
 $list number$$
 Fix a bug in the $code CppAD::local::pod_vector$$ template class

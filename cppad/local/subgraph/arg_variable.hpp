@@ -73,7 +73,7 @@ void get_argument_variable(
 			{
 				case UsravOp:
 				{	CPPAD_ASSERT_NARG_NRES(op, 1, 0);
-					size_t j_var = op_arg[0];
+					size_t j_var = size_t( op_arg[0] );
 					variable.push_back(j_var);
 				}
 				break;
@@ -99,7 +99,7 @@ void get_argument_variable(
 	size_t num_arg = is_variable.size();
 	for(size_t j = 0; j < num_arg; ++j)
 	{	if( is_variable[j] )
-		{	size_t j_var = op_arg[j];
+		{	size_t j_var = size_t( op_arg[j] );
 			variable.push_back(j_var);
 		}
 	}

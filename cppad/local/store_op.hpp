@@ -223,11 +223,11 @@ inline void forward_store_pp_op_0(
 	Base*          taylor      ,
 	bool*          isvar_by_ind   ,
 	size_t*        index_by_ind   )
-{	size_t i_vec = arg[1];
+{	addr_t i_vec = arg[1];
 
 	// Because the index is a parameter, this indexing error should be
 	// caught and reported to the user when the tape is recording.
-	CPPAD_ASSERT_UNKNOWN( i_vec < index_by_ind[ arg[0] - 1 ] );
+	CPPAD_ASSERT_UNKNOWN( size_t(i_vec) < index_by_ind[ arg[0] - 1 ] );
 
 	CPPAD_ASSERT_UNKNOWN( NumArg(StppOp) == 3 );
 	CPPAD_ASSERT_UNKNOWN( NumRes(StppOp) == 0 );
@@ -235,7 +235,7 @@ inline void forward_store_pp_op_0(
 	CPPAD_ASSERT_UNKNOWN( size_t(arg[2]) < num_par );
 
 	isvar_by_ind[ arg[0] + i_vec ]  = false;
-	index_by_ind[ arg[0] + i_vec ]  = arg[2];
+	index_by_ind[ arg[0] + i_vec ]  = size_t(arg[2]);
 }
 
 /*!
@@ -252,18 +252,18 @@ inline void forward_store_pv_op_0(
 	Base*          taylor      ,
 	bool*          isvar_by_ind   ,
 	size_t*        index_by_ind   )
-{	size_t i_vec = arg[1];
+{	addr_t i_vec = arg[1];
 
 	// Because the index is a parameter, this indexing error should be
 	// caught and reported to the user when the tape is recording.
-	CPPAD_ASSERT_UNKNOWN( i_vec < index_by_ind[ arg[0] - 1 ] );
+	CPPAD_ASSERT_UNKNOWN( size_t(i_vec) < index_by_ind[ arg[0] - 1 ] );
 
 	CPPAD_ASSERT_UNKNOWN( NumArg(StpvOp) == 3 );
 	CPPAD_ASSERT_UNKNOWN( NumRes(StpvOp) == 0 );
 	CPPAD_ASSERT_UNKNOWN( 0 < arg[0] );
 
 	isvar_by_ind[ arg[0] + i_vec ]  = true;
-	index_by_ind[ arg[0] + i_vec ]  = arg[2];
+	index_by_ind[ arg[0] + i_vec ]  = size_t(arg[2]);
 }
 
 /*!
@@ -281,9 +281,9 @@ inline void forward_store_vp_op_0(
 	bool*          isvar_by_ind   ,
 	size_t*        index_by_ind   )
 {
-	size_t i_vec = Integer( taylor[ size_t(arg[1]) * cap_order + 0 ] );
+	addr_t i_vec = addr_t(Integer( taylor[ size_t(arg[1]) * cap_order + 0 ] ));
 	CPPAD_ASSERT_KNOWN(
-		i_vec < index_by_ind[ arg[0] - 1 ] ,
+		size_t(i_vec) < index_by_ind[ arg[0] - 1 ] ,
 		"VecAD: index during zero order forward sweep is out of range"
 	);
 
@@ -293,7 +293,7 @@ inline void forward_store_vp_op_0(
 	CPPAD_ASSERT_UNKNOWN( size_t(arg[2]) < num_par );
 
 	isvar_by_ind[ arg[0] + i_vec ]  = false;
-	index_by_ind[ arg[0] + i_vec ]  = arg[2];
+	index_by_ind[ arg[0] + i_vec ]  = size_t(arg[2]);
 }
 
 /*!
@@ -311,9 +311,9 @@ inline void forward_store_vv_op_0(
 	bool*          isvar_by_ind   ,
 	size_t*        index_by_ind   )
 {
-	size_t i_vec = Integer( taylor[ size_t(arg[1]) * cap_order + 0 ] );
+	addr_t i_vec = addr_t(Integer( taylor[ size_t(arg[1]) * cap_order + 0 ] ));
 	CPPAD_ASSERT_KNOWN(
-		i_vec < index_by_ind[ arg[0] - 1 ] ,
+		size_t(i_vec) < index_by_ind[ arg[0] - 1 ] ,
 		"VecAD: index during zero order forward sweep is out of range"
 	);
 
@@ -322,7 +322,7 @@ inline void forward_store_vv_op_0(
 	CPPAD_ASSERT_UNKNOWN( 0 < arg[0] );
 
 	isvar_by_ind[ arg[0] + i_vec ]  = true;
-	index_by_ind[ arg[0] + i_vec ]  = arg[2];
+	index_by_ind[ arg[0] + i_vec ]  = size_t(arg[2]);
 }
 
 /*!
