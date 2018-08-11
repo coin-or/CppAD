@@ -222,7 +222,7 @@ void optimize_run(
 	if( num_cexp > 0 )
 	{	vector<size_t> keys(num_cexp);
 		for(size_t i = 0; i < num_cexp; i++)
-			keys[i] = cexp_info[i].max_left_right;
+			keys[i] = size_t( cexp_info[i].max_left_right );
 		CppAD::index_sort(keys, cskip_order);
 	}
 	// initial index in conditional skip order
@@ -414,9 +414,9 @@ void optimize_run(
 			if( skip )
 			{	size_t j = cskip_order[cskip_order_next];
 				if( NumRes(op) > 0 )
-					skip &= cexp_info[j].max_left_right < i_var;
+					skip &= size_t( cexp_info[j].max_left_right ) < i_var;
 				else
-					skip &= cexp_info[j].max_left_right <= i_var;
+					skip &= size_t( cexp_info[j].max_left_right ) <= i_var;
 			}
 			if( skip )
 			{	size_t j = cskip_order[cskip_order_next];
@@ -697,7 +697,9 @@ void optimize_run(
 			// affect max_left_right which is used during this sweep.
 			if( conditional_skip )
 			{	CPPAD_ASSERT_UNKNOWN( cexp_next < num_cexp );
-				CPPAD_ASSERT_UNKNOWN( cexp_info[cexp_next].i_op == i_op );
+				CPPAD_ASSERT_UNKNOWN(
+					size_t( cexp_info[cexp_next].i_op ) == i_op
+				);
 				cskip_new[ cexp_next ].left  = size_t( new_arg[2] );
 				cskip_new[ cexp_next ].right = size_t( new_arg[3] );
 				++cexp_next;
@@ -1021,13 +1023,13 @@ void optimize_run(
 		if( cskip_new[i].i_arg > 0 )
 		{	// size_t i_arg
 			struct_cexp_info info = cexp_info[i];
-			size_t n_true  = skip_op_true.number_elements(i);
-			size_t n_false = skip_op_false.number_elements(i);
+			addr_t n_true  = addr_t( skip_op_true.number_elements(i) );
+			addr_t n_false = addr_t( skip_op_false.number_elements(i) );
 			i_arg          = cskip_new[i].i_arg;
-			size_t left    = cskip_new[i].left;
-			size_t right   = cskip_new[i].right;
-			rec->ReplaceArg(i_arg++, info.cop   );
-			rec->ReplaceArg(i_arg++, info.flag  );
+			addr_t left    = addr_t( cskip_new[i].left );
+			addr_t right   = addr_t( cskip_new[i].right );
+			rec->ReplaceArg(i_arg++, addr_t(info.cop)   );
+			rec->ReplaceArg(i_arg++, addr_t(info.flag)  );
 			rec->ReplaceArg(i_arg++, left  );
 			rec->ReplaceArg(i_arg++, right );
 			rec->ReplaceArg(i_arg++, n_true     );

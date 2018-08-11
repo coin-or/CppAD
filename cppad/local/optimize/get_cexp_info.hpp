@@ -143,14 +143,14 @@ void get_cexp_info(
 		CPPAD_ASSERT_UNKNOWN( op == CExpOp );
 		//
 		struct_cexp_info info;
-		info.i_op       = i_op;
+		info.i_op       = addr_t(i_op);
 		info.cop        = CompareOp( arg[0] );
-		info.flag       = size_t(arg[1]);
-		info.left       = size_t(arg[2]);
-		info.right      = size_t(arg[3]);
+		info.flag       = static_cast<unsigned char>(arg[1]);
+		info.left       = arg[2];
+		info.right      = arg[3];
 		//
 		// max_left_right
-		size_t index    = 0;
+		addr_t index    = 0;
 		if( arg[1] & 1 )
 			index = std::max(index, info.left);
 		if( arg[1] & 2 )

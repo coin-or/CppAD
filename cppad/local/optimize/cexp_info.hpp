@@ -26,20 +26,16 @@ Information about one conditional expression.
 */
 struct struct_cexp_info {
 	/// The operator index for this conditional expression operation
-	size_t i_op;
-
-	/// (flag & 1) is true if and only if left is a variable
-	/// (flag & 2) is true if and only if right is a variable
-	size_t flag;
+	addr_t i_op;
 
 	/// variable or parameter index for left comparison operand
-	size_t left;
+	addr_t left;
 
 	/// variable or parameter index for right comparison operand
-	size_t right;
+	addr_t right;
 
 	/// maximum variable index between left and right (ignoring parameters).
-	size_t max_left_right;
+	addr_t max_left_right;
 
 	/// set of operator that are not used when comparison result is true
 	/// Note that UsrapOp, UsravOp, UsrrpOp, and UsrrvOp, are not in this
@@ -53,6 +49,10 @@ struct struct_cexp_info {
 
 	/// comparision operator for this conditional expression
 	CompareOp cop;
+
+	/// (flag & 1) is true if and only if left is a variable
+	/// (flag & 2) is true if and only if right is a variable
+	unsigned char flag;
 };
 
 // Information about the conditional skip in the new operation sequence

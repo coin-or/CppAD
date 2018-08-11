@@ -163,7 +163,7 @@ public:
 	inline size_t ReserveArg(size_t n_arg);
 
 	// Replace an argument value
-	void ReplaceArg(size_t i_arg, size_t value);
+	void ReplaceArg(size_t i_arg, addr_t value);
 
 	/// Put a character string in the text for this recording.
 	inline addr_t PutTxt(const char *text);
@@ -747,8 +747,8 @@ is the index, in argument vector, for the value that is replaced.
 is the new value for the argument with the specified index.
 */
 template <class Base>
-inline void recorder<Base>::ReplaceArg(size_t i_arg, size_t value)
-{	arg_vec_[i_arg] =  static_cast<addr_t>( value ); }
+inline void recorder<Base>::ReplaceArg(size_t i_arg, addr_t value)
+{	arg_vec_[i_arg] =  value; }
 // --------------------------------------------------------------------------
 /*!
 Put a character string in the text for this recording.
