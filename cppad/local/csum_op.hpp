@@ -428,7 +428,7 @@ inline void forward_sparse_jacobian_csum_op(
 		sparsity.binary_union(
 			i_z        , // index in sparsity for result
 			i_z        , // index in sparsity for left operand
-			arg[i]   , // index for right operand
+			size_t(arg[i]), // index for right operand
 			sparsity     // sparsity vector for right operand
 		);
 	}
@@ -500,8 +500,8 @@ inline void reverse_sparse_jacobian_csum_op(
 	{
 		CPPAD_ASSERT_UNKNOWN( size_t(arg[i]) < i_z );
 		sparsity.binary_union(
-			arg[i]     , // index in sparsity for result
-			arg[i]     , // index in sparsity for left operand
+			size_t(arg[i]), // index in sparsity for result
+			size_t(arg[i]), // index in sparsity for left operand
 			i_z        , // index for right operand
 			sparsity     // sparsity vector for right operand
 		);
@@ -596,8 +596,8 @@ inline void reverse_sparse_hessian_csum_op(
 	{
 		CPPAD_ASSERT_UNKNOWN( size_t(arg[i]) < i_z );
 		rev_hes_sparsity.binary_union(
-		arg[i]             , // index in sparsity for result
-		arg[i]             , // index in sparsity for left operand
+		size_t(arg[i]), // index in sparsity for result
+		size_t(arg[i]), // index in sparsity for left operand
 		i_z                , // index for right operand
 		rev_hes_sparsity     // sparsity vector for right operand
 		);

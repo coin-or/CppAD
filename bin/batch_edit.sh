@@ -36,10 +36,12 @@ move_list='
 move_sed='s|par_var_dyn|con_dyn_var|'
 #
 cat << EOF > junk.sed
-s|i_par = \\(dyn_ind2par_ind\\[.*\\]\\);|i_par = size_t( \\1 );|
-s|var2op(old_arg)|var2op(size_t(old_arg))|
-s|ret.i_var = rec->PutOp(CSumOp);|ret.i_var = size_t(rec->PutOp(CSumOp));|
-s|ret.i_var = rec->PutOp(op);|ret.i_var = size_t(rec->PutOp(op));|
+/binary_union/! b one
+: loop
+N
+/);/! b loop
+s|\\targ\[\\(.\\)\\] *,|\\tsize_t(arg[\\1]),|g
+: one
 EOF
 # -----------------------------------------------------------------------------
 if [ $0 != "bin/batch_edit.sh" ]
