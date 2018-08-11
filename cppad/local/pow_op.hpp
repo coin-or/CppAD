@@ -64,8 +64,8 @@ inline void forward_powvv_op(
 	// final result for zero order case is exactly the same as for Base
 	if( p == 0 )
 	{	// Taylor coefficients corresponding to arguments and result
-		Base* x   = taylor + arg[0]  * cap_order;
-		Base* y   = taylor + arg[1]  * cap_order;
+		Base* x   = taylor + size_t(arg[0]) * cap_order;
+		Base* y   = taylor + size_t(arg[1]) * cap_order;
 		Base* z_2 = taylor + (i_z+2) * cap_order;
 
 		z_2[0] = pow(x[0], y[0]);
@@ -284,7 +284,7 @@ inline void forward_powpv_op(
 	// z_2 = exp(z_1)
 	// zero order case exactly same as Base type operation
 	if( p == 0 )
-	{	Base* y   = taylor + arg[1]  * cap_order;
+	{	Base* y   = taylor + size_t(arg[1]) * cap_order;
 		Base* z_2 = taylor + (i_z+2) * cap_order;
 		z_2[0] = pow(x, y[0]);
 		p++;

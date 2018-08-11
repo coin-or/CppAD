@@ -859,7 +859,7 @@ void forward0(
 			CPPAD_ASSERT_UNKNOWN( user_i == 0 );
 			CPPAD_ASSERT_UNKNOWN( user_j < user_n );
 			//
-			user_tx[user_j++] = taylor[ arg[0] * J + 0 ];
+			user_tx[user_j++] = taylor[ size_t(arg[0]) * J + 0 ];
 			//
 			if( user_j == user_n )
 			{	// call users function for this operation

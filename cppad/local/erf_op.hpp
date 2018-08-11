@@ -136,7 +136,7 @@ inline void forward_erf_op(
 	forward_mulpv_op(p, q, i_z+3, addr, parameter, cap_order, taylor);
 
 	// pointers to taylor coefficients for x , z_3, and z_4
-	Base* x    = taylor + arg[0]  * cap_order;
+	Base* x    = taylor + size_t(arg[0]) * cap_order;
 	Base* z_3  = taylor + (i_z+3) * cap_order;
 	Base* z_4  = taylor + (i_z+4) * cap_order;
 
@@ -251,7 +251,7 @@ inline void forward_erf_op_0(
 	forward_mulpv_op_0(i_z+3, addr, parameter, cap_order, taylor);
 
 	// zero order Taylor coefficient for z_4
-	Base* x    = taylor + arg[0]  * cap_order;
+	Base* x    = taylor + size_t(arg[0]) * cap_order;
 	Base* z_4  = taylor + (i_z + 4) * cap_order;
 	z_4[0] = erf(x[0]);
 }
@@ -516,7 +516,7 @@ inline void reverse_erf_op(
 	i_z -= 4; // 4 = NumRes(ErfOp) - 1;
 
 	// Taylor coefficients and partials corresponding to x
-	const Base* x  = taylor  + arg[0]  * cap_order;
+	const Base* x  = taylor  + size_t(arg[0]) * cap_order;
 	Base* px       = partial + size_t(arg[0]) * nc_partial;
 
 	// Taylor coefficients and partials corresponding to z_3

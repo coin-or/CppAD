@@ -745,7 +745,7 @@ void reverse(
 			--user_j;
 			user_ix[user_j] = arg[0];
 			for(ell = 0; ell < user_k1; ell++)
-				user_tx[user_j*user_k1 + ell] = Taylor[ arg[0] * J + ell];
+				user_tx[user_j*user_k1 + ell] = Taylor[ size_t(arg[0]) * J + ell];
 			//
 			if( user_j == 0 )
 				user_state = start_user;

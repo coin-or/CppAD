@@ -207,7 +207,7 @@ public:
 			size_t i = 0;
 			while( i < vecad_ind_vec_.size() )
 			{	num_vecad_vec_rec_++;
-				i += vecad_ind_vec_[i] + 1;
+				i += size_t( vecad_ind_vec_[i] ) + 1;
 			}
 			CPPAD_ASSERT_UNKNOWN( i == vecad_ind_vec_.size() );
 		}
@@ -588,7 +588,7 @@ public:
 	the index of the VecAD index in recording
 	*/
 	size_t GetVecInd (size_t i) const
-	{	return vecad_ind_vec_[i]; }
+	{	return size_t( vecad_ind_vec_[i] ); }
 
 	/*!
 	\brief

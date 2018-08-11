@@ -108,7 +108,7 @@ inline void forward_dis_op(
 	Base* z = taylor +    i_z * num_taylor_per_var;
 
 	if( p == 0 )
-	{	z[0]  = discrete<Base>::eval(arg[0], x[0]);
+	{	z[0]  = discrete<Base>::eval(size_t(arg[0]), x[0]);
 		p++;
 	}
 	for(size_t ell = 0; ell < r; ell++)
