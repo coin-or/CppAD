@@ -743,7 +743,7 @@ void reverse(
 			CPPAD_ASSERT_UNKNOWN( user_j <= user_n );
 			//
 			--user_j;
-			user_ix[user_j] = arg[0];
+			user_ix[user_j] = size_t( arg[0] );
 			for(ell = 0; ell < user_k1; ell++)
 				user_tx[user_j*user_k1 + ell] = Taylor[ size_t(arg[0]) * J + ell];
 			//

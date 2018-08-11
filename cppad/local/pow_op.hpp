@@ -52,7 +52,7 @@ inline void forward_powvv_op(
 	);
 
 	// z_0 = log(x)
-	forward_log_op(p, q, i_z, arg[0], cap_order, taylor);
+	forward_log_op(p, q, i_z, size_t(arg[0]), cap_order, taylor);
 
 	// z_1 = z_0 * y
 	addr_t adr[2];
@@ -110,7 +110,7 @@ inline void forward_powvv_op_dir(
 	);
 
 	// z_0 = log(x)
-	forward_log_op_dir(q, r, i_z, arg[0], cap_order, taylor);
+	forward_log_op_dir(q, r, i_z, size_t(arg[0]), cap_order, taylor);
 
 	// z_1 = y * z_0
 	addr_t adr[2];
@@ -215,7 +215,7 @@ inline void reverse_powvv_op(
 
 	// z_0 = log(x)
 	reverse_log_op(
-		d, i_z, arg[0], cap_order, taylor, nc_partial, partial
+		d, i_z, size_t(arg[0]), cap_order, taylor, nc_partial, partial
 	);
 }
 
@@ -496,7 +496,7 @@ inline void forward_powvp_op(
 	);
 
 	// z_0 = log(x)
-	forward_log_op(p, q, i_z, arg[0], cap_order, taylor);
+	forward_log_op(p, q, i_z, size_t(arg[0]), cap_order, taylor);
 
 	// z_1 = y * z_0
 	addr_t adr[2];
@@ -552,7 +552,7 @@ inline void forward_powvp_op_dir(
 	);
 
 	// z_0 = log(x)
-	forward_log_op_dir(q, r, i_z, arg[0], cap_order, taylor);
+	forward_log_op_dir(q, r, i_z, size_t(arg[0]), cap_order, taylor);
 
 	// z_1 = y * z_0
 	addr_t adr[2];
@@ -663,7 +663,7 @@ inline void reverse_powvp_op(
 
 	// z_0 = log(x)
 	reverse_log_op(
-		d, i_z, arg[0], cap_order, taylor, nc_partial, partial
+		d, i_z, size_t(arg[0]), cap_order, taylor, nc_partial, partial
 	);
 }
 

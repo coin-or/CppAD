@@ -201,16 +201,14 @@ move this routine from <tt>ADTape<Base></tt> to <tt>recorder<Base></tt>.
 template <class Base>
 size_t ADTape<Base>::AddVec(size_t length, const pod_vector_maybe<Base>& data)
 {	CPPAD_ASSERT_UNKNOWN( length > 0 );
-	size_t i;
-	size_t value_index;
 
 	// store the length in VecInd
-	size_t start = Rec_.PutVecInd(length);
+	size_t start = size_t( Rec_.PutVecInd(length) );
 
 	// store indices of the values in VecInd
-	for(i = 0; i < length; i++)
+	for(size_t i = 0; i < length; i++)
 	{
-		value_index = Rec_.put_con_par( data[i] );
+		size_t value_index = size_t( Rec_.put_con_par( data[i] ) );
 		Rec_.PutVecInd( value_index );
 	}
 
