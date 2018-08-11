@@ -132,7 +132,7 @@ void get_cexp_info(
 	skip_op_false.resize(num_cexp_op, num_op);
 	//
 	for(size_t i = 0; i < num_cexp_op; i++)
-	{	size_t i_op  = cexp2op[i];
+	{	size_t i_op = size_t( cexp2op[i] );
 		CPPAD_ASSERT_UNKNOWN(
 			op_previous[i_op] == 0 || op_usage[i_op] == usage_t(yes_usage)
 		);
@@ -145,9 +145,9 @@ void get_cexp_info(
 		struct_cexp_info info;
 		info.i_op       = i_op;
 		info.cop        = CompareOp( arg[0] );
-		info.flag       = arg[1];
-		info.left       = arg[2];
-		info.right      = arg[3];
+		info.flag       = size_t(arg[1]);
+		info.left       = size_t(arg[2]);
+		info.right      = size_t(arg[3]);
 		//
 		// max_left_right
 		size_t index    = 0;

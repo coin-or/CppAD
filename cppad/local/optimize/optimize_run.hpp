@@ -384,7 +384,7 @@ void optimize_run(
 	for(i_op = 0; i_op < num_op; ++i_op)
 	{	// if non-zero, use previous result in place of this operator.
 		// Must get this information before writing new_op[i_op].
-		size_t previous = op_previous[i_op];
+		size_t previous = size_t( op_previous[i_op] );
 		//
 		// zero is invalid except for new_op[0].
 		new_op[i_op] = 0;
@@ -698,8 +698,8 @@ void optimize_run(
 			if( conditional_skip )
 			{	CPPAD_ASSERT_UNKNOWN( cexp_next < num_cexp );
 				CPPAD_ASSERT_UNKNOWN( cexp_info[cexp_next].i_op == i_op );
-				cskip_new[ cexp_next ].left  = new_arg[2];
-				cskip_new[ cexp_next ].right = new_arg[3];
+				cskip_new[ cexp_next ].left  = size_t( new_arg[2] );
+				cskip_new[ cexp_next ].right = size_t( new_arg[3] );
 				++cexp_next;
 			}
 			break;

@@ -188,7 +188,7 @@ void get_previous(
 			);
 			if( op_previous[i_op] != 0 )
 			{	// like a unary operator that assigns i_op equal to previous.
-				size_t previous = op_previous[i_op];
+				size_t previous = size_t( op_previous[i_op] );
 				bool sum_op = false;
 				CPPAD_ASSERT_UNKNOWN( previous < i_op );
 				op_inc_arg_usage(
