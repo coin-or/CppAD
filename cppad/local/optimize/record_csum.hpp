@@ -112,14 +112,18 @@ struct_size_pair record_csum(
 # ifndef NDEBUG
 	bool ok = false;
 	if( info.op == SubvpOp ) ok =
-		op_usage[ random_itr.var2op(info.arg[0]) ] == usage_t(csum_usage);
+	op_usage[ random_itr.var2op(size_t(info.arg[0])) ] == usage_t(csum_usage);
+	//
 	if( info.op == AddpvOp || info.op == SubpvOp ) ok =
-		op_usage[ random_itr.var2op(info.arg[1]) ] == usage_t(csum_usage);
+	op_usage[ random_itr.var2op(size_t(info.arg[1])) ] == usage_t(csum_usage);
+	//
 	if( info.op == AddvvOp || info.op == SubvvOp )
 	{	ok  =
-		op_usage[ random_itr.var2op(info.arg[0]) ] == usage_t(csum_usage);
-		ok |=
-		op_usage[ random_itr.var2op(info.arg[1]) ] == usage_t(csum_usage);
+	op_usage[ random_itr.var2op(size_t(info.arg[0])) ] == usage_t(csum_usage);
+	//
+	ok |=
+	op_usage[ random_itr.var2op(size_t(info.arg[1])) ] == usage_t(csum_usage);
+	//
 	}
 	CPPAD_ASSERT_UNKNOWN( ok );
 # endif

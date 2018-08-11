@@ -999,7 +999,7 @@ void optimize_run(
 	}
 	// modify the dependent variable vector to new indices
 	for(size_t i = 0; i < dep_taddr.size(); i++ )
-	{	dep_taddr[i] = new_var[ random_itr.var2op(dep_taddr[i]) ];
+	{	dep_taddr[i] = size_t(new_var[ random_itr.var2op(dep_taddr[i]) ]);
 		CPPAD_ASSERT_UNKNOWN( size_t(dep_taddr[i]) < num_var );
 	}
 
