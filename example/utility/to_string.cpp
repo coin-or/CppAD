@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -42,7 +42,7 @@ namespace {
 	{	Integer result = 0;
 		size_t index   = 0;
 		while( index < s.size() )
-			result = Integer(10 * result + s[index++] - '0');
+			result = Integer(10 * result + Integer(s[index++]) - '0');
 		return result;
 	}
 	template <class Integer>

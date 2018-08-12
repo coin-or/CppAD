@@ -105,7 +105,8 @@ void sparse2eigen(
 const CppAD::sparse_rcv<SizeVector, ValueVector>&               source       ,
 Eigen::SparseMatrix<typename ValueVector::value_type, Options>& destination  )
 // END_PROTOTYPE
-{	typedef typename ValueVector::value_type value_type;
+{	using Eigen::Index;
+	typedef typename ValueVector::value_type value_type;
 	typedef Eigen::Triplet<value_type>       triplet;
 	std::vector<triplet> vec( source.nnz() );
 	//
@@ -118,7 +119,7 @@ Eigen::SparseMatrix<typename ValueVector::value_type, Options>& destination  )
 	//
 	size_t nr = source.nr();
 	size_t nc = source.nc();
-	destination.resize(nr, nc);
+	destination.resize( Index(nr), Index(nc) );
 	destination.setFromTriplets(vec.begin(), vec.end());
 	//
 	CPPAD_ASSERT_UNKNOWN( destination.isCompressed() );
