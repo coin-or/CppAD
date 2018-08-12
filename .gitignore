@@ -1,29 +1,33 @@
+# ----------------------------------------------------------------------------
 # specific files
 /aclocal.m4
 /ar-lib
 /autom4te.cache
 /bin/test_one.sh
-/bug/build/
 /cppad/configure.hpp
 /cppad/local/is_pod.hpp
 /doxyfile
 /git_commit.sh
 /test_one.cpp
 /test_one.exe
+# ----------------------------------------------------------------------------
 # specific directories
 /build/
 /doxydoc/
-# specific extensions in all directories
-*.err
-*.log
-*.swp
-*.tmp
-# all new directories
 /new/
 /new.*/
-# all junk files and direcrories
+# directory that is ignore by master but not by gh-pages
+# /doc/
+# ----------------------------------------------------------------------------
+# specific extensions in top direcotry
+/*.err
+/*.log
+# ----------------------------------------------------------------------------
+# vim swap files in any directory
+*.swp
+# ----------------------------------------------------------------------------
+# junk and temp files in any directory
 junk
 junk.*
-# all temp files and directories
 temp
 temp.*
