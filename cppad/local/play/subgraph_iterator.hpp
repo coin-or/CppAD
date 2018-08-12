@@ -119,12 +119,12 @@ public:
 		const addr_t*& op_arg     ,
 		size_t&        var_index  ) const
 	{	// op
-		size_t op_index = (*subgraph_)[subgraph_index_];
+		size_t op_index = size_t( (*subgraph_)[subgraph_index_] );
 		random_itr_->op_info(op_index, op, op_arg, var_index);
 	}
 	/// current operator index
 	size_t op_index(void)
-	{	return (*subgraph_)[subgraph_index_]; }
+	{	return size_t( (*subgraph_)[subgraph_index_] ); }
 };
 
 } } } // BEGIN_CPPAD_LOCAL_PLAY_NAMESPACE

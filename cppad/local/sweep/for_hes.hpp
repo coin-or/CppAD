@@ -257,7 +257,7 @@ void for_hes(
 # endif
 			CPPAD_ASSERT_UNKNOWN( NumArg(op) == 1 )
 			forward_sparse_hessian_nonlinear_unary_op(
-				arg[0], for_jac_sparse, for_hes_sparse
+				size_t(arg[0]), for_jac_sparse, for_hes_sparse
 			);
 			break;
 			// -------------------------------------------------
@@ -283,7 +283,7 @@ void for_hes(
 			case DivpvOp:
 			CPPAD_ASSERT_NARG_NRES(op, 2, 1)
 			forward_sparse_hessian_nonlinear_unary_op(
-				arg[1], for_jac_sparse, for_hes_sparse
+				size_t(arg[1]), for_jac_sparse, for_hes_sparse
 			);
 			break;
 			// -------------------------------------------------
@@ -299,7 +299,7 @@ void for_hes(
 			// arg[2] is always the parameter 2 / sqrt(pi)
 			CPPAD_ASSERT_NARG_NRES(op, 3, 5);
 			forward_sparse_hessian_nonlinear_unary_op(
-				arg[0], for_jac_sparse, for_hes_sparse
+				size_t(arg[0]), for_jac_sparse, for_hes_sparse
 			);
 			break;
 			// -------------------------------------------------
@@ -335,7 +335,7 @@ void for_hes(
 			case PowpvOp:
 			CPPAD_ASSERT_NARG_NRES(op, 2, 3)
 			forward_sparse_hessian_nonlinear_unary_op(
-				arg[1], for_jac_sparse, for_hes_sparse
+				size_t(arg[1]), for_jac_sparse, for_hes_sparse
 			);
 			break;
 			// -------------------------------------------------
@@ -343,7 +343,7 @@ void for_hes(
 			case PowvpOp:
 			CPPAD_ASSERT_NARG_NRES(op, 2, 3)
 			forward_sparse_hessian_nonlinear_unary_op(
-				arg[0], for_jac_sparse, for_hes_sparse
+				size_t(arg[0]), for_jac_sparse, for_hes_sparse
 			);
 			break;
 			// -------------------------------------------------

@@ -351,7 +351,7 @@ inline void forward_sparse_hessian_mul_op(
 	Vector_set&         for_hes_sparsity  )
 {	// --------------------------------------------------
 	// set of independent variables that v0 depends on
-	typename Vector_set::const_iterator itr_0(for_jac_sparsity, arg[0]);
+	typename Vector_set::const_iterator itr_0(for_jac_sparsity, size_t(arg[0]));
 
 	// loop over dependent variables with non-zero partial
 	size_t i_x = *itr_0;
@@ -362,7 +362,7 @@ inline void forward_sparse_hessian_mul_op(
 	}
 	// --------------------------------------------------
 	// set of independent variables that v1 depends on
-	typename Vector_set::const_iterator itr_1(for_jac_sparsity, arg[1]);
+	typename Vector_set::const_iterator itr_1(for_jac_sparsity, size_t(arg[1]));
 
 	// loop over dependent variables with non-zero partial
 	i_x = *itr_1;
@@ -401,7 +401,7 @@ inline void forward_sparse_hessian_div_op(
 	Vector_set&         for_hes_sparsity  )
 {	// --------------------------------------------------
 	// set of independent variables that v0 depends on
-	typename Vector_set::const_iterator itr_0(for_jac_sparsity, arg[0]);
+	typename Vector_set::const_iterator itr_0(for_jac_sparsity, size_t(arg[0]));
 
 	// loop over dependent variables with non-zero partial
 	size_t i_x = *itr_0;
@@ -412,7 +412,7 @@ inline void forward_sparse_hessian_div_op(
 	}
 	// --------------------------------------------------
 	// set of independent variables that v1 depends on
-	typename Vector_set::const_iterator itr_1(for_jac_sparsity, arg[1]);
+	typename Vector_set::const_iterator itr_1(for_jac_sparsity, size_t(arg[1]));
 
 	// loop over dependent variables with non-zero partial
 	i_x = *itr_1;
@@ -453,7 +453,7 @@ inline void forward_sparse_hessian_pow_op(
 	Vector_set&         for_hes_sparsity  )
 {	// --------------------------------------------------
 	// set of independent variables that v0 depends on
-	typename Vector_set::const_iterator itr_0(for_jac_sparsity, arg[0]);
+	typename Vector_set::const_iterator itr_0(for_jac_sparsity, size_t(arg[0]));
 
 	// loop over dependent variables with non-zero partial
 	size_t i_x = *itr_0;
@@ -466,7 +466,7 @@ inline void forward_sparse_hessian_pow_op(
 	}
 	// --------------------------------------------------
 	// set of independent variables that v1 depends on
-	typename Vector_set::const_iterator itr_1(for_jac_sparsity, arg[1]);
+	typename Vector_set::const_iterator itr_1(for_jac_sparsity, size_t(arg[1]));
 
 	// loop over dependent variables with non-zero partial
 	i_x = *itr_1;
