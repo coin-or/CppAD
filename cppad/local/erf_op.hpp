@@ -377,7 +377,7 @@ inline void forward_erf_op_dir(
 
 	// pointers to taylor coefficients for x , z_3, and z_4
 	size_t num_taylor_per_var = (cap_order - 1) * r + 1;
-	Base* x    = taylor + arg[0]  * num_taylor_per_var;
+	Base* x    = taylor + size_t(arg[0]) * num_taylor_per_var;
 	Base* z_3  = taylor + (i_z+3) * num_taylor_per_var;
 	Base* z_4  = taylor + (i_z+4) * num_taylor_per_var;
 

@@ -36,12 +36,8 @@ move_list='
 move_sed='s|par_var_dyn|con_dyn_var|'
 #
 cat << EOF > junk.sed
-/binary_union/! b one
-: loop
-N
-/);/! b loop
-s|\\targ\[\\(.\\)\\] *,|\\tsize_t(arg[\\1]),|g
-: one
+s|arg\\[\\(.\\)\\] *\\* *num_taylor_per_var|size_t(arg[\\1]) * num_taylor_per_var|
+s|arg\\[\\(.\\)\\]\\*(|size_t(arg[\\1])*(|
 EOF
 # -----------------------------------------------------------------------------
 if [ $0 != "bin/batch_edit.sh" ]

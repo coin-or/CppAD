@@ -643,11 +643,11 @@ void forward2(
 			CPPAD_ASSERT_UNKNOWN( user_i == 0 );
 			CPPAD_ASSERT_UNKNOWN( user_j < user_n );
 			//
-			user_tx_all[user_j*(q*r+1)+0] = taylor[arg[0]*((J-1)*r+1)+0];
+			user_tx_all[user_j*(q*r+1)+0] = taylor[size_t(arg[0])*((J-1)*r+1)+0];
 			for(ell = 0; ell < r; ell++)
 			{	for(k = 1; k < user_q1; k++)
 				{	user_tx_all[user_j*(q*r+1) + (k-1)*r+1+ell] =
-						taylor[arg[0]*((J-1)*r+1) + (k-1)*r+1+ell];
+						taylor[size_t(arg[0])*((J-1)*r+1) + (k-1)*r+1+ell];
 				}
 			}
 			//
@@ -759,7 +759,7 @@ void forward2(
 			);
 			Base* Z_tmp = CPPAD_NULL;
 			if( op == UsravOp )
-				Z_tmp = taylor + arg[0]*((J-1) * r + 1);
+				Z_tmp = taylor + size_t(arg[0])*((J-1) * r + 1);
 			else if( NumRes(op) > 0 )
 				Z_tmp = taylor + i_var*((J-1)*r + 1);
 			if( Z_tmp != CPPAD_NULL )
