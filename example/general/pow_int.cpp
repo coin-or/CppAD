@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -47,17 +47,16 @@ bool pow_int(void)
 	// dependent variable vector
 	size_t m = 7;
 	CPPAD_TESTVECTOR(AD<double>) y(m);
-	int i;
-	for(i = 0; i < int(m); i++)
-		y[i] = CppAD::pow(x[0], i - 3);
+	for(size_t i = 0; i < m; i++)
+		y[i] = CppAD::pow(x[0], int(i) - 3);
 
 	// create f: x -> y and stop tape recording
 	CppAD::ADFun<double> f(x, y);
 
 	// check value
 	double check;
-	for(i = 0; i < int(m); i++)
-	{	check = std::pow(x0, double(i - 3));
+	for(size_t i = 0; i < m; i++)
+	{	check = std::pow(x0, double(i) - 3.0);
 		ok &= NearEqual(y[i] , check,  eps99 , eps99);
 	}
 
@@ -66,20 +65,20 @@ bool pow_int(void)
 	CPPAD_TESTVECTOR(double) dy(m);
 	dx[0] = 1.;
 	dy    = f.Forward(1, dx);
-	for(i = 0; i < int(m); i++)
-	{	check = double(i-3) * std::pow(x0, double(i - 4));
+	for(size_t i = 0; i < m; i++)
+	{	check = (double(i) - 3.0) * std::pow(x0, double(i) - 4.0);
 		ok &= NearEqual(dy[i] , check,  eps99 , eps99);
 	}
 
 	// reverse computation of derivative of y[i]
 	CPPAD_TESTVECTOR(double)  w(m);
 	CPPAD_TESTVECTOR(double) dw(n);
-	for(i = 0; i < int(m); i++)
+	for(size_t i = 0; i < m; i++)
 		w[i] = 0.;
-	for(i = 0; i < int(m); i++)
+	for(size_t i = 0; i < m; i++)
 	{	w[i] = 1.;
 		dw    = f.Reverse(1, w);
-		check = double(i-3) * std::pow(x0, double(i - 4));
+		check = (double(i) - 3.0) * std::pow(x0, double(i) - 4.0);
 		ok &= NearEqual(dw[0] , check,  eps99 , eps99);
 		w[i] = 0.;
 	}

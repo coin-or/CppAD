@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -78,7 +78,7 @@ bool check_for_nan(void)
 		string number;
 		for(size_t i = start; msg[i] != '\n'; i++)
 			number += msg[i];
-		size_t vector_size = std::atoi(number.c_str());
+		size_t vector_size = size_t( std::atoi(number.c_str()) );
 		ok &= vector_size == 2;
 
 		// get and check first dependent variable index that is nan
@@ -87,7 +87,7 @@ bool check_for_nan(void)
 		number  = "";
 		for(size_t i = start; msg[i] != '\n'; i++)
 			number += msg[i];
-		size_t index = std::atoi(number.c_str());
+		size_t index = size_t( std::atoi(number.c_str()) );
 		ok &= index == 1;
 
 		// get the name of the file
