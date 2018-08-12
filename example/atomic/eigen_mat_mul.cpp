@@ -1,6 +1,5 @@
-// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -111,7 +110,7 @@ $srccode%cpp% */
 	size_t m = 3;
 	CPPAD_TESTVECTOR(ad_scalar) ad_y(m);
 	for(size_t i = 0; i < m; i++)
-		ad_y[i] = ad_result(i, 0);
+		ad_y[i] = ad_result(long(i), 0);
 	CppAD::ADFun<scalar> f(ad_x, ad_y);
 	// -------------------------------------------------------------------
 	// check zero order forward mode

@@ -1,9 +1,8 @@
-// $Id$
 # ifndef CPPAD_EXAMPLE_EIGEN_MAT_INV_HPP
 # define CPPAD_EXAMPLE_EIGEN_MAT_INV_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -246,8 +245,8 @@ $srccode%cpp% */
 			f_result_.resize(n_order);
 			//
 			for(size_t k = 0; k < n_order; k++)
-			{	f_arg_[k].resize(nr, nr);
-				f_result_[k].resize(nr, nr);
+			{	f_arg_[k].resize( long(nr), long(nr) );
+				f_result_[k].resize( long(nr), long(nr) );
 			}
 		}
 		// -------------------------------------------------------------------
@@ -264,7 +263,7 @@ $srccode%cpp% */
 		f_result_[0] = f_arg_[0].inverse();
 		for(size_t k = 1; k < n_order; k++)
 		{	// initialize sum
-			matrix f_sum = matrix::Zero(nr, nr);
+			matrix f_sum = matrix::Zero( long(nr), long(nr) );
 			// compute sum
 			for(size_t ell = 1; ell <= k; ell++)
 				f_sum -= f_arg_[ell] * f_result_[k-ell];
@@ -331,8 +330,8 @@ $srccode%cpp% */
 			r_result_.resize(n_order);
 			//
 			for(size_t k = 0; k < n_order; k++)
-			{	r_arg_[k].resize(nr, nr);
-				r_result_[k].resize(nr, nr);
+			{	r_arg_[k].resize( long(nr), long(nr) );
+				r_result_[k].resize( long(nr), long(nr) );
 			}
 		}
 		// -------------------------------------------------------------------
@@ -351,7 +350,7 @@ $srccode%cpp% */
 		// -------------------------------------------------------------------
 		// initialize r_arg_ as zero
 		for(size_t k = 0; k < n_order; k++)
-			r_arg_[k]   = matrix::Zero(nr, nr);
+			r_arg_[k]   = matrix::Zero( long(nr), long(nr) );
 		// -------------------------------------------------------------------
 		// matrix reverse mode calculation
 		//

@@ -1,9 +1,8 @@
-// $Id$
 # ifndef CPPAD_EXAMPLE_EIGEN_CHOLESKY_HPP
 # define CPPAD_EXAMPLE_EIGEN_CHOLESKY_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -87,7 +86,7 @@ $srccode%cpp% */
 		// lower triangle of symmetric matrix A
 		for(size_t i = 0; i < nr; i++)
 		{	for(size_t j = 0; j <= i; j++)
-				packed_arg[index++] = arg(i, j);
+				packed_arg[index++] = arg( long(i), long(j) );
 		}
 		assert( index == nx );
 		// -------------------------------------------------------------------
@@ -98,11 +97,11 @@ $srccode%cpp% */
 		(*this)(packed_arg, packed_result);
 		// -------------------------------------------------------------------
 		// unpack result matrix L
-		ad_matrix result = ad_matrix::Zero(nr, nr);
+		ad_matrix result = ad_matrix::Zero( long(nr), long(nr) );
 		index = 0;
 		for(size_t i = 0; i < nr; i++)
 		{	for(size_t j = 0; j <= i; j++)
-				result(i, j) = packed_result[index++];
+				result( long(i), long(j) ) = packed_result[index++];
 		}
 		return result;
 	}
@@ -155,8 +154,8 @@ $srccode%cpp% */
 			f_result_.resize(n_order);
 			//
 			for(size_t k = 0; k < n_order; k++)
-			{	f_arg_[k].resize(nr, nr);
-				f_result_[k].resize(nr, nr);
+			{	f_arg_[k].resize( long(nr), long(nr) );
+				f_result_[k].resize( long(nr), long(nr) );
 			}
 		}
 		// -------------------------------------------------------------------
@@ -164,8 +163,8 @@ $srccode%cpp% */
 		for(size_t k = 0; k < n_order; k++)
 		{	size_t index = 1;
 			// unpack arg values for this order
-			for(size_t i = 0; i < nr; i++)
-			{	for(size_t j = 0; j <= i; j++)
+			for(long i = 0; i < long(nr); i++)
+			{	for(long j = 0; j <= i; j++)
 				{	f_arg_[k](i, j) = tx[ index * n_order + k ];
 					f_arg_[k](j, i) = f_arg_[k](i, j);
 					index++;
@@ -189,7 +188,7 @@ $srccode%cpp% */
 			matrix temp = L_0.template solve<Eigen::OnTheLeft>(f_sum);
 			temp   = L_0.transpose().template solve<Eigen::OnTheRight>(temp);
 			// divide the diagonal by 2
-			for(size_t i = 0; i < nr; i++)
+			for(long i = 0; i < long(nr); i++)
 				temp(i, i) /= scalar(2.0);
 			// L_k = L_0 * low[ L_0^{-1} * (A_k - B_k) * L_0^{-T} ]
 			lower_view view = temp.template triangularView<Eigen::Lower>();
@@ -199,8 +198,8 @@ $srccode%cpp% */
 		// pack result_ into ty
 		for(size_t k = 0; k < n_order; k++)
 		{	size_t index = 0;
-			for(size_t i = 0; i < nr; i++)
-			{	for(size_t j = 0; j <= i; j++)
+			for(long i = 0; i < long(nr); i++)
+			{	for(long j = 0; j <= i; j++)
 				{	ty[ index * n_order + k ] = f_result_[k](i, j);
 					index++;
 				}
@@ -261,8 +260,8 @@ $srccode%cpp% */
 			r_result_.resize(n_order);
 			//
 			for(size_t k = 0; k < n_order; k++)
-			{	r_arg_[k].resize(nr, nr);
-				r_result_[k].resize(nr, nr);
+			{	r_arg_[k].resize( long(nr), long(nr) );
+				r_result_[k].resize( long(nr), long(nr) );
 			}
 		}
 		// -------------------------------------------------------------------
@@ -270,8 +269,8 @@ $srccode%cpp% */
 		for(size_t k = 0; k < n_order; k++)
 		{	size_t index = 1;
 			// unpack arg values for this order
-			for(size_t i = 0; i < nr; i++)
-			{	for(size_t j = 0; j <= i; j++)
+			for(long i = 0; i < long(nr); i++)
+			{	for(long j = 0; j <= i; j++)
 				{	f_arg_[k](i, j) = tx[ index * n_order + k ];
 					f_arg_[k](j, i) = f_arg_[k](i, j);
 					index++;
@@ -281,10 +280,10 @@ $srccode%cpp% */
 		// -------------------------------------------------------------------
 		// unpack py into r_result_
 		for(size_t k = 0; k < n_order; k++)
-		{	r_result_[k] = matrix::Zero(nr, nr);
+		{	r_result_[k] = matrix::Zero( long(nr), long(nr) );
 			size_t index = 0;
-			for(size_t i = 0; i < nr; i++)
-			{	for(size_t j = 0; j <= i; j++)
+			for(long i = 0; i < long(nr); i++)
+			{	for(long j = 0; j <= i; j++)
 				{	r_result_[k](i, j) = py[ index * n_order + k ];
 					index++;
 				}
@@ -293,7 +292,7 @@ $srccode%cpp% */
 		// -------------------------------------------------------------------
 		// initialize r_arg_ as zero
 		for(size_t k = 0; k < n_order; k++)
-			r_arg_[k]   = matrix::Zero(nr, nr);
+			r_arg_[k]   = matrix::Zero( long(nr), long(nr) );
 		// -------------------------------------------------------------------
 		// matrix reverse mode calculation
 		lower_view L_0 = f_result_[0].template triangularView<Eigen::Lower>();
@@ -305,7 +304,7 @@ $srccode%cpp% */
 			matrix tmp1 = L_0.transpose() * r_result_[k];
 			//
 			//low[ L_0^T * bar{L}_k ]
-			for(size_t i = 0; i < nr; i++)
+			for(long i = 0; i < long(nr); i++)
 				tmp1(i, i) /= scalar(2.0);
 			matrix tmp2 = tmp1.template triangularView<Eigen::Lower>();
 			//
@@ -337,7 +336,7 @@ $srccode%cpp% */
 		}
 		// M_0 = L_0^{-T} * low[ L_0^T * bar{L}_0 ]^{T} L_0^{-1}
 		matrix M_0 = L_0.transpose() * r_result_[0];
-		for(size_t i = 0; i < nr; i++)
+		for(long i = 0; i < long(nr); i++)
 			M_0(i, i) /= scalar(2.0);
 		M_0 = M_0.template triangularView<Eigen::Lower>();
 		M_0 = L_0.template solve<Eigen::OnTheRight>( M_0 );
@@ -351,8 +350,8 @@ $srccode%cpp% */
 		{	size_t index = 0;
 			px[ index * n_order + k ] = 0.0;
 			index++;
-			for(size_t i = 0; i < nr; i++)
-			{	for(size_t j = 0; j < i; j++)
+			for(long i = 0; i < long(nr); i++)
+			{	for(long j = 0; j < i; j++)
 				{	px[ index * n_order + k ] = 2.0 * r_arg_[k](i, j);
 					index++;
 				}

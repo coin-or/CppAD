@@ -2,7 +2,7 @@
 # define CPPAD_EXAMPLE_EIGEN_MAT_MUL_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -244,9 +244,9 @@ $srccode%cpp% */
 			f_result_.resize(n_order);
 			//
 			for(size_t k = 0; k < n_order; k++)
-			{	f_left_[k].resize(nr_left, n_middle);
-				f_right_[k].resize(n_middle, nc_right);
-				f_result_[k].resize(nr_left, nc_right);
+			{	f_left_[k].resize( long(nr_left), long(n_middle) );
+				f_right_[k].resize( long(n_middle), long(nc_right) );
+				f_result_[k].resize( long(nr_left), long(nc_right) );
 			}
 		}
 		// -------------------------------------------------------------------
@@ -265,7 +265,7 @@ $srccode%cpp% */
 		// (we could avoid recalculting f_result_[k] for k=0,...,p-1)
 		for(size_t k = 0; k < n_order; k++)
 		{	// result[k] = sum_ell left[ell] * right[k-ell]
-			f_result_[k] = matrix::Zero(nr_left, nc_right);
+			f_result_[k] = matrix::Zero( long(nr_left), long(nc_right) );
 			for(size_t ell = 0; ell <= k; ell++)
 				f_result_[k] += f_left_[ell] * f_right_[k-ell];
 		}
@@ -291,11 +291,13 @@ $srccode%cpp% */
 				{	// left information
 					size_t index   = 3 + i * n_middle + ell;
 					bool var_left  = vx[index];
-					bool nz_left   = var_left | (f_left_[0](i, ell) != zero);
+					bool nz_left   = var_left |
+						 (f_left_[0]( long(i), long(ell) ) != zero);
 					// right information
 					index          = 3 + n_left + ell * nc_right + j;
 					bool var_right = vx[index];
-					bool nz_right  = var_right | (f_right_[0](ell, j) != zero);
+					bool nz_right  = var_right |
+						 (f_right_[0]( long(ell), long(j) ) != zero);
 					// effect of result
 					var |= var_left & nz_right;
 					var |= nz_left  & var_right;
@@ -357,9 +359,9 @@ $srccode%cpp% */
 			r_result_.resize(n_order);
 			//
 			for(size_t k = 0; k < n_order; k++)
-			{	r_left_[k].resize(nr_left, n_middle);
-				r_right_[k].resize(n_middle, nc_right);
-				r_result_[k].resize(nr_left, nc_right);
+			{	r_left_[k].resize( long(nr_left), long(n_middle) );
+				r_right_[k].resize( long(n_middle), long(nc_right) );
+				r_result_[k].resize( long(nr_left), long(nc_right) );
 			}
 		}
 		// -------------------------------------------------------------------
@@ -382,8 +384,8 @@ $srccode%cpp% */
 		// -------------------------------------------------------------------
 		// initialize r_left_ and r_right_ as zero
 		for(size_t k = 0; k < n_order; k++)
-		{	r_left_[k]   = matrix::Zero(nr_left, n_middle);
-			r_right_[k]  = matrix::Zero(n_middle, nc_right);
+		{	r_left_[k]   = matrix::Zero( long(nr_left), long(n_middle) );
+			r_right_[k]  = matrix::Zero( long(n_middle), long(nc_right) );
 		}
 		// -------------------------------------------------------------------
 		// matrix reverse mode calculation
