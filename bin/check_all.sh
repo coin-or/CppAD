@@ -34,6 +34,10 @@ cat << EOF > check_all.$$
 # Ipopt has sign conversion warnings
 /\/coin\/.*-Wsign-conversion/d
 #
+# Adolc has multiple types of conversion warnings
+/\/adolc\/.*-W[a-z-]*conversion/d
+/\/adolc\/.*-Wshorten-64-to-32/d
+#
 # Lines describing the error begin with space
 /^ /d
 #

@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -85,7 +85,7 @@ bool link_det_minor(
 		detA = Det(A);
 
 		// create function object f : A -> detA
-		detA.diff(0, m);  // index 0 of m dependent variables
+		detA.diff(0, (unsigned int) m);  // index 0 of m dependent variables
 
 		// evaluate and return gradient using reverse mode
 		for(i =0; i < n; i++)

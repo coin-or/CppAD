@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -94,7 +94,7 @@ bool link_ode(
 		{	// set value of x[j]
 			X[j] = x[j];
 			// set up for X as the independent variable vector
-			X[j].diff(j, n);
+			X[j].diff((unsigned int) j, (unsigned int) n);
 		}
 
 		// evaluate function
@@ -103,7 +103,7 @@ bool link_ode(
 		// return values with Y as the dependent variable vector
 		for(i = 0; i < m; i++)
 		{	for(j = 0; j < n; j++)
-				jacobian[ i * n + j ] = Y[i].d(j);
+				jacobian[ i * n + j ] = Y[i].d((unsigned int) j);
 		}
 	}
 	return true;
