@@ -47,7 +47,7 @@ inline void forward_lepp_op_0(
 	Base x = parameter[ arg[0] ];
 	Base y = parameter[ arg[1] ];
 
-	count += GreaterThanZero(x - y);
+	count += size_t( GreaterThanZero(x - y) );
 }
 /*!
 Zero order forward mode comparison check that left <= right
@@ -290,7 +290,7 @@ inline void forward_eqpp_op_0(
 	Base x = parameter[ arg[0] ];
 	Base y = parameter[ arg[1] ];
 
-	count += (x != y);
+	count += size_t(x != y);
 }
 /*!
 Zero order forward mode comparison check that left == right
@@ -313,7 +313,7 @@ inline void forward_eqpv_op_0(
 	Base  x = parameter[ arg[0] ];
 	Base* y = taylor + size_t(arg[1]) * cap_order;
 
-	count += (x != y[0]);
+	count += size_t(x != y[0]);
 }
 /*!
 Zero order forward mode comparison check that left == right
@@ -336,7 +336,7 @@ inline void forward_eqvv_op_0(
 	Base* x = taylor + size_t(arg[0]) * cap_order;
 	Base* y = taylor + size_t(arg[1]) * cap_order;
 
-	count += (x[0] != y[0]);
+	count += size_t(x[0] != y[0]);
 }
 // -------------------------------- != -----------------------------------
 /*!
@@ -366,7 +366,7 @@ inline void forward_nepp_op_0(
 	Base x = parameter[ arg[0] ];
 	Base y = parameter[ arg[1] ];
 
-	count += (x == y);
+	count += size_t(x == y);
 }
 /*!
 Zero order forward mode comparison check that left != right
@@ -389,7 +389,7 @@ inline void forward_nepv_op_0(
 	Base  x = parameter[ arg[0] ];
 	Base* y = taylor + size_t(arg[1]) * cap_order;
 
-	count += (x == y[0]);
+	count += size_t(x == y[0]);
 }
 /*!
 Zero order forward mode comparison check that left != right
@@ -412,7 +412,7 @@ inline void forward_nevv_op_0(
 	Base* x = taylor + size_t(arg[0]) * cap_order;
 	Base* y = taylor + size_t(arg[1]) * cap_order;
 
-	count += (x[0] == y[0]);
+	count += size_t(x[0] == y[0]);
 }
 
 

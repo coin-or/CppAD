@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -124,7 +124,7 @@ bool mul_level_adolc(void)
 	a1f.Dependent(a2x, a2y);
 
 	// Value of the independent variables whitle taping f'(x) * v
-	int tag = 0;
+	short tag = 0;
 	int keep = 1;
 	trace_on(tag, keep);
 	for(j = 0; j < n; j++)

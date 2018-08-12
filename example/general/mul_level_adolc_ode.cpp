@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -302,7 +302,7 @@ bool mul_level_adolc_ode(void)
 		a1x[i] = x[i] = double(i + 1);
 
 	// declare the parameters as the independent variable
-	int tag = 0;                     // Adolc setup
+	short tag = 0;                     // Adolc setup
 	int keep = 1;
 	trace_on(tag, keep);
 	for(i = 0; i < n; i++)

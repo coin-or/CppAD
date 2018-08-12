@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -46,12 +46,12 @@ namespace {
 		VecAD<double> B(2);
 		AD<double>    u;
 		for(u = 0; u < 2; u += 1.)
-			B[u] = b[ Integer(u) ];
+			B[u] = b[ size_t( Integer(u) ) ];
 
 		// copy the matrix a into the VecAD object A
 		VecAD<double> A(4);
 		for(u = 0; u < 4; u += 1.)
-			A[u] = a [ Integer(u) ];
+			A[u] = a [ size_t( Integer(u) ) ];
 
 		// tape AD operation sequence that determines the row of A
 		// with maximum absolute element in column zero
