@@ -287,7 +287,7 @@ is used.
 */
 
 # ifndef NDEBUG
-# define CPPAD_J_PAR_EQUAL_REC j_par = rec
+# define CPPAD_J_PAR_EQUAL_REC j_par = (size_t) rec
 # else
 # define CPPAD_J_PAR_EQUAL_REC rec
 # endif
@@ -844,11 +844,11 @@ void ADFun<Base>::abs_normal_fun(ADFun<Base>& g, ADFun<Base>& a) const
 	g.ind_taddr_.resize(n + s);
 	// (x, u)
 	for(size_t j = 0; j < n; j++)
-	{	g.ind_taddr_[j] = f2g_var[ ind_taddr_[j] ];
+	{	g.ind_taddr_[j] = size_t( f2g_var[ ind_taddr_[j] ] );
 		CPPAD_ASSERT_UNKNOWN( g.ind_taddr_[j] == j + 1 );
 	}
 	for(size_t j = 0; j < s; j++)
-	{	g.ind_taddr_[n + j] = f2g_var[ f_abs_res[j] ];
+	{	g.ind_taddr_[n + j] = size_t( f2g_var[ f_abs_res[j] ] );
 		CPPAD_ASSERT_UNKNOWN( g.ind_taddr_[n + j] == n + j + 1 );
 	}
 
@@ -857,11 +857,11 @@ void ADFun<Base>::abs_normal_fun(ADFun<Base>& g, ADFun<Base>& a) const
 	size_t m = Range();
 	g.dep_taddr_.resize(m + s);
 	for(size_t i = 0; i < m; i++)
-	{	g.dep_taddr_[i] = f2g_var[ dep_taddr_[i] ];
+	{	g.dep_taddr_[i] = size_t( f2g_var[ dep_taddr_[i] ] );
 		CPPAD_ASSERT_UNKNOWN( g.dep_taddr_[i] < num_var );
 	}
 	for(size_t i = 0; i < s; i++)
-	{	g.dep_taddr_[m + i] = f2g_var[ f_abs_arg[i] ];
+	{	g.dep_taddr_[m + i] = size_t( f2g_var[ f_abs_arg[i] ] );
 		CPPAD_ASSERT_UNKNOWN( g.dep_taddr_[m + i] < num_var );
 	}
 
