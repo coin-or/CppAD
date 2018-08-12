@@ -1,5 +1,5 @@
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the
@@ -20,7 +20,9 @@ ADD_SUBDIRECTORY(compare_c)
 ADD_SUBDIRECTORY(debug_rel)
 
 # cppad_for_tmb tests
-ADD_SUBDIRECTORY(cppad_for_tmb)
+IF( OPENMP_FOUND )
+	ADD_SUBDIRECTORY(cppad_for_tmb)
+ENDIF( OPENMP_FOUND )
 
 # general tests
 ADD_SUBDIRECTORY(general)

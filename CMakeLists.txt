@@ -236,6 +236,9 @@ FOREACH(dir_types includedirs libdirs datadir docdir)
 	ENDIF( cppad_postfix )
 ENDFOREACH(dir_types includedirs libdirs datadir docdir)
 # -----------------------------------------------------------------------------
+# OPENMP_FOUND, OpenMP_CXX_FLAGS
+FIND_PACKAGE(OpenMP)
+# -----------------------------------------------------------------------------
 # boost_prefix
 FIND_PACKAGE(Boost)
 SET(cppad_has_boost 0)

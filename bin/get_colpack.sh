@@ -1,7 +1,6 @@
 #! /bin/bash -e
-# $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the
@@ -93,6 +92,9 @@ fi
 if [ ! -e ColPack-$version ]
 then
 	echo_eval tar -xzf ColPack-$version.tar.gz
+	#
+	# patch source: newline missing at end of file in verions 1.0.10
+	sed -i ColPack-$version/Recovery/RecoveryCore.h -e '$,$ s|$|\n|'
 fi
 echo_eval cd ColPack-$version
 # -----------------------------------------------------------------------------

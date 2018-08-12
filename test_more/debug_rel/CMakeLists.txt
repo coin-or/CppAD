@@ -1,5 +1,5 @@
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the
@@ -12,13 +12,13 @@
 
 # set compiler flags for debug_rel.cpp and debug.cpp
 SET_SOURCE_FILES_PROPERTIES(
-	debug_rel.cpp debug.cpp PROPERITIES COMPILE_FLAGS
+	debug_rel.cpp debug.cpp PROPERTIES COMPILE_FLAGS
 	"${cppad_cxx_flags} ${CMAKE_CXX_FLAGS_DEBUG} -DCPPAD_DEBUG_AND_RELEASE"
 )
 
-# et compiler flags for release,cpp
+# set compiler flags for release,cpp
 SET_SOURCE_FILES_PROPERTIES(
-	release.cpp PROPERITIES COMPILE_FLAGS
+	release.cpp PROPERTIES COMPILE_FLAGS
 	"${cppad_cxx_flags} ${CMAKE_CXX_FLAGS_RELEASE} -DCPPAD_DEBUG_AND_RELEASE"
 )
 

@@ -24,24 +24,44 @@ then
 		exit 1
 	fi
 fi
+# -----------------------------------------------------------------------------
+check_all_warn() {
+cat << EOF > check_all.$$
+# Lines that describe where error is
+/^In file included from/d
+/: note:/d
+#
+# Ipopt has sign conversion warnings
+/\/coin\/.*-Wsign-conversion/d
+#
+# Lines describing the error begin with space
+/^ /d
+#
+# Lines summarizing results
+/^[0-9]* warnings generated/d
+EOF
+	sed $top_srcdir/check_all.err -f check_all.$$ > $top_srcdir/check_all.warn
+	rm check_all.$$
+}
+# -----------------------------------------------------------------------------
 echo_log_eval() {
 	echo $*
 	echo $* >> $top_srcdir/check_all.log
-	echo $* >  $top_srcdir/check_all.err
-	if ! eval $* >> $top_srcdir/check_all.log 2>> $top_srcdir/check_all.err
+	if ! eval $* >> $top_srcdir/check_all.log 2> $top_srcdir/check_all.err
 	then
-		cat $top_srcdir/check_all.err
-		echo 'Error: see check_all.log'
+		tail $top_srcdir/check_all.err
+		echo 'Error: see check_all.err, check_all.log'
 		exit 1
 	fi
-	count=`wc -l $top_srcdir/check_all.err | sed -e 's|\([0-9]*\) .*|\1|'`
-	if [ "$count" != '1' ]
+	check_all_warn
+	count=`wc -l $top_srcdir/check_all.warn | sed -e 's|^\([0-9]*\) .*|\1|'`
+	if [ "$count" != '0' ]
 	then
-		cat "$top_srcdir/check_all.err"
-		echo 'Warning: see check_all.err'
+		head "$top_srcdir/check_all.warn"
+		echo 'Warning: see check_all.warn, check_all.log'
 		exit 1
 	fi
-	rm $top_srcdir/check_all.err
+	rm $top_srcdir/check_all.warn $top_srcdir/check_all.err
 }
 echo_log() {
 	echo $*
@@ -52,6 +72,7 @@ random_01() {
 	eval random_01_$1="`expr $RANDOM % 2`"
 	set -e
 }
+# -----------------------------------------------------------------------------
 if [ -e check_all.log ]
 then
 	echo "rm check_all.log"
@@ -81,14 +102,19 @@ else
 	tarball="cppad-$version.gpl.tgz"
 fi
 #
+random_01 compiler
+if [ "$random_01_compiler" == '0' ]
+then
+	compiler='default'
+else
+	compiler='--clang'
+fi
 random_01 standard
 if [ "$random_01_standard" == '0' ]
 then
 	standard='--c++98 --no_adolc --no_sacado'
-	random_standard="$standard"
 else
-	standard=''
-	random_standard="--c++11"
+	standard='--c++11'
 fi
 #
 if [ "$debug_all" == 'yes' ]
@@ -114,16 +140,26 @@ else
 fi
 cat << EOF
 tarball         = $tarball
-standard        = $random_standard
+compiler        = $compiler
+standard        = $standard
 debug_which     = $debug_which
 package_vector  = $package_vector
 EOF
 cat << EOF >> $top_srcdir/check_all.log
 tarball         = $tarball
-standard        = $random_standard
+compiler        = $compiler
+standard        = $standard
 debug_which     = $debug_which
 package_vector  = $package_vector
 EOF
+if [ "$compiler" == 'default' ]
+then
+	compiler=''
+fi
+if [ "$standard" == '--c++11' ]
+then
+	standard=''
+fi
 # ---------------------------------------------------------------------------
 # Run automated checks for the form bin/check_*.sh with a few exceptions.
 # In addition, run ~bradbell/bin/check_copyright.sh.
@@ -146,7 +182,7 @@ echo_log_eval rm -rf cppad-$version
 echo_log_eval tar -xzf $tarball
 echo_log_eval cd cppad-$version
 # -----------------------------------------------------------------------------
-echo_log_eval bin/run_cmake.sh $package_vector $debug_which $standard
+echo_log_eval bin/run_cmake.sh $compiler $standard $debug_which $package_vector
 echo_log_eval cd build
 # -----------------------------------------------------------------------------
 echo_log_eval make check

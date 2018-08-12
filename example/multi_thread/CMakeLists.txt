@@ -1,5 +1,5 @@
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the
@@ -20,9 +20,7 @@ SET(check_example_multi_thread_depends "")
 #	VARIABLE - variable to store the result
 INCLUDE(CheckLibraryExists)
 
-# If openmp found, set OpenMP_CXX_FLAGS and process its subdirectory
-#
-FIND_PACKAGE(OpenMP)
+# If openmp found, set process its subdirectory
 IF ( OPENMP_FOUND )
 	# OpenMP_CXX_FLAGS - flags to add to the CXX compiler for OpenMP support
 	ADD_SUBDIRECTORY(openmp)
