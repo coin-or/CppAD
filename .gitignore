@@ -1,3 +1,4 @@
+# ----------------------------------------------------------------------------
 # specific files
 /aclocal.m4
 /ar-lib
@@ -9,22 +10,24 @@
 /git_commit.sh
 /test_one.cpp
 /test_one.exe
+# ----------------------------------------------------------------------------
 # specific directories
-/bug/build/
 /build/
-/doc/
 /doxydoc/
-# specific extensions in all directories
-*.err
-*.log
-*.swp
-*.tmp
-# all new directories
 /new/
 /new.*/
-# all junk files and direcrories
+# directory that is ignored by master, but not by gh-pages
+/doc/
+# ----------------------------------------------------------------------------
+# specific extensions in top direcotry
+/*.err
+/*.log
+# ----------------------------------------------------------------------------
+# vim swap files in any directory
+*.swp
+# ----------------------------------------------------------------------------
+# junk and temp files in any directory
 junk
 junk.*
-# all temp files and directories
 temp
 temp.*
