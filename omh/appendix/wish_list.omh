@@ -191,17 +191,6 @@ $head test_boolofvoid$$
 For general purpose use, the $cref test_boolofvoid$$ should be usable
 without including a memory check at the end.
 
-$head Eigen$$
-Use a wrapper class for
-$cref/eigen vectors/testvector/Eigen Vectors/$$ so that the
-$code size$$ member function returns a
-$code size_t$$ instead of an $code int$$.
-This would allow $cref TESTVECTOR$$ to be a true template class; i.e.,
-to use the syntax
-$codei%
-	TESTVECTOR<%Scalar%>
-%$$
-
 $head Example$$
 Split the $cref/example list/ListAllExamples/$$
 into separate groups by the corresponding example subdirectory.

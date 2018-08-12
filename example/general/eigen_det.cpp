@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -36,14 +36,14 @@ bool eigen_det(void)
 	using CppAD::NearEqual;
 	using Eigen::Matrix;
 	using Eigen::Dynamic;
+	using Eigen::Index;
 	//
 	typedef Matrix< double     , Dynamic, Dynamic > matrix;
 	typedef Matrix< AD<double> , Dynamic, Dynamic > a_matrix;
 	//
-	typedef Matrix< double ,     Dynamic , 1>       vector;
-	typedef Matrix< AD<double> , Dynamic , 1>       a_vector;
-	// some temporary indices
-	size_t i, j;
+	typedef eigen_vector<double>                    vector;
+	typedef eigen_vector< AD<double> >              a_vector;
+	//
 
 	// domain and range space vectors
 	size_t size = 3, n  = size * size, m = 1;
@@ -51,8 +51,8 @@ bool eigen_det(void)
 	vector x(n);
 
 	// set and declare independent variables and start tape recording
-	for(i = 0; i < size; i++)
-	{	for(j = 0; j < size; j++)
+	for(size_t i = 0; i < size; i++)
+	{	for(size_t j = 0; j < size; j++)
 		{	// lower triangular matrix
 			a_x[i * size + j] = x[i * size + j] = 0.0;
 			if( j <= i )
@@ -62,13 +62,16 @@ bool eigen_det(void)
 	CppAD::Independent(a_x);
 
 	// copy independent variable vector to a matrix
-	a_matrix a_X(size, size);
-	matrix X(size, size);
-	for(i = 0; i < size; i++)
-	{	for(j = 0; j < size; j++)
-		{	X(i, j)   = x[i * size + j];
+	Index Size = Index(size);
+	a_matrix a_X(Size, Size);
+	matrix     X(Size, Size);
+	for(size_t i = 0; i < size; i++)
+	{	for(size_t j = 0; j < size; j++)
+		{	Index I = Index(i);
+			Index J = Index(j);
+			X(I ,J)   = x[i * size + j];
 			// If we used a_X(i, j) = X(i, j), a_X would not depend on a_x.
-			a_X(i, j) = a_x[i * size + j];
+			a_X(I, J) = a_x[i * size + j];
 		}
 	}
 
@@ -89,9 +92,12 @@ bool eigen_det(void)
 	// check the derivative using the formula
 	// d/dX log(det(X)) = transpose( inv(X) )
 	matrix inv_X = X.inverse();
-	for(i = 0; i < size; i++)
-	{	for(j = 0; j < size; j++)
-			ok &= NearEqual(jac[i * size + j], inv_X(j, i), eps, eps);
+	for(size_t i = 0; i < size; i++)
+	{	for(size_t j = 0; j < size; j++)
+		{	Index I = Index(i);
+			Index J = Index(j);
+			ok &= NearEqual(jac[i * size + j], inv_X(J, I), eps, eps);
+		}
 	}
 
 	return ok;

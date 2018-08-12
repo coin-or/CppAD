@@ -111,7 +111,7 @@ if [ "$random_01_compiler" == '0' ]
 then
 	compiler='default'
 else
-	compiler='defult' # change to --clang when warnings are fixed.
+	compiler='default' # change to --clang when warnings are fixed.
 fi
 random_01 standard
 if [ "$random_01_standard" == '0' ]

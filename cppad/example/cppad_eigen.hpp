@@ -1,7 +1,7 @@
 # ifndef CPPAD_EXAMPLE_CPPAD_EIGEN_HPP
 # define CPPAD_EXAMPLE_CPPAD_EIGEN_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -10,6 +10,10 @@ the terms of the
 A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
+// cppad.hpp gets included at the end
+# define EIGEN_MATRIXBASE_PLUGIN <cppad/example/eigen_plugin.hpp>
+# include <Eigen/Core>
+
 /*
 $begin cppad_eigen.hpp$$
 $spell
@@ -41,7 +45,8 @@ $$
 $section Enable Use of Eigen Linear Algebra Package with CppAD$$
 
 $head Syntax$$
-$codei%# include <cppad/example/cppad_eigen.hpp>%$$
+$codei%# include <cppad/example/cppad_eigen.hpp>
+%$$
 $children%
 	cppad/example/eigen_plugin.hpp%
 	example/general/eigen_array.cpp%
@@ -62,16 +67,18 @@ contain an example and test of this include file.
 They return true if they succeed and false otherwise.
 
 $head Include Files$$
-The file $code cppad_eigen.hpp$$ includes both
-$code <cppad/cppad.hpp>$$ and $code <Eigen/Core>$$.
-The file $cref eigen_plugin.hpp$$ defines $code value_type$$
-in the Eigen matrix class so its vectors are
-$cref/simple vectors/SimpleVector/$$
-(not necessary for eigen-3.3.3 and later).
+The file $code <Eigen/Core>$$ is included before
+these definitions and $code <cppad/cppad.hpp>$$ is included after.
+
+$head CppAD Declarations$$
+First declare some items that are defined by cppad.hpp:
 $srccode%cpp% */
-# define EIGEN_MATRIXBASE_PLUGIN <cppad/example/eigen_plugin.hpp>
-# include <Eigen/Core>
-# include <cppad/cppad.hpp>
+namespace CppAD {
+	// AD<Base>
+	template <class Base> class AD;
+	// numeric_limits<Float>
+	template <class Float>  class numeric_limits;
+}
 /* %$$
 $head Eigen NumTraits$$
 Eigen needs the following definitions to work properly
@@ -147,6 +154,38 @@ namespace CppAD {
 		{	return x * x; }
 }
 
+/* %$$
+$head eigen_vector$$
+The class $code eigen_vector$$ is a wrapper for Eigen column vectors
+so that they are $cref/simple vectors/SimpleVector/$$.
+To be specific, it converts $code Eigen::Index$$ arguments and
+return values to $code size_t$$.
+$srccode%cpp% */
+template <class Scalar>
+class eigen_vector : public Eigen::Matrix<Scalar, Eigen::Dynamic, 1> {
+private:
+	// base_class
+	typedef Eigen::Matrix<Scalar, Eigen::Dynamic, 1> base_class;
+public:
+	// constructor
+	eigen_vector(size_t n) : base_class( Eigen::Index(n) )
+	{ }
+	eigen_vector(void) : base_class()
+	{ }
+	// operator[]
+	Scalar& operator[](size_t i)
+	{	return base_class::operator[]( Eigen::Index(i) ); }
+	const Scalar& operator[](size_t i) const
+	{	return base_class::operator[]( Eigen::Index(i) ); }
+	// size
+	size_t size(void) const
+	{	return size_t( base_class::size() ); }
+	// resize
+	void resize(size_t n)
+	{	base_class::resize( Eigen::Index(n) ); }
+};
+//
+# include <cppad/cppad.hpp>
 /* %$$
 $end
 */

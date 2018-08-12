@@ -1,9 +1,8 @@
-// $Id$
 # ifndef CPPAD_CORE_TESTVECTOR_HPP
 # define CPPAD_CORE_TESTVECTOR_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -35,17 +34,6 @@ $mindex CPPAD_TESTVECTOR$$
 $head Syntax$$
 $codei%CPPAD_TESTVECTOR(%Scalar%)
 %$$
-
-$head Purpose$$
-Many of the CppAD $cref/examples/example/$$ and tests use
-the $code CPPAD_TESTVECTOR$$ template class to pass information to CppAD.
-This is not a true template class because it's syntax uses
-$codei%(%Scalar%)%$$ instead of $codei%<%Scalar%>%$$.
-This enables us to use
-$codei%
-	Eigen::Matrix<%Scalar%, Eigen::Dynamic, 1>
-%$$
-as one of the possible cases for this 'template class'.
 
 $head Choice$$
 The user can choose, during the install procedure,
@@ -106,7 +94,7 @@ $srccode%cpp% */
 In this case CppAD will use this boost vector for
 many of its examples and tests.
 
-$head Eigen Vectors$$
+$head eigen_vector$$
 If in the cmake command
 you specify $icode cppad_testvector$$ to be $code eigen$$,
 $code CPPAD_EIGENVECTOR$$ will be true.
@@ -115,9 +103,10 @@ $code CPPAD_TESTVECTOR$$ is defined by the following source code:
 $srccode%cpp% */
 # if CPPAD_EIGENVECTOR
 # include <cppad/example/cppad_eigen.hpp>
-# define CPPAD_TESTVECTOR(Scalar) Eigen::Matrix< Scalar , Eigen::Dynamic, 1>
+# define CPPAD_TESTVECTOR(Scalar) eigen_vector< Scalar >
 # endif
 /* %$$
+see $cref/eigen_vector/cppad_eigen.hpp/eigen_vector/$$.
 In this case CppAD will use the Eigen vector
 for many of its examples and tests.
 

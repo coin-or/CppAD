@@ -28,9 +28,16 @@ $spell
 	uninstalled
 	Vec
 	valgrind
+	Eigen
 $$
 
 $section Changes and Additions to CppAD During 2018$$
+
+$head 08-12$$
+Add the $cref/eigen_vector/cppad_eigen.hpp/eigen_vector/$$
+wrapper class so that an $code eigen_vector$$ is a true
+$cref SimpleVector$$; i.e., it using $code size_t$$
+instead of $code Eigen::Index$$ for its sizes and indices.
 
 $head 08-10$$
 Extend the CppAD vector class to enable
