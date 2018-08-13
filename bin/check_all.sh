@@ -111,7 +111,7 @@ if [ "$random_01_compiler" == '0' ]
 then
 	compiler='default'
 else
-	compiler='default' # change to --clang when warnings are fixed.
+	compiler='--clang'
 fi
 random_01 standard
 if [ "$random_01_standard" == '0' ]
@@ -162,7 +162,7 @@ then
 fi
 if [ "$standard" == '--c++11' ]
 then
-	standard=''
+	standard='' # default for run_cmake.sh
 fi
 # ---------------------------------------------------------------------------
 # Run automated checks for the form bin/check_*.sh with a few exceptions.
@@ -212,7 +212,7 @@ for option in onetape colpack optimize atomic memory boolsparsity
 do
 	echo_eval speed/cppad/speed_cppad correct 432 $option
 done
-if echo "$skip_package" | grep 'adolc' > /dev/null
+if ! echo "$skip_package" | grep 'adolc' > /dev/null
 then
 	echo_eval speed/adolc/speed_adolc correct         432 onetape
 	echo_eval speed/adolc/speed_adolc sparse_jacobian 432 onetape colpack
