@@ -1428,7 +1428,7 @@ public:
 	The default value is unspecified.
 
 	\param optimize [in]
-l	should the operation sequence corresponding to the algo be optimized.
+	should the operation sequence corresponding to the algo be optimized.
 	The default value is true, but it is
 	sometimes useful to use false for debugging purposes.
 	*/
@@ -1443,11 +1443,11 @@ l	should the operation sequence corresponding to the algo be optimized.
 		bool                           optimize = true
 	) :
 	atomic_base<Base>(name  , sparsity)        ,
-	f_( omp_get_max_threads() )                ,
-	jac_sparse_set_( omp_get_max_threads() )   ,
-	jac_sparse_bool_( omp_get_max_threads() )  ,
-	hes_sparse_set_( omp_get_max_threads() )   ,
-	hes_sparse_bool_( omp_get_max_threads() )
+	f_( size_t( omp_get_max_threads() ) )                ,
+	jac_sparse_set_( size_t( omp_get_max_threads() ) )   ,
+	jac_sparse_bool_( size_t( omp_get_max_threads() ) )  ,
+	hes_sparse_set_( size_t( omp_get_max_threads() ) )   ,
+	hes_sparse_bool_( size_t( omp_get_max_threads() ) )
 	{
 		CheckSimpleVector< CppAD::AD<Base> , ADVector>();
 

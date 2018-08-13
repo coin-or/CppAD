@@ -40,14 +40,14 @@ bool operator_with_variable(void)
 
 	// range space vector
 	CPPAD_TESTVECTOR(AD<double>) ay(n);
-	int k = 0;
-	ay[k] = double(-k-1)*(adynamic[k] + ax[k]) * (ax[k] + adynamic[k]);
+	size_t k = 0;
+	ay[k] = -1.0*(k+1)*(adynamic[k] + ax[k]) * (ax[k] + adynamic[k]);
 	++k;
-	ay[k] = double(-k-1)*(adynamic[k] - ax[k]) * (ax[k] - adynamic[k]);
+	ay[k] = -1.0*(k+1)*(adynamic[k] - ax[k]) * (ax[k] - adynamic[k]);
 	++k;
-	ay[k] = double(-k-1)*(adynamic[k] * ax[k]) + (ax[k] * adynamic[k]);
+	ay[k] = -1.0*(k+1)*(adynamic[k] * ax[k]) + (ax[k] * adynamic[k]);
 	++k;
-	ay[k] = double(-k-1)*(adynamic[k] / ax[k]) + (ax[k] / adynamic[k]);
+	ay[k] = -1.0*(k+1)*(adynamic[k] / ax[k]) + (ax[k] / adynamic[k]);
 	++k;
 	ay[k]  = ax[k];
 	ay[k] += adynamic[k];
@@ -80,18 +80,18 @@ bool operator_with_variable(void)
 	double check;
 	k = 0;
 	check  = ( Value(adynamic[k]) + x[k] ) * ( x[k] + Value(adynamic[k]) );
-	check *= double(-k-1);
+	check *= -1.0*(k+1);
 	ok    &= NearEqual(y[k] , check, eps, eps);
 	++k;
 	check  = ( Value(adynamic[k]) - x[k] ) * ( x[k] - Value(adynamic[k]) );
-	check *= double(-k-1);
+	check *= -1.0*(k+1);
 	ok    &= NearEqual(y[k] , check, eps, eps);
 	++k;
-	check  = double(-k-1)*( Value(adynamic[k]) * x[k] );
+	check  = -1.0*(k+1)*( Value(adynamic[k]) * x[k] );
 	check += ( x[k] * Value(adynamic[k]) );
 	ok    &= NearEqual(y[k] , check, eps, eps);
 	++k;
-	check  = double(-k-1)*( Value(adynamic[k]) / x[k] );
+	check  = -1.0*(k+1)*( Value(adynamic[k]) / x[k] );
 	check += ( x[k] / Value(adynamic[k]) );
 	ok    &= NearEqual(y[k] , check, eps, eps);
 	++k;
@@ -126,16 +126,16 @@ bool operator_with_variable(void)
 	//
 	y = f.Forward(0, x);
 	k     = 0;
-	check = double(-k-1)*( dynamic[k] + x[k] ) * ( x[k] + dynamic[k] );
+	check = -1.0*(k+1)*( dynamic[k] + x[k] ) * ( x[k] + dynamic[k] );
 	ok   &= NearEqual(y[k] , check, eps, eps);
 	++k;
-	check = double(-k-1)*( dynamic[k] - x[k] ) * ( x[k] - dynamic[k] );
+	check = -1.0*(k+1)*( dynamic[k] - x[k] ) * ( x[k] - dynamic[k] );
 	ok   &= NearEqual(y[k] , check, eps, eps);
 	++k;
-	check = double(-k-1)*( dynamic[k] * x[k] ) + ( x[k] * dynamic[k] );
+	check = -1.0*(k+1)*( dynamic[k] * x[k] ) + ( x[k] * dynamic[k] );
 	ok   &= NearEqual(y[k] , check, eps, eps);
 	++k;
-	check = double(-k-1)*( dynamic[k] / x[k] ) + ( x[k] / dynamic[k] );
+	check = -1.0*(k+1)*( dynamic[k] / x[k] ) + ( x[k] / dynamic[k] );
 	ok   &= NearEqual(y[k] , check, eps, eps);
 	++k;
 	check = x[k] + dynamic[k];
@@ -192,7 +192,7 @@ bool dynamic_operator(void)
 	ny += 6;
 # endif
 	CPPAD_TESTVECTOR(AD<double>) ay(ny);
-	int k = 0;
+	size_t k = 0;
 	// ----------------------------------------------------------
 	// 98 standard math
 	ay[k] = acos(adynamic[0]);
@@ -367,7 +367,7 @@ bool dynamic_operator(void)
 	check = CppAD::CondExpEq(dynamic[0], 0.5, 1.0, -1.0);
 	++k;
 	// ----------------------------------------------------------
-	ok &= size_t(k) == ny;
+	ok &= k == ny;
 	//
 	return ok;
 }

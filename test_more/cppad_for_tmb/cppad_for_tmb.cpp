@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -154,9 +154,9 @@ bool multi_thread_checkpoint(void)
 {	bool ok = true;
 
 	// OpenMP setup
-	int num_threads = 4;               // number of threads
-	omp_set_dynamic(0);                // turn off dynamic thread adjustment
-	omp_set_num_threads(num_threads);  // set number of OMP threads
+	size_t num_threads = 4;      // number of threads
+	omp_set_dynamic(0);          // turn off dynamic thread adjustment
+	omp_set_num_threads( int(num_threads) );  // set number of OMP threads
 
 	// check that multi-threading is possible on this machine
 	if( omp_get_max_threads() < 2 )
@@ -181,11 +181,11 @@ bool multi_thread_checkpoint(void)
 
 	// place to hold result for each thread
 	d_vector y(num_threads);
-	for(int thread = 0; thread < num_threads; thread++)
+	for(size_t thread = 0; thread < num_threads; thread++)
 		y[thread] = 0.0;
 
 	# pragma omp parallel for
-	for(int thread = 0; thread < num_threads; thread++)
+	for(size_t thread = 0; thread < num_threads; thread++)
 	{	ad_vector au(n), av(m);
 		au[0] = 1.0;
 		CppAD::Independent(au);
@@ -201,7 +201,7 @@ bool multi_thread_checkpoint(void)
 	}
 
 	// check the results
-	for(int thread = 0; thread < num_threads; thread++)
+	for(size_t thread = 0; thread < num_threads; thread++)
 	{	double check = double( n_sum_ * (thread + 1) );
 		ok          &= check == y[thread];
 	}

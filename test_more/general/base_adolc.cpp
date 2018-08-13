@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -32,7 +32,7 @@ bool base_adolc(void)
 	CPPAD_TESTVECTOR(ADDdouble) aa_x(n);
 
 	// value of the independent variables
-	int tag = 0;                         // Adolc setup
+	short tag = 0;      // Adolc setup
 	int keep = 1;
 	trace_on(tag, keep);
 	size_t j;

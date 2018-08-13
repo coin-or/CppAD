@@ -1,6 +1,6 @@
 #! /bin/bash -e
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the
@@ -17,7 +17,7 @@ usage: bin/test_one.sh dir/file [extra]
 
 dir:   directory in front of file name
 file:  name of *.cpp file, with extension, that contains the test
-extra: extra source files and/or options for the g++ command
+extra: extra source files and/or options for the compile command
 EOF
 	exit 1
 fi
@@ -117,15 +117,47 @@ do
 done
 #
 # compile command
-compile_command="g++ test_one.cpp -o test_one.exe
+compile_command="@CMAKE_CXX_COMPILER@ test_one.cpp -o test_one.exe
 	$dir/$file $extra
 	-g
 	$cxx_flags
 	$include_flags
 	$library_flags
 "
-echo "$compile_command"
-$compile_command
+echo "$compile_command 2> test_one.err"
+if ! $compile_command 2> test_one.err
+then
+	tail test_one.err
+	echo 'test_one.sh: see test_one.err'
+	exit 1
+fi
+# --------------------------------------------------------------------------
+cat << EOF > test_one.sed
+# Lines that describe where error is
+/^In file included from/d
+/: note:/d
+#
+# Ipopt has sign conversion warnings
+/\/coin\/.*-Wsign-conversion/d
+#
+# Adolc has multiple types of conversion warnings
+/\/adolc\/.*-W[a-z-]*conversion/d
+/\/adolc\/.*-Wshorten-64-to-32/d
+#
+# Lines describing the error begin with space
+/^ /d
+#
+# Lines summarizing results
+/^[0-9]* warnings generated/d
+EOF
+sed -f test_one.sed < test_one.err > test_one.warn
+rm test_one.sed
+if [ -s test_one.warn ]
+then
+	cat test_one.warn
+	echo 'test_one.sh: unexpected warnings: see  test_one.warn, test_one.err'
+	exit 1
+fi
 # --------------------------------------------------------------------------
 library_path='@PROJECT_BINARY_DIR@/cppad_lib'
 if ! echo $LD_LIBRARY_PATH | grep "$library_path"

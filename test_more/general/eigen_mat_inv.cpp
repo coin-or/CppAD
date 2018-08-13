@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -37,6 +37,7 @@ y[3] = x[0] / (x[0] * x[1] + 2)
 bool non_symmetric(void)
 {
 	bool ok    = true;
+	using Eigen::Index;
 	// -------------------------------------------------------------------
 	// object that computes inverse of a 2x2 matrix
 	atomic_eigen_mat_inv<scalar> mat_inv;
@@ -65,7 +66,7 @@ bool non_symmetric(void)
 	CPPAD_TESTVECTOR(ad_scalar) ad_y(4);
 	for(size_t i = 0; i < nr; i++)
 		for(size_t j = 0; j < nr; j++)
-			ad_y[ i * nr + j ] = ad_result(i, j);
+			ad_y[ i * nr + j ] = ad_result( Index(i), Index(j) );
 	/* Used to test hand calculated derivaives
 	CppAD::AD<scalar> ad_dinv = 1.0 / (ad_x[0] * ad_x[1] + 2.0);
 	ad_y[0] = ad_x[1] * ad_dinv;
