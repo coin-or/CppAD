@@ -169,7 +169,7 @@ See <a href="link_det_minor.htm" target="_top"><span style='white-space: nowrap'
           detA <font color="#990000">=</font> <b><font color="#000000">Det</font></b><font color="#990000">(</font>A<font color="#990000">);</font>
 
           <i><font color="#9A1900">// create function object f : A -&gt; detA</font></i>
-          detA<font color="#990000">.</font><b><font color="#000000">diff</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">,</font> m<font color="#990000">);</font>  <i><font color="#9A1900">// index 0 of m dependent variables</font></i>
+          detA<font color="#990000">.</font><b><font color="#000000">diff</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">,</font> <font color="#990000">(</font><font color="#009900">unsigned</font> <font color="#009900">int</font><font color="#990000">)</font> m<font color="#990000">);</font>  <i><font color="#9A1900">// index 0 of m dependent variables</font></i>
 
           <i><font color="#9A1900">// evaluate and return gradient using reverse mode</font></i>
           <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font><font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> n<font color="#990000">;</font> i<font color="#990000">++)</font>

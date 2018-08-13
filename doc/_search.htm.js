@@ -3,7 +3,7 @@
 // ------------------------------------------------------------ 
 Keyword = 
 [
-'CppAD  cppad-20180809: A Package for Differentiation of C++ Algorithms  ',' algorithmic automatic derivative version cppad.hpp syntax introduction example include file preprocessor symbols namespace ',
+'CppAD  cppad-20180813: A Package for Differentiation of C++ Algorithms  ',' algorithmic automatic derivative version cppad.hpp syntax introduction example include file preprocessor symbols namespace ',
 'Install  CppAD Download, Test, and Install Instructions  ',' step 1: 2: cmake 3: check 4: installation deprecated ',
 'download  Download The CppAD Source Code  ',' purpose distribution directory version release license compressed archives coin github control subversion documentation building ',
 'cmake  Using CMake to Configure CppAD  ',' makefile install prefix postfix include directories lib datadir documentation package compile flags profile maximum number threads sparsity internal structure vector sets memory usage tape implicit explicit the program command build directory check cmake_verbose_makefile generator cppad_prefix cppad_postfix cmake_install_includedirs cmake_install_libdirs cmake_install_datadir cmake_install_docdir package_prefix cppad_cxx_flags c++11 debug release cppad_profile_flag eigen fadbad cppad_testvector cppad_max_num_threads cppad_tape_id_type cstdint cppad_tape_addr_type cppad_debug_which exception cppad_deprecated ',
@@ -487,7 +487,7 @@ Keyword =
 'ad_fun.cpp  Creating Your Own Interface to an ADFun Object  ',' example test ',
 'ad_in_c.cpp  Example and Test Linking CppAD to Languages Other than C++  ',' algorithmic differentiation automatic ',
 'conj_grad.cpp  Differentiate Conjugate Gradient Algorithm: Example and Test  ',' purpose ',
-'cppad_eigen.hpp  Enable Use of Eigen Linear Algebra Package with CppAD  ',' syntax purpose example include files numtraits namespace ',
+'cppad_eigen.hpp  Enable Use of Eigen Linear Algebra Package with CppAD  ',' syntax purpose example include files declarations numtraits namespace eigen_vector ',
 'eigen_plugin.hpp  Source Code for eigen_plugin.hpp  ',' ',
 'eigen_array.cpp  Using Eigen Arrays: Example and Test  ',' ',
 'eigen_det.cpp  Using Eigen To Compute Determinant: Example and Test  ',' ',
@@ -508,7 +508,7 @@ Keyword =
 'speed_example.cpp  Run the Speed Examples  ',' program running tests ',
 'lu_vec_ad.cpp  Lu Factor and Solve with Recorded Pivoting  ',' luvecad linear equation determinant syntax purpose storage convention matrix rhs result logdet example ',
 'lu_vec_ad_ok.cpp  Lu Factor and Solve With Recorded Pivoting: Example and Test  ',' ',
-'testvector  Using The CppAD Test Vector Template Class  ',' cppad_testvector syntax purpose choice cppad::vector std::vector boost::numeric::ublas::vector eigen vectors ',
+'testvector  Using The CppAD Test Vector Template Class  ',' cppad_testvector syntax choice cppad::vector std::vector boost::numeric::ublas::vector eigen_vector ',
 'wno_conversion  Suppress Suspect Implicit Conversion Warnings  ',' syntax purpose ',
 'speed  Speed Test an Operator Overloading AD Package  ',' purpose debug_which ',
 'speed_main  Running the Speed Test Program  ',' cppad uniform_01 syntax purpose package double profile correct seed global options onetape memory optimize atomic hes2jac subgraph sparsity boolsparsity revsparsity subsparsity colpack symmetric correctness results n_sweep link functions ',
@@ -616,9 +616,9 @@ Keyword =
 'reverse_identity  An Important Reverse Mode Identity  ',' notation sweep theorem proof ',
 'glossary  Glossary  ',' ad function base type above elementary vector operation atomic sequence dependent independent parameter constant dynamic row-major representation sparsity pattern column index vectors boolean sets tape active inactive variable variables taylor coefficient ',
 'Bib  Bibliography  ',' abramowitz stegun the c++ programming language evaluating derivatives numerical recipes shampine l.f. ',
-'wish_list  The CppAD Wish List  ',' atomic subgraph new api sparsity element-wise operations abs-normal windows install multi-threading check_finite test_boolofvoid eigen example optimization taping special operators memory checkpoint retape testing compilation speed base requirements adolc forward mode recomputation iterator interface sequence software guidelines tracing atan2 benderquad ',
+'wish_list  The CppAD Wish List  ',' atomic subgraph new api sparsity element-wise operations abs-normal windows install multi-threading check_finite test_boolofvoid example optimization taping special operators memory checkpoint retape testing compilation speed base requirements adolc forward mode recomputation iterator interface sequence software guidelines tracing atan2 benderquad ',
 'whats_new  Changes and Additions to CppAD  ',' introduction this year previous years ',
-'whats_new_18  Changes and Additions to CppAD During 2018  ',' 08-08 08-05 08-04 07-30 07-27 07-23 07-18 07-02 06-27 06-22 06-20 06-19 06-13 06-12 06-04 05-29 05-28 05-26 05-20 05-17 05-04 05-03 04-29 04-13 03-20 03-19 03-04 03-02 02-27 02-26 02-23 02-20 ',
+'whats_new_18  Changes and Additions to CppAD During 2018  ',' 08-13 08-12 08-10 08-08 08-05 08-04 07-30 07-27 07-23 07-18 07-02 06-27 06-22 06-20 06-19 06-13 06-12 06-04 05-29 05-28 05-26 05-20 05-17 05-04 05-03 04-29 04-13 03-20 03-19 03-04 03-02 02-27 02-26 02-23 02-20 ',
 'whats_new_17  Changes and Additions to CppAD During 2017  ',' api 12-14 12-08 12-06 12-05 12-04 12-01 11-30 11-23 11-20 11-19 11-15 11-13 11-12 11-08 11-06 11-04 10-23 09-16 08-30 08-29 08-09 08-08 07-25 07-03 07-01 06-28 06-11 06-10 06-07 06-04 06-03 06-01 05-29 05-19 05-14 05-12 04-08 04-02 03-31 03-29 03-25 03-20 03-13 03-11 03-10 03-06 03-04 02-26 02-21 02-19 02-15 02-13 02-11 02-10 02-09 02-08 02-05 02-03 02-02 02-01 01-30 01-29 01-27 01-19 01-18 01-17 ',
 'whats_new_16  Changes and Additions to CppAD During 2016  ',' introduction 12-23 12-20 12-18 12-13 12-11 12-09 11-18 11-14 11-13 10-27 10-12 09-29 09-27 09-26 09-16 09-13 08-30 08-25 07-17 07-14 06-30 06-29 06-27 06-25 06-10 05-05 04-17 03-27 03-26 03-25 03-24 03-23 03-22 03-21 03-20 03-19 03-17 03-12 03-05 03-01 02-29 02-28 02-27 02-26 02-25 02-23 01-21 01-20 01-18 ',
 'whats_new_15  CppAD Changes and Additions During 2015  ',' introduction 12-31 12-29 12-28 12-08 12-01 11-30 11-25 11-24 11-14 11-08 11-06 10-21 10-16 10-06 10-04 10-03 10-02 09-28 09-27 09-25 09-24 09-23 09-21 09-20 09-19 09-16 09-03 09-02 08-31 08-30 08-29 08-28 08-26 08-25 08-20 08-17 08-16 08-09 08-06 07-31 06-16 06-11 06-09 06-07 05-26 cond_exp_1 cond_exp_2 05-11 05-10 05-09 05-08 05-07 05-05 04-18 03-13 03-06 02-28 02-18 02-16 02-14 02-11 02-10 02-09 02-07 02-06 02-04 02-03 02-02 01-30 01-29 01-26 01-23 01-21 01-20 01-09 01-07 01-02 ',

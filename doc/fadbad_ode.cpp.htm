@@ -173,7 +173,7 @@ See <a href="link_ode.htm" target="_top"><span style='white-space: nowrap'>link_
           <font color="#FF0000">{</font>    <i><font color="#9A1900">// set value of x[j]</font></i>
                X<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">=</font> x<font color="#990000">[</font>j<font color="#990000">];</font>
                <i><font color="#9A1900">// set up for X as the independent variable vector</font></i>
-               X<font color="#990000">[</font>j<font color="#990000">].</font><b><font color="#000000">diff</font></b><font color="#990000">(</font>j<font color="#990000">,</font> n<font color="#990000">);</font>
+               X<font color="#990000">[</font>j<font color="#990000">].</font><b><font color="#000000">diff</font></b><font color="#990000">((</font><font color="#009900">unsigned</font> <font color="#009900">int</font><font color="#990000">)</font> j<font color="#990000">,</font> <font color="#990000">(</font><font color="#009900">unsigned</font> <font color="#009900">int</font><font color="#990000">)</font> n<font color="#990000">);</font>
           <font color="#FF0000">}</font>
 
           <i><font color="#9A1900">// evaluate function</font></i>
@@ -182,7 +182,7 @@ See <a href="link_ode.htm" target="_top"><span style='white-space: nowrap'>link_
           <i><font color="#9A1900">// return values with Y as the dependent variable vector</font></i>
           <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> m<font color="#990000">;</font> i<font color="#990000">++)</font>
           <font color="#FF0000">{</font>    <b><font color="#0000FF">for</font></b><font color="#990000">(</font>j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> n<font color="#990000">;</font> j<font color="#990000">++)</font>
-                    jacobian<font color="#990000">[</font> i <font color="#990000">*</font> n <font color="#990000">+</font> j <font color="#990000">]</font> <font color="#990000">=</font> Y<font color="#990000">[</font>i<font color="#990000">].</font><b><font color="#000000">d</font></b><font color="#990000">(</font>j<font color="#990000">);</font>
+                    jacobian<font color="#990000">[</font> i <font color="#990000">*</font> n <font color="#990000">+</font> j <font color="#990000">]</font> <font color="#990000">=</font> Y<font color="#990000">[</font>i<font color="#990000">].</font><b><font color="#000000">d</font></b><font color="#990000">((</font><font color="#009900">unsigned</font> <font color="#009900">int</font><font color="#990000">)</font> j<font color="#990000">);</font>
           <font color="#FF0000">}</font>
      <font color="#FF0000">}</font>
      <b><font color="#0000FF">return</font></b> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>

@@ -59,8 +59,10 @@ var list_current0 = [
 'cppad_eigen.hpp.htm#Purpose',
 'cppad_eigen.hpp.htm#Example',
 'cppad_eigen.hpp.htm#Include Files',
+'cppad_eigen.hpp.htm#CppAD Declarations',
 'cppad_eigen.hpp.htm#Eigen NumTraits',
-'cppad_eigen.hpp.htm#CppAD Namespace'
+'cppad_eigen.hpp.htm#CppAD Namespace',
+'cppad_eigen.hpp.htm#eigen_vector'
 ];
 function choose_across0(item)
 {	var index          = item.selectedIndex;

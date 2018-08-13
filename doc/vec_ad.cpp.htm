@@ -117,12 +117,12 @@ A:active { color : purple }
           <font color="#008080">VecAD&lt;double&gt;</font> <b><font color="#000000">B</font></b><font color="#990000">(</font><font color="#993399">2</font><font color="#990000">);</font>
           <font color="#008080">AD&lt;double&gt;</font>    u<font color="#990000">;</font>
           <b><font color="#0000FF">for</font></b><font color="#990000">(</font>u <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> u <font color="#990000">&lt;</font> <font color="#993399">2</font><font color="#990000">;</font> u <font color="#990000">+=</font> <font color="#993399">1</font><font color="#990000">.)</font>
-               B<font color="#990000">[</font>u<font color="#990000">]</font> <font color="#990000">=</font> b<font color="#990000">[</font> <b><font color="#000000">Integer</font></b><font color="#990000">(</font>u<font color="#990000">)</font> <font color="#990000">];</font>
+               B<font color="#990000">[</font>u<font color="#990000">]</font> <font color="#990000">=</font> b<font color="#990000">[</font> <b><font color="#000000">size_t</font></b><font color="#990000">(</font> <b><font color="#000000">Integer</font></b><font color="#990000">(</font>u<font color="#990000">)</font> <font color="#990000">)</font> <font color="#990000">];</font>
 
           <i><font color="#9A1900">// copy the matrix a into the VecAD object A</font></i>
           <font color="#008080">VecAD&lt;double&gt;</font> <b><font color="#000000">A</font></b><font color="#990000">(</font><font color="#993399">4</font><font color="#990000">);</font>
           <b><font color="#0000FF">for</font></b><font color="#990000">(</font>u <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> u <font color="#990000">&lt;</font> <font color="#993399">4</font><font color="#990000">;</font> u <font color="#990000">+=</font> <font color="#993399">1</font><font color="#990000">.)</font>
-               A<font color="#990000">[</font>u<font color="#990000">]</font> <font color="#990000">=</font> a <font color="#990000">[</font> <b><font color="#000000">Integer</font></b><font color="#990000">(</font>u<font color="#990000">)</font> <font color="#990000">];</font>
+               A<font color="#990000">[</font>u<font color="#990000">]</font> <font color="#990000">=</font> a <font color="#990000">[</font> <b><font color="#000000">size_t</font></b><font color="#990000">(</font> <b><font color="#000000">Integer</font></b><font color="#990000">(</font>u<font color="#990000">)</font> <font color="#990000">)</font> <font color="#990000">];</font>
 
           <i><font color="#9A1900">// tape AD operation sequence that determines the row of A</font></i>
           <i><font color="#9A1900">// with maximum absolute element in column zero</font></i>

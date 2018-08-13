@@ -112,14 +112,14 @@ A:active { color : purple }
      <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>NearEqual<font color="#990000">;</font>
      <b><font color="#0000FF">using</font></b> Eigen<font color="#990000">::</font>Matrix<font color="#990000">;</font>
      <b><font color="#0000FF">using</font></b> Eigen<font color="#990000">::</font>Dynamic<font color="#990000">;</font>
+     <b><font color="#0000FF">using</font></b> Eigen<font color="#990000">::</font>Index<font color="#990000">;</font>
      <i><font color="#9A1900">//</font></i>
      <b><font color="#0000FF">typedef</font></b> <font color="#008080">Matrix&lt; double     , Dynamic, Dynamic &gt;</font> matrix<font color="#990000">;</font>
      <b><font color="#0000FF">typedef</font></b> <font color="#008080">Matrix&lt; AD&lt;double&gt; , Dynamic, Dynamic &gt;</font> a_matrix<font color="#990000">;</font>
      <i><font color="#9A1900">//</font></i>
-     <b><font color="#0000FF">typedef</font></b> <font color="#008080">Matrix&lt; double ,     Dynamic , 1&gt;</font>       vector<font color="#990000">;</font>
-     <b><font color="#0000FF">typedef</font></b> <font color="#008080">Matrix&lt; AD&lt;double&gt; , Dynamic , 1&gt;</font>       a_vector<font color="#990000">;</font>
-     <i><font color="#9A1900">// some temporary indices</font></i>
-     <font color="#008080">size_t</font> i<font color="#990000">,</font> j<font color="#990000">;</font>
+     <b><font color="#0000FF">typedef</font></b> <font color="#008080">eigen_vector&lt;double&gt;</font>                    vector<font color="#990000">;</font>
+     <b><font color="#0000FF">typedef</font></b> <font color="#008080">eigen_vector&lt; AD&lt;double&gt; &gt;</font>              a_vector<font color="#990000">;</font>
+     <i><font color="#9A1900">//</font></i>
 
      <i><font color="#9A1900">// domain and range space vectors</font></i>
      <font color="#008080">size_t</font> size <font color="#990000">=</font> <font color="#993399">3</font><font color="#990000">,</font> n  <font color="#990000">=</font> size <font color="#990000">*</font> size<font color="#990000">,</font> m <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font>
@@ -127,8 +127,8 @@ A:active { color : purple }
      <font color="#008080">vector</font> <b><font color="#000000">x</font></b><font color="#990000">(</font>n<font color="#990000">);</font>
 
      <i><font color="#9A1900">// set and declare independent variables and start tape recording</font></i>
-     <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> size<font color="#990000">;</font> i<font color="#990000">++)</font>
-     <font color="#FF0000">{</font>    <b><font color="#0000FF">for</font></b><font color="#990000">(</font>j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> size<font color="#990000">;</font> j<font color="#990000">++)</font>
+     <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> size<font color="#990000">;</font> i<font color="#990000">++)</font>
+     <font color="#FF0000">{</font>    <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> size<font color="#990000">;</font> j<font color="#990000">++)</font>
           <font color="#FF0000">{</font>    <i><font color="#9A1900">// lower triangular matrix</font></i>
                a_x<font color="#990000">[</font>i <font color="#990000">*</font> size <font color="#990000">+</font> j<font color="#990000">]</font> <font color="#990000">=</font> x<font color="#990000">[</font>i <font color="#990000">*</font> size <font color="#990000">+</font> j<font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">0.0</font><font color="#990000">;</font>
                <b><font color="#0000FF">if</font></b><font color="#990000">(</font> j <font color="#990000">&lt;=</font> i <font color="#990000">)</font>
@@ -138,13 +138,16 @@ A:active { color : purple }
      CppAD<font color="#990000">::</font><b><font color="#000000">Independent</font></b><font color="#990000">(</font>a_x<font color="#990000">);</font>
 
      <i><font color="#9A1900">// copy independent variable vector to a matrix</font></i>
-     <font color="#008080">a_matrix</font> <b><font color="#000000">a_X</font></b><font color="#990000">(</font>size<font color="#990000">,</font> size<font color="#990000">);</font>
-     <font color="#008080">matrix</font> <b><font color="#000000">X</font></b><font color="#990000">(</font>size<font color="#990000">,</font> size<font color="#990000">);</font>
-     <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> size<font color="#990000">;</font> i<font color="#990000">++)</font>
-     <font color="#FF0000">{</font>    <b><font color="#0000FF">for</font></b><font color="#990000">(</font>j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> size<font color="#990000">;</font> j<font color="#990000">++)</font>
-          <font color="#FF0000">{</font>    <b><font color="#000000">X</font></b><font color="#990000">(</font>i<font color="#990000">,</font> j<font color="#990000">)</font>   <font color="#990000">=</font> x<font color="#990000">[</font>i <font color="#990000">*</font> size <font color="#990000">+</font> j<font color="#990000">];</font>
+     <font color="#008080">Index</font> Size <font color="#990000">=</font> <b><font color="#000000">Index</font></b><font color="#990000">(</font>size<font color="#990000">);</font>
+     <font color="#008080">a_matrix</font> <b><font color="#000000">a_X</font></b><font color="#990000">(</font>Size<font color="#990000">,</font> Size<font color="#990000">);</font>
+     <font color="#008080">matrix</font>     <b><font color="#000000">X</font></b><font color="#990000">(</font>Size<font color="#990000">,</font> Size<font color="#990000">);</font>
+     <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> size<font color="#990000">;</font> i<font color="#990000">++)</font>
+     <font color="#FF0000">{</font>    <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> size<font color="#990000">;</font> j<font color="#990000">++)</font>
+          <font color="#FF0000">{</font>    <font color="#008080">Index</font> I <font color="#990000">=</font> <b><font color="#000000">Index</font></b><font color="#990000">(</font>i<font color="#990000">);</font>
+               <font color="#008080">Index</font> J <font color="#990000">=</font> <b><font color="#000000">Index</font></b><font color="#990000">(</font>j<font color="#990000">);</font>
+               <b><font color="#000000">X</font></b><font color="#990000">(</font>I <font color="#990000">,</font>J<font color="#990000">)</font>   <font color="#990000">=</font> x<font color="#990000">[</font>i <font color="#990000">*</font> size <font color="#990000">+</font> j<font color="#990000">];</font>
                <i><font color="#9A1900">// If we used a_X(i, j) = X(i, j), a_X would not depend on a_x.</font></i>
-               <b><font color="#000000">a_X</font></b><font color="#990000">(</font>i<font color="#990000">,</font> j<font color="#990000">)</font> <font color="#990000">=</font> a_x<font color="#990000">[</font>i <font color="#990000">*</font> size <font color="#990000">+</font> j<font color="#990000">];</font>
+               <b><font color="#000000">a_X</font></b><font color="#990000">(</font>I<font color="#990000">,</font> J<font color="#990000">)</font> <font color="#990000">=</font> a_x<font color="#990000">[</font>i <font color="#990000">*</font> size <font color="#990000">+</font> j<font color="#990000">];</font>
           <font color="#FF0000">}</font>
      <font color="#FF0000">}</font>
 
@@ -165,9 +168,12 @@ A:active { color : purple }
      <i><font color="#9A1900">// check the derivative using the formula</font></i>
      <i><font color="#9A1900">// d/dX log(det(X)) = transpose( inv(X) )</font></i>
      <font color="#008080">matrix</font> inv_X <font color="#990000">=</font> X<font color="#990000">.</font><b><font color="#000000">inverse</font></b><font color="#990000">();</font>
-     <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> size<font color="#990000">;</font> i<font color="#990000">++)</font>
-     <font color="#FF0000">{</font>    <b><font color="#0000FF">for</font></b><font color="#990000">(</font>j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> size<font color="#990000">;</font> j<font color="#990000">++)</font>
-               ok <font color="#990000">&amp;=</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>jac<font color="#990000">[</font>i <font color="#990000">*</font> size <font color="#990000">+</font> j<font color="#990000">],</font> <b><font color="#000000">inv_X</font></b><font color="#990000">(</font>j<font color="#990000">,</font> i<font color="#990000">),</font> eps<font color="#990000">,</font> eps<font color="#990000">);</font>
+     <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> size<font color="#990000">;</font> i<font color="#990000">++)</font>
+     <font color="#FF0000">{</font>    <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> size<font color="#990000">;</font> j<font color="#990000">++)</font>
+          <font color="#FF0000">{</font>    <font color="#008080">Index</font> I <font color="#990000">=</font> <b><font color="#000000">Index</font></b><font color="#990000">(</font>i<font color="#990000">);</font>
+               <font color="#008080">Index</font> J <font color="#990000">=</font> <b><font color="#000000">Index</font></b><font color="#990000">(</font>j<font color="#990000">);</font>
+               ok <font color="#990000">&amp;=</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>jac<font color="#990000">[</font>i <font color="#990000">*</font> size <font color="#990000">+</font> j<font color="#990000">],</font> <b><font color="#000000">inv_X</font></b><font color="#990000">(</font>J<font color="#990000">,</font> I<font color="#990000">),</font> eps<font color="#990000">,</font> eps<font color="#990000">);</font>
+          <font color="#FF0000">}</font>
      <font color="#FF0000">}</font>
 
      <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>

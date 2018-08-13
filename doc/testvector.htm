@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Using The CppAD Test Vector Template Class</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Using The CppAD Test Vector Template Class">
-<meta name="keywords" id="keywords" content=" using the cppad test vector template class Cppad_testvector syntax purpose choice cppad::vector std::vector boost::numeric::ublas::vector eigen vectors ">
+<meta name="keywords" id="keywords" content=" using the cppad test vector template class Cppad_testvector syntax choice cppad::vector std::vector boost::numeric::ublas::vector eigen_vector ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -83,12 +83,11 @@ A:active { color : purple }
 <select onchange='choose_current0(this)'>
 <option>Headings-&gt;</option>
 <option>Syntax</option>
-<option>Purpose</option>
 <option>Choice</option>
 <option>CppAD::vector</option>
 <option>std::vector</option>
 <option>boost::numeric::ublas::vector</option>
-<option>Eigen Vectors</option>
+<option>eigen_vector</option>
 </select>
 </td>
 </tr></table><br>
@@ -106,26 +105,6 @@ A:active { color : purple }
 
 <code><font color="blue"><span style='white-space: nowrap'>CPPAD_TESTVECTOR(</span></font><i><font color="black"><span style='white-space: nowrap'>Scalar</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
 </span></font></code>
-<br>
-<b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
-<br>
-Many of the CppAD <a href="example.htm" target="_top"><span style='white-space: nowrap'>examples</span></a>
- and tests use
-the <code><font color="blue">CPPAD_TESTVECTOR</font></code> template class to pass information to CppAD.
-This is not a true template class because it's syntax uses
-
-<code><font color="blue"><span style='white-space: nowrap'>(</span></font><i><font color="black"><span style='white-space: nowrap'>Scalar</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
- instead of 
-<code><font color="blue"><span style='white-space: nowrap'>&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Scalar</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code>
-.
-This enables us to use
-
-<code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Eigen::Matrix&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Scalar</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;Eigen::Dynamic,&nbsp;1&gt;<br>
-</span></font></code>
-as one of the possible cases for this 'template class'.
-
-<br>
 <br>
 <b><big><a name="Choice" id="Choice">Choice</a></big></b>
 <br>
@@ -200,7 +179,7 @@ many of its examples and tests.
 
 <br>
 <br>
-<b><big><a name="Eigen Vectors" id="Eigen Vectors">Eigen Vectors</a></big></b>
+<b><big><a name="eigen_vector" id="eigen_vector">eigen_vector</a></big></b>
 <br>
 If in the cmake command
 you specify 
@@ -211,8 +190,10 @@ In this case,
 <code><font color="blue">CPPAD_TESTVECTOR</font></code> is defined by the following source code:
 <pre><tt><b><font color="#000080"># if</font></b> CPPAD_EIGENVECTOR
 <b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/example/cppad_eigen.hpp&gt;</font>
-<b><font color="#000080"># define</font></b> <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font>Scalar<font color="#990000">)</font> Eigen<font color="#990000">::</font>Matrix<font color="#990000">&lt;</font> Scalar <font color="#990000">,</font> Eigen<font color="#990000">::</font>Dynamic<font color="#990000">,</font> <font color="#993399">1</font><font color="#990000">&gt;</font>
+<b><font color="#000080"># define</font></b> <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font>Scalar<font color="#990000">)</font> eigen_vector<font color="#990000">&lt;</font> Scalar <font color="#990000">&gt;</font>
 <b><font color="#000080"># endif</font></b></tt></pre>
+see <a href="cppad_eigen.hpp.htm#eigen_vector" target="_top"><span style='white-space: nowrap'>eigen_vector</span></a>
+.
 In this case CppAD will use the Eigen vector
 for many of its examples and tests.
 

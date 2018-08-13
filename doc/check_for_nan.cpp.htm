@@ -158,7 +158,7 @@ A:active { color : purple }
           <font color="#008080">string</font> number<font color="#990000">;</font>
           <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> start<font color="#990000">;</font> msg<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">!=</font> <font color="#FF0000">'</font><font color="#CC33CC">\n</font><font color="#FF0000">'</font><font color="#990000">;</font> i<font color="#990000">++)</font>
                number <font color="#990000">+=</font> msg<font color="#990000">[</font>i<font color="#990000">];</font>
-          <font color="#008080">size_t</font> vector_size <font color="#990000">=</font> std<font color="#990000">::</font><b><font color="#000000">atoi</font></b><font color="#990000">(</font>number<font color="#990000">.</font><b><font color="#000000">c_str</font></b><font color="#990000">());</font>
+          <font color="#008080">size_t</font> vector_size <font color="#990000">=</font> <b><font color="#000000">size_t</font></b><font color="#990000">(</font> std<font color="#990000">::</font><b><font color="#000000">atoi</font></b><font color="#990000">(</font>number<font color="#990000">.</font><b><font color="#000000">c_str</font></b><font color="#990000">())</font> <font color="#990000">);</font>
           ok <font color="#990000">&amp;=</font> vector_size <font color="#990000">==</font> <font color="#993399">2</font><font color="#990000">;</font>
 
           <i><font color="#9A1900">// get and check first dependent variable index that is nan</font></i>
@@ -167,7 +167,7 @@ A:active { color : purple }
           number  <font color="#990000">=</font> <font color="#FF0000">""</font><font color="#990000">;</font>
           <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> start<font color="#990000">;</font> msg<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">!=</font> <font color="#FF0000">'</font><font color="#CC33CC">\n</font><font color="#FF0000">'</font><font color="#990000">;</font> i<font color="#990000">++)</font>
                number <font color="#990000">+=</font> msg<font color="#990000">[</font>i<font color="#990000">];</font>
-          <font color="#008080">size_t</font> index <font color="#990000">=</font> std<font color="#990000">::</font><b><font color="#000000">atoi</font></b><font color="#990000">(</font>number<font color="#990000">.</font><b><font color="#000000">c_str</font></b><font color="#990000">());</font>
+          <font color="#008080">size_t</font> index <font color="#990000">=</font> <b><font color="#000000">size_t</font></b><font color="#990000">(</font> std<font color="#990000">::</font><b><font color="#000000">atoi</font></b><font color="#990000">(</font>number<font color="#990000">.</font><b><font color="#000000">c_str</font></b><font color="#990000">())</font> <font color="#990000">);</font>
           ok <font color="#990000">&amp;=</font> index <font color="#990000">==</font> <font color="#993399">1</font><font color="#990000">;</font>
 
           <i><font color="#9A1900">// get the name of the file</font></i>

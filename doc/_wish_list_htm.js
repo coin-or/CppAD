@@ -48,7 +48,6 @@ var list_current0 = [
 'wish_list.htm#Multi-Threading',
 'wish_list.htm#check_finite',
 'wish_list.htm#test_boolofvoid',
-'wish_list.htm#Eigen',
 'wish_list.htm#Example',
 'wish_list.htm#Optimization',
 'wish_list.htm#Optimization.Taping',

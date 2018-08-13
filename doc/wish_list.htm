@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>The CppAD Wish List</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="The CppAD Wish List">
-<meta name="keywords" id="keywords" content=" the cppad wish list atomic subgraph new api sparsity element-wise operations abs-normal windows install multi-threading check_finite test_boolofvoid eigen example optimization taping special operators memory checkpoint retape testing compilation speed base requirements adolc forward mode recomputation iterator interface operation sequence software guidelines tracing atan2 benderquad ">
+<meta name="keywords" id="keywords" content=" the cppad wish list atomic subgraph new api sparsity element-wise operations abs-normal windows install multi-threading check_finite test_boolofvoid example optimization taping special operators memory checkpoint retape testing compilation speed base requirements adolc forward mode recomputation iterator interface operation sequence software guidelines tracing atan2 benderquad ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -98,7 +98,6 @@ A:active { color : purple }
 <option>Multi-Threading</option>
 <option>check_finite</option>
 <option>test_boolofvoid</option>
-<option>Eigen</option>
 <option>Example</option>
 <option>Optimization</option>
 <option>---..Taping</option>
@@ -354,21 +353,6 @@ For general purpose use, the <a href="test_boolofvoid.htm" target="_top"><span s
 without including a memory check at the end.
 
 <br>
-<br>
-<b><big><a name="Eigen" id="Eigen">Eigen</a></big></b>
-<br>
-Use a wrapper class for
-<a href="testvector.htm#Eigen Vectors" target="_top"><span style='white-space: nowrap'>eigen&nbsp;vectors</span></a>
- so that the
-<code><font color="blue">size</font></code> member function returns a
-<code><font color="blue">size_t</font></code> instead of an <code><font color="blue">int</font></code>.
-This would allow <a href="testvector.htm" target="_top"><span style='white-space: nowrap'>TESTVECTOR</span></a>
- to be a true template class; i.e.,
-to use the syntax
-
-<code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TESTVECTOR&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Scalar</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;<br>
-</span></font></code>
 <br>
 <b><big><a name="Example" id="Example">Example</a></big></b>
 <br>

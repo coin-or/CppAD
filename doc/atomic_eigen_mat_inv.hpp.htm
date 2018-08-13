@@ -457,8 +457,8 @@ R_0
                f_result_<font color="#990000">.</font><b><font color="#000000">resize</font></b><font color="#990000">(</font>n_order<font color="#990000">);</font>
                <i><font color="#9A1900">//</font></i>
                <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> k <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> k <font color="#990000">&lt;</font> n_order<font color="#990000">;</font> k<font color="#990000">++)</font>
-               <font color="#FF0000">{</font>    f_arg_<font color="#990000">[</font>k<font color="#990000">].</font><b><font color="#000000">resize</font></b><font color="#990000">(</font>nr<font color="#990000">,</font> nr<font color="#990000">);</font>
-                    f_result_<font color="#990000">[</font>k<font color="#990000">].</font><b><font color="#000000">resize</font></b><font color="#990000">(</font>nr<font color="#990000">,</font> nr<font color="#990000">);</font>
+               <font color="#FF0000">{</font>    f_arg_<font color="#990000">[</font>k<font color="#990000">].</font><b><font color="#000000">resize</font></b><font color="#990000">(</font> <font color="#009900">long</font><font color="#990000">(</font>nr<font color="#990000">),</font> <font color="#009900">long</font><font color="#990000">(</font>nr<font color="#990000">)</font> <font color="#990000">);</font>
+                    f_result_<font color="#990000">[</font>k<font color="#990000">].</font><b><font color="#000000">resize</font></b><font color="#990000">(</font> <font color="#009900">long</font><font color="#990000">(</font>nr<font color="#990000">),</font> <font color="#009900">long</font><font color="#990000">(</font>nr<font color="#990000">)</font> <font color="#990000">);</font>
                <font color="#FF0000">}</font>
           <font color="#FF0000">}</font>
           <i><font color="#9A1900">// -------------------------------------------------------------------</font></i>
@@ -475,7 +475,7 @@ R_0
           f_result_<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> f_arg_<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">].</font><b><font color="#000000">inverse</font></b><font color="#990000">();</font>
           <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> k <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font> k <font color="#990000">&lt;</font> n_order<font color="#990000">;</font> k<font color="#990000">++)</font>
           <font color="#FF0000">{</font>    <i><font color="#9A1900">// initialize sum</font></i>
-               <font color="#008080">matrix</font> f_sum <font color="#990000">=</font> matrix<font color="#990000">::</font><b><font color="#000000">Zero</font></b><font color="#990000">(</font>nr<font color="#990000">,</font> nr<font color="#990000">);</font>
+               <font color="#008080">matrix</font> f_sum <font color="#990000">=</font> matrix<font color="#990000">::</font><b><font color="#000000">Zero</font></b><font color="#990000">(</font> <font color="#009900">long</font><font color="#990000">(</font>nr<font color="#990000">),</font> <font color="#009900">long</font><font color="#990000">(</font>nr<font color="#990000">)</font> <font color="#990000">);</font>
                <i><font color="#9A1900">// compute sum</font></i>
                <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> ell <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font> ell <font color="#990000">&lt;=</font> k<font color="#990000">;</font> ell<font color="#990000">++)</font>
                     f_sum <font color="#990000">-=</font> f_arg_<font color="#990000">[</font>ell<font color="#990000">]</font> <font color="#990000">*</font> f_result_<font color="#990000">[</font>k<font color="#990000">-</font>ell<font color="#990000">];</font>
@@ -542,8 +542,8 @@ R_0
                r_result_<font color="#990000">.</font><b><font color="#000000">resize</font></b><font color="#990000">(</font>n_order<font color="#990000">);</font>
                <i><font color="#9A1900">//</font></i>
                <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> k <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> k <font color="#990000">&lt;</font> n_order<font color="#990000">;</font> k<font color="#990000">++)</font>
-               <font color="#FF0000">{</font>    r_arg_<font color="#990000">[</font>k<font color="#990000">].</font><b><font color="#000000">resize</font></b><font color="#990000">(</font>nr<font color="#990000">,</font> nr<font color="#990000">);</font>
-                    r_result_<font color="#990000">[</font>k<font color="#990000">].</font><b><font color="#000000">resize</font></b><font color="#990000">(</font>nr<font color="#990000">,</font> nr<font color="#990000">);</font>
+               <font color="#FF0000">{</font>    r_arg_<font color="#990000">[</font>k<font color="#990000">].</font><b><font color="#000000">resize</font></b><font color="#990000">(</font> <font color="#009900">long</font><font color="#990000">(</font>nr<font color="#990000">),</font> <font color="#009900">long</font><font color="#990000">(</font>nr<font color="#990000">)</font> <font color="#990000">);</font>
+                    r_result_<font color="#990000">[</font>k<font color="#990000">].</font><b><font color="#000000">resize</font></b><font color="#990000">(</font> <font color="#009900">long</font><font color="#990000">(</font>nr<font color="#990000">),</font> <font color="#009900">long</font><font color="#990000">(</font>nr<font color="#990000">)</font> <font color="#990000">);</font>
                <font color="#FF0000">}</font>
           <font color="#FF0000">}</font>
           <i><font color="#9A1900">// -------------------------------------------------------------------</font></i>
@@ -562,7 +562,7 @@ R_0
           <i><font color="#9A1900">// -------------------------------------------------------------------</font></i>
           <i><font color="#9A1900">// initialize r_arg_ as zero</font></i>
           <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> k <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> k <font color="#990000">&lt;</font> n_order<font color="#990000">;</font> k<font color="#990000">++)</font>
-               r_arg_<font color="#990000">[</font>k<font color="#990000">]</font>   <font color="#990000">=</font> matrix<font color="#990000">::</font><b><font color="#000000">Zero</font></b><font color="#990000">(</font>nr<font color="#990000">,</font> nr<font color="#990000">);</font>
+               r_arg_<font color="#990000">[</font>k<font color="#990000">]</font>   <font color="#990000">=</font> matrix<font color="#990000">::</font><b><font color="#000000">Zero</font></b><font color="#990000">(</font> <font color="#009900">long</font><font color="#990000">(</font>nr<font color="#990000">),</font> <font color="#009900">long</font><font color="#990000">(</font>nr<font color="#990000">)</font> <font color="#990000">);</font>
           <i><font color="#9A1900">// -------------------------------------------------------------------</font></i>
           <i><font color="#9A1900">// matrix reverse mode calculation</font></i>
           <i><font color="#9A1900">//</font></i>

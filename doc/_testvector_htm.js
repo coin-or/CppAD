@@ -33,12 +33,11 @@ var list_down1 = [
 ];
 var list_current0 = [
 'testvector.htm#Syntax',
-'testvector.htm#Purpose',
 'testvector.htm#Choice',
 'testvector.htm#CppAD::vector',
 'testvector.htm#std::vector',
 'testvector.htm#boost::numeric::ublas::vector',
-'testvector.htm#Eigen Vectors'
+'testvector.htm#eigen_vector'
 ];
 function choose_across0(item)
 {	var index          = item.selectedIndex;

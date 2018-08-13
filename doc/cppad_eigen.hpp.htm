@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Enable Use of Eigen Linear Algebra Package with CppAD</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Enable Use of Eigen Linear Algebra Package with CppAD">
-<meta name="keywords" id="keywords" content=" enable use eigen linear algebra package with cppad syntax purpose example include files numtraits namespace ">
+<meta name="keywords" id="keywords" content=" enable use eigen linear algebra package with cppad syntax purpose example include files declarations numtraits namespace eigen_vector ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -114,8 +114,10 @@ A:active { color : purple }
 <option>Purpose</option>
 <option>Example</option>
 <option>Include Files</option>
+<option>CppAD Declarations</option>
 <option>Eigen NumTraits</option>
 <option>CppAD Namespace</option>
+<option>eigen_vector</option>
 </select>
 </td>
 </tr></table><br>
@@ -131,11 +133,8 @@ A:active { color : purple }
 
 <br>
 
-<code><font color="blue"><span style='white-space: nowrap'>#&nbsp;include&nbsp;&lt;cppad/example/cppad_eigen.hpp&gt;</span></font></code>
-
-
-
-<br>
+<code><font color="blue"><span style='white-space: nowrap'>#&nbsp;include&nbsp;&lt;cppad/example/cppad_eigen.hpp&gt;<br>
+</span></font></code>
 <br>
 <b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
 <br>
@@ -161,19 +160,20 @@ They return true if they succeed and false otherwise.
 <br>
 <b><big><a name="Include Files" id="Include Files">Include Files</a></big></b>
 <br>
-The file <code><font color="blue">cppad_eigen.hpp</font></code> includes both
-<code><font color="blue">&lt;cppad/cppad.hpp&gt;</font></code> and <code><font color="blue">&lt;Eigen/Core&gt;</font></code>.
-The file <a href="eigen_plugin.hpp.htm" target="_top"><span style='white-space: nowrap'>eigen_plugin.hpp</span></a>
- defines <code><font color="blue">value_type</font></code>
-in the Eigen matrix class so its vectors are
-<a href="simplevector.htm" target="_top"><span style='white-space: nowrap'>simple&nbsp;vectors</span></a>
+The file <code><font color="blue">&lt;Eigen/Core&gt;</font></code> is included before
+these definitions and <code><font color="blue">&lt;cppad/cppad.hpp&gt;</font></code> is included after.
 
-(not necessary for eigen-3.3.3 and later).
-<pre style='display:inline'><tt>
-<b><font color="#000080"># define</font></b> EIGEN_MATRIXBASE_PLUGIN <font color="#990000">&lt;</font>cppad<font color="#990000">/</font>example<font color="#990000">/</font>eigen_plugin<font color="#990000">.</font>hpp<font color="#990000">&gt;</font>
-<b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;Eigen/Core&gt;</font>
-<b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/cppad.hpp&gt;</font>
-</tt></pre>
+<br>
+<br>
+<b><big><a name="CppAD Declarations" id="CppAD Declarations">CppAD Declarations</a></big></b>
+<br>
+First declare some items that are defined by cppad.hpp:
+<pre><tt><b><font color="#0000FF">namespace</font></b> CppAD <font color="#FF0000">{</font>
+     <i><font color="#9A1900">// AD&lt;Base&gt;</font></i>
+     <b><font color="#0000FF">template</font></b> <font color="#990000">&lt;</font><b><font color="#0000FF">class</font></b> <font color="#008080">Base</font><font color="#990000">&gt;</font> <b><font color="#0000FF">class</font></b> <font color="#008080">AD</font><font color="#990000">;</font>
+     <i><font color="#9A1900">// numeric_limits&lt;Float&gt;</font></i>
+     <b><font color="#0000FF">template</font></b> <font color="#990000">&lt;</font><b><font color="#0000FF">class</font></b> <font color="#008080">Float</font><font color="#990000">&gt;</font>  <b><font color="#0000FF">class</font></b> <font color="#008080">numeric_limits</font><font color="#990000">;</font>
+<font color="#FF0000">}</font></tt></pre>
 <br>
 <b><big><a name="Eigen NumTraits" id="Eigen NumTraits">Eigen NumTraits</a></big></b>
 <br>
@@ -253,6 +253,38 @@ with
           <font color="#FF0000">{</font>    <b><font color="#0000FF">return</font></b> x <font color="#990000">*</font> x<font color="#990000">;</font> <font color="#FF0000">}</font>
 <font color="#FF0000">}</font>
 </tt></pre>
+<b><big><a name="eigen_vector" id="eigen_vector">eigen_vector</a></big></b>
+<br>
+The class <code><font color="blue">eigen_vector</font></code> is a wrapper for Eigen column vectors
+so that they are <a href="simplevector.htm" target="_top"><span style='white-space: nowrap'>simple&nbsp;vectors</span></a>
+.
+To be specific, it converts <code><font color="blue">Eigen::Index</font></code> arguments and
+return values to <code><font color="blue">size_t</font></code>.
+<pre><tt><b><font color="#0000FF">template</font></b> <font color="#990000">&lt;</font><b><font color="#0000FF">class</font></b> <font color="#008080">Scalar</font><font color="#990000">&gt;</font>
+<b><font color="#0000FF">class</font></b> <font color="#008080">eigen_vector</font> <font color="#990000">:</font> <b><font color="#0000FF">public</font></b> Eigen<font color="#990000">::</font>Matrix<font color="#990000">&lt;</font>Scalar<font color="#990000">,</font> Eigen<font color="#990000">::</font>Dynamic<font color="#990000">,</font> <font color="#993399">1</font><font color="#990000">&gt;</font> <font color="#FF0000">{</font>
+<b><font color="#0000FF">private</font></b><font color="#990000">:</font>
+     <i><font color="#9A1900">// base_class</font></i>
+     <b><font color="#0000FF">typedef</font></b> Eigen<font color="#990000">::</font><font color="#008080">Matrix&lt;Scalar, Eigen::Dynamic, 1&gt;</font> base_class<font color="#990000">;</font>
+<b><font color="#0000FF">public</font></b><font color="#990000">:</font>
+     <i><font color="#9A1900">// constructor</font></i>
+     <b><font color="#000000">eigen_vector</font></b><font color="#990000">(</font><font color="#008080">size_t</font> n<font color="#990000">)</font> <font color="#990000">:</font> <b><font color="#000000">base_class</font></b><font color="#990000">(</font> Eigen<font color="#990000">::</font><b><font color="#000000">Index</font></b><font color="#990000">(</font>n<font color="#990000">)</font> <font color="#990000">)</font>
+     <font color="#FF0000">{</font> <font color="#FF0000">}</font>
+     <b><font color="#000000">eigen_vector</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font> <font color="#990000">:</font> <b><font color="#000000">base_class</font></b><font color="#990000">()</font>
+     <font color="#FF0000">{</font> <font color="#FF0000">}</font>
+     <i><font color="#9A1900">// operator[]</font></i>
+     Scalar<font color="#990000">&amp;</font> <b><font color="#0000FF">operator</font></b><font color="#990000">[](</font><font color="#008080">size_t</font> i<font color="#990000">)</font>
+     <font color="#FF0000">{</font>    <b><font color="#0000FF">return</font></b> base_class<font color="#990000">::</font><b><font color="#0000FF">operator</font></b><font color="#990000">[](</font> Eigen<font color="#990000">::</font><b><font color="#000000">Index</font></b><font color="#990000">(</font>i<font color="#990000">)</font> <font color="#990000">);</font> <font color="#FF0000">}</font>
+     <b><font color="#0000FF">const</font></b> Scalar<font color="#990000">&amp;</font> <b><font color="#0000FF">operator</font></b><font color="#990000">[](</font><font color="#008080">size_t</font> i<font color="#990000">)</font> <b><font color="#0000FF">const</font></b>
+     <font color="#FF0000">{</font>    <b><font color="#0000FF">return</font></b> base_class<font color="#990000">::</font><b><font color="#0000FF">operator</font></b><font color="#990000">[](</font> Eigen<font color="#990000">::</font><b><font color="#000000">Index</font></b><font color="#990000">(</font>i<font color="#990000">)</font> <font color="#990000">);</font> <font color="#FF0000">}</font>
+     <i><font color="#9A1900">// size</font></i>
+     <font color="#008080">size_t</font> <b><font color="#000000">size</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font> <b><font color="#0000FF">const</font></b>
+     <font color="#FF0000">{</font>    <b><font color="#0000FF">return</font></b> <b><font color="#000000">size_t</font></b><font color="#990000">(</font> base_class<font color="#990000">::</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">);</font> <font color="#FF0000">}</font>
+     <i><font color="#9A1900">// resize</font></i>
+     <font color="#009900">void</font> <b><font color="#000000">resize</font></b><font color="#990000">(</font><font color="#008080">size_t</font> n<font color="#990000">)</font>
+     <font color="#FF0000">{</font>    base_class<font color="#990000">::</font><b><font color="#000000">resize</font></b><font color="#990000">(</font> Eigen<font color="#990000">::</font><b><font color="#000000">Index</font></b><font color="#990000">(</font>n<font color="#990000">)</font> <font color="#990000">);</font> <font color="#FF0000">}</font>
+<font color="#FF0000">}</font><font color="#990000">;</font>
+<i><font color="#9A1900">//</font></i>
+<b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/cppad.hpp&gt;</font></tt></pre>
 
 <hr>Input File: cppad/example/cppad_eigen.hpp
 
