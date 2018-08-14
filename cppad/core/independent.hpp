@@ -76,14 +76,14 @@ AD operation sequence.
 
 $head abort_op_index$$
 If this argument is present,
-it specifies the operator index at which the execution is be aborted
+it specifies the operator index at which the execution will aborted
 by calling the CppAD $cref/error handler/ErrorHandler/$$.
 When this error handler leads to an assert, the user
 can inspect the call stack to see the source code corresponding to
 this operator index; see
-$cref/purpose/compare_change/op_index/Purpose/$$.
-No abort will occur if $icode abort_op_index$$ is zero,
-if $cref/NDEBUG/Faq/Speed/NDEBUG/$$ is defined.
+$cref/purpose/compare_change/op_index/Purpose/$$ for $icode op_index$$
+and $cref/NDEBUG/Faq/Speed/NDEBUG/$$.
+No abort will occur if $icode abort_op_index$$ is zero.
 If this argument is not present, the default value zero is used
 for $icode abort_index$$.
 
