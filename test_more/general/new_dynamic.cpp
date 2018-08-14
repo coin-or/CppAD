@@ -187,7 +187,7 @@ bool dynamic_operator(void)
 	CppAD::Independent(ax, abort_op_index, record_compare, adynamic);
 
 	// range space vector
-	size_t ny = 22;
+	size_t ny = 26;
 # if CPPAD_USE_CPLUSPLUS_2011
 	ny += 6;
 # endif
@@ -238,20 +238,34 @@ bool dynamic_operator(void)
 	++k;
 # endif
 	// ----------------------------------------------------------
+	// binary
+	ay[k]  = 2.0 + adynamic[0];
+	++k;
+	ay[k]  = adynamic[0];
+	ay[k] += 2.0;
+	++k;
+	ay[k]  = adynamic[0] / 2.0;
+	++k;
+	ay[k]  = adynamic[0];
+	ay[k] /= 2.0;
+	++k;
+	ay[k]  = 2.0 * adynamic[0];
+	++k;
+	ay[k]  = adynamic[0];
+	ay[k] *= 2.0;
+	++k;
+	ay[k]  = adynamic[0] - 2.0;
+	++k;
+	ay[k]  = adynamic[0];
+	ay[k] -= 2.0;
+	++k;
+	// ----------------------------------------------------------
 	// other
 	ay[k] = abs(adynamic[0]);
-	++k;
-	ay[k] = 2.0 + adynamic[0];
-	++k;
-	ay[k] = adynamic[0] / 2.0;
-	++k;
-	ay[k] = 2.0 * adynamic[0];
 	++k;
 	ay[k] = pow(adynamic[0], 2.0);
 	++k;
 	ay[k] = sign(adynamic[0]);
-	++k;
-	ay[k] = adynamic[0] - 2.0;
 	++k;
 	ay[k] = azmul(2.0, adynamic[0]);
 	++k;
@@ -338,26 +352,36 @@ bool dynamic_operator(void)
 	++k;
 # endif
 	// ----------------------------------------------------------
-	// other
-	check = abs(dynamic[0]);
+	// binary
+	check = 2.0 + dynamic[0];
 	ok   &= NearEqual(y[k], check, eps, eps);
 	++k;
-	check = 2.0 + dynamic[0];
 	ok   &= NearEqual(y[k], check, eps, eps);
 	++k;
 	check = dynamic[0] / 2.0;
 	ok   &= NearEqual(y[k], check, eps, eps);
 	++k;
+	ok   &= NearEqual(y[k], check, eps, eps);
+	++k;
 	check = 2.0 * dynamic[0];
+	ok   &= NearEqual(y[k], check, eps, eps);
+	++k;
+	ok   &= NearEqual(y[k], check, eps, eps);
+	++k;
+	check = dynamic[0] - 2.0;
+	ok   &= NearEqual(y[k], check, eps, eps);
+	++k;
+	ok   &= NearEqual(y[k], check, eps, eps);
+	++k;
+	// ----------------------------------------------------------
+	// other
+	check = abs(dynamic[0]);
 	ok   &= NearEqual(y[k], check, eps, eps);
 	++k;
 	check = pow(dynamic[0], 2.0);
 	ok   &= NearEqual(y[k], check, eps, eps);
 	++k;
 	check = sign(dynamic[0]);
-	ok   &= NearEqual(y[k], check, eps, eps);
-	++k;
-	check = dynamic[0] - 2.0;
 	ok   &= NearEqual(y[k], check, eps, eps);
 	++k;
 	check = azmul(2.0, dynamic[0]);

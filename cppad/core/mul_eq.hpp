@@ -36,9 +36,7 @@ AD<Base>& AD<Base>::operator *= (const AD<Base> &right)
 	bool match_right = right.tape_id_ == tape_id;
 
 	// check if left and right are dynamic parameters
-# ifndef NDEBUG
 	bool dyn_left  = match_left  & dynamic_;
-# endif
 	bool dyn_right = match_right & right.dynamic_;
 
 	// check if left and right are variables
@@ -111,10 +109,20 @@ AD<Base>& AD<Base>::operator *= (const AD<Base> &right)
 			tape_id_ = tape_id;
 		}
 	}
-	else
-	{	CPPAD_ASSERT_KNOWN( ! (dyn_left | dyn_right) ,
-		"binary *=: one operand is a dynamic parameter and other not a variable"
+	else if( dyn_left | dyn_right )
+	{	addr_t arg0 = taddr_;
+		addr_t arg1 = right.taddr_;
+		if( ! dyn_left )
+			arg0 = tape->Rec_.put_con_par(value_);
+		if( ! dyn_right )
+			arg1 = tape->Rec_.put_con_par(right.value_);
+		//
+		// parameters with a dynamic parameter results
+		taddr_ = tape->Rec_.put_dyn_par(
+				value_, local::mul_dyn, arg0, arg1
 		);
+		tape_id_ = tape_id;
+		dynamic_ = true;
 	}
 	return *this;
 }
