@@ -198,12 +198,9 @@ do
 	if [ ! -d "$dir" ]
 	then
 		skip="$skip $package"
-	elif [ "$package" == 'adolc' ] || [ "$package" == 'sacado' ]
+	elif echo $standard | grep "--no_$package" > /dev/null
 	then
-		if [ "$standard" != '' ]
-		then
-			skip="$skip $package"
-		fi
+		skip="$skip $package"
 	fi
 done
 #
