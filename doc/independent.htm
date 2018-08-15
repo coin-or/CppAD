@@ -211,19 +211,21 @@ AD operation sequence.
 <b><big><a name="abort_op_index" id="abort_op_index">abort_op_index</a></big></b>
 <br>
 If this argument is present,
-it specifies the operator index at which the execution is be aborted
+it specifies the operator index at which the execution will aborted
 by calling the CppAD <a href="errorhandler.htm" target="_top"><span style='white-space: nowrap'>error&nbsp;handler</span></a>
 .
 When this error handler leads to an assert, the user
 can inspect the call stack to see the source code corresponding to
 this operator index; see
 <a href="compare_change.htm#op_index.Purpose" target="_top"><span style='white-space: nowrap'>purpose</span></a>
+ for 
+<code><i><font color="black"><span style='white-space: nowrap'>op_index</span></font></i></code>
+
+and <a href="faq.htm#Speed.NDEBUG" target="_top"><span style='white-space: nowrap'>NDEBUG</span></a>
 .
 No abort will occur if 
 <code><i><font color="black"><span style='white-space: nowrap'>abort_op_index</span></font></i></code>
- is zero,
-if <a href="faq.htm#Speed.NDEBUG" target="_top"><span style='white-space: nowrap'>NDEBUG</span></a>
- is defined.
+ is zero.
 If this argument is not present, the default value zero is used
 for 
 <code><i><font color="black"><span style='white-space: nowrap'>abort_index</span></font></i></code>
