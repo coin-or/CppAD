@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -51,8 +51,8 @@ $srccode%cpp% */
 bool eigen_cholesky(void)
 {
 	typedef double scalar;
-	typedef typename atomic_eigen_cholesky<scalar>::ad_scalar ad_scalar;
-	typedef typename atomic_eigen_cholesky<scalar>::ad_matrix ad_matrix;
+	typedef atomic_eigen_cholesky<scalar>::ad_scalar ad_scalar;
+	typedef atomic_eigen_cholesky<scalar>::ad_matrix ad_matrix;
 	//
 	bool ok    = true;
 	scalar eps = 10. * std::numeric_limits<scalar>::epsilon();

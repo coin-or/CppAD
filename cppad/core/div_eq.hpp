@@ -89,15 +89,17 @@ AD<Base>& AD<Base>::operator /= (const AD<Base> &right)
 			CPPAD_ASSERT_UNKNOWN( local::NumArg(local::DivpvOp) == 2 );
 
 			// put operand addresses in tape
-			CPPAD_ASSERT_KNOWN( ! dyn_left,
-				"binary /=: left operand is a dynamic parameter"
-			);
-			addr_t p = tape->Rec_.put_con_par(left);
+			addr_t p = taddr_;
+			if( ! dyn_left )
+				p = tape->Rec_.put_con_par(left);
 			tape->Rec_.PutArg(p, right.taddr_);
+
 			// put operator in the tape
 			taddr_ = tape->Rec_.PutOp(local::DivpvOp);
+
 			// make this a variable
 			tape_id_ = tape_id;
+			dynamic_ = false;
 		}
 	}
 	else if( dyn_left | dyn_right )

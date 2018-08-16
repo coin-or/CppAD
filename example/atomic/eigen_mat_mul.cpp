@@ -56,9 +56,9 @@ $srccode%cpp% */
 
 bool eigen_mat_mul(void)
 {	//
-	typedef double                                            scalar;
-	typedef CppAD::AD<scalar>                                 ad_scalar;
-	typedef typename atomic_eigen_mat_mul<scalar>::ad_matrix  ad_matrix;
+	typedef double                                   scalar;
+	typedef CppAD::AD<scalar>                        ad_scalar;
+	typedef atomic_eigen_mat_mul<scalar>::ad_matrix  ad_matrix;
 	//
 	bool ok    = true;
 	scalar eps = 10. * std::numeric_limits<scalar>::epsilon();
