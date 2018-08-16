@@ -170,9 +170,9 @@ which defines matrix multiply as a <a href="atomic_base.htm" target="_top"><span
 
 <font color="#009900">bool</font> <b><font color="#000000">eigen_mat_mul</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
 <font color="#FF0000">{</font>    <i><font color="#9A1900">//</font></i>
-     <b><font color="#0000FF">typedef</font></b> <font color="#009900">double</font>                                            scalar<font color="#990000">;</font>
-     <b><font color="#0000FF">typedef</font></b> CppAD<font color="#990000">::</font><font color="#008080">AD&lt;scalar&gt;</font>                                 ad_scalar<font color="#990000">;</font>
-     <b><font color="#0000FF">typedef</font></b> <b><font color="#0000FF">typename</font></b> <font color="#008080">atomic_eigen_mat_mul</font><font color="#990000">&lt;</font>scalar<font color="#990000">&gt;::</font><font color="#008080">ad_matrix</font>  ad_matrix<font color="#990000">;</font>
+     <b><font color="#0000FF">typedef</font></b> <font color="#009900">double</font>                                   scalar<font color="#990000">;</font>
+     <b><font color="#0000FF">typedef</font></b> CppAD<font color="#990000">::</font><font color="#008080">AD&lt;scalar&gt;</font>                        ad_scalar<font color="#990000">;</font>
+     <b><font color="#0000FF">typedef</font></b> atomic_eigen_mat_mul<font color="#990000">&lt;</font>scalar<font color="#990000">&gt;::</font><font color="#008080">ad_matrix</font>  ad_matrix<font color="#990000">;</font>
      <i><font color="#9A1900">//</font></i>
      <font color="#009900">bool</font> ok    <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
      <font color="#008080">scalar</font> eps <font color="#990000">=</font> <font color="#993399">10</font><font color="#990000">.</font> <font color="#990000">*</font> std<font color="#990000">::</font>numeric_limits<font color="#990000">&lt;</font>scalar<font color="#990000">&gt;::</font><b><font color="#000000">epsilon</font></b><font color="#990000">();</font>
