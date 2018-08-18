@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Changes and Additions to CppAD During 2018</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Changes and Additions to CppAD During 2018">
-<meta name="keywords" id="keywords" content=" changes additions to cppad during 2018 08-16 08-14 08-13 08-12 08-10 08-08 08-05 08-04 07-30 07-27 07-23 07-18 07-02 06-27 06-22 06-20 06-19 06-13 06-12 06-04 05-29 05-28 05-26 05-20 05-17 05-04 05-03 04-29 04-13 03-20 03-19 03-04 03-02 02-27 02-26 02-23 02-20 ">
+<meta name="keywords" id="keywords" content=" changes additions to cppad during 2018 08-18 08-17 08-16 08-14 08-13 08-12 08-10 08-08 08-05 08-04 07-30 07-27 07-23 07-18 07-02 06-27 06-22 06-20 06-19 06-13 06-12 06-04 05-29 05-28 05-26 05-20 05-17 05-04 05-03 04-29 04-13 03-20 03-19 03-04 03-02 02-27 02-26 02-23 02-20 ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -110,6 +110,8 @@ A:active { color : purple }
 <td>
 <select onchange='choose_current0(this)'>
 <option>Headings-&gt;</option>
+<option>08-18</option>
+<option>08-17</option>
 <option>08-16</option>
 <option>08-14</option>
 <option>08-13</option>
@@ -160,6 +162,36 @@ A:active { color : purple }
 
 
 <center><b><big><big>Changes and Additions to CppAD During 2018</big></big></b></center>
+<br>
+<b><big><a name="08-18" id="08-18">08-18</a></big></b>
+
+<ol type="1"><li>
+Fix some remaining clang warnings.
+</li><li>
+
+Fix <a href="integer.htm" target="_top"><span style='white-space: nowrap'>Integer</span></a>
+ and <a href="unaryminus.htm" target="_top"><span style='white-space: nowrap'>unary&nbsp;minus</span></a>
+ for
+<a href="glossary.htm#Parameter.Dynamic" target="_top"><span style='white-space: nowrap'>dynamic</span></a>
+ parameters.
+</li></ol>
+
+
+
+<br>
+<br>
+<b><big><a name="08-17" id="08-17">08-17</a></big></b>
+<br>
+Fix <a href="compound_assign.htm" target="_top"><span style='white-space: nowrap'>compound&nbsp;assignment</span></a>
+ operators
+where left operand is a
+<a href="glossary.htm#Parameter.Constant" target="_top"><span style='white-space: nowrap'>constant</span></a>
+ parameter
+and right operand is a
+<a href="glossary.htm#Parameter.Dynamic" target="_top"><span style='white-space: nowrap'>dynamic</span></a>
+ parameter.
+
+<br>
 <br>
 <b><big><a name="08-16" id="08-16">08-16</a></big></b>
 <br>
