@@ -48,7 +48,7 @@ Zero is the normal operational value.
 If it is one, a trace for each dynamic parameter is compuation is printed.
 Sometimes it is usefull to trace f.new_dynamic with the same
 dynamic parameter values as during the recording
-to debug the recording process.
+(to debug the recording process).
 */
 # define CPPAD_DYNAMIC_TRACE 0
 
@@ -58,10 +58,10 @@ Compute dynamic parameters.
 \tparam Base
 The type of the parameters.
 
-\tparam new_dynamic
+\tparam VectorBase
 is a simple vector class with elements of type Base.
 
-\param new_dynamic
+\param ind_dynamic
 new value for the independent dynamic parameter vector.
 
 \param all_par_vec
@@ -98,7 +98,7 @@ lower than the index value for the parameter.
 template <class Base, class VectorBase>
 void dynamic(
 	pod_vector_maybe<Base>&       all_par_vec     ,
-	const VectorBase&             new_dynamic     ,
+	const VectorBase&             ind_dynamic     ,
 	const pod_vector<bool>&       dyn_par_is      ,
 	const pod_vector<addr_t>&     dyn_ind2par_ind ,
 	const pod_vector<opcode_t>&   dyn_par_op      ,
@@ -106,10 +106,12 @@ void dynamic(
 {
 	// number of dynamic parameters
 	size_t num_dynamic_par = dyn_ind2par_ind.size();
-	// number of independent dynamic parameters
-	size_t num_ind_dynamic = new_dynamic.size();
-	CPPAD_ASSERT_UNKNOWN( num_ind_dynamic <= num_dynamic_par );
-	//
+# ifndef NDEBUG
+	for(size_t j = 0; j < ind_dynamic.size(); ++j)
+		CPPAD_ASSERT_UNKNOWN(
+			dyn_par_is[j] && op_code_dyn( dyn_par_op[j] ) == ind_dyn
+	);
+# endif
 # if CPPAD_DYNAMIC_TRACE
 	const char* cond_exp_name[] = {
 		"CondExpLt",
@@ -127,12 +129,6 @@ void dynamic(
 	<< std::setw(11) << std::left << "op"
 	<< std::setw(26) << std::right << "dynamic i=, constant v="
 	<< std::endl;
-# endif
-# ifndef NDEBUG
-	for(size_t j = 0; j < num_ind_dynamic; ++j)
-		CPPAD_ASSERT_UNKNOWN(
-			dyn_par_is[j] && op_code_dyn( dyn_par_op[j] ) == ind_dyn
-	);
 # endif
 	// used to hold the first two parameter arguments
 	const Base* par[5];
@@ -199,7 +195,7 @@ void dynamic(
 			case ind_dyn:
 			CPPAD_ASSERT_UNKNOWN( n_arg == 0 );
 			CPPAD_ASSERT_UNKNOWN( i_par == i_dyn );
-			all_par_vec[i_par] = new_dynamic[i_dyn];
+			all_par_vec[i_par] = ind_dynamic[i_dyn];
 			break;
 
 			// exp

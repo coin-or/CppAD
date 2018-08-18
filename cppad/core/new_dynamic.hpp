@@ -102,11 +102,11 @@ template <typename Base>
 template <typename VectorBase>
 void ADFun<Base>::new_dynamic(const VectorBase& dynamic)
 {	using local::pod_vector;
-	// num_dynamic_ind
-	size_t num_dynamic_ind = play_.num_dynamic_ind();
-	CPPAD_ASSERT_UNKNOWN( size_t( dynamic.size() ) == num_dynamic_ind );
-	CPPAD_ASSERT_UNKNOWN( num_dynamic_ind <= play_.num_par_rec() );
-
+	CPPAD_ASSERT_KNOWN(
+		size_t( dynamic.size() ) == play_.num_dynamic_ind() ,
+		"f.new_dynamic: dynamic.size() different from corresponding "
+		"call to Independent"
+	);
 	// check VectorBase is Simple Vector class with Base elements
 	CheckSimpleVector<Base, VectorBase>();
 
