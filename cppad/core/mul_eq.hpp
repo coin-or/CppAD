@@ -65,7 +65,7 @@ AD<Base>& AD<Base>::operator *= (const AD<Base> &right)
 		}
 		else if( IdenticalZero( right.value_ ) )
 		{	// this = variable * 0
-			make_parameter();
+			tape_id_ = 0; // not in current tape
 		}
 		else
 		{	// this = variable  * parameter
