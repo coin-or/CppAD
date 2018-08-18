@@ -45,7 +45,10 @@ use with a different definition in other files.
 \def CPPAD_DYNAMIC_TRACE
 This value is either zero or one.
 Zero is the normal operational value.
-If it is one, a trace for each dynamic parameter is printed.
+If it is one, a trace for each dynamic parameter is compuation is printed.
+Sometimes it is usefull to trace f.new_dynamic with the same
+dynamic parameter values as during the recording
+to debug the recording process.
 */
 # define CPPAD_DYNAMIC_TRACE 0
 
@@ -55,13 +58,15 @@ Compute dynamic parameters.
 \tparam Base
 The type of the parameters.
 
-\param num_ind_dynamic
-number of independent dynamic parameters
+\tparam new_dynamic
+is a simple vector class with elements of type Base.
+
+\param new_dynamic
+new value for the independent dynamic parameter vector.
 
 \param all_par_vec
 is the vector of all the parameters.
-Ths constant parameters and the independent dynamic parameters are inputs.
-The other dynamic parameters are outputs.
+Ths constant parameters are inputs and the dynamic parameters are outputs.
 
 \param dyn_par_is
 is a vector with the same length as par_vec.
@@ -90,17 +95,22 @@ where
 The arguments for each dynamic parameter have index value
 lower than the index value for the parameter.
 */
-template <class Base>
+template <class Base, class VectorBase>
 void dynamic(
-	size_t                        num_ind_dynamic ,
 	pod_vector_maybe<Base>&       all_par_vec     ,
+	const VectorBase&             new_dynamic     ,
 	const pod_vector<bool>&       dyn_par_is      ,
 	const pod_vector<addr_t>&     dyn_ind2par_ind ,
 	const pod_vector<opcode_t>&   dyn_par_op      ,
 	const pod_vector<addr_t>&     dyn_par_arg     )
 {
+	// number of dynamic parameters
+	size_t num_dynamic_par = dyn_ind2par_ind.size();
+	// number of independent dynamic parameters
+	size_t num_ind_dynamic = new_dynamic.size();
+	CPPAD_ASSERT_UNKNOWN( num_ind_dynamic <= num_dynamic_par );
+	//
 # if CPPAD_DYNAMIC_TRACE
-	std::cout << std::endl;
 	const char* cond_exp_name[] = {
 		"CondExpLt",
 		"CondExpLe",
@@ -109,6 +119,14 @@ void dynamic(
 		"CondExpGt",
 		"CondExpNe"
 	};
+	std::cout
+	<< std::endl
+	<< std::setw(10) << std::left << "index"
+	<< std::setw(10) << std::left << "old"
+	<< std::setw(10) << std::left << "new"
+	<< std::setw(11) << std::left << "op"
+	<< std::setw(26) << std::right << "dynamic i=, constant v="
+	<< std::endl;
 # endif
 # ifndef NDEBUG
 	for(size_t j = 0; j < num_ind_dynamic; ++j)
@@ -117,19 +135,20 @@ void dynamic(
 	);
 # endif
 	// used to hold the first two parameter arguments
-	const Base* par[2];
+	const Base* par[5];
+	for(size_t j = 0; j < 5; ++j)
+		par[j] = CPPAD_NULL;
 	//
 	// Initialize index in all_par_vec (none used ind_dyn operators).
 	size_t i_arg = 0;
 	//
-	// number of dynamic parameters
-	size_t num_dynamic_par = dyn_ind2par_ind.size();
-	CPPAD_ASSERT_UNKNOWN( num_ind_dynamic <= num_dynamic_par );
-	//
 	// Loop the dynamic parameters skipping independent dynamics at beginning.
-	for(size_t i_dyn = num_ind_dynamic; i_dyn < num_dynamic_par; ++i_dyn)
+	for(size_t i_dyn = 0; i_dyn < num_dynamic_par; ++i_dyn)
 	{	// parametere index for this dynamic parameter
 		size_t i_par = size_t( dyn_ind2par_ind[i_dyn] );
+# if CPPAD_DYNAMIC_TRACE
+		Base old_value = all_par_vec[i_par];
+# endif
 		//
 		// operator for this dynamic parameter
 		op_code_dyn op = op_code_dyn( dyn_par_op[i_dyn] );
@@ -138,15 +157,10 @@ void dynamic(
 		size_t n_arg   = num_arg_dyn(op);
 		//
 		// first arguments
-		par[0] = & all_par_vec[ dyn_par_arg[i_arg + 0] ];
+		CPPAD_ASSERT_UNKNOWN( n_arg <= 5 );
+		for(size_t j = 0; j < n_arg; ++j)
+			par[j] = & all_par_vec[ dyn_par_arg[i_arg + j] ];
 		//
-		// second argument if this operator has a second argument
-		if( 1 < n_arg )
-			par[1] = & all_par_vec[ dyn_par_arg[i_arg + 1] ];
-		else
-		{	// to avoid warning about may not be initialized
-			par[1] = CPPAD_NULL;
-		}
 		switch(op)
 		{
 			// ---------------------------------------------------------------
@@ -179,6 +193,13 @@ void dynamic(
 			case cosh_dyn:
 			CPPAD_ASSERT_UNKNOWN( n_arg == 1 );
 			all_par_vec[i_par] = cosh( *par[0] );
+			break;
+
+			// ind
+			case ind_dyn:
+			CPPAD_ASSERT_UNKNOWN( n_arg == 0 );
+			CPPAD_ASSERT_UNKNOWN( i_par == i_dyn );
+			all_par_vec[i_par] = new_dynamic[i_dyn];
 			break;
 
 			// exp
@@ -329,12 +350,23 @@ void dynamic(
 				all_par_vec[ dyn_par_arg[i_arg + 4] ]   // if_false
 			);
 # if CPPAD_DYNAMIC_TRACE
-			std::cout << std::setw(10) << std::left << all_par_vec[i_par]
-			<< " = " << std::right << std::setw(10)
-			<< cond_exp_name[ dyn_par_arg[i_arg + 0] ] << "(";
+			std::cout
+			<< std::setw(10) << std::left << i_par
+			<< std::setw(10) << std::left << old_value
+			<< std::setw(10) << std::left << all_par_vec[i_par]
+			<< "="
+			<< std::setw(10) << std::right
+			<< cond_exp_name[ dyn_par_arg[i_arg + 0] ]
+			<< "(";
 			for(size_t i = 1; i < 5; ++i)
-			{	std::cout << std::setw(10) << std::right
-				<< all_par_vec[ dyn_par_arg[i_arg + i] ];
+			{	if( dyn_par_is[ dyn_par_arg[i_arg + i] ] )
+				{	std::cout << "i=" << std::setw(10) << std::right
+					<< dyn_par_arg[i_arg + i];
+				}
+				else
+				{	std::cout << "v=" << std::setw(10) << std::right
+					<< all_par_vec[ dyn_par_arg[i_arg + i] ];
+				}
 				if( i < 4 )
 					std::cout << ",";
 			}
@@ -350,11 +382,34 @@ void dynamic(
 		}
 # if CPPAD_DYNAMIC_TRACE
 		if( op != cond_exp_dyn )
-		{	std::cout << std::setw(10) << std::left << all_par_vec[i_par]
-			<< " = " << std::setw(10) << std::right << op_name_dyn(op)
-			<< "(" << std::setw(10) << std::right << *par[0];
+		{
+			std::cout
+			<< std::setw(10) << std::left << i_par
+			<< std::setw(10) << std::left << old_value
+			<< std::setw(10) << std::left << all_par_vec[i_par]
+			<< "="
+			<< std::setw(10) << std::right << op_name_dyn(op)
+			<< "(";
+			if( 0 < n_arg )
+			{	if( dyn_par_is[ dyn_par_arg[i_arg + 0] ] )
+				{	std::cout << "i=" << std::setw(10) << std::right
+					<< dyn_par_arg[i_arg + 0];
+				}
+				else
+				{	std::cout << "v=" << std::setw(10) << std::right
+					<< all_par_vec[ dyn_par_arg[i_arg + 0] ];
+				}
+			}
 			if( 1 < n_arg )
-				std::cout << ", " << std::setw(8) << std::right << *par[1];
+			{	if( dyn_par_is[ dyn_par_arg[i_arg + 1] ] )
+				{	std::cout << ", i=" << std::setw(10) << std::right
+					<< dyn_par_arg[i_arg + 1];
+				}
+				else
+				{	std::cout << ", v=" << std::setw(10) << std::right
+					<< all_par_vec[ dyn_par_arg[i_arg + 1] ];
+				}
+			}
 			std::cout << ")" << std::endl;
 		}
 # endif

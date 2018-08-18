@@ -117,19 +117,10 @@ void ADFun<Base>::new_dynamic(const VectorBase& dynamic)
 	const pod_vector<addr_t>&          dyn_par_arg( play_.dyn_par_arg() );
 	const pod_vector<addr_t>&     dyn_ind2par_ind ( play_.dyn_ind2par_ind() );
 
-	// set the independent dynamic parameters
-	for(size_t j = 0; j < num_dynamic_ind; ++j)
-	{	CPPAD_ASSERT_UNKNOWN( dyn_par_is[j] );
-		CPPAD_ASSERT_UNKNOWN(
-			local::op_code_dyn( dyn_par_op[j] ) == local::ind_dyn
-		);
-		all_par_vec[j] = dynamic[j];
-	}
-
 	// set the dependent dynamic parameters
 	local::sweep::dynamic(
-		num_dynamic_ind ,
 		all_par_vec     ,
+		dynamic         ,
 		dyn_par_is      ,
 		dyn_ind2par_ind ,
 		dyn_par_op      ,
