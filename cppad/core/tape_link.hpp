@@ -157,12 +157,12 @@ is the base type corresponding to AD<Base> operations.
 This argument determines if we are creating a new tape, or deleting an
 old one.
 
-- \c tape_manage_new :
+- \c new_tape_manage :
 Creates and a new tape.
 It is assumed that there is no tape recording AD<Base> operations
 for this thread when \c tape_manage is called.
 
-- \c tape_manage_delete :
+- \c delete_tape_manage :
 It is assumed that there is a tape recording AD<Base> operations
 for this thread when \c tape_manage is called.
 The value of <tt>*tape_id_ptr(thread)</tt> will be advanced by
@@ -170,14 +170,14 @@ The value of <tt>*tape_id_ptr(thread)</tt> will be advanced by
 
 
 \return
-- <tt>job == tape_manage_new</tt>: a pointer to the new tape is returned.
-- <tt>job == tape_manage_delete</tt>: the value \c CPPAD_NULL is returned.
+- <tt>job == new_tape_manage</tt>: a pointer to the new tape is returned.
+- <tt>job == delete_tape_manage</tt>: the value \c CPPAD_NULL is returned.
 */
 template <class Base>
-local::ADTape<Base>*  AD<Base>::tape_manage(tape_manage_job job)
+local::ADTape<Base>*  AD<Base>::tape_manage(tape_manage_enum job)
 {
 	CPPAD_ASSERT_UNKNOWN(
-		job == tape_manage_new || job == tape_manage_delete
+		job == new_tape_manage || job == delete_tape_manage
 	);
 	// thread, tape_id, and tape for this call
 	size_t                thread     = thread_alloc::thread_num();
@@ -186,8 +186,8 @@ local::ADTape<Base>*  AD<Base>::tape_manage(tape_manage_job job)
 
 
 	// -----------------------------------------------------------------------
-	// tape_manage_new
-	if( job == tape_manage_new )
+	// new_tape_manage
+	if( job == new_tape_manage )
 	{
 		// tape for this thread must be null at the start
 		CPPAD_ASSERT_UNKNOWN( *tape_h  == CPPAD_NULL );
@@ -213,8 +213,8 @@ local::ADTape<Base>*  AD<Base>::tape_manage(tape_manage_job job)
 		(*tape_h)->id_ = *tape_id_p;
 	}
 	// -----------------------------------------------------------------------
-	// tape_manage_delete
-	if( job == tape_manage_delete )
+	// delete_tape_manage
+	if( job == delete_tape_manage )
 	{	// delete this tape
 		CPPAD_ASSERT_UNKNOWN( *tape_h  != CPPAD_NULL );
 		delete *tape_h;

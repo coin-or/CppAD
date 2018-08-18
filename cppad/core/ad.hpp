@@ -25,10 +25,12 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 
+// tape_manage_enum
 typedef enum {
-	tape_manage_new,
-	tape_manage_delete
-} tape_manage_job;
+	new_tape_manage,
+	delete_tape_manage
+}
+tape_manage_enum;
 
 template <class Base>
 class AD {
@@ -291,7 +293,7 @@ private:
 	// static
 	inline static tape_id_t*            tape_id_ptr(size_t thread);
 	inline static local::ADTape<Base>** tape_handle(size_t thread);
-	static local::ADTape<Base>*         tape_manage(tape_manage_job job);
+	static local::ADTape<Base>*         tape_manage(tape_manage_enum job);
 	inline static local::ADTape<Base>*  tape_ptr(void);
 	inline static local::ADTape<Base>*  tape_ptr(tape_id_t tape_id);
 };

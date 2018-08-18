@@ -36,8 +36,9 @@ move_list='
 move_sed='s|par_var_dyn|con_dyn_var|'
 #
 cat << EOF > junk.sed
-s|arg\\[\\(.\\)\\] *\\* *num_taylor_per_var|size_t(arg[\\1]) * num_taylor_per_var|
-s|arg\\[\\(.\\)\\]\\*(|size_t(arg[\\1])*(|
+s|tape_manage_new|new_tape_manage|
+s|tape_manage_delete|delete_tape_manage|
+s|tape_manage_job|tape_manage_enum|
 EOF
 # -----------------------------------------------------------------------------
 if [ $0 != "bin/batch_edit.sh" ]

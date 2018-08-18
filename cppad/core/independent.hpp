@@ -193,7 +193,7 @@ inline void Independent(
 		"a previous tape is still active (for this thread).\n"
 		"AD<Base>::abort_recording() would abort this previous recording."
 	);
-	local::ADTape<Base>* tape = ADBase::tape_manage(tape_manage_new);
+	local::ADTape<Base>* tape = ADBase::tape_manage(new_tape_manage);
 	tape->Independent(x, abort_op_index, record_compare, dynamic);
 }
 // ---------------------------------------------------------------------------

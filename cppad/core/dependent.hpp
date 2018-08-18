@@ -321,7 +321,7 @@ void ADFun<Base>::Dependent(local::ADTape<Base> *tape, const ADvector &y)
 	// ---------------------------------------------------------------------
 
 	// now we can delete the tape
-	AD<Base>::tape_manage(tape_manage_delete);
+	AD<Base>::tape_manage(delete_tape_manage);
 
 	// total number of varables in this recording
 	CPPAD_ASSERT_UNKNOWN( num_var_tape_  == play_.num_var_rec() );
