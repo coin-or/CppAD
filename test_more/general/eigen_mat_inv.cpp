@@ -13,9 +13,9 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 namespace { // BEGIN_EMPTY_NAMESPACE
 
-typedef double                                            scalar;
-typedef CppAD::AD<scalar>                                 ad_scalar;
-typedef typename atomic_eigen_mat_inv<scalar>::ad_matrix  ad_matrix;
+typedef double                                   scalar;
+typedef CppAD::AD<scalar>                        ad_scalar;
+typedef atomic_eigen_mat_inv<scalar>::ad_matrix  ad_matrix;
 
 scalar eps = 10. * std::numeric_limits<scalar>::epsilon();
 using CppAD::NearEqual;
