@@ -33,6 +33,13 @@ $$
 
 $section Changes and Additions to CppAD During 2018$$
 
+$head 08-17$$
+Fix $cref/compound assignment/compound_assign/$$ operators
+where left operand is a
+$cref/constant/glossary/Parameter/Constant/$$ parameter
+and right operand is a
+$cref/dynamic/glossary/Parameter/Dynamic/$$ parameter.
+
 $head 08-16$$
 Fix $cref/compound assignment/compound_assign/$$ operators
 where left operand is a

@@ -115,7 +115,7 @@ AD<Base>& AD<Base>::operator *= (const AD<Base> &right)
 	{	addr_t arg0 = taddr_;
 		addr_t arg1 = right.taddr_;
 		if( ! dyn_left )
-			arg0 = tape->Rec_.put_con_par(value_);
+			arg0 = tape->Rec_.put_con_par(left);
 		if( ! dyn_right )
 			arg1 = tape->Rec_.put_con_par(right.value_);
 		//

@@ -241,23 +241,23 @@ bool dynamic_operator(void)
 	// binary
 	ay[k]  = 2.0 + adynamic[0];
 	++k;
-	ay[k]  = adynamic[0];
-	ay[k] += 2.0;
+	ay[k]  = 2.0;
+	ay[k] += adynamic[0];  // constant += dynamic
 	++k;
 	ay[k]  = adynamic[0] / 2.0;
 	++k;
 	ay[k]  = adynamic[0];
-	ay[k] /= 2.0;
+	ay[k] /= 2.0;          // dynamic /= constant
 	++k;
 	ay[k]  = 2.0 * adynamic[0];
 	++k;
-	ay[k]  = adynamic[0];
-	ay[k] *= 2.0;
+	ay[k]  = 2.0;
+	ay[k] *= adynamic[0];  // constant *= dynamic
 	++k;
 	ay[k]  = adynamic[0] - 2.0;
 	++k;
 	ay[k]  = adynamic[0];
-	ay[k] -= 2.0;
+	ay[k] -= 2.0;          // dynamic -= constant
 	++k;
 	// ----------------------------------------------------------
 	// other
