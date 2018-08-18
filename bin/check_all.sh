@@ -198,7 +198,7 @@ do
 	if [ ! -d "$dir" ]
 	then
 		skip="$skip $package"
-	elif echo $standard | grep "--no_$package" > /dev/null
+	elif echo $standard | grep "no_$package" > /dev/null
 	then
 		skip="$skip $package"
 	fi
