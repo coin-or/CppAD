@@ -187,7 +187,7 @@ bool dynamic_operator(void)
 	CppAD::Independent(ax, abort_op_index, record_compare, adynamic);
 
 	// range space vector
-	size_t ny = 26;
+	size_t ny = 27;
 # if CPPAD_USE_CPLUSPLUS_2011
 	ny += 6;
 # endif
@@ -261,6 +261,8 @@ bool dynamic_operator(void)
 	++k;
 	// ----------------------------------------------------------
 	// other
+	ay[k] = - adynamic[0];
+	++k;
 	ay[k] = abs(adynamic[0]);
 	++k;
 	ay[k] = pow(adynamic[0], 2.0);
@@ -375,6 +377,9 @@ bool dynamic_operator(void)
 	++k;
 	// ----------------------------------------------------------
 	// other
+	check = - dynamic[0];
+	ok   &= NearEqual(y[k], check, eps, eps);
+	++k;
 	check = abs(dynamic[0]);
 	ok   &= NearEqual(y[k], check, eps, eps);
 	++k;

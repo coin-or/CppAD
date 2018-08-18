@@ -101,11 +101,7 @@ namespace CppAD {
 	template <class Base>
 	CPPAD_INLINE_FRIEND_TEMPLATE_FUNCTION
 	int Integer(const AD<Base> &x)
-	{	CPPAD_ASSERT_KNOWN( ! Dynamic(x),
-			"Integer: argument is a dynamic parameter"
-		);
-		return Integer(x.value_);
-	}
+	{	return Integer(x.value_); }
 
 	template <class Base>
 	CPPAD_INLINE_FRIEND_TEMPLATE_FUNCTION

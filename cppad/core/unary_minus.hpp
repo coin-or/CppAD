@@ -84,10 +84,6 @@ template <class Base>
 inline AD<Base> AD<Base>::operator - (void) const
 {	// 2DO: make a more efficient by adding unary minus to op_code.h (some day)
 	//
-	CPPAD_ASSERT_KNOWN( ! Dynamic(*this),
-		"unary - cannot operate on a dynamic parameter"
-	);
-	//
 	AD<Base> result(0);
 	result  -= *this;
 	return result;
