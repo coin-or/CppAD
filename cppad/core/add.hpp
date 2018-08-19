@@ -36,12 +36,12 @@ AD<Base> operator + (const AD<Base> &left , const AD<Base> &right)
 	bool match_right = right.tape_id_ == tape_id;
 
 	// check if left and right are dynamic parameters
-	bool dyn_left  = match_left  & left.dynamic_;
-	bool dyn_right = match_right & right.dynamic_;
+	bool dyn_left  = match_left  & (left.ad_type_ == local::dyn_ad_type);
+	bool dyn_right = match_right & (right.ad_type_ == local::dyn_ad_type);
 
 	// check if left and right are variables
-	bool var_left  = match_left  & (! left.dynamic_);
-	bool var_right = match_right & (! right.dynamic_);
+	bool var_left  = match_left  & (left.ad_type_ != local::dyn_ad_type);
+	bool var_right = match_right & (right.ad_type_ != local::dyn_ad_type);
 
 	CPPAD_ASSERT_KNOWN(
 		left.tape_id_ == right.tape_id_ || ! match_left || ! match_right ,
@@ -115,7 +115,7 @@ AD<Base> operator + (const AD<Base> &left , const AD<Base> &right)
 			result.value_, local::add_dyn,   arg0, arg1
 		);
 		result.tape_id_ = tape_id;
-		result.dynamic_ = true;
+		result.ad_type_ = local::dyn_ad_type;
 	}
 	return result;
 }

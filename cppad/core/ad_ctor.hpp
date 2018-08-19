@@ -91,7 +91,7 @@ inline AD<Base>::AD(const AD &x)
 	value_    = x.value_;
 	tape_id_  = x.tape_id_;
 	taddr_    = x.taddr_;
-	dynamic_  = x.dynmaic_;
+	ad_type_  = x.ad_type_;
 
 	return;
 }
@@ -109,7 +109,7 @@ inline AD<Base>::AD(void)
 : value_()
 , tape_id_(0)
 , taddr_(0)
-, dynamic_(false)
+, ad_type_(local::no_ad_type)
 { }
 
 // --------------------------------------------------------------------------
@@ -130,7 +130,7 @@ inline AD<Base>::AD(const double &d)
 : value_( Base(d) )
 , tape_id_(0)
 , taddr_(0)
-, dynamic_(false)
+, ad_type_(local::no_ad_type)
 {	// check that this is a parameter
 	CPPAD_ASSERT_UNKNOWN( Parameter(*this) );
 }
@@ -156,7 +156,7 @@ inline AD<Base>::AD(const Base &b)
 : value_(b)
 , tape_id_(0)
 , taddr_(0)
-, dynamic_(false)
+, ad_type_(local::no_ad_type)
 {	// check that this is a parameter
 	CPPAD_ASSERT_UNKNOWN( Parameter(*this) );
 }
@@ -193,7 +193,7 @@ inline AD<Base>::AD(const T &t)
 : value_(Base(t))
 , tape_id_(0)
 , taddr_(0)
-, dynamic_(false)
+, ad_type_(local::no_ad_type)
 { }
 
 } // END_CPPAD_NAMESPACE

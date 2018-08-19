@@ -12,6 +12,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 # include <cppad/core/hash_code.hpp>
 # include <cppad/local/pod_vector.hpp>
+# include <cppad/local/ad_type.hpp>
 
 namespace CppAD { namespace local { // BEGIN_CPPAD_LOCAL_NAMESPACE
 /*!
@@ -851,7 +852,7 @@ void recorder<Base>::cond_exp(
 	{	CPPAD_ASSERT_KNOWN( tape_id == left.tape_id_ ,
 		"CondExpRel: arguments are variables or dynamics for different thread"
 		);
-		if( ! left.dynamic_ )
+		if(left.ad_type_ != dyn_ad_type)
 			ind1 += 1;
 	}
 
@@ -864,7 +865,7 @@ void recorder<Base>::cond_exp(
 	{	CPPAD_ASSERT_KNOWN( tape_id == right.tape_id_ ,
 		"CondExpRel: arguments are variables or dynamics for different thread"
 		);
-		if( ! right.dynamic_ )
+		if(right.ad_type_ != dyn_ad_type)
 			ind1 += 2;
 	}
 
@@ -877,7 +878,7 @@ void recorder<Base>::cond_exp(
 	{	CPPAD_ASSERT_KNOWN( tape_id == if_true.tape_id_ ,
 		"CondExpRel: arguments are variables or dynamics for different thread"
 		);
-		if( ! if_true.dynamic_ )
+		if(if_true.ad_type_ != dyn_ad_type)
 			ind1 += 4;
 	}
 
@@ -890,7 +891,7 @@ void recorder<Base>::cond_exp(
 	{	CPPAD_ASSERT_KNOWN( tape_id == if_false.tape_id_ ,
 		"CondExpRel: arguments are variables or dynamics for different thread"
 		);
-		if( ! if_false.dynamic_ )
+		if(if_false.ad_type_ != dyn_ad_type)
 			ind1 += 8;
 	}
 	if( ind1 == 0 )
@@ -901,7 +902,7 @@ void recorder<Base>::cond_exp(
 		result.taddr_   = put_dyn_cond_exp(
 			result.value_, CompareOp(ind0), ind2, ind3, ind4, ind5
 		);
-		result.dynamic_ = true;
+		result.ad_type_ = dyn_ad_type;
 		result.tape_id_ = tape_id;
 
 		// check that result is a dynamic parameter
@@ -916,8 +917,8 @@ void recorder<Base>::cond_exp(
 		PutArg(ind0, ind1, ind2, ind3, ind4, ind5);
 
 		// make result a variable
-		CPPAD_ASSERT_UNKNOWN( result.dynamic_ == false );
-		result.dynamic_ = false;
+		CPPAD_ASSERT_UNKNOWN( result.ad_type_ == no_ad_type );
+		result.ad_type_ = var_ad_type;
 		result.tape_id_ = tape_id;
 
 		// check that result is a variable

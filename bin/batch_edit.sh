@@ -36,9 +36,23 @@ move_list='
 move_sed='s|par_var_dyn|con_dyn_var|'
 #
 cat << EOF > junk.sed
-s|tape_manage_new|new_tape_manage|
-s|tape_manage_delete|delete_tape_manage|
-s|tape_manage_job|tape_manage_enum|
+s|x.dynmaic_|x.dynamic_|
+s|dynamic_\\( *= *[a-zA-Z_]*\\)\\.dynamic_|ad_type_\\1.ad_type_|g
+s|, dynamic_(false)|, ad_type_(local::no_ad_type)|
+#
+s|( *! *\\([a-zA-Z_]*\\)\\.dynamic_ *)|(\\1.ad_type_ != local::dyn_ad_type)|
+s|( *! *dynamic_ *)|(ad_type_ != local::dyn_ad_type)|
+#
+s|( *\\([a-zA-Z_]*\\)\\.dynamic_ *)|(\\1.ad_type_ == local::dyn_ad_type)|
+s|( *dynamic_ *)|(ad_type_ == local::dyn_ad_type)|
+#
+s|& *\\([a-zA-Z]*\\)\\.dynamic_|\\& (\\1.ad_type_ == local::dyn_ad_type)|
+s|& *dynamic_|\\& (ad_type_ == local::dyn_ad_type)|
+#
+s/| *\\([a-zA-Z]*\\)\\.dynamic_/| (\\1.ad_type_ == local::dyn_ad_type)/
+#
+s|dynamic_\\( *=*\\) true|ad_type_\\1 local::dyn_ad_type|
+s|dynamic_\\( *=*\\) false|ad_type_\\1 local::var_ad_type|
 EOF
 # -----------------------------------------------------------------------------
 if [ $0 != "bin/batch_edit.sh" ]

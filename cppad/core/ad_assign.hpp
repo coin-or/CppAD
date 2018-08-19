@@ -78,7 +78,7 @@ inline AD<Base>& AD<Base>::operator=(const AD<Base> &right)
 {	value_    = right.value_;
 	tape_id_  = right.tape_id_;
 	taddr_    = right.taddr_;
-	dynamic_  = right.dynamic_;
+	ad_type_  = right.ad_type_;
 
 	return *this;
 }

@@ -508,19 +508,19 @@ acos, asin, atan, cos, cosh, exp, fabs, log, sin, sinh, sqrt, tan, tanh.
         if( tape_id_ != tape->id_ )                               \
             return result;                                        \
                                                                   \
-        if( dynamic_ )                                            \
+        if(ad_type_ == local::dyn_ad_type)                        \
         {   result.taddr_ = tape->Rec_.put_dyn_par(               \
                 result.value_, local::Name##_dyn, taddr_          \
             );                                                    \
             result.tape_id_ = tape_id_;                           \
-            result.dynamic_ = true;                               \
+            result.ad_type_ = local::dyn_ad_type;                 \
         }                                                         \
         else                                                      \
         {   CPPAD_ASSERT_UNKNOWN( NumArg(Op) == 1 );              \
             tape->Rec_.PutArg(taddr_);                            \
             result.taddr_    = tape->Rec_.PutOp(Op);              \
             result.tape_id_  = tape->id_;                         \
-			result.dynamic_  = false;                             \
+            result.ad_type_  = local::var_ad_type;                \
         }                                                         \
         return result;                                            \
     }                                                             \
@@ -575,13 +575,13 @@ namespace CppAD {
 		if( tape_id_ != tape->id_ )
 			return result;
 
-		if( dynamic_ )
+		if(ad_type_ == local::dyn_ad_type)
 		{	// dynamic paramter argument
 			result.taddr_   = tape->Rec_.put_dyn_par(
 				result.value_, local::erf_dyn, taddr_
 			);
 			result.tape_id_  = tape_id_;
-			result.dynamic_  = true;
+			result.ad_type_  = local::dyn_ad_type;
 		}
 		else
 		{	// variable argument
@@ -602,7 +602,7 @@ namespace CppAD {
 			//
 			result.taddr_   = tape->Rec_.PutOp(local::ErfOp);
 			result.tape_id_ = tape->id_;
-			result.dynamic_ = false;
+			result.ad_type_ = local::var_ad_type;
 		}
 		return result;
 	}

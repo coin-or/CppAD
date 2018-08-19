@@ -19,6 +19,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 // define the template classes that are used by the AD template class
 # include <cppad/local/op_code_dyn.hpp>
 # include <cppad/local/op_code.hpp>
+# include <cppad/local/ad_type.hpp>
 # include <cppad/local/recorder.hpp>
 # include <cppad/local/player.hpp>
 # include <cppad/local/ad_tape.hpp>
@@ -36,18 +37,19 @@ template <class Base>
 class AD {
 private :
 	// -----------------------------------------------------------------------
-	// value_ corresponding to this object
+	// Base type value for this object
 	Base value_;
 	//
-	// Tape identifier corresponding to taddr
+	// tape for this object
 	tape_id_t tape_id_;
 	//
-	// taddr_ in tape for this or dynamic parameter
+	// tape address for this object
+	// (when tape_id is current tape for AD<Base>)
 	addr_t taddr_;
 	//
-	// is this a dynamic parameter (or a variable)
-	// when tape is current tape and taddr_ is non-zero.
-	bool   dynamic_;
+	// sub-type for this object
+	// (when tape_id is current tape for AD<Base>)
+	local::ad_type_enum ad_type_;
 	// -----------------------------------------------------------------------
 
 	// enable use of AD<Base> in parallel mode
@@ -282,7 +284,7 @@ private:
 
 		tape_id_ = id;
 		taddr_   = taddr;
-		dynamic_ = false;
+		ad_type_ = local::var_ad_type;
 	}
 	// ---------------------------------------------------------------
 	// tape linking functions
