@@ -147,7 +147,7 @@ namespace CppAD {
 	// Variable
 	template <class Base>
 	bool Variable(const AD<Base> &x)
-	{	if( (x.tape_id_ == 0) | (x.ad_type_ == local::dyn_ad_type) )
+	{	if( (x.tape_id_ == 0) | (x.ad_type_ != local::var_ad_type) )
 			return false;
 		//
 		size_t thread = size_t(x.tape_id_ % CPPAD_MAX_NUM_THREADS);

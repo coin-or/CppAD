@@ -1,5 +1,5 @@
-# ifndef CPPAD_LOCAL_OPTIMIZE_GET_PREVIOUS_HPP
-# define CPPAD_LOCAL_OPTIMIZE_GET_PREVIOUS_HPP
+# ifndef CPPAD_LOCAL_OPTIMIZE_GET_OP_PREVIOUS_HPP
+# define CPPAD_LOCAL_OPTIMIZE_GET_OP_PREVIOUS_HPP
 
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
@@ -71,7 +71,7 @@ On output, it is the usage counting previous optimization.
 */
 
 template <class Addr, class Base>
-void get_previous(
+void get_op_previous(
 	const player<Base>*                         play                ,
 	const play::const_random_iterator<Addr>&    random_itr          ,
 	sparse_list&                                cexp_set            ,

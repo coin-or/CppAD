@@ -282,6 +282,7 @@ public:
 			ay.taddr_ = tape->Rec_.PutOp(local::DisOp);
 			// make result a variable
 			ay.tape_id_    = tape->id_;
+			ay.ad_type_    = local::var_ad_type;
 
 			CPPAD_ASSERT_UNKNOWN( Variable(ay) );
 		}

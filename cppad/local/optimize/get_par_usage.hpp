@@ -129,7 +129,7 @@ void get_par_usage(
 		//
 		if( op_usage[i_op] != no_usage ) switch( op )
 		{
-			// add or subtrace with left a parameter and right a variable
+			// add or subtract with left a parameter and right a variable
 			case AddpvOp:
 			case SubpvOp:
 			if( dyn_par_is[ arg[0] ] )

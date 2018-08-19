@@ -16,7 +16,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # include <iterator>
 # include <cppad/local/optimize/get_op_usage.hpp>
 # include <cppad/local/optimize/get_par_usage.hpp>
-# include <cppad/local/optimize/get_previous.hpp>
+# include <cppad/local/optimize/get_op_previous.hpp>
 # include <cppad/local/optimize/get_cexp_info.hpp>
 # include <cppad/local/optimize/size_pair.hpp>
 # include <cppad/local/optimize/csum_stacks.hpp>
@@ -166,7 +166,7 @@ void optimize_run(
 		op_usage
 	);
 	pod_vector<addr_t>        op_previous;
-	get_previous(
+	get_op_previous(
 		play,
 		random_itr,
 		cexp_set,

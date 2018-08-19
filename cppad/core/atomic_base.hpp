@@ -546,7 +546,7 @@ void operator()(
 		ay[i].taddr_   = 0;
 
 		// we need to record this operation if
-		// any of the eleemnts of ay are variables,
+		// any of the elemnts of ay are variables,
 		record_operation |= vy[i];
 	}
 # ifndef NDEBUG
@@ -600,6 +600,7 @@ void operator()(
 		{	if( vy[i] )
 			{	ay[i].taddr_    = tape->Rec_.PutOp(local::UsrrvOp);
 				ay[i].tape_id_  = tape_id;
+				ay[i].ad_type_  = local::var_ad_type;
 			}
 			else
 			{	CPPAD_ASSERT_UNKNOWN( ! Dynamic( ay[i] ) );
