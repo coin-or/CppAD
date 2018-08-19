@@ -140,6 +140,7 @@ pow(const AD<Base>& x, const AD<Base>& y)
 
 			// make result a variable
 			result.tape_id_ = tape_id;
+			result.ad_type_ = local::var_ad_type;
 		}
 		else if( IdenticalZero( y.value_ ) )
 		{	// result = variable^0
@@ -160,6 +161,7 @@ pow(const AD<Base>& x, const AD<Base>& y)
 
 			// make result a variable
 			result.tape_id_ = tape_id;
+			result.ad_type_ = local::var_ad_type;
 		}
 	}
 	else if( var_y )
@@ -182,6 +184,7 @@ pow(const AD<Base>& x, const AD<Base>& y)
 
 			// make result a variable
 			result.tape_id_ = tape_id;
+			result.ad_type_ = local::var_ad_type;
 		}
 	}
 	else if( dyn_x | dyn_y )

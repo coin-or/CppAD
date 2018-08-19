@@ -57,8 +57,9 @@ AD<Base>& AD<Base>::operator += (const AD<Base> &right)
 			tape->Rec_.PutArg(taddr_, right.taddr_);
 			// put operator in the tape
 			taddr_ = tape->Rec_.PutOp(local::AddvvOp);
-			// make this a variable
+			// check that this is a variable
 			CPPAD_ASSERT_UNKNOWN( tape_id_ == tape_id );
+			CPPAD_ASSERT_UNKNOWN( ad_type_ == local::var_ad_type);
 		}
 		else if( ! IdenticalZero( right.value_ ) )
 		{	// this = variable  + parameter
@@ -73,8 +74,9 @@ AD<Base>& AD<Base>::operator += (const AD<Base> &right)
 			tape->Rec_.PutArg(p, taddr_);
 			// put operator in the tape
 			taddr_ = tape->Rec_.PutOp(local::AddpvOp);
-			// make this a variable
+			// check that this is a variable
 			CPPAD_ASSERT_UNKNOWN( tape_id_ == tape_id );
+			CPPAD_ASSERT_UNKNOWN( ad_type_ == local::var_ad_type);
 		}
 	}
 	else if( var_right  )

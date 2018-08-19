@@ -59,6 +59,7 @@ AD<Base> operator + (const AD<Base> &left , const AD<Base> &right)
 			result.taddr_ = tape->Rec_.PutOp(local::AddvvOp);
 			// make result a variable
 			result.tape_id_ = tape_id;
+			result.ad_type_ = local::var_ad_type;
 		}
 		else if( IdenticalZero(right.value_) )
 		{	// result = variable + 0
@@ -79,6 +80,7 @@ AD<Base> operator + (const AD<Base> &left , const AD<Base> &right)
 			result.taddr_ = tape->Rec_.PutOp(local::AddpvOp);
 			// make result a variable
 			result.tape_id_ = tape_id;
+			result.ad_type_ = local::var_ad_type;
 		}
 	}
 	else if( var_right )
@@ -100,6 +102,7 @@ AD<Base> operator + (const AD<Base> &left , const AD<Base> &right)
 			result.taddr_ = tape->Rec_.PutOp(local::AddpvOp);
 			// make result a variable
 			result.tape_id_ = tape_id;
+			result.ad_type_ = local::var_ad_type;
 		}
 	}
 	else if( dyn_left | dyn_right )
