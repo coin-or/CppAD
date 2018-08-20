@@ -34,7 +34,8 @@ The input value of op_previous[current] is assumed to be zero.
 If a match if found,
 the output value of op_previous[current] is set to the
 matching operator index, otherwise it is left as is.
-Note that op_previous[current] < current.
+Note that op_previous[current] < current and
+op_previous[ op_previous[current] ] = 0.
 
 \param current
 is the index of the current operator which must be an unary
@@ -137,7 +138,7 @@ void match_op(
 			arg_match[j] = var2previous_var[ arg[j] ];
 	}
 	//
-	size_t code = optimize_hash_code(op, num_arg, arg_match);
+	size_t code = optimize_hash_code(opcode_t(op), num_arg, arg_match);
 	//
 	// iterator for the set with this hash code
 	sparse_list_const_iterator itr(hash_table_op, code);
@@ -183,7 +184,7 @@ void match_op(
 	{	CPPAD_ASSERT_UNKNOWN( NumArg(op) == 2 );
 		std::swap( arg_match[0], arg_match[1] );
 		//
-		code      = optimize_hash_code(op, num_arg, arg_match);
+		code      = optimize_hash_code(opcode_t(op), num_arg, arg_match);
 		sparse_list_const_iterator itr_swap(hash_table_op, code);
 		while( *itr_swap != num_op )
 		{

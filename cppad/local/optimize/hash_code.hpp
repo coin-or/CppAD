@@ -27,8 +27,7 @@ Specialized hash code for a CppAD operator and its arguments
 is the operator that we are computing a hash code for.
 
 \param num_arg
-number of elements of arg to include in the hash code
-(num_arg <= 3).
+number of elements of arg to include in the hash code.
 
 \param arg
 is a vector of length num_arg
@@ -39,13 +38,10 @@ is a hash code that is between zero and CPPAD_HASH_TABLE_SIZE - 1.
 */
 
 inline size_t optimize_hash_code(
-	OpCode        op      ,
+	opcode_t      op      ,
 	size_t        num_arg ,
 	const addr_t* arg     )
 {
-	// there is only one case where num_arg == 3
-	CPPAD_ASSERT_UNKNOWN( op == ErfOp || num_arg <= 2 );
-	CPPAD_ASSERT_UNKNOWN( num_arg <= 3 );
 	size_t sum = size_t(op);
 	for(size_t i = 0; i < num_arg; i++)
 		sum += size_t(arg[i]);

@@ -50,8 +50,8 @@ On output, it does count previous optimization.
 The input size of this vector must be zero.
 Upon return it has size equal to the number of operators
 in the operation sequence; i.e., num_op = play->nun_var_rec().
-If op_previous[i] == 0, no replacement was found for the i-th operator.
-If op_previous[i] != 0, op_usage[ op_previous[i] ] == usage_t(yes_usage)
+Let j = op_previous[i]. It j = 0, no replacement was found for i-th operator.
+Otherwise, j < i, op_previous[j] == 0, op_usage[j] == usage_t(yes_usage),
 i-th operator has NumArg(op) <= 3, 0 < NumRes(op), is not one of the following:
 	- PriOp, ParOp, InvOp, EndOp, CexpOp, BeginOp.
 
@@ -67,7 +67,7 @@ operation sequence.i.e., play->nun_var_rec().
 On input, op_usage[i] is the usage for
 the i-th operator in the operation sequence not counting previous
 optimization.
-On output, it is the usage counting previous optimization.
+On output, it is the usage counting previous operator optimization.
 */
 
 template <class Addr, class Base>
@@ -78,13 +78,11 @@ void get_op_previous(
 	pod_vector<addr_t>&                         op_previous         ,
 	pod_vector<usage_t>&                        op_usage            )
 {
-	CPPAD_ASSERT_UNKNOWN( op_previous.size() == 0 );
-
 	// number of operators in the tape
 	const size_t num_op = random_itr.num_op();
-	op_usage.resize( num_op );
-	op_previous.resize( num_op );
+	CPPAD_ASSERT_UNKNOWN( op_previous.size() == 0 );
 	CPPAD_ASSERT_UNKNOWN( op_usage.size() == num_op );
+	op_previous.resize( num_op );
 	//
 	// number of conditional expressions in the tape
 	//

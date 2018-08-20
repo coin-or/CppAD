@@ -72,8 +72,8 @@ private:
 	pod_vector<bool> dyn_par_is_;
 
 	/// mapping from dynamic parameter index to parameter index
-	/// (size equal to number of dynamic parameters)
-	/// (dyn_ind2par_ind_[j] < dyn_ind2par_ind_[j+1])
+	/// 1: size equal to number of dynamic parameters
+	/// 2: dyn_ind2par_ind_[j] < dyn_ind2par_ind_[j+1]
 	pod_vector<addr_t> dyn_ind2par_ind_;
 
 	/// operators for just the dynamic parameters

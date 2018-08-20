@@ -135,7 +135,7 @@ void dynamic(
 	for(size_t j = 0; j < 2; ++j)
 		par[2] = CPPAD_NULL;
 	//
-	// Initialize index in all_par_vec (none used ind_dyn operators).
+	// Initialize index in dyn_par_arg
 	size_t i_arg = 0;
 	//
 	// Loop the dynamic parameters skipping independent dynamics at beginning.
