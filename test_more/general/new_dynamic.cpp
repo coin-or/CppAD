@@ -698,7 +698,7 @@ bool dynamic_optimize(void)
 	ax[0] = 0.0; // value does not matter for this example;
 
 	// range space vector
-	size_t ny = 1;
+	size_t ny = 2;
 	CPPAD_TESTVECTOR(AD<double>) ay(ny);
 
 	// not using abort_op_index, are recording compare operators
@@ -712,16 +712,29 @@ bool dynamic_optimize(void)
 	adynamic[0] = 1.0;
 	CppAD::Independent(ax, abort_op_index, record_compare, adynamic);
 	//
-	// create two identical dynamic parameters, one we be optimized out
-	AD<double> one = 3.0 + adynamic[0]; // use the same constant parameter 3.0
-	AD<double> two = 3.0 + adynamic[0];
-	ay[0] = ax[0] + one * two;
+	// Avoid cumulative summations because it adds a constant parameter
+	// Create four dynamic parameters, second, fourth should be optimized out
+	//
+	// first extra dynamic parameter (also is in optimized tape)
+	AD<double> first  = 3.0 + adynamic[0];
+	//
+	// second that is the same as first because addition is communative
+	AD<double> second = adynamic[0] + 3.0;
+	//
+	// third extra dynamic parameter (also in optimized tape)
+	AD<double> third  = first * first;
+	//
+	// fourth is same as third and uses second which gets optimized out
+	AD<double> fourth = second * second;
+	//
+	ay[0] = ax[0] + third;
+	ay[1] = ax[0] * fourth;
 	//
 	// create f: x -> y and stop tape recording
 	f.Dependent(ax, ay);
 	ok &= f.size_dyn_ind() == nd;
-	ok &= f.size_dyn_par() == nd + 3;
-	ok &= f.size_par()     == nd + 3 + 1;
+	ok &= f.size_dyn_par() == nd + 4;
+	ok &= f.size_par()     == nd + 4 + 1; // one constant parameter 3.0
 	// -------------------------------------------------------------
 	// vectors used for new_dynamic and Forward.
 	CPPAD_TESTVECTOR(double) dynamic(nd), x(nx), y(ny);
@@ -731,6 +744,8 @@ bool dynamic_optimize(void)
 	y    = f.Forward(0, x);
 	double check = x[0] + (3.0 + dynamic[0] ) * (3.0 + dynamic[0]);
 	ok   &= NearEqual(y[0], check, eps, eps);
+	check = x[0] * (3.0 + dynamic[0] ) * (3.0 + dynamic[0]);
+	ok   &= NearEqual(y[1], check, eps, eps);
 	// -------------------------------------------------------------
 	// optimize and re-test
 	f.optimize();
@@ -742,6 +757,8 @@ bool dynamic_optimize(void)
 	y     = f.Forward(0, x);
 	check = x[0] + (3.0 + dynamic[0]) * (3.0 + dynamic[0]);
 	ok   &= NearEqual(y[0], check, eps, eps);
+	check = x[0] * (3.0 + dynamic[0]) * (3.0 + dynamic[0]);
+	ok   &= NearEqual(y[1], check, eps, eps);
 	//
 	return ok;
 }

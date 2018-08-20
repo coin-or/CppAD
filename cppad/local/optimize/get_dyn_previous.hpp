@@ -216,8 +216,13 @@ void get_dyn_previous(
         // operator for this dynamic parameter
         op_code_dyn op = op_code_dyn( dyn_par_op[i_dyn] );
 		//
-		// temporary used be below and decaled here to reduce memory allocation
+		// temporary used below and decaled here to reduce memory allocation
 		pod_vector<addr_t> arg_match;
+		//
+		// temporaries used below and decaled here to reduce indentation level
+		bool   match;
+		size_t code;
+		size_t count;
 		//
 		// check for a previous match for i_dyn
 		if( par_usage[i_par] ) switch( op )
@@ -260,7 +265,7 @@ void get_dyn_previous(
 					arg_match
 				);
 				opcode_t op_t  = opcode_t(op);
-				size_t code    = optimize_hash_code(
+				code           = optimize_hash_code(
 					op_t, num_arg, arg_match.data()
 				);
 				//
@@ -268,8 +273,8 @@ void get_dyn_previous(
 				sparse_list_const_iterator itr(hash_table_dyn, code);
 				//
 				// check for a match
-				size_t count = 0;
-				bool   match = false;
+				count = 0;
+				match = false;
 				while( ! match && *itr != num_dynamic_par )
 				{	++count;
 					//
@@ -312,6 +317,7 @@ void get_dyn_previous(
 			case zmul_dyn:
 			CPPAD_ASSERT_UNKNOWN( num_arg_dyn(op) == 2);
 			CPPAD_ASSERT_UNKNOWN( dyn_par_is[i_par] );
+			match = false;
 			{	size_t num_arg = 2;
 				arg_match.resize(num_arg);
 				dyn_arg_match(
@@ -325,7 +331,7 @@ void get_dyn_previous(
 					arg_match
 				);
 				opcode_t op_t  = opcode_t(op);
-				size_t code    = optimize_hash_code(
+				code           = optimize_hash_code(
 					op_t, num_arg, arg_match.data()
 				);
 				//
@@ -333,8 +339,7 @@ void get_dyn_previous(
 				sparse_list_const_iterator itr(hash_table_dyn, code);
 				//
 				// check for a match
-				size_t count = 0;
-				bool   match = false;
+				count = 0;
 				while( ! match && *itr != num_dynamic_par )
 				{	++count;
 					//
@@ -356,15 +361,48 @@ void get_dyn_previous(
 					CPPAD_ASSERT_UNKNOWN( k_dyn < i_dyn );
 					dyn_previous[i_dyn] = addr_t( k_dyn );
 				}
-				else
-				{	CPPAD_ASSERT_UNKNOWN( count < 11 );
-					if( count == 10 )
-					{	// restart list for this hash code
-						hash_table_dyn.clear(code);
-					}
-					// add the entry to hash table
-					hash_table_dyn.add_element(code, i_dyn);
+			}
+			if( ! match & ( (op == add_dyn) | (op == mul_dyn) ) )
+			{	size_t num_arg = 2;
+				std::swap( arg_match[0], arg_match[1] );
+				opcode_t op_t    = opcode_t(op);
+				size_t code_swp  = optimize_hash_code(
+					op_t, num_arg, arg_match.data()
+				);
+				//
+				// iterator for the set with this hash code
+				sparse_list_const_iterator itr(hash_table_dyn, code_swp);
+				//
+				// check for a match
+				while( ! match && *itr != num_dynamic_par )
+				{	//
+					// candidate for current dynamic parameter
+					size_t  k_dyn  = *itr;
+					CPPAD_ASSERT_UNKNOWN( k_dyn < i_dyn );
+					//
+					// argument offset for the candidate
+					addr_t k_arg   = dyn_arg_offset[k_dyn];
+					//
+					match  = op_t == dyn_par_op[k_dyn];
+					match &= arg_match[0] == dyn_par_arg[k_arg + 0];
+					match &= arg_match[1] == dyn_par_arg[k_arg + 1];
+					if( ! match )
+						++itr;
 				}
+				if( match )
+				{	size_t  k_dyn  = *itr;
+					CPPAD_ASSERT_UNKNOWN( k_dyn < i_dyn );
+					dyn_previous[i_dyn] = addr_t( k_dyn );
+				}
+			}
+			if( ! match )
+			{	CPPAD_ASSERT_UNKNOWN( count < 11 );
+				if( count == 10 )
+				{	// restart list for this hash code
+					hash_table_dyn.clear(code);
+				}
+				// add the entry to hash table
+				hash_table_dyn.add_element(code, i_dyn);
 			}
 
 			// --------------------------------------------------------------

@@ -133,7 +133,7 @@ void dynamic(
 	// used to hold the first two parameter arguments
 	const Base* par[2];
 	for(size_t j = 0; j < 2; ++j)
-		par[2] = CPPAD_NULL;
+		par[j] = CPPAD_NULL;
 	//
 	// Initialize index in dyn_par_arg
 	size_t i_arg = 0;

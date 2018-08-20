@@ -40,6 +40,10 @@ $cref discrete$$ functions.
 $lnext
 Fix some detection of identically zero and one
 for dynamic parameters.
+$lnext
+Fix an access of invalid memory during $cref new_dynamic$$.
+$lnext
+Add optimization of dynamic parameters during $cref/f.optimize/optimize/$$.
 $lend
 
 

@@ -209,7 +209,7 @@ for option in onetape colpack optimize atomic memory boolsparsity
 do
 	echo_eval speed/cppad/speed_cppad correct 432 $option
 done
-if ! echo "$skip_package" | grep 'adolc' > /dev/null
+if ! echo "$skip" | grep 'adolc' > /dev/null
 then
 	echo_eval speed/adolc/speed_adolc correct         432 onetape
 	echo_eval speed/adolc/speed_adolc sparse_jacobian 432 onetape colpack
