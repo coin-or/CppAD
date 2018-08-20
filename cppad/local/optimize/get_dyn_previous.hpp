@@ -362,7 +362,7 @@ void get_dyn_previous(
 					dyn_previous[i_dyn] = addr_t( k_dyn );
 				}
 			}
-			if( ! match & ( (op == add_dyn) | (op == mul_dyn) ) )
+			if( (! match) & ( (op == add_dyn) | (op == mul_dyn) ) )
 			{	size_t num_arg = 2;
 				std::swap( arg_match[0], arg_match[1] );
 				opcode_t op_t    = opcode_t(op);
