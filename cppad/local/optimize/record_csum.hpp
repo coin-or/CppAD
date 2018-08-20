@@ -264,7 +264,7 @@ struct_size_pair record_csum(
 	// number of dynamics to subtract in this cummulative sum operator
 	size_t n_sub_dyn = stack.sub_dyn.size();
 
-	// first five arguements to cumulative sum operator
+	// first five arguments to cumulative sum operator
 	addr_t new_arg = rec->put_con_par(sum_par);
 	rec->PutArg(new_arg);            // arg[0]: initial sum
 	size_t end   = n_add_var + 5;

@@ -524,7 +524,7 @@ bool dynamic_compare(void)
 	return ok;
 }
 // ----------------------------------------------------------------------------
-bool dynamic_optimize(void)
+bool optimize_csum(void)
 {	bool ok = true;
 	using CppAD::AD;
 	using CppAD::NearEqual;
@@ -681,6 +681,70 @@ bool dynamic_discrete(void)
 
 	return ok;
 }
+// ----------------------------------------------------------------------------
+bool dynamic_optimize(void)
+{	bool ok = true;
+	using CppAD::AD;
+	using CppAD::NearEqual;
+	double eps = 10. * std::numeric_limits<double>::epsilon();
+
+	// independent dynamic parameter vector
+	size_t nd  = 1;
+	CPPAD_TESTVECTOR(AD<double>) adynamic(nd);
+
+	// domain space vector
+	size_t nx = 1;
+	CPPAD_TESTVECTOR(AD<double>) ax(nx);
+	ax[0] = 0.0; // value does not matter for this example;
+
+	// range space vector
+	size_t ny = 1;
+	CPPAD_TESTVECTOR(AD<double>) ay(ny);
+
+	// not using abort_op_index, are recording compare operators
+	size_t abort_op_index = 0;
+	bool   record_compare = true;
+
+	// Function object
+	CppAD::ADFun<double> f;
+	// ----------------------------------------------------------
+	// record f
+	adynamic[0] = 1.0;
+	CppAD::Independent(ax, abort_op_index, record_compare, adynamic);
+	//
+	// create two identical dynamic parameters, one we be optimized out
+	AD<double> one = 3.0 + adynamic[0]; // use the same constant parameter 3.0
+	AD<double> two = 3.0 + adynamic[0];
+	ay[0] = ax[0] + one * two;
+	//
+	// create f: x -> y and stop tape recording
+	f.Dependent(ax, ay);
+	ok &= f.size_dyn_ind() == nd;
+	ok &= f.size_dyn_par() == nd + 3;
+	ok &= f.size_par()     == nd + 3 + 1;
+	// -------------------------------------------------------------
+	// vectors used for new_dynamic and Forward.
+	CPPAD_TESTVECTOR(double) dynamic(nd), x(nx), y(ny);
+	dynamic[0] = 4.0;
+	f.new_dynamic(dynamic);
+	x[0] = 5.0;
+	y    = f.Forward(0, x);
+	double check = x[0] + (3.0 + dynamic[0] ) * (3.0 + dynamic[0]);
+	ok   &= NearEqual(y[0], check, eps, eps);
+	// -------------------------------------------------------------
+	// optimize and re-test
+	f.optimize();
+	ok &= f.size_dyn_ind() == nd;
+	ok &= f.size_dyn_par() == nd + 2;
+	ok &= f.size_par()     == nd + 2 + 1;
+	dynamic[0] = 6.0;
+	f.new_dynamic(dynamic);
+	y     = f.Forward(0, x);
+	check = x[0] + (3.0 + dynamic[0]) * (3.0 + dynamic[0]);
+	ok   &= NearEqual(y[0], check, eps, eps);
+	//
+	return ok;
+}
 
 
 } // END_EMPTY_NAMESPACE
@@ -688,12 +752,14 @@ bool dynamic_discrete(void)
 // ----------------------------------------------------------------------------
 bool new_dynamic(void)
 {	bool ok = true;
+	//
 	ok     &= operator_with_variable();
 	ok     &= dynamic_operator();
 	ok     &= dynamic_compare();
-	ok     &= dynamic_optimize();
+	ok     &= optimize_csum();
 	ok     &= dynamic_atomic();
 	ok     &= dynamic_discrete();
+	ok     &= dynamic_optimize();
 	//
 	return ok;
 }

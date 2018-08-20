@@ -16,6 +16,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # include <iterator>
 # include <cppad/local/optimize/get_op_usage.hpp>
 # include <cppad/local/optimize/get_par_usage.hpp>
+# include <cppad/local/optimize/get_dyn_previous.hpp>
 # include <cppad/local/optimize/get_op_previous.hpp>
 # include <cppad/local/optimize/get_cexp_info.hpp>
 # include <cppad/local/optimize/size_pair.hpp>
@@ -145,6 +146,12 @@ void optimize_run(
 	size_t num_dynamic_ind = play->num_dynamic_ind();
 
 	// number of dynamic parameters
+	size_t num_dynamic_par = play->num_dynamic_par();
+
+	// mapping from dynamic parameter index to paramemter index
+	const pod_vector<addr_t>& dyn_ind2par_ind( play->dyn_ind2par_ind() );
+
+	// number of dynamic parameters
 	CPPAD_ASSERT_UNKNOWN( num_dynamic_ind <= play->num_dynamic_par () );
 
 	// -----------------------------------------------------------------------
@@ -204,6 +211,13 @@ void optimize_run(
 		vecad_used,
 		par_usage
 	);
+	pod_vector<addr_t> dyn_previous;
+	get_dyn_previous(
+		play                ,
+		random_itr          ,
+		par_usage           ,
+		dyn_previous
+	);
 	// -----------------------------------------------------------------------
 
 	// nan with type Base
@@ -254,8 +268,7 @@ void optimize_run(
 	const pod_vector<opcode_t>& dyn_par_op( play->dyn_par_op() );
 	const pod_vector<addr_t>&   dyn_par_arg( play->dyn_par_arg() );
 	//
-	// independent dynamic parameters are always incldued and must go at front
-	//
+	// -----------------------------------------------------------------------
 	// set new_par
 	pod_vector<addr_t> new_par( num_par );
 	addr_t addr_t_max = std::numeric_limits<addr_t>::max();
@@ -282,48 +295,70 @@ void optimize_run(
 		size_t n_arg   = num_arg_dyn(op);
 		//
 		if( par_usage[i_par] )
-		{	// value of this parameter
-			Base par       = play->GetPar(i_par);
-			//
-			if( op == cond_exp_dyn )
-			{	// cond_exp_dyn
-				CPPAD_ASSERT_UNKNOWN( num_dynamic_ind <= i_par );
-				CPPAD_ASSERT_UNKNOWN( n_arg = 5 );
-				new_par[i_par] = rec->put_dyn_cond_exp(
-					par                                ,   // par
-					CompareOp( dyn_par_arg[i_arg + 0] ),   // cop
-					new_par[ dyn_par_arg[i_arg + 1] ]  ,   // left
-					new_par[ dyn_par_arg[i_arg + 2] ]  ,   // right
-					new_par[ dyn_par_arg[i_arg + 3] ]  ,   // if_true
-					new_par[ dyn_par_arg[i_arg + 4] ]      // if_false
-				);
-			}
-			else if( n_arg == 1 )
-			{	// cases with one argument
-				CPPAD_ASSERT_UNKNOWN( num_dynamic_ind <= i_par );
-				new_par[i_par] = rec->put_dyn_par( par, op,
-					new_par[ dyn_par_arg[i_arg + 0] ]
-				);
-			}
-			else if( n_arg == 2 )
-			{	// cases with two arguments
-				CPPAD_ASSERT_UNKNOWN( num_dynamic_ind <= i_par );
-				new_par[i_par] = rec->put_dyn_par( par, op,
-					new_par[ dyn_par_arg[i_arg + 0] ],
-					new_par[ dyn_par_arg[i_arg + 1] ]
-				);
+		{	size_t j_dyn = size_t( dyn_previous[i_dyn] );
+			if( j_dyn != num_dynamic_par )
+			{	size_t j_par = dyn_ind2par_ind[j_dyn];
+				CPPAD_ASSERT_UNKNOWN( j_par < i_par );
+				new_par[i_par] = addr_t( j_par );
 			}
 			else
-			{	// independent dynamic parmaeter case
-				CPPAD_ASSERT_UNKNOWN( op == ind_dyn )
-				CPPAD_ASSERT_UNKNOWN( i_par < num_dynamic_ind );
-				CPPAD_ASSERT_UNKNOWN( n_arg == 0 );
-				new_par[i_par] = rec->put_dyn_par( par, op);
+			{
+				// value of this parameter
+				Base par       = play->GetPar(i_par);
+				//
+				if( op == cond_exp_dyn )
+				{	// cond_exp_dyn
+					CPPAD_ASSERT_UNKNOWN( num_dynamic_ind <= i_par );
+					CPPAD_ASSERT_UNKNOWN( n_arg = 5 );
+					new_par[i_par] = rec->put_dyn_cond_exp(
+						par                                ,   // par
+						CompareOp( dyn_par_arg[i_arg + 0] ),   // cop
+						new_par[ dyn_par_arg[i_arg + 1] ]  ,   // left
+						new_par[ dyn_par_arg[i_arg + 2] ]  ,   // right
+						new_par[ dyn_par_arg[i_arg + 3] ]  ,   // if_true
+						new_par[ dyn_par_arg[i_arg + 4] ]      // if_false
+					);
+				}
+				else if(  op == dis_dyn )
+				{	// dis_dyn
+					CPPAD_ASSERT_UNKNOWN( n_arg = 2 );
+					new_par[i_par] = rec->put_dyn_par(
+						par                               ,  // par
+						op                                ,  // op
+						dyn_par_arg[i_arg + 0]            ,  // index
+						new_par[ dyn_par_arg[i_arg + 1] ]    // parameter
+					);
+				}
+				else if( n_arg == 1 )
+				{	// cases with one argument
+					CPPAD_ASSERT_UNKNOWN( num_dynamic_ind <= i_par );
+					new_par[i_par] = rec->put_dyn_par( par, op,
+						new_par[ dyn_par_arg[i_arg + 0] ]
+					);
+				}
+				else if( n_arg == 2 )
+				{	// cases with two arguments
+					CPPAD_ASSERT_UNKNOWN( num_dynamic_ind <= i_par );
+					new_par[i_par] = rec->put_dyn_par( par, op,
+						new_par[ dyn_par_arg[i_arg + 0] ],
+						new_par[ dyn_par_arg[i_arg + 1] ]
+					);
+				}
+				else
+				{	// independent dynamic parmaeter case
+					CPPAD_ASSERT_UNKNOWN( op == ind_dyn )
+					CPPAD_ASSERT_UNKNOWN( i_par < num_dynamic_ind );
+					CPPAD_ASSERT_UNKNOWN( n_arg == 0 );
+					new_par[i_par] = rec->put_dyn_par( par, op);
+				}
 			}
 		}
 		++i_dyn;
 		i_arg += n_arg;
 	}
+	// -----------------------------------------------------------------------
+	// There is an additional constant parameter for each cumulative summation
+	// (that does not have a corresponding old parameter index).
 	// ------------------------------------------------------------------------
 	// initialize mapping from old VecAD index to new VecAD index
 	CPPAD_ASSERT_UNKNOWN(
