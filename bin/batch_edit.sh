@@ -36,23 +36,15 @@ move_list='
 move_sed='s|par_var_dyn|con_dyn_var|'
 #
 cat << EOF > junk.sed
-s|x.dynmaic_|x.dynamic_|
-s|dynamic_\\( *= *[a-zA-Z_]*\\)\\.dynamic_|ad_type_\\1.ad_type_|g
-s|, dynamic_(false)|, ad_type_(local::no_ad_type)|
+s/if( ! IdenticalZero( *right.value_ *) )/if( dyn_right | (! IdenticalZero(right.value_) ) )/
 #
-s|( *! *\\([a-zA-Z_]*\\)\\.dynamic_ *)|(\\1.ad_type_ != local::dyn_ad_type)|
-s|( *! *dynamic_ *)|(ad_type_ != local::dyn_ad_type)|
+s|if( IdenticalZero( *right.value_ *) )|if( (! dyn_right) \\& IdenticalZero(right.value_) )|
+s|if( IdenticalOne( *right.value_ *) )|if( (! dyn_right) \\& IdenticalOne(right.value_) )|
 #
-s|( *\\([a-zA-Z_]*\\)\\.dynamic_ *)|(\\1.ad_type_ == local::dyn_ad_type)|
-s|( *dynamic_ *)|(ad_type_ == local::dyn_ad_type)|
-#
-s|& *\\([a-zA-Z]*\\)\\.dynamic_|\\& (\\1.ad_type_ == local::dyn_ad_type)|
-s|& *dynamic_|\\& (ad_type_ == local::dyn_ad_type)|
-#
-s/| *\\([a-zA-Z]*\\)\\.dynamic_/| (\\1.ad_type_ == local::dyn_ad_type)/
-#
-s|dynamic_\\( *=*\\) true|ad_type_\\1 local::dyn_ad_type|
-s|dynamic_\\( *=*\\) false|ad_type_\\1 local::var_ad_type|
+s|if( IdenticalZero( *left *) )|if( (! dyn_left) \\& IdenticalZero(left) )|
+s|if( IdenticalZero( *left.value_ *) )|if( (! dyn_left) \\& IdenticalZero(left.value_) )|
+s|if( IdenticalOne( *left *) )|if( (! dyn_left) \\& IdenticalOne(left) )|
+s|if( IdenticalOne( *left.value_ *) )|if( (! dyn_left) \\& IdenticalOne(left.value_) )|
 EOF
 # -----------------------------------------------------------------------------
 if [ $0 != "bin/batch_edit.sh" ]

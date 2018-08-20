@@ -571,7 +571,7 @@ namespace CppAD {
 		if( tape == CPPAD_NULL )
 			return result;
 
-		// check if operand is a constant paramerer
+		// check if operand is a constant parameter
 		if( tape_id_ != tape->id_ )
 			return result;
 

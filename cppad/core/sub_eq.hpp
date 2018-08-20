@@ -61,7 +61,7 @@ AD<Base>& AD<Base>::operator -= (const AD<Base> &right)
 			CPPAD_ASSERT_UNKNOWN( tape_id_ == tape_id );
 			CPPAD_ASSERT_UNKNOWN( ad_type_ == local::var_ad_type);
 		}
-		else if( IdenticalZero( right.value_ ) )
+		else if( (! dyn_right) & IdenticalZero(right.value_) )
 		{	// this = variable - 0
 		}
 		else

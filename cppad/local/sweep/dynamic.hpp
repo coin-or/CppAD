@@ -131,9 +131,9 @@ void dynamic(
 	<< std::endl;
 # endif
 	// used to hold the first two parameter arguments
-	const Base* par[5];
-	for(size_t j = 0; j < 5; ++j)
-		par[j] = CPPAD_NULL;
+	const Base* par[2];
+	for(size_t j = 0; j < 2; ++j)
+		par[2] = CPPAD_NULL;
 	//
 	// Initialize index in all_par_vec (none used ind_dyn operators).
 	size_t i_arg = 0;
@@ -152,10 +152,12 @@ void dynamic(
 		// number of arguments
 		size_t n_arg   = num_arg_dyn(op);
 		//
-		// first arguments
-		CPPAD_ASSERT_UNKNOWN( n_arg <= 5 );
-		for(size_t j = 0; j < n_arg; ++j)
-			par[j] = & all_par_vec[ dyn_par_arg[i_arg + j] ];
+		if( (op != cond_exp_dyn) & (op != dis_dyn ) )
+		{	// all arguments are parameters
+			CPPAD_ASSERT_UNKNOWN( n_arg <= 2 );
+			for(size_t j = 0; j < n_arg; ++j)
+				par[j] = & all_par_vec[ dyn_par_arg[i_arg + j] ];
+		}
 		//
 		switch(op)
 		{
@@ -334,6 +336,36 @@ void dynamic(
 			break;
 
 			// ---------------------------------------------------------------
+			// discrete(index, argument)
+			case dis_dyn:
+			CPPAD_ASSERT_UNKNOWN( n_arg == 2 );
+			all_par_vec[i_par] = discrete<Base>::eval(
+				size_t(      dyn_par_arg[i_arg + 0] ) , // index
+				all_par_vec[ dyn_par_arg[i_arg + 1] ]   // argument
+			);
+# if CPPAD_DYNAMIC_TRACE
+			std::cout
+			<< std::setw(10) << std::left << i_par
+			<< std::setw(10) << std::left << old_value
+			<< std::setw(10) << std::left << all_par_vec[i_par]
+			<< "="
+			<< std::setw(10) << std::right << op_name_dyn(op)
+			<< "("
+			<< std::setw(12) << std::right <<
+				discrete<Base>::name( size_t( dyn_par_arg[i_arg + 0] ) );
+			if( dyn_par_is[ dyn_par_arg[i_arg + 1] ] )
+			{	std::cout << ", i=" << std::setw(10) << std::right
+				<< dyn_par_arg[i_arg + 1];
+			}
+			else
+			{	std::cout << ", v=" << std::setw(10) << std::right
+				<< all_par_vec[ dyn_par_arg[i_arg + 1] ];
+			}
+			std::cout << ")" << std::endl;
+# endif
+			break;
+
+			// ---------------------------------------------------------------
 			// cond_exp(cop, left, right, if_true, if_false)
 			// (not yet implemented)
 			case cond_exp_dyn:
@@ -377,7 +409,7 @@ void dynamic(
 			break;
 		}
 # if CPPAD_DYNAMIC_TRACE
-		if( op != cond_exp_dyn )
+		if( (op != cond_exp_dyn) & (op != dis_dyn ) )
 		{
 			std::cout
 			<< std::setw(10) << std::left << i_par

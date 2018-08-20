@@ -33,6 +33,16 @@ $$
 
 $section Changes and Additions to CppAD During 2018$$
 
+$head 08-19$$
+$list number$$
+Fix dynamic parameter arguments to
+$cref discrete$$ functions.
+$lnext
+Fix some detection of identically zero and one
+for dynamic parameters.
+$lend
+
+
 $head 08-18$$
 $list number$$
 Fix some remaining clang warnings.

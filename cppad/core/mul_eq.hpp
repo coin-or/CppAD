@@ -61,10 +61,10 @@ AD<Base>& AD<Base>::operator *= (const AD<Base> &right)
 			CPPAD_ASSERT_UNKNOWN( tape_id_ == tape_id );
 			CPPAD_ASSERT_UNKNOWN( ad_type_ == local::var_ad_type);
 		}
-		else if( IdenticalOne( right.value_ ) )
+		else if( (! dyn_right) & IdenticalOne(right.value_) )
 		{	// this = variable * 1
 		}
-		else if( IdenticalZero( right.value_ ) )
+		else if( (! dyn_right) & IdenticalZero(right.value_) )
 		{	// this = variable * 0
 			tape_id_ = 0; // not in current tape
 		}
@@ -87,10 +87,10 @@ AD<Base>& AD<Base>::operator *= (const AD<Base> &right)
 		}
 	}
 	else if( var_right  )
-	{	if( IdenticalZero(left) )
+	{	if( (! dyn_left) & IdenticalZero(left) )
 		{	// this = 0 * right
 		}
-		else if( IdenticalOne(left) )
+		else if( (! dyn_left) & IdenticalOne(left) )
 		{	// this = 1 * right
 			make_variable(right.tape_id_, right.taddr_);
 		}

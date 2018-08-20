@@ -33,6 +33,7 @@ enum op_code_dyn {
 	cond_exp_dyn,  // cond_exp(cop, left, right, if_true, if_false)
 	cos_dyn,       // cos(parameter)
 	cosh_dyn,      // cosh(parameter)
+	dis_dyn,       // discrete function (index, parameter)
 	div_dyn,       // parameter / parameter
 	erf_dyn,       // erf(parameter)
 	exp_dyn,       // exp(parameter)
@@ -73,6 +74,7 @@ inline size_t num_arg_dyn(op_code_dyn op)
 		5, // cond_exp_dyn
 		1, // cos_dyn
 		1, // cosh_dyn
+		2, // dis_dyn
 		2, // div_dyn
 		1, // erf_dyn
 		1, // exp_dyn
@@ -119,6 +121,7 @@ inline const char* op_name_dyn(op_code_dyn op)
 		"cond_exp",
 		"cos",
 		"cosh",
+		"dis",
 		"div",
 		"erf",
 		"exp",

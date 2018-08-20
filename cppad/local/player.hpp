@@ -455,8 +455,9 @@ public:
 			// number of arguments for this dynamic parameter
 			size_t n_arg = num_arg_dyn(op);
 			//
-			if( op == cond_exp_dyn )
-			{	for(size_t i = 1; i < n_arg; ++i) CPPAD_ASSERT_UNKNOWN(
+			if( (op == cond_exp_dyn) | (op == dis_dyn ) )
+			{	// for these two cases, first argument not a parameter index
+				for(size_t i = 1; i < n_arg; ++i) CPPAD_ASSERT_UNKNOWN(
 					dyn_par_arg_[i_arg + i] < i_par
 				);
 			}

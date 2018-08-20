@@ -258,17 +258,40 @@ public:
 	*/
 	AD<Base> ad(const AD<Base> &ax) const
 	{
-# ifndef NDEBUG
-		if( Dynamic(ax) )
-		{	std::string msg = name_
-			+ ": argument to this discrete function is a dynamic parameter";
-			CPPAD_ASSERT_KNOWN(false, msg.c_str());
-		}
-# endif
+		CPPAD_ASSERT_KNOWN(
+			size_t( std::numeric_limits<addr_t>::max() ) >= index_,
+			"discrete: cppad_tape_addr_type maximum not large enough"
+		);
+		//
 		AD<Base> ay;
 		ay.value_ = f_(ax.value_);
-		if( Variable(ax) )
-		{	local::ADTape<Base> *tape = ax.tape_this();
+		//
+		// check if there is a recording in progress
+		local::ADTape<Base>* tape = AD<Base>::tape_ptr();
+		if( tape == CPPAD_NULL )
+			return ay;
+		//
+		// check if argument is a constant parameter
+		if( ax.tape_id_ != tape->id_ )
+			return ay;
+		//
+		if( ax.ad_type_ == local::dyn_ad_type )
+		{
+			// tape dynamic paramter operation
+			ay.taddr_   = tape->Rec_.put_dyn_par(
+				ay.value_, local::dis_dyn, addr_t(index_), ax.taddr_
+			);
+			ay.tape_id_  = ax.tape_id_;
+			ay.ad_type_  = local::dyn_ad_type;
+
+			// make result a dynamic parameter
+			ay.tape_id_    = tape->id_;
+			ay.ad_type_    = local::dyn_ad_type;
+
+			CPPAD_ASSERT_UNKNOWN( Dynamic(ay) );
+		}
+		else if( ax.ad_type_ == local::var_ad_type )
+		{
 			CPPAD_ASSERT_UNKNOWN( local::NumRes(local::DisOp) == 1 );
 			CPPAD_ASSERT_UNKNOWN( local::NumArg(local::DisOp) == 2 );
 
@@ -285,6 +308,10 @@ public:
 			ay.ad_type_    = local::var_ad_type;
 
 			CPPAD_ASSERT_UNKNOWN( Variable(ay) );
+		}
+		else
+		{	// other types not yet being used and should have this tape id
+			CPPAD_ASSERT_UNKNOWN(false);
 		}
 		return ay;
 	}

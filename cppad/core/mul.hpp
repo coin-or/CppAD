@@ -61,10 +61,10 @@ AD<Base> operator * (const AD<Base> &left , const AD<Base> &right)
 			result.tape_id_ = tape_id;
 			result.ad_type_ = local::var_ad_type;
 		}
-		else if( IdenticalZero(right.value_) )
+		else if( (! dyn_right) & IdenticalZero(right.value_) )
 		{	// result = variable * 0
 		}
-		else if( IdenticalOne(right.value_) )
+		else if( (! dyn_right) & IdenticalOne(right.value_) )
 		{	// result = variable * 1
 			result.make_variable(left.tape_id_, left.taddr_);
 		}
@@ -86,10 +86,10 @@ AD<Base> operator * (const AD<Base> &left , const AD<Base> &right)
 		}
 	}
 	else if( var_right )
-	{	if( IdenticalZero(left.value_) )
+	{	if( (! dyn_left) & IdenticalZero(left.value_) )
 		{	// result = 0 * variable
 		}
-		else if( IdenticalOne(left.value_) )
+		else if( (! dyn_left) & IdenticalOne(left.value_) )
 		{	// result = 1 * variable
 			result.make_variable(right.tape_id_, right.taddr_);
 		}
