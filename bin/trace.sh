@@ -1,7 +1,7 @@
 #! /bin/bash -e
 # $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the
@@ -17,7 +17,7 @@ then
 fi
 name="$1"
 option="$2"
-file="cppad/local/$name.hpp"
+file="cppad/local/sweep/$name.hpp"
 #
 ok='yes'
 if [ "$option" != '0' ] && [ "$option" != '1' ]
@@ -32,7 +32,7 @@ fi
 if [ "$ok" == 'no' ]
 then
 	echo 'usage: bin/trace.sh name (0|1)'
-	echo '	where the file cppad/local/name.hpp has a defined TRACE option'
+	echo 'name:e cppad/local/sweep/name.hpp defined *_TRACE as 0 or 1'
 	exit 1
 fi
 old=`grep '_TRACE [01]' $file`

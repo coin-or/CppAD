@@ -9,7 +9,7 @@
 # A copy of this license is included in the COPYING file of this distribution.
 # Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # -----------------------------------------------------------------------------
-# Run one of the tests
+# Command line arguments
 if [ "$0" != 'bin/test_one.sh' ]
 then
 cat << EOF
@@ -30,6 +30,7 @@ then
 	file="local/$file"
 fi
 # ---------------------------------------------------------------------------
+# Check command line arguments
 if [ "$dir" == '' ]
 then
 	echo "test_one.sh: cannot find dir before front of file"
@@ -45,6 +46,8 @@ then
 	echo 'test_one.sh: Must first execute bin/run_cmake.sh'
 	exit 1
 fi
+# ---------------------------------------------------------------------------
+# Clean out old output files
 if [ -e test_one.exe ]
 then
 	rm test_one.exe
@@ -55,7 +58,7 @@ then
 fi
 original_dir=`pwd`
 # ---------------------------------------------------------------------------
-# check for cppad_lib
+# Make sure cppad_lib is there
 count=`ls build/cppad_lib/libcppad_lib.* | wc -l`
 if [ "$count" == '0' ]
 then
@@ -83,6 +86,8 @@ then
 	include_flags="$include_flags -isystem @eigen_prefix@/include"
 fi
 # --------------------------------------------------------------------------
+# Create test_one.exe
+#
 # determine the function name
 fun=`grep "^bool *[a-zA-Z0-9_]* *( *void *)" $dir/$file | tail -1 | \
 	sed -e "s/^bool *\([a-zA-Z0-9_]*\) *( *void *)/\1/"`
@@ -90,10 +95,11 @@ fun=`grep "^bool *[a-zA-Z0-9_]* *( *void *)" $dir/$file | tail -1 | \
 # determine the main program main
 main=`echo *$dir | sed -e 's|.*/||' -e 's|$|.cpp|'`
 #
-# create test_one.cpp
 sed < $dir/$main > test_one.cpp \
 -e '/^\tRun( /d' \
 -e "s/.*This line is used by test_one.sh.*/\tRun( $fun, \"$fun\");/"
+# --------------------------------------------------------------------------
+# Create test_one.exe
 #
 # compiler flags
 cxx_flags='@cppad_cxx_flags@'
@@ -132,6 +138,19 @@ then
 	exit 1
 fi
 # --------------------------------------------------------------------------
+# LD_LIBRARY_PATH
+library_path='@PROJECT_BINARY_DIR@/cppad_lib'
+if ! echo $LD_LIBRARY_PATH | grep "$library_path"
+then
+	echo 'LD_LIBRARY_PATH=\'
+	echo "$library_path:\$LD_LIBRARY_PATH"
+	export LD_LIBRARY_PATH="$library_path:$LD_LIBRARY_PATH"
+fi
+# --------------------------------------------------------------------------
+# Execute the test
+echo_eval ./test_one.exe
+# --------------------------------------------------------------------------
+# Check for compiler warnings
 cat << EOF > test_one.sed
 # Lines that describe where error is
 /^In file included from/d
@@ -159,13 +178,5 @@ then
 	exit 1
 fi
 # --------------------------------------------------------------------------
-library_path='@PROJECT_BINARY_DIR@/cppad_lib'
-if ! echo $LD_LIBRARY_PATH | grep "$library_path"
-then
-	echo 'LD_LIBRARY_PATH=\'
-	echo "$library_path:\$LD_LIBRARY_PATH"
-	export LD_LIBRARY_PATH="$library_path:$LD_LIBRARY_PATH"
-fi
-# --------------------------------------------------------------------------
-echo_eval ./test_one.exe
+echo 'test_one.sh: OK'
 exit 0
