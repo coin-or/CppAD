@@ -593,12 +593,12 @@ LIBOBJS
 ipopt_prefix
 eigen_prefix
 adolc_prefix
-cppad_SOURCE_DIR
-cppad_abs_includedir
-cppad_prefix
+cppad_pkgconfig_requires_uninstalled
 cppad_pkgconfig_requires
 cppad_pkgconfig_libs
+cppad_pkgconfig_libs_uninstalled
 cppad_pkgconfig_cflags
+cppad_pkgconfig_cflags_uninstalled
 cppad_url
 cppad_version
 cppad_description
@@ -7169,35 +7169,48 @@ cppad_version=${PACKAGE_VERSION}
 
 cppad_url="http://www.coin-or.org/CppAD"
 
+cppad_pkgconfig_cflags_uninstalled="-I$abs_top_srcdir"
+
 if test "$prefix" == "NONE" ; then
-	cppad_pkgconfig_cflags_value="-I$HOME/include"
-	cppad_pkgconfig_libs_value="-L$HOME/lib"
+	value="-I$HOME/include"
 else
-	cppad_pkgconfig_cflags_value="-I$prefix/include"
-	cppad_pkgconfig_libs_value="-L$prefix/lib"
+	value="-I$prefix/include"
 fi
 if test "$POSTFIX_DIR" != "" ; then
-	cppad_pkgconfig_cflags_value="$cppad_pkgconfig_cflags_value/$POSTFIX_DIR"
-	cppad_pkgconfig_libs_value="$cppad_pkgconfig_libs_value/$POSTFIX_DIR"
+	value="$value/$POSTFIX_DIR"
+fi
+cppad_pkgconfig_cflags="$value"
+
+if test "$IPOPT_DIR" == "" ; then
+	value=""
+else
+	value="-L$abs_top_builddir/cppad_ipopt/src -lcppad_ipopt"
+fi
+cppad_pkgconfig_libs_uninstalled="$value"
+
+if test "$prefix" == "NONE" ; then
+	value="-L$HOME/lib"
+else
+	value="-L$prefix/lib"
+fi
+if test "$POSTFIX_DIR" != "" ; then
+	value="$value/$POSTFIX_DIR"
 fi
 if test "$IPOPT_DIR" == "" ; then
-	cppad_pkgconfig_libs_value=""
-	cppad_pkgconfig_requires_value=""
+	value=""
 else
-	cppad_pkgconfig_libs_value="$cppad_pkgconfig_libs_value -lcppad_ipopt"
-	cppad_pkgconfig_requires_value="ipopt"
+	value="$value -lcppad_ipopt"
 fi
-cppad_pkgconfig_cflags="$cppad_pkgconfig_cflags_value"
+cppad_pkgconfig_libs="$value"
 
-cppad_pkgconfig_libs="$cppad_pkgconfig_libs_value"
+if test "$IPOPT_DIR" == "" ; then
+	value=""
+else
+	value="ipopt"
+fi
+cppad_pkgconfig_requires="$value"
 
-cppad_pkgconfig_requires="$cppad_pkgconfig_requires_value"
-
-cppad_prefix="$prefix"
-
-cppad_abs_includedir="$includedir"
-
-cppad_SOURCE_DIR=${ABS_TOP_SRCDIR}
+cppad_pkgconfig_requires_uninstalled="$value"
 
 adolc_prefix=${ADOLC_DIR}
 
