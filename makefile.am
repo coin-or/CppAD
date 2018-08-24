@@ -483,5 +483,5 @@ if CppAD_DEPRECATED
 	chmod -R a+r $(inc_postfix)/cppad
 endif
 #
-pkgconfigdir = $(datadir)/pkgconfig
+pkgconfigdir = $(libdir)/pkgconfig
 pkgconfig_DATA = pkgconfig/cppad.pc

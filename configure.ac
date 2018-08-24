@@ -764,39 +764,74 @@ else
 fi
 AC_MSG_RESULT([cppad_ipopt_nlp libraries: $CPPAD_IPOPT_LIBS])
 dnl --------------------------------------------------------------------------
-dnl Names set here so same cppad.pc.in works for both with cmake and autoconf.
-dnl (note that autoconf configuration does not allow for Colpack).
+dnl Set the values of the names needed by the files
+dnl pkgconfig/cppad.pc.in and pkgconfig/cppad-uninstalled.pc.in.
 dnl
+dnl These settings are an attempt to be the same as in CMakeLists.txt
+dnl and pkgconfig/CMakeLists.txt with the following restrictions:
+dnl 1. The default prefix for the autoconf install is $HOME.
+dnl 2. autoconf configuration does not allow for Colpack.
+dnl 3. Assume that libraries are being installed in prefix/lib.
+dnl 4. Only install pkgconfig files below prefix/lib (not in datadir).
+dnl
+dnl cppad_description
 AC_SUBST(cppad_description, "Differentiation of C++ Algorithms")
+dnl
+dnl cppad_version
 AC_SUBST(cppad_version, ${PACKAGE_VERSION} )
+dnl
+dnl cppad_url
 AC_SUBST(cppad_url, "http://www.coin-or.org/CppAD")
+dnl
+dnl cppad_pkgconfig_cflags_uninstalled
+AC_SUBST(cppad_pkgconfig_cflags_uninstalled, "-I$abs_top_srcdir")
+dnl
+dnl cppad_pkgconfig_cflags
 if test "$prefix" == "NONE" ; then
-	cppad_pkgconfig_cflags_value="-I$HOME/include"
-	cppad_pkgconfig_libs_value="-L$HOME/lib"
+	value="-I$HOME/include"
 else
-	cppad_pkgconfig_cflags_value="-I$prefix/include"
-	cppad_pkgconfig_libs_value="-L$prefix/lib"
+	value="-I$prefix/include"
 fi
 if test "$POSTFIX_DIR" != "" ; then
-	cppad_pkgconfig_cflags_value="$cppad_pkgconfig_cflags_value/$POSTFIX_DIR"
-	cppad_pkgconfig_libs_value="$cppad_pkgconfig_libs_value/$POSTFIX_DIR"
+	value="$value/$POSTFIX_DIR"
+fi
+AC_SUBST(cppad_pkgconfig_cflags, "$value")
+dnl
+dnl cppad_pkgconfig_libs_uninstalled
+if test "$IPOPT_DIR" == "" ; then
+	value=""
+else
+	value="-L$abs_top_builddir/cppad_ipopt/src -lcppad_ipopt"
+fi
+AC_SUBST(cppad_pkgconfig_libs_uninstalled, "$value")
+dnl
+dnl cppad_pkgconfig_libs
+if test "$prefix" == "NONE" ; then
+	value="-L$HOME/lib"
+else
+	value="-L$prefix/lib"
+fi
+if test "$POSTFIX_DIR" != "" ; then
+	value="$value/$POSTFIX_DIR"
 fi
 if test "$IPOPT_DIR" == "" ; then
-	cppad_pkgconfig_libs_value=""
-	cppad_pkgconfig_requires_value=""
+	value=""
 else
-	cppad_pkgconfig_libs_value="$cppad_pkgconfig_libs_value -lcppad_ipopt"
-	cppad_pkgconfig_requires_value="ipopt"
+	value="$value -lcppad_ipopt"
 fi
-AC_SUBST(cppad_pkgconfig_cflags,   "$cppad_pkgconfig_cflags_value")
-AC_SUBST(cppad_pkgconfig_libs,     "$cppad_pkgconfig_libs_value")
-AC_SUBST(cppad_pkgconfig_requires, "$cppad_pkgconfig_requires_value")
-AC_SUBST(cppad_prefix,             "$prefix")
-AC_SUBST(cppad_abs_includedir,     "$includedir")
+AC_SUBST(cppad_pkgconfig_libs, "$value")
 dnl
-dnl names set here so cppad.pc-uninstalled works both with cmake and autoconf
-AC_SUBST(cppad_SOURCE_DIR,  ${ABS_TOP_SRCDIR} )
+dnl cppad_pkgconfig_requires
+dnl cppad_pkgconfig_requires_uninstalled
+if test "$IPOPT_DIR" == "" ; then
+	value=""
+else
+	value="ipopt"
+fi
+AC_SUBST(cppad_pkgconfig_requires, "$value")
+AC_SUBST(cppad_pkgconfig_requires_uninstalled, "$value")
 dnl
+dnl -------------------------------------------------------------------------
 dnl names set here so */test_one.sh.in works both with cmake and autoconf
 dnl (no longer used ?)
 AC_SUBST(adolc_prefix,      ${ADOLC_DIR} )
