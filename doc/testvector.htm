@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Using The CppAD Test Vector Template Class</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Using The CppAD Test Vector Template Class">
-<meta name="keywords" id="keywords" content=" using the cppad test vector template class Cppad_testvector syntax choice cppad::vector std::vector boost::numeric::ublas::vector eigen_vector ">
+<meta name="keywords" id="keywords" content=" using the cppad test vector template class Cppad_testvector syntax choice cppad::vector std::vector boost::numeric::ublas::vector cppad::eigen_vector ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -87,7 +87,7 @@ A:active { color : purple }
 <option>CppAD::vector</option>
 <option>std::vector</option>
 <option>boost::numeric::ublas::vector</option>
-<option>eigen_vector</option>
+<option>CppAD::eigen_vector</option>
 </select>
 </td>
 </tr></table><br>
@@ -179,7 +179,7 @@ many of its examples and tests.
 
 <br>
 <br>
-<b><big><a name="eigen_vector" id="eigen_vector">eigen_vector</a></big></b>
+<b><big><a name="CppAD::eigen_vector" id="CppAD::eigen_vector">CppAD::eigen_vector</a></big></b>
 <br>
 If in the cmake command
 you specify 
@@ -190,7 +190,7 @@ In this case,
 <code><font color="blue">CPPAD_TESTVECTOR</font></code> is defined by the following source code:
 <pre><tt><b><font color="#000080"># if</font></b> CPPAD_EIGENVECTOR
 <b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/example/cppad_eigen.hpp&gt;</font>
-<b><font color="#000080"># define</font></b> <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font>Scalar<font color="#990000">)</font> eigen_vector<font color="#990000">&lt;</font> Scalar <font color="#990000">&gt;</font>
+<b><font color="#000080"># define</font></b> <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font>Scalar<font color="#990000">)</font> CppAD<font color="#990000">::</font>eigen_vector<font color="#990000">&lt;</font> Scalar <font color="#990000">&gt;</font>
 <b><font color="#000080"># endif</font></b></tt></pre>
 see <a href="cppad_eigen.hpp.htm#eigen_vector" target="_top"><span style='white-space: nowrap'>eigen_vector</span></a>
 .

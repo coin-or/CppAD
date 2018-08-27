@@ -255,34 +255,36 @@ with
 </tt></pre>
 <b><big><a name="eigen_vector" id="eigen_vector">eigen_vector</a></big></b>
 <br>
-The class <code><font color="blue">eigen_vector</font></code> is a wrapper for Eigen column vectors
+The class <code><font color="blue">CppAD::eigen_vector</font></code> is a wrapper for Eigen column vectors
 so that they are <a href="simplevector.htm" target="_top"><span style='white-space: nowrap'>simple&nbsp;vectors</span></a>
 .
 To be specific, it converts <code><font color="blue">Eigen::Index</font></code> arguments and
 return values to <code><font color="blue">size_t</font></code>.
-<pre><tt><b><font color="#0000FF">template</font></b> <font color="#990000">&lt;</font><b><font color="#0000FF">class</font></b> <font color="#008080">Scalar</font><font color="#990000">&gt;</font>
-<b><font color="#0000FF">class</font></b> <font color="#008080">eigen_vector</font> <font color="#990000">:</font> <b><font color="#0000FF">public</font></b> Eigen<font color="#990000">::</font>Matrix<font color="#990000">&lt;</font>Scalar<font color="#990000">,</font> Eigen<font color="#990000">::</font>Dynamic<font color="#990000">,</font> <font color="#993399">1</font><font color="#990000">&gt;</font> <font color="#FF0000">{</font>
-<b><font color="#0000FF">private</font></b><font color="#990000">:</font>
-     <i><font color="#9A1900">// base_class</font></i>
-     <b><font color="#0000FF">typedef</font></b> Eigen<font color="#990000">::</font><font color="#008080">Matrix&lt;Scalar, Eigen::Dynamic, 1&gt;</font> base_class<font color="#990000">;</font>
-<b><font color="#0000FF">public</font></b><font color="#990000">:</font>
-     <i><font color="#9A1900">// constructor</font></i>
-     <b><font color="#000000">eigen_vector</font></b><font color="#990000">(</font><font color="#008080">size_t</font> n<font color="#990000">)</font> <font color="#990000">:</font> <b><font color="#000000">base_class</font></b><font color="#990000">(</font> Eigen<font color="#990000">::</font><b><font color="#000000">Index</font></b><font color="#990000">(</font>n<font color="#990000">)</font> <font color="#990000">)</font>
-     <font color="#FF0000">{</font> <font color="#FF0000">}</font>
-     <b><font color="#000000">eigen_vector</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font> <font color="#990000">:</font> <b><font color="#000000">base_class</font></b><font color="#990000">()</font>
-     <font color="#FF0000">{</font> <font color="#FF0000">}</font>
-     <i><font color="#9A1900">// operator[]</font></i>
-     Scalar<font color="#990000">&amp;</font> <b><font color="#0000FF">operator</font></b><font color="#990000">[](</font><font color="#008080">size_t</font> i<font color="#990000">)</font>
-     <font color="#FF0000">{</font>    <b><font color="#0000FF">return</font></b> base_class<font color="#990000">::</font><b><font color="#0000FF">operator</font></b><font color="#990000">[](</font> Eigen<font color="#990000">::</font><b><font color="#000000">Index</font></b><font color="#990000">(</font>i<font color="#990000">)</font> <font color="#990000">);</font> <font color="#FF0000">}</font>
-     <b><font color="#0000FF">const</font></b> Scalar<font color="#990000">&amp;</font> <b><font color="#0000FF">operator</font></b><font color="#990000">[](</font><font color="#008080">size_t</font> i<font color="#990000">)</font> <b><font color="#0000FF">const</font></b>
-     <font color="#FF0000">{</font>    <b><font color="#0000FF">return</font></b> base_class<font color="#990000">::</font><b><font color="#0000FF">operator</font></b><font color="#990000">[](</font> Eigen<font color="#990000">::</font><b><font color="#000000">Index</font></b><font color="#990000">(</font>i<font color="#990000">)</font> <font color="#990000">);</font> <font color="#FF0000">}</font>
-     <i><font color="#9A1900">// size</font></i>
-     <font color="#008080">size_t</font> <b><font color="#000000">size</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font> <b><font color="#0000FF">const</font></b>
-     <font color="#FF0000">{</font>    <b><font color="#0000FF">return</font></b> <b><font color="#000000">size_t</font></b><font color="#990000">(</font> base_class<font color="#990000">::</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">);</font> <font color="#FF0000">}</font>
-     <i><font color="#9A1900">// resize</font></i>
-     <font color="#009900">void</font> <b><font color="#000000">resize</font></b><font color="#990000">(</font><font color="#008080">size_t</font> n<font color="#990000">)</font>
-     <font color="#FF0000">{</font>    base_class<font color="#990000">::</font><b><font color="#000000">resize</font></b><font color="#990000">(</font> Eigen<font color="#990000">::</font><b><font color="#000000">Index</font></b><font color="#990000">(</font>n<font color="#990000">)</font> <font color="#990000">);</font> <font color="#FF0000">}</font>
-<font color="#FF0000">}</font><font color="#990000">;</font>
+<pre><tt><b><font color="#0000FF">namespace</font></b> CppAD <font color="#FF0000">{</font>
+     <b><font color="#0000FF">template</font></b> <font color="#990000">&lt;</font><b><font color="#0000FF">class</font></b> <font color="#008080">Scalar</font><font color="#990000">&gt;</font>
+     <b><font color="#0000FF">class</font></b> <font color="#008080">eigen_vector</font> <font color="#990000">:</font> <b><font color="#0000FF">public</font></b> Eigen<font color="#990000">::</font>Matrix<font color="#990000">&lt;</font>Scalar<font color="#990000">,</font> Eigen<font color="#990000">::</font>Dynamic<font color="#990000">,</font> <font color="#993399">1</font><font color="#990000">&gt;</font> <font color="#FF0000">{</font>
+     <b><font color="#0000FF">private</font></b><font color="#990000">:</font>
+          <i><font color="#9A1900">// base_class</font></i>
+          <b><font color="#0000FF">typedef</font></b> Eigen<font color="#990000">::</font><font color="#008080">Matrix&lt;Scalar, Eigen::Dynamic, 1&gt;</font> base_class<font color="#990000">;</font>
+     <b><font color="#0000FF">public</font></b><font color="#990000">:</font>
+          <i><font color="#9A1900">// constructor</font></i>
+          <b><font color="#000000">eigen_vector</font></b><font color="#990000">(</font><font color="#008080">size_t</font> n<font color="#990000">)</font> <font color="#990000">:</font> <b><font color="#000000">base_class</font></b><font color="#990000">(</font> Eigen<font color="#990000">::</font><b><font color="#000000">Index</font></b><font color="#990000">(</font>n<font color="#990000">)</font> <font color="#990000">)</font>
+          <font color="#FF0000">{</font> <font color="#FF0000">}</font>
+          <b><font color="#000000">eigen_vector</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font> <font color="#990000">:</font> <b><font color="#000000">base_class</font></b><font color="#990000">()</font>
+          <font color="#FF0000">{</font> <font color="#FF0000">}</font>
+          <i><font color="#9A1900">// operator[]</font></i>
+          Scalar<font color="#990000">&amp;</font> <b><font color="#0000FF">operator</font></b><font color="#990000">[](</font><font color="#008080">size_t</font> i<font color="#990000">)</font>
+          <font color="#FF0000">{</font>    <b><font color="#0000FF">return</font></b> base_class<font color="#990000">::</font><b><font color="#0000FF">operator</font></b><font color="#990000">[](</font> Eigen<font color="#990000">::</font><b><font color="#000000">Index</font></b><font color="#990000">(</font>i<font color="#990000">)</font> <font color="#990000">);</font> <font color="#FF0000">}</font>
+          <b><font color="#0000FF">const</font></b> Scalar<font color="#990000">&amp;</font> <b><font color="#0000FF">operator</font></b><font color="#990000">[](</font><font color="#008080">size_t</font> i<font color="#990000">)</font> <b><font color="#0000FF">const</font></b>
+          <font color="#FF0000">{</font>    <b><font color="#0000FF">return</font></b> base_class<font color="#990000">::</font><b><font color="#0000FF">operator</font></b><font color="#990000">[](</font> Eigen<font color="#990000">::</font><b><font color="#000000">Index</font></b><font color="#990000">(</font>i<font color="#990000">)</font> <font color="#990000">);</font> <font color="#FF0000">}</font>
+          <i><font color="#9A1900">// size</font></i>
+          <font color="#008080">size_t</font> <b><font color="#000000">size</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font> <b><font color="#0000FF">const</font></b>
+          <font color="#FF0000">{</font>    <b><font color="#0000FF">return</font></b> <b><font color="#000000">size_t</font></b><font color="#990000">(</font> base_class<font color="#990000">::</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">);</font> <font color="#FF0000">}</font>
+          <i><font color="#9A1900">// resize</font></i>
+          <font color="#009900">void</font> <b><font color="#000000">resize</font></b><font color="#990000">(</font><font color="#008080">size_t</font> n<font color="#990000">)</font>
+          <font color="#FF0000">{</font>    base_class<font color="#990000">::</font><b><font color="#000000">resize</font></b><font color="#990000">(</font> Eigen<font color="#990000">::</font><b><font color="#000000">Index</font></b><font color="#990000">(</font>n<font color="#990000">)</font> <font color="#990000">);</font> <font color="#FF0000">}</font>
+     <font color="#FF0000">}</font><font color="#990000">;</font>
+<font color="#FF0000">}</font>
 <i><font color="#9A1900">//</font></i>
 <b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/cppad.hpp&gt;</font></tt></pre>
 

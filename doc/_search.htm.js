@@ -508,7 +508,7 @@ Keyword =
 'speed_example.cpp  Run the Speed Examples  ',' program running tests ',
 'lu_vec_ad.cpp  Lu Factor and Solve with Recorded Pivoting  ',' luvecad linear equation determinant syntax purpose storage convention matrix rhs result logdet example ',
 'lu_vec_ad_ok.cpp  Lu Factor and Solve With Recorded Pivoting: Example and Test  ',' ',
-'testvector  Using The CppAD Test Vector Template Class  ',' cppad_testvector syntax choice cppad::vector std::vector boost::numeric::ublas::vector eigen_vector ',
+'testvector  Using The CppAD Test Vector Template Class  ',' cppad_testvector syntax choice cppad::vector std::vector boost::numeric::ublas::vector cppad::eigen_vector ',
 'wno_conversion  Suppress Suspect Implicit Conversion Warnings  ',' syntax purpose ',
 'speed  Speed Test an Operator Overloading AD Package  ',' purpose debug_which ',
 'speed_main  Running the Speed Test Program  ',' cppad uniform_01 syntax purpose package double profile correct seed global options onetape memory optimize atomic hes2jac subgraph sparsity boolsparsity revsparsity subsparsity colpack symmetric correctness results n_sweep link functions ',

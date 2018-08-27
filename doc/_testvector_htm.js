@@ -37,7 +37,7 @@ var list_current0 = [
 'testvector.htm#CppAD::vector',
 'testvector.htm#std::vector',
 'testvector.htm#boost::numeric::ublas::vector',
-'testvector.htm#eigen_vector'
+'testvector.htm#CppAD::eigen_vector'
 ];
 function choose_across0(item)
 {	var index          = item.selectedIndex;
