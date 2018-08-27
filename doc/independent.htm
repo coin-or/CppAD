@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Declare Independent Variables and Start Recording</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Declare Independent Variables and Start Recording">
-<meta name="keywords" id="keywords" content=" declare independent variables start recording syntax stop x abort_op_index record_compare dynamic vectorad parallel mode example ">
+<meta name="keywords" id="keywords" content=" declare independent variables start recording syntax stop x abort_op_index record_compare dynamic efficiency vectorad parallel mode example ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -109,6 +109,7 @@ A:active { color : purple }
 <option>abort_op_index</option>
 <option>record_compare</option>
 <option>dynamic</option>
+<option>---..Efficiency</option>
 <option>VectorAD</option>
 <option>Parallel Mode</option>
 <option>Example</option>
@@ -270,15 +271,33 @@ If this argument is present, it has prototype
 (see 
 <code><i><font color="black"><span style='white-space: nowrap'>Vector</span></font></i></code>
  below).
-It specifies the
+It specifies the independent
 <a href="glossary.htm#Parameter.Dynamic" target="_top"><span style='white-space: nowrap'>dynamic</span></a>
- parameter vector.
+ parameters.
 The value of these parameters,
 in the <a href="adfun.htm" target="_top"><span style='white-space: nowrap'>ADFun</span></a>
  object 
 <code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
 ,
 that can be changed using <a href="new_dynamic.htm" target="_top"><span style='white-space: nowrap'>new_dynamic</span></a>
+.
+
+<br>
+<br>
+<big><a name="dynamic.Efficiency" id="dynamic.Efficiency">Efficiency</a></big>
+<br>
+Any operations that use dynamic parameters will be recorded.
+We use other dynamic parameters to denote parameters that depend on
+the independent dynamic parameters 
+<code><i><font color="black"><span style='white-space: nowrap'>dynamic</span></font></i></code>
+,
+and do not depend on 
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+.
+It is more efficient to compute other dynamic parameters before calling
+<code><font color="blue">Independent</font></code> and include them in the
+independent dynamic parameter vector 
+<code><i><font color="black"><span style='white-space: nowrap'>dynamic</span></font></i></code>
 .
 
 <br>

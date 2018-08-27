@@ -3,7 +3,7 @@
 // ------------------------------------------------------------ 
 Keyword = 
 [
-'CppAD  cppad-20180821: A Package for Differentiation of C++ Algorithms  ',' algorithmic automatic derivative version cppad.hpp syntax introduction example include file preprocessor symbols namespace ',
+'CppAD  cppad-20180827: A Package for Differentiation of C++ Algorithms  ',' algorithmic automatic derivative version cppad.hpp syntax introduction example include file preprocessor symbols namespace ',
 'Install  CppAD Download, Test, and Install Instructions  ',' step 1: 2: cmake 3: check 4: installation deprecated ',
 'download  Download The CppAD Source Code  ',' purpose distribution directory version release license compressed archives coin github control subversion documentation building ',
 'cmake  Using CMake to Configure CppAD  ',' makefile install prefix postfix include directories lib datadir documentation package compile flags profile maximum number threads sparsity internal structure vector sets memory usage tape implicit explicit the program command build directory check cmake_verbose_makefile generator cppad_prefix cppad_postfix cmake_install_includedirs cmake_install_libdirs cmake_install_datadir cmake_install_docdir package_prefix cppad_cxx_flags c++11 debug release cppad_profile_flag eigen fadbad cppad_testvector cppad_max_num_threads cppad_tape_id_type cstdint cppad_tape_addr_type cppad_debug_which exception cppad_deprecated ',
@@ -225,7 +225,7 @@ Keyword =
 'Reverse  Reverse Mode  ',' multiple directions ',
 'sparsity_pattern  Calculating Sparsity Patterns  ',' preferred old ',
 'sparse_derivative  Calculating Sparse Derivatives  ',' preferred sparsity patterns old ',
-'Independent  Declare Independent Variables and Start Recording  ',' syntax stop abort_op_index record_compare dynamic vectorad parallel mode example ',
+'Independent  Declare Independent Variables and Start Recording  ',' syntax stop abort_op_index record_compare dynamic efficiency vectorad parallel mode example ',
 'independent.cpp  Independent and ADFun Constructor: Example and Test  ',' ',
 'FunConstruct  Construct an ADFun Object and Stop Recording  ',' tape syntax purpose vectorad default constructor sequence copy assignment operator taylor coefficients sparsity patterns parallel mode example ',
 'fun_assign.cpp  ADFun Assignment: Example and Test  ',' ',
@@ -618,7 +618,7 @@ Keyword =
 'Bib  Bibliography  ',' abramowitz stegun the c++ programming language evaluating derivatives numerical recipes shampine l.f. ',
 'wish_list  The CppAD Wish List  ',' atomic subgraph new api sparsity element-wise operations abs-normal windows install multi-threading check_finite test_boolofvoid example optimization taping special operators memory checkpoint retape testing compilation speed base requirements adolc forward mode recomputation iterator interface sequence software guidelines tracing atan2 benderquad ',
 'whats_new  Changes and Additions to CppAD  ',' introduction this year previous years ',
-'whats_new_18  Changes and Additions to CppAD During 2018  ',' 08-19 08-18 08-17 08-16 08-14 08-13 08-12 08-10 08-08 08-05 08-04 07-30 07-27 07-23 07-18 07-02 06-27 06-22 06-20 06-19 06-13 06-12 06-04 05-29 05-28 05-26 05-20 05-17 05-04 05-03 04-29 04-13 03-20 03-19 03-04 03-02 02-27 02-26 02-23 02-20 ',
+'whats_new_18  Changes and Additions to CppAD During 2018  ',' 08-27 08-19 08-18 08-17 08-16 08-14 08-13 08-12 08-10 08-08 08-05 08-04 07-30 07-27 07-23 07-18 07-02 06-27 06-22 06-20 06-19 06-13 06-12 06-04 05-29 05-28 05-26 05-20 05-17 05-04 05-03 04-29 04-13 03-20 03-19 03-04 03-02 02-27 02-26 02-23 02-20 ',
 'whats_new_17  Changes and Additions to CppAD During 2017  ',' api 12-14 12-08 12-06 12-05 12-04 12-01 11-30 11-23 11-20 11-19 11-15 11-13 11-12 11-08 11-06 11-04 10-23 09-16 08-30 08-29 08-09 08-08 07-25 07-03 07-01 06-28 06-11 06-10 06-07 06-04 06-03 06-01 05-29 05-19 05-14 05-12 04-08 04-02 03-31 03-29 03-25 03-20 03-13 03-11 03-10 03-06 03-04 02-26 02-21 02-19 02-15 02-13 02-11 02-10 02-09 02-08 02-05 02-03 02-02 02-01 01-30 01-29 01-27 01-19 01-18 01-17 ',
 'whats_new_16  Changes and Additions to CppAD During 2016  ',' introduction 12-23 12-20 12-18 12-13 12-11 12-09 11-18 11-14 11-13 10-27 10-12 09-29 09-27 09-26 09-16 09-13 08-30 08-25 07-17 07-14 06-30 06-29 06-27 06-25 06-10 05-05 04-17 03-27 03-26 03-25 03-24 03-23 03-22 03-21 03-20 03-19 03-17 03-12 03-05 03-01 02-29 02-28 02-27 02-26 02-25 02-23 01-21 01-20 01-18 ',
 'whats_new_15  CppAD Changes and Additions During 2015  ',' introduction 12-31 12-29 12-28 12-08 12-01 11-30 11-25 11-24 11-14 11-08 11-06 10-21 10-16 10-06 10-04 10-03 10-02 09-28 09-27 09-25 09-24 09-23 09-21 09-20 09-19 09-16 09-03 09-02 08-31 08-30 08-29 08-28 08-26 08-25 08-20 08-17 08-16 08-09 08-06 07-31 06-16 06-11 06-09 06-07 05-26 cond_exp_1 cond_exp_2 05-11 05-10 05-09 05-08 05-07 05-05 04-18 03-13 03-06 02-28 02-18 02-16 02-14 02-11 02-10 02-09 02-07 02-06 02-04 02-03 02-02 01-30 01-29 01-26 01-23 01-21 01-20 01-09 01-07 01-02 ',
