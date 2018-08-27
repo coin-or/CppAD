@@ -41,8 +41,8 @@ bool eigen_det(void)
 	typedef Matrix< double     , Dynamic, Dynamic > matrix;
 	typedef Matrix< AD<double> , Dynamic, Dynamic > a_matrix;
 	//
-	typedef eigen_vector<double>                    vector;
-	typedef eigen_vector< AD<double> >              a_vector;
+	typedef CppAD::eigen_vector<double>          vector;
+	typedef CppAD::eigen_vector< AD<double> >    a_vector;
 	//
 
 	// domain and range space vectors

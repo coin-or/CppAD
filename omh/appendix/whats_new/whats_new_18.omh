@@ -29,6 +29,7 @@ $spell
 	Vec
 	valgrind
 	Eigen
+	namespace
 $$
 
 $section Changes and Additions to CppAD During 2018$$
@@ -40,6 +41,11 @@ $cref/efficiency/Independent/dynamic/Efficiency/$$ for dynamic parameters.
 $lnext
 In a comment in the $cref new_dynamic.cpp$$ example,
 change 'independent dynamic parameters' to 'dynamic parameter'.
+$lnext
+The $cref/eigen_vector/cppad_eigen.hpp/eigen_vector/$$ class was moved
+out of the global namespace to the CppAD namespace.
+This class was recently introduced ($cref/08-12/whats_new_18/08-12/$$)
+and so this change to the API should be easy to fix in user code.
 $lend
 
 $head 08-19$$

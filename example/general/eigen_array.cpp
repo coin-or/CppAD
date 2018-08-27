@@ -34,7 +34,7 @@ bool eigen_array(void)
 	using CppAD::AD;
 	using CppAD::NearEqual;
 	//
-	typedef eigen_vector< AD<double> > a_vector;
+	typedef CppAD::eigen_vector< AD<double> > a_vector;
 	//
 	// domain and range space vectors
 	size_t n  = 10, m = n;

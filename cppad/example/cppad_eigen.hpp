@@ -156,34 +156,36 @@ namespace CppAD {
 
 /* %$$
 $head eigen_vector$$
-The class $code eigen_vector$$ is a wrapper for Eigen column vectors
+The class $code CppAD::eigen_vector$$ is a wrapper for Eigen column vectors
 so that they are $cref/simple vectors/SimpleVector/$$.
 To be specific, it converts $code Eigen::Index$$ arguments and
 return values to $code size_t$$.
 $srccode%cpp% */
-template <class Scalar>
-class eigen_vector : public Eigen::Matrix<Scalar, Eigen::Dynamic, 1> {
-private:
-	// base_class
-	typedef Eigen::Matrix<Scalar, Eigen::Dynamic, 1> base_class;
-public:
-	// constructor
-	eigen_vector(size_t n) : base_class( Eigen::Index(n) )
-	{ }
-	eigen_vector(void) : base_class()
-	{ }
-	// operator[]
-	Scalar& operator[](size_t i)
-	{	return base_class::operator[]( Eigen::Index(i) ); }
-	const Scalar& operator[](size_t i) const
-	{	return base_class::operator[]( Eigen::Index(i) ); }
-	// size
-	size_t size(void) const
-	{	return size_t( base_class::size() ); }
-	// resize
-	void resize(size_t n)
-	{	base_class::resize( Eigen::Index(n) ); }
-};
+namespace CppAD {
+	template <class Scalar>
+	class eigen_vector : public Eigen::Matrix<Scalar, Eigen::Dynamic, 1> {
+	private:
+		// base_class
+		typedef Eigen::Matrix<Scalar, Eigen::Dynamic, 1> base_class;
+	public:
+		// constructor
+		eigen_vector(size_t n) : base_class( Eigen::Index(n) )
+		{ }
+		eigen_vector(void) : base_class()
+		{ }
+		// operator[]
+		Scalar& operator[](size_t i)
+		{	return base_class::operator[]( Eigen::Index(i) ); }
+		const Scalar& operator[](size_t i) const
+		{	return base_class::operator[]( Eigen::Index(i) ); }
+		// size
+		size_t size(void) const
+		{	return size_t( base_class::size() ); }
+		// resize
+		void resize(size_t n)
+		{	base_class::resize( Eigen::Index(n) ); }
+	};
+}
 //
 # include <cppad/cppad.hpp>
 /* %$$

@@ -94,7 +94,7 @@ $srccode%cpp% */
 In this case CppAD will use this boost vector for
 many of its examples and tests.
 
-$head eigen_vector$$
+$head CppAD::eigen_vector$$
 If in the cmake command
 you specify $icode cppad_testvector$$ to be $code eigen$$,
 $code CPPAD_EIGENVECTOR$$ will be true.
@@ -103,7 +103,7 @@ $code CPPAD_TESTVECTOR$$ is defined by the following source code:
 $srccode%cpp% */
 # if CPPAD_EIGENVECTOR
 # include <cppad/example/cppad_eigen.hpp>
-# define CPPAD_TESTVECTOR(Scalar) eigen_vector< Scalar >
+# define CPPAD_TESTVECTOR(Scalar) CppAD::eigen_vector< Scalar >
 # endif
 /* %$$
 see $cref/eigen_vector/cppad_eigen.hpp/eigen_vector/$$.
