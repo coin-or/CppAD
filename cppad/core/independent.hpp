@@ -108,11 +108,20 @@ $codei%
 	const %VectorAD%& %dynamic%
 %$$
 (see $icode Vector$$ below).
-It specifies the
-$cref/dynamic/glossary/Parameter/Dynamic/$$ parameter vector.
+It specifies the independent
+$cref/dynamic/glossary/Parameter/Dynamic/$$ parameters.
 The value of these parameters,
 in the $cref ADFun$$ object $icode f$$,
 that can be changed using $cref new_dynamic$$.
+
+$subhead Efficiency$$
+Any operations that use dynamic parameters will be recorded.
+We use other dynamic parameters to denote parameters that depend on
+the independent dynamic parameters $icode dynamic$$,
+and do not depend on $icode x$$.
+It is more efficient to compute other dynamic parameters before calling
+$code Independent$$ and include them in the
+independent dynamic parameter vector $icode dynamic$$.
 
 $head VectorAD$$
 The type $icode VectorAD$$ must be a $cref SimpleVector$$ class with

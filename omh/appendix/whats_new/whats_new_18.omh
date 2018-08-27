@@ -33,6 +33,15 @@ $$
 
 $section Changes and Additions to CppAD During 2018$$
 
+$head 08-27$$
+$list number$$
+Add a discussion about
+$cref/efficiency/Independent/dynamic/Efficiency/$$ for dynamic parameters.
+$lnext
+In a comment in the $cref new_dynamic.cpp$$ example,
+change 'independent dynamic parameters' to 'dynamic parameter'.
+$lend
+
 $head 08-19$$
 $list number$$
 Fix dynamic parameter arguments to

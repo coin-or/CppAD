@@ -72,7 +72,7 @@ bool new_dynamic(void)
 	// check the number of independent dynamic parameters in f
 	ok &= f.size_dyn_ind() == nd;
 
-	// total number of independent dynamic parameters in f
+	// total number of dynamic parameters in f
 	ok &= f.size_dyn_par() == nd + 1;
 
 	// check that these are no longer dynamic parameters

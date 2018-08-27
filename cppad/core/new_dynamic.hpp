@@ -55,7 +55,7 @@ $codei%
 (see $icode VectorBase$$ below).
 It specifies a new value for the independent
 $cref/dynamic/glossary/Parameter/Dynamic/$$ parameters.
-It size must be the same as the size of the
+It size must be the same as the size of the independent
 $cref/dynamic/Independent/dynamic/$$ parameter vector
 in the call to $code Independent$$ that started
 the recording for $icode f$$; see
