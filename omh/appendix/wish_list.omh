@@ -51,6 +51,23 @@ $spell
 $$
 
 $section The CppAD Wish List$$
+
+$head AD<Base> Functions from Base Functions$$
+Add a feature that creates an $codei%ADFun< AD<%Base%> >%$$ object
+from an $cref/ADFun<Base>/ADFun/$$ object.
+Then any AD function would have two versions,
+a $icode Base$$ version for evaluation of derivatives,
+and an $codei%AD<%Base%>%$$ for recording a new functions that
+use derivatives of this function.
+This works well with the $cref new_dynamic$$ feature.
+For example, one could first define a function with
+$cref/dynamic parameters/glossary/Parameter/Dynamic/$$ and
+then define a second function, using derivatives of the first function,
+where dynamic parameters in the first function are variables in the second.
+Users of atomic functions would need to define AD versions
+of $cref atomic_forward$$ and $cref atomic_reverse$$ to gain full use
+of this feature.
+
 $comment ------------------------------------------------------------------- $$
 $head Atomic$$
 
