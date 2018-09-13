@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>The CppAD Wish List</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="The CppAD Wish List">
-<meta name="keywords" id="keywords" content=" the cppad wish list atomic subgraph new api sparsity element-wise operations abs-normal windows install multi-threading check_finite test_boolofvoid example optimization taping special operators memory checkpoint retape testing compilation speed base requirements adolc forward mode recomputation iterator interface operation sequence software guidelines tracing atan2 benderquad ">
+<meta name="keywords" id="keywords" content=" the cppad wish list ad&lt;base&gt; functions from base atomic subgraph new api sparsity element-wise operations abs-normal windows install multi-threading check_finite test_boolofvoid example optimization taping special operators memory checkpoint retape testing compilation speed requirements adolc forward mode recomputation iterator interface operation sequence software guidelines tracing atan2 benderquad ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -88,6 +88,7 @@ A:active { color : purple }
 <td>
 <select onchange='choose_current0(this)'>
 <option>Headings-&gt;</option>
+<option>AD&lt;Base&gt; Functions from Base Functions</option>
 <option>Atomic</option>
 <option>---..Subgraph</option>
 <option>---..New API</option>
@@ -129,6 +130,37 @@ A:active { color : purple }
 
 
 <center><b><big><big>The CppAD Wish List</big></big></b></center>
+<br>
+<b><big><a name="AD&lt;Base&gt; Functions from Base Functions" id="AD&lt;Base&gt; Functions from Base Functions">AD&lt;Base&gt; Functions from Base Functions</a></big></b>
+<br>
+Add a feature that creates an 
+<code><font color="blue"><span style='white-space: nowrap'>ADFun&lt;&nbsp;AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;&gt;</span></font></code>
+ object
+from an <a href="adfun.htm" target="_top"><span style='white-space: nowrap'>ADFun&lt;Base&gt;</span></a>
+ object.
+Then any AD function would have two versions,
+a 
+<code><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i></code>
+ version for evaluation of derivatives,
+and an 
+<code><font color="blue"><span style='white-space: nowrap'>AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code>
+ for recording a new functions that
+use derivatives of this function.
+This works well with the <a href="new_dynamic.htm" target="_top"><span style='white-space: nowrap'>new_dynamic</span></a>
+ feature.
+For example, one could first define a function with
+<a href="glossary.htm#Parameter.Dynamic" target="_top"><span style='white-space: nowrap'>dynamic&nbsp;parameters</span></a>
+ and
+then define a second function, using derivatives of the first function,
+where dynamic parameters in the first function are variables in the second.
+Users of atomic functions would need to define AD versions
+of <a href="atomic_forward.htm" target="_top"><span style='white-space: nowrap'>atomic_forward</span></a>
+ and <a href="atomic_reverse.htm" target="_top"><span style='white-space: nowrap'>atomic_reverse</span></a>
+ to gain full use
+of this feature.
+
+
+<br>
 <br>
 <b><big><a name="Atomic" id="Atomic">Atomic</a></big></b>
 

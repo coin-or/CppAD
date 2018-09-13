@@ -38,6 +38,7 @@ var list_down1 = [
 'license.htm'
 ];
 var list_current0 = [
+'wish_list.htm#AD&lt;Base&gt; Functions from Base Functions',
 'wish_list.htm#Atomic',
 'wish_list.htm#Atomic.Subgraph',
 'wish_list.htm#Atomic.New API',
