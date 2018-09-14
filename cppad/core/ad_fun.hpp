@@ -67,9 +67,10 @@ It does it calculations using \c Base operations.
 
 template <class Base>
 class ADFun {
-// ------------------------------------------------------------
-// Private member variables
 private:
+	// ------------------------------------------------------------
+	// Private member variables
+	// ------------------------------------------------------------
 	/// Has this ADFun object been optmized
 	bool has_been_optimized_;
 
@@ -142,14 +143,14 @@ private:
 	/// Not in subgraph_info_ because it depends on Base.
 	local::pod_vector_maybe<Base> subgraph_partial_;
 
-// ------------------------------------------------------------
-// Private member functions
+	// ------------------------------------------------------------
+	// Private member functions
+	// ------------------------------------------------------------
 
 	/// change the operation sequence corresponding to this object
 	template <typename ADvector>
 	void Dependent(local::ADTape<Base> *tape, const ADvector &y);
 
-	// ------------------------------------------------------------
 	// vector of bool version of ForSparseJac
 	// (doxygen in cppad/core/for_sparse_jac.hpp)
 	template <class VectorSet>
@@ -161,6 +162,7 @@ private:
 		const VectorSet&   r         ,
 		VectorSet&         s
 	);
+
 	// vector of std::set<size_t> version of ForSparseJac
 	// (doxygen in cppad/core/for_sparse_jac.hpp)
 	template <class VectorSet>
@@ -172,7 +174,7 @@ private:
 		const VectorSet&         r         ,
 		VectorSet&               s
 	);
-	// ------------------------------------------------------------
+
 	// vector of bool version of RevSparseJac
 	// (doxygen in cppad/core/rev_sparse_jac.hpp)
 	template <class VectorSet>
@@ -184,6 +186,7 @@ private:
 		const VectorSet&   s         ,
 		VectorSet&         r
 	);
+
 	// vector of std::set<size_t> version of RevSparseJac
 	// (doxygen in cppad/core/rev_sparse_jac.hpp)
 	template <class VectorSet>
@@ -195,7 +198,7 @@ private:
 		const VectorSet&         s         ,
 		VectorSet&               r
 	);
-	// ------------------------------------------------------------
+
 	// vector of bool version of ForSparseHes
 	// (doxygen in cppad/core/for_sparse_hes.hpp)
 	template <class VectorSet>
@@ -205,6 +208,7 @@ private:
 		const VectorSet&   s         ,
 		VectorSet&         h
 	);
+
 	// vector of std::set<size_t> version of ForSparseHes
 	// (doxygen in cppad/core/for_sparse_hes.hpp)
 	template <class VectorSet>
@@ -214,7 +218,7 @@ private:
 		const VectorSet&         s         ,
 		VectorSet&               h
 	);
-	// ------------------------------------------------------------
+
 	// vector of bool version of RevSparseHes
 	// (doxygen in cppad/core/rev_sparse_hes.hpp)
 	template <class VectorSet>
@@ -225,6 +229,7 @@ private:
 		const VectorSet&   s         ,
 		VectorSet&         h
 	);
+
 	// vector of std::set<size_t> version of RevSparseHes
 	// (doxygen in cppad/core/rev_sparse_hes.hpp)
 	template <class VectorSet>
@@ -235,7 +240,7 @@ private:
 		const VectorSet&         s         ,
 		VectorSet&               h
 	);
-	// ------------------------------------------------------------
+
 	// Forward mode version of SparseJacobian
 	// (doxygen in cppad/core/sparse_jacobian.hpp)
 	template <class VectorBase, class VectorSet, class VectorSize>
@@ -247,6 +252,7 @@ private:
 		      VectorBase&           jac             ,
 		      sparse_jacobian_work& work
 	);
+
 	// Reverse mode version of SparseJacobian
 	// (doxygen in cppad/core/sparse_jacobian.hpp)
 	template <class VectorBase, class VectorSet, class VectorSize>
@@ -258,7 +264,7 @@ private:
 		      VectorBase&           jac             ,
 		      sparse_jacobian_work& work
 	);
-	// ------------------------------------------------------------
+
 	// combined sparse_list and sparse_pack version of SparseHessian
 	// (doxygen in cppad/core/sparse_hessian.hpp)
 	template <class VectorBase, class VectorSet, class VectorSize>
@@ -271,7 +277,7 @@ private:
 		      VectorBase&              hes         ,
 		      sparse_hessian_work&     work
 	);
-// ------------------------------------------------------------
+
 public:
 	/// copy constructor
 	ADFun(const ADFun& g)
@@ -330,23 +336,31 @@ public:
 	template <typename VectorBase>
 	VectorBase Reverse(size_t p, const VectorBase &v);
 
-	// ---------------------------------------------------------------------
-	// Jacobian sparsity
+	// forward Jacobian sparsity pattern
+	// (doxygen in cppad/core/for_sparse_jac.hpp)
 	template <typename VectorSet>
 	VectorSet ForSparseJac(
 		size_t q, const VectorSet &r, bool transpose = false,
 		bool dependency = false
 	);
+
+	// reverse Jacobian sparsity pattern
+	// (doxygen in cppad/core/rev_sparse_jac.hpp)
 	template <typename VectorSet>
 	VectorSet RevSparseJac(
 		size_t q, const VectorSet &s, bool transpose = false,
 		bool dependency = false
 	);
-	// ---------------------------------------------------------------------
+
+	// subgraph_reverse: select domain
+	// (doxygen in cppad/core/subgraph_reverse.hpp)
 	template <typename VectorBool>
 	void subgraph_reverse(
 		const VectorBool&                   select_domain
 	);
+
+	// subgraph_reverse: compute derivative
+	// (doxygen in cppad/core/subgraph_reverse.hpp)
 	template <typename Addr, typename VectorBase, typename SizeVector>
 	void subgraph_reverse_helper(
 		size_t                               q         ,
@@ -354,6 +368,9 @@ public:
 		SizeVector&                          col       ,
 		VectorBase&                          dw
 	);
+
+	// subgraph_reverse: compute derivative
+	// (doxygen in cppad/core/subgraph_reverse.hpp)
 	template <typename VectorBase, typename SizeVector>
 	void subgraph_reverse(
 		size_t                               q         ,
@@ -361,11 +378,17 @@ public:
 		SizeVector&                          col       ,
 		VectorBase&                          dw
 	);
+
+	// subgraph_jac_rev: compute Jacobian
+	// (doxygen in cppad/core/subgraph_jac_rev.hpp)
 	template <typename SizeVector, typename BaseVector>
 	void subgraph_jac_rev(
 		const BaseVector&                    x         ,
 		sparse_rcv<SizeVector, BaseVector>&  subset
 	);
+
+	// subgraph_jac_rev: compute Jacobian
+	// (doxygen missing in cppad/core/subgraph_jac_rev.hpp)
 	template <typename BoolVector, typename SizeVector, typename BaseVector>
 	void subgraph_jac_rev(
 		const BoolVector&                    select_domain ,
@@ -373,6 +396,10 @@ public:
 		const BaseVector&                    x             ,
 		sparse_rcv<SizeVector, BaseVector>&  matrix_out
 	);
+
+
+	// compute sparse Jacobian using forward mode
+	// (doxygen in cppad/core/sparse_jac.hpp)
 	template <typename SizeVector, typename BaseVector>
 	size_t sparse_jac_for(
 		size_t                               group_max ,
@@ -382,6 +409,9 @@ public:
 		const std::string&                   coloring  ,
 		sparse_jac_work&                     work
 	);
+
+	// compute sparse Jacobian using reverse mode
+	// (doxygen in cppad/core/sparse_jac.hpp)
 	template <typename SizeVector, typename BaseVector>
 	size_t sparse_jac_rev(
 		const BaseVector&                    x        ,
@@ -390,6 +420,9 @@ public:
 		const std::string&                   coloring ,
 		sparse_jac_work&                     work
 	);
+
+	// compute sparse Hessian
+	// (doxygen in cppad/core/sparse_hes.hpp)
 	template <typename SizeVector, typename BaseVector>
 	size_t sparse_hes(
 		const BaseVector&                    x        ,
@@ -399,7 +432,9 @@ public:
 		const std::string&                   coloring ,
 		sparse_hes_work&                     work
 	);
-	// ---------------------------------------------------------------------
+
+	// compute sparsity pattern using subgraphs
+	// (doxygen in cppad/core/subgraph_sparsity.hpp)
 	template <typename BoolVector, typename SizeVector>
 	void subgraph_sparsity(
 		const BoolVector&            select_domain    ,
@@ -407,6 +442,10 @@ public:
 		bool                         transpose        ,
 		sparse_rc<SizeVector>&       pattern_out
 	);
+
+
+	// forward mode Jacobian sparsity pattern
+	// (doxygen in cppad/core/for_jac_sparsity.hpp)
 	template <typename SizeVector>
 	void for_jac_sparsity(
 		const sparse_rc<SizeVector>& pattern_in       ,
@@ -415,6 +454,9 @@ public:
 		bool                         internal_bool    ,
 		sparse_rc<SizeVector>&       pattern_out
 	);
+
+	// reverse mode Jacobian sparsity pattern
+	// (doxygen in cppad/core/for_jac_sparsity.hpp)
 	template <typename SizeVector>
 	void rev_jac_sparsity(
 		const sparse_rc<SizeVector>& pattern_in       ,
@@ -423,6 +465,9 @@ public:
 		bool                         internal_bool    ,
 		sparse_rc<SizeVector>&       pattern_out
 	);
+
+	// reverse mode Hessian sparsity pattern
+	// (doxygen in cppad/core/rev_hes_sparsity.hpp)
 	template <typename BoolVector, typename SizeVector>
 	void rev_hes_sparsity(
 		const BoolVector&            select_range     ,
@@ -430,6 +475,9 @@ public:
 		bool                         internal_bool    ,
 		sparse_rc<SizeVector>&       pattern_out
 	);
+
+	// forward mode Hessian sparsity pattern
+	// (doxygen in cppad/core/for_hes_sparsity.hpp)
 	template <typename BoolVector, typename SizeVector>
 	void for_hes_sparsity(
 		const BoolVector&            select_domain    ,
@@ -437,13 +485,14 @@ public:
 		bool                         internal_bool    ,
 		sparse_rc<SizeVector>&       pattern_out
 	);
-	// ---------------------------------------------------------------------
-	// forward mode Hessian sparsity
-	// (see doxygen documentation in for_sparse_hes.hpp)
+
+	// forward mode Hessian sparsity pattern
+	// (see doxygen in cppad/core/for_sparse_hes.hpp)
 	template <typename VectorSet>
 	VectorSet ForSparseHes(
 		const VectorSet &r, const VectorSet &s
 	);
+
 	// internal set sparsity version of ForSparseHes
 	// (used by checkpoint functions only)
 	void ForSparseHesCheckpoint(
@@ -451,13 +500,16 @@ public:
 		vector<bool>&                 s         ,
 		local::sparse_list&                  h
 	);
-	// reverse mode Hessian sparsity
-	// (see doxygen documentation in rev_sparse_hes.hpp)
+
+	// reverse mode Hessian sparsity pattern
+	// (see doxygen in cppad/core/rev_sparse_hes.hpp)
 	template <typename VectorSet>
 	VectorSet RevSparseHes(
 		size_t q, const VectorSet &s, bool transpose = false
 	);
+
 	// internal set sparsity version of RevSparseHes
+	// (doxygen in cppad/core/rev_sparse_hes.hpp)
 	// (used by checkpoint functions only)
 	void RevSparseHesCheckpoint(
 		size_t                        q         ,
@@ -465,7 +517,9 @@ public:
 		bool                          transpose ,
 		local::sparse_list&                  h
 	);
+
 	// internal set sparsity version of RevSparseJac
+	// (doxygen in cppad/core/rev_sparse_jac.hpp)
 	// (used by checkpoint functions only)
 	void RevSparseJacCheckpoint(
 		size_t                        q          ,
@@ -474,8 +528,10 @@ public:
 		bool                          dependency ,
 		local::sparse_list&                  s
 	);
-    // internal set sparsity version of RevSparseJac
-    // (used by checkpoint functions only)
+
+	// internal set sparsity version of RevSparseJac
+	// (doxygen in cppad/core/for_sparse_jac.hpp)
+	// (used by checkpoint functions only)
 	void ForSparseJacCheckpoint(
 	size_t                        q          ,
 	const local::sparse_list&     r          ,
