@@ -151,7 +151,7 @@ private:
 
 	// ------------------------------------------------------------
 	// vector of bool version of ForSparseJac
-	// (see doxygen in for_sparse_jac.hpp)
+	// (doxygen in cppad/core/for_sparse_jac.hpp)
 	template <class VectorSet>
 	void ForSparseJacCase(
 		bool               set_type  ,
@@ -162,7 +162,7 @@ private:
 		VectorSet&         s
 	);
 	// vector of std::set<size_t> version of ForSparseJac
-	// (see doxygen in for_sparse_jac.hpp)
+	// (doxygen in cppad/core/for_sparse_jac.hpp)
 	template <class VectorSet>
 	void ForSparseJacCase(
 		const std::set<size_t>&  set_type  ,
@@ -174,7 +174,7 @@ private:
 	);
 	// ------------------------------------------------------------
 	// vector of bool version of RevSparseJac
-	// (see doxygen in rev_sparse_jac.hpp)
+	// (doxygen in cppad/core/rev_sparse_jac.hpp)
 	template <class VectorSet>
 	void RevSparseJacCase(
 		bool               set_type  ,
@@ -185,7 +185,7 @@ private:
 		VectorSet&         r
 	);
 	// vector of std::set<size_t> version of RevSparseJac
-	// (see doxygen in rev_sparse_jac.hpp)
+	// (doxygen in cppad/core/rev_sparse_jac.hpp)
 	template <class VectorSet>
 	void RevSparseJacCase(
 		const std::set<size_t>&  set_type  ,
@@ -197,7 +197,7 @@ private:
 	);
 	// ------------------------------------------------------------
 	// vector of bool version of ForSparseHes
-	// (see doxygen in for_sparse_hes.hpp)
+	// (doxygen in cppad/core/for_sparse_hes.hpp)
 	template <class VectorSet>
 	void ForSparseHesCase(
 		bool               set_type  ,
@@ -206,7 +206,7 @@ private:
 		VectorSet&         h
 	);
 	// vector of std::set<size_t> version of ForSparseHes
-	// (see doxygen in for_sparse_hes.hpp)
+	// (doxygen in cppad/core/for_sparse_hes.hpp)
 	template <class VectorSet>
 	void ForSparseHesCase(
 		const std::set<size_t>&  set_type  ,
@@ -216,7 +216,7 @@ private:
 	);
 	// ------------------------------------------------------------
 	// vector of bool version of RevSparseHes
-	// (see doxygen in rev_sparse_hes.hpp)
+	// (doxygen in cppad/core/rev_sparse_hes.hpp)
 	template <class VectorSet>
 	void RevSparseHesCase(
 		bool               set_type  ,
@@ -226,7 +226,7 @@ private:
 		VectorSet&         h
 	);
 	// vector of std::set<size_t> version of RevSparseHes
-	// (see doxygen in rev_sparse_hes.hpp)
+	// (doxygen in cppad/core/rev_sparse_hes.hpp)
 	template <class VectorSet>
 	void RevSparseHesCase(
 		const std::set<size_t>&  set_type  ,
@@ -237,7 +237,7 @@ private:
 	);
 	// ------------------------------------------------------------
 	// Forward mode version of SparseJacobian
-	// (see doxygen in sparse_jacobian.hpp)
+	// (doxygen in cppad/core/sparse_jacobian.hpp)
 	template <class VectorBase, class VectorSet, class VectorSize>
 	size_t SparseJacobianFor(
 		const VectorBase&           x               ,
@@ -248,7 +248,7 @@ private:
 		      sparse_jacobian_work& work
 	);
 	// Reverse mode version of SparseJacobian
-	// (see doxygen in sparse_jacobian.hpp)
+	// (doxygen in cppad/core/sparse_jacobian.hpp)
 	template <class VectorBase, class VectorSet, class VectorSize>
 	size_t SparseJacobianRev(
 		const VectorBase&           x               ,
@@ -259,8 +259,8 @@ private:
 		      sparse_jacobian_work& work
 	);
 	// ------------------------------------------------------------
-	// combined sparse_list and sparse_pack version of
-	// SparseHessian (see doxygen in sparse_hessian.hpp)
+	// combined sparse_list and sparse_pack version of SparseHessian
+	// (doxygen in cppad/core/sparse_hessian.hpp)
 	template <class VectorBase, class VectorSet, class VectorSize>
 	size_t SparseHessianCompute(
 		const VectorBase&              x           ,
@@ -291,7 +291,7 @@ public:
 	ADFun(void);
 
 	// assignment operator
-	// (see doxygen in fun_construct.hpp)
+	// (doxygen in cppad/core/fun_construct.hpp)
 	void operator=(const ADFun& f);
 
 	/// sequence constructor
