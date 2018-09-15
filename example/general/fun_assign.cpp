@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -35,7 +35,7 @@ bool fun_assign(void)
 	// ten times machine percision
 	double eps = 10. * CppAD::numeric_limits<double>::epsilon();
 
-	// two ADFun<double> objects
+	// an empty ADFun<double> object
 	CppAD::ADFun<double> g;
 
 	// domain space vector
@@ -54,7 +54,14 @@ bool fun_assign(void)
 	y[1] = x[1] * x[2] + x[2];
 
 	// Store operation sequence, and order zero forward results, in f.
+# if CPPAD_USE_CPLUSPLUS_2011
+	// this assignment will use move semantics
+	CppAD::ADFun<double> f;
+	f = CppAD::ADFun<double>(x, y);
+# else
+	// normal use of constructor
 	CppAD::ADFun<double> f(x, y);
+# endif
 
 	// sparsity pattern for the identity matrix
 	CPPAD_TESTVECTOR(std::set<size_t>) r(n);
@@ -64,7 +71,7 @@ bool fun_assign(void)
 	// Store forward mode sparsity pattern in f
 	f.ForSparseJac(n, r);
 
-	// make a copy in g
+	// make a copy of f in g
 	g = f;
 
 	// check values that should be equal

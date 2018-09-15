@@ -156,6 +156,13 @@ can be $code const$$.
 All of information (state) stored in $icode f$$ is copied to $icode g$$
 and any information originally in $icode g$$ is lost.
 
+$subhead Move Semantics$$
+In the special case where $icode f$$ is a temporary object
+(and enough C++11 features are supported by the compiler)
+this assignment will use move semantics.
+This avoids the overhead of the copying all the information from
+$icode f$$ to $icode g$$.
+
 $subhead Taylor Coefficients$$
 The Taylor coefficient information currently stored in $icode f$$
 (computed by $cref/f.Forward/Forward/$$) is
@@ -272,10 +279,7 @@ ADFun object containing the operation sequence to be copied.
 */
 template <typename Base>
 void ADFun<Base>::operator=(const ADFun<Base>& f)
-{	size_t m = f.Range();
-	size_t n = f.Domain();
-	size_t i;
-
+{
 	// go through member variables in ad_fun.hpp order
 	//
 	// size_t objects
@@ -311,7 +315,7 @@ void ADFun<Base>::operator=(const ADFun<Base>& f)
 	{	CPPAD_ASSERT_UNKNOWN( n_set == num_var_tape_  );
 		CPPAD_ASSERT_UNKNOWN( f.for_jac_sparse_set_.n_set() == 0 );
 		for_jac_sparse_pack_.resize(n_set, end);
-		for(i = 0; i < num_var_tape_  ; i++)
+		for(size_t i = 0; i < num_var_tape_  ; i++)
 		{	for_jac_sparse_pack_.assignment(
 				i                       ,
 				i                       ,
@@ -328,7 +332,7 @@ void ADFun<Base>::operator=(const ADFun<Base>& f)
 	{	CPPAD_ASSERT_UNKNOWN( n_set == num_var_tape_  );
 		CPPAD_ASSERT_UNKNOWN( f.for_jac_sparse_pack_.n_set() == 0 );
 		for_jac_sparse_set_.resize(n_set, end);
-		for(i = 0; i < num_var_tape_; i++)
+		for(size_t i = 0; i < num_var_tape_; i++)
 		{	for_jac_sparse_set_.assignment(
 				i                       ,
 				i                       ,
@@ -337,6 +341,71 @@ void ADFun<Base>::operator=(const ADFun<Base>& f)
 		}
 	}
 }
+# if CPPAD_USE_CPLUSPLUS_2011
+/// Move semantics version of assignment operator
+template <typename Base>
+void ADFun<Base>::operator=(ADFun<Base>&& f)
+{
+	// size_t objects
+	has_been_optimized_        = f.has_been_optimized_;
+	check_for_nan_             = f.check_for_nan_;
+	compare_change_count_      = f.compare_change_count_;
+	compare_change_number_     = f.compare_change_number_;
+	compare_change_op_index_   = f.compare_change_op_index_;
+	num_order_taylor_          = f.num_order_taylor_;
+	cap_order_taylor_          = f.cap_order_taylor_;
+	num_direction_taylor_      = f.num_direction_taylor_;
+	num_var_tape_              = f.num_var_tape_;
+	//
+	// pod_vector objects
+	ind_taddr_.swap(      f.ind_taddr_);
+	dep_taddr_.swap(      f.dep_taddr_);
+	dep_parameter_.swap(  f.dep_parameter_);
+	taylor_.swap(         f.taylor_);
+	cskip_op_.swap(       f.cskip_op_);
+	load_op_.swap(        f.load_op_);
+	//
+	// player
+	play_.swap(f.play_);
+	//
+	// subgraph
+	subgraph_info_  = f.subgraph_info_;
+	//
+	// sparse_pack
+	for_jac_sparse_pack_.resize(0, 0);
+	size_t n_set = f.for_jac_sparse_pack_.n_set();
+	size_t end   = f.for_jac_sparse_pack_.end();
+	if( n_set > 0 )
+	{	CPPAD_ASSERT_UNKNOWN( n_set == num_var_tape_  );
+		CPPAD_ASSERT_UNKNOWN( f.for_jac_sparse_set_.n_set() == 0 );
+		for_jac_sparse_pack_.resize(n_set, end);
+		for(size_t i = 0; i < num_var_tape_  ; i++)
+		{	for_jac_sparse_pack_.assignment(
+				i                       ,
+				i                       ,
+				f.for_jac_sparse_pack_
+			);
+		}
+	}
+	//
+	// sparse_set
+	for_jac_sparse_set_.resize(0, 0);
+	n_set = f.for_jac_sparse_set_.n_set();
+	end   = f.for_jac_sparse_set_.end();
+	if( n_set > 0 )
+	{	CPPAD_ASSERT_UNKNOWN( n_set == num_var_tape_  );
+		CPPAD_ASSERT_UNKNOWN( f.for_jac_sparse_pack_.n_set() == 0 );
+		for_jac_sparse_set_.resize(n_set, end);
+		for(size_t i = 0; i < num_var_tape_; i++)
+		{	for_jac_sparse_set_.assignment(
+				i                       ,
+				i                       ,
+				f.for_jac_sparse_set_
+			);
+		}
+	}
+}
+# endif
 
 /*!
 ADFun constructor from an operation sequence.

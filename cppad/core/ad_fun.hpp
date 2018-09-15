@@ -299,6 +299,11 @@ public:
 	// assignment operator
 	// (doxygen in cppad/core/fun_construct.hpp)
 	void operator=(const ADFun& f);
+# if CPPAD_USE_CPLUSPLUS_2011
+	// assignment operator with move semantics
+	void operator=(ADFun&& f);
+# endif
+
 
 	/// sequence constructor
 	template <typename ADvector>
