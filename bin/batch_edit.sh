@@ -26,6 +26,7 @@
 # 13. Remove CPPAD_INLINE_FRIEND_TEMPLATE_FUNCTION
 # 14. Remove all inlines for functions that depend on template parameters.
 # 15. Change 'ind[0-9] -> arg[0-9] when used as operator arguments.
+# 16. Remove all lines that have 'SHORT COPYRIGHT' on them.
 # -----------------------------------------------------------------------------
 spell_list='
 '
