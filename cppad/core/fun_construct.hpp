@@ -289,15 +289,10 @@ void ADFun<Base>::operator=(const ADFun<Base>& f)
 	num_direction_taylor_      = f.num_direction_taylor_;
 	num_var_tape_              = f.num_var_tape_;
 	//
-	// CppAD::vector objects
-	ind_taddr_.resize(n);
-	ind_taddr_                 = f.ind_taddr_;
-	dep_taddr_.resize(m);
-	dep_taddr_                 = f.dep_taddr_;
-	dep_parameter_.resize(m);
-	dep_parameter_             = f.dep_parameter_;
-	//
 	// pod_vector objects
+	ind_taddr_                 = f.ind_taddr_;
+	dep_taddr_                 = f.dep_taddr_;
+	dep_parameter_             = f.dep_parameter_;
 	taylor_                    = f.taylor_;
 	cskip_op_                  = f.cskip_op_;
 	load_op_                   = f.load_op_;
