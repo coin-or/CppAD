@@ -90,7 +90,7 @@ template <class Addr, class Base>
 void optimize_run(
 	const std::string&                         options    ,
 	size_t                                     n          ,
-	vector<size_t>&                            dep_taddr  ,
+	pod_vector<size_t>&                        dep_taddr  ,
 	player<Base>*                              play       ,
 	recorder<Base>*                            rec        )
 {	// check that recorder is empty

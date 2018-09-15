@@ -103,7 +103,7 @@ void set_internal_sparsity(
 	bool                          zero_empty       ,
 	bool                          input_empty      ,
 	bool                          transpose        ,
-	const vector<size_t>&         internal_index   ,
+	const pod_vector<size_t>&     internal_index   ,
 	InternalSparsity&             internal_pattern ,
 	const sparse_rc<SizeVector>&  pattern_in       )
 {
@@ -148,7 +148,7 @@ void set_internal_sparsity(
 	bool                          zero_empty       ,
 	bool                          input_empty      ,
 	bool                          transpose        ,
-	const vector<size_t>&         internal_index   ,
+	const pod_vector<size_t>&     internal_index   ,
 	InternalSparsity&             internal_pattern ,
 	const vectorBool&             pattern_in       )
 {	size_t nr = internal_index.size();
@@ -185,7 +185,7 @@ void set_internal_sparsity(
 	bool                          zero_empty       ,
 	bool                          input_empty      ,
 	bool                          transpose        ,
-	const vector<size_t>&         internal_index   ,
+	const pod_vector<size_t>&     internal_index   ,
 	InternalSparsity&             internal_pattern ,
 	const vector<bool>&           pattern_in       )
 {	size_t nr = internal_index.size();
@@ -222,7 +222,7 @@ void set_internal_sparsity(
 	bool                               zero_empty       ,
 	bool                               input_empty      ,
 	bool                               transpose        ,
-	const vector<size_t>&              internal_index   ,
+	const pod_vector<size_t>&          internal_index   ,
 	InternalSparsity&                  internal_pattern ,
 	const vector< std::set<size_t> >&  pattern_in       )
 {	size_t nr = internal_index.size();
@@ -301,7 +301,7 @@ in internal_index, or its transpose, depending on the value of transpose.
 template <class SizeVector, class InternalSparsity>
 void get_internal_sparsity(
 	bool                          transpose         ,
-	const vector<size_t>&         internal_index    ,
+	const pod_vector<size_t>&     internal_index    ,
 	const InternalSparsity&       internal_pattern  ,
 	sparse_rc<SizeVector>&        pattern_out        )
 {	typedef typename InternalSparsity::const_iterator iterator;
@@ -352,7 +352,7 @@ void get_internal_sparsity(
 template <class InternalSparsity>
 void get_internal_sparsity(
 	bool                          transpose         ,
-	const vector<size_t>&         internal_index    ,
+	const pod_vector<size_t>&     internal_index    ,
 	const InternalSparsity&       internal_pattern  ,
 	vectorBool&                   pattern_out       )
 {	typedef typename InternalSparsity::const_iterator iterator;
@@ -383,7 +383,7 @@ void get_internal_sparsity(
 template <class InternalSparsity>
 void get_internal_sparsity(
 	bool                          transpose         ,
-	const vector<size_t>&         internal_index    ,
+	const pod_vector<size_t>&     internal_index    ,
 	const InternalSparsity&       internal_pattern  ,
 	vector<bool>&                 pattern_out       )
 {	typedef typename InternalSparsity::const_iterator iterator;
@@ -414,7 +414,7 @@ void get_internal_sparsity(
 template <class InternalSparsity>
 void get_internal_sparsity(
 	bool                          transpose         ,
-	const vector<size_t>&         internal_index    ,
+	const pod_vector<size_t>&     internal_index    ,
 	const InternalSparsity&       internal_pattern  ,
 	vector< std::set<size_t> >&   pattern_out       )
 {	typedef typename InternalSparsity::const_iterator iterator;

@@ -339,7 +339,7 @@ size_t ADFun<Base>::sparse_jac_for(
 		);
 		//
 		// convert pattern to an internal version of its transpose
-		vector<size_t> internal_index(n);
+		local::pod_vector<size_t> internal_index(n);
 		for(size_t j = 0; j < n; j++)
 			internal_index[j] = j;
 		bool transpose   = true;
@@ -532,7 +532,7 @@ size_t ADFun<Base>::sparse_jac_rev(
 		);
 		//
 		// convert pattern to an internal version
-		vector<size_t> internal_index(m);
+		local::pod_vector<size_t> internal_index(m);
 		for(size_t i = 0; i < m; i++)
 			internal_index[i] = i;
 		bool transpose   = false;

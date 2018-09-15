@@ -137,8 +137,8 @@ void rev_jac(
 	//
 	// work space used by UserOp.
 	vector<Base>       user_x;   // parameters in x as integers
-	vector<size_t>     user_ix;  // variable indices for argument vector
-	vector<size_t>     user_iy;  // variable indices for result vector
+	pod_vector<size_t> user_ix;  // variable indices for argument vector
+	pod_vector<size_t> user_iy;  // variable indices for result vector
 	//
 	// information set by forward_user (initialization to avoid warnings)
 	size_t user_old=0, user_m=0, user_n=0, user_i=0, user_j=0;

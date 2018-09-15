@@ -199,7 +199,7 @@ void get_op_usage(
 	bool                                        print_for_op        ,
 	const player<Base>*                         play                ,
 	const play::const_random_iterator<Addr>&    random_itr          ,
-	const vector<size_t>&                       dep_taddr           ,
+	const pod_vector<size_t>&                   dep_taddr           ,
 	pod_vector<addr_t>&                         cexp2op             ,
 	sparse_list&                                cexp_set            ,
 	pod_vector<bool>&                           vecad_used          ,

@@ -152,8 +152,8 @@ void for_hes(
 	//
 	// work space used by UserOp.
 	vector<Base>       user_x;   // value of parameter arguments to function
-	vector<size_t>     user_ix;  // variable index (on tape) for each argument
-	vector<size_t>     user_iy;  // variable index (on tape) for each result
+	pod_vector<size_t> user_ix;  // variable index (on tape) for each argument
+	pod_vector<size_t> user_iy;  // variable index (on tape) for each result
 	//
 	// information set by forward_user (initialization to avoid warnings)
 	size_t user_old=0, user_m=0, user_n=0, user_i=0, user_j=0;

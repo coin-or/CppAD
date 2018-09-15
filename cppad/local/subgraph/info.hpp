@@ -297,7 +297,7 @@ public:
 	template <typename Addr>
 	void get_rev(
 		const play::const_random_iterator<Addr>&   random_itr   ,
-		const vector<size_t>&                      dep_taddr    ,
+		const pod_vector<size_t>&                  dep_taddr    ,
 		addr_t                                     i_dep        ,
 		pod_vector<addr_t>&                        subgraph
 	);

@@ -89,7 +89,7 @@ template <typename Addr, typename Base, typename BoolVector>
 void subgraph_sparsity(
 	player<Base>*                              play          ,
 	subgraph_info&                             sub_info      ,
-	const vector<size_t>&                      dep_taddr     ,
+	const pod_vector<size_t>&                  dep_taddr     ,
 	const BoolVector&                          select_domain ,
 	const BoolVector&                          select_range  ,
 	pod_vector<size_t>&                        row_out       ,

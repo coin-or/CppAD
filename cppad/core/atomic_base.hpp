@@ -1253,8 +1253,8 @@ for the j-th result for this atomic function.
 template <class InternalSparsity>
 void for_sparse_jac(
 	const vector<Base>&        x            ,
-	const vector<size_t>&      x_index      ,
-	const vector<size_t>&      y_index      ,
+	const local::pod_vector<size_t>& x_index ,
+	const local::pod_vector<size_t>& y_index ,
 	InternalSparsity&          var_sparsity )
 {
 	// intial results are empty during forward mode
@@ -1523,8 +1523,8 @@ the sparsity has been updated to remove y as a function of x.
 template <class InternalSparsity>
 void rev_sparse_jac(
 	const vector<Base>&        x            ,
-	const vector<size_t>&      x_index      ,
-	const vector<size_t>&      y_index      ,
+	const local::pod_vector<size_t>& x_index ,
+	const local::pod_vector<size_t>& y_index ,
 	InternalSparsity&          var_sparsity )
 {
 	// initial results may be non-empty during reverse mode
@@ -1811,8 +1811,8 @@ have been included.
 template <class InternalSparsity>
 void for_sparse_hes(
 	const vector<Base>&        x                ,
-	const vector<size_t>&      x_index          ,
-	const vector<size_t>&      y_index          ,
+	const local::pod_vector<size_t>& x_index ,
+	const local::pod_vector<size_t>& y_index ,
 	const InternalSparsity&    for_jac_sparsity ,
 	const InternalSparsity&    rev_jac_sparsity ,
 	InternalSparsity&          for_hes_sparsity )
@@ -2243,8 +2243,8 @@ with one of the partials with respect to to y_index[i].
 template <class InternalSparsity>
 void rev_sparse_hes(
 	const vector<Base>&        x                ,
-	const vector<size_t>&      x_index          ,
-	const vector<size_t>&      y_index          ,
+	const local::pod_vector<size_t>& x_index ,
+	const local::pod_vector<size_t>& y_index ,
 	const InternalSparsity&    for_jac_sparsity ,
 	bool*                      rev_jac_flag     ,
 	InternalSparsity&          rev_hes_sparsity )

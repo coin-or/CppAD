@@ -104,10 +104,10 @@ private:
 	size_t num_var_tape_;
 
 	/// tape address for the independent variables
-	CppAD::vector<size_t> ind_taddr_;
+	local::pod_vector<size_t> ind_taddr_;
 
 	/// tape address and parameter flag for the dependent variables
-	CppAD::vector<size_t> dep_taddr_;
+	local::pod_vector<size_t> dep_taddr_;
 
 	/// which dependent variables are actually parameters
 	CppAD::vector<bool>   dep_parameter_;

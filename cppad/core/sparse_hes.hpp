@@ -414,7 +414,7 @@ size_t ADFun<Base>::sparse_hes(
 		}
 		//
 		// convert pattern to an internal version of its transpose
-		vector<size_t> internal_index(n);
+		local::pod_vector<size_t> internal_index(n);
 		for(size_t j = 0; j < n; j++)
 			internal_index[j] = j;
 		bool transpose   = true;
