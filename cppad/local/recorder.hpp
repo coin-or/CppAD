@@ -230,8 +230,7 @@ The number of variables corresponding to the operation is given by
 With each call to PutOp or PutLoadOp,
 the return index increases by the number of variables corresponding
 to the call.
-This index starts at zero after the default constructor
-and after each call to Erase.
+This index starts at zero after the default constructor.
 */
 template <class Base>
 inline addr_t recorder<Base>::PutOp(OpCode op)
@@ -283,13 +282,11 @@ which must be one for this operation.
 With each call to PutLoadOp or PutOp,
 the return index increases by the number of variables corresponding
 to this call to the call.
-This index starts at zero after the default constructor
-and after each call to Erase.
+This index starts at zero after the default constructor.
 
 \par num_load_op_rec()
 The return value for <code>num_load_op_rec()</code>
-increases by one after each call to this function
-(and starts at zero after the default constructor or Erase).
+increases by one after each call to this function.
 */
 template <class Base>
 inline addr_t recorder<Base>::PutLoadOp(OpCode op)
@@ -333,8 +330,7 @@ is the index to be palced at the end of the vector of VecAD indices.
 
 \return
 is the index in the vector of VecAD indices corresponding to this value.
-This index starts at zero after the recorder default constructor
-and after each call to Erase.
+This index starts at zero after the recorder default constructor.
 It increments by one for each call to PutVecInd..
 */
 template <class Base>
@@ -555,8 +551,7 @@ corresponding to the operation code op is given by
 	NumArg(op)
 \endverbatim
 The number of the operation argument indices starts at zero
-after the default constructor and each call to Erase.
-It increases by the number of indices placed by each call to PutArg.
+after the default constructor.
 */
 inline void prototype_put_arg(void)
 {	// This routine should not be called

@@ -500,6 +500,7 @@ public:
 		op2var_vec_         = play.op2var_vec_;
 		var2op_vec_         = play.var2op_vec_;
 	}
+	/*
 	// ===============================================================
 	/// Erase the recording stored in the player
 	void Erase(void)
@@ -522,6 +523,7 @@ public:
 		op2var_vec_.resize(0);
 		var2op_vec_.resize(0);
 	}
+	*/
 	// =================================================================
 	/// Enable use of const_subgraph_iterator and member functions that begin
 	// with random_(no work if already setup).
