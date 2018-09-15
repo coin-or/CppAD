@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -131,7 +131,7 @@ $latex j = 0 , \ldots , n-1$$,
 the $th j$$ component of the $th k$$ order Taylor coefficient
 for $latex X(t)$$ is defined by
 $pre
-	$$ $latex x_j^{(k)} = $$ $icode%%xq%[ (%q%+1) * %j% + %k% ]%$$
+	$$ $latex x_j^{(k)} = $$ $icode%xq%[ (%q%+1) * %j% + %k% ]%$$
 
 $subhead Restrictions$$
 Note if $icode f$$ uses $cref old_atomic$$ functions,

@@ -102,45 +102,12 @@ y_{n-1} (t,x) / x_0  & y_{n-1} (t,x) / x_1 & \cdots & y_{n-1} (t,x) / x_{n-1}
 \] $$
 
 $head Taylor's Method Using AD$$
-An $th m$$ order Taylor method for
-approximating the solution of an
-ordinary differential equations is
-$latex \[
-	y(t + \Delta t , x)
-	\approx
-	\sum_{k=0}^p \partial_t^k y(t , x ) \frac{ \Delta t^k }{ k ! }
-	=
-	y^{(0)} (t , x ) +
-	y^{(1)} (t , x ) \Delta t + \cdots +
-	y^{(p)} (t , x ) \Delta t^p
-\] $$
-where the Taylor coefficients $latex y^{(k)} (t, x)$$ are defined by
-$latex \[
-	y^{(k)} (t, x) = \partial_t^k y(t , x ) / k !
-\] $$
 We define the function $latex z(t, x)$$ by the equation
 $latex \[
 	z ( t , x ) = g[ y ( t , x ) ] = h [ x , y( t , x ) ]
 \] $$
-It follows that
-$latex \[
-\begin{array}{rcl}
-	\partial_t y(t, x) & = & z (t , x)
-	\\
-	 \partial_t^{k+1} y(t , x) & = & \partial_t^k z (t , x)
-	\\
-	y^{(k+1)} ( t , x) & = & z^{(k)} (t, x) / (k+1)
-\end{array}
-\] $$
-where $latex  z^{(k)} (t, x)$$ is the
-$th k$$ order Taylor coefficient
-for $latex z(t, x)$$.
-In the example below, the Taylor coefficients
-$latex \[
-	y^{(0)} (t , x) , \ldots , y^{(k)} ( t , x )
-\] $$
-are used to calculate the Taylor coefficient $latex z^{(k)} ( t , x )$$
-which in turn gives the value for $latex  y^{(k+1)} y ( t , x)$$.
+see $cref taylor_ode$$ for the method used to compute the
+Taylor coefficients w.r.t $latex t$$ of $latex y(t, x)$$.
 
 $head base_adolc.hpp$$
 The file $cref base_adolc.hpp$$ is implements the

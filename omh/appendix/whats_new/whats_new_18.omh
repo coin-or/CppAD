@@ -30,13 +30,19 @@ $spell
 	valgrind
 	Eigen
 	namespace
+	Taylor
 $$
 
 $section Changes and Additions to CppAD During 2018$$
 
 $head 09-15$$
+$list number$$
 Add a $cref/move semantics/FunConstruct/Assignment Operator/Move Semantics/$$
 version of the function assignment operator.
+$lnext
+Move AD theory for using Taylor's method to solve an ode to the separate
+section $cref taylor_ode$$.
+$lend
 
 $head 08-27$$
 $list number$$
