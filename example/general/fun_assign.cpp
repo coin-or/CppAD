@@ -54,14 +54,10 @@ bool fun_assign(void)
 	y[1] = x[1] * x[2] + x[2];
 
 	// Store operation sequence, and order zero forward results, in f.
-# if CPPAD_USE_CPLUSPLUS_2011
+	// If CPPAD_USE_CPLUSPLUS_2011 in cppad/configure.hpp is 1,
 	// this assignment will use move semantics
 	CppAD::ADFun<double> f;
 	f = CppAD::ADFun<double>(x, y);
-# else
-	// normal use of constructor
-	CppAD::ADFun<double> f(x, y);
-# endif
 
 	// sparsity pattern for the identity matrix
 	CPPAD_TESTVECTOR(std::set<size_t>) r(n);

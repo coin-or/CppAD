@@ -636,6 +636,29 @@ public:
 	}
 	// -----------------------------------------------------------------
 	/*!
+	swap (used by move semantics version of ADFun assignment operator)
+
+	\param other
+	this sparse_list with be swapped with other.
+
+	\par vector_of_sets
+	This public member function is not yet part of
+	the vector_of_sets concept.
+	*/
+	void swap(sparse_list& other)
+	{	// size_t objects
+		std::swap(end_             , other.end_);
+		std::swap(number_not_used_ , other.number_not_used_);
+		std::swap(data_not_used_   , other.data_not_used_);
+
+		// pod_vectors
+		data_.swap(       other.data_);
+		start_.swap(      other.start_);
+		post_.swap(       other.post_);
+		temporary_.swap(  other.temporary_);
+	}
+	// -----------------------------------------------------------------
+	/*!
 	Start a new vector of sets.
 
 	\param n_set

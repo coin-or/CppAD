@@ -368,42 +368,14 @@ void ADFun<Base>::operator=(ADFun<Base>&& f)
 	// player
 	play_.swap(f.play_);
 	//
-	// subgraph
-	subgraph_info_  = f.subgraph_info_;
+	// subgraph_info
+	subgraph_info_.swap(f.subgraph_info_);
 	//
 	// sparse_pack
-	for_jac_sparse_pack_.resize(0, 0);
-	size_t n_set = f.for_jac_sparse_pack_.n_set();
-	size_t end   = f.for_jac_sparse_pack_.end();
-	if( n_set > 0 )
-	{	CPPAD_ASSERT_UNKNOWN( n_set == num_var_tape_  );
-		CPPAD_ASSERT_UNKNOWN( f.for_jac_sparse_set_.n_set() == 0 );
-		for_jac_sparse_pack_.resize(n_set, end);
-		for(size_t i = 0; i < num_var_tape_  ; i++)
-		{	for_jac_sparse_pack_.assignment(
-				i                       ,
-				i                       ,
-				f.for_jac_sparse_pack_
-			);
-		}
-	}
+	for_jac_sparse_pack_.swap( f.for_jac_sparse_pack_);
 	//
-	// sparse_set
-	for_jac_sparse_set_.resize(0, 0);
-	n_set = f.for_jac_sparse_set_.n_set();
-	end   = f.for_jac_sparse_set_.end();
-	if( n_set > 0 )
-	{	CPPAD_ASSERT_UNKNOWN( n_set == num_var_tape_  );
-		CPPAD_ASSERT_UNKNOWN( f.for_jac_sparse_pack_.n_set() == 0 );
-		for_jac_sparse_set_.resize(n_set, end);
-		for(size_t i = 0; i < num_var_tape_; i++)
-		{	for_jac_sparse_set_.assignment(
-				i                       ,
-				i                       ,
-				f.for_jac_sparse_set_
-			);
-		}
-	}
+	// sparse_list
+	for_jac_sparse_set_.swap( f.for_jac_sparse_set_);
 }
 # endif
 

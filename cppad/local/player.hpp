@@ -502,7 +502,7 @@ public:
 	}
 	// ===============================================================
 	/// swap this recording with another recording
-	/// (used for move semantics in ADFun assignment operation)
+	/// (used for move semantics version of ADFun assignment operation)
 	void swap(player& other)
 	{
 		std::swap(num_dynamic_ind_,    other.num_dynamic_ind_);

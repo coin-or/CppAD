@@ -2,7 +2,7 @@
 # define CPPAD_LOCAL_SPARSE_PACK_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -124,6 +124,23 @@ public:
 		end_    = other.end_;
 		n_pack_ = other.n_pack_;
 		data_   = other.data_;
+	}
+	// -----------------------------------------------------------------
+	/*!
+	swap (used by move semantics version of ADFun assignment operator)
+
+	\param other
+	this sparse_pack will be swapped with other.
+	*/
+	void swap(sparse_pack& other)
+	{	// size_t objects
+		CPPAD_ASSERT_UNKNOWN( n_bit_  == other.n_bit_);
+		std::swap(n_set_  , other.n_set_);
+		std::swap(end_    , other.end_);
+		std::swap(n_pack_ , other.n_pack_);
+		//
+		// pod_vectors
+		data_.swap(other.data_);
 	}
 	// -----------------------------------------------------------------
 	/*!

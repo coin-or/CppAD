@@ -169,8 +169,29 @@ public:
 	{	n_ind_            = info.n_ind_;
 		n_dep_            = info.n_dep_;
 		n_op_             = info.n_op_;
+		n_var_            = info.n_var_;
 		map_user_op_      = info.map_user_op_;
 		in_subgraph_      = info.in_subgraph_;
+		select_domain_    = info.select_domain_;
+		process_range_    = info.process_range_;
+		return;
+	}
+	// -----------------------------------------------------------------------
+	/// swap
+	/// (used for move semantics version of ADFun assignment)
+	void swap(subgraph_info& info)
+	{	// size_t objects
+		std::swap(n_ind_ , info.n_ind_);
+		std::swap(n_dep_ , info.n_dep_);
+		std::swap(n_op_  , info.n_op_);
+		std::swap(n_var_ , info.n_var_);
+		//
+		// pod_vectors
+		map_user_op_.swap(   info.map_user_op_);
+		in_subgraph_.swap(   info.in_subgraph_);
+		select_domain_.swap( info.select_domain_);
+		process_range_.swap( info.process_range_);
+		//
 		return;
 	}
 	// -----------------------------------------------------------------------
