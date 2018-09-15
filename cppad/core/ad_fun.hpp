@@ -110,7 +110,7 @@ private:
 	local::pod_vector<size_t> dep_taddr_;
 
 	/// which dependent variables are actually parameters
-	CppAD::vector<bool>   dep_parameter_;
+	local::pod_vector<bool> dep_parameter_;
 
 	/// results of the forward mode calculations
 	local::pod_vector_maybe<Base> taylor_;
