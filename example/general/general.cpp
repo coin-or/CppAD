@@ -181,6 +181,7 @@ int main(void)
 	Run( atan,              "atan"             );
 	Run( atanh,             "atanh"            );
 	Run( azmul,             "azmul"            );
+	Run( base_require,      "base_require"     );
 	Run( BenderQuad,        "BenderQuad"       );
 	Run( BoolFun,           "BoolFun"          );
 	Run( capacity_order,    "capacity_order"   );
