@@ -22,6 +22,9 @@ $$
 
 $section Taylor's Ode Solver: base2ad Example and Test$$
 
+$head See Also$$
+$cref taylor_ode.cpp$$, $cref mul_level_ode.cpp$$
+
 $head Purpose$$
 This is a realistic example using $cref base2ad$$ to create
 an $codei%AD<%Base%>%$$ function from an $icode Base$$ function.
@@ -31,10 +34,6 @@ its $cref/variables/glossary/Variable/$$.
 These derivatives are used by the $cref taylor_ode$$ method.
 This solution is then differentiated with respect to
 the functions $cref/dynamic parameters/glossary/Parameter/Dynamic/$$.
-The example $cref mul_level_ode.cpp$$ computes the same values using
-$cref mul_level$$ AD.
-The example $cref ode_taylor.cpp$$ is a simpler applications
-of Taylor's method for solving an ODE.
 
 $head ODE$$
 For this example the function

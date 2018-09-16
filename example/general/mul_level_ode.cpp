@@ -22,6 +22,9 @@ $$
 
 $section Taylor's Ode Solver: A Multi-Level AD Example and Test$$
 
+$head See Also$$
+$cref taylor_ode.cpp$$, $cref base2ad.cpp$$, $cref mul_level_adolc_ode.cpp$$
+
 $head Purpose$$
 This is a realistic example using
 two levels of AD; see $cref mul_level$$.
@@ -32,36 +35,15 @@ The second level uses $code AD< AD<double> >$$
 to take derivatives during the solution of the differential equation.
 These derivatives are used in the application
 of Taylor's method to the solution of the ODE.
-The example $cref mul_level_adolc_ode.cpp$$ computes the same values using
-Adolc's type $code adouble$$ and CppAD's type $code AD<adouble>$$.
-The example $cref taylor_ode.cpp$$ is a simpler applications
-of Taylor's method for solving an ODE.
 
 $head ODE$$
-For this example the ODE's are defined by the function
-$latex h : \B{R}^n \times \B{R}^n \rightarrow \B{R}^n$$ where
+For this example the function
+$latex y : \B{R} \times \B{R}^n \rightarrow \B{R}^n$$ is defined by
+$latex y(0, x) = 0$$ and
+$latex \partial_t y(t, x) = g(y, x)$$ where
+$latex g : \B{R}^n \times \B{R}^n \rightarrow \B{R}^n$$ is defined by
 $latex \[
-	h[ x, y(t, x) ] =
-	\left( \begin{array}{c}
-			x_0                     \\
-			x_1 y_0 (t, x)          \\
-			\vdots                  \\
-			x_{n-1} y_{n-2} (t, x)
-	\end{array} \right)
-	=
-	\left( \begin{array}{c}
-			\partial_t y_0 (t , x)      \\
-			\partial_t y_1 (t , x)      \\
-			\vdots                      \\
-			\partial_t y_{n-1} (t , x)
-	\end{array} \right)
-\] $$
-and the initial condition $latex y(0, x) = 0$$.
-The value of $latex x$$ is fixed during the solution of the ODE
-and the function $latex g : \B{R}^n \rightarrow \B{R}^n$$ is used to
-define the ODE where
-$latex \[
-	g(y) =
+	g(y, x) =
 	\left( \begin{array}{c}
 			x_0     \\
 			x_1 y_0 \\
@@ -122,24 +104,29 @@ $end
 // =========================================================================
 // define types for each level
 namespace { // BEGIN empty namespace
-typedef CppAD::AD<double>   a1type;
-typedef CppAD::AD<a1type>   a2type;
+
+typedef CppAD::AD<double>          a1double;
+typedef CppAD::AD<a1double>        a2double;
+
+typedef CPPAD_TESTVECTOR(double)    d_vector;
+typedef CPPAD_TESTVECTOR(a1double)  a1vector;
+typedef CPPAD_TESTVECTOR(a2double)  a2vector;
 
 // -------------------------------------------------------------------------
 // class definition for C++ function object that defines ODE
 class Ode {
 private:
 	// copy of a that is set by constructor and used by g(y)
-	CPPAD_TESTVECTOR(a1type) a1x_;
+	a1vector a1x_;
 public:
 	// constructor
-	Ode(const CPPAD_TESTVECTOR(a1type)& a1x) : a1x_(a1x)
+	Ode(const a1vector& a1x) : a1x_(a1x)
 	{ }
 	// the function g(y) is evaluated with two levels of taping
-	CPPAD_TESTVECTOR(a2type) operator()
-	( const CPPAD_TESTVECTOR(a2type)& a2y) const
+	a2vector operator()
+	( const a2vector& a2y) const
 	{	size_t n = a2y.size();
-		CPPAD_TESTVECTOR(a2type) a2g(n);
+		a2vector a2g(n);
 		size_t i;
 		a2g[0] = a1x_[0];
 		for(i = 1; i < n; i++)
@@ -152,12 +139,12 @@ public:
 // -------------------------------------------------------------------------
 // Routine that uses Taylor's method to solve ordinary differential equaitons
 // and allows for algorithmic differentiation of the solution.
-CPPAD_TESTVECTOR(a1type) taylor_ode(
+a1vector taylor_ode(
 	Ode                            G       ,  // function that defines the ODE
 	size_t                         order   ,  // order of Taylor's method used
 	size_t                         nstep   ,  // number of steps to take
-	const a1type&                  a1dt    ,  // Delta t for each step
-	const CPPAD_TESTVECTOR(a1type)& a1y_ini)  // y(t) at the initial time
+	const a1double&                a1dt    ,  // Delta t for each step
+	const a1vector& a1y_ini)  // y(t) at the initial time
 {
 	// some temporary indices
 	size_t i, k, ell;
@@ -166,10 +153,10 @@ CPPAD_TESTVECTOR(a1type) taylor_ode(
 	size_t n = a1y_ini.size();
 
 	// copies of x and g(y) with two levels of taping
-	CPPAD_TESTVECTOR(a2type)   a2y(n), a2z(n);
+	a2vector   a2y(n), a2z(n);
 
 	// y, y^{(k)} , z^{(k)}, and y^{(k+1)}
-	CPPAD_TESTVECTOR(a1type)  a1y(n), a1y_k(n), a1z_k(n), a1y_kp(n);
+	a1vector  a1y(n), a1y_k(n), a1z_k(n), a1y_kp(n);
 
 	// initialize x
 	for(i = 0; i < n; i++)
@@ -177,28 +164,28 @@ CPPAD_TESTVECTOR(a1type) taylor_ode(
 
 	// loop with respect to each step of Taylors method
 	for(ell = 0; ell < nstep; ell++)
-	{	// prepare to compute derivatives using a1type
+	{	// prepare to compute derivatives using a1double
 		for(i = 0; i < n; i++)
 			a2y[i] = a1y[i];
 		CppAD::Independent(a2y);
 
-		// evaluate ODE in a2type
+		// evaluate ODE in a2double
 		a2z = G(a2y);
 
 		// define differentiable version of a1g: y -> z
-		// that computes its derivatives using a1type objects
-		CppAD::ADFun<a1type> a1g(a2y, a2z);
+		// that computes its derivatives using a1double objects
+		CppAD::ADFun<a1double> a1g(a2y, a2z);
 
 		// Use Taylor's method to take a step
 		a1y_k            = a1y;     // initialize y^{(k)}
-		a1type   a1dt_kp = a1dt;  // initialize dt^(k+1)
+		a1double a1dt_kp = a1dt;  // initialize dt^(k+1)
 		for(k = 0; k <= order; k++)
 		{	// evaluate k-th order Taylor coefficient of y
 			a1z_k = a1g.Forward(k, a1y_k);
 
 			for(i = 0; i < n; i++)
 			{	// convert to (k+1)-Taylor coefficient for x
-				a1y_kp[i] = a1z_k[i] / a1type(k + 1);
+				a1y_kp[i] = a1z_k[i] / a1double(k + 1);
 
 				// add term for to this Taylor coefficient
 				// to solution for y(t, x)
@@ -226,9 +213,9 @@ bool mul_level_ode(void)
 	// some temporary indices
 	size_t i, j;
 
-	// parameter vector in both double and a1type
-	CPPAD_TESTVECTOR(double)  x(n);
-	CPPAD_TESTVECTOR(a1type)  a1x(n);
+	// parameter vector in both double and a1double
+	d_vector  x(n);
+	a1vector  a1x(n);
 	for(i = 0; i < n; i++)
 		a1x[i] = x[i] = double(i + 1);
 
@@ -239,14 +226,14 @@ bool mul_level_ode(void)
 	Ode G(a1x);                // function that defines the ODE
 	size_t   order = n;      // order of Taylor's method used
 	size_t   nstep = 2;      // number of steps to take
-	a1type   a1dt  = double(1.);     // Delta t for each step
+	a1double a1dt  = double(1.);     // Delta t for each step
 	// value of y(t, x) at the initial time
-	CPPAD_TESTVECTOR(a1type) a1y_ini(n);
+	a1vector a1y_ini(n);
 	for(i = 0; i < n; i++)
 		a1y_ini[i] = 0.;
 
 	// integrate the differential equation
-	CPPAD_TESTVECTOR(a1type) a1y_final(n);
+	a1vector a1y_final(n);
 	a1y_final = taylor_ode(G, order, nstep, a1dt, a1y_ini);
 
 	// define differentiable fucntion object f : x -> y_final
@@ -262,10 +249,10 @@ bool mul_level_ode(void)
 	}
 
 	// evaluate the Jacobian of h at a
-	CPPAD_TESTVECTOR(double) jac ( f.Jacobian(x) );
+	d_vector jac ( f.Jacobian(x) );
 	// There appears to be a bug in g++ version 4.4.2 because it generates
 	// a warning for the equivalent form
-	// CPPAD_TESTVECTOR(double) jac = f.Jacobian(x);
+	// d_vector jac = f.Jacobian(x);
 
 	// check Jacobian
 	for(i = 0; i < n; i++)
