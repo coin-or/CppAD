@@ -307,6 +307,7 @@ public:
 # endif
 
 	// create ADFun< AD<Base> > from this ADFun<Base>
+	// (doxygen in cppad/core/base2ad.hpp)
 	ADFun< AD<Base> > base2ad(void) const;
 
 	/// sequence constructor
@@ -840,6 +841,7 @@ public:
 # include <cppad/core/independent.hpp>
 # include <cppad/core/dependent.hpp>
 # include <cppad/core/fun_construct.hpp>
+# include <cppad/core/base2ad.hpp>
 # include <cppad/core/abort_recording.hpp>
 # include <cppad/core/fun_eval.hpp>
 # include <cppad/core/drivers.hpp>

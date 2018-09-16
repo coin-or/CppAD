@@ -19,6 +19,7 @@ $childtable%
 	cppad/core/fun_construct.hpp%
 	cppad/core/dependent.hpp%
 	cppad/core/abort_recording.hpp%
+	cppad/core/base2ad.hpp%
 	omh/seq_property.omh
 %$$
 

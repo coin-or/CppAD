@@ -33,17 +33,16 @@ $mindex tape$$
 
 
 $head Syntax$$
-$codei%ADFun<%Base%> %f%, %g%
+$codei%ADFun<%Base%> %f%(%x%, %y%);
 %$$
-$codei%ADFun<%Base%> %f%(%x%, %y%)
+$codei%ADFun<%Base%> %g%
 %$$
-$icode%g% = %f%
-%$$
+$icode%g% = %f%$$
 
 
 $head Purpose$$
-The $codei%AD<%Base%>%$$ object $icode f$$ can
-store an AD of $icode Base$$
+The $codei%ADFun<%Base%>%$$ object $icode f$$
+stores an AD of $icode Base$$
 $cref/operation sequence/glossary/Operation/Sequence/$$.
 It can then be used to calculate derivatives of the corresponding
 $cref/AD function/glossary/AD Function/$$
@@ -87,12 +86,12 @@ if this is not the case.
 $head Default Constructor$$
 The default constructor
 $codei%
-	ADFun<%Base%> %f%
+	ADFun<%Base%> %g%
 %$$
 creates an
 $codei%AD<%Base%>%$$ object with no corresponding operation sequence; i.e.,
 $codei%
-	%f%.size_var()
+	%g%.size_var()
 %$$
 returns the value zero (see $cref/size_var/seq_property/size_var/$$).
 
@@ -315,50 +314,6 @@ void ADFun<Base>::operator=(const ADFun<Base>& f)
 	//
 	// sparse_list
 	for_jac_sparse_set_        = f.for_jac_sparse_set_;
-}
-
-/// Create an ADFun< AD<Base> > from this ADFun<Base>
-template <typename Base>
-ADFun< AD<Base> > ADFun<Base>::base2ad(void) const
-{	ADFun< AD<Base> > fun;
-	//
-	// size_t objects
-	fun.has_been_optimized_        = has_been_optimized_;
-	fun.check_for_nan_             = check_for_nan_;
-	fun.compare_change_count_      = compare_change_count_;
-	fun.compare_change_number_     = compare_change_number_;
-	fun.compare_change_op_index_   = compare_change_op_index_;
-	fun.num_order_taylor_          = num_order_taylor_;
-	fun.cap_order_taylor_          = cap_order_taylor_;
-	fun.num_direction_taylor_      = num_direction_taylor_;
-	fun.num_var_tape_              = num_var_tape_;
-	//
-	// pod_vector objects
-	fun.ind_taddr_                 = ind_taddr_;
-	fun.dep_taddr_                 = dep_taddr_;
-	fun.dep_parameter_             = dep_parameter_;
-	fun.cskip_op_                  = cskip_op_;
-	fun.load_op_                   = load_op_;
-	//
-	// pod_maybe_vector< AD<Base> > = pod_maybe_vector<Base>
-	fun.taylor_.resize( taylor_.size() );
-	for(size_t i = 0; i < taylor_.size(); ++i)
-		fun.taylor_[i] = taylor_[i];
-	//
-	// player
-	// (uses move semantics when CPPAD_USE_CPLUSPLUS_2011 is 1)
-	fun.play_ = play_.base2ad();
-	//
-	// subgraph
-	fun.subgraph_info_ = subgraph_info_;
-	//
-	// sparse_pack
-	fun.for_jac_sparse_pack_ = for_jac_sparse_pack_;
-	//
-	// sparse_list
-	fun.for_jac_sparse_set_  = for_jac_sparse_set_;
-	//
-	return fun;
 }
 # if CPPAD_USE_CPLUSPLUS_2011
 /// Move semantics version of assignment operator

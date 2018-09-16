@@ -111,6 +111,7 @@ nobase_myinclude_HEADERS =  \
 	cppad/core/atanh.hpp \
 	cppad/core/atomic_base.hpp \
 	cppad/core/azmul.hpp \
+	cppad/core/base2ad.hpp \
 	cppad/core/base_complex.hpp \
 	cppad/core/base_cond_exp.hpp \
 	cppad/core/base_double.hpp \

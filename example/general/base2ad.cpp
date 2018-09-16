@@ -10,7 +10,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 
 /*
-$begin mul_level_ode.cpp$$
+$begin base2ad.cpp$$
 $spell
 	Taylor
 	Cpp
@@ -20,48 +20,30 @@ $spell
 	adouble
 $$
 
-$section Taylor's Ode Solver: A Multi-Level AD Example and Test$$
+$section Taylor's Ode Solver: base2ad Example and Test$$
 
 $head Purpose$$
-This is a realistic example using
-two levels of AD; see $cref mul_level$$.
-The first level uses $code AD<double>$$ to tape the solution of an
-ordinary differential equation.
-This solution is then differentiated with respect to a parameter vector.
-The second level uses $code AD< AD<double> >$$
-to take derivatives during the solution of the differential equation.
-These derivatives are used in the application
-of Taylor's method to the solution of the ODE.
-The example $cref mul_level_adolc_ode.cpp$$ computes the same values using
-Adolc's type $code adouble$$ and CppAD's type $code AD<adouble>$$.
+This is a realistic example using $cref base2ad$$ to create
+an $codei%AD<%Base%>%$$ function from an $icode Base$$ function.
+The function represents an ordinary differential equation.
+It is differentiated with respect to
+its $cref/variables/glossary/Variable/$$.
+These derivatives are used by the $cref taylor_ode$$ method.
+This solution is then differentiated with respect to
+the functions $cref/dynamic parameters/glossary/Parameter/Dynamic/$$.
+The example $cref mul_level_ode.cpp$$ computes the same values using
+$cref mul_level$$ AD.
 The example $cref ode_taylor.cpp$$ is a simpler applications
 of Taylor's method for solving an ODE.
 
 $head ODE$$
-For this example the ODE's are defined by the function
-$latex h : \B{R}^n \times \B{R}^n \rightarrow \B{R}^n$$ where
+For this example the function
+$latex y : \B{R} \times \B{R}^n \rightarrow \B{R}^n$$ is defined by
+$latex y(0, x) = 0$$ and
+$latex \partial_t y(t, x) = g(y, x)$$ where
+$latex g : \B{R}^n \times \B{R}^n \rightarrow \B{R}^n$$ is defined by
 $latex \[
-	h[ x, y(t, x) ] =
-	\left( \begin{array}{c}
-			x_0                     \\
-			x_1 y_0 (t, x)          \\
-			\vdots                  \\
-			x_{n-1} y_{n-2} (t, x)
-	\end{array} \right)
-	=
-	\left( \begin{array}{c}
-			\partial_t y_0 (t , x)      \\
-			\partial_t y_1 (t , x)      \\
-			\vdots                      \\
-			\partial_t y_{n-1} (t , x)
-	\end{array} \right)
-\] $$
-and the initial condition $latex y(0, x) = 0$$.
-The value of $latex x$$ is fixed during the solution of the ODE
-and the function $latex g : \B{R}^n \rightarrow \B{R}^n$$ is used to
-define the ODE where
-$latex \[
-	g(y) =
+	g(y, x) =
 	\left( \begin{array}{c}
 			x_0     \\
 			x_1 y_0 \\
@@ -102,7 +84,7 @@ y_{n-1} (t,x) / x_0  & y_{n-1} (t,x) / x_1 & \cdots & y_{n-1} (t,x) / x_{n-1}
 $head Taylor's Method Using AD$$
 We define the function $latex z(t, x)$$ by the equation
 $latex \[
-	z ( t , x ) = g[ y ( t , x ) ] = h [ x , y( t , x ) ]
+	z ( t , x ) = g[ y ( t , x ), x ]
 \] $$
 see $cref taylor_ode$$ for the method used to compute the
 Taylor coefficients w.r.t $latex t$$ of $latex y(t, x)$$.
