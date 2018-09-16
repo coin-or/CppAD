@@ -56,6 +56,7 @@ var list_current0 = [
 'funconstruct.htm#Sequence Constructor',
 'funconstruct.htm#Copy Constructor',
 'funconstruct.htm#Assignment Operator',
+'funconstruct.htm#Assignment Operator.Move Semantics',
 'funconstruct.htm#Assignment Operator.Taylor Coefficients',
 'funconstruct.htm#Assignment Operator.Sparsity Patterns',
 'funconstruct.htm#Parallel Mode',

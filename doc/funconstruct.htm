@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Construct an ADFun Object and Stop Recording</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Construct an ADFun Object and Stop Recording">
-<meta name="keywords" id="keywords" content=" construct adfun object stop recording tape syntax purpose x y vectorad default constructor sequence copy assignment operator taylor coefficients sparsity patterns parallel mode example ">
+<meta name="keywords" id="keywords" content=" construct adfun object stop recording tape syntax purpose x y vectorad default constructor sequence copy assignment operator move semantics taylor coefficients sparsity patterns parallel mode example ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -111,6 +111,7 @@ A:active { color : purple }
 <option>Sequence Constructor</option>
 <option>Copy Constructor</option>
 <option>Assignment Operator</option>
+<option>---..Move Semantics</option>
 <option>---..Taylor Coefficients</option>
 <option>---..Sparsity Patterns</option>
 <option>Parallel Mode</option>
@@ -369,6 +370,22 @@ All of information (state) stored in
 and any information originally in 
 <code><i><font color="black"><span style='white-space: nowrap'>g</span></font></i></code>
  is lost.
+
+<br>
+<br>
+<big><a name="Assignment Operator.Move Semantics" id="Assignment Operator.Move Semantics">Move Semantics</a></big>
+<br>
+In the special case where 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+ is a temporary object
+(and enough C++11 features are supported by the compiler)
+this assignment will use move semantics.
+This avoids the overhead of the copying all the information from
+
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+ to 
+<code><i><font color="black"><span style='white-space: nowrap'>g</span></font></i></code>
+.
 
 <br>
 <br>

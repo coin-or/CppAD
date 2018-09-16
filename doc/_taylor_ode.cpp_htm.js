@@ -7,46 +7,38 @@ var list_across0 = [
 ];
 var list_up0 = [
 'cppad.htm',
-'example.htm',
-'general.htm',
-'jac_minor_det.cpp.htm'
+'appendix.htm',
+'theory.htm',
+'taylor_ode.htm',
+'taylor_ode.cpp.htm'
 ];
 var list_down3 = [
-'install.htm',
-'introduction.htm',
-'ad.htm',
-'adfun.htm',
-'preprocessor.htm',
-'multi_thread.htm',
-'utility.htm',
-'ipopt_solve.htm',
-'example.htm',
-'speed.htm',
-'appendix.htm'
+'faq.htm',
+'directory.htm',
+'theory.htm',
+'glossary.htm',
+'bib.htm',
+'wish_list.htm',
+'whats_new.htm',
+'deprecated.htm',
+'compare_c.htm',
+'numeric_ad.htm',
+'addon.htm',
+'license.htm'
 ];
 var list_down2 = [
-'get_started.cpp.htm',
-'general.htm',
-'exampleutility.htm',
-'listallexamples.htm',
-'testvector.htm',
-'wno_conversion.htm'
+'forwardtheory.htm',
+'reversetheory.htm',
+'reverse_identity.htm',
+'taylor_ode.htm'
 ];
 var list_down1 = [
-'ad_fun.cpp.htm',
-'ad_in_c.cpp.htm',
-'conj_grad.cpp.htm',
-'cppad_eigen.hpp.htm',
-'hes_minor_det.cpp.htm',
-'hes_lu_det.cpp.htm',
-'interface2c.cpp.htm',
-'jac_minor_det.cpp.htm',
-'jac_lu_det.cpp.htm',
-'mul_level.htm',
-'ode_stiff.cpp.htm',
-'mul_level_ode.cpp.htm',
-'mul_level_adolc_ode.cpp.htm',
-'stack_machine.cpp.htm'
+'taylor_ode.cpp.htm'
+];
+var list_current0 = [
+'taylor_ode.cpp.htm#Purpose',
+'taylor_ode.cpp.htm#ODE',
+'taylor_ode.cpp.htm#ODE Solution'
 ];
 function choose_across0(item)
 {	var index          = item.selectedIndex;

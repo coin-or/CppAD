@@ -45,7 +45,6 @@ var list_down0 = [
 'ode_stiff.cpp.htm',
 'mul_level_ode.cpp.htm',
 'mul_level_adolc_ode.cpp.htm',
-'ode_taylor.cpp.htm',
 'stack_machine.cpp.htm'
 ];
 var list_current0 = [

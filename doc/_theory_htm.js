@@ -40,7 +40,8 @@ var list_down1 = [
 var list_down0 = [
 'forwardtheory.htm',
 'reversetheory.htm',
-'reverse_identity.htm'
+'reverse_identity.htm',
+'taylor_ode.htm'
 ];
 var list_current0 = [
 'theory.htm#Contents'

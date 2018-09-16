@@ -1,0 +1,225 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=default'
+>
+</script>
+<head>
+<title>AD Theory for Solving ODE's Using Taylor's Method</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="AD Theory for Solving ODE's Using Taylor's Method">
+<meta name="keywords" id="keywords" content=" ad theory solving ode's using taylor's method problem z(t) example ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_taylor_ode_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="https://github.com/coin-or/cppad" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="reverse_identity.htm" target="_top">Prev</a>
+</td><td><a href="taylor_ode.cpp.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>Appendix</option>
+<option>Theory</option>
+<option>taylor_ode</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>CppAD-&gt;</option>
+<option>Install</option>
+<option>Introduction</option>
+<option>AD</option>
+<option>ADFun</option>
+<option>preprocessor</option>
+<option>multi_thread</option>
+<option>utility</option>
+<option>ipopt_solve</option>
+<option>Example</option>
+<option>speed</option>
+<option>Appendix</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>Appendix-&gt;</option>
+<option>Faq</option>
+<option>directory</option>
+<option>Theory</option>
+<option>glossary</option>
+<option>Bib</option>
+<option>wish_list</option>
+<option>whats_new</option>
+<option>deprecated</option>
+<option>compare_c</option>
+<option>numeric_ad</option>
+<option>addon</option>
+<option>License</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>Theory-&gt;</option>
+<option>ForwardTheory</option>
+<option>ReverseTheory</option>
+<option>reverse_identity</option>
+<option>taylor_ode</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down0(this)'>
+<option>taylor_ode-&gt;</option>
+<option>taylor_ode.cpp</option>
+</select>
+</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Problem</option>
+<option>z(t)</option>
+<option>Taylor's Method</option>
+<option>Example</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@
+
+
+<center><b><big><big>AD Theory for Solving ODE's Using Taylor's Method</big></big></b></center>
+<br>
+<b><big><a name="Problem" id="Problem">Problem</a></big></b>
+<br>
+We are given an initial value problem for
+<small>@(@
+y : \B{R} \rightarrow \B{R}^n
+@)@</small>; i.e., we know
+<small>@(@
+y(0) \in \B{R}^n
+@)@</small>
+and we know a function <small>@(@
+g : \B{R}^n \rightarrow \B{R}^n
+@)@</small>
+such that <small>@(@
+y^1 (t) = g[ y(t) ]
+@)@</small>
+where <small>@(@
+y^k (t)
+@)@</small> is the <code><i>k</i></code>-th derivative of <small>@(@
+y(t)
+@)@</small>.
+
+<br>
+<br>
+<b><big><a name="z(t)" id="z(t)">z(t)</a></big></b>
+<br>
+We define the function
+<small>@(@
+z : \B{R} \rightarrow \B{R}^n
+@)@</small> by
+<small>@(@
+z(t) = g[ y(t) ]
+@)@</small>.
+Given the Taylor coefficients
+<small>@(@
+y^{(k)} (t)
+@)@</small> for <small>@(@
+k = 0 , \ldots , p
+@)@</small>, we can
+compute <small>@(@
+z^{(p)} (t)
+@)@</small> using forward mode AD on the function
+<small>@(@
+g(y)
+@)@</small>; see <a href="forward_order.htm" target="_top"><span style='white-space: nowrap'>forward_order</span></a>
+.
+It follows from <small>@(@
+y^1 (t) = z(t)
+@)@</small> that
+<small>@(@
+y^{p+1} (t) = z^p (t)
+@)@</small>
+<small>@[@
+
+	y^{(p+1)} (t) = z^{(p)} (t) / (k + 1)
+
+@]@</small>
+where <small>@(@
+y^{(k)} (t)
+@)@</small> is the <code><i>k</i></code>-th order Taylor coefficient
+for <small>@(@
+y(t)
+@)@</small>; i.e., <small>@(@
+y^k (t) / k !
+@)@</small>.
+Starting with the known value <small>@(@
+y^{(0)} (t)
+@)@</small>,
+this gives a prescription for computing <small>@(@
+y^{(k)} (t)
+@)@</small> for
+any <small>@(@
+k
+@)@</small>.
+
+<br>
+<br>
+<b><big><a name="Taylor's Method" id="Taylor's Method">Taylor's Method</a></big></b>
+<br>
+The <code><i>p</i></code>-th order Taylor method for approximates
+<small>@[@
+
+y( t + \Delta t )
+\approx
+y^{(0)} (t) + y^{(1)} (t) \Delta t + \cdots + y^{(p)} (t)  \Delta t^p
+
+@]@</small>
+
+
+<br>
+<br>
+<b><big><a name="Example" id="Example">Example</a></big></b>
+<br>
+The file <a href="taylor_ode.cpp.htm" target="_top"><span style='white-space: nowrap'>taylor_ode.cpp</span></a>
+ contains an example and test
+of this method.
+It returns true if it succeeds and false otherwise.
+
+
+<hr>Input File: omh/appendix/theory/taylor_ode.omh
+
+</body>
+</html>

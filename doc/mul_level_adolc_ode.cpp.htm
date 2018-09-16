@@ -32,7 +32,7 @@ A:active { color : purple }
 <a href="https://github.com/coin-or/cppad" target="_top"><img border="0" src="_image.gif"></a>
 </td>
 <td><a href="mul_level_ode.cpp.htm" target="_top">Prev</a>
-</td><td><a href="ode_taylor.cpp.htm" target="_top">Next</a>
+</td><td><a href="stack_machine.cpp.htm" target="_top">Next</a>
 </td><td>
 <select onchange='choose_across0(this)'>
 <option>Index-&gt;</option>
@@ -95,7 +95,6 @@ A:active { color : purple }
 <option>ode_stiff.cpp</option>
 <option>mul_level_ode.cpp</option>
 <option>mul_level_adolc_ode.cpp</option>
-<option>ode_taylor.cpp</option>
 <option>stack_machine.cpp</option>
 </select>
 </td>
@@ -138,7 +137,7 @@ of Taylor's method to the solution of the ODE.
 The example <a href="mul_level_ode.cpp.htm" target="_top"><span style='white-space: nowrap'>mul_level_ode.cpp</span></a>
  computes the same values using
 <code><font color="blue">AD&lt;double&gt;</font></code> and <code><font color="blue">AD&lt; AD&lt;double&gt; &gt;</font></code>.
-The example <a href="ode_taylor.cpp.htm" target="_top"><span style='white-space: nowrap'>ode_taylor.cpp</span></a>
+The example <a href="taylor_ode.cpp.htm" target="_top"><span style='white-space: nowrap'>taylor_ode.cpp</span></a>
  is a simpler applications
 of Taylor's method for solving an ODE.
 
@@ -235,28 +234,6 @@ y_{n-1} (t,x) / x_0  & y_{n-1} (t,x) / x_1 & \cdots & y_{n-1} (t,x) / x_{n-1}
 <br>
 <b><big><a name="Taylor's Method Using AD" id="Taylor's Method Using AD">Taylor's Method Using AD</a></big></b>
 <br>
-An <code><i>m</i></code>-th order Taylor method for
-approximating the solution of an
-ordinary differential equations is
-<small>@[@
-
-	y(t + \Delta t , x)
-	\approx
-	\sum_{k=0}^p \partial_t^k y(t , x ) \frac{ \Delta t^k }{ k ! }
-	=
-	y^{(0)} (t , x ) +
-	y^{(1)} (t , x ) \Delta t + \cdots +
-	y^{(p)} (t , x ) \Delta t^p
-
-@]@</small>
-where the Taylor coefficients <small>@(@
-y^{(k)} (t, x)
-@)@</small> are defined by
-<small>@[@
-
-	y^{(k)} (t, x) = \partial_t^k y(t , x ) / k !
-
-@]@</small>
 We define the function <small>@(@
 z(t, x)
 @)@</small> by the equation
@@ -265,36 +242,12 @@ z(t, x)
 	z ( t , x ) = g[ y ( t , x ) ] = h [ x , y( t , x ) ]
 
 @]@</small>
-It follows that
-<small>@[@
-
-\begin{array}{rcl}
-	\partial_t y(t, x) & = & z (t , x)
-	\\
-	 \partial_t^{k+1} y(t , x) & = & \partial_t^k z (t , x)
-	\\
-	y^{(k+1)} ( t , x) & = & z^{(k)} (t, x) / (k+1)
-\end{array}
-
-@]@</small>
-where <small>@(@
-z^{(k)} (t, x)
-@)@</small> is the
-<code><i>k</i></code>-th order Taylor coefficient
-for <small>@(@
-z(t, x)
-@)@</small>.
-In the example below, the Taylor coefficients
-<small>@[@
-
-	y^{(0)} (t , x) , \ldots , y^{(k)} ( t , x )
-
-@]@</small>
-are used to calculate the Taylor coefficient <small>@(@
-z^{(k)} ( t , x )
-@)@</small>
-which in turn gives the value for <small>@(@
-y^{(k+1)} y ( t , x)
+see <a href="taylor_ode.htm" target="_top"><span style='white-space: nowrap'>taylor_ode</span></a>
+ for the method used to compute the
+Taylor coefficients w.r.t <small>@(@
+t
+@)@</small> of <small>@(@
+y(t, x)
 @)@</small>.
 
 <br>
