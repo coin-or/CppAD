@@ -34,12 +34,11 @@ spell_list='
 revert_list='
 '
 move_list='
-	example/general/ode_taylor.cpp
 '
 move_sed='s|ode_taylor.cpp|taylor_ode.cpp|'
 #
 cat << EOF > junk.sed
-s|ode_taylor.cpp|taylor_ode.cpp|
+s|ode_taylor|taylor_ode|
 EOF
 # -----------------------------------------------------------------------------
 if [ $0 != "bin/batch_edit.sh" ]

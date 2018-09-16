@@ -42,7 +42,7 @@ Make $cref mul_level_ode.cpp$$ and $cref mul_level_adolc_ode.cpp$$
 more like $cref base2ad.cpp$$.
 
 $head 09-16$$
-The $code ode_taylor.cpp$$ example was moved to $cref taylor_ode.cpp$$
+The $code taylor_ode.cpp$$ example was moved to $cref taylor_ode.cpp$$
 and changed to use the same notation as $cref taylor_ode$$.
 
 $head 09-15$$

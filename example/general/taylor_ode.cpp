@@ -91,7 +91,7 @@ namespace { // BEGIN empty namespace
 
 // -------------------------------------------------------------------------
 // use Taylor's method to solve this ordinary differential equaiton
-bool ode_taylor(void)
+bool taylor_ode(void)
 {	// initialize the return value as true
 	bool ok = true;
 

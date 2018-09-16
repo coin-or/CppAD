@@ -123,7 +123,7 @@ extern bool number_skip(void);
 extern bool NumericType(void);
 extern bool num_limits(void);
 extern bool OdeStiff(void);
-extern bool ode_taylor(void);
+extern bool taylor_ode(void);
 extern bool opt_val_hes(void);
 extern bool con_dyn_var(void);
 extern bool Poly(void);
@@ -236,7 +236,7 @@ int main(void)
 	Run( NumericType,       "NumericType"      );
 	Run( num_limits,        "num_limits"       );
 	Run( OdeStiff,          "OdeStiff"         );
-	Run( ode_taylor,        "ode_taylor"       );
+	Run( taylor_ode,        "ode_taylor"       );
 	Run( opt_val_hes,       "opt_val_hes"      );
 	Run( con_dyn_var,       "con_dyn_var"      );
 	Run( Poly,              "Poly"             );
