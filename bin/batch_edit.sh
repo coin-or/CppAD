@@ -27,6 +27,7 @@
 # 14. Remove all inlines for functions that depend on template parameters.
 # 15. Change 'ind[0-9] -> arg[0-9] when used as operator arguments.
 # 16. Remove all lines that have 'SHORT COPYRIGHT' on them.
+# 17. Remove 'It returns true if it succeeds and false otherwise.'
 # -----------------------------------------------------------------------------
 spell_list='
 '

@@ -40,7 +40,6 @@ $childtable%
 	example/general/ode_stiff.cpp%
 	example/general/mul_level_ode.cpp%
 	example/general/mul_level_adolc_ode.cpp%
-	example/general/ode_taylor.cpp%
 	example/general/stack_machine.cpp
 %$$
 
