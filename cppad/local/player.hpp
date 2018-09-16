@@ -35,6 +35,8 @@ are done using the type Base .
 
 template <class Base>
 class player {
+	// player<Base> must be a friend of player< AD<Base> > for base2ad to work
+	template <typename AnotherBase> friend class player;
 private:
 	// ----------------------------------------------------------------------
 	// information that defines the recording
@@ -106,7 +108,7 @@ private:
 
 public:
 	// =================================================================
-	/// constructor
+	/// default constructor
 	// set all scalars to zero to avoid valgraind warning when ani assignment
 	// occures before values get set.
 	player(void) :
@@ -115,6 +117,13 @@ public:
 	num_load_op_rec_(0)  ,
 	num_vecad_vec_rec_(0)
 	{ }
+	// =================================================================
+	/// copy constructor (needed for base2ad)
+	player(const player& play)
+	{	// 2DO: want to use move semantics here because it is a temporary
+		// in base2ad case.
+		*this = play;
+	}
 
 	// =================================================================
 	/// destructor
@@ -475,23 +484,24 @@ public:
 # endif
 	// ===============================================================
 	/*!
-	Copying an operation sequence from another player to this one
+	Copy a player<Base> to another player<Base>
 
 	\param play
-	the object that contains the operatoion sequence to copy.
+	object that contains the operatoion sequence to copy.
 	*/
 	void operator=(const player& play)
 	{
+		// size_t objects
 		num_dynamic_ind_    = play.num_dynamic_ind_;
 		num_var_rec_        = play.num_var_rec_;
 		num_load_op_rec_    = play.num_load_op_rec_;
 		num_vecad_vec_rec_  = play.num_vecad_vec_rec_;
 		//
+		// pod_vectors
 		op_vec_             = play.op_vec_;
 		arg_vec_            = play.arg_vec_;
 		text_vec_           = play.text_vec_;
 		vecad_ind_vec_      = play.vecad_ind_vec_;
-		all_par_vec_        = play.all_par_vec_;
 		dyn_par_is_         = play.dyn_par_is_;
 		dyn_ind2par_ind_    = play.dyn_ind2par_ind_;
 		dyn_par_op_         = play.dyn_par_op_;
@@ -499,22 +509,84 @@ public:
 		op2arg_vec_         = play.op2arg_vec_;
 		op2var_vec_         = play.op2var_vec_;
 		var2op_vec_         = play.var2op_vec_;
+		//
+		// pod_maybe_vectors
+		all_par_vec_        = play.all_par_vec_;
+	}
+	// ===============================================================
+# if CPPAD_USE_CPLUSPLUS_2011
+	// move semantics version of assignment operator
+	void operator=(player&& play)
+	{
+		// size_t objects
+		num_dynamic_ind_    = play.num_dynamic_ind_;
+		num_var_rec_        = play.num_var_rec_;
+		num_load_op_rec_    = play.num_load_op_rec_;
+		num_vecad_vec_rec_  = play.num_vecad_vec_rec_;
+		//
+		// pod_vectors
+		op_vec_.swap(            play.op_vec_);
+		arg_vec_.swap(           play.arg_vec_);
+		text_vec_.swap(          play.text_vec_);
+		vecad_ind_vec_.swap(     play.vecad_ind_vec_);
+		dyn_par_is_.swap(        play.dyn_par_is_);
+		dyn_ind2par_ind_.swap(   play.dyn_ind2par_ind_);
+		dyn_par_op_.swap(        play.dyn_par_op_);
+		dyn_par_arg_.swap(       play.dyn_par_arg_);
+		op2arg_vec_.swap(        play.op2arg_vec_);
+		op2var_vec_.swap(        play.op2var_vec_);
+		var2op_vec_.swap(        play.var2op_vec_);
+		//
+		// pod_maybe_vectors
+		all_par_vec_.swap(       play.all_par_vec_);
+	}
+# endif
+	// ===============================================================
+	/// Create a player< AD<Base> > from this player<Base>
+	player< AD<Base> > base2ad(void) const
+	{	player< AD<Base> > play;
+		//
+		// size_t objects
+		play.num_dynamic_ind_    = num_dynamic_ind_;
+		play.num_var_rec_        = num_var_rec_;
+		play.num_load_op_rec_    = num_load_op_rec_;
+		play.num_vecad_vec_rec_  = num_vecad_vec_rec_;
+		//
+		// pod_vectors
+		play.op_vec_             = op_vec_;
+		play.arg_vec_            = arg_vec_;
+		play.text_vec_           = text_vec_;
+		play.vecad_ind_vec_      = vecad_ind_vec_;
+		play.dyn_par_is_         = dyn_par_is_;
+		play.dyn_ind2par_ind_    = dyn_ind2par_ind_;
+		play.dyn_par_op_         = dyn_par_op_;
+		play.dyn_par_arg_        = dyn_par_arg_;
+		play.op2arg_vec_         = op2arg_vec_;
+		play.op2var_vec_         = op2var_vec_;
+		play.var2op_vec_         = var2op_vec_;
+		//
+		// pod_maybe_vector< AD<Base> > = pod_maybe_vector<Base>
+		play.all_par_vec_.resize( all_par_vec_.size() );
+		for(size_t i = 0; i < all_par_vec_.size(); ++i)
+			play.all_par_vec_[i] = all_par_vec_[i];
+		//
+		return play;
 	}
 	// ===============================================================
 	/// swap this recording with another recording
 	/// (used for move semantics version of ADFun assignment operation)
 	void swap(player& other)
-	{
+	{	// size_t objects
 		std::swap(num_dynamic_ind_,    other.num_dynamic_ind_);
 		std::swap(num_var_rec_,        other.num_var_rec_);
 		std::swap(num_load_op_rec_,    other.num_load_op_rec_);
 		std::swap(num_vecad_vec_rec_,  other.num_vecad_vec_rec_);
 		//
+		// pod_vectors
 		op_vec_.swap(         other.op_vec_);
 		arg_vec_.swap(        other.arg_vec_);
 		text_vec_.swap(       other.text_vec_);
 		vecad_ind_vec_.swap(  other.vecad_ind_vec_);
-		all_par_vec_.swap(    other.all_par_vec_);
 		dyn_par_is_.swap(     other.dyn_par_is_);
 		dyn_ind2par_ind_.swap(other.dyn_ind2par_ind_);
 		dyn_par_op_.swap(     other.dyn_par_op_);
@@ -522,6 +594,9 @@ public:
 		op2arg_vec_.swap(     other.op2arg_vec_);
 		op2var_vec_.swap(     other.op2var_vec_);
 		var2op_vec_.swap(     other.var2op_vec_);
+		//
+		// pod_maybe_vectors
+		all_par_vec_.swap(    other.all_par_vec_);
 	}
 	// =================================================================
 	/// Enable use of const_subgraph_iterator and member functions that begin

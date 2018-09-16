@@ -64,6 +64,7 @@ extern bool atan2(void);
 extern bool atanh(void);
 extern bool atan(void);
 extern bool azmul(void);
+extern bool base2ad(void);
 extern bool base_require(void);
 extern bool BenderQuad(void);
 extern bool BoolFun(void);
@@ -181,6 +182,7 @@ int main(void)
 	Run( atan,              "atan"             );
 	Run( atanh,             "atanh"            );
 	Run( azmul,             "azmul"            );
+	Run( base2ad,           "base2ad"          );
 	Run( base_require,      "base_require"     );
 	Run( BenderQuad,        "BenderQuad"       );
 	Run( BoolFun,           "BoolFun"          );

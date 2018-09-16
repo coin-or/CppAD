@@ -49,6 +49,7 @@ SET(source_list
 	atanh.cpp
 	azmul.cpp
 	base_alloc.hpp
+	base2ad.cpp
 	base_require.cpp
 	bender_quad.cpp
 	bool_fun.cpp

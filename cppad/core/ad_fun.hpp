@@ -67,6 +67,8 @@ It does it calculations using \c Base operations.
 
 template <class Base>
 class ADFun {
+	// ADFun<Base> must be a friend of ADFun< AD<Base> > for base2ad to work.
+	template <typename AnotherBase> friend class ADFun;
 private:
 	// ------------------------------------------------------------
 	// Private member variables
@@ -304,6 +306,8 @@ public:
 	void operator=(ADFun&& f);
 # endif
 
+	// create ADFun< AD<Base> > from this ADFun<Base>
+	ADFun< AD<Base> > base2ad(void) const;
 
 	/// sequence constructor
 	template <typename ADvector>
