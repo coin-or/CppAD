@@ -51,5 +51,11 @@ y( t + \Delta t )
 y^{(0)} (t) + y^{(1)} (t) \Delta t + \cdots + y^{(p)} (t)  \Delta t^p
 \] $$
 
+$children%example/general/taylor_ode.cpp
+%$$
+$head Example$$
+The file $cref taylor_ode.cpp$$ contains an example and test
+of this method.
+It returns true if it succeeds and false otherwise.
 
 $end

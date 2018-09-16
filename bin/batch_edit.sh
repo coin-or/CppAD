@@ -27,25 +27,19 @@
 # 14. Remove all inlines for functions that depend on template parameters.
 # 15. Change 'ind[0-9] -> arg[0-9] when used as operator arguments.
 # 16. Remove all lines that have 'SHORT COPYRIGHT' on them.
+# 17. Remove 'It returns true if it succeeds and false otherwise.'
 # -----------------------------------------------------------------------------
 spell_list='
 '
 revert_list='
 '
 move_list='
+	example/general/ode_taylor.cpp
 '
-move_sed='s|par_var_dyn|con_dyn_var|'
+move_sed='s|ode_taylor.cpp|taylor_ode.cpp|'
 #
 cat << EOF > junk.sed
-s/if( ! IdenticalZero( *right.value_ *) )/if( dyn_right | (! IdenticalZero(right.value_) ) )/
-#
-s|if( IdenticalZero( *right.value_ *) )|if( (! dyn_right) \\& IdenticalZero(right.value_) )|
-s|if( IdenticalOne( *right.value_ *) )|if( (! dyn_right) \\& IdenticalOne(right.value_) )|
-#
-s|if( IdenticalZero( *left *) )|if( (! dyn_left) \\& IdenticalZero(left) )|
-s|if( IdenticalZero( *left.value_ *) )|if( (! dyn_left) \\& IdenticalZero(left.value_) )|
-s|if( IdenticalOne( *left *) )|if( (! dyn_left) \\& IdenticalOne(left) )|
-s|if( IdenticalOne( *left.value_ *) )|if( (! dyn_left) \\& IdenticalOne(left.value_) )|
+s|ode_taylor.cpp|taylor_ode.cpp|
 EOF
 # -----------------------------------------------------------------------------
 if [ $0 != "bin/batch_edit.sh" ]

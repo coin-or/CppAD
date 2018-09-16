@@ -105,7 +105,7 @@ SET(source_list
 	numeric_type.cpp
 	num_limits.cpp
 	ode_stiff.cpp
-	ode_taylor.cpp
+	taylor_ode.cpp
 	opt_val_hes.cpp
 	con_dyn_var.cpp
 	poly.cpp
