@@ -24,6 +24,9 @@ $$
 
 $section Taylor's Ode Solver: A Multi-Level Adolc Example and Test$$
 
+$head See Also$$
+$cref taylor_ode.cpp$$, $cref mul_level_ode.cpp$$
+
 $head Purpose$$
 This is a realistic example using
 two levels of AD; see $cref mul_level$$.
@@ -34,36 +37,16 @@ The second level uses CppAD's type $code AD<adouble>$$
 to take derivatives during the solution of the differential equation.
 These derivatives are used in the application
 of Taylor's method to the solution of the ODE.
-The example $cref mul_level_ode.cpp$$ computes the same values using
-$code AD<double>$$ and $code AD< AD<double> >$$.
-The example $cref taylor_ode.cpp$$ is a simpler applications
-of Taylor's method for solving an ODE.
+
 
 $head ODE$$
-For this example the ODE's are defined by the function
-$latex h : \B{R}^n \times \B{R}^n \rightarrow \B{R}^n$$ where
+For this example the function
+$latex y : \B{R} \times \B{R}^n \rightarrow \B{R}^n$$ is defined by
+$latex y(0, x) = 0$$ and
+$latex \partial_t y(t, x) = g(y, x)$$ where
+$latex g : \B{R}^n \times \B{R}^n \rightarrow \B{R}^n$$ is defined by
 $latex \[
-	h[ x, y(t, x) ] =
-	\left( \begin{array}{c}
-			x_0                     \\
-			x_1 y_0 (t, x)          \\
-			\vdots                  \\
-			x_{n-1} y_{n-2} (t, x)
-	\end{array} \right)
-	=
-	\left( \begin{array}{c}
-			\partial_t y_0 (t , x)      \\
-			\partial_t y_1 (t , x)      \\
-			\vdots                      \\
-			\partial_t y_{n-1} (t , x)
-	\end{array} \right)
-\] $$
-and the initial condition $latex y(0, x) = 0$$.
-The value of $latex x$$ is fixed during the solution of the ODE
-and the function $latex g : \B{R}^n \rightarrow \B{R}^n$$ is used to
-define the ODE where
-$latex \[
-	g(y) =
+	g(y, x) =
 	\left( \begin{array}{c}
 			x_0     \\
 			x_1 y_0 \\
