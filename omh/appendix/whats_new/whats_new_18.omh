@@ -35,6 +35,10 @@ $$
 
 $section Changes and Additions to CppAD During 2018$$
 
+$head 09-16$$
+The $code ode_taylor.cpp$$ example was moved to $cref taylor_ode.cpp$$
+and changed to use the same notation as $cref taylor_ode$$.
+
 $head 09-15$$
 $list number$$
 Add a $cref/move semantics/FunConstruct/Assignment Operator/Move Semantics/$$

@@ -34,7 +34,7 @@ These derivatives are used in the application
 of Taylor's method to the solution of the ODE.
 The example $cref mul_level_adolc_ode.cpp$$ computes the same values using
 Adolc's type $code adouble$$ and CppAD's type $code AD<adouble>$$.
-The example $cref ode_taylor.cpp$$ is a simpler applications
+The example $cref taylor_ode.cpp$$ is a simpler applications
 of Taylor's method for solving an ODE.
 
 $head ODE$$

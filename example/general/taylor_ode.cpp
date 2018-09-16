@@ -10,7 +10,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 
 /*
-$begin ode_taylor.cpp$$
+$begin taylor_ode.cpp$$
 $spell
 	Taylor
 	Cpp
@@ -60,7 +60,7 @@ $latex \[
 \] $$
 
 $code
-$srcfile%example/general/ode_taylor.cpp%0%// BEGIN C++%// END C++%1%$$
+$srcfile%example/general/taylor_ode.cpp%0%// BEGIN C++%// END C++%1%$$
 $$
 
 $end

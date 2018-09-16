@@ -231,7 +231,7 @@ $rref ode_evaluate.cpp$$
 $rref ode_gear_control.cpp$$
 $rref ode_gear.cpp$$
 $rref ode_stiff.cpp$$
-$rref ode_taylor.cpp$$
+$rref taylor_ode.cpp$$
 $rref optimize_compare_op.cpp$$
 $rref optimize_conditional_skip.cpp$$
 $rref optimize_cumulative_sum.cpp$$

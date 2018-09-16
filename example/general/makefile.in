@@ -129,7 +129,7 @@ am__general_SOURCES_DIST = mul_level_adolc.cpp mul_level_adolc_ode.cpp \
 	lu_vec_ad_ok.cpp mul.cpp mul_eq.cpp mul_level.cpp \
 	mul_level_ode.cpp near_equal_ext.cpp new_dynamic.cpp \
 	number_skip.cpp numeric_type.cpp num_limits.cpp ode_stiff.cpp \
-	ode_taylor.cpp opt_val_hes.cpp con_dyn_var.cpp poly.cpp \
+	taylor_ode.cpp opt_val_hes.cpp con_dyn_var.cpp poly.cpp \
 	pow.cpp pow_int.cpp print_for.cpp reverse_checkpoint.cpp \
 	reverse_one.cpp reverse_three.cpp reverse_two.cpp rev_one.cpp \
 	rev_two.cpp rosen_34.cpp runge45_2.cpp seq_property.cpp \
@@ -166,7 +166,7 @@ am_general_OBJECTS = $(am__objects_1) abort_recording.$(OBJEXT) \
 	mul_level.$(OBJEXT) mul_level_ode.$(OBJEXT) \
 	near_equal_ext.$(OBJEXT) new_dynamic.$(OBJEXT) \
 	number_skip.$(OBJEXT) numeric_type.$(OBJEXT) \
-	num_limits.$(OBJEXT) ode_stiff.$(OBJEXT) ode_taylor.$(OBJEXT) \
+	num_limits.$(OBJEXT) ode_stiff.$(OBJEXT) taylor_ode.$(OBJEXT) \
 	opt_val_hes.$(OBJEXT) con_dyn_var.$(OBJEXT) poly.$(OBJEXT) \
 	pow.$(OBJEXT) pow_int.$(OBJEXT) print_for.$(OBJEXT) \
 	reverse_checkpoint.$(OBJEXT) reverse_one.$(OBJEXT) \
@@ -558,7 +558,7 @@ general_SOURCES = \
 	numeric_type.cpp \
 	num_limits.cpp \
 	ode_stiff.cpp \
-	ode_taylor.cpp \
+	taylor_ode.cpp \
 	opt_val_hes.cpp \
 	con_dyn_var.cpp \
 	poly.cpp \
@@ -723,7 +723,6 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/number_skip.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/numeric_type.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ode_stiff.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ode_taylor.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/opt_val_hes.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/poly.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/pow.Po@am__quote@
@@ -748,6 +747,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/tan.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/tanh.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/tape_index.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/taylor_ode.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/unary_minus.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/unary_plus.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/value.Po@am__quote@
