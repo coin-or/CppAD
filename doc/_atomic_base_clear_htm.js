@@ -24,7 +24,8 @@ var list_down3 = [
 ];
 var list_down2 = [
 'checkpoint.htm',
-'atomic_base.htm'
+'atomic_base.htm',
+'atomic_example.htm'
 ];
 var list_down1 = [
 'atomic_ctor.htm',
@@ -36,16 +37,7 @@ var list_down1 = [
 'atomic_rev_sparse_jac.htm',
 'atomic_for_sparse_hes.htm',
 'atomic_rev_sparse_hes.htm',
-'atomic_base_clear.htm',
-'atomic_get_started.cpp.htm',
-'atomic_norm_sq.cpp.htm',
-'atomic_reciprocal.cpp.htm',
-'atomic_set_sparsity.cpp.htm',
-'atomic_tangent.cpp.htm',
-'atomic_eigen_mat_mul.cpp.htm',
-'atomic_eigen_mat_inv.cpp.htm',
-'atomic_eigen_cholesky.cpp.htm',
-'atomic_mat_mul.cpp.htm'
+'atomic_base_clear.htm'
 ];
 var list_current0 = [
 'atomic_base_clear.htm#Syntax',

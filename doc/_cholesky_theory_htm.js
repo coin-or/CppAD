@@ -10,25 +10,16 @@ var list_up0 = [
 'ad.htm',
 'advalued.htm',
 'atomic.htm',
-'atomic_base.htm',
+'atomic_example.htm',
 'atomic_eigen_cholesky.cpp.htm',
 'cholesky_theory.htm'
 ];
 var list_down3 = [
 'checkpoint.htm',
-'atomic_base.htm'
+'atomic_base.htm',
+'atomic_example.htm'
 ];
 var list_down2 = [
-'atomic_ctor.htm',
-'atomic_option.htm',
-'atomic_afun.htm',
-'atomic_forward.htm',
-'atomic_reverse.htm',
-'atomic_for_sparse_jac.htm',
-'atomic_rev_sparse_jac.htm',
-'atomic_for_sparse_hes.htm',
-'atomic_rev_sparse_hes.htm',
-'atomic_base_clear.htm',
 'atomic_get_started.cpp.htm',
 'atomic_norm_sq.cpp.htm',
 'atomic_reciprocal.cpp.htm',
