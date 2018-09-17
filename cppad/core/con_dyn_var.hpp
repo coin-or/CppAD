@@ -100,7 +100,8 @@ namespace CppAD {
 	// Constant
 	template <class Base>
 	bool Constant(const AD<Base> &x)
-	{	if( x.tape_id_ == 0 )
+	{	CPPAD_ASSERT_UNKNOWN( x.tape_id_==0 || x.ad_type_!=local::no_ad_type );
+		if( x.tape_id_ == 0 )
 			return true;
 		//
 		size_t thread = size_t(x.tape_id_ % CPPAD_MAX_NUM_THREADS);
@@ -114,7 +115,8 @@ namespace CppAD {
 	// Dynamic
 	template <class Base>
 	bool Dynamic(const AD<Base> &x)
-	{	if( (x.tape_id_ == 0) | (x.ad_type_ != local::dyn_ad_type) )
+	{	CPPAD_ASSERT_UNKNOWN( x.tape_id_==0 || x.ad_type_!=local::no_ad_type );
+		if( (x.tape_id_ == 0) | (x.ad_type_ != local::dyn_ad_type) )
 			return false;
 		//
 		size_t thread = size_t(x.tape_id_ % CPPAD_MAX_NUM_THREADS);
@@ -128,7 +130,8 @@ namespace CppAD {
 	// Parameter
 	template <class Base>
 	bool Parameter(const AD<Base> &x)
-	{	if( (x.tape_id_ == 0) | (x.ad_type_ == local::dyn_ad_type) )
+	{	CPPAD_ASSERT_UNKNOWN( x.tape_id_==0 || x.ad_type_!=local::no_ad_type );
+		if( (x.tape_id_ == 0) | (x.ad_type_ == local::dyn_ad_type) )
 			return true;
 		//
 		size_t thread = size_t(x.tape_id_ % CPPAD_MAX_NUM_THREADS);
@@ -147,7 +150,8 @@ namespace CppAD {
 	// Variable
 	template <class Base>
 	bool Variable(const AD<Base> &x)
-	{	if( (x.tape_id_ == 0) | (x.ad_type_ != local::var_ad_type) )
+	{	CPPAD_ASSERT_UNKNOWN( x.tape_id_==0 || x.ad_type_!=local::no_ad_type );
+		if( (x.tape_id_ == 0) | (x.ad_type_ != local::var_ad_type) )
 			return false;
 		//
 		size_t thread = size_t(x.tape_id_ % CPPAD_MAX_NUM_THREADS);

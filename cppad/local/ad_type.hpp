@@ -21,7 +21,6 @@ Define the enum type ad_type_enum
 /// The ad_type_enum type
 typedef enum {
 	no_ad_type,
-	con_ad_type,
 	dyn_ad_type,
 	var_ad_type
 }
