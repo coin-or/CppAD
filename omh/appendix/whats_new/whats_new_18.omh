@@ -35,11 +35,19 @@ $$
 
 $section Changes and Additions to CppAD During 2018$$
 
+$comment ------------------------------------------------------------------- $$
 $head base2ad$$
 
 $subhead 09-16$$
 Make $cref mul_level_ode.cpp$$ and $cref mul_level_adolc_ode.cpp$$
 more like $cref base2ad.cpp$$.
+
+$comment ------------------------------------------------------------------- $$
+
+$head 09-17$$
+Create a section with just the
+$cref atomic_base$$ specifications
+and another with the $cref/atomic examples/atomic_example/$$.
 
 $head 09-16$$
 The $code taylor_ode.cpp$$ example was moved to $cref taylor_ode.cpp$$

@@ -110,6 +110,16 @@ nobase_myinclude_HEADERS =  \
 	cppad/core/atan2.hpp \
 	cppad/core/atanh.hpp \
 	cppad/core/atomic_base.hpp \
+	cppad/core/atomic_base/afun.hpp \
+	cppad/core/atomic_base/clear.hpp \
+	cppad/core/atomic_base/ctor.hpp \
+	cppad/core/atomic_base/for_sparse_hes.hpp \
+	cppad/core/atomic_base/for_sparse_jac.hpp \
+	cppad/core/atomic_base/forward.hpp \
+	cppad/core/atomic_base/option.hpp \
+	cppad/core/atomic_base/reverse.hpp \
+	cppad/core/atomic_base/rev_sparse_hes.hpp \
+	cppad/core/atomic_base/rev_sparse_jac.hpp \
 	cppad/core/azmul.hpp \
 	cppad/core/base2ad.hpp \
 	cppad/core/base_complex.hpp \

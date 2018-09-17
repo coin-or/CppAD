@@ -1,9 +1,8 @@
-// $Id$
 # ifndef CPPAD_CORE_AD_VALUED_HPP
 # define CPPAD_CORE_AD_VALUED_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -21,7 +20,7 @@ $$
 
 $section AD Valued Operations and Functions$$
 
-$comment atomic.omh includes atomic_base.omh which atomic_base.hpp$$
+$comment atomic.omh includes atomic_base.hpp$$
 $childtable%
 	cppad/core/arithmetic.hpp%
 	cppad/core/standard_math.hpp%

@@ -154,7 +154,7 @@ $end
 
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 /*!
-\file for_sparse_hes.hpp
+\file core/for_sparse_hes.hpp
 Forward mode Hessian sparsity patterns.
 */
 // ===========================================================================

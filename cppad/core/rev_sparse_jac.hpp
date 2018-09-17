@@ -174,7 +174,7 @@ $end
 
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 /*!
-\file rev_sparse_jac.hpp
+\file core/rev_sparse_jac.hpp
 Reverse mode Jacobian sparsity patterns.
 */
 // =========================================================================

@@ -1,6 +1,5 @@
-// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -77,7 +76,17 @@ $icode%ok% == false%$$ unless you require
 forward mode calculation of second derivatives.
 
 $childtable%
-	cppad/core/atomic_base.hpp%
+	cppad/core/atomic_base/ctor.hpp%
+	cppad/core/atomic_base/option.hpp%
+	cppad/core/atomic_base/afun.hpp%
+	cppad/core/atomic_base/forward.hpp%
+	cppad/core/atomic_base/reverse.hpp%
+	cppad/core/atomic_base/for_sparse_jac.hpp%
+	cppad/core/atomic_base/rev_sparse_jac.hpp%
+	cppad/core/atomic_base/for_sparse_hes.hpp%
+	cppad/core/atomic_base/rev_sparse_hes.hpp%
+	cppad/core/atomic_base/clear.hpp%
+
 	example/atomic/get_started.cpp%
 	example/atomic/norm_sq.cpp%
 	example/atomic/reciprocal.cpp%
