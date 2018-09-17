@@ -432,8 +432,10 @@ public:
 				);
 				// put operator in the tape, ind_ is a parameter
 				result.taddr_ = tape->Rec_.PutLoadOp(local::LdpOp);
+
 				// change result to variable for this load
 				result.tape_id_ = tape->id_;
+				result.ad_type_ = local::var_ad_type;
 			}
 			else
 			{	CPPAD_ASSERT_UNKNOWN( local::NumRes(local::LdvOp) == 1 );
@@ -458,8 +460,10 @@ public:
 				);
 				// put operator in the tape, ind_ is a variable
 				result.taddr_ = tape->Rec_.PutLoadOp(local::LdvOp);
+
 				// change result to variable for this load
 				result.tape_id_ = tape->id_;
+				result.ad_type_ = local::var_ad_type;
 			}
 		}
 		return result;
