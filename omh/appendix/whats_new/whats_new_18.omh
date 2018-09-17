@@ -35,6 +35,12 @@ $$
 
 $section Changes and Additions to CppAD During 2018$$
 
+$head 09-17$$
+Create a section with just the
+$cref atomic_base$$ specifications
+and another with the $cref/atomic examples/atomic_example/$$.
+
+
 $head 09-16$$
 The $code ode_taylor.cpp$$ example was moved to $cref taylor_ode.cpp$$
 and changed to use the same notation as $cref taylor_ode$$.
