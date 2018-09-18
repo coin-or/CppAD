@@ -160,9 +160,9 @@ the return value is a sparsity pattern for J(x) ( J(x)^T ) where
 Here F is the function corresponding to the operation sequence
 and x is any argument value.
 */
-template <class Base>
+template <class Base, class RecBase>
 template <class SizeVector>
-void ADFun<Base>::rev_jac_sparsity(
+void ADFun<Base,RecBase>::rev_jac_sparsity(
 	const sparse_rc<SizeVector>& pattern_in       ,
 	bool                         transpose        ,
 	bool                         dependency       ,

@@ -156,9 +156,9 @@ The return value is a sparsity pattern for H(x) where
 Here F is the function corresponding to the operation sequence
 and x is any argument value.
 */
-template <class Base>
+template <class Base, class RecBase>
 template <class BoolVector, class SizeVector>
-void ADFun<Base>::for_hes_sparsity(
+void ADFun<Base,RecBase>::for_hes_sparsity(
 	const BoolVector&            select_domain    ,
 	const BoolVector&            select_range     ,
 	bool                         internal_bool    ,

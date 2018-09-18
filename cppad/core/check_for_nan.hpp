@@ -155,8 +155,8 @@ Set check_for_nan
 \param value
 new value for this flag.
 */
-template <class Base>
-void ADFun<Base>::check_for_nan(bool value)
+template <class Base, class RecBase>
+void ADFun<Base,RecBase>::check_for_nan(bool value)
 {	check_for_nan_ = value; }
 
 /*!
@@ -165,8 +165,8 @@ Get check_for_nan
 \return
 current value of check_for_nan_.
 */
-template <class Base>
-bool ADFun<Base>::check_for_nan(void) const
+template <class Base, class RecBase>
+bool ADFun<Base,RecBase>::check_for_nan(void) const
 {	return check_for_nan_; }
 
 /*!

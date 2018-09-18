@@ -2,7 +2,7 @@
 # define CPPAD_CORE_FOR_ONE_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -121,9 +121,9 @@ $end
 //  BEGIN CppAD namespace
 namespace CppAD {
 
-template <typename Base>
+template <typename Base, typename RecBase>
 template <typename Vector>
-Vector ADFun<Base>::ForOne(const Vector &x, size_t j)
+Vector ADFun<Base,RecBase>::ForOne(const Vector &x, size_t j)
 {	size_t j1;
 
 	size_t n = Domain();

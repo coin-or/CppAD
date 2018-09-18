@@ -50,7 +50,7 @@ namespace CppAD {
 	class sparse_jacobian_work;
 	class sparse_hessian_work;
 	template <class Base> class AD;
-	template <class Base> class ADFun;
+	template <class Base, class RecBase=Base> class ADFun;
 	template <class Base> class atomic_base;
 	template <class Base> class discrete;
 	template <class Base> class VecAD;

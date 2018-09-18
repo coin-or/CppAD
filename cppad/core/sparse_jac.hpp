@@ -283,9 +283,9 @@ and the same subset.
 This is the number of first order forward sweeps used to compute
 the Jacobian.
 */
-template <class Base>
+template <class Base, class RecBase>
 template <class SizeVector, class BaseVector>
-size_t ADFun<Base>::sparse_jac_for(
+size_t ADFun<Base,RecBase>::sparse_jac_for(
 	size_t                               group_max  ,
 	const BaseVector&                    x          ,
 	sparse_rcv<SizeVector, BaseVector>&  subset     ,
@@ -477,9 +477,9 @@ and the same subset.
 This is the number of first order reverse sweeps used to compute
 the Jacobian.
 */
-template <class Base>
+template <class Base, class RecBase>
 template <class SizeVector, class BaseVector>
-size_t ADFun<Base>::sparse_jac_rev(
+size_t ADFun<Base,RecBase>::sparse_jac_rev(
 	const BaseVector&                    x        ,
 	sparse_rcv<SizeVector, BaseVector>&  subset   ,
 	const sparse_rc<SizeVector>&         pattern  ,

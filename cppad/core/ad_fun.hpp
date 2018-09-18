@@ -65,10 +65,10 @@ It does it calculations using \c Base operations.
 */
 
 
-template <class Base>
+template <typename Base, typename RecBase>
 class ADFun {
 	// ADFun<Base> must be a friend of ADFun< AD<Base> > for base2ad to work.
-	template <typename AnotherBase> friend class ADFun;
+	template <typename Base2, typename RecBase2> friend class ADFun;
 private:
 	// ------------------------------------------------------------
 	// Private member variables

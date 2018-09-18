@@ -222,9 +222,9 @@ See \c RevSparseHes(q, s).
 \param h
 is the return value for the corresponging call to \c RevSparseJac(q, s).
 */
-template <class Base>
+template <class Base, class RecBase>
 template <class VectorSet>
-void ADFun<Base>::RevSparseHesCase(
+void ADFun<Base,RecBase>::RevSparseHesCase(
 	bool              set_type         ,
 	bool              transpose        ,
 	size_t            q                ,
@@ -337,9 +337,9 @@ See \c RevSparseHes(q, s).
 \param h
 is the return value for the corresponging call to \c RevSparseJac(q, s).
 */
-template <class Base>
+template <class Base, class RecBase>
 template <class VectorSet>
-void ADFun<Base>::RevSparseHesCase(
+void ADFun<Base,RecBase>::RevSparseHesCase(
 	const std::set<size_t>&   set_type         ,
 	bool                      transpose        ,
 	size_t                    q                ,
@@ -489,9 +489,9 @@ where \f$ F \f$ is the function corresponding to the operation sequence
 and \a x is any argument value.
 */
 
-template <class Base>
+template <class Base, class RecBase>
 template <class VectorSet>
-VectorSet ADFun<Base>::RevSparseHes(
+VectorSet ADFun<Base,RecBase>::RevSparseHes(
 	size_t q,  const VectorSet& s, bool transpose
 )
 {	VectorSet h;
@@ -548,8 +548,8 @@ or \f$ H(x)^T \f$ depending on transpose.
 The forward jacobian sparsity pattern must be currently stored
 in this ADFUN object.
 */
-template <class Base>
-void ADFun<Base>::RevSparseHesCheckpoint(
+template <class Base, class RecBase>
+void ADFun<Base,RecBase>::RevSparseHesCheckpoint(
 	size_t                        q         ,
 	vector<bool>&                 s         ,
 	bool                          transpose ,

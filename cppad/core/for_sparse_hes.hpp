@@ -178,9 +178,9 @@ See \c ForSparseHes(r, s).
 \param h
 is the return value for the corresponging call to \c ForSparseJac(q, s).
 */
-template <class Base>
+template <class Base, class RecBase>
 template <class VectorSet>
-void ADFun<Base>::ForSparseHesCase(
+void ADFun<Base,RecBase>::ForSparseHesCase(
 	bool              set_type         ,
 	const VectorSet&  r                ,
 	const VectorSet&  s                ,
@@ -298,9 +298,9 @@ See \c ForSparseHes(q, s).
 \param h
 is the return value for the corresponging call to \c ForSparseJac(q, s).
 */
-template <class Base>
+template <class Base, class RecBase>
 template <class VectorSet>
-void ADFun<Base>::ForSparseHesCase(
+void ADFun<Base,RecBase>::ForSparseHesCase(
 	const std::set<size_t>&   set_type         ,
 	const VectorSet&          r                ,
 	const VectorSet&          s                ,
@@ -444,9 +444,9 @@ where \f$ F \f$ is the function corresponding to the operation sequence
 and \a x is any argument value.
 */
 
-template <class Base>
+template <class Base, class RecBase>
 template <class VectorSet>
-VectorSet ADFun<Base>::ForSparseHes(
+VectorSet ADFun<Base,RecBase>::ForSparseHes(
 	const VectorSet& r, const VectorSet& s
 )
 {	VectorSet h;
@@ -494,8 +494,8 @@ in this ADFUN object.
 
 // The checkpoint class is not yet using forward sparse Hessians.
 # ifdef CPPAD_NOT_DEFINED
-template <class Base>
-void ADFun<Base>::ForSparseHesCheckpoint(
+template <class Base, class RecBase>
+void ADFun<Base,RecBase>::ForSparseHesCheckpoint(
 	vector<bool>&                 r         ,
 	vector<bool>&                 s         ,
 	local::sparse_list&           h         )

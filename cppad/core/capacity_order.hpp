@@ -152,8 +152,8 @@ new taylor coefficient buffer.
 The output value of num_direction_taylor_ is equal to \c r.
 */
 
-template <typename Base>
-void ADFun<Base>::capacity_order(size_t c, size_t r)
+template <typename Base, typename RecBase>
+void ADFun<Base,RecBase>::capacity_order(size_t c, size_t r)
 {	// temporary indices
 	size_t i, k, ell;
 
@@ -237,8 +237,8 @@ Otherwise, if \c num_direction_taylor_ is zero, it is set to one.
 Othwerwise, \c num_direction_taylor_ is not modified.
 */
 
-template <typename Base>
-void ADFun<Base>::capacity_order(size_t c)
+template <typename Base, typename RecBase>
+void ADFun<Base,RecBase>::capacity_order(size_t c)
 {	size_t r;
 	if( (c == 0) | (c == 1) )
 	{	r = c;

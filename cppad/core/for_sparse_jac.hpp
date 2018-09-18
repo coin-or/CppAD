@@ -253,9 +253,9 @@ See \c ForSparseJac(q, r, transpose, dependency).
 is the return value for the corresponding call to \c ForSparseJac(q, r).
 */
 
-template <class Base>
+template <class Base, class RecBase>
 template <class VectorSet>
-void ADFun<Base>::ForSparseJacCase(
+void ADFun<Base,RecBase>::ForSparseJacCase(
 	bool                set_type      ,
 	bool                transpose     ,
 	bool                dependency    ,
@@ -366,9 +366,9 @@ See \c ForSparseJac(q, r, transpose, dependency).
 \param s
 is the return value for the corresponding call to \c ForSparseJac(q, r).
 */
-template <class Base>
+template <class Base, class RecBase>
 template <class VectorSet>
-void ADFun<Base>::ForSparseJacCase(
+void ADFun<Base,RecBase>::ForSparseJacCase(
 	const std::set<size_t>&    set_type      ,
 	bool                       transpose     ,
 	bool                       dependency    ,
@@ -555,9 +555,9 @@ In this case
 	for_jac_sparse_pack_.end()  == 0
 \endverbatim
 */
-template <class Base>
+template <class Base, class RecBase>
 template <class VectorSet>
-VectorSet ADFun<Base>::ForSparseJac(
+VectorSet ADFun<Base,RecBase>::ForSparseJac(
 	size_t             q             ,
 	const VectorSet&   r             ,
 	bool               transpose     ,
@@ -643,8 +643,8 @@ In this case
 	for_jac_sparse_pack_.end()  == 0
 \endverbatim
 */
-template <class Base>
-void ADFun<Base>::ForSparseJacCheckpoint(
+template <class Base, class RecBase>
+void ADFun<Base,RecBase>::ForSparseJacCheckpoint(
 	size_t                        q          ,
 	const local::sparse_list&     r          ,
 	bool                          transpose  ,

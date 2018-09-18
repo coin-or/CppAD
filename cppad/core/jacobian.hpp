@@ -2,7 +2,7 @@
 # define CPPAD_CORE_JACOBIAN_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -194,9 +194,9 @@ void JacobianRev(ADFun<Base> &f, const Vector &x, Vector &jac)
 	}
 }
 
-template <typename Base>
+template <typename Base, typename RecBase>
 template <typename Vector>
-Vector ADFun<Base>::Jacobian(const Vector &x)
+Vector ADFun<Base,RecBase>::Jacobian(const Vector &x)
 {	size_t i;
 	size_t n = Domain();
 	size_t m = Range();

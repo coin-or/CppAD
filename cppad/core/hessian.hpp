@@ -2,7 +2,7 @@
 # define CPPAD_CORE_HESSIAN_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -138,9 +138,9 @@ $end
 //  BEGIN CppAD namespace
 namespace CppAD {
 
-template <typename Base>
+template <typename Base, typename RecBase>
 template <typename Vector>
-Vector ADFun<Base>::Hessian(const Vector &x, size_t l)
+Vector ADFun<Base,RecBase>::Hessian(const Vector &x, size_t l)
 {	size_t i, m = Range();
 	CPPAD_ASSERT_KNOWN(
 		l < m,
@@ -156,9 +156,9 @@ Vector ADFun<Base>::Hessian(const Vector &x, size_t l)
 }
 
 
-template <typename Base>
+template <typename Base, typename RecBase>
 template <typename Vector>
-Vector ADFun<Base>::Hessian(const Vector &x, const Vector &w)
+Vector ADFun<Base,RecBase>::Hessian(const Vector &x, const Vector &w)
 {	size_t j;
 	size_t k;
 

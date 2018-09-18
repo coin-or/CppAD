@@ -39,7 +39,14 @@ move_list='
 move_sed='s|ode_taylor.cpp|taylor_ode.cpp|'
 #
 cat << EOF > junk.sed
-s|ode_taylor|taylor_ode|
+/template *<[a-z]* *Base>/! b end
+N
+N
+/ADFun<Base>::/! b end
+s|template *<class Base>|template <class Base, class RecBase>|
+s|template <typename Base>|template <typename Base, typename RecBase>|
+s|ADFun<Base>::|ADFun<Base,RecBase>::|g
+: end
 EOF
 # -----------------------------------------------------------------------------
 if [ $0 != "bin/batch_edit.sh" ]

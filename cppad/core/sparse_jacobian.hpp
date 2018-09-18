@@ -2,7 +2,7 @@
 # define CPPAD_CORE_SPARSE_JACOBIAN_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -360,9 +360,9 @@ requested Jacobian values. The total work, not counting the zero order
 forward sweep, or the time to combine computations, is proportional to this
 return value.
 */
-template<class Base>
+template <class Base, class RecBase>
 template <class VectorBase, class VectorSet, class VectorSize>
-size_t ADFun<Base>::SparseJacobianFor(
+size_t ADFun<Base,RecBase>::SparseJacobianFor(
 	const VectorBase&            x           ,
 	      VectorSet&             p_transpose ,
 	const VectorSize&            row         ,
@@ -557,9 +557,9 @@ reverse Jacobian values. The total work, not counting the zero order
 forward sweep, or the time to combine computations, is proportional to this
 return value.
 */
-template<class Base>
+template <class Base, class RecBase>
 template <class VectorBase, class VectorSet, class VectorSize>
-size_t ADFun<Base>::SparseJacobianRev(
+size_t ADFun<Base,RecBase>::SparseJacobianRev(
 	const VectorBase&           x           ,
 	      VectorSet&            p           ,
 	const VectorSize&           row         ,
@@ -723,9 +723,9 @@ requested Jacobian values. The total work, not counting the zero order
 forward sweep, or the time to combine computations, is proportional to this
 return value.
 */
-template<class Base>
+template <class Base, class RecBase>
 template <class VectorBase, class VectorSet, class VectorSize>
-size_t ADFun<Base>::SparseJacobianForward(
+size_t ADFun<Base,RecBase>::SparseJacobianForward(
 	const VectorBase&     x    ,
 	const VectorSet&      p    ,
 	const VectorSize&     row  ,
@@ -838,9 +838,9 @@ reverse Jacobian values. The total work, not counting the zero order
 forward sweep, or the time to combine computations, is proportional to this
 return value.
 */
-template<class Base>
+template <class Base, class RecBase>
 template <class VectorBase, class VectorSet, class VectorSize>
-size_t ADFun<Base>::SparseJacobianReverse(
+size_t ADFun<Base,RecBase>::SparseJacobianReverse(
 	const VectorBase&     x    ,
 	const VectorSet&      p    ,
 	const VectorSize&     row  ,
@@ -928,9 +928,9 @@ is the sparsity pattern for the Jacobian that we are calculating.
 Will be a vector if size \c m * n containing the Jacobian at the
 specified point (in row major order).
 */
-template <class Base>
+template <class Base, class RecBase>
 template <class VectorBase, class VectorSet>
-VectorBase ADFun<Base>::SparseJacobian(
+VectorBase ADFun<Base,RecBase>::SparseJacobian(
 	const VectorBase& x, const VectorSet& p
 )
 {	size_t i, j, k;
@@ -1043,9 +1043,9 @@ is a vector specifing the point at which to compute the Jacobian.
 Will be a vector of size \c m * n containing the Jacobian at the
 specified point (in row major order).
 */
-template <class Base>
+template <class Base, class RecBase>
 template <class VectorBase>
-VectorBase ADFun<Base>::SparseJacobian( const VectorBase& x )
+VectorBase ADFun<Base,RecBase>::SparseJacobian( const VectorBase& x )
 {	typedef CppAD::vectorBool   VectorBool;
 
 	size_t m = Range();

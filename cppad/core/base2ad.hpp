@@ -60,8 +60,8 @@ namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 \file base2ad.hpp
 */
 /// Create an ADFun< AD<Base> > from this ADFun<Base>
-template <typename Base>
-ADFun< AD<Base> > ADFun<Base>::base2ad(void) const
+template <typename Base, typename RecBase>
+ADFun< AD<Base> > ADFun<Base,RecBase>::base2ad(void) const
 {	ADFun< AD<Base> > fun;
 	//
 	// size_t objects

@@ -73,9 +73,9 @@ for the i-th varaible on the tape.
 and there is no variable with index zero.)
 */
 
-template <typename Base>
+template <typename Base, typename RecBase>
 template <typename VectorBase>
-VectorBase ADFun<Base>::Forward(
+VectorBase ADFun<Base,RecBase>::Forward(
 	size_t              q         ,
 	const VectorBase&   xq        ,
 	      std::ostream& s         )
@@ -319,9 +319,9 @@ for the i-th varaible, and ell-th direction.
 and there is no variable with index zero.)
 */
 
-template <typename Base>
+template <typename Base, typename RecBase>
 template <typename VectorBase>
-VectorBase ADFun<Base>::Forward(
+VectorBase ADFun<Base,RecBase>::Forward(
 	size_t              q         ,
 	size_t              r         ,
 	const VectorBase&   xq        )

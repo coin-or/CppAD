@@ -166,9 +166,9 @@ where F is the function corresponding to the operation sequence
 and x is any argument value.
 is the sparsity pattern transposed.
 */
-template <typename Base>
+template <typename Base, typename RecBase>
 template <typename BoolVector, typename SizeVector>
-void ADFun<Base>::subgraph_sparsity(
+void ADFun<Base,RecBase>::subgraph_sparsity(
 	const BoolVector&            select_domain    ,
 	const BoolVector&            select_range     ,
 	bool                         transpose        ,

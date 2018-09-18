@@ -316,9 +316,9 @@ and the same subset.
 This is the number of first order forward
 (and second order reverse) sweeps used to compute thhe Hessian.
 */
-template <class Base>
+template <class Base, class RecBase>
 template <class SizeVector, class BaseVector>
-size_t ADFun<Base>::sparse_hes(
+size_t ADFun<Base,RecBase>::sparse_hes(
 	const BaseVector&                    x        ,
 	const BaseVector&                    w        ,
 	sparse_rcv<SizeVector , BaseVector>& subset   ,

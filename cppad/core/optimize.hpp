@@ -214,8 +214,8 @@ be meaningful in the resulting recording.
 On the other hand, they are not necessary and take extra time
 when compare_change is not used.
 */
-template <class Base>
-void ADFun<Base>::optimize(const std::string& options)
+template <class Base, class RecBase>
+void ADFun<Base,RecBase>::optimize(const std::string& options)
 {
 # if CPPAD_CORE_OPTIMIZE_PRINT_RESULT
 	// size of operation sequence before optimizatiton

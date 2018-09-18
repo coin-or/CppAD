@@ -146,9 +146,9 @@ Determine the \c tape corresponding to this exeuction thread and then use
 \param y [in]
 The dependent variable vector for the corresponding function.
 */
-template <typename Base>
+template <typename Base, typename RecBase>
 template <typename ADvector>
-void ADFun<Base>::Dependent(const ADvector &y)
+void ADFun<Base,RecBase>::Dependent(const ADvector &y)
 {	local::ADTape<Base>* tape = AD<Base>::tape_ptr();
 	CPPAD_ASSERT_KNOWN(
 		tape != CPPAD_NULL,
@@ -173,9 +173,9 @@ also stored in the tape so a check is done to make sure it is correct
 \param y [in]
 The dependent variable vector for the corresponding function.
 */
-template <typename Base>
+template <typename Base, typename RecBase>
 template <typename ADvector>
-void ADFun<Base>::Dependent(const ADvector &x, const ADvector &y)
+void ADFun<Base,RecBase>::Dependent(const ADvector &x, const ADvector &y)
 {
 	CPPAD_ASSERT_KNOWN(
 		x.size() > 0,
@@ -231,9 +231,9 @@ All of the private member data in ad_fun.hpp is set to correspond to the
 new tape except for check_for_nan_.
 */
 
-template <typename Base>
+template <typename Base, typename RecBase>
 template <typename ADvector>
-void ADFun<Base>::Dependent(local::ADTape<Base> *tape, const ADvector &y)
+void ADFun<Base,RecBase>::Dependent(local::ADTape<Base> *tape, const ADvector &y)
 {
 	size_t   m = y.size();
 	size_t   n = tape->size_independent_;

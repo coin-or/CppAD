@@ -292,8 +292,8 @@ is used.
 # define CPPAD_J_PAR_EQUAL_REC rec
 # endif
 
-template <class Base>
-void ADFun<Base>::abs_normal_fun(ADFun<Base>& g, ADFun<Base>& a) const
+template <class Base, class RecBase>
+void ADFun<Base,RecBase>::abs_normal_fun(ADFun& g, ADFun& a) const
 {	using namespace local;
 
 	// -----------------------------------------------------------------------

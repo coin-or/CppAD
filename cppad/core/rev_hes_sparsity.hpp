@@ -160,9 +160,9 @@ the return value is a sparsity pattern for H(x) ( H(x)^T ) where
 Here F is the function corresponding to the operation sequence
 and x is any argument value.
 */
-template <class Base>
+template <class Base, class RecBase>
 template <class BoolVector, class SizeVector>
-void ADFun<Base>::rev_hes_sparsity(
+void ADFun<Base,RecBase>::rev_hes_sparsity(
 	const BoolVector&            select_range     ,
 	bool                         transpose        ,
 	bool                         internal_bool    ,

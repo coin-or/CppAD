@@ -87,9 +87,9 @@ that corresponding to the forward mode Taylor coefficients
 for the independent variables as specified by previous calls to Forward.
 
 */
-template <typename Base>
+template <typename Base, typename RecBase>
 template <typename VectorBase>
-VectorBase ADFun<Base>::Reverse(size_t q, const VectorBase &w)
+VectorBase ADFun<Base,RecBase>::Reverse(size_t q, const VectorBase &w)
 {	// constants
 	const Base zero(0);
 

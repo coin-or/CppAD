@@ -98,9 +98,9 @@ Change the dynamic parameters in this ADFun object
 \param dynamic
 is the vector of new values for the dynamic parameters.
 */
-template <typename Base>
+template <typename Base, typename RecBase>
 template <typename VectorBase>
-void ADFun<Base>::new_dynamic(const VectorBase& dynamic)
+void ADFun<Base,RecBase>::new_dynamic(const VectorBase& dynamic)
 {	using local::pod_vector;
 	CPPAD_ASSERT_KNOWN(
 		size_t( dynamic.size() ) == play_.num_dynamic_ind() ,

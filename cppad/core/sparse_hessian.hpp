@@ -2,7 +2,7 @@
 # define CPPAD_CORE_SPARSE_HESSIAN_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -413,9 +413,9 @@ The total work, not counting the zero order
 forward sweep, or the time to combine computations, is proportional to this
 return value.
 */
-template<class Base>
+template <class Base, class RecBase>
 template <class VectorBase, class VectorSet, class VectorSize>
-size_t ADFun<Base>::SparseHessianCompute(
+size_t ADFun<Base,RecBase>::SparseHessianCompute(
 	const VectorBase&           x           ,
 	const VectorBase&           w           ,
 	      VectorSet&            sparsity    ,
@@ -647,9 +647,9 @@ The total work, not counting the zero order
 forward sweep, or the time to combine computations, is proportional to this
 return value.
 */
-template<class Base>
+template <class Base, class RecBase>
 template <class VectorBase, class VectorSet, class VectorSize>
-size_t ADFun<Base>::SparseHessian(
+size_t ADFun<Base,RecBase>::SparseHessian(
 	const VectorBase&     x    ,
 	const VectorBase&     w    ,
 	const VectorSet&      p    ,
@@ -744,9 +744,9 @@ Will be a vector of size \c n * n containing the Hessian of
 at the point specified by \a x
 (where \c n is the domain dimension for this ADFun<Base> object).
 */
-template <class Base>
+template <class Base, class RecBase>
 template <class VectorBase, class VectorSet>
-VectorBase ADFun<Base>::SparseHessian(
+VectorBase ADFun<Base,RecBase>::SparseHessian(
 	const VectorBase& x, const VectorBase& w, const VectorSet& p
 )
 {	size_t i, j, k;
@@ -830,9 +830,9 @@ Will be a vector of size \c n * n containing the Hessian of
 at the point specified by \a x
 (where \c n is the domain dimension for this ADFun<Base> object).
 */
-template <class Base>
+template <class Base, class RecBase>
 template <class VectorBase>
-VectorBase ADFun<Base>::SparseHessian(const VectorBase &x, const VectorBase &w)
+VectorBase ADFun<Base,RecBase>::SparseHessian(const VectorBase &x, const VectorBase &w)
 {	size_t i, j, k;
 	typedef CppAD::vectorBool VectorBool;
 

@@ -208,9 +208,9 @@ is the return value for the corresponding call to
 RevSparseJac(q, r, transpose).
 */
 
-template <class Base>
+template <class Base, class RecBase>
 template <class VectorSet>
-void ADFun<Base>::RevSparseJacCase(
+void ADFun<Base,RecBase>::RevSparseJacCase(
 	bool                set_type          ,
 	bool                transpose         ,
 	bool                dependency        ,
@@ -321,9 +321,9 @@ See \c RevSparseJac(q, r, transpose, dependency)
 is the return value for the corresponding call to RevSparseJac(q, r, transpose)
 */
 
-template <class Base>
+template <class Base, class RecBase>
 template <class VectorSet>
-void ADFun<Base>::RevSparseJacCase(
+void ADFun<Base,RecBase>::RevSparseJacCase(
 	const std::set<size_t>&      set_type          ,
 	bool                         transpose         ,
 	bool                         dependency        ,
@@ -478,9 +478,9 @@ If \c VectorSet::value_type is \c std::set<size_t>,
 the return value has size \f$ q \f$ ( \f$ n \f$)
 and with all its elements between zero and \f$ n - 1 \f$ (\f$ q - 1 \f$).
 */
-template <class Base>
+template <class Base, class RecBase>
 template <class VectorSet>
-VectorSet ADFun<Base>::RevSparseJac(
+VectorSet ADFun<Base,RecBase>::RevSparseJac(
 	size_t              q          ,
 	const VectorSet&    r          ,
 	bool                transpose  ,
@@ -539,8 +539,8 @@ On output, s is the sparsity pattern for the matrix \f$ S(x) \f$
 or \f$ S(x)^T \f$ depending on transpose.
 
 */
-template <class Base>
-void ADFun<Base>::RevSparseJacCheckpoint(
+template <class Base, class RecBase>
+void ADFun<Base,RecBase>::RevSparseJacCheckpoint(
 	size_t                        q          ,
 	const local::sparse_list&     r          ,
 	bool                          transpose  ,

@@ -121,6 +121,7 @@ $rref atomic_rev_sparse_jac.cpp$$
 $rref atomic_set_sparsity.cpp$$
 $rref atomic_tangent.cpp$$
 $rref azmul.cpp$$
+$rref base2ad.cpp$$
 $rref base_adolc.hpp$$
 $rref base_alloc.hpp$$
 $rref base_complex.hpp$$

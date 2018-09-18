@@ -247,8 +247,8 @@ can then be used to put an operation sequence in this ADFun object.
 is the base for the recording that can be stored in this ADFun object;
 i.e., operation sequences that were recorded using the type \c AD<Base>.
 */
-template <typename Base>
-ADFun<Base>::ADFun(void) :
+template <typename Base, typename RecBase>
+ADFun<Base,RecBase>::ADFun(void) :
 has_been_optimized_(false),
 check_for_nan_(true) ,
 compare_change_count_(1),
@@ -276,8 +276,8 @@ i.e., operation sequences that were recorded using the type \c AD<Base>.
 \param f
 ADFun object containing the operation sequence to be copied.
 */
-template <typename Base>
-void ADFun<Base>::operator=(const ADFun<Base>& f)
+template <typename Base, typename RecBase>
+void ADFun<Base,RecBase>::operator=(const ADFun& f)
 {
 	// go through member variables in ad_fun.hpp order
 	//
@@ -317,8 +317,8 @@ void ADFun<Base>::operator=(const ADFun<Base>& f)
 }
 # if CPPAD_USE_CPLUSPLUS_2011
 /// Move semantics version of assignment operator
-template <typename Base>
-void ADFun<Base>::operator=(ADFun<Base>&& f)
+template <typename Base, typename RecBase>
+void ADFun<Base,RecBase>::operator=(ADFun&& f)
 {
 	// size_t objects
 	has_been_optimized_        = f.has_been_optimized_;
@@ -387,9 +387,9 @@ Thus, the zero order Taylor coefficients
 corresponding to the value of the \a x vector
 are stored in this ADFun object.
 */
-template <typename Base>
+template <typename Base, typename RecBase>
 template <typename VectorAD>
-ADFun<Base>::ADFun(const VectorAD &x, const VectorAD &y)
+ADFun<Base,RecBase>::ADFun(const VectorAD &x, const VectorAD &y)
 {
 	CPPAD_ASSERT_KNOWN(
 		x.size() > 0,
