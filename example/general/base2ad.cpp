@@ -192,13 +192,11 @@ bool base2ad(void)
 	// number of components in differential equation
 	size_t n = 4;
 
-	// record the function g(y, x) with x as dynamic parameters
+	// record function g(y, x)
+	// with y as the independent variables and x as dynamic parameters
 	a_vector  ay(n), ax(n);
 	for(size_t i = 0; i < n; i++)
 		ay[i] = ax[i] = double(i + 1);
-
-
-	// declare the parameters as the independent variable
 	size_t abort_op_index = 0;
 	bool   record_compare = true;
 	CppAD::Independent(ay, abort_op_index, record_compare, ax);
@@ -209,9 +207,11 @@ bool base2ad(void)
 	fun_double fun_g(ay, ag);
 
 
-	// arguments to taylor_ode
+	// afun_g
 	afun_double afun_g;
 	afun_g = fun_g.base2ad(); // differential equation
+
+	// other arguments to taylor_ode
 	size_t   order = n;       // order of Taylor's method used
 	size_t   nstep = 2;       // number of steps to take
 	a_double adt   = 1.;      // Delta t for each step
@@ -219,10 +219,11 @@ bool base2ad(void)
 	for(size_t i = 0; i < n; i++)
 		ay_ini[i] = 0.;
 
-	// declare the independent variables
+	// declare x as independent variables
 	CppAD::Independent(ax);
 
-	// set value of x in afun_g
+	// the independent variables if this function are
+	// the dynamic parameters in afun_g
 	afun_g.new_dynamic(ax);
 
 	// integrate the differential equation
