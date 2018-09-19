@@ -1,0 +1,408 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=default'
+>
+</script>
+<head>
+<title>Taylor's Ode Solver: base2ad Example and Test</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Taylor's Ode Solver: base2ad Example and Test">
+<meta name="keywords" id="keywords" content=" taylor's ode solver: base2ad example test see also purpose solution derivative method using ad source ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_base2ad.cpp_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="https://github.com/coin-or/cppad" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="base2ad.htm" target="_top">Prev</a>
+</td><td><a href="seq_property.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>ADFun</option>
+<option>record_adfun</option>
+<option>base2ad</option>
+<option>base2ad.cpp</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>ADFun-&gt;</option>
+<option>record_adfun</option>
+<option>drivers</option>
+<option>Forward</option>
+<option>Reverse</option>
+<option>sparsity_pattern</option>
+<option>sparse_derivative</option>
+<option>optimize</option>
+<option>abs_normal</option>
+<option>FunCheck</option>
+<option>check_for_nan</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>record_adfun-&gt;</option>
+<option>Independent</option>
+<option>FunConstruct</option>
+<option>Dependent</option>
+<option>abort_recording</option>
+<option>base2ad</option>
+<option>seq_property</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>base2ad-&gt;</option>
+<option>base2ad.cpp</option>
+</select>
+</td>
+<td>base2ad.cpp</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>See Also</option>
+<option>Purpose</option>
+<option>ODE</option>
+<option>ODE Solution</option>
+<option>Derivative of ODE Solution</option>
+<option>Taylor's Method Using AD</option>
+<option>Source</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@
+
+
+<center><b><big><big>Taylor's Ode Solver: base2ad Example and Test</big></big></b></center>
+<br>
+<b><big><a name="See Also" id="See Also">See Also</a></big></b>
+
+<br>
+<a href="taylor_ode.cpp.htm" target="_top"><span style='white-space: nowrap'>taylor_ode.cpp</span></a>
+, <a href="mul_level_ode.cpp.htm" target="_top"><span style='white-space: nowrap'>mul_level_ode.cpp</span></a>
+
+
+<br>
+<br>
+<b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
+<br>
+This is a realistic example using <a href="base2ad.htm" target="_top"><span style='white-space: nowrap'>base2ad</span></a>
+ to create
+an 
+<code><font color="blue"><span style='white-space: nowrap'>AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code>
+ function from an 
+<code><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i></code>
+ function.
+The function represents an ordinary differential equation.
+It is differentiated with respect to
+its <a href="glossary.htm#Variable" target="_top"><span style='white-space: nowrap'>variables</span></a>
+.
+These derivatives are used by the <a href="taylor_ode.htm" target="_top"><span style='white-space: nowrap'>taylor_ode</span></a>
+ method.
+This solution is then differentiated with respect to
+the functions <a href="glossary.htm#Parameter.Dynamic" target="_top"><span style='white-space: nowrap'>dynamic&nbsp;parameters</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="ODE" id="ODE">ODE</a></big></b>
+<br>
+For this example the function
+<small>@(@
+y : \B{R} \times \B{R}^n \rightarrow \B{R}^n
+@)@</small> is defined by
+<small>@(@
+y(0, x) = 0
+@)@</small> and
+<small>@(@
+\partial_t y(t, x) = g(y, x)
+@)@</small> where
+<small>@(@
+g : \B{R}^n \times \B{R}^n \rightarrow \B{R}^n
+@)@</small> is defined by
+<small>@[@
+
+	g(y, x) =
+	\left( \begin{array}{c}
+			x_0     \\
+			x_1 y_0 \\
+			\vdots  \\
+			x_{n-1} y_{n-2}
+	\end{array} \right)
+
+@]@</small>
+
+<br>
+<br>
+<b><big><a name="ODE Solution" id="ODE Solution">ODE Solution</a></big></b>
+<br>
+The solution for this example can be calculated by
+starting with the first row and then using the solution
+for the first row to solve the second and so on.
+Doing this we obtain
+<small>@[@
+
+	y(t, x ) =
+	\left( \begin{array}{c}
+		x_0 t                  \\
+		x_1 x_0 t^2 / 2        \\
+		\vdots                 \\
+		x_{n-1} x_{n-2} \ldots x_0 t^n / n !
+	\end{array} \right)
+
+@]@</small>
+
+<br>
+<br>
+<b><big><a name="Derivative of ODE Solution" id="Derivative of ODE Solution">Derivative of ODE Solution</a></big></b>
+<br>
+Differentiating the solution above,
+with respect to the parameter vector <small>@(@
+x
+@)@</small>,
+we notice that
+<small>@[@
+
+\partial_x y(t, x ) =
+\left( \begin{array}{cccc}
+y_0 (t,x) / x_0      & 0                   & \cdots & 0      \\
+y_1 (t,x) / x_0      & y_1 (t,x) / x_1     & 0      & \vdots \\
+\vdots               & \vdots              & \ddots & 0      \\
+y_{n-1} (t,x) / x_0  & y_{n-1} (t,x) / x_1 & \cdots & y_{n-1} (t,x) / x_{n-1}
+\end{array} \right)
+
+@]@</small>
+
+<br>
+<br>
+<b><big><a name="Taylor's Method Using AD" id="Taylor's Method Using AD">Taylor's Method Using AD</a></big></b>
+<br>
+We define the function <small>@(@
+z(t, x)
+@)@</small> by the equation
+<small>@[@
+
+	z ( t , x ) = g[ y ( t , x ), x ]
+
+@]@</small>
+see <a href="taylor_ode.htm" target="_top"><span style='white-space: nowrap'>taylor_ode</span></a>
+ for the method used to compute the
+Taylor coefficients w.r.t <small>@(@
+t
+@)@</small> of <small>@(@
+y(t, x)
+@)@</small>.
+
+<br>
+<br>
+<b><big><a name="Source" id="Source">Source</a></big></b>
+
+<code><font color="blue">
+<pre><tt>
+
+<b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/cppad.hpp&gt;</font>
+
+<i><font color="#9A1900">// =========================================================================</font></i>
+<b><font color="#0000FF">namespace</font></b> <font color="#FF0000">{</font> <i><font color="#9A1900">// BEGIN empty namespace</font></i>
+
+<b><font color="#0000FF">typedef</font></b> CppAD<font color="#990000">::</font><font color="#008080">AD&lt;double&gt;</font>                  a_double<font color="#990000">;</font>
+
+<b><font color="#0000FF">typedef</font></b> <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font><font color="#009900">double</font><font color="#990000">)</font>           d_vector<font color="#990000">;</font>
+<b><font color="#0000FF">typedef</font></b> <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font>a_double<font color="#990000">)</font>         a_vector<font color="#990000">;</font>
+
+<b><font color="#0000FF">typedef</font></b> CppAD<font color="#990000">::</font><font color="#008080">ADFun&lt;double&gt;</font>               fun_double<font color="#990000">;</font>
+<b><font color="#0000FF">typedef</font></b> CppAD<font color="#990000">::</font><font color="#008080">ADFun&lt;a_double, double&gt;</font>     afun_double<font color="#990000">;</font>
+
+<i><font color="#9A1900">// -------------------------------------------------------------------------</font></i>
+<i><font color="#9A1900">// class definition for C++ function object that defines ODE</font></i>
+<b><font color="#0000FF">class</font></b> <font color="#008080">Ode</font> <font color="#FF0000">{</font>
+<b><font color="#0000FF">private</font></b><font color="#990000">:</font>
+     <i><font color="#9A1900">// copy of x that is set by constructor and used by g(y)</font></i>
+     <font color="#008080">a_vector</font> x_<font color="#990000">;</font>
+<b><font color="#0000FF">public</font></b><font color="#990000">:</font>
+     <i><font color="#9A1900">// constructor</font></i>
+     <b><font color="#000000">Ode</font></b><font color="#990000">(</font><b><font color="#0000FF">const</font></b> a_vector<font color="#990000">&amp;</font> x<font color="#990000">)</font> <font color="#990000">:</font> <b><font color="#000000">x_</font></b><font color="#990000">(</font>x<font color="#990000">)</font>
+     <font color="#FF0000">{</font> <font color="#FF0000">}</font>
+     <i><font color="#9A1900">// the function g(y) given the parameter vector x</font></i>
+     <font color="#008080">a_vector</font> <b><font color="#0000FF">operator</font></b><font color="#990000">()</font> <font color="#990000">(</font><b><font color="#0000FF">const</font></b> a_vector<font color="#990000">&amp;</font> y<font color="#990000">)</font> <b><font color="#0000FF">const</font></b>
+     <font color="#FF0000">{</font>    <font color="#008080">size_t</font> n <font color="#990000">=</font> y<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">();</font>
+          <font color="#008080">a_vector</font> <b><font color="#000000">g</font></b><font color="#990000">(</font>n<font color="#990000">);</font>
+          g<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> x_<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">];</font>
+          <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> n<font color="#990000">;</font> i<font color="#990000">++)</font>
+               g<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> x_<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">*</font> y<font color="#990000">[</font>i<font color="#990000">-</font><font color="#993399">1</font><font color="#990000">];</font>
+          <i><font color="#9A1900">//</font></i>
+          <b><font color="#0000FF">return</font></b> g<font color="#990000">;</font>
+     <font color="#FF0000">}</font>
+<font color="#FF0000">}</font><font color="#990000">;</font>
+
+<i><font color="#9A1900">// -------------------------------------------------------------------------</font></i>
+<i><font color="#9A1900">// Routine that uses Taylor's method to solve ordinary differential equaitons</font></i>
+<font color="#008080">a_vector</font> <b><font color="#000000">taylor_ode</font></b><font color="#990000">(</font>
+     afun_double<font color="#990000">&amp;</font>     fun_g   <font color="#990000">,</font>  <i><font color="#9A1900">// function that defines the ODE</font></i>
+     <font color="#008080">size_t</font>           order   <font color="#990000">,</font>  <i><font color="#9A1900">// order of Taylor's method used</font></i>
+     <font color="#008080">size_t</font>           nstep   <font color="#990000">,</font>  <i><font color="#9A1900">// number of steps to take</font></i>
+     <b><font color="#0000FF">const</font></b> a_double<font color="#990000">&amp;</font>  dt      <font color="#990000">,</font>  <i><font color="#9A1900">// Delta t for each step</font></i>
+     <b><font color="#0000FF">const</font></b> a_vector<font color="#990000">&amp;</font>  y_ini<font color="#990000">)</font>     <i><font color="#9A1900">// y(t) at the initial time</font></i>
+<font color="#FF0000">{</font>
+     <i><font color="#9A1900">// number of variables in the ODE</font></i>
+     <font color="#008080">size_t</font> n <font color="#990000">=</font> y_ini<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">();</font>
+
+     <i><font color="#9A1900">// initialize y</font></i>
+     <font color="#008080">a_vector</font> y <font color="#990000">=</font> y_ini<font color="#990000">;</font>
+
+     <i><font color="#9A1900">// loop with respect to each step of Taylors method</font></i>
+     <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> s <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> s <font color="#990000">&lt;</font> nstep<font color="#990000">;</font> s<font color="#990000">++)</font>
+     <font color="#FF0000">{</font>
+          <i><font color="#9A1900">// initialize</font></i>
+          <font color="#008080">a_vector</font> y_k   <font color="#990000">=</font> y<font color="#990000">;</font>
+          <font color="#008080">a_double</font> dt_k  <font color="#990000">=</font> <b><font color="#000000">a_double</font></b><font color="#990000">(</font><font color="#993399">1.0</font><font color="#990000">);</font>
+          <font color="#008080">a_vector</font> next  <font color="#990000">=</font> y<font color="#990000">;</font>
+
+          <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> k <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> k <font color="#990000">&lt;</font> order<font color="#990000">;</font> k<font color="#990000">++)</font>
+          <font color="#FF0000">{</font>
+               <i><font color="#9A1900">// evaluate k-th order Taylor coefficient z^{(k)} (t)</font></i>
+               <font color="#008080">a_vector</font> z_k <font color="#990000">=</font> fun_g<font color="#990000">.</font><b><font color="#000000">Forward</font></b><font color="#990000">(</font>k<font color="#990000">,</font> y_k<font color="#990000">);</font>
+
+               <i><font color="#9A1900">// dt^{k+1}</font></i>
+               dt_k <font color="#990000">*=</font> dt<font color="#990000">;</font>
+
+               <i><font color="#9A1900">// y^{(k+1)}</font></i>
+               <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> n<font color="#990000">;</font> i<font color="#990000">++)</font>
+               <font color="#FF0000">{</font>    <i><font color="#9A1900">// y^{(k+1)}</font></i>
+                    y_k<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> z_k<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">/</font> <b><font color="#000000">a_double</font></b><font color="#990000">(</font>k <font color="#990000">+</font> <font color="#993399">1</font><font color="#990000">);</font>
+
+                    <i><font color="#9A1900">// add term for k+1 Taylor coefficient</font></i>
+                    <i><font color="#9A1900">// to solution for next y</font></i>
+                    next<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">+=</font> y_k<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">*</font> dt_k<font color="#990000">;</font>
+               <font color="#FF0000">}</font>
+          <font color="#FF0000">}</font>
+
+          <i><font color="#9A1900">// take step</font></i>
+          y <font color="#990000">=</font> next<font color="#990000">;</font>
+     <font color="#FF0000">}</font>
+     <b><font color="#0000FF">return</font></b> y<font color="#990000">;</font>
+<font color="#FF0000">}</font>
+<font color="#FF0000">}</font> <i><font color="#9A1900">// END empty namespace</font></i>
+
+<i><font color="#9A1900">// ==========================================================================</font></i>
+<i><font color="#9A1900">// Routine that tests alogirhtmic differentiation of solutions computed</font></i>
+<i><font color="#9A1900">// by the routine taylor_ode.</font></i>
+<font color="#009900">bool</font> <b><font color="#000000">base2ad</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
+<font color="#FF0000">{</font>    <font color="#009900">bool</font> ok <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
+     <font color="#009900">double</font> eps <font color="#990000">=</font> <font color="#993399">100</font><font color="#990000">.</font> <font color="#990000">*</font> std<font color="#990000">::</font>numeric_limits<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;::</font><b><font color="#000000">epsilon</font></b><font color="#990000">();</font>
+
+     <i><font color="#9A1900">// number of components in differential equation</font></i>
+     <font color="#008080">size_t</font> n <font color="#990000">=</font> <font color="#993399">4</font><font color="#990000">;</font>
+
+     <i><font color="#9A1900">// record the function g(y, x) with x as dynamic parameters</font></i>
+     <font color="#008080">a_vector</font>  <b><font color="#000000">ay</font></b><font color="#990000">(</font>n<font color="#990000">),</font> <b><font color="#000000">ax</font></b><font color="#990000">(</font>n<font color="#990000">);</font>
+     <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> n<font color="#990000">;</font> i<font color="#990000">++)</font>
+          ay<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> ax<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> <font color="#009900">double</font><font color="#990000">(</font>i <font color="#990000">+</font> <font color="#993399">1</font><font color="#990000">);</font>
+
+
+     <i><font color="#9A1900">// declare the parameters as the independent variable</font></i>
+     <font color="#008080">size_t</font> abort_op_index <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
+     <font color="#009900">bool</font>   record_compare <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
+     CppAD<font color="#990000">::</font><b><font color="#000000">Independent</font></b><font color="#990000">(</font>ay<font color="#990000">,</font> abort_op_index<font color="#990000">,</font> record_compare<font color="#990000">,</font> ax<font color="#990000">);</font>
+
+     <i><font color="#9A1900">// fun_g</font></i>
+     <font color="#008080">Ode</font> <b><font color="#000000">G</font></b><font color="#990000">(</font>ax<font color="#990000">);</font>
+     <font color="#008080">a_vector</font> ag <font color="#990000">=</font> <b><font color="#000000">G</font></b><font color="#990000">(</font>ay<font color="#990000">);</font>
+     <font color="#008080">fun_double</font> <b><font color="#000000">fun_g</font></b><font color="#990000">(</font>ay<font color="#990000">,</font> ag<font color="#990000">);</font>
+
+
+     <i><font color="#9A1900">// arguments to taylor_ode</font></i>
+     <font color="#008080">afun_double</font> afun_g<font color="#990000">;</font>
+     afun_g <font color="#990000">=</font> fun_g<font color="#990000">.</font><b><font color="#000000">base2ad</font></b><font color="#990000">();</font> <i><font color="#9A1900">// differential equation</font></i>
+     <font color="#008080">size_t</font>   order <font color="#990000">=</font> n<font color="#990000">;</font>       <i><font color="#9A1900">// order of Taylor's method used</font></i>
+     <font color="#008080">size_t</font>   nstep <font color="#990000">=</font> <font color="#993399">2</font><font color="#990000">;</font>       <i><font color="#9A1900">// number of steps to take</font></i>
+     <font color="#008080">a_double</font> adt   <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">.;</font>      <i><font color="#9A1900">// Delta t for each step</font></i>
+     <font color="#008080">a_vector</font> <b><font color="#000000">ay_ini</font></b><font color="#990000">(</font>n<font color="#990000">);</font>       <i><font color="#9A1900">// initial value of y</font></i>
+     <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> n<font color="#990000">;</font> i<font color="#990000">++)</font>
+          ay_ini<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">.;</font>
+
+     <i><font color="#9A1900">// declare the independent variables</font></i>
+     CppAD<font color="#990000">::</font><b><font color="#000000">Independent</font></b><font color="#990000">(</font>ax<font color="#990000">);</font>
+
+     <i><font color="#9A1900">// set value of x in afun_g</font></i>
+     afun_g<font color="#990000">.</font><b><font color="#000000">new_dynamic</font></b><font color="#990000">(</font>ax<font color="#990000">);</font>
+
+     <i><font color="#9A1900">// integrate the differential equation</font></i>
+     <font color="#008080">a_vector</font> ay_final<font color="#990000">;</font>
+     ay_final <font color="#990000">=</font> <b><font color="#000000">taylor_ode</font></b><font color="#990000">(</font>afun_g<font color="#990000">,</font> order<font color="#990000">,</font> nstep<font color="#990000">,</font> adt<font color="#990000">,</font> ay_ini<font color="#990000">);</font>
+
+     <i><font color="#9A1900">// define differentiable fucntion object f(x) = y_final(x)</font></i>
+     <i><font color="#9A1900">// that computes its derivatives in double</font></i>
+     CppAD<font color="#990000">::</font><font color="#008080">ADFun&lt;double&gt;</font> <b><font color="#000000">fun_f</font></b><font color="#990000">(</font>ax<font color="#990000">,</font> ay_final<font color="#990000">);</font>
+
+     <i><font color="#9A1900">// double version of ax</font></i>
+     <font color="#008080">d_vector</font> <b><font color="#000000">x</font></b><font color="#990000">(</font>n<font color="#990000">);</font>
+     <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> n<font color="#990000">;</font> i<font color="#990000">++)</font>
+          x<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> <b><font color="#000000">Value</font></b><font color="#990000">(</font> ax<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">);</font>
+
+     <i><font color="#9A1900">// check function values</font></i>
+     <font color="#009900">double</font> check <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">.;</font>
+     <font color="#009900">double</font> t     <font color="#990000">=</font> <font color="#009900">double</font><font color="#990000">(</font>nstep<font color="#990000">)</font> <font color="#990000">*</font> <b><font color="#000000">Value</font></b><font color="#990000">(</font>adt<font color="#990000">);</font>
+     <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> n<font color="#990000">;</font> i<font color="#990000">++)</font>
+     <font color="#FF0000">{</font>    check <font color="#990000">*=</font> x<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">*</font> t <font color="#990000">/</font> <font color="#009900">double</font><font color="#990000">(</font>i <font color="#990000">+</font> <font color="#993399">1</font><font color="#990000">);</font>
+          ok <font color="#990000">&amp;=</font> CppAD<font color="#990000">::</font><b><font color="#000000">NearEqual</font></b><font color="#990000">(</font><b><font color="#000000">Value</font></b><font color="#990000">(</font>ay_final<font color="#990000">[</font>i<font color="#990000">]),</font> check<font color="#990000">,</font> eps<font color="#990000">,</font> eps<font color="#990000">);</font>
+     <font color="#FF0000">}</font>
+
+     <i><font color="#9A1900">// There appears to be a bug in g++ version 4.4.2 because it generates</font></i>
+     <i><font color="#9A1900">// a warning for the equivalent form</font></i>
+     <i><font color="#9A1900">// d_vector jac = fun_f.Jacobian(x);</font></i>
+     <font color="#008080">d_vector</font> <b><font color="#000000">jac</font></b> <font color="#990000">(</font> fun_f<font color="#990000">.</font><b><font color="#000000">Jacobian</font></b><font color="#990000">(</font>x<font color="#990000">)</font> <font color="#990000">);</font>
+
+     <i><font color="#9A1900">// check Jacobian</font></i>
+     <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> n<font color="#990000">;</font> i<font color="#990000">++)</font>
+     <font color="#FF0000">{</font>    <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> n<font color="#990000">;</font> j<font color="#990000">++)</font>
+          <font color="#FF0000">{</font>    <font color="#009900">double</font> jac_ij <font color="#990000">=</font> jac<font color="#990000">[</font>i <font color="#990000">*</font> n <font color="#990000">+</font> j<font color="#990000">];</font>
+               <b><font color="#0000FF">if</font></b><font color="#990000">(</font> i <font color="#990000">&lt;</font> j <font color="#990000">)</font>
+                    check <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">.;</font>
+               <b><font color="#0000FF">else</font></b> check <font color="#990000">=</font> <b><font color="#000000">Value</font></b><font color="#990000">(</font> ay_final<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">)</font> <font color="#990000">/</font> x<font color="#990000">[</font>j<font color="#990000">];</font>
+               ok <font color="#990000">&amp;=</font> CppAD<font color="#990000">::</font><b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>jac_ij<font color="#990000">,</font> check<font color="#990000">,</font> eps<font color="#990000">,</font> eps<font color="#990000">);</font>
+          <font color="#FF0000">}</font>
+     <font color="#FF0000">}</font>
+     <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
+<font color="#FF0000">}</font>
+</tt></pre>
+</font></code>
+<hr>Input File: example/general/base2ad.cpp
+
+</body>
+</html>

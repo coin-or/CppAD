@@ -36,7 +36,8 @@ var list_down1 = [
 'atomic_eigen_mat_mul.cpp.htm',
 'atomic_eigen_mat_inv.cpp.htm',
 'atomic_eigen_cholesky.cpp.htm',
-'atomic_mat_mul.cpp.htm'
+'atomic_mat_mul.cpp.htm',
+'atomic_base2ad.cpp.htm'
 ];
 var list_current0 = [
 'atomic_norm_sq.cpp.htm#Theory',

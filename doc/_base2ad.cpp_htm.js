@@ -8,22 +8,11 @@ var list_across0 = [
 var list_up0 = [
 'cppad.htm',
 'adfun.htm',
-'record_adfun.htm'
+'record_adfun.htm',
+'base2ad.htm',
+'base2ad.cpp.htm'
 ];
-var list_down2 = [
-'install.htm',
-'introduction.htm',
-'ad.htm',
-'adfun.htm',
-'preprocessor.htm',
-'multi_thread.htm',
-'utility.htm',
-'ipopt_solve.htm',
-'example.htm',
-'speed.htm',
-'appendix.htm'
-];
-var list_down1 = [
+var list_down3 = [
 'record_adfun.htm',
 'drivers.htm',
 'forward.htm',
@@ -35,7 +24,7 @@ var list_down1 = [
 'funcheck.htm',
 'check_for_nan.htm'
 ];
-var list_down0 = [
+var list_down2 = [
 'independent.htm',
 'funconstruct.htm',
 'dependent.htm',
@@ -43,8 +32,17 @@ var list_down0 = [
 'base2ad.htm',
 'seq_property.htm'
 ];
+var list_down1 = [
+'base2ad.cpp.htm'
+];
 var list_current0 = [
-'record_adfun.htm#Contents'
+'base2ad.cpp.htm#See Also',
+'base2ad.cpp.htm#Purpose',
+'base2ad.cpp.htm#ODE',
+'base2ad.cpp.htm#ODE Solution',
+'base2ad.cpp.htm#Derivative of ODE Solution',
+'base2ad.cpp.htm#Taylor\'s Method Using AD',
+'base2ad.cpp.htm#Source'
 ];
 function choose_across0(item)
 {	var index          = item.selectedIndex;
@@ -57,6 +55,12 @@ function choose_up0(item)
 	item.selectedIndex = 0;
 	if(index > 0)
 		document.location = list_up0[index-1];
+}
+function choose_down3(item)
+{	var index          = item.selectedIndex;
+	item.selectedIndex = 0;
+	if(index > 0)
+		document.location = list_down3[index-1];
 }
 function choose_down2(item)
 {	var index          = item.selectedIndex;

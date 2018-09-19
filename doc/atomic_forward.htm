@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Atomic Forward Mode</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Atomic Forward Mode">
-<meta name="keywords" id="keywords" content=" atomic forward mode callback virtual syntax purpose implementation p q vx vy tx ty ok discussion examples ">
+<meta name="keywords" id="keywords" content=" atomic forward mode callback virtual syntax base ad&lt;base&gt; purpose implementation p q vx vy tx atx ty aty ok discussion examples ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -99,6 +99,8 @@ A:active { color : purple }
 <select onchange='choose_current0(this)'>
 <option>Headings-&gt;</option>
 <option>Syntax</option>
+<option>---..Base</option>
+<option>---..AD&lt;Base&gt;</option>
 <option>Purpose</option>
 <option>Implementation</option>
 <option>p</option>
@@ -106,7 +108,9 @@ A:active { color : purple }
 <option>vx</option>
 <option>vy</option>
 <option>tx</option>
+<option>atx</option>
 <option>ty</option>
+<option>aty</option>
 <option>ok</option>
 <option>Discussion</option>
 <option>Examples</option>
@@ -126,10 +130,53 @@ A:active { color : purple }
 <br>
 <b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
 
+
+<br>
+<br>
+<big><a name="Syntax.Base" id="Syntax.Base">Base</a></big>
+
 <br>
 
-<code><i><font color="black"><span style='white-space: nowrap'>ok</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>afun</span></font></i><font color="blue"><span style='white-space: nowrap'>.forward(</span></font><i><font color="black"><span style='white-space: nowrap'>p</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>q</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>vx</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>vy</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>tx</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ty</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+<code><i><font color="black"><span style='white-space: nowrap'>ok</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>afun</span></font></i><font color="blue"><span style='white-space: nowrap'>.forward(</span></font><i><font color="black"><span style='white-space: nowrap'>p</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>q</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>vx</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>vy</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>tx</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ty</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+This syntax is used by 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.Forward</span></font></code>
+ where 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+ has prototype
 
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ADFun&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+and 
+<code><i><font color="black"><span style='white-space: nowrap'>afun</span></font></i></code>
+ is used in 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+.
+
+<br>
+<br>
+<big><a name="Syntax.AD&lt;Base&gt;" id="Syntax.AD&lt;Base&gt;">AD&lt;Base&gt;</a></big>
+
+<br>
+
+<code><i><font color="black"><span style='white-space: nowrap'>ok</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>afun</span></font></i><font color="blue"><span style='white-space: nowrap'>.forward(</span></font><i><font color="black"><span style='white-space: nowrap'>p</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>q</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>vx</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>vy</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>atx</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>aty</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+This syntax is used by 
+<code><i><font color="black"><span style='white-space: nowrap'>af</span></font></i><font color="blue"><span style='white-space: nowrap'>.Forward</span></font></code>
+ where 
+<code><i><font color="black"><span style='white-space: nowrap'>af</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ADFun&lt;&nbsp;AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&gt;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>af</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+and 
+<code><i><font color="black"><span style='white-space: nowrap'>afun</span></font></i></code>
+ is used in 
+<code><i><font color="black"><span style='white-space: nowrap'>af</span></font></i></code>
+ (see <a href="base2ad.htm" target="_top"><span style='white-space: nowrap'>base2ad</span></a>
+).
 
 <br>
 <br>
@@ -138,8 +185,11 @@ A:active { color : purple }
 This virtual function is used by <a href="atomic_afun.htm" target="_top"><span style='white-space: nowrap'>atomic_afun</span></a>
 
 to evaluate function values.
-It is also used buy <a href="forward.htm" target="_top"><span style='white-space: nowrap'>forward</span></a>
-
+It is also used buy
+<a href="forward.htm" target="_top"><span style='white-space: nowrap'>f.Forward</span></a>
+ (and 
+<code><i><font color="black"><span style='white-space: nowrap'>af</span></font></i><font color="blue"><span style='white-space: nowrap'>.Forward</span></font></code>
+)
 to compute function vales and derivatives.
 
 <br>
@@ -293,6 +343,18 @@ The argument
 and 
 <code><i><font color="black"><span style='white-space: nowrap'>tx</span></font></i><font color="blue"><span style='white-space: nowrap'>.size()&nbsp;==&nbsp;(</span></font><i><font color="black"><span style='white-space: nowrap'>q</span></font></i><font color="blue"><span style='white-space: nowrap'>+1)*</span></font><i><font color="black"><span style='white-space: nowrap'>n</span></font></i></code>
 .
+It is used by 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.Forward</span></font></code>
+ where 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+ has type
+
+<code><font color="blue"><span style='white-space: nowrap'>ADFun&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+ and 
+<code><i><font color="black"><span style='white-space: nowrap'>afun</span></font></i></code>
+ is used in 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+.
 For <small>@(@
 j = 0 , \ldots , n-1
 @)@</small> and <small>@(@
@@ -330,6 +392,23 @@ t = 0
 
 <br>
 <br>
+<b><big><a name="atx" id="atx">atx</a></big></b>
+<br>
+The argument 
+<code><i><font color="black"><span style='white-space: nowrap'>atx</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;CppAD::vector&lt;&nbsp;AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;&gt;&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>atx</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+Otherwise, 
+<code><i><font color="black"><span style='white-space: nowrap'>atx</span></font></i></code>
+ specifications are the same as for 
+<code><i><font color="black"><span style='white-space: nowrap'>tx</span></font></i></code>
+.
+
+<br>
+<br>
 <b><big><a name="ty" id="ty">ty</a></big></b>
 <br>
 The argument 
@@ -341,6 +420,18 @@ The argument
 </span></font></code>
 and 
 <code><i><font color="black"><span style='white-space: nowrap'>tx</span></font></i><font color="blue"><span style='white-space: nowrap'>.size()&nbsp;==&nbsp;(</span></font><i><font color="black"><span style='white-space: nowrap'>q</span></font></i><font color="blue"><span style='white-space: nowrap'>+1)*</span></font><i><font color="black"><span style='white-space: nowrap'>m</span></font></i></code>
+.
+It is set by 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.Forward</span></font></code>
+ where 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+ has type
+
+<code><font color="blue"><span style='white-space: nowrap'>ADFun&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+ and 
+<code><i><font color="black"><span style='white-space: nowrap'>afun</span></font></i></code>
+ is used in 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
 .
 Upon return,
 For <small>@(@
@@ -400,6 +491,23 @@ the input of
 
 @]@</small>
 and hence the corresponding elements need not be recalculated.
+
+<br>
+<br>
+<b><big><a name="aty" id="aty">aty</a></big></b>
+<br>
+The argument 
+<code><i><font color="black"><span style='white-space: nowrap'>aty</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;CppAD::vector&lt;&nbsp;AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;&gt;&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>aty</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+Otherwise, 
+<code><i><font color="black"><span style='white-space: nowrap'>aty</span></font></i></code>
+ specifications are the same as for 
+<code><i><font color="black"><span style='white-space: nowrap'>ty</span></font></i></code>
+.
 
 <br>
 <br>

@@ -44,6 +44,8 @@ var list_down0 = [
 ];
 var list_current0 = [
 'atomic_forward.htm#Syntax',
+'atomic_forward.htm#Syntax.Base',
+'atomic_forward.htm#Syntax.AD&lt;Base&gt;',
 'atomic_forward.htm#Purpose',
 'atomic_forward.htm#Implementation',
 'atomic_forward.htm#p',
@@ -51,7 +53,9 @@ var list_current0 = [
 'atomic_forward.htm#vx',
 'atomic_forward.htm#vy',
 'atomic_forward.htm#tx',
+'atomic_forward.htm#atx',
 'atomic_forward.htm#ty',
+'atomic_forward.htm#aty',
 'atomic_forward.htm#ok',
 'atomic_forward.htm#Discussion',
 'atomic_forward.htm#Examples'

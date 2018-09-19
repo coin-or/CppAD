@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Atomic Reverse Mode</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Atomic Reverse Mode">
-<meta name="keywords" id="keywords" content=" atomic reverse mode syntax purpose implementation q tx ty f g h py px ok examples ">
+<meta name="keywords" id="keywords" content=" atomic reverse mode syntax base ad&lt;base&gt; purpose implementation q tx atx ty aty f g h py apy px apx ok examples ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -99,15 +99,21 @@ A:active { color : purple }
 <select onchange='choose_current0(this)'>
 <option>Headings-&gt;</option>
 <option>Syntax</option>
+<option>---..Base</option>
+<option>---..AD&lt;Base&gt;</option>
 <option>Purpose</option>
 <option>Implementation</option>
 <option>q</option>
 <option>tx</option>
+<option>atx</option>
 <option>ty</option>
+<option>aty</option>
 <option>F</option>
 <option>G, H</option>
 <option>py</option>
+<option>apy</option>
 <option>---..px</option>
+<option>apx</option>
 <option>ok</option>
 <option>Examples</option>
 </select>
@@ -123,10 +129,53 @@ A:active { color : purple }
 <br>
 <b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
 
+
+<br>
+<br>
+<big><a name="Syntax.Base" id="Syntax.Base">Base</a></big>
+
 <br>
 
-<code><i><font color="black"><span style='white-space: nowrap'>ok</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>afun</span></font></i><font color="blue"><span style='white-space: nowrap'>.reverse(</span></font><i><font color="black"><span style='white-space: nowrap'>q</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>tx</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ty</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>px</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>py</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+<code><i><font color="black"><span style='white-space: nowrap'>ok</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>afun</span></font></i><font color="blue"><span style='white-space: nowrap'>.reverse(</span></font><i><font color="black"><span style='white-space: nowrap'>q</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>tx</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ty</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>px</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>py</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+This syntax is used by 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.Forward</span></font></code>
+ where 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+ has prototype
 
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;ADFun&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+and 
+<code><i><font color="black"><span style='white-space: nowrap'>afun</span></font></i></code>
+ is used in 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+.
+
+<br>
+<br>
+<big><a name="Syntax.AD&lt;Base&gt;" id="Syntax.AD&lt;Base&gt;">AD&lt;Base&gt;</a></big>
+
+<br>
+
+<code><i><font color="black"><span style='white-space: nowrap'>ok</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>afun</span></font></i><font color="blue"><span style='white-space: nowrap'>.reverse(</span></font><i><font color="black"><span style='white-space: nowrap'>q</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>atx</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>aty</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>apx</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>apy</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+This syntax is used by 
+<code><i><font color="black"><span style='white-space: nowrap'>af</span></font></i><font color="blue"><span style='white-space: nowrap'>.Forward</span></font></code>
+ where 
+<code><i><font color="black"><span style='white-space: nowrap'>af</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;ADFun&lt;&nbsp;AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&gt;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>af</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+and 
+<code><i><font color="black"><span style='white-space: nowrap'>afun</span></font></i></code>
+ is used in 
+<code><i><font color="black"><span style='white-space: nowrap'>af</span></font></i></code>
+ (see <a href="base2ad.htm" target="_top"><span style='white-space: nowrap'>base2ad</span></a>
+).
 
 <br>
 <br>
@@ -221,6 +270,23 @@ t = 0
 
 <br>
 <br>
+<b><big><a name="atx" id="atx">atx</a></big></b>
+<br>
+The argument 
+<code><i><font color="black"><span style='white-space: nowrap'>atx</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;CppAD::vector&lt;&nbsp;AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;&gt;&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>atx</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+Otherwise, 
+<code><i><font color="black"><span style='white-space: nowrap'>atx</span></font></i></code>
+ specifications are the same as for 
+<code><i><font color="black"><span style='white-space: nowrap'>tx</span></font></i></code>
+.
+
+<br>
+<br>
 <b><big><a name="ty" id="ty">ty</a></big></b>
 <br>
 The argument 
@@ -274,6 +340,23 @@ t = 0
 	y_j^k = \frac{1}{ k ! } Y_j^{(k)} (0)
 
 @]@</small>
+
+<br>
+<br>
+<b><big><a name="aty" id="aty">aty</a></big></b>
+<br>
+The argument 
+<code><i><font color="black"><span style='white-space: nowrap'>aty</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;CppAD::vector&lt;&nbsp;AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;&gt;&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>aty</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+Otherwise, 
+<code><i><font color="black"><span style='white-space: nowrap'>aty</span></font></i></code>
+ specifications are the same as for 
+<code><i><font color="black"><span style='white-space: nowrap'>ty</span></font></i></code>
+.
 
 
 <br>
@@ -373,7 +456,24 @@ k = 0 , \ldots , q
 
 <br>
 <br>
-<big><a name="py.px" id="py.px">px</a></big>
+<b><big><a name="apy" id="apy">apy</a></big></b>
+<br>
+The argument 
+<code><i><font color="black"><span style='white-space: nowrap'>apy</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;CppAD::vector&lt;&nbsp;AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;&gt;&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>apy</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+Otherwise, 
+<code><i><font color="black"><span style='white-space: nowrap'>apy</span></font></i></code>
+ specifications are the same as for 
+<code><i><font color="black"><span style='white-space: nowrap'>py</span></font></i></code>
+.
+
+<br>
+<br>
+<big><a name="apy.px" id="apy.px">px</a></big>
 <br>
 The 
 <code><i><font color="black"><span style='white-space: nowrap'>px</span></font></i></code>
@@ -422,6 +522,23 @@ k < \ell
 <small>@(@
 \partial F_i^k / \partial x_j^\ell = 0
 @)@</small>.
+
+<br>
+<br>
+<b><big><a name="apx" id="apx">apx</a></big></b>
+<br>
+The argument 
+<code><i><font color="black"><span style='white-space: nowrap'>apx</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CppAD::vector&lt;&nbsp;AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;&gt;&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>apx</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+Otherwise, 
+<code><i><font color="black"><span style='white-space: nowrap'>apx</span></font></i></code>
+ specifications are the same as for 
+<code><i><font color="black"><span style='white-space: nowrap'>px</span></font></i></code>
+.
 
 <br>
 <br>

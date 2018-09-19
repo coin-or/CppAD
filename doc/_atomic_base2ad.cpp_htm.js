@@ -7,44 +7,40 @@ var list_across0 = [
 ];
 var list_up0 = [
 'cppad.htm',
-'adfun.htm',
-'record_adfun.htm'
+'ad.htm',
+'advalued.htm',
+'atomic.htm',
+'atomic_example.htm',
+'atomic_base2ad.cpp.htm'
+];
+var list_down3 = [
+'arithmetic.htm',
+'unary_standard_math.htm',
+'binary_math.htm',
+'condexp.htm',
+'discrete.htm',
+'numeric_limits.htm',
+'atomic.htm'
 ];
 var list_down2 = [
-'install.htm',
-'introduction.htm',
-'ad.htm',
-'adfun.htm',
-'preprocessor.htm',
-'multi_thread.htm',
-'utility.htm',
-'ipopt_solve.htm',
-'example.htm',
-'speed.htm',
-'appendix.htm'
+'checkpoint.htm',
+'atomic_base.htm',
+'atomic_example.htm'
 ];
 var list_down1 = [
-'record_adfun.htm',
-'drivers.htm',
-'forward.htm',
-'reverse.htm',
-'sparsity_pattern.htm',
-'sparse_derivative.htm',
-'optimize.htm',
-'abs_normal.htm',
-'funcheck.htm',
-'check_for_nan.htm'
-];
-var list_down0 = [
-'independent.htm',
-'funconstruct.htm',
-'dependent.htm',
-'abort_recording.htm',
-'base2ad.htm',
-'seq_property.htm'
+'atomic_get_started.cpp.htm',
+'atomic_norm_sq.cpp.htm',
+'atomic_reciprocal.cpp.htm',
+'atomic_set_sparsity.cpp.htm',
+'atomic_tangent.cpp.htm',
+'atomic_eigen_mat_mul.cpp.htm',
+'atomic_eigen_mat_inv.cpp.htm',
+'atomic_eigen_cholesky.cpp.htm',
+'atomic_mat_mul.cpp.htm',
+'atomic_base2ad.cpp.htm'
 ];
 var list_current0 = [
-'record_adfun.htm#Contents'
+'atomic_base2ad.cpp.htm#Source Code'
 ];
 function choose_across0(item)
 {	var index          = item.selectedIndex;
@@ -57,6 +53,12 @@ function choose_up0(item)
 	item.selectedIndex = 0;
 	if(index > 0)
 		document.location = list_up0[index-1];
+}
+function choose_down3(item)
+{	var index          = item.selectedIndex;
+	item.selectedIndex = 0;
+	if(index > 0)
+		document.location = list_down3[index-1];
 }
 function choose_down2(item)
 {	var index          = item.selectedIndex;

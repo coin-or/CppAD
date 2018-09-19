@@ -146,6 +146,7 @@ To build this program and run its correctness tests see <a href="cmake_check.htm
 <b><font color="#0000FF">extern</font></b> <font color="#009900">bool</font> <b><font color="#000000">atanh</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">);</font>
 <b><font color="#0000FF">extern</font></b> <font color="#009900">bool</font> <b><font color="#000000">atan</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">);</font>
 <b><font color="#0000FF">extern</font></b> <font color="#009900">bool</font> <b><font color="#000000">azmul</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">);</font>
+<b><font color="#0000FF">extern</font></b> <font color="#009900">bool</font> <b><font color="#000000">base2ad</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">);</font>
 <b><font color="#0000FF">extern</font></b> <font color="#009900">bool</font> <b><font color="#000000">base_require</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">);</font>
 <b><font color="#0000FF">extern</font></b> <font color="#009900">bool</font> <b><font color="#000000">BenderQuad</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">);</font>
 <b><font color="#0000FF">extern</font></b> <font color="#009900">bool</font> <b><font color="#000000">BoolFun</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">);</font>
@@ -204,7 +205,7 @@ To build this program and run its correctness tests see <a href="cmake_check.htm
 <b><font color="#0000FF">extern</font></b> <font color="#009900">bool</font> <b><font color="#000000">NumericType</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">);</font>
 <b><font color="#0000FF">extern</font></b> <font color="#009900">bool</font> <b><font color="#000000">num_limits</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">);</font>
 <b><font color="#0000FF">extern</font></b> <font color="#009900">bool</font> <b><font color="#000000">OdeStiff</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">);</font>
-<b><font color="#0000FF">extern</font></b> <font color="#009900">bool</font> <b><font color="#000000">ode_taylor</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">);</font>
+<b><font color="#0000FF">extern</font></b> <font color="#009900">bool</font> <b><font color="#000000">taylor_ode</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">);</font>
 <b><font color="#0000FF">extern</font></b> <font color="#009900">bool</font> <b><font color="#000000">opt_val_hes</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">);</font>
 <b><font color="#0000FF">extern</font></b> <font color="#009900">bool</font> <b><font color="#000000">con_dyn_var</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">);</font>
 <b><font color="#0000FF">extern</font></b> <font color="#009900">bool</font> <b><font color="#000000">Poly</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">);</font>
@@ -263,6 +264,7 @@ To build this program and run its correctness tests see <a href="cmake_check.htm
      <b><font color="#000000">Run</font></b><font color="#990000">(</font> atan<font color="#990000">,</font>              <font color="#FF0000">"atan"</font>             <font color="#990000">);</font>
      <b><font color="#000000">Run</font></b><font color="#990000">(</font> atanh<font color="#990000">,</font>             <font color="#FF0000">"atanh"</font>            <font color="#990000">);</font>
      <b><font color="#000000">Run</font></b><font color="#990000">(</font> azmul<font color="#990000">,</font>             <font color="#FF0000">"azmul"</font>            <font color="#990000">);</font>
+     <b><font color="#000000">Run</font></b><font color="#990000">(</font> base2ad<font color="#990000">,</font>           <font color="#FF0000">"base2ad"</font>          <font color="#990000">);</font>
      <b><font color="#000000">Run</font></b><font color="#990000">(</font> base_require<font color="#990000">,</font>      <font color="#FF0000">"base_require"</font>     <font color="#990000">);</font>
      <b><font color="#000000">Run</font></b><font color="#990000">(</font> BenderQuad<font color="#990000">,</font>        <font color="#FF0000">"BenderQuad"</font>       <font color="#990000">);</font>
      <b><font color="#000000">Run</font></b><font color="#990000">(</font> BoolFun<font color="#990000">,</font>           <font color="#FF0000">"BoolFun"</font>          <font color="#990000">);</font>
@@ -316,7 +318,7 @@ To build this program and run its correctness tests see <a href="cmake_check.htm
      <b><font color="#000000">Run</font></b><font color="#990000">(</font> NumericType<font color="#990000">,</font>       <font color="#FF0000">"NumericType"</font>      <font color="#990000">);</font>
      <b><font color="#000000">Run</font></b><font color="#990000">(</font> num_limits<font color="#990000">,</font>        <font color="#FF0000">"num_limits"</font>       <font color="#990000">);</font>
      <b><font color="#000000">Run</font></b><font color="#990000">(</font> OdeStiff<font color="#990000">,</font>          <font color="#FF0000">"OdeStiff"</font>         <font color="#990000">);</font>
-     <b><font color="#000000">Run</font></b><font color="#990000">(</font> ode_taylor<font color="#990000">,</font>        <font color="#FF0000">"ode_taylor"</font>       <font color="#990000">);</font>
+     <b><font color="#000000">Run</font></b><font color="#990000">(</font> taylor_ode<font color="#990000">,</font>        <font color="#FF0000">"ode_taylor"</font>       <font color="#990000">);</font>
      <b><font color="#000000">Run</font></b><font color="#990000">(</font> opt_val_hes<font color="#990000">,</font>       <font color="#FF0000">"opt_val_hes"</font>      <font color="#990000">);</font>
      <b><font color="#000000">Run</font></b><font color="#990000">(</font> con_dyn_var<font color="#990000">,</font>       <font color="#FF0000">"con_dyn_var"</font>      <font color="#990000">);</font>
      <b><font color="#000000">Run</font></b><font color="#990000">(</font> Poly<font color="#990000">,</font>              <font color="#FF0000">"Poly"</font>             <font color="#990000">);</font>

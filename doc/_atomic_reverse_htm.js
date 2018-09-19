@@ -44,15 +44,21 @@ var list_down0 = [
 ];
 var list_current0 = [
 'atomic_reverse.htm#Syntax',
+'atomic_reverse.htm#Syntax.Base',
+'atomic_reverse.htm#Syntax.AD&lt;Base&gt;',
 'atomic_reverse.htm#Purpose',
 'atomic_reverse.htm#Implementation',
 'atomic_reverse.htm#q',
 'atomic_reverse.htm#tx',
+'atomic_reverse.htm#atx',
 'atomic_reverse.htm#ty',
+'atomic_reverse.htm#aty',
 'atomic_reverse.htm#F',
 'atomic_reverse.htm#G, H',
 'atomic_reverse.htm#py',
-'atomic_reverse.htm#py.px',
+'atomic_reverse.htm#apy',
+'atomic_reverse.htm#apy.px',
+'atomic_reverse.htm#apx',
 'atomic_reverse.htm#ok',
 'atomic_reverse.htm#Examples'
 ];
