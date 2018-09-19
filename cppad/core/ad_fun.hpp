@@ -308,7 +308,7 @@ public:
 
 	// create ADFun< AD<Base> > from this ADFun<Base>
 	// (doxygen in cppad/core/base2ad.hpp)
-	ADFun< AD<Base> > base2ad(void) const;
+	ADFun< AD<Base>, RecBase > base2ad(void) const;
 
 	/// sequence constructor
 	template <typename ADvector>

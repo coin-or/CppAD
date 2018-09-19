@@ -25,6 +25,11 @@ $section Create an AD<Base> Function From an Base Function$$
 $head Syntax$$
 $icode%af% = %f%.base2ad()%$$
 
+$head Base$$
+This is the base type used to recorcd the operation sequence in $icode f$$
+and $icode af$$; i.e., the type $codei%AD<%Base%>%$$ was used to record
+the operation sequence.
+
 $head f$$
 This object has prototype
 $codei%
@@ -35,11 +40,11 @@ It does it's derivative calculations using the type $icode Base$$.
 $head af$$
 This object has prototype
 $codei%
-	ADFun< AD<%Base%> > %af%
+	ADFun< AD<%Base%> , %Base% > %af%
 %$$
 It has the same operation sequence as $icode f$$,
 but it does it's derivative calculations using the type
-$codei%AD<%Base%$$.
+$codei%AD<%Base>%$$.
 This enables one to record new functions that are defined
 using derivatives of the function $icode f$$.
 
@@ -59,10 +64,10 @@ namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 /*!
 \file base2ad.hpp
 */
-/// Create an ADFun< AD<Base> > from this ADFun<Base>
+/// Create an ADFun< AD<Base>, Base > from this ADFun<Base>
 template <typename Base, typename RecBase>
-ADFun< AD<Base> > ADFun<Base,RecBase>::base2ad(void) const
-{	ADFun< AD<Base> > fun;
+ADFun< AD<Base>, RecBase > ADFun<Base,RecBase>::base2ad(void) const
+{	ADFun< AD<Base>, RecBase > fun;
 	//
 	// size_t objects
 	fun.has_been_optimized_        = has_been_optimized_;

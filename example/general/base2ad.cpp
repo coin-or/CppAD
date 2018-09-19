@@ -103,13 +103,13 @@ $end
 // =========================================================================
 namespace { // BEGIN empty namespace
 
-typedef CppAD::AD<double>          a_double;
+typedef CppAD::AD<double>                  a_double;
 
-typedef CPPAD_TESTVECTOR(double)   d_vector;
-typedef CPPAD_TESTVECTOR(a_double) a_vector;
+typedef CPPAD_TESTVECTOR(double)           d_vector;
+typedef CPPAD_TESTVECTOR(a_double)         a_vector;
 
-typedef CppAD::ADFun<double>       fun_double;
-typedef CppAD::ADFun<a_double>     afun_double;
+typedef CppAD::ADFun<double>               fun_double;
+typedef CppAD::ADFun<a_double, double>     afun_double;
 
 // -------------------------------------------------------------------------
 // class definition for C++ function object that defines ODE
