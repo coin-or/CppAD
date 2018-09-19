@@ -79,7 +79,11 @@ VectorBase ADFun<Base,RecBase>::Forward(
 	size_t              q         ,
 	const VectorBase&   xq        ,
 	      std::ostream& s         )
-{	// temporary indices
+{
+	// used to identify the RecBase type in calls to sweeps
+	RecBase not_used_rec_base;
+
+	// temporary indices
 	size_t i, j, k;
 
 	// number of independent variables
@@ -155,12 +159,14 @@ VectorBase ADFun<Base,RecBase>::Forward(
 	CPPAD_ASSERT_UNKNOWN( cskip_op_.size() == play_.num_op_rec() );
 	CPPAD_ASSERT_UNKNOWN( load_op_.size()  == play_.num_load_op_rec() );
 	if( q == 0 )
-	{	local::sweep::forward0(&play_, s, true,
+	{
+		local::sweep::forward0(&play_, s, true,
 			n, num_var_tape_, C,
 			taylor_.data(), cskip_op_.data(), load_op_,
 			compare_change_count_,
 			compare_change_number_,
-			compare_change_op_index_
+			compare_change_op_index_,
+			not_used_rec_base
 		);
 	}
 	else
@@ -169,7 +175,8 @@ VectorBase ADFun<Base,RecBase>::Forward(
 			taylor_.data(), cskip_op_.data(), load_op_,
 			compare_change_count_,
 			compare_change_number_,
-			compare_change_op_index_
+			compare_change_op_index_,
+			not_used_rec_base
 		);
 	}
 
@@ -325,7 +332,11 @@ VectorBase ADFun<Base,RecBase>::Forward(
 	size_t              q         ,
 	size_t              r         ,
 	const VectorBase&   xq        )
-{	// temporary indices
+{
+	// used to identify the RecBase type in calls to sweeps
+	RecBase not_used_rec_base;
+
+	// temporary indices
 	size_t i, j, ell;
 
 	// number of independent variables
@@ -392,7 +403,8 @@ VectorBase ADFun<Base,RecBase>::Forward(
 		c,
 		taylor_.data(),
 		cskip_op_.data(),
-		load_op_
+		load_op_,
+		not_used_rec_base
 	);
 
 	// return Taylor coefficients for dependent variables

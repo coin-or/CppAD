@@ -26,7 +26,7 @@ $head Syntax$$
 $icode%af% = %f%.base2ad()%$$
 
 $head Base$$
-This is the base type used to recorcd the operation sequence in $icode f$$
+This is the base type used to recorded the operation sequence in $icode f$$
 and $icode af$$; i.e., the type $codei%AD<%Base%>%$$ was used to record
 the operation sequence.
 

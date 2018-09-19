@@ -109,6 +109,7 @@ $rref atomic_eigen_mat_mul.hpp$$
 $rref atomic_for_sparse_hes.cpp$$
 $rref atomic_for_sparse_jac.cpp$$
 $rref atomic_forward.cpp$$
+$rref atomic_base2ad.cpp$$
 $rref atomic_get_started.cpp$$
 $rref atomic_mat_mul.cpp$$
 $rref atomic_mat_mul.hpp$$

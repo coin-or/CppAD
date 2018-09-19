@@ -130,9 +130,12 @@ load instruction.
 In the case where the index is zero,
 the instruction corresponds to a parameter (not variable).
 
+\param not_used_rec_base
+Specifies RecBase for this call.
+
 */
 
-template <class Addr, class Base>
+template <class Addr, class Base, class RecBase>
 void forward2(
 	const local::player<Base>*  play,
 	const size_t                q,
@@ -142,7 +145,8 @@ void forward2(
 	const size_t                J,
 	Base*                       taylor,
 	const bool*                 cskip_op,
-	const pod_vector<Addr>&     var_by_load_op
+	const pod_vector<Addr>&     var_by_load_op,
+	const RecBase&              not_used_rec_base
 )
 {
 	CPPAD_ASSERT_UNKNOWN( q > 0 );
@@ -164,9 +168,9 @@ void forward2(
 	size_t user_old=0, user_m=0, user_n=0, user_i=0, user_j=0;
 	enum_user_state user_state = start_user; // proper initialization
 	//
-	atomic_base<Base>* user_atom = CPPAD_NULL; // user's atomic op calculator
+	atomic_base<RecBase>* user_atom = CPPAD_NULL; // user's atomic op
 # ifndef NDEBUG
-	bool               user_ok   = false;      // atomic op return value
+	bool                  user_ok   = false;      // atomic op return value
 # endif
 
 	// length of the parameter vector (used by CppAD assert macros)
@@ -550,7 +554,9 @@ void forward2(
 			case UserOp:
 			// start or end an atomic function call
 			flag = user_state == start_user;
-			user_atom = play::user_op_info<Base>(op, arg, user_old, user_m, user_n);
+			user_atom = play::user_op_info<RecBase>(
+				op, arg, user_old, user_m, user_n
+			);
 			if( flag )
 			{	user_state = arg_user;
 				user_i     = 0;

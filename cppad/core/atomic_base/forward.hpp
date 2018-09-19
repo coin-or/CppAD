@@ -25,6 +25,9 @@ $spell
 	const
 	CppAD
 	bool
+	atx
+	aty
+	af
 $$
 
 $section Atomic Forward Mode$$
@@ -32,12 +35,16 @@ $mindex callback virtual$$
 
 
 $head Syntax$$
-$icode%ok% = %afun%.forward(%p%, %q%, %vx%, %vy%, %tx%, %ty%)%$$
+$icode%ok% = %afun%.forward(%p%, %q%, %vx%, %vy%, %tx%, %ty%)
+%$$
+$icode%ok% = %afun%.forward(%p%, %q%, %vx%, %vy%, %atx%, %aty%)
+%$$
 
 $head Purpose$$
 This virtual function is used by $cref atomic_afun$$
 to evaluate function values.
-It is also used buy $cref/forward/Forward/$$
+It is also used buy
+$cref/f.Forward/Forward/$$ (and $icode%af%.Forward%$$)
 to compute function vales and derivatives.
 
 $head Implementation$$
@@ -108,6 +115,8 @@ $codei%
 	const CppAD::vector<%Base%>& %tx%
 %$$
 and $icode%tx%.size() == (%q%+1)*%n%$$.
+It is used by $icode%f%.Forward%$$ where $icode f$$ has type
+$codei%ADFun<%Base%> %f%$$ and $icode afun$$ is used in $icode f$$.
 For $latex j = 0 , \ldots , n-1$$ and $latex k = 0 , \ldots , q$$,
 we use the Taylor coefficient notation
 $latex \[
@@ -125,12 +134,27 @@ $latex \[
 	x_j^k = \frac{1}{ k ! } X_j^{(k)} (0)
 \] $$
 
+$head atx$$
+The argument $icode atx$$ has prototype
+$codei%
+	const CppAD::vector< AD<%Base%> >& %atx%
+%$$
+and $icode%atx%.size() == (%q%+1)*%n%$$.
+It is used by $icode%af%.Forward%$$ where $icode af$$ has prototype
+$codei%
+	ADFun< AD<%Base%> , %Base% > %af%
+%$$
+and $icode afun$$ is used in $icode af$$ (see $cref base2ad$$).
+Otherwise, $icode atx$$ specifications are the same as for $icode tx$$.
+
 $head ty$$
 The argument $icode ty$$ has prototype
 $codei%
 	CppAD::vector<%Base%>& %ty%
 %$$
 and $icode%tx%.size() == (%q%+1)*%m%$$.
+It is set by $icode%f%.Forward%$$ where $icode f$$ has type
+$codei%ADFun<%Base%> %f%$$ and $icode afun$$ is used in $icode f$$.
 Upon return,
 For $latex i = 0 , \ldots , m-1$$ and $latex k = 0 , \ldots , q$$,
 $latex \[
@@ -157,6 +181,19 @@ $latex \[
 	ty [ i * ( q + 1 ) + k ] = y_i^k
 \]$$
 and hence the corresponding elements need not be recalculated.
+
+$head aty$$
+The argument $icode aty$$ has prototype
+$codei%
+	const CppAD::vector< AD<%Base%> >& %aty%
+%$$
+and $icode%aty%.size() == (%q%+1)*%m%$$.
+It is used by $icode%af%.Forward%$$ where $icode af$$ has prototype
+$codei%
+	ADFun< AD<%Base%> , %Base% > %af%
+%$$
+and $icode afun$$ is used in $icode af$$ (see $cref base2ad$$).
+Otherwise, $icode aty$$ specifications are the same as for $icode ty$$.
 
 $head ok$$
 If the required results are calculated, $icode ok$$ should be true.
@@ -241,6 +278,16 @@ bool atomic_base<Base>::forward(
 	      vector<bool>&       vy ,
 	const vector<Base>&       tx ,
 	      vector<Base>&       ty )
+{	return false; }
+
+template <typename Base>
+bool atomic_base<Base>::forward(
+	size_t                    p   ,
+	size_t                    q   ,
+	const vector<bool>&       vx  ,
+	      vector<bool>&       vy  ,
+	const vector< AD<Base> >& atx ,
+	      vector< AD<Base> >& aty )
 {	return false; }
 
 } // END_CPPAD_NAMESPACE

@@ -391,6 +391,9 @@ template <typename Base, typename RecBase>
 template <typename VectorAD>
 ADFun<Base,RecBase>::ADFun(const VectorAD &x, const VectorAD &y)
 {
+	// used to identify the RecBase type in calls to sweeps
+	RecBase not_used_rec_base;
+
 	CPPAD_ASSERT_KNOWN(
 		x.size() > 0,
 		"ADFun<Base>: independent variable vector has size zero."
@@ -458,7 +461,8 @@ ADFun<Base,RecBase>::ADFun(const VectorAD &x, const VectorAD &y)
 		cskip_op_.data(), load_op_,
 		compare_change_count_,
 		compare_change_number_,
-		compare_change_op_index_
+		compare_change_op_index_,
+		not_used_rec_base
 	);
 	CPPAD_ASSERT_UNKNOWN( compare_change_count_    == 1 );
 	CPPAD_ASSERT_UNKNOWN( compare_change_number_   == 0 );

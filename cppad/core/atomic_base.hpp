@@ -135,7 +135,8 @@ $childtable%
 	example/atomic/eigen_mat_mul.cpp%
 	example/atomic/eigen_mat_inv.cpp%
 	example/atomic/eigen_cholesky.cpp%
-	example/atomic/mat_mul.cpp
+	example/atomic/mat_mul.cpp%
+	example/atomic/base2ad.cpp
 %$$
 
 $end
@@ -183,8 +184,12 @@ private:
 	struct work_struct {
 		vector<bool>               vx;
 		vector<bool>               vy;
+		//
 		vector<Base>               tx;
 		vector<Base>               ty;
+		//
+		vector<AD<Base> >          atx;
+		vector<AD<Base> >          aty;
 		//
 		vector<bool>               bool_t;
 		//
@@ -301,6 +306,7 @@ static const std::string& class_name(size_t index)
 		size_t           id = 0
 	);
 
+	// ------------------------------------------------------------
 	// forward: see docygen in atomic_base/forward.hpp
 	virtual bool forward(
 		size_t                    p  ,
@@ -310,7 +316,16 @@ static const std::string& class_name(size_t index)
 		const vector<Base>&       tx ,
 		      vector<Base>&       ty
 	);
+	virtual bool forward(
+		size_t                    p  ,
+		size_t                    q  ,
+		const vector<bool>&       vx ,
+		      vector<bool>&       vy ,
+		const vector< AD<Base> >& atx ,
+		      vector< AD<Base> >& aty
+	);
 
+	// ------------------------------------------------------------
 	// reverse: see docygen in atomic_base/reverse.hpp
 	virtual bool reverse(
 		size_t                    q  ,

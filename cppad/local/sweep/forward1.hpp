@@ -178,9 +178,12 @@ If compare_change_count is zero, this value is set to zero.
 Otherwise it is the operator index (see forward_next) for the count-th
 comparision operation that has a different result from when the information in
 play was recorded.
+
+\param not_used_rec_base
+Specifies RecBase for this call.
 */
 
-template <class Addr, class Base>
+template <class Addr, class Base, class RecBase>
 void forward1(
 	const local::player<Base>* play,
 	std::ostream&              s_out,
@@ -195,7 +198,8 @@ void forward1(
 	pod_vector<Addr>&          var_by_load_op,
 	size_t                     compare_change_count,
 	size_t&                    compare_change_number,
-	size_t&                    compare_change_op_index
+	size_t&                    compare_change_op_index,
+	const RecBase&             not_used_rec_base
 )
 {
 	// number of directions
@@ -243,9 +247,9 @@ void forward1(
 	vector<Base> user_tx;        // argument vector Taylor coefficients
 	vector<Base> user_ty;        // result vector Taylor coefficients
 	//
-	atomic_base<Base>* user_atom = CPPAD_NULL; // user's atomic op calculator
+	atomic_base<RecBase>* user_atom = CPPAD_NULL; // user's atomic op
 # ifndef NDEBUG
-	bool               user_ok   = false;      // atomic op return value
+	bool                  user_ok   = false;      // atomic op return value
 # endif
 	//
 	// information defined by forward_user
@@ -912,7 +916,9 @@ void forward1(
 			case UserOp:
 			// start or end an atomic function call
 			flag = user_state == start_user;
-			user_atom = play::user_op_info<Base>(op, arg, user_old, user_m, user_n);
+			user_atom = play::user_op_info<RecBase>(
+				op, arg, user_old, user_m, user_n
+			);
 			if( flag )
 			{	user_state = arg_user;
 				user_i     = 0;
