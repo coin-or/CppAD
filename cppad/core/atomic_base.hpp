@@ -135,8 +135,7 @@ $childtable%
 	example/atomic/eigen_mat_mul.cpp%
 	example/atomic/eigen_mat_inv.cpp%
 	example/atomic/eigen_cholesky.cpp%
-	example/atomic/mat_mul.cpp%
-	example/atomic/base2ad.cpp
+	example/atomic/mat_mul.cpp
 %$$
 
 $end
@@ -188,8 +187,8 @@ private:
 		vector<Base>               tx;
 		vector<Base>               ty;
 		//
-		vector<AD<Base> >          atx;
-		vector<AD<Base> >          aty;
+		vector< AD<Base> >         atx;
+		vector< AD<Base> >         aty;
 		//
 		vector<bool>               bool_t;
 		//
@@ -227,73 +226,18 @@ private:
 		static std::vector<std::string> list_;
 		return list_;
 	}
-	// =====================================================================
 public:
+	// =====================================================================
+	// In User API
+	// =====================================================================
 	//
-	/// current sparsity setting
-	option_enum sparsity(void) const
-	{	return sparsity_; }
-
-	/// Name corresponding to a base_atomic object
-	const std::string& afun_name(void) const
-	{	return class_name()[index_]; }
-
+	// ---------------------------------------------------------------------
 	// ctor: doxygen in atomic_base/ctor.hpp
 	atomic_base(void);
-
-	// ctor: doxygen in atomic_base/ctor.hpp
 	atomic_base(
 		const std::string&     name,
 		option_enum            sparsity = bool_sparsity_enum
 	);
-
-/// destructor informs CppAD that this atomic function with this index
-/// has dropped out of scope by setting its pointer to null
-virtual ~atomic_base(void)
-{	CPPAD_ASSERT_UNKNOWN( class_object().size() > index_ );
-	// change object pointer to null, but leave name for error reporting
-	class_object()[index_] = CPPAD_NULL;
-	//
-	// free temporary work memory
-	for(size_t thread = 0; thread < CPPAD_MAX_NUM_THREADS; thread++)
-		free_work(thread);
-}
-/// allocates work_ for a specified thread
-void allocate_work(size_t thread)
-{	if( work_[thread] == CPPAD_NULL )
-	{	// allocate the raw memory
-		size_t min_bytes = sizeof(work_struct);
-		size_t num_bytes;
-		void*  v_ptr     = thread_alloc::get_memory(min_bytes, num_bytes);
-		// save in work_
-		work_[thread]    = reinterpret_cast<work_struct*>( v_ptr );
-		// call constructor
-		new( work_[thread] ) work_struct;
-	}
-	return;
-}
-/// frees work_ for a specified thread
-void free_work(size_t thread)
-{	if( work_[thread] != CPPAD_NULL )
-	{	// call destructor
-		work_[thread]->~work_struct();
-		// return memory to avialable pool for this thread
-        thread_alloc::return_memory( reinterpret_cast<void*>(work_[thread]) );
-		// mark this thread as not allocated
-		work_[thread] = CPPAD_NULL;
-	}
-	return;
-}
-/// atomic_base function object corresponding to a certain index
-static atomic_base* class_object(size_t index)
-{	CPPAD_ASSERT_UNKNOWN( class_object().size() > index );
-	return class_object()[index];
-}
-/// atomic_base function name corresponding to a certain index
-static const std::string& class_name(size_t index)
-{	CPPAD_ASSERT_UNKNOWN( class_name().size() > index );
-	return class_name()[index];
-}
 
 	// option: see doxygen in atomic_base/option.hpp
 	void option(enum option_enum option_value);
@@ -306,7 +250,7 @@ static const std::string& class_name(size_t index)
 		size_t           id = 0
 	);
 
-	// ------------------------------------------------------------
+	// ------------------------------------------------------------------------
 	// forward: see docygen in atomic_base/forward.hpp
 	virtual bool forward(
 		size_t                    p  ,
@@ -325,7 +269,7 @@ static const std::string& class_name(size_t index)
 		      vector< AD<Base> >& aty
 	);
 
-	// ------------------------------------------------------------
+	// ------------------------------------------------------------------------
 	// reverse: see docygen in atomic_base/reverse.hpp
 	virtual bool reverse(
 		size_t                    q  ,
@@ -552,15 +496,76 @@ static const std::string& class_name(size_t index)
 	// clear: see doxygen in atomic_base/clear.hpp
 	static void clear(void);
 
-// -------------------------------------------------------------------------
-/*!
-Set value of id (used by deprecated old_atomic class)
+	// =====================================================================
+	// Not in User API
+	// =====================================================================
 
-This function is called just before calling any of the virtual function
-and has the corresponding id of the corresponding virtual call.
-*/
-virtual void set_old(size_t id)
-{ }
+	/// current sparsity setting
+	option_enum sparsity(void) const
+	{	return sparsity_; }
+
+	/// Name corresponding to a base_atomic object
+	const std::string& afun_name(void) const
+	{	return class_name()[index_]; }
+
+	/// destructor informs CppAD that this atomic function with this index
+	/// has dropped out of scope by setting its pointer to null
+	virtual ~atomic_base(void)
+	{	CPPAD_ASSERT_UNKNOWN( class_object().size() > index_ );
+		// change object pointer to null, but leave name for error reporting
+		class_object()[index_] = CPPAD_NULL;
+		//
+		// free temporary work memory
+		for(size_t thread = 0; thread < CPPAD_MAX_NUM_THREADS; thread++)
+			free_work(thread);
+	}
+	/// allocates work_ for a specified thread
+	void allocate_work(size_t thread)
+	{	if( work_[thread] == CPPAD_NULL )
+		{	// allocate the raw memory
+			size_t min_bytes = sizeof(work_struct);
+			size_t num_bytes;
+			void*  v_ptr     = thread_alloc::get_memory(min_bytes, num_bytes);
+			// save in work_
+			work_[thread]    = reinterpret_cast<work_struct*>( v_ptr );
+			// call constructor
+			new( work_[thread] ) work_struct;
+		}
+		return;
+	}
+	/// frees work_ for a specified thread
+	void free_work(size_t thread)
+	{	if( work_[thread] != CPPAD_NULL )
+		{	// call destructor
+			work_[thread]->~work_struct();
+			// return memory to avialable pool for this thread
+	        thread_alloc::return_memory(
+				reinterpret_cast<void*>(work_[thread])
+			);
+			// mark this thread as not allocated
+			work_[thread] = CPPAD_NULL;
+		}
+		return;
+	}
+	/// atomic_base function object corresponding to a certain index
+	static atomic_base* class_object(size_t index)
+	{	CPPAD_ASSERT_UNKNOWN( class_object().size() > index );
+		return class_object()[index];
+	}
+	/// atomic_base function name corresponding to a certain index
+	static const std::string& class_name(size_t index)
+	{	CPPAD_ASSERT_UNKNOWN( class_name().size() > index );
+		return class_name()[index];
+	}
+
+	/*!
+	Set value of id (used by deprecated old_atomic class)
+
+	This function is called just before calling any of the virtual function
+	and has the corresponding id of the corresponding virtual call.
+	*/
+	virtual void set_old(size_t id)
+	{ }
 // ---------------------------------------------------------------------------
 };
 } // END_CPPAD_NAMESPACE
