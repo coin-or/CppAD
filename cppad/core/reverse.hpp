@@ -90,7 +90,10 @@ for the independent variables as specified by previous calls to Forward.
 template <typename Base, typename RecBase>
 template <typename VectorBase>
 VectorBase ADFun<Base,RecBase>::Reverse(size_t q, const VectorBase &w)
-{	// constants
+{	// used to identify the RecBase type in calls to sweeps
+	RecBase not_used_rec_base;
+
+	// constants
 	const Base zero(0);
 
 	// temporary indices
@@ -167,7 +170,8 @@ VectorBase ADFun<Base,RecBase>::Reverse(size_t q, const VectorBase &w)
 		Partial.data(),
 		cskip_op_.data(),
 		load_op_,
-		play_itr
+		play_itr,
+		not_used_rec_base
 	);
 
 	// return the derivative values

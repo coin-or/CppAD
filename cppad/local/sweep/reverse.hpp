@@ -180,12 +180,15 @@ varaibles, that are not in the subgraph are not calculated.
 If part of an atomic function call is in the subgraph,
 the entire atomic function call must be in the subgraph.
 
+\param not_used_rec_base
+Specifies RecBase for this call.
+
 \par Assumptions
 The first operator on the tape is a BeginOp,
 and the next \a n operators are InvOp operations for the
 corresponding independent variables; see play->check_inv_op(n_ind).
 */
-template <class Addr, class Base, class Iterator>
+template <class Addr, class Base, class Iterator, class RecBase>
 void reverse(
 	size_t                      d,
 	size_t                      n,
@@ -197,7 +200,8 @@ void reverse(
 	Base*                       Partial,
 	bool*                       cskip_op,
 	const pod_vector<Addr>&     var_by_load_op,
-	Iterator&                   play_itr
+	Iterator&                   play_itr,
+	const RecBase&              not_used_rec_base
 )
 {
 	// check numvar argument
@@ -221,9 +225,9 @@ void reverse(
 	vector<Base> user_px;        // partials w.r.t argument vector
 	vector<Base> user_py;        // partials w.r.t. result vector
 	//
-	atomic_base<Base>* user_atom = CPPAD_NULL; // user's atomic op calculator
+	atomic_base<RecBase>* user_atom = CPPAD_NULL; // user's atomic op
 # ifndef NDEBUG
-	bool               user_ok   = false;      // atomic op return value
+	bool                  user_ok   = false;      // atomic op return value
 # endif
 	//
 	// information defined by forward_user
@@ -677,7 +681,9 @@ void reverse(
 			case UserOp:
 			// start or end an atomic function call
 			flag = user_state == end_user;
-			user_atom = play::user_op_info<Base>(op, arg, user_old, user_m, user_n);
+			user_atom = play::user_op_info<RecBase>(
+				op, arg, user_old, user_m, user_n
+			);
 			if( flag )
 			{	user_state = ret_user;
 				user_i     = user_m;

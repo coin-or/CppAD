@@ -1,4 +1,3 @@
-// $Id$
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
@@ -37,6 +36,9 @@ public:
 	CppAD::atomic_base<double>(name)
 	{ }
 private:
+	// ----------------------------------------------------------------------
+	// forward mode
+	// ----------------------------------------------------------------------
 	template <typename Scalar>
 	bool template_forward(
 		size_t                    p ,
@@ -89,10 +91,60 @@ private:
 		size_t                          q ,
 		const vector<bool>&            vx ,
 		      vector<bool>&            vy ,
-		const vector< AD<double> > &   atx ,
+		const vector< AD<double> >&    atx ,
 		      vector< AD<double> >&    aty
 	)
 	{	return template_forward(p, q, vx, vy, atx, aty);
+	}
+	// ----------------------------------------------------------------------
+	// reverse mode
+	// ----------------------------------------------------------------------
+	template <typename Scalar>
+	bool template_reverse(
+		size_t                    q ,
+		const vector<Scalar>&    tx ,
+		const vector<Scalar>&    ty ,
+		      vector<Scalar>&    px ,
+		const vector<Scalar>&    py
+	)
+	{
+# ifndef NDEBUG
+		size_t n = tx.size() / (q + 1);
+		size_t m = ty.size() / (q + 1);
+# endif
+		assert( n == 1 );
+		assert( m == 1 );
+
+		// return flag
+		bool ok = q == 0;
+		if( ! ok )
+			return ok;
+
+		// Order zero reverse mode.
+		// y^0 = f( x^0 ) = 1 / x^0
+		// y^1 = f'( x^0 ) * x^1 = - x^1 / (x^0 * x^0)
+		px[0] = - py[0] / ( tx[0] * tx[0] );
+		return ok;
+	}
+	// reverse mode routines called by ADFun<Base> objects
+	virtual bool reverse(
+		size_t                    q ,
+		const vector<double>&    tx ,
+		const vector<double>&    ty ,
+		      vector<double>&    px ,
+		const vector<double>&    py
+	)
+	{	return template_reverse(q, tx, ty, px, py);
+	}
+	// reverse mode routines called by ADFun<Base> objects
+	virtual bool reverse(
+		size_t                         q ,
+		const vector< AD<double> >&    atx ,
+		const vector< AD<double> >&    aty ,
+		      vector< AD<double> >&    apx ,
+		const vector< AD<double> >&    apy
+	)
+	{	return template_reverse(q, atx, aty, apx, apy);
 	}
 }; // End of atomic_base2ad class
 }  // End empty namespace
@@ -129,7 +181,7 @@ bool base2ad(void)
 	// create f: x -> y and stop tape recording
 	CppAD::ADFun<double> f;
 	f.Dependent (ax, ay);  // f(x) = x
-	//
+
 	// check function value
 	double check = x0;
 	ok &= NearEqual( Value(ay[0]) , check,  eps, eps);
@@ -142,6 +194,13 @@ bool base2ad(void)
 	y_q    = f.Forward(q, x_q);
 	ok &= NearEqual(y_q[0] , check,  eps, eps);
 
+	// check first order reverse
+	vector<double> dw(n), w(m);
+	w[0]  = 1.0;
+	dw    = f.Reverse(q+1, w);
+	check = 1.0;
+	ok &= NearEqual(dw[0] , check,  eps, eps);
+
 	// create af : x -> y
 	CppAD::ADFun< AD<double> , double > af;
 	af = f.base2ad();
@@ -151,7 +210,15 @@ bool base2ad(void)
 	q      = 0;
 	ax_q[0] = x0;
 	ay_q    = af.Forward(q, ax_q);
+	check   = x0;
 	ok &= NearEqual( Value(ay_q[0]) , check,  eps, eps);
+
+	// check first order reverse
+	vector< AD<double> > adw(n), aw(m);
+	aw[0]  = 1.0;
+	adw    = af.Reverse(q+1, aw);
+	check = 1.0;
+	ok &= NearEqual( Value(adw[0]) , check,  eps, eps);
 
 	return ok;
 }

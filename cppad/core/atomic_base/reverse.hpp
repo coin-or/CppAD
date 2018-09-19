@@ -23,6 +23,11 @@ $spell
 	Taylor
 	const
 	CppAD
+	atx
+	aty
+	apx
+	apy
+	af
 $$
 
 $section Atomic Reverse Mode$$
@@ -31,7 +36,24 @@ $spell
 $$
 
 $head Syntax$$
-$icode%ok% = %afun%.reverse(%q%, %tx%, %ty%, %px%, %py%)%$$
+
+$subhead Base$$
+$icode%ok% = %afun%.reverse(%q%, %tx%, %ty%, %px%, %py%)
+%$$
+This syntax is used by $icode%f%.Forward%$$ where $icode f$$ has prototype
+$codei%
+    ADFun<%Base%> %f%
+%$$
+and $icode afun$$ is used in $icode f$$.
+
+$subhead AD<Base>$$
+$icode%ok% = %afun%.reverse(%q%, %atx%, %aty%, %apx%, %apy%)
+%$$
+This syntax is used by $icode%af%.Forward%$$ where $icode af$$ has prototype
+$codei%
+    ADFun< AD<%Base%> , %Base% > %af%
+%$$
+and $icode afun$$ is used in $icode af$$ (see $cref base2ad$$).
 
 $head Purpose$$
 This function is used by $cref/reverse/Reverse/$$
@@ -78,6 +100,13 @@ $latex \[
 	x_j^k = \frac{1}{ k ! } X_j^{(k)} (0)
 \] $$
 
+$head atx$$
+The argument $icode atx$$ has prototype
+$codei%
+	const CppAD::vector< AD<%Base%> >& %atx%
+%$$
+Otherwise, $icode atx$$ specifications are the same as for $icode tx$$.
+
 $head ty$$
 The argument $icode ty$$ has prototype
 $codei%
@@ -103,6 +132,13 @@ to the derivatives of $latex Y(t)$$ at $latex t = 0$$ in the following way:
 $latex \[
 	y_j^k = \frac{1}{ k ! } Y_j^{(k)} (0)
 \] $$
+
+$head aty$$
+The argument $icode aty$$ has prototype
+$codei%
+	const CppAD::vector< AD<%Base%> >& %aty%
+%$$
+Otherwise, $icode aty$$ specifications are the same as for $icode ty$$.
 
 
 $head F$$
@@ -150,6 +186,13 @@ $latex \[
 	py[ i * (q + 1 ) + k ] = \partial G / \partial y_i^k
 \] $$
 
+$head apy$$
+The argument $icode apy$$ has prototype
+$codei%
+	const CppAD::vector< AD<%Base%> >& %apy%
+%$$
+Otherwise, $icode apy$$ specifications are the same as for $icode py$$.
+
 $subhead px$$
 The $icode px$$ has prototype
 $codei%
@@ -181,6 +224,13 @@ py[ i * (q + 1 ) + k ] ( \partial F_i^k / \partial x_j^\ell )
 \] $$
 Note that we have used the fact that for $latex k < \ell$$,
 $latex \partial F_i^k / \partial x_j^\ell = 0$$.
+
+$head apx$$
+The argument $icode apx$$ has prototype
+$codei%
+	CppAD::vector< AD<%Base%> >& %apx%
+%$$
+Otherwise, $icode apx$$ specifications are the same as for $icode px$$.
 
 $head ok$$
 The return value $icode ok$$ has prototype
@@ -234,6 +284,15 @@ bool atomic_base<Base>::reverse(
 	const vector<Base>&       ty ,
 	      vector<Base>&       px ,
 	const vector<Base>&       py )
+{	return false; }
+
+template <typename Base>
+bool atomic_base<Base>::reverse(
+	size_t                    q  ,
+	const vector< AD<Base> >& atx ,
+	const vector< AD<Base> >& aty ,
+	      vector< AD<Base> >& apx ,
+	const vector< AD<Base> >& apy )
 {	return false; }
 
 } // END_CPPAD_NAMESPACE

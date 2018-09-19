@@ -35,10 +35,24 @@ $mindex callback virtual$$
 
 
 $head Syntax$$
+
+$subhead Base$$
 $icode%ok% = %afun%.forward(%p%, %q%, %vx%, %vy%, %tx%, %ty%)
 %$$
+This syntax is used by $icode%f%.Forward%$$ where $icode f$$ has prototype
+$codei%
+	ADFun<%Base%> %f%
+%$$
+and $icode afun$$ is used in $icode f$$.
+
+$subhead AD<Base>$$
 $icode%ok% = %afun%.forward(%p%, %q%, %vx%, %vy%, %atx%, %aty%)
 %$$
+This syntax is used by $icode%af%.Forward%$$ where $icode af$$ has prototype
+$codei%
+	ADFun< AD<%Base%> , %Base% > %af%
+%$$
+and $icode afun$$ is used in $icode af$$ (see $cref base2ad$$).
 
 $head Purpose$$
 This virtual function is used by $cref atomic_afun$$
@@ -139,12 +153,6 @@ The argument $icode atx$$ has prototype
 $codei%
 	const CppAD::vector< AD<%Base%> >& %atx%
 %$$
-and $icode%atx%.size() == (%q%+1)*%n%$$.
-It is used by $icode%af%.Forward%$$ where $icode af$$ has prototype
-$codei%
-	ADFun< AD<%Base%> , %Base% > %af%
-%$$
-and $icode afun$$ is used in $icode af$$ (see $cref base2ad$$).
 Otherwise, $icode atx$$ specifications are the same as for $icode tx$$.
 
 $head ty$$
@@ -187,12 +195,6 @@ The argument $icode aty$$ has prototype
 $codei%
 	const CppAD::vector< AD<%Base%> >& %aty%
 %$$
-and $icode%aty%.size() == (%q%+1)*%m%$$.
-It is used by $icode%af%.Forward%$$ where $icode af$$ has prototype
-$codei%
-	ADFun< AD<%Base%> , %Base% > %af%
-%$$
-and $icode afun$$ is used in $icode af$$ (see $cref base2ad$$).
 Otherwise, $icode aty$$ specifications are the same as for $icode ty$$.
 
 $head ok$$

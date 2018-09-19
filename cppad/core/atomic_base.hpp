@@ -334,6 +334,13 @@ static const std::string& class_name(size_t index)
 		      vector<Base>&       px ,
 		const vector<Base>&       py
 	);
+	virtual bool reverse(
+		size_t                    q   ,
+		const vector< AD<Base> >& atx ,
+		const vector< AD<Base> >& aty ,
+		      vector< AD<Base> >& apx ,
+		const vector< AD<Base> >& apy
+	);
 
 	// ------------------------------------------------------------
 	// for_sparse_jac: see doxygen in atomic_base/for_sparse_jac.hpp
