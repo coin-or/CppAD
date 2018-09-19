@@ -35,14 +35,15 @@ $$
 
 $section Changes and Additions to CppAD During 2018$$
 
-$comment ------------------------------------------------------------------- $$
-$head base2ad$$
-
-$subhead 09-16$$
-Make $cref mul_level_ode.cpp$$ and $cref mul_level_adolc_ode.cpp$$
-more like $cref base2ad.cpp$$.
-
-$comment ------------------------------------------------------------------- $$
+$head 09-19$$
+Add the $cref base2ad$$ capability.
+This creates a function that computes using $codei%AD<%Base%>%$$
+objects from one that computes using $icode Base$$ objects.
+This enables one to record any derivatives computations as part of another
+function and thereby removes the need for
+$cref/multiple levels of AD/mul_level/$$.
+For example, compare $cref base2ad.cpp$$
+with $cref mul_level_ode.cpp$$.
 
 $head 09-17$$
 Create a section with just the

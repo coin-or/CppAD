@@ -29,6 +29,7 @@
 # 16. Remove all lines that have 'SHORT COPYRIGHT' on them.
 # 17. Remove 'It returns true if it succeeds and false otherwise.'
 # 18. Change template <class *> -> template <typename *>.
+# 19. Create check_sort.sh and use it to sort all alphabetical lists.
 # -----------------------------------------------------------------------------
 spell_list='
 '

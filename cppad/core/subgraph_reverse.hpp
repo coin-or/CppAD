@@ -297,6 +297,8 @@ void ADFun<Base,RecBase>::subgraph_reverse_helper(
 	SizeVector& col ,
 	VectorBase& dw  )
 {	using local::pod_vector;
+	// used to identify the RecBase type in calls to sweeps
+	RecBase not_used_rec_base;
 	//
 	// get a random iterator for this player
 	play_.template setup_random<Addr>();
@@ -410,7 +412,8 @@ void ADFun<Base,RecBase>::subgraph_reverse_helper(
 		subgraph_partial_.data(),
 		cskip_op_.data(),
 		load_op_,
-		subgraph_itr
+		subgraph_itr,
+		not_used_rec_base
 	);
 
 	// number of non-zero in return value
