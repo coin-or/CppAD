@@ -243,16 +243,16 @@ It returns true if it succeeds and false if it fails.
 $end
 */
 
-# define CPPAD_TMP_MULTI_THREAD 0
+# define CPPAD_MULTI_THREAD_TMB 0
 # ifdef _OPENMP
 # ifdef CPPAD_FOR_TMB
-# undef  CPPAD_TMP_MULTI_THREAD
-# define CPPAD_TMP_MULTI_THREAD 1
+# undef  CPPAD_MULTI_THREAD_TMB
+# define CPPAD_MULTI_THREAD_TMB 1
 # endif
 # endif
 
 // ============================================================================
-# if ! CPPAD_TMP_MULTI_THREAD
+# if ! CPPAD_MULTI_THREAD_TMB
 // ============================================================================
 
 template <class Base>
@@ -277,40 +277,7 @@ private:
 	{	return static_cast< atomic_base<Base>* >(this)->sparsity(); }
 	// ------------------------------------------------------------------------
 	/// set jac_sparse_set_
-	void set_jac_sparse_set(void)
-	{	CPPAD_ASSERT_UNKNOWN( jac_sparse_set_.n_set() == 0 );
-		bool transpose  = false;
-		bool dependency = true;
-		size_t n = f_.Domain();
-		size_t m = f_.Range();
-		// Use the choice for forward / reverse that results in smaller
-		// size for the sparsity pattern of all variables in the tape.
-		if( n <= m )
-		{	local::sparse_list identity;
-			identity.resize(n, n);
-			for(size_t j = 0; j < n; j++)
-			{	// use add_element because only adding one element per set
-				identity.add_element(j, j);
-			}
-			f_.ForSparseJacCheckpoint(
-				n, identity, transpose, dependency, jac_sparse_set_
-			);
-			f_.size_forward_set(0);
-		}
-		else
-		{	local::sparse_list identity;
-			identity.resize(m, m);
-			for(size_t i = 0; i < m; i++)
-			{	// use add_element because only adding one element per set
-				identity.add_element(i, i);
-			}
-			f_.RevSparseJacCheckpoint(
-				m, identity, transpose, dependency, jac_sparse_set_
-			);
-		}
-		CPPAD_ASSERT_UNKNOWN( f_.size_forward_set() == 0 );
-		CPPAD_ASSERT_UNKNOWN( f_.size_forward_bool() == 0 );
-	}
+	void set_jac_sparse_set(void);
 	/// set jac_sparse_bool_
 	void set_jac_sparse_bool(void)
 	{	CPPAD_ASSERT_UNKNOWN( jac_sparse_bool_.size() == 0 );
@@ -1105,40 +1072,7 @@ private:
 	{	return static_cast< atomic_base<Base>* >(this)->sparsity(); }
 	// ------------------------------------------------------------------------
 	/// set jac_sparse_set_
-	void set_jac_sparse_set(void)
-	{	CPPAD_ASSERT_UNKNOWN( jac_sparse_set_[THREAD].n_set() == 0 );
-		bool transpose  = false;
-		bool dependency = true;
-		size_t n = f_[THREAD].Domain();
-		size_t m = f_[THREAD].Range();
-		// Use the choice for forward / reverse that results in smaller
-		// size for the sparsity pattern of all variables in the tape.
-		if( n <= m )
-		{	local::sparse_list identity;
-			identity.resize(n, n);
-			for(size_t j = 0; j < n; j++)
-			{	// use add_element because only adding one element per set
-				identity.add_element(j, j);
-			}
-			f_[THREAD].ForSparseJacCheckpoint(
-				n, identity, transpose, dependency, jac_sparse_set_[THREAD]
-			);
-			f_[THREAD].size_forward_set(0);
-		}
-		else
-		{	local::sparse_list identity;
-			identity.resize(m, m);
-			for(size_t i = 0; i < m; i++)
-			{	// use add_element because only adding one element per set
-				identity.add_element(i, i);
-			}
-			f_[THREAD].RevSparseJacCheckpoint(
-				m, identity, transpose, dependency, jac_sparse_set_[THREAD]
-			);
-		}
-		CPPAD_ASSERT_UNKNOWN( f_[THREAD].size_forward_set() == 0 );
-		CPPAD_ASSERT_UNKNOWN( f_[THREAD].size_forward_bool() == 0 );
-	}
+	void set_jac_sparse_set(void);
 	/// set jac_sparse_bool_
 	void set_jac_sparse_bool(void)
 	{	CPPAD_ASSERT_UNKNOWN( jac_sparse_bool_[THREAD].size() == 0 );
@@ -1922,7 +1856,11 @@ public:
 // ============================================================================
 # endif
 // ============================================================================
-# undef CPPAD_TMP_MULTI_THREAD
 
 } // END_CPPAD_NAMESPACE
+
+// functions implemented in cppad/core/checkpoint files
+# include <cppad/core/checkpoint/set_jac_sparse_set.hpp>
+
+# undef CPPAD_MULTI_THREAD_TMB
 # endif
