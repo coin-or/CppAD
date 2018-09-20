@@ -284,35 +284,7 @@ private:
 	/// set hes_sparse_set_
 	void set_hes_sparse_set(void);
 	/// set hes_sparse_bool_
-	void set_hes_sparse_bool(void)
-	{	CPPAD_ASSERT_UNKNOWN( hes_sparse_bool_.size() == 0 );
-		size_t n = f_.Domain();
-		size_t m = f_.Range();
-		//
-		// set version of sparsity for vector of all ones
-		vectorBool all_one(m);
-		for(size_t i = 0; i < m; i++)
-			all_one[i] = true;
-
-		// set version of sparsity for n by n idendity matrix
-		vectorBool identity(n * n);
-		for(size_t j = 0; j < n; j++)
-		{	for(size_t i = 0; i < n; i++)
-				identity[ i * n + j ] = (i == j);
-		}
-
-		// compute sparsity pattern for H(x) = sum_i f_i(x)^{(2)}
-		bool transpose  = false;
-		bool dependency = false;
-		f_.ForSparseJac(n, identity, transpose, dependency);
-		hes_sparse_bool_ = f_.RevSparseHes(n, all_one, transpose);
-		CPPAD_ASSERT_UNKNOWN( hes_sparse_bool_.size() == n * n );
-		//
-		// drop the forward sparsity results from f_
-		f_.size_forward_bool(0);
-		CPPAD_ASSERT_UNKNOWN( f_.size_forward_bool() == 0 );
-		CPPAD_ASSERT_UNKNOWN( f_.size_forward_set() == 0 );
-	}
+	void set_hes_sparse_bool(void);
 	// ------------------------------------------------------------------------
 	/*!
 	Link from user_atomic to forward sparse Jacobian pack and bool
@@ -1016,35 +988,7 @@ private:
 	/// set hes_sparse_set_
 	void set_hes_sparse_set(void);
 	/// set hes_sparse_bool_
-	void set_hes_sparse_bool(void)
-	{	CPPAD_ASSERT_UNKNOWN( hes_sparse_bool_[THREAD].size() == 0 );
-		size_t n = f_[THREAD].Domain();
-		size_t m = f_[THREAD].Range();
-		//
-		// set version of sparsity for vector of all ones
-		vectorBool all_one(m);
-		for(size_t i = 0; i < m; i++)
-			all_one[i] = true;
-
-		// set version of sparsity for n by n idendity matrix
-		vectorBool identity(n * n);
-		for(size_t j = 0; j < n; j++)
-		{	for(size_t i = 0; i < n; i++)
-				identity[ i * n + j ] = (i == j);
-		}
-
-		// compute sparsity pattern for H(x) = sum_i f_i(x)^{(2)}
-		bool transpose  = false;
-		bool dependency = false;
-		f_[THREAD].ForSparseJac(n, identity, transpose, dependency);
-		hes_sparse_bool_[THREAD] = f_[THREAD].RevSparseHes(n, all_one, transpose);
-		CPPAD_ASSERT_UNKNOWN( hes_sparse_bool_[THREAD].size() == n * n );
-		//
-		// drop the forward sparsity results from f_
-		f_[THREAD].size_forward_bool(0);
-		CPPAD_ASSERT_UNKNOWN( f_[THREAD].size_forward_bool() == 0 );
-		CPPAD_ASSERT_UNKNOWN( f_[THREAD].size_forward_set() == 0 );
-	}
+	void set_hes_sparse_bool(void);
 	// ------------------------------------------------------------------------
 	/*!
 	Link from user_atomic to forward sparse Jacobian pack and bool
@@ -1734,6 +1678,7 @@ public:
 } // END_CPPAD_NAMESPACE
 
 // functions implemented in cppad/core/checkpoint files
+# include <cppad/core/checkpoint/set_hes_sparse_bool.hpp>
 # include <cppad/core/checkpoint/set_hes_sparse_set.hpp>
 # include <cppad/core/checkpoint/set_jac_sparse_bool.hpp>
 # include <cppad/core/checkpoint/set_jac_sparse_set.hpp>
