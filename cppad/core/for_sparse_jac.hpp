@@ -262,7 +262,11 @@ void ADFun<Base,RecBase>::ForSparseJacCase(
 	size_t              q             ,
 	const VectorSet&    r             ,
 	VectorSet&          s             )
-{	size_t m = Range();
+{
+	// used to identify the RecBase type in calls to sweeps
+	RecBase not_used_rec_base;
+	//
+	size_t m = Range();
 	size_t n = Domain();
 
 	// check VectorSet is Simple Vector class with bool elements
@@ -310,7 +314,9 @@ void ADFun<Base,RecBase>::ForSparseJacCase(
 		dependency,
 		n,
 		num_var_tape_,
-		for_jac_sparse_pack_
+		for_jac_sparse_pack_,
+		not_used_rec_base
+
 	);
 
 	// return values corresponding to dependent variables
@@ -375,7 +381,11 @@ void ADFun<Base,RecBase>::ForSparseJacCase(
 	size_t                     q             ,
 	const VectorSet&           r             ,
 	VectorSet&                 s             )
-{	size_t m = Range();
+{
+	// used to identify the RecBase type in calls to sweeps
+	RecBase not_used_rec_base;
+	//
+	size_t m = Range();
 	size_t n = Domain();
 
 	// check VectorSet is Simple Vector class with sets for elements
@@ -457,7 +467,9 @@ void ADFun<Base,RecBase>::ForSparseJacCase(
 		dependency,
 		n,
 		num_var_tape_,
-		for_jac_sparse_set_
+		for_jac_sparse_set_,
+		not_used_rec_base
+
 	);
 
 	// return values corresponding to dependent variables
@@ -562,7 +574,8 @@ VectorSet ADFun<Base,RecBase>::ForSparseJac(
 	const VectorSet&   r             ,
 	bool               transpose     ,
 	bool               dependency    )
-{	VectorSet s;
+{
+	VectorSet s;
 	typedef typename VectorSet::value_type Set_type;
 
 	// free all memory currently in sparsity patterns
@@ -650,7 +663,11 @@ void ADFun<Base,RecBase>::ForSparseJacCheckpoint(
 	bool                          transpose  ,
 	bool                          dependency ,
 	local::sparse_list&                  s          )
-{	size_t n = Domain();
+{
+	// used to identify the RecBase type in calls to sweeps
+	RecBase not_used_rec_base;
+	//
+	size_t n = Domain();
 	size_t m = Range();
 
 # ifndef NDEBUG
@@ -706,7 +723,9 @@ void ADFun<Base,RecBase>::ForSparseJacCheckpoint(
 		dependency,
 		n,
 		num_var_tape_,
-		for_jac_sparse_set_
+		for_jac_sparse_set_,
+		not_used_rec_base
+
 	);
 
 	// dimension the return value

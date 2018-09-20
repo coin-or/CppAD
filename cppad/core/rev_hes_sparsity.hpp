@@ -167,7 +167,11 @@ void ADFun<Base,RecBase>::rev_hes_sparsity(
 	bool                         transpose        ,
 	bool                         internal_bool    ,
 	sparse_rc<SizeVector>&       pattern_out      )
-{	size_t n  = Domain();
+{
+	// used to identify the RecBase type in calls to sweeps
+	RecBase not_used_rec_base;
+	//
+	size_t n  = Domain();
 	size_t m  = Range();
 	//
 	CPPAD_ASSERT_KNOWN(
@@ -207,8 +211,8 @@ void ADFun<Base,RecBase>::rev_hes_sparsity(
 			num_var_tape_,
 			for_jac_sparse_pack_,
 			rev_jac_pattern.data(),
-			internal_hes
-
+			internal_hes,
+			not_used_rec_base
 		);
 		// get sparstiy pattern for independent variables
 		local::get_internal_sparsity(
@@ -236,8 +240,8 @@ void ADFun<Base,RecBase>::rev_hes_sparsity(
 			num_var_tape_,
 			for_jac_sparse_set_,
 			rev_jac_pattern.data(),
-			internal_hes
-
+			internal_hes,
+			not_used_rec_base
 		);
 		// get sparstiy pattern for independent variables
 		local::get_internal_sparsity(

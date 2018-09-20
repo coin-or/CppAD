@@ -185,7 +185,11 @@ void ADFun<Base,RecBase>::ForSparseHesCase(
 	const VectorSet&  r                ,
 	const VectorSet&  s                ,
 	VectorSet&        h                )
-{	size_t n = Domain();
+{
+	// used to identify the RecBase type in calls to sweeps
+	RecBase not_used_rec_base;
+	//
+	size_t n = Domain();
 	size_t m = Range();
 	//
 	// check Vector is Simple VectorSet class with bool elements
@@ -221,7 +225,9 @@ void ADFun<Base,RecBase>::ForSparseHesCase(
 		dependency,
 		n,
 		num_var_tape_,
-		for_jac_pattern
+		for_jac_pattern,
+		not_used_rec_base
+
 	);
 	// sparsity pattern correspnding to s
 	local::sparse_pack rev_jac_pattern;
@@ -240,7 +246,9 @@ void ADFun<Base,RecBase>::ForSparseHesCase(
 		dependency,
 		n,
 		num_var_tape_,
-		rev_jac_pattern
+		rev_jac_pattern,
+		not_used_rec_base
+
 	);
 	// vector of sets that will hold the forward Hessain values
 	local::sparse_pack for_hes_pattern;
@@ -253,7 +261,9 @@ void ADFun<Base,RecBase>::ForSparseHesCase(
 		num_var_tape_,
 		for_jac_pattern,
 		rev_jac_pattern,
-		for_hes_pattern
+		for_hes_pattern,
+		not_used_rec_base
+
 	);
 	// initialize return values corresponding to independent variables
 	h.resize(n * n);
@@ -305,7 +315,11 @@ void ADFun<Base,RecBase>::ForSparseHesCase(
 	const VectorSet&          r                ,
 	const VectorSet&          s                ,
 	VectorSet&                h                )
-{	size_t n = Domain();
+{
+	// used to identify the RecBase type in calls to sweeps
+	RecBase not_used_rec_base;
+	//
+	size_t n = Domain();
 # ifndef NDEBUG
 	size_t m = Range();
 # endif
@@ -344,7 +358,9 @@ void ADFun<Base,RecBase>::ForSparseHesCase(
 		dependency,
 		n,
 		num_var_tape_,
-		for_jac_pattern
+		for_jac_pattern,
+		not_used_rec_base
+
 	);
 	// sparsity pattern correspnding to s
 	local::sparse_list rev_jac_pattern;
@@ -370,7 +386,9 @@ void ADFun<Base,RecBase>::ForSparseHesCase(
 		dependency,
 		n,
 		num_var_tape_,
-		rev_jac_pattern
+		rev_jac_pattern,
+		not_used_rec_base
+
 	);
 	//
 	// vector of sets that will hold reverse Hessain values
@@ -384,7 +402,9 @@ void ADFun<Base,RecBase>::ForSparseHesCase(
 		num_var_tape_,
 		for_jac_pattern,
 		rev_jac_pattern,
-		for_hes_pattern
+		for_hes_pattern,
+		not_used_rec_base
+
 	);
 	// return values corresponding to independent variables
 	// j is index corresponding to reverse mode partial
@@ -449,7 +469,8 @@ template <class VectorSet>
 VectorSet ADFun<Base,RecBase>::ForSparseHes(
 	const VectorSet& r, const VectorSet& s
 )
-{	VectorSet h;
+{
+	VectorSet h;
 	typedef typename VectorSet::value_type Set_type;
 
 	// Should check to make sure q is same as in previous call to
@@ -500,6 +521,10 @@ void ADFun<Base,RecBase>::ForSparseHesCheckpoint(
 	vector<bool>&                 s         ,
 	local::sparse_list&           h         )
 {
+	// used to identify the RecBase type in calls to sweeps
+	RecBase not_used_rec_base;
+	//
+
 	size_t n = Domain();
 	size_t m = Range();
 
@@ -529,7 +554,9 @@ void ADFun<Base,RecBase>::ForSparseHesCheckpoint(
 		num_var_tape_,
 		for_jac_sparse_set_,
 		RevJac.data(),
-		for_hes_pattern
+		for_hes_pattern,
+		not_used_rec_base
+
 	);
 
 	// dimension the return value

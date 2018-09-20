@@ -89,16 +89,20 @@ the forward Hessian sparsity pattern for the variable with index i is empty.
 the forward Hessian sparsity pattern for the independent dependent variable
 with index (j-1) is given by the set with index j
 in \a for_hes_sparse.
+
+\param not_used_rec_base
+Specifies RecBase for this call.
 */
 
-template <class Addr, class Base, class Vector_set>
+template <class Addr, class Base, class Vector_set, class RecBase>
 void for_hes(
 	const local::player<Base>* play,
 	size_t                     n,
 	size_t                     numvar,
 	const Vector_set&          for_jac_sparse,
 	const Vector_set&          rev_jac_sparse,
-	Vector_set&                for_hes_sparse
+	Vector_set&                for_hes_sparse,
+	const RecBase&             not_used_rec_base
 )
 {
 	// length of the parameter vector (used by CppAD assert macros)
@@ -147,8 +151,8 @@ void for_hes(
 		CPPAD_ASSERT_UNKNOWN( j == play->num_vec_ind_rec() );
 	}
 	// ------------------------------------------------------------------------
-	// user's atomic op calculator
-	atomic_base<Base>* user_atom = CPPAD_NULL; // user's atomic op calculator
+	// user's atomic op
+	atomic_base<RecBase>* user_atom = CPPAD_NULL; // user's atomic op
 	//
 	// work space used by UserOp.
 	vector<Base>       user_x;   // value of parameter arguments to function
@@ -362,7 +366,9 @@ void for_hes(
 				user_state == start_user || user_state == end_user
 			);
 			flag = user_state == start_user;
-			user_atom = play::user_op_info<Base>(op, arg, user_old, user_m, user_n);
+			user_atom = play::user_op_info<RecBase>(
+				op, arg, user_old, user_m, user_n
+			);
 			if( flag )
 			{	user_state = arg_user;
 				user_i     = 0;

@@ -92,16 +92,20 @@ with index (j-1) is given by the set with index j
 in \a rev_hes_sparse.
 The values in the rest of \a rev_hes_sparse are not specified; i.e.,
 they are used for temporary work space.
+
+\param not_used_rec_base
+Specifies RecBase for this call.
 */
 
-template <class Addr, class Base, class Vector_set>
+template <class Addr, class Base, class Vector_set, class RecBase>
 void rev_hes(
 	const local::player<Base>* play,
 	size_t                     n,
 	size_t                     numvar,
 	const Vector_set&          for_jac_sparse,
 	bool*                      RevJac,
-	Vector_set&                rev_hes_sparse
+	Vector_set&                rev_hes_sparse,
+	const RecBase&             not_used_rec_base
 )
 {
 	// length of the parameter vector (used by CppAD assert macros)
@@ -155,8 +159,8 @@ void rev_hes(
 	}
 
 	// ----------------------------------------------------------------------
-	// user's atomic op calculator
-	atomic_base<Base>* user_atom = CPPAD_NULL; // user's atomic op calculator
+	// user's atomic op
+	atomic_base<RecBase>* user_atom = CPPAD_NULL; // user's atomic op
 	//
 	// work space used by UserOp.
 	vector<Base>       user_x;   // parameters in x as integers
@@ -627,7 +631,9 @@ void rev_hes(
 				user_state == start_user || user_state == end_user
 			);
 			flag = user_state == end_user;
-			user_atom = play::user_op_info<Base>(op, arg, user_old, user_m, user_n);
+			user_atom = play::user_op_info<RecBase>(
+				op, arg, user_old, user_m, user_n
+			);
 			if( flag )
 			{	user_state = ret_user;
 				user_i     = user_m;

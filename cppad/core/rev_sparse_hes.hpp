@@ -230,7 +230,11 @@ void ADFun<Base,RecBase>::RevSparseHesCase(
 	size_t            q                ,
 	const VectorSet&  s                ,
 	VectorSet&        h                )
-{	size_t n = Domain();
+{
+	// used to identify the RecBase type in calls to sweeps
+	RecBase not_used_rec_base;
+	//
+	size_t n = Domain();
 	size_t m = Range();
 	//
 	h.resize(q * n );
@@ -281,7 +285,9 @@ void ADFun<Base,RecBase>::RevSparseHesCase(
 		num_var_tape_,
 		for_jac_sparse_pack_,
 		RevJac.data(),
-		rev_hes_pattern
+		rev_hes_pattern,
+		not_used_rec_base
+
 	);
 
 	// return values corresponding to independent variables
@@ -345,7 +351,11 @@ void ADFun<Base,RecBase>::RevSparseHesCase(
 	size_t                    q                ,
 	const VectorSet&          s                ,
 	VectorSet&                h                )
-{	size_t n = Domain();
+{
+	// used to identify the RecBase type in calls to sweeps
+	RecBase not_used_rec_base;
+	//
+	size_t n = Domain();
 # ifndef NDEBUG
 	size_t m = Range();
 # endif
@@ -410,7 +420,9 @@ void ADFun<Base,RecBase>::RevSparseHesCase(
 		num_var_tape_,
 		for_jac_sparse_set_,
 		RevJac.data(),
-		rev_hes_pattern
+		rev_hes_pattern,
+		not_used_rec_base
+
 	);
 
 	// return values corresponding to independent variables
@@ -494,7 +506,8 @@ template <class VectorSet>
 VectorSet ADFun<Base,RecBase>::RevSparseHes(
 	size_t q,  const VectorSet& s, bool transpose
 )
-{	VectorSet h;
+{
+	VectorSet h;
 	typedef typename VectorSet::value_type Set_type;
 
 	// Should check to make sure q is same as in previous call to
@@ -554,7 +567,11 @@ void ADFun<Base,RecBase>::RevSparseHesCheckpoint(
 	vector<bool>&                 s         ,
 	bool                          transpose ,
 	local::sparse_list&           h         )
-{	size_t n = Domain();
+{
+	// used to identify the RecBase type in calls to sweeps
+	RecBase not_used_rec_base;
+	//
+	size_t n = Domain();
 	size_t m = Range();
 
 	// checkpoint functions should get this right
@@ -584,7 +601,9 @@ void ADFun<Base,RecBase>::RevSparseHesCheckpoint(
 		num_var_tape_,
 		for_jac_sparse_set_,
 		RevJac.data(),
-		rev_hes_pattern
+		rev_hes_pattern,
+		not_used_rec_base
+
 	);
 
 	// dimension the return value

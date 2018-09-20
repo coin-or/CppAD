@@ -217,7 +217,11 @@ void ADFun<Base,RecBase>::RevSparseJacCase(
 	size_t              q                 ,
 	const VectorSet&    r                 ,
 	VectorSet&          s                 )
-{	size_t n = Domain();
+{
+	// used to identify the RecBase type in calls to sweeps
+	RecBase not_used_rec_base;
+	//
+	size_t n = Domain();
 	size_t m = Range();
 
 	// dimension of the result vector
@@ -262,7 +266,9 @@ void ADFun<Base,RecBase>::RevSparseJacCase(
 		dependency,
 		n,
 		num_var_tape_,
-		var_sparsity
+		var_sparsity,
+		not_used_rec_base
+
 	);
 
 	// return values corresponding to dependent variables
@@ -330,7 +336,11 @@ void ADFun<Base,RecBase>::RevSparseJacCase(
 	size_t                       q                 ,
 	const VectorSet&             r                 ,
 	VectorSet&                   s                 )
-{	// dimension of the result vector
+{
+	// used to identify the RecBase type in calls to sweeps
+	RecBase not_used_rec_base;
+	//
+	// dimension of the result vector
 	if( transpose )
 		s.resize( Domain() );
 	else	s.resize( q );
@@ -405,7 +415,9 @@ void ADFun<Base,RecBase>::RevSparseJacCase(
 		dependency,
 		n,
 		num_var_tape_,
-		var_sparsity
+		var_sparsity,
+		not_used_rec_base
+
 	);
 
 	// return values corresponding to dependent variables
@@ -546,7 +558,11 @@ void ADFun<Base,RecBase>::RevSparseJacCheckpoint(
 	bool                          transpose  ,
 	bool                          dependency ,
 	local::sparse_list&                  s          )
-{	size_t n = Domain();
+{
+	// used to identify the RecBase type in calls to sweeps
+	RecBase not_used_rec_base;
+	//
+	size_t n = Domain();
 	size_t m = Range();
 
 # ifndef NDEBUG
@@ -597,7 +613,9 @@ void ADFun<Base,RecBase>::RevSparseJacCheckpoint(
 		dependency,
 		n,
 		num_var_tape_,
-		var_sparsity
+		var_sparsity,
+		not_used_rec_base
+
 	);
 
 	// dimension the return value

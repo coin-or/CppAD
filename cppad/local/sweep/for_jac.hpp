@@ -79,15 +79,20 @@ corresponds to the set with index i in \a var_sparsity.
 \par Checked Assertions:
 \li numvar == var_sparsity.n_set()
 \li numvar == play->num_var_rec()
+
+\param not_used_rec_base
+Specifies RecBase for this call.
 */
 
-template <class Addr, class Base, class Vector_set>
+template <class Addr, class Base, class Vector_set, class RecBase>
 void for_jac(
 	const local::player<Base>* play,
 	bool                       dependency        ,
 	size_t                     n                 ,
 	size_t                     numvar            ,
-	Vector_set&                var_sparsity )
+	Vector_set&                var_sparsity,
+	const RecBase&             not_used_rec_base
+)
 {
 	size_t            i, j, k;
 
@@ -128,8 +133,8 @@ void for_jac(
 	}
 
 	// --------------------------------------------------------------
-	// user's atomic op calculator
-	atomic_base<Base>* user_atom = CPPAD_NULL;
+	// user's atomic op
+	atomic_base<RecBase>* user_atom = CPPAD_NULL;
 	//
 	// work space used by UserOp.
 	vector<Base>       user_x;   // value of parameter arguments to function
@@ -617,7 +622,9 @@ void for_jac(
 				user_state == start_user || user_state == end_user
 			);
 			flag = user_state == start_user;
-			user_atom = play::user_op_info<Base>(op, arg, user_old, user_m, user_n);
+			user_atom = play::user_op_info<RecBase>(
+				op, arg, user_old, user_m, user_n
+			);
 			if( flag )
 			{	user_state = arg_user;
 				user_i     = 0;

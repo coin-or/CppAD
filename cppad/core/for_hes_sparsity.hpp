@@ -163,7 +163,11 @@ void ADFun<Base,RecBase>::for_hes_sparsity(
 	const BoolVector&            select_range     ,
 	bool                         internal_bool    ,
 	sparse_rc<SizeVector>&       pattern_out      )
-{	size_t n  = Domain();
+{
+	// used to identify the RecBase type in calls to sweeps
+	RecBase not_used_rec_base;
+	//
+	size_t n  = Domain();
 	size_t m  = Range();
 	//
 	CPPAD_ASSERT_KNOWN(
@@ -196,7 +200,9 @@ void ADFun<Base,RecBase>::for_hes_sparsity(
 			dependency,
 			n,
 			num_var_tape_,
-			internal_for_jac
+			internal_for_jac,
+			not_used_rec_base
+
 		);
 		// reverse Jacobian sparsity pattern for select_range
 		local::sparse_pack internal_rev_jac;
@@ -212,7 +218,9 @@ void ADFun<Base,RecBase>::for_hes_sparsity(
 			dependency,
 			n,
 			num_var_tape_,
-			internal_rev_jac
+			internal_rev_jac,
+			not_used_rec_base
+
 		);
 		// internal vector of sets that will hold Hessian
 		local::sparse_pack internal_for_hes;
@@ -225,7 +233,9 @@ void ADFun<Base,RecBase>::for_hes_sparsity(
 			num_var_tape_,
 			internal_for_jac,
 			internal_rev_jac,
-			internal_for_hes
+			internal_for_hes,
+			not_used_rec_base
+
 		);
 		//
 		// put the result in pattern_tmp
@@ -249,7 +259,9 @@ void ADFun<Base,RecBase>::for_hes_sparsity(
 			dependency,
 			n,
 			num_var_tape_,
-			internal_for_jac
+			internal_for_jac,
+			not_used_rec_base
+
 		);
 		// reverse Jacobian sparsity pattern for select_range
 		// (corresponds to s)
@@ -266,7 +278,9 @@ void ADFun<Base,RecBase>::for_hes_sparsity(
 			dependency,
 			n,
 			num_var_tape_,
-			internal_rev_jac
+			internal_rev_jac,
+			not_used_rec_base
+
 		);
 		// internal vector of sets that will hold Hessian
 		local::sparse_list internal_for_hes;
@@ -279,7 +293,9 @@ void ADFun<Base,RecBase>::for_hes_sparsity(
 			num_var_tape_,
 			internal_for_jac,
 			internal_rev_jac,
-			internal_for_hes
+			internal_for_hes,
+			not_used_rec_base
+
 		);
 		//
 		// put the result in pattern_tmp

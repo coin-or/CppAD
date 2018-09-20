@@ -215,7 +215,11 @@ void ADFun<Base,RecBase>::for_jac_sparsity(
 	bool                         dependency       ,
 	bool                         internal_bool    ,
 	sparse_rc<SizeVector>&       pattern_out      )
-{	// number or rows, columns, and non-zeros in pattern_in
+{
+	// used to identify the RecBase type in calls to sweeps
+	RecBase not_used_rec_base;
+	//
+	// number or rows, columns, and non-zeros in pattern_in
 	size_t nr_in  = pattern_in.nr();
 	size_t nc_in  = pattern_in.nc();
 	//
@@ -253,7 +257,9 @@ void ADFun<Base,RecBase>::for_jac_sparsity(
 			dependency,
 			n,
 			num_var_tape_,
-			for_jac_sparse_pack_
+			for_jac_sparse_pack_,
+			not_used_rec_base
+
 		);
 		// set the output pattern
 		local::get_internal_sparsity(
@@ -283,7 +289,9 @@ void ADFun<Base,RecBase>::for_jac_sparsity(
 			dependency,
 			n,
 			num_var_tape_,
-			for_jac_sparse_set_
+			for_jac_sparse_set_,
+			not_used_rec_base
+
 		);
 		// get the ouput pattern
 		local::get_internal_sparsity(
