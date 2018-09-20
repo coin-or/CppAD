@@ -444,47 +444,8 @@ public:
 		const vector<Base>&       tx ,
 		const vector<Base>&       ty ,
 		      vector<Base>&       px ,
-		const vector<Base>&       py )
-	{
-# ifndef NDEBUG
-		size_t n = f_.Domain();
-		size_t m = f_.Range();
-# endif
-		CPPAD_ASSERT_UNKNOWN( n == tx.size() / (q+1) );
-		CPPAD_ASSERT_UNKNOWN( m == ty.size() / (q+1) );
-		CPPAD_ASSERT_UNKNOWN( f_.size_var() > 0 );
-		CPPAD_ASSERT_UNKNOWN( tx.size() % (q+1) == 0 );
-		CPPAD_ASSERT_UNKNOWN( ty.size() % (q+1) == 0 );
-		bool ok  = true;
-
-		// put proper forward mode coefficients in f_
-# ifdef NDEBUG
-		// compute forward results for orders zero through q
-		f_.Forward(q, tx);
-# else
-		CPPAD_ASSERT_UNKNOWN( px.size() == n * (q+1) );
-		CPPAD_ASSERT_UNKNOWN( py.size() == m * (q+1) );
-		size_t i, j, k;
-		//
-		// compute forward results for orders zero through q
-		vector<Base> check_ty = f_.Forward(q, tx);
-		for(i = 0; i < m; i++)
-		{	for(k = 0; k <= q; k++)
-			{	j = i * (q+1) + k;
-				CPPAD_ASSERT_UNKNOWN( check_ty[j] == ty[j] );
-			}
-		}
-# endif
-		// now can run reverse mode
-		px = f_.Reverse(q+1, py);
-
-		// no longer need the Taylor coefficients in f_
-		// (have to reconstruct them every time)
-		size_t c = 0;
-		size_t r = 0;
-		f_.capacity_order(c, r);
-		return ok;
-	}
+		const vector<Base>&       py
+	);
 	// ------------------------------------------------------------------------
 	/*!
 	Link from user_atomic to forward sparse Jacobian pack
@@ -804,47 +765,8 @@ public:
 		const vector<Base>&       tx ,
 		const vector<Base>&       ty ,
 		      vector<Base>&       px ,
-		const vector<Base>&       py )
-	{
-# ifndef NDEBUG
-		size_t n = f_[THREAD].Domain();
-		size_t m = f_[THREAD].Range();
-# endif
-		CPPAD_ASSERT_UNKNOWN( n == tx.size() / (q+1) );
-		CPPAD_ASSERT_UNKNOWN( m == ty.size() / (q+1) );
-		CPPAD_ASSERT_UNKNOWN( f_[THREAD].size_var() > 0 );
-		CPPAD_ASSERT_UNKNOWN( tx.size() % (q+1) == 0 );
-		CPPAD_ASSERT_UNKNOWN( ty.size() % (q+1) == 0 );
-		bool ok  = true;
-
-		// put proper forward mode coefficients in f_
-# ifdef NDEBUG
-		// compute forward results for orders zero through q
-		f_[THREAD].Forward(q, tx);
-# else
-		CPPAD_ASSERT_UNKNOWN( px.size() == n * (q+1) );
-		CPPAD_ASSERT_UNKNOWN( py.size() == m * (q+1) );
-		size_t i, j, k;
-		//
-		// compute forward results for orders zero through q
-		vector<Base> check_ty = f_[THREAD].Forward(q, tx);
-		for(i = 0; i < m; i++)
-		{	for(k = 0; k <= q; k++)
-			{	j = i * (q+1) + k;
-				CPPAD_ASSERT_UNKNOWN( check_ty[j] == ty[j] );
-			}
-		}
-# endif
-		// now can run reverse mode
-		px = f_[THREAD].Reverse(q+1, py);
-
-		// no longer need the Taylor coefficients in f_
-		// (have to reconstruct them every time)
-		size_t c = 0;
-		size_t r = 0;
-		f_[THREAD].capacity_order(c, r);
-		return ok;
-	}
+		const vector<Base>&       py
+	);
 	// ------------------------------------------------------------------------
 	/*!
 	Link from user_atomic to forward sparse Jacobian pack
@@ -968,6 +890,7 @@ public:
 } // END_CPPAD_NAMESPACE
 
 // functions implemented in cppad/core/checkpoint files
+# include <cppad/core/checkpoint/reverse.hpp>
 # include <cppad/core/checkpoint/forward.hpp>
 # include <cppad/core/checkpoint/rev_sparse_hes.hpp>
 # include <cppad/core/checkpoint/rev_sparse_jac.hpp>
