@@ -279,38 +279,7 @@ private:
 	/// set jac_sparse_set_
 	void set_jac_sparse_set(void);
 	/// set jac_sparse_bool_
-	void set_jac_sparse_bool(void)
-	{	CPPAD_ASSERT_UNKNOWN( jac_sparse_bool_.size() == 0 );
-		bool transpose  = false;
-		bool dependency = true;
-		size_t n = f_.Domain();
-		size_t m = f_.Range();
-		// Use the choice for forward / reverse that results in smaller
-		// size for the sparsity pattern of all variables in the tape.
-		if( n <= m )
-		{	vectorBool identity(n * n);
-			for(size_t j = 0; j < n; j++)
-			{	for(size_t i = 0; i < n; i++)
-					identity[ i * n + j ] = (i == j);
-			}
-			jac_sparse_bool_ = f_.ForSparseJac(
-				n, identity, transpose, dependency
-			);
-			f_.size_forward_bool(0);
-		}
-		else
-		{	vectorBool identity(m * m);
-			for(size_t j = 0; j < m; j++)
-			{	for(size_t i = 0; i < m; i++)
-					identity[ i * m + j ] = (i == j);
-			}
-			jac_sparse_bool_ = f_.RevSparseJac(
-				m, identity, transpose, dependency
-			);
-		}
-		CPPAD_ASSERT_UNKNOWN( f_.size_forward_bool() == 0 );
-		CPPAD_ASSERT_UNKNOWN( f_.size_forward_set() == 0 );
-	}
+	void set_jac_sparse_bool(void);
 	// ------------------------------------------------------------------------
 	/// set hes_sparse_set_
 	void set_hes_sparse_set(void)
@@ -1074,38 +1043,7 @@ private:
 	/// set jac_sparse_set_
 	void set_jac_sparse_set(void);
 	/// set jac_sparse_bool_
-	void set_jac_sparse_bool(void)
-	{	CPPAD_ASSERT_UNKNOWN( jac_sparse_bool_[THREAD].size() == 0 );
-		bool transpose  = false;
-		bool dependency = true;
-		size_t n = f_[THREAD].Domain();
-		size_t m = f_[THREAD].Range();
-		// Use the choice for forward / reverse that results in smaller
-		// size for the sparsity pattern of all variables in the tape.
-		if( n <= m )
-		{	vectorBool identity(n * n);
-			for(size_t j = 0; j < n; j++)
-			{	for(size_t i = 0; i < n; i++)
-					identity[ i * n + j ] = (i == j);
-			}
-			jac_sparse_bool_[THREAD] = f_[THREAD].ForSparseJac(
-				n, identity, transpose, dependency
-			);
-			f_[THREAD].size_forward_bool(0);
-		}
-		else
-		{	vectorBool identity(m * m);
-			for(size_t j = 0; j < m; j++)
-			{	for(size_t i = 0; i < m; i++)
-					identity[ i * m + j ] = (i == j);
-			}
-			jac_sparse_bool_[THREAD] = f_[THREAD].RevSparseJac(
-				m, identity, transpose, dependency
-			);
-		}
-		CPPAD_ASSERT_UNKNOWN( f_[THREAD].size_forward_bool() == 0 );
-		CPPAD_ASSERT_UNKNOWN( f_[THREAD].size_forward_set() == 0 );
-	}
+	void set_jac_sparse_bool(void);
 	// ------------------------------------------------------------------------
 	/// set hes_sparse_set_
 	void set_hes_sparse_set(void)
@@ -1860,6 +1798,7 @@ public:
 } // END_CPPAD_NAMESPACE
 
 // functions implemented in cppad/core/checkpoint files
+# include <cppad/core/checkpoint/set_jac_sparse_bool.hpp>
 # include <cppad/core/checkpoint/set_jac_sparse_set.hpp>
 
 # undef CPPAD_MULTI_THREAD_TMB
