@@ -135,7 +135,8 @@ $childtable%
 	example/atomic/eigen_mat_mul.cpp%
 	example/atomic/eigen_mat_inv.cpp%
 	example/atomic/eigen_cholesky.cpp%
-	example/atomic/mat_mul.cpp
+	example/atomic/mat_mul.cpp%
+	example/atomic/base2ad.cpp
 %$$
 
 $end
