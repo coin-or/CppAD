@@ -530,6 +530,7 @@ nobase_myinclude_HEADERS = \
 	cppad/core/capacity_order.hpp \
 	cppad/core/check_for_nan.hpp \
 	cppad/core/checkpoint.hpp \
+	cppad/core/checkpoint/forward.hpp \
 	cppad/core/checkpoint/rev_sparse_hes.hpp \
 	cppad/core/checkpoint/rev_sparse_jac.hpp \
 	cppad/core/checkpoint/for_sparse_jac.hpp \

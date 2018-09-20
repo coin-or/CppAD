@@ -431,83 +431,8 @@ public:
 		const vector<bool>&      vx ,
 		      vector<bool>&      vy ,
 		const vector<Base>&      tx ,
-		      vector<Base>&      ty )
-	{	size_t n = f_.Domain();
-		size_t m = f_.Range();
-		//
-		CPPAD_ASSERT_UNKNOWN( f_.size_var() > 0 );
-		CPPAD_ASSERT_UNKNOWN( tx.size() % (q+1) == 0 );
-		CPPAD_ASSERT_UNKNOWN( ty.size() % (q+1) == 0 );
-		CPPAD_ASSERT_UNKNOWN( n == tx.size() / (q+1) );
-		CPPAD_ASSERT_UNKNOWN( m == ty.size() / (q+1) );
-		bool ok  = true;
-		//
-		if( vx.size() == 0 )
-		{	// during user forward mode
-			if( jac_sparse_set_.n_set() != 0 )
-				jac_sparse_set_.resize(0,0);
-			if( jac_sparse_bool_.size() != 0 )
-				jac_sparse_bool_.clear();
-			//
-			if( hes_sparse_set_.n_set() != 0 )
-				hes_sparse_set_.resize(0,0);
-			if( hes_sparse_bool_.size() != 0 )
-				hes_sparse_bool_.clear();
-		}
-		if( vx.size() > 0 )
-		{	// need Jacobian sparsity pattern to determine variable relation
-			// during user recording using checkpoint functions
-			if( sparsity() == atomic_base<Base>::set_sparsity_enum )
-			{	if( jac_sparse_set_.n_set() == 0 )
-					set_jac_sparse_set();
-				CPPAD_ASSERT_UNKNOWN( jac_sparse_set_.n_set() == m );
-				CPPAD_ASSERT_UNKNOWN( jac_sparse_set_.end()   == n );
-				//
-				for(size_t i = 0; i < m; i++)
-				{	vy[i] = false;
-					local::sparse_list::const_iterator set_itr(
-						jac_sparse_set_, i
-					);
-					size_t j = *set_itr;
-					while(j < n )
-					{	// y[i] depends on the value of x[j]
-						// cast avoid Microsoft warning (should not be needed)
-						vy[i] |= static_cast<bool>( vx[j] );
-						j = *(++set_itr);
-					}
-				}
-			}
-			else
-			{	if( jac_sparse_set_.n_set() != 0 )
-					jac_sparse_set_.resize(0, 0);
-				if( jac_sparse_bool_.size() == 0 )
-					set_jac_sparse_bool();
-				CPPAD_ASSERT_UNKNOWN( jac_sparse_set_.n_set() == 0 );
-				CPPAD_ASSERT_UNKNOWN( jac_sparse_bool_.size() == m * n );
-				//
-				for(size_t i = 0; i < m; i++)
-				{	vy[i] = false;
-					for(size_t j = 0; j < n; j++)
-					{	if( jac_sparse_bool_[ i * n + j ] )
-						{	// y[i] depends on the value of x[j]
-							// cast avoid Microsoft warning
-							vy[i] |= static_cast<bool>( vx[j] );
-						}
-					}
-				}
-			}
-		}
-		// compute forward results for orders zero through q
-		ty = f_.Forward(q, tx);
-
-		// no longer need the Taylor coefficients in f_
-		// (have to reconstruct them every time)
-		// Hold onto sparsity pattern because it is always good.
-		size_t c = 0;
-		size_t r = 0;
-		f_.capacity_order(c, r);
-		return ok;
-	}
+		      vector<Base>&      ty
+	);
 	// ------------------------------------------------------------------------
 	/*!
 	Link from user_atomic to reverse mode
@@ -866,83 +791,8 @@ public:
 		const vector<bool>&      vx ,
 		      vector<bool>&      vy ,
 		const vector<Base>&      tx ,
-		      vector<Base>&      ty )
-	{	size_t n = f_[THREAD].Domain();
-		size_t m = f_[THREAD].Range();
-		//
-		CPPAD_ASSERT_UNKNOWN( f_[THREAD].size_var() > 0 );
-		CPPAD_ASSERT_UNKNOWN( tx.size() % (q+1) == 0 );
-		CPPAD_ASSERT_UNKNOWN( ty.size() % (q+1) == 0 );
-		CPPAD_ASSERT_UNKNOWN( n == tx.size() / (q+1) );
-		CPPAD_ASSERT_UNKNOWN( m == ty.size() / (q+1) );
-		bool ok  = true;
-		//
-		if( vx.size() == 0 )
-		{	// during user forward mode
-			if( jac_sparse_set_[THREAD].n_set() != 0 )
-				jac_sparse_set_[THREAD].resize(0,0);
-			if( jac_sparse_bool_[THREAD].size() != 0 )
-				jac_sparse_bool_[THREAD].clear();
-			//
-			if( hes_sparse_set_[THREAD].n_set() != 0 )
-				hes_sparse_set_[THREAD].resize(0,0);
-			if( hes_sparse_bool_[THREAD].size() != 0 )
-				hes_sparse_bool_[THREAD].clear();
-		}
-		if( vx.size() > 0 )
-		{	// need Jacobian sparsity pattern to determine variable relation
-			// during user recording using checkpoint functions
-			if( sparsity() == atomic_base<Base>::set_sparsity_enum )
-			{	if( jac_sparse_set_[THREAD].n_set() == 0 )
-					set_jac_sparse_set();
-				CPPAD_ASSERT_UNKNOWN( jac_sparse_set_[THREAD].n_set() == m );
-				CPPAD_ASSERT_UNKNOWN( jac_sparse_set_[THREAD].end()   == n );
-				//
-				for(size_t i = 0; i < m; i++)
-				{	vy[i] = false;
-					local::sparse_list::const_iterator set_itr(
-						jac_sparse_set_[THREAD], i
-					);
-					size_t j = *set_itr;
-					while(j < n )
-					{	// y[i] depends on the value of x[j]
-						// cast avoid Microsoft warning (should not be needed)
-						vy[i] |= static_cast<bool>( vx[j] );
-						j = *(++set_itr);
-					}
-				}
-			}
-			else
-			{	if( jac_sparse_set_[THREAD].n_set() != 0 )
-					jac_sparse_set_[THREAD].resize(0, 0);
-				if( jac_sparse_bool_[THREAD].size() == 0 )
-					set_jac_sparse_bool();
-				CPPAD_ASSERT_UNKNOWN( jac_sparse_set_[THREAD].n_set() == 0 );
-				CPPAD_ASSERT_UNKNOWN( jac_sparse_bool_[THREAD].size() == m * n );
-				//
-				for(size_t i = 0; i < m; i++)
-				{	vy[i] = false;
-					for(size_t j = 0; j < n; j++)
-					{	if( jac_sparse_bool_[THREAD][ i * n + j ] )
-						{	// y[i] depends on the value of x[j]
-							// cast avoid Microsoft warning
-							vy[i] |= static_cast<bool>( vx[j] );
-						}
-					}
-				}
-			}
-		}
-		// compute forward results for orders zero through q
-		ty = f_[THREAD].Forward(q, tx);
-
-		// no longer need the Taylor coefficients in f_
-		// (have to reconstruct them every time)
-		// Hold onto sparsity pattern because it is always good.
-		size_t c = 0;
-		size_t r = 0;
-		f_[THREAD].capacity_order(c, r);
-		return ok;
-	}
+		      vector<Base>&      ty
+	);
 	// ------------------------------------------------------------------------
 	/*!
 	Link from user_atomic to reverse mode
@@ -1118,6 +968,7 @@ public:
 } // END_CPPAD_NAMESPACE
 
 // functions implemented in cppad/core/checkpoint files
+# include <cppad/core/checkpoint/forward.hpp>
 # include <cppad/core/checkpoint/rev_sparse_hes.hpp>
 # include <cppad/core/checkpoint/rev_sparse_jac.hpp>
 # include <cppad/core/checkpoint/for_sparse_jac.hpp>
