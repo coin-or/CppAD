@@ -1,5 +1,5 @@
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the
@@ -26,6 +26,7 @@ SET(source_list ../thread_test.cpp
 	../team_example.cpp
 	../harmonic.cpp
 	../multi_atomic.cpp
+	../checkpoint.cpp
 	../multi_newton.cpp
 	a11c_openmp.cpp
 	simple_ad_openmp.cpp

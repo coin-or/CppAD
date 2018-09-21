@@ -77,6 +77,7 @@ $children%
 	example/multi_thread/team_example.cpp%
 	example/multi_thread/harmonic.omh%
 	example/multi_thread/multi_atomic.omh%
+	example/multi_thread/checkpoint.omh%
 	example/multi_thread/multi_newton.omh%
 
 	example/multi_thread/team_thread.hpp
@@ -204,6 +205,7 @@ $end
 # include "team_example.hpp"
 # include "harmonic.hpp"
 # include "multi_atomic.hpp"
+# include "checkpoint.hpp"
 # include "multi_newton.hpp"
 
 extern bool a11c(void);
@@ -247,6 +249,7 @@ int main(int argc, char *argv[])
 	"./<thread>_test team_example\n"
 	"./<thread>_test harmonic     test_time max_threads mega_sum\n"
 	"./<thread>_test multi_atomic test_time max_threads num_solve\n"
+	"./<thread>_test checkpoint   test_time max_threads num_solve\n"
 	"./<thread>_test multi_newton test_time max_threads \\\n"
 	"	num_zero num_sub num_sum use_ad\\\n"
 	"where <thread> is bthread, openmp, or pthread";
@@ -281,15 +284,16 @@ int main(int argc, char *argv[])
 	const char* test_name = "";
 	if( argc > 1 )
 		test_name = *++argv;
-	bool run_a11c         = std::strcmp(test_name, "a11c")         == 0;
-	bool run_simple_ad    = std::strcmp(test_name, "simple_ad")    == 0;
-	bool run_team_example = std::strcmp(test_name, "team_example") == 0;
-	bool run_harmonic     = std::strcmp(test_name, "harmonic")     == 0;
-	bool run_multi_atomic = std::strcmp(test_name, "multi_atomic") == 0;
-	bool run_multi_newton = std::strcmp(test_name, "multi_newton") == 0;
+	bool run_a11c         = std::strcmp(test_name, "a11c")             == 0;
+	bool run_simple_ad    = std::strcmp(test_name, "simple_ad")        == 0;
+	bool run_team_example = std::strcmp(test_name, "team_example")     == 0;
+	bool run_harmonic     = std::strcmp(test_name, "harmonic")         == 0;
+	bool run_multi_atomic = std::strcmp(test_name, "multi_atomic")     == 0;
+	bool run_checkpoint   = std::strcmp(test_name, "checkpoint")       == 0;
+	bool run_multi_newton = std::strcmp(test_name, "multi_newton")     == 0;
 	if( run_a11c || run_simple_ad || run_team_example )
 		ok = (argc == 2);
-	else if( run_harmonic || run_multi_atomic )
+	else if( run_harmonic || run_multi_atomic || run_checkpoint )
 		ok = (argc == 5);
 	else if( run_multi_newton )
 		ok = (argc == 8);
@@ -335,7 +339,7 @@ int main(int argc, char *argv[])
 			"run: mega_sum is less than one"
 		);
 	}
-	else if( run_multi_atomic )
+	else if( run_multi_atomic || run_checkpoint )
 	{	// num_solve
 		num_solve = arg2size_t( *++argv, 1,
 			"run: num_solve is less than one"
@@ -382,6 +386,8 @@ int main(int argc, char *argv[])
 			harmonic_time(time_out, test_time, num_threads, mega_sum);
 		else if( run_multi_atomic ) ok &=
 			multi_atomic_time(time_out, test_time, num_threads, num_solve);
+		else if( run_checkpoint ) ok &=
+			multi_checkpoint_time(time_out, test_time, num_threads, num_solve);
 		else
 		{	ok &= run_multi_newton;
 			ok &= multi_newton_time(

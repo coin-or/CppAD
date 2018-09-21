@@ -1,5 +1,5 @@
-# ifndef CPPAD_EXAMPLE_MULTI_THREAD_MULTI_ATOMIC_HPP
-# define CPPAD_EXAMPLE_MULTI_THREAD_MULTI_ATOMIC_HPP
+# ifndef CPPAD_EXAMPLE_MULTI_THREAD_CHECKPOINT_HPP
+# define CPPAD_EXAMPLE_MULTI_THREAD_CHECKPOINT_HPP
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
@@ -11,7 +11,7 @@ A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 
-bool multi_atomic_time(
+bool multi_checkpoint_time(
 	double& time_out, double test_time, size_t num_threads, size_t num_solve
 );
 
