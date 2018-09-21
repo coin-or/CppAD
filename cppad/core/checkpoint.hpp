@@ -364,29 +364,7 @@ public:
 		option_enum                    sparsity =
 				atomic_base<Base>::pack_sparsity_enum  ,
 		bool                           optimize = true
-	) : atomic_base<Base>(name, sparsity)
-	{	CheckSimpleVector< CppAD::AD<Base> , ADVector>();
-
-		// make a copy of ax because Independent modifies AD information
-		ADVector x_tmp(ax);
-		// delcare x_tmp as the independent variables
-		Independent(x_tmp);
-		// record mapping from x_tmp to ay
-		algo(x_tmp, ay);
-		// create function f_ : x -> y
-		f_.Dependent(ay);
-		if( optimize )
-		{	// suppress checking for nan in f_ results
-			// (see optimize documentation for atomic functions)
-			f_.check_for_nan(false);
-			//
-			// now optimize
-			f_.optimize();
-		}
-		// now disable checking of comparison operations
-		// 2DO: add a debugging mode that checks for changes and aborts
-		f_.compare_change_count(0);
-	}
+	);
 	// ------------------------------------------------------------------------
 	/*!
 	Implement the user call to <tt>atom_fun.size_var()</tt>.
@@ -674,40 +652,7 @@ public:
 		option_enum                    sparsity =
 				atomic_base<Base>::pack_sparsity_enum  ,
 		bool                           optimize = true
-	) :
-	atomic_base<Base>(name  , sparsity)        ,
-	f_( size_t( omp_get_max_threads() ) )                ,
-	jac_sparse_set_( size_t( omp_get_max_threads() ) )   ,
-	jac_sparse_bool_( size_t( omp_get_max_threads() ) )  ,
-	hes_sparse_set_( size_t( omp_get_max_threads() ) )   ,
-	hes_sparse_bool_( size_t( omp_get_max_threads() ) )
-	{
-		CheckSimpleVector< CppAD::AD<Base> , ADVector>();
-
-		// make a copy of ax because Independent modifies AD information
-		ADVector x_tmp(ax);
-		// delcare x_tmp as the independent variables
-		Independent(x_tmp);
-		// record mapping from x_tmp to ay
-		algo(x_tmp, ay);
-		// create function f_ : x -> y
-		f_[0].Dependent(ay);
-		if( optimize )
-		{	// suppress checking for nan in f_ results
-			// (see optimize documentation for atomic functions)
-			f_[0].check_for_nan(false);
-			//
-			// now optimize
-			f_[0].optimize();
-		}
-		// now disable checking of comparison operations
-		// 2DO: add a debugging mode that checks for changes and aborts
-		f_[0].compare_change_count(0);
-		//
-		// copy for use during multi-threading
-		for(int i = 1; i < omp_get_max_threads(); ++i)
-			f_[i] = f_[0];
-	}
+	);
 	// ------------------------------------------------------------------------
 	/*!
 	Implement the user call to <tt>atom_fun.size_var()</tt>.
@@ -890,6 +835,7 @@ public:
 } // END_CPPAD_NAMESPACE
 
 // functions implemented in cppad/core/checkpoint files
+# include <cppad/core/checkpoint/ctor.hpp>
 # include <cppad/core/checkpoint/reverse.hpp>
 # include <cppad/core/checkpoint/forward.hpp>
 # include <cppad/core/checkpoint/rev_sparse_hes.hpp>
