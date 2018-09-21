@@ -329,13 +329,11 @@ y(t, x)
      <i><font color="#9A1900">// number of components in differential equation</font></i>
      <font color="#008080">size_t</font> n <font color="#990000">=</font> <font color="#993399">4</font><font color="#990000">;</font>
 
-     <i><font color="#9A1900">// record the function g(y, x) with x as dynamic parameters</font></i>
+     <i><font color="#9A1900">// record function g(y, x)</font></i>
+     <i><font color="#9A1900">// with y as the independent variables and x as dynamic parameters</font></i>
      <font color="#008080">a_vector</font>  <b><font color="#000000">ay</font></b><font color="#990000">(</font>n<font color="#990000">),</font> <b><font color="#000000">ax</font></b><font color="#990000">(</font>n<font color="#990000">);</font>
      <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> n<font color="#990000">;</font> i<font color="#990000">++)</font>
           ay<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> ax<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> <font color="#009900">double</font><font color="#990000">(</font>i <font color="#990000">+</font> <font color="#993399">1</font><font color="#990000">);</font>
-
-
-     <i><font color="#9A1900">// declare the parameters as the independent variable</font></i>
      <font color="#008080">size_t</font> abort_op_index <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
      <font color="#009900">bool</font>   record_compare <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
      CppAD<font color="#990000">::</font><b><font color="#000000">Independent</font></b><font color="#990000">(</font>ay<font color="#990000">,</font> abort_op_index<font color="#990000">,</font> record_compare<font color="#990000">,</font> ax<font color="#990000">);</font>
@@ -346,9 +344,11 @@ y(t, x)
      <font color="#008080">fun_double</font> <b><font color="#000000">fun_g</font></b><font color="#990000">(</font>ay<font color="#990000">,</font> ag<font color="#990000">);</font>
 
 
-     <i><font color="#9A1900">// arguments to taylor_ode</font></i>
+     <i><font color="#9A1900">// afun_g</font></i>
      <font color="#008080">afun_double</font> afun_g<font color="#990000">;</font>
      afun_g <font color="#990000">=</font> fun_g<font color="#990000">.</font><b><font color="#000000">base2ad</font></b><font color="#990000">();</font> <i><font color="#9A1900">// differential equation</font></i>
+
+     <i><font color="#9A1900">// other arguments to taylor_ode</font></i>
      <font color="#008080">size_t</font>   order <font color="#990000">=</font> n<font color="#990000">;</font>       <i><font color="#9A1900">// order of Taylor's method used</font></i>
      <font color="#008080">size_t</font>   nstep <font color="#990000">=</font> <font color="#993399">2</font><font color="#990000">;</font>       <i><font color="#9A1900">// number of steps to take</font></i>
      <font color="#008080">a_double</font> adt   <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">.;</font>      <i><font color="#9A1900">// Delta t for each step</font></i>
@@ -356,10 +356,11 @@ y(t, x)
      <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> n<font color="#990000">;</font> i<font color="#990000">++)</font>
           ay_ini<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">.;</font>
 
-     <i><font color="#9A1900">// declare the independent variables</font></i>
+     <i><font color="#9A1900">// declare x as independent variables</font></i>
      CppAD<font color="#990000">::</font><b><font color="#000000">Independent</font></b><font color="#990000">(</font>ax<font color="#990000">);</font>
 
-     <i><font color="#9A1900">// set value of x in afun_g</font></i>
+     <i><font color="#9A1900">// the independent variables if this function are</font></i>
+     <i><font color="#9A1900">// the dynamic parameters in afun_g</font></i>
      afun_g<font color="#990000">.</font><b><font color="#000000">new_dynamic</font></b><font color="#990000">(</font>ax<font color="#990000">);</font>
 
      <i><font color="#9A1900">// integrate the differential equation</font></i>
