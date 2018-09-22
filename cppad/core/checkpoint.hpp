@@ -402,7 +402,7 @@ public:
 	}
 	// ------------------------------------------------------------------------
 	/*!
-	Implement the user call to <tt>atom_fun.size_var()</tt>.
+	Implement the user call to atom_fun.size_var().
 	*/
 	size_t size_var(void)
 	{   // make sure member_ is allocated for this thread
@@ -413,21 +413,21 @@ public:
 	}
 	// ------------------------------------------------------------------------
 	/*!
-	Implement the user call to <tt>atom_fun(ax, ay)</tt>.
+	Implement the user call to atom_fun(ax, ay).
 
 	\tparam ADVector
-	A simple vector class with elements of type <code>AD<Base></code>.
+	A simple vector class with elements of type AD<Base>.
 
 	\param id
 	optional parameter which must be zero if present.
 
 	\param ax
 	is the argument vector for this call,
-	<tt>ax.size()</tt> determines the number of arguments.
+	ax.size() determines the number of arguments.
 
 	\param ay
 	is the result vector for this call,
-	<tt>ay.size()</tt> determines the number of results.
+	ay.size() determines the number of results.
 	*/
 	template <class ADVector>
 	void operator()(const ADVector& ax, ADVector& ay, size_t id = 0)
