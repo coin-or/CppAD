@@ -23,6 +23,8 @@ defining checkpoint functions.
 /*
 $begin checkpoint$$
 $spell
+	alloc
+	inuse
 	sv
 	var
 	cppad.hpp
@@ -218,17 +220,28 @@ see $cref/start recording/Independent/Start Recording/$$.
 $icode%m%+%n%+2%$$ operations and creates $icode m$$ new variables,
 but this is not part of the CppAD specifications and my change.)
 
-$head clear$$
-The $code atomic_base$$ class holds onto static work space in order to
-increase speed by avoiding system memory allocation calls.
-This call makes to work space $cref/available/ta_available/$$ to
-for other uses by the same thread.
-This should be called when you are done using the
-user atomic functions for a specific value of $icode Base$$.
+$head Memory$$
 
 $subhead Restriction$$
 The $code clear$$ routine cannot be called
 while in $cref/parallel/ta_in_parallel/$$ execution mode.
+
+$head Parallel Mode$$
+The CppAD checkpoint function delays the caching of certain calculations
+until they are needed.
+In $cref/parallel model/ta_parallel_setup/$$,
+this may result in $cref/thread_alloc::inuse(thread)/ta_inuse/$$
+being non-zero even though the specified thread is no longer active.
+This memory will be freed when the checkpoint object is deleted.
+
+$subhead clear$$
+The $code atomic_base$$ class holds onto static work space
+that is not connected to a particular object
+(in order to increase speed by avoiding system memory allocation calls).
+This call makes to work space $cref/available/ta_available/$$ to
+for other uses by the same thread.
+This should be called when you are done using the
+user atomic functions for a specific value of $icode Base$$.
 
 $children%example/atomic/checkpoint.cpp
 	%example/atomic/mul_level.cpp
