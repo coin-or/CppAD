@@ -15,9 +15,6 @@ $$
 
 $section Multi-Threading Checkpoint Example / Test$$
 
-$head Under Construction$$
-This example is not yet working.
-
 $head Source File$$
 All of the routines below are located in the file
 $codep

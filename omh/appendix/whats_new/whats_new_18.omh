@@ -35,6 +35,12 @@ $$
 
 $section Changes and Additions to CppAD During 2018$$
 
+$head 09-22$$
+There was a bug in the $cref checkpoint$$ function when they
+were used in $cref/in parallel mode/ta_parallel_setup/$$.
+The $cref multi_checkpoint.cpp$$ example was added
+to test this and demonstrate use of checkpoints in parallel mode.
+
 $head 09-19$$
 Add the $cref base2ad$$ capability.
 This creates a function that computes using $codei%AD<%Base%>%$$

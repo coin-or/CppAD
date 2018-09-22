@@ -105,7 +105,7 @@ $begin multi_checkpoint_common$$
 $spell
 $$
 
-$section Multi-Threaded User Atomic Common Information$$
+$section Multi-Threaded Checkpoint Common Information$$
 
 $head Purpose$$
 This source code defines the common variables that are used by
@@ -373,11 +373,13 @@ bool multi_checkpoint_takedown(vector<double>& square_root)
 		void* v_ptr = static_cast<void*>( work_all_[thread_num] );
 		thread_alloc::return_memory( v_ptr );
 		//
-		// check that there is no longer any memory inuse by this thread
+		// Note that checkpoint object has memory connect to each thread
+		// thread_alloc::inuse(thread_num) cannot be zero until it is deleted
 		if( thread_num > 0 )
-		{	ok &= 0 == thread_alloc::inuse(thread_num);
+		{	ok &= thread_alloc::inuse(thread_num) > 0;
 			//
-			// return all memory being held for future use by this thread
+			// return all memory that is not in use and
+			// but being held for future use by this thread
 			thread_alloc::free_available(thread_num);
 		}
 	}
@@ -393,7 +395,7 @@ $spell
 	bool
 $$
 
-$section Run Multi-Threaded User Atomic Calculation$$
+$section Run Multi-Threaded Checkpoint Calculation$$
 
 $head Syntax$$
 $icode%ok% = multi_checkpoint_run(%y_squared%, %square_root%)%$$
@@ -470,7 +472,7 @@ $spell
 	CppAD
 $$
 
-$section Timing Test for Multi-Threaded User Atomic Calculation$$
+$section Timing Test for Multi-Threaded Checkpoint Calculation$$
 
 $head Syntax$$
 $icode%ok% = multi_checkpoint_time(
