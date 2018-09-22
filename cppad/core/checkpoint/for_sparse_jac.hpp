@@ -14,7 +14,6 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 
-# if ! CPPAD_MULTI_THREAD_TMB
 template <class Base>
 template <class sparsity_type>
 bool checkpoint<Base>::for_sparse_jac(
@@ -131,110 +130,6 @@ bool checkpoint<Base>::for_sparse_jac(
 
 	return ok;
 }
-# else // CPPAD_MULTI_THREAD_TMB
-# define THREAD omp_get_thread_num()
-template <class Base>
-template <class sparsity_type>
-bool checkpoint<Base>::for_sparse_jac(
-	size_t                                  q  ,
-	const sparsity_type&                    r  ,
-	      sparsity_type&                    s  ,
-	const vector<Base>&                     x  )
-{	// during user sparsity calculations
-	size_t m = f_[THREAD].Range();
-	size_t n = f_[THREAD].Domain();
-	if( jac_sparse_bool_[THREAD].size() == 0 )
-		set_jac_sparse_bool();
-	if( jac_sparse_set_[THREAD].n_set() != 0 )
-		jac_sparse_set_[THREAD].resize(0, 0);
-	CPPAD_ASSERT_UNKNOWN( jac_sparse_bool_[THREAD].size() == m * n );
-	CPPAD_ASSERT_UNKNOWN( jac_sparse_set_[THREAD].n_set() == 0 );
-	CPPAD_ASSERT_UNKNOWN( r.size() == n * q );
-	CPPAD_ASSERT_UNKNOWN( s.size() == m * q );
-	//
-	bool ok = true;
-	for(size_t i = 0; i < m; i++)
-	{	for(size_t k = 0; k < q; k++)
-			s[i * q + k] = false;
-	}
-	// sparsity for  s = jac_sparse_bool_ * r
-	for(size_t i = 0; i < m; i++)
-	{	for(size_t k = 0; k < q; k++)
-		{	// initialize sparsity for S(i,k)
-			bool s_ik = false;
-			// S(i,k) = sum_j J(i,j) * R(j,k)
-			for(size_t j = 0; j < n; j++)
-			{	bool J_ij = jac_sparse_bool_[THREAD][ i * n + j];
-				bool R_jk = r[j * q + k ];
-				s_ik |= ( J_ij & R_jk );
-			}
-			s[i * q + k] = s_ik;
-		}
-	}
-	return ok;
-}
-template <class Base>
-bool checkpoint<Base>::for_sparse_jac(
-	size_t                                  q  ,
-	const vectorBool&                       r  ,
-	      vectorBool&                       s  ,
-	const vector<Base>&                     x  )
-{	return for_sparse_jac< vectorBool >(q, r, s, x);
-}
-template <class Base>
-bool checkpoint<Base>::for_sparse_jac(
-	size_t                                  q  ,
-	const vector<bool>&                     r  ,
-	      vector<bool>&                     s  ,
-	const vector<Base>&                     x  )
-{	return for_sparse_jac< vector<bool> >(q, r, s, x);
-}
-template <class Base>
-bool checkpoint<Base>::for_sparse_jac(
-	size_t                                  q  ,
-	const vector< std::set<size_t> >&       r  ,
-	      vector< std::set<size_t> >&       s  ,
-	const vector<Base>&                     x  )
-{	// during user sparsity calculations
-	size_t m = f_[THREAD].Range();
-	size_t n = f_[THREAD].Domain();
-	if( jac_sparse_bool_[THREAD].size() != 0 )
-		jac_sparse_bool_[THREAD].clear();
-	if( jac_sparse_set_[THREAD].n_set() == 0 )
-		set_jac_sparse_set();
-	CPPAD_ASSERT_UNKNOWN( jac_sparse_bool_[THREAD].size() == 0 );
-	CPPAD_ASSERT_UNKNOWN( jac_sparse_set_[THREAD].n_set() == m );
-	CPPAD_ASSERT_UNKNOWN( jac_sparse_set_[THREAD].end()   == n );
-	CPPAD_ASSERT_UNKNOWN( r.size() == n );
-	CPPAD_ASSERT_UNKNOWN( s.size() == m );
-
-	bool ok = true;
-	for(size_t i = 0; i < m; i++)
-		s[i].clear();
-
-	// sparsity for  s = jac_sparse_set_ * r
-	for(size_t i = 0; i < m; i++)
-	{	// compute row i of the return pattern
-		local::sparse_list::const_iterator set_itr(
-			jac_sparse_set_[THREAD], i
-		);
-		size_t j = *set_itr;
-		while(j < n )
-		{	std::set<size_t>::const_iterator itr_j;
-			const std::set<size_t>& r_j( r[j] );
-			for(itr_j = r_j.begin(); itr_j != r_j.end(); itr_j++)
-			{	size_t k = *itr_j;
-				CPPAD_ASSERT_UNKNOWN( k < q );
-				s[i].insert(k);
-			}
-			j = *(++set_itr);
-		}
-	}
-
-	return ok;
-}
-# undef THREAD
-# endif //  CPPAD_MULTI_THREAD_TMB
 
 } // END_CPPAD_NAMESPACE
 # endif

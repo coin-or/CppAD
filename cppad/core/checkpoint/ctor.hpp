@@ -14,7 +14,6 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 
-# if ! CPPAD_MULTI_THREAD_TMB
 template <class Base>
 template <class Algo, class ADVector>
 checkpoint<Base>::checkpoint(
@@ -64,53 +63,6 @@ checkpoint<Base>::checkpoint(
 	// 2DO: add a debugging mode that checks for changes and aborts
 	member_[master]->f_.compare_change_count(0);
 }
-# else // CPPAD_MULTI_THREAD_TMB
-# define THREAD omp_get_thread_num()
-template <class Base>
-template <class Algo, class ADVector>
-checkpoint<Base>::checkpoint(
-	const char*                    name            ,
-	Algo&                          algo            ,
-	const ADVector&                ax              ,
-	ADVector&                      ay              ,
-	option_enum                    sparsity        ,
-	bool                           optimize
-) :
-atomic_base<Base>(name  , sparsity)        ,
-f_( size_t( omp_get_max_threads() ) )                ,
-jac_sparse_set_( size_t( omp_get_max_threads() ) )   ,
-jac_sparse_bool_( size_t( omp_get_max_threads() ) )  ,
-hes_sparse_set_( size_t( omp_get_max_threads() ) )   ,
-hes_sparse_bool_( size_t( omp_get_max_threads() ) )
-{
-	CheckSimpleVector< CppAD::AD<Base> , ADVector>();
-
-	// make a copy of ax because Independent modifies AD information
-	ADVector x_tmp(ax);
-	// delcare x_tmp as the independent variables
-	Independent(x_tmp);
-	// record mapping from x_tmp to ay
-	algo(x_tmp, ay);
-	// create function f_ : x -> y
-	f_[0].Dependent(ay);
-	if( optimize )
-	{	// suppress checking for nan in f_ results
-		// (see optimize documentation for atomic functions)
-		f_[0].check_for_nan(false);
-		//
-		// now optimize
-		f_[0].optimize();
-	}
-	// now disable checking of comparison operations
-	// 2DO: add a debugging mode that checks for changes and aborts
-	f_[0].compare_change_count(0);
-	//
-	// copy for use during multi-threading
-	for(int i = 1; i < omp_get_max_threads(); ++i)
-		f_[i] = f_[0];
-}
-# undef THREAD
-# endif //  CPPAD_MULTI_THREAD_TMB
 
 } // END_CPPAD_NAMESPACE
 # endif
