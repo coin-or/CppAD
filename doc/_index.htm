@@ -122,6 +122,7 @@ A:active { color : purple }
 <b>--</b>with<b>-</b>testvector&#160;<a href="autotools.htm#--with-testvector" target="_top">Autotools&nbsp;Unix&nbsp;Test&nbsp;and&nbsp;Installation:&#160;--with-testvector</a><br>
 <b>-=</b>&#160;<a href="sub_eq.cpp.htm" target="_top">AD&nbsp;Compound&nbsp;Assignment&nbsp;Subtraction:&nbsp;Example&nbsp;and&nbsp;Test</a><br>
 <b>/</b>&#160;<a href="multi_newton.cpp.htm" target="_top">Multi-Threaded&nbsp;Newton&nbsp;Method&nbsp;Example&nbsp;/&nbsp;Test</a><br>
+&#160;&#160;<a href="multi_checkpoint.cpp.htm" target="_top">Multi-Threading&nbsp;Checkpoint&nbsp;Example&nbsp;/&nbsp;Test</a><br>
 &#160;&#160;<a href="multi_atomic.cpp.htm" target="_top">Multi-Threading&nbsp;User&nbsp;Atomic&nbsp;Example&nbsp;/&nbsp;Test</a><br>
 &#160;&#160;<a href="harmonic.cpp.htm" target="_top">Multi-Threading&nbsp;Harmonic&nbsp;Summation&nbsp;Example&nbsp;/&nbsp;Test</a><br>
 &#160;&#160;<a href="compound_assign.htm" target="_top">AD&nbsp;Compound&nbsp;Assignment&nbsp;Operators</a><br>
@@ -847,6 +848,7 @@ A:active { color : purple }
 &#160;&#160;&#160;&#160;&#160;&#160;<a href="whats_new_14.htm#09-21" target="_top">CppAD&nbsp;Changes&nbsp;and&nbsp;Additions&nbsp;During&nbsp;2014:&#160;09-21</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;<a href="whats_new_15.htm#09-21" target="_top">CppAD&nbsp;Changes&nbsp;and&nbsp;Additions&nbsp;During&nbsp;2015:&#160;09-21</a><br>
 09<b>-</b>22&#160;<a href="whats_new_10.htm#09-22" target="_top">Changes&nbsp;and&nbsp;Additions&nbsp;to&nbsp;CppAD&nbsp;During&nbsp;2010:&#160;09-22</a><br>
+&#160;&#160;&#160;&#160;&#160;&#160;<a href="whats_new_18.htm#09-22" target="_top">Changes&nbsp;and&nbsp;Additions&nbsp;to&nbsp;CppAD&nbsp;During&nbsp;2018:&#160;09-22</a><br>
 09<b>-</b>23&#160;<a href="whats_new_04.htm#09-23" target="_top">Changes&nbsp;and&nbsp;Additions&nbsp;to&nbsp;CppAD&nbsp;During&nbsp;2004:&#160;09-23</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;<a href="whats_new_15.htm#09-23" target="_top">CppAD&nbsp;Changes&nbsp;and&nbsp;Additions&nbsp;During&nbsp;2015:&#160;09-23</a><br>
 09<b>-</b>24&#160;<a href="whats_new_05.htm#09-24" target="_top">Changes&nbsp;and&nbsp;Additions&nbsp;to&nbsp;CppAD&nbsp;During&nbsp;2005:&#160;09-24</a><br>
@@ -1312,7 +1314,7 @@ AD&#160;<a href="ipopt_nlp_get_started.cpp.htm" target="_top">Nonlinear&nbsp;Pro
 &#160;&#160;&#160;<a href="simple_ad_bthread.cpp.htm" target="_top">A&nbsp;Simple&nbsp;Boost&nbsp;Threading&nbsp;AD:&nbsp;Example&nbsp;and&nbsp;Test</a><br>
 &#160;&#160;&#160;<a href="simple_ad_openmp.cpp.htm" target="_top">A&nbsp;Simple&nbsp;OpenMP&nbsp;AD:&nbsp;Example&nbsp;and&nbsp;Test</a><br>
 &#160;&#160;&#160;<a href="introduction.htm" target="_top">An&nbsp;Introduction&nbsp;by&nbsp;Example&nbsp;to&nbsp;Algorithmic&nbsp;Differentiation</a><br>
-&#160;&#160;&#160;<a href="cppad.htm" target="_top">cppad-20180921:&nbsp;A&nbsp;Package&nbsp;for&nbsp;Differentiation&nbsp;of&nbsp;C++&nbsp;Algorithms</a><br>
+&#160;&#160;&#160;<a href="cppad.htm" target="_top">cppad-20180922:&nbsp;A&nbsp;Package&nbsp;for&nbsp;Differentiation&nbsp;of&nbsp;C++&nbsp;Algorithms</a><br>
 ADFun&#160;<a href="comparechange.htm" target="_top">Comparison&nbsp;Changes&nbsp;During&nbsp;Zero&nbsp;Order&nbsp;Forward&nbsp;Mode</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;<a href="compare_change.htm" target="_top">Comparison&nbsp;Changes&nbsp;Between&nbsp;Taping&nbsp;and&nbsp;Zero&nbsp;Order&nbsp;Forward</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;<a href="dependent.htm" target="_top">Stop&nbsp;Recording&nbsp;and&nbsp;Store&nbsp;Operation&nbsp;Sequence</a><br>
@@ -1601,17 +1603,18 @@ afun&#160;<a href="old_atomic.htm#afun" target="_top">User&nbsp;Defined&nbsp;Ato
 algebra&#160;<a href="cppad_eigen.hpp.htm" target="_top">Enable&nbsp;Use&nbsp;of&nbsp;Eigen&nbsp;Linear&nbsp;Algebra&nbsp;Package&nbsp;with&nbsp;CppAD</a><br>
 algo&#160;<a href="checkpoint.htm#algo" target="_top">Checkpointing&nbsp;Functions:&#160;algo</a><br>
 algorithm&#160;<a href="conj_grad.cpp.htm#Algorithm" target="_top">Differentiate&nbsp;Conjugate&nbsp;Gradient&nbsp;Algorithm:&nbsp;Example&nbsp;and&nbsp;Test:&#160;Algorithm</a><br>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="multi_checkpoint_algo.htm" target="_top">Defines&nbsp;an&nbsp;Algorithm&nbsp;that&nbsp;Computes&nbsp;Square&nbsp;Root</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="forsparsehes.htm#Algorithm" target="_top">Hessian&nbsp;Sparsity&nbsp;Pattern:&nbsp;Forward&nbsp;Mode:&#160;Algorithm</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="for_hes_sparsity.htm#Algorithm" target="_top">Forward&nbsp;Mode&nbsp;Hessian&nbsp;Sparsity&nbsp;Patterns:&#160;Algorithm</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="exp_eps.htm" target="_top">An&nbsp;Epsilon&nbsp;Accurate&nbsp;Exponential&nbsp;Approximation</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="exp_2.htm" target="_top">Second&nbsp;Order&nbsp;Exponential&nbsp;Approximation</a><br>
-&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="cppad.htm" target="_top">cppad-20180921:&nbsp;A&nbsp;Package&nbsp;for&nbsp;Differentiation&nbsp;of&nbsp;C++&nbsp;Algorithms</a><br>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="cppad.htm" target="_top">cppad-20180922:&nbsp;A&nbsp;Package&nbsp;for&nbsp;Differentiation&nbsp;of&nbsp;C++&nbsp;Algorithms</a><br>
 algorithm<b>:</b>&#160;<a href="conj_grad.cpp.htm" target="_top">Differentiate&nbsp;Conjugate&nbsp;Gradient&nbsp;Algorithm:&nbsp;Example&nbsp;and&nbsp;Test</a><br>
 algorithmic&#160;<a href="ad_in_c.cpp.htm" target="_top">Example&nbsp;and&nbsp;Test&nbsp;Linking&nbsp;CppAD&nbsp;to&nbsp;Languages&nbsp;Other&nbsp;than&nbsp;C++</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="introduction.htm#Preface.Algorithmic Differentiation" target="_top">An&nbsp;Introduction&nbsp;by&nbsp;Example&nbsp;to&nbsp;Algorithmic&nbsp;Differentiation:&#160;Preface.Algorithmic&nbsp;Differentiation</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="introduction.htm" target="_top">An&nbsp;Introduction&nbsp;by&nbsp;Example&nbsp;to&nbsp;Algorithmic&nbsp;Differentiation</a><br>
-&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="cppad.htm" target="_top">cppad-20180921:&nbsp;A&nbsp;Package&nbsp;for&nbsp;Differentiation&nbsp;of&nbsp;C++&nbsp;Algorithms</a><br>
-algorithms&#160;<a href="cppad.htm" target="_top">cppad-20180921:&nbsp;A&nbsp;Package&nbsp;for&nbsp;Differentiation&nbsp;of&nbsp;C++&nbsp;Algorithms</a><br>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="cppad.htm" target="_top">cppad-20180922:&nbsp;A&nbsp;Package&nbsp;for&nbsp;Differentiation&nbsp;of&nbsp;C++&nbsp;Algorithms</a><br>
+algorithms&#160;<a href="cppad.htm" target="_top">cppad-20180922:&nbsp;A&nbsp;Package&nbsp;for&nbsp;Differentiation&nbsp;of&nbsp;C++&nbsp;Algorithms</a><br>
 alignment&#160;<a href="ta_create_array.htm#Alignment" target="_top">Allocate&nbsp;An&nbsp;Array&nbsp;and&nbsp;Call&nbsp;Default&nbsp;Constructor&nbsp;for&nbsp;its&nbsp;Elements:&#160;Alignment</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="ta_get_memory.htm#Alignment" target="_top">Get&nbsp;At&nbsp;Least&nbsp;A&nbsp;Specified&nbsp;Amount&nbsp;of&nbsp;Memory:&#160;Alignment</a><br>
 all&#160;<a href="listallexamples.htm" target="_top">List&nbsp;All&nbsp;(Except&nbsp;Deprecated)&nbsp;CppAD&nbsp;Examples</a><br>
@@ -1894,9 +1897,10 @@ atx&#160;<a href="atomic_reverse.htm#atx" target="_top">Atomic&nbsp;Reverse&nbsp
 &#160;&#160;&#160;&#160;<a href="atomic_forward.htm#atx" target="_top">Atomic&nbsp;Forward&nbsp;Mode:&#160;atx</a><br>
 aty&#160;<a href="atomic_reverse.htm#aty" target="_top">Atomic&nbsp;Reverse&nbsp;Mode:&#160;aty</a><br>
 &#160;&#160;&#160;&#160;<a href="atomic_forward.htm#aty" target="_top">Atomic&nbsp;Forward&nbsp;Mode:&#160;aty</a><br>
-au&#160;<a href="multi_atomic_user.htm#au" target="_top">Defines&nbsp;a&nbsp;User&nbsp;Atomic&nbsp;Operation&nbsp;that&nbsp;Computes&nbsp;Square&nbsp;Root:&#160;au</a><br>
+au&#160;<a href="multi_checkpoint_algo.htm#au" target="_top">Defines&nbsp;an&nbsp;Algorithm&nbsp;that&nbsp;Computes&nbsp;Square&nbsp;Root:&#160;au</a><br>
+&#160;&#160;&#160;<a href="multi_atomic_user.htm#au" target="_top">Defines&nbsp;a&nbsp;User&nbsp;Atomic&nbsp;Operation&nbsp;that&nbsp;Computes&nbsp;Square&nbsp;Root:&#160;au</a><br>
 automatic&#160;<a href="ad_in_c.cpp.htm" target="_top">Example&nbsp;and&nbsp;Test&nbsp;Linking&nbsp;CppAD&nbsp;to&nbsp;Languages&nbsp;Other&nbsp;than&nbsp;C++</a><br>
-&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="cppad.htm" target="_top">cppad-20180921:&nbsp;A&nbsp;Package&nbsp;for&nbsp;Differentiation&nbsp;of&nbsp;C++&nbsp;Algorithms</a><br>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="cppad.htm" target="_top">cppad-20180922:&nbsp;A&nbsp;Package&nbsp;for&nbsp;Differentiation&nbsp;of&nbsp;C++&nbsp;Algorithms</a><br>
 autotools&#160;<a href="autotools.htm" target="_top">Autotools&nbsp;Unix&nbsp;Test&nbsp;and&nbsp;Installation</a><br>
 available&#160;<a href="memory_leak.htm#available" target="_top">Memory&nbsp;Leak&nbsp;Detection:&#160;available</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="omp_delete_array.htm" target="_top">Return&nbsp;A&nbsp;Raw&nbsp;Array&nbsp;to&nbsp;The&nbsp;Available&nbsp;Memory&nbsp;for&nbsp;a&nbsp;Thread</a><br>
@@ -1910,6 +1914,7 @@ ax&#160;<a href="old_atomic.htm#afun.ax" target="_top">User&nbsp;Defined&nbsp;At
 &#160;&#160;&#160;<a href="checkpoint.htm#ax" target="_top">Checkpointing&nbsp;Functions:&#160;ax</a><br>
 &#160;&#160;&#160;<a href="discrete.htm#ax" target="_top">Discrete&nbsp;AD&nbsp;Functions:&#160;ax</a><br>
 ay&#160;<a href="old_atomic.htm#afun.ay" target="_top">User&nbsp;Defined&nbsp;Atomic&nbsp;AD&nbsp;Functions:&#160;afun.ay</a><br>
+&#160;&#160;&#160;<a href="multi_checkpoint_algo.htm#ay" target="_top">Defines&nbsp;an&nbsp;Algorithm&nbsp;that&nbsp;Computes&nbsp;Square&nbsp;Root:&#160;ay</a><br>
 &#160;&#160;&#160;<a href="multi_atomic_user.htm#ay" target="_top">Defines&nbsp;a&nbsp;User&nbsp;Atomic&nbsp;Operation&nbsp;that&nbsp;Computes&nbsp;Square&nbsp;Root:&#160;ay</a><br>
 &#160;&#160;&#160;<a href="atomic_afun.htm#ay" target="_top">Using&nbsp;AD&nbsp;Version&nbsp;of&nbsp;Atomic&nbsp;Function:&#160;ay</a><br>
 &#160;&#160;&#160;<a href="checkpoint.htm#ay" target="_top">Checkpointing&nbsp;Functions:&#160;ay</a><br>
@@ -2066,7 +2071,7 @@ bvector&#160;<a href="ipopt_solve.htm#Bvector" target="_top">Use&nbsp;Ipopt&nbsp
 C&#160;<a href="interface2c.cpp.htm" target="_top">Interfacing&nbsp;to&nbsp;C:&nbsp;Example&nbsp;and&nbsp;Test</a><br>
 &#160;&#160;<a href="ad_in_c.cpp.htm" target="_top">Example&nbsp;and&nbsp;Test&nbsp;Linking&nbsp;CppAD&nbsp;to&nbsp;Languages&nbsp;Other&nbsp;than&nbsp;C++</a><br>
 &#160;&#160;&#160;&#160;&#160;compare<b>&nbsp;</b>speed<b>&nbsp;</b>with<b>&nbsp;</b>C<b>++</b>&#160;<a href="compare_c.htm" target="_top">Compare&nbsp;Speed&nbsp;of&nbsp;C&nbsp;and&nbsp;C++</a><br>
-C<b>++</b>&#160;<a href="cppad.htm" target="_top">cppad-20180921:&nbsp;A&nbsp;Package&nbsp;for&nbsp;Differentiation&nbsp;of&nbsp;C++&nbsp;Algorithms</a><br>
+C<b>++</b>&#160;<a href="cppad.htm" target="_top">cppad-20180922:&nbsp;A&nbsp;Package&nbsp;for&nbsp;Differentiation&nbsp;of&nbsp;C++&nbsp;Algorithms</a><br>
 &#160;&#160;&#160;&#160;&#160;compare<b>&nbsp;</b>speed<b>&nbsp;</b>with<b>&nbsp;</b>C&#160;<a href="compare_c.htm" target="_top">Compare&nbsp;Speed&nbsp;of&nbsp;C&nbsp;and&nbsp;C++</a><br>
 CheckNumericType&#160;<a href="checknumerictype.htm" target="_top">Check&nbsp;NumericType&nbsp;Class&nbsp;Concept</a><br>
 CheckSimpleVector&#160;<a href="checksimplevector.htm" target="_top">Check&nbsp;Simple&nbsp;Vector&nbsp;Concept</a><br>
@@ -2088,7 +2093,7 @@ CPPAD<b>_</b>TRACK<b>_</b>NEW<b>_</b>VEC&#160;<a href="tracknewdel.htm" target="
 CppAD&#160;<a href="vector_bool.cpp.htm" target="_top">CppAD::vectorBool&nbsp;Class:&nbsp;Example&nbsp;and&nbsp;Test</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;<a href="cppad_vector.cpp.htm" target="_top">CppAD::vector&nbsp;Template&nbsp;Class:&nbsp;Example&nbsp;and&nbsp;Test</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;<a href="cppad_vector.htm" target="_top">The&nbsp;CppAD::vector&nbsp;Template&nbsp;Class</a><br>
-&#160;&#160;&#160;&#160;&#160;&#160;<a href="cppad.htm" target="_top">cppad-20180921:&nbsp;A&nbsp;Package&nbsp;for&nbsp;Differentiation&nbsp;of&nbsp;C++&nbsp;Algorithms</a><br>
+&#160;&#160;&#160;&#160;&#160;&#160;<a href="cppad.htm" target="_top">cppad-20180922:&nbsp;A&nbsp;Package&nbsp;for&nbsp;Differentiation&nbsp;of&nbsp;C++&nbsp;Algorithms</a><br>
 CppADTrackDelVec&#160;<a href="tracknewdel.htm" target="_top">Routines&nbsp;That&nbsp;Track&nbsp;Use&nbsp;of&nbsp;New&nbsp;and&nbsp;Delete</a><br>
 CppADTrackExtend&#160;<a href="tracknewdel.htm" target="_top">Routines&nbsp;That&nbsp;Track&nbsp;Use&nbsp;of&nbsp;New&nbsp;and&nbsp;Delete</a><br>
 CppADTrackNewVec&#160;<a href="tracknewdel.htm" target="_top">Routines&nbsp;That&nbsp;Track&nbsp;Use&nbsp;of&nbsp;New&nbsp;and&nbsp;Delete</a><br>
@@ -2110,12 +2115,14 @@ c<b>++</b>&#160;<a href="main_compare_c.htm" target="_top">Main&nbsp;Program&nbs
 &#160;&#160;&#160;&#160;<a href="bib.htm#The C++ Programming Language" target="_top">Bibliography:&#160;The&nbsp;C++&nbsp;Programming&nbsp;Language</a><br>
 &#160;&#160;&#160;&#160;<a href="ad_in_c.cpp.htm" target="_top">Example&nbsp;and&nbsp;Test&nbsp;Linking&nbsp;CppAD&nbsp;to&nbsp;Languages&nbsp;Other&nbsp;than&nbsp;C++</a><br>
 &#160;&#160;&#160;&#160;<a href="utility.htm#C++ Concepts" target="_top">Some&nbsp;General&nbsp;Purpose&nbsp;Utilities:&#160;C++&nbsp;Concepts</a><br>
-&#160;&#160;&#160;&#160;<a href="cppad.htm" target="_top">cppad-20180921:&nbsp;A&nbsp;Package&nbsp;for&nbsp;Differentiation&nbsp;of&nbsp;C++&nbsp;Algorithms</a><br>
+&#160;&#160;&#160;&#160;<a href="cppad.htm" target="_top">cppad-20180922:&nbsp;A&nbsp;Package&nbsp;for&nbsp;Differentiation&nbsp;of&nbsp;C++&nbsp;Algorithms</a><br>
 c<b>++</b>11&#160;<a href="cmake.htm#cppad_cxx_flags.C++11" target="_top">Using&nbsp;CMake&nbsp;to&nbsp;Configure&nbsp;CppAD:&#160;cppad_cxx_flags.C++11</a><br>
 c<b>:</b>&#160;<a href="interface2c.cpp.htm" target="_top">Interfacing&nbsp;to&nbsp;C:&nbsp;Example&nbsp;and&nbsp;Test</a><br>
 calculating&#160;<a href="sparse_derivative.htm" target="_top">Calculating&nbsp;Sparse&nbsp;Derivatives</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="sparsity_pattern.htm" target="_top">Calculating&nbsp;Sparsity&nbsp;Patterns</a><br>
 calculation&#160;<a href="luratio.htm" target="_top">LU&nbsp;Factorization&nbsp;of&nbsp;A&nbsp;Square&nbsp;Matrix&nbsp;and&nbsp;Stability&nbsp;Calculation</a><br>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="multi_checkpoint_time.htm" target="_top">Timing&nbsp;Test&nbsp;for&nbsp;Multi-Threaded&nbsp;Checkpoint&nbsp;Calculation</a><br>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="multi_checkpoint_run.htm" target="_top">Run&nbsp;Multi-Threaded&nbsp;Checkpoint&nbsp;Calculation</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="multi_atomic_time.htm" target="_top">Timing&nbsp;Test&nbsp;for&nbsp;Multi-Threaded&nbsp;User&nbsp;Atomic&nbsp;Calculation</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="multi_atomic_run.htm" target="_top">Run&nbsp;Multi-Threaded&nbsp;User&nbsp;Atomic&nbsp;Calculation</a><br>
 calculations&#160;<a href="theory.htm" target="_top">The&nbsp;Theory&nbsp;of&nbsp;Derivative&nbsp;Calculations</a><br>
@@ -2201,6 +2208,13 @@ checknumerictype&#160;<a href="check_numeric_type.cpp.htm" target="_top">The&nbs
 checkpoint&#160;<a href="old_usead_2.cpp.htm" target="_top">Using&nbsp;AD&nbsp;to&nbsp;Compute&nbsp;Atomic&nbsp;Function&nbsp;Derivatives</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="old_usead_1.cpp.htm" target="_top">Using&nbsp;AD&nbsp;to&nbsp;Compute&nbsp;Atomic&nbsp;Function&nbsp;Derivatives</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="wish_list.htm#checkpoint" target="_top">The&nbsp;CppAD&nbsp;Wish&nbsp;List:&#160;checkpoint</a><br>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="multi_checkpoint_time.htm" target="_top">Timing&nbsp;Test&nbsp;for&nbsp;Multi-Threaded&nbsp;Checkpoint&nbsp;Calculation</a><br>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="multi_checkpoint_run.htm" target="_top">Run&nbsp;Multi-Threaded&nbsp;Checkpoint&nbsp;Calculation</a><br>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="multi_checkpoint_takedown.htm" target="_top">Multi-Threaded&nbsp;Checkpoint&nbsp;Take&nbsp;Down</a><br>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="multi_checkpoint_worker.htm" target="_top">Multi-Threaded&nbsp;Checkpoint&nbsp;Worker</a><br>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="multi_checkpoint_setup.htm" target="_top">Multi-Threaded&nbsp;Checkpoint&nbsp;Set&nbsp;Up</a><br>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="multi_checkpoint_common.htm" target="_top">Multi-Threaded&nbsp;Checkpoint&nbsp;Common&nbsp;Information</a><br>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="multi_checkpoint.cpp.htm" target="_top">Multi-Threading&nbsp;Checkpoint&nbsp;Example&nbsp;/&nbsp;Test</a><br>
 checkpointing&#160;<a href="checkpoint_extended_ode.cpp.htm" target="_top">Checkpointing&nbsp;an&nbsp;Extended&nbsp;ODE&nbsp;Solver:&nbsp;Example&nbsp;and&nbsp;Test</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="checkpoint_ode.cpp.htm" target="_top">Checkpointing&nbsp;an&nbsp;ODE&nbsp;Solver:&nbsp;Example&nbsp;and&nbsp;Test</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="checkpoint.htm" target="_top">Checkpointing&nbsp;Functions</a><br>
@@ -2376,6 +2390,7 @@ column&#160;<a href="glossary.htm#Sparsity Pattern.Row and Column Index Vectors"
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="rc_sparsity.cpp.htm" target="_top">Preferred&nbsp;Sparsity&nbsp;Patterns:&nbsp;Row&nbsp;and&nbsp;Column&nbsp;Indices:&nbsp;Example&nbsp;and&nbsp;Test</a><br>
 command&#160;<a href="cmake.htm#CMake Command" target="_top">Using&nbsp;CMake&nbsp;to&nbsp;Configure&nbsp;CppAD:&#160;CMake&nbsp;Command</a><br>
 common&#160;<a href="multi_newton_common.htm" target="_top">Common&nbsp;Variables&nbsp;use&nbsp;by&nbsp;Multi-Threaded&nbsp;Newton&nbsp;Method</a><br>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="multi_checkpoint_common.htm" target="_top">Multi-Threaded&nbsp;Checkpoint&nbsp;Common&nbsp;Information</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="multi_atomic_common.htm" target="_top">Multi-Threaded&nbsp;User&nbsp;Atomic&nbsp;Common&nbsp;Information</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="harmonic_common.htm" target="_top">Common&nbsp;Variables&nbsp;Used&nbsp;by&nbsp;Multi-threading&nbsp;Sum&nbsp;of&nbsp;1/i</a><br>
 compare&#160;<a href="compare_c.htm" target="_top">Compare&nbsp;Speed&nbsp;of&nbsp;C&nbsp;and&nbsp;C++</a><br>
@@ -2425,7 +2440,8 @@ compute&#160;<a href="det_by_minor_c.htm" target="_top">Compute&nbsp;Determinant
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="lusolve.htm" target="_top">Compute&nbsp;Determinant&nbsp;and&nbsp;Solve&nbsp;Linear&nbsp;Equations</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="ludetandsolve.htm" target="_top">Compute&nbsp;Determinants&nbsp;and&nbsp;Solve&nbsp;Equations&nbsp;by&nbsp;LU&nbsp;Factorization</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="subgraph_jac_rev.htm" target="_top">Compute&nbsp;Sparse&nbsp;Jacobians&nbsp;Using&nbsp;Subgraphs</a><br>
-computes&#160;<a href="multi_atomic_user.htm" target="_top">Defines&nbsp;a&nbsp;User&nbsp;Atomic&nbsp;Operation&nbsp;that&nbsp;Computes&nbsp;Square&nbsp;Root</a><br>
+computes&#160;<a href="multi_checkpoint_algo.htm" target="_top">Defines&nbsp;an&nbsp;Algorithm&nbsp;that&nbsp;Computes&nbsp;Square&nbsp;Root</a><br>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="multi_atomic_user.htm" target="_top">Defines&nbsp;a&nbsp;User&nbsp;Atomic&nbsp;Operation&nbsp;that&nbsp;Computes&nbsp;Square&nbsp;Root</a><br>
 computing&#160;<a href="benderquad.htm" target="_top">Computing&nbsp;Jacobian&nbsp;and&nbsp;Hessian&nbsp;of&nbsp;Bender's&nbsp;Reduced&nbsp;Objective</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="change_param.cpp.htm" target="_top">Computing&nbsp;a&nbsp;Jacobian&nbsp;With&nbsp;Constants&nbsp;that&nbsp;Change</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="subgraph_jac_rev.cpp.htm" target="_top">Computing&nbsp;Sparse&nbsp;Jacobian&nbsp;Using&nbsp;Reverse&nbsp;Mode:&nbsp;Example&nbsp;and&nbsp;Test</a><br>
@@ -2660,9 +2676,9 @@ cppad&#160;<a href="license.htm" target="_top">Your&nbsp;License&nbsp;for&nbsp;t
 &#160;&#160;&#160;&#160;&#160;&#160;<a href="cmake.htm" target="_top">Using&nbsp;CMake&nbsp;to&nbsp;Configure&nbsp;CppAD</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;<a href="download.htm" target="_top">Download&nbsp;The&nbsp;CppAD&nbsp;Source&nbsp;Code</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;<a href="install.htm" target="_top">CppAD&nbsp;Download,&nbsp;Test,&nbsp;and&nbsp;Install&nbsp;Instructions</a><br>
-cppad<b>-</b>20180921<b>:</b>&#160;<a href="cppad.htm" target="_top">cppad-20180921:&nbsp;A&nbsp;Package&nbsp;for&nbsp;Differentiation&nbsp;of&nbsp;C++&nbsp;Algorithms</a><br>
+cppad<b>-</b>20180922<b>:</b>&#160;<a href="cppad.htm" target="_top">cppad-20180922:&nbsp;A&nbsp;Package&nbsp;for&nbsp;Differentiation&nbsp;of&nbsp;C++&nbsp;Algorithms</a><br>
 cppad<b>.</b>general&#160;<a href="sparse_hes.htm#coloring.cppad.general" target="_top">Computing&nbsp;Sparse&nbsp;Hessians:&#160;coloring.cppad.general</a><br>
-cppad<b>.</b>hpp&#160;<a href="cppad.htm" target="_top">cppad-20180921:&nbsp;A&nbsp;Package&nbsp;for&nbsp;Differentiation&nbsp;of&nbsp;C++&nbsp;Algorithms</a><br>
+cppad<b>.</b>hpp&#160;<a href="cppad.htm" target="_top">cppad-20180922:&nbsp;A&nbsp;Package&nbsp;for&nbsp;Differentiation&nbsp;of&nbsp;C++&nbsp;Algorithms</a><br>
 cppad<b>.</b>symmetric&#160;<a href="sparse_hes.htm#coloring.cppad.symmetric" target="_top">Computing&nbsp;Sparse&nbsp;Hessians:&#160;coloring.cppad.symmetric</a><br>
 cppad<b>::</b>eigen<b>_</b>vector&#160;<a href="testvector.htm#CppAD::eigen_vector" target="_top">Using&nbsp;The&nbsp;CppAD&nbsp;Test&nbsp;Vector&nbsp;Template&nbsp;Class:&#160;CppAD::eigen_vector</a><br>
 cppad<b>::</b>numeric<b>_</b>limits&#160;<a href="base_limits.htm#CppAD::numeric_limits" target="_top">Base&nbsp;Type&nbsp;Requirements&nbsp;for&nbsp;Numeric&nbsp;Limits:&#160;CppAD::numeric_limits</a><br>
@@ -2779,7 +2795,8 @@ defined&#160;<a href="old_atomic.htm" target="_top">User&nbsp;Defined&nbsp;Atomi
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="atomic_example.htm" target="_top">Example&nbsp;User&nbsp;Defined&nbsp;Atomic&nbsp;Functions</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="atomic_base.htm" target="_top">User&nbsp;Defined&nbsp;Atomic&nbsp;AD&nbsp;Functions</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="pkgconfig.htm#Defined Fields" target="_top">CppAD&nbsp;pkg-config&nbsp;Files:&#160;Defined&nbsp;Fields</a><br>
-defines&#160;<a href="multi_atomic_user.htm" target="_top">Defines&nbsp;a&nbsp;User&nbsp;Atomic&nbsp;Operation&nbsp;that&nbsp;Computes&nbsp;Square&nbsp;Root</a><br>
+defines&#160;<a href="multi_checkpoint_algo.htm" target="_top">Defines&nbsp;an&nbsp;Algorithm&nbsp;that&nbsp;Computes&nbsp;Square&nbsp;Root</a><br>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="multi_atomic_user.htm" target="_top">Defines&nbsp;a&nbsp;User&nbsp;Atomic&nbsp;Operation&nbsp;that&nbsp;Computes&nbsp;Square&nbsp;Root</a><br>
 definition&#160;<a href="simplevector.htm" target="_top">Definition&nbsp;of&nbsp;a&nbsp;Simple&nbsp;Vector</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="numerictype.htm" target="_top">Definition&nbsp;of&nbsp;a&nbsp;Numeric&nbsp;Type</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="base_alloc.hpp.htm#Class Definition" target="_top">Example&nbsp;AD&lt;Base&gt;&nbsp;Where&nbsp;Base&nbsp;Constructor&nbsp;Allocates&nbsp;Memory:&#160;Class&nbsp;Definition</a><br>
@@ -2943,7 +2960,7 @@ derivative&#160;<a href="theory.htm" target="_top">The&nbsp;Theory&nbsp;of&nbsp;
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="exp_eps_for1.htm#Operation Sequence.Derivative" target="_top">exp_eps:&nbsp;First&nbsp;Order&nbsp;Forward&nbsp;Sweep:&#160;Operation&nbsp;Sequence.Derivative</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="exp_2_for2.htm#Operation Sequence.Derivative" target="_top">exp_2:&nbsp;Second&nbsp;Order&nbsp;Forward&nbsp;Mode:&#160;Operation&nbsp;Sequence.Derivative</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="exp_2_for1.htm#Operation Sequence.Derivative" target="_top">exp_2:&nbsp;First&nbsp;Order&nbsp;Forward&nbsp;Mode:&#160;Operation&nbsp;Sequence.Derivative</a><br>
-&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="cppad.htm" target="_top">cppad-20180921:&nbsp;A&nbsp;Package&nbsp;for&nbsp;Differentiation&nbsp;of&nbsp;C++&nbsp;Algorithms</a><br>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="cppad.htm" target="_top">cppad-20180922:&nbsp;A&nbsp;Package&nbsp;for&nbsp;Differentiation&nbsp;of&nbsp;C++&nbsp;Algorithms</a><br>
 derivative<b>:</b>&#160;<a href="revone.htm" target="_top">First&nbsp;Order&nbsp;Derivative:&nbsp;Driver&nbsp;Routine</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="forone.htm" target="_top">First&nbsp;Order&nbsp;Partial&nbsp;Derivative:&nbsp;Driver&nbsp;Routine</a><br>
 derivatives&#160;<a href="old_usead_2.cpp.htm" target="_top">Using&nbsp;AD&nbsp;to&nbsp;Compute&nbsp;Atomic&nbsp;Function&nbsp;Derivatives</a><br>
@@ -3060,8 +3077,8 @@ differentiating&#160;<a href="stack_machine.cpp.htm" target="_top">Example&nbsp;
 differentiation&#160;<a href="ad_in_c.cpp.htm" target="_top">Example&nbsp;and&nbsp;Test&nbsp;Linking&nbsp;CppAD&nbsp;to&nbsp;Languages&nbsp;Other&nbsp;than&nbsp;C++</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="introduction.htm#Preface.Algorithmic Differentiation" target="_top">An&nbsp;Introduction&nbsp;by&nbsp;Example&nbsp;to&nbsp;Algorithmic&nbsp;Differentiation:&#160;Preface.Algorithmic&nbsp;Differentiation</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="introduction.htm" target="_top">An&nbsp;Introduction&nbsp;by&nbsp;Example&nbsp;to&nbsp;Algorithmic&nbsp;Differentiation</a><br>
-&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="cppad.htm" target="_top">cppad-20180921:&nbsp;A&nbsp;Package&nbsp;for&nbsp;Differentiation&nbsp;of&nbsp;C++&nbsp;Algorithms</a><br>
-&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="cppad.htm" target="_top">cppad-20180921:&nbsp;A&nbsp;Package&nbsp;for&nbsp;Differentiation&nbsp;of&nbsp;C++&nbsp;Algorithms</a><br>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="cppad.htm" target="_top">cppad-20180922:&nbsp;A&nbsp;Package&nbsp;for&nbsp;Differentiation&nbsp;of&nbsp;C++&nbsp;Algorithms</a><br>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="cppad.htm" target="_top">cppad-20180922:&nbsp;A&nbsp;Package&nbsp;for&nbsp;Differentiation&nbsp;of&nbsp;C++&nbsp;Algorithms</a><br>
 digits10&#160;<a href="numeric_limits.htm#digits10" target="_top">Numeric&nbsp;Limits&nbsp;For&nbsp;an&nbsp;AD&nbsp;and&nbsp;Base&nbsp;Types:&#160;digits10</a><br>
 dimension&#160;<a href="rombergmul.htm" target="_top">Multi-dimensional&nbsp;Romberg&nbsp;Integration</a><br>
 dimensional&#160;<a href="rombergmul.cpp.htm" target="_top">One&nbsp;Dimensional&nbsp;Romberg&nbsp;Integration:&nbsp;Example&nbsp;and&nbsp;Test</a><br>
@@ -3171,6 +3188,7 @@ double&#160;<a href="double_sparse_jacobian.cpp.htm" target="_top">Double&nbsp;S
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="base_double.hpp.htm" target="_top">Enable&nbsp;use&nbsp;of&nbsp;AD&lt;Base&gt;&nbsp;where&nbsp;Base&nbsp;is&nbsp;double</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="base_member.htm#Double Constructor" target="_top">Required&nbsp;Base&nbsp;Class&nbsp;Member&nbsp;Functions:&#160;Double&nbsp;Constructor</a><br>
 down&#160;<a href="multi_newton_takedown.htm" target="_top">Take&nbsp;Down&nbsp;Multi-threaded&nbsp;Newton&nbsp;Method</a><br>
+&#160;&#160;&#160;&#160;&#160;<a href="multi_checkpoint_takedown.htm" target="_top">Multi-Threaded&nbsp;Checkpoint&nbsp;Take&nbsp;Down</a><br>
 &#160;&#160;&#160;&#160;&#160;<a href="multi_atomic_takedown.htm" target="_top">Multi-Threaded&nbsp;User&nbsp;Atomic&nbsp;Take&nbsp;Down</a><br>
 &#160;&#160;&#160;&#160;&#160;<a href="harmonic_takedown.htm" target="_top">Take&nbsp;Down&nbsp;Multi-threading&nbsp;Sum&nbsp;of&nbsp;1/i</a><br>
 download&#160;<a href="get_sacado.sh.htm" target="_top">Download&nbsp;and&nbsp;Install&nbsp;Sacado&nbsp;in&nbsp;Build&nbsp;Directory</a><br>
@@ -3560,6 +3578,7 @@ example&#160;<a href="lu_ratio.cpp.htm" target="_top">LuRatio:&nbsp;Example&nbsp
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="team_thread.hpp.htm#Example Implementation" target="_top">Specifications&nbsp;for&nbsp;A&nbsp;Team&nbsp;of&nbsp;AD&nbsp;Threads:&#160;Example&nbsp;Implementation</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="team_thread.hpp.htm#Example Use" target="_top">Specifications&nbsp;for&nbsp;A&nbsp;Team&nbsp;of&nbsp;AD&nbsp;Threads:&#160;Example&nbsp;Use</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="multi_newton.cpp.htm" target="_top">Multi-Threaded&nbsp;Newton&nbsp;Method&nbsp;Example&nbsp;/&nbsp;Test</a><br>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="multi_checkpoint.cpp.htm" target="_top">Multi-Threading&nbsp;Checkpoint&nbsp;Example&nbsp;/&nbsp;Test</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="multi_atomic.cpp.htm" target="_top">Multi-Threading&nbsp;User&nbsp;Atomic&nbsp;Example&nbsp;/&nbsp;Test</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="harmonic.cpp.htm" target="_top">Multi-Threading&nbsp;Harmonic&nbsp;Summation&nbsp;Example&nbsp;/&nbsp;Test</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="team_example.cpp.htm" target="_top">Using&nbsp;a&nbsp;Team&nbsp;of&nbsp;AD&nbsp;Threads:&nbsp;Example&nbsp;and&nbsp;Test</a><br>
@@ -3827,7 +3846,7 @@ example&#160;<a href="lu_ratio.cpp.htm" target="_top">LuRatio:&nbsp;Example&nbsp
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="colpack_jacobian.cpp.htm" target="_top">ColPack:&nbsp;Sparse&nbsp;Jacobian&nbsp;Example&nbsp;and&nbsp;Test</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="colpack_jac.cpp.htm" target="_top">ColPack:&nbsp;Sparse&nbsp;Jacobian&nbsp;Example&nbsp;and&nbsp;Test</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="colpack_prefix.htm#Example" target="_top">Including&nbsp;the&nbsp;ColPack&nbsp;Sparsity&nbsp;Calculations:&#160;Example</a><br>
-&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="cppad.htm#Example" target="_top">cppad-20180921:&nbsp;A&nbsp;Package&nbsp;for&nbsp;Differentiation&nbsp;of&nbsp;C++&nbsp;Algorithms:&#160;Example</a><br>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="cppad.htm#Example" target="_top">cppad-20180922:&nbsp;A&nbsp;Package&nbsp;for&nbsp;Differentiation&nbsp;of&nbsp;C++&nbsp;Algorithms:&#160;Example</a><br>
 examples&#160;<a href="autotools.htm#make.Examples and Tests" target="_top">Autotools&nbsp;Unix&nbsp;Test&nbsp;and&nbsp;Installation:&#160;make.Examples&nbsp;and&nbsp;Tests</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="speed_example.cpp.htm" target="_top">Run&nbsp;the&nbsp;Speed&nbsp;Examples</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="general.cpp.htm" target="_top">CppAD&nbsp;Examples&nbsp;and&nbsp;Tests</a><br>
@@ -4108,11 +4127,12 @@ file&#160;<a href="old_mat_mul.cpp.htm#Include File" target="_top">Old&nbsp;Matr
 &#160;&#160;&#160;&#160;&#160;<a href="near_equal.cpp.htm#File Name" target="_top">NearEqual&nbsp;Function:&nbsp;Example&nbsp;and&nbsp;Test:&#160;File&nbsp;Name</a><br>
 &#160;&#160;&#160;&#160;&#160;<a href="errorhandler.htm#file" target="_top">Replacing&nbsp;the&nbsp;CppAD&nbsp;Error&nbsp;Handler:&#160;file</a><br>
 &#160;&#160;&#160;&#160;&#160;<a href="multi_newton.cpp.htm#Source File" target="_top">Multi-Threaded&nbsp;Newton&nbsp;Method&nbsp;Example&nbsp;/&nbsp;Test:&#160;Source&nbsp;File</a><br>
+&#160;&#160;&#160;&#160;&#160;<a href="multi_checkpoint.cpp.htm#Source File" target="_top">Multi-Threading&nbsp;Checkpoint&nbsp;Example&nbsp;/&nbsp;Test:&#160;Source&nbsp;File</a><br>
 &#160;&#160;&#160;&#160;&#160;<a href="multi_atomic.cpp.htm#Source File" target="_top">Multi-Threading&nbsp;User&nbsp;Atomic&nbsp;Example&nbsp;/&nbsp;Test:&#160;Source&nbsp;File</a><br>
 &#160;&#160;&#160;&#160;&#160;<a href="harmonic.cpp.htm#Source File" target="_top">Multi-Threading&nbsp;Harmonic&nbsp;Summation&nbsp;Example&nbsp;/&nbsp;Test:&#160;Source&nbsp;File</a><br>
 &#160;&#160;&#160;&#160;&#160;<a href="check_for_nan.htm#get_check_for_nan.file" target="_top">Check&nbsp;an&nbsp;ADFun&nbsp;Object&nbsp;For&nbsp;Nan&nbsp;Results:&#160;get_check_for_nan.file</a><br>
 &#160;&#160;&#160;&#160;&#160;<a href="base_alloc.hpp.htm#Include File" target="_top">Example&nbsp;AD&lt;Base&gt;&nbsp;Where&nbsp;Base&nbsp;Constructor&nbsp;Allocates&nbsp;Memory:&#160;Include&nbsp;File</a><br>
-&#160;&#160;&#160;&#160;&#160;<a href="cppad.htm#Include File" target="_top">cppad-20180921:&nbsp;A&nbsp;Package&nbsp;for&nbsp;Differentiation&nbsp;of&nbsp;C++&nbsp;Algorithms:&#160;Include&nbsp;File</a><br>
+&#160;&#160;&#160;&#160;&#160;<a href="cppad.htm#Include File" target="_top">cppad-20180922:&nbsp;A&nbsp;Package&nbsp;for&nbsp;Differentiation&nbsp;of&nbsp;C++&nbsp;Algorithms:&#160;Include&nbsp;File</a><br>
 file<b>_</b>name&#160;<a href="check_for_nan.htm#Error Message.file_name" target="_top">Check&nbsp;an&nbsp;ADFun&nbsp;Object&nbsp;For&nbsp;Nan&nbsp;Results:&#160;Error&nbsp;Message.file_name</a><br>
 files&#160;<a href="addon.htm#Library Files" target="_top">CppAD&nbsp;Addons:&#160;Library&nbsp;Files</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;<a href="addon.htm#Include Files" target="_top">CppAD&nbsp;Addons:&#160;Include&nbsp;Files</a><br>
@@ -4806,7 +4826,7 @@ include&#160;<a href="addon.htm#Include Files" target="_top">CppAD&nbsp;Addons:&
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="exp_eps.htm#include" target="_top">An&nbsp;Epsilon&nbsp;Accurate&nbsp;Exponential&nbsp;Approximation:&#160;include</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="exp_2.htm#include" target="_top">Second&nbsp;Order&nbsp;Exponential&nbsp;Approximation:&#160;include</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="cmake.htm" target="_top">Using&nbsp;CMake&nbsp;to&nbsp;Configure&nbsp;CppAD</a><br>
-&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="cppad.htm#Include File" target="_top">cppad-20180921:&nbsp;A&nbsp;Package&nbsp;for&nbsp;Differentiation&nbsp;of&nbsp;C++&nbsp;Algorithms:&#160;Include&nbsp;File</a><br>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="cppad.htm#Include File" target="_top">cppad-20180922:&nbsp;A&nbsp;Package&nbsp;for&nbsp;Differentiation&nbsp;of&nbsp;C++&nbsp;Algorithms:&#160;Include&nbsp;File</a><br>
 including&#160;<a href="sacado_prefix.htm" target="_top">Including&nbsp;the&nbsp;Sacado&nbsp;Speed&nbsp;Tests</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="ipopt_prefix.htm" target="_top">Including&nbsp;the&nbsp;cppad_ipopt&nbsp;Library&nbsp;and&nbsp;Tests</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="fadbad_prefix.htm" target="_top">Including&nbsp;the&nbsp;FADBAD&nbsp;Speed&nbsp;Tests</a><br>
@@ -4884,6 +4904,7 @@ indices&#160;<a href="ipopt_nlp_ode_fast.htm#Trapezoidal Approximation.Domain In
 indices<b>:</b>&#160;<a href="rc_sparsity.cpp.htm" target="_top">Preferred&nbsp;Sparsity&nbsp;Patterns:&nbsp;Row&nbsp;and&nbsp;Column&nbsp;Indices:&nbsp;Example&nbsp;and&nbsp;Test</a><br>
 info&#160;<a href="errorhandler.htm#info" target="_top">Replacing&nbsp;the&nbsp;CppAD&nbsp;Error&nbsp;Handler:&#160;info</a><br>
 information&#160;<a href="old_mat_mul.hpp.htm#Extra Call Information" target="_top">Define&nbsp;Matrix&nbsp;Multiply&nbsp;as&nbsp;a&nbsp;User&nbsp;Atomic&nbsp;Operation:&#160;Extra&nbsp;Call&nbsp;Information</a><br>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="multi_checkpoint_common.htm" target="_top">Multi-Threaded&nbsp;Checkpoint&nbsp;Common&nbsp;Information</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="multi_atomic_common.htm" target="_top">Multi-Threaded&nbsp;User&nbsp;Atomic&nbsp;Common&nbsp;Information</a><br>
 initial&#160;<a href="ipopt_nlp_ode_fast.htm#Initial Condition" target="_top">ODE&nbsp;Fitting&nbsp;Using&nbsp;Fast&nbsp;Representation:&#160;Initial&nbsp;Condition</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="ipopt_nlp_ode_simple.htm#Initial Condition Constraint" target="_top">ODE&nbsp;Fitting&nbsp;Using&nbsp;Simple&nbsp;Representation:&#160;Initial&nbsp;Condition&nbsp;Constraint</a><br>
@@ -4970,7 +4991,7 @@ introduction&#160;<a href="test_vector.htm#Introduction" target="_top">Choosing&
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="example.htm#Introduction" target="_top">Examples:&#160;Introduction</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="exp_apx.cpp.htm" target="_top">Correctness&nbsp;Tests&nbsp;For&nbsp;Exponential&nbsp;Approximation&nbsp;in&nbsp;Introduction</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="introduction.htm" target="_top">An&nbsp;Introduction&nbsp;by&nbsp;Example&nbsp;to&nbsp;Algorithmic&nbsp;Differentiation</a><br>
-&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="cppad.htm#Introduction" target="_top">cppad-20180921:&nbsp;A&nbsp;Package&nbsp;for&nbsp;Differentiation&nbsp;of&nbsp;C++&nbsp;Algorithms:&#160;Introduction</a><br>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="cppad.htm#Introduction" target="_top">cppad-20180922:&nbsp;A&nbsp;Package&nbsp;for&nbsp;Differentiation&nbsp;of&nbsp;C++&nbsp;Algorithms:&#160;Introduction</a><br>
 inuse&#160;<a href="memory_leak.htm#inuse" target="_top">Memory&nbsp;Leak&nbsp;Detection:&#160;inuse</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;<a href="omp_inuse.htm" target="_top">Amount&nbsp;of&nbsp;Memory&nbsp;a&nbsp;Thread&nbsp;is&nbsp;Currently&nbsp;Using</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;<a href="ta_inuse.htm" target="_top">Amount&nbsp;of&nbsp;Memory&nbsp;a&nbsp;Thread&nbsp;is&nbsp;Currently&nbsp;Using</a><br>
@@ -5683,6 +5704,12 @@ multi<b>-</b>threaded&#160;<a href="multi_newton_time.htm" target="_top">Timing&
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="multi_newton_setup.htm" target="_top">Set&nbsp;Up&nbsp;Multi-Threaded&nbsp;Newton&nbsp;Method</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="multi_newton_common.htm" target="_top">Common&nbsp;Variables&nbsp;use&nbsp;by&nbsp;Multi-Threaded&nbsp;Newton&nbsp;Method</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="multi_newton.cpp.htm" target="_top">Multi-Threaded&nbsp;Newton&nbsp;Method&nbsp;Example&nbsp;/&nbsp;Test</a><br>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="multi_checkpoint_time.htm" target="_top">Timing&nbsp;Test&nbsp;for&nbsp;Multi-Threaded&nbsp;Checkpoint&nbsp;Calculation</a><br>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="multi_checkpoint_run.htm" target="_top">Run&nbsp;Multi-Threaded&nbsp;Checkpoint&nbsp;Calculation</a><br>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="multi_checkpoint_takedown.htm" target="_top">Multi-Threaded&nbsp;Checkpoint&nbsp;Take&nbsp;Down</a><br>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="multi_checkpoint_worker.htm" target="_top">Multi-Threaded&nbsp;Checkpoint&nbsp;Worker</a><br>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="multi_checkpoint_setup.htm" target="_top">Multi-Threaded&nbsp;Checkpoint&nbsp;Set&nbsp;Up</a><br>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="multi_checkpoint_common.htm" target="_top">Multi-Threaded&nbsp;Checkpoint&nbsp;Common&nbsp;Information</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="multi_atomic_time.htm" target="_top">Timing&nbsp;Test&nbsp;for&nbsp;Multi-Threaded&nbsp;User&nbsp;Atomic&nbsp;Calculation</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="multi_atomic_run.htm" target="_top">Run&nbsp;Multi-Threaded&nbsp;User&nbsp;Atomic&nbsp;Calculation</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="multi_atomic_takedown.htm" target="_top">Multi-Threaded&nbsp;User&nbsp;Atomic&nbsp;Take&nbsp;Down</a><br>
@@ -5698,6 +5725,7 @@ multi<b>-</b>threading&#160;<a href="omp_alloc.htm" target="_top">A&nbsp;Quick&n
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="thread_alloc.cpp.htm" target="_top">Fast&nbsp;Multi-Threading&nbsp;Memory&nbsp;Allocator:&nbsp;Example&nbsp;and&nbsp;Test</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="thread_alloc.htm" target="_top">A&nbsp;Fast&nbsp;Multi-Threading&nbsp;Memory&nbsp;Allocator</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="utility.htm#Miscellaneous.Multi-Threading Memory Allocation" target="_top">Some&nbsp;General&nbsp;Purpose&nbsp;Utilities:&#160;Miscellaneous.Multi-Threading&nbsp;Memory&nbsp;Allocation</a><br>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="multi_checkpoint.cpp.htm" target="_top">Multi-Threading&nbsp;Checkpoint&nbsp;Example&nbsp;/&nbsp;Test</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="multi_atomic.cpp.htm" target="_top">Multi-Threading&nbsp;User&nbsp;Atomic&nbsp;Example&nbsp;/&nbsp;Test</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="harmonic_takedown.htm" target="_top">Take&nbsp;Down&nbsp;Multi-threading&nbsp;Sum&nbsp;of&nbsp;1/i</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="harmonic_setup.htm" target="_top">Set&nbsp;Up&nbsp;Multi-threading&nbsp;Sum&nbsp;of&nbsp;1/i</a><br>
@@ -5787,7 +5815,7 @@ namespace&#160;<a href="addon.htm#Namespace" target="_top">CppAD&nbsp;Addons:&#1
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="cppad_ipopt_nlp.htm#cppad_ipopt namespace" target="_top">Nonlinear&nbsp;Programming&nbsp;Using&nbsp;the&nbsp;CppAD&nbsp;Interface&nbsp;to&nbsp;Ipopt:&#160;cppad_ipopt&nbsp;namespace</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="faq.htm#Namespace" target="_top">Frequently&nbsp;Asked&nbsp;Questions&nbsp;and&nbsp;Answers:&#160;Namespace</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="cppad_eigen.hpp.htm#CppAD Namespace" target="_top">Enable&nbsp;Use&nbsp;of&nbsp;Eigen&nbsp;Linear&nbsp;Algebra&nbsp;Package&nbsp;with&nbsp;CppAD:&#160;CppAD&nbsp;Namespace</a><br>
-&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="cppad.htm#Namespace" target="_top">cppad-20180921:&nbsp;A&nbsp;Package&nbsp;for&nbsp;Differentiation&nbsp;of&nbsp;C++&nbsp;Algorithms:&#160;Namespace</a><br>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="cppad.htm#Namespace" target="_top">cppad-20180922:&nbsp;A&nbsp;Package&nbsp;for&nbsp;Differentiation&nbsp;of&nbsp;C++&nbsp;Algorithms:&#160;Namespace</a><br>
 nan&#160;<a href="zdouble.htm#Syntax.Nan" target="_top">zdouble:&nbsp;An&nbsp;AD&nbsp;Base&nbsp;Type&nbsp;With&nbsp;Absolute&nbsp;Zero:&#160;Syntax.Nan</a><br>
 &#160;&#160;&#160;&#160;<a href="ode_err_control.cpp.htm#Nan" target="_top">OdeErrControl:&nbsp;Example&nbsp;and&nbsp;Test:&#160;Nan</a><br>
 &#160;&#160;&#160;&#160;<a href="odeerrcontrol.htm#Method.Nan" target="_top">An&nbsp;Error&nbsp;Controller&nbsp;for&nbsp;ODE&nbsp;Solvers:&#160;Method.Nan</a><br>
@@ -5870,7 +5898,8 @@ num<b>_</b>bytes&#160;<a href="omp_efficient.htm#num_bytes" target="_top">Check&
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="ta_available.htm#num_bytes" target="_top">Amount&nbsp;of&nbsp;Memory&nbsp;Available&nbsp;for&nbsp;Quick&nbsp;Use&nbsp;by&nbsp;a&nbsp;Thread:&#160;num_bytes</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="ta_inuse.htm#num_bytes" target="_top">Amount&nbsp;of&nbsp;Memory&nbsp;a&nbsp;Thread&nbsp;is&nbsp;Currently&nbsp;Using:&#160;num_bytes</a><br>
 num<b>_</b>itr&#160;<a href="multi_atomic_user.htm#au.num_itr" target="_top">Defines&nbsp;a&nbsp;User&nbsp;Atomic&nbsp;Operation&nbsp;that&nbsp;Computes&nbsp;Square&nbsp;Root:&#160;au.num_itr</a><br>
-num<b>_</b>solve&#160;<a href="multi_atomic_time.htm#num_solve" target="_top">Timing&nbsp;Test&nbsp;for&nbsp;Multi-Threaded&nbsp;User&nbsp;Atomic&nbsp;Calculation:&#160;num_solve</a><br>
+num<b>_</b>solve&#160;<a href="multi_checkpoint_time.htm#num_solve" target="_top">Timing&nbsp;Test&nbsp;for&nbsp;Multi-Threaded&nbsp;Checkpoint&nbsp;Calculation:&#160;num_solve</a><br>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="multi_atomic_time.htm#num_solve" target="_top">Timing&nbsp;Test&nbsp;for&nbsp;Multi-Threaded&nbsp;User&nbsp;Atomic&nbsp;Calculation:&#160;num_solve</a><br>
 num<b>_</b>sub&#160;<a href="multi_newton_time.htm#num_sub" target="_top">Timing&nbsp;Test&nbsp;of&nbsp;Multi-Threaded&nbsp;Newton&nbsp;Method:&#160;num_sub</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="multi_newton_run.htm#num_sub" target="_top">A&nbsp;Multi-Threaded&nbsp;Newton's&nbsp;Method:&#160;num_sub</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="multi_newton_setup.htm#num_sub" target="_top">Set&nbsp;Up&nbsp;Multi-Threaded&nbsp;Newton&nbsp;Method:&#160;num_sub</a><br>
@@ -5883,6 +5912,7 @@ num<b>_</b>threads&#160;<a href="ta_parallel_setup.htm#num_threads" target="_top
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="multi_newton_time.htm#num_threads" target="_top">Timing&nbsp;Test&nbsp;of&nbsp;Multi-Threaded&nbsp;Newton&nbsp;Method:&#160;num_threads</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="multi_newton_run.htm#num_threads" target="_top">A&nbsp;Multi-Threaded&nbsp;Newton's&nbsp;Method:&#160;num_threads</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="multi_newton_setup.htm#num_threads" target="_top">Set&nbsp;Up&nbsp;Multi-Threaded&nbsp;Newton&nbsp;Method:&#160;num_threads</a><br>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="multi_checkpoint_time.htm#num_threads" target="_top">Timing&nbsp;Test&nbsp;for&nbsp;Multi-Threaded&nbsp;Checkpoint&nbsp;Calculation:&#160;num_threads</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="multi_atomic_time.htm#num_threads" target="_top">Timing&nbsp;Test&nbsp;for&nbsp;Multi-Threaded&nbsp;User&nbsp;Atomic&nbsp;Calculation:&#160;num_threads</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="harmonic_time.htm#num_threads" target="_top">Timing&nbsp;Test&nbsp;of&nbsp;Multi-Threaded&nbsp;Summation&nbsp;of&nbsp;1/i:&#160;num_threads</a><br>
 num<b>_</b>zero&#160;<a href="multi_newton_time.htm#num_zero" target="_top">Timing&nbsp;Test&nbsp;of&nbsp;Multi-Threaded&nbsp;Newton&nbsp;Method:&#160;num_zero</a><br>
@@ -6018,6 +6048,10 @@ ok&#160;<a href="old_atomic.htm#ok" target="_top">User&nbsp;Defined&nbsp;Atomic&
 &#160;&#160;&#160;<a href="team_thread.hpp.htm#ok" target="_top">Specifications&nbsp;for&nbsp;A&nbsp;Team&nbsp;of&nbsp;AD&nbsp;Threads:&#160;ok</a><br>
 &#160;&#160;&#160;<a href="multi_newton_time.htm#ok" target="_top">Timing&nbsp;Test&nbsp;of&nbsp;Multi-Threaded&nbsp;Newton&nbsp;Method:&#160;ok</a><br>
 &#160;&#160;&#160;<a href="multi_newton_run.htm#ok" target="_top">A&nbsp;Multi-Threaded&nbsp;Newton's&nbsp;Method:&#160;ok</a><br>
+&#160;&#160;&#160;<a href="multi_checkpoint_time.htm#ok" target="_top">Timing&nbsp;Test&nbsp;for&nbsp;Multi-Threaded&nbsp;Checkpoint&nbsp;Calculation:&#160;ok</a><br>
+&#160;&#160;&#160;<a href="multi_checkpoint_run.htm#ok" target="_top">Run&nbsp;Multi-Threaded&nbsp;Checkpoint&nbsp;Calculation:&#160;ok</a><br>
+&#160;&#160;&#160;<a href="multi_checkpoint_takedown.htm#ok" target="_top">Multi-Threaded&nbsp;Checkpoint&nbsp;Take&nbsp;Down:&#160;ok</a><br>
+&#160;&#160;&#160;<a href="multi_checkpoint_setup.htm#ok" target="_top">Multi-Threaded&nbsp;Checkpoint&nbsp;Set&nbsp;Up:&#160;ok</a><br>
 &#160;&#160;&#160;<a href="multi_atomic_time.htm#ok" target="_top">Timing&nbsp;Test&nbsp;for&nbsp;Multi-Threaded&nbsp;User&nbsp;Atomic&nbsp;Calculation:&#160;ok</a><br>
 &#160;&#160;&#160;<a href="multi_atomic_run.htm#ok" target="_top">Run&nbsp;Multi-Threaded&nbsp;User&nbsp;Atomic&nbsp;Calculation:&#160;ok</a><br>
 &#160;&#160;&#160;<a href="multi_atomic_takedown.htm#ok" target="_top">Multi-Threaded&nbsp;User&nbsp;Atomic&nbsp;Take&nbsp;Down:&#160;ok</a><br>
@@ -6356,7 +6390,7 @@ package&#160;<a href="speed_main.htm#package.AD Package" target="_top">Running&n
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="speed.htm" target="_top">Speed&nbsp;Test&nbsp;an&nbsp;Operator&nbsp;Overloading&nbsp;AD&nbsp;Package</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="cppad_eigen.hpp.htm" target="_top">Enable&nbsp;Use&nbsp;of&nbsp;Eigen&nbsp;Linear&nbsp;Algebra&nbsp;Package&nbsp;with&nbsp;CppAD</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="cmake.htm" target="_top">Using&nbsp;CMake&nbsp;to&nbsp;Configure&nbsp;CppAD</a><br>
-&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="cppad.htm" target="_top">cppad-20180921:&nbsp;A&nbsp;Package&nbsp;for&nbsp;Differentiation&nbsp;of&nbsp;C++&nbsp;Algorithms</a><br>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="cppad.htm" target="_top">cppad-20180922:&nbsp;A&nbsp;Package&nbsp;for&nbsp;Differentiation&nbsp;of&nbsp;C++&nbsp;Algorithms</a><br>
 package<b>_</b>prefix&#160;<a href="cmake.htm#package_prefix" target="_top">Using&nbsp;CMake&nbsp;to&nbsp;Configure&nbsp;CppAD:&#160;package_prefix</a><br>
 parallel&#160;<a href="old_atomic.htm#afun.Parallel Mode" target="_top">User&nbsp;Defined&nbsp;Atomic&nbsp;AD&nbsp;Functions:&#160;afun.Parallel&nbsp;Mode</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="omp_in_parallel.htm" target="_top">Is&nbsp;The&nbsp;Current&nbsp;Execution&nbsp;in&nbsp;OpenMP&nbsp;Parallel&nbsp;Mode</a><br>
@@ -6525,7 +6559,7 @@ prefix<b>_</b>dir&#160;<a href="autotools.htm#prefix_dir" target="_top">Autotool
 preprocessor&#160;<a href="addon.htm#Preprocessor Symbols" target="_top">CppAD&nbsp;Addons:&#160;Preprocessor&nbsp;Symbols</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="faq.htm#Namespace.Test Vector Preprocessor Symbol" target="_top">Frequently&nbsp;Asked&nbsp;Questions&nbsp;and&nbsp;Answers:&#160;Namespace.Test&nbsp;Vector&nbsp;Preprocessor&nbsp;Symbol</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="preprocessor.htm" target="_top">CppAD&nbsp;API&nbsp;Preprocessor&nbsp;Symbols</a><br>
-&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="cppad.htm#Preprocessor Symbols" target="_top">cppad-20180921:&nbsp;A&nbsp;Package&nbsp;for&nbsp;Differentiation&nbsp;of&nbsp;C++&nbsp;Algorithms:&#160;Preprocessor&nbsp;Symbols</a><br>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="cppad.htm#Preprocessor Symbols" target="_top">cppad-20180922:&nbsp;A&nbsp;Package&nbsp;for&nbsp;Differentiation&nbsp;of&nbsp;C++&nbsp;Algorithms:&#160;Preprocessor&nbsp;Symbols</a><br>
 previous&#160;<a href="whats_new.htm#Previous Years" target="_top">Changes&nbsp;and&nbsp;Additions&nbsp;to&nbsp;CppAD:&#160;Previous&nbsp;Years</a><br>
 previously&#160;<a href="tracknewdel.htm#TrackCount.Previously Deprecated" target="_top">Routines&nbsp;That&nbsp;Track&nbsp;Use&nbsp;of&nbsp;New&nbsp;and&nbsp;Delete:&#160;TrackCount.Previously&nbsp;Deprecated</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="tracknewdel.htm#TrackExtend.Previously Deprecated" target="_top">Routines&nbsp;That&nbsp;Track&nbsp;Use&nbsp;of&nbsp;New&nbsp;and&nbsp;Delete:&#160;TrackExtend.Previously&nbsp;Deprecated</a><br>
@@ -6731,6 +6765,11 @@ purpose&#160;<a href="luratio.htm#ratio.Purpose" target="_top">LU&nbsp;Factoriza
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="multi_newton_worker.htm#Purpose" target="_top">Do&nbsp;One&nbsp;Thread's&nbsp;Work&nbsp;for&nbsp;Multi-Threaded&nbsp;Newton&nbsp;Method:&#160;Purpose</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="multi_newton_setup.htm#Purpose" target="_top">Set&nbsp;Up&nbsp;Multi-Threaded&nbsp;Newton&nbsp;Method:&#160;Purpose</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="multi_newton_common.htm#Purpose" target="_top">Common&nbsp;Variables&nbsp;use&nbsp;by&nbsp;Multi-Threaded&nbsp;Newton&nbsp;Method:&#160;Purpose</a><br>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="multi_checkpoint_takedown.htm#Purpose" target="_top">Multi-Threaded&nbsp;Checkpoint&nbsp;Take&nbsp;Down:&#160;Purpose</a><br>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="multi_checkpoint_worker.htm#Purpose" target="_top">Multi-Threaded&nbsp;Checkpoint&nbsp;Worker:&#160;Purpose</a><br>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="multi_checkpoint_setup.htm#Purpose" target="_top">Multi-Threaded&nbsp;Checkpoint&nbsp;Set&nbsp;Up:&#160;Purpose</a><br>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="multi_checkpoint_common.htm#Purpose" target="_top">Multi-Threaded&nbsp;Checkpoint&nbsp;Common&nbsp;Information:&#160;Purpose</a><br>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="multi_checkpoint_algo.htm#Purpose" target="_top">Defines&nbsp;an&nbsp;Algorithm&nbsp;that&nbsp;Computes&nbsp;Square&nbsp;Root:&#160;Purpose</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="multi_atomic_takedown.htm#Purpose" target="_top">Multi-Threaded&nbsp;User&nbsp;Atomic&nbsp;Take&nbsp;Down:&#160;Purpose</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="multi_atomic_worker.htm#Purpose" target="_top">Multi-Threaded&nbsp;User&nbsp;Atomic&nbsp;Worker:&#160;Purpose</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="multi_atomic_setup.htm#Purpose" target="_top">Multi-Threaded&nbsp;User&nbsp;Atomic&nbsp;Set&nbsp;Up:&#160;Purpose</a><br>
@@ -7256,6 +7295,7 @@ romberg&#160;<a href="rombergmul.cpp.htm" target="_top">One&nbsp;Dimensional&nbs
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="romberg_one.cpp.htm" target="_top">One&nbsp;Dimensional&nbsp;Romberg&nbsp;Integration:&nbsp;Example&nbsp;and&nbsp;Test</a><br>
 root&#160;<a href="sqrt_reverse.htm" target="_top">Square&nbsp;Root&nbsp;Function&nbsp;Reverse&nbsp;Mode&nbsp;Theory</a><br>
 &#160;&#160;&#160;&#160;&#160;<a href="sqrt_forward.htm" target="_top">Square&nbsp;Root&nbsp;Function&nbsp;Forward&nbsp;Mode&nbsp;Theory</a><br>
+&#160;&#160;&#160;&#160;&#160;<a href="multi_checkpoint_algo.htm" target="_top">Defines&nbsp;an&nbsp;Algorithm&nbsp;that&nbsp;Computes&nbsp;Square&nbsp;Root</a><br>
 &#160;&#160;&#160;&#160;&#160;<a href="multi_atomic_user.htm" target="_top">Defines&nbsp;a&nbsp;User&nbsp;Atomic&nbsp;Operation&nbsp;that&nbsp;Computes&nbsp;Square&nbsp;Root</a><br>
 &#160;&#160;&#160;&#160;&#160;<a href="sqrt.htm" target="_top">The&nbsp;Square&nbsp;Root&nbsp;Function:&nbsp;sqrt</a><br>
 rosen34<b>:</b>&#160;<a href="rosen_34.cpp.htm" target="_top">Rosen34:&nbsp;Example&nbsp;and&nbsp;Test</a><br>
@@ -7291,6 +7331,7 @@ rt&#160;<a href="atomic_rev_sparse_jac.htm#Implementation.rt" target="_top">Atom
 run&#160;<a href="speed_example.cpp.htm" target="_top">Run&nbsp;the&nbsp;Speed&nbsp;Examples</a><br>
 &#160;&#160;&#160;&#160;<a href="speedtest.htm" target="_top">Run&nbsp;One&nbsp;Speed&nbsp;Test&nbsp;and&nbsp;Print&nbsp;Results</a><br>
 &#160;&#160;&#160;&#160;<a href="speed_test.htm" target="_top">Run&nbsp;One&nbsp;Speed&nbsp;Test&nbsp;and&nbsp;Return&nbsp;Results</a><br>
+&#160;&#160;&#160;&#160;<a href="multi_checkpoint_run.htm" target="_top">Run&nbsp;Multi-Threaded&nbsp;Checkpoint&nbsp;Calculation</a><br>
 &#160;&#160;&#160;&#160;<a href="multi_atomic_run.htm" target="_top">Run&nbsp;Multi-Threaded&nbsp;User&nbsp;Atomic&nbsp;Calculation</a><br>
 &#160;&#160;&#160;&#160;<a href="thread_test.cpp.htm" target="_top">Run&nbsp;Multi-Threading&nbsp;Examples&nbsp;and&nbsp;Speed&nbsp;Tests</a><br>
 &#160;&#160;&#160;&#160;<a href="exp_apx.cpp.htm" target="_top">Correctness&nbsp;Tests&nbsp;For&nbsp;Exponential&nbsp;Approximation&nbsp;in&nbsp;Introduction</a><br>
@@ -7474,6 +7515,7 @@ set&#160;<a href="old_mat_mul.hpp.htm#Set Union" target="_top">Define&nbsp;Matri
 &#160;&#160;&#160;&#160;<a href="sparse_rc.htm#set" target="_top">Row&nbsp;and&nbsp;Column&nbsp;Index&nbsp;Sparsity&nbsp;Patterns:&#160;set</a><br>
 &#160;&#160;&#160;&#160;<a href="set_union.cpp.htm" target="_top">Set&nbsp;Union:&nbsp;Example&nbsp;and&nbsp;Test</a><br>
 &#160;&#160;&#160;&#160;<a href="multi_newton_setup.htm" target="_top">Set&nbsp;Up&nbsp;Multi-Threaded&nbsp;Newton&nbsp;Method</a><br>
+&#160;&#160;&#160;&#160;<a href="multi_checkpoint_setup.htm" target="_top">Multi-Threaded&nbsp;Checkpoint&nbsp;Set&nbsp;Up</a><br>
 &#160;&#160;&#160;&#160;<a href="multi_atomic_setup.htm" target="_top">Multi-Threaded&nbsp;User&nbsp;Atomic&nbsp;Set&nbsp;Up</a><br>
 &#160;&#160;&#160;&#160;<a href="harmonic_setup.htm" target="_top">Set&nbsp;Up&nbsp;Multi-threading&nbsp;Sum&nbsp;of&nbsp;1/i</a><br>
 &#160;&#160;&#160;&#160;<a href="atomic_set_sparsity.cpp.htm" target="_top">Atomic&nbsp;Sparsity&nbsp;with&nbsp;Set&nbsp;Patterns:&nbsp;Example&nbsp;and&nbsp;Test</a><br>
@@ -7742,6 +7784,13 @@ source&#160;<a href="main_compare_c.htm#Source Code" target="_top">Main&nbsp;Pro
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="multi_newton_setup.htm#Source" target="_top">Set&nbsp;Up&nbsp;Multi-Threaded&nbsp;Newton&nbsp;Method:&#160;Source</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="multi_newton_common.htm#Source" target="_top">Common&nbsp;Variables&nbsp;use&nbsp;by&nbsp;Multi-Threaded&nbsp;Newton&nbsp;Method:&#160;Source</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="multi_newton.cpp.htm#Source File" target="_top">Multi-Threaded&nbsp;Newton&nbsp;Method&nbsp;Example&nbsp;/&nbsp;Test:&#160;Source&nbsp;File</a><br>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="multi_checkpoint_run.htm#Source" target="_top">Run&nbsp;Multi-Threaded&nbsp;Checkpoint&nbsp;Calculation:&#160;Source</a><br>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="multi_checkpoint_takedown.htm#Source" target="_top">Multi-Threaded&nbsp;Checkpoint&nbsp;Take&nbsp;Down:&#160;Source</a><br>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="multi_checkpoint_worker.htm#Source" target="_top">Multi-Threaded&nbsp;Checkpoint&nbsp;Worker:&#160;Source</a><br>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="multi_checkpoint_setup.htm#Source" target="_top">Multi-Threaded&nbsp;Checkpoint&nbsp;Set&nbsp;Up:&#160;Source</a><br>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="multi_checkpoint_common.htm#Source" target="_top">Multi-Threaded&nbsp;Checkpoint&nbsp;Common&nbsp;Information:&#160;Source</a><br>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="multi_checkpoint_algo.htm#Source" target="_top">Defines&nbsp;an&nbsp;Algorithm&nbsp;that&nbsp;Computes&nbsp;Square&nbsp;Root:&#160;Source</a><br>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="multi_checkpoint.cpp.htm#Source File" target="_top">Multi-Threading&nbsp;Checkpoint&nbsp;Example&nbsp;/&nbsp;Test:&#160;Source&nbsp;File</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="multi_atomic_run.htm#Source" target="_top">Run&nbsp;Multi-Threaded&nbsp;User&nbsp;Atomic&nbsp;Calculation:&#160;Source</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="multi_atomic_takedown.htm#Source" target="_top">Multi-Threaded&nbsp;User&nbsp;Atomic&nbsp;Take&nbsp;Down:&#160;Source</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="multi_atomic_worker.htm#Source" target="_top">Multi-Threaded&nbsp;User&nbsp;Atomic&nbsp;Worker:&#160;Source</a><br>
@@ -8088,9 +8137,12 @@ square&#160;<a href="luratio.htm" target="_top">LU&nbsp;Factorization&nbsp;of&nb
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="sqrt_forward.htm" target="_top">Square&nbsp;Root&nbsp;Function&nbsp;Forward&nbsp;Mode&nbsp;Theory</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="mat_sum_sq.cpp.htm" target="_top">Sum&nbsp;of&nbsp;the&nbsp;Elements&nbsp;of&nbsp;the&nbsp;Square&nbsp;of&nbsp;a&nbsp;Matrix:&nbsp;Example&nbsp;and&nbsp;Test</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="lufactor.htm" target="_top">LU&nbsp;Factorization&nbsp;of&nbsp;A&nbsp;Square&nbsp;Matrix</a><br>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="multi_checkpoint_algo.htm" target="_top">Defines&nbsp;an&nbsp;Algorithm&nbsp;that&nbsp;Computes&nbsp;Square&nbsp;Root</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="multi_atomic_user.htm" target="_top">Defines&nbsp;a&nbsp;User&nbsp;Atomic&nbsp;Operation&nbsp;that&nbsp;Computes&nbsp;Square&nbsp;Root</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="sqrt.htm" target="_top">The&nbsp;Square&nbsp;Root&nbsp;Function:&nbsp;sqrt</a><br>
-square<b>_</b>root&#160;<a href="multi_atomic_run.htm#square_root" target="_top">Run&nbsp;Multi-Threaded&nbsp;User&nbsp;Atomic&nbsp;Calculation:&#160;square_root</a><br>
+square<b>_</b>root&#160;<a href="multi_checkpoint_run.htm#square_root" target="_top">Run&nbsp;Multi-Threaded&nbsp;Checkpoint&nbsp;Calculation:&#160;square_root</a><br>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="multi_checkpoint_takedown.htm#square_root" target="_top">Multi-Threaded&nbsp;Checkpoint&nbsp;Take&nbsp;Down:&#160;square_root</a><br>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="multi_atomic_run.htm#square_root" target="_top">Run&nbsp;Multi-Threaded&nbsp;User&nbsp;Atomic&nbsp;Calculation:&#160;square_root</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="multi_atomic_takedown.htm#square_root" target="_top">Multi-Threaded&nbsp;User&nbsp;Atomic&nbsp;Take&nbsp;Down:&#160;square_root</a><br>
 squared<b>:</b>&#160;<a href="atomic_norm_sq.cpp.htm" target="_top">Atomic&nbsp;Euclidean&nbsp;Norm&nbsp;Squared:&nbsp;Example&nbsp;and&nbsp;Test</a><br>
 st&#160;<a href="atomic_rev_sparse_jac.htm#Implementation.st" target="_top">Atomic&nbsp;Reverse&nbsp;Jacobian&nbsp;Sparsity&nbsp;Patterns:&#160;Implementation.st</a><br>
@@ -8248,7 +8300,7 @@ sweeps&#160;<a href="exp_eps_cppad.htm" target="_top">exp_eps:&nbsp;CppAD&nbsp;F
 symbol&#160;<a href="faq.htm#Namespace.Test Vector Preprocessor Symbol" target="_top">Frequently&nbsp;Asked&nbsp;Questions&nbsp;and&nbsp;Answers:&#160;Namespace.Test&nbsp;Vector&nbsp;Preprocessor&nbsp;Symbol</a><br>
 symbols&#160;<a href="addon.htm#Preprocessor Symbols" target="_top">CppAD&nbsp;Addons:&#160;Preprocessor&nbsp;Symbols</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="preprocessor.htm" target="_top">CppAD&nbsp;API&nbsp;Preprocessor&nbsp;Symbols</a><br>
-&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="cppad.htm#Preprocessor Symbols" target="_top">cppad-20180921:&nbsp;A&nbsp;Package&nbsp;for&nbsp;Differentiation&nbsp;of&nbsp;C++&nbsp;Algorithms:&#160;Preprocessor&nbsp;Symbols</a><br>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="cppad.htm#Preprocessor Symbols" target="_top">cppad-20180922:&nbsp;A&nbsp;Package&nbsp;for&nbsp;Differentiation&nbsp;of&nbsp;C++&nbsp;Algorithms:&#160;Preprocessor&nbsp;Symbols</a><br>
 symmetric&#160;<a href="speed_main.htm#Sparsity Options.symmetric" target="_top">Running&nbsp;the&nbsp;Speed&nbsp;Test&nbsp;Program:&#160;Sparsity&nbsp;Options.symmetric</a><br>
 syntax&#160;<a href="luratio.htm#Syntax" target="_top">LU&nbsp;Factorization&nbsp;of&nbsp;A&nbsp;Square&nbsp;Matrix&nbsp;and&nbsp;Stability&nbsp;Calculation:&#160;Syntax</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="opt_val_hes.htm#Syntax" target="_top">Jacobian&nbsp;and&nbsp;Hessian&nbsp;of&nbsp;Optimal&nbsp;Values:&#160;Syntax</a><br>
@@ -8354,6 +8406,11 @@ syntax&#160;<a href="luratio.htm#Syntax" target="_top">LU&nbsp;Factorization&nbs
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="multi_newton_takedown.htm#Syntax" target="_top">Take&nbsp;Down&nbsp;Multi-threaded&nbsp;Newton&nbsp;Method:&#160;Syntax</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="multi_newton_worker.htm#Syntax" target="_top">Do&nbsp;One&nbsp;Thread's&nbsp;Work&nbsp;for&nbsp;Multi-Threaded&nbsp;Newton&nbsp;Method:&#160;Syntax</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="multi_newton_setup.htm#Syntax" target="_top">Set&nbsp;Up&nbsp;Multi-Threaded&nbsp;Newton&nbsp;Method:&#160;Syntax</a><br>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="multi_checkpoint_time.htm#Syntax" target="_top">Timing&nbsp;Test&nbsp;for&nbsp;Multi-Threaded&nbsp;Checkpoint&nbsp;Calculation:&#160;Syntax</a><br>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="multi_checkpoint_run.htm#Syntax" target="_top">Run&nbsp;Multi-Threaded&nbsp;Checkpoint&nbsp;Calculation:&#160;Syntax</a><br>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="multi_checkpoint_takedown.htm#Syntax" target="_top">Multi-Threaded&nbsp;Checkpoint&nbsp;Take&nbsp;Down:&#160;Syntax</a><br>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="multi_checkpoint_setup.htm#Syntax" target="_top">Multi-Threaded&nbsp;Checkpoint&nbsp;Set&nbsp;Up:&#160;Syntax</a><br>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="multi_checkpoint_algo.htm#Syntax" target="_top">Defines&nbsp;an&nbsp;Algorithm&nbsp;that&nbsp;Computes&nbsp;Square&nbsp;Root:&#160;Syntax</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="multi_atomic_time.htm#Syntax" target="_top">Timing&nbsp;Test&nbsp;for&nbsp;Multi-Threaded&nbsp;User&nbsp;Atomic&nbsp;Calculation:&#160;Syntax</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="multi_atomic_run.htm#Syntax" target="_top">Run&nbsp;Multi-Threaded&nbsp;User&nbsp;Atomic&nbsp;Calculation:&#160;Syntax</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="multi_atomic_takedown.htm#Syntax" target="_top">Multi-Threaded&nbsp;User&nbsp;Atomic&nbsp;Take&nbsp;Down:&#160;Syntax</a><br>
@@ -8489,13 +8546,14 @@ syntax&#160;<a href="luratio.htm#Syntax" target="_top">LU&nbsp;Factorization&nbs
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="get_eigen.sh.htm#Syntax" target="_top">Download&nbsp;and&nbsp;Install&nbsp;Eigen&nbsp;in&nbsp;Build&nbsp;Directory:&#160;Syntax</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="get_colpack.sh.htm#Syntax" target="_top">Download&nbsp;and&nbsp;Install&nbsp;ColPack&nbsp;in&nbsp;Build&nbsp;Directory:&#160;Syntax</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="get_adolc.sh.htm#Syntax" target="_top">Download&nbsp;and&nbsp;Install&nbsp;Adolc&nbsp;in&nbsp;Build&nbsp;Directory:&#160;Syntax</a><br>
-&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="cppad.htm#Syntax" target="_top">cppad-20180921:&nbsp;A&nbsp;Package&nbsp;for&nbsp;Differentiation&nbsp;of&nbsp;C++&nbsp;Algorithms:&#160;Syntax</a><br>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="cppad.htm#Syntax" target="_top">cppad-20180922:&nbsp;A&nbsp;Package&nbsp;for&nbsp;Differentiation&nbsp;of&nbsp;C++&nbsp;Algorithms:&#160;Syntax</a><br>
 systems&#160;<a href="elapsed_seconds.htm#Microsoft Systems" target="_top">Returns&nbsp;Elapsed&nbsp;Number&nbsp;of&nbsp;Seconds:&#160;Microsoft&nbsp;Systems</a><br>
 
 <b><big><a name="T">T</a></big></b>
 <br>
 Taylor&#160;<a href="taylor_ode.cpp.htm" target="_top">Taylor's&nbsp;Ode&nbsp;Solver:&nbsp;An&nbsp;Example&nbsp;and&nbsp;Test</a><br>
 take&#160;<a href="multi_newton_takedown.htm" target="_top">Take&nbsp;Down&nbsp;Multi-threaded&nbsp;Newton&nbsp;Method</a><br>
+&#160;&#160;&#160;&#160;&#160;<a href="multi_checkpoint_takedown.htm" target="_top">Multi-Threaded&nbsp;Checkpoint&nbsp;Take&nbsp;Down</a><br>
 &#160;&#160;&#160;&#160;&#160;<a href="multi_atomic_takedown.htm" target="_top">Multi-Threaded&nbsp;User&nbsp;Atomic&nbsp;Take&nbsp;Down</a><br>
 &#160;&#160;&#160;&#160;&#160;<a href="harmonic_takedown.htm" target="_top">Take&nbsp;Down&nbsp;Multi-threading&nbsp;Sum&nbsp;of&nbsp;1/i</a><br>
 tan&#160;<a href="old_tan.cpp.htm" target="_top">Old&nbsp;Tan&nbsp;and&nbsp;Tanh&nbsp;as&nbsp;User&nbsp;Atomic&nbsp;Operations:&nbsp;Example&nbsp;and&nbsp;Test</a><br>
@@ -8702,6 +8760,8 @@ test&#160;<a href="lu_ratio.cpp.htm" target="_top">LuRatio:&nbsp;Example&nbsp;an
 &#160;&#160;&#160;&#160;&#160;<a href="team_thread.hpp.htm#Speed Test of Implementation" target="_top">Specifications&nbsp;for&nbsp;A&nbsp;Team&nbsp;of&nbsp;AD&nbsp;Threads:&#160;Speed&nbsp;Test&nbsp;of&nbsp;Implementation</a><br>
 &#160;&#160;&#160;&#160;&#160;<a href="multi_newton_time.htm" target="_top">Timing&nbsp;Test&nbsp;of&nbsp;Multi-Threaded&nbsp;Newton&nbsp;Method</a><br>
 &#160;&#160;&#160;&#160;&#160;<a href="multi_newton.cpp.htm" target="_top">Multi-Threaded&nbsp;Newton&nbsp;Method&nbsp;Example&nbsp;/&nbsp;Test</a><br>
+&#160;&#160;&#160;&#160;&#160;<a href="multi_checkpoint_time.htm" target="_top">Timing&nbsp;Test&nbsp;for&nbsp;Multi-Threaded&nbsp;Checkpoint&nbsp;Calculation</a><br>
+&#160;&#160;&#160;&#160;&#160;<a href="multi_checkpoint.cpp.htm" target="_top">Multi-Threading&nbsp;Checkpoint&nbsp;Example&nbsp;/&nbsp;Test</a><br>
 &#160;&#160;&#160;&#160;&#160;<a href="multi_atomic_time.htm" target="_top">Timing&nbsp;Test&nbsp;for&nbsp;Multi-Threaded&nbsp;User&nbsp;Atomic&nbsp;Calculation</a><br>
 &#160;&#160;&#160;&#160;&#160;<a href="multi_atomic.cpp.htm" target="_top">Multi-Threading&nbsp;User&nbsp;Atomic&nbsp;Example&nbsp;/&nbsp;Test</a><br>
 &#160;&#160;&#160;&#160;&#160;<a href="harmonic_time.htm" target="_top">Timing&nbsp;Test&nbsp;of&nbsp;Multi-Threaded&nbsp;Summation&nbsp;of&nbsp;1/i</a><br>
@@ -8868,6 +8928,7 @@ test&#160;<a href="lu_ratio.cpp.htm" target="_top">LuRatio:&nbsp;Example&nbsp;an
 test<b>_</b>boolofvoid&#160;<a href="wish_list.htm#test_boolofvoid" target="_top">The&nbsp;CppAD&nbsp;Wish&nbsp;List:&#160;test_boolofvoid</a><br>
 test<b>_</b>size&#160;<a href="time_test.htm#test_size" target="_top">Determine&nbsp;Amount&nbsp;of&nbsp;Time&nbsp;to&nbsp;Execute&nbsp;a&nbsp;Test:&#160;test_size</a><br>
 test<b>_</b>time&#160;<a href="multi_newton_time.htm#test_time" target="_top">Timing&nbsp;Test&nbsp;of&nbsp;Multi-Threaded&nbsp;Newton&nbsp;Method:&#160;test_time</a><br>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="multi_checkpoint_time.htm#test_time" target="_top">Timing&nbsp;Test&nbsp;for&nbsp;Multi-Threaded&nbsp;Checkpoint&nbsp;Calculation:&#160;test_time</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="multi_atomic_time.htm#test_time" target="_top">Timing&nbsp;Test&nbsp;for&nbsp;Multi-Threaded&nbsp;User&nbsp;Atomic&nbsp;Calculation:&#160;test_time</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="harmonic_time.htm#test_time" target="_top">Timing&nbsp;Test&nbsp;of&nbsp;Multi-Threaded&nbsp;Summation&nbsp;of&nbsp;1/i:&#160;test_time</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="thread_test.cpp.htm#multi_newton.test_time" target="_top">Run&nbsp;Multi-Threading&nbsp;Examples&nbsp;and&nbsp;Speed&nbsp;Tests:&#160;multi_newton.test_time</a><br>
@@ -8922,6 +8983,7 @@ that&#160;<a href="tracknewdel.htm" target="_top">Routines&nbsp;That&nbsp;Track&
 &#160;&#160;&#160;&#160;&#160;<a href="index_sort.htm" target="_top">Returns&nbsp;Indices&nbsp;that&nbsp;Sort&nbsp;a&nbsp;Vector</a><br>
 &#160;&#160;&#160;&#160;&#160;<a href="ta_free_all.htm" target="_top">Free&nbsp;All&nbsp;Memory&nbsp;That&nbsp;Was&nbsp;Allocated&nbsp;for&nbsp;Use&nbsp;by&nbsp;thread_alloc</a><br>
 &#160;&#160;&#160;&#160;&#160;<a href="test_boolofvoid.htm" target="_top">Object&nbsp;that&nbsp;Runs&nbsp;a&nbsp;Group&nbsp;of&nbsp;Tests</a><br>
+&#160;&#160;&#160;&#160;&#160;<a href="multi_checkpoint_algo.htm" target="_top">Defines&nbsp;an&nbsp;Algorithm&nbsp;that&nbsp;Computes&nbsp;Square&nbsp;Root</a><br>
 &#160;&#160;&#160;&#160;&#160;<a href="multi_atomic_user.htm" target="_top">Defines&nbsp;a&nbsp;User&nbsp;Atomic&nbsp;Operation&nbsp;that&nbsp;Computes&nbsp;Square&nbsp;Root</a><br>
 &#160;&#160;&#160;&#160;&#160;<a href="number_skip.cpp.htm" target="_top">Number&nbsp;of&nbsp;Variables&nbsp;That&nbsp;Can&nbsp;be&nbsp;Skipped:&nbsp;Example&nbsp;and&nbsp;Test</a><br>
 &#160;&#160;&#160;&#160;&#160;<a href="number_skip.htm" target="_top">Number&nbsp;of&nbsp;Variables&nbsp;that&nbsp;Can&nbsp;be&nbsp;Skipped</a><br>
@@ -9080,6 +9142,10 @@ thread&#160;<a href="memory_leak.htm#thread" target="_top">Memory&nbsp;Leak&nbsp
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="multi_newton_run.htm#Thread" target="_top">A&nbsp;Multi-Threaded&nbsp;Newton's&nbsp;Method:&#160;Thread</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="multi_newton_takedown.htm#Thread" target="_top">Take&nbsp;Down&nbsp;Multi-threaded&nbsp;Newton&nbsp;Method:&#160;Thread</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="multi_newton_setup.htm#Thread" target="_top">Set&nbsp;Up&nbsp;Multi-Threaded&nbsp;Newton&nbsp;Method:&#160;Thread</a><br>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="multi_checkpoint_time.htm#Thread" target="_top">Timing&nbsp;Test&nbsp;for&nbsp;Multi-Threaded&nbsp;Checkpoint&nbsp;Calculation:&#160;Thread</a><br>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="multi_checkpoint_run.htm#Thread" target="_top">Run&nbsp;Multi-Threaded&nbsp;Checkpoint&nbsp;Calculation:&#160;Thread</a><br>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="multi_checkpoint_takedown.htm#Thread" target="_top">Multi-Threaded&nbsp;Checkpoint&nbsp;Take&nbsp;Down:&#160;Thread</a><br>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="multi_checkpoint_setup.htm#Thread" target="_top">Multi-Threaded&nbsp;Checkpoint&nbsp;Set&nbsp;Up:&#160;Thread</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="multi_atomic_time.htm#Thread" target="_top">Timing&nbsp;Test&nbsp;for&nbsp;Multi-Threaded&nbsp;User&nbsp;Atomic&nbsp;Calculation:&#160;Thread</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="multi_atomic_run.htm#Thread" target="_top">Run&nbsp;Multi-Threaded&nbsp;User&nbsp;Atomic&nbsp;Calculation:&#160;Thread</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="multi_atomic_takedown.htm#Thread" target="_top">Multi-Threaded&nbsp;User&nbsp;Atomic&nbsp;Take&nbsp;Down:&#160;Thread</a><br>
@@ -9130,6 +9196,7 @@ time<b>_</b>min&#160;<a href="time_det_by_minor_c.htm#time_min" target="_top">De
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="time_test.htm#time_min" target="_top">Determine&nbsp;Amount&nbsp;of&nbsp;Time&nbsp;to&nbsp;Execute&nbsp;a&nbsp;Test:&#160;time_min</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="speed_test.htm#time_min" target="_top">Run&nbsp;One&nbsp;Speed&nbsp;Test&nbsp;and&nbsp;Return&nbsp;Results:&#160;time_min</a><br>
 time<b>_</b>out&#160;<a href="multi_newton_time.htm#time_out" target="_top">Timing&nbsp;Test&nbsp;of&nbsp;Multi-Threaded&nbsp;Newton&nbsp;Method:&#160;time_out</a><br>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="multi_checkpoint_time.htm#time_out" target="_top">Timing&nbsp;Test&nbsp;for&nbsp;Multi-Threaded&nbsp;Checkpoint&nbsp;Calculation:&#160;time_out</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="multi_atomic_time.htm#time_out" target="_top">Timing&nbsp;Test&nbsp;for&nbsp;Multi-Threaded&nbsp;User&nbsp;Atomic&nbsp;Calculation:&#160;time_out</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="harmonic_time.htm#time_out" target="_top">Timing&nbsp;Test&nbsp;of&nbsp;Multi-Threaded&nbsp;Summation&nbsp;of&nbsp;1/i:&#160;time_out</a><br>
 time<b>_</b>test&#160;<a href="time_test.cpp.htm" target="_top">time_test:&nbsp;Example&nbsp;and&nbsp;test</a><br>
@@ -9146,6 +9213,7 @@ times&#160;<a href="repeat_det_by_minor_c.htm" target="_top">Repeat&nbsp;det_by_
 timing&#160;<a href="time_test.htm#Timing" target="_top">Determine&nbsp;Amount&nbsp;of&nbsp;Time&nbsp;to&nbsp;Execute&nbsp;a&nbsp;Test:&#160;Timing</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="speed_test.htm#Timing" target="_top">Run&nbsp;One&nbsp;Speed&nbsp;Test&nbsp;and&nbsp;Return&nbsp;Results:&#160;Timing</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="multi_newton_time.htm" target="_top">Timing&nbsp;Test&nbsp;of&nbsp;Multi-Threaded&nbsp;Newton&nbsp;Method</a><br>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="multi_checkpoint_time.htm" target="_top">Timing&nbsp;Test&nbsp;for&nbsp;Multi-Threaded&nbsp;Checkpoint&nbsp;Calculation</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="multi_atomic_time.htm" target="_top">Timing&nbsp;Test&nbsp;for&nbsp;Multi-Threaded&nbsp;User&nbsp;Atomic&nbsp;Calculation</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="harmonic_time.htm" target="_top">Timing&nbsp;Test&nbsp;of&nbsp;Multi-Threaded&nbsp;Summation&nbsp;of&nbsp;1/i</a><br>
 to<b>_</b>string&#160;<a href="utility.htm#Miscellaneous.to_string" target="_top">Some&nbsp;General&nbsp;Purpose&nbsp;Utilities:&#160;Miscellaneous.to_string</a><br>
@@ -9308,6 +9376,7 @@ unix&#160;<a href="autotools.htm" target="_top">Autotools&nbsp;Unix&nbsp;Test&nb
 unknown&#160;<a href="cppad_assert.htm#Unknown" target="_top">CppAD&nbsp;Assertions&nbsp;During&nbsp;Execution:&#160;Unknown</a><br>
 up&#160;<a href="multi_newton_worker.htm#up" target="_top">Do&nbsp;One&nbsp;Thread's&nbsp;Work&nbsp;for&nbsp;Multi-Threaded&nbsp;Newton&nbsp;Method:&#160;up</a><br>
 &#160;&#160;&#160;<a href="multi_newton_setup.htm" target="_top">Set&nbsp;Up&nbsp;Multi-Threaded&nbsp;Newton&nbsp;Method</a><br>
+&#160;&#160;&#160;<a href="multi_checkpoint_setup.htm" target="_top">Multi-Threaded&nbsp;Checkpoint&nbsp;Set&nbsp;Up</a><br>
 &#160;&#160;&#160;<a href="multi_atomic_setup.htm" target="_top">Multi-Threaded&nbsp;User&nbsp;Atomic&nbsp;Set&nbsp;Up</a><br>
 &#160;&#160;&#160;<a href="harmonic_setup.htm" target="_top">Set&nbsp;Up&nbsp;Multi-threading&nbsp;Sum&nbsp;of&nbsp;1/i</a><br>
 usage&#160;<a href="old_atomic.htm#rev_hes_sparse.Usage" target="_top">User&nbsp;Defined&nbsp;Atomic&nbsp;AD&nbsp;Functions:&#160;rev_hes_sparse.Usage</a><br>
@@ -9655,7 +9724,7 @@ version&#160;<a href="microsoft_timer.htm" target="_top">Microsoft&nbsp;Version&
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="discrete.htm#Create AD Version" target="_top">Discrete&nbsp;AD&nbsp;Functions:&#160;Create&nbsp;AD&nbsp;Version</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="download.htm#Source Code Control.Version" target="_top">Download&nbsp;The&nbsp;CppAD&nbsp;Source&nbsp;Code:&#160;Source&nbsp;Code&nbsp;Control.Version</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="download.htm#Version" target="_top">Download&nbsp;The&nbsp;CppAD&nbsp;Source&nbsp;Code:&#160;Version</a><br>
-&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="cppad.htm" target="_top">cppad-20180921:&nbsp;A&nbsp;Package&nbsp;for&nbsp;Differentiation&nbsp;of&nbsp;C++&nbsp;Algorithms</a><br>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="cppad.htm" target="_top">cppad-20180922:&nbsp;A&nbsp;Package&nbsp;for&nbsp;Differentiation&nbsp;of&nbsp;C++&nbsp;Algorithms</a><br>
 version<b>)</b>&#160;<a href="double_mat_mul.cpp.htm" target="_top">CppAD&nbsp;Speed:&nbsp;Matrix&nbsp;Multiplication&nbsp;(Double&nbsp;Version)</a><br>
 virtual&#160;<a href="atomic_forward.htm" target="_top">Atomic&nbsp;Forward&nbsp;Mode</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="atomic_base.htm#Virtual Functions" target="_top">User&nbsp;Defined&nbsp;Atomic&nbsp;AD&nbsp;Functions:&#160;Virtual&nbsp;Functions</a><br>
@@ -9723,7 +9792,8 @@ work&#160;<a href="multi_newton_worker.htm" target="_top">Do&nbsp;One&nbsp;Threa
 &#160;&#160;&#160;&#160;&#160;<a href="sparse_hes.htm#work" target="_top">Computing&nbsp;Sparse&nbsp;Hessians:&#160;work</a><br>
 &#160;&#160;&#160;&#160;&#160;<a href="sparse_jacobian.htm#work" target="_top">Sparse&nbsp;Jacobian:&#160;work</a><br>
 &#160;&#160;&#160;&#160;&#160;<a href="sparse_jac.htm#work" target="_top">Computing&nbsp;Sparse&nbsp;Jacobians:&#160;work</a><br>
-worker&#160;<a href="multi_atomic_worker.htm" target="_top">Multi-Threaded&nbsp;User&nbsp;Atomic&nbsp;Worker</a><br>
+worker&#160;<a href="multi_checkpoint_worker.htm" target="_top">Multi-Threaded&nbsp;Checkpoint&nbsp;Worker</a><br>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="multi_atomic_worker.htm" target="_top">Multi-Threaded&nbsp;User&nbsp;Atomic&nbsp;Worker</a><br>
 write&#160;<a href="ad_input.htm" target="_top">AD&nbsp;Output&nbsp;Stream&nbsp;Operator</a><br>
 
 <b><big><a name="X">X</a></big></b>
@@ -9885,8 +9955,12 @@ y<b>(</b>t<b>)</b>&#160;<a href="tan_reverse.htm#Eliminating Y(t)" target="_top"
 y<b>(</b>x&#160;<a href="abs_normal_fun.htm#g.y(x, u)" target="_top">Create&nbsp;An&nbsp;Abs-normal&nbsp;Representation&nbsp;of&nbsp;a&nbsp;Function:&#160;g.y(x,&nbsp;u)</a><br>
 y0&#160;<a href="forward_zero.htm#y0" target="_top">Zero&nbsp;Order&nbsp;Forward&nbsp;Mode:&nbsp;Function&nbsp;Values:&#160;y0</a><br>
 y2&#160;<a href="forward_two.htm#y2" target="_top">Second&nbsp;Order&nbsp;Forward&nbsp;Mode:&nbsp;Derivative&nbsp;Values:&#160;y2</a><br>
-y<b>_</b>initial&#160;<a href="multi_atomic_user.htm#au.y_initial" target="_top">Defines&nbsp;a&nbsp;User&nbsp;Atomic&nbsp;Operation&nbsp;that&nbsp;Computes&nbsp;Square&nbsp;Root:&#160;au.y_initial</a><br>
-y<b>_</b>squared&#160;<a href="multi_atomic_run.htm#y_squared" target="_top">Run&nbsp;Multi-Threaded&nbsp;User&nbsp;Atomic&nbsp;Calculation:&#160;y_squared</a><br>
+y<b>_</b>initial&#160;<a href="multi_checkpoint_algo.htm#au.y_initial" target="_top">Defines&nbsp;an&nbsp;Algorithm&nbsp;that&nbsp;Computes&nbsp;Square&nbsp;Root:&#160;au.y_initial</a><br>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="multi_atomic_user.htm#au.y_initial" target="_top">Defines&nbsp;a&nbsp;User&nbsp;Atomic&nbsp;Operation&nbsp;that&nbsp;Computes&nbsp;Square&nbsp;Root:&#160;au.y_initial</a><br>
+y<b>_</b>squared&#160;<a href="multi_checkpoint_run.htm#y_squared" target="_top">Run&nbsp;Multi-Threaded&nbsp;Checkpoint&nbsp;Calculation:&#160;y_squared</a><br>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="multi_checkpoint_setup.htm#y_squared" target="_top">Multi-Threaded&nbsp;Checkpoint&nbsp;Set&nbsp;Up:&#160;y_squared</a><br>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="multi_checkpoint_algo.htm#au.y_squared" target="_top">Defines&nbsp;an&nbsp;Algorithm&nbsp;that&nbsp;Computes&nbsp;Square&nbsp;Root:&#160;au.y_squared</a><br>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="multi_atomic_run.htm#y_squared" target="_top">Run&nbsp;Multi-Threaded&nbsp;User&nbsp;Atomic&nbsp;Calculation:&#160;y_squared</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="multi_atomic_setup.htm#y_squared" target="_top">Multi-Threaded&nbsp;User&nbsp;Atomic&nbsp;Set&nbsp;Up:&#160;y_squared</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="multi_atomic_user.htm#au.y_squared" target="_top">Defines&nbsp;a&nbsp;User&nbsp;Atomic&nbsp;Operation&nbsp;that&nbsp;Computes&nbsp;Square&nbsp;Root:&#160;au.y_squared</a><br>
 year&#160;<a href="whats_new.htm#This Year" target="_top">Changes&nbsp;and&nbsp;Additions&nbsp;to&nbsp;CppAD:&#160;This&nbsp;Year</a><br>

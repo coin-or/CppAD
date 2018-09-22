@@ -38,6 +38,7 @@ var list_down1 = [
 'team_example.cpp.htm',
 'harmonic.cpp.htm',
 'multi_atomic.cpp.htm',
+'multi_checkpoint.cpp.htm',
 'multi_newton.cpp.htm',
 'team_thread.hpp.htm'
 ];

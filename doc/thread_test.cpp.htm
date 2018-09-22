@@ -86,6 +86,7 @@ A:active { color : purple }
 <option>team_example.cpp</option>
 <option>harmonic.cpp</option>
 <option>multi_atomic.cpp</option>
+<option>multi_checkpoint.cpp</option>
 <option>multi_newton.cpp</option>
 <option>team_thread.hpp</option>
 </select>
@@ -396,6 +397,7 @@ Pthread Implementation of a Team of AD Threads</td></tr>
 <b><font color="#000080"># include</font></b> <font color="#FF0000">"team_example.hpp"</font>
 <b><font color="#000080"># include</font></b> <font color="#FF0000">"harmonic.hpp"</font>
 <b><font color="#000080"># include</font></b> <font color="#FF0000">"multi_atomic.hpp"</font>
+<b><font color="#000080"># include</font></b> <font color="#FF0000">"checkpoint.hpp"</font>
 <b><font color="#000080"># include</font></b> <font color="#FF0000">"multi_newton.hpp"</font>
 
 <b><font color="#0000FF">extern</font></b> <font color="#009900">bool</font> <b><font color="#000000">a11c</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">);</font>
@@ -439,6 +441,7 @@ Pthread Implementation of a Team of AD Threads</td></tr>
      <font color="#FF0000">"./&lt;thread&gt;_test team_example</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font>
      <font color="#FF0000">"./&lt;thread&gt;_test harmonic     test_time max_threads mega_sum</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font>
      <font color="#FF0000">"./&lt;thread&gt;_test multi_atomic test_time max_threads num_solve</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font>
+     <font color="#FF0000">"./&lt;thread&gt;_test checkpoint   test_time max_threads num_solve</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font>
      <font color="#FF0000">"./&lt;thread&gt;_test multi_newton test_time max_threads </font><font color="#CC33CC">\\\n</font><font color="#FF0000">"</font>
      <font color="#FF0000">"    num_zero num_sub num_sum use_ad</font><font color="#CC33CC">\\\n</font><font color="#FF0000">"</font>
      <font color="#FF0000">"where &lt;thread&gt; is bthread, openmp, or pthread"</font><font color="#990000">;</font>
@@ -473,15 +476,16 @@ Pthread Implementation of a Team of AD Threads</td></tr>
      <b><font color="#0000FF">const</font></b> <font color="#009900">char</font><font color="#990000">*</font> test_name <font color="#990000">=</font> <font color="#FF0000">""</font><font color="#990000">;</font>
      <b><font color="#0000FF">if</font></b><font color="#990000">(</font> argc <font color="#990000">&gt;</font> <font color="#993399">1</font> <font color="#990000">)</font>
           test_name <font color="#990000">=</font> <font color="#990000">*++</font>argv<font color="#990000">;</font>
-     <font color="#009900">bool</font> run_a11c         <font color="#990000">=</font> std<font color="#990000">::</font><b><font color="#000000">strcmp</font></b><font color="#990000">(</font>test_name<font color="#990000">,</font> <font color="#FF0000">"a11c"</font><font color="#990000">)</font>         <font color="#990000">==</font> <font color="#993399">0</font><font color="#990000">;</font>
-     <font color="#009900">bool</font> run_simple_ad    <font color="#990000">=</font> std<font color="#990000">::</font><b><font color="#000000">strcmp</font></b><font color="#990000">(</font>test_name<font color="#990000">,</font> <font color="#FF0000">"simple_ad"</font><font color="#990000">)</font>    <font color="#990000">==</font> <font color="#993399">0</font><font color="#990000">;</font>
-     <font color="#009900">bool</font> run_team_example <font color="#990000">=</font> std<font color="#990000">::</font><b><font color="#000000">strcmp</font></b><font color="#990000">(</font>test_name<font color="#990000">,</font> <font color="#FF0000">"team_example"</font><font color="#990000">)</font> <font color="#990000">==</font> <font color="#993399">0</font><font color="#990000">;</font>
-     <font color="#009900">bool</font> run_harmonic     <font color="#990000">=</font> std<font color="#990000">::</font><b><font color="#000000">strcmp</font></b><font color="#990000">(</font>test_name<font color="#990000">,</font> <font color="#FF0000">"harmonic"</font><font color="#990000">)</font>     <font color="#990000">==</font> <font color="#993399">0</font><font color="#990000">;</font>
-     <font color="#009900">bool</font> run_multi_atomic <font color="#990000">=</font> std<font color="#990000">::</font><b><font color="#000000">strcmp</font></b><font color="#990000">(</font>test_name<font color="#990000">,</font> <font color="#FF0000">"multi_atomic"</font><font color="#990000">)</font> <font color="#990000">==</font> <font color="#993399">0</font><font color="#990000">;</font>
-     <font color="#009900">bool</font> run_multi_newton <font color="#990000">=</font> std<font color="#990000">::</font><b><font color="#000000">strcmp</font></b><font color="#990000">(</font>test_name<font color="#990000">,</font> <font color="#FF0000">"multi_newton"</font><font color="#990000">)</font> <font color="#990000">==</font> <font color="#993399">0</font><font color="#990000">;</font>
+     <font color="#009900">bool</font> run_a11c         <font color="#990000">=</font> std<font color="#990000">::</font><b><font color="#000000">strcmp</font></b><font color="#990000">(</font>test_name<font color="#990000">,</font> <font color="#FF0000">"a11c"</font><font color="#990000">)</font>             <font color="#990000">==</font> <font color="#993399">0</font><font color="#990000">;</font>
+     <font color="#009900">bool</font> run_simple_ad    <font color="#990000">=</font> std<font color="#990000">::</font><b><font color="#000000">strcmp</font></b><font color="#990000">(</font>test_name<font color="#990000">,</font> <font color="#FF0000">"simple_ad"</font><font color="#990000">)</font>        <font color="#990000">==</font> <font color="#993399">0</font><font color="#990000">;</font>
+     <font color="#009900">bool</font> run_team_example <font color="#990000">=</font> std<font color="#990000">::</font><b><font color="#000000">strcmp</font></b><font color="#990000">(</font>test_name<font color="#990000">,</font> <font color="#FF0000">"team_example"</font><font color="#990000">)</font>     <font color="#990000">==</font> <font color="#993399">0</font><font color="#990000">;</font>
+     <font color="#009900">bool</font> run_harmonic     <font color="#990000">=</font> std<font color="#990000">::</font><b><font color="#000000">strcmp</font></b><font color="#990000">(</font>test_name<font color="#990000">,</font> <font color="#FF0000">"harmonic"</font><font color="#990000">)</font>         <font color="#990000">==</font> <font color="#993399">0</font><font color="#990000">;</font>
+     <font color="#009900">bool</font> run_multi_atomic <font color="#990000">=</font> std<font color="#990000">::</font><b><font color="#000000">strcmp</font></b><font color="#990000">(</font>test_name<font color="#990000">,</font> <font color="#FF0000">"multi_atomic"</font><font color="#990000">)</font>     <font color="#990000">==</font> <font color="#993399">0</font><font color="#990000">;</font>
+     <font color="#009900">bool</font> run_checkpoint   <font color="#990000">=</font> std<font color="#990000">::</font><b><font color="#000000">strcmp</font></b><font color="#990000">(</font>test_name<font color="#990000">,</font> <font color="#FF0000">"checkpoint"</font><font color="#990000">)</font>       <font color="#990000">==</font> <font color="#993399">0</font><font color="#990000">;</font>
+     <font color="#009900">bool</font> run_multi_newton <font color="#990000">=</font> std<font color="#990000">::</font><b><font color="#000000">strcmp</font></b><font color="#990000">(</font>test_name<font color="#990000">,</font> <font color="#FF0000">"multi_newton"</font><font color="#990000">)</font>     <font color="#990000">==</font> <font color="#993399">0</font><font color="#990000">;</font>
      <b><font color="#0000FF">if</font></b><font color="#990000">(</font> run_a11c <font color="#990000">||</font> run_simple_ad <font color="#990000">||</font> run_team_example <font color="#990000">)</font>
           ok <font color="#990000">=</font> <font color="#990000">(</font>argc <font color="#990000">==</font> <font color="#993399">2</font><font color="#990000">);</font>
-     <b><font color="#0000FF">else</font></b> <b><font color="#0000FF">if</font></b><font color="#990000">(</font> run_harmonic <font color="#990000">||</font> run_multi_atomic <font color="#990000">)</font>
+     <b><font color="#0000FF">else</font></b> <b><font color="#0000FF">if</font></b><font color="#990000">(</font> run_harmonic <font color="#990000">||</font> run_multi_atomic <font color="#990000">||</font> run_checkpoint <font color="#990000">)</font>
           ok <font color="#990000">=</font> <font color="#990000">(</font>argc <font color="#990000">==</font> <font color="#993399">5</font><font color="#990000">);</font>
      <b><font color="#0000FF">else</font></b> <b><font color="#0000FF">if</font></b><font color="#990000">(</font> run_multi_newton <font color="#990000">)</font>
           ok <font color="#990000">=</font> <font color="#990000">(</font>argc <font color="#990000">==</font> <font color="#993399">8</font><font color="#990000">);</font>
@@ -527,7 +531,7 @@ Pthread Implementation of a Team of AD Threads</td></tr>
                <font color="#FF0000">"run: mega_sum is less than one"</font>
           <font color="#990000">);</font>
      <font color="#FF0000">}</font>
-     <b><font color="#0000FF">else</font></b> <b><font color="#0000FF">if</font></b><font color="#990000">(</font> run_multi_atomic <font color="#990000">)</font>
+     <b><font color="#0000FF">else</font></b> <b><font color="#0000FF">if</font></b><font color="#990000">(</font> run_multi_atomic <font color="#990000">||</font> run_checkpoint <font color="#990000">)</font>
      <font color="#FF0000">{</font>    <i><font color="#9A1900">// num_solve</font></i>
           num_solve <font color="#990000">=</font> <b><font color="#000000">arg2size_t</font></b><font color="#990000">(</font> <font color="#990000">*++</font>argv<font color="#990000">,</font> <font color="#993399">1</font><font color="#990000">,</font>
                <font color="#FF0000">"run: num_solve is less than one"</font>
@@ -535,6 +539,10 @@ Pthread Implementation of a Team of AD Threads</td></tr>
      <font color="#FF0000">}</font>
      <b><font color="#0000FF">else</font></b>
      <font color="#FF0000">{</font>    ok <font color="#990000">&amp;=</font> run_multi_newton<font color="#990000">;</font>
+          <b><font color="#0000FF">if</font></b><font color="#990000">(</font> <font color="#990000">!</font> ok <font color="#990000">)</font>
+          <font color="#FF0000">{</font>    cout <font color="#990000">&lt;&lt;</font> <font color="#FF0000">"thread_test: program error</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font><font color="#990000">;</font>
+               <b><font color="#0000FF">return</font></b> <font color="#990000">!</font> ok<font color="#990000">;</font>
+          <font color="#FF0000">}</font>
 
           <i><font color="#9A1900">// num_zero</font></i>
           num_zero <font color="#990000">=</font> <b><font color="#000000">arg2size_t</font></b><font color="#990000">(</font> <font color="#990000">*++</font>argv<font color="#990000">,</font> <font color="#993399">2</font><font color="#990000">,</font>
@@ -568,15 +576,18 @@ Pthread Implementation of a Team of AD Threads</td></tr>
      cout <font color="#990000">&lt;&lt;</font> <font color="#FF0000">"time_all  = ["</font> <font color="#990000">&lt;&lt;</font> endl<font color="#990000">;</font>
      <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> num_threads <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> num_threads <font color="#990000">&lt;=</font> max_threads<font color="#990000">;</font> num_threads<font color="#990000">++)</font>
      <font color="#FF0000">{</font>    <font color="#009900">double</font> time_out<font color="#990000">;</font>
+          <font color="#009900">bool</font> this_ok<font color="#990000">;</font>
 
           <i><font color="#9A1900">// run the requested test</font></i>
-          <b><font color="#0000FF">if</font></b><font color="#990000">(</font> run_harmonic <font color="#990000">)</font> ok <font color="#990000">&amp;=</font>
+          <b><font color="#0000FF">if</font></b><font color="#990000">(</font> run_harmonic <font color="#990000">)</font> this_ok <font color="#990000">=</font>
                <b><font color="#000000">harmonic_time</font></b><font color="#990000">(</font>time_out<font color="#990000">,</font> test_time<font color="#990000">,</font> num_threads<font color="#990000">,</font> mega_sum<font color="#990000">);</font>
-          <b><font color="#0000FF">else</font></b> <b><font color="#0000FF">if</font></b><font color="#990000">(</font> run_multi_atomic <font color="#990000">)</font> ok <font color="#990000">&amp;=</font>
+          <b><font color="#0000FF">else</font></b> <b><font color="#0000FF">if</font></b><font color="#990000">(</font> run_multi_atomic <font color="#990000">)</font> this_ok <font color="#990000">=</font>
                <b><font color="#000000">multi_atomic_time</font></b><font color="#990000">(</font>time_out<font color="#990000">,</font> test_time<font color="#990000">,</font> num_threads<font color="#990000">,</font> num_solve<font color="#990000">);</font>
+          <b><font color="#0000FF">else</font></b> <b><font color="#0000FF">if</font></b><font color="#990000">(</font> run_checkpoint <font color="#990000">)</font> this_ok <font color="#990000">=</font>
+               <b><font color="#000000">multi_checkpoint_time</font></b><font color="#990000">(</font>time_out<font color="#990000">,</font> test_time<font color="#990000">,</font> num_threads<font color="#990000">,</font> num_solve<font color="#990000">);</font>
           <b><font color="#0000FF">else</font></b>
-          <font color="#FF0000">{</font>    ok <font color="#990000">&amp;=</font> run_multi_newton<font color="#990000">;</font>
-               ok <font color="#990000">&amp;=</font> <b><font color="#000000">multi_newton_time</font></b><font color="#990000">(</font>
+          <font color="#FF0000">{</font>    this_ok <font color="#990000">=</font> run_multi_newton<font color="#990000">;</font>
+               this_ok <font color="#990000">&amp;=</font> <b><font color="#000000">multi_newton_time</font></b><font color="#990000">(</font>
                     time_out                <font color="#990000">,</font>
                     test_time               <font color="#990000">,</font>
                     num_threads             <font color="#990000">,</font>
@@ -587,11 +598,16 @@ Pthread Implementation of a Team of AD Threads</td></tr>
                <font color="#990000">);</font>
           <font color="#FF0000">}</font>
           <i><font color="#9A1900">// time_out</font></i>
-          cout <font color="#990000">&lt;&lt;</font> <font color="#FF0000">"</font><font color="#CC33CC">\t</font><font color="#FF0000">"</font> <font color="#990000">&lt;&lt;</font> time_out <font color="#990000">&lt;&lt;</font> <font color="#FF0000">" % "</font><font color="#990000">;</font>
+          cout <font color="#990000">&lt;&lt;</font> std<font color="#990000">::</font><b><font color="#000000">setw</font></b><font color="#990000">(</font><font color="#993399">20</font><font color="#990000">)</font> <font color="#990000">&lt;&lt;</font> time_out <font color="#990000">&lt;&lt;</font> <font color="#FF0000">" % "</font><font color="#990000">;</font>
           <i><font color="#9A1900">// num_threads</font></i>
           <b><font color="#0000FF">if</font></b><font color="#990000">(</font> num_threads <font color="#990000">==</font> <font color="#993399">0</font> <font color="#990000">)</font>
-               cout <font color="#990000">&lt;&lt;</font> <font color="#FF0000">"no threading"</font> <font color="#990000">&lt;&lt;</font> endl<font color="#990000">;</font>
-          <b><font color="#0000FF">else</font></b> cout <font color="#990000">&lt;&lt;</font> num_threads <font color="#990000">&lt;&lt;</font> <font color="#FF0000">" threads"</font> <font color="#990000">&lt;&lt;</font> endl<font color="#990000">;</font>
+               cout <font color="#990000">&lt;&lt;</font> <font color="#FF0000">"no threading"</font><font color="#990000">;</font>
+          <b><font color="#0000FF">else</font></b> cout <font color="#990000">&lt;&lt;</font> num_threads <font color="#990000">&lt;&lt;</font> <font color="#FF0000">" threads"</font><font color="#990000">;</font>
+          <b><font color="#0000FF">if</font></b><font color="#990000">(</font> this_ok <font color="#990000">)</font>
+               cout <font color="#990000">&lt;&lt;</font> <font color="#FF0000">" ok"</font> <font color="#990000">&lt;&lt;</font> endl<font color="#990000">;</font>
+          <b><font color="#0000FF">else</font></b> cout <font color="#990000">&lt;&lt;</font> <font color="#FF0000">" error"</font> <font color="#990000">&lt;&lt;</font> endl<font color="#990000">;</font>
+          <i><font color="#9A1900">//</font></i>
+          ok <font color="#990000">&amp;=</font> this_ok<font color="#990000">;</font>
      <font color="#FF0000">}</font>
      cout <font color="#990000">&lt;&lt;</font> <font color="#FF0000">"];"</font> <font color="#990000">&lt;&lt;</font> endl<font color="#990000">;</font>
      <i><font color="#9A1900">//</font></i>
