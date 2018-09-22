@@ -17,9 +17,13 @@ namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 # if ! CPPAD_MULTI_THREAD_TMB
 template <class Base>
 void checkpoint<Base>::set_hes_sparse_set(void)
-{	CPPAD_ASSERT_UNKNOWN( hes_sparse_set_.n_set() == 0 );
-	size_t n = f_.Domain();
-	size_t m = f_.Range();
+{	// make sure member_ is allocated for this thread
+	size_t thread = thread_alloc::thread_num();
+	allocate_member(thread);
+	//
+	CPPAD_ASSERT_UNKNOWN( member_[thread]->hes_sparse_set_.n_set() == 0 );
+	size_t n = member_[thread]->f_.Domain();
+	size_t m = member_[thread]->f_.Range();
 	//
 	// set version of sparsity for vector of all ones
 	vector<bool> all_one(m);
@@ -37,17 +41,17 @@ void checkpoint<Base>::set_hes_sparse_set(void)
 	// compute sparsity pattern for H(x) = sum_i f_i(x)^{(2)}
 	bool transpose  = false;
 	bool dependency = false;
-	f_.ForSparseJacCheckpoint(
-		n, identity, transpose, dependency, jac_sparse_set_
+	member_[thread]->f_.ForSparseJacCheckpoint(
+		n, identity, transpose, dependency, member_[thread]->jac_sparse_set_
 	);
-	f_.RevSparseHesCheckpoint(
-		n, all_one, transpose, hes_sparse_set_
+	member_[thread]->f_.RevSparseHesCheckpoint(
+		n, all_one, transpose, member_[thread]->hes_sparse_set_
 	);
-	CPPAD_ASSERT_UNKNOWN( hes_sparse_set_.n_set() == n );
-	CPPAD_ASSERT_UNKNOWN( hes_sparse_set_.end()   == n );
+	CPPAD_ASSERT_UNKNOWN( member_[thread]->hes_sparse_set_.n_set() == n );
+	CPPAD_ASSERT_UNKNOWN( member_[thread]->hes_sparse_set_.end()   == n );
 	//
 	// drop the forward sparsity results from f_
-	f_.size_forward_set(0);
+	member_[thread]->f_.size_forward_set(0);
 }
 # else // CPPAD_MULTI_THREAD_TMB
 # define THREAD omp_get_thread_num()

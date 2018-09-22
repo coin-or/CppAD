@@ -22,14 +22,18 @@ bool checkpoint<Base>::reverse(
 	const vector<Base>&       ty ,
 	      vector<Base>&       px ,
 	const vector<Base>&       py )
-{
+{	// make sure member_ is allocated for this thread
+	size_t thread = thread_alloc::thread_num();
+	allocate_member(thread);
+	//
+
 # ifndef NDEBUG
-	size_t n = f_.Domain();
-	size_t m = f_.Range();
+	size_t n = member_[thread]->f_.Domain();
+	size_t m = member_[thread]->f_.Range();
 # endif
 	CPPAD_ASSERT_UNKNOWN( n == tx.size() / (q+1) );
 	CPPAD_ASSERT_UNKNOWN( m == ty.size() / (q+1) );
-	CPPAD_ASSERT_UNKNOWN( f_.size_var() > 0 );
+	CPPAD_ASSERT_UNKNOWN( member_[thread]->f_.size_var() > 0 );
 	CPPAD_ASSERT_UNKNOWN( tx.size() % (q+1) == 0 );
 	CPPAD_ASSERT_UNKNOWN( ty.size() % (q+1) == 0 );
 	bool ok  = true;
@@ -37,14 +41,14 @@ bool checkpoint<Base>::reverse(
 	// put proper forward mode coefficients in f_
 # ifdef NDEBUG
 	// compute forward results for orders zero through q
-	f_.Forward(q, tx);
+	member_[thread]->f_.Forward(q, tx);
 # else
 	CPPAD_ASSERT_UNKNOWN( px.size() == n * (q+1) );
 	CPPAD_ASSERT_UNKNOWN( py.size() == m * (q+1) );
 	size_t i, j, k;
 	//
 	// compute forward results for orders zero through q
-	vector<Base> check_ty = f_.Forward(q, tx);
+	vector<Base> check_ty = member_[thread]->f_.Forward(q, tx);
 	for(i = 0; i < m; i++)
 	{	for(k = 0; k <= q; k++)
 		{	j = i * (q+1) + k;
@@ -53,13 +57,13 @@ bool checkpoint<Base>::reverse(
 	}
 # endif
 	// now can run reverse mode
-	px = f_.Reverse(q+1, py);
+	px = member_[thread]->f_.Reverse(q+1, py);
 
 	// no longer need the Taylor coefficients in f_
 	// (have to reconstruct them every time)
 	size_t c = 0;
 	size_t r = 0;
-	f_.capacity_order(c, r);
+	member_[thread]->f_.capacity_order(c, r);
 	return ok;
 }
 # else // CPPAD_MULTI_THREAD_TMB

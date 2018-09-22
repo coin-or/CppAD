@@ -17,11 +17,15 @@ namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 # if ! CPPAD_MULTI_THREAD_TMB
 template <class Base>
 void checkpoint<Base>::set_jac_sparse_bool(void)
-{	CPPAD_ASSERT_UNKNOWN( jac_sparse_bool_.size() == 0 );
+{	// make sure member_ is allocated for this thread
+	size_t thread = thread_alloc::thread_num();
+	allocate_member(thread);
+	//
+	CPPAD_ASSERT_UNKNOWN( member_[thread]->jac_sparse_bool_.size() == 0 );
 	bool transpose  = false;
 	bool dependency = true;
-	size_t n = f_.Domain();
-	size_t m = f_.Range();
+	size_t n = member_[thread]->f_.Domain();
+	size_t m = member_[thread]->f_.Range();
 	// Use the choice for forward / reverse that results in smaller
 	// size for the sparsity pattern of all variables in the tape.
 	if( n <= m )
@@ -30,10 +34,10 @@ void checkpoint<Base>::set_jac_sparse_bool(void)
 		{	for(size_t i = 0; i < n; i++)
 				identity[ i * n + j ] = (i == j);
 		}
-		jac_sparse_bool_ = f_.ForSparseJac(
+		member_[thread]->jac_sparse_bool_ = member_[thread]->f_.ForSparseJac(
 			n, identity, transpose, dependency
 		);
-		f_.size_forward_bool(0);
+		member_[thread]->f_.size_forward_bool(0);
 	}
 	else
 	{	vectorBool identity(m * m);
@@ -41,12 +45,12 @@ void checkpoint<Base>::set_jac_sparse_bool(void)
 		{	for(size_t i = 0; i < m; i++)
 				identity[ i * m + j ] = (i == j);
 		}
-		jac_sparse_bool_ = f_.RevSparseJac(
+		member_[thread]->jac_sparse_bool_ = member_[thread]->f_.RevSparseJac(
 			m, identity, transpose, dependency
 		);
 	}
-	CPPAD_ASSERT_UNKNOWN( f_.size_forward_bool() == 0 );
-	CPPAD_ASSERT_UNKNOWN( f_.size_forward_set() == 0 );
+	CPPAD_ASSERT_UNKNOWN( member_[thread]->f_.size_forward_bool() == 0 );
+	CPPAD_ASSERT_UNKNOWN( member_[thread]->f_.size_forward_set() == 0 );
 }
 # else // CPPAD_MULTI_THREAD_TMB
 # define THREAD omp_get_thread_num()

@@ -22,15 +22,19 @@ bool checkpoint<Base>::for_sparse_jac(
 	const sparsity_type&                    r  ,
 	      sparsity_type&                    s  ,
 	const vector<Base>&                     x  )
-{	// during user sparsity calculations
-	size_t m = f_.Range();
-	size_t n = f_.Domain();
-	if( jac_sparse_bool_.size() == 0 )
+{	// make sure member_ is allocated for this thread
+	size_t thread = thread_alloc::thread_num();
+	allocate_member(thread);
+	//
+	// during user sparsity calculations
+	size_t m = member_[thread]->f_.Range();
+	size_t n = member_[thread]->f_.Domain();
+	if( member_[thread]->jac_sparse_bool_.size() == 0 )
 		set_jac_sparse_bool();
-	if( jac_sparse_set_.n_set() != 0 )
-		jac_sparse_set_.resize(0, 0);
-	CPPAD_ASSERT_UNKNOWN( jac_sparse_bool_.size() == m * n );
-	CPPAD_ASSERT_UNKNOWN( jac_sparse_set_.n_set() == 0 );
+	if( member_[thread]->jac_sparse_set_.n_set() != 0 )
+		member_[thread]->jac_sparse_set_.resize(0, 0);
+	CPPAD_ASSERT_UNKNOWN( member_[thread]->jac_sparse_bool_.size() == m * n );
+	CPPAD_ASSERT_UNKNOWN( member_[thread]->jac_sparse_set_.n_set() == 0 );
 	CPPAD_ASSERT_UNKNOWN( r.size() == n * q );
 	CPPAD_ASSERT_UNKNOWN( s.size() == m * q );
 	//
@@ -46,7 +50,7 @@ bool checkpoint<Base>::for_sparse_jac(
 			bool s_ik = false;
 			// S(i,k) = sum_j J(i,j) * R(j,k)
 			for(size_t j = 0; j < n; j++)
-			{	bool J_ij = jac_sparse_bool_[ i * n + j];
+			{	bool J_ij = member_[thread]->jac_sparse_bool_[ i * n + j];
 				bool R_jk = r[j * q + k ];
 				s_ik |= ( J_ij & R_jk );
 			}
@@ -61,7 +65,11 @@ bool checkpoint<Base>::for_sparse_jac(
 	const vectorBool&                       r  ,
 	      vectorBool&                       s  ,
 	const vector<Base>&                     x  )
-{	return for_sparse_jac< vectorBool >(q, r, s, x);
+{	// make sure member_ is allocated for this thread
+	size_t thread = thread_alloc::thread_num();
+	allocate_member(thread);
+	//
+	return for_sparse_jac< vectorBool >(q, r, s, x);
 }
 template <class Base>
 bool checkpoint<Base>::for_sparse_jac(
@@ -69,7 +77,11 @@ bool checkpoint<Base>::for_sparse_jac(
 	const vector<bool>&                     r  ,
 	      vector<bool>&                     s  ,
 	const vector<Base>&                     x  )
-{	return for_sparse_jac< vector<bool> >(q, r, s, x);
+{	// make sure member_ is allocated for this thread
+	size_t thread = thread_alloc::thread_num();
+	allocate_member(thread);
+	//
+	return for_sparse_jac< vector<bool> >(q, r, s, x);
 }
 template <class Base>
 bool checkpoint<Base>::for_sparse_jac(
@@ -77,16 +89,20 @@ bool checkpoint<Base>::for_sparse_jac(
 	const vector< std::set<size_t> >&       r  ,
 	      vector< std::set<size_t> >&       s  ,
 	const vector<Base>&                     x  )
-{	// during user sparsity calculations
-	size_t m = f_.Range();
-	size_t n = f_.Domain();
-	if( jac_sparse_bool_.size() != 0 )
-		jac_sparse_bool_.clear();
-	if( jac_sparse_set_.n_set() == 0 )
+{	// make sure member_ is allocated for this thread
+	size_t thread = thread_alloc::thread_num();
+	allocate_member(thread);
+	//
+	// during user sparsity calculations
+	size_t m = member_[thread]->f_.Range();
+	size_t n = member_[thread]->f_.Domain();
+	if( member_[thread]->jac_sparse_bool_.size() != 0 )
+		member_[thread]->jac_sparse_bool_.clear();
+	if( member_[thread]->jac_sparse_set_.n_set() == 0 )
 		set_jac_sparse_set();
-	CPPAD_ASSERT_UNKNOWN( jac_sparse_bool_.size() == 0 );
-	CPPAD_ASSERT_UNKNOWN( jac_sparse_set_.n_set() == m );
-	CPPAD_ASSERT_UNKNOWN( jac_sparse_set_.end()   == n );
+	CPPAD_ASSERT_UNKNOWN( member_[thread]->jac_sparse_bool_.size() == 0 );
+	CPPAD_ASSERT_UNKNOWN( member_[thread]->jac_sparse_set_.n_set() == m );
+	CPPAD_ASSERT_UNKNOWN( member_[thread]->jac_sparse_set_.end()   == n );
 	CPPAD_ASSERT_UNKNOWN( r.size() == n );
 	CPPAD_ASSERT_UNKNOWN( s.size() == m );
 
@@ -98,7 +114,7 @@ bool checkpoint<Base>::for_sparse_jac(
 	for(size_t i = 0; i < m; i++)
 	{	// compute row i of the return pattern
 		local::sparse_list::const_iterator set_itr(
-			jac_sparse_set_, i
+			member_[thread]->jac_sparse_set_, i
 		);
 		size_t j = *set_itr;
 		while(j < n )

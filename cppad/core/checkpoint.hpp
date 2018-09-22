@@ -262,16 +262,50 @@ private:
 	/// same as option_enum in base class
 	typedef typename atomic_base<Base>::option_enum option_enum;
 	//
-	/// AD function corresponding to this checkpoint object
-	ADFun<Base> f_;
+	// ------------------------------------------------------------------------
+	// member_
+	// ------------------------------------------------------------------------
+	// same checkpoint object can be used by multiple threads
+	struct member_struct {
+		//
+		/// AD function corresponding to this checkpoint object
+		ADFun<Base> f_;
+		//
+		/// sparsity for entire Jacobian f(x)^{(1)}
+		/// does not change so can cache it
+		local::sparse_list         jac_sparse_set_;
+		vectorBool                 jac_sparse_bool_;
+		//
+		/// sparsity for sum_i f_i(x)^{(2)} does not change so can cache it
+		local::sparse_list         hes_sparse_set_;
+		vectorBool                 hes_sparse_bool_;
+	};
+	/// use pointers and allocate memory to avoid false sharing
+	member_struct* member_[CPPAD_MAX_NUM_THREADS];
 	//
-	/// sparsity for entire Jacobian f(x)^{(1)} does not change so can cache it
-	local::sparse_list         jac_sparse_set_;
-	vectorBool                 jac_sparse_bool_;
+	/// allocate member_ for this thread
+	void allocate_member(size_t thread)
+	{	// thread zero is the master thread
+		size_t master = 0;
+		//
+		if( member_[thread] == CPPAD_NULL )
+		{	member_[thread] = new member_struct;
+			// The function is only recorded by the master thread,
+			// other threads have copy.
+			if( thread != master )
+				member_[thread]->f_ = member_[master]->f_;
+		}
+		return;
+	}
 	//
-	/// sparsity for sum_i f_i(x)^{(2)} does not change so can cache it
-	local::sparse_list         hes_sparse_set_;
-	vectorBool                 hes_sparse_bool_;
+	/// free member_ for this thread
+	void free_member(size_t thread)
+	{	if( member_[thread] != CPPAD_NULL )
+		{	delete member_[thread];
+			member_[thread] = CPPAD_NULL;
+		}
+		return;
+	}
 	// ------------------------------------------------------------------------
 	option_enum sparsity(void)
 	{	return static_cast< atomic_base<Base>* >(this)->sparsity(); }
@@ -365,12 +399,30 @@ public:
 				atomic_base<Base>::pack_sparsity_enum  ,
 		bool                           optimize = true
 	);
+	/// destructor
+	~checkpoint(void)
+	{
+# ifndef NDEBUG
+		if( thread_alloc::in_parallel() )
+		{	std::string msg = atomic_base<Base>::afun_name();
+			msg += ": checkpoint destructor called in parallel mode.";
+			CPPAD_ASSERT_KNOWN(false, msg.c_str() );
+		}
+# endif
+		for(size_t thread = 0; thread < CPPAD_MAX_NUM_THREADS; ++thread)
+			free_member(thread);
+	}
 	// ------------------------------------------------------------------------
 	/*!
 	Implement the user call to <tt>atom_fun.size_var()</tt>.
 	*/
 	size_t size_var(void)
-	{	return f_.size_var(); }
+	{   // make sure member_ is allocated for this thread
+		size_t thread = thread_alloc::thread_num();
+		allocate_member(thread);
+		//
+		return member_[thread]->f_.size_var();
+	}
 	// ------------------------------------------------------------------------
 	/*!
 	Implement the user call to <tt>atom_fun(ax, ay)</tt>.

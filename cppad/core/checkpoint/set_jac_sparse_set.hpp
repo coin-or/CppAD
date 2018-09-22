@@ -17,11 +17,15 @@ namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 # if ! CPPAD_MULTI_THREAD_TMB
 template <class Base>
 void checkpoint<Base>::set_jac_sparse_set(void)
-{	CPPAD_ASSERT_UNKNOWN( jac_sparse_set_.n_set() == 0 );
+{	// make sure member_ is allocated for this thread
+	size_t thread = thread_alloc::thread_num();
+	allocate_member(thread);
+	//
+	CPPAD_ASSERT_UNKNOWN( member_[thread]->jac_sparse_set_.n_set() == 0 );
 	bool transpose  = false;
 	bool dependency = true;
-	size_t n = f_.Domain();
-	size_t m = f_.Range();
+	size_t n = member_[thread]->f_.Domain();
+	size_t m = member_[thread]->f_.Range();
 	// Use the choice for forward / reverse that results in smaller
 	// size for the sparsity pattern of all variables in the tape.
 	if( n <= m )
@@ -31,10 +35,10 @@ void checkpoint<Base>::set_jac_sparse_set(void)
 		{	// use add_element because only adding one element per set
 			identity.add_element(j, j);
 		}
-		f_.ForSparseJacCheckpoint(
-			n, identity, transpose, dependency, jac_sparse_set_
+		member_[thread]->f_.ForSparseJacCheckpoint(
+			n, identity, transpose, dependency, member_[thread]->jac_sparse_set_
 		);
-		f_.size_forward_set(0);
+		member_[thread]->f_.size_forward_set(0);
 	}
 	else
 	{	local::sparse_list identity;
@@ -43,12 +47,12 @@ void checkpoint<Base>::set_jac_sparse_set(void)
 		{	// use add_element because only adding one element per set
 			identity.add_element(i, i);
 		}
-		f_.RevSparseJacCheckpoint(
-			m, identity, transpose, dependency, jac_sparse_set_
+		member_[thread]->f_.RevSparseJacCheckpoint(
+			m, identity, transpose, dependency, member_[thread]->jac_sparse_set_
 		);
 	}
-	CPPAD_ASSERT_UNKNOWN( f_.size_forward_set() == 0 );
-	CPPAD_ASSERT_UNKNOWN( f_.size_forward_bool() == 0 );
+	CPPAD_ASSERT_UNKNOWN( member_[thread]->f_.size_forward_set() == 0 );
+	CPPAD_ASSERT_UNKNOWN( member_[thread]->f_.size_forward_bool() == 0 );
 }
 # else // CPPAD_MULTI_THREAD_TMB
 # define THREAD omp_get_thread_num()
