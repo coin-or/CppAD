@@ -347,6 +347,10 @@ int main(int argc, char *argv[])
 	}
 	else
 	{	ok &= run_multi_newton;
+		if( ! ok )
+		{	cout << "thread_test: program error\n";
+			return ! ok;
+		}
 
 		// num_zero
 		num_zero = arg2size_t( *++argv, 2,
@@ -380,17 +384,18 @@ int main(int argc, char *argv[])
 	cout << "time_all  = [" << endl;
 	for(size_t num_threads = 0; num_threads <= max_threads; num_threads++)
 	{	double time_out;
+		bool this_ok;
 
 		// run the requested test
-		if( run_harmonic ) ok &=
+		if( run_harmonic ) this_ok =
 			harmonic_time(time_out, test_time, num_threads, mega_sum);
-		else if( run_multi_atomic ) ok &=
+		else if( run_multi_atomic ) this_ok =
 			multi_atomic_time(time_out, test_time, num_threads, num_solve);
-		else if( run_checkpoint ) ok &=
+		else if( run_checkpoint ) this_ok =
 			multi_checkpoint_time(time_out, test_time, num_threads, num_solve);
 		else
-		{	ok &= run_multi_newton;
-			ok &= multi_newton_time(
+		{	this_ok = run_multi_newton;
+			this_ok &= multi_newton_time(
 				time_out                ,
 				test_time               ,
 				num_threads             ,
@@ -401,11 +406,16 @@ int main(int argc, char *argv[])
 			);
 		}
 		// time_out
-		cout << "\t" << time_out << " % ";
+		cout << std::setw(20) << time_out << " % ";
 		// num_threads
 		if( num_threads == 0 )
-			cout << "no threading" << endl;
-		else	cout << num_threads << " threads" << endl;
+			cout << "no threading";
+		else	cout << num_threads << " threads";
+		if( this_ok )
+			cout << " ok" << endl;
+		else	cout << " error" << endl;
+		//
+		ok &= this_ok;
 	}
 	cout << "];" << endl;
 	//

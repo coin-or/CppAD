@@ -612,8 +612,12 @@ bool multi_checkpoint_time(
 	{	double check = std::sqrt( y_squared_[i] );
 		ok          &= std::fabs( square_root_[i] / check - 1.0 ) <= eps99;
 	}
+	//
+	// free memory in CppAD vectors that are still in scope
 	y_squared_.clear();
 	square_root_.clear();
+	au.clear();
+	ay.clear();
 	//
 	// check that no static variables in this file are holding onto memory
 	ok &= initial_inuse == thread_alloc::inuse(0);
