@@ -52,7 +52,7 @@ $codei%checkpoint<%Base%> %atom_fun%(
 checkpoint<%Base%>::clear()%$$
 
 $head See Also$$
-$cref reverse_checkpoint.cpp$$
+$cref atomic_base$$, $cref reverse_checkpoint.cpp$$
 
 $head Purpose$$
 

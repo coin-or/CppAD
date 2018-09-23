@@ -42,13 +42,18 @@ $codei%
 %afun%(%ax%, %ay%)
 %ok% = %afun%.forward(%p%, %q%, %vx%, %vy%, %tx%, %ty%)
 %ok% = %afun%.reverse(%q%, %tx%, %ty%, %px%, %py%)
-%ok% = %afun%.for_sparse_jac(%q%, %r%, %s%)
-%ok% = %afun%.rev_sparse_jac(%q%, %r%, %s%)
-%ok% = %afun%.for_sparse_hes(%vx%, %r%, %s%, %h%)
-%ok% = %afun%.rev_sparse_hes(%vx%, %s%, %t%, %q%, %r%, %u%, %v%)
+%ok% = %afun%.for_sparse_jac(%q%, %r%, %s%, %x%)
+%ok% = %afun%.rev_sparse_jac(%q%, %r%, %s%, %x%)
+%ok% = %afun%.for_sparse_hes(%vx%, %r%, %s%, %h%, %x%)
+%ok% = %afun%.rev_sparse_hes(%vx%, %s%, %t%, %q%, %r%, %u%, %v%, %x%)
 atomic_base<%Base%>::clear()%$$
 
+$head See Also$$
+$cref checkpoint$$
+
 $head Purpose$$
+
+$subhead Speed$$
 In some cases, the user knows how to compute derivatives of a function
 $latex \[
 	y = f(x) \; {\rm where} \; f : B^n \rightarrow B^m
@@ -59,6 +64,11 @@ and letting CppAD do the rest.
 In this case $codei%atomic_base%<%Base%>%$$ can use
 the user code for $latex f(x)$$, and its derivatives,
 as $codei%AD<%Base%>%$$ atomic operations.
+
+$subhead Reduce Memory$$
+If the function $latex f(x)$$ is used often,
+using an atomic version of $latex f(x)$$ remove the need for repeated
+copies of the corresponding $codei%AD<%Base%>%$$ operations.
 
 $head Virtual Functions$$
 User defined derivatives are implemented by defining the
