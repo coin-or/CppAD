@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -15,6 +15,7 @@ namespace {
 	using CppAD::AD;
 	typedef CPPAD_TESTVECTOR(AD<double>) ADVector;
 
+	// ------------------------------------------------------------------------
 	bool f_algo(const ADVector& x, ADVector& y)
 	{	size_t m = y.size();
 		assert( size_t(x.size()) == m + 1);
@@ -32,7 +33,6 @@ namespace {
 		}
 		return true;
 	}
-
 	bool test_one(void)
 	{	bool ok = true;
 		using CppAD::checkpoint;
@@ -135,7 +135,7 @@ namespace {
 		checkpoint<double>::clear();
 		return ok;
 	}
-
+	// ------------------------------------------------------------------------
 	bool h_algo(const ADVector& ax, ADVector& ay)
 	{	ay[0] = ax[0];
 		ay[1] = ax[1] + ax[2];
@@ -159,7 +159,10 @@ namespace {
 		Independent(ax);
 		h_check(ax, ay);
 		ADFun<double> h(ax, ay);
-
+		//
+		// --------------------------------------------------------------------
+		// sparsity pattern
+		// --------------------------------------------------------------------
 		for(size_t k = 0; k < 3; k++)
 		{	if( k == 0 )
 				h_check.option(CppAD::atomic_base<double>::pack_sparsity_enum);
@@ -179,7 +182,30 @@ namespace {
 			check.insert(2);
 			ok &= s[0] == check;
 		}
-
+		// --------------------------------------------------------------------
+		// base2ad
+		// --------------------------------------------------------------------
+		ADFun< AD<double> , double > ah;
+		ah = h.base2ad();
+		//
+		// forward mode
+		ADVector au(n), av(m);
+		for(size_t j = 0; j < n; j++)
+			ax[j] = au[j] = double(j + 1);
+		av = ah.Forward(0, au);
+		h_algo(ax, ay);
+		for(size_t i = 0; i < m; ++i)
+			ok &= av[i] == ay[i];
+		//
+		// reverse mode
+		ADVector adw(n), aw(m);
+		for(size_t i = 0; i < m; ++i)
+			aw[i] = 1.0;
+		adw = ah.Reverse(1, aw);
+		ok &= Value( adw[0] ) == 1.0;
+		ok &= Value( adw[1] ) == 1.0;
+		ok &= Value( adw[2] ) == 1.0;
+		//
 		return ok;
 	}
 }

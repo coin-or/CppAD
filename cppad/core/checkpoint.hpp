@@ -270,7 +270,8 @@ private:
 	struct member_struct {
 		//
 		/// AD function corresponding to this checkpoint object
-		ADFun<Base> f_;
+		ADFun<Base>             f_;
+		ADFun< AD<Base>, Base > af_;
 		//
 		/// sparsity for entire Jacobian f(x)^{(1)}
 		/// does not change so can cache it
@@ -457,12 +458,20 @@ public:
 	\copydetails atomic_base::forward
 	*/
 	virtual bool forward(
-		size_t                    p ,
-		size_t                    q ,
-		const vector<bool>&      vx ,
-		      vector<bool>&      vy ,
-		const vector<Base>&      tx ,
-		      vector<Base>&      ty
+		size_t                      p  ,
+		size_t                      q  ,
+		const vector<bool>&         vx ,
+		      vector<bool>&         vy ,
+		const vector<Base>&         tx ,
+		      vector<Base>&         ty
+	);
+	virtual bool forward(
+		size_t                      p   ,
+		size_t                      q   ,
+		const vector<bool>&         vx  ,
+		      vector<bool>&         vy  ,
+		const vector< AD<Base> >&   atx ,
+		      vector< AD<Base> >&   aty
 	);
 	// ------------------------------------------------------------------------
 	/*!
@@ -471,11 +480,18 @@ public:
 	\copydetails atomic_base::reverse
 	*/
 	virtual bool reverse(
-		size_t                    q  ,
-		const vector<Base>&       tx ,
-		const vector<Base>&       ty ,
-		      vector<Base>&       px ,
-		const vector<Base>&       py
+		size_t                          q  ,
+		const vector<Base>&             tx ,
+		const vector<Base>&             ty ,
+		      vector<Base>&             px ,
+		const vector<Base>&             py
+	);
+	virtual bool reverse(
+		size_t                          q  ,
+		const vector< AD<Base> >&       atx ,
+		const vector< AD<Base> >&       aty ,
+		      vector< AD<Base> >&       apx ,
+		const vector< AD<Base> >&       apy
 	);
 	// ------------------------------------------------------------------------
 	/*!
