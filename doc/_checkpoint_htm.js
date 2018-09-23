@@ -63,8 +63,10 @@ var list_current0 = [
 'checkpoint.htm#option',
 'checkpoint.htm#algo',
 'checkpoint.htm#atom_fun',
-'checkpoint.htm#clear',
-'checkpoint.htm#clear.Restriction',
+'checkpoint.htm#Memory',
+'checkpoint.htm#Memory.Restriction',
+'checkpoint.htm#Parallel Mode',
+'checkpoint.htm#Parallel Mode.clear',
 'checkpoint.htm#Example'
 ];
 function choose_across0(item)

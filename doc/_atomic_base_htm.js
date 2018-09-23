@@ -49,7 +49,10 @@ var list_down0 = [
 ];
 var list_current0 = [
 'atomic_base.htm#Syntax',
+'atomic_base.htm#See Also',
 'atomic_base.htm#Purpose',
+'atomic_base.htm#Purpose.Speed',
+'atomic_base.htm#Purpose.Reduce Memory',
 'atomic_base.htm#Virtual Functions',
 'atomic_base.htm#Examples',
 'atomic_base.htm#Contents'

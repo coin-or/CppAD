@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Checkpointing Functions</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Checkpointing Functions">
-<meta name="keywords" id="keywords" content=" checkpointing functions syntax see also purpose reduce memory faster recording repeating forward restriction multiple level ad method constructor base advector name ax ay sparsity optimize size_var option algo atom_fun clear example ">
+<meta name="keywords" id="keywords" content=" checkpointing functions syntax see also purpose reduce memory faster recording repeating forward restriction multiple level ad method constructor base advector name ax ay sparsity optimize size_var option algo atom_fun parallel mode clear example ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -118,8 +118,10 @@ A:active { color : purple }
 <option>option</option>
 <option>algo</option>
 <option>atom_fun</option>
-<option>clear</option>
+<option>Memory</option>
 <option>---..Restriction</option>
+<option>Parallel Mode</option>
+<option>---..clear</option>
 <option>Example</option>
 </select>
 </td>
@@ -151,7 +153,8 @@ checkpoint&lt;</span></font><i><font color="black"><span style='white-space: now
 <b><big><a name="See Also" id="See Also">See Also</a></big></b>
 
 <br>
-<a href="reverse_checkpoint.cpp.htm" target="_top"><span style='white-space: nowrap'>reverse_checkpoint.cpp</span></a>
+<a href="atomic_base.htm" target="_top"><span style='white-space: nowrap'>atomic_base</span></a>
+, <a href="reverse_checkpoint.cpp.htm" target="_top"><span style='white-space: nowrap'>reverse_checkpoint.cpp</span></a>
 
 
 <br>
@@ -501,10 +504,37 @@ but this is not part of the CppAD specifications and my change.)
 
 <br>
 <br>
-<b><big><a name="clear" id="clear">clear</a></big></b>
+<b><big><a name="Memory" id="Memory">Memory</a></big></b>
+
+
 <br>
-The <code><font color="blue">atomic_base</font></code> class holds onto static work space in order to
-increase speed by avoiding system memory allocation calls.
+<br>
+<big><a name="Memory.Restriction" id="Memory.Restriction">Restriction</a></big>
+<br>
+The <code><font color="blue">clear</font></code> routine cannot be called
+while in <a href="ta_in_parallel.htm" target="_top"><span style='white-space: nowrap'>parallel</span></a>
+ execution mode.
+
+<br>
+<br>
+<b><big><a name="Parallel Mode" id="Parallel Mode">Parallel Mode</a></big></b>
+<br>
+The CppAD checkpoint function delays the caching of certain calculations
+until they are needed.
+In <a href="ta_parallel_setup.htm" target="_top"><span style='white-space: nowrap'>parallel&nbsp;model</span></a>
+,
+this may result in <a href="ta_inuse.htm" target="_top"><span style='white-space: nowrap'>thread_alloc::inuse(thread)</span></a>
+
+being non-zero even though the specified thread is no longer active.
+This memory will be freed when the checkpoint object is deleted.
+
+<br>
+<br>
+<big><a name="Parallel Mode.clear" id="Parallel Mode.clear">clear</a></big>
+<br>
+The <code><font color="blue">atomic_base</font></code> class holds onto static work space
+that is not connected to a particular object
+(in order to increase speed by avoiding system memory allocation calls).
 This call makes to work space <a href="ta_available.htm" target="_top"><span style='white-space: nowrap'>available</span></a>
  to
 for other uses by the same thread.
@@ -512,14 +542,6 @@ This should be called when you are done using the
 user atomic functions for a specific value of 
 <code><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i></code>
 .
-
-<br>
-<br>
-<big><a name="clear.Restriction" id="clear.Restriction">Restriction</a></big>
-<br>
-The <code><font color="blue">clear</font></code> routine cannot be called
-while in <a href="ta_in_parallel.htm" target="_top"><span style='white-space: nowrap'>parallel</span></a>
- execution mode.
 
 
 <br>
