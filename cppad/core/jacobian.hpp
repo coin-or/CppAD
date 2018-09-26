@@ -112,8 +112,8 @@ $end
 //  BEGIN CppAD namespace
 namespace CppAD {
 
-template <typename Base, typename Vector>
-void JacobianFor(ADFun<Base> &f, const Vector &x, Vector &jac)
+template <typename Base, typename RecBase, typename Vector>
+void JacobianFor(ADFun<Base, RecBase> &f, const Vector &x, Vector &jac)
 {	size_t i;
 	size_t j;
 
@@ -150,8 +150,8 @@ void JacobianFor(ADFun<Base> &f, const Vector &x, Vector &jac)
 			jac[ i * n + j ] = v[i];
 	}
 }
-template <typename Base, typename Vector>
-void JacobianRev(ADFun<Base> &f, const Vector &x, Vector &jac)
+template <typename Base, typename RecBase, typename Vector>
+void JacobianRev(ADFun<Base, RecBase> &f, const Vector &x, Vector &jac)
 {	size_t i;
 	size_t j;
 

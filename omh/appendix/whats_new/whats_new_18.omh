@@ -35,6 +35,12 @@ $$
 
 $section Changes and Additions to CppAD During 2018$$
 
+$head 09-25$$
+Functions $icode af$$,
+created by $cref/af = f.base2ad/base2ad/$$,
+could not use $cref/af.Jacobian/Jacobian/$$.
+This has been fixed.
+
 $head 09-23$$
 The $cref checkpoint$$ functions did not work with functions that
 were created using $cref base2ad$$.
