@@ -122,7 +122,7 @@ void subgraph_info::init_rev(
 			// only mark both first UserOp for each call as depending
 			// on the selected independent variables
 			case UserOp:
-			begin_atomic_call  = not begin_atomic_call;
+			begin_atomic_call  = ! begin_atomic_call;
 			if( begin_atomic_call )
 			{	get_argument_variable(random_itr, i_op, argument_variable, work);
 				for(size_t j = 0; j < argument_variable.size(); ++j)
