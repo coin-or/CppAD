@@ -383,6 +383,7 @@ $head Source Code$$
 $srccode%cpp% */
 bool correct_det_by_minor(void)
 {	double a[9], det, check;
+	double eps99 = 99.0 * DBL_EPSILON;
 
 	random_seed(123);
 	uniform_01(9, a);
@@ -396,7 +397,6 @@ bool correct_det_by_minor(void)
 	check -= a[1] * ( a[3] * a[8] - a[5] * a[6] );
 	check += a[2] * ( a[3] * a[7] - a[4] * a[6] );
 
-	double eps99 = 99.0 * DBL_EPSILON;
 	if( fabs(det / check - 1.0) < eps99 )
 		return true;
 	return false;
