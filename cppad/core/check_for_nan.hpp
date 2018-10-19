@@ -182,7 +182,10 @@ template <class Base>
 void put_check_for_nan(const CppAD::vector<Base>& vec, std::string& file_name)
 {
 	size_t char_size = sizeof(Base) * vec.size();
-	const char* char_ptr   = reinterpret_cast<const char*>( vec.data() );
+	// 2DO: add vec.data() to C11 tests and use it when C11 true
+	// const char* char_ptr   = reinterpret_cast<const char*>( vec.data() );
+	const char* char_ptr   = reinterpret_cast<const char*>( &vec[0] );
+
 # if CPPAD_HAS_MKSTEMP
 	char pattern[] = "/tmp/fileXXXXXX";
 	int fd = mkstemp(pattern);
@@ -192,13 +195,15 @@ void put_check_for_nan(const CppAD::vector<Base>& vec, std::string& file_name)
 # else
 # if CPPAD_HAS_TMPNAM_S
 		std::vector<char> name(L_tmpnam_s);
-		if( tmpnam_s( name.data(), L_tmpnam_s ) != 0 )
+		// if( tmpnam_s( name.data(), L_tmpnam_s ) != 0 )
+		if( tmpnam_s( &name[0], L_tmpnam_s ) != 0 )
 		{	CPPAD_ASSERT_KNOWN(
 				false,
 				"Cannot create a temporary file name"
 			);
 		}
-		file_name = name.data();
+		// file_name = name.data();
+		file_name = &name[0];
 # else
 		file_name = tmpnam( CPPAD_NULL );
 # endif
@@ -222,7 +227,8 @@ template <class Base>
 void get_check_for_nan(CppAD::vector<Base>& vec, const std::string& file_name)
 {	//
 	std::streamsize char_size = std::streamsize( sizeof(Base) * vec.size() );
-	char* char_ptr   = reinterpret_cast<char*>( vec.data() );
+	// char* char_ptr   = reinterpret_cast<char*>( vec.data() );
+	char* char_ptr   = reinterpret_cast<char*>( &vec[0] );
 	//
 	std::fstream file_in(file_name.c_str(), std::ios::in|std::ios::binary );
 	file_in.read(char_ptr, char_size);
