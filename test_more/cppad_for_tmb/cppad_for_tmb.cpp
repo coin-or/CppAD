@@ -185,7 +185,7 @@ bool multi_thread_checkpoint(void)
 		y[thread] = 0.0;
 
 	# pragma omp parallel for
-	for(size_t thread = 0; thread < num_threads; thread++)
+	for(int thread = 0; thread < int(num_threads); thread++)
 	{	ad_vector au(n), av(m);
 		au[0] = 1.0;
 		CppAD::Independent(au);

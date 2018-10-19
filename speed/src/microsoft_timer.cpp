@@ -1,6 +1,5 @@
-// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -43,7 +42,7 @@ be defined, or this routine is not compiled.
 $end
 -----------------------------------------------------------------------
 */
-# if _MSC_VER
+# ifdef _MSC_VER
 # include <windows.h>
 # include <cassert>
 

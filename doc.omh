@@ -59,18 +59,29 @@ $spell
 	Var
 	Diff
 	initializes
+	http
+	www
+	seanet
+	bradbell
+	https
+	github
 $$
-
-,
 
 $comment bin/version assumes that : follows cppad version number here$$
 $section
 cppad-20180925: A Package for Differentiation of C++ Algorithms
 $$
-$mindex AD algorithmic differentiation automatic C++ algorithm derivative CppAD version cppad.hpp$$
 
-$head Syntax$$
-$code # include <cppad/cppad.hpp>$$
+$head Links$$
+$table
+$href%https://www.coin-or.org/%coin-or%$$,            $cnext
+$cref install$$,                                      $cnext
+$cref/get_started/get_started.cpp/$$,                 $cnext
+$cref whats_new$$,                                    $cnext
+$cref addon$$,                                        $cnext
+$href%https://github.com/coin-or/cppad%github%$$,     $cnext
+$href%http://www.seanet.com/~bradbell%manager%$$
+$tend
 
 $head Introduction$$
 We refer to the
