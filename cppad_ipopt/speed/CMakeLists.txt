@@ -1,5 +1,5 @@
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the
@@ -32,7 +32,7 @@ SET(source_list
 	../src/vec_fun_pattern.cpp
 	ode_speed.cpp
 )
-set_compile_flags( cppad_ipopt_speed "debug_none" "${source_list}" )
+set_compile_flags( cppad_ipopt_example "${cppad_debug_which}" "${source_list}" )
 #
 ADD_EXECUTABLE( cppad_ipopt_speed EXCLUDE_FROM_ALL ${source_list} )
 

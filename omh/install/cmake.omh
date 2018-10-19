@@ -373,13 +373,6 @@ all the files will be compiled in debug (release) mode.
 If $icode cppad_debug_which$$ does not appear on the command line,
 the default value $code debug_all$$ is used.
 
-$subhead Exception$$
-The test corresponding to $code make cppad_ipopt_speed$$
-always get complied in release more (to avoid the extra time
-it would take to run in debug mode).
-Note that this test corresponds a deprecated interface; see
-$cref cppad_ipopt_nlp$$.
-
 $head cppad_deprecated$$
 The default value for $icode cppad_deprecated$$ is $code NO$$
 (the value $code YES$$ is not currently being used).

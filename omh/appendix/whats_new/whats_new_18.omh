@@ -37,6 +37,13 @@ $$
 
 $section Changes and Additions to CppAD During 2018$$
 
+$head 10-19$$
+The speed tests for the deprecated
+$cref cppad_ipopt_nlp$$ now use the
+$cref/cppad_debug_which/cmake/cppad_debug_which/$$ flag
+in the same was as other test
+(not always true).
+
 $head 10-18$$
 CppAD is now including the $code -Wconversion$$ in its compilation.
 This results in warnings in more of the optional packages and so
