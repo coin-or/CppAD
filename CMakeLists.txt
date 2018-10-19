@@ -133,8 +133,8 @@ command_line_arg(cppad_profile_flag NOTFOUND STRING
 	"compile flag used to compile and link a profile version of a program"
 )
 # -----------------------------------------------------------------------------
-# External package prefixes with warnings
-SET(system_include FALSE)
+# All the External package prefixes without warnings
+SET(system_include TRUE)
 #
 # adolc_prefix
 optional_package(adolc ${system_include} "adolc install prefix")
@@ -144,9 +144,6 @@ optional_package(colpack ${system_include} "colpack install prefix")
 #
 # ipopt_prefix
 optional_package(ipopt ${system_include} "ipopt install prefix")
-# -----------------------------------------------------------------------------
-# External package prefixes without warnings
-SET(system_include TRUE)
 #
 # sacado_prefix
 optional_package(sacado ${system_include} "sacado install prefix")

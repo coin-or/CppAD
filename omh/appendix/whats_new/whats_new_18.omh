@@ -32,9 +32,16 @@ $spell
 	namespace
 	Taylor
 	af
+	Wconversion
 $$
 
 $section Changes and Additions to CppAD During 2018$$
+
+$head 10-18$$
+CppAD is now including the $code -Wconversion$$ in its compilation.
+This results in warnings in more of the optional packages and so
+their include files are compiled like system files (without warnings);
+see $cref/package_prefix/cmake/package_prefix/$$.
 
 $head 09-25$$
 Functions $icode af$$,

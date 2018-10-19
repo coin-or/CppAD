@@ -197,7 +197,7 @@ bool multi_thread_checkpoint(void)
 		v         = f.Forward(0, x);
 		//
 		// this assigment has false sharing; i.e., will case cache resets
-		y[thread] = v[0];
+		y[ size_t(thread) ] = v[0];
 	}
 
 	// check the results
