@@ -29,7 +29,7 @@ A:active { color : purple }
 <body>
 <table><tr>
 <td>
-<a href="https://github.com/coin-or/cppad" target="_top"><img border="0" src="_image.gif"></a>
+<a href="https://coin-or.github.io/CppAD" target="_top"><img border="0" src="_image.gif"></a>
 </td>
 <td><a href="uniform_01_c.htm" target="_top">Prev</a>
 </td><td><a href="repeat_det_by_minor_c.htm" target="_top">Next</a>
@@ -143,6 +143,7 @@ It value is <code><font color="blue">1</font></code> if the test passes and <cod
 
 <pre><tt><font color="#009900">bool</font> <b><font color="#000000">correct_det_by_minor</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
 <font color="#FF0000">{</font>    <font color="#009900">double</font> a<font color="#990000">[</font><font color="#993399">9</font><font color="#990000">],</font> det<font color="#990000">,</font> check<font color="#990000">;</font>
+     <font color="#009900">double</font> eps99 <font color="#990000">=</font> <font color="#993399">99.0</font> <font color="#990000">*</font> DBL_EPSILON<font color="#990000">;</font>
 
      <b><font color="#000000">random_seed</font></b><font color="#990000">(</font><font color="#993399">123</font><font color="#990000">);</font>
      <b><font color="#000000">uniform_01</font></b><font color="#990000">(</font><font color="#993399">9</font><font color="#990000">,</font> a<font color="#990000">);</font>
@@ -156,7 +157,6 @@ It value is <code><font color="blue">1</font></code> if the test passes and <cod
      check <font color="#990000">-=</font> a<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">*</font> <font color="#990000">(</font> a<font color="#990000">[</font><font color="#993399">3</font><font color="#990000">]</font> <font color="#990000">*</font> a<font color="#990000">[</font><font color="#993399">8</font><font color="#990000">]</font> <font color="#990000">-</font> a<font color="#990000">[</font><font color="#993399">5</font><font color="#990000">]</font> <font color="#990000">*</font> a<font color="#990000">[</font><font color="#993399">6</font><font color="#990000">]</font> <font color="#990000">);</font>
      check <font color="#990000">+=</font> a<font color="#990000">[</font><font color="#993399">2</font><font color="#990000">]</font> <font color="#990000">*</font> <font color="#990000">(</font> a<font color="#990000">[</font><font color="#993399">3</font><font color="#990000">]</font> <font color="#990000">*</font> a<font color="#990000">[</font><font color="#993399">7</font><font color="#990000">]</font> <font color="#990000">-</font> a<font color="#990000">[</font><font color="#993399">4</font><font color="#990000">]</font> <font color="#990000">*</font> a<font color="#990000">[</font><font color="#993399">6</font><font color="#990000">]</font> <font color="#990000">);</font>
 
-     <font color="#009900">double</font> eps99 <font color="#990000">=</font> <font color="#993399">99.0</font> <font color="#990000">*</font> DBL_EPSILON<font color="#990000">;</font>
      <b><font color="#0000FF">if</font></b><font color="#990000">(</font> <b><font color="#000000">fabs</font></b><font color="#990000">(</font>det <font color="#990000">/</font> check <font color="#990000">-</font> <font color="#993399">1.0</font><font color="#990000">)</font> <font color="#990000">&lt;</font> eps99 <font color="#990000">)</font>
           <b><font color="#0000FF">return</font></b> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
      <b><font color="#0000FF">return</font></b> <b><font color="#0000FF">false</font></b><font color="#990000">;</font>

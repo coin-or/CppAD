@@ -22,7 +22,7 @@ var list_down0 = [
 'appendix.htm'
 ];
 var list_current0 = [
-'cppad.htm#Syntax',
+'cppad.htm#Links',
 'cppad.htm#Introduction',
 'cppad.htm#Example',
 'cppad.htm#Include File',
