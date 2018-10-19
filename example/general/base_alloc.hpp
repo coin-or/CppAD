@@ -233,7 +233,7 @@ namespace CppAD {
 $head Output Operator$$
 $srccode%cpp% */
 namespace CppAD {
-	std::ostream& operator << (std::ostream &os, const base_alloc& x)
+	inline std::ostream& operator << (std::ostream &os, const base_alloc& x)
 	{	os << *x.ptrdbl_;
 		return os;
 	}
