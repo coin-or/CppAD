@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -214,7 +214,7 @@ namespace { // Begin empty namespace
 		size_t q;
 		for(q = 0; q < p; q++)
 			Ut[q] = false;
-		std::set<size_t>::iterator itr;
+		std::set<size_t>::const_iterator itr;
 		for(itr = u[0].begin(); itr != u[0].end(); itr++)
 			Ut[*itr] = true;
 		A = r_ptr_-> RevSparseJac(p, Ut);

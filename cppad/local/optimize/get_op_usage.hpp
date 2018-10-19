@@ -434,7 +434,8 @@ void get_op_usage(
 					);
 				}
 				// are if_true and if_false cases the same variable
-				bool same_variable = bool(arg[1] & 4) && bool(arg[1] & 8);
+				bool same_variable = (arg[1] & 4) != 0;
+				same_variable     &= (arg[1] & 8) != 0;
 				same_variable     &= arg[4] == arg[5];
 				//
 				// if_true
