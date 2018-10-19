@@ -30,6 +30,8 @@
 # 17. Remove 'It returns true if it succeeds and false otherwise.'
 # 18. Change template <class *> -> template <typename *>.
 # 19. Create check_sort.sh and use it to sort all alphabetical lists.
+# 20. Convert to EPL2 and remove the scripts that convert to GPL.
+#     this includes removing gpl_license.sh.
 # -----------------------------------------------------------------------------
 spell_list='
 '
