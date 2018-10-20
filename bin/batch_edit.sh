@@ -32,6 +32,8 @@
 # 19. Create check_sort.sh and use it to sort all alphabetical lists.
 # 20. Convert to EPL2 and remove the scripts that convert to GPL.
 #     this includes removing gpl_license.sh.
+# 21. Move test_more -> test.
+# 22. Move cppad -> include/cppad.
 # -----------------------------------------------------------------------------
 spell_list='
 '
