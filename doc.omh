@@ -69,7 +69,7 @@ $$
 
 $comment bin/version assumes that : follows cppad version number here$$
 $section
-cppad-20181019: A Package for Differentiation of C++ Algorithms
+cppad-20181020: A Package for Differentiation of C++ Algorithms
 $$
 
 $head Links$$
