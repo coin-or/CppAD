@@ -14,4 +14,4 @@ language: cpp
 compiler: gcc
 
 script:
-	bin/travis.sh
+    bin/travis.sh
