@@ -59,12 +59,14 @@ fi
 original_dir=`pwd`
 # ---------------------------------------------------------------------------
 # Make sure cppad_lib is there
-count=`ls build/cppad_lib/libcppad_lib.* | wc -l`
-if [ "$count" == '0' ]
+if [ @cppad_has_colpack@ == 1 ]
 then
-	cd build
-	make cppad_lib
-	cd ..
+	if ! ls build/cppad_lib/libcppad_lib.* > /dev/null
+	then
+		cd build
+		make cppad_lib
+		cd ..
+	fi
 fi
 # ---------------------------------------------------------------------------
 # include_flags
@@ -106,7 +108,6 @@ cxx_flags='@cppad_cxx_flags@'
 #
 # library flags
 library_flags=`pkg-config --libs ipopt`
-library_flags="$library_flags @PROJECT_BINARY_DIR@/cppad_lib/libcppad_lib.so"
 library_flags="$library_flags -lboost_thread -lpthread"
 for lib in lib lib64
 do
@@ -114,6 +115,8 @@ do
 	then
 		library_flags="$library_flags -L@colpack_prefix@/$lib -lColPack"
 		export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:@colpack_prefix@/$lib"
+		cppad_lib_path="@PROJECT_BINARY_DIR@/cppad_lib/libcppad_lib.so"
+		library_flags="$library_flags $cppad_lib_path"
 	fi
 	if [ -e @adolc_prefix@/$lib ]
 	then
