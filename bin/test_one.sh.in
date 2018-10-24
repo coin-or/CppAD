@@ -71,19 +71,19 @@ fi
 # ---------------------------------------------------------------------------
 # include_flags
 include_flags="-I $original_dir"
-if [ -e @adolc_prefix@/include ]
+if [ @cppad_has_adolc@ == 1 ]
 then
 	include_flags="$include_flags -I @adolc_prefix@/include"
 fi
-if [ -e @colpack_prefix@/include ]
+if [ @cppad_has_colpack@ == 1 ]
 then
 	include_flags="$include_flags -I @colpack_prefix@/include"
 fi
-if [ -e @ipopt_prefix@/include ]
+if [ @cppad_has_ipopt@ == 1 ]
 then
 	include_flags="$include_flags -I @ipopt_prefix@/include"
 fi
-if [ -e @eigen_prefix@/include ]
+if [ @cppad_has_eigen@ == 1 ]
 then
 	include_flags="$include_flags -isystem @eigen_prefix@/include"
 fi
