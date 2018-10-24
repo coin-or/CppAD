@@ -333,7 +333,7 @@ The type <code><font color="blue">base_alloc</font></code> is simple (in this re
 <b><big><a name="Output Operator" id="Output Operator">Output Operator</a></big></b>
 
 <pre><tt><b><font color="#0000FF">namespace</font></b> CppAD <font color="#FF0000">{</font>
-     std<font color="#990000">::</font>ostream<font color="#990000">&amp;</font> <b><font color="#0000FF">operator</font></b> <font color="#990000">&lt;&lt;</font> <font color="#990000">(</font>std<font color="#990000">::</font><font color="#008080">ostream</font> <font color="#990000">&amp;</font>os<font color="#990000">,</font> <b><font color="#0000FF">const</font></b> base_alloc<font color="#990000">&amp;</font> x<font color="#990000">)</font>
+     <b><font color="#0000FF">inline</font></b> std<font color="#990000">::</font>ostream<font color="#990000">&amp;</font> <b><font color="#0000FF">operator</font></b> <font color="#990000">&lt;&lt;</font> <font color="#990000">(</font>std<font color="#990000">::</font><font color="#008080">ostream</font> <font color="#990000">&amp;</font>os<font color="#990000">,</font> <b><font color="#0000FF">const</font></b> base_alloc<font color="#990000">&amp;</font> x<font color="#990000">)</font>
      <font color="#FF0000">{</font>    os <font color="#990000">&lt;&lt;</font> <font color="#990000">*</font>x<font color="#990000">.</font>ptrdbl_<font color="#990000">;</font>
           <b><font color="#0000FF">return</font></b> os<font color="#990000">;</font>
      <font color="#FF0000">}</font>

@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Using CMake to Configure CppAD</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Using CMake to Configure CppAD">
-<meta name="keywords" id="keywords" content=" using cmake to configure cppad makefile install prefix postfix include directories lib datadir documentation package compile flags profile maximum number threads sparsity internal structure vector sets memory usage tape ctor implicit explicit the program command build directory make check cmake_verbose_makefile generator cppad_prefix cppad_postfix cmake_install_includedirs cmake_install_libdirs cmake_install_datadir cmake_install_docdir package_prefix cppad_cxx_flags c++11 debug release cppad_profile_flag eigen fadbad cppad_testvector cppad_max_num_threads cppad_tape_id_type cstdint cppad_tape_addr_type cppad_debug_which exception cppad_deprecated ">
+<meta name="keywords" id="keywords" content=" using cmake to configure cppad makefile install prefix postfix include directories lib datadir documentation package compile flags profile maximum number threads sparsity internal structure vector sets memory usage tape ctor implicit explicit the program command build directory make check cmake_verbose_makefile generator cppad_prefix cppad_postfix cmake_install_includedirs cmake_install_libdirs cmake_install_datadir cmake_install_docdir package_prefix cppad_cxx_flags c++11 debug release cppad_profile_flag eigen fadbad cppad_testvector cppad_max_num_threads cppad_tape_id_type cstdint cppad_tape_addr_type cppad_debug_which cppad_deprecated ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -116,7 +116,6 @@ A:active { color : purple }
 <option>cppad_tape_addr_type</option>
 <option>---..cstdint</option>
 <option>cppad_debug_which</option>
-<option>---..Exception</option>
 <option>cppad_deprecated</option>
 </select>
 </td>
@@ -635,17 +634,6 @@ If
 <code><i><font color="black"><span style='white-space: nowrap'>cppad_debug_which</span></font></i></code>
  does not appear on the command line,
 the default value <code><font color="blue">debug_all</font></code> is used.
-
-<br>
-<br>
-<big><a name="cppad_debug_which.Exception" id="cppad_debug_which.Exception">Exception</a></big>
-<br>
-The test corresponding to <code><font color="blue">make cppad_ipopt_speed</font></code>
-always get complied in release more (to avoid the extra time
-it would take to run in debug mode).
-Note that this test corresponds a deprecated interface; see
-<a href="cppad_ipopt_nlp.htm" target="_top"><span style='white-space: nowrap'>cppad_ipopt_nlp</span></a>
-.
 
 <br>
 <br>

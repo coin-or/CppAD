@@ -12,10 +12,10 @@ MathJax.Hub.Config({
 >
 </script>
 <head>
-<title>cppad-20181018: A Package for Differentiation of C++ Algorithms</title>
+<title>cppad-20181024: An C++ Algorithmic Differentiation Package</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
-<meta name="description" id="description" content="cppad-20181018: A Package for Differentiation of C++ Algorithms">
-<meta name="keywords" id="keywords" content=" cppad-20181018: package differentiation c++ algorithms links introduction example include file preprocessor symbols namespace ">
+<meta name="description" id="description" content="cppad-20181024: An C++ Algorithmic Differentiation Package">
+<meta name="keywords" id="keywords" content=" cppad-20181024: c++ algorithmic differentiation package software engineering features operator overloading base type recording operations multi-threading optimizing sequences dynamic parameters derivative calculations sparsity atomic functions logical comparisons vectors testing correctness speed utilities release notes example ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -67,13 +67,27 @@ A:active { color : purple }
 <td>
 <select onchange='choose_current0(this)'>
 <option>Headings-&gt;</option>
-<option>Links</option>
-<option>Introduction</option>
+<option>Algorithmic Differentiation</option>
+<option>Software Engineering</option>
+<option>Features</option>
+<option>---..Operator Overloading</option>
+<option>---..Base Type</option>
+<option>---..Recording Operations</option>
+<option>---..Multi-Threading</option>
+<option>---..Optimizing Operations Sequences</option>
+<option>---..Dynamic Parameters</option>
+<option>---..Derivative Calculations</option>
+<option>---..Sparsity</option>
+<option>---..Recording Derivative Operations</option>
+<option>---..Atomic Functions</option>
+<option>---..Logical Comparisons</option>
+<option>---..Vectors</option>
+<option>Testing</option>
+<option>---..Correctness</option>
+<option>---..Speed</option>
+<option>Utilities</option>
+<option>Release Notes</option>
 <option>Example</option>
-<option>Include File</option>
-<option>Preprocessor Symbols</option>
-<option>Namespace</option>
-<option>Contents</option>
 </select>
 </td>
 </tr></table><br>
@@ -85,45 +99,53 @@ A:active { color : purple }
 \newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
 \newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
 \newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }
-@)@</small><center><b><big><big>cppad-20181018: A Package for Differentiation of C++ Algorithms</big></big></b></center>
-<br>
-<b><big><a name="Links" id="Links">Links</a></big></b>
-
-<table><tr><td align='left'  valign='top'>
-
-<a href="https://www.coin-or.org/" target="_top"><span style='white-space: nowrap'>coin-or</span></a>
-,            </td><td align='left'  valign='top'>
-
+@)@</small><center><b><big><big>cppad-20181024: An C++ Algorithmic Differentiation Package</big></big></b></center>
+<table><tr><td align='left'  valign='middle'>
+<img src="coin.png" valign="top">
+</td><td align='left'  valign='middle'>
+<table><tr><td align='left'  valign='middle'>
 <a href="install.htm" target="_top"><span style='white-space: nowrap'>install</span></a>
-,                                      </td><td align='left'  valign='top'>
+,                                      </td><td align='left'  valign='middle'>
 
 <a href="get_started.cpp.htm" target="_top"><span style='white-space: nowrap'>get_started</span></a>
-,                 </td><td align='left'  valign='top'>
+,                 </td><td align='left'  valign='middle'>
 
 <a href="whats_new.htm" target="_top"><span style='white-space: nowrap'>whats_new</span></a>
-,                                    </td><td align='left'  valign='top'>
+,                                    </td><td align='left'  valign='middle'>
 
 <a href="addon.htm" target="_top"><span style='white-space: nowrap'>addon</span></a>
-,                                        </td><td align='left'  valign='top'>
+,                                        </td><td align='left'  valign='middle'>
 
 <a href="https://github.com/coin-or/cppad" target="_top"><span style='white-space: nowrap'>github</span></a>
-,     </td><td align='left'  valign='top'>
+,     </td><td align='left'  valign='middle'>
 
-<a href="http://www.seanet.com/~bradbell" target="_top"><span style='white-space: nowrap'>manager</span></a>
+<a href="http://www.seanet.com/~bradbell" target="_top"><span style='white-space: nowrap'>project&nbsp;manager</span></a>
+
+</td></tr>
+</table>
+
+<code><span style='white-space: nowrap'><br>
+<br>
+</span></code>CppAD is distributed by
+<a href="http://www.coin-or.org" target="_top"><span style='white-space: nowrap'>COIN-OR</span></a>
+
+with the Eclipse Public License
+<a href="http://www.opensource.org/licenses/EPL-1.0" target="_top"><span style='white-space: nowrap'>EPL-1.0</span></a>
+
+or the GNU General Public License
+<a href="http://www.opensource.org/licenses/AGPL-3.0" target="_top"><span style='white-space: nowrap'>AGPL-3.0</span></a>
+.
 
 </td></tr>
 </table>
 <br>
-<b><big><a name="Introduction" id="Introduction">Introduction</a></big></b>
+<b><big><a name="Algorithmic Differentiation" id="Algorithmic Differentiation">Algorithmic Differentiation</a></big></b>
 <br>
-We refer to the
-step by step conversion from an algorithm that computes function values
-to an algorithm that computes derivative values
-as <i>Algorithmic Differentiation</i>
-(often referred to as <i>Automatic Differentiation</i>.)
-Given a C++ algorithm that computes function values,
-CppAD generates an algorithm that computes its derivative values.
-A brief introduction to Algorithmic Differentiation can be found in
+We refer to the automatic creation of an algorithm that
+computes derivative values from an algorithm that computes function values
+as <i>Algorithmic Differentiation</i>,
+also referred to as <i>Automatic Differentiation</i> or just AD.
+A brief introduction to AD can be found in
 <a href="http://en.wikipedia.org/wiki/Automatic_differentiation" target="_top"><span style='white-space: nowrap'>wikipedia</span></a>
 .
 The web site
@@ -131,65 +153,198 @@ The web site
 
 is dedicated to research about, and promoting the use of, AD.
 
-<ol type="1"><li>
-<a href="http://www.coin-or.org/CppAD/" target="_top"><span style='white-space: nowrap'>CppAD</span></a>
+<br>
+<br>
+<b><big><a name="Software Engineering" id="Software Engineering">Software Engineering</a></big></b>
+<br>
+CppAD is developed using the software engineering procedures described
+on the project manager's
+<a href="https://www.seanet.com/~bradbell/software.htm" target="_top"><span style='white-space: nowrap'>software</span></a>
 
-uses operator overloading to compute derivatives of algorithms defined in C++.
-It is distributed by the
-<a href="http://www.coin-or.org/foundation.html" target="_top"><span style='white-space: nowrap'>COIN-OR&nbsp;Foundation</span></a>
+web page.
 
-with the Eclipse Public License
-<a href="http://www.opensource.org/licenses/EPL-1.0" target="_top"><span style='white-space: nowrap'>EPL-1.0</span></a>
+<br>
+<br>
+<b><big><a name="Features" id="Features">Features</a></big></b>
 
-or the GNU General Public License
-<a href="http://www.opensource.org/licenses/AGPL-3.0" target="_top"><span style='white-space: nowrap'>GPL-3.0</span></a>
+
+<br>
+<br>
+<big><a name="Features.Operator Overloading" id="Features.Operator Overloading">Operator Overloading</a></big>
+<br>
+CppAD uses operator overloading of the C++ template class <a href="ad.htm" target="_top"><span style='white-space: nowrap'>AD</span></a>
+
+to compute derivatives of algorithms defined using AD objects; see
+the <a href="introduction.htm" target="_top"><span style='white-space: nowrap'>introduction</span></a>
+ for a description of how this is accomplished.
+
+<br>
+<br>
+<big><a name="Features.Base Type" id="Features.Base Type">Base Type</a></big>
+<br>
+The operator overloading uses a templated base type that
+can be user defined; see <a href="base_require.htm" target="_top"><span style='white-space: nowrap'>base_require</span></a>
 .
-Testing and installation is supported for Unix, Microsoft, and Apple
-operating systems.
-Extensive user and developer documentation is included.
+The required definitions for <code><font color="blue">AD&lt;float&gt;</font></code> and
+<code><font color="blue">AD&lt;double&gt;</font></code> are included as part of CppAD.
 
-</li><li>
+<br>
+<br>
+<big><a name="Features.Recording Operations" id="Features.Recording Operations">Recording Operations</a></big>
+<br>
+A sequence of 
+<code><font color="blue"><span style='white-space: nowrap'>AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code>
 
-An AD of <i>Base</i>
-<a href="glossary.htm#Operation.Sequence" target="_top"><span style='white-space: nowrap'>operation&nbsp;sequence</span></a>
+<a href="glossary.htm#Operation.Sequence" target="_top"><span style='white-space: nowrap'>operations</span></a>
 
-is stored as an
+can be recorded and stored in an
 <a href="adfun.htm" target="_top"><span style='white-space: nowrap'>AD&nbsp;function&nbsp;object</span></a>
+ object.
+This object can then be used to evaluate
+function values and arbitrary order derivatives,
+and sparsity patterns of derivative values using the 
+<code><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i></code>
+ type.
 
-which can evaluate function values and derivatives.
+<br>
+<br>
+<big><a name="Features.Multi-Threading" id="Features.Multi-Threading">Multi-Threading</a></big>
+<br>
+CppAD supports an arbitrary <a href="multi_thread.htm" target="_top"><span style='white-space: nowrap'>multi&nbsp;threading</span></a>
+ environment.
+Examples are provided using Boost threads, Posix threads, and Openmp threads.
+
+<br>
+<br>
+<big><a name="Features.Optimizing Operations Sequences" id="Features.Optimizing Operations Sequences">Optimizing Operations Sequences</a></big>
+<br>
+During the recording of a function,
+the <a href="independent.htm" target="_top"><span style='white-space: nowrap'>Independent</span></a>
+ variables are know and a forward dependency
+analysis is used to determine which operations should be recorded.
+Once the <a href="dependent.htm" target="_top"><span style='white-space: nowrap'>Dependent</span></a>
+ variables are determined,
+a reverse dependency analysis can be preformed.
+This <a href="optimize.htm" target="_top"><span style='white-space: nowrap'>optimize</span></a>
+ routine uses a reverse dependency analysis,
+and other techniques,
+to remove unnecessary operations.
+
+<br>
+<br>
+<big><a name="Features.Dynamic Parameters" id="Features.Dynamic Parameters">Dynamic Parameters</a></big>
+<br>
+CppAD enables one to specify a vector of
+<a href="glossary.htm#Parameter.Dynamic" target="_top"><span style='white-space: nowrap'>dynamic</span></a>
+ parameters.
+The value of the function and derivatives can depend on these parameters,
+but no derivatives are taken with respect to these parameters.
+This enables CppAD to reduce the derivative calculations; e.g.,
+the derivative of variable times a variable has two terms
+while a variable times a parameter only has one.
+
+<br>
+<br>
+<big><a name="Features.Derivative Calculations" id="Features.Derivative Calculations">Derivative Calculations</a></big>
+<br>
 Arbitrary order
 <a href="forward.htm" target="_top"><span style='white-space: nowrap'>forward</span></a>
  and <a href="reverse.htm" target="_top"><span style='white-space: nowrap'>reverse</span></a>
 
 mode derivative calculations
-can be preformed on the operation sequence.
-Logical comparisons can be included in an operation sequence
-using AD <a href="condexp.htm" target="_top"><span style='white-space: nowrap'>conditional&nbsp;expressions</span></a>
+can be preformed using an <code><font color="blue">ADFun</font></code> object.
+Easy to user drivers that compute the
+entire <a href="jacobian.htm" target="_top"><span style='white-space: nowrap'>Jacobian</span></a>
+ and a specific <a href="hessian.htm" target="_top"><span style='white-space: nowrap'>Hessian</span></a>
+ are included.
+
+<br>
+<br>
+<big><a name="Features.Sparsity" id="Features.Sparsity">Sparsity</a></big>
+<br>
+Both forward and reverse mode can be used to calculation the sparsity
+pattern for Jacobians and Hessians; see <a href="sparsity_pattern.htm" target="_top"><span style='white-space: nowrap'>sparsity_pattern</span></a>
 .
-Evaluation of user defined unary
+Where a Jacobian or Hessian is sparse,
+both forward and reverse mode can be combined with the sparsity pattern
+to speed up the calculation of
+<a href="sparse_derivative.htm" target="_top"><span style='white-space: nowrap'>sparse&nbsp;derivatives</span></a>
+.
+In addition, a <a href="subgraph_jac_rev.htm" target="_top"><span style='white-space: nowrap'>subgraph</span></a>
+ method,
+that does not require a sparsity pattern, can be used
+to speed up these derivative calculations.
+
+<br>
+<br>
+<big><a name="Features.Recording Derivative Operations" id="Features.Recording Derivative Operations">Recording Derivative Operations</a></big>
+<br>
+A <code><font color="blue">ADFun</font></code> object can be converted into an object that
+evaluates derivatives using the type 
+<code><font color="blue"><span style='white-space: nowrap'>AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code>
+; see <a href="base2ad.htm" target="_top"><span style='white-space: nowrap'>base2ad</span></a>
+.
+This enables one to record new functions that
+are expressed using derivatives of other functions.
+
+<br>
+<br>
+<big><a name="Features.Atomic Functions" id="Features.Atomic Functions">Atomic Functions</a></big>
+<br>
+User defined derivative calculations for arbitrary functions
+can also be included in
+a recording using <a href="atomic_base.htm" target="_top"><span style='white-space: nowrap'>atomic&nbsp;functions</span></a>
+ functions.
+A special <a href="checkpoint.htm" target="_top"><span style='white-space: nowrap'>checkpoint</span></a>
+ class is included
+which allows one to record a function and reuse it as
+an atomic operation in other functions.
+There also is a special interface for user defined unary
 <a href="discrete.htm" target="_top"><span style='white-space: nowrap'>discrete&nbsp;functions</span></a>
- can also be included
-in the sequence of operations; i.e.,
+ functions; i.e.,
 functions that depend on the
 <a href="glossary.htm#Tape.Independent Variable" target="_top"><span style='white-space: nowrap'>independent&nbsp;variables</span></a>
 
-but which have identically zero derivatives
-(e.g., a step function).
+but which have identically zero derivatives (e.g., a step function).
 
-</li><li>
-
-Derivatives of functions that are defined in terms of other derivatives
-can be computed using multiple levels of AD;
-see <a href="mul_level.cpp.htm" target="_top"><span style='white-space: nowrap'>mul_level.cpp</span></a>
- for a simple example
-and <a href="mul_level_ode.cpp.htm" target="_top"><span style='white-space: nowrap'>mul_level_ode.cpp</span></a>
- for a more realistic example.
-To this end, CppAD can also be used with other AD types; for example see
-<a href="mul_level_adolc_ode.cpp.htm" target="_top"><span style='white-space: nowrap'>mul_level_adolc_ode.cpp</span></a>
+<br>
+<br>
+<big><a name="Features.Logical Comparisons" id="Features.Logical Comparisons">Logical Comparisons</a></big>
+<br>
+Logical comparisons can be included in an operation sequence
+using AD <a href="condexp.htm" target="_top"><span style='white-space: nowrap'>conditional&nbsp;expressions</span></a>
 .
 
-</li><li>
+<br>
+<br>
+<big><a name="Features.Vectors" id="Features.Vectors">Vectors</a></big>
+<br>
+The CppAD API allows one to use any
+<a href="simplevector.htm" target="_top"><span style='white-space: nowrap'>SimpleVector</span></a>
+ class.
+The preprocessor symbol <a href="testvector.htm" target="_top"><span style='white-space: nowrap'>CPPAD_TESTVECTOR</span></a>
 
+is template vector class which is used for correctness testing.
+Many of the correctness tests use this template vector class
+which you can choose during the <a href="cmake.htm" target="_top"><span style='white-space: nowrap'>cmake</span></a>
+ configuration command.
+
+<br>
+<br>
+<b><big><a name="Testing" id="Testing">Testing</a></big></b>
+
+
+<br>
+<br>
+<big><a name="Testing.Correctness" id="Testing.Correctness">Correctness</a></big>
+<br>
+There is an extensive set of correctness tests; see <a href="cmake_check.htm" target="_top"><span style='white-space: nowrap'>cmake_check</span></a>
+.
+
+<br>
+<br>
+<big><a name="Testing.Speed" id="Testing.Speed">Speed</a></big>
+<br>
 A set of programs for doing <a href="speed.htm" target="_top"><span style='white-space: nowrap'>speed</span></a>
  comparisons between
 <a href="https://projects.coin-or.org/ADOL-C" target="_top"><span style='white-space: nowrap'>Adolc</span></a>
@@ -202,96 +357,38 @@ and
 
 are included.
 
-
-</li><li>
-
-Includes a set of C++ <a href="utility.htm" target="_top"><span style='white-space: nowrap'>utilities</span></a>
+<br>
+<br>
+<b><big><a name="Utilities" id="Utilities">Utilities</a></big></b>
+<br>
+CppAD includes a set of C++ <a href="utility.htm" target="_top"><span style='white-space: nowrap'>utilities</span></a>
  that are useful
-for general operator overloaded numerical method.
-Allows for replacement of the
-<a href="testvector.htm" target="_top"><span style='white-space: nowrap'>testvector</span></a>
+for general operator overloaded numerical methods.
 
-template vector class which is used for extensive testing;
-for example, you can do your testing with the
-<a href="http://www.boost.org/libs/numeric/ublas/doc/index.htm" target="_top"><span style='white-space: nowrap'>uBlas</span></a>
-
-template vector class.
-
-</li><li>
-
-See <a href="whats_new.htm" target="_top"><span style='white-space: nowrap'>whats_new</span></a>
+<br>
+<br>
+<b><big><a name="Release Notes" id="Release Notes">Release Notes</a></big></b>
+<br>
+This <a href="whats_new.htm" target="_top"><span style='white-space: nowrap'>whats_new</span></a>
  for a list of recent extensions and bug fixes.
-
-</li></ol>
-
-
-You can find out about other algorithmic differentiation tools
-and about algorithmic differentiation in general at the following web sites:
-<a href="http://en.wikipedia.org/wiki/Automatic_differentiation" target="_top"><span style='white-space: nowrap'>wikipedia</span></a>
-,
-<a href="http://www.autodiff.org" target="_top"><span style='white-space: nowrap'>autodiff.org</span></a>
-.
 
 <br>
 <br>
 <b><big><a name="Example" id="Example">Example</a></big></b>
 <br>
-The file
-<a href="get_started.cpp.htm" target="_top"><span style='white-space: nowrap'>get_started.cpp</span></a>
+The file <a href="get_started.cpp.htm" target="_top"><span style='white-space: nowrap'>get_started.cpp</span></a>
 
 contains an example and test of using CppAD to compute
 the derivative of a polynomial.
 There are many other
 <a href="example.htm" target="_top"><span style='white-space: nowrap'>examples</span></a>
 .
-
-<br>
-<br>
-<b><big><a name="Include File" id="Include File">Include File</a></big></b>
-<br>
-The following include directive
-<code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#&nbsp;include&nbsp;&lt;cppad/cppad.hpp&gt;<br>
-</span></font></code>includes the CppAD package for the rest of the current compilation unit.
-
-<br>
-<br>
-<b><big><a name="Preprocessor Symbols" id="Preprocessor Symbols">Preprocessor Symbols</a></big></b>
-<br>
-All the <a href="preprocessor.htm" target="_top"><span style='white-space: nowrap'>preprocessor</span></a>
- symbols used by CppAD begin with eight
-<code><font color="blue">CppAD</font></code> or <code><font color="blue">CPPAD_</font></code>.
-
-<br>
-<br>
-<b><big><a name="Namespace" id="Namespace">Namespace</a></big></b>
-<br>
-All of the functions and objects defined by CppAD are in the
-<code><font color="blue">CppAD</font></code> namespace; for example, you can access the <a href="ad.htm" target="_top"><span style='white-space: nowrap'>AD</span></a>
- types as
-<code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;n&nbsp;=&nbsp;2;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CppAD::vector&lt;&nbsp;CppAD::AD&lt;</span></font></code><i><span style='white-space: nowrap'>Base</span></i><code><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;&gt;&nbsp;</span></font></code><i><span style='white-space: nowrap'>x</span></i><code><font color="blue"><span style='white-space: nowrap'>(</span></font></code><i><span style='white-space: nowrap'>n</span></i><code><font color="blue"><span style='white-space: nowrap'>)<br>
-</span></font></code>You can abbreviate access to one object or function a <code><font color="blue">using</font></code>
-command of the form
-<code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;using&nbsp;CppAD::AD<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CppAD::vector&lt;&nbsp;AD&lt;</span></font></code><i><span style='white-space: nowrap'>Base</span></i><code><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;&gt;&nbsp;</span></font></code><i><span style='white-space: nowrap'>x</span></i><code><font color="blue"><span style='white-space: nowrap'>(</span></font></code><i><span style='white-space: nowrap'>n</span></i><code><font color="blue"><span style='white-space: nowrap'>)<br>
-</span></font></code>You can abbreviate access to all CppAD objects and functions
-with a command of the form
-<code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;using&nbsp;namespace&nbsp;CppAD<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vector&lt;&nbsp;AD&lt;</span></font></code><i><span style='white-space: nowrap'>Base</span></i><code><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;&gt;&nbsp;</span></font></code><i><span style='white-space: nowrap'>x</span></i><code><font color="blue"><span style='white-space: nowrap'>(</span></font></code><i><span style='white-space: nowrap'>n</span></i><code><font color="blue"><span style='white-space: nowrap'>)<br>
-</span></font></code>If you include other namespaces in a similar manner,
-this can cause naming conflicts.
+All of the examples are also correctness tests,
+which ensures that they work properly.
 
 
-<br>
-<br>
-<b><big><a name="Contents" id="Contents">Contents</a></big></b>
-<br>
-<table>
-<tr><td><a href="_contents.htm" target="_top">_contents</a></td><td>Table&nbsp;of&nbsp;Contents</td></tr><tr><td><a href="install.htm" target="_top">Install</a></td><td>CppAD&nbsp;Download,&nbsp;Test,&nbsp;and&nbsp;Install&nbsp;Instructions</td></tr><tr><td><a href="introduction.htm" target="_top">Introduction</a></td><td>An&nbsp;Introduction&nbsp;by&nbsp;Example&nbsp;to&nbsp;Algorithmic&nbsp;Differentiation</td></tr><tr><td><a href="ad.htm" target="_top">AD</a></td><td>AD&nbsp;Objects</td></tr><tr><td><a href="adfun.htm" target="_top">ADFun</a></td><td>ADFun&nbsp;Objects</td></tr><tr><td><a href="preprocessor.htm" target="_top">preprocessor</a></td><td>CppAD&nbsp;API&nbsp;Preprocessor&nbsp;Symbols</td></tr><tr><td><a href="multi_thread.htm" target="_top">multi_thread</a></td><td>Using&nbsp;CppAD&nbsp;in&nbsp;a&nbsp;Multi-Threading&nbsp;Environment</td></tr><tr><td><a href="utility.htm" target="_top">utility</a></td><td>Some&nbsp;General&nbsp;Purpose&nbsp;Utilities</td></tr><tr><td><a href="ipopt_solve.htm" target="_top">ipopt_solve</a></td><td>Use&nbsp;Ipopt&nbsp;to&nbsp;Solve&nbsp;a&nbsp;Nonlinear&nbsp;Programming&nbsp;Problem</td></tr><tr><td><a href="example.htm" target="_top">Example</a></td><td>Examples</td></tr><tr><td><a href="speed.htm" target="_top">speed</a></td><td>Speed&nbsp;Test&nbsp;an&nbsp;Operator&nbsp;Overloading&nbsp;AD&nbsp;Package</td></tr><tr><td><a href="appendix.htm" target="_top">Appendix</a></td><td>Appendix</td></tr><tr><td><a href="_reference.htm" target="_top">_reference</a></td><td>Alphabetic&nbsp;Listing&nbsp;of&nbsp;Cross&nbsp;Reference&nbsp;Tags</td></tr><tr><td><a href="_index.htm" target="_top">_index</a></td><td>Keyword&nbsp;Index</td></tr><tr><td><a href="_search.htm" target="_top">_search</a></td><td>Search&nbsp;This&nbsp;Web&nbsp;Site</td></tr><tr><td><a href="_external.htm" target="_top">_external</a></td><td>External&nbsp;Internet&nbsp;References</td></tr></table>
+
+
 <hr>Input File: doc.omh
 
 </body>

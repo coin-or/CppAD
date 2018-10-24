@@ -36,11 +36,14 @@ var list_current0 = [
 'get_started.cpp.htm#Function',
 'get_started.cpp.htm#Derivative',
 'get_started.cpp.htm#Value',
+'get_started.cpp.htm#Include File',
 'get_started.cpp.htm#Poly',
-'get_started.cpp.htm#Exercises',
+'get_started.cpp.htm#CppAD Namespace',
+'get_started.cpp.htm#CppAD Preprocessor Symbols',
 'get_started.cpp.htm#Program',
 'get_started.cpp.htm#Output',
-'get_started.cpp.htm#Running'
+'get_started.cpp.htm#Running',
+'get_started.cpp.htm#Exercises'
 ];
 function choose_across0(item)
 {	var index          = item.selectedIndex;

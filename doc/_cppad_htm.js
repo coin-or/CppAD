@@ -22,13 +22,27 @@ var list_down0 = [
 'appendix.htm'
 ];
 var list_current0 = [
-'cppad.htm#Links',
-'cppad.htm#Introduction',
-'cppad.htm#Example',
-'cppad.htm#Include File',
-'cppad.htm#Preprocessor Symbols',
-'cppad.htm#Namespace',
-'cppad.htm#Contents'
+'cppad.htm#Algorithmic Differentiation',
+'cppad.htm#Software Engineering',
+'cppad.htm#Features',
+'cppad.htm#Features.Operator Overloading',
+'cppad.htm#Features.Base Type',
+'cppad.htm#Features.Recording Operations',
+'cppad.htm#Features.Multi-Threading',
+'cppad.htm#Features.Optimizing Operations Sequences',
+'cppad.htm#Features.Dynamic Parameters',
+'cppad.htm#Features.Derivative Calculations',
+'cppad.htm#Features.Sparsity',
+'cppad.htm#Features.Recording Derivative Operations',
+'cppad.htm#Features.Atomic Functions',
+'cppad.htm#Features.Logical Comparisons',
+'cppad.htm#Features.Vectors',
+'cppad.htm#Testing',
+'cppad.htm#Testing.Correctness',
+'cppad.htm#Testing.Speed',
+'cppad.htm#Utilities',
+'cppad.htm#Release Notes',
+'cppad.htm#Example'
 ];
 function choose_across0(item)
 {	var index          = item.selectedIndex;
