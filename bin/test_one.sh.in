@@ -168,7 +168,8 @@ then
 fi
 # --------------------------------------------------------------------------
 # Execute the test
-echo_eval ./test_one.exe
+echo "./test_one.exe"
+./test_one.exe
 # --------------------------------------------------------------------------
 # Check for compiler warnings
 cat << EOF > test_one.sed
