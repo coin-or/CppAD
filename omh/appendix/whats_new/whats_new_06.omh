@@ -1020,8 +1020,8 @@ in the CppAD namespace for the
 $code float$$ and $code double$$ types.
 
 $head 03-15$$
-Improve the
-$cref/introduction/cppad/Introduction/$$ to CppAD.
+Improve the introduction to $cref CppAD$$ on the top level page
+of the documentation.
 
 $head 03-11$$
 The file $code cppad/local/MathOther.h$$ had a file name case error

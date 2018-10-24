@@ -20,7 +20,7 @@ $$
 $spell
 $$
 
-$section Create an AD<Base> Function From an Base Function$$
+$section Create an AD<Base> Function From a Base Function$$
 
 $head Syntax$$
 $icode%af% = %f%.base2ad()%$$
