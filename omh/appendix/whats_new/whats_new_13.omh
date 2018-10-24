@@ -200,7 +200,7 @@ with the same prefix was added.
 
 $head 10-13$$
 Make sure that all of the
-$cref/preprocessor symbols/cppad/Preprocessor Symbols/$$,
+$cref preprocessor$$ symbols
 that are not part of the CppAD API, are undefined when the
 $code <cppad/cppad.hpp>$$ file concludes.
 

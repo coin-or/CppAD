@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -14,17 +14,15 @@ $begin get_started.cpp$$
 $spell
 	cppad.hpp
 	http://www.coin-or.org/CppAD/
-	getstarted
 	namespace
 	iostream
 	const
 	std
-	powx
 	Jacobian
 	jac
 	endl
-	da
 	cout
+	cmake
 $$
 
 $section Getting Started Using CppAD to Compute Derivatives$$
@@ -57,41 +55,45 @@ $latex \[
 	f' ( 3 ) = 1 + 2 * 3 + 3 * 3^2 + 4 * 3^3 = 142
 \] $$
 
+$head Include File$$
+The following command, in the program below, includes the CppAD package:
+$codei%
+	# include <cppad/cppad.hpp>
+%$$
+
 $head Poly$$
-The routine $code Poly$$ is defined below for this particular application.
+The routine $code Poly$$, defined below, evaluates a polynomial.
 A general purpose polynomial evaluation routine is documented and
-distributed with CppAD (see $cref Poly$$).
+distributed with CppAD; see $cref Poly$$.
 
-$head Exercises$$
-Modify the program below to accomplish the following tasks
-using CppAD:
-$list number$$
-Compute and print the derivative of $latex f(x) = 1 + x + x^2 + x^3 + x^4$$
-at the point $latex x = 2$$.
-$lnext
-Compute and print the derivative of $latex f(x) = 1 + x + x^2 / 2$$
-at the point $latex x = .5$$.
-$lnext
-Compute and print the derivative of $latex f(x) = \exp (x) - 1 - x - x^2 / 2$$
-at the point $latex x = .5$$.
-$lend
+$head CppAD Namespace$$
+All of the functions and objects defined by CppAD are in the
+$code CppAD$$ namespace. In the example below,
+$codei%
+	using CppAD::AD;
+%$$
+enables one to abbreviate $code CppAD::AD$$ using just $code AD$$.
 
+$head CppAD Preprocessor Symbols$$
+All the $cref preprocessor$$ symbols defined by CppAD begin with
+$code CPPAD_$$ (some deprecated symbols begin with $code CppAD_$$).
+The preprocessor symbol $cref/CPPAD_TESTVECTOR/testvector/$$
+is used in the example below.
 
 $head Program$$
 $srccode%cpp% */
-#include <iostream>      // standard input/output
-#include <vector>        // standard vector
-#include <cppad/cppad.hpp> // the CppAD package http://www.coin-or.org/CppAD/
+# include <iostream>        // standard input/output
+# include <vector>          // standard vector
+# include <cppad/cppad.hpp> // the CppAD package
 
-namespace {
-	// define y(x) = Poly(a, x) in the empty namespace
+namespace { // begin the empty namespace
+	// define the function Poly(a, x) = a[0] + a[1]*x[1] + ... + a[k-1]*x[k-1]
 	template <class Type>
-	Type Poly(const std::vector<double> &a, const Type &x)
+	Type Poly(const CPPAD_TESTVECTOR(double) &a, const Type &x)
 	{	size_t k  = a.size();
 		Type y   = 0.;  // initialize summation
 		Type x_i = 1.;  // initialize x^i
-		size_t i;
-		for(i = 0; i < k; i++)
+		for(size_t i = 0; i < k; i++)
 		{	y   += a[i] * x_i;  // y   = y + a_i * x^i
 			x_i *= x;           // x_i = x_i * x
 		}
@@ -100,36 +102,35 @@ namespace {
 }
 // main program
 int main(void)
-{	using CppAD::AD;           // use AD as abbreviation for CppAD::AD
-	using std::vector;         // use vector as abbreviation for std::vector
-	size_t i;                  // a temporary index
+{	using CppAD::AD;   // use AD as abbreviation for CppAD::AD
+	using std::vector; // use vector as abbreviation for std::vector
 
 	// vector of polynomial coefficients
-	size_t k = 5;              // number of polynomial coefficients
-	vector<double> a(k);       // vector of polynomial coefficients
-	for(i = 0; i < k; i++)
-		a[i] = 1.;           // value of polynomial coefficients
+	size_t k = 5;                  // number of polynomial coefficients
+	CPPAD_TESTVECTOR(double) a(k); // vector of polynomial coefficients
+	for(size_t i = 0; i < k; i++)
+		a[i] = 1.;                 // value of polynomial coefficients
 
 	// domain space vector
-	size_t n = 1;              // number of domain space variables
-	vector< AD<double> > X(n); // vector of domain space variables
-	X[0] = 3.;                 // value corresponding to operation sequence
+	size_t n = 1;               // number of domain space variables
+	vector< AD<double> > ax(n); // vector of domain space variables
+	ax[0] = 3.;                 // value at which function is recorded
 
 	// declare independent variables and start recording operation sequence
-	CppAD::Independent(X);
+	CppAD::Independent(ax);
 
 	// range space vector
-	size_t m = 1;              // number of ranges space variables
-	vector< AD<double> > Y(m); // vector of ranges space variables
-	Y[0] = Poly(a, X[0]);      // value during recording of operations
+	size_t m = 1;               // number of ranges space variables
+	vector< AD<double> > ay(m); // vector of ranges space variables
+	ay[0] = Poly(a, ax[0]);     // record operations that compute ay[0]
 
 	// store operation sequence in f: X -> Y and stop recording
-	CppAD::ADFun<double> f(X, Y);
+	CppAD::ADFun<double> f(ax, ay);
 
 	// compute derivative using operation sequence stored in f
 	vector<double> jac(m * n); // Jacobian of f (m by n matrix)
 	vector<double> x(n);       // domain space vector
-	x[0] = 3.;                 // argument value for derivative
+	x[0] = 3.;                 // argument value for computing derivative
 	jac  = f.Jacobian(x);      // Jacobian for operation sequence
 
 	// print the results
@@ -139,7 +140,7 @@ int main(void)
 	int error_code;
 	if( jac[0] == 142. )
 		error_code = 0;      // return code for correct case
-	else  error_code = 1;      // return code for incorrect case
+	else  error_code = 1;    // return code for incorrect case
 
 	return error_code;
 }
@@ -151,7 +152,27 @@ $codep
 $$
 
 $head Running$$
-To build and run this program see $cref cmake_check$$.
+After you configure your system using the $cref cmake$$ command,
+you compile and run this example by executing the command
+$codei%
+	make check_example_get_started
+%$$
+in the build directory; i.e., the directory where the cmake command
+was executed.
+
+$head Exercises$$
+Modify the program above to accomplish the following tasks
+using CppAD:
+$list number$$
+Compute and print the derivative of $latex f(x) = 1 + x + x^2 + x^3 + x^4$$
+at the point $latex x = 2$$.
+$lnext
+Compute and print the derivative of $latex f(x) = 1 + x + x^2 / 2$$
+at the point $latex x = .5$$.
+$lnext
+Compute and print the derivative of $latex f(x) = \exp (x) - 1 - x - x^2 / 2$$
+at the point $latex x = .5$$.
+$lend
 
 $end
 */

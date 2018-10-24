@@ -176,40 +176,6 @@ the derivative of a polynomial.
 There are many other
 $xref/Example//examples/$$.
 
-$head Include File$$
-The following include directive
-$syntax%
-	# include <cppad/cppad.hpp>
-%$$
-includes the CppAD package for the rest of the current compilation unit.
-
-$head Preprocessor Symbols$$
-All the $cref preprocessor$$ symbols used by CppAD begin with eight
-$code CppAD$$ or $code CPPAD_$$.
-
-$head Namespace$$
-All of the functions and objects defined by CppAD are in the
-$code CppAD$$ namespace; for example, you can access the $xref/AD/$$ types as
-$syntax%
-	size_t n = 2;
-	CppAD::vector< CppAD::AD<%Base%> > %x%(%n%)
-%$$
-You can abbreviate access to one object or function a $code using$$
-command of the form
-$syntax%
-	using CppAD::AD
-	CppAD::vector< AD<%Base%> > %x%(%n%)
-%$$
-You can abbreviate access to all CppAD objects and functions
-with a command of the form
-$syntax%
-	using namespace CppAD
-	vector< AD<%Base%> > %x%(%n%)
-%$$
-If you include other namespaces in a similar manner,
-this can cause naming conflicts.
-
-
 $childtable%
 	omh/install/install.omh%
 	omh/introduction.omh%
