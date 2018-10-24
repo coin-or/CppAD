@@ -100,12 +100,6 @@ The web site
 $href%http://www.autodiff.org%autodiff.org%$$
 is dedicated to research about, and promoting the use of, AD.
 
-$head Software Engineering$$
-CppAD is developed using the software engineering procedures described
-on the project manager's
-$href%https://www.seanet.com/~bradbell/software.htm%software%$$
-web page.
-
 $head Features$$
 
 $subhead Operator Overloading$$
@@ -200,6 +194,12 @@ The preprocessor symbol $cref/CPPAD_TESTVECTOR/testvector/$$
 is template vector class which is used for correctness testing.
 Many of the correctness tests use this template vector class
 which you can choose during the $cref cmake$$ configuration command.
+
+$head Software Engineering$$
+CppAD is developed using the software engineering procedures described
+on the project manager's
+$href%https://www.seanet.com/~bradbell/software.htm%software%$$
+web page.
 
 $head Testing$$
 
