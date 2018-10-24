@@ -73,7 +73,7 @@ original_dir=`pwd`
 # ---------------------------------------------------------------------------
 # initialize
 include_flags="-I $original_dir"
-library_flags="-lboost_thread -lpthread"
+library_flags="-lpthread"
 #
 # adolc
 if [ @cppad_has_adolc@ == 1 ]
@@ -83,6 +83,11 @@ then
 	set_libdir @adolc_prefix@
 	library_flags="$library_flags -L@adolc_prefix@/$libdir -ladolc"
 	export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:@adolc_prefix@/$libdir"
+fi
+#
+if [ @cppad_has_boost@ == 1 ]
+then
+	library_flags="$library_flags -lboost_thread"
 fi
 #
 # colpack
