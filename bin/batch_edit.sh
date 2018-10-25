@@ -35,6 +35,7 @@
 # 21. Move test_more -> test.
 # 22. Move cppad -> include/cppad.
 # 23. Convert all $xref commands -> $cref commands.
+# 24. Move whats_new/whats_new_yy.omh -> whats_new/yyyy.omh
 # -----------------------------------------------------------------------------
 spell_list='
 '
