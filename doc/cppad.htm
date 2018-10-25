@@ -12,10 +12,10 @@ MathJax.Hub.Config({
 >
 </script>
 <head>
-<title>cppad-20181024: An C++ Algorithmic Differentiation Package</title>
+<title>cppad-20181025: An C++ Algorithmic Differentiation Package</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
-<meta name="description" id="description" content="cppad-20181024: An C++ Algorithmic Differentiation Package">
-<meta name="keywords" id="keywords" content=" cppad-20181024: c++ algorithmic differentiation package software engineering features operator overloading base type recording operations multi-threading optimizing sequences dynamic parameters derivative calculations sparsity atomic functions logical comparisons vectors testing correctness speed utilities release notes example ">
+<meta name="description" id="description" content="cppad-20181025: An C++ Algorithmic Differentiation Package">
+<meta name="keywords" id="keywords" content=" cppad-20181025: c++ algorithmic differentiation package features operator overloading base type recording operations multi-threading optimizing sequences dynamic parameters derivative calculations sparsity atomic functions logical comparisons vectors software engineering testing correctness speed utilities release notes example ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -68,7 +68,6 @@ A:active { color : purple }
 <select onchange='choose_current0(this)'>
 <option>Headings-&gt;</option>
 <option>Algorithmic Differentiation</option>
-<option>Software Engineering</option>
 <option>Features</option>
 <option>---..Operator Overloading</option>
 <option>---..Base Type</option>
@@ -82,6 +81,7 @@ A:active { color : purple }
 <option>---..Atomic Functions</option>
 <option>---..Logical Comparisons</option>
 <option>---..Vectors</option>
+<option>Software Engineering</option>
 <option>Testing</option>
 <option>---..Correctness</option>
 <option>---..Speed</option>
@@ -99,7 +99,7 @@ A:active { color : purple }
 \newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
 \newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
 \newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }
-@)@</small><center><b><big><big>cppad-20181024: An C++ Algorithmic Differentiation Package</big></big></b></center>
+@)@</small><center><b><big><big>cppad-20181025: An C++ Algorithmic Differentiation Package</big></big></b></center>
 <table><tr><td align='left'  valign='middle'>
 <img src="coin.png" valign="top">
 </td><td align='left'  valign='middle'>
@@ -116,8 +116,11 @@ A:active { color : purple }
 <a href="addon.htm" target="_top"><span style='white-space: nowrap'>addon</span></a>
 ,                                        </td><td align='left'  valign='middle'>
 
-<a href="https://github.com/coin-or/cppad" target="_top"><span style='white-space: nowrap'>github</span></a>
+<a href="https://github.com/coin-or/CppAD" target="_top"><span style='white-space: nowrap'>github</span></a>
 ,     </td><td align='left'  valign='middle'>
+
+<a href="https://travis-ci.org/coin-or/CppAD" target="_top"><span style='white-space: nowrap'>travis</span></a>
+,  </td><td align='left'  valign='middle'>
 
 <a href="http://www.seanet.com/~bradbell" target="_top"><span style='white-space: nowrap'>project&nbsp;manager</span></a>
 
@@ -152,16 +155,6 @@ The web site
 <a href="http://www.autodiff.org" target="_top"><span style='white-space: nowrap'>autodiff.org</span></a>
 
 is dedicated to research about, and promoting the use of, AD.
-
-<br>
-<br>
-<b><big><a name="Software Engineering" id="Software Engineering">Software Engineering</a></big></b>
-<br>
-CppAD is developed using the software engineering procedures described
-on the project manager's
-<a href="https://www.seanet.com/~bradbell/software.htm" target="_top"><span style='white-space: nowrap'>software</span></a>
-
-web page.
 
 <br>
 <br>
@@ -328,6 +321,16 @@ is template vector class which is used for correctness testing.
 Many of the correctness tests use this template vector class
 which you can choose during the <a href="cmake.htm" target="_top"><span style='white-space: nowrap'>cmake</span></a>
  configuration command.
+
+<br>
+<br>
+<b><big><a name="Software Engineering" id="Software Engineering">Software Engineering</a></big></b>
+<br>
+CppAD is developed using the software engineering procedures described
+on the project manager's
+<a href="https://www.seanet.com/~bradbell/software.htm" target="_top"><span style='white-space: nowrap'>software</span></a>
+
+web page.
 
 <br>
 <br>
