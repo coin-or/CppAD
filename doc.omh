@@ -73,7 +73,8 @@ $cref install$$,                                      $cnext
 $cref/get_started/get_started.cpp/$$,                 $cnext
 $cref whats_new$$,                                    $cnext
 $cref addon$$,                                        $cnext
-$href%https://github.com/coin-or/cppad%github%$$,     $cnext
+$href%https://github.com/coin-or/CppAD%github%$$,     $cnext
+$href%https://travis-ci.org/coin-or/CppAD%travis%$$,  $cnext
 $href%http://www.seanet.com/~bradbell%project manager%$$
 $tend
 $pre
