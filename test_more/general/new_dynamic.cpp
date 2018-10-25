@@ -21,7 +21,7 @@ bool operator_with_variable(void)
 	using CppAD::NearEqual;
 	using CppAD::azmul;
 	using CppAD::CondExpLt;
-	double eps = 10. * std::numeric_limits<double>::epsilon();
+	double eps99 = 99.0 * std::numeric_limits<double>::epsilon();
 	size_t n   = 11;
 
 	// dynamic parameter vector
@@ -82,40 +82,40 @@ bool operator_with_variable(void)
 	k = 0;
 	check  = ( Value(adynamic[k]) + x[k] ) * ( x[k] + Value(adynamic[k]) );
 	check *= -1.0*double(k+1);
-	ok    &= NearEqual(y[k] , check, eps, eps);
+	ok    &= NearEqual(y[k] , check, eps99, eps99);
 	++k;
 	check  = ( Value(adynamic[k]) - x[k] ) * ( x[k] - Value(adynamic[k]) );
 	check *= -1.0*double(k+1);
-	ok    &= NearEqual(y[k] , check, eps, eps);
+	ok    &= NearEqual(y[k] , check, eps99, eps99);
 	++k;
 	check  = -1.0*double(k+1)*( Value(adynamic[k]) * x[k] );
 	check += ( x[k] * Value(adynamic[k]) );
-	ok    &= NearEqual(y[k] , check, eps, eps);
+	ok    &= NearEqual(y[k] , check, eps99, eps99);
 	++k;
 	check  = -1.0*double(k+1)*( Value(adynamic[k]) / x[k] );
 	check += ( x[k] / Value(adynamic[k]) );
-	ok    &= NearEqual(y[k] , check, eps, eps);
+	ok    &= NearEqual(y[k] , check, eps99, eps99);
 	++k;
 	check  = x[k] + Value(adynamic[k]);
-	ok    &= NearEqual(y[k] , check, eps, eps);
+	ok    &= NearEqual(y[k] , check, eps99, eps99);
 	++k;
 	check  = Value(adynamic[k]) - x[k];
-	ok    &= NearEqual(y[k] , check, eps, eps);
+	ok    &= NearEqual(y[k] , check, eps99, eps99);
 	++k;
 	check  = x[k] * Value(adynamic[k]);
-	ok    &= NearEqual(y[k] , check, eps, eps);
+	ok    &= NearEqual(y[k] , check, eps99, eps99);
 	++k;
 	check  = Value(adynamic[k]) / x[k];
-	ok    &= NearEqual(y[k] , check, eps, eps);
+	ok    &= NearEqual(y[k] , check, eps99, eps99);
 	++k;
 	check  = pow(x[k], Value(adynamic[k])) + pow(Value(adynamic[k]), x[k]);
-	ok    &= NearEqual(y[k] , check, eps, eps);
+	ok    &= NearEqual(y[k] , check, eps99, eps99);
 	++k;
 	check  = azmul(x[k], Value(adynamic[k])) + azmul(Value(adynamic[k]), x[k]);
-	ok    &= NearEqual(y[k] , check, eps, eps);
+	ok    &= NearEqual(y[k] , check, eps99, eps99);
 	++k;
 	check  = CondExpLt( x[k], Value(adynamic[k]), x[k], Value(adynamic[k]) );
-	ok    &= NearEqual(y[k] , check, eps, eps);
+	ok    &= NearEqual(y[k] , check, eps99, eps99);
 	++k;
 	ok &= size_t(k) == n;
 
@@ -128,37 +128,37 @@ bool operator_with_variable(void)
 	y = f.Forward(0, x);
 	k     = 0;
 	check = -1.0*double(k+1)*( dynamic[k] + x[k] ) * ( x[k] + dynamic[k] );
-	ok   &= NearEqual(y[k] , check, eps, eps);
+	ok   &= NearEqual(y[k] , check, eps99, eps99);
 	++k;
 	check = -1.0*double(k+1)*( dynamic[k] - x[k] ) * ( x[k] - dynamic[k] );
-	ok   &= NearEqual(y[k] , check, eps, eps);
+	ok   &= NearEqual(y[k] , check, eps99, eps99);
 	++k;
 	check = -1.0*double(k+1)*( dynamic[k] * x[k] ) + ( x[k] * dynamic[k] );
-	ok   &= NearEqual(y[k] , check, eps, eps);
+	ok   &= NearEqual(y[k] , check, eps99, eps99);
 	++k;
 	check = -1.0*double(k+1)*( dynamic[k] / x[k] ) + ( x[k] / dynamic[k] );
-	ok   &= NearEqual(y[k] , check, eps, eps);
+	ok   &= NearEqual(y[k] , check, eps99, eps99);
 	++k;
 	check = x[k] + dynamic[k];
-	ok   &= NearEqual(y[k] , check, eps, eps);
+	ok   &= NearEqual(y[k] , check, eps99, eps99);
 	++k;
 	check = dynamic[k] - x[k];
-	ok   &= NearEqual(y[k] , check, eps, eps);
+	ok   &= NearEqual(y[k] , check, eps99, eps99);
 	++k;
 	check = x[k] * dynamic[k];
-	ok   &= NearEqual(y[k] , check, eps, eps);
+	ok   &= NearEqual(y[k] , check, eps99, eps99);
 	++k;
 	check = dynamic[k] / x[k];
-	ok   &= NearEqual(y[k] , check, eps, eps);
+	ok   &= NearEqual(y[k] , check, eps99, eps99);
 	++k;
 	check  = pow(x[k], dynamic[k]) + pow(dynamic[k], x[k]);
-	ok    &= NearEqual(y[k] , check, eps, eps);
+	ok    &= NearEqual(y[k] , check, eps99, eps99);
 	++k;
 	check  = azmul(x[k], dynamic[k]) + azmul(dynamic[k], x[k]);
-	ok    &= NearEqual(y[k] , check, eps, eps);
+	ok    &= NearEqual(y[k] , check, eps99, eps99);
 	++k;
 	check  = CondExpLt(x[k], dynamic[k], x[k], dynamic[k]);
-	ok    &= NearEqual(y[k] , check, eps, eps);
+	ok    &= NearEqual(y[k] , check, eps99, eps99);
 	++k;
 	ok &= size_t(k) == n;
 	//
@@ -171,7 +171,7 @@ bool dynamic_operator(void)
 	using CppAD::NearEqual;
 	using CppAD::azmul;
 	using CppAD::sign;
-	double eps = 10. * std::numeric_limits<double>::epsilon();
+	double eps99 = 99.0 * std::numeric_limits<double>::epsilon();
 
 	// independent dynamic parameter vector
 	size_t nd  = 1;
@@ -295,104 +295,104 @@ bool dynamic_operator(void)
 	// ----------------------------------------------------------
 	// 98 standard math
 	double check = acos(dynamic[0]);
-	ok   &= NearEqual(y[k], check, eps, eps);
+	ok   &= NearEqual(y[k], check, eps99, eps99);
 	++k;
 	check = asin(dynamic[0]);
-	ok   &= NearEqual(y[k], check, eps, eps);
+	ok   &= NearEqual(y[k], check, eps99, eps99);
 	++k;
 	check = atan(dynamic[0]);
-	ok   &= NearEqual(y[k], check, eps, eps);
+	ok   &= NearEqual(y[k], check, eps99, eps99);
 	++k;
 	check = cos(dynamic[0]);
-	ok   &= NearEqual(y[k], check, eps, eps);
+	ok   &= NearEqual(y[k], check, eps99, eps99);
 	++k;
 	check = cosh(dynamic[0]);
-	ok   &= NearEqual(y[k], check, eps, eps);
+	ok   &= NearEqual(y[k], check, eps99, eps99);
 	++k;
 	check = exp(dynamic[0]);
-	ok   &= NearEqual(y[k], check, eps, eps);
+	ok   &= NearEqual(y[k], check, eps99, eps99);
 	++k;
 	check = acos(dynamic[0]);
-	ok   &= NearEqual(y[k], check, eps, eps);
+	ok   &= NearEqual(y[k], check, eps99, eps99);
 	++k;
 	check = log(dynamic[0]);
-	ok   &= NearEqual(y[k], check, eps, eps);
+	ok   &= NearEqual(y[k], check, eps99, eps99);
 	++k;
 	check = sin(dynamic[0]);
-	ok   &= NearEqual(y[k], check, eps, eps);
+	ok   &= NearEqual(y[k], check, eps99, eps99);
 	++k;
 	check = sinh(dynamic[0]);
-	ok   &= NearEqual(y[k], check, eps, eps);
+	ok   &= NearEqual(y[k], check, eps99, eps99);
 	++k;
 	check = sqrt(dynamic[0]);
-	ok   &= NearEqual(y[k], check, eps, eps);
+	ok   &= NearEqual(y[k], check, eps99, eps99);
 	++k;
 	check = tan(dynamic[0]);
-	ok   &= NearEqual(y[k], check, eps, eps);
+	ok   &= NearEqual(y[k], check, eps99, eps99);
 	++k;
 	check = tanh(dynamic[0]);
-	ok   &= NearEqual(y[k], check, eps, eps);
+	ok   &= NearEqual(y[k], check, eps99, eps99);
 	++k;
 	// ----------------------------------------------------------
 	// 2011 standard math
 # if CPPAD_USE_CPLUSPLUS_2011
 	check = asinh(dynamic[0]);
-	ok   &= NearEqual(y[k], check, eps, eps);
+	ok   &= NearEqual(y[k], check, eps99, eps99);
 	++k;
 	check = acosh(dynamic[0] + 1.0);
-	ok   &= NearEqual(y[k], check, eps, eps);
+	ok   &= NearEqual(y[k], check, eps99, eps99);
 	++k;
 	check = atanh(dynamic[0]);
-	ok   &= NearEqual(y[k], check, eps, eps);
+	ok   &= NearEqual(y[k], check, eps99, eps99);
 	++k;
 	check = expm1(dynamic[0]);
-	ok   &= NearEqual(y[k], check, eps, eps);
+	ok   &= NearEqual(y[k], check, eps99, eps99);
 	++k;
 	check = erf(dynamic[0]);
-	ok   &= NearEqual(y[k], check, eps, eps);
+	ok   &= NearEqual(y[k], check, eps99, eps99);
 	++k;
 	check = log1p(dynamic[0]);
-	ok   &= NearEqual(y[k], check, eps, eps);
+	ok   &= NearEqual(y[k], check, eps99, eps99);
 	++k;
 # endif
 	// ----------------------------------------------------------
 	// binary
 	check = 2.0 + dynamic[0];
-	ok   &= NearEqual(y[k], check, eps, eps);
+	ok   &= NearEqual(y[k], check, eps99, eps99);
 	++k;
-	ok   &= NearEqual(y[k], check, eps, eps);
+	ok   &= NearEqual(y[k], check, eps99, eps99);
 	++k;
 	check = dynamic[0] / 2.0;
-	ok   &= NearEqual(y[k], check, eps, eps);
+	ok   &= NearEqual(y[k], check, eps99, eps99);
 	++k;
-	ok   &= NearEqual(y[k], check, eps, eps);
+	ok   &= NearEqual(y[k], check, eps99, eps99);
 	++k;
 	check = 2.0 * dynamic[0];
-	ok   &= NearEqual(y[k], check, eps, eps);
+	ok   &= NearEqual(y[k], check, eps99, eps99);
 	++k;
-	ok   &= NearEqual(y[k], check, eps, eps);
+	ok   &= NearEqual(y[k], check, eps99, eps99);
 	++k;
 	check = dynamic[0] - 2.0;
-	ok   &= NearEqual(y[k], check, eps, eps);
+	ok   &= NearEqual(y[k], check, eps99, eps99);
 	++k;
-	ok   &= NearEqual(y[k], check, eps, eps);
+	ok   &= NearEqual(y[k], check, eps99, eps99);
 	++k;
 	// ----------------------------------------------------------
 	// other
 	check = - dynamic[0];
-	ok   &= NearEqual(y[k], check, eps, eps);
+	ok   &= NearEqual(y[k], check, eps99, eps99);
 	++k;
 	check = abs(dynamic[0]);
-	ok   &= NearEqual(y[k], check, eps, eps);
+	ok   &= NearEqual(y[k], check, eps99, eps99);
 	++k;
 	check = pow(dynamic[0], 2.0);
-	ok   &= NearEqual(y[k], check, eps, eps);
+	ok   &= NearEqual(y[k], check, eps99, eps99);
 	++k;
 	check = sign(dynamic[0]);
-	ok   &= NearEqual(y[k], check, eps, eps);
+	ok   &= NearEqual(y[k], check, eps99, eps99);
 	++k;
 	check = azmul(2.0, dynamic[0]);
-	ok   &= NearEqual(y[k], check, eps, eps);
+	ok   &= NearEqual(y[k], check, eps99, eps99);
 	++k;
 	// if dynamic[0] == 0.5 then ay[k] = 1.0 else ay[k] = -1.0
 	check = CppAD::CondExpEq(dynamic[0], 0.5, 1.0, -1.0);
@@ -528,7 +528,7 @@ bool optimize_csum(void)
 {	bool ok = true;
 	using CppAD::AD;
 	using CppAD::NearEqual;
-	double eps = 10. * std::numeric_limits<double>::epsilon();
+	double eps99 = 99.0 * std::numeric_limits<double>::epsilon();
 
 	// independent dynamic parameter vector
 	size_t num_dyn_ind  = 2;
@@ -582,9 +582,9 @@ bool optimize_csum(void)
 	x[0] = 5.0;
 	y    = f.Forward(0, x);
 	double check = 3.0 - x[0] - 4.0 + 5.0;
-	ok   &= NearEqual(y[0], check, eps, eps);
+	ok   &= NearEqual(y[0], check, eps99, eps99);
 	check = x[0] + dynamic[1] - dynamic[0];
-	ok   &= NearEqual(y[1], check, eps, eps);
+	ok   &= NearEqual(y[1], check, eps99, eps99);
 	// -------------------------------------------------------------
 	// optimize and re-test
 	f.optimize();
@@ -597,9 +597,9 @@ bool optimize_csum(void)
 	x[0] = 0.5;
 	y    = f.Forward(0, x);
 	check = 3.0 - x[0] - 4.0 + 5.0;
-	ok   &= NearEqual(y[0], check, eps, eps);
+	ok   &= NearEqual(y[0], check, eps99, eps99);
 	check = x[0] + dynamic[1] - dynamic[0];
-	ok   &= NearEqual(y[1], check, eps, eps);
+	ok   &= NearEqual(y[1], check, eps99, eps99);
 	//
 	return ok;
 }
@@ -655,7 +655,7 @@ CPPAD_DISCRETE_FUNCTION(double, n_digits)
 //
 bool dynamic_discrete(void)
 {	bool ok = true;
-	double eps = 10. * std::numeric_limits<double>::epsilon();
+	double eps99 = 99.0 * std::numeric_limits<double>::epsilon();
 
 	// record the function f(x) = x[0] * n_digits( dynamic[0] )
 	ADvector ax(1);
@@ -677,7 +677,7 @@ bool dynamic_discrete(void)
 	// check zero order forward
 	x[0] = 3.0;
 	y    = f.Forward(0, x);
-	ok  &= CppAD::NearEqual(y[0], x[0] * 2.0, eps, eps);
+	ok  &= CppAD::NearEqual(y[0], x[0] * 2.0, eps99, eps99);
 
 	return ok;
 }
@@ -686,7 +686,7 @@ bool dynamic_optimize(void)
 {	bool ok = true;
 	using CppAD::AD;
 	using CppAD::NearEqual;
-	double eps = 10. * std::numeric_limits<double>::epsilon();
+	double eps99 = 99.0 * std::numeric_limits<double>::epsilon();
 
 	// independent dynamic parameter vector
 	size_t nd  = 1;
@@ -748,9 +748,9 @@ bool dynamic_optimize(void)
 	x[0] = 5.0;
 	y    = f.Forward(0, x);
 	double check = x[0] + (3.0 + dynamic[0] ) * (3.0 + dynamic[0]);
-	ok   &= NearEqual(y[0], check, eps, eps);
+	ok   &= NearEqual(y[0], check, eps99, eps99);
 	check = x[0] * (3.0 + dynamic[0] ) * (3.0 + dynamic[0]);
-	ok   &= NearEqual(y[1], check, eps, eps);
+	ok   &= NearEqual(y[1], check, eps99, eps99);
 	// -------------------------------------------------------------
 	// optimize and re-test
 	f.optimize();
@@ -761,9 +761,9 @@ bool dynamic_optimize(void)
 	f.new_dynamic(dynamic);
 	y     = f.Forward(0, x);
 	check = x[0] + (3.0 + dynamic[0]) * (3.0 + dynamic[0]);
-	ok   &= NearEqual(y[0], check, eps, eps);
+	ok   &= NearEqual(y[0], check, eps99, eps99);
 	check = x[0] * (3.0 + dynamic[0]) * (3.0 + dynamic[0]);
-	ok   &= NearEqual(y[1], check, eps, eps);
+	ok   &= NearEqual(y[1], check, eps99, eps99);
 	//
 	return ok;
 }
