@@ -37,6 +37,12 @@ $$
 
 $section Changes and Additions to CppAD During 2018$$
 
+$head 10-24$$
+The new $cref CppAD$$ home pages has been edited to be a better
+introduction to CppAD.
+In addition, more discussion was added to the $cref get_started.cpp$$
+example.
+
 $head 10-19$$
 The speed tests for the deprecated
 $cref cppad_ipopt_nlp$$ now use the
