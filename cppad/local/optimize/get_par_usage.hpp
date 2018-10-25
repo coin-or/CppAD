@@ -92,7 +92,7 @@ void get_par_usage(
 	par_usage.resize(num_par);
 	for(size_t i_par = 0; i_par < num_dynamic_ind; ++i_par)
 		par_usage[i_par] = true;  // true for independent dynamic parameters
-	for(size_t i_par = num_dynamic_par; i_par < num_par; ++i_par)
+	for(size_t i_par = num_dynamic_ind; i_par < num_par; ++i_par)
 		par_usage[i_par] = false; // initialize as false for other parameters
 	//
 	// -----------------------------------------------------------------------
@@ -136,7 +136,7 @@ void get_par_usage(
 				par_usage[ arg[0] ] = true;
 			else
 			{	// determine if this parameter will be absorbed by csum
-				 if( ! (op_usage[i_op] == csum_usage) )
+				if( ! (op_usage[i_op] == csum_usage) )
 				{	// determine operator corresponding to variable
 					size_t j_op = random_itr.var2op(size_t(arg[1]));
 					CPPAD_ASSERT_UNKNOWN( op_usage[j_op] != no_usage );
@@ -152,7 +152,7 @@ void get_par_usage(
 				par_usage[ arg[1] ] = true;
 			else
 			{	// determine if this parameter will be absorbed by csum
-				 if( ! (op_usage[i_op] == csum_usage) )
+				if( ! (op_usage[i_op] == csum_usage) )
 				{	// determine operator corresponding to variable
 					size_t j_op = random_itr.var2op(size_t(arg[0]));
 					CPPAD_ASSERT_UNKNOWN( op_usage[j_op] != no_usage );

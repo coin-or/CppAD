@@ -108,7 +108,8 @@ bool operator_with_variable(void)
 	check  = Value(adynamic[k]) / x[k];
 	ok    &= NearEqual(y[k] , check, eps99, eps99);
 	++k;
-	check  = pow(x[k], Value(adynamic[k])) + pow(Value(adynamic[k]), x[k]);
+	check  = std::pow(x[k], Value(adynamic[k]));
+	check += std::pow(Value(adynamic[k]), x[k]);
 	ok    &= NearEqual(y[k] , check, eps99, eps99);
 	++k;
 	check  = azmul(x[k], Value(adynamic[k])) + azmul(Value(adynamic[k]), x[k]);
@@ -151,7 +152,8 @@ bool operator_with_variable(void)
 	check = dynamic[k] / x[k];
 	ok   &= NearEqual(y[k] , check, eps99, eps99);
 	++k;
-	check  = pow(x[k], dynamic[k]) + std::pow(dynamic[k], x[k]);
+	check  = std::pow(x[k], dynamic[k]);
+	check += std::pow(dynamic[k], x[k]);
 	ok    &= NearEqual(y[k] , check, eps99, eps99);
 	++k;
 	check  = azmul(x[k], dynamic[k]) + CppAD::azmul(dynamic[k], x[k]);

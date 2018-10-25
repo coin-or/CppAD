@@ -37,6 +37,12 @@ $$
 
 $section Changes and Additions to CppAD During 2018$$
 
+$head 10-25$$
+There was bug in $cref/f.optimize/optimize/$$
+when $icode f$$ has $cref/dynamic parameters/new_dynamic/$$.
+This has been fixed.
+
+
 $head 10-24$$
 The new $cref CppAD$$ home pages has been edited to be a better
 introduction to CppAD.
