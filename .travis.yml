@@ -18,4 +18,4 @@ script:
     # If path_to_one_test is is present, only that test is run,
     # otherwise all the tests are run.
     #
-    bin/travis.sh test_more/general/new_dynamic.cpp
+    bin/travis.sh
