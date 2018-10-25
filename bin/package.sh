@@ -66,6 +66,7 @@ cat << EOF > $src_dir/package.$$
 /^.gitignore\$/d
 /^authors\$/d
 /^bin\\/colpack.sh\$/d
+/^coin.png\$/d
 /^compile\$/d
 /^config.guess\$/d
 /^config.sub\$/d
