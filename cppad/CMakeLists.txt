@@ -1,5 +1,5 @@
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the
@@ -21,12 +21,25 @@ MACRO(check_match match_variable match_constant output_variable)
 	print_variable(${output_variable})
 ENDMACRO(check_match)
 # -----------------------------------------------------------------------------
-# cppad_compiler_is_gnucxx
-IF( CMAKE_COMPILER_IS_GNUCXX )
-	SET( cppad_compiler_is_gnucxx 1 )
-ELSE( CMAKE_COMPILER_IS_GNUCXX )
-	SET( cppad_compiler_is_gnucxx 0 )
-ENDIF( CMAKE_COMPILER_IS_GNUCXX )
+# compiler_has_conversion_warn
+SET( clang_or_gnu 0 )
+IF( "${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang" )
+	SET(clang_or_gnu 1)
+ENDIF( "${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang" )
+IF( "${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU" )
+	SET(clang_or_gnu 1)
+ENDIF( "${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU" )
+IF( clang_or_gnu )
+	SET(backup "${cppad_cxx_flags}")
+	SET(cppad_cxx_flags "${backup} -Wfloat-conversion -Wconversion -Werror")
+	#
+	SET(source "int main(void) { return 0; }")
+	check_source_runs("${source}" compiler_has_conversion_warn )
+	#
+	SET(cppad_cxx_flags "${backup}")
+ELSE( clang_or_gnu )
+	SET( compiler_has_conversion_warn 0 )
+ENDIF( clang_or_gnu )
 # -----------------------------------------------------------------------------
 # cppad_boostvector, cppad_cppadvector, cppad_eigenvector, cppad_stdvector
 #

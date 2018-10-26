@@ -1,7 +1,7 @@
 # ifndef CPPAD_WNO_CONVERSION_HPP
 # define CPPAD_WNO_CONVERSION_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -36,7 +36,7 @@ $end
 */
 
 # include <cppad/configure.hpp>
-# if CPPAD_COMPILER_IS_GNUCXX
+# if CPPAD_COMPILER_HAS_CONVERSION_WARN
 # pragma GCC diagnostic ignored "-Wfloat-conversion"
 # pragma GCC diagnostic ignored "-Wconversion"
 # endif

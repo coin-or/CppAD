@@ -18,10 +18,10 @@ Replacement for config.h so that all preprocessor symbols begin with CPPAD_
 */
 
 /*!
-\def CPPAD_COMPILER_IS_GNUCXX
-is the compiler a variant of g++
+\def CPPAD_COMPILER_HAS_CONVERSION_WARN
+is the compiler a variant of g++ and has conversion warnings
 */
-# define CPPAD_COMPILER_IS_GNUCXX @cppad_compiler_is_gnucxx@
+# define CPPAD_COMPILER_HAS_CONVERSION_WARN @compiler_has_conversion_warn@
 
 /*!
 \def CPPAD_DISABLE_SOME_MICROSOFT_COMPILER_WARNINGS
