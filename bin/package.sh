@@ -25,10 +25,10 @@ echo_eval() {
 }
 # -----------------------------------------------------------------------------
 src_dir=`pwd`
-version=`version.sh get`
+version=`sed -n -e '/^SET( *cppad_version *"[0-9]*"/p' CMakeLists.txt | \
+	sed -e 's|.*"\([^"]*\)".*|\1|'`
 # -----------------------------------------------------------------------------
 # doc
-echo 'create ./doc'
 if [ -e 'doc' ]
 then
 	echo_eval rm -r doc
@@ -47,9 +47,11 @@ p
 EOF
 #
 # use gh-pages if they exist for this version
+git fetch origin gh-pages >& /dev/null
 git_hash=`git log origin/gh-pages | sed -n -f $src_dir/package.$$ | head -1`
 if [ "$git_hash" != '' ]
 then
+	echo 'create ./doc'
 	mkdir doc
 	list=`git ls-tree --name-only $git_hash:doc`
 	for file in $list
@@ -57,8 +59,23 @@ then
 		git show $git_hash:doc/$file > doc/$file
 	done
 else
-	# no gh-pages so build documentation (requires omhelp)
-	run_omhelp.sh doc
+cat << EOF
+Cannot find gh-pages documentation for this version: $version
+
+1. Use 'git log origin/gh-pages' to see which versions have docuimentation.
+
+2. Pick a version number and search for 'Advance to' for that version number
+in output of 'git log master' and note the <hash_code> for that commit.
+
+3. Use 'git checkout <hash_code>' to check the source code for that version.
+
+4. Use 'git show master:bin/package.sh > bin/package.sh' to get the most
+recent version of bin/package.sh
+
+5. Re-run  bin/package.sh"
+EOF
+	rm package.$$
+	exit 1
 fi
 # -----------------------------------------------------------------------------
 # change_list

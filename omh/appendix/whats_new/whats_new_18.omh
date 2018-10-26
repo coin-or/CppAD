@@ -48,6 +48,9 @@ $lnext
 Fix warning, from old $code gcc$$ compilers, that
 $code -Wfloat-conversion$$ and $code -Wfloat-conversion$$
 are not valid options.
+$lnext
+Instructions for obtaining GPL distribution were added near the
+top of the $cref/home page/CppAD/$$.
 $lend
 
 

@@ -57,6 +57,7 @@ $spell
 	subgraph
 	Posix
 	Openmp
+	tarballs
 $$
 
 $comment bin/version assumes that : follows cppad version number here$$
@@ -86,6 +87,8 @@ with the Eclipse Public License
 $href%http://www.opensource.org/licenses/EPL-1.0%EPL-1.0%$$
 or the GNU General Public License
 $href%http://www.opensource.org/licenses/AGPL-3.0%AGPL-3.0%$$.
+The script $code bin/package.sh$$ will generate two tarballs
+in the $code build$$ directory, one for each distribution,
 
 $tend
 $align top$$
