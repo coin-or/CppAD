@@ -38,9 +38,15 @@ $$
 $section Changes and Additions to CppAD During 2018$$
 
 $head 10-25$$
+$list number$$
 There was bug in $cref/f.optimize/optimize/$$
 when $icode f$$ has $cref/dynamic parameters/new_dynamic/$$.
 This has been fixed.
+$lnext
+Fix warning, from old $code gcc$$ compilers, that
+$code -Wfloat-conversion$$ and $code -Wfloat-conversion$$
+are not valid options.
+$lend
 
 
 $head 10-24$$

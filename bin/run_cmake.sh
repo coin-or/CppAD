@@ -245,7 +245,8 @@ do
 done
 #
 # cppad_cxx_flags
-cppad_cxx_flags="-Wall -pedantic-errors -std=$standard -Wshadow -Wconversion"
+cppad_cxx_flags="-Wall -pedantic-errors -std=$standard -Wshadow"
+cppad_cxx_flags="$cppad_cxx_flags -Wfloat-conversion -Wconversion"
 if [ "$callgrind" == 'yes' ]
 then
 	if [ "$debug_which" != 'debug_none' ]
