@@ -33,6 +33,8 @@ $spell
 	Taylor
 	af
 	Wconversion
+	gcc
+	Wfloat
 $$
 
 $section Changes and Additions to CppAD During 2018$$
