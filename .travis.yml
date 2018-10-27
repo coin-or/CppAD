@@ -14,11 +14,13 @@ language: cpp
 compiler: gcc
 
 script:
-  # bin/travis.sh [path_to_one_test]
-  # If path_to_one_test is is present, only that test is run,
-  # otherwise all the tests are run.
+  # bin/travis.sh test_name
   #
-  bin/travis.sh
+  # Where test_name can be 'all', a directory that contains tests,
+  # or a file that contains one test. A file that contains one test must
+  # have the .cpp extension.
+  #
+  bin/travis.sh test_more/cppad_for_tmb
 
 notifications:
   email:

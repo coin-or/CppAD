@@ -130,9 +130,6 @@ bool prefer_reverse(void)
 	return ok;
 }
 
-// ----------------------------------------------------------------------------
-// Special version of atomic_base so one functions works for multiple threads.
-//
 // algorithm that we are checkpoingint
 const size_t n_sum_ = 1000;
 void square_algo(const ad_vector& ax, ad_vector& ay)
