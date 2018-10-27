@@ -14,8 +14,15 @@ language: cpp
 compiler: gcc
 
 script:
-    # bin/travis.sh [path_to_one_test]
-    # If path_to_one_test is is present, only that test is run,
-    # otherwise all the tests are run.
-    #
-    bin/travis.sh
+  # bin/travis.sh [path_to_one_test]
+  # If path_to_one_test is is present, only that test is run,
+  # otherwise all the tests are run.
+  #
+  bin/travis.sh
+
+notifications:
+  email:
+    recipients:
+      bradbell@seanet.com
+    on_success: always # default: change
+    on_failure: always # default: always
