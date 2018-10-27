@@ -29,7 +29,8 @@ usage: bin/travis.sh test_name
 
 Where test_name can be 'all', a directory that contains tests,
 or a file that contains one test. A file that contains one test must
-have the .cpp extension.
+have the .cpp extension. Note that travis does not yet support test
+that require other packages; e.g., adolc.
 EOF
 	fi
 fi
