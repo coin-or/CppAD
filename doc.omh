@@ -237,7 +237,7 @@ which ensures that they work properly.
 
 $children%
 	omh/install/install.omh%
-	omh/introduction.omh%
+	omh/theory/theory.omh%
 	cppad/core/user_ad.hpp%
 	cppad/core/ad_fun.hpp%
 	omh/preprocessor.omh%

@@ -191,15 +191,15 @@ and $latex z^{(j+1)}$$.
 
 
 $children%
-	omh/appendix/theory/exp_forward.omh%
-	omh/appendix/theory/log_forward.omh%
-	omh/appendix/theory/sqrt_forward.omh%
-	omh/appendix/theory/sin_cos_forward.omh%
-	omh/appendix/theory/atan_forward.omh%
-	omh/appendix/theory/asin_forward.omh%
-	omh/appendix/theory/acos_forward.omh%
-	omh/appendix/theory/tan_forward.omh%
-	omh/appendix/theory/erf_forward.omh
+	omh/theory/exp_forward.omh%
+	omh/theory/log_forward.omh%
+	omh/theory/sqrt_forward.omh%
+	omh/theory/sin_cos_forward.omh%
+	omh/theory/atan_forward.omh%
+	omh/theory/asin_forward.omh%
+	omh/theory/acos_forward.omh%
+	omh/theory/tan_forward.omh%
+	omh/theory/erf_forward.omh
 %$$
 
 $subhead Cases that Apply Recursion Above$$

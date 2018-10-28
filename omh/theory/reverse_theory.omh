@@ -169,15 +169,15 @@ $latex \[
 
 
 $childtable%
-	omh/appendix/theory/exp_reverse.omh%
-	omh/appendix/theory/log_reverse.omh%
-	omh/appendix/theory/sqrt_reverse.omh%
-	omh/appendix/theory/sin_cos_reverse.omh%
-	omh/appendix/theory/atan_reverse.omh%
-	omh/appendix/theory/asin_reverse.omh%
-	omh/appendix/theory/acos_reverse.omh%
-	omh/appendix/theory/tan_reverse.omh%
-	omh/appendix/theory/erf_reverse.omh
+	omh/theory/exp_reverse.omh%
+	omh/theory/log_reverse.omh%
+	omh/theory/sqrt_reverse.omh%
+	omh/theory/sin_cos_reverse.omh%
+	omh/theory/atan_reverse.omh%
+	omh/theory/asin_reverse.omh%
+	omh/theory/acos_reverse.omh%
+	omh/theory/tan_reverse.omh%
+	omh/theory/erf_reverse.omh
 %$$
 
 $end
