@@ -447,6 +447,9 @@ void dynamic(
 	return;
 }
 
+// preprocessor symbols that are local to this file
+# undef CPPAD_DYNAMIC_TRACE
+
 } } } // END_CPPAD_LOCAL_SWEEP_NAMESPACE
 
 # endif

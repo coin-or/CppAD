@@ -768,10 +768,10 @@ void rev_jac(
 
 	return;
 }
-} } } // END_CPPAD_LOCAL_SWEEP_NAMESPACE
 
 // preprocessor symbols that are local to this file
 # undef CPPAD_REV_JAC_TRACE
-# undef CPPAD_ATOMIC_CALL
+
+} } } // END_CPPAD_LOCAL_SWEEP_NAMESPACE
 
 # endif

@@ -19,6 +19,13 @@ then
 	echo "bin/package.sh: must be executed from its parent directory"
 	exit 1
 fi
+if ! git show-ref origin/gh-pages >& /dev/null
+then
+	echo 'bin/package.sh: git cannot find origin/gh-pages branch'
+	echo 'use the following command to fetch it:'
+	echo '	git fetch origin gh-pages'
+	exit 1
+fi
 echo_eval() {
      echo $*
      eval $*
@@ -47,7 +54,6 @@ p
 EOF
 #
 # use gh-pages if they exist for this version
-git fetch origin gh-pages >& /dev/null
 git_hash=`git log origin/gh-pages | sed -n -f $src_dir/package.$$ | head -1`
 if [ "$git_hash" != '' ]
 then
@@ -58,6 +64,10 @@ then
 	do
 		git show $git_hash:doc/$file > doc/$file
 	done
+elif which run_omhelp.sh > /dev/null
+then
+	# omhelp is available, so build documentation for this version
+	echo_eval run_omhelp.sh doc
 else
 cat << EOF
 Cannot find gh-pages documentation for this version: $version

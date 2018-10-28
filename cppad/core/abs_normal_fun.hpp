@@ -920,6 +920,9 @@ void ADFun<Base,RecBase>::abs_normal_fun(ADFun& g, ADFun& a) const
 	a.cap_order_taylor_ = 0;
 }
 
+// preprocessor symbols that are local to this file
+# undef CPPAD_J_PAR_EQUAL_REC
+
 } // END_CPPAD_NAMESPACE
 
 # endif

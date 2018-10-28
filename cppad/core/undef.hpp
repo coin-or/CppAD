@@ -2,7 +2,7 @@
 # define CPPAD_CORE_UNDEF_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -61,9 +61,9 @@ Preprecessor definitions that presist after cppad/cppad.hpp is included:
 */
 // Preprecessor definitions that do not presist
 # undef CPPAD_ASSERT_NARG_NRES
-# undef CPPAD_ASSERT_ARG_BEFORE_RESULT
 # undef CPPAD_AZMUL
 # undef CPPAD_BOOSTVECTOR
+# undef CPPAD_COMPILER_HAS_CONVERSION_WARN
 # undef CPPAD_COND_EXP
 # undef CPPAD_COND_EXP_BASE_REL
 # undef CPPAD_COND_EXP_REL
@@ -71,17 +71,16 @@ Preprecessor definitions that presist after cppad/cppad.hpp is included:
 # undef CPPAD_FOLD_AD_VALUED_BINARY_OPERATOR
 # undef CPPAD_FOLD_ASSIGNMENT_OPERATOR
 # undef CPPAD_FOLD_BOOL_VALUED_BINARY_OPERATOR
-# undef CPPAD_FOR_JAC_SWEEP_TRACE
+# undef CPPAD_HAS_ADOLC
+# undef CPPAD_HAS_EIGEN
 # undef CPPAD_HAS_GETTIMEOFDAY
+# undef CPPAD_HAS_IPOPT
 # undef CPPAD_HAS_MKSTEMP
 # undef CPPAD_HAS_TMPNAM_S
 # undef CPPAD_INLINE_FRIEND_TEMPLATE_FUNCTION
 # undef CPPAD_LIB_EXPORT
 # undef CPPAD_MAX_NUM_CAPACITY
 # undef CPPAD_MIN_DOUBLE_CAPACITY
-# undef CPPAD_REVERSE_SWEEP_TRACE
-# undef CPPAD_REV_HES_SWEEP_TRACE
-# undef CPPAD_REV_JAC_SWEEP_TRACE
 # undef CPPAD_STANDARD_MATH_UNARY_AD
 # undef CPPAD_STDVECTOR
 # undef CPPAD_TRACE_CAPACITY
@@ -91,5 +90,6 @@ Preprecessor definitions that presist after cppad/cppad.hpp is included:
 # undef CPPAD_USER_MACRO_ONE
 # undef CPPAD_USER_MACRO_TWO
 # undef CPPAD_VEC_AD_COMPUTED_ASSIGNMENT
+# undef CPPAD_VEC_ENUM_TYPE
 
 # endif

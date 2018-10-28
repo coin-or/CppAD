@@ -20,20 +20,17 @@ $spell
 $$
 
 $section ADFun Sequence Properties: Example and Test$$
-$mindex Domain Range Parameter size_var size_par size_op_arg size_VecAD$$
 
-
-
-
-$code
 $srcfile%example/general/seq_property.cpp%0%// BEGIN C++%// END C++%1%$$
-$$
 
 $end
 */
 // BEGIN C++
 
 # include <cppad/cppad.hpp>
+
+// Note that CPPAD_VEC_ENUM_TYPE is not part of CppAD API and may change
+# define CPPAD_VEC_ENUM_TYPE unsigned char
 
 bool seq_property(void)
 {	bool ok = true;
@@ -148,7 +145,6 @@ bool seq_property(void)
 	ok &= f.size_dyn_arg()  == ndyn_arg;
 
 	//
-	// Note that CPPAD_VEC_ENUM_TYPE is not part of CppAD API and may change
 	size_t sum = 0;
 	sum += nop        * sizeof(CPPAD_VEC_ENUM_TYPE);
 	sum += narg       * sizeof(CPPAD_TAPE_ADDR_TYPE);

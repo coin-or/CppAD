@@ -623,5 +623,4 @@ public:
 # include <cppad/core/checkpoint/set_jac_sparse_bool.hpp>
 # include <cppad/core/checkpoint/set_jac_sparse_set.hpp>
 
-# undef CPPAD_MULTI_THREAD_TMB
 # endif

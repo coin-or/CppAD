@@ -345,4 +345,6 @@ void ADFun<Base,RecBase>::optimize(const std::string& options)
 }
 
 } // END_CPPAD_NAMESPACE
+
+# undef CPPAD_CORE_OPTIMIZE_PRINT_RESULT
 # endif
