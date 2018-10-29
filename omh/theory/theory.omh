@@ -18,7 +18,8 @@ $contents%
 	omh/theory/forward_theory.omh%
 	omh/theory/reverse_theory.omh%
 	omh/theory/reverse_identity.omh%
-	omh/theory/taylor_ode.omh
+	omh/theory/taylor_ode.omh%
+	omh/theory/research.omh
 %$$
 
 $end

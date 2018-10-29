@@ -52,21 +52,18 @@ $$
 
 $section The CppAD Wish List$$
 
-$head AD<Base> Functions from Base Functions$$
-Add a feature that creates an $codei%ADFun< AD<%Base%> >%$$ object
-from an $cref/ADFun<Base>/ADFun/$$ object.
-Then any AD function would have two versions,
-a $icode Base$$ version for evaluation of derivatives,
-and an $codei%AD<%Base%>%$$ for recording a new functions that
-use derivatives of this function.
-This works well with the $cref new_dynamic$$ feature.
-For example, one could first define a function with
-$cref/dynamic parameters/glossary/Parameter/Dynamic/$$ and
-then define a second function, using derivatives of the first function,
-where dynamic parameters in the first function are variables in the second.
-Users of atomic functions would need to define AD versions
-of $cref atomic_forward$$ and $cref atomic_reverse$$ to gain full use
-of this feature.
+$head See Also$$
+$cref research$$
+
+$head Purpose$$
+This items on this list are improvements and extensions to CppAD
+that are currently being considered.
+
+$head Constant$$
+There should be a $icode%f%.Constant(%i%)%$$ function,
+similar to the $cref/Parameter/seq_property/Parameter/$$ function,
+that allows one to determine which dependent variables are
+$cref/constant parameters/glossary/Parameter/Constant/$$.
 
 $comment ------------------------------------------------------------------- $$
 $head Atomic$$
@@ -178,16 +175,6 @@ $codei%
 $lend
 
 
-$head Multi-Threading$$
-The TMB packages has a special version of the
-$cref checkpoint$$ class
-that enables one checkpoint function to be my multiple OpenMp threads.
-Perhaps it would be useful to extend the CppAD multi-threading environment
-to allow for this.
-In addition, perhaps a multi-threading version of an ADFun object would
-be useful.
-
-
 $comment ------------------------------------------------------------------- $$
 
 $head check_finite$$
@@ -227,11 +214,6 @@ $codei%
 and have the optimizer recognize when they should be used.
 (They could also be in the user API, but it would not be expected
 that the user would use them.)
-
-$subhead Memory$$
-The $cref optimize$$ command seems to use a lot of memory when the
-tape is large. We should create a test case that demonstrates this and then
-work on reducing the amount of memory needed by this operation.
 
 $comment ------------------------------------------------------------------ $$
 $head checkpoint$$
@@ -290,60 +272,23 @@ repeatedly calculated
 (because an iterator for the result container would be passed in).
 $lend
 
-$head Operation Sequence$$
-It is possible to detect if the
-AD of $icode Base$$
-$cref/operation sequence/glossary/Operation/Sequence/$$
-does not depend on any of the
-$cref/independent variable/glossary/Tape/Independent Variable/$$ values.
-This could be returned as an extra
-$cref seq_property$$.
-
-$head Software Guidelines$$
-The following is a list of some software guidelines taken from
-$href%http://www.boost.org/development/requirements.html#Guidelines%boost%$$.
-These guidelines are not followed by the current CppAD source code,
-but perhaps they should be:
-
-$list number$$
-Names (except as noted below)
-should be all lowercase, with words separated by underscores.
-For example, acronyms should be treated as ordinary names
-(xml_parser instead of XML_parser).
-
-$lnext
-Template parameter names should begin with an uppercase letter.
-
-$lnext
+$head Convert Tabs to Spaces$$
 Use spaces rather than tabs.
-Currently, CppAD uses a tabs stops at column multiples of 5.
-Five columns were chosen to avoid high levels of indenting and to allow for
-$codep
-	if( expression )
-		statement
-	else	statement
-$$
-with a tab after the else.
-Automatic conversion to actual spaces should be easy.
-
-$lend
+Currently, CppAD uses a tabs stops at column multiples of 8.
+Automatic conversion to actual spaces should be easy
+using the Unix $code expand$$ command.
 
 $head Tracing$$
 Add tracing the operation sequence to the user API and documentation.
 Tracing the operation sequence is currently done by changing the CppAD
 source code. Use the command
 $codep
-	grep '^# *define *CPPAD_.*_TRACE' cppad/local/*.hpp
+	grep '^# *define *CPPAD_.*_TRACE' cppad/local/sweep*.hpp
 $$
 to find all the possible tracing flags.
-
 
 $head atan2$$
 The $cref/atan2/Atan2/$$ function could be made faster by adding
 a special operator for it.
-
-$head BenderQuad$$
-See the $cref/problem/BenderQuad/Problem/$$ with the
-current $code BenderQuad$$ specifications.
 
 $end

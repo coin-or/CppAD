@@ -35,9 +35,36 @@ $spell
 	Wconversion
 	gcc
 	Wfloat
+	addons
 $$
 
 $section Changes and Additions to CppAD During 2018$$
+
+$head 10-29$$
+The following is a list of changes to the documentation:
+$list number$$
+The $cref theory$$ section was moved
+to a higher level in the documentation and the
+$cref introduction$$ we put in that section.
+$lnext
+The $cref wish_list$$ section was brought up to date
+and the $cref research$$ section was added.
+$lnext
+Some of the links to the CppAD $cref/addons/addon/$$ section were broken.
+This has been fixed.
+$lnext
+The wish list entries for the following items were removed
+because they were completed:
+$cref base2ad$$,
+$cref checkpoint$$ functions now work with
+$cref/multiple threads/multi_thread/$$,
+the $cref optimize$$ memory usage has been reduced.
+$lnext
+The operations sequence entry was changed to the
+$cref/Constant/wish_list/Constant/$$ entry.
+The software guidelines entry was changed to just
+$cref/convert tabs to spaces/wish_list/Convert Tabs to Spaces/$$.
+$lend
 
 $head 10-25$$
 $list number$$

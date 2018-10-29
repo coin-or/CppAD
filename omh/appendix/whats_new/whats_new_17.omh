@@ -70,7 +70,7 @@ A wish list item for a
 $cref/new API/wish_list/Atomic/New API/$$ for
 user defined $cref/atomic/atomic_base/$$ functions.
 $lnext
-A $cref/multi-threading/wish_list/Multi-Threading/$$
+A multi-threading
 wish list item was added.
 $lend
 
@@ -190,7 +190,7 @@ in the file $code cppad/local/optimize/hash_code.hpp$$.
 $lend
 
 $head 09-16$$
-An $cref/optimization memory/wish_list/Optimization/Memory/$$ entry
+An optimization memory entry
 was added to the wish list
 and the $cref/check_finite/wish_list/check_finite/$$ entry was modified.
 

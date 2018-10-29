@@ -1,0 +1,94 @@
+/* --------------------------------------------------------------------------
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+
+CppAD is distributed under multiple licenses. This distribution is under
+the terms of the
+                    Eclipse Public License Version 1.0.
+
+A copy of this license is included in the COPYING file of this distribution.
+Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
+-------------------------------------------------------------------------- */
+
+$begin research$$
+$spell
+	CppAD
+	Jacobian
+	acyclic
+$$
+
+$section Research and Software Engineering Projects Related to CppAD$$
+
+$head See Also$$
+$cref wish_list$$
+
+$head Purpose$$
+This is a list of research and software engineering projects related to CppAD.
+If you know of published results for any of these topics, please contact the
+project manage so a link to the answer can be added to the CppAD documentation.
+
+$head Abs-Normal Form$$
+$href%https://arxiv.org/abs/1701.00753%Abs-normal%$$ forms are
+recent advent in AD and algorithms related to it are an important
+research topic.
+The CppAD $cref abs_normal_fun$$ routine enables one to create approximations
+for non-smooth functions that have higher than first order accuracy.
+This opens the question of designing algorithms to take advantage of this.
+
+$head Atomic Functions$$
+Mathematical formulas for, and implementation of,
+$cref/atomic functions/atomic_base/$$
+that make AD faster and or conserve on memory for special cases; e.g.,
+special functions, sparse matrix operations.
+
+$head Dynamic Parameters$$
+CppAD provides for $cref/dynamic parameters/new_dynamic/$$
+in a unique way (they can depend on other dynamic parameters).
+This opens the question of techniques that take advantage of this.
+For example, see $cref base2ad.cpp$$ which uses this feature.
+
+$head Multi-Threading$$
+Interesting algorithms and implementations that take advantage of
+the CppAD $cref/multi threading/multi_thread/$$ capability.
+
+$head Optimization$$
+The CppAD $cref/optimization/optimize/$$ of an acyclic graph
+has not been described.
+In addition, possible improvements would be interesting.
+For example, how to  detect places where the distributive law can be
+used to reduce two multiplies and one addition to one multiply and
+one addition.
+For another example, the optimization of
+$cref/conditional expressions/condexp/$$ is not well know,
+nor are the benefits understood.
+
+$head Scripting Language$$
+It would be useful to make $cref addon$$ packages that
+connect CppAD to a scripting languages.
+The package
+$href%https://bradbell.github.io/cppad_py%cppad_swig%$$
+demonstrate how one could use swig to do this and
+$href%https://bradbell.github.io/cppad_py%cppad_py%$$
+is a preliminary version of such a connection to Python.
+
+$head Sparsity Coloring Problem$$
+Given the
+$cref/sparsity pattern/glossary/Sparsity Pattern/$$ for a Jacobian or Hessian,
+a graph coloring algorithm is used to determine which row or columns
+can be evaluated at the same time; see
+$href%
+https://github.com/coin-or/CppAD/blob/master/cppad/local/color_general.hpp%
+color_general.hpp
+%$$
+and
+$href%
+https://github.com/coin-or/CppAD/blob/master/cppad/local/color_symmetric.hpp%
+color_symmertic.hpp
+%$$.
+
+$head Speed$$
+CppAD provides for some $cref speed$$ comparisons between
+different AD packages.
+These comparisons could be improved, extended, and written up.
+
+
+$end

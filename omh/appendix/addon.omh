@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -23,6 +23,7 @@ $spell
 	namespace
 	cg
 	pycppad
+	py
 $$
 
 
@@ -45,17 +46,21 @@ $href%https://github.com/joaoleal/CppADCodeGen/%cg%$$ $cnext
 	$code CppADCodeGen$$ $cnext
 	C++ Source Code Generation of CppAD Derivative Calculations
 $rnext
-$href%http://moby.ihme.washington.edu/bradbell/cppad_mixed%mixed%$$
+$href%https://bradbell.github.io/cppad_mixed%mixed%$$
 	$cnext $code cppad_mixed$$ $cnext
 	A C++ Interface to Random Effects Laplace Approximation
 $rnext
-$href%http://www.seanet.com/~bradbell/cppad_swig%swig%$$
+$href%https://bradbell.github.io/cppad_swig%swig%$$
 	$cnext $code cppad_swig$$ $cnext
 	A C++ AD Library with a Swig Interface to Perl, Octave, and Python
 $rnext
+$href%https://bradbell.github.io/cppad_py%py%$$
+	$cnext $code cppad_py$$ $cnext
+	A Python Interface to CppAD
+$rnext
 $href%http://www.seanet.com/~bradbell/pycppad/pycppad.htm%py%$$ $cnext
 	$code pycppad$$ $cnext
-	A Python Interface to CppAD
+	A Python Interface to CppAD (no longer being developed)
 $tend
 
 $head Include Files$$
@@ -97,5 +102,3 @@ is reserved for use by the $icode name$$ addon.
 
 
 $end
-
-

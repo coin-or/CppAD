@@ -1152,8 +1152,7 @@ These have been changed to be plain vectors to avoid memory
 leak detection by $cref/TrackCount/TrackNewDel/TrackCount/$$.
 
 $head 01-20$$
-Add
-$cref/software guidelines/wish_list/Software Guidelines/$$
+Add software guidelines
 to the wish list.
 
 $head 01-18$$
