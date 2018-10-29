@@ -13,6 +13,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 extern bool implicit_ctor(void);
 extern bool prefer_reverse(void);
+extern bool multi_atomic(void);
 extern bool multi_checkpoint(void);
 
 int main(void)
@@ -24,6 +25,7 @@ int main(void)
 
 	Run( implicit_ctor,            "implicit_ctor"          );
 	Run( prefer_reverse,           "prefer_reverse"         );
+	Run( multi_atomic,             "multi_atomic"           );
 	Run( multi_checkpoint,         "multi_checkpoint"       );
 
 	// check for memory leak

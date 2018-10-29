@@ -20,6 +20,7 @@ SET(source_list
 	${name}.cpp
 	implicit_ctor.cpp
 	perfer_reverse.cpp
+	multi_atomic.cpp
 	multi_checkpoint.cpp
 )
 set_compile_flags(
