@@ -21,10 +21,10 @@ namespace {
 
 
 	// algorithm that we are checkpoingint
-	const size_t n_sum_ = 1000;
-	void square_algo(const ad_vector& ax, ad_vector& ay)
+	const size_t length_of_sum_ = 1000;
+	void long_sum_algo(const ad_vector& ax, ad_vector& ay)
 	{	ay[0] = 0.0;
-		for(size_t i = 0; i < n_sum_; ++i)
+		for(size_t i = 0; i < length_of_sum_; ++i)
 			ay[0] += ax[0];
 		return;
 	}
@@ -60,7 +60,7 @@ bool multi_checkpoint(void)
 		CppAD::atomic_base<double>::set_sparsity_enum;
 	bool optimize = false;
 	CppAD::checkpoint<double> atom_fun(
-		"square", square_algo, ax, ay, sparsity, optimize
+		"long_sum", long_sum_algo, ax, ay, sparsity, optimize
 	);
 
 	// setup for using CppAD in paralle mode
@@ -91,7 +91,7 @@ bool multi_checkpoint(void)
 
 	// check the results
 	for(size_t thread = 0; thread < num_threads; thread++)
-	{	double check = double( n_sum_ * (thread + 1) );
+	{	double check = double( length_of_sum_ * (thread + 1) );
 		ok          &= check == y[thread];
 	}
 	return ok;
