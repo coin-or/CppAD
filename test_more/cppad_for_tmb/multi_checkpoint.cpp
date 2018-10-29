@@ -21,7 +21,7 @@ namespace {
 
 
 	// algorithm that we are checkpoingint
-	const size_t length_of_sum_ = 1000;
+	const size_t length_of_sum_ = 5000;
 	void long_sum_algo(const ad_vector& ax, ad_vector& ay)
 	{	ay[0] = 0.0;
 		for(size_t i = 0; i < length_of_sum_; ++i)
