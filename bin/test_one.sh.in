@@ -141,6 +141,10 @@ sed < $dir/$main > test_one.cpp \
 #
 # compiler flags
 cxx_flags='@cppad_cxx_flags@'
+if [ "$dir" == 'test_more/cppad_for_tmb' ]
+then
+	cxx_flags="$cxx_flags @OpenMP_CXX_FLAGS@ -DCPPAD_FOR_TMB"
+fi
 #
 # compile command
 compile_command="@CMAKE_CXX_COMPILER@ test_one.cpp -o test_one.exe

@@ -20,6 +20,8 @@ int main(void)
 	size_t      width = 30;
 	CppAD::test_boolofvoid Run(group, width);
 
+	// This line is used by test_one.sh
+
 	Run( implicit_ctor,            "implicit_ctor"          );
 	Run( prefer_reverse,           "prefer_reverse"         );
 	Run( multi_checkpoint,         "multi_checkpoint"       );
