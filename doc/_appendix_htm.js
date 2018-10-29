@@ -11,7 +11,7 @@ var list_up0 = [
 ];
 var list_down1 = [
 'install.htm',
-'introduction.htm',
+'theory.htm',
 'ad.htm',
 'adfun.htm',
 'preprocessor.htm',
@@ -25,7 +25,6 @@ var list_down1 = [
 var list_down0 = [
 'faq.htm',
 'directory.htm',
-'theory.htm',
 'glossary.htm',
 'bib.htm',
 'wish_list.htm',

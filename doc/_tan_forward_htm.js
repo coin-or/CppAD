@@ -7,30 +7,30 @@ var list_across0 = [
 ];
 var list_up0 = [
 'cppad.htm',
-'appendix.htm',
 'theory.htm',
 'forwardtheory.htm',
 'tan_forward.htm'
 ];
 var list_down3 = [
-'faq.htm',
-'directory.htm',
+'install.htm',
 'theory.htm',
-'glossary.htm',
-'bib.htm',
-'wish_list.htm',
-'whats_new.htm',
-'deprecated.htm',
-'compare_c.htm',
-'numeric_ad.htm',
-'addon.htm',
-'license.htm'
+'ad.htm',
+'adfun.htm',
+'preprocessor.htm',
+'multi_thread.htm',
+'utility.htm',
+'ipopt_solve.htm',
+'example.htm',
+'speed.htm',
+'appendix.htm'
 ];
 var list_down2 = [
+'introduction.htm',
 'forwardtheory.htm',
 'reversetheory.htm',
 'reverse_identity.htm',
-'taylor_ode.htm'
+'taylor_ode.htm',
+'research.htm'
 ];
 var list_down1 = [
 'exp_forward.htm',

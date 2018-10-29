@@ -13,7 +13,7 @@ var list_up0 = [
 ];
 var list_down3 = [
 'install.htm',
-'introduction.htm',
+'theory.htm',
 'ad.htm',
 'adfun.htm',
 'preprocessor.htm',
@@ -27,7 +27,6 @@ var list_down3 = [
 var list_down2 = [
 'faq.htm',
 'directory.htm',
-'theory.htm',
 'glossary.htm',
 'bib.htm',
 'wish_list.htm',
@@ -57,6 +56,7 @@ var list_down1 = [
 'whats_new_03.htm'
 ];
 var list_current0 = [
+'whats_new_18.htm#10-29',
 'whats_new_18.htm#10-25',
 'whats_new_18.htm#10-24',
 'whats_new_18.htm#10-19',

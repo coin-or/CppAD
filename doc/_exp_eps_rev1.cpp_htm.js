@@ -7,6 +7,7 @@ var list_across0 = [
 ];
 var list_up0 = [
 'cppad.htm',
+'theory.htm',
 'introduction.htm',
 'exp_eps.htm',
 'exp_eps_rev1.htm',

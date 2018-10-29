@@ -15,7 +15,6 @@ var list_up0 = [
 var list_down3 = [
 'faq.htm',
 'directory.htm',
-'theory.htm',
 'glossary.htm',
 'bib.htm',
 'wish_list.htm',

@@ -12,7 +12,7 @@ var list_up0 = [
 ];
 var list_down2 = [
 'install.htm',
-'introduction.htm',
+'theory.htm',
 'ad.htm',
 'adfun.htm',
 'preprocessor.htm',

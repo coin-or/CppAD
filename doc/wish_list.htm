@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>The CppAD Wish List</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="The CppAD Wish List">
-<meta name="keywords" id="keywords" content=" the cppad wish list ad&lt;base&gt; functions from base atomic subgraph new api sparsity element-wise operations abs-normal windows install multi-threading check_finite test_boolofvoid example optimization taping special operators memory checkpoint retape testing compilation speed requirements adolc forward mode recomputation iterator interface operation sequence software guidelines tracing atan2 benderquad ">
+<meta name="keywords" id="keywords" content=" the cppad wish list see also purpose constant atomic subgraph new api sparsity element-wise operations abs-normal windows install check_finite test_boolofvoid example optimization taping special operators checkpoint retape testing compilation speed base requirements adolc forward mode recomputation iterator interface convert tabs to spaces tracing atan2 ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -55,7 +55,7 @@ A:active { color : purple }
 <select onchange='choose_down2(this)'>
 <option>CppAD-&gt;</option>
 <option>Install</option>
-<option>Introduction</option>
+<option>Theory</option>
 <option>AD</option>
 <option>ADFun</option>
 <option>preprocessor</option>
@@ -72,7 +72,6 @@ A:active { color : purple }
 <option>Appendix-&gt;</option>
 <option>Faq</option>
 <option>directory</option>
-<option>Theory</option>
 <option>glossary</option>
 <option>Bib</option>
 <option>wish_list</option>
@@ -88,7 +87,9 @@ A:active { color : purple }
 <td>
 <select onchange='choose_current0(this)'>
 <option>Headings-&gt;</option>
-<option>AD&lt;Base&gt; Functions from Base Functions</option>
+<option>See Also</option>
+<option>Purpose</option>
+<option>Constant</option>
 <option>Atomic</option>
 <option>---..Subgraph</option>
 <option>---..New API</option>
@@ -96,14 +97,12 @@ A:active { color : purple }
 <option>---..Element-wise Operations</option>
 <option>Abs-normal</option>
 <option>Windows Install</option>
-<option>Multi-Threading</option>
 <option>check_finite</option>
 <option>test_boolofvoid</option>
 <option>Example</option>
 <option>Optimization</option>
 <option>---..Taping</option>
 <option>---..Special Operators</option>
-<option>---..Memory</option>
 <option>checkpoint</option>
 <option>---..Retape</option>
 <option>---..Testing</option>
@@ -112,11 +111,9 @@ A:active { color : purple }
 <option>Adolc</option>
 <option>Forward Mode Recomputation</option>
 <option>Iterator Interface</option>
-<option>Operation Sequence</option>
-<option>Software Guidelines</option>
+<option>Convert Tabs to Spaces</option>
 <option>Tracing</option>
 <option>atan2</option>
-<option>BenderQuad</option>
 </select>
 </td>
 </tr></table><br>
@@ -131,33 +128,31 @@ A:active { color : purple }
 
 <center><b><big><big>The CppAD Wish List</big></big></b></center>
 <br>
-<b><big><a name="AD&lt;Base&gt; Functions from Base Functions" id="AD&lt;Base&gt; Functions from Base Functions">AD&lt;Base&gt; Functions from Base Functions</a></big></b>
+<b><big><a name="See Also" id="See Also">See Also</a></big></b>
+
 <br>
-Add a feature that creates an 
-<code><font color="blue"><span style='white-space: nowrap'>ADFun&lt;&nbsp;AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;&gt;</span></font></code>
- object
-from an <a href="adfun.htm" target="_top"><span style='white-space: nowrap'>ADFun&lt;Base&gt;</span></a>
- object.
-Then any AD function would have two versions,
-a 
-<code><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i></code>
- version for evaluation of derivatives,
-and an 
-<code><font color="blue"><span style='white-space: nowrap'>AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code>
- for recording a new functions that
-use derivatives of this function.
-This works well with the <a href="new_dynamic.htm" target="_top"><span style='white-space: nowrap'>new_dynamic</span></a>
- feature.
-For example, one could first define a function with
-<a href="glossary.htm#Parameter.Dynamic" target="_top"><span style='white-space: nowrap'>dynamic&nbsp;parameters</span></a>
- and
-then define a second function, using derivatives of the first function,
-where dynamic parameters in the first function are variables in the second.
-Users of atomic functions would need to define AD versions
-of <a href="atomic_forward.htm" target="_top"><span style='white-space: nowrap'>atomic_forward</span></a>
- and <a href="atomic_reverse.htm" target="_top"><span style='white-space: nowrap'>atomic_reverse</span></a>
- to gain full use
-of this feature.
+<a href="research.htm" target="_top"><span style='white-space: nowrap'>research</span></a>
+
+
+<br>
+<br>
+<b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
+<br>
+This items on this list are improvements and extensions to CppAD
+that are currently being considered.
+
+<br>
+<br>
+<b><big><a name="Constant" id="Constant">Constant</a></big></b>
+<br>
+There should be a 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.Constant(</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+ function,
+similar to the <a href="seq_property.htm#Parameter" target="_top"><span style='white-space: nowrap'>Parameter</span></a>
+ function,
+that allows one to determine which dependent variables are
+<a href="glossary.htm#Parameter.Constant" target="_top"><span style='white-space: nowrap'>constant&nbsp;parameters</span></a>
+.
 
 
 <br>
@@ -341,22 +336,6 @@ They run the CppAD tests using the default <a href="cmake.htm" target="_top"><sp
 </span></font></code>
 </li></ol>
 <br>
-<b><big><a name="Multi-Threading" id="Multi-Threading">Multi-Threading</a></big></b>
-<br>
-The TMB packages has a special version of the
-<a href="checkpoint.htm" target="_top"><span style='white-space: nowrap'>checkpoint</span></a>
- class
-that enables one checkpoint function to be my multiple OpenMp threads.
-Perhaps it would be useful to extend the CppAD multi-threading environment
-to allow for this.
-In addition, perhaps a multi-threading version of an ADFun object would
-be useful.
-
-
-
-
-<br>
-<br>
 <b><big><a name="check_finite" id="check_finite">check_finite</a></big></b>
 
 <ol type="1"><li>
@@ -417,15 +396,6 @@ Add special operators that can be implemented more efficiently, e.g.,
 and have the optimizer recognize when they should be used.
 (They could also be in the user API, but it would not be expected
 that the user would use them.)
-
-<br>
-<br>
-<big><a name="Optimization.Memory" id="Optimization.Memory">Memory</a></big>
-<br>
-The <a href="optimize.htm" target="_top"><span style='white-space: nowrap'>optimize</span></a>
- command seems to use a lot of memory when the
-tape is large. We should create a test case that demonstrates this and then
-work on reducing the amount of memory needed by this operation.
 
 
 <br>
@@ -519,56 +489,12 @@ repeatedly calculated
 
 <br>
 <br>
-<b><big><a name="Operation Sequence" id="Operation Sequence">Operation Sequence</a></big></b>
+<b><big><a name="Convert Tabs to Spaces" id="Convert Tabs to Spaces">Convert Tabs to Spaces</a></big></b>
 <br>
-It is possible to detect if the
-AD of 
-<code><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i></code>
-
-<a href="glossary.htm#Operation.Sequence" target="_top"><span style='white-space: nowrap'>operation&nbsp;sequence</span></a>
-
-does not depend on any of the
-<a href="glossary.htm#Tape.Independent Variable" target="_top"><span style='white-space: nowrap'>independent&nbsp;variable</span></a>
- values.
-This could be returned as an extra
-<a href="seq_property.htm" target="_top"><span style='white-space: nowrap'>seq_property</span></a>
-.
-
-<br>
-<br>
-<b><big><a name="Software Guidelines" id="Software Guidelines">Software Guidelines</a></big></b>
-<br>
-The following is a list of some software guidelines taken from
-<a href="http://www.boost.org/development/requirements.html#Guidelines" target="_top"><span style='white-space: nowrap'>boost</span></a>
-.
-These guidelines are not followed by the current CppAD source code,
-but perhaps they should be:
-
-<ol type="1"><li>
-Names (except as noted below)
-should be all lowercase, with words separated by underscores.
-For example, acronyms should be treated as ordinary names
-(xml_parser instead of XML_parser).
-
-</li><li>
-
-Template parameter names should begin with an uppercase letter.
-
-</li><li>
-
 Use spaces rather than tabs.
-Currently, CppAD uses a tabs stops at column multiples of 5.
-Five columns were chosen to avoid high levels of indenting and to allow for
-<code><font color='blue'><pre style='display:inline'> 
-     if( expression )
-          statement
-     else statement
-</pre></font></code>
-with a tab after the else.
-Automatic conversion to actual spaces should be easy.
-
-</li></ol>
-
+Currently, CppAD uses a tabs stops at column multiples of 8.
+Automatic conversion to actual spaces should be easy
+using the Unix <code><font color="blue">expand</font></code> command.
 
 <br>
 <br>
@@ -578,10 +504,9 @@ Add tracing the operation sequence to the user API and documentation.
 Tracing the operation sequence is currently done by changing the CppAD
 source code. Use the command
 <code><font color='blue'><pre style='display:inline'> 
-     grep '^# *define *CPPAD_.*_TRACE' cppad/local/*.hpp
+     grep '^# *define *CPPAD_.*_TRACE' cppad/local/sweep*.hpp
 </pre></font></code>
 to find all the possible tracing flags.
-
 
 <br>
 <br>
@@ -590,14 +515,6 @@ to find all the possible tracing flags.
 The <a href="atan2.htm" target="_top"><span style='white-space: nowrap'>atan2</span></a>
  function could be made faster by adding
 a special operator for it.
-
-<br>
-<br>
-<b><big><a name="BenderQuad" id="BenderQuad">BenderQuad</a></big></b>
-<br>
-See the <a href="benderquad.htm#Problem" target="_top"><span style='white-space: nowrap'>problem</span></a>
- with the
-current <code><font color="blue">BenderQuad</font></code> specifications.
 
 
 <hr>Input File: omh/appendix/wish_list.omh

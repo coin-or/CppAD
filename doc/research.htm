@@ -1,0 +1,223 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=default'
+>
+</script>
+<head>
+<title>Research and Software Engineering Projects Related to CppAD</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Research and Software Engineering Projects Related to CppAD">
+<meta name="keywords" id="keywords" content=" research software engineering projects related to cppad see also purpose abs-normal form atomic functions dynamic parameters multi-threading optimization scripting language sparsity coloring problem speed ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_research_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="https://coin-or.github.io/CppAD" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="taylor_ode.cpp.htm" target="_top">Prev</a>
+</td><td><a href="ad.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>Theory</option>
+<option>research</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>CppAD-&gt;</option>
+<option>Install</option>
+<option>Theory</option>
+<option>AD</option>
+<option>ADFun</option>
+<option>preprocessor</option>
+<option>multi_thread</option>
+<option>utility</option>
+<option>ipopt_solve</option>
+<option>Example</option>
+<option>speed</option>
+<option>Appendix</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>Theory-&gt;</option>
+<option>Introduction</option>
+<option>ForwardTheory</option>
+<option>ReverseTheory</option>
+<option>reverse_identity</option>
+<option>taylor_ode</option>
+<option>research</option>
+</select>
+</td>
+<td>research</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>See Also</option>
+<option>Purpose</option>
+<option>Abs-Normal Form</option>
+<option>Atomic Functions</option>
+<option>Dynamic Parameters</option>
+<option>Multi-Threading</option>
+<option>Optimization</option>
+<option>Scripting Language</option>
+<option>Sparsity Coloring Problem</option>
+<option>Speed</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>Research and Software Engineering Projects Related to CppAD</big></big></b></center>
+<br>
+<b><big><a name="See Also" id="See Also">See Also</a></big></b>
+
+<br>
+<a href="wish_list.htm" target="_top"><span style='white-space: nowrap'>wish_list</span></a>
+
+
+<br>
+<br>
+<b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
+<br>
+This is a list of research and software engineering projects related to CppAD.
+If you know of published results for any of these topics, please contact the
+project manage so a link to the answer can be added to the CppAD documentation.
+
+<br>
+<br>
+<b><big><a name="Abs-Normal Form" id="Abs-Normal Form">Abs-Normal Form</a></big></b>
+
+<br>
+<a href="https://arxiv.org/abs/1701.00753" target="_top"><span style='white-space: nowrap'>Abs-normal</span></a>
+ forms are
+recent advent in AD and algorithms related to it are an important
+research topic.
+The CppAD <a href="abs_normal_fun.htm" target="_top"><span style='white-space: nowrap'>abs_normal_fun</span></a>
+ routine enables one to create approximations
+for non-smooth functions that have higher than first order accuracy.
+This opens the question of designing algorithms to take advantage of this.
+
+<br>
+<br>
+<b><big><a name="Atomic Functions" id="Atomic Functions">Atomic Functions</a></big></b>
+<br>
+Mathematical formulas for, and implementation of,
+<a href="atomic_base.htm" target="_top"><span style='white-space: nowrap'>atomic&nbsp;functions</span></a>
+
+that make AD faster and or conserve on memory for special cases; e.g.,
+special functions, sparse matrix operations.
+
+<br>
+<br>
+<b><big><a name="Dynamic Parameters" id="Dynamic Parameters">Dynamic Parameters</a></big></b>
+<br>
+CppAD provides for <a href="new_dynamic.htm" target="_top"><span style='white-space: nowrap'>dynamic&nbsp;parameters</span></a>
+
+in a unique way (they can depend on other dynamic parameters).
+This opens the question of techniques that take advantage of this.
+For example, see <a href="base2ad.cpp.htm" target="_top"><span style='white-space: nowrap'>base2ad.cpp</span></a>
+ which uses this feature.
+
+<br>
+<br>
+<b><big><a name="Multi-Threading" id="Multi-Threading">Multi-Threading</a></big></b>
+<br>
+Interesting algorithms and implementations that take advantage of
+the CppAD <a href="multi_thread.htm" target="_top"><span style='white-space: nowrap'>multi&nbsp;threading</span></a>
+ capability.
+
+<br>
+<br>
+<b><big><a name="Optimization" id="Optimization">Optimization</a></big></b>
+<br>
+The CppAD <a href="optimize.htm" target="_top"><span style='white-space: nowrap'>optimization</span></a>
+ of an acyclic graph
+has not been described.
+In addition, possible improvements would be interesting.
+For example, how to  detect places where the distributive law can be
+used to reduce two multiplies and one addition to one multiply and
+one addition.
+For another example, the optimization of
+<a href="condexp.htm" target="_top"><span style='white-space: nowrap'>conditional&nbsp;expressions</span></a>
+ is not well know,
+nor are the benefits understood.
+
+<br>
+<br>
+<b><big><a name="Scripting Language" id="Scripting Language">Scripting Language</a></big></b>
+<br>
+It would be useful to make <a href="addon.htm" target="_top"><span style='white-space: nowrap'>addon</span></a>
+ packages that
+connect CppAD to a scripting languages.
+The package
+<a href="https://bradbell.github.io/cppad_py" target="_top"><span style='white-space: nowrap'>cppad_swig</span></a>
+
+demonstrate how one could use swig to do this and
+<a href="https://bradbell.github.io/cppad_py" target="_top"><span style='white-space: nowrap'>cppad_py</span></a>
+
+is a preliminary version of such a connection to Python.
+
+<br>
+<br>
+<b><big><a name="Sparsity Coloring Problem" id="Sparsity Coloring Problem">Sparsity Coloring Problem</a></big></b>
+<br>
+Given the
+<a href="glossary.htm#Sparsity Pattern" target="_top"><span style='white-space: nowrap'>sparsity&nbsp;pattern</span></a>
+ for a Jacobian or Hessian,
+a graph coloring algorithm is used to determine which row or columns
+can be evaluated at the same time; see
+<a href="https://github.com/coin-or/CppAD/blob/master/cppad/local/color_general.hpp" target="_top"><span style='white-space: nowrap'>color_general.hpp</span></a>
+
+and
+<a href="https://github.com/coin-or/CppAD/blob/master/cppad/local/color_symmetric.hpp" target="_top"><span style='white-space: nowrap'>color_symmertic.hpp</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="Speed" id="Speed">Speed</a></big></b>
+<br>
+CppAD provides for some <a href="speed.htm" target="_top"><span style='white-space: nowrap'>speed</span></a>
+ comparisons between
+different AD packages.
+These comparisons could be improved, extended, and written up.
+
+
+
+<hr>Input File: omh/theory/research.omh
+
+</body>
+</html>

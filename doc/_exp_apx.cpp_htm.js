@@ -7,12 +7,13 @@ var list_across0 = [
 ];
 var list_up0 = [
 'cppad.htm',
+'theory.htm',
 'introduction.htm',
 'exp_apx.cpp.htm'
 ];
-var list_down2 = [
+var list_down3 = [
 'install.htm',
-'introduction.htm',
+'theory.htm',
 'ad.htm',
 'adfun.htm',
 'preprocessor.htm',
@@ -22,6 +23,14 @@ var list_down2 = [
 'example.htm',
 'speed.htm',
 'appendix.htm'
+];
+var list_down2 = [
+'introduction.htm',
+'forwardtheory.htm',
+'reversetheory.htm',
+'reverse_identity.htm',
+'taylor_ode.htm',
+'research.htm'
 ];
 var list_down1 = [
 'exp_2.htm',
@@ -43,6 +52,12 @@ function choose_up0(item)
 	item.selectedIndex = 0;
 	if(index > 0)
 		document.location = list_up0[index-1];
+}
+function choose_down3(item)
+{	var index          = item.selectedIndex;
+	item.selectedIndex = 0;
+	if(index > 0)
+		document.location = list_down3[index-1];
 }
 function choose_down2(item)
 {	var index          = item.selectedIndex;

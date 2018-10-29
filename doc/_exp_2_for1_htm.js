@@ -7,22 +7,18 @@ var list_across0 = [
 ];
 var list_up0 = [
 'cppad.htm',
+'theory.htm',
 'introduction.htm',
 'exp_2.htm',
 'exp_2_for1.htm'
 ];
 var list_down3 = [
-'install.htm',
 'introduction.htm',
-'ad.htm',
-'adfun.htm',
-'preprocessor.htm',
-'multi_thread.htm',
-'utility.htm',
-'ipopt_solve.htm',
-'example.htm',
-'speed.htm',
-'appendix.htm'
+'forwardtheory.htm',
+'reversetheory.htm',
+'reverse_identity.htm',
+'taylor_ode.htm',
+'research.htm'
 ];
 var list_down2 = [
 'exp_2.htm',

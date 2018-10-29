@@ -12,7 +12,7 @@ var list_up0 = [
 ];
 var list_down2 = [
 'install.htm',
-'introduction.htm',
+'theory.htm',
 'ad.htm',
 'adfun.htm',
 'preprocessor.htm',
@@ -26,7 +26,6 @@ var list_down2 = [
 var list_down1 = [
 'faq.htm',
 'directory.htm',
-'theory.htm',
 'glossary.htm',
 'bib.htm',
 'wish_list.htm',
@@ -38,7 +37,9 @@ var list_down1 = [
 'license.htm'
 ];
 var list_current0 = [
-'wish_list.htm#AD&lt;Base&gt; Functions from Base Functions',
+'wish_list.htm#See Also',
+'wish_list.htm#Purpose',
+'wish_list.htm#Constant',
 'wish_list.htm#Atomic',
 'wish_list.htm#Atomic.Subgraph',
 'wish_list.htm#Atomic.New API',
@@ -46,14 +47,12 @@ var list_current0 = [
 'wish_list.htm#Atomic.Element-wise Operations',
 'wish_list.htm#Abs-normal',
 'wish_list.htm#Windows Install',
-'wish_list.htm#Multi-Threading',
 'wish_list.htm#check_finite',
 'wish_list.htm#test_boolofvoid',
 'wish_list.htm#Example',
 'wish_list.htm#Optimization',
 'wish_list.htm#Optimization.Taping',
 'wish_list.htm#Optimization.Special Operators',
-'wish_list.htm#Optimization.Memory',
 'wish_list.htm#checkpoint',
 'wish_list.htm#checkpoint.Retape',
 'wish_list.htm#checkpoint.Testing',
@@ -62,11 +61,9 @@ var list_current0 = [
 'wish_list.htm#Adolc',
 'wish_list.htm#Forward Mode Recomputation',
 'wish_list.htm#Iterator Interface',
-'wish_list.htm#Operation Sequence',
-'wish_list.htm#Software Guidelines',
+'wish_list.htm#Convert Tabs to Spaces',
 'wish_list.htm#Tracing',
-'wish_list.htm#atan2',
-'wish_list.htm#BenderQuad'
+'wish_list.htm#atan2'
 ];
 function choose_across0(item)
 {	var index          = item.selectedIndex;

@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>ADFun Sequence Properties: Example and Test</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="ADFun Sequence Properties: Example and Test">
-<meta name="keywords" id="keywords" content=" adfun sequence properties: example test Domain Range Parameter size_var size_par size_op_arg size_vecad ">
+<meta name="keywords" id="keywords" content=" adfun sequence properties: example test ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -98,8 +98,11 @@ A:active { color : purple }
 
 
 <center><b><big><big>ADFun Sequence Properties: Example and Test</big></big></b></center>
-<code><font color="blue"><pre><tt>
+<pre><tt>
 <b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/cppad.hpp&gt;</font>
+
+<i><font color="#9A1900">// Note that CPPAD_VEC_ENUM_TYPE is not part of CppAD API and may change</font></i>
+<b><font color="#000080"># define</font></b> CPPAD_VEC_ENUM_TYPE <font color="#009900">unsigned</font> <font color="#009900">char</font>
 
 <font color="#009900">bool</font> <b><font color="#000000">seq_property</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
 <font color="#FF0000">{</font>    <font color="#009900">bool</font> ok <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
@@ -214,7 +217,6 @@ A:active { color : purple }
      ok <font color="#990000">&amp;=</font> f<font color="#990000">.</font><b><font color="#000000">size_dyn_arg</font></b><font color="#990000">()</font>  <font color="#990000">==</font> ndyn_arg<font color="#990000">;</font>
 
      <i><font color="#9A1900">//</font></i>
-     <i><font color="#9A1900">// Note that CPPAD_VEC_ENUM_TYPE is not part of CppAD API and may change</font></i>
      <font color="#008080">size_t</font> sum <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
      sum <font color="#990000">+=</font> nop        <font color="#990000">*</font> <b><font color="#0000FF">sizeof</font></b><font color="#990000">(</font>CPPAD_VEC_ENUM_TYPE<font color="#990000">);</font>
      sum <font color="#990000">+=</font> narg       <font color="#990000">*</font> <b><font color="#0000FF">sizeof</font></b><font color="#990000">(</font>CPPAD_TAPE_ADDR_TYPE<font color="#990000">);</font>
@@ -230,7 +232,7 @@ A:active { color : purple }
      <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
 <font color="#FF0000">}</font>
 </tt></pre>
-</font></code>
+
 <hr>Input File: example/general/seq_property.cpp
 
 </body>
