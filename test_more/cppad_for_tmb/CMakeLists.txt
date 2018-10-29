@@ -8,38 +8,36 @@
 # A copy of this license is included in the COPYING file of this distribution.
 # Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # -----------------------------------------------------------------------------
-# compile_flags
-SET(compile_flags "${CMAKE_CXX_FLAGS_DEBUG}" )
-IF( "${cppad_debug_which}" STREQUAL "debug_all" )
-	SET(compile_flags "${CMAKE_CXX_FLAGS_RELEASE}" )
-ENDIF( "${cppad_debug_which}" STREQUAL "debug_all" )
-IF( "${cppad_debug_which}" STREQUAL "debug_odd" )
-	SET(compile_flags "${CMAKE_CXX_FLAGS_RELEASE}" )
-ENDIF( "${cppad_debug_which}" STREQUAL "debug_odd" )
-SET(compile_flags
-	"${compile_flags} ${cppad_cxx_flags} ${OpenMP_CXX_FLAGS} -DCPPAD_FOR_TMB"
-)
 #
-# name
+# Name for this text
 SET(name cppad_for_tmb)
 #
-# set compiler flags
-SET_SOURCE_FILES_PROPERTIES(
-	${name}.cpp PROPERTIES COMPILE_FLAGS "${compile_flags}"
+# Add extra compiler flags to cppad_cxx_flags so set_compile_flags uses them.
+# This change only affects the cppad_for_tmb tests (NO PARENT_SCOPE).
+SET(cppad_cxx_flags "${cppad_cxx_flags} ${OpenMP_CXX_FLAGS} -DCPPAD_FOR_TMB")
+#
+SET(source_list
+	${name}.cpp
+	implicit_ctor.cpp
+	perfer_reverse.cpp
+	multi_checkpoint.cpp
+)
+set_compile_flags(
+	test_more_${name} "${cppad_debug_which}" "${source_list}"
 )
 #
 # now that we have the properties, add the executable
-ADD_EXECUTABLE( test_more_${name} EXCLUDE_FROM_ALL ${name}.cpp )
+ADD_EXECUTABLE( test_more_${name} EXCLUDE_FROM_ALL ${source_list} )
 #
 # Extra flags used by linker for openmp support
 SET(CMAKE_EXE_LINKER_FLAGS ${OpenMP_CXX_FLAGS} )
 #
-# check_test_more_cppad_for_tmb target
+# check_test_more_${name} target
 ADD_CUSTOM_TARGET(
 	check_test_more_${name} test_more_${name} DEPENDS test_more_${name}
 )
 MESSAGE(STATUS "make check_test_more_${name}: available")
 
-# Add check_test_more_cppad_for_tmb to check depends in parent environment
+# Add check_test_more_${name} to check depends in parent environment
 add_to_list(check_test_more_depends check_test_more_${name})
 SET(check_test_more_depends "${check_test_more_depends}" PARENT_SCOPE)
