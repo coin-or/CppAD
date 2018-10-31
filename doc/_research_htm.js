@@ -40,7 +40,10 @@ var list_current0 = [
 'research.htm#Multi-Threading',
 'research.htm#Optimization',
 'research.htm#Scripting Language',
-'research.htm#Sparsity Coloring Problem',
+'research.htm#Sparsity',
+'research.htm#Sparsity.Sparsity Patterns',
+'research.htm#Sparsity.Coloring Problem',
+'research.htm#Sparsity.Subgraphs',
 'research.htm#Speed'
 ];
 function choose_across0(item)

@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Research and Software Engineering Projects Related to CppAD</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Research and Software Engineering Projects Related to CppAD">
-<meta name="keywords" id="keywords" content=" research software engineering projects related to cppad see also purpose abs-normal form atomic functions dynamic parameters multi-threading optimization scripting language sparsity coloring problem speed ">
+<meta name="keywords" id="keywords" content=" research software engineering projects related to cppad see also purpose abs-normal form atomic functions dynamic parameters multi-threading optimization scripting language sparsity patterns coloring problem subgraphs speed ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -90,7 +90,10 @@ A:active { color : purple }
 <option>Multi-Threading</option>
 <option>Optimization</option>
 <option>Scripting Language</option>
-<option>Sparsity Coloring Problem</option>
+<option>Sparsity</option>
+<option>---..Sparsity Patterns</option>
+<option>---..Coloring Problem</option>
+<option>---..Subgraphs</option>
 <option>Speed</option>
 </select>
 </td>
@@ -113,9 +116,11 @@ A:active { color : purple }
 <br>
 <b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
 <br>
-This is a list of research and software engineering projects related to CppAD.
-If you know of published results for any of these topics, please contact the
-project manage so a link to the answer can be added to the CppAD documentation.
+This is a list of research topics,
+and software engineering projects, related to CppAD.
+If you know of published results for any of the research topics,
+please contact the project manage
+so a link to the answer can be added to the CppAD documentation.
 
 <br>
 <br>
@@ -193,7 +198,21 @@ is a preliminary version of such a connection to Python.
 
 <br>
 <br>
-<b><big><a name="Sparsity Coloring Problem" id="Sparsity Coloring Problem">Sparsity Coloring Problem</a></big></b>
+<b><big><a name="Sparsity" id="Sparsity">Sparsity</a></big></b>
+
+
+<br>
+<br>
+<big><a name="Sparsity.Sparsity Patterns" id="Sparsity.Sparsity Patterns">Sparsity Patterns</a></big>
+<br>
+There are forward, reverse and subgraph methods for computing a
+<a href="sparsity_pattern.htm" target="_top"><span style='white-space: nowrap'>sparsity_pattern</span></a>
+.
+It is unclear which is better for which cases.
+
+<br>
+<br>
+<big><a name="Sparsity.Coloring Problem" id="Sparsity.Coloring Problem">Coloring Problem</a></big>
 <br>
 Given the
 <a href="glossary.htm#Sparsity Pattern" target="_top"><span style='white-space: nowrap'>sparsity&nbsp;pattern</span></a>
@@ -205,6 +224,19 @@ can be evaluated at the same time; see
 and
 <a href="https://github.com/coin-or/CppAD/blob/master/cppad/local/color_symmetric.hpp" target="_top"><span style='white-space: nowrap'>color_symmertic.hpp</span></a>
 .
+
+<br>
+<br>
+<big><a name="Sparsity.Subgraphs" id="Sparsity.Subgraphs">Subgraphs</a></big>
+<br>
+The <a href="subgraph_jac_rev.htm" target="_top"><span style='white-space: nowrap'>subgraph_jac_rev</span></a>
+ method use subgraphs to compute sparsity patterns
+and to evaluate sparse derivatives.
+This is a new technique that should be written up.
+It was invented by
+Kasper Kristensen, DTU Technical University of Denmark.
+See the <a href="wish_list.htm#Subgraph" target="_top"><span style='white-space: nowrap'>subgraph</span></a>
+ wish list items.
 
 <br>
 <br>
