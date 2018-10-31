@@ -65,14 +65,8 @@ Add the $cref subgraph_hes2jac.cpp$$ example
 which computes sparse Hessians using subgraphs and Jacobians.
 
 $head 12-08$$
-$list number$$
-A wish list item for a
-$cref/new API/wish_list/Atomic/New API/$$ for
-user defined $cref/atomic/atomic_base/$$ functions.
-$lnext
 A multi-threading
 wish list item was added.
-$lend
 
 $head 12-06$$
 A $cref wish_list$$ item to enable one to iterate through a
@@ -124,9 +118,7 @@ $href%https://cran.r-project.org/web/packages/TMB/index.html%TMB%$$ package.
 
 $head 11-15$$
 $list number$$
-Add wish list item for $cref subgraph_sparsity$$ when
-$cref/atomic functions/wish_list/Atomic/Subgraph/$$
-are present.
+Add wish list item for $cref/subgraph sparsity/wish_list/Subgraph/Sparsity/$$.
 $lnext
 Fix $cref cmake_check$$ when $cref ipopt_prefix$$ is not present on the
 $cref cmake$$ command line
@@ -499,7 +491,10 @@ Fix warning during $cref cmake$$ command,
 on $href%https://www.cygwin.com/%cygwin%$$ systems,
 about $code WIN32$$ not being defined.
 $lnext
-Add $cref/element-wise operations/wish_list/Atomic/Element-wise Operations/$$
+Add $cref/element-wise atomic operations
+	/wish_list
+	/Element-wise Atomic Operations
+/$$
 to the wish list.
 $lend
 

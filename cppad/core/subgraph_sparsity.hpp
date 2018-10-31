@@ -52,7 +52,7 @@ $cref/atomic functions/atomic_afun/$$ in the $icode f$$ operation sequence
 are not efficient. To be specific, each atomic function is treated as if
 all of its outputs depend on all of its inputs.
 This may be improved upon in the future; see the
-$cref/subgraph atomic functions/wish_list/Atomic/Subgraph/$$
+$cref/subgraph sparsity/wish_list/Subgraph/Sparsity/$$
 wish list item.
 
 $head BoolVector$$

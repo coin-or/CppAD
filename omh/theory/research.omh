@@ -14,6 +14,9 @@ $spell
 	CppAD
 	Jacobian
 	acyclic
+	subgraph
+	Subgraphs
+	Kasper Kristensen
 $$
 
 $section Research and Software Engineering Projects Related to CppAD$$
@@ -22,9 +25,11 @@ $head See Also$$
 $cref wish_list$$
 
 $head Purpose$$
-This is a list of research and software engineering projects related to CppAD.
-If you know of published results for any of these topics, please contact the
-project manage so a link to the answer can be added to the CppAD documentation.
+This is a list of research topics,
+and software engineering projects, related to CppAD.
+If you know of published results for any of the research topics,
+please contact the project manage
+so a link to the answer can be added to the CppAD documentation.
 
 $head Abs-Normal Form$$
 $href%https://arxiv.org/abs/1701.00753%Abs-normal%$$ forms are
@@ -70,7 +75,14 @@ demonstrate how one could use swig to do this and
 $href%https://bradbell.github.io/cppad_py%cppad_py%$$
 is a preliminary version of such a connection to Python.
 
-$head Sparsity Coloring Problem$$
+$head Sparsity$$
+
+$subhead Sparsity Patterns$$
+There are forward, reverse and subgraph methods for computing a
+$cref sparsity_pattern$$.
+It is unclear which is better for which cases.
+
+$subhead Coloring Problem$$
 Given the
 $cref/sparsity pattern/glossary/Sparsity Pattern/$$ for a Jacobian or Hessian,
 a graph coloring algorithm is used to determine which row or columns
@@ -84,6 +96,14 @@ $href%
 https://github.com/coin-or/CppAD/blob/master/cppad/local/color_symmetric.hpp%
 color_symmertic.hpp
 %$$.
+
+$subhead Subgraphs$$
+The $cref subgraph_jac_rev$$ method use subgraphs to compute sparsity patterns
+and to evaluate sparse derivatives.
+This is a new technique that should be written up.
+It was invented by
+Kasper Kristensen, DTU Technical University of Denmark.
+See the $cref/subgraph/wish_list/Subgraph/$$ wish list items.
 
 $head Speed$$
 CppAD provides for some $cref speed$$ comparisons between

@@ -36,9 +36,22 @@ $spell
 	gcc
 	Wfloat
 	addons
+	Kasper Kristensen
+	Subgraph
 $$
 
 $section Changes and Additions to CppAD During 2018$$
+
+$head 10-31$$
+$list number$$
+The items in the $cref wish_list$$ were re-organized
+so that the
+$cref/new atomic API/wish_list/New Atomic API/$$ entries
+were all under one heading.
+$lnext
+A credit to Kasper Kristensen was added to the
+$cref/subgraph/research/Sparsity/Subgraphs/$$ research item.
+$lend
 
 $head 10-29$$
 The following is a list of changes to the documentation:

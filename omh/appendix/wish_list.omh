@@ -10,6 +10,8 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 $begin wish_list$$
 $spell
+	Subgraphs
+	Jacobians
 	subgraph
 	Recomputation
 	optimizer
@@ -59,16 +61,16 @@ $head Purpose$$
 This items on this list are improvements and extensions to CppAD
 that are currently being considered.
 
-$head Constant$$
-There should be a $icode%f%.Constant(%i%)%$$ function,
-similar to the $cref/Parameter/seq_property/Parameter/$$ function,
-that allows one to determine which dependent variables are
-$cref/constant parameters/glossary/Parameter/Constant/$$.
-
 $comment ------------------------------------------------------------------- $$
-$head Atomic$$
+$head Subgraph$$
 
-$subhead Subgraph$$
+$subhead Forward Mode$$
+The $cref subgraph_jac_rev$$ routine computes sparsity patterns
+of Jacobians using reverse mode.
+It is possible that a forward mode version of this method would be
+better for some cases.
+
+$subhead Sparsity$$
 The $cref subgraph_sparsity$$ calculation treats
 each atomic function call as if
 all of its outputs depend on all of its inputs;
@@ -77,42 +79,40 @@ These sparsity patterns could be made more efficient
 (could have fewer possibly non-zeros entries)
 by using the sparsity patterns for the atomic functions.
 
-$subhead New API$$
-A new API for atomic functions could be created:
+$comment ------------------------------------------------------------------- $$
+$head Constant$$
+There should be a $icode%f%.Constant(%i%)%$$ function,
+similar to the $cref/Parameter/seq_property/Parameter/$$ function,
+that allows one to determine which dependent variables are
+$cref/constant parameters/glossary/Parameter/Constant/$$.
 
-$list number$$
+$comment ------------------------------------------------------------------- $$
+$head New Atomic API$$
+A new API for atomic functions could be created with the following
+differences from the current API:
+
+$subhead Dynamic Parameters$$
 The atomic functions would be more efficient if
 the $cref/vx/atomic_forward/vx/$$ and $cref/vy/atomic_forward/vy/$$
 arguments had three possible values (instead of two):
 constant parameter, dynamic parameter, and variable.
-$lnext
-Use $cref sparse_rc$$ for sparsity patterns and calculate sparsity patterns
-using
+
+$subhead Sparsity Patterns$$
+Use $cref sparse_rc$$ to represent sparsity patterns
+and calculate sparsity patterns using
 $codei%
 	%afun%.jac_sparsity(%select_domain%, %select_range%, %pattern_out%)
 	%afun%.hes_sparsity(%select_domain%, %select_range%, %pattern_out%)
 %$$
 see $cref subgraph_sparsity$$.
-This would be simpler for the user.
-$lnext
+This would be simpler for the user and just as efficient.
+
+$subhead Dependency$$
 Add a $cref/dependency/for_jac_sparsity/dependency/$$ argument
 to the forward and reverse Jacobian sparsity patterns.
-$lend
 
-$subhead Sparsity$$
-Add an $cref atomic_option$$ that checks if the sparsity patterns calculated
-by user atomic functions have
-elements for arguments that are know to be parameters and
-could be more efficient.
-For example, the user's version of $code for_sparse_jac$$ could check
-$cref/x/atomic_for_sparse_jac/Implementation/x/$$ to see for which components
-are variables;
-i.e., $cref/isnan(x[j])/nan/isnan/$$ is true for a particular call.
-Note that
-$cref/vx/atomic_for_sparse_hes/Implementation/vx/$$ should be removed,
-because the method above can be used to determine this information.
-
-$subhead Element-wise Operations$$
+$comment ------------------------------------------------------------------- $$
+$head Element-wise Atomic Operations$$
 Add user atomic functions for element-wise addition, subtraction,
 multiplication, and division.
 Where the operands are $cref/simple vectors/SimpleVector/$$
