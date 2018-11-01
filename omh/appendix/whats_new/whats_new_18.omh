@@ -42,6 +42,12 @@ $$
 
 $section Changes and Additions to CppAD During 2018$$
 
+$head 11-01$$
+There in the
+$cref checkpoint$$ functions with multiple threads
+(see $cref/10-29/whats_new_18/10-29/$$ below).
+This has been fixed.
+
 $head 10-31$$
 $list number$$
 The items in the $cref wish_list$$ were re-organized

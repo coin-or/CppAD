@@ -35,12 +35,6 @@ checkpoint<Base>::checkpoint(
 	for(size_t thread = 0; thread < CPPAD_MAX_NUM_THREADS; ++thread)
 		member_[thread] = CPPAD_NULL;
 	//
-	// make sure member_ is allocated for this (the master) thread
-	// (only thread is possible when not in parallel mode)
-	size_t master = thread_alloc::thread_num();
-	CPPAD_ASSERT_UNKNOWN( master == 0 );
-	allocate_member(master);
-	//
 	CheckSimpleVector< CppAD::AD<Base> , ADVector>();
 	//
 	// make a copy of ax because Independent modifies AD information
@@ -50,18 +44,18 @@ checkpoint<Base>::checkpoint(
 	// record mapping from x_tmp to ay
 	algo(x_tmp, ay);
 	// create function f_ : x -> y
-	member_[master]->f_.Dependent(ay);
+	const_member_.f_.Dependent(ay);
 	if( optimize )
 	{	// suppress checking for nan in f_ results
 		// (see optimize documentation for atomic functions)
-		member_[master]->f_.check_for_nan(false);
+		const_member_.f_.check_for_nan(false);
 		//
 		// now optimize
-		member_[master]->f_.optimize();
+		const_member_.f_.optimize();
 	}
 	// now disable checking of comparison operations
 	// 2DO: add a debugging mode that checks for changes and aborts
-	member_[master]->f_.compare_change_count(0);
+	const_member_.f_.compare_change_count(0);
 }
 
 } // END_CPPAD_NAMESPACE

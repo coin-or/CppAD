@@ -282,20 +282,19 @@ private:
 		local::sparse_list         hes_sparse_set_;
 		vectorBool                 hes_sparse_bool_;
 	};
+	/// This version of work is const except during constructor
+	member_struct const_member_;
+
 	/// use pointers and allocate memory to avoid false sharing
 	member_struct* member_[CPPAD_MAX_NUM_THREADS];
 	//
 	/// allocate member_ for this thread
 	void allocate_member(size_t thread)
-	{	// thread zero is the master thread
-		size_t master = 0;
-		//
-		if( member_[thread] == CPPAD_NULL )
+	{	if( member_[thread] == CPPAD_NULL )
 		{	member_[thread] = new member_struct;
-			// The function is only recorded by the master thread,
-			// other threads have copy.
-			if( thread != master )
-				member_[thread]->f_ = member_[master]->f_;
+			// The function is recorded in sequential mode and placed in
+			// const_member_.f_, other threads have copy.
+			member_[thread]->f_ = const_member_.f_;
 		}
 		return;
 	}
