@@ -356,7 +356,7 @@ $head 05-28$$
 $list number$$
 The Coin download page is not longer supporting monthly version.
 These versions are now supported by the
-$cref/source code control/download/Source Code Control/$$
+$cref/git/download/Git/$$
 download procedure.
 $lnext
 The windows install procedures have not been kept up to date

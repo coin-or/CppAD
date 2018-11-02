@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -512,7 +512,7 @@ of the solution of an ODE with respect to a parameter
 
 $head 02-15$$
 Change the distribution
-$cref/compressed tar file/download/Compressed Archives/$$
+compressed tar file
 to only contain one copy of the documentation.
 Link to the current Internet documentation for the other three copies.
 

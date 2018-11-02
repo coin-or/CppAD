@@ -80,8 +80,8 @@ assist you in learning about changes between various versions of CppAD.
 
 $head 12-31$$
 The $cref download$$ instructions were modified to have more mention of
-using $cref/git/download/Source Code Control/Git/$$ and less mention of
-$cref/subversion/download/Source Code Control/Subversion/$$.
+git and less mention of
+subversion.
 
 $head 12-29$$
 Separate $cref to_string$$ from $cref ad_to_string$$ so that it

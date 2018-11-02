@@ -69,6 +69,14 @@ For example
 $icode%version%.%rel% = 20160000.0%$$ corresponds to the first release
 of the version for 2016,
 $code 20160000.1$$ corresponds to the first bug fix for 2016.
+The compressed archive names on the
+$href%https://github.com/coin-or/CppAD/releases%Github download page%$$
+have the format
+$codei%
+	cppad-%version%.%rel%.tgz
+%$$
+These archives correspond to the Eclipse Public License and do not have
+the documentation included in them.
 
 $head License$$
 We use $icode lic$$ to denote the licence corresponding to an archived
@@ -76,48 +84,7 @@ version of CppAD.
 The GNU General Public License is denoted by $icode%lic% = gpl%$$
 and the Eclipse Public License is denoted by $icode%lic% = epl%$$.
 
-
-$head Compressed Archives$$
-The Coin compressed archives have the
-documentation built into them.
-
-
-$subhead Coin$$
-The compressed archive names on the
-$href%http://www.coin-or.org/download/source/CppAD/%Coin download page%$$
-have one of the following formats:
-$codei%
-	cppad-%version%.%rel%.%lic%.tgz
-	cppad-%version%.%lic%.tgz
-%$$
-In Unix, you can extract these compressed archives using $code tar$$.
-For example,
-$codei%
-	tar -xzf cppad-%version%.%rel%.%lic%.tgz
-%$$
-No matter what the format of the name, the corresponding distribution
-directory is $codei%cppad-%version%$$.
-To see that the extraction has been done correctly,
-check for the following file:
-$codei%
-	cppad-%version%/cppad/cppad.hpp
-%$$
-
-$subhead Github$$
-The compressed archive names on the
-$href%https://github.com/coin-or/CppAD/releases%Github download page%$$
-have the format
-$codei%
-	cppad-%version%.%rel%.tgz
-%$$
-These archives correspond to the Eclipse Public License.
-
-
-$head Source Code Control$$
-These methods only provide the Eclipse Public License
-version of CppAD.
-
-$subhead Git$$
+$head Git$$
 CppAD source code development is current done using $code git$$
 You can a git clone of the current version using the command
 $codei%
@@ -125,16 +92,6 @@ $codei%
 %$$
 This procedure requires that
 the $href|https://en.wikipedia.org/wiki/Git_%28software%29|git|$$
-is installed on your system.
-
-$subhead Subversion$$
-A subversion copy of the source code is kept on the Coin web site.
-You can obtain this subversion copy using the command
-$codei%
-	svn checkout https://projects.coin-or.org/svn/CppAD/trunk cppad.svn/trunk
-%$$
-This procedure requires that
-the $href%http://subversion.tigris.org/%subversion%$$ program
 is installed on your system.
 
 $subhead Version$$
@@ -159,12 +116,18 @@ $codep
 	grep '^SET(cppad_version' CMakeLists.txt
 $$
 
+$subhead Compressed Archives$$
+You can build compressed archives with the GPL or EPL license using
+the script $code bin/package.sh$$.
+These archives have the documentation in the $code doc$$ directory
+and do not have the $code git$$ information.
+They are intended for re-distribution.
+
 $subhead Documentation$$
 The documentation at the web address
 $href%https://coin-or.github.io/CppAD/doc/%$$ is for the
 most recent version of CppAD.
-If you are using $code git$$ source code control,
-starting with $code cppad-20170716$$, you can get the documentation
+You can get the documentation
 for an other versions of CppAD.
 To do so, in the distribution directory execute the following commands:
 $codep
@@ -181,8 +144,7 @@ You can then view documentation for version you are using by opening the file
 $code doc/index.html$$ in a web browser.
 
 $subhead Building Documentation$$
-If you are using $code subversion$$ source code control,
-or you are using a version before $code 20170716$$,
+If you are using a version before $code 20170716$$,
 you can build the documentation for the version you are using.
 The documentation for CppAD is built from the source code files using
 $href%http://www.seanet.com/~bradbell/omhelp/%OMhelp%$$.
@@ -198,6 +160,5 @@ $codei%
 %$$
 You can then view documentation for version you are using by opening the file
 $code doc/index.html$$ in a web browser.
-
 
 $end

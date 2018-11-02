@@ -56,15 +56,14 @@ Interesting algorithms and implementations that take advantage of
 the CppAD $cref/multi threading/multi_thread/$$ capability.
 
 $head Optimization$$
-The CppAD $cref/optimization/optimize/$$ of an acyclic graph
-has not been described.
-In addition, possible improvements would be interesting.
-For example, how to  detect places where the distributive law can be
+There is no paper describing
+the CppAD $cref/optimization/optimize/$$ of a computational graph.
+In particular, the optimization of
+$cref/conditional expressions/condexp/$$ is not well understood.
+In addition, possible improvements to the optimization would be welcome.
+For example, detecting places where the distributive law can be
 used to reduce two multiplies and one addition to one multiply and
-one addition.
-For another example, the optimization of
-$cref/conditional expressions/condexp/$$ is not well know,
-nor are the benefits understood.
+two additions.
 
 $head Scripting Language$$
 It would be useful to make $cref addon$$ packages that

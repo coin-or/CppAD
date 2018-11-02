@@ -32,7 +32,7 @@ cppad/core/cond_exp.hpp
 introduction/exp_2.omh
 introduction/exp_eps.omh
 omh/appendix/license.omh
-bin/batch_edit.sh
+batch_edit.sed
 '
 # -----------------------------------------------------------------------------
 # Make sure that OMhelp srcfile commands refer to same file as command
