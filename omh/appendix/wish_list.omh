@@ -58,8 +58,37 @@ $head See Also$$
 $cref research$$
 
 $head Purpose$$
-This items on this list are improvements and extensions to CppAD
+The items on this list are improvements and extensions to CppAD
 that are currently being considered.
+
+$comment ------------------------------------------------------------------ $$
+$head checkpoint$$
+
+$subhead Tapeless AD$$
+Perhaps there should be a version of the
+$cref checkpoint$$ class that uses a tapeless AD package to compute
+the derivative values.
+This would allow for algorithms where the operations sequence
+depends on the independent variable values.
+There is a question as to how sparsity patterns would be determined
+in this case.
+Perhaps they would be passed into the constructor.
+If it was known to be constant,
+the user could compute the pattern using CppAD.
+Otherwise, the user could input
+a conservative estimate of the pattern that would be correct.
+
+$subhead Re-taping$$
+Perhaps the $code checkpoint$$ class should allow for re-taping
+derivative values.
+This would also allow for algorithms where the operations sequence
+depends on the independent variable values.
+Perhaps (as for tapeless entry above)
+they should be passed into the constructor.
+
+$subhead Testing$$
+There should be some examples and tests for both speed and memory use
+that demonstrate that checkpointing is useful.
 
 $comment ------------------------------------------------------------------- $$
 $head Subgraph$$
@@ -214,27 +243,6 @@ $codei%
 and have the optimizer recognize when they should be used.
 (They could also be in the user API, but it would not be expected
 that the user would use them.)
-
-$comment ------------------------------------------------------------------ $$
-$head checkpoint$$
-
-$subhead Retape$$
-Perhaps there should be a version of the
-$cref checkpoint$$ class that uses a tapeless AD package to compute
-the derivative values.
-This would allow for algorithms where the operations sequence
-depends on the independent variable values.
-There is a question as to how sparsity patterns would be determined
-in this case.
-Perhaps they would be passed into the constructor.
-If it was known to be constant,
-the user could compute the pattern using CppAD.
-Otherwise, the user could input
-a conservative estimate of the pattern that would be correct.
-
-$subhead Testing$$
-There should be some examples and tests for both speed and memory use
-that demonstrate that checkpointing is useful.
 
 $comment -------------------------------------------------------------------$$
 
