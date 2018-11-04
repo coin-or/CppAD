@@ -54,6 +54,10 @@ $spell
 	addr
 	grep
 	VecAD
+	minsys
+	mingw
+	pacman
+	gcc
 $$
 
 $section Using CMake to Configure CppAD$$
@@ -69,21 +73,29 @@ that can be used to test and install a program on Unix, Microsoft, or
 Apple operating systems.
 For example, one can use it to automatically generate Microsoft project files.
 
+$head Build Directory$$
+Create $code build$$, a subdirectory of the
+$cref/distribution directory/download/Distribution Directory/$$,
+change into the $code build$$.
+
 $head CMake Command$$
-The command below assumes that $code cmake$$ is in your execution
+
+$subhead Simple$$
+The simplest version of the $code cmake$$ command is
+$codei%
+	cmake ..
+%$$
+This assumes that you are starting in the $code build$$ directory
+(so that $code ..$$ refers to the distribution directory).
+The command also assumes that $code cmake$$ is in your execution
 path with version greater than or equal 2.8.
 If not, you can put the path to the version of $code cmake$$
 in font the command.
-Only the $code cmake$$ command and the path to the distribution directory
-($code ..$$ at the end of the command below) are required.
-In other words, the first and last lines below are required
-and all of the other lines are optional.
+It is suggested that you should start with the simple version of the
+cmake command above and then add options one at a time.
 
-$subhead Build Directory$$
-Create a $code build$$ subdirectory of the
-$cref/distribution directory/download/Distribution Directory/$$,
-change into the $code build$$  directory,
-and execute the following command:
+$subhead Options$$
+The full version of the command, with all its optional arguments is:
 $codei%
 cmake %%                                                                     \
     -D CMAKE_VERBOSE_MAKEFILE=%cmake_verbose_makefile%                       \
@@ -116,6 +128,19 @@ cmake %%                                                                     \
     -D cppad_deprecated=%cppad_deprecated%                                   \
     \
     ..
+%$$
+
+$subhead minsys2$$
+The $href%https://www.msys2.org/%minsys2%$$ system,
+with $code mingw-64$$ and $code g++$$,
+has some requires some special procedures.
+The following seems to work:
+use $code pacman$$ to install
+$code make$$, $code gcc$$, and $code ming2-w64-x86_64-cmake$$.
+Then, in the shell set $code CC='g++'$$,
+and use the following replacement for the simple cmake command:
+$codei%
+	cmake -G "Unix Makefiles" ..
 %$$
 
 $head make check$$

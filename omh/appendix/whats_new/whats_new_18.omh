@@ -38,12 +38,21 @@ $spell
 	addons
 	Kasper Kristensen
 	Subgraph
+	minsys
+	cmake
 $$
 
 $section Changes and Additions to CppAD During 2018$$
 
+$head 11-04$$
+The $cref/simple/cmake/CMake Command/Simple/$$ version of the cmake command
+is now suggested as a starting point installing CppAD.
+In addition, special suggestions were make for the
+$cref/minsys2/cmake/CMake Command/minsys2/$$ case.
+
+
 $head 11-01$$
-There in the
+There was a bug in the
 $cref checkpoint$$ functions with multiple threads
 (see $cref/10-29/whats_new_18/10-29/$$ below).
 This has been fixed.

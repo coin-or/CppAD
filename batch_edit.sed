@@ -39,7 +39,6 @@
 # '
 # list of files and or directories that are moved to new names
 # move_paths='
-#	omh/appendix/theory
 # '
 # sed command that maps old file and or directory names to new file names
 # move_sed='
@@ -47,12 +46,11 @@
 # '
 # list of files that get edited by the extra_sed command
 # extra_files='
-#	omh/theory/theory.omh
 # '
 # sed command that is applied to the extra files
 # (after the other sed commands in this file)
 # extra_sed='
-#	s|^.contents%|&\n\tomh/theory/introduction.omh%|
 # '
 # ----------------------------------------------------------------------------
 # Put other sed commands below here and without # at start of line
+s|/cmake/CMake Command/Build Directory/|/cmake/Build Directory/|
