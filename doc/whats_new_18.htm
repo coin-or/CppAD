@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Changes and Additions to CppAD During 2018</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Changes and Additions to CppAD During 2018">
-<meta name="keywords" id="keywords" content=" changes additions to cppad during 2018 11-01 10-31 10-29 10-25 10-24 10-19 10-18 09-25 09-23 09-22 09-19 09-17 09-16 09-15 08-27 08-19 08-18 08-17 08-16 08-14 08-13 08-12 08-10 08-08 08-05 08-04 07-30 07-27 07-23 07-18 07-02 06-27 06-22 06-20 06-19 06-13 06-12 06-04 05-29 05-28 05-26 05-20 05-17 05-04 05-03 04-29 04-13 03-20 03-19 03-04 03-02 02-27 02-26 02-23 02-20 ">
+<meta name="keywords" id="keywords" content=" changes additions to cppad during 2018 11-04 11-01 10-31 10-29 10-25 10-24 10-19 10-18 09-25 09-23 09-22 09-19 09-17 09-16 09-15 08-27 08-19 08-18 08-17 08-16 08-14 08-13 08-12 08-10 08-08 08-05 08-04 07-30 07-27 07-23 07-18 07-02 06-27 06-22 06-20 06-19 06-13 06-12 06-04 05-29 05-28 05-26 05-20 05-17 05-04 05-03 04-29 04-13 03-20 03-19 03-04 03-02 02-27 02-26 02-23 02-20 ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -109,6 +109,7 @@ A:active { color : purple }
 <td>
 <select onchange='choose_current0(this)'>
 <option>Headings-&gt;</option>
+<option>11-04</option>
 <option>11-01</option>
 <option>10-31</option>
 <option>10-29</option>
@@ -178,9 +179,51 @@ A:active { color : purple }
 
 <center><b><big><big>Changes and Additions to CppAD During 2018</big></big></b></center>
 <br>
+<b><big><a name="11-04" id="11-04">11-04</a></big></b>
+
+<ol type="1"><li>
+The <a href="cmake.htm#CMake Command.Simple" target="_top"><span style='white-space: nowrap'>simple</span></a>
+ version of the cmake command
+is now suggested as a starting point installing CppAD.
+In addition, special suggestions were make for the
+<a href="cmake.htm#CMake Command.minsys2" target="_top"><span style='white-space: nowrap'>minsys2</span></a>
+ and
+<a href="cmake.htm#CMake Command.Visual Studio" target="_top"><span style='white-space: nowrap'>visual&nbsp;studio</span></a>
+
+cases.
+</li><li>
+
+The Visual Studio compiler gave a warning because the
+<code><font color="blue">get_record_compare</font></code> (not in use API)
+was returning <code><font color="blue">size_t</font></code> when
+it should have returned a <code><font color="blue">bool</font></code>.
+It also gave a warning in <code><font color="blue">test_more/general/erf.cpp</font></code>
+about conversion from <code><font color="blue">double</font></code> to <code><font color="blue">size_t</font></code>.
+These have been fixed.
+</li><li>
+
+The Visual Studio compiler also gave an error because it requires
+the <a href="adfun.htm" target="_top"><span style='white-space: nowrap'>ADFun</span></a>
+ copy constructor for assignment to
+a <a href="base2ad.htm" target="_top"><span style='white-space: nowrap'>base2ad</span></a>
+ result.
+This copy constructor has been allowed (but only for this case).
+</li><li>
+
+The Visual Studio compiler does not seem to be able to mix
+debug and release code. One of the tests had to be modified
+enable the user to avoid this; see
+<a href="cmake.htm#CMake Command.Visual Studio" target="_top"><span style='white-space: nowrap'>visual&nbsp;studio</span></a>
+.
+</li></ol>
+
+
+
+<br>
+<br>
 <b><big><a name="11-01" id="11-01">11-01</a></big></b>
 <br>
-There in the
+There was a bug in the
 <a href="checkpoint.htm" target="_top"><span style='white-space: nowrap'>checkpoint</span></a>
  functions with multiple threads
 (see <a href="whats_new_18.htm#10-29" target="_top"><span style='white-space: nowrap'>10-29</span></a>
@@ -747,7 +790,7 @@ This has been fixed.
 <ol type="1"><li>
 The Coin download page is not longer supporting monthly version.
 These versions are now supported by the
-<a href="download.htm#Source Code Control" target="_top"><span style='white-space: nowrap'>source&nbsp;code&nbsp;control</span></a>
+<a href="download.htm#Git" target="_top"><span style='white-space: nowrap'>git</span></a>
 
 download procedure.
 </li><li>

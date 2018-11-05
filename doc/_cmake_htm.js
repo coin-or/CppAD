@@ -40,8 +40,12 @@ var list_down0 = [
 ];
 var list_current0 = [
 'cmake.htm#The CMake Program',
+'cmake.htm#Build Directory',
 'cmake.htm#CMake Command',
-'cmake.htm#CMake Command.Build Directory',
+'cmake.htm#CMake Command.Simple',
+'cmake.htm#CMake Command.Options',
+'cmake.htm#CMake Command.minsys2',
+'cmake.htm#CMake Command.Visual Studio',
 'cmake.htm#make check',
 'cmake.htm#cmake_verbose_makefile',
 'cmake.htm#generator',

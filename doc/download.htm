@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Download The CppAD Source Code</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Download The CppAD Source Code">
-<meta name="keywords" id="keywords" content=" download the cppad source code purpose distribution directory version release license compressed archives coin github control git subversion documentation building ">
+<meta name="keywords" id="keywords" content=" download the cppad source code purpose distribution directory version release license git compressed archives documentation building ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -85,13 +85,9 @@ A:active { color : purple }
 <option>Version</option>
 <option>Release</option>
 <option>License</option>
-<option>Compressed Archives</option>
-<option>---..Coin</option>
-<option>---..Github</option>
-<option>Source Code Control</option>
-<option>---..Git</option>
-<option>---..Subversion</option>
+<option>Git</option>
 <option>---..Version</option>
+<option>---..Compressed Archives</option>
 <option>---..Documentation</option>
 <option>---..Building Documentation</option>
 </select>
@@ -165,6 +161,16 @@ For example
  corresponds to the first release
 of the version for 2016,
 <code><font color="blue">20160000.1</font></code> corresponds to the first bug fix for 2016.
+The compressed archive names on the
+<a href="https://github.com/coin-or/CppAD/releases" target="_top"><span style='white-space: nowrap'>Github&nbsp;download&nbsp;page</span></a>
+
+have the format
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cppad-</span></font><i><font color="black"><span style='white-space: nowrap'>version</span></font></i><font color="blue"><span style='white-space: nowrap'>.</span></font><i><font color="black"><span style='white-space: nowrap'>rel</span></font></i><font color="blue"><span style='white-space: nowrap'>.tgz<br>
+</span></font></code>
+These archives correspond to the Eclipse Public License and do not have
+the documentation included in them.
 
 <br>
 <br>
@@ -181,68 +187,9 @@ and the Eclipse Public License is denoted by
 <code><i><font color="black"><span style='white-space: nowrap'>lic</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;epl</span></font></code>
 .
 
-
 <br>
 <br>
-<b><big><a name="Compressed Archives" id="Compressed Archives">Compressed Archives</a></big></b>
-<br>
-The Coin compressed archives have the
-documentation built into them.
-
-
-<br>
-<br>
-<big><a name="Compressed Archives.Coin" id="Compressed Archives.Coin">Coin</a></big>
-<br>
-The compressed archive names on the
-<a href="http://www.coin-or.org/download/source/CppAD/" target="_top"><span style='white-space: nowrap'>Coin&nbsp;download&nbsp;page</span></a>
-
-have one of the following formats:
-
-<code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cppad-</span></font><i><font color="black"><span style='white-space: nowrap'>version</span></font></i><font color="blue"><span style='white-space: nowrap'>.</span></font><i><font color="black"><span style='white-space: nowrap'>rel</span></font></i><font color="blue"><span style='white-space: nowrap'>.</span></font><i><font color="black"><span style='white-space: nowrap'>lic</span></font></i><font color="blue"><span style='white-space: nowrap'>.tgz<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cppad-</span></font><i><font color="black"><span style='white-space: nowrap'>version</span></font></i><font color="blue"><span style='white-space: nowrap'>.</span></font><i><font color="black"><span style='white-space: nowrap'>lic</span></font></i><font color="blue"><span style='white-space: nowrap'>.tgz<br>
-</span></font></code>
-In Unix, you can extract these compressed archives using <code><font color="blue">tar</font></code>.
-For example,
-
-<code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tar&nbsp;-xzf&nbsp;cppad-</span></font><i><font color="black"><span style='white-space: nowrap'>version</span></font></i><font color="blue"><span style='white-space: nowrap'>.</span></font><i><font color="black"><span style='white-space: nowrap'>rel</span></font></i><font color="blue"><span style='white-space: nowrap'>.</span></font><i><font color="black"><span style='white-space: nowrap'>lic</span></font></i><font color="blue"><span style='white-space: nowrap'>.tgz<br>
-</span></font></code>
-No matter what the format of the name, the corresponding distribution
-directory is 
-<code><font color="blue"><span style='white-space: nowrap'>cppad-</span></font><i><font color="black"><span style='white-space: nowrap'>version</span></font></i></code>
-.
-To see that the extraction has been done correctly,
-check for the following file:
-
-<code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cppad-</span></font><i><font color="black"><span style='white-space: nowrap'>version</span></font></i><font color="blue"><span style='white-space: nowrap'>/cppad/cppad.hpp<br>
-</span></font></code>
-<br>
-<big><a name="Compressed Archives.Github" id="Compressed Archives.Github">Github</a></big>
-<br>
-The compressed archive names on the
-<a href="https://github.com/coin-or/CppAD/releases" target="_top"><span style='white-space: nowrap'>Github&nbsp;download&nbsp;page</span></a>
-
-have the format
-
-<code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cppad-</span></font><i><font color="black"><span style='white-space: nowrap'>version</span></font></i><font color="blue"><span style='white-space: nowrap'>.</span></font><i><font color="black"><span style='white-space: nowrap'>rel</span></font></i><font color="blue"><span style='white-space: nowrap'>.tgz<br>
-</span></font></code>
-These archives correspond to the Eclipse Public License.
-
-
-<br>
-<br>
-<b><big><a name="Source Code Control" id="Source Code Control">Source Code Control</a></big></b>
-<br>
-These methods only provide the Eclipse Public License
-version of CppAD.
-
-<br>
-<br>
-<big><a name="Source Code Control.Git" id="Source Code Control.Git">Git</a></big>
+<b><big><a name="Git" id="Git">Git</a></big></b>
 <br>
 CppAD source code development is current done using <code><font color="blue">git</font></code>
 You can a git clone of the current version using the command
@@ -257,22 +204,7 @@ is installed on your system.
 
 <br>
 <br>
-<big><a name="Source Code Control.Subversion" id="Source Code Control.Subversion">Subversion</a></big>
-<br>
-A subversion copy of the source code is kept on the Coin web site.
-You can obtain this subversion copy using the command
-
-<code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;svn&nbsp;checkout&nbsp;https://projects.coin-or.org/svn/CppAD/trunk&nbsp;cppad.svn/trunk<br>
-</span></font></code>
-This procedure requires that
-the <a href="http://subversion.tigris.org/" target="_top"><span style='white-space: nowrap'>subversion</span></a>
- program
-is installed on your system.
-
-<br>
-<br>
-<big><a name="Source Code Control.Version" id="Source Code Control.Version">Version</a></big>
+<big><a name="Git.Version" id="Git.Version">Version</a></big>
 <br>
 After downloading the source code,
 and changing into the distribution directory,
@@ -299,14 +231,23 @@ You can check the corresponding version number using the command
      grep '^SET(cppad_version' CMakeLists.txt
 </pre></font></code>
 <br>
-<big><a name="Source Code Control.Documentation" id="Source Code Control.Documentation">Documentation</a></big>
+<big><a name="Git.Compressed Archives" id="Git.Compressed Archives">Compressed Archives</a></big>
+<br>
+You can build compressed archives with the GPL or EPL license using
+the script <code><font color="blue">bin/package.sh</font></code>.
+These archives have the documentation in the <code><font color="blue">doc</font></code> directory
+and do not have the <code><font color="blue">git</font></code> information.
+They are intended for re-distribution.
+
+<br>
+<br>
+<big><a name="Git.Documentation" id="Git.Documentation">Documentation</a></big>
 <br>
 The documentation at the web address
 <a href="https://coin-or.github.io/CppAD/doc/" target="_top"><span style='white-space: nowrap'>https://coin-or.github.io/CppAD/doc/</span></a>
  is for the
 most recent version of CppAD.
-If you are using <code><font color="blue">git</font></code> source code control,
-starting with <code><font color="blue">cppad-20170716</font></code>, you can get the documentation
+You can get the documentation
 for an other versions of CppAD.
 To do so, in the distribution directory execute the following commands:
 <code><font color='blue'><pre style='display:inline'> 
@@ -329,10 +270,9 @@ You can then view documentation for version you are using by opening the file
 
 <br>
 <br>
-<big><a name="Source Code Control.Building Documentation" id="Source Code Control.Building Documentation">Building Documentation</a></big>
+<big><a name="Git.Building Documentation" id="Git.Building Documentation">Building Documentation</a></big>
 <br>
-If you are using <code><font color="blue">subversion</font></code> source code control,
-or you are using a version before <code><font color="blue">20170716</font></code>,
+If you are using a version before <code><font color="blue">20170716</font></code>,
 you can build the documentation for the version you are using.
 The documentation for CppAD is built from the source code files using
 <a href="http://www.seanet.com/~bradbell/omhelp/" target="_top"><span style='white-space: nowrap'>OMhelp</span></a>
@@ -350,7 +290,6 @@ in the distribution directory execute the following command:
 </span></font></code>
 You can then view documentation for version you are using by opening the file
 <code><font color="blue">doc/index.html</font></code> in a web browser.
-
 
 
 <hr>Input File: omh/install/download.omh

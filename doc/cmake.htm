@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Using CMake to Configure CppAD</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Using CMake to Configure CppAD">
-<meta name="keywords" id="keywords" content=" using cmake to configure cppad makefile install prefix postfix include directories lib datadir documentation package compile flags profile maximum number threads sparsity internal structure vector sets memory usage tape ctor implicit explicit the program command build directory make check cmake_verbose_makefile generator cppad_prefix cppad_postfix cmake_install_includedirs cmake_install_libdirs cmake_install_datadir cmake_install_docdir package_prefix cppad_cxx_flags c++11 debug release cppad_profile_flag eigen fadbad cppad_testvector cppad_max_num_threads cppad_tape_id_type cstdint cppad_tape_addr_type cppad_debug_which cppad_deprecated ">
+<meta name="keywords" id="keywords" content=" using cmake to configure cppad makefile install prefix postfix include directories lib datadir documentation package compile flags profile maximum number threads sparsity internal structure vector sets memory usage tape ctor implicit explicit the program build directory command simple options minsys2 visual studio make check cmake_verbose_makefile generator cppad_prefix cppad_postfix cmake_install_includedirs cmake_install_libdirs cmake_install_datadir cmake_install_docdir package_prefix cppad_cxx_flags c++11 debug release cppad_profile_flag eigen fadbad cppad_testvector cppad_max_num_threads cppad_tape_id_type cstdint cppad_tape_addr_type cppad_debug_which cppad_deprecated ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -92,8 +92,12 @@ A:active { color : purple }
 <select onchange='choose_current0(this)'>
 <option>Headings-&gt;</option>
 <option>The CMake Program</option>
+<option>Build Directory</option>
 <option>CMake Command</option>
-<option>---..Build Directory</option>
+<option>---..Simple</option>
+<option>---..Options</option>
+<option>---..minsys2</option>
+<option>---..Visual Studio</option>
 <option>make check</option>
 <option>cmake_verbose_makefile</option>
 <option>generator</option>
@@ -144,26 +148,41 @@ For example, one can use it to automatically generate Microsoft project files.
 
 <br>
 <br>
-<b><big><a name="CMake Command" id="CMake Command">CMake Command</a></big></b>
+<b><big><a name="Build Directory" id="Build Directory">Build Directory</a></big></b>
 <br>
-The command below assumes that <code><font color="blue">cmake</font></code> is in your execution
-path with version greater than or equal 2.8.
-If not, you can put the path to the version of <code><font color="blue">cmake</font></code>
-in font the command.
-Only the <code><font color="blue">cmake</font></code> command and the path to the distribution directory
-(<code><font color="blue">..</font></code> at the end of the command below) are required.
-In other words, the first and last lines below are required
-and all of the other lines are optional.
+Create <code><font color="blue">build</font></code>, a subdirectory of the
+<a href="download.htm#Distribution Directory" target="_top"><span style='white-space: nowrap'>distribution&nbsp;directory</span></a>
+,
+change into the <code><font color="blue">build</font></code>.
 
 <br>
 <br>
-<big><a name="CMake Command.Build Directory" id="CMake Command.Build Directory">Build Directory</a></big>
+<b><big><a name="CMake Command" id="CMake Command">CMake Command</a></big></b>
+
+
 <br>
-Create a <code><font color="blue">build</font></code> subdirectory of the
-<a href="download.htm#Distribution Directory" target="_top"><span style='white-space: nowrap'>distribution&nbsp;directory</span></a>
-,
-change into the <code><font color="blue">build</font></code>  directory,
-and execute the following command:
+<br>
+<big><a name="CMake Command.Simple" id="CMake Command.Simple">Simple</a></big>
+<br>
+The simplest version of the <code><font color="blue">cmake</font></code> command is
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cmake&nbsp;..<br>
+</span></font></code>
+This assumes that you are starting in the <code><font color="blue">build</font></code> directory
+(so that <code><font color="blue">..</font></code> refers to the distribution directory).
+The command also assumes that <code><font color="blue">cmake</font></code> is in your execution
+path with version greater than or equal 2.8.
+If not, you can put the path to the version of <code><font color="blue">cmake</font></code>
+in font the command.
+It is suggested that you should start with the simple version of the
+cmake command above and then add options one at a time.
+
+<br>
+<br>
+<big><a name="CMake Command.Options" id="CMake Command.Options">Options</a></big>
+<br>
+The full version of the command, with all its optional arguments is:
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
 cmake&nbsp;</span></font><i><font color="black"></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\<br>
@@ -197,6 +216,40 @@ cmake&nbsp;</span></font><i><font color="black"></font></i><font color="blue"><s
 &nbsp;&nbsp;&nbsp;&nbsp;-D&nbsp;cppad_deprecated=</span></font><i><font color="black"><span style='white-space: nowrap'>cppad_deprecated</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\<br>
 &nbsp;&nbsp;&nbsp;&nbsp;\<br>
 &nbsp;&nbsp;&nbsp;&nbsp;..<br>
+</span></font></code>
+<br>
+<big><a name="CMake Command.minsys2" id="CMake Command.minsys2">minsys2</a></big>
+<br>
+The <a href="https://www.msys2.org/" target="_top"><span style='white-space: nowrap'>minsys2</span></a>
+ system,
+with <code><font color="blue">mingw-64</font></code> and <code><font color="blue">g++</font></code>,
+has some requires some special procedures.
+The following seems to work:
+Use <code><font color="blue">pacman</font></code> to install
+<code><font color="blue">make</font></code>, <code><font color="blue">gcc</font></code>, and <code><font color="blue">ming2-w64-x86_64-cmake</font></code>.
+Then, in the shell, set <code><font color="blue">CC='g++'</font></code>,
+and use the following replacement for the simple cmake command:
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cmake&nbsp;-G&nbsp;&quot;Unix&nbsp;Makefiles&quot;&nbsp;..<br>
+</span></font></code>
+<br>
+<big><a name="CMake Command.Visual Studio" id="CMake Command.Visual Studio">Visual Studio</a></big>
+<br>
+The <a href="https://www.msys2.org/" target="_top"><span style='white-space: nowrap'>minsys2</span></a>
+ system,
+with <code><font color="blue">mingw-64</font></code> and
+<a href="https://visualstudio.microsoft.com/vs/community/" target="_top"><span style='white-space: nowrap'>visual&nbsp;studio</span></a>
+
+compiler has some requires some special procedures.
+(Visual studio does not seem to be able to mix debug and release code.)
+The following seems to work:
+Use <code><font color="blue">pacman</font></code> to install <code><font color="blue">ming2-w64-x86_64-cmake</font></code>.
+Then, in the shell,
+use the following replacement for the simple cmake command:
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cmake&nbsp;-D&nbsp;debug_which=debug_all&nbsp;..<br>
 </span></font></code>
 <br>
 <b><big><a name="make check" id="make check">make check</a></big></b>

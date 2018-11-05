@@ -35,15 +35,11 @@ var list_current0 = [
 'download.htm#Version',
 'download.htm#Release',
 'download.htm#License',
-'download.htm#Compressed Archives',
-'download.htm#Compressed Archives.Coin',
-'download.htm#Compressed Archives.Github',
-'download.htm#Source Code Control',
-'download.htm#Source Code Control.Git',
-'download.htm#Source Code Control.Subversion',
-'download.htm#Source Code Control.Version',
-'download.htm#Source Code Control.Documentation',
-'download.htm#Source Code Control.Building Documentation'
+'download.htm#Git',
+'download.htm#Git.Version',
+'download.htm#Git.Compressed Archives',
+'download.htm#Git.Documentation',
+'download.htm#Git.Building Documentation'
 ];
 function choose_across0(item)
 {	var index          = item.selectedIndex;
