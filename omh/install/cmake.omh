@@ -135,12 +135,26 @@ The $href%https://www.msys2.org/%minsys2%$$ system,
 with $code mingw-64$$ and $code g++$$,
 has some requires some special procedures.
 The following seems to work:
-use $code pacman$$ to install
+Use $code pacman$$ to install
 $code make$$, $code gcc$$, and $code ming2-w64-x86_64-cmake$$.
-Then, in the shell set $code CC='g++'$$,
+Then, in the shell, set $code CC='g++'$$,
 and use the following replacement for the simple cmake command:
 $codei%
 	cmake -G "Unix Makefiles" ..
+%$$
+
+$subhead Visual Studio$$
+The $href%https://www.msys2.org/%minsys2%$$ system,
+with $code mingw-64$$ and
+$href%https://visualstudio.microsoft.com/vs/community/%visual studio%$$
+compiler has some requires some special procedures.
+(Visual studio does not seem to be able to mix debug and release code.)
+The following seems to work:
+Use $code pacman$$ to install $code ming2-w64-x86_64-cmake$$.
+Then, in the shell,
+use the following replacement for the simple cmake command:
+$codei%
+	cmake -D debug_which=debug_all ..
 %$$
 
 $head make check$$

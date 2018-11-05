@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -190,7 +190,7 @@ namespace {
 		y1    = f.Forward(1, x1);
 		check = df.Forward(0, x0);
 		ok   &= NearEqual(check[0], y1[0], eps, eps);
-		for(size_t ell = 0.0; ell < r; ell++)
+		for(size_t ell = 0; ell < r; ell++)
 		{	xq[ell]     = x1[ell] / double(ell + 1);
 			zeroq[ell]  = 0.0;
 		}
@@ -219,7 +219,7 @@ namespace {
 		check[0] /= 3.0;
 		ok       &= NearEqual(check[0], y3[0], eps, eps);
 		yq        = f.Forward(3, r, zeroq);
-		for(size_t ell = 0.0; ell < r; ell++)
+		for(size_t ell = 0; ell < r; ell++)
 		{	checkq[ell] = check[0] * xq[ell];
 			ok         &= NearEqual(checkq[ell], yq[ell], eps, eps);
 		}

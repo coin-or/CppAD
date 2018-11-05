@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -36,7 +36,7 @@ $end
 namespace { // BEGIN_EMPTY_NAMESPACE
 
 // --------------------------------------------------------------------------
-CppAD::ADFun<double> record_function(size_t n)
+void record_function(CppAD::ADFun<double>& f, size_t n)
 {	// must be greater than or equal 3; see n_sweep below
 	assert( n >= 3 );
 	//
@@ -74,7 +74,8 @@ bool test_set(const char* color_method)
 	typedef CppAD::vector< std::set<size_t> >         s_vector;
 	//
 	size_t n = 12;
-	CppAD::ADFun<double> f = record_function(n);
+	CppAD::ADFun<double> f;
+	record_function(f, n);
 	//
 	// sparsity patteren for the sub-set of variables we are computing
 	// the hessian w.r.t.
@@ -142,7 +143,8 @@ bool test_bool(const char* color_method)
 	typedef CppAD::vector<bool>        s_vector;
 	//
 	size_t n = 12;
-	CppAD::ADFun<double> f = record_function(n);
+	CppAD::ADFun<double> f;
+	record_function(f, n);
 	//
 	// sparsity patteren for the sub-set of variables we are computing
 	// the hessian w.r.t.

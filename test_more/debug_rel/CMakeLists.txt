@@ -11,15 +11,25 @@
 # Build the test_more/general tests
 
 # set compiler flags for debug_rel.cpp and debug.cpp
+IF( "${debug_which}" STREQUAL "debug_all" )
+	SET(debug_extra    "${CMAKE_CXX_FLAGS_DEBUG}")
+	SET(release_extra  "${CMAKE_CXX_FLAGS_DEBUG}")
+ELSEIF( "${debug_which}" STREQUAL "debug_none" )
+	SET(debug_extra    "${CMAKE_CXX_FLAGS_RELEASE}")
+	SET(release_extra  "${CMAKE_CXX_FLAGS_RELEASE}")
+ELSE( "${debug_which}" )
+	SET(debug_extra    "${CMAKE_CXX_FLAGS_DEBUG}")
+	SET(release_extra  "${CMAKE_CXX_FLAGS_RELEASE}")
+ENDIF( "${debug_which}" STREQUAL "debug_all" )
+#
 SET_SOURCE_FILES_PROPERTIES(
 	debug_rel.cpp debug.cpp PROPERTIES COMPILE_FLAGS
-	"${cppad_cxx_flags} ${CMAKE_CXX_FLAGS_DEBUG} -DCPPAD_DEBUG_AND_RELEASE"
+	"${cppad_cxx_flags} ${debug_extra} -DCPPAD_DEBUG_AND_RELEASE"
 )
-
-# set compiler flags for release,cpp
+#
 SET_SOURCE_FILES_PROPERTIES(
 	release.cpp PROPERTIES COMPILE_FLAGS
-	"${cppad_cxx_flags} ${CMAKE_CXX_FLAGS_RELEASE} -DCPPAD_DEBUG_AND_RELEASE"
+	"${cppad_cxx_flags} ${release_extra} -DCPPAD_DEBUG_AND_RELEASE"
 )
 
 # now that we have the properties, add the executable

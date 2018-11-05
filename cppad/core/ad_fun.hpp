@@ -73,6 +73,11 @@ private:
 	// ------------------------------------------------------------
 	// Private member variables
 	// ------------------------------------------------------------
+
+	/// Is this function obejct a base2ad return value
+	/// (special becasue some compliers need copy constructor in this case)
+	bool base2ad_return_value_;
+
 	/// Has this ADFun object been optmized
 	bool has_been_optimized_;
 
@@ -281,22 +286,11 @@ private:
 	);
 
 public:
-	/// copy constructor
-	ADFun(const ADFun& g)
-	: num_var_tape_(0)
-	{	CppAD::ErrorHandler::Call(
-		true,
-		__LINE__,
-		__FILE__,
-		"ADFun(const ADFun& g)",
-		"Attempting to use the ADFun<Base> copy constructor.\n"
-		"Perhaps you are passing an ADFun<Base> object "
-		"by value instead of by reference."
-		);
-	 }
-
 	/// default constructor
 	ADFun(void);
+
+	/// copy constructor
+	ADFun(const ADFun& g);
 
 	// assignment operator
 	// (doxygen in cppad/core/fun_construct.hpp)

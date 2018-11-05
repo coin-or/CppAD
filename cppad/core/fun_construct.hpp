@@ -249,6 +249,7 @@ i.e., operation sequences that were recorded using the type \c AD<Base>.
 */
 template <typename Base, typename RecBase>
 ADFun<Base,RecBase>::ADFun(void) :
+base2ad_return_value_(false),
 has_been_optimized_(false),
 check_for_nan_(true) ,
 compare_change_count_(1),
@@ -257,6 +258,33 @@ compare_change_op_index_(0),
 num_var_tape_(0)
 { }
 
+/*!
+ADFun copy constructor
+
+This is only alowed for a base2ad return value and is required
+by some compilers to support the following syntax:
+\verbatim
+	ADFun< AD<Base>, Base > af;
+	af = f.base2ad();
+\endverbatim
+
+*/
+template <typename Base, typename RecBase>
+ADFun<Base,RecBase>::ADFun(const ADFun& g)
+{	if( g.base2ad_return_value_ )
+		*this = g;
+	else
+	{	CppAD::ErrorHandler::Call(
+			true,
+			__LINE__,
+			__FILE__,
+			"ADFun(const ADFun& g)",
+			"Attempting to use the ADFun<Base> copy constructor.\n"
+			"Perhaps you are passing an ADFun<Base> object "
+			"by value instead of by reference."
+		);
+	}
+}
 /*!
 ADFun assignment operator
 
@@ -281,9 +309,12 @@ void ADFun<Base,RecBase>::operator=(const ADFun& f)
 {
 	// go through member variables in ad_fun.hpp order
 	//
-	// size_t objects
+	// bool objects
+	base2ad_return_value_      = false;
 	has_been_optimized_        = f.has_been_optimized_;
 	check_for_nan_             = f.check_for_nan_;
+	//
+	// size_t objects
 	compare_change_count_      = f.compare_change_count_;
 	compare_change_number_     = f.compare_change_number_;
 	compare_change_op_index_   = f.compare_change_op_index_;
@@ -320,9 +351,12 @@ void ADFun<Base,RecBase>::operator=(const ADFun& f)
 template <typename Base, typename RecBase>
 void ADFun<Base,RecBase>::operator=(ADFun&& f)
 {
-	// size_t objects
+	// bool objects
+	base2ad_return_value_      = false; // f might be, but this is not
 	has_been_optimized_        = f.has_been_optimized_;
 	check_for_nan_             = f.check_for_nan_;
+	//
+	// size_t objects
 	compare_change_count_      = f.compare_change_count_;
 	compare_change_number_     = f.compare_change_number_;
 	compare_change_op_index_   = f.compare_change_op_index_;

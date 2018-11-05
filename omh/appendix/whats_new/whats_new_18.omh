@@ -41,6 +41,7 @@ $spell
 	minsys
 	cmake
 	bool
+	erf
 $$
 
 $section Changes and Additions to CppAD During 2018$$
@@ -50,13 +51,27 @@ $list number$$
 The $cref/simple/cmake/CMake Command/Simple/$$ version of the cmake command
 is now suggested as a starting point installing CppAD.
 In addition, special suggestions were make for the
-$cref/minsys2/cmake/CMake Command/minsys2/$$ case.
+$cref/minsys2/cmake/CMake Command/minsys2/$$ and
+$cref/visual studio/cmake/CMake Command/Visual Studio/$$
+cases.
 $lnext
 The Visual Studio compiler gave a warning because the
 $code get_record_compare$$ (not in use API)
 was returning $code size_t$$ when
 it should have returned a $code bool$$.
-This has been fixed.
+It also gave a warning in $code test_more/general/erf.cpp$$
+about conversion from $code double$$ to $code size_t$$.
+These have been fixed.
+$lnext
+The Visual Studio compiler also gave an error because it requires
+the $cref ADFun$$ copy constructor for assignment to
+a $cref base2ad$$ result.
+This copy constructor has been allowed (but only for this case).
+$lnext
+The Visual Studio compiler does not seem to be able to mix
+debug and release code. One of the tests had to be modified
+enable the user to avoid this; see
+$cref/visual studio/cmake/CMake Command/Visual Studio/$$.
 $lend
 
 

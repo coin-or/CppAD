@@ -268,14 +268,17 @@ void ADFun<Base,RecBase>::Dependent(local::ADTape<Base> *tape, const ADvector &y
 	// put an EndOp at the end of the tape
 	tape->Rec_.PutOp(local::EndOp);
 
-	// some size_t values in ad_fun.hpp
+	// bool values in this object except check_for_nan_
+	base2ad_return_value_      = false;
 	has_been_optimized_        = false;
+	//
+	// size_t values in this object except for num_var_tape_
 	compare_change_count_      = 1;
 	compare_change_number_     = 0;
 	compare_change_op_index_   = 0;
 	num_order_taylor_          = 0;
-	num_direction_taylor_      = 0;
 	cap_order_taylor_          = 0;
+	num_direction_taylor_      = 0;
 
 	// num_var_tape_
 	// Now that all the variables are in the tape, we can set this value.
