@@ -60,10 +60,9 @@ void record_function(CppAD::ADFun<double>& f, size_t n)
 
 	// create f: x -> y and stop tape recording
 	// (without executing zero order forward calculation)
-	CppAD::ADFun<double> f;
 	f.Dependent(a_x, a_y);
 	//
-	return f;
+	return;
 }
 // --------------------------------------------------------------------------
 bool test_set(const char* color_method)
