@@ -109,7 +109,7 @@ public:
 	{	num_dynamic_ind_ = num_dynamic_ind; }
 
 	/// Get record_compare option
-	size_t get_record_compare(void) const
+	bool get_record_compare(void) const
 	{	return record_compare_; }
 
 	/// Get the abort_op_index

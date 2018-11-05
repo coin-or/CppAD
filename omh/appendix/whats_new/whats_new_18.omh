@@ -40,15 +40,24 @@ $spell
 	Subgraph
 	minsys
 	cmake
+	bool
 $$
 
 $section Changes and Additions to CppAD During 2018$$
 
 $head 11-04$$
+$list number$$
 The $cref/simple/cmake/CMake Command/Simple/$$ version of the cmake command
 is now suggested as a starting point installing CppAD.
 In addition, special suggestions were make for the
 $cref/minsys2/cmake/CMake Command/minsys2/$$ case.
+$lnext
+The Visual Studio compiler gave a warning because the
+$code get_record_compare$$ (not in use API)
+was returning $code size_t$$ when
+it should have returned a $code bool$$.
+This has been fixed.
+$lend
 
 
 $head 11-01$$
