@@ -15,6 +15,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 $begin base2ad$$
 $spell
 	af
+	Taylor
 $$
 
 $spell
@@ -47,6 +48,8 @@ but it does it's derivative calculations using the type
 $codei%AD<%Base>%$$.
 This enables one to record new functions that are defined
 using derivatives of the function $icode f$$.
+Initially, there are no Taylor coefficients stored in $icode af$$ and
+$cref%af.size_order()%size_order%$$ is zero.
 
 $children%
 	example/general/base2ad.cpp
@@ -80,9 +83,9 @@ ADFun< AD<Base>, RecBase > ADFun<Base,RecBase>::base2ad(void) const
 	fun.compare_change_count_      = compare_change_count_;
 	fun.compare_change_number_     = compare_change_number_;
 	fun.compare_change_op_index_   = compare_change_op_index_;
-	fun.num_order_taylor_          = num_order_taylor_;
-	fun.cap_order_taylor_          = cap_order_taylor_;
-	fun.num_direction_taylor_      = num_direction_taylor_;
+	CPPAD_ASSERT_UNKNOWN( fun.num_order_taylor_ == 0 ) ;
+	CPPAD_ASSERT_UNKNOWN( fun.cap_order_taylor_ == 0 );
+	CPPAD_ASSERT_UNKNOWN( fun.num_direction_taylor_ == 0 );
 	fun.num_var_tape_              = num_var_tape_;
 	//
 	// pod_vector objects
@@ -93,9 +96,7 @@ ADFun< AD<Base>, RecBase > ADFun<Base,RecBase>::base2ad(void) const
 	fun.load_op_                   = load_op_;
 	//
 	// pod_maybe_vector< AD<Base> > = pod_maybe_vector<Base>
-	fun.taylor_.resize( taylor_.size() );
-	for(size_t i = 0; i < taylor_.size(); ++i)
-		fun.taylor_[i] = taylor_[i];
+	CPPAD_ASSERT_UNKNOWN( fun.taylor_.size() == 0 );
 	//
 	// player
 	// (uses move semantics when CPPAD_USE_CPLUSPLUS_2011 is 1)

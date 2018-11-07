@@ -252,9 +252,12 @@ ADFun<Base,RecBase>::ADFun(void) :
 base2ad_return_value_(false),
 has_been_optimized_(false),
 check_for_nan_(true) ,
-compare_change_count_(1),
+compare_change_count_(0),
 compare_change_number_(0),
 compare_change_op_index_(0),
+num_order_taylor_(0),
+cap_order_taylor_(0),
+num_direction_taylor_(0),
 num_var_tape_(0)
 { }
 
