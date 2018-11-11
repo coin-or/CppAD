@@ -42,9 +42,14 @@ $spell
 	cmake
 	bool
 	erf
+	tmb
 $$
 
 $section Changes and Additions to CppAD During 2018$$
+
+$head 11-11$$
+Fix a warning in $code test_more/cppad_for_tmb/multi_checkpoint.cpp$$
+when using boost vectors for testing.
 
 $head 11-06$$
 The initial
