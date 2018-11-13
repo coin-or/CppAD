@@ -114,7 +114,8 @@ bool multi_atomic(void)
 		v         = f.Forward(0, x);
 		//
 		// this assigment has false sharing; i.e., will case cache resets
-		y[thread] = v[0];
+		// (conversion avoids boost vector conversion warning)
+		y[size_t(thread)] = v[0];
 	}
 
 	// check the results

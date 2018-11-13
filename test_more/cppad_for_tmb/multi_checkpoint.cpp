@@ -83,7 +83,7 @@ bool multi_checkpoint(void)
 		v         = f.Forward(0, x);
 		//
 		// this assigment has false sharing; i.e., will case cache resets
-		// (conversion seems to avoid boost vector conversion warning)
+		// (conversion avoids boost vector conversion warning)
 		y[size_t(thread)] = v[0];
 	}
 
