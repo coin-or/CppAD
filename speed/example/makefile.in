@@ -97,16 +97,15 @@ DIST_COMMON = $(srcdir)/makefile.am $(am__DIST_COMMON)
 mkinstalldirs = $(install_sh) -d
 CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
-am__dirstamp = $(am__leading_dot)dirstamp
 am_speed_example_OBJECTS = example.$(OBJEXT) det_by_lu.$(OBJEXT) \
 	det_by_minor.$(OBJEXT) det_of_minor.$(OBJEXT) \
 	elapsed_seconds.$(OBJEXT) mat_sum_sq.$(OBJEXT) \
 	ode_evaluate.$(OBJEXT) sparse_hes_fun.$(OBJEXT) \
 	sparse_jac_fun.$(OBJEXT) speed_test.$(OBJEXT) \
-	time_test.$(OBJEXT) ../src/microsoft_timer.$(OBJEXT)
+	time_test.$(OBJEXT)
 speed_example_OBJECTS = $(am_speed_example_OBJECTS)
 speed_example_LDADD = $(LDADD)
-speed_example_DEPENDENCIES =
+speed_example_DEPENDENCIES = ../src/libspeed.a
 AM_V_P = $(am__v_P_@AM_V@)
 am__v_P_ = $(am__v_P_@AM_DEFAULT_V@)
 am__v_P_0 = false
@@ -193,9 +192,8 @@ CXX_FLAGS_EIGEN = @CXX_FLAGS_EIGEN@
 CXX_FLAGS_FADBAD = @CXX_FLAGS_FADBAD@
 CYGPATH_W = @CYGPATH_W@
 
-# $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the
@@ -275,8 +273,8 @@ build_cpu = @build_cpu@
 build_os = @build_os@
 build_vendor = @build_vendor@
 builddir = @builddir@
+compiler_has_conversion_warn = @compiler_has_conversion_warn@
 cppad_boostvector = @cppad_boostvector@
-cppad_compiler_is_gnucxx = @cppad_compiler_is_gnucxx@
 cppad_cplusplus_201100_ok = @cppad_cplusplus_201100_ok@
 cppad_cppadvector = @cppad_cppadvector@
 cppad_cxx_flags = @cppad_cxx_flags@
@@ -350,8 +348,8 @@ AM_CPPFLAGS = -I. -I$(top_srcdir) $(BOOST_INCLUDE) $(EIGEN_INCLUDE)
 #
 AM_CXXFLAGS = -g $(CXX_FLAGS)
 #
-LDADD = -lspeed
-AM_LDFLAGS = -L../src
+LDADD = ../src/libspeed.a
+#
 speed_example_SOURCES = \
 	example.cpp \
 	det_by_lu.cpp \
@@ -363,8 +361,7 @@ speed_example_SOURCES = \
 	sparse_hes_fun.cpp \
 	sparse_jac_fun.cpp \
 	speed_test.cpp \
-	time_test.cpp \
-	../src/microsoft_timer.cpp
+	time_test.cpp
 
 all: all-am
 
@@ -402,14 +399,6 @@ $(am__aclocal_m4_deps):
 
 clean-checkPROGRAMS:
 	-test -z "$(check_PROGRAMS)" || rm -f $(check_PROGRAMS)
-../src/$(am__dirstamp):
-	@$(MKDIR_P) ../src
-	@: > ../src/$(am__dirstamp)
-../src/$(DEPDIR)/$(am__dirstamp):
-	@$(MKDIR_P) ../src/$(DEPDIR)
-	@: > ../src/$(DEPDIR)/$(am__dirstamp)
-../src/microsoft_timer.$(OBJEXT): ../src/$(am__dirstamp) \
-	../src/$(DEPDIR)/$(am__dirstamp)
 
 speed_example$(EXEEXT): $(speed_example_OBJECTS) $(speed_example_DEPENDENCIES) $(EXTRA_speed_example_DEPENDENCIES) 
 	@rm -f speed_example$(EXEEXT)
@@ -417,12 +406,10 @@ speed_example$(EXEEXT): $(speed_example_OBJECTS) $(speed_example_DEPENDENCIES) $
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
-	-rm -f ../src/*.$(OBJEXT)
 
 distclean-compile:
 	-rm -f *.tab.c
 
-@AMDEP_TRUE@@am__include@ @am__quote@../src/$(DEPDIR)/microsoft_timer.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/det_by_lu.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/det_by_minor.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/det_of_minor.Po@am__quote@
@@ -564,8 +551,6 @@ clean-generic:
 distclean-generic:
 	-test -z "$(CONFIG_CLEAN_FILES)" || rm -f $(CONFIG_CLEAN_FILES)
 	-test . = "$(srcdir)" || test -z "$(CONFIG_CLEAN_VPATH_FILES)" || rm -f $(CONFIG_CLEAN_VPATH_FILES)
-	-rm -f ../src/$(DEPDIR)/$(am__dirstamp)
-	-rm -f ../src/$(am__dirstamp)
 
 maintainer-clean-generic:
 	@echo "This command is intended for maintainers to use"
@@ -575,7 +560,7 @@ clean: clean-am
 clean-am: clean-checkPROGRAMS clean-generic mostlyclean-am
 
 distclean: distclean-am
-	-rm -rf ../src/$(DEPDIR) ./$(DEPDIR)
+	-rm -rf ./$(DEPDIR)
 	-rm -f makefile
 distclean-am: clean-am distclean-compile distclean-generic \
 	distclean-tags
@@ -621,7 +606,7 @@ install-ps-am:
 installcheck-am:
 
 maintainer-clean: maintainer-clean-am
-	-rm -rf ../src/$(DEPDIR) ./$(DEPDIR)
+	-rm -rf ./$(DEPDIR)
 	-rm -f makefile
 maintainer-clean-am: distclean-am maintainer-clean-generic
 

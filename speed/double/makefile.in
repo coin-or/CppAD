@@ -103,7 +103,7 @@ am_speed_double_OBJECTS = main.$(OBJEXT) det_lu.$(OBJEXT) \
 	sparse_jacobian.$(OBJEXT)
 speed_double_OBJECTS = $(am_speed_double_OBJECTS)
 speed_double_LDADD = $(LDADD)
-speed_double_DEPENDENCIES =
+speed_double_DEPENDENCIES = ../src/libspeed.a
 AM_V_P = $(am__v_P_@AM_V@)
 am__v_P_ = $(am__v_P_@AM_DEFAULT_V@)
 am__v_P_0 = false
@@ -259,8 +259,8 @@ build_cpu = @build_cpu@
 build_os = @build_os@
 build_vendor = @build_vendor@
 builddir = @builddir@
+compiler_has_conversion_warn = @compiler_has_conversion_warn@
 cppad_boostvector = @cppad_boostvector@
-cppad_compiler_is_gnucxx = @cppad_compiler_is_gnucxx@
 cppad_cplusplus_201100_ok = @cppad_cplusplus_201100_ok@
 cppad_cppadvector = @cppad_cppadvector@
 cppad_cxx_flags = @cppad_cxx_flags@
@@ -326,9 +326,8 @@ top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 
-# $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the
@@ -351,8 +350,7 @@ AM_CXXFLAGS = -O2 -DNDEBUG -DCPPAD_DOUBLE_SPEED $(CXX_FLAGS)
 # AM_CXXFLAGS   = -g $(CXX_FLAGS) -DCPPAD_DOUBLE_SPEED
 # END DEBUG
 #
-LDADD = -lspeed
-AM_LDFLAGS = -L../src
+LDADD = ../src/libspeed.a
 #
 speed_double_SOURCES = \
 	main.cpp \

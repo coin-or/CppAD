@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -10,6 +10,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 $begin preprocessor$$
 $spell
+	Microsoft
 	const
 	nullptr
 	CppADvector
@@ -19,13 +20,23 @@ $$
 $section CppAD API Preprocessor Symbols$$
 $mindex CPPAD_ NULL pointer$$
 
-$head Purpose$$
+$head Rule$$
 The CppAD include files defines preprocessor symbols all of which begin
 with $code CPPAD_$$.
 Note that there are some old, deprecated preprocessor symbols that
 begin with $code CppAD$$.
 In this section we list all of the CppAD preprocessor symbols that
 are part of the CppAD Application Interface (API).
+
+$head NOMINMAX$$
+There is one exception to the rule above,
+when using the Microsoft Visual Studio compiler
+and including $code windows.h$$,
+it is done as follows:
+$codep
+	# define NOMINMAX
+	# include <windows.h>
+$$
 
 $head Documented Here$$
 

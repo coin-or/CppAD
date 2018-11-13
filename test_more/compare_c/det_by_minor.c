@@ -1,7 +1,7 @@
 /* $Id: */
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -491,6 +491,7 @@ $srccode%cpp% */
 # if _MSC_VER
 // ---------------------------------------------------------------------------
 // Microsoft version of timer
+# define NOMINMAX  // so windows.h does not define min and max as macros
 # include <windows.h>
 # include <cassert>
 double elapsed_seconds(void)

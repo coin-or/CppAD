@@ -74,6 +74,7 @@ general_SOURCES   = \
 	$(ADOLC_SRC_FILES) \
 	\
 	abort_recording.cpp \
+	base2ad.cpp \
 	fabs.cpp \
 	acos.cpp \
 	acosh.cpp \

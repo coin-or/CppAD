@@ -51,11 +51,6 @@ $head s$$
 is a $code double$$ equal to the
 number of seconds since the first call to $code elapsed_seconds$$.
 
-$head Microsoft Systems$$
-It you are using $code ::GetSystemTime$$,
-you will need to link in the external routine
-called $cref microsoft_timer$$.
-
 $children%
 	speed/example/elapsed_seconds.cpp
 %$$
@@ -84,7 +79,8 @@ $end
 # if CPPAD_USE_CPLUSPLUS_2011
 # include <chrono>
 # elif _MSC_VER
-extern double microsoft_timer(void);
+# define NOMINMAX // so windows.h does not define min and max as macros
+# include <windows.h>
 # elif CPPAD_HAS_GETTIMEOFDAY
 # include <sys/time.h>
 # else
@@ -130,7 +126,30 @@ inline double elapsed_seconds(void)
 }
 // --------------------------------------------------------------------------
 # elif _MSC_VER
-{	return microsoft_timer(); }
+{	CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL;
+	static bool       first_  = true;
+	static SYSTEMTIME st_;
+	SYSTEMTIME st;
+
+	if( first_ )
+	{	::GetSystemTime(&st_);
+		first_ = false;
+		return 0.;
+	}
+	::GetSystemTime(&st);
+
+	double hour   = double(st.wHour)         - double(st_.wHour);
+	double minute = double(st.wMinute)       - double(st_.wMinute);
+	double second = double(st.wSecond)       - double(st_.wSecond);
+	double milli  = double(st.wMilliseconds) - double(st_.wMilliseconds);
+
+	double diff   = 1e-3*milli + second + 60.*minute + 3600.*hour;
+	if( diff < 0. )
+		diff += 3600.*24.;
+	CPPAD_ASSERT_UNKNOWN( 0 <= diff && diff < 3600.*24. );
+
+	return diff;
+}
 // --------------------------------------------------------------------------
 # elif CPPAD_HAS_GETTIMEOFDAY
 {	CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL;

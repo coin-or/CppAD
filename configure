@@ -630,7 +630,7 @@ cppad_has_gettimeofday
 cppad_cppadvector
 is_pod_specialize_11
 is_pod_specialize_98
-cppad_compiler_is_gnucxx
+compiler_has_conversion_warn
 cppad_cplusplus_201100_ok
 cppad_has_tmpnam_s
 cppad_has_mkstemp
@@ -5924,7 +5924,7 @@ cppad_deprecated_01=0
 cppad_has_colpack=0
 
 
-cppad_has_mkstemp=1
+cppad_has_mkstemp=0
 
 cppad_has_tmpnam_s=0
 
@@ -5932,7 +5932,7 @@ cppad_has_tmpnam_s=0
 cppad_cplusplus_201100_ok=0
 
 
-cppad_compiler_is_gnucxx=0
+compiler_has_conversion_warn=0
 
 
 is_pod_specialize_98="
@@ -7221,6 +7221,8 @@ ipopt_prefix=${IPOPT_DIR}
 ac_config_files="$ac_config_files cppad/configure.hpp cppad/local/is_pod.hpp cppad_ipopt/example/test.sh cppad_ipopt/speed/test.sh cppad_ipopt/test/test.sh example/ipopt_solve/test.sh pkgconfig/cppad.pc pkgconfig/cppad-uninstalled.pc makefile cppad_ipopt/src/makefile cppad_ipopt/example/makefile cppad_ipopt/speed/makefile cppad_ipopt/test/makefile example/general/makefile example/abs_normal/makefile example/atomic/makefile example/deprecated/makefile example/ipopt_solve/makefile example/optimize/makefile example/sparse/makefile example/utility/makefile example/get_started/makefile introduction/makefile example/multi_thread/makefile example/print_for/makefile speed/adolc/makefile speed/cppad/makefile speed/double/makefile speed/example/makefile speed/fadbad/makefile speed/profile/makefile speed/profile/gprof.sed speed/sacado/makefile speed/src/makefile test_more/compare_c/makefile test_more/general/makefile"
 
 
+ac_config_commands="$ac_config_commands configure.hpp"
+
 ac_config_commands="$ac_config_commands example_ipopt_solve_test.sh"
 
 ac_config_commands="$ac_config_commands cppad_ipopt_example_test.sh"
@@ -8034,6 +8036,12 @@ cat >>$CONFIG_STATUS <<_ACEOF || ac_write_fail=1
 # INIT-COMMANDS
 #
 AMDEP_TRUE="$AMDEP_TRUE" ac_aux_dir="$ac_aux_dir"
+abs_top_srcdir=$abs_top_srcdir
+
+
+
+
+
 
 
 
@@ -8084,6 +8092,7 @@ do
     "speed/src/makefile") CONFIG_FILES="$CONFIG_FILES speed/src/makefile" ;;
     "test_more/compare_c/makefile") CONFIG_FILES="$CONFIG_FILES test_more/compare_c/makefile" ;;
     "test_more/general/makefile") CONFIG_FILES="$CONFIG_FILES test_more/general/makefile" ;;
+    "configure.hpp") CONFIG_COMMANDS="$CONFIG_COMMANDS configure.hpp" ;;
     "example_ipopt_solve_test.sh") CONFIG_COMMANDS="$CONFIG_COMMANDS example_ipopt_solve_test.sh" ;;
     "cppad_ipopt_example_test.sh") CONFIG_COMMANDS="$CONFIG_COMMANDS cppad_ipopt_example_test.sh" ;;
     "cppad_ipopt_speed_test.sh") CONFIG_COMMANDS="$CONFIG_COMMANDS cppad_ipopt_speed_test.sh" ;;
@@ -8610,6 +8619,7 @@ $as_echo X"$file" |
   done
 }
  ;;
+    "configure.hpp":C) cp cppad/configure.hpp  $abs_top_srcdir/cppad/configure.hpp ;;
     "example_ipopt_solve_test.sh":C) chmod +x example/ipopt_solve/test.sh ;;
     "cppad_ipopt_example_test.sh":C) chmod +x cppad_ipopt/example/test.sh ;;
     "cppad_ipopt_speed_test.sh":C) chmod +x cppad_ipopt/speed/test.sh ;;

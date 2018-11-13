@@ -11,6 +11,9 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 $begin cmake$$
 $spell
+	autotools
+	mkdir
+	vcvarsall
 	cstdint
 	uint
 	pkgconfig
@@ -156,6 +159,22 @@ use the following replacement for the simple cmake command:
 $codei%
 	cmake -D debug_which=debug_all ..
 %$$
+
+$subhead autotools$$
+The autotools build with the Visual Studio compiler was fixed so that it now
+works with the following configure and test commands:
+$codep
+	mkdir build
+	cd build
+	../configure CC=cl CXX=cl
+	make test
+$$
+This was tested in a Dos command window,
+that had the $code vcvarsall.bat$$ settings,
+extend path that included the $code minsys2$$ bin directory,
+and was running bash.
+It is highly recommended that you use the $code cmake$$ command above,
+instead of this procedure, when building with Visual Studio.
 
 $head make check$$
 Important information about the CppAD configuration is output

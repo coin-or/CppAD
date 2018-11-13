@@ -11,6 +11,9 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 $begin whats_new_18$$
 $spell
+	eps
+	autotools
+	Microsoft
 	CppAD
 	jac
 	hes
@@ -46,6 +49,27 @@ $spell
 $$
 
 $section Changes and Additions to CppAD During 2018$$
+
+$head 11-13$$
+$list number$$
+There was a problem using
+$cref elapsed_seconds$$ with the Microsoft Visual Studio compiler.
+To be specific, $code microsoft_timer$$ could be an undefined external.
+This has been fixed.
+$lnext
+The $code # define NOMINMAX$$ command was placed before
+$code # include <windows.h>$$
+so that $code std::min$$ and $code std::max$$ work properly.
+(This only matters when using the Visual Studio compiler.)
+$lnext
+For some unknown reason, the Microsoft Visual Studio compiler
+was giving a senseless error at the variable name $code small$$.
+This has been changed to $code eps$$ in $cref interface2c.cpp$$.
+$lnext
+The deprecated $cref/autotools/cmake/CMake Command/autotools/$$
+was fixed to work with the current version of CppAD.
+$lend
+
 
 $head 11-11$$
 Fix a warning in $code test_more/cppad_for_tmb/multi_checkpoint.cpp$$

@@ -45,6 +45,7 @@ do
 		then
 			sed -n -e "/^# *define /p" $file | sed \
 				-e "/^# *define *$include_guard/d" \
+				-e '/^# define NOMINMAX/d' \
 				-e "s/^# *define  *\([A-Za-z0-9_]*\).*/\1/" >> check_define.1
 		fi
 		# undef

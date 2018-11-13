@@ -98,16 +98,16 @@ mkinstalldirs = $(install_sh) -d
 CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
 am__atomic_SOURCES_DIST = eigen_cholesky.cpp eigen_mat_inv.cpp \
-	eigen_mat_mul.cpp atomic.cpp checkpoint.cpp extended_ode.cpp \
-	for_sparse_hes.cpp for_sparse_jac.cpp forward.cpp \
-	get_started.cpp mat_mul.cpp mul_level.cpp norm_sq.cpp ode.cpp \
-	reciprocal.cpp rev_sparse_hes.cpp rev_sparse_jac.cpp \
-	reverse.cpp set_sparsity.cpp tangent.cpp
+	eigen_mat_mul.cpp atomic.cpp base2ad.cpp checkpoint.cpp \
+	extended_ode.cpp for_sparse_hes.cpp for_sparse_jac.cpp \
+	forward.cpp get_started.cpp mat_mul.cpp mul_level.cpp \
+	norm_sq.cpp ode.cpp reciprocal.cpp rev_sparse_hes.cpp \
+	rev_sparse_jac.cpp reverse.cpp set_sparsity.cpp tangent.cpp
 @CppAD_EIGEN_DIR_TRUE@am__objects_1 = eigen_cholesky.$(OBJEXT) \
 @CppAD_EIGEN_DIR_TRUE@	eigen_mat_inv.$(OBJEXT) \
 @CppAD_EIGEN_DIR_TRUE@	eigen_mat_mul.$(OBJEXT)
 am_atomic_OBJECTS = $(am__objects_1) atomic.$(OBJEXT) \
-	checkpoint.$(OBJEXT) extended_ode.$(OBJEXT) \
+	base2ad.$(OBJEXT) checkpoint.$(OBJEXT) extended_ode.$(OBJEXT) \
 	for_sparse_hes.$(OBJEXT) for_sparse_jac.$(OBJEXT) \
 	forward.$(OBJEXT) get_started.$(OBJEXT) mat_mul.$(OBJEXT) \
 	mul_level.$(OBJEXT) norm_sq.$(OBJEXT) ode.$(OBJEXT) \
@@ -202,9 +202,8 @@ CXX_FLAGS_EIGEN = @CXX_FLAGS_EIGEN@
 CXX_FLAGS_FADBAD = @CXX_FLAGS_FADBAD@
 CYGPATH_W = @CYGPATH_W@
 
-# $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the
@@ -284,8 +283,8 @@ build_cpu = @build_cpu@
 build_os = @build_os@
 build_vendor = @build_vendor@
 builddir = @builddir@
+compiler_has_conversion_warn = @compiler_has_conversion_warn@
 cppad_boostvector = @cppad_boostvector@
-cppad_compiler_is_gnucxx = @cppad_compiler_is_gnucxx@
 cppad_cplusplus_201100_ok = @cppad_cplusplus_201100_ok@
 cppad_cppadvector = @cppad_cppadvector@
 cppad_cxx_flags = @cppad_cxx_flags@
@@ -371,6 +370,7 @@ AM_CPPFLAGS = -I. \
 atomic_SOURCES = \
 	$(EIGEN_SRC_FILES) \
 	atomic.cpp \
+	base2ad.cpp \
 	checkpoint.cpp \
 	extended_ode.cpp \
 	for_sparse_hes.cpp \
@@ -436,6 +436,7 @@ distclean-compile:
 	-rm -f *.tab.c
 
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/atomic.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/base2ad.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/checkpoint.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/eigen_cholesky.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/eigen_mat_inv.Po@am__quote@

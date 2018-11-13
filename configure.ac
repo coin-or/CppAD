@@ -491,8 +491,8 @@ AC_SUBST(cppad_deprecated_01,  0)
 dnl autotools version does not colpack
 AC_SUBST(cppad_has_colpack, 0)
 
-dnl autotools version will assumes mkstemp is available.
-AC_SUBST(cppad_has_mkstemp, 1)
+dnl autotools version will not assume mkstemp or tmpnam_s are available.
+AC_SUBST(cppad_has_mkstemp, 0)
 AC_SUBST(cppad_has_tmpnam_s, 0)
 
 dnl autotools version cannot use c++11 compiler
@@ -500,7 +500,7 @@ dnl so supress corresponding features
 AC_SUBST(cppad_cplusplus_201100_ok, 0)
 
 dnl autotools version does not check if using g++
-AC_SUBST(cppad_compiler_is_gnucxx, 0)
+AC_SUBST(compiler_has_conversion_warn, 0)
 
 dnl autotools version sets is_pod without testing system, cmake is better
 dnl for the  Fundamental types
@@ -882,15 +882,23 @@ AC_CONFIG_FILES([
 ])
 dnl END AC_CONFIG_FILES
 
+dnl copy config.hpp to source directory
+AC_CONFIG_COMMANDS(
+	[configure.hpp],
+	[cp cppad/configure.hpp  $abs_top_srcdir/cppad/configure.hpp],
+	[abs_top_srcdir=$abs_top_srcdir]
+)
 dnl scripts that set library path before running test
 AC_CONFIG_COMMANDS(
 	[example_ipopt_solve_test.sh],
 	[chmod +x example/ipopt_solve/test.sh],
-)	[]
+	[]
+)
 AC_CONFIG_COMMANDS(
 	[cppad_ipopt_example_test.sh],
 	[chmod +x cppad_ipopt/example/test.sh],
-)	[]
+	[]
+)
 AC_CONFIG_COMMANDS(
 	[cppad_ipopt_speed_test.sh],
 	[chmod +x cppad_ipopt/speed/test.sh],

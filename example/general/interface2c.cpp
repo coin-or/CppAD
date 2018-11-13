@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -151,30 +151,30 @@ bool Interface2C(void)
 	// compare dyda to central difference approximation for deriative
 	for(i = 0; i < na; i++)
 	{	// local variables
-		float small, ai, yp, ym, dy_da;
+		float eps, ai, yp, ym, dy_da;
 
 		// We assume that the type float has at least 7 digits of
-		// precision, so we choose small to be about pow(10., -7./2.).
-		small  = (float) 3e-4;
+		// precision, so we choose eps to be about pow(10., -7./2.).
+		eps  = (float) 3e-4;
 
 		// value of this component of a
 		ai    = a[i];
 
-		// evaluate F( a + small * ei )
-		a[i]  = ai + small;
+		// evaluate F( a + eps * ei )
+		a[i]  = ai + eps;
 		sumGauss(x, a, &yp, tmp, na);
 
-		// evaluate F( a - small * ei )
-		a[i]  = ai - small;
+		// evaluate F( a - eps * ei )
+		a[i]  = ai - eps;
 		sumGauss(x, a, &ym, tmp, na);
 
 		// evaluate central difference approximates for partial
-		dy_da = (yp - ym) / (2 * small);
+		dy_da = (yp - ym) / (2 * eps);
 
 		// restore this component of a
 		a[i]  = ai;
 
-		ok   &= NearEqual(dyda[i], dy_da, small, small);
+		ok   &= NearEqual(dyda[i], dy_da, eps, eps);
 	}
 	return ok;
 }
