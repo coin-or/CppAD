@@ -1,6 +1,6 @@
 #! /bin/sh -e
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the
@@ -32,15 +32,17 @@ next_program() {
 		;;
 	esac
 }
-n_program='3'
-program_list=' openmp_test pthread_test bthread_test'
+n_program='0'
+program_list=''
 for program in openmp_test pthread_test bthread_test
 do
-	if [ ! -e "$program" ]
+	if [ -e "$program" ]
 	then
-		program_list=`echo "$program_list" | sed -e "s| $program||"`
-		n_program=`expr $n_program - 1`
+		program_list="$program $program_list"
+		n_program=`expr $n_program + 1`
 	fi
+	echo "program_list = $program_list"
+	echo "n_program = $n_program"
 done
 if [ "$n_program" = '0' ]
 then

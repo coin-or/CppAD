@@ -786,7 +786,6 @@ SUBDIRS = \
 	example/deprecated \
 	example/general \
 	example/get_started \
-	example/ipopt_solve \
 	example/optimize \
 	example/print_for \
 	example/sparse \
@@ -851,7 +850,6 @@ test_directory_list = \
 	example/deprecated \
 	example/general \
 	example/get_started \
-	example/ipopt_solve \
 	example/multi_thread \
 	example/optimize \
 	example/print_for \
