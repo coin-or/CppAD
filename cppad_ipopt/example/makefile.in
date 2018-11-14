@@ -358,7 +358,7 @@ EXTRA_DIST = \
 	ode2.omh
 
 #
-AM_CXXFLAGS = -g $(CXX_FLAGS)
+AM_CXXFLAGS = $(CXX_FLAGS)
 #
 AM_CPPFLAGS = -I. \
 	-I$(top_srcdir) \

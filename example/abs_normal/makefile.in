@@ -363,7 +363,7 @@ EXTRA_DIST = abs_normal.omh
 #
 AM_CPPFLAGS = -I. $(CPPAD_INCLUDE) $(BOOST_INCLUDE) $(EIGEN_INCLUDE)
 #
-AM_CXXFLAGS = -g $(CXX_FLAGS)
+AM_CXXFLAGS = $(CXX_FLAGS)
 #
 abs_normal_SOURCES = \
 	abs_eval.cpp \

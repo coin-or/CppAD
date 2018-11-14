@@ -343,7 +343,7 @@ top_srcdir = @top_srcdir@
 #
 EXTRA_DIST = test.sh.in
 #
-AM_CXXFLAGS = -g $(CXX_FLAGS)
+AM_CXXFLAGS = $(CXX_FLAGS)
 #
 AM_CPPFLAGS = -I. \
 	-I$(top_srcdir) \

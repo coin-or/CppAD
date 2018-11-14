@@ -806,6 +806,7 @@ EXTRA_DIST = \
 	epl-v10.html \
 	omh \
 	uw_copy_040507.html \
+	coin.png \
 	\
 	test_more/compare_c/CMakeLists.txt \
 	cppad/CMakeLists.txt \
@@ -840,7 +841,9 @@ EXTRA_DIST = \
 	example/multi_thread/bthread/CMakeLists.txt \
 	example/multi_thread/CMakeLists.txt \
 	example/multi_thread/openmp/CMakeLists.txt \
-	example/multi_thread/pthread/CMakeLists.txt
+	example/multi_thread/pthread/CMakeLists.txt \
+	example/multi_thread/checkpoint.omh \
+	example/multi_thread/checkpoint.cpp
 
 test_directory_list = \
 	$(IPOPT_TESTS) \

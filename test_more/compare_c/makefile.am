@@ -1,5 +1,5 @@
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the
@@ -23,8 +23,8 @@ EXTRA_DIST = \
 # erase configures choice of flags
 DEFS =
 #
-# AM_CXXFLAGS = -g
-# AM_CFLAGS   = -g
+# AM_CXXFLAGS =
+# AM_CFLAGS   =
 #
 AM_CXXFLAGS = -O2 -DNDEBUG
 AM_CFLAGS   = -O2 -DNDEBUG

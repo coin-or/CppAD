@@ -26,7 +26,7 @@ EXTRA_DIST        =  \
 #
 check_PROGRAMS    = atomic
 #
-AM_CXXFLAGS       = -g $(CXX_FLAGS)
+AM_CXXFLAGS       = $(CXX_FLAGS)
 #
 AM_CPPFLAGS       = -I. \
 	-I$(top_srcdir) \

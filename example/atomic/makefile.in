@@ -359,7 +359,7 @@ EXTRA_DIST = \
 	$(EIGEN_EXTRA_FILES)
 
 #
-AM_CXXFLAGS = -g $(CXX_FLAGS)
+AM_CXXFLAGS = $(CXX_FLAGS)
 #
 AM_CPPFLAGS = -I. \
 	-I$(top_srcdir) \

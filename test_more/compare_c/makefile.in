@@ -356,8 +356,8 @@ EXTRA_DIST = \
 	det_by_minor.c
 
 #
-# AM_CXXFLAGS = -g
-# AM_CFLAGS   = -g
+# AM_CXXFLAGS =
+# AM_CFLAGS   =
 #
 AM_CXXFLAGS = -O2 -DNDEBUG
 AM_CFLAGS = -O2 -DNDEBUG

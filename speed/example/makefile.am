@@ -20,7 +20,7 @@ check_PROGRAMS    = speed_example
 #
 AM_CPPFLAGS       = -I. -I$(top_srcdir) $(BOOST_INCLUDE) $(EIGEN_INCLUDE)
 #
-AM_CXXFLAGS       = -g $(CXX_FLAGS)
+AM_CXXFLAGS       = $(CXX_FLAGS)
 #
 LDADD             = ../src/libspeed.a
 #

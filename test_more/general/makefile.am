@@ -52,7 +52,6 @@ noinst_LIBRARIES    = libeigen.a
 libeigen_a_SOURCES  =  cppad_eigen.cpp eigen_mat_inv.cpp
 EIGEN_LIB           = -L. -leigen
 libeigen_a_CXXFLAGS = \
-	-g \
 	$(CXX_FLAGS_EIGEN) \
 	 -I$(EIGEN_DIR)/include
 else
@@ -76,7 +75,7 @@ AM_CPPFLAGS       = -I. \
 	$(IPOPT_FLAGS) \
 	$(OPENMP_FLAGS)
 #
-AM_CXXFLAGS       = -g $(ADOLC_FLAGS) $(IPOPT_FLAGS) $(CXX_FLAGS)
+AM_CXXFLAGS       = $(ADOLC_FLAGS) $(IPOPT_FLAGS) $(CXX_FLAGS)
 #
 AM_LDFLAGS        = $(OPENMP_FLAGS)
 LDADD             = $(ADOLC_LIB) $(IPOPT_LIB) $(EIGEN_LIB) $(OPENMP_FLAGS)

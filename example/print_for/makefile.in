@@ -347,7 +347,7 @@ EXTRA_DIST = test.sh
 #
 AM_CPPFLAGS = -I. $(CPPAD_INCLUDE) $(BOOST_INCLUDE) $(EIGEN_INCLUDE)
 #
-AM_CXXFLAGS = -g $(CXX_FLAGS)
+AM_CXXFLAGS = $(CXX_FLAGS)
 #
 print_for_SOURCES = print_for.cpp
 all: all-am

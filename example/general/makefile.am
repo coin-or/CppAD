@@ -34,7 +34,7 @@ libeigen_a_SOURCES  =  eigen_det.cpp eigen_array.cpp
 EIGEN_LIB           = -L. -leigen
 EIGEN_FLAGS         =
 libeigen_a_CXXFLAGS = \
-	-g $(CXX_FLAGS_EIGEN) \
+	$(CXX_FLAGS_EIGEN) \
 	-I$(EIGEN_DIR)/include
 else
 EIGEN_EXTRA_FILES   = eigen_det.cpp eigen_array.cpp
@@ -55,9 +55,9 @@ EXTRA_DIST        =  \
 check_PROGRAMS    = general
 #
 if CppAD_MS_COMPILER
-AM_CXXFLAGS       = -EHsc -g $(ADOLC_FLAGS) $(EIGEN_FLAGS) $(CXX_FLAGS)
+AM_CXXFLAGS       = -EHsc $(ADOLC_FLAGS) $(EIGEN_FLAGS) $(CXX_FLAGS)
 else
-AM_CXXFLAGS       = -g $(ADOLC_FLAGS) $(EIGEN_FLAGS) $(CXX_FLAGS)
+AM_CXXFLAGS       = $(ADOLC_FLAGS) $(EIGEN_FLAGS) $(CXX_FLAGS)
 endif
 #
 AM_CPPFLAGS       = \

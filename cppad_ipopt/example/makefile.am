@@ -1,6 +1,5 @@
-# $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the
@@ -20,7 +19,7 @@ EXTRA_DIST        =  \
 #
 check_PROGRAMS    = example
 #
-AM_CXXFLAGS       = -g $(CXX_FLAGS)
+AM_CXXFLAGS       = $(CXX_FLAGS)
 #
 AM_CPPFLAGS       = -I. \
 	-I$(top_srcdir) \

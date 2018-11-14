@@ -121,6 +121,7 @@ do
 	then
 		if [ "$name" != "doc.omh" ]      && \
 		   [ "$name" != 'download.omh' ] && \
+		   [ "$name" != 'package.sh' ]   && \
 		   [ "$name" != 'proj_desc.py' ]
 		then
 			echo "gpl_license.sh: name=$name"
