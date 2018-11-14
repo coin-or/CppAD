@@ -68,6 +68,9 @@ This has been changed to $code eps$$ in $cref interface2c.cpp$$.
 $lnext
 The deprecated $cref/autotools/cmake/CMake Command/autotools/$$
 was fixed to work with the current version of CppAD.
+$lnext
+Fix a warning in $code test_more/cppad_for_tmb/multi_atomic.cpp$$
+when using boost vectors for testing.
 $lend
 
 
