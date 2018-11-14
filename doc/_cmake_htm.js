@@ -46,6 +46,7 @@ var list_current0 = [
 'cmake.htm#CMake Command.Options',
 'cmake.htm#CMake Command.minsys2',
 'cmake.htm#CMake Command.Visual Studio',
+'cmake.htm#CMake Command.autotools',
 'cmake.htm#make check',
 'cmake.htm#cmake_verbose_makefile',
 'cmake.htm#generator',

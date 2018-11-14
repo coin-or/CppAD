@@ -66,7 +66,6 @@ var list_current0 = [
 'elapsed_seconds.htm#Syntax',
 'elapsed_seconds.htm#Purpose',
 'elapsed_seconds.htm#s',
-'elapsed_seconds.htm#Microsoft Systems',
 'elapsed_seconds.htm#Example'
 ];
 function choose_across0(item)

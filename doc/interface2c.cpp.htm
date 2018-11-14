@@ -235,30 +235,30 @@ A:active { color : purple }
      <i><font color="#9A1900">// compare dyda to central difference approximation for deriative</font></i>
      <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> na<font color="#990000">;</font> i<font color="#990000">++)</font>
      <font color="#FF0000">{</font>    <i><font color="#9A1900">// local variables</font></i>
-          <font color="#009900">float</font> small<font color="#990000">,</font> ai<font color="#990000">,</font> yp<font color="#990000">,</font> ym<font color="#990000">,</font> dy_da<font color="#990000">;</font>
+          <font color="#009900">float</font> eps<font color="#990000">,</font> ai<font color="#990000">,</font> yp<font color="#990000">,</font> ym<font color="#990000">,</font> dy_da<font color="#990000">;</font>
 
           <i><font color="#9A1900">// We assume that the type float has at least 7 digits of</font></i>
-          <i><font color="#9A1900">// precision, so we choose small to be about pow(10., -7./2.).</font></i>
-          small  <font color="#990000">=</font> <font color="#990000">(</font><font color="#009900">float</font><font color="#990000">)</font> <font color="#993399">3e-4</font><font color="#990000">;</font>
+          <i><font color="#9A1900">// precision, so we choose eps to be about pow(10., -7./2.).</font></i>
+          eps  <font color="#990000">=</font> <font color="#990000">(</font><font color="#009900">float</font><font color="#990000">)</font> <font color="#993399">3e-4</font><font color="#990000">;</font>
 
           <i><font color="#9A1900">// value of this component of a</font></i>
           ai    <font color="#990000">=</font> a<font color="#990000">[</font>i<font color="#990000">];</font>
 
-          <i><font color="#9A1900">// evaluate F( a + small * ei )</font></i>
-          a<font color="#990000">[</font>i<font color="#990000">]</font>  <font color="#990000">=</font> ai <font color="#990000">+</font> small<font color="#990000">;</font>
+          <i><font color="#9A1900">// evaluate F( a + eps * ei )</font></i>
+          a<font color="#990000">[</font>i<font color="#990000">]</font>  <font color="#990000">=</font> ai <font color="#990000">+</font> eps<font color="#990000">;</font>
           <b><font color="#000000">sumGauss</font></b><font color="#990000">(</font>x<font color="#990000">,</font> a<font color="#990000">,</font> <font color="#990000">&amp;</font>yp<font color="#990000">,</font> tmp<font color="#990000">,</font> na<font color="#990000">);</font>
 
-          <i><font color="#9A1900">// evaluate F( a - small * ei )</font></i>
-          a<font color="#990000">[</font>i<font color="#990000">]</font>  <font color="#990000">=</font> ai <font color="#990000">-</font> small<font color="#990000">;</font>
+          <i><font color="#9A1900">// evaluate F( a - eps * ei )</font></i>
+          a<font color="#990000">[</font>i<font color="#990000">]</font>  <font color="#990000">=</font> ai <font color="#990000">-</font> eps<font color="#990000">;</font>
           <b><font color="#000000">sumGauss</font></b><font color="#990000">(</font>x<font color="#990000">,</font> a<font color="#990000">,</font> <font color="#990000">&amp;</font>ym<font color="#990000">,</font> tmp<font color="#990000">,</font> na<font color="#990000">);</font>
 
           <i><font color="#9A1900">// evaluate central difference approximates for partial</font></i>
-          dy_da <font color="#990000">=</font> <font color="#990000">(</font>yp <font color="#990000">-</font> ym<font color="#990000">)</font> <font color="#990000">/</font> <font color="#990000">(</font><font color="#993399">2</font> <font color="#990000">*</font> small<font color="#990000">);</font>
+          dy_da <font color="#990000">=</font> <font color="#990000">(</font>yp <font color="#990000">-</font> ym<font color="#990000">)</font> <font color="#990000">/</font> <font color="#990000">(</font><font color="#993399">2</font> <font color="#990000">*</font> eps<font color="#990000">);</font>
 
           <i><font color="#9A1900">// restore this component of a</font></i>
           a<font color="#990000">[</font>i<font color="#990000">]</font>  <font color="#990000">=</font> ai<font color="#990000">;</font>
 
-          ok   <font color="#990000">&amp;=</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>dyda<font color="#990000">[</font>i<font color="#990000">],</font> dy_da<font color="#990000">,</font> small<font color="#990000">,</font> small<font color="#990000">);</font>
+          ok   <font color="#990000">&amp;=</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>dyda<font color="#990000">[</font>i<font color="#990000">],</font> dy_da<font color="#990000">,</font> eps<font color="#990000">,</font> eps<font color="#990000">);</font>
      <font color="#FF0000">}</font>
      <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
 <font color="#FF0000">}</font></tt></pre>

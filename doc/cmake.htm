@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Using CMake to Configure CppAD</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Using CMake to Configure CppAD">
-<meta name="keywords" id="keywords" content=" using cmake to configure cppad makefile install prefix postfix include directories lib datadir documentation package compile flags profile maximum number threads sparsity internal structure vector sets memory usage tape ctor implicit explicit the program build directory command simple options minsys2 visual studio make check cmake_verbose_makefile generator cppad_prefix cppad_postfix cmake_install_includedirs cmake_install_libdirs cmake_install_datadir cmake_install_docdir package_prefix cppad_cxx_flags c++11 debug release cppad_profile_flag eigen fadbad cppad_testvector cppad_max_num_threads cppad_tape_id_type cstdint cppad_tape_addr_type cppad_debug_which cppad_deprecated ">
+<meta name="keywords" id="keywords" content=" using cmake to configure cppad makefile install prefix postfix include directories lib datadir documentation package compile flags profile maximum number threads sparsity internal structure vector sets memory usage tape ctor implicit explicit the program build directory command simple options minsys2 visual studio autotools make check cmake_verbose_makefile generator cppad_prefix cppad_postfix cmake_install_includedirs cmake_install_libdirs cmake_install_datadir cmake_install_docdir package_prefix cppad_cxx_flags c++11 debug release cppad_profile_flag eigen fadbad cppad_testvector cppad_max_num_threads cppad_tape_id_type cstdint cppad_tape_addr_type cppad_debug_which cppad_deprecated ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -98,6 +98,7 @@ A:active { color : purple }
 <option>---..Options</option>
 <option>---..minsys2</option>
 <option>---..Visual Studio</option>
+<option>---..autotools</option>
 <option>make check</option>
 <option>cmake_verbose_makefile</option>
 <option>generator</option>
@@ -251,6 +252,25 @@ use the following replacement for the simple cmake command:
 <code><font color="blue"><span style='white-space: nowrap'><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cmake&nbsp;-D&nbsp;debug_which=debug_all&nbsp;..<br>
 </span></font></code>
+<br>
+<big><a name="CMake Command.autotools" id="CMake Command.autotools">autotools</a></big>
+<br>
+The autotools build with the Visual Studio compiler was fixed so that it now
+works with the following configure and test commands:
+<code><font color='blue'><pre style='display:inline'> 
+     mkdir build
+     cd build
+     ../configure CC=cl CXX=cl
+     make test
+</pre></font></code>
+This was tested in a Dos command window,
+that had the <code><font color="blue">vcvarsall.bat</font></code> settings,
+extend path that included the <code><font color="blue">minsys2</font></code> bin directory,
+and was running bash.
+It is highly recommended that you use the <code><font color="blue">cmake</font></code> command above,
+instead of this procedure, when building with Visual Studio.
+
+<br>
 <br>
 <b><big><a name="make check" id="make check">make check</a></big></b>
 <br>

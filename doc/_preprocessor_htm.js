@@ -23,7 +23,8 @@ var list_down1 = [
 'appendix.htm'
 ];
 var list_current0 = [
-'preprocessor.htm#Purpose',
+'preprocessor.htm#Rule',
+'preprocessor.htm#NOMINMAX',
 'preprocessor.htm#Documented Here',
 'preprocessor.htm#Documented Here.CPPAD_DEBUG_AND_RELEASE',
 'preprocessor.htm#Documented Here.CPPAD_NULL',
