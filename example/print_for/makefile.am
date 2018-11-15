@@ -14,14 +14,7 @@
 DEFS          =
 #
 # Make sure that ../cppad-uninstalled.pc works for determining cflags
-if CppAD_PKG_CONFIG
-CPPAD_INCLUDE = `( \
-	export PKG_CONFIG_PATH=$(top_builddir)/pkgconfig ; \
-	pkg-config --cflags cppad \
-)`
-else
 CPPAD_INCLUDE = -I$(top_srcdir)
-endif
 #
 # Microsoft project files
 EXTRA_DIST        =  test.sh

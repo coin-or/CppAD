@@ -841,9 +841,7 @@ EXTRA_DIST = \
 	example/multi_thread/bthread/CMakeLists.txt \
 	example/multi_thread/CMakeLists.txt \
 	example/multi_thread/openmp/CMakeLists.txt \
-	example/multi_thread/pthread/CMakeLists.txt \
-	example/multi_thread/checkpoint.omh \
-	example/multi_thread/checkpoint.cpp
+	example/multi_thread/pthread/CMakeLists.txt
 
 test_directory_list = \
 	$(IPOPT_TESTS) \

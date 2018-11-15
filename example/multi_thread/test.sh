@@ -20,15 +20,15 @@ next_program() {
 	fi
 	case $i_program in
 		0)
-		program=`echo "$program_list" | sed -e 's| \([^ ]*\).*|\1|'`
+		program=`echo "$program_list" | sed -e 's| *\([^ ]*\).*|\1|'`
 		;;
 
 		1)
-		program=`echo "$program_list" | sed -e 's| [^ ]* \([^ ]*\).*|\1|'`
+		program=`echo "$program_list" | sed -e 's| *[^ ]* *\([^ ]*\).*|\1|'`
 		;;
 
 		2)
-		program=`echo "$program_list" | sed -e 's| [^ ]* [^ ]* ||'`
+		program=`echo "$program_list" | sed -e 's| *[^ ]* [^ ]* *||'`
 		;;
 	esac
 }
@@ -41,9 +41,9 @@ do
 		program_list="$program $program_list"
 		n_program=`expr $n_program + 1`
 	fi
-	echo "program_list = $program_list"
-	echo "n_program = $n_program"
 done
+echo "program_list = $program_list"
+echo "n_program = $n_program"
 if [ "$n_program" = '0' ]
 then
 	echo "example/multi_thread/test.sh: nothing to test"

@@ -187,7 +187,7 @@ CXX_FLAGS_FADBAD = @CXX_FLAGS_FADBAD@
 CYGPATH_W = @CYGPATH_W@
 
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the
@@ -333,14 +333,9 @@ target_alias = @target_alias@
 top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
-@CppAD_PKG_CONFIG_FALSE@CPPAD_INCLUDE = -I$(top_srcdir)
 #
 # Make sure that ../cppad-uninstalled.pc works for determining cflags
-@CppAD_PKG_CONFIG_TRUE@CPPAD_INCLUDE = `( \
-@CppAD_PKG_CONFIG_TRUE@	export PKG_CONFIG_PATH=$(top_builddir)/pkgconfig ; \
-@CppAD_PKG_CONFIG_TRUE@	pkg-config --cflags cppad \
-@CppAD_PKG_CONFIG_TRUE@)`
-
+CPPAD_INCLUDE = -I$(top_srcdir)
 #
 # Microsoft project files
 EXTRA_DIST = test.sh

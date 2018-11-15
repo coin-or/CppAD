@@ -64,7 +64,8 @@ SHARED_SRC = \
 \
 	harmonic.omh     harmonic.cpp      harmonic.hpp \
 	multi_atomic.omh multi_atomic.cpp  multi_atomic.hpp \
-	multi_newton.omh multi_newton.cpp  multi_newton.hpp
+	multi_newton.omh multi_newton.cpp  multi_newton.hpp \
+	checkpoint.omh   checkpoint.cpp    checkpoint.hpp
 #
 bthread_test_SOURCES = \
 	$(SHARED_SRC) \
