@@ -260,15 +260,20 @@ works with the following configure and test commands:
 <code><font color='blue'><pre style='display:inline'> 
      mkdir build
      cd build
-     ../configure CC=cl CXX=cl
+     ../configure CC=cl CXX=cl CXX_FLAGS=&quot;-DEBUG&quot;
      make test
 </pre></font></code>
-This was tested in a Dos command window,
-that had the <code><font color="blue">vcvarsall.bat</font></code> settings,
-extend path that included the <code><font color="blue">minsys2</font></code> bin directory,
-and was running bash.
-It is highly recommended that you use the <code><font color="blue">cmake</font></code> command above,
-instead of this procedure, when building with Visual Studio.
+An optimized versions was tested using
+<code><font color='blue'><pre style='display:inline'> 
+     ../configure CXX=cl CC=cl CXX_FLAGS=&quot;-DNDEBUG -O2 -EHsc&quot;
+     make test
+</pre></font></code>
+The commands above need to be run a Dos window,
+that has the <code><font color="blue">vcvarsall.bat</font></code> settings,
+extend path that includes the <code><font color="blue">minsys2</font></code> bin directory,
+and was running the bash shell inside the Doc window.
+It is highly recommended that you use the <code><font color="blue">cmake</font></code> commands above,
+an not <code><font color="blue">../configure</font></code>, when building with Visual Studio.
 
 <br>
 <br>
