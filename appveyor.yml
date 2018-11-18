@@ -1,0 +1,36 @@
+# -----------------------------------------------------------------------------
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+#
+# CppAD is distributed under multiple licenses. This distribution is under
+# the terms of the
+#                     Eclipse Public License Version 1.0.
+#
+# A copy of this license is included in the COPYING file of this distribution.
+# Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
+# -----------------------------------------------------------------------------
+#
+# build platform, i.e. x86, x64, Any CPU. This setting is optional.
+platform:
+	- x64
+
+# msys2 environment
+environment:
+  matrix:
+    - HOST_ARCH_ARG: --host=x86_64-w64-mingw32
+      ADD_PATH: /mingw64/bin
+
+# scripts that run after cloning repository
+install:
+	C:\msys64\usr\bin\bash
+
+#
+# run custom scripts instead of automatic MSBuild
+build_script:
+	bin/appveyor.sh
+#
+notifications:
+  -provider: Email
+   to:
+     -bradbell@seanet.com
+   on_build_success: true
+   on_build_failuer: true

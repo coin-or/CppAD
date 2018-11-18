@@ -10,6 +10,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 
 $begin cmake$$
+$escape $$
 $spell
 	Hsc
 	autotools
@@ -141,10 +142,15 @@ has some requires some special procedures.
 The following seems to work:
 Use $code pacman$$ to install
 $code make$$, $code gcc$$, and $code ming2-w64-x86_64-cmake$$.
-Then, in the shell, set $code CC='g++'$$,
-and use the following replacement for the simple cmake command:
+Then use the following replacement for the simple cmake
+and test command:
 $codei%
-	cmake -G "Unix Makefiles" ..
+	cmake \
+		-G '"Unix Makefiles"' \
+		-D CMAKE_C_COMPILER=gcc \
+		-D CMAKE_CXX_COMPILER=g++ \
+		..
+	make check
 %$$
 
 $subhead Visual Studio$$
@@ -160,6 +166,7 @@ use the following replacement for the simple cmake command:
 $codei%
 	cmake -D debug_which=debug_all ..
 %$$
+Then open the project in Visual Studio and build the to level check.
 
 $subhead autotools$$
 The autotools build with the Visual Studio compiler was fixed so that it now
