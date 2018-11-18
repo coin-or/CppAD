@@ -345,7 +345,7 @@ top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 #
 # BEGIN OPTIMIZE
-AM_CXXFLAGS = -O2 -DNDEBUG $(CXX_FLAGS)
+AM_CXXFLAGS = $(CXX_FLAGS)
 # END OPTIMIZE
 #
 # BEGIN DEBUG

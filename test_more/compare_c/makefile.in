@@ -359,8 +359,8 @@ EXTRA_DIST = \
 # AM_CXXFLAGS =
 # AM_CFLAGS   =
 #
-AM_CXXFLAGS = -O2 -DNDEBUG
-AM_CFLAGS = -O2 -DNDEBUG
+AM_CXXFLAGS = 
+AM_CFLAGS = 
 #
 det_by_minor_c_SOURCES = det_by_minor_c.c
 det_by_minor_cpp_SOURCES = det_by_minor_cpp.cpp
