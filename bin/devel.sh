@@ -14,3 +14,8 @@
 # web address linked by run_omhelp.sh to the Home icon on each page.
 image_link='https://coin-or.github.io/CppAD'
 echo "image_link=$image_link"
+#
+# special files, for this repository, that check_copyright.sh should ignore
+copyright_ignore='
+'
+echo "coyright_ignore=$coyright_ignore"

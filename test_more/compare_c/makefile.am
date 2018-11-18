@@ -26,8 +26,8 @@ DEFS =
 # AM_CXXFLAGS =
 # AM_CFLAGS   =
 #
-AM_CXXFLAGS = -O2 -DNDEBUG
-AM_CFLAGS   = -O2 -DNDEBUG
+AM_CXXFLAGS =
+AM_CFLAGS   =
 #
 check_PROGRAMS    = det_by_minor_c det_by_minor_cpp
 #
