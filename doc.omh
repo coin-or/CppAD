@@ -62,7 +62,7 @@ $$
 
 $comment bin/version assumes that : follows cppad version number here$$
 $section
-cppad-20181118: A C++ Algorithmic Differentiation Package$$
+cppad-20181121: A C++ Algorithmic Differentiation Package$$
 
 $align middle$$
 $table
