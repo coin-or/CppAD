@@ -50,6 +50,10 @@ $$
 
 $section Changes and Additions to CppAD During 2018$$
 
+$head 11-21$$
+Add a checkpoint $cref/constructor/wish_list/checkpoint/Constructor/$$
+item to the wish list.
+
 $head 11-13$$
 $list number$$
 There was a problem using

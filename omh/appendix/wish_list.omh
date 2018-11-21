@@ -64,6 +64,13 @@ that are currently being considered.
 $comment ------------------------------------------------------------------ $$
 $head checkpoint$$
 
+$subhead Constructor$$
+Now that $cref base2ad$$ is available,
+perhaps one should pass an $cref ADFun$$ object,
+instead of an algorithm,
+to the check point constructor.
+
+
 $subhead Tapeless AD$$
 Perhaps there should be a version of the
 $cref checkpoint$$ class that uses a tapeless AD package to compute
