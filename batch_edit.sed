@@ -23,6 +23,7 @@
 # '
 # list of files that are deleted by batch_edit.sh
 # delete_files='
+#	bin/ls_files.sh
 # '
 # list of files that are not edited by the sed commands in this file
 # (with the possible exception of the extra_sed commands)
@@ -44,3 +45,4 @@
 # '
 # ----------------------------------------------------------------------------
 # Put other sed commands below here and without # at start of line
+s|bin/ls_files.sh|git ls-files|

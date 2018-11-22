@@ -1,6 +1,6 @@
 #! /bin/bash -e
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 #
 # CppAD is distributed under the terms of the
 #              Eclipse Public License Version 2.0.
@@ -36,7 +36,7 @@ done
 echo "Checking soruce code for names reserved for addon packages"
 echo "-------------------------------------------------------"
 ok="yes"
-file_list=`bin/ls_files.sh`
+file_list=`git ls-files`
 for file in $file_list
 do
 	if grep -E $grep_cmd $file > /dev/null

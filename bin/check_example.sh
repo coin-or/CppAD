@@ -1,6 +1,6 @@
 #! /bin/bash -e
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 #
 # CppAD is distributed under the terms of the
 #              Eclipse Public License Version 2.0.
@@ -18,7 +18,7 @@ fi
 # -----------------------------------------------------------------------------
 echo "Checking that all examples are in omh/example_list.omh"
 echo "-------------------------------------------------------"
-file_list=`bin/ls_files.sh | sed -n \
+file_list=`git ls-files | sed -n \
 	-e '/^example\/deprecated\//d' \
 	-e '/^example\//p'`
 #

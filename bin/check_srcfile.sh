@@ -39,7 +39,7 @@ batch_edit.sed
 # Make sure that OMhelp srcfile commands refer to same file as command
 echo "Checking that OMhelp srcfile commands include from file they appear in."
 echo "----------------------------------------------------------------------"
-list=`bin/ls_files.sh`
+list=`git ls-files`
 different="no"
 for file in $list
 do

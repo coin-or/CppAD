@@ -38,7 +38,7 @@ fi
 # -----------------------------------------------------------------------------
 echo "Checking include files listed in makefile.am"
 echo "-------------------------------------------------------"
-bin/ls_files.sh | sed -n -e '/cppad\/.*\.hpp$/p' \
+git ls-files | sed -n -e '/cppad\/.*\.hpp$/p' \
 	> check_makefile.1.$$
 sort -u check_makefile.1.$$ > check_makefile.2.$$
 #
@@ -68,7 +68,7 @@ fi
 # -----------------------------------------------------------------------------
 echo "Checking debugging flags in all makefile.am files."
 echo "-------------------------------------------------------"
-list=`bin/ls_files.sh | sed -n -e '/\/makefile.am$/p'`
+list=`git ls-files | sed -n -e '/\/makefile.am$/p'`
 ok="yes"
 for file in $list
 do

@@ -1,6 +1,6 @@
 #! /bin/bash -e
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 #
 # CppAD is distributed under the terms of the
 #              Eclipse Public License Version 2.0.
@@ -25,7 +25,7 @@ then
 	echo "bin/check_include_file.sh: unexpected check_include_file.1.$$"
 	exit 1
 fi
-list=`bin/ls_files.sh | sed -n \
+list=`git ls-files | sed -n \
 	-e '/\.cpp$/p' \
 	-e '/\.hpp$/p'`
 for file in $list
@@ -45,7 +45,7 @@ cat check_include_file.1.$$ | \
 #
 # The files cppad/configure.hpp and cppad/local/is_pod.hpp
 # are not in git repository (build during configuration)
-bin/ls_files.sh | sed -n -e '/cppad\/.*\.hpp$/p' | \
+git ls-files | sed -n -e '/cppad\/.*\.hpp$/p' | \
 	sed \
 		-e '1,1s|^|cppad/configure.hpp\n|' \
 		-e '1,1s|^|cppad/local/is_pod.hpp\n|' \
