@@ -150,7 +150,7 @@ to the forward and reverse Jacobian sparsity patterns.
 
 $comment ------------------------------------------------------------------- $$
 $head Element-wise Atomic Operations$$
-Add user atomic functions for element-wise addition, subtraction,
+Add atomic functions for element-wise addition, subtraction,
 multiplication, and division.
 Where the operands are $cref/simple vectors/SimpleVector/$$
 with elements of type $codei%AD<%Base%>%$$.

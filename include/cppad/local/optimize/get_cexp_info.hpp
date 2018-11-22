@@ -69,15 +69,15 @@ expression in the operation sequence.
 This vector of sets is empty on input.
 Upon return, the j-th set is the operators that are not used when
 comparison result for cexp_info[j] is true.
-Note that UsrapOp, UsravOp, UsrrpOp, and UsrrvOp, are not in this
-set and should be skipped when the corresponding UserOp are skipped.
+Note that FunapOp, FunavOp, FunrpOp, and FunrvOp, are not in this
+set and should be skipped when the corresponding AFunOp are skipped.
 
 \param skip_op_false
 This vector of sets is empty on input.
 Upon return, the j-th set is the operators that are not used when
 comparison result for cexp_info[j] is false.
-Note that UsrapOp, UsravOp, UsrrpOp, and UsrrvOp, are not in this
-set and should be skipped when the corresponding UserOp are skipped.
+Note that FunapOp, FunavOp, FunrpOp, and FunrvOp, are not in this
+set and should be skipped when the corresponding AFunOp are skipped.
 
 \param op_previous
 The input size of this vector must be zero.
@@ -170,16 +170,16 @@ void get_cexp_info(
 		if( keep )
 		{	sparse_list_const_iterator itr(cexp_set, i_op);
 			if( *itr != cexp_set.end() )
-			{	if( play->GetOp(i_op) == UserOp )
-				{	// i_op is the first operations in this user atomic call.
+			{	if( play->GetOp(i_op) == AFunOp )
+				{	// i_op is the first operations in this atomic function call.
 					// Find the last operation in this call.
 					++j_op;
-					while( play->GetOp(j_op) != UserOp )
+					while( play->GetOp(j_op) != AFunOp )
 					{	switch( play->GetOp(j_op) )
-						{	case UsrapOp:
-							case UsravOp:
-							case UsrrpOp:
-							case UsrrvOp:
+						{	case FunapOp:
+							case FunavOp:
+							case FunrpOp:
+							case FunrvOp:
 							break;
 
 							default:

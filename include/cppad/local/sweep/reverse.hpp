@@ -155,7 +155,7 @@ If cskip_op[i] is true, the operator index i in the recording
 does not affect any of the dependent variable (given the value
 of the independent variables).
 Note that all the operators in an atomic function call are skipped as a block,
-so only the last UserOp fore each call needs to have cskip_op[i] true.
+so only the last AFunOp fore each call needs to have cskip_op[i] true.
 
 \param var_by_load_op
 is a vector with size play->num_load_op_rec().
@@ -216,7 +216,7 @@ void reverse(
 	if( num_par > 0 )
 		parameter = play->GetPar();
 
-	// work space used by UserOp.
+	// work space used by AFunOp.
 	const size_t user_k  = d;    // highest order we are differentiating
 	const size_t user_k1 = d+1;  // number of orders for this calculation
 	vector<size_t> user_ix;      // variable indices for argument vector
@@ -257,16 +257,16 @@ void reverse(
 		while( cskip_op[i_op] )
 		{	switch(op)
 			{
-				case UserOp:
-				{	// get information for this user atomic call
+				case AFunOp:
+				{	// get information for this atomic function call
 					CPPAD_ASSERT_UNKNOWN( user_state == end_user );
 					play::user_op_info<Base>(op, arg, user_old, user_m, user_n);
 					//
-					// skip to the first UserOp
+					// skip to the first AFunOp
 					for(size_t i = 0; i < user_m + user_n + 1; ++i)
 						--play_itr;
 					play_itr.op_info(op, arg, i_var);
-					CPPAD_ASSERT_UNKNOWN( op == UserOp );
+					CPPAD_ASSERT_UNKNOWN( op == AFunOp );
 				}
 				break;
 
@@ -678,7 +678,7 @@ void reverse(
 			break;
 			// --------------------------------------------------
 
-			case UserOp:
+			case AFunOp:
 			// start or end an atomic function call
 			flag = user_state == end_user;
 			user_atom = play::user_op_info<RecBase>(
@@ -723,7 +723,7 @@ void reverse(
 			}
 			break;
 
-			case UsrapOp:
+			case FunapOp:
 			// parameter argument in an atomic operation sequence
 			CPPAD_ASSERT_UNKNOWN( NumArg(op) == 1 );
 			CPPAD_ASSERT_UNKNOWN( user_state == arg_user );
@@ -741,7 +741,7 @@ void reverse(
 				user_state = start_user;
 			break;
 
-			case UsravOp:
+			case FunavOp:
 			// variable argument in an atomic operation sequence
 			CPPAD_ASSERT_UNKNOWN( NumArg(op) == 1 );
 			CPPAD_ASSERT_UNKNOWN( user_state == arg_user );
@@ -757,8 +757,8 @@ void reverse(
 				user_state = start_user;
 			break;
 
-			case UsrrpOp:
-			// parameter result for a user atomic function
+			case FunrpOp:
+			// parameter result for a atomic function
 			CPPAD_ASSERT_NARG_NRES(op, 1, 0);
 			CPPAD_ASSERT_UNKNOWN( user_state == ret_user );
 			CPPAD_ASSERT_UNKNOWN( user_i <= user_m );
@@ -776,8 +776,8 @@ void reverse(
 				user_state = arg_user;
 			break;
 
-			case UsrrvOp:
-			// variable result for a user atomic function
+			case FunrvOp:
+			// variable result for a atomic function
 			CPPAD_ASSERT_NARG_NRES(op, 0, 1);
 			CPPAD_ASSERT_UNKNOWN( user_state == ret_user );
 			CPPAD_ASSERT_UNKNOWN( user_i <= user_m );

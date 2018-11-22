@@ -15,16 +15,16 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 namespace CppAD { namespace local { // BEGIN_CPPAD_LOCAL_NAMESPACE
 
 enum enum_user_state {
-	/// next UserOp marks beginning of a user atomic call
+	/// next AFunOp marks beginning of a atomic function call
 	start_user,
 
-	/// next UsrapOp (UsravOp) is a parameter (variable) argument
+	/// next FunapOp (FunavOp) is a parameter (variable) argument
 	arg_user,
 
-	/// next UsrrpOp (UsrrvOp) is a parameter (variable) result
+	/// next FunrpOp (FunrvOp) is a parameter (variable) result
 	ret_user,
 
-	/// next UserOp marks end of a user atomic call
+	/// next AFunOp marks end of a atomic function call
 	end_user
 };
 

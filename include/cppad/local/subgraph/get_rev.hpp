@@ -65,8 +65,8 @@ Note that for user function call operators i_op,
 \code
 	n_dep_ < in_subgraph[i_op]
 \endcode
-except for the first UserOp in the atomic function call sequence.
-For the first UserOp,
+except for the first AFunOp in the atomic function call sequence.
+For the first AFunOp,
 \code
 	in_subgraph[i_op] <= n_dep_
 \endcode
@@ -134,7 +134,7 @@ void subgraph_info::get_rev(
 		// There must be a result for this operator
 # ifndef NDEBUG
 		OpCode op = random_itr.get_op(i_op);
-		CPPAD_ASSERT_UNKNOWN(op == UserOp || NumRes(op) > 0 );
+		CPPAD_ASSERT_UNKNOWN(op == AFunOp || NumRes(op) > 0 );
 # endif
 		//
 		// which variables are connected to this operator

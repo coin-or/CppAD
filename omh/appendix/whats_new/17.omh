@@ -270,14 +270,14 @@ Examples and utilities that use this representation have also been included,
 see $cref abs_normal$$.
 
 $head 06-11$$
-The user atomic functions base class $cref atomic_base$$
+The atomic functions base class $cref atomic_base$$
 makes more of an effort to avoid false sharing cache misses.
-This may the speed of multi-threaded applications with user atomic functions;
+This may the speed of multi-threaded applications with atomic functions;
 e.g., see $cref multi_atomic.cpp$$.
 
 $head 06-10$$
 $list number$$
-Add the multi-threading user atomic function example
+Add the multi-threading atomic function example
 $cref multi_atomic.cpp$$.
 $lnext
 The $code example/multi_thread/test_multi$$ directory used

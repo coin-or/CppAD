@@ -200,26 +200,26 @@ void atomic_base<Base>::operator()(
 	if( record_operation )
 	{
 		// Operator that marks beginning of this atomic operation
-		CPPAD_ASSERT_UNKNOWN( local::NumRes(local::UserOp) == 0 );
-		CPPAD_ASSERT_UNKNOWN( local::NumArg(local::UserOp) == 4 );
+		CPPAD_ASSERT_UNKNOWN( local::NumRes(local::AFunOp) == 0 );
+		CPPAD_ASSERT_UNKNOWN( local::NumArg(local::AFunOp) == 4 );
 		CPPAD_ASSERT_KNOWN(
 			size_t( std::numeric_limits<addr_t>::max() ) >=
 			std::max( std::max( std::max(index_, id), n), m ),
 			"atomic_base: cppad_tape_addr_type maximum not large enough"
 		);
 		tape->Rec_.PutArg(addr_t(index_), addr_t(id), addr_t(n), addr_t(m));
-		tape->Rec_.PutOp(local::UserOp);
+		tape->Rec_.PutOp(local::AFunOp);
 
 		// Now put n operators, one for each element of argument vector
-		CPPAD_ASSERT_UNKNOWN( local::NumRes(local::UsravOp) == 0 );
-		CPPAD_ASSERT_UNKNOWN( local::NumRes(local::UsrapOp) == 0 );
-		CPPAD_ASSERT_UNKNOWN( local::NumArg(local::UsravOp) == 1 );
-		CPPAD_ASSERT_UNKNOWN( local::NumArg(local::UsrapOp) == 1 );
+		CPPAD_ASSERT_UNKNOWN( local::NumRes(local::FunavOp) == 0 );
+		CPPAD_ASSERT_UNKNOWN( local::NumRes(local::FunapOp) == 0 );
+		CPPAD_ASSERT_UNKNOWN( local::NumArg(local::FunavOp) == 1 );
+		CPPAD_ASSERT_UNKNOWN( local::NumArg(local::FunapOp) == 1 );
 		for(j = 0; j < n; j++)
 		{	if( Variable(ax[j]) )
 			{	// information for an argument that is a variable
 				tape->Rec_.PutArg(ax[j].taddr_);
-				tape->Rec_.PutOp(local::UsravOp);
+				tape->Rec_.PutOp(local::FunavOp);
 			}
 			else
 			{	// information for an argument that is parameter
@@ -227,18 +227,18 @@ void atomic_base<Base>::operator()(
 				if( ! Dynamic( ax[j] ) )
 					par = tape->Rec_.put_con_par(ax[j].value_);
 				tape->Rec_.PutArg(par);
-				tape->Rec_.PutOp(local::UsrapOp);
+				tape->Rec_.PutOp(local::FunapOp);
 			}
 		}
 
 		// Now put m operators, one for each element of result vector
-		CPPAD_ASSERT_UNKNOWN( local::NumArg(local::UsrrpOp) == 1 );
-		CPPAD_ASSERT_UNKNOWN( local::NumRes(local::UsrrpOp) == 0 );
-		CPPAD_ASSERT_UNKNOWN( local::NumArg(local::UsrrvOp) == 0 );
-		CPPAD_ASSERT_UNKNOWN( local::NumRes(local::UsrrvOp) == 1 );
+		CPPAD_ASSERT_UNKNOWN( local::NumArg(local::FunrpOp) == 1 );
+		CPPAD_ASSERT_UNKNOWN( local::NumRes(local::FunrpOp) == 0 );
+		CPPAD_ASSERT_UNKNOWN( local::NumArg(local::FunrvOp) == 0 );
+		CPPAD_ASSERT_UNKNOWN( local::NumRes(local::FunrvOp) == 1 );
 		for(i = 0; i < m; i++)
 		{	if( vy[i] )
-			{	ay[i].taddr_    = tape->Rec_.PutOp(local::UsrrvOp);
+			{	ay[i].taddr_    = tape->Rec_.PutOp(local::FunrvOp);
 				ay[i].tape_id_  = tape_id;
 				ay[i].ad_type_  = local::var_ad_type;
 			}
@@ -246,18 +246,18 @@ void atomic_base<Base>::operator()(
 			{	CPPAD_ASSERT_UNKNOWN( ! Dynamic( ay[i] ) );
 				addr_t par = tape->Rec_.put_con_par(ay[i].value_);
 				tape->Rec_.PutArg(par);
-				tape->Rec_.PutOp(local::UsrrpOp);
+				tape->Rec_.PutOp(local::FunrpOp);
 			}
 		}
 
-		// Put a duplicate UserOp at end of UserOp sequence
+		// Put a duplicate AFunOp at end of AFunOp sequence
 		CPPAD_ASSERT_KNOWN(
 			size_t( std::numeric_limits<addr_t>::max() ) >=
 			std::max( std::max( std::max(index_, id), n), m ),
 			"atomic_base: cppad_tape_addr_type maximum not large enough"
 		);
 		tape->Rec_.PutArg(addr_t(index_), addr_t(id), addr_t(n), addr_t(m));
-		tape->Rec_.PutOp(local::UserOp);
+		tape->Rec_.PutOp(local::AFunOp);
 	}
 	return;
 }

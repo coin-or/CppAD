@@ -90,8 +90,8 @@ size_t ADFun<Base,RecBase>::number_skip(void)
 	{	// next op
 		(++itr).op_info(op, arg, i_var);
 		//
-		if( op == local::UserOp )
-		{	// skip only appears at front or back UserOp of user atomic call
+		if( op == local::AFunOp )
+		{	// skip only appears at front or back AFunOp of atomic function call
 			bool skip_call = cskip_op_[ itr.op_index() ];
 			local::play::user_op_info<Base>(op, arg, user_old, user_m, user_n);
 			CPPAD_ASSERT_UNKNOWN( NumRes(op) == 0 );
@@ -104,7 +104,7 @@ size_t ADFun<Base,RecBase>::number_skip(void)
 				if( skip_call )
 					num_var_skip += NumRes(op);
 			}
-			CPPAD_ASSERT_UNKNOWN( op == local::UserOp );
+			CPPAD_ASSERT_UNKNOWN( op == local::AFunOp );
 		}
 		else
 		{	if( cskip_op_[ itr.op_index() ] )

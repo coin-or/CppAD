@@ -79,7 +79,7 @@ the function corresponding to the recording.
 	select_domain[ col_out[k] ] == true
 \endcode
 
-\par UserOp
+\par AFunOp
 All of the inputs and outputs for an atomic function call are considered
 to be connected.
 2DO: It would be good to use the sparsity patters for atomic function calls
@@ -165,9 +165,9 @@ void subgraph_sparsity(
 			// operator corresponding to this index
 			OpCode op = play->GetOp(i_op);
 			//
-			// This version of the subgraph only has first UserOp
+			// This version of the subgraph only has first AFunOp
 			// for each atomic functionc all.
-			CPPAD_ASSERT_UNKNOWN( NumRes(op) > 0 || op == UserOp );
+			CPPAD_ASSERT_UNKNOWN( NumRes(op) > 0 || op == AFunOp );
 			//
 			// independent variable entries correspond to sparsity pattern
 			if( op == InvOp )

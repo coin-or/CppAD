@@ -28,7 +28,7 @@ $codei%atomic_user %a_square_root%
 $icode%a_square_root%(%au%, %ay%)%$$
 
 $head Purpose$$
-This user atomic operation computes a square root using Newton's method.
+This atomic function operation computes a square root using Newton's method.
 It is meant to be very inefficient in order to demonstrate timing results.
 
 $head au$$
@@ -263,7 +263,7 @@ bool multi_atomic_setup(const vector<double>& y_squared)
 	au[0] = AD<double>( num_itr_ ); // num_itr
 	au[1] = ax[0];                  // y_initial
 	au[2] = ax[0];                  // y_squared
-	// put user atomic operation in recording
+	// put atomic function operation in recording
 	(*a_square_root_)(au, ay);
 	//
 	// f(u) = sqrt(u)

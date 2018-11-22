@@ -357,7 +357,7 @@ bool old_usead_1(void)
 
 	// -----------------------------------------------------------------
 	// Free all temporary work space associated with old_atomic objects.
-	// (If there are future calls to user atomic functions, they will
+	// (If there are future calls to atomic functions, they will
 	// create new temporary work space.)
 	CppAD::user_atomic<double>::clear();
 

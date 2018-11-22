@@ -137,7 +137,7 @@ void for_jac(
 	// user's atomic op
 	atomic_base<RecBase>* user_atom = CPPAD_NULL;
 	//
-	// work space used by UserOp.
+	// work space used by AFunOp.
 	vector<Base>       user_x;   // value of parameter arguments to function
 	pod_vector<size_t> user_ix;  // variable index (on tape) for each argument
 	pod_vector<size_t> user_iy;  // variable index (on tape) for each result
@@ -149,13 +149,13 @@ void for_jac(
 	// --------------------------------------------------------------
 	//
 	// pointer to the beginning of the parameter vector
-	// (used by user atomic functions)
+	// (used by atomic functions)
 	const Base* parameter = CPPAD_NULL;
 	if( num_par > 0 )
 		parameter = play->GetPar();
 
 # if CPPAD_FOR_JAC_TRACE
-	vector<size_t>    user_usrrp; // parameter index for UsrrpOp operators
+	vector<size_t>    user_usrrp; // parameter index for FunrpOp operators
 	std::cout << std::endl;
 	CppAD::vectorBool z_value(limit);
 # endif
@@ -617,7 +617,7 @@ void for_jac(
 			break;
 			// -------------------------------------------------
 
-			case UserOp:
+			case AFunOp:
 			// start or end an atomic function call
 			CPPAD_ASSERT_UNKNOWN(
 				user_state == start_user || user_state == end_user
@@ -648,8 +648,8 @@ void for_jac(
 			}
 			break;
 
-			case UsrapOp:
-			// parameter argument for a user atomic function
+			case FunapOp:
+			// parameter argument for a atomic function
 			CPPAD_ASSERT_UNKNOWN( NumArg(op) == 1 );
 			CPPAD_ASSERT_UNKNOWN( user_state == arg_user );
 			CPPAD_ASSERT_UNKNOWN( user_i == 0 );
@@ -664,8 +664,8 @@ void for_jac(
 				user_state = ret_user;
 			break;
 
-			case UsravOp:
-			// variable argument for a user atomic function
+			case FunavOp:
+			// variable argument for a atomic function
 			CPPAD_ASSERT_UNKNOWN( NumArg(op) == 1 );
 			CPPAD_ASSERT_UNKNOWN( user_state == arg_user );
 			CPPAD_ASSERT_UNKNOWN( user_i == 0 );
@@ -680,8 +680,8 @@ void for_jac(
 				user_state = ret_user;
 			break;
 
-			case UsrrpOp:
-			// parameter result for a user atomic function
+			case FunrpOp:
+			// parameter result for a atomic function
 			CPPAD_ASSERT_NARG_NRES(op, 1, 0);
 			CPPAD_ASSERT_UNKNOWN( user_state == ret_user );
 			CPPAD_ASSERT_UNKNOWN( user_i < user_m );
@@ -698,8 +698,8 @@ void for_jac(
 				user_state = end_user;
 			break;
 
-			case UsrrvOp:
-			// variable result for a user atomic function
+			case FunrvOp:
+			// variable result for a atomic function
 			CPPAD_ASSERT_NARG_NRES(op, 0, 1);
 			CPPAD_ASSERT_UNKNOWN( user_state == ret_user );
 			CPPAD_ASSERT_UNKNOWN( user_i < user_m );
@@ -741,12 +741,12 @@ void for_jac(
 			CPPAD_ASSERT_UNKNOWN(0);
 		}
 # if CPPAD_FOR_JAC_TRACE
-		if( op == UserOp && user_state == start_user )
+		if( op == AFunOp && user_state == start_user )
 		{	// print operators that have been delayed
 			CPPAD_ASSERT_UNKNOWN( user_m == user_iy.size() );
 			CPPAD_ASSERT_UNKNOWN( itr.op_index() > user_m );
-			CPPAD_ASSERT_NARG_NRES(UsrrpOp, 1, 0);
-			CPPAD_ASSERT_NARG_NRES(UsrrvOp, 0, 1);
+			CPPAD_ASSERT_NARG_NRES(FunrpOp, 1, 0);
+			CPPAD_ASSERT_NARG_NRES(FunrvOp, 0, 1);
 			addr_t arg_tmp[1];
 			for(i = 0; i < user_m; i++)
 			{	size_t j_var = user_iy[i];
@@ -759,9 +759,9 @@ void for_jac(
 				{	z_value[j] = true;
 					j = *(++itr);
 				}
-				OpCode op_tmp = UsrrvOp;
+				OpCode op_tmp = FunrvOp;
 				if( j_var == 0 )
-				{	op_tmp     = UsrrpOp;
+				{	op_tmp     = FunrpOp;
 					arg_tmp[0] = user_usrrp[i];
 				}
 				// j_var is zero when there is no result.
@@ -793,8 +793,8 @@ void for_jac(
 			j = *(++itr);
 		}
 		// must delay print for these cases till after atomic user call
-		bool delay_print = op == UsrrpOp;
-		delay_print     |= op == UsrrvOp;
+		bool delay_print = op == FunrpOp;
+		delay_print     |= op == FunrvOp;
 		if( ! delay_print )
 		{	 printOp(
 				std::cout,

@@ -55,6 +55,12 @@ enum OpCode {
 	AcoshOp,  // acosh(variable)
 	AddpvOp,  // parameter  + variable
 	AddvvOp,  // variable   + variable
+	// atomic function operation codes
+	AFunOp,   // start of a atomic function operaiton
+	// arg[0] = index of the operation if atomic_base<Base> class
+	// arg[1] = extra information passed through by deprecated old atomic class
+	// arg[2] = number of arguments to this atomic function
+	// arg[3] = number of results for this atomic function
 	AsinOp,   // asin(variable)
 	AsinhOp,  // asinh(variable)
 	AtanOp,   // atan(variable)
@@ -105,6 +111,10 @@ enum OpCode {
 	ErfOp,    // erf(variable)
 	ExpOp,    // exp(variable)
 	Expm1Op,  // expm1(variable)
+	FunapOp,  // this atomic function argument is a parameter
+	FunavOp,  // this atomic function argument is a variable
+	FunrpOp,  // this atomic function result is a parameter
+	FunrvOp,  // this atomic function result is a variable
 	InvOp,    // independent variable
 	LdpOp,    // z[parameter] (parameter converted to index)
 	LdvOp,    // z[variable]
@@ -147,16 +157,6 @@ enum OpCode {
 	SubvvOp,  // variable   - variable
 	TanOp,    // tan(variable)
 	TanhOp,   // tan(variable)
-	// user atomic operation codes
-	UserOp,   // start of a user atomic operaiton
-	// arg[0] = index of the operation if atomic_base<Base> class
-	// arg[1] = extra information passed through by deprecated old atomic class
-	// arg[2] = number of arguments to this atomic function
-	// arg[3] = number of results for this atomic function
-	UsrapOp,  // this user atomic argument is a parameter
-	UsravOp,  // this user atomic argument is a variable
-	UsrrpOp,  // this user atomic result is a parameter
-	UsrrvOp,  // this user atomic result is a variable
 	ZmulpvOp, // azmul(parameter, variable)
 	ZmulvpOp, // azmul(variabe,  parameter)
 	ZmulvvOp, // azmul(variable, variable)
@@ -196,6 +196,7 @@ inline size_t NumArg( OpCode op)
 		1, // AcoshOp
 		2, // AddpvOp
 		2, // AddvvOp
+		4, // AFunOp
 		1, // AsinOp
 		1, // AsinhOp
 		1, // AtanOp
@@ -217,6 +218,10 @@ inline size_t NumArg( OpCode op)
 		3, // ErfOp
 		1, // ExpOp
 		1, // Expm1Op
+		1, // FunapOp
+		1, // FunavOp
+		1, // FunrpOp
+		0, // FunrvOp
 		0, // InvOp
 		3, // LdpOp
 		3, // LdvOp
@@ -253,11 +258,6 @@ inline size_t NumArg( OpCode op)
 		2, // SubvvOp
 		1, // TanOp
 		1, // TanhOp
-		4, // UserOp
-		1, // UsrapOp
-		1, // UsravOp
-		1, // UsrrpOp
-		0, // UsrrvOp
 		2, // ZmulpvOp
 		2, // ZmulvpOp
 		2, // ZmulvvOp
@@ -312,6 +312,7 @@ inline size_t NumRes(OpCode op)
 		2, // AcoshOp
 		1, // AddpvOp
 		1, // AddvvOp
+		0, // AFunOp
 		2, // AsinOp
 		2, // AsinhOp
 		2, // AtanOp
@@ -333,6 +334,10 @@ inline size_t NumRes(OpCode op)
 		5, // ErfOp
 		1, // ExpOp
 		1, // Expm1Op
+		0, // FunapOp
+		0, // FunavOp
+		0, // FunrpOp
+		1, // FunrvOp
 		1, // InvOp
 		1, // LdpOp
 		1, // LdvOp
@@ -369,11 +374,6 @@ inline size_t NumRes(OpCode op)
 		1, // SubvvOp
 		2, // TanOp
 		2, // TanhOp
-		0, // UserOp
-		0, // UsrapOp
-		0, // UsravOp
-		0, // UsrrpOp
-		1, // UsrrvOp
 		1, // ZmulpvOp
 		1, // ZmulvpOp
 		1, // ZmulvvOp
@@ -407,6 +407,7 @@ inline const char* OpName(OpCode op)
 		"Acosh" ,
 		"Addpv" ,
 		"Addvv" ,
+		"AFun"  ,
 		"Asin"  ,
 		"Asinh" ,
 		"Atan"  ,
@@ -428,6 +429,10 @@ inline const char* OpName(OpCode op)
 		"Erf"   ,
 		"Exp"   ,
 		"Expm1" ,
+		"Funap" ,
+		"Funav" ,
+		"Funrp" ,
+		"Funrv" ,
 		"Inv"   ,
 		"Ldp"   ,
 		"Ldv"   ,
@@ -464,11 +469,6 @@ inline const char* OpName(OpCode op)
 		"Subvv" ,
 		"Tan"   ,
 		"Tanh"  ,
-		"User"  ,
-		"Usrap" ,
-		"Usrav" ,
-		"Usrrp" ,
-		"Usrrv" ,
 		"Zmulpv",
 		"Zmulvp",
 		"Zmulvv",
@@ -771,7 +771,7 @@ void printOp(
 		case SinOp:
 		case SinhOp:
 		case SqrtOp:
-		case UsravOp:
+		case FunavOp:
 		case TanOp:
 		case TanhOp:
 		CPPAD_ASSERT_UNKNOWN( NumArg(op) == 1 );
@@ -786,13 +786,13 @@ void printOp(
 		break;
 
 		case ParOp:
-		case UsrapOp:
-		case UsrrpOp:
+		case FunapOp:
+		case FunrpOp:
 		CPPAD_ASSERT_UNKNOWN( NumArg(op) == 1 );
 		printOpField(os, "  p=", play->GetPar(ind[0]), ncol);
 		break;
 
-		case UserOp:
+		case AFunOp:
 		CPPAD_ASSERT_UNKNOWN( NumArg(op) == 4 );
 		{	std::string name =  atomic_base<Base>::class_name(ind[0]);
 			printOpField(os, " f=",   name.c_str(), ncol);
@@ -821,7 +821,7 @@ void printOp(
 
 		case EndOp:
 		case InvOp:
-		case UsrrvOp:
+		case FunrvOp:
 		CPPAD_ASSERT_UNKNOWN( NumArg(op) == 0 );
 		break;
 
@@ -968,7 +968,7 @@ inline void arg_is_variable(
 
 		case EndOp:
 		case InvOp:
-		case UsrrvOp:
+		case FunrvOp:
 		CPPAD_ASSERT_UNKNOWN( NumArg(op) == 0 );
 		break;
 
@@ -993,15 +993,15 @@ inline void arg_is_variable(
 		case SqrtOp:
 		case TanhOp:
 		case TanOp:
-		case UsravOp:
+		case FunavOp:
 		CPPAD_ASSERT_UNKNOWN( NumArg(op) == 1 );
 		is_variable[0] = true;
 		break;
 
 		case BeginOp:
 		case ParOp:
-		case UsrapOp:
-		case UsrrpOp:
+		case FunapOp:
+		case FunrpOp:
 		CPPAD_ASSERT_UNKNOWN( NumArg(op) == 1 );
 		is_variable[0] = false;
 		break;
@@ -1094,7 +1094,7 @@ inline void arg_is_variable(
 
 		// --------------------------------------------------------------------
 		// case where NumArg(op) == 4
-		case UserOp:
+		case AFunOp:
 		CPPAD_ASSERT_UNKNOWN( NumArg(op) == 4 );
 		for(size_t i = 0; i < 4; i++)
 			is_variable[i] = false;

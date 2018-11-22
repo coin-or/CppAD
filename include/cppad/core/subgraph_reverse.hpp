@@ -374,10 +374,10 @@ void ADFun<Base,RecBase>::subgraph_reverse_helper(
 		random_itr.op_info(i_op, op, arg, i_var);
 		if( NumRes(op) == 0 )
 		{	CPPAD_ASSERT_UNKNOWN(
-				op == local::UserOp  ||
-				op == local::UsrapOp ||
-				op == local::UsravOp ||
-				op == local::UsrrpOp ||
+				op == local::AFunOp  ||
+				op == local::FunapOp ||
+				op == local::FunavOp ||
+				op == local::FunrpOp ||
 				op == local::EndOp
 			);
 		}

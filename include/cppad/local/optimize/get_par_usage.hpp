@@ -202,9 +202,9 @@ void get_par_usage(
 			case SubvvOp:
 			case TanOp:
 			case TanhOp:
-			case UserOp:
-			case UsravOp:
-			case UsrrvOp:
+			case AFunOp:
+			case FunavOp:
+			case FunrvOp:
 			case ZmulvvOp:
 			break;
 
@@ -229,8 +229,8 @@ void get_par_usage(
 			case NepvOp:
 			case ParOp:
 			case PowpvOp:
-			case UsrapOp:
-			case UsrrpOp:
+			case FunapOp:
+			case FunrpOp:
 			case ZmulpvOp:
 			CPPAD_ASSERT_UNKNOWN( 1 <= NumArg(op) )
 			par_usage[arg[0]] = true;

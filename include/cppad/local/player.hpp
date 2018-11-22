@@ -297,10 +297,10 @@ public:
 				case LdpOp:
 				case NeppOp:
 				case ParOp:
-				case UserOp:
-				case UsrapOp:
-				case UsrrpOp:
-				case UsrrvOp:
+				case AFunOp:
+				case FunapOp:
+				case FunrpOp:
+				case FunrvOp:
 				case StppOp:
 				break;
 
@@ -330,7 +330,7 @@ public:
 				case SubvpOp:
 				case TanOp:
 				case TanhOp:
-				case UsravOp:
+				case FunavOp:
 				case ZmulvpOp:
 				CPPAD_ASSERT_UNKNOWN(op_arg[0] <= arg_var_bound );
 				break;

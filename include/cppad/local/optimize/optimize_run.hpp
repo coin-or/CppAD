@@ -473,7 +473,7 @@ void optimize_run(
 				}
 			}
 		}
-		if( op == UserOp )
+		if( op == AFunOp )
 		{	if( user_state == start_user )
 				user_state = end_user;
 			else
@@ -972,34 +972,34 @@ void optimize_run(
 			break;
 
 			// -----------------------------------------------------------
-			// user atomic function call operators
+			// atomic function call operators
 
-			case UserOp:
+			case AFunOp:
 			CPPAD_ASSERT_UNKNOWN( previous == 0 );
 			CPPAD_ASSERT_NARG_NRES(op, 4, 0);
 			// user_old, user_n, user_m
 			rec->PutArg(arg[0], arg[1], arg[2], arg[3]);
 			new_op[i_op] = addr_t( rec->num_op_rec() );
-			rec->PutOp(UserOp);
+			rec->PutOp(AFunOp);
 			break;
 
-			case UsrapOp:
+			case FunapOp:
 			CPPAD_ASSERT_UNKNOWN( previous == 0 );
 			CPPAD_ASSERT_NARG_NRES(op, 1, 0);
 			new_arg[0] = new_par[ arg[0] ];
 			rec->PutArg(new_arg[0]);
 			new_op[i_op] = addr_t( rec->num_op_rec() );
-			rec->PutOp(UsrapOp);
+			rec->PutOp(FunapOp);
 			break;
 
-			case UsravOp:
+			case FunavOp:
 			CPPAD_ASSERT_UNKNOWN( previous == 0 );
 			CPPAD_ASSERT_NARG_NRES(op, 1, 0);
 			new_arg[0] = new_var[ random_itr.var2op(size_t(arg[0])) ];
 			if( size_t(new_arg[0]) < num_var )
 			{	rec->PutArg(new_arg[0]);
 				new_op[i_op] = addr_t( rec->num_op_rec() );
-				rec->PutOp(UsravOp);
+				rec->PutOp(FunavOp);
 			}
 			else
 			{	// This argument does not affect the result and
@@ -1007,24 +1007,24 @@ void optimize_run(
 				new_arg[0] = rec->put_con_par( base_nan );
 				rec->PutArg(new_arg[0]);
 				new_op[i_op] = addr_t( rec->num_op_rec() );
-				rec->PutOp(UsrapOp);
+				rec->PutOp(FunapOp);
 			}
 			break;
 
-			case UsrrpOp:
+			case FunrpOp:
 			CPPAD_ASSERT_UNKNOWN( previous == 0 );
 			CPPAD_ASSERT_NARG_NRES(op, 1, 0);
 			new_arg[0] = new_par[ arg[0] ];
 			rec->PutArg(new_arg[0]);
 			new_op[i_op] = addr_t( rec->num_op_rec() );
-			rec->PutOp(UsrrpOp);
+			rec->PutOp(FunrpOp);
 			break;
 
-			case UsrrvOp:
+			case FunrvOp:
 			CPPAD_ASSERT_UNKNOWN( previous == 0 );
 			CPPAD_ASSERT_NARG_NRES(op, 0, 1);
 			new_op[i_op]  = addr_t( rec->num_op_rec() );
-			new_var[i_op] = rec->PutOp(UsrrvOp);
+			new_var[i_op] = rec->PutOp(FunrvOp);
 			break;
 			// ---------------------------------------------------
 

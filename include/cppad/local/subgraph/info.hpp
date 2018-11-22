@@ -45,7 +45,7 @@ private:
 	// private member data set by set_map_user_op
 	// -----------------------------------------------------------------------
 
-	/// Mapping atomic call operators to UserOp that begins call sequence,
+	/// Mapping atomic call operators to AFunOp that begins call sequence,
 	/// other operators are not changed by the map.
 	/// (size zero after construtor or resize)
 	pod_vector<addr_t> map_user_op_;
@@ -85,7 +85,7 @@ public:
 	size_t n_var(void) const
 	{	return n_var_; }
 
-	/// map user atomic function calls to first operator in the call
+	/// map atomic function calls to first operator in the call
 	const pod_vector<addr_t>& map_user_op(void) const
 	{	return map_user_op_; }
 
@@ -133,12 +133,12 @@ public:
 		while( i_op < n_op_ )
 		{	OpCode op = play->GetOp(i_op);
 			ok       &= map_user_op_[i_op] == addr_t( i_op );
-			if( op == UserOp )
+			if( op == AFunOp )
 			{	addr_t begin = addr_t( i_op );
 				op           = play->GetOp(++i_op);
-				while( op != UserOp )
+				while( op != AFunOp )
 				{	CPPAD_ASSERT_UNKNOWN(
-					op==UsrapOp || op==UsravOp || op==UsrrpOp || op==UsrrvOp
+					op==FunapOp || op==FunavOp || op==FunrpOp || op==FunrvOp
 					);
 					ok  &= map_user_op_[i_op] == begin;
 					op   = play->GetOp(++i_op);
@@ -252,14 +252,14 @@ public:
 	(which is true after a resize operation).
 	This function sets its size to the number of operations in play.
 	We use the term user OpCocde for the any one of the following:
-	UserOp, UsrapOp, UsravOp, UsrrpOp, or UsrrvOp. Suppose
+	AFunOp, FunapOp, FunavOp, FunrpOp, or FunrvOp. Suppose
 	\code
 		OpCodce op_i = play->GetOp(i_op);
 		size_t  j_op = map_user_op[i_op];
 		OpCode  op_j = play->GetOP(j_op);
 	\endcode
 	If op is a user OpCode, j_op is the index of the first operator
-	in the corresponding atomic function call and op_j == UserOp.
+	in the corresponding atomic function call and op_j == AFunOp.
 	Otherwise j_op == i_op;
 
 	*/
@@ -281,22 +281,22 @@ public:
 			// value of map_user_op when op is not in atomic function call)
 			map_user_op_[i_op] = addr_t( i_op );
 			//
-			if( op == UserOp )
-			{	// first UserOp in an atomic function call sequence
+			if( op == AFunOp )
+			{	// first AFunOp in an atomic function call sequence
 				//
 				// All operators in this atomic call sequence will be
-				// mapped to the UserOp that begins this call.
+				// mapped to the AFunOp that begins this call.
 				addr_t begin = addr_t( i_op );
 				op           = play->GetOp(++i_op);
-				while( op != UserOp )
+				while( op != AFunOp )
 				{	CPPAD_ASSERT_UNKNOWN(
-					op==UsrapOp || op==UsravOp || op==UsrrpOp || op==UsrrvOp
+					op==FunapOp || op==FunavOp || op==FunrpOp || op==FunrvOp
 					);
 					// map this operator to the beginning of the call
 					map_user_op_[i_op] = begin;
 					op                 = play->GetOp(++i_op);
 				}
-				// map the second UserOp to the beginning of the call
+				// map the second AFunOp to the beginning of the call
 				map_user_op_[i_op] = begin;
 			}
 		}

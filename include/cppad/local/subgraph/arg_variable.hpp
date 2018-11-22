@@ -32,12 +32,12 @@ is a random iterator for this operation sequence.
 
 \param i_op
 is the operator index. If this operator is part of a user function call,
-it must be the first UserOp in the call. (There is a UserOp at the
+it must be the first AFunOp in the call. (There is a AFunOp at the
 beginning and end of each call.)
 
 \param variable
 is the set of argument variables corresponding to this operator.
-If the operator is a UserOp, the arguments are the variables
+If the operator is a AFunOp, the arguments are the variables
 that are passed into the function call.
 
 \param work
@@ -63,29 +63,29 @@ void get_argument_variable(
 	//
 	// partial check of assumptions on user function calls
 	CPPAD_ASSERT_UNKNOWN(
-		op != UsrapOp && op != UsravOp && op != UsrrpOp && op != UsrrvOp
+		op != FunapOp && op != FunavOp && op != FunrpOp && op != FunrvOp
 	);
 	//
-	// we assume this is the first UserOp of the call
-	if( op == UserOp )
+	// we assume this is the first AFunOp of the call
+	if( op == AFunOp )
 	{	random_itr.op_info(++i_op, op, op_arg, i_var);
-		while( op != UserOp )
+		while( op != AFunOp )
 		{	switch(op)
 			{
-				case UsravOp:
+				case FunavOp:
 				{	CPPAD_ASSERT_NARG_NRES(op, 1, 0);
 					size_t j_var = size_t( op_arg[0] );
 					variable.push_back(j_var);
 				}
 				break;
 
-				case UsrrvOp:
-				case UsrrpOp:
-				case UsrapOp:
+				case FunrvOp:
+				case FunrpOp:
+				case FunapOp:
 				break;
 
 				default:
-				// cannot find second UserOp in this call
+				// cannot find second AFunOp in this call
 				CPPAD_ASSERT_UNKNOWN(false);
 				break;
 			}

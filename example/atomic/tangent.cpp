@@ -22,7 +22,7 @@ $section Tan and Tanh as User Atomic Operations: Example and Test$$
 $head Theory$$
 The code below uses the $cref tan_forward$$ and $cref tan_reverse$$
 to implement the tangent and hyperbolic tangent
-functions as user atomic operations.
+functions as atomic function operations.
 
 $head sparsity$$
 This atomic operation can use both set and bool sparsity patterns.

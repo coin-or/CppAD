@@ -241,7 +241,7 @@ void forward1(
 			cskip_op[i] = false;
 	}
 
-	// work space used by UserOp.
+	// work space used by AFunOp.
 	vector<bool> user_vx;        // empty vecotor
 	vector<bool> user_vy;        // empty vecotor
 	vector<Base> user_tx;        // argument vector Taylor coefficients
@@ -311,17 +311,17 @@ void forward1(
 		while( cskip_op[itr.op_index()] )
 		{	switch(op)
 			{
-				case UserOp:
-				{	// get information for this user atomic call
+				case AFunOp:
+				{	// get information for this atomic function call
 					CPPAD_ASSERT_UNKNOWN( user_state == start_user );
 					play::user_op_info<Base>(op, arg, user_old, user_m, user_n);
 					//
-					// skip to the second UserOp
+					// skip to the second AFunOp
 					for(i = 0; i < user_m + user_n + 1; ++i)
 						++itr;
 # ifndef NDEBUG
 					itr.op_info(op, arg, i_var);
-					CPPAD_ASSERT_UNKNOWN( op == UserOp );
+					CPPAD_ASSERT_UNKNOWN( op == AFunOp );
 # endif
 				}
 				break;
@@ -913,7 +913,7 @@ void forward1(
 			break;
 			// -------------------------------------------------
 
-			case UserOp:
+			case AFunOp:
 			// start or end an atomic function call
 			flag = user_state == start_user;
 			user_atom = play::user_op_info<RecBase>(
@@ -955,8 +955,8 @@ void forward1(
 			}
 			break;
 
-			case UsrapOp:
-			// parameter argument for a user atomic function
+			case FunapOp:
+			// parameter argument for a atomic function
 			CPPAD_ASSERT_UNKNOWN( NumArg(op) == 1 );
 			CPPAD_ASSERT_UNKNOWN( user_state == arg_user );
 			CPPAD_ASSERT_UNKNOWN( user_i == 0 );
@@ -972,8 +972,8 @@ void forward1(
 				user_state = ret_user;
 			break;
 
-			case UsravOp:
-			// variable argument for a user atomic function
+			case FunavOp:
+			// variable argument for a atomic function
 			CPPAD_ASSERT_UNKNOWN( NumArg(op) == 1 );
 			CPPAD_ASSERT_UNKNOWN( user_state == arg_user );
 			CPPAD_ASSERT_UNKNOWN( user_i == 0 );
@@ -987,8 +987,8 @@ void forward1(
 				user_state = ret_user;
 			break;
 
-			case UsrrpOp:
-			// parameter result for a user atomic function
+			case FunrpOp:
+			// parameter result for a atomic function
 			CPPAD_ASSERT_NARG_NRES(op, 1, 0);
 			CPPAD_ASSERT_UNKNOWN( user_state == ret_user );
 			CPPAD_ASSERT_UNKNOWN( user_i < user_m );
@@ -1005,8 +1005,8 @@ void forward1(
 				user_state = end_user;
 			break;
 
-			case UsrrvOp:
-			// variable result for a user atomic function
+			case FunrvOp:
+			// variable result for a atomic function
 			CPPAD_ASSERT_NARG_NRES(op, 0, 1);
 			CPPAD_ASSERT_UNKNOWN( user_state == ret_user );
 			CPPAD_ASSERT_UNKNOWN( user_i < user_m );
@@ -1046,8 +1046,8 @@ void forward1(
 		if( user_trace )
 		{	user_trace = false;
 
-			CPPAD_ASSERT_UNKNOWN( op == UserOp );
-			CPPAD_ASSERT_UNKNOWN( NumArg(UsrrvOp) == 0 );
+			CPPAD_ASSERT_UNKNOWN( op == AFunOp );
+			CPPAD_ASSERT_UNKNOWN( NumArg(FunrvOp) == 0 );
 			for(i = 0; i < user_m; i++) if( user_iy[i] > 0 )
 			{	size_t i_tmp   = (itr.op_index() + i) - user_m;
 				printOp(
@@ -1055,7 +1055,7 @@ void forward1(
 					play,
 					i_tmp,
 					user_iy[i],
-					UsrrvOp,
+					FunrvOp,
 					CPPAD_NULL
 				);
 				Base* Z_tmp = taylor + user_iy[i] * J;
@@ -1070,7 +1070,7 @@ void forward1(
 			}
 		}
 		Base*           Z_tmp   = taylor + J * i_var;
-		if( op != UsrrvOp )
+		if( op != FunrvOp )
 		{
 			printOp(
 				std::cout,

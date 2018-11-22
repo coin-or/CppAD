@@ -96,7 +96,7 @@ bool link_mat_mul(
 	CppAD::vector<double> w(1);
 	w[0] = 1.;
 
-	// user atomic information
+	// atomic function information
 	CppAD::vector<ADScalar> ax(3 + 2 * n), ay(n);
 	atomic_mat_mul atom_mul;
 	//

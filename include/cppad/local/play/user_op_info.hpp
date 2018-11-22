@@ -21,16 +21,16 @@ namespace CppAD { namespace local { namespace play {
 
 /*!
 \brief
-Unpack extra information corresponding to a UserOp
+Unpack extra information corresponding to a AFunOp
 
 \param op [in]
-must be a UserOp
+must be a AFunOp
 
 \param op_arg [in]
 is the arguments for this operator
 
 \param user_old [out]
-is the extra information passed to the old style user atomic functions.
+is the extra information passed to the old style atomic functions.
 
 \param user_m   [out]
 is the number of results for this user atmoic function.
@@ -39,7 +39,7 @@ is the number of results for this user atmoic function.
 is the number of arguments for this user atmoic function.
 
 \return
-Is a pointer to this user atomic function.
+Is a pointer to this atomic function.
 */
 template <class Base>
 atomic_base<Base>* user_op_info(
@@ -50,7 +50,7 @@ atomic_base<Base>* user_op_info(
 	size_t&          user_n     )
 {	atomic_base<Base>* user_atom;
 	//
-	CPPAD_ASSERT_UNKNOWN( op == UserOp );
+	CPPAD_ASSERT_UNKNOWN( op == AFunOp );
 	CPPAD_ASSERT_NARG_NRES(op, 4, 0);
 	//
 	user_old = size_t(op_arg[1]);

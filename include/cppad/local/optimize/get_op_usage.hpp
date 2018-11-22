@@ -238,7 +238,7 @@ void get_op_usage(
 	vectorBool       user_r_pack;  // pack sparsity pattern for result
 	vectorBool       user_s_pack;  // pack sparisty pattern for argument
 	//
-	atomic_base<Base>* user_atom = CPPAD_NULL; // current user atomic function
+	atomic_base<Base>* user_atom = CPPAD_NULL; // current atomic function
 	bool               user_pack = false;      // sparsity pattern type is pack
 	bool               user_bool = false;      // sparsity pattern type is bool
 	bool               user_set  = false;      // sparsity pattern type is set
@@ -631,7 +631,7 @@ void get_op_usage(
 			// user defined atomic operators
 			// ============================================================
 
-			case UserOp:
+			case AFunOp:
 			// start or end atomic operation sequence
 			if( user_state == end_user )
 			{	// revese_user using random_itr instead of play
@@ -779,7 +779,7 @@ void get_op_usage(
 			}
 			break; // -------------------------------------------------------
 
-			case UsrapOp:
+			case FunapOp:
 			// parameter argument in an atomic operation sequence
 			CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < num_par );
 			//
@@ -797,7 +797,7 @@ void get_op_usage(
 			//
 			break;
 
-			case UsravOp:
+			case FunavOp:
 			// variable argument in an atomic operation sequence
 			CPPAD_ASSERT_UNKNOWN( 0 < arg[0] );
 			//
@@ -815,7 +815,7 @@ void get_op_usage(
 			//
 			break;
 
-			case UsrrvOp:
+			case FunrvOp:
 			// variable result in an atomic operation sequence
 			//
 			// reverse_user using random_itr instead of play
@@ -839,7 +839,7 @@ void get_op_usage(
 			}
 			break; // --------------------------------------------------------
 
-			case UsrrpOp:
+			case FunrpOp:
 			CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < num_par );
 			//
 			// reverse_user using random_itr instead of play

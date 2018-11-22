@@ -241,7 +241,7 @@ that is not connected to a particular object
 This call makes to work space $cref/available/ta_available/$$ to
 for other uses by the same thread.
 This should be called when you are done using the
-user atomic functions for a specific value of $icode Base$$.
+atomic functions for a specific value of $icode Base$$.
 
 $children%example/atomic/checkpoint.cpp
 	%example/atomic/mul_level.cpp

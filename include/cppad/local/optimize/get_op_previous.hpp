@@ -58,8 +58,8 @@ i-th operator has NumArg(op) <= 3, 0 < NumRes(op), is not one of the following:
 	- it is not one of the load store op
 	LtpvOp, LtvpOp, LtvvOp, StppOp, StpvOp, StvpOp, StvvOp.
 
-	- it is not a user atomic fucntion op
-	UserOp, UsrapOp, UsravOp, UsrrpOp, UsrrvOp.
+	- it is not a atomic function fucntion op
+	AFunOp, FunapOp, FunavOp, FunrpOp, FunrvOp.
 
 \param op_usage
 The size of this vector is the number of operators in the
@@ -120,11 +120,11 @@ void get_op_previous(
 			case StpvOp:
 			case StvpOp:
 			case StvvOp:
-			case UserOp:
-			case UsrapOp:
-			case UsravOp:
-			case UsrrpOp:
-			case UsrrvOp:
+			case AFunOp:
+			case FunapOp:
+			case FunavOp:
+			case FunrpOp:
+			case FunrvOp:
 			break;
 
 			// ----------------------------------------------------------------

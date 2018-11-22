@@ -38,13 +38,13 @@ struct struct_cexp_info {
 	addr_t max_left_right;
 
 	/// set of operator that are not used when comparison result is true
-	/// Note that UsrapOp, UsravOp, UsrrpOp, and UsrrvOp, are not in this
-	/// vector and should be skipped when the corresponding UserOp are skipped.
+	/// Note that FunapOp, FunavOp, FunrpOp, and FunrvOp, are not in this
+	/// vector and should be skipped when the corresponding AFunOp are skipped.
 	CppAD::vector<size_t> skip_op_true;
 
 	/// set of variables that are not used when comparison result is false
-	/// Note that UsrapOp, UsravOp, UsrrpOp, and UsrrvOp, are not in this
-	/// vector and should be skipped when the corresponding UserOp are skipped.
+	/// Note that FunapOp, FunavOp, FunrpOp, and FunrvOp, are not in this
+	/// vector and should be skipped when the corresponding AFunOp are skipped.
 	CppAD::vector<size_t> skip_op_false;
 
 	/// comparision operator for this conditional expression

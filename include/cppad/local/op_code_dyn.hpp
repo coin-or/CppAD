@@ -56,7 +56,7 @@ enum op_code_dyn {
 	number_dyn     // number of operator codes (not an operator)
 };
 // 2DO: Following operators in OpCode need to be extended to parameter only:
-// CExpOp, UserOp
+// CExpOp, AFunOp
 
 
 /// number of arguments for each dynamic parameter operator

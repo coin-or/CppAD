@@ -22,7 +22,7 @@ include entire function call in a subgraph
 */
 // ===========================================================================
 /*!
-Convert from just firt UserOp to entire atomic function call in a subgraph.
+Convert from just firt AFunOp to entire atomic function call in a subgraph.
 
 \tparam Addr
 Type used for indices in the random iterator.
@@ -32,7 +32,7 @@ is a random iterator for this operation sequence.
 
 \param subgraph
 It a set of operator indices in this recording.
-If the corresponding operator is a UserOp, it assumed to be the
+If the corresponding operator is a AFunOp, it assumed to be the
 first one in the corresponding atomic function call.
 The other call operators are included in the subgraph.
 */
@@ -46,25 +46,25 @@ void entire_call(
 	for(size_t k = 0; k < n_sub; ++k)
 	{	size_t i_op = size_t( subgraph[k] );
 		//
-		if( random_itr.get_op(i_op) == UserOp )
-		{	// This is the first UserOp of this atomic function call
-			while( random_itr.get_op(++i_op) != UserOp )
+		if( random_itr.get_op(i_op) == AFunOp )
+		{	// This is the first AFunOp of this atomic function call
+			while( random_itr.get_op(++i_op) != AFunOp )
 			{	switch(random_itr.get_op(i_op))
 				{
-					case UsravOp:
-					case UsrrvOp:
-					case UsrrpOp:
-					case UsrapOp:
+					case FunavOp:
+					case FunrvOp:
+					case FunrpOp:
+					case FunapOp:
 					subgraph.push_back( addr_t(i_op) );
 					break;
 
 					default:
-					// cannot find second UserOp in this call
+					// cannot find second AFunOp in this call
 					CPPAD_ASSERT_UNKNOWN(false);
 					break;
 				}
 			}
-			// THis is the second UserOp of this atomic function call
+			// THis is the second AFunOp of this atomic function call
 			subgraph.push_back( addr_t(i_op) );
 		}
 	}

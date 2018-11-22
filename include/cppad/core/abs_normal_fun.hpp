@@ -780,40 +780,40 @@ void ADFun<Base,RecBase>::abs_normal_fun(ADFun& g, ADFun& a) const
 			break;
 
 			// -----------------------------------------------------------
-			// user atomic function call operators
+			// atomic function call operators
 
-			case UserOp:
+			case AFunOp:
 			CPPAD_ASSERT_NARG_NRES(op, 4, 0);
 			// atomic_index, user_old, user_n, user_m
 			rec.PutArg(arg[0], arg[1], arg[2], arg[3]);
-			rec.PutOp(UserOp);
+			rec.PutOp(AFunOp);
 			break;
 
-			case UsrapOp:
+			case FunapOp:
 			CPPAD_ASSERT_NARG_NRES(op, 1, 0);
 			new_arg[0] = arg[0]; // parameter
 			rec.PutArg(new_arg[0]);
-			rec.PutOp(UsrapOp);
+			rec.PutOp(FunapOp);
 			break;
 
-			case UsravOp:
+			case FunavOp:
 			CPPAD_ASSERT_NARG_NRES(op, 1, 0);
 			CPPAD_ASSERT_UNKNOWN( size_t( f2g_var[arg[0]] ) < num_var );
 			new_arg[0] = f2g_var[ arg[0] ];
 			rec.PutArg(new_arg[0]);
-			rec.PutOp(UsravOp);
+			rec.PutOp(FunavOp);
 			break;
 
-			case UsrrpOp:
+			case FunrpOp:
 			CPPAD_ASSERT_NARG_NRES(op, 1, 0);
 			new_arg[0] = arg[0]; // parameter
 			rec.PutArg(new_arg[0]);
-			rec.PutOp(UsrrpOp);
+			rec.PutOp(FunrpOp);
 			break;
 
-			case UsrrvOp:
+			case FunrvOp:
 			CPPAD_ASSERT_NARG_NRES(op, 0, 1);
-			f2g_var[i_var] = rec.PutOp(UsrrvOp);
+			f2g_var[i_var] = rec.PutOp(FunrvOp);
 			break;
 			// ---------------------------------------------------
 

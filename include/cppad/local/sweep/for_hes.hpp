@@ -154,7 +154,7 @@ void for_hes(
 	// user's atomic op
 	atomic_base<RecBase>* user_atom = CPPAD_NULL; // user's atomic op
 	//
-	// work space used by UserOp.
+	// work space used by AFunOp.
 	vector<Base>       user_x;   // value of parameter arguments to function
 	pod_vector<size_t> user_ix;  // variable index (on tape) for each argument
 	pod_vector<size_t> user_iy;  // variable index (on tape) for each result
@@ -166,7 +166,7 @@ void for_hes(
 	// -------------------------------------------------------------------------
 	//
 	// pointer to the beginning of the parameter vector
-	// (used by user atomic functions)
+	// (used by atomic functions)
 	const Base* parameter = CPPAD_NULL;
 	if( num_par > 0 )
 		parameter = play->GetPar();
@@ -180,7 +180,7 @@ void for_hes(
 	itr.op_info(op, arg, i_var);
 	CPPAD_ASSERT_UNKNOWN( op == BeginOp );
 # if CPPAD_FOR_HES_TRACE
-	vector<size_t> user_usrrp; // parameter index for UsrrpOp operators
+	vector<size_t> user_usrrp; // parameter index for FunrpOp operators
 	std::cout << std::endl;
 	CppAD::vectorBool zf_value(limit);
 	CppAD::vectorBool zh_value(limit * limit);
@@ -202,11 +202,11 @@ void for_hes(
 		include |= op == EndOp;
 		include |= op == CSkipOp;
 		include |= op == CSumOp;
-		include |= op == UserOp;
-		include |= op == UsrapOp;
-		include |= op == UsravOp;
-		include |= op == UsrrpOp;
-		include |= op == UsrrvOp;
+		include |= op == AFunOp;
+		include |= op == FunapOp;
+		include |= op == FunavOp;
+		include |= op == FunrpOp;
+		include |= op == FunrvOp;
 		//
 		if( include ) switch( op )
 		{	// operators that should not occurr
@@ -360,7 +360,7 @@ void for_hes(
 			break;
 			// -------------------------------------------------
 
-			case UserOp:
+			case AFunOp:
 			// start or end an atomic function call
 			CPPAD_ASSERT_UNKNOWN(
 				user_state == start_user || user_state == end_user
@@ -392,8 +392,8 @@ void for_hes(
 			}
 			break;
 
-			case UsrapOp:
-			// parameter argument for a user atomic function
+			case FunapOp:
+			// parameter argument for a atomic function
 			CPPAD_ASSERT_UNKNOWN( NumArg(op) == 1 );
 			CPPAD_ASSERT_UNKNOWN( user_state == arg_user );
 			CPPAD_ASSERT_UNKNOWN( user_i == 0 );
@@ -408,8 +408,8 @@ void for_hes(
 				user_state = ret_user;
 			break;
 
-			case UsravOp:
-			// variable argument for a user atomic function
+			case FunavOp:
+			// variable argument for a atomic function
 			CPPAD_ASSERT_UNKNOWN( NumArg(op) == 1 );
 			CPPAD_ASSERT_UNKNOWN( user_state == arg_user );
 			CPPAD_ASSERT_UNKNOWN( user_i == 0 );
@@ -424,8 +424,8 @@ void for_hes(
 				user_state = ret_user;
 			break;
 
-			case UsrrpOp:
-			// parameter result for a user atomic function
+			case FunrpOp:
+			// parameter result for a atomic function
 			CPPAD_ASSERT_NARG_NRES(op, 1, 0);
 			CPPAD_ASSERT_UNKNOWN( user_state == ret_user );
 			CPPAD_ASSERT_UNKNOWN( user_i < user_m );
@@ -442,8 +442,8 @@ void for_hes(
 				user_state = end_user;
 			break;
 
-			case UsrrvOp:
-			// variable result for a user atomic function
+			case FunrvOp:
+			// variable result for a atomic function
 			CPPAD_ASSERT_NARG_NRES(op, 0, 1);
 			CPPAD_ASSERT_UNKNOWN( user_state == ret_user );
 			CPPAD_ASSERT_UNKNOWN( user_i < user_m );
@@ -471,12 +471,12 @@ void for_hes(
 		}
 # if CPPAD_FOR_HES_TRACE
 		typedef typename Vector_set::const_iterator const_iterator;
-		if( op == UserOp && user_state == start_user )
+		if( op == AFunOp && user_state == start_user )
 		{	// print operators that have been delayed
 			CPPAD_ASSERT_UNKNOWN( user_m == user_iy.size() );
 			CPPAD_ASSERT_UNKNOWN( itr.op_index() > user_m );
-			CPPAD_ASSERT_NARG_NRES(UsrrpOp, 1, 0);
-			CPPAD_ASSERT_NARG_NRES(UsrrvOp, 0, 1);
+			CPPAD_ASSERT_NARG_NRES(FunrpOp, 1, 0);
+			CPPAD_ASSERT_NARG_NRES(FunrvOp, 0, 1);
 			addr_t arg_tmp[1];
 			for(k = 0; k < user_m; k++)
 			{	size_t k_var = user_iy[k];
@@ -500,9 +500,9 @@ void for_hes(
 						j = *(++itr_2);
 					}
 				}
-				OpCode op_tmp = UsrrvOp;
+				OpCode op_tmp = FunrvOp;
 				if( k_var == 0 )
-				{	op_tmp     = UsrrpOp;
+				{	op_tmp     = FunrpOp;
 					arg_tmp[0] = user_usrrp[k];
 				}
 				// k_var is zero when there is no result
@@ -544,8 +544,8 @@ void for_hes(
 			}
 		}
 		// must delay print for these cases till after atomic user call
-		bool delay_print = op == UsrrpOp;
-		delay_print     |= op == UsrrvOp;
+		bool delay_print = op == FunrpOp;
+		delay_print     |= op == FunrvOp;
 		if( ! delay_print )
 		{	 printOp(
 				std::cout,

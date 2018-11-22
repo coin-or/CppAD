@@ -45,8 +45,8 @@ If in_subgraph_[i_op] == depend_yes (depend_no),
 the result for this operator depends (does not depend)
 on the selected independent variables.
 Note that for user function call operators i_op,
-in_subgraph[i_op] is depend_no except for the first UserOp in the
-atomic function call sequence. For the first UserOp,
+in_subgraph[i_op] is depend_no except for the first AFunOp in the
+atomic function call sequence. For the first AFunOp,
 it is depend_yes (depend_no) if any of the results for the call sequence
 depend (do not depend) on the selected independent variables.
 Except for UserOP, only operators with NumRes(op) > 0 have in_subgraph_
@@ -119,9 +119,9 @@ void subgraph_info::init_rev(
 # endif
 			break;
 
-			// only mark both first UserOp for each call as depending
+			// only mark both first AFunOp for each call as depending
 			// on the selected independent variables
-			case UserOp:
+			case AFunOp:
 			begin_atomic_call  = ! begin_atomic_call;
 			if( begin_atomic_call )
 			{	get_argument_variable(random_itr, i_op, argument_variable, work);
@@ -136,13 +136,13 @@ void subgraph_info::init_rev(
 			}
 			break;
 
-			// skip UsrrvOp (gets mapped to first UserOp in this call)
-			case UsrrvOp:
+			// skip FunrvOp (gets mapped to first AFunOp in this call)
+			case FunrvOp:
 			CPPAD_ASSERT_UNKNOWN( NumRes(op) > 0 );
 			break;
 
 			default:
-			// Except for UserOp, only include when NumRes(op) > 0.
+			// Except for AFunOp, only include when NumRes(op) > 0.
 			if( NumRes(op) > 0 )
 			{	get_argument_variable(random_itr, i_op, argument_variable, work);
 				for(size_t j = 0; j < argument_variable.size(); ++j)
@@ -190,8 +190,8 @@ If in_subgraph_[i_op] == depend_yes (depend_no),
 the result for this operator depends (does not depend)
 on the selected independent variables.
 Note that for user function call operators i_op,
-in_subgraph[i_op] is depend_no except for the first UserOp in the
-atomic function call sequence. For the first UserOp,
+in_subgraph[i_op] is depend_no except for the first AFunOp in the
+atomic function call sequence. For the first AFunOp,
 it is depend_yes (depend_no) if any of the results for the call sequence
 depend (do not depend) on the selected independent variables.
 Except for UserOP, only operators with NumRes(op) > 0 have in_subgraph_

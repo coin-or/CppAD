@@ -693,10 +693,10 @@ The function call $codei%
 makes to work space $cref/available/ta_available/$$ to
 for other uses by the same thread.
 This should be called when you are done using the
-user atomic functions for a specific value of $icode Base$$.
+atomic functions for a specific value of $icode Base$$.
 
 $subhead Restriction$$
-The user atomic $code clear$$ routine cannot be called
+The atomic function $code clear$$ routine cannot be called
 while in $cref/parallel/ta_in_parallel/$$ execution mode.
 
 $children%
@@ -710,7 +710,7 @@ $head Example$$
 
 $subhead Simple$$
 The file $cref old_reciprocal.cpp$$ contains the simplest example and test
-of a user atomic operation.
+of a atomic function operation.
 
 $subhead Use AD$$
 The examples
@@ -722,11 +722,11 @@ a repeated section of code would only be taped once.
 
 $subhead Tangent Function$$
 The file $cref old_tan.cpp$$ contains an example and test
-implementation of the tangent function as a user atomic operation.
+implementation of the tangent function as a atomic function operation.
 
 $subhead Matrix Multiplication$$
 The file  $cref old_mat_mul.cpp$$ contains an example and test
-implementation of matrix multiplication a a user atomic operation.
+implementation of matrix multiplication a a atomic function operation.
 
 $end
 ------------------------------------------------------------------------------

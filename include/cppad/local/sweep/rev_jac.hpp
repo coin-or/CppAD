@@ -139,7 +139,7 @@ void rev_jac(
 	// user's atomic op
 	atomic_base<RecBase>* user_atom = CPPAD_NULL; // user's atomic op
 	//
-	// work space used by UserOp.
+	// work space used by AFunOp.
 	vector<Base>       user_x;   // parameters in x as integers
 	pod_vector<size_t> user_ix;  // variable indices for argument vector
 	pod_vector<size_t> user_iy;  // variable indices for result vector
@@ -610,7 +610,7 @@ void rev_jac(
 			break;
 			// -------------------------------------------------
 
-			case UserOp:
+			case AFunOp:
 			// start or end an atomic function call
 			CPPAD_ASSERT_UNKNOWN(
 				user_state == start_user || user_state == end_user
@@ -638,7 +638,7 @@ void rev_jac(
 			}
 			break;
 
-			case UsrapOp:
+			case FunapOp:
 			// parameter argument in an atomic operation sequence
 			CPPAD_ASSERT_UNKNOWN( NumArg(op) == 1 );
 			CPPAD_ASSERT_UNKNOWN( user_state == arg_user );
@@ -656,7 +656,7 @@ void rev_jac(
 				user_state = start_user;
 			break;
 
-			case UsravOp:
+			case FunavOp:
 			// variable argument in an atomic operation sequence
 			CPPAD_ASSERT_UNKNOWN( NumArg(op) == 1 );
 			CPPAD_ASSERT_UNKNOWN( user_state == arg_user );
@@ -673,8 +673,8 @@ void rev_jac(
 				user_state = start_user;
 			break;
 
-			case UsrrpOp:
-			// parameter result for a user atomic function
+			case FunrpOp:
+			// parameter result for a atomic function
 			CPPAD_ASSERT_NARG_NRES(op, 1, 0);
 			CPPAD_ASSERT_UNKNOWN( user_state == ret_user );
 			CPPAD_ASSERT_UNKNOWN( user_i <= user_m );
@@ -688,8 +688,8 @@ void rev_jac(
 				user_state = arg_user;
 			break;
 
-			case UsrrvOp:
-			// variable result for a user atomic function
+			case FunrvOp:
+			// variable result for a atomic function
 			CPPAD_ASSERT_NARG_NRES(op, 0, 1);
 			CPPAD_ASSERT_UNKNOWN( user_state == ret_user );
 			CPPAD_ASSERT_UNKNOWN( user_i <= user_m );
@@ -747,7 +747,7 @@ void rev_jac(
 			op,
 			arg
 		);
-		// Note that sparsity for UsrrvOp are computed before call to
+		// Note that sparsity for FunrvOp are computed before call to
 		// atomic function so no need to delay printing (as in forward mode)
 		if( NumRes(op) > 0 && op != BeginOp ) printOpResult(
 			std::cout,

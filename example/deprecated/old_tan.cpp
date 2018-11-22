@@ -25,7 +25,7 @@ see $cref atomic_tangent.cpp$$ instead.
 $head Theory$$
 The code below uses the $cref tan_forward$$ and $cref tan_reverse$$
 to implement the tangent ($icode%id% == 0%$$) and hyperbolic tangent
-($icode%id% == 1%$$) functions as user atomic operations.
+($icode%id% == 1%$$) functions as atomic function operations.
 
 $srcfile%example/deprecated/old_tan.cpp%0%// BEGIN C++%// END C++%1%$$
 
@@ -399,7 +399,7 @@ bool old_tan(void)
 
 	// --------------------------------------------------------------------
 	// Free all temporary work space associated with old_atomic objects.
-	// (If there are future calls to user atomic functions, they will
+	// (If there are future calls to atomic functions, they will
 	// create new temporary work space.)
 	CppAD::user_atomic<float>::clear();
 
