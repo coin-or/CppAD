@@ -22,75 +22,48 @@ CPPAD_DIR=$HOME/prefix/cppad
 EIGEN_DIR=$HOME/prefix/eigen
 FADBAD_DIR=$HOME/prefix/fadbad
 IPOPT_DIR=$HOME/prefix/ipopt
-# version type is one of "trunk" or "stable"
-version_type="stable"
+# -----------------------------------------------------------------------------
+# bash function that echos and executes a command
+echo_eval() {
+	echo $*
+	eval $*
+}
 # -----------------------------------------------------------------------------
 if [ $0 != "bin/autotools.sh" ]
 then
 	echo "bin/autotools.sh: must be executed in the directory that contians it"
 	exit 1
 fi
-if [ "$2" != "" ]
+if [ "$1" != 'automake' ] && [ "$1" !=  'configure' ] && [ "$1" != 'test' ]
 then
-	# when running multiple options, start by removing old log files
-	touch junk.log
-	list=`ls *.log`
-	for log in $list
-	do
-		echo "rm $log"
-		rm $log
-	done
-	#
-	# run multiple options in order
-     for option in $*
-     do
-		echo "=============================================================="
-		echo "begin: bin/autotools.sh $option"
-          bin/autotools.sh $option
-     done
-	echo "=============================================================="
-     exit 0
+     echo "$1 is not a valid option"
+cat << EOF
+usage: bin/autotools.sh option
+
+where option is one of the following:
+automake: run the tools required by autoconf and automake.
+configure:run the configure script in the build directory.
+test:     build and run the tests using the autotools.
+EOF
+	exit 1
 fi
+option="$1"
 # -----------------------------------------------------------------------------
 if [ ! -e build ]
 then
-	echo "mkdir build"
-	mkdir build
+	echo_eval mkdir build
 fi
-# -----------------------------------------------------------------------------
-# Today's date in yyyy-mm-dd decimal digit format where
-# yy is year in century, mm is month in year, dd is day in month.
-yyyy_mm_dd=`date +%F`
-#
-# Version of cppad that corresponds to today.
-if [ "$version_type" == "trunk" ]
-then
-	version=`version.sh get`
-else
-	version=`grep '^ *AC_INIT(' configure.ac |
-		sed -e 's/[^,]*, *\([^ ,]*\).*/\1/' -e 's|\[||' -e 's|\]||'`
-	yyyy_mm_dd=`echo $version |
-		sed -e 's|\..*||' -e 's|\(....\)\(..\)|\1-\2-|'`
-fi
+log_dir=`pwd`
+log_file="$option.log"
+version=`version.sh get`
 #
 # Files are created by the configure command and copied to the source tree
 configure_file_list="
 	cppad/configure.hpp
 "
 # -----------------------------------------------------------------------------
-# change version to current date
-if [ "$1" = "version" ]
+if [ "$option" = "automake" ]
 then
-	echo 'version.sh check'
-	version.sh check
-	#
-	echo "OK: bin/autotools.sh version"
-	exit 0
-fi
-# -----------------------------------------------------------------------------
-if [ "$1" = "automake" ]
-then
-	#
 	# check that autoconf and automake output are in original version
 	makefile_in=`sed configure.ac \
 	-n \
@@ -131,8 +104,7 @@ then
 		echo "Check them in when this command is done completes."
 	fi
 	#
-	echo "aclocal"
-	aclocal
+	echo_eval aclocal
 	#
 	echo "skipping libtoolize"
 	# echo "libtoolize -c -f -i"
@@ -141,11 +113,9 @@ then
 	#	exit 1
 	# fi
 	#
-	echo "autoconf"
-	autoconf
+	echo_eval autoconf
 	#
-	echo "automake --add-missing"
-	automake --add-missing
+	echo_eval automake --add-missing
 	#
 	link_list="missing install-sh depcomp config.sub config.guess"
 	for name in $link_list
@@ -154,11 +124,9 @@ then
 		then
 			echo "Converting $name from a link to a regular file"
 			#
-			echo "cp $name $name.$$"
-			cp $name $name.$$
+			echo_eval cp $name $name.$$
 			#
-			echo "mv $name.$$ $name"
-			mv $name.$$ $name
+			echo_eval mv $name.$$ $name
 		fi
 	done
 	#
@@ -167,369 +135,111 @@ then
 fi
 # -----------------------------------------------------------------------------
 # configure
-if [ "$1" == "configure" ]
+if [ "$option" == "configure" ]
 then
-	log_dir=`pwd`
-	log_file="$1.log"
 	#
-	echo "cd build"
-	cd build
+	echo_eval cd build
 	#
 	dir_list="
 		--prefix=$CPPAD_DIR
 	"
+	testvector='cppadvector'
 	if [ -e $BOOST_DIR/include/boost ]
 	then
 		dir_list="$dir_list BOOST_DIR=$BOOST_DIR"
-#_build_test_only:	if [ ! -e $EIGEN_DIR/include/Eigen ]
-#_build_test_only:	then
-#_build_test_only:		dir_list="$dir_list --with-boostvector"
-#_build_test_only:	fi
+		testvector='boostvector'
 	fi
 	if [ -e $EIGEN_DIR/include/Eigen ]
 	then
-		dir_list="$dir_list
-			EIGEN_DIR=$EIGEN_DIR"
-#_build_test_only:	dir_list="$dir_list --with-eigenvector"
+		dir_list="$dir_list EIGEN_DIR=$EIGEN_DIR"
+		testvector='eigenvector'
 	fi
 	if [ -e $FADBAD_DIR/include/FADBAD++ ]
 	then
-		dir_list="$dir_list
-			FADBAD_DIR=$FADBAD_DIR"
+		dir_list="$dir_list FADBAD_DIR=$FADBAD_DIR"
 	fi
 	if [ -e $IPOPT_DIR/include/coin/IpIpoptApplication.hpp ]
 	then
-		dir_list="$dir_list
-		IPOPT_DIR=$IPOPT_DIR"
+		dir_list="$dir_list IPOPT_DIR=$IPOPT_DIR"
 	fi
-	# Use =int (a signed type) to do more checking for
-	# slicing from size_t to addr_t.
-	special_types=""
-#_build_test_only:	special_types="TAPE_ADDR_TYPE=int TAPE_ID_TYPE=int"
-	#
-	dir_list=`echo $dir_list | sed -e 's|\t\t*| |g'`
 	cxx_flags="-Wall -ansi -pedantic-errors -std=c++11 -Wshadow"
 	cxx_flags="$cxx_flags -isystem $EIGEN_DIR/include"
 cat << EOF
 ../configure > $log_file \\
 $dir_list \\
 CXX_FLAGS=\"$cxx_flags\" \\
-$special_types OPENMP_FLAGS=-fopenmp \\
+OPENMP_FLAGS=-fopenmp \\
+--with-$testvector \\
 --with-Documentation
 EOF
 	#
 	../configure > $log_dir/$log_file \
 		$dir_list \
 		CXX_FLAGS="$cxx_flags" \
-		$special_types OPENMP_FLAGS=-fopenmp \
+		OPENMP_FLAGS=-fopenmp \
+		--with-$testvector \
 		--with-Documentation
 	#
 	for file in $configure_file_list
 	do
-		echo "cp $file ../$file"
-		cp $file ../$file
+		echo_eval cp $file ../$file
 	done
 	#
 	echo "OK: bin/autotools.sh configure"
 	exit 0
 fi
 # -----------------------------------------------------------------------------
-if [ "$1" = "dist" ]
+if [ "$option" = "test" ]
 then
-	# ----------------------------------------------------------------------
-	# Things to do in the original source directory
-	# ----------------------------------------------------------------------
-	echo "run_omhelp.sh -clean doc"
-	if ! run_omhelp.sh -clean doc
-	then
-		exit 1
-	fi
-	# No longer run these because tested when bin/package.sh is run.
-	# Run automated checking of file names in original source directory
-	# list="
-	#	check_define.sh
-	#	check_example.sh
-	#	check_if.sh
-	#	check_include_def.sh
-	#	check_include_file.sh
-	#	check_include_omh.sh
-	#	check_makefile.sh
-	#	check_op_code.sh
-	#	check_replace.sh
-	#	check_svn_id.sh
-	#	check_verbatim.sh
-	# "
-	# for check in $list
-	# do
-	#	echo "bin/$check"
-	#	      bin/$check
-	# done
-	# ----------------------------------------------------------------------
-	# Things to do in the build directory
-	# ----------------------------------------------------------------------
-	echo "cd build"
-	      cd build
-	#
-	if [ -e cppad-$version ]
-	then
-		echo "rm -rf cppad-$version"
-		      rm -rf cppad-$version
-	fi
-	for file in cppad-*.tgz
-	do
-		if [ -e $file ]
-		then
-			echo "rm $file"
-			rm $file
-		fi
-	done
-	#
-	echo "make dist"
-	      make dist
-	#
-	if [ ! -e cppad-$version.tar.gz ]
-	then
-		echo "cppad-$version.tar.gz does not exist"
-		echo "perhaps version is out of date"
-		#
-		exit 1
-	fi
-	# change *.tgz to *.epl.tgz
-	echo "mv cppad-$version.tar.gz cppad-$version.epl.tgz"
-	      mv cppad-$version.tar.gz cppad-$version.epl.tgz
-	#
-	echo "OK: bin/autotools.sh dist"
-	exit 0
-fi
-# -----------------------------------------------------------------------------
-# omhelp comes after dist because dist only includes one help output
-if [ "$1" = "omhelp" ]
-then
-	echo 'run_omhelp.sh -clean doc'
-	run_omhelp.sh -clean doc
-	#
-	echo "OK: bin/autotools.sh omhelp"
-	exit 0
-fi
-# -----------------------------------------------------------------------------
-if [ "$1" = "doxygen" ]
-then
-	echo "bin/run_doxygen.sh"
-	bin/run_doxygen.sh
-	#
-	echo "OK: bin/autotools.sh doxygen"
-	exit 0
-fi
-# -----------------------------------------------------------------------------
-if [ "$1" = "gpl" ]
-then
-	# create GPL licensed version
-	echo "bin/gpl_license.sh cppad-$version build build"
-	bin/gpl_license.sh cppad-$version build build
-	#
-	echo "OK: bin/autotools.sh gpl"
-	exit 0
-fi
-# -----------------------------------------------------------------------------
-if [ "$1" = "copy2doc" ]
-then
-	for ext in epl gpl
-	do
-		echo "cp build/cppad-$version.$ext.tgz doc/cppad-$version.$ext.tgz"
-		cp build/cppad-$version.$ext.tgz doc/cppad-$version.$ext.tgz
-	done
-	#
-	echo "cp -r doxydoc doc/doxydoc"
-	cp -r doxydoc doc/doxydoc
-	#
-	echo "cp *.log doc"
-	cp *.log doc
-	#
-	echo "OK: bin/autotools.sh copy2doc"
-	exit 0
-fi
-# -----------------------------------------------------------------------------
-if [ "$1" == "all" ]
-then
-	list="
-		version
-		automake
-		configure
-		dist
-		omhelp
-		doxygen
-		gpl
-		copy2doc
-	"
-	if [ "$version_type" != "trunk" ]
-	then
-		# only use the help built during the bin/autotools.sh dist command
-		list=`echo $list | sed -e 's|omhelp||'`
-	fi
-	echo "bin/autotools.sh $list"
-	bin/autotools.sh $list
-	echo "OK: bin/autotools.sh all"
-	exit 0
-fi
-# -----------------------------------------------------------------------------
-if [ "$1" = "test" ]
-then
-	log_dir=`pwd`
-	log_file="build_test.log"
+	echo "date >> $log_file"
+	date >> $log_dir/$log_file
+	# -----------------------------------------------------------------------
+	# build/cppad-$version.tgz
+	bin/package.sh
 	# --------------------------------------------------------------
-	# Things to do in the distribution directory
-	# --------------------------------------------------------------
-	#
-	# start log for this test
-	echo "date > $log_file"
-	      date > $log_dir/$log_file
-	# ----------------------------------------------------------------------
-	# Things to do in the build directory
-	# ----------------------------------------------------------------------
-	echo "cd build"
-	echo "cd build" >> $log_dir/$log_file
-	      cd build
-	#
-	# erase old distribution directory
-	if [ -e cppad-$version ]
-	then
-		echo "rm -rf cppad-$version"
-		echo "rm -rf cppad-$version" >> $log_dir/$log_file
-		      rm -rf cppad-$version
-	fi
+	echo_eval cd build
 	#
 	# create distribution directory
-	echo "tar -xzf cppad-$version.epl.tgz"
-	echo "tar -xzf cppad-$version.epl.tgz" >> $log_dir/$log_file
-	      tar -xzf cppad-$version.epl.tgz
+	echo_eval tar -xzf cppad-$version.tgz
 	#
-	# ----------------------------------------------------------------------
-	# Things to do in the build/disribution directory
-	# ----------------------------------------------------------------------
-	echo "cd cppad-$version"
-	echo "cd cppad-$version" >> $log_dir/$log_file
-	      cd cppad-$version
-	#
-	# build_test_only configuration
-	echo "sed -i -e 's|^#_build_test_only:||' bin/autotools.sh"
-	sed -i -e 's|^#_build_test_only:||' bin/autotools.sh
+	# change into distribution directory
+	echo_eval cd cppad-$version
 	#
 	echo "bin/autotools.sh configure >> $log_file"
-	      bin/autotools.sh configure >> $log_dir/$log_file
+	bin/autotools.sh configure >> $log_dir/$log_file
 	#
-	# test user documentation
-	echo "run_omhelp.sh -xml  doc >> $log_file"
-	run_omhelp.sh -xml doc  >> $log_dir/$log_file
-	#
-	# Developer documentation no longer works for autotools install
-	# test developer documentation
-	# echo "bin/autotools.sh doxygen   >> $log_file"
-	#      bin/autotools.sh doxygen   >> $log_dir/$log_file
+	echo "cat configure.log >> $log_file"
+	cat $log_dir/configure.log >> $log_dir/$log_file
+	echo 'rm configure.log'
+	rm $log_dir/configure.log
 	#
 	# ----------------------------------------------------------------------
-	# Things to do in the build/disribution/build directory
-	# ----------------------------------------------------------------------
-	echo "cd build"
-	echo "cd build" >> $log_dir/$log_file
-	      cd build
-	#
-	dir=`pwd`
-	echo "To see progress in the 'make test' log file use"
-	echo "	../temp.sh ( OK | All | tail | follow | file )"
-	cat << EOF > $log_dir/../temp.sh
-#! /bin/bash -e
-case "\$1" in
-
-	OK)
-	grep OK $dir/make_test.log
-	exit 0
-	;;
-
-	All)
-	grep All $dir/make_test.log
-	exit 0
-	;;
-
-	tail)
-	tail $dir/make_test.log
-	exit 0
-	;;
-
-	follow)
-	tail -f $dir/make_test.log
-	exit 0
-	;;
-
-	file)
-	echo "$dir/make_test.log"
-	exit 0
-	;;
-
-	*)
-	echo "usage: ../temp.sh option"
-	echo "where option is one of following: OK, All, tail, follow, file."
-	exit 1
-esac
-EOF
-	chmod +x $log_dir/../temp.sh
+	echo_eval cd build
+	make_log="$log_dir/make_test.log"
 	#
 	# build and run all the tests
-	echo "make test                >& make_test.log"
-	      make test                >& make_test.log
+	echo "make test  >& make_test.log"
+	make test >& $make_log
 	#
-	echo "rm ../temp.sh"
-	rm $log_dir/../temp.sh
-	#
-	echo "cat make_test.log        >> $log_file"
-	      cat make_test.log        >> $log_dir/$log_file
-	#
-	# ignore warning in eigen (that has been reported)
-	if grep ': *warning:' make_test.log
+	if grep ': *warning: .*tmpnam.*is dangerous' $make_log > /dev/null
 	then
-		echo "There are warnings in $dir/make_test.log"
+		grep ': *warning: .*tmpnam.*is dangerous' $make_log | head -1
+	fi
+	echo "cat make_test.log >> $log_file"
+	cat $make_log >> $log_dir/$log_file
+	#
+	sed -i $make_log -e '/: *warning: .*tmpnam.*is dangerous/d'
+	if grep ': *warning:' $make_log
+	then
+		echo "There are warnings in make_test.log"
 		exit 1
 	fi
+	echo "rm make_test.log"
+	rm $make_log
 	# --------------------------------------------------------------------
-	echo "cd ../../.."
-	cd ../../..
-	# end the build_test.log file with the date and time
 	echo "date >> $log_file"
-	      date >> $log_dir/$log_file
-	#
-	echo "No errors or warnings found; see build_test.log."
+	date >> $log_dir/$log_file
 	#
 	echo "OK: bin/autotools.sh test"
 	exit 0
 fi
-# -----------------------------------------------------------------------------
-# report bin/autotools.sh usage error
-if [ "$1" != "" ]
-then
-     echo "$1 is not a valid option"
-fi
-#
-if [ "$version_type" == "trunk" ]
-then
-	all_cases="run all the options above in order"
-else
-	all_cases="run all the options above in order with exception of omhelp"
-fi
-cat << EOF
-usage: bin/autotools.sh option_1 option_2 ...
-
-options                                                             requires
--------                                                             --------
-version:  set version in AUTHORS, configure.ac, configure, ...
-omhelp:   build all formats of user documentation in doc/*.
-automake: run the tools required by autoconf and automake.
-configure:run the configure script in the build directory.          automake
-dist:     create the distribution file build/cppad-version.epl.tgz. configure
-doxygen:  build developer documentation in doxydoc/*.               configure
-gpl:      create build/*.gpl.zip and build/*.epl.zip.               dist
-copy2doc: copy logs, tarballs & doxygen output into doc directory.  dist,doxygen
-
-all:      $all_cases
-test:     use tarball to make test and put result in build_test.log. dist
-EOF
-#
-exit 1

@@ -17,12 +17,13 @@ $$
 
 $section Your License for the CppAD Software$$
 
+$head Your License$$
+$verbatim%COPYING%$$
+
+$head Eclipse Public License Version 2.0$$
 $pre
 
 $$
-
-$fixed
 $verbatim%epl-2.0.txt%$$
-$$
 
 $end
