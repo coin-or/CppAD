@@ -953,7 +953,7 @@ The GPL distribution had the output of the
 $cref/configure/autotools/Configure/$$ command in it.
 $lnext
 Since the change on 01-09, the file
-$code omh/appendix/whats_new_11.omh$$ has been required to build the
+$code omh/appendix/11.omh$$ has been required to build the
 documentation (and it has been missing from the distribution).
 $lnext
 Fadbad was generating warnings due to the $code -Wshadow$$ flag
