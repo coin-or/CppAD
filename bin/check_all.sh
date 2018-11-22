@@ -98,15 +98,8 @@ then
 fi
 # ---------------------------------------------------------------------------
 version=`version.sh get`
+tarball="cppad-$version.tgz"
 # ---------------------------------------------------------------------------
-random_01 tarball
-if [ "$random_01_tarball" == '0' ]
-then
-	tarball="cppad-$version.epl.tgz"
-else
-	tarball="cppad-$version.gpl.tgz"
-fi
-#
 random_01 compiler
 if [ "$random_01_compiler" == '0' ]
 then
@@ -167,12 +160,12 @@ then
 fi
 # ---------------------------------------------------------------------------
 # Run automated checks for the form bin/check_*.sh with a few exceptions.
-# In addition, run ~bradbell/bin/check_copyright.sh.
 list=`ls bin/check_* | sed \
 	-e '/check_all.sh/d' \
 	-e '/check_jenkins.sh/d' \
 	-e '/check_svn_dist.sh/d'`
-for check in check_copyright.sh $list
+# ~/devel/check_copyright.sh not included in batch_edit branch
+for check in $list
 do
 	echo_log_eval $check
 done

@@ -1,6 +1,6 @@
 #! /bin/bash -e
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 #
 # CppAD is distributed under the terms of the
 #              Eclipse Public License Version 2.0.
@@ -72,80 +72,16 @@ list=`bin/ls_files.sh | sed -n -e '/\/makefile.am$/p'`
 ok="yes"
 for file in $list
 do
-	case $file in
-		( makefile.am | work/* | svn_dist/* )
-		;;
-
-		(example/multi_thread/makefile.am)
-		;;
-
-		(speed/example/makefile.am)
-		if grep '\-DNDEBUG' $file > /dev/null
-		then
-			echo "-DNDEBUG flag appears in $file"
-			ok="no"
-		fi
-		if ! grep '\-g' $file > /dev/null
-		then
-			echo "-g flag does not appear in in $file"
-			ok="no"
-		fi
-		;;
-
-		(test_more/makefile.am)
-		sed -e '/ndebug/d' < $file > bin/check_makefile.$$
-		if grep '\-DNDEBUG' bin/check_makefile.$$ > /dev/null
-		then
-			echo "-DNDEBUG flag appears in $file"
-			ok="no"
-		fi
-		if ! grep '\-g' $file > /dev/null
-		then
-			echo "-g flag does not appear in in $file"
-			ok="no"
-		fi
-		rm bin/check_makefile.$$
-		;;
-
-		(speed/[^/]*/makefile.am | cppad_ipopt/speed/makefile.am)
-		if ! grep '^[^#]*-DNDEBUG' $file > /dev/null
-		then
-			echo "Optimization flag is not defined in $file"
-			ok="no"
-		fi
-		if ! grep '^#.*-g' $file > /dev/null
-		then
-			echo "Debug flag is not commented out in $file"
-			ok="no"
-		fi
-		;;
-
-		(test_more/compare_c/makefile.am)
-		if ! grep '^[^#]*-DNDEBUG' $file > /dev/null
-		then
-			echo "Optimization flag is not defined in $file"
-			ok="no"
-		fi
-		if ! grep '^#.*-g' $file > /dev/null
-		then
-			echo "Debug flag is not commented out in $file"
-			ok="no"
-		fi
-		;;
-
-		*)
-		if grep '\-DNDEBUG' $file > /dev/null
-		then
-			echo "-DNDEBUG flag appears in $file"
-			ok="no"
-		fi
-		if ! grep '\-g' $file > /dev/null
-		then
-			echo "-g flag does not appear in in $file"
-			ok="no"
-		fi
-		;;
-	esac
+	if grep '\-DNDEBUG' $file > /dev/null
+	then
+		echo "-DNDEBUG flag appears in $file"
+		ok="no"
+	fi
+	if grep '\-g' $file > /dev/null
+	then
+		echo "-g flag appears in in $file"
+		ok="no"
+	fi
 done
 echo "-------------------------------------------------------"
 if [ "$ok" = "yes" ]

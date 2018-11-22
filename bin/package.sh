@@ -100,9 +100,6 @@ cat << EOF > $src_dir/package.$$
 /^config.sub\$/d
 /^configure\$/d
 /^depcomp\$/d
-/^epl-v10.html\$/d
-/^epl-v10.txt\$/d
-/^gpl-3.0.txt\$/d
 /^install-sh\$/d
 /^missing\$/d
 /^uw_copy_040507.html\$/d
@@ -120,56 +117,15 @@ echo_eval mkdir build/cppad-$version
 # cppad-$version.tgz
 git ls-files -z | xargs -0 tar -czvf build/cppad-$version/tar.tgz
 # -----------------------------------------------------------------------------
-# cppad-$version and cppad-$version.epl.tgz
-echo "create build/cppad-$version.epl.tgz"
+# cppad-$version.tgz
+echo "create build/cppad-$version.tgz"
 cd build/cppad-$version
 tar -xzf tar.tgz
 rm tar.tgz
-rm gpl-3.0.txt
 cp -r ../../doc doc
 cd ..
-tar --create cppad-$version --gzip --file=cppad-$version.epl.tgz
-# -----------------------------------------------------------------------------
-# cppad-$version and cppad-$version.gpl.tgz
-echo "create build/cppad-$version.gpl.tgz"
-#
-# restore gpl file
-cp ../gpl-3.0.txt cppad-$version/gpl-3.0.txt
-#
-# change EPL to GPL
-cat << EOF > $src_dir/package.$$
-s|Eclipse Public License Version 1.0|GNU General Public License Version 3|
-EOF
-#
-cd cppad-$version
-#
-# remove epl files
-for file in epl-v10.html epl-v10.txt
-do
-	rm $file
-done
-#
-# change license in COPYING
-sed -i COPYING -e '12,$d'
-cat gpl-3.0.txt >> COPYING
-#
-# Change short copyright message at top of every file
-for file in $change_list
-do
-	sed -i $file -f $src_dir/package.$$
-	if ! grep 'GNU General Public License Version 3' $file > /dev/null
-	then
-		echo "package.sh: Cannot change $file"
-	fi
-done
-rm $src_dir/package.$$
-#
-# cppad-$version.gpl.tgz
-cd ..
-tar --create cppad-$version --gzip --file=cppad-$version.gpl.tgz
-# ----------------------------------------------------------------------------
-# remove cppad-$version
+tar --create cppad-$version --gzip --file=cppad-$version.tgz
 rm -r cppad-$version
-#
+# ---------------------------------------------------------------------------
 echo 'package.sh: OK'
 exit 0
