@@ -14,7 +14,6 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 $begin add.cpp$$
 
 $section AD Binary Addition: Example and Test$$
-$mindex + add plus$$
 
 
 $code

@@ -24,7 +24,6 @@ $spell
 $$
 
 $section Second Order Exponential Approximation$$
-$mindex exp_2 example algorithm$$
 
 
 $head Syntax$$

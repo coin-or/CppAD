@@ -13,7 +13,6 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 $begin mul.cpp$$
 
 $section AD Binary Multiplication: Example and Test$$
-$mindex * multiply times$$
 
 
 $code

@@ -36,7 +36,6 @@ $spell
 $$
 
 $section Base Type Requirements for Conditional Expressions$$
-$mindex CondExp require CPPAD_COND_EXP_REL$$
 
 $head Purpose$$
 These definitions are required by the user's code to support the

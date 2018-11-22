@@ -19,7 +19,6 @@ $spell
 $$
 
 $section Using CppAD in a Multi-Threading Environment$$
-$mindex mode execution maximum number$$
 
 $head Purpose$$
 Extra steps and care must be taken to use CppAD

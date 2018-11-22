@@ -17,7 +17,6 @@ $spell
 $$
 
 $section CppAD::vector Template Class: Example and Test$$
-$mindex vector CppAD$$
 
 
 $code

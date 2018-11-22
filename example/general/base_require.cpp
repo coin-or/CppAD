@@ -16,7 +16,6 @@ $spell
 $$
 
 $section Using a User Defined AD Base Type: Example and Test$$
-$mindex type$$
 
 
 $code

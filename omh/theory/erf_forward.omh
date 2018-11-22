@@ -18,7 +18,6 @@ $$
 
 
 $section Error Function Forward Taylor Polynomial Theory$$
-$mindex erf$$
 
 $head Derivatives$$
 Given $latex X(t)$$, we define the function

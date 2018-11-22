@@ -29,7 +29,6 @@ $spell
 $$
 
 $section Evaluate a Function Defined in Terms of an ODE$$
-$mindex ode_evaluate$$
 
 
 $head Syntax$$

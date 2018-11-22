@@ -27,7 +27,6 @@ $$
 
 
 $section time_test: Example and test$$
-$mindex time_test$$
 
 $code
 $srcfile%speed/example/time_test.cpp%0%// BEGIN C++%// END C++%1%$$

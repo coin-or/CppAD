@@ -123,7 +123,7 @@ $subhead Recording Operations$$
 A sequence of $codei%AD<%Base%>%$$
 $cref/operations/glossary/Operation/Sequence/$$
 can be recorded and stored in an
-$xref/ADFun//AD function object/$$ object.
+$cref/AD function object/ADFun/$$ object.
 This object can then be used to evaluate
 function values and arbitrary order derivatives,
 and sparsity patterns of derivative values using the $icode Base$$ type.
@@ -153,7 +153,7 @@ while a variable times a parameter only has one.
 
 $subhead Derivative Calculations$$
 Arbitrary order
-$xref/Forward//forward/$$ and $xref/Reverse//reverse/$$
+$cref/forward/Forward/$$ and $cref/reverse/Reverse/$$
 mode derivative calculations
 can be preformed using an $code ADFun$$ object.
 Easy to user drivers that compute the
@@ -184,14 +184,14 @@ A special $cref checkpoint$$ class is included
 which allows one to record a function and reuse it as
 an atomic operation in other functions.
 There also is a special interface for user defined unary
-$xref/Discrete//discrete functions/$$ functions; i.e.,
+$cref/discrete functions/Discrete/$$ functions; i.e.,
 functions that depend on the
 $cref/independent variables/glossary/Tape/Independent Variable/$$
 but which have identically zero derivatives (e.g., a step function).
 
 $subhead Logical Comparisons$$
 Logical comparisons can be included in an operation sequence
-using AD $xref/CondExp//conditional expressions/$$.
+using AD $cref/conditional expressions/CondExp/$$.
 
 $subhead Vectors$$
 The CppAD API allows one to use any
@@ -213,7 +213,7 @@ $subhead Correctness$$
 There is an extensive set of correctness tests; see $cref cmake_check$$.
 
 $subhead Speed$$
-A set of programs for doing $cref/speed/$$ comparisons between
+A set of programs for doing $cref speed$$ comparisons between
 $href%https://projects.coin-or.org/ADOL-C%Adolc%$$,
 CppAD,
 $href%http://www.fadbad.com/%Fadbad%$$,
@@ -226,14 +226,14 @@ CppAD includes a set of C++ $cref/utilities/utility/$$ that are useful
 for general operator overloaded numerical methods.
 
 $head Release Notes$$
-This $xref/whats_new/$$ for a list of recent extensions and bug fixes.
+This $cref whats_new$$ for a list of recent extensions and bug fixes.
 
 $head Example$$
-The file $xref/get_started.cpp/$$
+The file $cref get_started.cpp$$
 contains an example and test of using CppAD to compute
 the derivative of a polynomial.
 There are many other
-$xref/Example//examples/$$.
+$cref/examples/Example/$$.
 All of the examples are also correctness tests,
 which ensures that they work properly.
 

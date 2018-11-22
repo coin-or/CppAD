@@ -24,7 +24,6 @@ $$
 
 
 $section First Order Derivative: Driver Routine$$
-$mindex derivative easy$$
 
 $head Syntax$$
 $icode%dw% = %f%.RevOne(%x%, %i%)%$$

@@ -23,7 +23,6 @@ $$
 
 
 $section Speed Testing Sparse Jacobian$$
-$mindex link_sparse_jacobian test$$
 
 $head Prototype$$
 $codei%extern bool link_sparse_jacobian(

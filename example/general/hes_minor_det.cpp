@@ -17,7 +17,6 @@ $spell
 $$
 
 $section Gradient of Determinant Using Expansion by Minors: Example and Test$$
-$mindex minors$$
 
 $code
 $srcfile%example/general/hes_minor_det.cpp%0%// BEGIN C++%// END C++%1%$$

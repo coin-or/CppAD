@@ -21,7 +21,6 @@ $spell
 $$
 
 $section Returns Indices that Sort a Vector$$
-$mindex index_sort$$
 
 
 $head Syntax$$

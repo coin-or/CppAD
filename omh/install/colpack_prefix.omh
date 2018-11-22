@@ -25,7 +25,6 @@ $spell
 $$
 
 $section Including the ColPack Sparsity Calculations$$
-$mindex prefix get$$
 
 $head Purpose$$
 If you specify a $icode colpack_prefix$$ on the

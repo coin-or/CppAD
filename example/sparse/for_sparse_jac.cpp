@@ -20,7 +20,6 @@ $spell
 $$
 
 $section Forward Mode Jacobian Sparsity: Example and Test$$
-$mindex ForSparseJac sparsity$$
 
 
 $code

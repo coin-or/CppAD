@@ -17,7 +17,6 @@ $$
 
 
 $section sparse_jac_fun: Example and test$$
-$mindex sparse_jac_fun$$
 
 $code
 $srcfile%speed/example/sparse_jac_fun.cpp%0%// BEGIN C++%// END C++%1%$$

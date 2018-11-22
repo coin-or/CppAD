@@ -21,7 +21,6 @@ $$
 
 
 $section Speed Testing Derivative of Matrix Multiply$$
-$mindex link_mat_mul test multiple$$
 
 $head Prototype$$
 $codei%extern bool link_mat_mul(

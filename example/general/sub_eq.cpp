@@ -14,7 +14,6 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 $begin sub_eq.cpp$$
 
 $section AD Compound Assignment Subtraction: Example and Test$$
-$mindex -= subtract assign plus add$$
 
 
 

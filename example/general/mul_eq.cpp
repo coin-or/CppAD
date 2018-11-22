@@ -14,7 +14,6 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 $begin mul_eq.cpp$$
 
 $section AD Compound Assignment Multiplication: Example and Test$$
-$mindex *= multiply assign plus add$$
 
 
 

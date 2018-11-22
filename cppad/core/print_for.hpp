@@ -25,7 +25,6 @@ $$
 
 
 $section Printing AD Values During Forward Mode$$
-$mindex print text output debug$$
 
 $head Syntax$$
 $icode%f%.Forward(0, %x%)

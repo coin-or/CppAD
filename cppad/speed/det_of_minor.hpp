@@ -25,7 +25,6 @@ $$
 
 
 $section Determinant of a Minor$$
-$mindex det_of_minor matrix$$
 
 $head Syntax$$
 $codei%# include <cppad/speed/det_of_minor.hpp>

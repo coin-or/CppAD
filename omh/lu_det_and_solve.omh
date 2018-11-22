@@ -15,7 +15,6 @@ $begin LuDetAndSolve$$
 
 
 $section Compute Determinants and Solve Equations by LU Factorization$$
-$mindex matrix factor linear$$
 
 $childtable%
 	cppad/utility/lu_solve.hpp%

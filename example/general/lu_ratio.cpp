@@ -19,7 +19,6 @@ $spell
 $$
 
 $section LuRatio: Example and Test$$
-$mindex LuRatio$$
 
 
 $code

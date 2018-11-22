@@ -21,7 +21,6 @@ $spell
 $$
 
 $section Reverse Mode Hessian Sparsity: Example and Test$$
-$mindex RevSparseHes sparsity$$
 
 
 $code

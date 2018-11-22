@@ -17,7 +17,6 @@ $spell
 $$
 
 $section Number of Variables That Can be Skipped: Example and Test$$
-$mindex number_skip optimize conditional expression condition$$
 
 
 $code

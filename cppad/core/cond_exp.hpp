@@ -36,7 +36,6 @@ $$
 
 
 $section AD Conditional Expressions$$
-$mindex assign$$
 
 $head Syntax$$
 $icode%result% = CondExp%Rel%(%left%, %right%, %if_true%, %if_false%)%$$

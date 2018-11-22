@@ -30,7 +30,6 @@ $$
 
 
 $section Computing Jacobian and Hessian of Bender's Reduced Objective$$
-$mindex BenderQuad$$
 
 $head Syntax$$
 $codei%

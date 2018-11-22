@@ -16,7 +16,6 @@ $spell
 $$
 
 $section Interfacing to C: Example and Test$$
-$mindex C interface difference central$$
 
 $code
 $srcfile%example/general/interface2c.cpp%0%// BEGIN C++%// END C++%1%$$

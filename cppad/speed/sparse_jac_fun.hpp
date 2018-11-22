@@ -28,7 +28,6 @@ $spell
 $$
 
 $section Evaluate a Function That Has a Sparse Jacobian$$
-$mindex sparse_jac_fun$$
 
 
 $head Syntax$$

@@ -19,7 +19,6 @@ $$
 
 
 $section Conversion and I/O of AD Objects$$
-$mindex convert from$$
 
 $children%
 	cppad/core/value.hpp%

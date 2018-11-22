@@ -30,7 +30,6 @@ $spell
 $$
 
 $section Jacobian Sparsity Pattern: Reverse Mode$$
-$mindex RevSparseJac sparse$$
 
 $head Syntax$$
 $icode%s% = %f%.RevSparseJac(%q%, %r%)

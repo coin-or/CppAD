@@ -17,7 +17,6 @@ $spell
 $$
 
 $section OpenMP Memory Allocator: Example and Test$$
-$mindex allocation multi thread$$
 
 
 $head Deprecated 2011-08-31$$

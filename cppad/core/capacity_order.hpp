@@ -23,7 +23,6 @@ $$
 
 
 $section Controlling Taylor Coefficients Memory Allocation$$
-$mindex Forward capacity_order control$$
 
 $head Syntax$$
 $icode%f%.capacity_order(%c%)%$$

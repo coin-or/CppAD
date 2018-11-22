@@ -19,7 +19,6 @@ $spell
 $$
 
 $section Correctness Tests For Exponential Approximation in Introduction$$
-$mindex exp_apx main run$$
 
 
 $head Running Tests$$

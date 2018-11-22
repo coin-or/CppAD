@@ -18,7 +18,6 @@ $spell
 $$
 
 $section AD Absolute Value Function: Example and Test$$
-$mindex abs fabs$$
 
 
 $code

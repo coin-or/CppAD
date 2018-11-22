@@ -26,7 +26,6 @@ $$
 
 
 $section AD Two Argument Inverse Tangent Function$$
-$mindex tan atan2$$
 
 $head Syntax$$
 $icode%theta% = atan2(%y%, %x%)%$$

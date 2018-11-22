@@ -77,7 +77,6 @@ $$
 
 
 $section Running the Speed Test Program$$
-$mindex cppad uniform_01$$
 
 $head Syntax$$
 $codei%speed/%package%/speed_%package% %test% %seed% %option_list%$$

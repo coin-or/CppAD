@@ -32,7 +32,6 @@ $$
 
 
 $section Determine Amount of Time to Execute a Test$$
-$mindex time_test speed$$
 
 $head Syntax$$
 $codei%# include <cppad/utility/time_test.hpp>

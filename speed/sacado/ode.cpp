@@ -25,7 +25,6 @@ $spell
 $$
 
 $section Sacado Speed: Gradient of Ode Solution$$
-$mindex link_ode speed$$
 
 
 $head Specifications$$

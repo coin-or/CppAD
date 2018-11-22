@@ -14,7 +14,6 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 $begin numeric_type.cpp$$
 
 $section The NumericType: Example and Test$$
-$mindex NumericType$$
 
 $code
 $srcfile%example/general/numeric_type.cpp%0%// BEGIN C++%// END C++%1%$$

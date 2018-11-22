@@ -28,7 +28,6 @@ $spell
 $$
 
 $section Adolc Speed: Matrix Multiplication$$
-$mindex link_mat_mul speed multiply$$
 
 
 $head Specifications$$

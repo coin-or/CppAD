@@ -22,7 +22,6 @@ $spell
 $$
 
 $section Double Speed: Determinant by Minor Expansion$$
-$mindex link_det_minor speed$$
 
 
 $head Specifications$$

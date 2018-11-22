@@ -25,7 +25,6 @@ $spell
 $$
 
 $section Any Order Reverse Mode$$
-$mindex derivative$$
 
 $head Syntax$$
 $icode%dw% = %f%.Reverse(%q%, %w%)%$$

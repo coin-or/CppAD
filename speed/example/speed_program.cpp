@@ -28,7 +28,6 @@ $$
 
 
 $section Example Use of SpeedTest$$
-$mindex test speed$$
 
 $head Running This Program$$
 On a Unix system that includes the $code g++$$ compiler,

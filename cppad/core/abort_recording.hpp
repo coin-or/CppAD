@@ -17,7 +17,6 @@ $spell
 $$
 
 $section Abort Recording of an Operation Sequence$$
-$mindex tape$$
 
 
 $head Syntax$$

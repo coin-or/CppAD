@@ -17,7 +17,6 @@ $$
 
 
 $section sparse_hes_fun: Example and test$$
-$mindex sparse_hes_fun$$
 
 $code
 $srcfile%speed/example/sparse_hes_fun.cpp%0%// BEGIN C++%// END C++%1%$$

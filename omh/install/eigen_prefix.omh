@@ -24,7 +24,6 @@ $spell
 $$
 
 $section Including the Eigen Examples and Tests$$
-$mindex prefix get$$
 
 $head Purpose$$
 CppAD can include the following examples and tests that

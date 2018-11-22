@@ -25,7 +25,6 @@ $$
 
 
 $section First Order Partial Derivative: Driver Routine$$
-$mindex easy$$
 
 $head Syntax$$
 $icode%dy% = %f%.ForOne(%x%, %j%)%$$

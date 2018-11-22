@@ -18,7 +18,6 @@ $spell
 $$
 
 $section Convert an AD Variable to a Parameter: Example and Test$$
-$mindex Var2Par Value during taping$$
 
 
 $code

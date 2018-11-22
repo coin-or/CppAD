@@ -23,7 +23,6 @@ $$
 
 
 $section AD Boolean Functions$$
-$mindex bool CPPAD_BOOL_UNARY CPPAD_BOOL_BINARY$$
 
 $head Syntax$$
 $codei%CPPAD_BOOL_UNARY(%Base%, %unary_name%)

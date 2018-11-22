@@ -19,7 +19,6 @@ $spell
 $$
 
 $section Inverse Cosine and Hyperbolic Cosine Forward Mode Theory$$
-$mindex acos acosh$$
 
 $head Derivatives$$
 $latex \[

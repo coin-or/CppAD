@@ -24,7 +24,6 @@ $$
 
 
 $section Hessian: Easy Driver$$
-$mindex second derivative$$
 
 $head Syntax$$
 $icode%hes% = %f%.Hessian(%x%, %w%)

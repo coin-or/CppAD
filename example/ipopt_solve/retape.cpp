@@ -22,7 +22,6 @@ $spell
 $$
 
 $section Nonlinear Programming Retaping: Example and Test$$
-$mindex retape ipopt_solve$$
 
 $head Purpose$$
 This example program demonstrates a case were the $code ipopt::solve$$

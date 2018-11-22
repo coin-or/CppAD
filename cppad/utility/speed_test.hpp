@@ -32,7 +32,6 @@ $$
 
 
 $section Run One Speed Test and Return Results$$
-$mindex speed_test$$
 
 $head Syntax$$
 $codei%# include <cppad/utility/speed_test.hpp>
@@ -205,7 +204,6 @@ $$
 
 
 $section Run One Speed Test and Print Results$$
-$mindex SpeedTest$$
 
 $head Syntax$$
 

@@ -17,7 +17,6 @@ $spell
 $$
 
 $section Adolc Test Utility: Allocate and Free Memory For a Matrix$$
-$mindex adolc_alloc_mat alloc$$
 
 $head Syntax$$
 $codei%mat% = adolc_alloc_mat(%m%, %n%)

@@ -19,7 +19,6 @@ $$
 
 
 $section General Examples$$
-$mindex realistic$$
 
 $head Description$$
 Most of the examples in CppAD are part of the documentation

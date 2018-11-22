@@ -21,7 +21,6 @@ $$
 
 
 $section Speed Testing the Jacobian of Ode Solution$$
-$mindex link_ode test$$
 
 $head Prototype$$
 $codei%extern bool link_ode(

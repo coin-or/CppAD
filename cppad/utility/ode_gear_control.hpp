@@ -38,7 +38,6 @@ $$
 
 
 $section An Error Controller for Gear's Ode Solvers$$
-$mindex OdeGearControl Gear differential equation$$
 
 $head Syntax$$
 $codei%# include <cppad/utility/ode_gear_control.hpp>

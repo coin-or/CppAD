@@ -22,7 +22,6 @@ $$
 
 
 $section AD Unary Minus Operator$$
-$mindex -$$
 
 $head Syntax$$
 

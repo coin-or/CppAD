@@ -29,7 +29,6 @@ $$
 
 
 $section LU Factorization of A Square Matrix and Stability Calculation$$
-$mindex LuRatio linear equation solve$$
 
 $head Syntax$$
 $code# include <cppad/cppad.hpp>$$

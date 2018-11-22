@@ -25,7 +25,6 @@ $$
 
 
 $section An Arbitrary Order Gear Method$$
-$mindex OdeGear Ode stiff differential equation$$
 
 $head Syntax$$
 $codei%# include <cppad/utility/ode_gear.hpp>

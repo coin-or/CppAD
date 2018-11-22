@@ -25,7 +25,6 @@ $spell
 $$
 
 $section Compare AD and Base Objects for Nearly Equal$$
-$mindex NearEqual with$$
 
 
 $head Syntax$$

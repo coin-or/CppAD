@@ -19,7 +19,6 @@ $spell
 $$
 
 $section LuInvert: Example and Test$$
-$mindex LuInvert$$
 
 
 $code

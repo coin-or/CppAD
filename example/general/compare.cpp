@@ -17,7 +17,6 @@ $spell
 $$
 
 $section AD Binary Comparison Operators: Example and Test$$
-$mindex compare < <= > >= == !=$$
 
 
 

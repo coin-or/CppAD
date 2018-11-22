@@ -31,7 +31,6 @@ $spell
 $$
 
 $section Fadbad Speed: Ode$$
-$mindex link_ode speed$$
 
 
 

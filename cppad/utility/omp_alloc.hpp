@@ -95,7 +95,6 @@ $end
 $begin omp_in_parallel$$
 
 $section Is The Current Execution in OpenMP Parallel Mode$$
-$mindex in_parallel$$
 $spell
 	cppad.hpp
 	omp_alloc
@@ -151,7 +150,6 @@ $spell
 $$
 
 $section Get the Current OpenMP Thread Number$$
-$mindex get_thread_num$$
 
 $head Deprecated 2011-08-31$$
 Use the function $cref/thread_alloc::thread_num/ta_thread_num/$$ instead.
@@ -283,7 +281,6 @@ $spell
 $$
 
 $section Return Memory to omp_alloc$$
-$mindex return_memory$$
 
 $head Deprecated 2011-08-31$$
 Use the function $cref/thread_alloc::return_memory/ta_return_memory/$$ instead.
@@ -349,7 +346,6 @@ $spell
 $$
 
 $section Free Memory Currently Available for Quick Use by a Thread$$
-$mindex free_available$$
 
 $head Deprecated 2011-08-31$$
 Use the function $cref/thread_alloc::free_available/ta_free_available/$$
@@ -398,7 +394,6 @@ $spell
 $$
 
 $section Amount of Memory a Thread is Currently Using$$
-$mindex inuse$$
 
 $head Deprecated 2011-08-31$$
 
@@ -510,7 +505,6 @@ $spell
 $$
 
 $section Allocate Memory and Create A Raw Array$$
-$mindex create_array$$
 
 $head Deprecated 2011-08-31$$
 Use the function $cref/thread_alloc::create_array/ta_create_array/$$ instead.
@@ -605,7 +599,6 @@ $spell
 $$
 
 $section Return A Raw Array to The Available Memory for a Thread$$
-$mindex delete_array$$
 
 $head Deprecated 2011-08-31$$
 Use the function $cref/thread_alloc::delete_array/ta_delete_array/$$ instead.
@@ -746,7 +739,6 @@ $spell
 	omp_alloc
 $$
 $section Set Maximum Number of Threads for omp_alloc Allocator$$
-$mindex max_num_threads$$
 
 $head Removed$$
 This function has been removed from the CppAD API.

@@ -34,7 +34,6 @@ $$
 
 
 $section A 3rd and 4th Order Rosenbrock ODE Solver$$
-$mindex Rosen34 solve stiff differential equation$$
 
 $head Syntax$$
 $codei%# include <cppad/utility/rosen_34.hpp>

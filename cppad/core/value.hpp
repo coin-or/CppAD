@@ -21,7 +21,6 @@ $$
 
 
 $section Convert From an AD Type to its Base Type$$
-$mindex Value$$
 
 $head Syntax$$
 $icode%b% = Value(%x%)%$$

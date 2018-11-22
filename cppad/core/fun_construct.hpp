@@ -29,7 +29,6 @@ $spell
 $$
 
 $section Construct an ADFun Object and Stop Recording$$
-$mindex tape$$
 
 
 $head Syntax$$

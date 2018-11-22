@@ -35,7 +35,6 @@ $spell
 $$
 
 $section Adolc Speed: Second Derivative of a Polynomial$$
-$mindex link_poly speed$$
 
 
 $head Specifications$$

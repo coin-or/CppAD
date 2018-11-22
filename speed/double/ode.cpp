@@ -25,7 +25,6 @@ $spell
 $$
 
 $section Double Speed: Ode Solution$$
-$mindex link_ode speed$$
 
 
 $head Specifications$$

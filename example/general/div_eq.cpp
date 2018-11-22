@@ -14,7 +14,6 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 $begin div_eq.cpp$$
 
 $section AD Compound Assignment Division: Example and Test$$
-$mindex /= divide assign plus add$$
 
 
 

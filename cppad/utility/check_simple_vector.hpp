@@ -21,7 +21,6 @@ $spell
 $$
 
 $section Check Simple Vector Concept$$
-$mindex CheckSimpleVector$$
 
 
 $head Syntax$$

@@ -17,7 +17,6 @@ $spell
 $$
 
 $section Subset of Second Order Partials: Example and Test$$
-$mindex partial$$
 
 
 $code

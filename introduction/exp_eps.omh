@@ -15,7 +15,6 @@ $spell
 $$
 
 $section exp_eps: Implementation$$
-$mindex exp_eps$$
 
 $code
 $srcfile%introduction/exp_eps.hpp%0%// BEGIN C++%// END C++%$$
@@ -44,7 +43,6 @@ $spell
 $$
 
 $section exp_eps: Operation Sequence and Zero Order Forward Sweep$$
-$mindex example$$
 
 
 
@@ -397,7 +395,6 @@ $spell
 $$
 
 $section exp_eps: First Order Reverse Sweep$$
-$mindex mode$$
 
 
 

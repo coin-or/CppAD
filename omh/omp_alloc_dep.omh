@@ -19,7 +19,6 @@ $spell
 $$
 
 $section Check If A Memory Allocation is Efficient for Another Use$$
-$mindex omp_alloc reuse$$
 
 $head Deprecated 2011-07-29$$
 This function has been deprecated because speed tests seem to indicate
@@ -83,7 +82,6 @@ $spell
 	omp_alloc
 $$
 $section Set Maximum Number of Threads for omp_alloc Allocator$$
-$mindex max_num_threads parallel OpenMP initialize$$
 
 
 

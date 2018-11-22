@@ -31,7 +31,6 @@ $spell
 $$
 
 $section Printing During Forward Mode: Example and Test$$
-$mindex mode print$$
 
 
 $head Running$$

@@ -18,7 +18,6 @@ $spell
 $$
 
 $section Elapsed Seconds: Example and Test$$
-$mindex seconds timer$$
 
 
 $code

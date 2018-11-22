@@ -19,7 +19,6 @@ $spell
 $$
 
 $section AD Vectors that Record Index Operations: Example and Test$$
-$mindex VecAD vec_ad.cpp$$
 
 
 $code

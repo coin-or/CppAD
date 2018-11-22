@@ -17,7 +17,6 @@ $spell
 $$
 
 $section AD Assignment: Example and Test$$
-$mindex assign object$$
 
 
 $code

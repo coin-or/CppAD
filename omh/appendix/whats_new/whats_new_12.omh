@@ -499,7 +499,7 @@ $$
 $head 07-02$$
 Add  $code eigen_plugin.hpp$$ so that
 an Eigen vector can be used as a
-$cref/SimpleVector/$$.
+$cref SimpleVector$$.
 This has since been removed; see
 $cref/2017-05-11/whats_new_17/05-12/$$.
 

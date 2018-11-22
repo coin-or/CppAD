@@ -17,7 +17,6 @@ $spell
 $$
 
 $section Using a Team of AD Threads: Example and Test$$
-$mindex thread$$
 
 
 $head Purpose$$

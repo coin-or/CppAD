@@ -28,7 +28,6 @@ $$
 
 
 $section Evaluate a Polynomial or its Derivative$$
-$mindex Poly template$$
 
 $head Syntax$$
 $codei%# include <cppad/utility/poly.hpp>

@@ -23,7 +23,6 @@ $spell
 $$
 
 $section Replacing the CppAD Error Handler$$
-$mindex replace assert exception ErrorHandler$$
 
 $head Syntax$$
 $codei%# include <cppad/utility/error_handler.hpp>

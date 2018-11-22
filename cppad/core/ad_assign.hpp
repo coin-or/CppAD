@@ -23,7 +23,6 @@ $$
 
 
 $section AD Assignment Operator$$
-$mindex assign Base VecAD$$
 
 $head Syntax$$
 $icode%y% = %x%$$

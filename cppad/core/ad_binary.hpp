@@ -22,7 +22,6 @@ $spell
 $$
 
 $section AD Binary Arithmetic Operators$$
-$mindex + add plus - subtract minus * multiply times / divide$$
 
 
 

@@ -17,7 +17,6 @@ $spell
 $$
 
 $section Sum of the Elements of the Square of a Matrix: Example and Test$$
-$mindex mat_sum_sq$$
 
 
 $code

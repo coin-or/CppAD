@@ -28,7 +28,6 @@ $spell
 $$
 
 $section Determine if Two Values Are Nearly Equal$$
-$mindex NearEqual near absolute difference relative$$
 
 
 $head Syntax$$

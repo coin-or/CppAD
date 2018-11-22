@@ -14,7 +14,6 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 $begin index_sort.cpp$$
 
 $section Index Sort: Example and Test$$
-$mindex index_sort$$
 
 
 $code

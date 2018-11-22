@@ -26,7 +26,6 @@ $$
 
 
 $section Forward Mode Second Partial Derivative Driver$$
-$mindex order easy$$
 
 $head Syntax$$
 $icode%ddy% = %f%.ForTwo(%x%, %j%, %k%)%$$

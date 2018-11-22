@@ -12,7 +12,6 @@ CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 $begin reverse_one$$
 
 $section First Order Reverse Mode$$
-$mindex derivative$$
 $spell
 	taylor
 	const

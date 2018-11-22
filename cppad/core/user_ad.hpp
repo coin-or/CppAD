@@ -23,7 +23,6 @@ $spell
 $$
 
 $section AD Objects$$
-$mindex require$$
 
 
 $head Purpose$$

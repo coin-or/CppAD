@@ -17,7 +17,6 @@ $spell
 $$
 
 $section Second Order Reverse ModeExample and Test$$
-$mindex example$$
 
 
 $code

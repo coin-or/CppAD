@@ -18,7 +18,6 @@ $spell
 $$
 
 $section Hessian: Example and Test$$
-$mindex Hessian$$
 
 
 $code

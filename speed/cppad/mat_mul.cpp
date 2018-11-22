@@ -32,7 +32,6 @@ $spell
 $$
 
 $section CppAD Speed, Matrix Multiplication$$
-$mindex link_mat_mul multiply$$
 
 
 $head Specifications$$

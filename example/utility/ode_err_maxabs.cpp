@@ -18,7 +18,6 @@ $spell
 $$
 
 $section OdeErrControl: Example and Test Using Maxabs Argument$$
-$mindex OdeErrControl$$
 
 
 Define

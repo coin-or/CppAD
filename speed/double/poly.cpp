@@ -21,7 +21,6 @@ $spell
 $$
 
 $section Double Speed: Evaluate a Polynomial$$
-$mindex link_poly speed$$
 
 
 

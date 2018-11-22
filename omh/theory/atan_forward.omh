@@ -18,7 +18,6 @@ $spell
 $$
 
 $section Inverse Tangent and Hyperbolic Tangent Forward Mode Theory$$
-$mindex atan atanh$$
 
 $head Derivatives$$
 $latex \[

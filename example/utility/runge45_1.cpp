@@ -17,7 +17,6 @@ $spell
 $$
 
 $section Runge45: Example and Test$$
-$mindex Runge45$$
 
 
 Define

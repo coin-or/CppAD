@@ -29,7 +29,6 @@ $$
 
 
 $section CppAD Assertions During Execution$$
-$mindex assert macro CPPAD_ASSERT_KNOWN CPPAD_ASSERT_UNKNOWN$$
 
 $head Syntax$$
 $codei%CPPAD_ASSERT_KNOWN(%exp%, %msg%)

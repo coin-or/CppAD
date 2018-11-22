@@ -19,7 +19,6 @@ $spell
 $$
 
 $section LuFactor: Example and Test$$
-$mindex LuFactor$$
 
 
 $code

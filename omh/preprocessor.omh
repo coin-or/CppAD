@@ -19,7 +19,6 @@ $spell
 $$
 
 $section CppAD API Preprocessor Symbols$$
-$mindex CPPAD_ NULL pointer$$
 
 $head Rule$$
 The CppAD include files defines preprocessor symbols all of which begin

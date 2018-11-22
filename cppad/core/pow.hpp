@@ -24,7 +24,6 @@ $$
 
 
 $section The AD Power Function$$
-$mindex pow exponent$$
 
 $head Syntax$$
 $icode%z% = pow(%x%, %y%)%$$

@@ -24,7 +24,6 @@ $spell
 $$
 
 $section Sum Elements of a Matrix Times Itself$$
-$mindex mat_sum_sq multiply speed test$$
 
 $head Syntax$$
 $codei%# include <cppad/speed/mat_sum_sq.hpp>

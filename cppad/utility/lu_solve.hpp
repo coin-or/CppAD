@@ -33,7 +33,6 @@ $$
 
 
 $section Compute Determinant and Solve Linear Equations$$
-$mindex LuSolve Lu$$
 
 $pre
 $$

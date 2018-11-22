@@ -27,7 +27,6 @@ $$
 
 
 $section speed_test: Example and test$$
-$mindex speed_test$$
 
 $code
 $srcfile%speed/example/speed_test.cpp%0%// BEGIN C++%// END C++%1%$$

@@ -26,7 +26,6 @@ $$
 
 
 $section AD Constructors $$
-$mindex convert Base VecAD$$
 
 $head Syntax$$
 $codei%AD<%Base%> %y%()

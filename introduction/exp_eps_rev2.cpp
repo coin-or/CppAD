@@ -27,7 +27,6 @@ $spell
 $$
 
 $section exp_eps: Verify Second Order Reverse Sweep$$
-$mindex exp_eps$$
 
 
 $srccode%cpp% */

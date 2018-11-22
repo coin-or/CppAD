@@ -21,7 +21,6 @@ $$
 
 
 $section exp_eps: Verify Zero Order Forward Sweep$$
-$mindex exp_eps$$
 
 
 $srccode%cpp% */

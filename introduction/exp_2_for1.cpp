@@ -20,7 +20,6 @@ $spell
 $$
 
 $section exp_2: Verify First Order Forward Sweep$$
-$mindex exp_2$$
 
 
 $srccode%cpp% */

@@ -18,7 +18,6 @@ $spell
 $$
 
 $section Convert From AD to its Base Type: Example and Test$$
-$mindex Value record$$
 
 
 $code

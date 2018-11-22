@@ -18,7 +18,6 @@ $spell
 $$
 
 $section AD Output Operator: Example and Test$$
-$mindex <<$$
 
 
 $code

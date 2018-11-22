@@ -17,7 +17,6 @@ $spell
 $$
 
 $section OdeGear: Example and Test$$
-$mindex OdeGear$$
 
 
 Define

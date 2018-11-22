@@ -23,7 +23,6 @@ $spell
 $$
 
 $section Double Speed: Sparse Hessian$$
-$mindex link_sparse_hessian speed$$
 
 
 $head Specifications$$

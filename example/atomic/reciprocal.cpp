@@ -17,7 +17,6 @@ $spell
 $$
 
 $section Reciprocal as an Atomic Operation: Example and Test$$
-$mindex set_sparsity_enum$$
 
 $head Theory$$
 This example demonstrates using $cref atomic_base$$

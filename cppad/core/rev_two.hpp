@@ -26,7 +26,6 @@ $$
 
 
 $section Reverse Mode Second Partial Derivative Driver$$
-$mindex order easy$$
 
 $head Syntax$$
 $icode%ddw% = %f%.RevTwo(%x%, %i%, %j%)%$$

@@ -24,7 +24,6 @@ $spell
 $$
 
 $section Check Determinant of 3 by 3 matrix$$
-$mindex det_33 correct$$
 
 
 $head Syntax$$

@@ -28,7 +28,6 @@ $$
 
 
 $section Jacobian and Hessian of Optimal Values$$
-$mindex opt_val_hes$$
 
 $head Syntax$$
 $icode%signdet% = opt_val_hes(%x%, %y%, %fun%, %jac%, %hes%)%$$

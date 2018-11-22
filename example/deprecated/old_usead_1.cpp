@@ -18,7 +18,6 @@ $spell
 $$
 
 $section Using AD to Compute Atomic Function Derivatives$$
-$mindex inside user checkpoint$$
 
 $head Deprecated 2013-05-27$$
 This example has been deprecated because it is easier to use the

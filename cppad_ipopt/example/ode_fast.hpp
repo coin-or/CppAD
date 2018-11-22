@@ -18,7 +18,6 @@ $spell
 $$
 
 $section ODE Fitting Using Fast Representation$$
-$mindex cppad_ipopt_nlp example source$$
 
 
 $code

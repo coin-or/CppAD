@@ -17,7 +17,6 @@ $$
 
 
 $section Boost Thread Implementation of a Team of AD Threads$$
-$mindex bthread$$
 See $cref team_thread.hpp$$ for this routines specifications.
 
 $code

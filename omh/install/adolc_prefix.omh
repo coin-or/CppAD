@@ -26,7 +26,6 @@ $spell
 $$
 
 $section Including the ADOL-C Examples and Tests$$
-$mindex adolc prefix get$$
 
 $head Purpose$$
 CppAD includes examples and tests that can use the AD package

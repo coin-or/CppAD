@@ -14,7 +14,6 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 $begin div.cpp$$
 
 $section AD Binary Division: Example and Test$$
-$mindex / divide quotient$$
 
 
 $code

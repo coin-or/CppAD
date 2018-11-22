@@ -18,7 +18,6 @@ $spell
 $$
 
 $section Jacobian: Example and Test$$
-$mindex Jacobian$$
 
 
 $code

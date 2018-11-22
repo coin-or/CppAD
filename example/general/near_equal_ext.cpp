@@ -19,7 +19,6 @@ o	Microsoft
 $$
 
 $section Compare AD with Base Objects: Example and Test$$
-$mindex NearEqualExt$$
 
 $code
 $srcfile%example/general/near_equal_ext.cpp%0%// BEGIN C++%// END C++%1%$$

@@ -18,7 +18,6 @@ $spell
 $$
 
 $section A Simple OpenMP AD: Example and Test$$
-$mindex AD$$
 
 
 $head Purpose$$

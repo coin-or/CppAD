@@ -21,7 +21,6 @@ $spell
 $$
 
 $section Including the cppad_ipopt Library and Tests$$
-$mindex ipopt cppad prefix get$$
 
 $head Purpose$$
 Includes the $cref cppad_ipopt_nlp$$

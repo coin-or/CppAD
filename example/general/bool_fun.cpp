@@ -19,7 +19,6 @@ $spell
 $$
 
 $section AD Boolean Functions: Example and Test$$
-$mindex bool$$
 
 
 $code

@@ -17,7 +17,6 @@ $spell
 $$
 
 $section BenderQuad: Example and Test$$
-$mindex BenderQuad$$
 
 
 Define

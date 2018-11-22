@@ -21,7 +21,6 @@ $spell
 $$
 
 $section Including the FADBAD Speed Tests$$
-$mindex prefix get$$
 
 $head Purpose$$
 CppAD includes speed comparisons for the AD package

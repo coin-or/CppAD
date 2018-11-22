@@ -37,7 +37,6 @@ $spell
 
 $$
 $section Nonlinear Programming Using the CppAD Interface to Ipopt$$
-$mindex AD$$
 
 
 $head Deprecated 2012-11-28$$

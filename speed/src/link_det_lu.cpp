@@ -20,7 +20,6 @@ $$
 
 
 $section Speed Testing Gradient of Determinant Using Lu Factorization$$
-$mindex link_det_lu test$$
 
 $head Prototype$$
 $codei%extern bool link_det_lu(

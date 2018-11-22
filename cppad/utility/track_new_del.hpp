@@ -25,7 +25,6 @@ $spell
 $$
 
 $section Routines That Track Use of New and Delete$$
-$mindex memory NDEBUG CPPAD_TRACK_NEW_VEC CppADTrackNewVec CPPAD_TRACK_DEL_VEC CppADTrackDelVec CPPAD_TRACK_EXTEND CppADTrackExtend CPPAD_TRACK_COUNT thread multi$$
 
 $head Deprecated 2007-07-23$$
 All these routines have been deprecated.

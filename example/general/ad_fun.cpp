@@ -16,7 +16,6 @@ $spell
 $$
 
 $section Creating Your Own Interface to an ADFun Object$$
-$mindex example test$$
 
 
 $code

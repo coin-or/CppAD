@@ -25,7 +25,6 @@ $$
 
 
 $section Jacobian: Driver Routine$$
-$mindex Jacobian first derivative$$
 
 $head Syntax$$
 $icode%jac% = %f%.Jacobian(%x%)%$$

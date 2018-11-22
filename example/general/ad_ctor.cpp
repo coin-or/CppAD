@@ -17,7 +17,6 @@ $spell
 $$
 
 $section AD Constructors: Example and Test$$
-$mindex constructor object$$
 
 
 $code

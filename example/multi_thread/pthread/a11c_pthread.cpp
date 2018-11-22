@@ -20,7 +20,6 @@ $spell
 $$
 
 $section A Simple Parallel Pthread Example and Test$$
-$mindex OpenMP A.1.1c thread$$
 
 $head Purpose$$
 This example just demonstrates pthreads and does not use CppAD at all.

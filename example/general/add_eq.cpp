@@ -14,7 +14,6 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 $begin AddEq.cpp$$
 
 $section AD Compound Assignment Addition: Example and Test$$
-$mindex += add assign plus$$
 
 
 

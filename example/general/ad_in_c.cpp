@@ -17,7 +17,6 @@ $spell
 $$
 
 $section Example and Test Linking CppAD to Languages Other than C++$$
-$mindex C AD algorithmic differentiation automatic link$$
 
 
 

@@ -14,7 +14,6 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 $begin fun_assign.cpp$$
 
 $section ADFun Assignment: Example and Test$$
-$mindex assignment$$
 
 
 $code

@@ -15,7 +15,6 @@ $spell
 $$
 
 $section exp_2: Implementation$$
-$mindex exp_2$$
 
 $code
 $srcfile%introduction/exp_2.hpp%0%// BEGIN C++%// END C++%$$
@@ -44,7 +43,6 @@ $spell
 $$
 
 $section exp_2: Operation Sequence and Zero Order Forward Mode$$
-$mindex example$$
 
 
 

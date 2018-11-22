@@ -20,7 +20,6 @@ $spell
 $$
 
 $section A Simple Boost Thread Example and Test$$
-$mindex A.1.1c$$
 
 $head Purpose$$
 This example just demonstrates Boost threads and does not use CppAD at all.

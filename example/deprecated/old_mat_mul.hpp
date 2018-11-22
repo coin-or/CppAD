@@ -44,7 +44,6 @@ $$
 
 
 $section Define Matrix Multiply as a User Atomic Operation$$
-$mindex old_mat_mul old_atomic test$$
 
 
 $head Syntax$$

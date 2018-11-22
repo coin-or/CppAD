@@ -28,7 +28,6 @@ $$
 
 
 $section Invert an LU Factored Equation$$
-$mindex LuInvert linear$$
 
 $pre
 $$

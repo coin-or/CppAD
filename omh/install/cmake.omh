@@ -67,7 +67,6 @@ $spell
 $$
 
 $section Using CMake to Configure CppAD$$
-$mindex makefile install prefix postfix include directories lib datadir documentation package compile flags profile maximum number threads sparsity internal structure vector sets memory usage tape ctor implicit explicit$$
 
 
 $head The CMake Program$$

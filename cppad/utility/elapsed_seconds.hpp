@@ -23,7 +23,6 @@ $spell
 $$
 
 $section Returns Elapsed Number of Seconds$$
-$mindex elapsed_seconds time$$
 
 
 $head Syntax$$

@@ -23,7 +23,6 @@ $$
 
 
 $section Lu Factor and Solve with Recorded Pivoting$$
-$mindex LuVecAD linear equation determinant$$
 
 $pre
 $$

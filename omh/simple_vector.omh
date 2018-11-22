@@ -22,7 +22,6 @@ $$
 
 
 $section Definition of a Simple Vector$$
-$mindex value_type [] NDEBUG$$
 
 $head Template Class Requirements$$
 A simple vector template class $icode SimpleVector$$,

@@ -19,7 +19,6 @@ $spell
 $$
 
 $section Lu Factor and Solve With Recorded Pivoting: Example and Test$$
-$mindex record pivot$$
 
 
 $code

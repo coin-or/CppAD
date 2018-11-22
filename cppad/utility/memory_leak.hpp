@@ -23,7 +23,6 @@ $spell
 $$
 
 $section Memory Leak Detection$$
-$mindex memory_leak check static$$
 
 $head Deprecated 2012-04-06$$
 This routine has been deprecated.

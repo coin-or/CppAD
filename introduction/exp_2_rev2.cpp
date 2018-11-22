@@ -21,7 +21,6 @@ $spell
 $$
 
 $section exp_2: Verify Second Order Reverse Sweep$$
-$mindex exp_2 mode$$
 
 
 

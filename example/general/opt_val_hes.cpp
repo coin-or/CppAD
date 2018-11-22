@@ -17,7 +17,6 @@ $spell
 $$
 
 $section opt_val_hes: Example and Test$$
-$mindex opt_val_hes$$
 
 
 Fix $latex z \in \B{R}^\ell$$ and define the functions

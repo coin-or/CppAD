@@ -26,7 +26,6 @@ $spell
 $$
 
 $section Discrete AD Functions$$
-$mindex CPPAD_DISCRETE_FUNCTION$$
 
 
 $head Syntax$$

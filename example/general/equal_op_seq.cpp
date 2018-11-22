@@ -17,7 +17,6 @@ $spell
 $$
 
 $section EqualOpSeq: Example and Test$$
-$mindex EqualOpSeq$$
 
 
 $code

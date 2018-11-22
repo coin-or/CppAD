@@ -22,7 +22,6 @@ $spell
 $$
 
 $section One DimensionalRomberg Integration$$
-$mindex integrate Romberg$$
 
 
 $head Syntax$$

@@ -14,7 +14,6 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 $begin tape_index.cpp$$
 
 $section Taping Array Index Operation: Example and Test$$
-$mindex tape operation$$
 
 
 $code

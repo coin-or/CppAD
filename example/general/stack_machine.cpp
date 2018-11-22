@@ -15,7 +15,6 @@ $spell
 $$
 
 $section Example Differentiating a Stack Machine Interpreter$$
-$mindex test$$
 
 
 $code

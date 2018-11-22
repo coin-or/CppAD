@@ -35,7 +35,6 @@ $spell
 $$
 
 $section adolc Speed: Sparse Jacobian$$
-$mindex link_sparse_jacobian speed$$
 
 
 $head Specifications$$

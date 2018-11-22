@@ -27,7 +27,6 @@ $spell
 $$
 
 $section Getting Started Using CppAD to Compute Derivatives$$
-$mindex simple example start$$
 
 $head Purpose$$
 Demonstrate the use of CppAD by computing the derivative

@@ -16,7 +16,6 @@ $spell
 $$
 
 $section Logarithm Function Reverse Mode Theory$$
-$mindex log1p$$
 
 We use the reverse theory
 $cref%standard math function

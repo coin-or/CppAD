@@ -22,7 +22,6 @@ $spell
 $$
 
 $section Taylor's Ode Solver: An Example and Test$$
-$mindex Taylor$$
 
 $head Purpose$$
 This example uses the method described in $cref taylor_ode$$

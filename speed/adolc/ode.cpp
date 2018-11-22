@@ -26,7 +26,6 @@ $spell
 $$
 
 $section Adolc Speed: Ode$$
-$mindex link_ode speed$$
 
 
 $head Specifications$$

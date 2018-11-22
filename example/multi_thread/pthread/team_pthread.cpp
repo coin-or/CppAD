@@ -18,7 +18,6 @@ $$
 
 
 $section Pthread Implementation of a Team of AD Threads$$
-$mindex pthread_exit$$
 See $cref team_thread.hpp$$ for this routines specifications.
 
 $head Bug in Cygwin$$

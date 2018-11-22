@@ -20,7 +20,6 @@ $spell
 $$
 
 $section Reverse Mode Jacobian Sparsity: Example and Test$$
-$mindex RevSparseJac sparsity$$
 
 
 $code

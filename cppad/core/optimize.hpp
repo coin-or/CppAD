@@ -30,7 +30,6 @@ $spell
 $$
 
 $section Optimize an ADFun Object Tape$$
-$mindex sequence operations speed memory NDEBUG$$
 
 
 $head Syntax$$

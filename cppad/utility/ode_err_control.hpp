@@ -40,7 +40,6 @@ $$
 
 
 $section An Error Controller for ODE Solvers$$
-$mindex OdeErrControl differential equation$$
 
 $head Syntax$$
 $codei%# include <cppad/utility/ode_err_control.hpp>

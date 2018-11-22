@@ -14,7 +14,6 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 $begin sub.cpp$$
 
 $section AD Binary Subtraction: Example and Test$$
-$mindex - subtract minus$$
 
 
 $code

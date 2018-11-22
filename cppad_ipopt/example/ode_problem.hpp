@@ -21,7 +21,6 @@ $spell
 $$
 
 $section ODE Inverse Problem Definitions: Source Code$$
-$mindex example$$
 
 
 

@@ -18,7 +18,6 @@ $spell
 $$
 
 $section A Simple Boost Threading AD: Example and Test$$
-$mindex thread AD$$
 
 
 $head Purpose$$

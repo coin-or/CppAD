@@ -29,7 +29,6 @@ $$
 
 
 $section Using The CppAD Test Vector Template Class$$
-$mindex CPPAD_TESTVECTOR$$
 
 $head Syntax$$
 $codei%CPPAD_TESTVECTOR(%Scalar%)

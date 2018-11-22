@@ -29,7 +29,6 @@ $spell
 $$
 
 $section CppAD pkg-config Files$$
-$mindex pc$$
 
 $head Purpose$$
 The $code pkg-config$$ package helps with the use of installed libraries;

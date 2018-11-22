@@ -22,7 +22,6 @@ $spell
 $$
 
 $section Multi-dimensional Romberg Integration$$
-$mindex integrate multi dimensional dimension$$
 
 
 $head Syntax$$

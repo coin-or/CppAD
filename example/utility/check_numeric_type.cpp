@@ -14,7 +14,6 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 $begin check_numeric_type.cpp$$
 
 $section The CheckNumericType Function: Example and Test$$
-$mindex check NumericType$$
 
 $code
 $srcfile%example/utility/check_numeric_type.cpp%0%// BEGIN C++%// END C++%1%$$

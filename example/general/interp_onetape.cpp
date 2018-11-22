@@ -18,7 +18,6 @@ $spell
 $$
 
 $section Interpolation With Out Retaping: Example and Test$$
-$mindex interpolate tape retape$$
 
 
 $head See Also$$

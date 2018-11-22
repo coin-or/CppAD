@@ -20,7 +20,6 @@ $$
 
 
 $section Speed Testing Gradient of Determinant by Minor Expansion$$
-$mindex link_det_minor test$$
 
 $head Prototype$$
 $codei%extern bool link_det_minor(

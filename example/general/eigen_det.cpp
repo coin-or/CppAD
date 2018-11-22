@@ -17,7 +17,6 @@ $spell
 $$
 
 $section Using Eigen To Compute Determinant: Example and Test$$
-$mindex determinant$$
 
 
 $code

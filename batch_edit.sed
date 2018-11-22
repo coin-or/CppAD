@@ -1,7 +1,6 @@
 # -----------------------------------------------------------------------------
 # Plan for batch edit of all files:
 # 1. Do not update copyright date when do this edit
-# 4. Remove all omhelp index commands.
 # 5. Change: $code $srcfile ...$$ $$ -> $srcfile ... $$
 # 6. Convert tabs to spaces.
 # 7. Change CPPAD_TESTVECTOR to a template type (see Eigen entry in wishlist).
@@ -17,7 +16,6 @@
 # 19. Create check_sort.sh and use it to sort all alphabetical lists.
 # 21. Move test_more -> test.
 # 22. Move cppad -> include/cppad.
-# 23. Convert all $xref commands -> $cref commands.
 # 24. Move whats_new/whats_new_yy.omh -> whats_new/yyyy.omh
 # ----------------------------------------------------------------------------
 # list of directories that are added to the repository by batch_edit.sh

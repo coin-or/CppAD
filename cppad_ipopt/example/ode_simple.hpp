@@ -21,7 +21,6 @@ $spell
 $$
 
 $section ODE Fitting Using Simple Representation$$
-$mindex cppad_ipopt_nlp example source$$
 
 
 $code

@@ -18,7 +18,6 @@ $spell
 $$
 
 $section CppAD::vectorBool Class: Example and Test$$
-$mindex bool vectorBool CppAD$$
 
 
 $code

@@ -27,7 +27,6 @@ $spell
 $$
 
 $section Fadbad Speed: Gradient of Determinant by Minor Expansion$$
-$mindex link_det_minor speed$$
 
 
 $head Specifications$$

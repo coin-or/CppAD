@@ -18,7 +18,6 @@ $$
 
 
 $section Run the Speed Examples$$
-$mindex program$$
 
 $head Running Tests$$
 To build this program and run its correctness tests see $cref cmake_check$$.

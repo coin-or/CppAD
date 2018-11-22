@@ -37,7 +37,6 @@ $spell
 $$
 
 $section CppAD Speed: Sparse Jacobian$$
-$mindex link_sparse_jacobian speed$$
 
 
 $head Specifications$$

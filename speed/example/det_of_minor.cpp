@@ -18,7 +18,6 @@ $spell
 $$
 
 $section Determinant of a Minor: Example and Test$$
-$mindex det_of_minor$$
 
 
 $code

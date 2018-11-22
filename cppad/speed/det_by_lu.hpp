@@ -27,7 +27,6 @@ $spell
 $$
 
 $section Determinant Using Expansion by Lu Factorization$$
-$mindex det_by_lu factor$$
 
 
 $head Syntax$$

@@ -17,7 +17,6 @@ $spell
 $$
 
 $section A Stiff Ode: Example and Test$$
-$mindex ode$$
 
 
 Define

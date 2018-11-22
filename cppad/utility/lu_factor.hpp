@@ -30,7 +30,6 @@ $$
 
 
 $section LU Factorization of A Square Matrix$$
-$mindex LuFactor linear equation solve$$
 
 $pre
 $$

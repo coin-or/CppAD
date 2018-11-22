@@ -20,7 +20,6 @@ $spell
 $$
 
 $section Check NumericType Class Concept$$
-$mindex numeric CheckNumericType$$
 
 
 $head Syntax$$

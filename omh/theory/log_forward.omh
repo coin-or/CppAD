@@ -16,7 +16,6 @@ $spell
 $$
 
 $section Logarithm Function Forward Mode Theory$$
-$mindex log1p$$
 
 $head Derivatives$$
 If $latex F(x)$$ is $latex \R{log} (x)$$ or $latex \R{log1p} (x)$$

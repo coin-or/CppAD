@@ -22,7 +22,6 @@ $spell
 $$
 
 $section OpenMP Parallel Setup$$
-$mindex omp_max_thread$$
 
 $head Deprecated 2011-06-23$$
 Use $cref/thread_alloc::parallel_setup/ta_parallel_setup/$$

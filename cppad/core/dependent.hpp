@@ -25,7 +25,6 @@ $spell
 $$
 
 $section Stop Recording and Store Operation Sequence$$
-$mindex ADFun tape Dependent$$
 
 
 $head Syntax$$

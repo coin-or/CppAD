@@ -34,7 +34,6 @@ $spell
 $$
 
 $section User Defined Atomic AD Functions$$
-$mindex operation old_atomic$$
 
 $head Deprecated 2013-05-27$$
 Using $code CPPAD_USER_ATOMIC$$ has been deprecated.

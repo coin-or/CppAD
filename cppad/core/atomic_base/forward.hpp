@@ -31,7 +31,6 @@ $spell
 $$
 
 $section Atomic Forward Mode$$
-$mindex callback virtual$$
 
 
 $head Syntax$$

@@ -18,7 +18,6 @@ $spell
 $$
 
 $section A Simple OpenMP Example and Test$$
-$mindex A.1.1c thread$$
 
 $head Purpose$$
 This example just demonstrates OpenMP and does not use CppAD at all.

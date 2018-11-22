@@ -19,7 +19,6 @@ $spell
 $$
 
 $section Free Static Variables$$
-$mindex clear$$
 
 $head Syntax$$
 $codei%atomic_base<%Base%>::clear()%$$

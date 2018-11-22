@@ -24,7 +24,6 @@ $$
 
 
 $section The Integer Power Function$$
-$mindex pow exponent$$
 
 $head Syntax$$
 $codei%# include <cppad/utility/pow_int.hpp>

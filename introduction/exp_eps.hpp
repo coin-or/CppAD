@@ -24,7 +24,6 @@ $spell
 $$
 
 $section An Epsilon Accurate Exponential Approximation$$
-$mindex exp_eps example algorithm$$
 
 
 $head Syntax$$

@@ -12,7 +12,6 @@ CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 $begin atomic$$
 
 $section Atomic AD Functions$$
-$mindex operation$$
 
 $childtable%
 	cppad/core/checkpoint.hpp%

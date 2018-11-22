@@ -27,7 +27,6 @@ $spell
 $$
 
 $section Evaluate a Function That Has a Sparse Hessian$$
-$mindex sparse_hes_fun$$
 
 
 $head Syntax$$

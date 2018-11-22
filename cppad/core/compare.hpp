@@ -25,7 +25,6 @@ $$
 
 
 $section AD Binary Comparison Operators$$
-$mindex compare < <= > >= == !=$$
 
 
 $head Syntax$$

@@ -344,10 +344,10 @@ $lend
 $head 05-17$$
 $list number$$
 Add the $cref/transpose/ForSparseJac/transpose/$$ option to
-$cref/ForSparseJac/$$.
+$cref ForSparseJac$$.
 $lnext
 Add the $cref/transpose/RevSparseHes/transpose/$$ option to
-$cref/RevSparseHes/$$.
+$cref RevSparseHes$$.
 $lend
 
 $head 05-15$$
@@ -366,7 +366,7 @@ was not equal to $icode m$$ (range dimension) and sparsity pattern was a
 vector of $code bool$$.
 $lnext
 Add the $cref/transpose/RevSparseJac/transpose/$$ option to
-$cref/RevSparseJac/$$.
+$cref RevSparseJac$$.
 $lend
 
 $head 05-12$$

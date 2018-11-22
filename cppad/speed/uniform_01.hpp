@@ -21,7 +21,6 @@ $spell
 $$
 
 $section Simulate a [0,1] Uniform Random Variate$$
-$mindex uniform_01$$
 
 
 $head Syntax$$

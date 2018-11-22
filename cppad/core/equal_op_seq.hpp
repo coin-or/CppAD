@@ -23,7 +23,6 @@ $$
 
 
 $section Check if Two Value are Identically Equal$$
-$mindex EqualOpSeq operation sequence$$
 
 $head Syntax$$
 $icode%b% = EqualOpSeq(%x%, %y%)%$$

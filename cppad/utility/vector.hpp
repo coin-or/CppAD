@@ -32,7 +32,6 @@ $$
 
 
 $section The CppAD::vector Template Class$$
-$mindex vector CppAD [] push thread_alloc$$
 
 $head Syntax$$
 $codei%# include <cppad/utility/vector.hpp>%$$

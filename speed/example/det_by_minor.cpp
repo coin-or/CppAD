@@ -17,7 +17,6 @@ $spell
 $$
 
 $section Determinant Using Expansion by Minors: Example and Test$$
-$mindex minors$$
 
 $code
 $srcfile%speed/example/det_by_minor.cpp%0%// BEGIN C++%// END C++%1%$$

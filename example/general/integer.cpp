@@ -18,7 +18,6 @@ $spell
 $$
 
 $section Convert From AD to Integer: Example and Test$$
-$mindex Integer$$
 
 
 $code

@@ -36,7 +36,6 @@ $spell
 $$
 
 $section CppAD Speed: Second Derivative of a Polynomial$$
-$mindex link_poly speed$$
 
 
 $head Specifications$$

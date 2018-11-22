@@ -23,7 +23,6 @@ $$
 
 
 $section AD Output Stream Operator$$
-$mindex >> input write$$
 
 $head Syntax$$
 $icode%is% >> %x%$$
@@ -92,7 +91,6 @@ $$
 
 
 $section AD Output Stream Operator$$
-$mindex <<$$
 
 $head Syntax$$
 $icode%os% << %x%$$

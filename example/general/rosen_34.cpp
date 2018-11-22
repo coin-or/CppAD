@@ -17,7 +17,6 @@ $spell
 $$
 
 $section Rosen34: Example and Test$$
-$mindex Rosen34$$
 
 
 Define

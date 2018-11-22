@@ -17,7 +17,6 @@ $spell
 $$
 
 $section Complex Polynomial: Example and Test$$
-$mindex polynomial$$
 
 
 $head Poly$$

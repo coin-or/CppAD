@@ -414,7 +414,6 @@ $spell
 	bool
 $$
 $section Setup thread_alloc For Use in Multi-Threading Environment$$
-$mindex parallel initialize$$
 
 
 
@@ -605,7 +604,6 @@ $end
 $begin ta_in_parallel$$
 
 $section Is The Current Execution in Parallel Mode$$
-$mindex sequential$$
 $spell
 	thread_alloc
 	bool
@@ -684,7 +682,6 @@ $spell
 $$
 
 $section Get At Least A Specified Amount of Memory$$
-$mindex allocate$$
 
 
 $head Syntax$$
@@ -880,7 +877,6 @@ $spell
 $$
 
 $section Return Memory to thread_alloc$$
-$mindex return_memory available$$
 
 
 $head Syntax$$
@@ -1011,7 +1007,6 @@ $spell
 $$
 
 $section Free Memory Currently Available for Quick Use by a Thread$$
-$mindex free_available$$
 $spell
 	inuse
 $$
@@ -1100,7 +1095,6 @@ $spell
 $$
 
 $section Control When Thread Alloc Retains Memory For Future Use$$
-$mindex hold$$
 
 $head Syntax$$
 $codei%thread_alloc::hold_memory(%value%)%$$
@@ -1147,7 +1141,6 @@ $spell
 $$
 
 $section Amount of Memory a Thread is Currently Using$$
-$mindex inuse$$
 
 
 $head Syntax$$
@@ -1264,7 +1257,6 @@ $spell
 $$
 
 $section Allocate An Array and Call Default Constructor for its Elements$$
-$mindex create_array$$
 
 
 $head Syntax$$
@@ -1383,7 +1375,6 @@ $spell
 $$
 
 $section Deallocate An Array and Call Destructor for its Elements$$
-$mindex delete_array$$
 
 
 $head Syntax$$

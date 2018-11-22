@@ -21,7 +21,6 @@ $spell
 $$
 
 $section Forward Mode Hessian Sparsity: Example and Test$$
-$mindex ForSparseHes sparsity$$
 
 
 $code

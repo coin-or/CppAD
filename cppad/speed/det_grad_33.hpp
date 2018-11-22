@@ -24,7 +24,6 @@ $spell
 $$
 
 $section Check Gradient of Determinant of 3 by 3 matrix$$
-$mindex det_grad_33 correct$$
 
 
 $head Syntax$$

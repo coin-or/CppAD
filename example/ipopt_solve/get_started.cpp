@@ -20,7 +20,6 @@ $spell
 $$
 
 $section Nonlinear Programming Using CppAD and Ipopt: Example and Test$$
-$mindex ipopt AD$$
 
 $head Purpose$$
 This example program demonstrates how to use $cref ipopt_solve$$ to

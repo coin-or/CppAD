@@ -22,7 +22,6 @@ $$
 
 
 $section Number of Variables that Can be Skipped$$
-$mindex number_skip$$
 
 $head Syntax$$
 $icode%n% = %f%.number_skip()%$$

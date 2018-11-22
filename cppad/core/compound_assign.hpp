@@ -22,7 +22,6 @@ $spell
 $$
 
 $section AD Compound Assignment Operators$$
-$mindex + add plus - subtract minus * multiply times / divide multiple$$
 
 
 

@@ -18,7 +18,6 @@ $spell
 $$
 
 $section The Pow Integer Exponent: Example and Test$$
-$mindex int$$
 
 
 $code

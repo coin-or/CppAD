@@ -32,7 +32,6 @@ $$
 
 
 $section AD Vectors that Record Index Operations$$
-$mindex VecAD tape reference VecAD<Base>$$
 
 
 $head Syntax$$

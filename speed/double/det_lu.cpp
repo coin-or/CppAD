@@ -22,7 +22,6 @@ $spell
 $$
 
 $section Double Speed: Determinant Using Lu Factorization$$
-$mindex link_det_lu speed matrix factor$$
 
 
 $head Specifications$$

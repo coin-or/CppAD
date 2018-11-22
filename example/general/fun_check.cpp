@@ -18,7 +18,6 @@ $spell
 $$
 
 $section ADFun Check and Re-Tape: Example and Test$$
-$mindex FunCheck Dependent$$
 
 
 

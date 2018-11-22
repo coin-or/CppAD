@@ -22,7 +22,6 @@ $$
 
 
 $section Speed Testing Sparse Hessian$$
-$mindex link_sparse_hessian test$$
 
 $head Prototype$$
 $codei%extern bool link_sparse_hessian(

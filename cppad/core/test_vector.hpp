@@ -31,7 +31,6 @@ $$
 
 
 $section Choosing The Vector Testing Template Class$$
-$mindex CPPAD_TEST_VECTOR test$$
 
 $head Deprecated 2012-07-03$$
 The $code CPPAD_TEST_VECTOR$$ macro has been deprecated,

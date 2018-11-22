@@ -18,7 +18,6 @@ $spell
 $$
 
 $section Fast Multi-Threading Memory Allocator: Example and Test$$
-$mindex openmp allocation pthread boost multi-thread$$
 
 
 $code

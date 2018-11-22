@@ -17,7 +17,6 @@ $spell
 $$
 
 $section Using Eigen Arrays: Example and Test$$
-$mindex array$$
 
 
 $code

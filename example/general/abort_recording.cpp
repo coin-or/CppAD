@@ -16,7 +16,6 @@ $spell
 $$
 
 $section Abort Current Recording: Example and Test$$
-$mindex recording$$
 
 
 $code

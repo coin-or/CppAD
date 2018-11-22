@@ -17,7 +17,6 @@ $spell
 $$
 
 $section Controlling Taylor Coefficient Memory Allocation: Example and Test$$
-$mindex capacity_order$$
 
 
 $code

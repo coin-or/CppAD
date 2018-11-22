@@ -21,7 +21,6 @@ $$
 
 
 $section Speed Testing Second Derivative of a Polynomial$$
-$mindex link_poly test$$
 
 $head Prototype$$
 $codei%extern bool link_poly(

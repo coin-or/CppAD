@@ -14,7 +14,6 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 $begin TrackNewDel.cpp$$
 
 $section Tracking Use of New and Delete: Example and Test$$
-$mindex delete$$
 
 
 

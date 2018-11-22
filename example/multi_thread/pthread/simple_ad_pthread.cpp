@@ -18,7 +18,6 @@ $spell
 $$
 
 $section A Simple pthread AD: Example and Test$$
-$mindex AD$$
 
 
 $head Purpose$$

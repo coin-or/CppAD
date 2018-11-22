@@ -17,7 +17,6 @@ $spell
 $$
 
 $section CompareChange and Re-Tape: Example and Test$$
-$mindex compare change re-tape$$
 
 
 $code

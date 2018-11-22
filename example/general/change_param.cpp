@@ -19,7 +19,6 @@ $spell
 $$
 
 $section Computing a Jacobian With Constants that Change$$
-$mindex multiple AD level$$
 
 $head Purpose$$
 In this example we use two levels of taping so that a derivative

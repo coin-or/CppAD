@@ -14,7 +14,6 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 $begin check_simple_vector.cpp$$
 
 $section The CheckSimpleVector Function: Example and Test$$
-$mindex check SimpleVector$$
 
 $code
 $srcfile%example/utility/check_simple_vector.cpp%0%// BEGIN C++%// END C++%1%$$
