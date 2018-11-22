@@ -73,7 +73,7 @@ fi
 original_dir=`pwd`
 # ---------------------------------------------------------------------------
 # initialize
-include_flags="-I $original_dir"
+include_flags="-I $original_dir/include"
 library_flags="-lpthread"
 #
 # adolc

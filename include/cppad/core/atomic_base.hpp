@@ -93,16 +93,16 @@ $head Examples$$
 See $cref atomic_example$$.
 
 $childtable%
-	cppad/core/atomic_base/ctor.hpp%
-	cppad/core/atomic_base/option.hpp%
-	cppad/core/atomic_base/afun.hpp%
-	cppad/core/atomic_base/forward.hpp%
-	cppad/core/atomic_base/reverse.hpp%
-	cppad/core/atomic_base/for_sparse_jac.hpp%
-	cppad/core/atomic_base/rev_sparse_jac.hpp%
-	cppad/core/atomic_base/for_sparse_hes.hpp%
-	cppad/core/atomic_base/rev_sparse_hes.hpp%
-	cppad/core/atomic_base/clear.hpp
+	include/cppad/core/atomic_base/ctor.hpp%
+	include/cppad/core/atomic_base/option.hpp%
+	include/cppad/core/atomic_base/afun.hpp%
+	include/cppad/core/atomic_base/forward.hpp%
+	include/cppad/core/atomic_base/reverse.hpp%
+	include/cppad/core/atomic_base/for_sparse_jac.hpp%
+	include/cppad/core/atomic_base/rev_sparse_jac.hpp%
+	include/cppad/core/atomic_base/for_sparse_hes.hpp%
+	include/cppad/core/atomic_base/rev_sparse_hes.hpp%
+	include/cppad/core/atomic_base/clear.hpp
 %$$
 
 $end

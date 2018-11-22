@@ -17,7 +17,7 @@ then
 	mkdir build
 fi
 cd build
-if [ ! -e ../../cppad/configure.hpp ]
+if [ ! -e ../../include/cppad/configure.hpp ]
 then
 	cmake ../..
 fi

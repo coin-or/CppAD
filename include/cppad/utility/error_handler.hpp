@@ -111,7 +111,7 @@ It reports the meaning of the error from the C++ programmers point of view.
 
 $children%
 	example/utility/error_handler.cpp%
-	cppad/core/cppad_assert.hpp
+	include/cppad/core/cppad_assert.hpp
 %$$
 $head Example$$
 The file

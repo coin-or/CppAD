@@ -25,7 +25,7 @@ $italic Solving piecewise linear systems in abs-normal form$$,
 Linear Algebra and its Applications,
 vol. 471 (2015), pages 500-530.
 
-$childtable%cppad/core/abs_normal_fun.hpp
+$childtable%include/cppad/core/abs_normal_fun.hpp
 	%example/abs_normal/abs_print_mat.hpp
 	%example/abs_normal/abs_eval.hpp
 	%example/abs_normal/simplex_method.hpp

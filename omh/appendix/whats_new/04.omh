@@ -832,7 +832,7 @@ $pre
 
 $$
 Split all of the "example" and "test" index entries that come from
-$codei%cppad/example/%*%.cpp%$$
+$codei%include/cppad/example/%*%.cpp%$$
 into sorted subheadings.
 
 $head 03-05$$

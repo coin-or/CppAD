@@ -56,8 +56,8 @@ the examples.
 $contents%
 	example/get_started/get_started.cpp%
 	omh/example_list.omh%
-	cppad/core/testvector.hpp%
-	cppad/wno_conversion.hpp
+	include/cppad/core/testvector.hpp%
+	include/cppad/wno_conversion.hpp
 %$$
 
 

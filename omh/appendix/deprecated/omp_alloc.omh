@@ -12,7 +12,7 @@ CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 $begin omp_alloc$$
 $spell
 	openmp
-	cppad/utility/omp_alloc.hpp
+	include/cppad/utility/omp_alloc.hpp
 	CppAD
 $$
 
@@ -42,7 +42,7 @@ $head Deprecated 2011-08-23$$
 Use $cref thread_alloc$$ instead.
 
 $childtable%
-	cppad/utility/omp_alloc.hpp%
+	include/cppad/utility/omp_alloc.hpp%
 	example/deprecated/omp_alloc.cpp
 %$$
 

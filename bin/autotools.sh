@@ -59,7 +59,7 @@ version=`version.sh get`
 #
 # Files are created by the configure command and copied to the source tree
 configure_file_list="
-	cppad/configure.hpp
+	include/cppad/configure.hpp
 "
 # -----------------------------------------------------------------------------
 if [ "$option" = "automake" ]

@@ -30,7 +30,7 @@ $childtable%
 	example/general/ad_fun.cpp%
 	example/general/ad_in_c.cpp%
 	example/sparse/conj_grad.cpp%
-	cppad/example/cppad_eigen.hpp %
+	include/cppad/example/cppad_eigen.hpp %
 	example/general/hes_minor_det.cpp%
 	example/general/hes_lu_det.cpp%
 	example/general/interface2c.cpp%

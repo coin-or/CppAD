@@ -79,7 +79,7 @@ The following routine cannot be called in parallel mode:
 $cref/ErrorHandler constructor/ErrorHandler/Constructor/Parallel Mode/$$.
 
 $childtable%
-	cppad/core/parallel_ad.hpp%
+	include/cppad/core/parallel_ad.hpp%
 	example/multi_thread/thread_test.cpp
 %$$
 

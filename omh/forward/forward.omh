@@ -21,8 +21,8 @@ $childtable%
 	omh/forward/forward_dir.omh%
 	omh/forward/size_order.omh%
 	omh/forward/compare_change.omh%
-	cppad/core/capacity_order.hpp%
-	cppad/core/num_skip.hpp
+	include/cppad/core/capacity_order.hpp%
+	include/cppad/core/num_skip.hpp
 %$$
 
 $end

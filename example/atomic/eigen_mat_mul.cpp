@@ -41,7 +41,7 @@ f(x) =
 \] $$
 
 $children%
-	cppad/example/eigen_mat_mul.hpp
+	include/cppad/example/eigen_mat_mul.hpp
 %$$
 
 $head Class Definition$$

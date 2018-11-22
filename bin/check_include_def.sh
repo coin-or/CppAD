@@ -19,7 +19,7 @@ fi
 echo "Differences between include file names and ifndef at top directives."
 echo "Also make sure same ifndef not used by two different files."
 echo "-------------------------------------------------------------------"
-list=`git ls-files | sed -n -e '/^cppad\/deprecated\//d' -e '/\.hpp$/p'`
+list=`git ls-files | sed -n -e '/\.hpp$/p'`
 different='no'
 for file_name in $list
 do
@@ -31,8 +31,10 @@ do
 		sed -e 's|^# *ifndef *||'`
 	check=`echo $file_name | tr [a-zA-Z/.] [A-Za-z__]`
 	#
-	if [ "$first_dir" != 'cppad' ]
+	if [ "$first_dir" == 'include' ]
 	then
+		check=`echo $check | sed -e 's|INCLUDE_||'`
+	else
 		check="CPPAD_$check"
 	fi
 	#

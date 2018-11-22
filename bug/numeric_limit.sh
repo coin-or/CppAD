@@ -10,7 +10,7 @@
 # in the Eclipse Public License, Version 2.0 are satisfied:
 #            GNU General Public License, Version 3.0.
 # -----------------------------------------------------------------------------
-if [ ! -e ../cppad/configure.hpp ]
+if [ ! -e ../include/cppad/configure.hpp ]
 then
 	echo 'numeric_limits.sh: must first run bin/run_cmake.sh'
 	echo 'from parent directory.'

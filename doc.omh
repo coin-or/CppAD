@@ -240,12 +240,12 @@ which ensures that they work properly.
 $children%
 	omh/install/install.omh%
 	omh/theory/theory.omh%
-	cppad/core/user_ad.hpp%
-	cppad/core/ad_fun.hpp%
+	include/cppad/core/user_ad.hpp%
+	include/cppad/core/ad_fun.hpp%
 	omh/preprocessor.omh%
 	omh/multi_thread.omh%
 	omh/utility.omh%
-	cppad/ipopt/solve.hpp%
+	include/cppad/ipopt/solve.hpp%
 	omh/example.omh%
 	omh/speed/speed.omh%
 	omh/appendix.omh

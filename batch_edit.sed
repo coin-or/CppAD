@@ -15,10 +15,10 @@
 # 18. Change template <class *> -> template <typename *>.
 # 19. Create check_sort.sh and use it to sort all alphabetical lists.
 # 21. Move test_more -> test.
-# 22. Move cppad -> include/cppad.
 # ----------------------------------------------------------------------------
 # list of directories that are added to the repository by batch_edit.sh
 # new_directories='
+#	include
 # '
 # list of files that are deleted by batch_edit.sh
 # delete_files='
@@ -29,26 +29,11 @@
 # '
 # list of files and or directories that are moved to new names
 # move_paths='
-#	omh/appendix/whats_new/whats_new_03.omh
-#	omh/appendix/whats_new/whats_new_04.omh
-#	omh/appendix/whats_new/whats_new_05.omh
-#	omh/appendix/whats_new/whats_new_06.omh
-#	omh/appendix/whats_new/whats_new_07.omh
-#	omh/appendix/whats_new/whats_new_08.omh
-#	omh/appendix/whats_new/whats_new_09.omh
-#	omh/appendix/whats_new/whats_new_10.omh
-#	omh/appendix/whats_new/whats_new_11.omh
-#	omh/appendix/whats_new/whats_new_12.omh
-#	omh/appendix/whats_new/whats_new_13.omh
-#	omh/appendix/whats_new/whats_new_14.omh
-#	omh/appendix/whats_new/whats_new_15.omh
-#	omh/appendix/whats_new/whats_new_16.omh
-#	omh/appendix/whats_new/whats_new_17.omh
-#	omh/appendix/whats_new/whats_new_18.omh
+#	cppad
 # '
 # sed command that maps old file and or directory names to new file names
 # move_sed='
-#	s|whats_new_\([0-9][0-9]\).omh|\1.omh|
+#	s|cppad|include|
 # '
 # list of files that get edited by the extra_sed command
 # extra_files='
@@ -59,4 +44,7 @@
 # '
 # ----------------------------------------------------------------------------
 # Put other sed commands below here and without # at start of line
-s|whats_new_\([0-9][0-9]\).omh|\1.omh|g
+s|^/cppad/|/include/cppad/|
+s|/^cppad\\/|/^include\\/cppad\\/|
+s|\([^a-z][/]\)cppad/|\1include/cppad/|
+s|%cppad/|%include/cppad/|

@@ -27,7 +27,7 @@ done
 echo 'Check '# define' versus '# undef' names and check for addon names'
 echo '-----------------------------------------------------------------------'
 file_list=`git ls-files '*.hpp' '*.in' |
-	sed -n -e '/^cppad\//p'`
+	sed -n -e '/^include\/cppad\//p'`
 add_on_list='CG PY TMB MIXED'
 #
 # preprocessor symbol that may or may not be defined by user
@@ -36,6 +36,7 @@ echo 'CPPAD_DEBUG_AND_RELEASE' > check_define.1
 for file in $file_list
 do
 		include_guard=`echo $file | sed \
+			-e 's|^include/||' \
 			-e 's|\.in||' \
 			-e 's|/|_|g' \
 			-e 's|\.hpp|_hpp|' \
@@ -70,13 +71,6 @@ do
 	sort -u $file > check_define.3
 	mv check_define.3 $file
 done
-echo '-----------------------------------------------------------------------'
-if [ "$add_on_error" == 'true' ]
-then
-	echo 'check_define.sh: Error: add_on preprocessor symbol found'
-	rm check_define.1 check_define.2
-	exit 1
-fi
 if ! diff check_define.1 check_define.2
 then
 	echo 'check_define.sh: Error: defines and undefs do not match'
@@ -84,5 +78,11 @@ then
 	exit 1
 fi
 rm check_define.1 check_define.2
+echo '-----------------------------------------------------------------------'
+if [ "$add_on_error" == 'true' ]
+then
+	echo 'check_define.sh: Error: add_on preprocessor symbol found'
+	exit 1
+fi
 echo 'check_define.sh: OK'
 exit 0

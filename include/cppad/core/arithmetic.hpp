@@ -25,10 +25,10 @@ $$
 $section AD Arithmetic Operators and Compound Assignments$$
 
 $childtable%
-	cppad/core/unary_plus.hpp%
-	cppad/core/unary_minus.hpp%
-	cppad/core/ad_binary.hpp%
-	cppad/core/compound_assign.hpp
+	include/cppad/core/unary_plus.hpp%
+	include/cppad/core/unary_minus.hpp%
+	include/cppad/core/ad_binary.hpp%
+	include/cppad/core/compound_assign.hpp
 %$$
 
 $end

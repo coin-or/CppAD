@@ -576,7 +576,7 @@ $codei%
 	Error detected by false result for
 		IdenticalCon(%side%)
     at line %number% in the file
-		%...%/cppad/local/cskip_op.hpp
+		%...%/include/cppad/local/cskip_op.hpp
 %$$
 where $icode side$$ was $code left$$ or $code right$$
 and $icode number$$ was the line number of an assert in $code cskip_op.hpp$$.

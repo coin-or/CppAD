@@ -27,13 +27,13 @@ INCLUDE_DIRECTORIES( ${CMAKE_CURRENT_SOURCE_DIR}/../src )
 #                 source1 source2 ... sourceN
 # )
 SET(source_list ../main.cpp
-	../cppad/ode.cpp
-	../cppad/det_lu.cpp
-	../cppad/det_minor.cpp
-	../cppad/mat_mul.cpp
-	../cppad/poly.cpp
-	../cppad/sparse_hessian.cpp
-	../cppad/sparse_jacobian.cpp
+	../include/cppad/ode.cpp
+	../include/cppad/det_lu.cpp
+	../include/cppad/det_minor.cpp
+	../include/cppad/mat_mul.cpp
+	../include/cppad/poly.cpp
+	../include/cppad/sparse_hessian.cpp
+	../include/cppad/sparse_jacobian.cpp
 	../src/link_det_lu.cpp
 	../src/link_det_minor.cpp
 	../src/link_mat_mul.cpp

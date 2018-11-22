@@ -125,7 +125,7 @@ The routine $cref elapsed_seconds$$ will be used to determine the
 amount of time it took to execute the test.
 
 $children%
-	cppad/utility/elapsed_seconds.hpp%
+	include/cppad/utility/elapsed_seconds.hpp%
 	speed/example/time_test.cpp
 %$$
 $head Example$$

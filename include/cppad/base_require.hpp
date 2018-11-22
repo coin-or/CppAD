@@ -143,13 +143,13 @@ $srccode%cpp% */
 
 $childtable%
 	omh/base_require/base_member.omh%
-	cppad/core/base_cond_exp.hpp%
+	include/cppad/core/base_cond_exp.hpp%
 	omh/base_require/base_identical.omh%
 	omh/base_require/base_ordered.omh%
-	cppad/core/base_std_math.hpp%
-	cppad/core/base_limits.hpp%
-	cppad/core/base_to_string.hpp%
-	cppad/core/base_hash.hpp%
+	include/cppad/core/base_std_math.hpp%
+	include/cppad/core/base_limits.hpp%
+	include/cppad/core/base_to_string.hpp%
+	include/cppad/core/base_hash.hpp%
 	omh/base_require/base_example.omh
 %$$
 

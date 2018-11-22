@@ -22,11 +22,11 @@ $$
 $section Bool Valued Operations and Functions with AD Arguments$$
 
 $children%
-	cppad/core/compare.hpp%
-	cppad/core/near_equal_ext.hpp%
-	cppad/core/bool_fun.hpp%
-	cppad/core/con_dyn_var.hpp%
-	cppad/core/equal_op_seq.hpp
+	include/cppad/core/compare.hpp%
+	include/cppad/core/near_equal_ext.hpp%
+	include/cppad/core/bool_fun.hpp%
+	include/cppad/core/con_dyn_var.hpp%
+	include/cppad/core/equal_op_seq.hpp
 %$$
 $table
 $rref Compare$$

@@ -25,7 +25,7 @@ $pre
 $$
 # define CPPAD_ODE_EVALUATE_HPP
 
-$srcfile%cppad/speed/ode_evaluate.hpp%0%// BEGIN C++%// END C++%$$
+$srcfile%include/cppad/speed/ode_evaluate.hpp%0%// BEGIN C++%// END C++%$$
 
 # endif
 $$

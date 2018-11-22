@@ -863,7 +863,7 @@ $pre
 
 $$
 The $codei%speed/%*%.hpp%$$ files have been moved to
-$codei%cppad/speed/%*%.hpp%$$ and the corresponding wish list
+$codei%include/cppad/speed/%*%.hpp%$$ and the corresponding wish list
 item has been removed.
 $pre
 

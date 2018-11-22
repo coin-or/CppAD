@@ -34,10 +34,10 @@ SET(cppad_description  "Differentiation of C++ Algorithms" )
 # project(projectname [CXX] [C] [Java])
 PROJECT(cppad)
 #
-# Add this directory to the list of C++ preprocessor include directories
-# for the entire project.
+# Add the include sub-directory to the list of C++ preprocessor
+# include directories for the entire project.
 # include_directories([AFTER|BEFORE] [SYSTEM] dir1 dir2 ...)
-INCLUDE_DIRECTORIES( ${cppad_SOURCE_DIR} )
+INCLUDE_DIRECTORIES( ${cppad_SOURCE_DIR}/include )
 #
 # =============================================================================
 # Some system cmake language extensions
@@ -318,7 +318,7 @@ ENDIF( cppad_has_ipopt )
 SET(check_depends "")
 #
 # directories with no check depends entries
-ADD_SUBDIRECTORY(cppad)
+ADD_SUBDIRECTORY(include/cppad)
 ADD_SUBDIRECTORY(pkgconfig)
 IF( cppad_has_colpack )
 	ADD_SUBDIRECTORY(cppad_lib)

@@ -16,9 +16,10 @@ then
 	exit 1
 fi
 echo "bin/check_op_code.sh: checking that op codes are in alphabetical order:"
+file='include/cppad/local/op_code.hpp'
 # ---------------------------------------------------------------------------
 # check enum list of codes are in alphabetical order
-sed -n -e '/^enum/,/^\tNumberOp  /p' cppad/local/op_code.hpp | sed \
+sed -n -e '/^enum/,/^\tNumberOp  /p' $file | sed \
 	-e '/^enum/d' \
 	-e '/^\tNumberOp  /d' \
 	-e 's/^[	]*//' \
@@ -34,7 +35,7 @@ then
 fi
 # -----------------------------------------------------------------------------
 # check NumArgTable
-sed -n -e '/NumArgTable\[\]/,/^[ \t]*};/p' cppad/local/op_code.hpp | \
+sed -n -e '/NumArgTable\[\]/,/^[ \t]*};/p' $file | \
 	sed \
 		-e '/NumArgTable\[\]/d' \
 		-e '/NumberOp.*not used/d' \
@@ -51,7 +52,7 @@ then
 fi
 # -----------------------------------------------------------------------------
 # check NumResTable (last line of NumResTable is not used)
-sed -n -e '/NumResTable\[\]/,/^[ \t]*};/p' cppad/local/op_code.hpp | \
+sed -n -e '/NumResTable\[\]/,/^[ \t]*};/p' $file | \
 	sed \
 		-e '/NumResTable\[\]/d' \
 		-e '/^[ \t]*};/d' \
@@ -69,7 +70,7 @@ then
 fi
 # -----------------------------------------------------------------------------
 # check OpNameTable
-sed -n -e '/const char \*OpNameTable\[\]/,/^[ \t]*};/p' cppad/local/op_code.hpp | \
+sed -n -e '/const char \*OpNameTable\[\]/,/^[ \t]*};/p' $file | \
 	sed \
 		-e '/OpNameTable\[\]/d' \
 		-e '/"Number".*not used/d' \

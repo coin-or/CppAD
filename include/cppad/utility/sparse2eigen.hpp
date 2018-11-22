@@ -31,7 +31,7 @@ $codei%# include <cppad/utility/sparse2eigen.hpp>
 $codei%sparse2eigen(%source%, %destination%)%$$
 
 $head Prototype$$
-$srcfile%cppad/utility/sparse2eigen.hpp%0
+$srcfile%include/cppad/utility/sparse2eigen.hpp%0
 	%// BEGIN_PROTOTYPE%// END_PROTOTYPE%
 1%$$
 

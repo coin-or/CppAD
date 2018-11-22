@@ -26,7 +26,7 @@ $pre
 $$
 # define CPPAD_LU_FACTOR_HPP
 
-$srcfile%cppad/utility/lu_factor.hpp%0%// BEGIN C++%// END C++%$$
+$srcfile%include/cppad/utility/lu_factor.hpp%0%// BEGIN C++%// END C++%$$
 
 # endif
 $$

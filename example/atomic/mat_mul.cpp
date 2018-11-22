@@ -22,7 +22,7 @@ $head See Also$$
 $cref atomic_eigen_mat_mul.cpp$$
 
 $children%
-	cppad/example/mat_mul.hpp
+	include/cppad/example/mat_mul.hpp
 %$$
 
 $head Class Definition$$

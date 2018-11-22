@@ -40,10 +40,10 @@ derivative values, and other values related to the corresponding function.
 
 $childtable%
 	omh/adfun.omh%
-	cppad/core/optimize.hpp%
+	include/cppad/core/optimize.hpp%
 	example/abs_normal/abs_normal.omh%
-	cppad/core/fun_check.hpp%
-	cppad/core/check_for_nan.hpp
+	include/cppad/core/fun_check.hpp%
+	include/cppad/core/check_for_nan.hpp
 %$$
 
 $end

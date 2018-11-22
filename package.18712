@@ -1,0 +1,10 @@
+/^commit/! b end
+N
+N
+N
+N
+/version 20181121/! b end
+s|\nAuthor:.*||
+s|commit *||
+p
+: end

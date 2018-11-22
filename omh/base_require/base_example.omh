@@ -16,10 +16,10 @@ $section Example AD Base Types That are not AD<OtherBase>$$
 $contents%
 	example/general/base_alloc.hpp%
 	example/general/base_require.cpp%
-	cppad/example/base_adolc.hpp%
-	cppad/core/base_float.hpp%
-	cppad/core/base_double.hpp%
-	cppad/core/base_complex.hpp
+	include/cppad/example/base_adolc.hpp%
+	include/cppad/core/base_float.hpp%
+	include/cppad/core/base_double.hpp%
+	include/cppad/core/base_complex.hpp
 %$$
 
 $end

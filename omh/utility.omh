@@ -35,38 +35,38 @@ $codep
 $$
 
 $children%
-	cppad/utility/error_handler.hpp%
+	include/cppad/utility/error_handler.hpp%
 
-	cppad/utility/near_equal.hpp%
-	cppad/utility/speed_test.hpp%
-	cppad/utility/time_test.hpp%
-	cppad/utility/test_boolofvoid.hpp%
+	include/cppad/utility/near_equal.hpp%
+	include/cppad/utility/speed_test.hpp%
+	include/cppad/utility/time_test.hpp%
+	include/cppad/utility/test_boolofvoid.hpp%
 
 	omh/numeric_type.omh%
-	cppad/utility/check_numeric_type.hpp%
+	include/cppad/utility/check_numeric_type.hpp%
 	omh/simple_vector.omh%
-	cppad/utility/check_simple_vector.hpp%
+	include/cppad/utility/check_simple_vector.hpp%
 
-	cppad/utility/nan.hpp%
-	cppad/utility/pow_int.hpp%
-	cppad/utility/poly.hpp%
+	include/cppad/utility/nan.hpp%
+	include/cppad/utility/pow_int.hpp%
+	include/cppad/utility/poly.hpp%
 	omh/lu_det_and_solve.omh%
-	cppad/utility/romberg_one.hpp%
-	cppad/utility/romberg_mul.hpp%
-	cppad/utility/runge_45.hpp%
-	cppad/utility/rosen_34.hpp%
-	cppad/utility/ode_err_control.hpp%
-	cppad/utility/ode_gear.hpp%
-	cppad/utility/ode_gear_control.hpp%
+	include/cppad/utility/romberg_one.hpp%
+	include/cppad/utility/romberg_mul.hpp%
+	include/cppad/utility/runge_45.hpp%
+	include/cppad/utility/rosen_34.hpp%
+	include/cppad/utility/ode_err_control.hpp%
+	include/cppad/utility/ode_gear.hpp%
+	include/cppad/utility/ode_gear_control.hpp%
 
-	cppad/utility/vector.hpp%
+	include/cppad/utility/vector.hpp%
 	omh/thread_alloc.omh%
-	cppad/utility/index_sort.hpp%
-	cppad/utility/to_string.hpp%
-	cppad/utility/set_union.hpp%
-	cppad/utility/sparse_rc.hpp%
-	cppad/utility/sparse_rcv.hpp%
-	cppad/utility/sparse2eigen.hpp
+	include/cppad/utility/index_sort.hpp%
+	include/cppad/utility/to_string.hpp%
+	include/cppad/utility/set_union.hpp%
+	include/cppad/utility/sparse_rc.hpp%
+	include/cppad/utility/sparse_rcv.hpp%
+	include/cppad/utility/sparse2eigen.hpp
 %$$
 
 $head Testing$$

@@ -26,7 +26,7 @@ $pre
 $$
 # define CPPAD_DET_OF_MINOR_HPP
 
-$srcfile%cppad/speed/det_of_minor.hpp%0%// BEGIN C++%// END C++%$$
+$srcfile%include/cppad/speed/det_of_minor.hpp%0%// BEGIN C++%// END C++%$$
 
 # endif
 $$

@@ -21,12 +21,12 @@ $$
 $section Conversion and I/O of AD Objects$$
 
 $children%
-	cppad/core/value.hpp%
-	cppad/core/integer.hpp%
-	cppad/core/ad_to_string.hpp%
-	cppad/core/ad_io.hpp%
-	cppad/core/print_for.hpp%
-	cppad/core/var2par.hpp
+	include/cppad/core/value.hpp%
+	include/cppad/core/integer.hpp%
+	include/cppad/core/ad_to_string.hpp%
+	include/cppad/core/ad_io.hpp%
+	include/cppad/core/print_for.hpp%
+	include/cppad/core/var2par.hpp
 %$$
 $table
 $rref Value$$

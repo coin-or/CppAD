@@ -45,13 +45,14 @@ cat check_include_file.1.$$ | \
 #
 # The files cppad/configure.hpp and cppad/local/is_pod.hpp
 # are not in git repository (build during configuration)
-git ls-files | sed -n -e '/cppad\/.*\.hpp$/p' | \
+git ls-files | sed -n -e '/include\/cppad\/.*\.hpp$/p' | \
 	sed \
-		-e '1,1s|^|cppad/configure.hpp\n|' \
-		-e '1,1s|^|cppad/local/is_pod.hpp\n|' \
-		-e '/cppad\/local\/prototype_op.hpp/d' \
-		-e '/cppad\/local\/optimize\/define_prototype.hpp/d' \
-		-e '/cppad\/example\/eigen_plugin.hpp/d' | \
+		-e '1,1s|^|include/cppad/configure.hpp\n|' \
+		-e '1,1s|^|include/cppad/local/is_pod.hpp\n|' \
+		-e '/include\/cppad\/local\/prototype_op.hpp/d' \
+		-e '/include\/cppad\/local\/optimize\/define_prototype.hpp/d' \
+		-e '/include\/cppad\/example\/eigen_plugin.hpp/d' | \
+	sed -e 's|^include/||' | \
 	sort -u > check_include_file.3.$$
 #
 different='no'

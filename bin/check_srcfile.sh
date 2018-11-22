@@ -29,7 +29,7 @@ p
 EOF
 special_case='
 bin/check_srcfile.sh
-cppad/core/cond_exp.hpp
+include/cppad/core/cond_exp.hpp
 introduction/exp_2.omh
 introduction/exp_eps.omh
 omh/appendix/license.omh

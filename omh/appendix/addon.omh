@@ -68,11 +68,11 @@ $head Include Files$$
 If $icode includedir$$ is the directory where the include files are installed,
 the file
 $codei%
-	%includedir%/cppad/%name%.hpp
+	%includedir%/include/cppad/%name%.hpp
 %$$
 and the directory
 $codei%
-	%includedir%/cppad/%name%
+	%includedir%/include/cppad/%name%
 %$$
 are reserved for use by the $icode name$$ addon.
 

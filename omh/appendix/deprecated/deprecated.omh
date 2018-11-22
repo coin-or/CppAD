@@ -25,15 +25,15 @@ $childtable%
 	omh/appendix/deprecated/include_deprecated.omh%
 	omh/appendix/deprecated/fun_deprecated.omh%
 	omh/appendix/deprecated/compare_change.omh%
-	cppad/core/omp_max_thread.hpp%
-	cppad/utility/track_new_del.hpp%
+	include/cppad/core/omp_max_thread.hpp%
+	include/cppad/utility/track_new_del.hpp%
 	omh/appendix/deprecated/omp_alloc.omh%
-	cppad/utility/memory_leak.hpp%
-	cppad/core/epsilon.hpp%
-	cppad/core/test_vector.hpp%
+	include/cppad/utility/memory_leak.hpp%
+	include/cppad/core/epsilon.hpp%
+	include/cppad/core/test_vector.hpp%
 	cppad_ipopt/src/cppad_ipopt_nlp.hpp%
-	cppad/core/old_atomic.hpp%
-	cppad/core/zdouble.hpp%
+	include/cppad/core/old_atomic.hpp%
+	include/cppad/core/zdouble.hpp%
 	omh/install/autotools.omh
 %$$
 

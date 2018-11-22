@@ -40,7 +40,7 @@ $latex x_0 > 0$$, $latex x_2 > 0$$ and
 $latex x_0 x_2 - x_1 x_1 > 0$$.
 
 $childtable%omh/theory/cholesky.omh
-	%cppad/example/eigen_cholesky.hpp
+	%include/cppad/example/eigen_cholesky.hpp
 %$$
 
 $head Use Atomic Function$$

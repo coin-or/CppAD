@@ -1176,7 +1176,7 @@ was added to the distribution.
 $head 01-07$$
 Change CppAD error handler from using the macros defined in
 $code cppad/CppADError.h$$ to using a class defined in
-$cref%cppad/utility/error_handler.hpp%ErrorHandler%$$.
+$cref%include/cppad/utility/error_handler.hpp%ErrorHandler%$$.
 The macros $code CppADUnknownError$$ and $code CppADUsageError$$
 have been deprecated (they are temporarily still available in the
 file $code cppad/local/CppADError.h$$).

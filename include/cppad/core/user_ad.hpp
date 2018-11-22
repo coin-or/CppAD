@@ -47,13 +47,13 @@ Otherwise, see $cref base_require$$.
 
 
 $childtable%
-	cppad/core/ad_ctor.hpp%
-	cppad/core/ad_assign.hpp%
-	cppad/core/convert.hpp%
-	cppad/core/ad_valued.hpp%
-	cppad/core/bool_valued.hpp%
-	cppad/core/vec_ad.hpp%
-	cppad/base_require.hpp
+	include/cppad/core/ad_ctor.hpp%
+	include/cppad/core/ad_assign.hpp%
+	include/cppad/core/convert.hpp%
+	include/cppad/core/ad_valued.hpp%
+	include/cppad/core/bool_valued.hpp%
+	include/cppad/core/vec_ad.hpp%
+	include/cppad/base_require.hpp
 %$$
 
 $end

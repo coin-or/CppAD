@@ -49,7 +49,7 @@ $head Syntax$$
 $codei%# include <cppad/example/cppad_eigen.hpp>
 %$$
 $children%
-	cppad/example/eigen_plugin.hpp%
+	include/cppad/example/eigen_plugin.hpp%
 	example/general/eigen_array.cpp%
 	example/general/eigen_det.cpp
 %$$

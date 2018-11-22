@@ -22,11 +22,11 @@ $section AD Valued Operations and Functions$$
 
 $comment atomic.omh includes atomic_base.hpp$$
 $childtable%
-	cppad/core/arithmetic.hpp%
-	cppad/core/standard_math.hpp%
-	cppad/core/cond_exp.hpp%
-	cppad/core/discrete.hpp%
-	cppad/core/numeric_limits.hpp%
+	include/cppad/core/arithmetic.hpp%
+	include/cppad/core/standard_math.hpp%
+	include/cppad/core/cond_exp.hpp%
+	include/cppad/core/discrete.hpp%
+	include/cppad/core/numeric_limits.hpp%
 	omh/atomic.omh
 %$$
 

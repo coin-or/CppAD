@@ -65,7 +65,7 @@ int main(void)
 }
 EOF
 # -----------------------------------------------------------------------------
-if [ ! -e ../cppad/configure.hpp ]
+if [ ! -e ../include/cppad/configure.hpp ]
 then
 	echo
 	echo 'Cannot find the file cppad/configure.hpp in directory ..'

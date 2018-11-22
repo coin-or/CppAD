@@ -159,7 +159,7 @@ $head Atan2$$
 The following implementation of the
 AD $cref atan2$$ function is a more complex
 example of using conditional expressions:
-$srcfile%cppad/core/atan2.hpp%0%BEGIN CondExp%// END CondExp%$$
+$srcfile%include/cppad/core/atan2.hpp%0%BEGIN CondExp%// END CondExp%$$
 
 
 $end

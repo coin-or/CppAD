@@ -26,7 +26,7 @@ $pre
 $$
 # define CPPAD_POLY_HPP
 
-$srcfile%cppad/utility/poly.hpp%0%// BEGIN C++%// END C++%$$
+$srcfile%include/cppad/utility/poly.hpp%0%// BEGIN C++%// END C++%$$
 
 # endif
 $$

@@ -277,7 +277,7 @@ $head 05-16$$
 There was a mistake in printing the arguments for
 $code CSumOp$$ and $code CSkipOp$$ when using the undocumented
 $code TRACE$$ option during forward mode (available in files of the form
-$codei%cppad/local/%*%sweep.hpp/%$$).
+$codei%include/cppad/local/%*%sweep.hpp/%$$).
 This has been fixed.
 
 $head 05-14$$
@@ -290,7 +290,7 @@ $lnext
 There was a mistaken assert that the number of arguments for the
 $code BeginOp$$ was zero that caused an abort when using the undocumented
 $code TRACE$$ option available in files of the form
-$codei%cppad/local/%*%sweep.hpp/%$$.
+$codei%include/cppad/local/%*%sweep.hpp/%$$.
 This has been fixed.
 $lend
 

@@ -70,7 +70,7 @@ $codei%
 where $icode dir$$ is replaced by $code trunk$$.
 To see if this has been done correctly, check for the following file:
 $codei%
-	%dir%/cppad/cppad.hpp
+	%dir%/include/cppad/cppad.hpp
 %$$
 
 $head Stable Versions$$
@@ -89,7 +89,7 @@ $codei%
 %$$
 To see if this has been done correctly, check for the following file:
 $codei%
-	%dir%/cppad/cppad.hpp
+	%dir%/include/cppad/cppad.hpp
 %$$
 Note that it will correspond to the most recent release for this stable
 version.
@@ -110,7 +110,7 @@ $codei%
 %$$
 To see if this has been done correctly, check for the following file:
 $codei%
-	%dir%/cppad/cppad.hpp
+	%dir%/include/cppad/cppad.hpp
 %$$
 
 $head Build the Documentation$$

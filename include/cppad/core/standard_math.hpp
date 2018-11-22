@@ -62,15 +62,15 @@ $codei%
 	AD<%Base%> %y%
 %$$
 
-$children%cppad/core/std_math_98.hpp
-	%cppad/core/abs.hpp
-	%cppad/core/acosh.hpp
-	%cppad/core/asinh.hpp
-	%cppad/core/atanh.hpp
-	%cppad/core/erf.hpp
-	%cppad/core/expm1.hpp
-	%cppad/core/log1p.hpp
-	%cppad/core/sign.hpp
+$children%include/cppad/core/std_math_98.hpp
+	%include/cppad/core/abs.hpp
+	%include/cppad/core/acosh.hpp
+	%include/cppad/core/asinh.hpp
+	%include/cppad/core/atanh.hpp
+	%include/cppad/core/erf.hpp
+	%include/cppad/core/expm1.hpp
+	%include/cppad/core/log1p.hpp
+	%include/cppad/core/sign.hpp
 %$$
 
 $head fun$$
@@ -117,9 +117,9 @@ $begin binary_math$$
 
 $section The Binary Math Functions$$
 
-$childtable%cppad/core/atan2.hpp
-	%cppad/core/pow.hpp
-	%cppad/core/azmul.hpp
+$childtable%include/cppad/core/atan2.hpp
+	%include/cppad/core/pow.hpp
+	%include/cppad/core/azmul.hpp
 %$$
 
 $end

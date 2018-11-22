@@ -16,9 +16,9 @@ then
 	exit 1
 fi
 check_replace() {
-	define_file="cppad/local/$1"
-	replace_file="cppad/local/$2"
-	new_file="cppad/local/$2.$$"
+	define_file="include/cppad/local/$1"
+	replace_file="include/cppad/local/$2"
+	new_file="include/cppad/local/$2.$$"
 	bin/replace_html.py $define_file $replace_file $new_file
 	if ! diff $replace_file $new_file > /dev/null
 	then
@@ -38,7 +38,7 @@ EOF
 check_replace cond_op.hpp                        cond_op.hpp
 check_replace load_op.hpp                        load_op.hpp
 check_replace store_op.hpp                       store_op.hpp
-check_replace sweep/forward0.hpp                  sweep/forward1.hpp
+check_replace sweep/forward0.hpp                 sweep/forward1.hpp
 # -----------------------------------------------------------------------------
 echo "replace_html.sh: OK"
 exit 0

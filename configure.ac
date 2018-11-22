@@ -842,8 +842,8 @@ dnl -----------------------------------------------------------------------
 dnl AC_CONFIG_FILES(file-list) for each file in the list, configure will
 dnl read file.in, do its substitutions, and create file
 AC_CONFIG_FILES([
-	cppad/configure.hpp
-	cppad/local/is_pod.hpp
+	include/cppad/configure.hpp
+	include/cppad/local/is_pod.hpp
 	cppad_ipopt/example/test.sh
 	cppad_ipopt/speed/test.sh
 	cppad_ipopt/test/test.sh

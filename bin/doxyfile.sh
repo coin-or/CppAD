@@ -41,7 +41,7 @@ s|  *| |g
 EOF
 sed -i doxyfile -f bin/doxyfile.$$
 # -----------------------------------------------------------------------------
-include_directory_list=`find cppad -type d | tr '\n' ' ' `
+include_directory_list=`find include/cppad -type d | tr '\n' ' ' `
 # -----------------------------------------------------------------------------
 # PREDEFINED:see http://www.stack.nl/~dimitri/doxygen/manual/preprocessing.html
 # 2DO: change EXTRACT_ALL to NO so get warnings for undocumented functions.

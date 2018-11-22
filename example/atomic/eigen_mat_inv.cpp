@@ -39,7 +39,7 @@ f(x) =
 \] $$
 
 $children%
-	cppad/example/eigen_mat_inv.hpp
+	include/cppad/example/eigen_mat_inv.hpp
 %$$
 
 $head Class Definition$$
