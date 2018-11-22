@@ -42,9 +42,7 @@ This example will be compiled and tested provided that
 a value for $icode ipopt_prefix$$
 is specified on the $cref cmake$$ command line.
 
-$code
 $srcfile%cppad_ipopt/example/get_started.cpp%0%// BEGIN C++%// END C++%1%$$
-$$
 
 $end
 */

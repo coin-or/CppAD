@@ -14,9 +14,7 @@ $begin optimize_forward_active.cpp$$
 
 $section Example Optimization and Forward Activity Analysis$$
 
-$code
 $srcfile%example/optimize/forward_active.cpp%0%// BEGIN C++%// END C++%1%$$
-$$
 
 $end
 */

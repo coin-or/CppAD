@@ -25,9 +25,7 @@ This example demonstrates how CppAD can be used in a
 boost multi-threading environment.
 
 $head Source Code$$
-$code
 $srcfile%example/multi_thread/bthread/simple_ad_bthread.cpp%0%// BEGIN C++%// END C++%1%$$
-$$
 
 $end
 ------------------------------------------------------------------------------

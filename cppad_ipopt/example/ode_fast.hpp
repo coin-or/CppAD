@@ -20,9 +20,7 @@ $$
 $section ODE Fitting Using Fast Representation$$
 
 
-$code
 $srcfile%cppad_ipopt/example/ode_fast.hpp%0%// BEGIN C++%// END C++%1%$$
-$$
 
 $end
 */

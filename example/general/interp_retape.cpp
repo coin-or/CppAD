@@ -26,9 +26,7 @@ $cref interp_onetape.cpp$$
 $pre
 
 $$
-$code
 $srcfile%example/general/interp_retape.cpp%0%// BEGIN C++%// END C++%1%$$
-$$
 
 $end
 */

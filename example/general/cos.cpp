@@ -19,9 +19,7 @@ $$
 $section The AD cos Function: Example and Test$$
 
 
-$code
 $srcfile%example/general/cos.cpp%0%// BEGIN C++%// END C++%1%$$
-$$
 
 $end
 */

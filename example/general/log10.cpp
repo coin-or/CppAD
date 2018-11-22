@@ -19,9 +19,7 @@ $$
 $section The AD log10 Function: Example and Test$$
 
 
-$code
 $srcfile%example/general/log10.cpp%0%// BEGIN C++%// END C++%1%$$
-$$
 
 $end
 */

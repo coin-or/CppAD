@@ -16,9 +16,7 @@ $begin tape_index.cpp$$
 $section Taping Array Index Operation: Example and Test$$
 
 
-$code
 $srcfile%example/general/tape_index.cpp%0%// BEGIN C++%// END C++%1%$$
-$$
 
 $end
 */

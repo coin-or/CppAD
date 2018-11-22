@@ -22,9 +22,7 @@ $section ADFun Check and Re-Tape: Example and Test$$
 
 
 
-$code
 $srcfile%example/general/fun_check.cpp%0%// BEGIN C++%// END C++%1%$$
-$$
 
 $end
 */

@@ -18,9 +18,7 @@ $section AD Parameter and Variable Functions: Example and Test$$
 
 
 
-$code
 $srcfile%example/general/con_dyn_var.cpp%0%// BEGIN C++%// END C++%1%$$
-$$
 
 $end
 */

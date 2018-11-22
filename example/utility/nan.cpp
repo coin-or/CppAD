@@ -16,9 +16,7 @@ $begin nan.cpp$$
 $section nan: Example and Test$$
 
 
-$code
 $srcfile%example/utility/nan.cpp%0%// BEGIN C++%// END C++%1%$$
-$$
 
 $end
 */

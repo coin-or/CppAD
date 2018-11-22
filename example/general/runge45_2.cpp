@@ -45,9 +45,7 @@ $latex \[
 	\partial_b X(b, t_f ) =  \sum_{k=0}^j t_f^k / k !
 \] $$
 
-$code
 $srcfile%example/general/runge45_2.cpp%0%// BEGIN C++%// END C++%1%$$
-$$
 
 $end
 */

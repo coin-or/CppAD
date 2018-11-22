@@ -25,9 +25,7 @@ $head Running Tests$$
 To build this program and run its correctness tests see $cref cmake_check$$.
 
 $head Source$$
-$code
 $srcfile%introduction/introduction.cpp%0%// BEGIN C++%// END C++%1%$$
-$$
 
 $end
 */

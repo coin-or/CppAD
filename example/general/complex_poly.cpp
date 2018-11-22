@@ -22,9 +22,7 @@ $section Complex Polynomial: Example and Test$$
 $head Poly$$
 Select this link to view specifications for $cref Poly$$:
 
-$code
 $srcfile%example/general/complex_poly.cpp%0%// BEGIN C++%// END C++%1%$$
-$$
 
 $end
 */

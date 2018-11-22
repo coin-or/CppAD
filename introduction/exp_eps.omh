@@ -16,9 +16,7 @@ $$
 
 $section exp_eps: Implementation$$
 
-$code
 $srcfile%introduction/exp_eps.hpp%0%// BEGIN C++%// END C++%$$
-$$
 
 $end
 -----------------------------------------------------------------------------
@@ -29,9 +27,7 @@ $$
 
 $section exp_eps: Test of exp_eps$$
 
-$code
 $srcfile%introduction/exp_eps.cpp%0%// BEGIN C++%// END C++%$$
-$$
 
 $end
 -----------------------------------------------------------------------------

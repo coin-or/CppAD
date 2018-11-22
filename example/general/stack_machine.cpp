@@ -17,9 +17,7 @@ $$
 $section Example Differentiating a Stack Machine Interpreter$$
 
 
-$code
 $srcfile%example/general/stack_machine.cpp%0%// BEGIN C++%// END C++%1%$$
-$$
 
 $end
 */

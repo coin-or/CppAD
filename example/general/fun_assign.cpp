@@ -16,9 +16,7 @@ $begin fun_assign.cpp$$
 $section ADFun Assignment: Example and Test$$
 
 
-$code
 $srcfile%example/general/fun_assign.cpp%0%// BEGIN C++%// END C++%1%$$
-$$
 
 $end
 */

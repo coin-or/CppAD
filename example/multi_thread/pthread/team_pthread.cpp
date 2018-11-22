@@ -32,9 +32,7 @@ Set the following preprocessor symbol to 1 to demonstrate this bug:
 $srccode%cpp% */
 # define DEMONSTRATE_BUG_IN_CYGWIN 0
 /* %$$
-$code
 $srcfile%example/multi_thread/pthread/team_pthread.cpp%0%// BEGIN C++%// END C++%1%$$
-$$
 
 $end
 */

@@ -171,9 +171,7 @@ $latex \[
 $head Source$$
 The following source code
 implements the ODE inversion method proposed above:
-$code
 $srcfile%example/ipopt_solve/ode_inverse.cpp%0%// BEGIN C++%// END C++%1%$$
-$$
 
 $end
 ------------------------------------------------------------------------------

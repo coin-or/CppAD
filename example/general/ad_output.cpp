@@ -20,9 +20,7 @@ $$
 $section AD Output Operator: Example and Test$$
 
 
-$code
 $srcfile%example/general/ad_output.cpp%0%// BEGIN C++%// END C++%1%$$
-$$
 
 $end
 */

@@ -23,9 +23,7 @@ $head Purpose$$
 This example just demonstrates OpenMP and does not use CppAD at all.
 
 $head Source Code$$
-$code
 $srcfile%example/multi_thread/openmp/a11c_openmp.cpp%0%// BEGIN C++%// END C++%1%$$
-$$
 $end
 ----------------------------------------------------------------------------
 */

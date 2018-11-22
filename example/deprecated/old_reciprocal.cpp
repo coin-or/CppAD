@@ -23,9 +23,7 @@ The example below defines the user atomic function
 $latex f : \B{R}^n \rightarrow \B{R}^m$$ where
 $latex n = 1$$, $latex m = 1$$, and $latex f(x) = 1 / x$$.
 
-$code
 $srcfile%example/deprecated/old_reciprocal.cpp%0%// BEGIN C++%// END C++%1%$$
-$$
 
 $end
 */

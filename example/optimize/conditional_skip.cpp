@@ -17,9 +17,7 @@ $section Example Optimization and Conditional Expressions$$
 $head See Also$$
 $cref cond_exp.cpp$$
 
-$code
 $srcfile%example/optimize/conditional_skip.cpp%0%// BEGIN C++%// END C++%1%$$
-$$
 
 $end
 */

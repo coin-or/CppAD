@@ -18,9 +18,7 @@ $$
 
 $section sparse_jac_fun: Example and test$$
 
-$code
 $srcfile%speed/example/sparse_jac_fun.cpp%0%// BEGIN C++%// END C++%1%$$
-$$
 
 $end
 */

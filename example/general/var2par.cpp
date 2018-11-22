@@ -20,9 +20,7 @@ $$
 $section Convert an AD Variable to a Parameter: Example and Test$$
 
 
-$code
 $srcfile%example/general/var2par.cpp%0%// BEGIN C++%// END C++%1%$$
-$$
 
 $end
 */

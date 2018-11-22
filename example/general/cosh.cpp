@@ -18,9 +18,7 @@ $$
 $section The AD cosh Function: Example and Test$$
 
 
-$code
 $srcfile%example/general/cosh.cpp%0%// BEGIN C++%// END C++%1%$$
-$$
 
 $end
 */

@@ -21,9 +21,7 @@ $$
 $section AD Boolean Functions: Example and Test$$
 
 
-$code
 $srcfile%example/general/bool_fun.cpp%0%// BEGIN C++%// END C++%1%$$
-$$
 
 $end
 */

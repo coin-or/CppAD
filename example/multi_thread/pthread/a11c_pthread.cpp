@@ -25,9 +25,7 @@ $head Purpose$$
 This example just demonstrates pthreads and does not use CppAD at all.
 
 $head Source Code$$
-$code
 $srcfile%example/multi_thread/pthread/a11c_pthread.cpp%0%// BEGIN C++%// END C++%1%$$
-$$
 $end
 ----------------------------------------------------------------------------
 */

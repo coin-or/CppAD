@@ -18,9 +18,7 @@ $$
 
 $section Example Optimization and Print Forward Operators$$
 
-$code
 $srcfile%example/optimize/print_for.cpp%0%// BEGIN C++%// END C++%1%$$
-$$
 
 $end
 */

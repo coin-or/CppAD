@@ -17,9 +17,7 @@ $section Example Optimization and Nested Conditional Expressions$$
 $head See Also$$
 $cref cond_exp.cpp$$
 
-$code
 $srcfile%example/optimize/nest_conditional.cpp%0%// BEGIN C++%// END C++%1%$$
-$$
 
 $end
 */

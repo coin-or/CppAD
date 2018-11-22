@@ -48,9 +48,7 @@ Adolc's type $code adouble$$ and CppAD's type $code AD<adouble>$$.
 
 
 $head Source$$
-$code
 $srcfile%example/general/mul_level.cpp%0%// BEGIN C++%// END C++%1%$$
-$$
 
 $end
 */

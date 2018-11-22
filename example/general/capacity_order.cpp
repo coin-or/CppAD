@@ -19,9 +19,7 @@ $$
 $section Controlling Taylor Coefficient Memory Allocation: Example and Test$$
 
 
-$code
 $srcfile%example/general/capacity_order.cpp%0%// BEGIN C++%// END C++%1%$$
-$$
 
 $end
 */

@@ -17,9 +17,7 @@ $section AD Compound Assignment Subtraction: Example and Test$$
 
 
 
-$code
 $srcfile%example/general/sub_eq.cpp%0%// BEGIN C++%// END C++%1%$$
-$$
 
 $end
 */

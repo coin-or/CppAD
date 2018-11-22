@@ -16,9 +16,7 @@ $begin index_sort.cpp$$
 $section Index Sort: Example and Test$$
 
 
-$code
 $srcfile%example/utility/index_sort.cpp%0%// BEGIN C++%// END C++%1%$$
-$$
 
 $end
 */

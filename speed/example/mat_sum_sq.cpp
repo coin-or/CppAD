@@ -19,9 +19,7 @@ $$
 $section Sum of the Elements of the Square of a Matrix: Example and Test$$
 
 
-$code
 $srcfile%speed/example/mat_sum_sq.cpp%0%// BEGIN C++%// END C++%1%$$
-$$
 
 $end
 */

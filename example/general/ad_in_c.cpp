@@ -20,9 +20,7 @@ $section Example and Test Linking CppAD to Languages Other than C++$$
 
 
 
-$code
 $srcfile%example/general/ad_in_c.cpp%0%// BEGIN C++%// END C++%1%$$
-$$
 
 $end
 */

@@ -18,9 +18,7 @@ $$
 $section Simple Vector Template Class: Example and Test$$
 
 
-$code
 $srcfile%example/utility/simple_vector.cpp%0%// BEGIN C++%// END C++%1%$$
-$$
 
 $end
 --------------------------------------------------------------------------

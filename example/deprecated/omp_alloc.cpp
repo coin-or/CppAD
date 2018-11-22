@@ -23,9 +23,7 @@ $head Deprecated 2011-08-31$$
 This example is only intended to help convert calls to $cref omp_alloc$$
 to calls to $cref thread_alloc$$.
 
-$code
 $srcfile%example/deprecated/omp_alloc.cpp%0%// BEGIN C++%// END C++%1%$$
-$$
 
 $end
 */

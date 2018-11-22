@@ -17,9 +17,7 @@ $section AD Compound Assignment Division: Example and Test$$
 
 
 
-$code
 $srcfile%example/general/div_eq.cpp%0%// BEGIN C++%// END C++%1%$$
-$$
 
 $end
 */

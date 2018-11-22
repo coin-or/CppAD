@@ -19,9 +19,7 @@ $$
 $section The AD sin Function: Example and Test$$
 
 
-$code
 $srcfile%example/general/sin.cpp%0%// BEGIN C++%// END C++%1%$$
-$$
 
 $end
 */

@@ -19,9 +19,7 @@ $$
 $section sparse_rc: Example and Test$$
 
 
-$code
 $srcfile%example/utility/sparse_rc.cpp%0%// BEGIN C++%// END C++%1%$$
-$$
 
 $end
 */

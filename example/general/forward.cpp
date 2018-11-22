@@ -18,9 +18,7 @@ $$
 
 $section Forward Mode: Example and Test$$
 
-$code
 $srcfile%example/general/forward.cpp%0%// BEGIN C++%// END C++%1%$$
-$$
 
 $end
 */

@@ -38,9 +38,7 @@ as $latex x_j \downarrow 0$$ and
 we need to handle the case $latex x_j = 0$$
 in a special way to avoid multiplying zero by infinity.
 
-$code
 $srcfile%example/general/cond_exp.cpp%0%// BEGIN C++%// END C++%1%$$
-$$
 
 $end
 */

@@ -46,9 +46,7 @@ we return $code nan$$ in order to inform
 $code OdeErrControl$$ that its is taking to large a step.
 
 
-$code
 $srcfile%example/utility/ode_err_control.cpp%0%// BEGIN C++%// END C++%1%$$
-$$
 
 $end
 */

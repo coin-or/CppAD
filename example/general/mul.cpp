@@ -15,9 +15,7 @@ $begin mul.cpp$$
 $section AD Binary Multiplication: Example and Test$$
 
 
-$code
 $srcfile%example/general/mul.cpp%0%// BEGIN C++%// END C++%1%$$
-$$
 
 $end
 */

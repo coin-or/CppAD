@@ -16,9 +16,7 @@ $begin add.cpp$$
 $section AD Binary Addition: Example and Test$$
 
 
-$code
 $srcfile%example/general/add.cpp%0%// BEGIN C++%// END C++%1%$$
-$$
 
 $end
 */

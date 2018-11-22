@@ -20,9 +20,7 @@ $$
 $section The AD erf Function: Example and Test$$
 
 
-$code
 $srcfile%example/general/erf.cpp%0%// BEGIN C++%// END C++%1%$$
-$$
 
 $end
 */

@@ -19,9 +19,7 @@ $$
 
 $section Computing Sparse Jacobian Using Reverse Mode: Example and Test$$
 
-$code
 $srcfile%example/sparse/subgraph_jac_rev.cpp%0%// BEGIN C++%// END C++%1%$$
-$$
 
 $end
 */

@@ -43,9 +43,7 @@ where this Hessian is sparse.
 $head Example$$
 The following code shows one way to compute this subset of the
 Hessian of $latex f$$.
-$code
 $srcfile%example/sparse/sub_sparse_hes.cpp%0%// BEGIN C++%// END C++%1%$$
-$$
 
 $end
 */

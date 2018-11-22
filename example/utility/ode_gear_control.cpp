@@ -36,9 +36,7 @@ $latex \[
 \] $$
 The example tests OdeGearControl using the relations above:
 
-$code
 $srcfile%example/utility/ode_gear_control.cpp%0%// BEGIN C++%// END C++%1%$$
-$$
 
 $end
 */

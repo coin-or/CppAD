@@ -16,9 +16,7 @@ $begin set_union.cpp$$
 $section Set Union: Example and Test$$
 
 
-$code
 $srcfile%example/utility/set_union.cpp%0%// BEGIN C++%// END C++%1%$$
-$$
 
 $end
 */

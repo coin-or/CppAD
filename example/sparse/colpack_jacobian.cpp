@@ -19,9 +19,7 @@ $$
 
 $section ColPack: Sparse Jacobian Example and Test$$
 
-$code
 $srcfile%example/sparse/colpack_jacobian.cpp%0%// BEGIN C++%// END C++%1%$$
-$$
 
 $end
 */

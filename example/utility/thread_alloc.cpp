@@ -20,9 +20,7 @@ $$
 $section Fast Multi-Threading Memory Allocator: Example and Test$$
 
 
-$code
 $srcfile%example/utility/thread_alloc.cpp%0%// BEGIN C++%// END C++%1%$$
-$$
 
 $end
 */

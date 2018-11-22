@@ -14,9 +14,7 @@ $begin ipopt_nlp_ode_check.cpp$$
 
 $section Correctness Check for Both Simple and Fast Representations$$
 
-$code
 $srcfile%cppad_ipopt/example/ode_check.cpp%0%// BEGIN C++%// END C++%1%$$
-$$
 
 $end
 */

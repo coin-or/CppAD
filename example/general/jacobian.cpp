@@ -20,9 +20,7 @@ $$
 $section Jacobian: Example and Test$$
 
 
-$code
 $srcfile%example/general/jacobian.cpp%0%// BEGIN C++%// END C++%1%$$
-$$
 
 $end
 */

@@ -39,9 +39,7 @@ x_1 (t)    & = & a_0 [ \exp( - a_1 t ) - \exp( - a_0 t ) ] / ( a_0 - a_1 )
 \] $$
 The example tests Rosen34 using the relations above:
 
-$code
 $srcfile%example/general/ode_stiff.cpp%0%// BEGIN C++%// END C++%1%$$
-$$
 
 $end
 */

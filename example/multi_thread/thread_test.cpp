@@ -190,9 +190,7 @@ $rref team_pthread.cpp$$
 $tend
 
 $head Source$$
-$code
 $srcfile%example/multi_thread/thread_test.cpp%0%// BEGIN C++%// END C++%1%$$
-$$
 
 $end
 */

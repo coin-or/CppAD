@@ -21,9 +21,7 @@ $section CppAD Examples and Tests$$
 $head Running Tests$$
 To build this program and run its correctness tests see $cref cmake_check$$.
 
-$code
 $srcfile%example/general/general.cpp%0%// BEGIN C++%// END C++%1%$$
-$$
 
 $end
 */

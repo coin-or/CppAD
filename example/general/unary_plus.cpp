@@ -20,9 +20,7 @@ $$
 $section AD Unary Plus Operator: Example and Test$$
 
 
-$code
 $srcfile%example/general/unary_plus.cpp%0%// BEGIN C++%// END C++%1%$$
-$$
 
 $end
 */

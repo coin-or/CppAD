@@ -21,9 +21,7 @@ $$
 $section AD Vectors that Record Index Operations: Example and Test$$
 
 
-$code
 $srcfile%example/general/vec_ad.cpp%0%// BEGIN C++%// END C++%1%$$
-$$
 
 $end
 */

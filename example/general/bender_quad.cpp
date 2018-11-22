@@ -57,9 +57,7 @@ y - [ \partial_y \partial_y F(x, y) ]^{-1} \partial_y F[x,  y]
 
 
 
-$code
 $srcfile%example/general/bender_quad.cpp%0%// BEGIN C++%// END C++%1%$$
-$$
 
 $end
 */

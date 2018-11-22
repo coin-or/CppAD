@@ -19,9 +19,7 @@ $$
 
 $section The AD log1p Function: Example and Test$$
 
-$code
 $srcfile%example/general/log1p.cpp%0%// BEGIN C++%// END C++%1%$$
-$$
 
 $end
 */

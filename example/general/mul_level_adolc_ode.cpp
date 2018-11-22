@@ -113,9 +113,7 @@ $cref cmake$$ command line.
 
 $head Source$$
 
-$code
 $srcfile%example/general/mul_level_adolc_ode.cpp%0%// BEGIN C++%// END C++%1%$$
-$$
 
 $end
 --------------------------------------------------------------------------

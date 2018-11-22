@@ -18,9 +18,7 @@ $$
 
 $section Forward Mode: Example and Test of Multiple Orders$$
 
-$code
 $srcfile%example/general/forward_order.cpp%0%// BEGIN C++%// END C++%1%$$
-$$
 
 $end
 */

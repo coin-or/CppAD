@@ -18,9 +18,7 @@ $$
 
 $section Print During Zero Order Forward Mode: Example and Test$$
 
-$code
 $srcfile%example/general/print_for.cpp%0%// BEGIN C++%// END C++%1%$$
-$$
 
 $end
 */

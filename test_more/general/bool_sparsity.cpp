@@ -22,9 +22,7 @@ $section Using vectorBool Sparsity To Conserve Memory: Example and Test$$
 $head Purpose$$
 This example show how to conserve memory when computing sparsity patterns.
 
-$code
 $srcfile%test_more/general/bool_sparsity.cpp%0%// BEGIN C++%// END C++%1%$$
-$$
 
 @end
 */

@@ -21,9 +21,7 @@ $$
 $section LuRatio: Example and Test$$
 
 
-$code
 $srcfile%example/general/lu_ratio.cpp%0%// BEGIN C++%// END C++%1%$$
-$$
 
 $end
 */

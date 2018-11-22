@@ -17,9 +17,7 @@ $$
 
 $section Hessian Times Direction: Example and Test$$
 
-$code
 $srcfile%example/general/hes_times_dir.cpp%0%// BEGIN C++%// END C++%1%$$
-$$
 
 $end
 */

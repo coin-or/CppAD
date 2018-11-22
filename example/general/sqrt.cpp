@@ -19,9 +19,7 @@ $$
 $section The AD sqrt Function: Example and Test$$
 
 
-$code
 $srcfile%example/general/sqrt.cpp%0%// BEGIN C++%// END C++%1%$$
-$$
 
 $end
 */

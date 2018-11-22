@@ -19,9 +19,7 @@ $$
 $section Subset of Second Order Partials: Example and Test$$
 
 
-$code
 $srcfile%example/general/for_two.cpp%0%// BEGIN C++%// END C++%1%$$
-$$
 
 $end
 */

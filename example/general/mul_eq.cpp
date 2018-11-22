@@ -17,9 +17,7 @@ $section AD Compound Assignment Multiplication: Example and Test$$
 
 
 
-$code
 $srcfile%example/general/mul_eq.cpp%0%// BEGIN C++%// END C++%1%$$
-$$
 
 $end
 */

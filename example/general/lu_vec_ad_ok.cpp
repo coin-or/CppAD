@@ -21,9 +21,7 @@ $$
 $section Lu Factor and Solve With Recorded Pivoting: Example and Test$$
 
 
-$code
 $srcfile%example/general/lu_vec_ad_ok.cpp%0%// BEGIN C++%// END C++%1%$$
-$$
 
 $end
 */

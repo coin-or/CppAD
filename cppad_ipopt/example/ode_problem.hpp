@@ -24,9 +24,7 @@ $section ODE Inverse Problem Definitions: Source Code$$
 
 
 
-$code
 $srcfile%cppad_ipopt/example/ode_problem.hpp%0%// BEGIN C++%// END C++%1%$$
-$$
 
 $end
 ------------------------------------------------------------------------------

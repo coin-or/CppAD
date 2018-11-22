@@ -21,9 +21,7 @@ $$
 $section Sparse Hessian Using Subgraphs and Jacobian: Example and Test$$
 
 
-$code
 $srcfile%example/sparse/subgraph_hes2jac.cpp%0%// BEGIN C++%// END C++%1%$$
-$$
 
 $end
 */

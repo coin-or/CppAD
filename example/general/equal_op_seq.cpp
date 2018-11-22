@@ -19,9 +19,7 @@ $$
 $section EqualOpSeq: Example and Test$$
 
 
-$code
 $srcfile%example/general/equal_op_seq.cpp%0%// BEGIN C++%// END C++%1%$$
-$$
 
 $end
 */

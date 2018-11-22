@@ -20,9 +20,7 @@ $$
 $section The Pow Integer Exponent: Example and Test$$
 
 
-$code
 $srcfile%example/general/pow_int.cpp%0%// BEGIN C++%// END C++%1%$$
-$$
 
 $end
 */

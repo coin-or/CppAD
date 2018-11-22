@@ -19,9 +19,7 @@ $$
 $section CppAD::vector Template Class: Example and Test$$
 
 
-$code
 $srcfile%example/utility/cppad_vector.cpp%0%// BEGIN C++%// END C++%1%$$
-$$
 
 $end
 */

@@ -22,9 +22,7 @@ $$
 $section Reverse Mode Jacobian Sparsity: Example and Test$$
 
 
-$code
 $srcfile%example/sparse/rev_sparse_jac.cpp%0%// BEGIN C++%// END C++%1%$$
-$$
 
 $end
 */

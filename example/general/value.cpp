@@ -20,9 +20,7 @@ $$
 $section Convert From AD to its Base Type: Example and Test$$
 
 
-$code
 $srcfile%example/general/value.cpp%0%// BEGIN C++%// END C++%1%$$
-$$
 
 $end
 */

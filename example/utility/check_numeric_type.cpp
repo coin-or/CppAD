@@ -15,9 +15,7 @@ $begin check_numeric_type.cpp$$
 
 $section The CheckNumericType Function: Example and Test$$
 
-$code
 $srcfile%example/utility/check_numeric_type.cpp%0%// BEGIN C++%// END C++%1%$$
-$$
 
 $end
 */

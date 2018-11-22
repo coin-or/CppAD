@@ -46,9 +46,7 @@ $cref/ForSparseJac/ForSparseJac/dependency/$$ and
 $cref/RevSparseJac/RevSparseJac/dependency/$$ is a flag that signals
 that the dependency pattern (instead of the sparsity pattern) is computed.
 
-$code
 $srcfile%test_more/general/dependency.cpp%0%// BEGIN C++%// END C++%1%$$
-$$
 
 $end
 */

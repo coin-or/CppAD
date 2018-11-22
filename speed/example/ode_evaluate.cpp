@@ -17,9 +17,7 @@ $$
 
 $section ode_evaluate: Example and test$$
 
-$code
 $srcfile%speed/example/ode_evaluate.cpp%0%// BEGIN C++%// END C++%1%$$
-$$
 
 $end
 */

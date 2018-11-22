@@ -18,9 +18,7 @@ $$
 
 $section Computing Reverse Mode on Subgraphs: Example and Test$$
 
-$code
 $srcfile%example/sparse/subgraph_reverse.cpp%0%// BEGIN C++%// END C++%1%$$
-$$
 
 $end
 */

@@ -19,9 +19,7 @@ $$
 
 $section Gradient of Determinant Using LU Factorization: Example and Test$$
 
-$code
 $srcfile%example/general/hes_lu_det.cpp%0%// BEGIN C++%// END C++%1%$$
-$$
 
 $end
 */

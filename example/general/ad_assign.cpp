@@ -19,9 +19,7 @@ $$
 $section AD Assignment: Example and Test$$
 
 
-$code
 $srcfile%example/general/ad_assign.cpp%0%// BEGIN C++%// END C++%1%$$
-$$
 $end
 */
 // BEGIN C++

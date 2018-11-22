@@ -15,9 +15,7 @@ $begin check_simple_vector.cpp$$
 
 $section The CheckSimpleVector Function: Example and Test$$
 
-$code
 $srcfile%example/utility/check_simple_vector.cpp%0%// BEGIN C++%// END C++%1%$$
-$$
 
 $end
 */

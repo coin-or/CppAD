@@ -19,9 +19,7 @@ $$
 $section First Order Reverse Mode: Example and Test$$
 
 
-$code
 $srcfile%example/general/reverse_one.cpp%0%// BEGIN C++%// END C++%1%$$
-$$
 
 $end
 */

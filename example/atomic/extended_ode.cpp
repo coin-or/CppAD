@@ -106,9 +106,7 @@ $latex \[
 \] $$
 
 
-$code
 $srcfile%example/atomic/extended_ode.cpp%0%// BEGIN C++%// END C++%1%$$
-$$
 
 $end
 */

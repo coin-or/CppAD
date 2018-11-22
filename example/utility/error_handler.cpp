@@ -18,9 +18,7 @@ $$
 
 $section Replacing The CppAD Error Handler: Example and Test$$
 
-$code
 $srcfile%example/utility/error_handler.cpp%0%// BEGIN C++%// END C++%1%$$
-$$
 
 $end
 */

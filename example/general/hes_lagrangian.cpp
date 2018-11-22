@@ -21,9 +21,7 @@ $comment ! NOTE the title states that this example is used two places !$$
 $section Hessian of Lagrangian and ADFun Default Constructor: Example and Test$$
 
 
-$code
 $srcfile%example/general/hes_lagrangian.cpp%0%// BEGIN C++%// END C++%1%$$
-$$
 
 $end
 */

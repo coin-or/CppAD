@@ -20,9 +20,7 @@ $$
 $section Computing Sparse Hessian: Example and Test$$
 
 
-$code
 $srcfile%example/sparse/sparse_hes.cpp%0%// BEGIN C++%// END C++%1%$$
-$$
 
 $end
 */

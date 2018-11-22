@@ -26,9 +26,7 @@ $code NearEqual.cpp$$
 to avoid a name conflict with $code ../lib/NearEqual.cpp$$
 in the corresponding Microsoft project file.
 
-$code
 $srcfile%example/utility/near_equal.cpp%0%// BEGIN C++%// END C++%1%$$
-$$
 
 $end
 */

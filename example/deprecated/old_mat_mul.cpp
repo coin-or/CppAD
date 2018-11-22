@@ -28,9 +28,7 @@ $children%
 $head Include File$$
 This routine uses the include file $cref old_mat_mul.hpp$$.
 
-$code
 $srcfile%example/deprecated/old_mat_mul.cpp%0%// BEGIN C++%// END C++%1%$$
-$$
 
 $end
 */

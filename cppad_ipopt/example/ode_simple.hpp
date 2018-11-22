@@ -23,9 +23,7 @@ $$
 $section ODE Fitting Using Simple Representation$$
 
 
-$code
 $srcfile%cppad_ipopt/example/ode_simple.hpp%0%// BEGIN C++%// END C++%1%$$
-$$
 
 $end
 */

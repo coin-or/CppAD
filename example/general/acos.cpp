@@ -19,9 +19,7 @@ $$
 
 $section The AD acos Function: Example and Test$$
 
-$code
 $srcfile%example/general/acos.cpp%0%// BEGIN C++%// END C++%1%$$
-$$
 
 $end
 */

@@ -18,9 +18,7 @@ $comment ! NOTE the title states that this example is used two places !$$
 $section Independent and ADFun Constructor: Example and Test$$
 
 
-$code
 $srcfile%example/general/independent.cpp%0%// BEGIN C++%// END C++%1%$$
-$$
 
 $end
 */

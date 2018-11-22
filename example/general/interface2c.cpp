@@ -17,9 +17,7 @@ $$
 
 $section Interfacing to C: Example and Test$$
 
-$code
 $srcfile%example/general/interface2c.cpp%0%// BEGIN C++%// END C++%1%$$
-$$
 
 $end
 */

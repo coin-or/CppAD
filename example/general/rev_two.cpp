@@ -19,9 +19,7 @@ $$
 $section Second Partials Reverse Driver: Example and Test$$
 
 
-$code
 $srcfile%example/general/rev_two.cpp%0%// BEGIN C++%// END C++%1%$$
-$$
 
 $end
 */

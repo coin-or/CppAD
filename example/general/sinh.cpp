@@ -19,9 +19,7 @@ $$
 $section The AD sinh Function: Example and Test$$
 
 
-$code
 $srcfile%example/general/sinh.cpp%0%// BEGIN C++%// END C++%1%$$
-$$
 
 $end
 */

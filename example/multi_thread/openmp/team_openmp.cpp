@@ -19,9 +19,7 @@ $$
 $section OpenMP Implementation of a Team of AD Threads$$
 See $cref team_thread.hpp$$ for this routines specifications.
 
-$code
 $srcfile%example/multi_thread/openmp/team_openmp.cpp%0%// BEGIN C++%// END C++%1%$$
-$$
 
 $end
 */

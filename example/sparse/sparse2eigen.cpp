@@ -20,9 +20,7 @@ $$
 $section Converting CppAD Sparse Matrix to Eigen Format: Example and Test$$
 
 
-$code
 $srcfile%example/sparse/sparse2eigen.cpp%0%// BEGIN C++%// END C++%1%$$
-$$
 
 $end
 */

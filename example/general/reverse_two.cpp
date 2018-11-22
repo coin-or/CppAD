@@ -19,9 +19,7 @@ $$
 $section Second Order Reverse ModeExample and Test$$
 
 
-$code
 $srcfile%example/general/reverse_two.cpp%0%// BEGIN C++%// END C++%1%$$
-$$
 
 $end
 */

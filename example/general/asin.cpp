@@ -19,9 +19,7 @@ $$
 
 $section The AD asin Function: Example and Test$$
 
-$code
 $srcfile%example/general/asin.cpp%0%// BEGIN C++%// END C++%1%$$
-$$
 
 $end
 */

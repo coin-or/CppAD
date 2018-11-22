@@ -25,9 +25,7 @@ This example demonstrates how CppAD can be used in a
 OpenMP multi-threading environment.
 
 $head Source Code$$
-$code
 $srcfile%example/multi_thread/openmp/simple_ad_openmp.cpp%0%// BEGIN C++%// END C++%1%$$
-$$
 
 $end
 ------------------------------------------------------------------------------

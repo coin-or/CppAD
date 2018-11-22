@@ -15,9 +15,7 @@ $begin check_for_nan.cpp$$
 
 $section ADFun Checking For Nan: Example and Test$$
 
-$code
 $srcfile%example/general/check_for_nan.cpp%0%// BEGIN C++%// END C++%1%$$
-$$
 
 $end
 */

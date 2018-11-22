@@ -16,9 +16,7 @@ $begin div.cpp$$
 $section AD Binary Division: Example and Test$$
 
 
-$code
 $srcfile%example/general/div.cpp%0%// BEGIN C++%// END C++%1%$$
-$$
 
 $end
 */

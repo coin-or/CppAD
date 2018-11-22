@@ -27,9 +27,7 @@ $head Purpose$$
 This example program demonstrates a case were the $code ipopt::solve$$
 argument $cref/retape/ipopt_solve/options/Retape/$$ should be true.
 
-$code
 $srcfile%example/ipopt_solve/retape.cpp%0%// BEGIN C++%// END C++%1%$$
-$$
 
 $end
 */

@@ -16,9 +16,7 @@ $begin poly.cpp$$
 $section Polynomial Evaluation: Example and Test$$
 
 
-$code
 $srcfile%example/general/poly.cpp%0%// BEGIN C++%// END C++%1%$$
-$$
 
 $end
 */

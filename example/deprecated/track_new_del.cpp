@@ -17,9 +17,7 @@ $section Tracking Use of New and Delete: Example and Test$$
 
 
 
-$code
 $srcfile%example/deprecated/track_new_del.cpp%0%// BEGIN C++%// END C++%1%$$
-$$
 
 $end
 */

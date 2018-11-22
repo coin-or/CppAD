@@ -27,9 +27,7 @@ The code below uses the $cref tan_forward$$ and $cref tan_reverse$$
 to implement the tangent ($icode%id% == 0%$$) and hyperbolic tangent
 ($icode%id% == 1%$$) functions as user atomic operations.
 
-$code
 $srcfile%example/deprecated/old_tan.cpp%0%// BEGIN C++%// END C++%1%$$
-$$
 
 $end
 */

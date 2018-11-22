@@ -20,9 +20,7 @@ $$
 $section Elapsed Seconds: Example and Test$$
 
 
-$code
 $srcfile%speed/example/elapsed_seconds.cpp%0%// BEGIN C++%// END C++%1%$$
-$$
 
 $end
 */

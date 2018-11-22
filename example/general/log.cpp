@@ -20,9 +20,7 @@ $$
 $section The AD log Function: Example and Test$$
 
 
-$code
 $srcfile%example/general/log.cpp%0%// BEGIN C++%// END C++%1%$$
-$$
 
 $end
 */

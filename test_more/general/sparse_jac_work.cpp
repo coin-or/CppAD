@@ -19,9 +19,7 @@ $$
 
 $section Using Same Work With Different Levels of AD: Example and Test$$
 
-$code
 $srcfile%test_more/general/sparse_jac_work.cpp%0%// BEGIN C++%// END C++%1%$$
-$$
 
 $end
 */

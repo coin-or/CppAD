@@ -90,9 +90,7 @@ $latex k = k + 1$$,
 goto Convergence Check.
 $lend
 
-$code
 $srcfile%example/sparse/conj_grad.cpp%0%// BEGIN C++%// END C++%1%$$
-$$
 
 $end
 */

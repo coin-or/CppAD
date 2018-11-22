@@ -15,9 +15,7 @@ $begin to_string.cpp$$
 
 $section to_string: Example and Test$$
 
-$code
 $srcfile%example/utility/to_string.cpp%0%// BEGIN C++%// END C++%1%$$
-$$
 
 $end
 */

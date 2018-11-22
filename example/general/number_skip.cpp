@@ -19,9 +19,7 @@ $$
 $section Number of Variables That Can be Skipped: Example and Test$$
 
 
-$code
 $srcfile%example/general/number_skip.cpp%0%// BEGIN C++%// END C++%1%$$
-$$
 
 $end
 */

@@ -21,9 +21,7 @@ $$
 $section LuSolve With Complex Arguments: Example and Test$$
 
 
-$code
 $srcfile%example/utility/lu_solve.cpp%0%// BEGIN C++%// END C++%1%$$
-$$
 
 $end
 */

@@ -14,9 +14,7 @@ $begin ipopt_ode_speed.cpp$$
 
 $section Speed Test for Both Simple and Fast Representations$$
 
-$code
 $srcfile%cppad_ipopt/speed/ode_speed.cpp%0%// BEGIN C++%// END C++%1%$$
-$$
 
 $end
 */

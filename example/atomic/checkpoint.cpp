@@ -43,9 +43,7 @@ $latex \[
 	\end{array} \right)
 \] $$
 
-$code
 $srcfile%example/atomic/checkpoint.cpp%0%// BEGIN C++%// END C++%1%$$
-$$
 
 
 $end

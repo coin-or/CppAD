@@ -32,9 +32,7 @@ The routine $cref RevSparseHes$$ is used to compute both
 sparsity for both the full Hessian (see $icode h$$)
 and a subset of the Hessian (see $icode h2$$).
 
-$code
 $srcfile%example/sparse/sparsity_sub.cpp%0%// BEGIN C++%// END C++%1%$$
-$$
 
 $end
 */

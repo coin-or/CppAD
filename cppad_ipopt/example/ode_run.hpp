@@ -20,9 +20,7 @@ $$
 
 $section Driver for Running the Ipopt ODE Example$$
 
-$code
 $srcfile%cppad_ipopt/example/ode_run.hpp%0%// BEGIN C++%// END C++%1%$$
-$$
 
 $end
 */

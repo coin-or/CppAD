@@ -20,9 +20,7 @@ $section AD Binary Comparison Operators: Example and Test$$
 
 
 
-$code
 $srcfile%example/general/compare.cpp%0%// BEGIN C++%// END C++%1%$$
-$$
 
 $end
 */

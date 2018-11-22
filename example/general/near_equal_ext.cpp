@@ -20,9 +20,7 @@ $$
 
 $section Compare AD with Base Objects: Example and Test$$
 
-$code
 $srcfile%example/general/near_equal_ext.cpp%0%// BEGIN C++%// END C++%1%$$
-$$
 
 $end
 */

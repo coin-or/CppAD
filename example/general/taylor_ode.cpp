@@ -59,9 +59,7 @@ $latex \[
 	\end{array} \right)
 \] $$
 
-$code
 $srcfile%example/general/taylor_ode.cpp%0%// BEGIN C++%// END C++%1%$$
-$$
 
 $end
 --------------------------------------------------------------------------

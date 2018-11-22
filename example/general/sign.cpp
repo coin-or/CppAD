@@ -18,9 +18,7 @@ $$
 $section Sign Function: Example and Test$$
 
 
-$code
 $srcfile%example/general/sign.cpp%0%// BEGIN C++%// END C++%1%$$
-$$
 
 $end
 */

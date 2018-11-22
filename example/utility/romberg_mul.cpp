@@ -19,9 +19,7 @@ $$
 $section One Dimensional Romberg Integration: Example and Test$$
 
 
-$code
 $srcfile%example/utility/romberg_mul.cpp%0%// BEGIN C++%// END C++%1%$$
-$$
 
 $end
 */

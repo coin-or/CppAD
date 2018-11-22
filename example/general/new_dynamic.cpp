@@ -18,9 +18,7 @@ $$
 
 $section Dynamic Parameters: Example and Test$$
 
-$code
 $srcfile%example/general/new_dynamic.cpp%0%// BEGIN C++%// END C++%1%$$
-$$
 
 $end
 */

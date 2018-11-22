@@ -14,9 +14,7 @@ $begin optimize_reverse_active.cpp$$
 
 $section Example Optimization and Reverse Activity Analysis$$
 
-$code
 $srcfile%example/optimize/reverse_active.cpp%0%// BEGIN C++%// END C++%1%$$
-$$
 
 $end
 */

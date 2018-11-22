@@ -18,9 +18,7 @@ $$
 $section Creating Your Own Interface to an ADFun Object$$
 
 
-$code
 $srcfile%example/general/ad_fun.cpp%0%// BEGIN C++%// END C++%1%$$
-$$
 
 $end
 */

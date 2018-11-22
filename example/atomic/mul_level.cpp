@@ -27,9 +27,7 @@ On the other hand, if $icode Base$$ is $codei%AD<%Other%>%$$ the
 operations recorded at the $icode Base$$ level will not be atomic.
 This is demonstrated in this example.
 
-$code
 $srcfile%example/atomic/mul_level.cpp%0%// BEGIN C++%// END C++%1%$$
-$$
 
 
 $end

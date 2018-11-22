@@ -19,9 +19,7 @@ $$
 $section Using Eigen Arrays: Example and Test$$
 
 
-$code
 $srcfile%example/general/eigen_array.cpp%0%// BEGIN C++%// END C++%1%$$
-$$
 
 $end
 */

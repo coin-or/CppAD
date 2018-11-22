@@ -21,9 +21,7 @@ $$
 $section LuInvert: Example and Test$$
 
 
-$code
 $srcfile%example/utility/lu_invert.cpp%0%// BEGIN C++%// END C++%1%$$
-$$
 
 $end
 */

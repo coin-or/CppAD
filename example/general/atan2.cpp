@@ -20,9 +20,7 @@ $$
 $section The AD atan2 Function: Example and Test$$
 
 
-$code
 $srcfile%example/general/atan2.cpp%0%// BEGIN C++%// END C++%1%$$
-$$
 
 $end
 */

@@ -59,9 +59,7 @@ Y(x) & = & \frac{
 \end{array}
 \] $$
 
-$code
 $srcfile%example/general/opt_val_hes.cpp%0%// BEGIN C++%// END C++%1%$$
-$$
 
 $end
 */

@@ -34,9 +34,7 @@ Thus, we need to be careful to properly account for the fact that
 $latex X^{(2)} (0) = 2 x^{(2)}$$
 (and similarly $latex Y^{(2)} (0) = 2 y^{(2)}$$).
 
-$code
 $srcfile%example/general/reverse_three.cpp%0%// BEGIN C++%// END C++%1%$$
-$$
 
 $end
 */

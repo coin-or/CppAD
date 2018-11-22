@@ -57,9 +57,7 @@ the value $cref adolc_prefix$$ is specified on the
 $cref cmake$$ command line.
 
 $head Source$$
-$code
 $srcfile%example/general/mul_level_adolc.cpp%0%// BEGIN C++%// END C++%1%$$
-$$
 
 $end
 */

@@ -28,9 +28,7 @@ $$
 
 $section time_test: Example and test$$
 
-$code
 $srcfile%speed/example/time_test.cpp%0%// BEGIN C++%// END C++%1%$$
-$$
 
 $end
 */

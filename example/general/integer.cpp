@@ -20,9 +20,7 @@ $$
 $section Convert From AD to Integer: Example and Test$$
 
 
-$code
 $srcfile%example/general/integer.cpp%0%// BEGIN C++%// END C++%1%$$
-$$
 
 $end
 */

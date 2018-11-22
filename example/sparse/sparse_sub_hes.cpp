@@ -25,9 +25,7 @@ to compute a subset of the Hessian.
 $head See Also$$
 $cref sub_sparse_hes.cpp$$
 
-$code
 $srcfile%example/sparse/sparse_sub_hes.cpp%0%// BEGIN C++%// END C++%1%$$
-$$
 
 $end
 */

@@ -18,9 +18,7 @@ $$
 $section Using a User Defined AD Base Type: Example and Test$$
 
 
-$code
 $srcfile%example/general/base_require.cpp%0%// BEGIN C++%// END C++%1%$$
-$$
 
 $head Purpose$$
 The type $code base_alloc$$, defined in $cref base_alloc.hpp$$,

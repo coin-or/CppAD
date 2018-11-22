@@ -41,9 +41,7 @@ $head Configuration Requirement$$
 This example will be compiled and tested provided that
 $cref ipopt_prefix$$ is specified on the $cref cmake$$ command line.
 
-$code
 $srcfile%example/ipopt_solve/get_started.cpp%0%// BEGIN C++%// END C++%1%$$
-$$
 
 $end
 */

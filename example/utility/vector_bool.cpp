@@ -20,9 +20,7 @@ $$
 $section CppAD::vectorBool Class: Example and Test$$
 
 
-$code
 $srcfile%example/utility/vector_bool.cpp%0%// BEGIN C++%// END C++%1%$$
-$$
 
 $end
 */

@@ -19,9 +19,7 @@ $$
 
 $section First Order Partial Driver: Example and Test$$
 
-$code
 $srcfile%example/general/for_one.cpp%0%// BEGIN C++%// END C++%1%$$
-$$
 
 $end
 */

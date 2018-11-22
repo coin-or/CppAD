@@ -20,9 +20,7 @@ $$
 $section Hessian: Example and Test$$
 
 
-$code
 $srcfile%example/general/hessian.cpp%0%// BEGIN C++%// END C++%1%$$
-$$
 
 $end
 */

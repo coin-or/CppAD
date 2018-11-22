@@ -19,9 +19,7 @@ $$
 
 $section Determinant Using Lu Factorization: Example and Test$$
 
-$code
 $srcfile%speed/example/det_by_lu.cpp%0%// BEGIN C++%// END C++%1%$$
-$$
 
 $end
 */

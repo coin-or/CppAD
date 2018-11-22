@@ -19,9 +19,7 @@ $$
 $section Using Eigen To Compute Determinant: Example and Test$$
 
 
-$code
 $srcfile%example/general/eigen_det.cpp%0%// BEGIN C++%// END C++%1%$$
-$$
 
 $end
 */

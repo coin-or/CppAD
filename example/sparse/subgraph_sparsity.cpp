@@ -19,9 +19,7 @@ $$
 $section Subgraph Dependency Sparsity Patterns: Example and Test$$
 
 
-$code
 $srcfile%example/sparse/subgraph_sparsity.cpp%0%// BEGIN C++%// END C++%1%$$
-$$
 
 $end
 */

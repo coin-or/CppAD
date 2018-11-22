@@ -91,9 +91,7 @@ see $cref taylor_ode$$ for the method used to compute the
 Taylor coefficients w.r.t $latex t$$ of $latex y(t, x)$$.
 
 $head Source$$
-$code
 $srcfile%example/general/mul_level_ode.cpp%0%// BEGIN C++%// END C++%1%$$
-$$
 
 $end
 --------------------------------------------------------------------------

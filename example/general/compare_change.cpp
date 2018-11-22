@@ -19,9 +19,7 @@ $$
 $section CompareChange and Re-Tape: Example and Test$$
 
 
-$code
 $srcfile%example/general/compare_change.cpp%0%// BEGIN C++%// END C++%1%$$
-$$
 
 $end
 */

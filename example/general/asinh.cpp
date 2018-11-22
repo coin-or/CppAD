@@ -19,9 +19,7 @@ $$
 
 $section The AD asinh Function: Example and Test$$
 
-$code
 $srcfile%example/general/asinh.cpp%0%// BEGIN C++%// END C++%1%$$
-$$
 
 $end
 */

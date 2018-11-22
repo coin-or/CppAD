@@ -20,9 +20,7 @@ $$
 $section Determinant of a Minor: Example and Test$$
 
 
-$code
 $srcfile%speed/example/det_of_minor.cpp%0%// BEGIN C++%// END C++%1%$$
-$$
 
 $end
 */

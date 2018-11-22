@@ -20,9 +20,7 @@ $$
 $section AD Unary Minus Operator: Example and Test$$
 
 
-$code
 $srcfile%example/general/unary_minus.cpp%0%// BEGIN C++%// END C++%1%$$
-$$
 
 $end
 */

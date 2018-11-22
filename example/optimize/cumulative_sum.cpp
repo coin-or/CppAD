@@ -15,9 +15,7 @@ $begin optimize_cumulative_sum.cpp$$
 $section Example Optimization and Cumulative Sum Operations$$
 
 
-$code
 $srcfile%example/optimize/cumulative_sum.cpp%0%// BEGIN C++%// END C++%1%$$
-$$
 
 $end
 */

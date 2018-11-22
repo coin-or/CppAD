@@ -19,9 +19,7 @@ $$
 $section First Order Derivative Driver: Example and Test$$
 
 
-$code
 $srcfile%example/general/rev_one.cpp%0%// BEGIN C++%// END C++%1%$$
-$$
 
 $end
 */

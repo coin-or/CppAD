@@ -32,9 +32,7 @@ $rref team_pthread.cpp$$
 $tend
 
 $head Source Code$$
-$code
 $srcfile%example/multi_thread/team_example.cpp%0%// BEGIN C++%// END C++%1%$$
-$$
 
 $end
 ------------------------------------------------------------------------------

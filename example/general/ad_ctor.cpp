@@ -19,9 +19,7 @@ $$
 $section AD Constructors: Example and Test$$
 
 
-$code
 $srcfile%example/general/ad_ctor.cpp%0%// BEGIN C++%// END C++%1%$$
-$$
 $end
 */
 // BEGIN C++

@@ -20,9 +20,7 @@ $$
 $section Reverse Mode Hessian Sparsity: Example and Test$$
 
 
-$code
 $srcfile%example/sparse/rev_hes_sparsity.cpp%0%// BEGIN C++%// END C++%1%$$
-$$
 
 $end
 */

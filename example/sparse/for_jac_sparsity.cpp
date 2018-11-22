@@ -22,9 +22,7 @@ $$
 $section Forward Mode Jacobian Sparsity: Example and Test$$
 
 
-$code
 $srcfile%example/sparse/for_jac_sparsity.cpp%0%// BEGIN C++%// END C++%1%$$
-$$
 
 $end
 */

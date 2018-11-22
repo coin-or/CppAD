@@ -17,9 +17,7 @@ $section Example Optimization and Comparison Operators$$
 $head See Also$$
 $cref cond_exp.cpp$$
 
-$code
 $srcfile%example/optimize/compare_op.cpp%0%// BEGIN C++%// END C++%1%$$
-$$
 
 $end
 */

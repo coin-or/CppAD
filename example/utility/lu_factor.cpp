@@ -21,9 +21,7 @@ $$
 $section LuFactor: Example and Test$$
 
 
-$code
 $srcfile%example/utility/lu_factor.cpp%0%// BEGIN C++%// END C++%1%$$
-$$
 
 $end
 */

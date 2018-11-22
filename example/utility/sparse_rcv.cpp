@@ -20,9 +20,7 @@ $$
 $section sparse_rcv: Example and Test$$
 
 
-$code
 $srcfile%example/utility/sparse_rcv.cpp%0%// BEGIN C++%// END C++%1%$$
-$$
 
 $end
 */

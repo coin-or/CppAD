@@ -18,9 +18,7 @@ $$
 $section Abort Current Recording: Example and Test$$
 
 
-$code
 $srcfile%example/general/abort_recording.cpp%0%// BEGIN C++%// END C++%1%$$
-$$
 
 $end
 */

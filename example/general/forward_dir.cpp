@@ -18,9 +18,7 @@ $$
 
 $section Forward Mode: Example and Test of Multiple Directions$$
 
-$code
 $srcfile%example/general/forward_dir.cpp%0%// BEGIN C++%// END C++%1%$$
-$$
 
 $end
 */

@@ -18,9 +18,7 @@ $$
 
 $section sparse_hes_fun: Example and test$$
 
-$code
 $srcfile%speed/example/sparse_hes_fun.cpp%0%// BEGIN C++%// END C++%1%$$
-$$
 
 $end
 */

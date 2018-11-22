@@ -38,9 +38,7 @@ This is a simple example of an inner function, and hence not really
 useful for the purpose above;
 see $cref old_usead_2.cpp$$ for a more complete example.
 
-$code
 $srcfile%example/deprecated/old_usead_1.cpp%0%// BEGIN C++%// END C++%1%$$
-$$
 
 $end
 */

@@ -16,9 +16,7 @@ $begin sub.cpp$$
 $section AD Binary Subtraction: Example and Test$$
 
 
-$code
 $srcfile%example/general/sub.cpp%0%// BEGIN C++%// END C++%1%$$
-$$
 
 $end
 */

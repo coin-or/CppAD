@@ -25,9 +25,7 @@ $cref sparse_rc$$ to compute sparse Jacobians and Hessians.
 This became the preferred way to represent sparsity on
 $cref/2017-02-09/whats_new_17/02-09/$$.
 
-$code
 $srcfile%example/sparse/rc_sparsity.cpp%0%// BEGIN C++%// END C++%1%$$
-$$
 
 $end
 */

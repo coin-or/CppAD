@@ -18,9 +18,7 @@ $$
 
 $section The AD exp Function: Example and Test$$
 
-$code
 $srcfile%example/general/expm1.cpp%0%// BEGIN C++%// END C++%1%$$
-$$
 
 $end
 */

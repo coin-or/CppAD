@@ -15,9 +15,7 @@ $begin numeric_type.cpp$$
 
 $section The NumericType: Example and Test$$
 
-$code
 $srcfile%example/general/numeric_type.cpp%0%// BEGIN C++%// END C++%1%$$
-$$
 
 $end
 */

@@ -25,9 +25,7 @@ This example demonstrates how CppAD can be used in a
 pthread multi-threading environment.
 
 $head Source Code$$
-$code
 $srcfile%example/multi_thread/pthread/simple_ad_pthread.cpp%0%// BEGIN C++%// END C++%1%$$
-$$
 
 $end
 ------------------------------------------------------------------------------

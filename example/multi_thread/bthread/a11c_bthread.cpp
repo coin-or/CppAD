@@ -25,9 +25,7 @@ $head Purpose$$
 This example just demonstrates Boost threads and does not use CppAD at all.
 
 $head Source Code$$
-$code
 $srcfile%example/multi_thread/bthread/a11c_bthread.cpp%0%// BEGIN C++%// END C++%1%$$
-$$
 $end
 ----------------------------------------------------------------------------
 */

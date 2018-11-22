@@ -20,9 +20,7 @@ $$
 $section Sparse Jacobian: Example and Test$$
 
 
-$code
 $srcfile%example/sparse/sparse_jacobian.cpp%0%// BEGIN C++%// END C++%1%$$
-$$
 
 $end
 */

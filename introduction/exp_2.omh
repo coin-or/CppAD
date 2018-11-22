@@ -16,9 +16,7 @@ $$
 
 $section exp_2: Implementation$$
 
-$code
 $srcfile%introduction/exp_2.hpp%0%// BEGIN C++%// END C++%$$
-$$
 
 $end
 -----------------------------------------------------------------------------
@@ -29,9 +27,7 @@ $$
 
 $section exp_2: Test$$
 
-$code
 $srcfile%introduction/exp_2.cpp%0%// BEGIN C++%// END C++%$$
-$$
 
 $end
 -----------------------------------------------------------------------------
