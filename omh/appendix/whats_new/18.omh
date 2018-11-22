@@ -51,6 +51,18 @@ $$
 
 $section Changes and Additions to CppAD During 2018$$
 
+$head Branch: batch_edit$$
+
+$subhead 11-22$$
+$list number$$
+Change the $cref license$$ to be $code EPL-2.0$$
+with a $code GPL-3.0$$ alternative.
+$lnext
+Move the
+$cref/distribution/download/Distribution Directory/$$
+sub-directory $code cppad$$ to $code include/cppad$$.
+$lend
+
 $head 11-21$$
 Add a checkpoint $cref/constructor/wish_list/checkpoint/Constructor/$$
 item to the wish list.

@@ -38,7 +38,7 @@ $rnext
 $code build$$ $cnext
 	Used to build the libraries, examples, and tests.
 $rnext
-$code cppad$$ $cnext
+$code include$$ $cnext
 	The CppAD include directory.
 $rnext
 $code cppad_ipopt$$ $cnext
