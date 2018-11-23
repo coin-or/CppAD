@@ -571,7 +571,7 @@ is the index for the variable corresponding to the result of this operation
 \param op
 The operator code (OpCode) for this operation.
 
-\param ind
+\param arg
 is the vector of argument indices for this operation
 (must have NumArg(op) elements).
 */
@@ -582,7 +582,7 @@ void printOp(
 	size_t                 i_op   ,
 	size_t                 i_var  ,
 	OpCode                 op     ,
-	const addr_t*          ind    )
+	const addr_t*          arg    )
 {
 	CPPAD_ASSERT_KNOWN(
 		! thread_alloc::in_parallel() ,
@@ -598,7 +598,7 @@ void printOp(
 	else	printOpField(os,  "v=",      "",    5);
 	if( op == CExpOp || op == CSkipOp )
 	{	printOpField(os, "", OpName(op), 5);
-		printOpField(os, "", CompareOpName[ ind[0] ], 3);
+		printOpField(os, "", CompareOpName[ arg[0] ], 3);
 	}
 	else	printOpField(os, "", OpName(op), 8);
 
@@ -608,109 +608,109 @@ void printOp(
 	{
 		case CSkipOp:
 		/*
-		ind[0]     = the Rel operator: Lt, Le, Eq, Ge, Gt, or Ne
-		ind[1] & 1 = is left a variable
-		ind[1] & 2 = is right a variable
-		ind[2]     = index correspoding to left
-		ind[3]     = index correspoding to right
-		ind[4] = number of operations to skip if CExpOp comparision is true
-		ind[5] = number of operations to skip if CExpOp comparision is false
-		ind[6] -> ind[5+ind[4]]               = skip operations if true
-		ind[6+ind[4]] -> ind[5+ind[4]+ind[5]] = skip operations if false
-		ind[6+ind[4]+ind[5]] = ind[4] + ind[5]
+		arg[0]     = the Rel operator: Lt, Le, Eq, Ge, Gt, or Ne
+		arg[1] & 1 = is left a variable
+		arg[1] & 2 = is right a variable
+		arg[2]     = index correspoding to left
+		arg[3]     = index correspoding to right
+		arg[4] = number of operations to skip if CExpOp comparision is true
+		arg[5] = number of operations to skip if CExpOp comparision is false
+		arg[6] -> arg[5+arg[4]]               = skip operations if true
+		arg[6+arg[4]] -> arg[5+arg[4]+arg[5]] = skip operations if false
+		arg[6+arg[4]+arg[5]] = arg[4] + arg[5]
 		*/
-		CPPAD_ASSERT_UNKNOWN( ind[6+ind[4]+ind[5]] == ind[4]+ind[5] );
-		CPPAD_ASSERT_UNKNOWN(ind[1] != 0);
-		if( ind[1] & 1 )
-			printOpField(os, " vl=", ind[2], ncol);
-		else	printOpField(os, " pl=", play->GetPar(ind[2]), ncol);
-		if( ind[1] & 2 )
-			printOpField(os, " vr=", ind[3], ncol);
-		else	printOpField(os, " pr=", play->GetPar(ind[3]), ncol);
-		if( size_t(ind[4]) < 3 )
-		{	for(addr_t i = 0; i < ind[4]; i++)
-				printOpField(os, " ot=", ind[6+i], ncol);
+		CPPAD_ASSERT_UNKNOWN( arg[6+arg[4]+arg[5]] == arg[4]+arg[5] );
+		CPPAD_ASSERT_UNKNOWN(arg[1] != 0);
+		if( arg[1] & 1 )
+			printOpField(os, " vl=", arg[2], ncol);
+		else	printOpField(os, " pl=", play->GetPar(arg[2]), ncol);
+		if( arg[1] & 2 )
+			printOpField(os, " vr=", arg[3], ncol);
+		else	printOpField(os, " pr=", play->GetPar(arg[3]), ncol);
+		if( size_t(arg[4]) < 3 )
+		{	for(addr_t i = 0; i < arg[4]; i++)
+				printOpField(os, " ot=", arg[6+i], ncol);
 		}
 		else
-		{	printOpField(os, "\n\tot=", ind[6+0], ncol);
-			for(addr_t i = 1; i < ind[4]; i++)
-				printOpField(os, " ot=", ind[6+i], ncol);
+		{	printOpField(os, "\n\tot=", arg[6+0], ncol);
+			for(addr_t i = 1; i < arg[4]; i++)
+				printOpField(os, " ot=", arg[6+i], ncol);
 		}
-		if( size_t(ind[5]) < 3 )
-		{	for(addr_t i = 0; i < ind[5]; i++)
-				printOpField(os, " of=", ind[6+ind[4]+i], ncol);
+		if( size_t(arg[5]) < 3 )
+		{	for(addr_t i = 0; i < arg[5]; i++)
+				printOpField(os, " of=", arg[6+arg[4]+i], ncol);
 		}
 		else
-		{	printOpField(os, "\n\tof=", ind[6+ind[4]+0], ncol);
-			{	for(addr_t i = 1; i < ind[5]; i++)
-					printOpField(os, " of=", ind[6+ind[4]+i], ncol);
+		{	printOpField(os, "\n\tof=", arg[6+arg[4]+0], ncol);
+			{	for(addr_t i = 1; i < arg[5]; i++)
+					printOpField(os, " of=", arg[6+arg[4]+i], ncol);
 			}
 		}
 		break;
 
 		case CSumOp:
 		/*
-		ind[0] = index of parameter that initializes summation
-		ind[1] = end in ind of addition variables in summation
-		ind[2] = end in ind of subtraction variables in summation
-		ind[3] = end in ind of addition dynamic parameters in summation
-		ind[4] = end in ind of subtraction dynamic parameters in summation
-		ind[5],      ... , ind[ind[1]-1]: indices for addition variables
-		ind[ind[1]], ... , ind[ind[2]-1]: indices for subtraction variables
-		ind[ind[2]], ... , ind[ind[3]-1]: indices for additon dynamics
-		ind[ind[3]], ... , ind[ind[4]-1]: indices for subtraction dynamics
-		ind[ind[4]] = ind[4]
+		arg[0] = index of parameter that initializes summation
+		arg[1] = end in arg of addition variables in summation
+		arg[2] = end in arg of subtraction variables in summation
+		arg[3] = end in arg of addition dynamic parameters in summation
+		arg[4] = end in arg of subtraction dynamic parameters in summation
+		arg[5],      ... , arg[arg[1]-1]: indices for addition variables
+		arg[arg[1]], ... , arg[arg[2]-1]: indices for subtraction variables
+		arg[arg[2]], ... , arg[arg[3]-1]: indices for additon dynamics
+		arg[arg[3]], ... , arg[arg[4]-1]: indices for subtraction dynamics
+		arg[arg[4]] = arg[4]
 		*/
-		CPPAD_ASSERT_UNKNOWN( ind[ind[4]] == ind[4] );
-		printOpField(os, " pr=", play->GetPar(ind[0]), ncol);
-		for(addr_t i = 5; i < ind[1]; i++)
-			 printOpField(os, " +v=", ind[i], ncol);
-		for(addr_t i = ind[1]; i < ind[2]; i++)
-			 printOpField(os, " -v=", ind[i], ncol);
-		for(addr_t i = ind[2]; i < ind[3]; i++)
-			 printOpField(os, " +d=", play->GetPar(ind[i]), ncol);
-		for(addr_t i = ind[3]; i < ind[4]; i++)
-			 printOpField(os, " -d=", play->GetPar(ind[i]), ncol);
+		CPPAD_ASSERT_UNKNOWN( arg[arg[4]] == arg[4] );
+		printOpField(os, " pr=", play->GetPar(arg[0]), ncol);
+		for(addr_t i = 5; i < arg[1]; i++)
+			 printOpField(os, " +v=", arg[i], ncol);
+		for(addr_t i = arg[1]; i < arg[2]; i++)
+			 printOpField(os, " -v=", arg[i], ncol);
+		for(addr_t i = arg[2]; i < arg[3]; i++)
+			 printOpField(os, " +d=", play->GetPar(arg[i]), ncol);
+		for(addr_t i = arg[3]; i < arg[4]; i++)
+			 printOpField(os, " -d=", play->GetPar(arg[i]), ncol);
 		break;
 
 		case LdpOp:
 		CPPAD_ASSERT_UNKNOWN( NumArg(op) == 3 );
-		printOpField(os, "off=", ind[0], ncol);
-		printOpField(os, "idx=", ind[1], ncol);
+		printOpField(os, "off=", arg[0], ncol);
+		printOpField(os, "idx=", arg[1], ncol);
 		break;
 
 		case LdvOp:
 		CPPAD_ASSERT_UNKNOWN( NumArg(op) == 3 );
-		printOpField(os, "off=", ind[0], ncol);
-		printOpField(os, "  v=", ind[1], ncol);
+		printOpField(os, "off=", arg[0], ncol);
+		printOpField(os, "  v=", arg[1], ncol);
 		break;
 
 		case StppOp:
 		CPPAD_ASSERT_UNKNOWN( NumArg(op) == 3 );
-		printOpField(os, "off=", ind[0], ncol);
-		printOpField(os, "idx=", ind[1], ncol);
-		printOpField(os, " pr=", play->GetPar(ind[2]), ncol);
+		printOpField(os, "off=", arg[0], ncol);
+		printOpField(os, "idx=", arg[1], ncol);
+		printOpField(os, " pr=", play->GetPar(arg[2]), ncol);
 		break;
 
 		case StpvOp:
 		CPPAD_ASSERT_UNKNOWN( NumArg(op) == 3 );
-		printOpField(os, "off=", ind[0], ncol);
-		printOpField(os, "idx=", ind[1], ncol);
-		printOpField(os, " vr=", ind[2], ncol);
+		printOpField(os, "off=", arg[0], ncol);
+		printOpField(os, "idx=", arg[1], ncol);
+		printOpField(os, " vr=", arg[2], ncol);
 		break;
 
 		case StvpOp:
 		CPPAD_ASSERT_UNKNOWN( NumArg(op) == 3 );
-		printOpField(os, "off=", ind[0], ncol);
-		printOpField(os, " vl=", ind[1], ncol);
-		printOpField(os, " pr=", play->GetPar(ind[2]), ncol);
+		printOpField(os, "off=", arg[0], ncol);
+		printOpField(os, " vl=", arg[1], ncol);
+		printOpField(os, " pr=", play->GetPar(arg[2]), ncol);
 		break;
 
 		case StvvOp:
 		CPPAD_ASSERT_UNKNOWN( NumArg(op) == 3 );
-		printOpField(os, "off=", ind[0], ncol);
-		printOpField(os, " vl=", ind[1], ncol);
-		printOpField(os, " vr=", ind[2], ncol);
+		printOpField(os, "off=", arg[0], ncol);
+		printOpField(os, " vl=", arg[1], ncol);
+		printOpField(os, " vr=", arg[2], ncol);
 		break;
 
 		case AddvvOp:
@@ -724,8 +724,8 @@ void printOp(
 		case SubvvOp:
 		case ZmulvvOp:
 		CPPAD_ASSERT_UNKNOWN( NumArg(op) == 2 );
-		printOpField(os, " vl=", ind[0], ncol);
-		printOpField(os, " vr=", ind[1], ncol);
+		printOpField(os, " vl=", arg[0], ncol);
+		printOpField(os, " vr=", arg[1], ncol);
 		break;
 
 		case AddpvOp:
@@ -739,8 +739,8 @@ void printOp(
 		case PowpvOp:
 		case ZmulpvOp:
 		CPPAD_ASSERT_UNKNOWN( NumArg(op) == 2 );
-		printOpField(os, " pl=", play->GetPar(ind[0]), ncol);
-		printOpField(os, " vr=", ind[1], ncol);
+		printOpField(os, " pl=", play->GetPar(arg[0]), ncol);
+		printOpField(os, " vr=", arg[1], ncol);
 		break;
 
 		case DivvpOp:
@@ -750,8 +750,8 @@ void printOp(
 		case SubvpOp:
 		case ZmulvpOp:
 		CPPAD_ASSERT_UNKNOWN( NumArg(op) == 2 );
-		printOpField(os, " vl=", ind[0], ncol);
-		printOpField(os, " pr=", play->GetPar(ind[1]), ncol);
+		printOpField(os, " vl=", arg[0], ncol);
+		printOpField(os, " pr=", play->GetPar(arg[1]), ncol);
 		break;
 
 		case AbsOp:
@@ -775,43 +775,43 @@ void printOp(
 		case TanOp:
 		case TanhOp:
 		CPPAD_ASSERT_UNKNOWN( NumArg(op) == 1 );
-		printOpField(os, "  v=", ind[0], ncol);
+		printOpField(os, "  v=", arg[0], ncol);
 		break;
 
 		case ErfOp:
 		CPPAD_ASSERT_UNKNOWN( NumArg(op) == 3 );
-		// ind[1] points to the parameter 0
-		// ind[2] points to the parameter 2 / sqrt(pi)
-		printOpField(os, "  v=", ind[0], ncol);
+		// arg[1] points to the parameter 0
+		// arg[2] points to the parameter 2 / sqrt(pi)
+		printOpField(os, "  v=", arg[0], ncol);
 		break;
 
 		case ParOp:
 		case FunapOp:
 		case FunrpOp:
 		CPPAD_ASSERT_UNKNOWN( NumArg(op) == 1 );
-		printOpField(os, "  p=", play->GetPar(ind[0]), ncol);
+		printOpField(os, "  p=", play->GetPar(arg[0]), ncol);
 		break;
 
 		case AFunOp:
 		CPPAD_ASSERT_UNKNOWN( NumArg(op) == 4 );
-		{	std::string name =  atomic_base<Base>::class_name(ind[0]);
+		{	std::string name =  atomic_base<Base>::class_name(arg[0]);
 			printOpField(os, " f=",   name.c_str(), ncol);
-			printOpField(os, " i=", ind[1], ncol);
-			printOpField(os, " n=", ind[2], ncol);
-			printOpField(os, " m=", ind[3], ncol);
+			printOpField(os, " i=", arg[1], ncol);
+			printOpField(os, " n=", arg[2], ncol);
+			printOpField(os, " m=", arg[3], ncol);
 		}
 		break;
 
 		case PriOp:
 		CPPAD_ASSERT_NARG_NRES(op, 5, 0);
-		if( ind[0] & 1 )
-			printOpField(os, " v=", ind[1], ncol);
-		else	printOpField(os, " p=", play->GetPar(ind[1]), ncol);
-		os << "before=\"" << play->GetTxt(ind[2]) << "\"";
-		if( ind[0] & 2 )
-			printOpField(os, " v=", ind[3], ncol);
-		else	printOpField(os, " p=", play->GetPar(ind[3]), ncol);
-		os << "after=\"" << play->GetTxt(ind[4]) << "\"";
+		if( arg[0] & 1 )
+			printOpField(os, " v=", arg[1], ncol);
+		else	printOpField(os, " p=", play->GetPar(arg[1]), ncol);
+		os << "before=\"" << play->GetTxt(arg[2]) << "\"";
+		if( arg[0] & 2 )
+			printOpField(os, " v=", arg[3], ncol);
+		else	printOpField(os, " p=", play->GetPar(arg[3]), ncol);
+		os << "after=\"" << play->GetTxt(arg[4]) << "\"";
 		break;
 
 		case BeginOp:
@@ -827,28 +827,28 @@ void printOp(
 
 		case DisOp:
 		CPPAD_ASSERT_UNKNOWN( NumArg(op) == 2 );
-		{	const char* name = discrete<Base>::name(ind[0]);
+		{	const char* name = discrete<Base>::name(arg[0]);
 			printOpField(os, " f=", name, ncol);
-			printOpField(os, " x=", ind[1], ncol);
+			printOpField(os, " x=", arg[1], ncol);
 		}
 		break;
 
 
 		case CExpOp:
-		CPPAD_ASSERT_UNKNOWN(ind[1] != 0);
+		CPPAD_ASSERT_UNKNOWN(arg[1] != 0);
 		CPPAD_ASSERT_UNKNOWN( NumArg(op) == 6 );
-		if( ind[1] & 1 )
-			printOpField(os, " vl=", ind[2], ncol);
-		else	printOpField(os, " pl=", play->GetPar(ind[2]), ncol);
-		if( ind[1] & 2 )
-			printOpField(os, " vr=", ind[3], ncol);
-		else	printOpField(os, " pr=", play->GetPar(ind[3]), ncol);
-		if( ind[1] & 4 )
-			printOpField(os, " vt=", ind[4], ncol);
-		else	printOpField(os, " pt=", play->GetPar(ind[4]), ncol);
-		if( ind[1] & 8 )
-			printOpField(os, " vf=", ind[5], ncol);
-		else	printOpField(os, " pf=", play->GetPar(ind[5]), ncol);
+		if( arg[1] & 1 )
+			printOpField(os, " vl=", arg[2], ncol);
+		else	printOpField(os, " pl=", play->GetPar(arg[2]), ncol);
+		if( arg[1] & 2 )
+			printOpField(os, " vr=", arg[3], ncol);
+		else	printOpField(os, " pr=", play->GetPar(arg[3]), ncol);
+		if( arg[1] & 4 )
+			printOpField(os, " vt=", arg[4], ncol);
+		else	printOpField(os, " pt=", play->GetPar(arg[4]), ncol);
+		if( arg[1] & 8 )
+			printOpField(os, " vf=", arg[5], ncol);
+		else	printOpField(os, " pf=", play->GetPar(arg[5]), ncol);
 		break;
 
 		case EqppOp:
@@ -856,8 +856,8 @@ void printOp(
 		case LtppOp:
 		case NeppOp:
 		CPPAD_ASSERT_UNKNOWN( NumArg(op) == 2 );
-		printOpField(os, " pl=", play->GetPar(ind[0]), ncol);
-		printOpField(os, " pr=", play->GetPar(ind[1]), ncol);
+		printOpField(os, " pl=", play->GetPar(arg[0]), ncol);
+		printOpField(os, " pr=", play->GetPar(arg[1]), ncol);
 		break;
 
 		default:

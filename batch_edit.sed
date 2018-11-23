@@ -8,7 +8,6 @@
 # 12. Remove all doxygen \a commands (not used consistently)
 # 13. Remove CPPAD_INLINE_FRIEND_TEMPLATE_FUNCTION
 # 14. Remove all inlines for functions that depend on template parameters.
-# 15. Change 'ind[0-9] -> arg[0-9] when used as operator arguments.
 # 17. Remove 'It returns true if it succeeds and false otherwise.'
 # 18. Change template <class *> -> template <typename *>.
 # 19. Create check_sort.sh and use it to sort all alphabetical lists.
@@ -38,15 +37,3 @@
 # '
 # ----------------------------------------------------------------------------
 # Put other sed commands below here and without # at start of line
-s|user's atomic op|atomic function|
-s|forward_user|atomic forward|
-s|special variable user for parameters|special value for parameters|
-s|call users function|call atomic function|
-s|user function|atomic function|
-s|user calculation|atomic calculation|
-s|atomic user|atomic function|
-s|user_trace|atom_trace|g
-s|user_\([vtp][xy][^a-z]\)|atom_\1|g
-s|user_\([vtp][xy]\)$|atom_\1|g
-s|user_ok\([^a-z_]\)|atom_ok\1|g
-s|user_\([kq][^a-z_]\)|atom_\1|g

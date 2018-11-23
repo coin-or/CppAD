@@ -832,71 +832,71 @@ void recorder<Base>::cond_exp(
 	// check input result
 	CPPAD_ASSERT_UNKNOWN( Constant(result) );
 
-	// ind[0] = cop
-	addr_t ind0 = addr_t( cop );
+	// arg[0] = cop
+	addr_t arg0 = addr_t( cop );
 
-	// ind[1] = base 2 represenation of the value
+	// arg[1] = base 2 represenation of the value
 	// [Var(left), Var(right), Var(if_true), Var(if_false)]
-	addr_t ind1 = 0;
+	addr_t arg1 = 0;
 
-	// ind[2] = left address
-	// set first bit in ind1
-	addr_t ind2 = left.taddr_;
+	// arg[2] = left address
+	// set first bit in arg1
+	addr_t arg2 = left.taddr_;
 	if( Constant(left) )
-		ind2 = put_con_par(left.value_);
+		arg2 = put_con_par(left.value_);
 	else
 	{	CPPAD_ASSERT_KNOWN( tape_id == left.tape_id_ ,
 		"CondExpRel: arguments are variables or dynamics for different thread"
 		);
 		if(left.ad_type_ != dyn_ad_type)
-			ind1 += 1;
+			arg1 += 1;
 	}
 
-	// ind[3] = right address
-	// set second bit in ind1
-	addr_t ind3 = right.taddr_;
+	// arg[3] = right address
+	// set second bit in arg1
+	addr_t arg3 = right.taddr_;
 	if( Constant(right) )
-		ind3 = put_con_par(right.value_);
+		arg3 = put_con_par(right.value_);
 	else
 	{	CPPAD_ASSERT_KNOWN( tape_id == right.tape_id_ ,
 		"CondExpRel: arguments are variables or dynamics for different thread"
 		);
 		if(right.ad_type_ != dyn_ad_type)
-			ind1 += 2;
+			arg1 += 2;
 	}
 
-	// ind[4] = if_true address
-	// set third bit in ind1
-	addr_t ind4 = if_true.taddr_;
+	// arg[4] = if_true address
+	// set third bit in arg1
+	addr_t arg4 = if_true.taddr_;
 	if( Constant(if_true) )
-		ind4 = put_con_par(if_true.value_);
+		arg4 = put_con_par(if_true.value_);
 	else
 	{	CPPAD_ASSERT_KNOWN( tape_id == if_true.tape_id_ ,
 		"CondExpRel: arguments are variables or dynamics for different thread"
 		);
 		if(if_true.ad_type_ != dyn_ad_type)
-			ind1 += 4;
+			arg1 += 4;
 	}
 
-	// ind[5] =  if_false address
-	// set fourth bit in ind1
-	addr_t ind5 = if_false.taddr_;
+	// arg[5] =  if_false address
+	// set fourth bit in arg1
+	addr_t arg5 = if_false.taddr_;
 	if( Constant(if_false) )
-		ind5 = put_con_par(if_false.value_);
+		arg5 = put_con_par(if_false.value_);
 	else
 	{	CPPAD_ASSERT_KNOWN( tape_id == if_false.tape_id_ ,
 		"CondExpRel: arguments are variables or dynamics for different thread"
 		);
 		if(if_false.ad_type_ != dyn_ad_type)
-			ind1 += 8;
+			arg1 += 8;
 	}
-	if( ind1 == 0 )
+	if( arg1 == 0 )
 	{	// none of the arguments are variables, record cond_exp_dyn
 
 		// put the result at the end of the parameter vector as dynamic
 		// put_dyn_cond_exp(par, cop, left, right, if_true, if_false)
 		result.taddr_   = put_dyn_cond_exp(
-			result.value_, CompareOp(ind0), ind2, ind3, ind4, ind5
+			result.value_, CompareOp(arg0), arg2, arg3, arg4, arg5
 		);
 		result.ad_type_ = dyn_ad_type;
 		result.tape_id_ = tape_id;
@@ -910,7 +910,7 @@ void recorder<Base>::cond_exp(
 
 		// put operator in tape
 		result.taddr_ = PutOp(CExpOp);
-		PutArg(ind0, ind1, ind2, ind3, ind4, ind5);
+		PutArg(arg0, arg1, arg2, arg3, arg4, arg5);
 
 		// make result a variable
 		CPPAD_ASSERT_UNKNOWN( result.ad_type_ == no_ad_type );

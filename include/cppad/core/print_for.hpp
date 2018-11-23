@@ -151,35 +151,35 @@ namespace CppAD {
 			std::strlen(after) <= 1000 ,
 			"PrintFor: length of after is greater than 1000 characters"
 		);
-		addr_t ind0, ind1, ind2, ind3, ind4;
+		addr_t arg0, arg1, arg2, arg3, arg4;
 
-		// ind[0] = base 2 representation of the value [Var(pos), Var(var)]
-		ind0 = 0;
+		// arg[0] = base 2 representation of the value [Var(pos), Var(var)]
+		arg0 = 0;
 
-		// ind[1] = address for pos
+		// arg[1] = address for pos
 		if( Parameter(pos) )
-			ind1  = tape->Rec_.put_con_par(pos.value_);
+			arg1  = tape->Rec_.put_con_par(pos.value_);
 		else
-		{	ind0 += 1;
-			ind1  = pos.taddr_;
+		{	arg0 += 1;
+			arg1  = pos.taddr_;
 		}
 
-		// ind[2] = address of before
-		ind2 = tape->Rec_.PutTxt(before);
+		// arg[2] = address of before
+		arg2 = tape->Rec_.PutTxt(before);
 
-		// ind[3] = address for var
+		// arg[3] = address for var
 		if( Parameter(var) )
-			ind3  = tape->Rec_.put_con_par(var.value_);
+			arg3  = tape->Rec_.put_con_par(var.value_);
 		else
-		{	ind0 += 2;
-			ind3  = var.taddr_;
+		{	arg0 += 2;
+			arg3  = var.taddr_;
 		}
 
-		// ind[4] = address of after
-		ind4 = tape->Rec_.PutTxt(after);
+		// arg[4] = address of after
+		arg4 = tape->Rec_.PutTxt(after);
 
 		// put the operator in the tape
-		tape->Rec_.PutArg(ind0, ind1, ind2, ind3, ind4);
+		tape->Rec_.PutArg(arg0, arg1, arg2, arg3, arg4);
 		tape->Rec_.PutOp(local::PriOp);
 	}
 	// Fold all other cases into the case above
