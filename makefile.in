@@ -691,7 +691,7 @@ nobase_myinclude_HEADERS = \
 	include/cppad/local/parameter_op.hpp \
 	include/cppad/local/player.hpp \
 	include/cppad/local/play/addr_enum.hpp \
-	include/cppad/local/play/user_op_info.hpp \
+	include/cppad/local/play/atom_op_info.hpp \
 	include/cppad/local/play/sequential_iterator.hpp \
 	include/cppad/local/play/random_iterator.hpp \
 	include/cppad/local/play/random_setup.hpp \
@@ -726,7 +726,7 @@ nobase_myinclude_HEADERS = \
 	include/cppad/local/sub_op.hpp \
 	include/cppad/local/tanh_op.hpp \
 	include/cppad/local/tan_op.hpp \
-	include/cppad/local/user_state.hpp \
+	include/cppad/local/atom_state.hpp \
 	include/cppad/local/zmul_op.hpp \
 	include/cppad/speed/det_33.hpp \
 	include/cppad/speed/det_by_lu.hpp \

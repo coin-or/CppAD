@@ -412,9 +412,9 @@ void optimize_run(
 	OpCode          op;     // operator
 	const addr_t*   arg;    // arguments
 	size_t          i_var;  // variable index of primary (last) result
-	enum_user_state user_state;
+	enum_atom_state atom_state;
 	//
-	user_state = start_user;
+	atom_state = start_atom;
 	i_var      = 0;
 	for(i_op = 0; i_op < num_op; ++i_op)
 	{	// if non-zero, use previous result in place of this operator.
@@ -445,7 +445,7 @@ void optimize_run(
 		{	skip      &= cskip_order_next < num_cexp;
 			skip      &= op != BeginOp;
 			skip      &= op != InvOp;
-			skip      &= user_state == start_user;
+			skip      &= atom_state == start_atom;
 			if( skip )
 			{	size_t j = cskip_order[cskip_order_next];
 				if( NumRes(op) > 0 )
@@ -474,11 +474,11 @@ void optimize_run(
 			}
 		}
 		if( op == AFunOp )
-		{	if( user_state == start_user )
-				user_state = end_user;
+		{	if( atom_state == start_atom )
+				atom_state = end_atom;
 			else
-			{	CPPAD_ASSERT_UNKNOWN( user_state == end_user );
-				user_state = start_user;
+			{	CPPAD_ASSERT_UNKNOWN( atom_state == end_atom );
+				atom_state = start_atom;
 			}
 		}
 		//
@@ -977,7 +977,7 @@ void optimize_run(
 			case AFunOp:
 			CPPAD_ASSERT_UNKNOWN( previous == 0 );
 			CPPAD_ASSERT_NARG_NRES(op, 4, 0);
-			// user_old, user_n, user_m
+			// atom_old, atom_n, atom_m
 			rec->PutArg(arg[0], arg[1], arg[2], arg[3]);
 			new_op[i_op] = addr_t( rec->num_op_rec() );
 			rec->PutOp(AFunOp);

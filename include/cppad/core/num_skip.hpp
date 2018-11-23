@@ -62,7 +62,7 @@ $end
 -----------------------------------------------------------------------------
 */
 
-# include <cppad/local/play/user_op_info.hpp>
+# include <cppad/local/play/atom_op_info.hpp>
 
 // BEGIN CppAD namespace
 namespace CppAD {
@@ -74,7 +74,7 @@ size_t ADFun<Base,RecBase>::number_skip(void)
 {	// must pass through operation sequence to map operations to variables
 
 	// information defined by forward_user
-	size_t user_old=0, user_m=0, user_n=0;
+	size_t atom_old=0, atom_m=0, atom_n=0;
 
 	// number of variables skipped
 	size_t num_var_skip = 0;
@@ -93,9 +93,9 @@ size_t ADFun<Base,RecBase>::number_skip(void)
 		if( op == local::AFunOp )
 		{	// skip only appears at front or back AFunOp of atomic function call
 			bool skip_call = cskip_op_[ itr.op_index() ];
-			local::play::user_op_info<Base>(op, arg, user_old, user_m, user_n);
+			local::play::atom_op_info<Base>(op, arg, atom_old, atom_m, atom_n);
 			CPPAD_ASSERT_UNKNOWN( NumRes(op) == 0 );
-			size_t num_op = user_m + user_n + 1;
+			size_t num_op = atom_m + atom_n + 1;
 			for(size_t i = 0; i < num_op; i++)
 			{	CPPAD_ASSERT_UNKNOWN(
 					op != local::CSkipOp && op != local::CSumOp

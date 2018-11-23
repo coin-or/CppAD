@@ -12,7 +12,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
            GNU General Public License, Version 3.0.
 ---------------------------------------------------------------------------- */
 
-# include <cppad/local/play/user_op_info.hpp>
+# include <cppad/local/play/atom_op_info.hpp>
 
 // BEGIN_CPPAD_LOCAL_SWEEP_NAMESPACE
 namespace CppAD { namespace local { namespace sweep {
@@ -160,17 +160,17 @@ void rev_hes(
 
 	// ----------------------------------------------------------------------
 	// user's atomic op
-	atomic_base<RecBase>* user_atom = CPPAD_NULL; // user's atomic op
+	atomic_base<RecBase>* atom_fun = CPPAD_NULL; // user's atomic op
 	//
 	// work space used by AFunOp.
-	vector<Base>       user_x;   // parameters in x as integers
-	pod_vector<size_t> user_ix;  // variable indices for argument vector
-	pod_vector<size_t> user_iy;  // variable indices for result vector
+	vector<Base>       atom_x;   // parameters in x as integers
+	pod_vector<size_t> atom_ix;  // variable indices for argument vector
+	pod_vector<size_t> atom_iy;  // variable indices for result vector
 	//
 	// information set by forward_user (initialization to avoid warnings)
-	size_t user_old=0, user_m=0, user_n=0, user_i=0, user_j=0;
+	size_t atom_old=0, atom_m=0, atom_n=0, atom_i=0, atom_j=0;
 	// information set by forward_user (necessary initialization)
-	enum_user_state user_state = end_user; // proper initialization
+	enum_atom_state atom_state = end_atom; // proper initialization
 	// ----------------------------------------------------------------------
 	//
 	// pointer to the beginning of the parameter vector
@@ -628,28 +628,28 @@ void rev_hes(
 			case AFunOp:
 			// start or end an atomic function call
 			CPPAD_ASSERT_UNKNOWN(
-				user_state == start_user || user_state == end_user
+				atom_state == start_atom || atom_state == end_atom
 			);
-			flag = user_state == end_user;
-			user_atom = play::user_op_info<RecBase>(
-				op, arg, user_old, user_m, user_n
+			flag = atom_state == end_atom;
+			atom_fun = play::atom_op_info<RecBase>(
+				op, arg, atom_old, atom_m, atom_n
 			);
 			if( flag )
-			{	user_state = ret_user;
-				user_i     = user_m;
-				user_j     = user_n;
+			{	atom_state = ret_atom;
+				atom_i     = atom_m;
+				atom_j     = atom_n;
 				//
-				user_x.resize(user_n);
-				user_ix.resize(user_n);
-				user_iy.resize(user_m);
+				atom_x.resize(atom_n);
+				atom_ix.resize(atom_n);
+				atom_iy.resize(atom_m);
 			}
 			else
-			{	user_state = end_user;
+			{	atom_state = end_atom;
 				//
 				// call users function for this operation
-				user_atom->set_old(user_old);
-				user_atom->rev_sparse_hes(
-					user_x, user_ix, user_iy,
+				atom_fun->set_old(atom_old);
+				atom_fun->rev_sparse_hes(
+					atom_x, atom_ix, atom_iy,
 					for_jac_sparse, RevJac, rev_hes_sparse
 				);
 			}
@@ -658,65 +658,65 @@ void rev_hes(
 			case FunapOp:
 			// parameter argument in an atomic operation sequence
 			CPPAD_ASSERT_UNKNOWN( NumArg(op) == 1 );
-			CPPAD_ASSERT_UNKNOWN( user_state == arg_user );
-			CPPAD_ASSERT_UNKNOWN( user_i == 0 );
-			CPPAD_ASSERT_UNKNOWN( user_j <= user_n );
+			CPPAD_ASSERT_UNKNOWN( atom_state == arg_atom );
+			CPPAD_ASSERT_UNKNOWN( atom_i == 0 );
+			CPPAD_ASSERT_UNKNOWN( atom_j <= atom_n );
 			CPPAD_ASSERT_UNKNOWN( size_t( arg[0] ) < num_par );
 			//
-			--user_j;
+			--atom_j;
 			// argument parameter value
-			user_x[user_j] = parameter[arg[0]];
+			atom_x[atom_j] = parameter[arg[0]];
 			// special variable index used for parameters
-			user_ix[user_j] = 0;
+			atom_ix[atom_j] = 0;
 			//
-			if( user_j == 0 )
-				user_state = start_user;
+			if( atom_j == 0 )
+				atom_state = start_atom;
 			break;
 
 			case FunavOp:
 			// variable argument in an atomic operation sequence
 			CPPAD_ASSERT_UNKNOWN( NumArg(op) == 1 );
-			CPPAD_ASSERT_UNKNOWN( user_state == arg_user );
-			CPPAD_ASSERT_UNKNOWN( user_i == 0 );
-			CPPAD_ASSERT_UNKNOWN( user_j <= user_n );
+			CPPAD_ASSERT_UNKNOWN( atom_state == arg_atom );
+			CPPAD_ASSERT_UNKNOWN( atom_i == 0 );
+			CPPAD_ASSERT_UNKNOWN( atom_j <= atom_n );
 			//
-			--user_j;
+			--atom_j;
 			// argument variables not available during sparsity calculations
-			user_x[user_j] = CppAD::numeric_limits<Base>::quiet_NaN();
+			atom_x[atom_j] = CppAD::numeric_limits<Base>::quiet_NaN();
 			// variable index for this argument
-			user_ix[user_j] = size_t(arg[0]);
+			atom_ix[atom_j] = size_t(arg[0]);
 			//
-			if( user_j == 0 )
-				user_state = start_user;
+			if( atom_j == 0 )
+				atom_state = start_atom;
 			break;
 
 			case FunrpOp:
 			// parameter result for a atomic function
 			CPPAD_ASSERT_NARG_NRES(op, 1, 0);
-			CPPAD_ASSERT_UNKNOWN( user_state == ret_user );
-			CPPAD_ASSERT_UNKNOWN( user_i <= user_m );
-			CPPAD_ASSERT_UNKNOWN( user_j == user_n );
+			CPPAD_ASSERT_UNKNOWN( atom_state == ret_atom );
+			CPPAD_ASSERT_UNKNOWN( atom_i <= atom_m );
+			CPPAD_ASSERT_UNKNOWN( atom_j == atom_n );
 			CPPAD_ASSERT_UNKNOWN( size_t( arg[0] ) < num_par );
 			//
-			--user_i;
-			user_iy[user_i] = 0; // special variable used for parameters
+			--atom_i;
+			atom_iy[atom_i] = 0; // special variable used for parameters
 			//
-			if( user_i == 0 )
-				user_state = arg_user;
+			if( atom_i == 0 )
+				atom_state = arg_atom;
 			break;
 
 			case FunrvOp:
 			// variable result for a atomic function
 			CPPAD_ASSERT_NARG_NRES(op, 0, 1);
-			CPPAD_ASSERT_UNKNOWN( user_state == ret_user );
-			CPPAD_ASSERT_UNKNOWN( user_i <= user_m );
-			CPPAD_ASSERT_UNKNOWN( user_j == user_n );
+			CPPAD_ASSERT_UNKNOWN( atom_state == ret_atom );
+			CPPAD_ASSERT_UNKNOWN( atom_i <= atom_m );
+			CPPAD_ASSERT_UNKNOWN( atom_j == atom_n );
 			//
-			--user_i;
-			user_iy[user_i] = i_var; // variable for this result
+			--atom_i;
+			atom_iy[atom_i] = i_var; // variable for this result
 			//
-			if( user_i == 0 )
-				user_state = arg_user;
+			if( atom_i == 0 )
+				atom_state = arg_atom;
 			break;
 			// -------------------------------------------------
 

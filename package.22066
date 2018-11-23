@@ -1,0 +1,12 @@
+/^.gitignore$/d
+/^authors$/d
+/^bin\/colpack.sh$/d
+/^coin.png$/d
+/^compile$/d
+/^config.guess$/d
+/^config.sub$/d
+/^configure$/d
+/^depcomp$/d
+/^install-sh$/d
+/^missing$/d
+/^uw_copy_040507.html$/d

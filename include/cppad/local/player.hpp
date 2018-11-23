@@ -16,7 +16,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 # include <cppad/local/play/sequential_iterator.hpp>
 # include <cppad/local/play/subgraph_iterator.hpp>
 # include <cppad/local/play/random_setup.hpp>
-# include <cppad/local/user_state.hpp>
+# include <cppad/local/atom_state.hpp>
 # include <cppad/local/is_pod.hpp>
 
 namespace CppAD { namespace local { // BEGIN_CPPAD_LOCAL_NAMESPACE

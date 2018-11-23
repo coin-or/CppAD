@@ -12,7 +12,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
            GNU General Public License, Version 3.0.
 ---------------------------------------------------------------------------- */
 
-# include <cppad/local/play/user_op_info.hpp>
+# include <cppad/local/play/atom_op_info.hpp>
 
 // BEGIN_CPPAD_LOCAL_SWEEP_NAMESPACE
 namespace CppAD { namespace local { namespace sweep {
@@ -152,17 +152,17 @@ void for_hes(
 	}
 	// ------------------------------------------------------------------------
 	// user's atomic op
-	atomic_base<RecBase>* user_atom = CPPAD_NULL; // user's atomic op
+	atomic_base<RecBase>* atom_fun = CPPAD_NULL; // user's atomic op
 	//
 	// work space used by AFunOp.
-	vector<Base>       user_x;   // value of parameter arguments to function
-	pod_vector<size_t> user_ix;  // variable index (on tape) for each argument
-	pod_vector<size_t> user_iy;  // variable index (on tape) for each result
+	vector<Base>       atom_x;   // value of parameter arguments to function
+	pod_vector<size_t> atom_ix;  // variable index (on tape) for each argument
+	pod_vector<size_t> atom_iy;  // variable index (on tape) for each result
 	//
 	// information set by forward_user (initialization to avoid warnings)
-	size_t user_old=0, user_m=0, user_n=0, user_i=0, user_j=0;
+	size_t atom_old=0, atom_m=0, atom_n=0, atom_i=0, atom_j=0;
 	// information set by forward_user (necessary initialization)
-	enum_user_state user_state = start_user;
+	enum_atom_state atom_state = start_atom;
 	// -------------------------------------------------------------------------
 	//
 	// pointer to the beginning of the parameter vector
@@ -180,7 +180,7 @@ void for_hes(
 	itr.op_info(op, arg, i_var);
 	CPPAD_ASSERT_UNKNOWN( op == BeginOp );
 # if CPPAD_FOR_HES_TRACE
-	vector<size_t> user_usrrp; // parameter index for FunrpOp operators
+	vector<size_t> atom_funrp; // parameter index for FunrpOp operators
 	std::cout << std::endl;
 	CppAD::vectorBool zf_value(limit);
 	CppAD::vectorBool zh_value(limit * limit);
@@ -363,30 +363,30 @@ void for_hes(
 			case AFunOp:
 			// start or end an atomic function call
 			CPPAD_ASSERT_UNKNOWN(
-				user_state == start_user || user_state == end_user
+				atom_state == start_atom || atom_state == end_atom
 			);
-			flag = user_state == start_user;
-			user_atom = play::user_op_info<RecBase>(
-				op, arg, user_old, user_m, user_n
+			flag = atom_state == start_atom;
+			atom_fun = play::atom_op_info<RecBase>(
+				op, arg, atom_old, atom_m, atom_n
 			);
 			if( flag )
-			{	user_state = arg_user;
-				user_i     = 0;
-				user_j     = 0;
+			{	atom_state = arg_atom;
+				atom_i     = 0;
+				atom_j     = 0;
 				//
-				user_x.resize( user_n );
-				user_ix.resize( user_n );
-				user_iy.resize( user_m );
+				atom_x.resize( atom_n );
+				atom_ix.resize( atom_n );
+				atom_iy.resize( atom_m );
 # if CPPAD_FOR_HES_TRACE
-				user_usrrp.resize( user_m );
+				atom_funrp.resize( atom_m );
 # endif
 			}
 			else
-			{	user_state = start_user;
+			{	atom_state = start_atom;
 				//
-				user_atom->set_old(user_old);
-				user_atom->for_sparse_hes(
-					user_x, user_ix, user_iy,
+				atom_fun->set_old(atom_old);
+				atom_fun->for_sparse_hes(
+					atom_x, atom_ix, atom_iy,
 					for_jac_sparse, rev_jac_sparse, for_hes_sparse
 				);
 			}
@@ -395,65 +395,65 @@ void for_hes(
 			case FunapOp:
 			// parameter argument for a atomic function
 			CPPAD_ASSERT_UNKNOWN( NumArg(op) == 1 );
-			CPPAD_ASSERT_UNKNOWN( user_state == arg_user );
-			CPPAD_ASSERT_UNKNOWN( user_i == 0 );
-			CPPAD_ASSERT_UNKNOWN( user_j < user_n );
+			CPPAD_ASSERT_UNKNOWN( atom_state == arg_atom );
+			CPPAD_ASSERT_UNKNOWN( atom_i == 0 );
+			CPPAD_ASSERT_UNKNOWN( atom_j < atom_n );
 			CPPAD_ASSERT_UNKNOWN( size_t( arg[0] ) < num_par );
 			//
-			user_x[user_j] = parameter[arg[0]];
-			user_ix[user_j] = 0; // special variable used for parameters
+			atom_x[atom_j] = parameter[arg[0]];
+			atom_ix[atom_j] = 0; // special variable used for parameters
 			//
-			++user_j;
-			if( user_j == user_n )
-				user_state = ret_user;
+			++atom_j;
+			if( atom_j == atom_n )
+				atom_state = ret_atom;
 			break;
 
 			case FunavOp:
 			// variable argument for a atomic function
 			CPPAD_ASSERT_UNKNOWN( NumArg(op) == 1 );
-			CPPAD_ASSERT_UNKNOWN( user_state == arg_user );
-			CPPAD_ASSERT_UNKNOWN( user_i == 0 );
-			CPPAD_ASSERT_UNKNOWN( user_j < user_n );
+			CPPAD_ASSERT_UNKNOWN( atom_state == arg_atom );
+			CPPAD_ASSERT_UNKNOWN( atom_i == 0 );
+			CPPAD_ASSERT_UNKNOWN( atom_j < atom_n );
 			//
 			// arguemnt variables not avaialbe during sparisty calculations
-			user_x[user_j] = CppAD::numeric_limits<Base>::quiet_NaN();
-			user_ix[user_j] = size_t(arg[0]); // variable for this argument
+			atom_x[atom_j] = CppAD::numeric_limits<Base>::quiet_NaN();
+			atom_ix[atom_j] = size_t(arg[0]); // variable for this argument
 			//
-			++user_j;
-			if( user_j == user_n )
-				user_state = ret_user;
+			++atom_j;
+			if( atom_j == atom_n )
+				atom_state = ret_atom;
 			break;
 
 			case FunrpOp:
 			// parameter result for a atomic function
 			CPPAD_ASSERT_NARG_NRES(op, 1, 0);
-			CPPAD_ASSERT_UNKNOWN( user_state == ret_user );
-			CPPAD_ASSERT_UNKNOWN( user_i < user_m );
-			CPPAD_ASSERT_UNKNOWN( user_j == user_n );
+			CPPAD_ASSERT_UNKNOWN( atom_state == ret_atom );
+			CPPAD_ASSERT_UNKNOWN( atom_i < atom_m );
+			CPPAD_ASSERT_UNKNOWN( atom_j == atom_n );
 			CPPAD_ASSERT_UNKNOWN( size_t( arg[0] ) < num_par );
 			//
-			user_iy[user_i] = 0; // special variable used for parameters
+			atom_iy[atom_i] = 0; // special variable used for parameters
 # if CPPAD_FOR_HES_TRACE
 			// remember argument for delayed tracing
-			user_usrrp[user_i] = arg[0];
+			atom_funrp[atom_i] = arg[0];
 # endif
-			++user_i;
-			if( user_i == user_m )
-				user_state = end_user;
+			++atom_i;
+			if( atom_i == atom_m )
+				atom_state = end_atom;
 			break;
 
 			case FunrvOp:
 			// variable result for a atomic function
 			CPPAD_ASSERT_NARG_NRES(op, 0, 1);
-			CPPAD_ASSERT_UNKNOWN( user_state == ret_user );
-			CPPAD_ASSERT_UNKNOWN( user_i < user_m );
-			CPPAD_ASSERT_UNKNOWN( user_j == user_n );
+			CPPAD_ASSERT_UNKNOWN( atom_state == ret_atom );
+			CPPAD_ASSERT_UNKNOWN( atom_i < atom_m );
+			CPPAD_ASSERT_UNKNOWN( atom_j == atom_n );
 			//
-			user_iy[user_i] = i_var; // variable index for this result
+			atom_iy[atom_i] = i_var; // variable index for this result
 			//
-			++user_i;
-			if( user_i == user_m )
-				user_state = end_user;
+			++atom_i;
+			if( atom_i == atom_m )
+				atom_state = end_atom;
 			break;
 			// -------------------------------------------------
 
@@ -471,15 +471,15 @@ void for_hes(
 		}
 # if CPPAD_FOR_HES_TRACE
 		typedef typename Vector_set::const_iterator const_iterator;
-		if( op == AFunOp && user_state == start_user )
+		if( op == AFunOp && atom_state == start_atom )
 		{	// print operators that have been delayed
-			CPPAD_ASSERT_UNKNOWN( user_m == user_iy.size() );
-			CPPAD_ASSERT_UNKNOWN( itr.op_index() > user_m );
+			CPPAD_ASSERT_UNKNOWN( atom_m == atom_iy.size() );
+			CPPAD_ASSERT_UNKNOWN( itr.op_index() > atom_m );
 			CPPAD_ASSERT_NARG_NRES(FunrpOp, 1, 0);
 			CPPAD_ASSERT_NARG_NRES(FunrvOp, 0, 1);
 			addr_t arg_tmp[1];
-			for(k = 0; k < user_m; k++)
-			{	size_t k_var = user_iy[k];
+			for(k = 0; k < atom_m; k++)
+			{	size_t k_var = atom_iy[k];
 				// value for this variable
 				for(i = 0; i < limit; i++)
 				{	zf_value[i] = false;
@@ -503,13 +503,13 @@ void for_hes(
 				OpCode op_tmp = FunrvOp;
 				if( k_var == 0 )
 				{	op_tmp     = FunrpOp;
-					arg_tmp[0] = user_usrrp[k];
+					arg_tmp[0] = atom_funrp[k];
 				}
 				// k_var is zero when there is no result
 				printOp(
 					std::cout,
 					play,
-					itr.op_index() - user_m + k,
+					itr.op_index() - atom_m + k,
 					k_var,
 					op_tmp,
 					arg_tmp

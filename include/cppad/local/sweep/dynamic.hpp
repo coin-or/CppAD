@@ -12,7 +12,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
            GNU General Public License, Version 3.0.
 ---------------------------------------------------------------------------- */
 
-# include <cppad/local/play/user_op_info.hpp>
+# include <cppad/local/play/atom_op_info.hpp>
 
 // BEGIN_CPPAD_LOCAL_SWEEP_NAMESPACE
 namespace CppAD { namespace local { namespace sweep {
@@ -26,19 +26,19 @@ Under Consruction
 This avoids warnings when NDEBUG is defined and user_ok is not used.
 If NDEBUG is defined, this resolves to
 \code
-	user_atom->forward
+	atom_fun->forward
 \endcode
 otherwise, it respolves to
 \code
-	user_ok = user_atom->forward
+	user_ok = atom_fun->forward
 \endcode
 This maco is undefined at the end of this file to facillitate is
 use with a different definition in other files.
 */
 # ifdef NDEBUG
-# define CPPAD_ATOMIC_CALL user_atom->forward
+# define CPPAD_ATOMIC_CALL atom_fun->forward
 # else
-# define CPPAD_ATOMIC_CALL user_ok = user_atom->forward
+# define CPPAD_ATOMIC_CALL user_ok = atom_fun->forward
 # endif
 
 /*!

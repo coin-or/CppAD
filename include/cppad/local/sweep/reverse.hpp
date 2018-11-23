@@ -13,7 +13,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 ---------------------------------------------------------------------------- */
 
 
-# include <cppad/local/play/user_op_info.hpp>
+# include <cppad/local/play/atom_op_info.hpp>
 
 // BEGIN_CPPAD_LOCAL_SWEEP_NAMESPACE
 namespace CppAD { namespace local { namespace sweep {
@@ -27,19 +27,19 @@ Compute derivatives of arbitrary order Taylor coefficients.
 This avoids warnings when NDEBUG is defined and user_ok is not used.
 If \c NDEBUG is defined, this resolves to
 \code
-	user_atom->reverse
+	atom_fun->reverse
 \endcode
 otherwise, it respolves to
 \code
-	user_ok = user_atom->reverse
+	user_ok = atom_fun->reverse
 \endcode
 This maco is undefined at the end of this file to facillitate is
 use with a different definition in other files.
 */
 # ifdef NDEBUG
-# define CPPAD_ATOMIC_CALL user_atom->reverse
+# define CPPAD_ATOMIC_CALL atom_fun->reverse
 # else
-# define CPPAD_ATOMIC_CALL user_ok = user_atom->reverse
+# define CPPAD_ATOMIC_CALL user_ok = atom_fun->reverse
 # endif
 
 /*!
@@ -219,20 +219,20 @@ void reverse(
 	// work space used by AFunOp.
 	const size_t user_k  = d;    // highest order we are differentiating
 	const size_t user_k1 = d+1;  // number of orders for this calculation
-	vector<size_t> user_ix;      // variable indices for argument vector
+	vector<size_t> atom_ix;      // variable indices for argument vector
 	vector<Base> user_tx;        // argument vector Taylor coefficients
 	vector<Base> user_ty;        // result vector Taylor coefficients
 	vector<Base> user_px;        // partials w.r.t argument vector
 	vector<Base> user_py;        // partials w.r.t. result vector
 	//
-	atomic_base<RecBase>* user_atom = CPPAD_NULL; // user's atomic op
+	atomic_base<RecBase>* atom_fun = CPPAD_NULL; // user's atomic op
 # ifndef NDEBUG
 	bool                  user_ok   = false;      // atomic op return value
 # endif
 	//
 	// information defined by forward_user
-	size_t user_old=0, user_m=0, user_n=0, user_i=0, user_j=0;
-	enum_user_state user_state = end_user; // proper initialization
+	size_t atom_old=0, atom_m=0, atom_n=0, atom_i=0, atom_j=0;
+	enum_atom_state atom_state = end_atom; // proper initialization
 
 	// temporary indices
 	size_t j, ell;
@@ -259,11 +259,11 @@ void reverse(
 			{
 				case AFunOp:
 				{	// get information for this atomic function call
-					CPPAD_ASSERT_UNKNOWN( user_state == end_user );
-					play::user_op_info<Base>(op, arg, user_old, user_m, user_n);
+					CPPAD_ASSERT_UNKNOWN( atom_state == end_atom );
+					play::atom_op_info<Base>(op, arg, atom_old, atom_m, atom_n);
 					//
 					// skip to the first AFunOp
-					for(size_t i = 0; i < user_m + user_n + 1; ++i)
+					for(size_t i = 0; i < atom_m + atom_n + 1; ++i)
 						--play_itr;
 					play_itr.op_info(op, arg, i_var);
 					CPPAD_ASSERT_UNKNOWN( op == AFunOp );
@@ -680,44 +680,44 @@ void reverse(
 
 			case AFunOp:
 			// start or end an atomic function call
-			flag = user_state == end_user;
-			user_atom = play::user_op_info<RecBase>(
-				op, arg, user_old, user_m, user_n
+			flag = atom_state == end_atom;
+			atom_fun = play::atom_op_info<RecBase>(
+				op, arg, atom_old, atom_m, atom_n
 			);
 			if( flag )
-			{	user_state = ret_user;
-				user_i     = user_m;
-				user_j     = user_n;
+			{	atom_state = ret_atom;
+				atom_i     = atom_m;
+				atom_j     = atom_n;
 				//
-				user_ix.resize(user_n);
-				if(user_tx.size() != user_n * user_k1)
-				{	user_tx.resize(user_n * user_k1);
-					user_px.resize(user_n * user_k1);
+				atom_ix.resize(atom_n);
+				if(user_tx.size() != atom_n * user_k1)
+				{	user_tx.resize(atom_n * user_k1);
+					user_px.resize(atom_n * user_k1);
 				}
-				if(user_ty.size() != user_m * user_k1)
-				{	user_ty.resize(user_m * user_k1);
-					user_py.resize(user_m * user_k1);
+				if(user_ty.size() != atom_m * user_k1)
+				{	user_ty.resize(atom_m * user_k1);
+					user_py.resize(atom_m * user_k1);
 				}
 			}
 			else
-			{	user_state = end_user;
+			{	atom_state = end_atom;
 				//
 				// call users function for this operation
-				user_atom->set_old(user_old);
+				atom_fun->set_old(atom_old);
 				CPPAD_ATOMIC_CALL(
 					user_k, user_tx, user_ty, user_px, user_py
 				);
 # ifndef NDEBUG
 				if( ! user_ok )
 				{	std::string msg =
-						user_atom->afun_name()
+						atom_fun->afun_name()
 						+ ": atomic_base.reverse: returned false";
 					CPPAD_ASSERT_KNOWN(false, msg.c_str() );
 				}
 # endif
-				for(j = 0; j < user_n; j++) if( user_ix[j] > 0 )
+				for(j = 0; j < atom_n; j++) if( atom_ix[j] > 0 )
 				{	for(ell = 0; ell < user_k1; ell++)
-						Partial[user_ix[j] * K + ell] +=
+						Partial[atom_ix[j] * K + ell] +=
 							user_px[j * user_k1 + ell];
 				}
 			}
@@ -726,72 +726,72 @@ void reverse(
 			case FunapOp:
 			// parameter argument in an atomic operation sequence
 			CPPAD_ASSERT_UNKNOWN( NumArg(op) == 1 );
-			CPPAD_ASSERT_UNKNOWN( user_state == arg_user );
-			CPPAD_ASSERT_UNKNOWN( user_i == 0 );
-			CPPAD_ASSERT_UNKNOWN( user_j <= user_n );
+			CPPAD_ASSERT_UNKNOWN( atom_state == arg_atom );
+			CPPAD_ASSERT_UNKNOWN( atom_i == 0 );
+			CPPAD_ASSERT_UNKNOWN( atom_j <= atom_n );
 			CPPAD_ASSERT_UNKNOWN( size_t( arg[0] ) < num_par );
 			//
-			--user_j;
-			user_ix[user_j] = 0;
-			user_tx[user_j * user_k1 + 0] = parameter[ arg[0]];
+			--atom_j;
+			atom_ix[atom_j] = 0;
+			user_tx[atom_j * user_k1 + 0] = parameter[ arg[0]];
 			for(ell = 1; ell < user_k1; ell++)
-				user_tx[user_j * user_k1 + ell] = Base(0.);
+				user_tx[atom_j * user_k1 + ell] = Base(0.);
 			//
-			if( user_j == 0 )
-				user_state = start_user;
+			if( atom_j == 0 )
+				atom_state = start_atom;
 			break;
 
 			case FunavOp:
 			// variable argument in an atomic operation sequence
 			CPPAD_ASSERT_UNKNOWN( NumArg(op) == 1 );
-			CPPAD_ASSERT_UNKNOWN( user_state == arg_user );
-			CPPAD_ASSERT_UNKNOWN( user_i == 0 );
-			CPPAD_ASSERT_UNKNOWN( user_j <= user_n );
+			CPPAD_ASSERT_UNKNOWN( atom_state == arg_atom );
+			CPPAD_ASSERT_UNKNOWN( atom_i == 0 );
+			CPPAD_ASSERT_UNKNOWN( atom_j <= atom_n );
 			//
-			--user_j;
-			user_ix[user_j] = size_t( arg[0] );
+			--atom_j;
+			atom_ix[atom_j] = size_t( arg[0] );
 			for(ell = 0; ell < user_k1; ell++)
-				user_tx[user_j*user_k1 + ell] = Taylor[ size_t(arg[0]) * J + ell];
+				user_tx[atom_j*user_k1 + ell] = Taylor[ size_t(arg[0]) * J + ell];
 			//
-			if( user_j == 0 )
-				user_state = start_user;
+			if( atom_j == 0 )
+				atom_state = start_atom;
 			break;
 
 			case FunrpOp:
 			// parameter result for a atomic function
 			CPPAD_ASSERT_NARG_NRES(op, 1, 0);
-			CPPAD_ASSERT_UNKNOWN( user_state == ret_user );
-			CPPAD_ASSERT_UNKNOWN( user_i <= user_m );
-			CPPAD_ASSERT_UNKNOWN( user_j == user_n );
+			CPPAD_ASSERT_UNKNOWN( atom_state == ret_atom );
+			CPPAD_ASSERT_UNKNOWN( atom_i <= atom_m );
+			CPPAD_ASSERT_UNKNOWN( atom_j == atom_n );
 			CPPAD_ASSERT_UNKNOWN( size_t( arg[0] ) < num_par );
 			//
-			--user_i;
+			--atom_i;
 			for(ell = 0; ell < user_k1; ell++)
-			{	user_py[user_i * user_k1 + ell] = Base(0.);
-				user_ty[user_i * user_k1 + ell] = Base(0.);
+			{	user_py[atom_i * user_k1 + ell] = Base(0.);
+				user_ty[atom_i * user_k1 + ell] = Base(0.);
 			}
-			user_ty[user_i * user_k1 + 0] = parameter[ arg[0] ];
+			user_ty[atom_i * user_k1 + 0] = parameter[ arg[0] ];
 			//
-			if( user_i == 0 )
-				user_state = arg_user;
+			if( atom_i == 0 )
+				atom_state = arg_atom;
 			break;
 
 			case FunrvOp:
 			// variable result for a atomic function
 			CPPAD_ASSERT_NARG_NRES(op, 0, 1);
-			CPPAD_ASSERT_UNKNOWN( user_state == ret_user );
-			CPPAD_ASSERT_UNKNOWN( user_i <= user_m );
-			CPPAD_ASSERT_UNKNOWN( user_j == user_n );
+			CPPAD_ASSERT_UNKNOWN( atom_state == ret_atom );
+			CPPAD_ASSERT_UNKNOWN( atom_i <= atom_m );
+			CPPAD_ASSERT_UNKNOWN( atom_j == atom_n );
 			//
-			--user_i;
+			--atom_i;
 			for(ell = 0; ell < user_k1; ell++)
-			{	user_py[user_i * user_k1 + ell] =
+			{	user_py[atom_i * user_k1 + ell] =
 						Partial[i_var * K + ell];
-				user_ty[user_i * user_k1 + ell] =
+				user_ty[atom_i * user_k1 + ell] =
 						Taylor[i_var * J + ell];
 			}
-			if( user_i == 0 )
-				user_state = arg_user;
+			if( atom_i == 0 )
+				atom_state = arg_atom;
 			break;
 			// ------------------------------------------------------------
 
