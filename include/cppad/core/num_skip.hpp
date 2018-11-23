@@ -73,7 +73,7 @@ template <typename Base, typename RecBase>
 size_t ADFun<Base,RecBase>::number_skip(void)
 {	// must pass through operation sequence to map operations to variables
 
-	// information defined by forward_user
+	// information defined by atomic forward
 	size_t atom_old=0, atom_m=0, atom_n=0;
 
 	// number of variables skipped

@@ -260,7 +260,7 @@ bool reverse(void)
 	size_t m = 2;
 	vector< AD<double> > ay(m);
 
-	// call user function
+	// call atomic function
 	vector< AD<double> > ax = au;
 	afun(ax, ay);
 

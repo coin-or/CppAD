@@ -275,7 +275,7 @@ bool use_atomic_rev_sparse_hes(bool x_1_variable)
 	size_t m = 2;
 	vector< AD<double> > ay(m);
 
-	// call user function
+	// call atomic function
 	vector< AD<double> > ax(n);
 	ax[0] = au[0];
 	ax[2] = au[2];

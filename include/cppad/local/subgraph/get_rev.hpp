@@ -61,7 +61,7 @@ has size equal to the number of operators in play.
 If in_subgraph[i_op] <= n_dep_,
 the result for this operator depends on the selected independent variables.
 In addition, upon input, there is no i_op such that in_subgraph[i_op] == i_dep.
-Note that for user function call operators i_op,
+Note that for atomic function call operators i_op,
 \code
 	n_dep_ < in_subgraph[i_op]
 \endcode
@@ -70,7 +70,7 @@ For the first AFunOp,
 \code
 	in_subgraph[i_op] <= n_dep_
 \endcode
-if any result for the user function call
+if any result for the atomic function call
 depends on the selected independent variables.
 Except for UserOP, only operators with NumRes(op) > 0 are included
 in the dependency; e.g., comparision operators are not included.

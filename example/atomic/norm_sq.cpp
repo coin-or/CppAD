@@ -297,7 +297,7 @@ $srccode%cpp% */
 	size_t m = 1;
 	vector< AD<double> > ay(m);
 
-	// call user function and store norm_sq(x) in au[0]
+	// call atomic function and store norm_sq(x) in au[0]
 	afun(ax, ay);        // y_0 = x_0 * x_0 + x_1 * x_1
 
 	// create f: x -> y and stop tape recording

@@ -173,7 +173,7 @@ namespace {
 	// Number of Newton iterations, set by multi_atomic_time
 	size_t num_itr_;
 
-	// We can use one atomic_user function for all threads because
+	// We can use one atomic_atomic function for all threads because
 	// there is no member data that gets changed during worker call.
 	// This needs to stay in scope for as long as a recording will use it.
 	// We cannot be in parallel mode when this object is created or deleted.

@@ -163,7 +163,7 @@ $end
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 /*!
 \file atomic_base.hpp
-Base class for atomic user operations.
+Base class for atomic function operations.
 */
 
 template <class Base>

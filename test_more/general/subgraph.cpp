@@ -63,7 +63,7 @@ namespace {
 		ay[4] = ax[4] / 2.0;             // operator(variable, parameter)
 		ay[5] = 2.0 / ax[3];             // operator(parameter, variable)
 		//
-		// a user function call
+		// a atomic function call
 		for(size_t j = 0; j < size_t(au.size()); ++j)
 			au[j] = ax[j + 3];
 		(*atom_g)(au, av);

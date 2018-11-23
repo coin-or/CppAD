@@ -263,7 +263,7 @@ $srccode%cpp% */
 	// declare independent variables and start tape recording
 	CppAD::Independent(ax);
 
-	// call user function
+	// call atomic function
 	afun(ax, ay);
 
 	// create f: x -> y and stop tape recording

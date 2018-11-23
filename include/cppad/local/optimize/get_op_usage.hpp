@@ -699,35 +699,35 @@ void get_op_usage(
 				CPPAD_ASSERT_UNKNOWN(
 					i_op + atom_n + atom_m + 1 == last_user_i_op
 				);
-				// call users function for this operation
+				// call atomic function for this operation
 				atom_fun->set_old(atom_old);
-				bool user_ok  = false;
-				size_t user_q = 1; // as if sum of dependent variables
+				bool atom_ok  = false;
+				size_t atom_q = 1; // as if sum of dependent variables
 				if( user_pack )
-				{	user_ok = atom_fun->rev_sparse_jac(
-						user_q, atomc_r_pack, atomc_a_pack, atom_x
+				{	atom_ok = atom_fun->rev_sparse_jac(
+						atom_q, atomc_r_pack, atomc_a_pack, atom_x
 					);
-					if( ! user_ok ) user_ok = atom_fun->rev_sparse_jac(
-						user_q, atomc_r_pack, atomc_a_pack
+					if( ! atom_ok ) atom_ok = atom_fun->rev_sparse_jac(
+						atom_q, atomc_r_pack, atomc_a_pack
 					);
 				}
 				if( user_bool )
-				{	user_ok = atom_fun->rev_sparse_jac(
-						user_q, atomc_r_bool, atomc_a_bool, atom_x
+				{	atom_ok = atom_fun->rev_sparse_jac(
+						atom_q, atomc_r_bool, atomc_a_bool, atom_x
 					);
-					if( ! user_ok ) user_ok = atom_fun->rev_sparse_jac(
-						user_q, atomc_r_bool, atomc_a_bool
+					if( ! atom_ok ) atom_ok = atom_fun->rev_sparse_jac(
+						atom_q, atomc_r_bool, atomc_a_bool
 					);
 				}
 				if( user_set )
-				{	user_ok = atom_fun->rev_sparse_jac(
-						user_q, atomc_r_set, atomc_a_set, atom_x
+				{	atom_ok = atom_fun->rev_sparse_jac(
+						atom_q, atomc_r_set, atomc_a_set, atom_x
 					);
-					if( ! user_ok ) user_ok = atom_fun->rev_sparse_jac(
-						user_q, atomc_r_set, atomc_a_set
+					if( ! atom_ok ) atom_ok = atom_fun->rev_sparse_jac(
+						atom_q, atomc_r_set, atomc_a_set
 					);
 				}
-				if( ! user_ok )
+				if( ! atom_ok )
 				{	std::string s =
 						"Optimizing an ADFun object"
 						" that contains the atomic function\n\t";

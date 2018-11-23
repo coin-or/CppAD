@@ -23,14 +23,14 @@ Under Consruction
 
 /*
 \def CPPAD_ATOMIC_CALL
-This avoids warnings when NDEBUG is defined and user_ok is not used.
+This avoids warnings when NDEBUG is defined and atom_ok is not used.
 If NDEBUG is defined, this resolves to
 \code
 	atom_fun->forward
 \endcode
 otherwise, it respolves to
 \code
-	user_ok = atom_fun->forward
+	atom_ok = atom_fun->forward
 \endcode
 This maco is undefined at the end of this file to facillitate is
 use with a different definition in other files.
@@ -38,7 +38,7 @@ use with a different definition in other files.
 # ifdef NDEBUG
 # define CPPAD_ATOMIC_CALL atom_fun->forward
 # else
-# define CPPAD_ATOMIC_CALL user_ok = atom_fun->forward
+# define CPPAD_ATOMIC_CALL atom_ok = atom_fun->forward
 # endif
 
 /*!

@@ -68,7 +68,7 @@ atomic_base<Base>* atom_op_info(
 		CPPAD_ASSERT_KNOWN(false, msg.c_str() );
 	}
 # endif
-	// the atomic_base object corresponding to this user function
+	// the atomic_base object corresponding to this atomic function
 	atom_fun = atomic_base<Base>::class_object(user_index);
 	CPPAD_ASSERT_UNKNOWN( atom_fun != CPPAD_NULL );
 	return atom_fun;

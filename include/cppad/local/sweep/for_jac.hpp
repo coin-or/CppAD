@@ -134,7 +134,7 @@ void for_jac(
 	}
 
 	// --------------------------------------------------------------
-	// user's atomic op
+	// atomic function
 	atomic_base<RecBase>* atom_fun = CPPAD_NULL;
 	//
 	// work space used by AFunOp.
@@ -142,9 +142,9 @@ void for_jac(
 	pod_vector<size_t> atom_ix;  // variable index (on tape) for each argument
 	pod_vector<size_t> atom_iy;  // variable index (on tape) for each result
 	//
-	// information set by forward_user (initialization to avoid warnings)
+	// information set by atomic forward (initialization to avoid warnings)
 	size_t atom_old=0, atom_m=0, atom_n=0, atom_i=0, atom_j=0;
-	// information set by forward_user (necessary initialization)
+	// information set by atomic forward (necessary initialization)
 	enum_atom_state atom_state = start_atom;
 	// --------------------------------------------------------------
 	//
@@ -688,7 +688,7 @@ void for_jac(
 			CPPAD_ASSERT_UNKNOWN( atom_j == atom_n );
 			CPPAD_ASSERT_UNKNOWN( size_t( arg[0] ) < num_par );
 			//
-			atom_iy[atom_i] = 0; // special variable user for parameters
+			atom_iy[atom_i] = 0; // special value for parameters
 # if CPPAD_FOR_JAC_TRACE
 			// remember argument for delayed tracing
 			atom_funrp[atom_i] = arg[0];
@@ -792,7 +792,7 @@ void for_jac(
 		{	z_value[j] = true;
 			j = *(++itr);
 		}
-		// must delay print for these cases till after atomic user call
+		// must delay print for these cases till after atomic function call
 		bool delay_print = op == FunrpOp;
 		delay_print     |= op == FunrvOp;
 		if( ! delay_print )

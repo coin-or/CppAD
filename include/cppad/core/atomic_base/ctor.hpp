@@ -127,7 +127,7 @@ Constructors for atomic_base class.
 */
 
 /*!
-Base class for atomic_user functions.
+Base class for atomic_atomic functions.
 
 \tparam Base
 This class is used for defining an AD<Base> atomic operation y = f(x).

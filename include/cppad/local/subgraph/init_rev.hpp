@@ -44,7 +44,7 @@ The input size and elements of in_subgraph_ do not matter.
 If in_subgraph_[i_op] == depend_yes (depend_no),
 the result for this operator depends (does not depend)
 on the selected independent variables.
-Note that for user function call operators i_op,
+Note that for atomic function call operators i_op,
 in_subgraph[i_op] is depend_no except for the first AFunOp in the
 atomic function call sequence. For the first AFunOp,
 it is depend_yes (depend_no) if any of the results for the call sequence
@@ -189,7 +189,7 @@ The input size and elements of in_subgraph_ do not matter.
 If in_subgraph_[i_op] == depend_yes (depend_no),
 the result for this operator depends (does not depend)
 on the selected independent variables.
-Note that for user function call operators i_op,
+Note that for atomic function call operators i_op,
 in_subgraph[i_op] is depend_no except for the first AFunOp in the
 atomic function call sequence. For the first AFunOp,
 it is depend_yes (depend_no) if any of the results for the call sequence

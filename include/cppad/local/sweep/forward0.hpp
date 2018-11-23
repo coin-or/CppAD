@@ -23,14 +23,14 @@ Compute zero order forward mode Taylor coefficients.
 
 /*
 \def CPPAD_ATOMIC_CALL
-This avoids warnings when NDEBUG is defined and user_ok is not used.
+This avoids warnings when NDEBUG is defined and atom_ok is not used.
 If NDEBUG is defined, this resolves to
 \code
 	atom_fun->forward
 \endcode
 otherwise, it respolves to
 \code
-	user_ok = atom_fun->forward
+	atom_ok = atom_fun->forward
 \endcode
 This maco is undefined at the end of this file to facillitate is
 use with a different definition in other files.
@@ -38,7 +38,7 @@ use with a different definition in other files.
 # ifdef NDEBUG
 # define CPPAD_ATOMIC_CALL atom_fun->forward
 # else
-# define CPPAD_ATOMIC_CALL user_ok = atom_fun->forward
+# define CPPAD_ATOMIC_CALL atom_ok = atom_fun->forward
 # endif
 
 /*!
@@ -196,17 +196,17 @@ void forward0(
 	}
 
 	// work space used by AFunOp.
-	vector<bool> user_vx;        // empty vecotor
-	vector<bool> user_vy;        // empty vecotor
-	vector<Base> user_tx;        // argument vector Taylor coefficients
-	vector<Base> user_ty;        // result vector Taylor coefficients
+	vector<bool> atom_vx;        // empty vecotor
+	vector<bool> atom_vy;        // empty vecotor
+	vector<Base> atom_tx;        // argument vector Taylor coefficients
+	vector<Base> atom_ty;        // result vector Taylor coefficients
 	//
-	atomic_base<RecBase>* atom_fun = CPPAD_NULL; // user's atomic op
+	atomic_base<RecBase>* atom_fun = CPPAD_NULL; // atomic function
 # ifndef NDEBUG
-	bool                  user_ok   = false;      // atomic op return value
+	bool                  atom_ok   = false;      // atomic op return value
 # endif
 	//
-	// information defined by forward_user
+	// information defined by atomic forward
 	size_t atom_old=0, atom_m=0, atom_n=0, atom_i=0, atom_j=0;
 	enum_atom_state atom_state = start_atom; // proper initialization
 
@@ -230,8 +230,8 @@ void forward0(
 	*/
 
 # if CPPAD_FORWARD0_TRACE
-	// flag as to when to trace user function values
-	bool user_trace            = false;
+	// flag as to when to trace atomic function values
+	bool atom_trace            = false;
 
 	// variable indices for results vector
 	// (done differently for order zero).
@@ -816,8 +816,8 @@ void forward0(
 				atom_i     = 0;
 				atom_j     = 0;
 				//
-				user_tx.resize(atom_n);
-				user_ty.resize(atom_m);
+				atom_tx.resize(atom_n);
+				atom_ty.resize(atom_m);
 # if CPPAD_FORWARD0_TRACE
 				atom_iy.resize(atom_m);
 # endif
@@ -825,7 +825,7 @@ void forward0(
 			else
 			{	atom_state = start_atom;
 # ifndef NDEBUG
-				if( ! user_ok )
+				if( ! atom_ok )
 				{	std::string msg =
 						atom_fun->afun_name()
 						+ ": atomic_base.forward: returned false";
@@ -833,7 +833,7 @@ void forward0(
 				}
 # endif
 # if CPPAD_FORWARD0_TRACE
-				user_trace = true;
+				atom_trace = true;
 # endif
 			}
 			break;
@@ -846,13 +846,13 @@ void forward0(
 			CPPAD_ASSERT_UNKNOWN( atom_j < atom_n );
 			CPPAD_ASSERT_UNKNOWN( size_t( arg[0] ) < num_par );
 			//
-			user_tx[atom_j++] = parameter[ arg[0] ];
+			atom_tx[atom_j++] = parameter[ arg[0] ];
 			//
 			if( atom_j == atom_n )
-			{	// call users function for this operation
+			{	// call atomic function for this operation
 				atom_fun->set_old(atom_old);
 				CPPAD_ATOMIC_CALL(p, q,
-					user_vx, user_vy, user_tx, user_ty
+					atom_vx, atom_vy, atom_tx, atom_ty
 				);
 				atom_state = ret_atom;
 			}
@@ -865,13 +865,13 @@ void forward0(
 			CPPAD_ASSERT_UNKNOWN( atom_i == 0 );
 			CPPAD_ASSERT_UNKNOWN( atom_j < atom_n );
 			//
-			user_tx[atom_j++] = taylor[ size_t(arg[0]) * J + 0 ];
+			atom_tx[atom_j++] = taylor[ size_t(arg[0]) * J + 0 ];
 			//
 			if( atom_j == atom_n )
-			{	// call users function for this operation
+			{	// call atomic function for this operation
 				atom_fun->set_old(atom_old);
 				CPPAD_ATOMIC_CALL(p, q,
-					user_vx, user_vy, user_tx, user_ty
+					atom_vx, atom_vy, atom_tx, atom_ty
 				);
 				atom_state = ret_atom;
 			}
@@ -901,7 +901,7 @@ void forward0(
 # if CPPAD_FORWARD0_TRACE
 			atom_iy[atom_i] = i_var;
 # endif
-			taylor[ i_var * J + 0 ] = user_ty[atom_i++];
+			taylor[ i_var * J + 0 ] = atom_ty[atom_i++];
 			if( atom_i == atom_m )
 				atom_state = end_atom;
 			break;
@@ -929,8 +929,8 @@ void forward0(
 		}
 # if CPPAD_FORWARD0_TRACE
 		size_t  d  = 0;
-		if( user_trace )
-		{	user_trace = false;
+		if( atom_trace )
+		{	atom_trace = false;
 
 			CPPAD_ASSERT_UNKNOWN( op == AFunOp );
 			CPPAD_ASSERT_UNKNOWN( NumArg(FunrvOp) == 0 );

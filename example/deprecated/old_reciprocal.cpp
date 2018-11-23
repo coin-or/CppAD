@@ -267,12 +267,12 @@ bool old_reciprocal(void)
 	size_t m = 1;
 	vector< AD<double> > ay(m);
 
-	// call user function and store reciprocal(x) in au[0]
+	// call atomic function and store reciprocal(x) in au[0]
 	vector< AD<double> > au(m);
 	size_t id = 0;           // not used
 	reciprocal(id, ax, au);	// u = 1 / x
 
-	// call user function and store reciprocal(u) in ay[0]
+	// call atomic function and store reciprocal(u) in ay[0]
 	reciprocal(id, au, ay);	// y = 1 / u = x
 
 	// create f: x -> y and stop tape recording

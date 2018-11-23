@@ -221,7 +221,7 @@ bool test_one(void)
 	ax[1] = au[0] + au[1];
 	ax[2] = au[2];
 
-	// call user function
+	// call atomic function
 	afun(ax, ay);
 
 	// create f: u -> y and stop tape recording
@@ -303,7 +303,7 @@ bool test_two(void)
 	ax[1] = au[1] + au[2];
 	ax[2] = au[2] + au[0];
 
-	// call user function
+	// call atomic function
 	afun(ax, ay);
 
 	// create f: u -> y and stop tape recording

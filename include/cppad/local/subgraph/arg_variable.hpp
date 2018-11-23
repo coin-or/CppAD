@@ -31,7 +31,7 @@ Type used for indices in random iterator.
 is a random iterator for this operation sequence.
 
 \param i_op
-is the operator index. If this operator is part of a user function call,
+is the operator index. If this operator is part of a atomic function call,
 it must be the first AFunOp in the call. (There is a AFunOp at the
 beginning and end of each call.)
 
@@ -61,7 +61,7 @@ void get_argument_variable(
 	size_t        i_var;
 	random_itr.op_info(i_op, op, op_arg, i_var);
 	//
-	// partial check of assumptions on user function calls
+	// partial check of assumptions on atomic function calls
 	CPPAD_ASSERT_UNKNOWN(
 		op != FunapOp && op != FunavOp && op != FunrpOp && op != FunrvOp
 	);

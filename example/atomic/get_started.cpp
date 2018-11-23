@@ -113,7 +113,7 @@ $srccode%cpp% */
 	size_t m = 1;
 	vector< AD<double> > ay(m);
 
-	// call user function and store get_started(x) in au[0]
+	// call atomic function and store get_started(x) in au[0]
 	vector< AD<double> > au(m);
 	afun(ax, au);        // u = 1 / x
 

@@ -136,17 +136,17 @@ void rev_jac(
 	}
 
 	// ----------------------------------------------------------------------
-	// user's atomic op
-	atomic_base<RecBase>* atom_fun = CPPAD_NULL; // user's atomic op
+	// atomic function
+	atomic_base<RecBase>* atom_fun = CPPAD_NULL; // atomic function
 	//
 	// work space used by AFunOp.
 	vector<Base>       atom_x;   // parameters in x as integers
 	pod_vector<size_t> atom_ix;  // variable indices for argument vector
 	pod_vector<size_t> atom_iy;  // variable indices for result vector
 	//
-	// information set by forward_user (initialization to avoid warnings)
+	// information set by atomic forward (initialization to avoid warnings)
 	size_t atom_old=0, atom_m=0, atom_n=0, atom_i=0, atom_j=0;
-	// information set by forward_user (necessary initialization)
+	// information set by atomic forward (necessary initialization)
 	enum_atom_state atom_state = end_atom; // proper initialization
 	// ----------------------------------------------------------------------
 	//

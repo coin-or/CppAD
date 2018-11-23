@@ -24,14 +24,14 @@ Compute derivatives of arbitrary order Taylor coefficients.
 
 /*
 \def CPPAD_ATOMIC_CALL
-This avoids warnings when NDEBUG is defined and user_ok is not used.
+This avoids warnings when NDEBUG is defined and atom_ok is not used.
 If \c NDEBUG is defined, this resolves to
 \code
 	atom_fun->reverse
 \endcode
 otherwise, it respolves to
 \code
-	user_ok = atom_fun->reverse
+	atom_ok = atom_fun->reverse
 \endcode
 This maco is undefined at the end of this file to facillitate is
 use with a different definition in other files.
@@ -39,7 +39,7 @@ use with a different definition in other files.
 # ifdef NDEBUG
 # define CPPAD_ATOMIC_CALL atom_fun->reverse
 # else
-# define CPPAD_ATOMIC_CALL user_ok = atom_fun->reverse
+# define CPPAD_ATOMIC_CALL atom_ok = atom_fun->reverse
 # endif
 
 /*!
@@ -217,20 +217,20 @@ void reverse(
 		parameter = play->GetPar();
 
 	// work space used by AFunOp.
-	const size_t user_k  = d;    // highest order we are differentiating
-	const size_t user_k1 = d+1;  // number of orders for this calculation
+	const size_t atom_k  = d;    // highest order we are differentiating
+	const size_t atom_k1 = d+1;  // number of orders for this calculation
 	vector<size_t> atom_ix;      // variable indices for argument vector
-	vector<Base> user_tx;        // argument vector Taylor coefficients
-	vector<Base> user_ty;        // result vector Taylor coefficients
-	vector<Base> user_px;        // partials w.r.t argument vector
-	vector<Base> user_py;        // partials w.r.t. result vector
+	vector<Base> atom_tx;        // argument vector Taylor coefficients
+	vector<Base> atom_ty;        // result vector Taylor coefficients
+	vector<Base> atom_px;        // partials w.r.t argument vector
+	vector<Base> atom_py;        // partials w.r.t. result vector
 	//
-	atomic_base<RecBase>* atom_fun = CPPAD_NULL; // user's atomic op
+	atomic_base<RecBase>* atom_fun = CPPAD_NULL; // atomic function
 # ifndef NDEBUG
-	bool                  user_ok   = false;      // atomic op return value
+	bool                  atom_ok   = false;      // atomic op return value
 # endif
 	//
-	// information defined by forward_user
+	// information defined by atomic forward
 	size_t atom_old=0, atom_m=0, atom_n=0, atom_i=0, atom_j=0;
 	enum_atom_state atom_state = end_atom; // proper initialization
 
@@ -690,25 +690,25 @@ void reverse(
 				atom_j     = atom_n;
 				//
 				atom_ix.resize(atom_n);
-				if(user_tx.size() != atom_n * user_k1)
-				{	user_tx.resize(atom_n * user_k1);
-					user_px.resize(atom_n * user_k1);
+				if(atom_tx.size() != atom_n * atom_k1)
+				{	atom_tx.resize(atom_n * atom_k1);
+					atom_px.resize(atom_n * atom_k1);
 				}
-				if(user_ty.size() != atom_m * user_k1)
-				{	user_ty.resize(atom_m * user_k1);
-					user_py.resize(atom_m * user_k1);
+				if(atom_ty.size() != atom_m * atom_k1)
+				{	atom_ty.resize(atom_m * atom_k1);
+					atom_py.resize(atom_m * atom_k1);
 				}
 			}
 			else
 			{	atom_state = end_atom;
 				//
-				// call users function for this operation
+				// call atomic function for this operation
 				atom_fun->set_old(atom_old);
 				CPPAD_ATOMIC_CALL(
-					user_k, user_tx, user_ty, user_px, user_py
+					atom_k, atom_tx, atom_ty, atom_px, atom_py
 				);
 # ifndef NDEBUG
-				if( ! user_ok )
+				if( ! atom_ok )
 				{	std::string msg =
 						atom_fun->afun_name()
 						+ ": atomic_base.reverse: returned false";
@@ -716,9 +716,9 @@ void reverse(
 				}
 # endif
 				for(j = 0; j < atom_n; j++) if( atom_ix[j] > 0 )
-				{	for(ell = 0; ell < user_k1; ell++)
+				{	for(ell = 0; ell < atom_k1; ell++)
 						Partial[atom_ix[j] * K + ell] +=
-							user_px[j * user_k1 + ell];
+							atom_px[j * atom_k1 + ell];
 				}
 			}
 			break;
@@ -733,9 +733,9 @@ void reverse(
 			//
 			--atom_j;
 			atom_ix[atom_j] = 0;
-			user_tx[atom_j * user_k1 + 0] = parameter[ arg[0]];
-			for(ell = 1; ell < user_k1; ell++)
-				user_tx[atom_j * user_k1 + ell] = Base(0.);
+			atom_tx[atom_j * atom_k1 + 0] = parameter[ arg[0]];
+			for(ell = 1; ell < atom_k1; ell++)
+				atom_tx[atom_j * atom_k1 + ell] = Base(0.);
 			//
 			if( atom_j == 0 )
 				atom_state = start_atom;
@@ -750,8 +750,8 @@ void reverse(
 			//
 			--atom_j;
 			atom_ix[atom_j] = size_t( arg[0] );
-			for(ell = 0; ell < user_k1; ell++)
-				user_tx[atom_j*user_k1 + ell] = Taylor[ size_t(arg[0]) * J + ell];
+			for(ell = 0; ell < atom_k1; ell++)
+				atom_tx[atom_j*atom_k1 + ell] = Taylor[ size_t(arg[0]) * J + ell];
 			//
 			if( atom_j == 0 )
 				atom_state = start_atom;
@@ -766,11 +766,11 @@ void reverse(
 			CPPAD_ASSERT_UNKNOWN( size_t( arg[0] ) < num_par );
 			//
 			--atom_i;
-			for(ell = 0; ell < user_k1; ell++)
-			{	user_py[atom_i * user_k1 + ell] = Base(0.);
-				user_ty[atom_i * user_k1 + ell] = Base(0.);
+			for(ell = 0; ell < atom_k1; ell++)
+			{	atom_py[atom_i * atom_k1 + ell] = Base(0.);
+				atom_ty[atom_i * atom_k1 + ell] = Base(0.);
 			}
-			user_ty[atom_i * user_k1 + 0] = parameter[ arg[0] ];
+			atom_ty[atom_i * atom_k1 + 0] = parameter[ arg[0] ];
 			//
 			if( atom_i == 0 )
 				atom_state = arg_atom;
@@ -784,10 +784,10 @@ void reverse(
 			CPPAD_ASSERT_UNKNOWN( atom_j == atom_n );
 			//
 			--atom_i;
-			for(ell = 0; ell < user_k1; ell++)
-			{	user_py[atom_i * user_k1 + ell] =
+			for(ell = 0; ell < atom_k1; ell++)
+			{	atom_py[atom_i * atom_k1 + ell] =
 						Partial[i_var * K + ell];
-				user_ty[atom_i * user_k1 + ell] =
+				atom_ty[atom_i * atom_k1 + ell] =
 						Taylor[i_var * J + ell];
 			}
 			if( atom_i == 0 )

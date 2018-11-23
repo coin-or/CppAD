@@ -151,17 +151,17 @@ void for_hes(
 		CPPAD_ASSERT_UNKNOWN( j == play->num_vec_ind_rec() );
 	}
 	// ------------------------------------------------------------------------
-	// user's atomic op
-	atomic_base<RecBase>* atom_fun = CPPAD_NULL; // user's atomic op
+	// atomic function
+	atomic_base<RecBase>* atom_fun = CPPAD_NULL; // atomic function
 	//
 	// work space used by AFunOp.
 	vector<Base>       atom_x;   // value of parameter arguments to function
 	pod_vector<size_t> atom_ix;  // variable index (on tape) for each argument
 	pod_vector<size_t> atom_iy;  // variable index (on tape) for each result
 	//
-	// information set by forward_user (initialization to avoid warnings)
+	// information set by atomic forward (initialization to avoid warnings)
 	size_t atom_old=0, atom_m=0, atom_n=0, atom_i=0, atom_j=0;
-	// information set by forward_user (necessary initialization)
+	// information set by atomic forward (necessary initialization)
 	enum_atom_state atom_state = start_atom;
 	// -------------------------------------------------------------------------
 	//
@@ -543,7 +543,7 @@ void for_hes(
 				j = *(++itr_2);
 			}
 		}
-		// must delay print for these cases till after atomic user call
+		// must delay print for these cases till after atomic function call
 		bool delay_print = op == FunrpOp;
 		delay_print     |= op == FunrvOp;
 		if( ! delay_print )
