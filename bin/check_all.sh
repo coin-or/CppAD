@@ -26,6 +26,12 @@ then
 	fi
 fi
 # -----------------------------------------------------------------------------
+# bash function that echos and executes a command
+echo_eval() {
+	echo $*
+	eval $*
+}
+# -----------------------------------------------------------------------------
 check_all_warn() {
 cat << EOF > check_all.$$
 # Lines that describe where error is
@@ -78,11 +84,8 @@ random_01() {
 	set -e
 }
 # -----------------------------------------------------------------------------
-if [ -e check_all.log ]
-then
-	echo "rm check_all.log"
-	rm check_all.log
-fi
+# start new check_all.log
+date > check_all.log
 top_srcdir=`pwd`
 echo "top_srcdir = $top_srcdir"
 # ---------------------------------------------------------------------------
@@ -276,6 +279,7 @@ then
 	exit 1
 fi
 # ----------------------------------------------------------------------------
+date          >> $top_srcdir/check_all.log
 echo "$0: OK" >> $top_srcdir/check_all.log
 echo "$0: OK"
 exit 0
