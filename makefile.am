@@ -14,9 +14,9 @@ BUILT_SOURCES = \
 	$(top_srcdir)/include/cppad/configure.hpp \
 	$(top_srcdir)/include/cppad/local/is_pod.hpp
 $(top_srcdir)/include/cppad/configure.hpp: cppad/configure.hpp
-	cp cppad/configure.hpp $(top_srcdir)/include/cppad/configure.hpp
+	cp include/cppad/configure.hpp $(top_srcdir)/include/cppad/configure.hpp
 $(top_srcdir)/include/cppad/local/is_pod.hpp: cppad/local/is_pod.hpp
-	cp cppad/local/is_pod.hpp $(top_srcdir)/include/cppad/local/is_pod.hpp
+	cp include/cppad/local/is_pod.hpp $(top_srcdir)/include/cppad/local/is_pod.hpp
 #
 if CppAD_POSTFIX
 postfix_dir  = $(POSTFIX_DIR)

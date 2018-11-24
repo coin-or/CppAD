@@ -572,10 +572,9 @@ else
 	AC_MSG_RESULT([no])
 fi
 
-
-
-dnl Have configure check source directory to see if cppad/cppad.hpp is there
-AC_CONFIG_SRCDIR(cppad/cppad.hpp)
+dnl Have configure check source directory for the following file:
+dnl include/cppad/cppad.hpp
+AC_CONFIG_SRCDIR(include/cppad/cppad.hpp)
 
 dnl AC_PROG_CP outputs CPP as command to run C preprocessor
 AC_PROG_CPP
@@ -884,9 +883,9 @@ dnl END AC_CONFIG_FILES
 
 dnl copy config.hpp to source directory
 AC_CONFIG_COMMANDS(
-	[configure.hpp],
-	[cp cppad/configure.hpp  $abs_top_srcdir/cppad/configure.hpp],
-	[abs_top_srcdir=$abs_top_srcdir]
+[configure.hpp],
+[cp include/cppad/configure.hpp  $abs_top_srcdir/include/cppad/configure.hpp],
+[abs_top_srcdir=$abs_top_srcdir]
 )
 dnl scripts that set library path before running test
 AC_CONFIG_COMMANDS(

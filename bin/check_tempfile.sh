@@ -19,7 +19,13 @@ fi
 list=`ls | sed -n '/\.[0-9]*$/p'`
 if [ "$list" != '' ]
 then
-    ls | sed -n '/\.[0-9]*$/p'
+    echo 'Use following command to remove temporary files:'
+    cmd='rm '
+    for file in $list
+    do
+        cmd="$cmd $file"
+    done
+    echo "    $cmd"
 	echo 'check_tempfile.sh: Error'
 	exit 1
 fi
