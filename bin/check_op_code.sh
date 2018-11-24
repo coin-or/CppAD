@@ -1,6 +1,6 @@
 #! /bin/bash -e
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 #
 # CppAD is distributed under the terms of the
 #              Eclipse Public License Version 2.0.
@@ -24,13 +24,13 @@ sed -n -e '/^enum/,/^\tNumberOp  /p' $file | sed \
 	-e '/^\tNumberOp  /d' \
 	-e 's/^[	]*//' \
 	-e 's/Op[, ].*//' \
-	-e '/^\/\//d' > bin/op_code.1.$$
+	-e '/^\/\//d' > op_code.1.$$
 #
-sort --ignore-case bin/op_code.1.$$ > bin/op_code.2.$$
-if ! diff bin/op_code.1.$$ bin/op_code.2.$$
+sort --ignore-case op_code.1.$$ > op_code.2.$$
+if ! diff op_code.1.$$ op_code.2.$$
 then
 	echo "check_op_code.sh: enum list is not in alphabetical order"
-	rm bin/op_code.*.$$
+	rm op_code.*.$$
 	exit 1
 fi
 # -----------------------------------------------------------------------------
@@ -42,12 +42,12 @@ sed -n -e '/NumArgTable\[\]/,/^[ \t]*};/p' $file | \
 		-e '/^[ \t]*};/d' \
 		-e 's|^[ \t]*[0-9],* *// *||' \
 		-e 's|Op.*||' \
-		> bin/op_code.3.$$
+		> op_code.3.$$
 #
-if ! diff bin/op_code.1.$$ bin/op_code.3.$$
+if ! diff op_code.1.$$ op_code.3.$$
 then
 	echo "check_op_code.sh: NumArgTable list is not in alphabetical order"
-	rm bin/op_code.*.$$
+	rm op_code.*.$$
 	exit 1
 fi
 # -----------------------------------------------------------------------------
@@ -59,13 +59,13 @@ sed -n -e '/NumResTable\[\]/,/^[ \t]*};/p' $file | \
 		-e '/NumberOp.*not used/d' \
 		-e 's|^[ \t]*[0-9],* *// *||' \
 		-e 's|Op.*||' \
-		> bin/op_code.4.$$
+		> op_code.4.$$
 #
-if ! diff bin/op_code.1.$$ bin/op_code.4.$$
+if ! diff op_code.1.$$ op_code.4.$$
 then
 	echo "check_op_code.sh: NumResTable list is not in alphabetical order"
 	echo "(or missing last line)"
-	rm bin/op_code.*.$$
+	rm op_code.*.$$
 	exit 1
 fi
 # -----------------------------------------------------------------------------
@@ -77,17 +77,17 @@ sed -n -e '/const char \*OpNameTable\[\]/,/^[ \t]*};/p' $file | \
 		-e '/^[ \t]*};/d' \
 		-e 's|^[ \t]*"||' \
 		-e 's|".*||' \
-		> bin/op_code.5.$$
+		> op_code.5.$$
 #
-if ! diff bin/op_code.1.$$ bin/op_code.5.$$
+if ! diff op_code.1.$$ op_code.5.$$
 then
 	echo "check_op_code.sh: OpName list is not in alphabetical order"
-	rm bin/op_code.*.$$
+	rm op_code.*.$$
 	exit 1
 fi
 # -----------------------------------------------------------------------------
 # clean up
-rm bin/op_code.*.$$
+rm op_code.*.$$
 # ----------------------------------------------------------------------------
 echo "$0: OK"
 exit 0
