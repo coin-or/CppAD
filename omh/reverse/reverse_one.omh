@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
   CppAD is distributed under the terms of the
                Eclipse Public License Version 2.0.
@@ -24,9 +24,9 @@ $icode%dw% = %f%.Reverse(1, %w%)%$$
 
 
 $head Purpose$$
-We use $latex F : B^n \rightarrow B^m$$ to denote the
+We use $latex F : \B{R}^n \rightarrow \B{R}^m$$ to denote the
 $cref/AD function/glossary/AD Function/$$ corresponding to $icode f$$.
-The function $latex W : B^n \rightarrow B$$ is defined by
+The function $latex W : \B{R}^n \rightarrow \B{R}$$ is defined by
 $latex \[
 	W(x) = w_0 * F_0 ( x ) + \cdots + w_{m-1} * F_{m-1} (x)
 \] $$

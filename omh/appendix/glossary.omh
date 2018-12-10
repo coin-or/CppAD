@@ -33,7 +33,7 @@ there is a corresponding
 AD of $icode Base$$ $cref/operation sequence/glossary/Operation/Sequence/$$.
 This operation sequence
 defines a function
-$latex F : B^n \rightarrow B^m $$
+$latex F : \B{R}^n \rightarrow \B{R}^m $$
 where $icode B$$ is the space corresponding to objects of type $icode Base$$,
 $icode n$$ is the size of the $cref/domain/seq_property/Domain/$$ space, and
 $icode m$$ is the size of the $cref/range/seq_property/Range/$$ space.
@@ -59,7 +59,7 @@ $codei%
 %$$
 
 $head Base Function$$
-A function $latex f : B \rightarrow B$$
+A function $latex f : \B{R} \rightarrow \B{R}$$
 is referred to as a $icode Base$$ function,
 if $icode Base$$ is a C++ type that represent elements of
 the domain and range space of $icode f$$; i.e. elements of $latex B$$.
@@ -69,7 +69,7 @@ If $icode x$$ is an $codei%AD<%Base%>%$$ object,
 $icode Base$$ is referred to as the base type for $icode x$$.
 
 $head Elementary Vector$$
-The $th j$$ elementary vector $latex e^j \in B^m$$ is defined by
+The $th j$$ elementary vector $latex e^j \in \B{R}^m$$ is defined by
 $latex \[
 e_i^j = \left\{ \begin{array}{ll}
 	1 & {\rm if} \; i = j \\
@@ -160,7 +160,7 @@ $latex \[
 \] $$
 
 $head Sparsity Pattern$$
-Suppose that $latex A \in B^{m \times n}$$ is a sparse matrix.
+Suppose that $latex A \in \B{R}^{m \times n}$$ is a sparse matrix.
 CppAD has several ways to specify the elements of $latex A$$
 that are possible non-zero.
 
@@ -223,11 +223,11 @@ $cref/parameters/glossary/Parameter/$$.
 
 
 $head Taylor Coefficient$$
-Suppose $latex X : B \rightarrow B^n$$ is a
+Suppose $latex X : \B{R} \rightarrow \B{R}^n$$ is a
 is $latex p$$ times continuously differentiable function
 in some neighborhood of zero.
 For $latex k = 0 , \ldots , p$$,
-we use the column vector $latex x^{(k)} \in B^n$$ for the $th k$$ order
+we use the column vector $latex x^{(k)} \in \B{R}^n$$ for the $th k$$ order
 Taylor coefficient corresponding to $latex X$$
 which is defined by
 $latex \[

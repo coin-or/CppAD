@@ -56,7 +56,7 @@ $head Purpose$$
 $subhead Speed$$
 In some cases, the user knows how to compute derivatives of a function
 $latex \[
-	y = f(x) \; {\rm where} \; f : B^n \rightarrow B^m
+	y = f(x) \; {\rm where} \; f : \B{R}^n \rightarrow \B{R}^m
 \] $$
 more efficiently than by coding it using $codei%AD<%Base%>%$$
 $cref/atomic/glossary/Operation/Atomic/$$ operations

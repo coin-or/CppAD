@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
   CppAD is distributed under the terms of the
                Eclipse Public License Version 2.0.
@@ -23,7 +23,7 @@ $head Syntax$$
 $icode%dw% = %f%.Reverse(2, %w%)%$$
 
 $head Purpose$$
-We use $latex F : B^n \rightarrow B^m$$ to denote the
+We use $latex F : \B{R}^n \rightarrow \B{R}^m$$ to denote the
 $cref/AD function/glossary/AD Function/$$ corresponding to $icode f$$.
 Reverse mode computes the derivative of the $cref Forward$$ mode
 $cref/Taylor coefficients/glossary/Taylor Coefficient/$$
@@ -31,7 +31,7 @@ with respect to the domain variable $latex x$$.
 
 $head x^(k)$$
 For $latex k = 0, 1$$,
-the vector $latex x^{(k)} \in B^n$$ is defined as the value of
+the vector $latex x^{(k)} \in \B{R}^n$$ is defined as the value of
 $icode x_k$$ in the previous call (counting this call) of the form
 $codei%
 	%f%.Forward(%k%, %x_k%)
@@ -45,8 +45,8 @@ $cref/operation sequence/glossary/Operation/Sequence/$$ was recorded.
 
 $head W$$
 The functions
-$latex W_0 : B^n \rightarrow B$$ and
-$latex W_1 : B^n \rightarrow B$$
+$latex W_0 : \B{R}^n \rightarrow \B{R}$$ and
+$latex W_1 : \B{R}^n \rightarrow \B{R}$$
 are defined by
 $latex \[
 \begin{array}{rcl}

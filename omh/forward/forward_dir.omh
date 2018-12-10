@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
   CppAD is distributed under the terms of the
                Eclipse Public License Version 2.0.
@@ -30,9 +30,9 @@ $icode%yq% = %f%.Forward(%q%, %r%, %xq%)
 %$$
 
 $head Purpose$$
-We use $latex F : B^n \rightarrow B^m$$ to denote the
+We use $latex F : \B{R}^n \rightarrow \B{R}^m$$ to denote the
 $cref/AD function/glossary/AD Function/$$ corresponding to $icode f$$.
-Given a function $latex X : B \rightarrow B^n$$,
+Given a function $latex X : \B{R} \rightarrow \B{R}^n$$,
 defined by its
 $cref/Taylor coefficients/glossary/Taylor Coefficient/$$,
 forward mode computes the Taylor coefficients for the function
@@ -134,8 +134,8 @@ Note that $icode r$$ must have the same value in this previous call.
 
 $head X(t)$$
 For $latex \ell = 0 , \ldots , r-1$$, the function
-$latex X_\ell : B \rightarrow B^n$$ is defined using
-the Taylor coefficients $latex x^{(k),\ell} \in B^n$$:
+$latex X_\ell : \B{R} \rightarrow \B{R}^n$$ is defined using
+the Taylor coefficients $latex x^{(k),\ell} \in \B{R}^n$$:
 $latex \[
 X_\ell (t) = x^{(0)}  + x^{(1),\ell} * t^1 + \cdots +  x^{(q),\ell} t^q
 \] $$
@@ -152,10 +152,10 @@ for $latex k = 1 , \ldots , q$$.
 
 $head Y(t)$$
 For $latex \ell = 0 , \ldots , r-1$$, the function
-$latex Y_\ell : B \rightarrow B^m$$  is defined by
+$latex Y_\ell : \B{R} \rightarrow \B{R}^m$$  is defined by
 $latex Y_\ell (t) = F[ X_\ell (t) ] $$.
 We use $latex y^{(0)}$$ for the zero order coefficient
-and $latex y^{(k),\ell} \in B^m$$ to denote the
+and $latex y^{(k),\ell} \in \B{R}^m$$ to denote the
 hight order coefficients; i.e.,
 $latex \[
 Y_\ell (t) = y^{(0)} + y^{(1),\ell} * t^1 + \cdots + y^{(q),\ell} * t^q

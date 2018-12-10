@@ -59,7 +59,7 @@ $head Purpose$$
 $subhead Reduce Memory$$
 You can reduce the size of the tape and memory required for AD by
 checkpointing functions of the form $latex y = f(x)$$ where
-$latex f : B^n \rightarrow B^m$$.
+$latex f : \B{R}^n \rightarrow \B{R}^m$$.
 
 $subhead Faster Recording$$
 It may also reduce the time to make a recording the same function
@@ -142,7 +142,7 @@ $codei%
 	const %ADVector%& %ax%
 %$$
 and size must be equal to $icode n$$.
-It specifies vector $latex x \in B^n$$
+It specifies vector $latex x \in \B{R}^n$$
 at which an $codei%AD<%Base%>%$$ version of
 $latex y = f(x)$$ is to be evaluated.
 

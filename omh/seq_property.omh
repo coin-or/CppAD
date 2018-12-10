@@ -128,7 +128,7 @@ the $th i$$ component of $latex F$$ is constant and
 $latex \[
 	\D{F_i}{x_j} (x) = 0
 \] $$
-for $latex j = 0 , \ldots , n-1$$ and all $latex x \in B^n$$.
+for $latex j = 0 , \ldots , n-1$$ and all $latex x \in \B{R}^n$$.
 
 $head size_var$$
 The result $icode s$$ has prototype

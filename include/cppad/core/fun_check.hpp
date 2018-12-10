@@ -33,9 +33,9 @@ $cref CompareChange$$
 
 
 $head Purpose$$
-We use $latex F : B^n \rightarrow B^m$$ to denote the
+We use $latex F : \B{R}^n \rightarrow \B{R}^m$$ to denote the
 $cref/AD function/glossary/AD Function/$$ corresponding to $icode f$$.
-We use $latex G : B^n \rightarrow B^m$$ to denote the
+We use $latex G : \B{R}^n \rightarrow \B{R}^m$$ to denote the
 function corresponding to the C++ function object $icode g$$.
 This routine check if
 $latex \[

@@ -41,7 +41,7 @@ and store the operation sequence in $icode f$$.
 The operation sequence defines an
 $cref/AD function/glossary/AD Function/$$
 $latex \[
-	F : B^n \rightarrow B^m
+	F : \B{R}^n \rightarrow \B{R}^m
 \] $$
 where $latex B$$ is the space corresponding to objects of type $icode Base$$.
 The value $latex n$$ is the dimension of the

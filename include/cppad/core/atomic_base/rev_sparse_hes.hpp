@@ -46,9 +46,9 @@ $pre
 
 $$
 There is an unspecified scalar valued function
-$latex g : B^m \rightarrow B$$.
+$latex g : \B{R}^m \rightarrow \B{R}$$.
 Given a $cref/sparsity pattern/glossary/Sparsity Pattern/$$ for
-$latex R \in B^{n \times q}$$,
+$latex R \in \B{R}^{n \times q}$$,
 and information about the function $latex z = g(y)$$,
 this routine computes the sparsity pattern for
 $latex \[
@@ -82,7 +82,7 @@ $codei%
 %$$
 and its size is $icode m$$.
 It is a sparsity pattern for
-$latex S(x) = g^{(1)} [ f(x) ] \in B^{1 \times m}$$.
+$latex S(x) = g^{(1)} [ f(x) ] \in \B{R}^{1 \times m}$$.
 
 $subhead t$$
 This argument has prototype
@@ -94,7 +94,7 @@ The input values of its elements
 are not specified (must not matter).
 Upon return, $icode t$$ is a
 sparsity pattern for
-$latex T(x) \in B^{1 \times n}$$ where
+$latex T(x) \in \B{R}^{1 \times n}$$ where
 $latex \[
 	T(x) = (g \circ f)^{(1)} (x) = S(x) * f^{(1)} (x)
 \]$$
@@ -105,9 +105,9 @@ $codei%
     size_t %q%
 %$$
 It specifies the number of columns in
-$latex R \in B^{n \times q}$$,
-$latex U(x) \in B^{m \times q}$$, and
-$latex V(x) \in B^{n \times q}$$.
+$latex R \in \B{R}^{n \times q}$$,
+$latex U(x) \in \B{R}^{m \times q}$$, and
+$latex V(x) \in \B{R}^{n \times q}$$.
 
 $subhead r$$
 This argument has prototype
@@ -115,7 +115,7 @@ $codei%
      const %atomic_sparsity%& %r%
 %$$
 and is a $cref/atomic_sparsity/atomic_option/atomic_sparsity/$$ pattern for
-$latex R \in B^{n \times q}$$.
+$latex R \in \B{R}^{n \times q}$$.
 
 $head u$$
 This argument has prototype
@@ -123,7 +123,7 @@ $codei%
      const %atomic_sparsity%& %u%
 %$$
 and is a $cref/atomic_sparsity/atomic_option/atomic_sparsity/$$ pattern for
-$latex U(x) \in B^{m \times q}$$ which is defined by
+$latex U(x) \in \B{R}^{m \times q}$$ which is defined by
 $latex \[
 \begin{array}{rcl}
 U(x)
@@ -147,7 +147,7 @@ The input value of its elements
 are not specified (must not matter).
 Upon return, $icode v$$ is a
 $cref/atomic_sparsity/atomic_option/atomic_sparsity/$$ pattern for
-$latex V(x) \in B^{n \times q}$$ which is defined by
+$latex V(x) \in \B{R}^{n \times q}$$ which is defined by
 $latex \[
 \begin{array}{rcl}
 V(x)

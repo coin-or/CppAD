@@ -48,8 +48,8 @@ $cref/atomic_user/atomic_ctor/atomic_user/$$ class.
 $pre
 
 $$
-For a fixed matrix $latex R \in B^{q \times m}$$,
-the Jacobian of $latex R * f( x )$$ with respect to $latex x \in B^n$$ is
+For a fixed matrix $latex R \in \B{R}^{q \times m}$$,
+the Jacobian of $latex R * f( x )$$ with respect to $latex x \in \B{R}^n$$ is
 $latex \[
 	S(x) = R * f^{(1)} (x)
 \] $$
@@ -68,8 +68,8 @@ $codei%
     size_t %q%
 %$$
 It specifies the number of rows in
-$latex R \in B^{q \times m}$$ and the Jacobian
-$latex S(x) \in B^{q \times n}$$.
+$latex R \in \B{R}^{q \times m}$$ and the Jacobian
+$latex S(x) \in \B{R}^{q \times n}$$.
 
 $subhead rt$$
 This argument has prototype
@@ -78,7 +78,7 @@ $codei%
 %$$
 and is a
 $cref/atomic_sparsity/atomic_option/atomic_sparsity/$$ pattern for
-$latex R^\R{T} \in B^{m \times q}$$.
+$latex R^\R{T} \in \B{R}^{m \times q}$$.
 
 $subhead st$$
 This argument has prototype
@@ -89,7 +89,7 @@ The input value of its elements
 are not specified (must not matter).
 Upon return, $icode s$$ is a
 $cref/atomic_sparsity/atomic_option/atomic_sparsity/$$ pattern for
-$latex S(x)^\R{T} \in B^{n \times q}$$.
+$latex S(x)^\R{T} \in \B{R}^{n \times q}$$.
 
 $subhead x$$
 $index deprecated$$

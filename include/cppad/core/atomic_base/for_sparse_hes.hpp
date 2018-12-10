@@ -46,8 +46,8 @@ $pre
 
 $$
 Given a $cref/sparsity pattern/glossary/Sparsity Pattern/$$ for
-a diagonal matrix $latex R \in B^{n \times n}$$, and
-a row vector $latex S \in B^{1 \times m}$$,
+a diagonal matrix $latex R \in \B{R}^{n \times n}$$, and
+a row vector $latex S \in \B{R}^{1 \times m}$$,
 this routine computes the sparsity pattern for
 $latex \[
 	H(x) = R^\R{T} \cdot (S \cdot f)^{(2)}( x ) \cdot R
@@ -79,7 +79,7 @@ $codei%
      const CppAD:vector<bool>& %r%
 %$$
 and is a $cref/atomic_sparsity/atomic_option/atomic_sparsity/$$ pattern for
-the diagonal of $latex R \in B^{n \times n}$$.
+the diagonal of $latex R \in \B{R}^{n \times n}$$.
 
 $subhead s$$
 The argument $icode s$$ has prototype
@@ -87,7 +87,7 @@ $codei%
      const CppAD:vector<bool>& %s%
 %$$
 and its size is $icode m$$.
-It is a sparsity pattern for $latex S \in B^{1 \times m}$$.
+It is a sparsity pattern for $latex S \in \B{R}^{1 \times m}$$.
 
 $subhead h$$
 This argument has prototype
@@ -98,7 +98,7 @@ The input value of its elements
 are not specified (must not matter).
 Upon return, $icode h$$ is a
 $cref/atomic_sparsity/atomic_option/atomic_sparsity/$$ pattern for
-$latex H(x) \in B^{n \times n}$$ which is defined above.
+$latex H(x) \in \B{R}^{n \times n}$$ which is defined above.
 
 $subhead x$$
 $index deprecated$$

@@ -39,8 +39,8 @@ $icode%ok% = %afun%.for_sparse_jac(%q%, %r%, %s%)
 $head Purpose$$
 This function is used by $cref ForSparseJac$$ to compute
 Jacobian sparsity patterns.
-For a fixed matrix $latex R \in B^{n \times q}$$,
-the Jacobian of $latex f( x + R * u)$$ with respect to $latex u \in B^q$$ is
+For a fixed matrix $latex R \in \B{R}^{n \times q}$$,
+the Jacobian of $latex f( x + R * u)$$ with respect to $latex u \in \B{R}^q$$ is
 $latex \[
 	S(x) = f^{(1)} (x) * R
 \] $$
@@ -62,8 +62,8 @@ $codei%
     size_t %q%
 %$$
 It specifies the number of columns in
-$latex R \in B^{n \times q}$$ and the Jacobian
-$latex S(x) \in B^{m \times q}$$.
+$latex R \in \B{R}^{n \times q}$$ and the Jacobian
+$latex S(x) \in \B{R}^{m \times q}$$.
 
 $subhead r$$
 This argument has prototype
@@ -71,7 +71,7 @@ $codei%
      const %atomic_sparsity%& %r%
 %$$
 and is a $cref/atomic_sparsity/atomic_option/atomic_sparsity/$$ pattern for
-$latex R \in B^{n \times q}$$.
+$latex R \in \B{R}^{n \times q}$$.
 
 $subhead s$$
 This argument has prototype
@@ -82,7 +82,7 @@ The input values of its elements
 are not specified (must not matter).
 Upon return, $icode s$$ is a
 $cref/atomic_sparsity/atomic_option/atomic_sparsity/$$ pattern for
-$latex S(x) \in B^{m \times q}$$.
+$latex S(x) \in \B{R}^{m \times q}$$.
 
 $subhead x$$
 $index deprecated$$

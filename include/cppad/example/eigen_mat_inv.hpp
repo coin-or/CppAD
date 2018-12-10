@@ -90,7 +90,7 @@ $latex \[
 \] $$
 $latex \[
 	\bar{B} = \bar{E} (C D)^\R{T} \W{,}
-	\bar{C} = B^\R{T} \bar{E} D^\R{T} \W{,}
+	\bar{C} = \B{R}^\R{T} \bar{E} D^\R{T} \W{,}
 	\bar{D} = (B C)^\R{T} \bar{E}
 \] $$
 

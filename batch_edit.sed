@@ -3,7 +3,6 @@
 # 1. Do not update copyright date when do this edit
 # 6. Convert tabs to spaces.
 # 7. Change CPPAD_TESTVECTOR to a template type (see Eigen entry in wishlist).
-# 8. Change : B^n to \B{R}^n and other simuilar uses of B as a space.
 # 9. Change Vector<T> -> <T>Vector for T = Base, Size, Bool (T != Set)
 # 12. Remove all doxygen \a commands (not used consistently)
 # 13. Remove CPPAD_INLINE_FRIEND_TEMPLATE_FUNCTION
@@ -37,3 +36,10 @@
 # '
 # ----------------------------------------------------------------------------
 # Put other sed commands below here and without # at start of line
+s|\\in B|\\in \\B{R}|g
+s|\\times B|\\times \\B{R}|g
+s|\\rightarrow B|\\rightarrow \\B{R}|g
+s|B^|\\B{R}^|g
+#
+s|: B|: \\B{R}|g
+s|"\([^"]*\): \\B{R}|"\1: B|

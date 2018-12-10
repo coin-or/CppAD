@@ -51,7 +51,7 @@ $codei%
 	const %ADVector%& %ax%
 %$$
 and size must be equal to $icode n$$.
-It specifies vector $latex x \in B^n$$
+It specifies vector $latex x \in \B{R}^n$$
 at which an $codei%AD<%Base%>%$$ version of
 $latex y = f(x)$$ is to be evaluated; see
 $cref/Base/atomic_ctor/atomic_base/Base/$$.

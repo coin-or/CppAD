@@ -46,7 +46,7 @@ $cref/operation sequence/glossary/Operation/Sequence/$$.
 It can then be used to calculate derivatives of the corresponding
 $cref/AD function/glossary/AD Function/$$
 $latex \[
-	F : B^n \rightarrow B^m
+	F : \B{R}^n \rightarrow \B{R}^m
 \] $$
 where $latex B$$ is the space corresponding to objects of type $icode Base$$.
 

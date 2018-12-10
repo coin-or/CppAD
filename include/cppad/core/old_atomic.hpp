@@ -68,7 +68,7 @@ $head Purpose$$
 In some cases, the user knows how to compute the derivative
 of a function
 $latex \[
-	y = f(x) \; {\rm where} \; f : B^n \rightarrow B^m
+	y = f(x) \; {\rm where} \; f : \B{R}^n \rightarrow \B{R}^m
 \] $$
 more efficiently than by coding it using $codei%AD<%Base%>%$$
 $cref/atomic/glossary/Operation/Atomic/$$ operations
@@ -256,7 +256,7 @@ The $icode afun$$ argument $icode ax$$ has prototype
 $codei%
 	const %Tvector%< AD<%Base%> >& %ax%
 %$$
-It is the argument vector $latex x \in B^n$$
+It is the argument vector $latex x \in \B{R}^n$$
 at which the $codei%AD<%Base%>%$$ version of
 $latex y = f(x)$$ is to be evaluated.
 The dimension of the domain space for $latex y = f (x)$$
@@ -393,11 +393,11 @@ Using the calculations done by $cref/forward/old_atomic/forward/$$,
 the Taylor coefficients $latex \{ y_i^\ell \}$$ are a function of the Taylor
 coefficients for $latex \{ x_j^\ell \}$$; i.e., given $latex y = f(x)$$
 we define the function
-$latex F : B^{n \times (k+1)} \rightarrow B^{m \times (k+1)}$$ by
+$latex F : \B{R}^{n \times (k+1)} \rightarrow \B{R}^{m \times (k+1)}$$ by
 $latex \[
 y_i^\ell =  F_i^\ell ( \{ x_j^\ell \} )
 \] $$
-We use $latex G : B^{m \times (k+1)} \rightarrow B$$
+We use $latex G : \B{R}^{m \times (k+1)} \rightarrow \B{R}$$
 to denote an arbitrary scalar valued function of the Taylor coefficients for
 $latex Y(t)$$ and write  $latex z = G( \{ y_i^\ell \} )$$.
 The $code reverse$$ routine
@@ -467,7 +467,7 @@ $codei%
 %$$
 that is used to compute results during a forward Jacobian sparsity sweep.
 For a fixed $latex n \times q$$ matrix $latex R$$,
-the Jacobian of $latex f( x + R * u)$$ with respect to $latex u \in B^q$$ is
+the Jacobian of $latex f( x + R * u)$$ with respect to $latex u \in \B{R}^q$$ is
 $latex \[
 	S(x) = f^{(1)} (x) * R
 \] $$
@@ -483,8 +483,8 @@ $codei%
     size_t %q%
 %$$
 It specifies the number of columns in
-$latex R \in B^{n \times q}$$ and the Jacobian
-$latex S(x) \in B^{m \times q}$$.
+$latex R \in \B{R}^{n \times q}$$ and the Jacobian
+$latex S(x) \in \B{R}^{m \times q}$$.
 
 $subhead r$$
 The $icode for_jac_sparse$$ argument $icode r$$ has prototype
@@ -518,7 +518,7 @@ $codei%
 %$$
 that is used to compute results during a reverse Jacobian sparsity sweep.
 For a fixed $latex q \times m$$ matrix $latex S$$,
-the Jacobian of $latex S * f( x )$$ with respect to $latex x \in B^n$$ is
+the Jacobian of $latex S * f( x )$$ with respect to $latex x \in \B{R}^n$$ is
 $latex \[
 	R(x) = S * f^{(1)} (x)
 \] $$
@@ -536,8 +536,8 @@ $codei%
     size_t %q%
 %$$
 It specifies the number of rows in
-$latex S \in B^{q \times m}$$ and the Jacobian
-$latex R(x) \in B^{q \times n}$$.
+$latex S \in \B{R}^{q \times m}$$ and the Jacobian
+$latex R(x) \in \B{R}^{q \times n}$$.
 
 $subhead s$$
 The $icode rev_jac_sparse$$ argument $icode s$$ has prototype
@@ -570,7 +570,7 @@ $codei%
 	%ok% = %rev_hes_sparse%(%id%, %n%, %m%, %q%, %r%, %s%, %t%, %u%, %v%)
 %$$
 There is an unspecified scalar valued function
-$latex g : B^m \rightarrow B$$.
+$latex g : \B{R}^m \rightarrow \B{R}$$.
 Given a sparsity pattern for $latex R$$
 and information about the function $latex z = g(y)$$,
 this routine computes the sparsity pattern for
@@ -597,7 +597,7 @@ and $icode%r%.size() >= %n%$$.
 For $latex j = 0 , \ldots , n-1$$,
 all the elements of $icode%r%[%j%]%$$ are between
 zero and $icode%q%-1%$$ inclusive.
-This specifies a sparsity pattern for the matrix $latex R \in B^{n \times q}$$.
+This specifies a sparsity pattern for the matrix $latex R \in \B{R}^{n \times q}$$.
 
 $subhead s$$
 The $icode rev_hes_sparse$$ argument $icode s$$ has prototype
@@ -606,7 +606,7 @@ $codei%
 %$$
 and $icode%s%.size() >= %m%$$.
 This specifies a sparsity pattern for the matrix
-$latex S(x) = g^{(1)} (y) \in B^{1 \times m}$$.
+$latex S(x) = g^{(1)} (y) \in \B{R}^{1 \times m}$$.
 
 $subhead t$$
 The $icode rev_hes_sparse$$ argument $icode t$$ has prototype
@@ -617,7 +617,7 @@ and $icode%t%.size() >= %n%$$.
 The input values of its elements
 are not specified (must not matter).
 Upon return it represents a sparsity pattern for the matrix
-$latex T(x) \in B^{1 \times n}$$ defined by
+$latex T(x) \in \B{R}^{1 \times n}$$ defined by
 $latex \[
 T(x)  =  (g \circ f)^{(1)} (x) =  S(x) * f^{(1)} (x)
 \] $$
@@ -632,7 +632,7 @@ For $latex i = 0 , \ldots , m-1$$,
 all the elements of $icode%u%[%i%]%$$
 are between zero and $icode%q%-1%$$ inclusive.
 This specifies a sparsity pattern
-for the matrix $latex U(x) \in B^{m \times q}$$ defined by
+for the matrix $latex U(x) \in \B{R}^{m \times q}$$ defined by
 $latex \[
 \begin{array}{rcl}
 U(x)
@@ -659,7 +659,7 @@ Upon return, for $latex j = 0, \ldots , n-1$$,
 all the elements of $icode%v%[%j%]%$$
 are between zero and $icode%q%-1%$$ inclusive.
 This represents a sparsity pattern for the matrix
-$latex V(x) \in B^{n \times q}$$ defined by
+$latex V(x) \in \B{R}^{n \times q}$$ defined by
 $latex \[
 \begin{array}{rcl}
 V(x)

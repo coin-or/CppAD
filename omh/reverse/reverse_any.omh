@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
   CppAD is distributed under the terms of the
                Eclipse Public License Version 2.0.
@@ -30,7 +30,7 @@ $head Syntax$$
 $icode%dw% = %f%.Reverse(%q%, %w%)%$$
 
 $head Purpose$$
-We use $latex F : B^n \rightarrow B^m$$ to denote the
+We use $latex F : \B{R}^n \rightarrow \B{R}^m$$ to denote the
 $cref/AD function/glossary/AD Function/$$ corresponding to $icode f$$.
 Reverse mode computes the derivative of the $cref Forward$$ mode
 $cref/Taylor coefficients/glossary/Taylor Coefficient/$$
@@ -43,7 +43,7 @@ $head Notation$$
 
 $subhead u^(k)$$
 For $latex k = 0, \ldots , q-1$$,
-the vector $latex u^{(k)} \in B^n$$ is defined as the value of
+the vector $latex u^{(k)} \in \B{R}^n$$ is defined as the value of
 $icode x_k$$ in the previous calls of the form
 $codei%
 	%f%.Forward(%k%, %x_k%)
@@ -56,7 +56,7 @@ $cref/operation sequence/glossary/Operation/Sequence/$$ was recorded.
 
 $subhead X(t, u)$$
 The function
-$latex X : B \times B^{n \times q} \rightarrow B^n$$ is defined by
+$latex X : \B{R} \times \B{R}^{n \times q} \rightarrow \B{R}^n$$ is defined by
 $latex \[
 	X ( t , u ) = u^{(0)} + u^{(1)} * t + \cdots + u^{(q-1)} * t^{q-1}
 \] $$
@@ -69,7 +69,7 @@ $latex \[
 
 $subhead Y(t, u)$$
 The function
-$latex Y : B \times B^{n \times q} \rightarrow B^m$$ is defined by
+$latex Y : \B{R} \times \B{R}^{n \times q} \rightarrow \B{R}^m$$ is defined by
 $latex \[
 	Y(t, u) = F [ X(t,u) ]
 \]$$
@@ -92,7 +92,7 @@ w_i^{(k)} = \left\{ \begin{array}{ll}
 
 
 $subhead W(u)$$
-The function $latex W : B^{n \times q} \rightarrow B$$ is defined by
+The function $latex W : \B{R}^{n \times q} \rightarrow \B{R}$$ is defined by
 $latex \[
 W(u) = \sum_{k=0}^{q-1} ( w^{(k)} )^\R{T} \frac{1}{k !} \Dpow{k}{t} Y(0, u)
 \] $$

@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
   CppAD is distributed under the terms of the
                Eclipse Public License Version 2.0.
@@ -31,9 +31,9 @@ $cref FunCheck$$
 
 
 $head Purpose$$
-We use $latex F : B^n \rightarrow B^m$$ to denote the
+We use $latex F : \B{R}^n \rightarrow \B{R}^m$$ to denote the
 $cref/AD function/glossary/AD Function/$$ corresponding to $icode f$$; i.e,
-given $latex x \in B^n$$, $latex F(x)$$ is defined by
+given $latex x \in \B{R}^n$$, $latex F(x)$$ is defined by
 $codei%
 	%F%(%x%) = %f%.Forward(0, %x%)
 %$$

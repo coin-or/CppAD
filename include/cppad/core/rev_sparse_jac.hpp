@@ -37,9 +37,9 @@ $icode%s% = %f%.RevSparseJac(%q%, %r%)
 $icode%s% = %f%.RevSparseJac(%q%, %r%, %transpose%, %dependency%)%$$
 
 $head Purpose$$
-We use $latex F : B^n \rightarrow B^m$$ to denote the
+We use $latex F : \B{R}^n \rightarrow \B{R}^m$$ to denote the
 $cref/AD function/glossary/AD Function/$$ corresponding to $icode f$$.
-For a fixed matrix $latex R \in B^{q \times m}$$,
+For a fixed matrix $latex R \in \B{R}^{q \times m}$$,
 the Jacobian of $latex R * F( x )$$
 with respect to $latex x$$ is
 $latex \[
@@ -59,7 +59,7 @@ $codei%
 $head x$$
 If the operation sequence in $icode f$$ is
 $cref/independent/glossary/Operation/Independent/$$ of
-the independent variables in $latex x \in B^n$$,
+the independent variables in $latex x \in \B{R}^n$$,
 the sparsity pattern is valid for all values of
 (even if it has $cref CondExp$$ or $cref VecAD$$ operations).
 
@@ -69,8 +69,8 @@ $codei%
 	size_t %q%
 %$$
 It specifies the number of rows in
-$latex R \in B^{q \times m}$$ and the
-Jacobian $latex S(x) \in B^{q \times n}$$.
+$latex R \in \B{R}^{q \times m}$$ and the
+Jacobian $latex S(x) \in \B{R}^{q \times n}$$.
 
 $head transpose$$
 The argument $icode transpose$$ has prototype
@@ -103,7 +103,7 @@ its size is $icode q$$ and all its set elements are between
 zero and $latex m - 1$$.
 It specifies a
 $cref/sparsity pattern/glossary/Sparsity Pattern/$$
-for the matrix $latex R \in B^{q \times m}$$.
+for the matrix $latex R \in \B{R}^{q \times m}$$.
 
 $subhead transpose true$$
 If $icode r$$ has elements of type $code bool$$,
@@ -113,7 +113,7 @@ its size is $icode m$$ and all its set elements are between
 zero and $latex q - 1$$.
 It specifies a
 $cref/sparsity pattern/glossary/Sparsity Pattern/$$
-for the matrix $latex R^\R{T} \in B^{m \times q}$$.
+for the matrix $latex R^\R{T} \in \B{R}^{m \times q}$$.
 
 $head s$$
 The return value $icode s$$ has prototype

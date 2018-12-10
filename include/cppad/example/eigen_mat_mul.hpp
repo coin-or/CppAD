@@ -28,7 +28,7 @@ $cref atomic_mat_mul.hpp$$
 
 $head Purpose$$
 Construct an atomic operation that computes the matrix product,
-$latex R = A \times B$$
+$latex R = A \times \B{R}$$
 for any positive integers $latex r$$, $latex m$$, $latex c$$,
 and any $latex A \in \B{R}^{r \times m}$$,
 $latex B \in \B{R}^{m \times c}$$.

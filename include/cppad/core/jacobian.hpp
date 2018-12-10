@@ -31,7 +31,7 @@ $icode%jac% = %f%.Jacobian(%x%)%$$
 
 
 $head Purpose$$
-We use $latex F : B^n \rightarrow B^m$$ to denote the
+We use $latex F : \B{R}^n \rightarrow \B{R}^m$$ to denote the
 $cref/AD function/glossary/AD Function/$$ corresponding to $icode f$$.
 The syntax above sets $icode jac$$ to the
 Jacobian of $icode F$$ evaluated at $icode x$$; i.e.,

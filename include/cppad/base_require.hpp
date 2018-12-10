@@ -20,23 +20,12 @@ $spell
 	alloc
 	eps
 	std
-	Lt
-	Le
-	Eq
-	Ge
-	Gt
 	cppad.hpp
 	namespace
-	optimizations
 	bool
 	const
 	CppAD
 	enum
-	Lt
-	Le
-	Eq
-	Ge
-	Gt
 	inline
 	Op
 	std
@@ -68,6 +57,10 @@ $code std::complex<double>$$,
 or $codei%AD<%Other%>%$$,
 these requirements are provided by including the file
 $code cppad/cppad.hpp$$.
+In the documentation, The notation $latex \B{R}$$ denotes
+the field corresponding to the base type.
+Multiplication must be commutative for this field,
+but it need not be the reals; e.g., the complex numbers.
 
 $head Include Order$$
 If you are linking a non-standard base type to CppAD,

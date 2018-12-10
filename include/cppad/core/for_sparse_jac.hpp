@@ -36,7 +36,7 @@ $icode%s% = %f%.ForSparseJac(%q%, %r%)
 $icode%s% = %f%.ForSparseJac(%q%, %r%, %transpose%, %dependency%)%$$
 
 $head Purpose$$
-We use $latex F : B^n \rightarrow B^m$$ to denote the
+We use $latex F : \B{R}^n \rightarrow \B{R}^m$$ to denote the
 $cref/AD function/glossary/AD Function/$$ corresponding to $icode f$$.
 For a fixed $latex n \times q$$ matrix $latex R$$,
 the Jacobian of $latex F[ x + R * u ]$$
@@ -105,7 +105,7 @@ After this call, $icode%f%.size_forward_set()%$$ will return zero.
 $head x$$
 If the operation sequence in $icode f$$ is
 $cref/independent/glossary/Operation/Independent/$$ of
-the independent variables in $latex x \in B^n$$,
+the independent variables in $latex x \in \B{R}^n$$,
 the sparsity pattern is valid for all values of
 (even if it has $cref CondExp$$ or $cref VecAD$$ operations).
 
@@ -115,8 +115,8 @@ $codei%
 	size_t %q%
 %$$
 It specifies the number of columns in
-$latex R \in B^{n \times q}$$ and the Jacobian
-$latex S(x) \in B^{m \times q}$$.
+$latex R \in \B{R}^{n \times q}$$ and the Jacobian
+$latex S(x) \in \B{R}^{m \times q}$$.
 
 $head transpose$$
 The argument $icode transpose$$ has prototype
@@ -149,7 +149,7 @@ its size is $latex n$$ and all the set elements must be between
 zero and $icode%q%-1%$$ inclusive.
 It specifies a
 $cref/sparsity pattern/glossary/Sparsity Pattern/$$
-for the matrix $latex R \in B^{n \times q}$$.
+for the matrix $latex R \in \B{R}^{n \times q}$$.
 
 $subhead transpose true$$
 If $icode r$$ has elements of type $code bool$$,
@@ -159,7 +159,7 @@ its size is $latex q$$ and all the set elements must be between
 zero and $icode%n%-1%$$ inclusive.
 It specifies a
 $cref/sparsity pattern/glossary/Sparsity Pattern/$$
-for the matrix $latex R^\R{T} \in B^{q \times n}$$.
+for the matrix $latex R^\R{T} \in \B{R}^{q \times n}$$.
 
 $head s$$
 The return value $icode s$$ has prototype
@@ -176,7 +176,7 @@ its size is $latex m$$ and all its set elements are between
 zero and $icode%q%-1%$$ inclusive.
 It specifies a
 $cref/sparsity pattern/glossary/Sparsity Pattern/$$
-for the matrix $latex S(x) \in B^{m \times q}$$.
+for the matrix $latex S(x) \in \B{R}^{m \times q}$$.
 
 $subhead transpose true$$
 If $icode s$$ has elements of type $code bool$$,
@@ -186,7 +186,7 @@ its size is $latex q$$ and all its set elements are between
 zero and $icode%m%-1%$$ inclusive.
 It specifies a
 $cref/sparsity pattern/glossary/Sparsity Pattern/$$
-for the matrix $latex S(x)^\R{T} \in B^{q \times m}$$.
+for the matrix $latex S(x)^\R{T} \in \B{R}^{q \times m}$$.
 
 $head VectorSet$$
 The type $icode VectorSet$$ must be a $cref SimpleVector$$ class with

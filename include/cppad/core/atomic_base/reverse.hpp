@@ -142,16 +142,16 @@ Otherwise, $icode aty$$ specifications are the same as for $icode ty$$.
 
 
 $head F$$
-We use the notation $latex \{ x_j^k \} \in B^{n \times (q+1)}$$ for
+We use the notation $latex \{ x_j^k \} \in \B{R}^{n \times (q+1)}$$ for
 $latex \[
 	\{ x_j^k \W{:} j = 0 , \ldots , n-1, k = 0 , \ldots , q \}
 \]$$
-We use the notation $latex \{ y_i^k \} \in B^{m \times (q+1)}$$ for
+We use the notation $latex \{ y_i^k \} \in \B{R}^{m \times (q+1)}$$ for
 $latex \[
 	\{ y_i^k \W{:} i = 0 , \ldots , m-1, k = 0 , \ldots , q \}
 \]$$
 We define the function
-$latex F : B^{n \times (q+1)} \rightarrow B^{m \times (q+1)}$$ by
+$latex F : \B{R}^{n \times (q+1)} \rightarrow \B{R}^{m \times (q+1)}$$ by
 $latex \[
 	y_i^k = F_i^k [ \{ x_j^k \} ]
 \] $$
@@ -167,9 +167,9 @@ up to order $latex \ell$$.
 
 
 $head G, H$$
-We use $latex G : B^{m \times (q+1)} \rightarrow B$$
+We use $latex G : \B{R}^{m \times (q+1)} \rightarrow \B{R}$$
 to denote an arbitrary scalar valued function of $latex \{ y_i^k \}$$.
-We use $latex H : B^{n \times (q+1)} \rightarrow B$$
+We use $latex H : \B{R}^{n \times (q+1)} \rightarrow \B{R}$$
 defined by
 $latex \[
 	H ( \{ x_j^k \} ) = G[ F( \{ x_j^k \} ) ]

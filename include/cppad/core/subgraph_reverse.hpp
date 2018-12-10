@@ -34,7 +34,7 @@ $icode%f%.clear_subgraph()
 %$$
 
 $head Purpose$$
-We use $latex F : B^n \rightarrow B^m$$ to denote the
+We use $latex F : \B{R}^n \rightarrow \B{R}^m$$ to denote the
 $cref/AD function/glossary/AD Function/$$ corresponding to $icode f$$.
 Reverse mode computes the derivative of the $cref Forward$$ mode
 $cref/Taylor coefficients/glossary/Taylor Coefficient/$$

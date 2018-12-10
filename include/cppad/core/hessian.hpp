@@ -33,7 +33,7 @@ $icode%hes% = %f%.Hessian(%x%, %l%)
 
 
 $head Purpose$$
-We use $latex F : B^n \rightarrow B^m$$ to denote the
+We use $latex F : \B{R}^n \rightarrow \B{R}^m$$ to denote the
 $cref/AD function/glossary/AD Function/$$ corresponding to $icode f$$.
 The syntax above sets $icode hes$$ to the Hessian
 The syntax above sets $icode h$$ to the Hessian

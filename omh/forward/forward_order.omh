@@ -36,9 +36,9 @@ $icode%yq% = %f%.Forward(%q%, %xq%, %s%)
 
 
 $head Purpose$$
-We use $latex F : B^n \rightarrow B^m$$ to denote the
+We use $latex F : \B{R}^n \rightarrow \B{R}^m$$ to denote the
 $cref/AD function/glossary/AD Function/$$ corresponding to $icode f$$.
-Given a function $latex X : B \rightarrow B^n$$,
+Given a function $latex X : \B{R} \rightarrow \B{R}^n$$,
 defined by its
 $cref/Taylor coefficients/glossary/Taylor Coefficient/$$,
 forward mode computes the Taylor coefficients for the function
@@ -152,8 +152,8 @@ $icode s$$ is not used
 
 $head X(t)$$
 The function
-$latex X : B \rightarrow B^n$$ is defined using
-the Taylor coefficients $latex x^{(k)} \in B^n$$:
+$latex X : \B{R} \rightarrow \B{R}^n$$ is defined using
+the Taylor coefficients $latex x^{(k)} \in \B{R}^n$$:
 $latex \[
 	X(t) = x^{(0)} * t^0 + x^{(1)} * t^1 + \cdots + x^{(q)} * t^q
 \] $$
@@ -166,9 +166,9 @@ $latex \[
 
 $head Y(t)$$
 The function
-$latex Y : B \rightarrow B^m$$ is defined by
+$latex Y : \B{R} \rightarrow \B{R}^m$$ is defined by
 $latex Y(t) = F[ X(t) ] $$.
-We use $latex y^{(k)} \in B^m$$
+We use $latex y^{(k)} \in \B{R}^m$$
 to denote the $th k$$ order Taylor coefficient of $latex Y(t)$$; i.e.,
 $latex \[
 	Y(t) = y^{(0)} * t^0 + y^{(1)} * t^1 + \cdots + y^{(q)} * t^q + o( t^q )
