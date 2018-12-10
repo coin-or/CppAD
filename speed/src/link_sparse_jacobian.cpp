@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -81,7 +81,7 @@ $codei%
 $head x$$
 The argument $icode x$$ has prototype
 $codei%
-        CppAD::vector<double>& %x%
+   CppAD::vector<double>& %x%
 %$$
 and its size is $latex n$$; i.e., $icode%x%.size() == %size%$$.
 The input value of the elements of $icode x$$ does not matter.
@@ -93,7 +93,7 @@ The value of this vector need not change with each repetition.
 $head jacobian$$
 The argument $icode jacobian$$ has prototype
 $codei%
-        CppAD::vector<double>& %jacobian%
+   CppAD::vector<double>& %jacobian%
 %$$
 and its size is $icode K$$.
 The input value of its elements does not matter.

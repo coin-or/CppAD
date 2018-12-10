@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -334,7 +334,7 @@ Vector G_reverse_mul(const Vector& y)
 bool reverse_mul(void)
 {
 	bool ok = true;
-     double eps = 10. * CppAD::numeric_limits<double>::epsilon();
+    double eps = 10. * CppAD::numeric_limits<double>::epsilon();
 
 	using CppAD::AD;
 	using CppAD::NearEqual;

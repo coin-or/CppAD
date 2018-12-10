@@ -1,7 +1,7 @@
 # ifndef CPPAD_CORE_LU_RATIO_HPP
 # define CPPAD_CORE_LU_RATIO_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -152,7 +152,7 @@ $codei%
 $head ratio$$
 The argument $icode ratio$$ has prototype
 $codei%
-        AD<%Base%> &%ratio%
+    AD<%Base%> &%ratio%
 %$$
 On input, the value of $icode ratio$$ does not matter.
 On output it is a measure of how good the choice of pivots is.

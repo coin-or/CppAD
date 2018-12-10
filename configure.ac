@@ -44,10 +44,10 @@ dnl -----------------------------------------------------------------------
 dnl The case where enable_msvc != no is defined and supported by Ted Ralphs
 AC_MSG_CHECKING([--enable-msvc])
 AC_ARG_ENABLE([msvc],
-  [AC_HELP_STRING([--enable-msvc],
-                  [Prefer (i)cl/ifort/link over GNU on MinGW/Cygwin.])],
-  [enable_msvc=$enableval],
-  [enable_msvc=no]
+    [AC_HELP_STRING([--enable-msvc],
+    [Prefer (i)cl/ifort/link over GNU on MinGW/Cygwin.])],
+    [enable_msvc=$enableval],
+    [enable_msvc=no]
 )
 AC_MSG_RESULT([$enable_msvc])
 

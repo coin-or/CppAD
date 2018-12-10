@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -60,7 +60,7 @@ double ode_speed(const char* name, size_t& count)
 	else	assert(false);
 
 	size_t i;
-        double s0, s1;
+    double s0, s1;
 	size_t  c0, c1;
 
 	// solution vector

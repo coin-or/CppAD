@@ -103,7 +103,7 @@ $codei%
 $head ncopy$$
 The argument $icode ncopy$$ has prototype
 $codei%
-        size_t %ncopy%
+    size_t %ncopy%
 %$$
 This specifies the number of elements that are copied from
 the old array to the new array.

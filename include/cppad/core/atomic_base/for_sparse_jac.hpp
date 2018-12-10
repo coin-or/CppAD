@@ -59,7 +59,7 @@ $cref/atomic_user/atomic_ctor/atomic_user/$$ class.
 $subhead q$$
 The argument $icode q$$ has prototype
 $codei%
-     size_t %q%
+    size_t %q%
 %$$
 It specifies the number of columns in
 $latex R \in B^{n \times q}$$ and the Jacobian

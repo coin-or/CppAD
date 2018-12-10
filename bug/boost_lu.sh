@@ -1,6 +1,6 @@
 #! /bin/bash -e
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 #
 # CppAD is distributed under the terms of the
 #              Eclipse Public License Version 2.0.
@@ -23,8 +23,8 @@ The folowing change to
 seems to fix the problem:
 
 Old Text:
-	        return norm_inf (e1 - e2) < epsilon *
-               std::max<S> (std::max<S> (norm_inf (e1), norm_inf (e2)), min_norm);
+        return norm_inf (e1 - e2) < epsilon *
+        std::max<S> (std::max<S> (norm_inf (e1), norm_inf (e2)), min_norm);
 New Text:
     S norm_1    = norm_inf(e1);
     S norm_2    = norm_inf(e2);

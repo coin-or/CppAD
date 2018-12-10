@@ -1,7 +1,7 @@
 # ifndef CPPAD_CORE_OLD_ATOMIC_HPP
 # define CPPAD_CORE_OLD_ATOMIC_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -480,7 +480,7 @@ This routine is used by calls to $cref ForSparseJac$$.
 $subhead q$$
 The $icode for_jac_sparse$$ argument $icode q$$ has prototype
 $codei%
-     size_t %q%
+    size_t %q%
 %$$
 It specifies the number of columns in
 $latex R \in B^{n \times q}$$ and the Jacobian
@@ -533,7 +533,7 @@ and to $cref optimize$$.
 $subhead q$$
 The $icode rev_jac_sparse$$ argument $icode q$$ has prototype
 $codei%
-     size_t %q%
+    size_t %q%
 %$$
 It specifies the number of rows in
 $latex S \in B^{q \times m}$$ and the Jacobian
@@ -584,7 +584,7 @@ This routine is used by calls to $cref RevSparseHes$$.
 $subhead q$$
 The $icode rev_hes_sparse$$ argument $icode q$$ has prototype
 $codei%
-     size_t %q%
+    size_t %q%
 %$$
 It specifies the number of columns in the sparsity patterns.
 
@@ -611,7 +611,7 @@ $latex S(x) = g^{(1)} (y) \in B^{1 \times m}$$.
 $subhead t$$
 The $icode rev_hes_sparse$$ argument $icode t$$ has prototype
 $codei%
-     CppAD::vector<bool>& %t%
+   CppAD::vector<bool>& %t%
 %$$
 and $icode%t%.size() >= %n%$$.
 The input values of its elements
@@ -650,7 +650,7 @@ g^{(2)} (y) f^{(1)} (x) R
 $subhead v$$
 The $icode rev_hes_sparse$$ argument $icode v$$ has prototype
 $codei%
-     CppAD::vector< std::set<size_t> >& %v%
+   CppAD::vector< std::set<size_t> >& %v%
 %$$
 and $icode%v%.size() >= %n%$$.
 The input values of its elements
