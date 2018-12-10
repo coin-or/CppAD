@@ -16,14 +16,11 @@ DEFS          =
 #
 if CppAD_EIGEN
 EIGEN_SRC_FILES    =  eigen_cholesky.cpp eigen_mat_inv.cpp eigen_mat_mul.cpp
-EIGEN_EXTRA_FILES  =
 else
 EIGEN_EXTEA_FILES  =  eigen_cholesky.cpp eigen_mat_inv.cpp eigen_mat_mul.cpp
 EIGEN_SRC_FILES    =
 endif
 #
-EXTRA_DIST        =  \
-	$(EIGEN_EXTRA_FILES)
 #
 check_PROGRAMS    = atomic
 #

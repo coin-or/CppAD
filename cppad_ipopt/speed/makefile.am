@@ -14,7 +14,6 @@
 # CppAD pusts all it's preprocessor definitions in the cppad/configure.hpp
 DEFS          =
 #
-EXTRA_DIST = test.sh.in
 #
 check_PROGRAMS    = speed
 #

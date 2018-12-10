@@ -363,10 +363,6 @@ source_list = \
 # make separate copy of source files because  building with different flags
 BUILT_SOURCES = $(source_list)
 #
-EXTRA_DIST = \
-	gprof.sed
-
-#
 #
 AM_CXXFLAGS = \
 	-pg \

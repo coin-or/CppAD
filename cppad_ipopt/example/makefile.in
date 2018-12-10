@@ -353,11 +353,6 @@ top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 #
-EXTRA_DIST = \
-	ode1.omh \
-	ode2.omh
-
-#
 AM_CXXFLAGS = \
 	$(CXX_FLAGS) \
 	-I$(top_srcdir)/include \

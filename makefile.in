@@ -794,52 +794,6 @@ SUBDIRS = \
 
 #
 # note that bin/gpl_license.sh is deleted by dist-hook
-EXTRA_DIST = \
-	bin \
-	bin/autotools.sh \
-	doc.omh \
-	doc \
-	epl-v10.txt \
-	epl-v10.html \
-	omh \
-	uw_copy_040507.html \
-	coin.png \
-	\
-	test_more/compare_c/CMakeLists.txt \
-	include/cppad/CMakeLists.txt \
-	pkgconfig/CMakeLists.txt \
-	example/CMakeLists.txt \
-	example/atomic/CMakeLists.txt \
-	example/deprecated/CMakeLists.txt \
-	example/general/CMakeLists.txt \
-	example/get_started/CMakeLists.txt \
-	example/ipopt_solve/CMakeLists.txt \
-	example/optimize/CMakeLists.txt \
-	example/print_for/CMakeLists.txt \
-	example/sparse/CMakeLists.txt \
-	example/utility/CMakeLists.txt \
-	test_more/general/CMakeLists.txt \
-	CMakeLists.txt \
-	cppad_ipopt/src/CMakeLists.txt \
-	cppad_ipopt/example/CMakeLists.txt \
-	cppad_ipopt/test/CMakeLists.txt \
-	cppad_ipopt/CMakeLists.txt \
-	cppad_ipopt/speed/CMakeLists.txt \
-	speed/main.cpp \
-	speed/cppad/CMakeLists.txt \
-	speed/adolc/CMakeLists.txt \
-	speed/fadbad/CMakeLists.txt \
-	speed/src/CMakeLists.txt \
-	speed/example/CMakeLists.txt \
-	speed/CMakeLists.txt \
-	speed/double/CMakeLists.txt \
-	speed/profile/CMakeLists.txt \
-	speed/sacado/CMakeLists.txt \
-	example/multi_thread/bthread/CMakeLists.txt \
-	example/multi_thread/CMakeLists.txt \
-	example/multi_thread/openmp/CMakeLists.txt \
-	example/multi_thread/pthread/CMakeLists.txt
-
 test_directory_list = \
 	$(IPOPT_TESTS) \
 	$(SPEED_TESTS) \
@@ -857,6 +811,7 @@ test_directory_list = \
 	test_more/compare_c \
 	test_more/general
 
+#
 #
 doc_postfix = $(DESTDIR)$(datadir)/doc/$(postfix_dir)
 doc_package = $(DESTDIR)$(datadir)/doc/$(postfix_dir)/$(PACKAGE)-$(VERSION)
@@ -1137,9 +1092,6 @@ distdir: $(DISTFILES)
 	      || exit 1; \
 	  fi; \
 	done
-	$(MAKE) $(AM_MAKEFLAGS) \
-	  top_distdir="$(top_distdir)" distdir="$(distdir)" \
-	  dist-hook
 	-test -n "$(am__skip_mode_fix)" \
 	|| find "$(distdir)" -type d ! -perm -755 \
 		-exec chmod u+rwx,go+rx {} \; -o \
@@ -1385,8 +1337,8 @@ uninstall-am: uninstall-myincludeHEADERS \
 .PHONY: $(am__recursive_targets) CTAGS GTAGS TAGS all all-am \
 	am--refresh check check-am clean clean-cscope clean-generic \
 	cscope cscopelist-am ctags ctags-am dist dist-all dist-bzip2 \
-	dist-gzip dist-hook dist-lzip dist-shar dist-tarZ dist-xz \
-	dist-zip distcheck distclean distclean-generic distclean-tags \
+	dist-gzip dist-lzip dist-shar dist-tarZ dist-xz dist-zip \
+	distcheck distclean distclean-generic distclean-tags \
 	distcleancheck distdir distuninstallcheck dvi dvi-am html \
 	html-am info info-am install install-am install-data \
 	install-data-am install-dvi install-dvi-am install-exec \
@@ -1419,11 +1371,6 @@ test: all
 	echo "exit 0"                                      >> test.sh
 	chmod +x test.sh
 	./test.sh
-#
-dist-hook:
-	rm -rf `find . -name .svn`
-	rm $(distdir)/doc/error.wrd
-	rm $(distdir)/bin/gpl_license.sh
 
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.

@@ -353,12 +353,7 @@ top_srcdir = @top_srcdir@
 @CppAD_EIGEN_FALSE@EIGEN_SRC_FILES = 
 #
 @CppAD_EIGEN_TRUE@EIGEN_SRC_FILES = eigen_cholesky.cpp eigen_mat_inv.cpp eigen_mat_mul.cpp
-@CppAD_EIGEN_TRUE@EIGEN_EXTRA_FILES = 
 @CppAD_EIGEN_FALSE@EIGEN_EXTEA_FILES = eigen_cholesky.cpp eigen_mat_inv.cpp eigen_mat_mul.cpp
-#
-EXTRA_DIST = \
-	$(EIGEN_EXTRA_FILES)
-
 #
 AM_CXXFLAGS = \
 	$(CXX_FLAGS) \

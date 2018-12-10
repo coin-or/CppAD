@@ -18,8 +18,6 @@ det_by_minor_c.c: det_by_minor.c
 det_by_minor_cpp.cpp: det_by_minor.c
 	cp $(srcdir)/det_by_minor.c det_by_minor_cpp.cpp
 #
-EXTRA_DIST = \
-	det_by_minor.c
 #
 # erase configures choice of flags
 DEFS =

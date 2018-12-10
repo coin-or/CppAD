@@ -18,7 +18,6 @@ DEFS          =
 CPPAD_INCLUDE = -I$(top_srcdir)/include
 #
 # Microsoft project files
-EXTRA_DIST        =  test.sh
 #
 check_PROGRAMS    = print_for
 #

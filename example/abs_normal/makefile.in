@@ -355,8 +355,6 @@ top_srcdir = @top_srcdir@
 # Make sure that ../cppad-uninstalled.pc works for determining cflags
 CPPAD_INCLUDE = -I$(top_srcdir)/include
 #
-EXTRA_DIST = abs_normal.omh
-#
 #
 AM_CXXFLAGS = \
 	$(CXX_FLAGS) \

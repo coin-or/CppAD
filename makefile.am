@@ -394,51 +394,6 @@ SUBDIRS =  \
 	test_more/general
 #
 # note that bin/gpl_license.sh is deleted by dist-hook
-EXTRA_DIST = \
-	bin \
-	bin/autotools.sh \
-	doc.omh \
-	doc \
-	epl-v10.txt \
-	epl-v10.html \
-	omh \
-	uw_copy_040507.html \
-	coin.png \
-	\
-	test_more/compare_c/CMakeLists.txt \
-	include/cppad/CMakeLists.txt \
-	pkgconfig/CMakeLists.txt \
-	example/CMakeLists.txt \
-	example/atomic/CMakeLists.txt \
-	example/deprecated/CMakeLists.txt \
-	example/general/CMakeLists.txt \
-	example/get_started/CMakeLists.txt \
-	example/ipopt_solve/CMakeLists.txt \
-	example/optimize/CMakeLists.txt \
-	example/print_for/CMakeLists.txt \
-	example/sparse/CMakeLists.txt \
-	example/utility/CMakeLists.txt \
-	test_more/general/CMakeLists.txt \
-	CMakeLists.txt \
-	cppad_ipopt/src/CMakeLists.txt \
-	cppad_ipopt/example/CMakeLists.txt \
-	cppad_ipopt/test/CMakeLists.txt \
-	cppad_ipopt/CMakeLists.txt \
-	cppad_ipopt/speed/CMakeLists.txt \
-	speed/main.cpp \
-	speed/cppad/CMakeLists.txt \
-	speed/adolc/CMakeLists.txt \
-	speed/fadbad/CMakeLists.txt \
-	speed/src/CMakeLists.txt \
-	speed/example/CMakeLists.txt \
-	speed/CMakeLists.txt \
-	speed/double/CMakeLists.txt \
-	speed/profile/CMakeLists.txt \
-	speed/sacado/CMakeLists.txt \
-	example/multi_thread/bthread/CMakeLists.txt \
-	example/multi_thread/CMakeLists.txt \
-	example/multi_thread/openmp/CMakeLists.txt \
-	example/multi_thread/pthread/CMakeLists.txt
 
 test_directory_list = \
 	$(IPOPT_TESTS) \
@@ -472,10 +427,6 @@ test: all
 	chmod +x test.sh
 	./test.sh
 #
-dist-hook:
-	rm -rf `find . -name .svn`
-	rm $(distdir)/doc/error.wrd
-	rm $(distdir)/bin/gpl_license.sh
 #
 doc_postfix = $(DESTDIR)$(datadir)/doc/$(postfix_dir)
 doc_package = $(DESTDIR)$(datadir)/doc/$(postfix_dir)/$(PACKAGE)-$(VERSION)

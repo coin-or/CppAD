@@ -201,6 +201,7 @@ CXX_FLAGS_EIGEN = @CXX_FLAGS_EIGEN@
 CXX_FLAGS_FADBAD = @CXX_FLAGS_FADBAD@
 CYGPATH_W = @CYGPATH_W@
 #
+#
 # erase configures choice of flags
 DEFS = 
 DEPDIR = @DEPDIR@
@@ -352,10 +353,6 @@ top_srcdir = @top_srcdir@
 # See ./CMakeLists.txt for specifications.
 #
 BUILT_SOURCES = det_by_minor_c.c det_by_minor_cpp.cpp
-#
-EXTRA_DIST = \
-	det_by_minor.c
-
 #
 # AM_CXXFLAGS =
 # AM_CFLAGS   =

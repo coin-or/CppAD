@@ -66,8 +66,6 @@ microsoft_timer.cpp: $(srcdir)/../src/microsoft_timer.cpp
 # CppAD pusts all it's preprocessor definitions in the cppad/configure.hpp
 DEFS          =
 #
-EXTRA_DIST       =  \
-	gprof.sed
 #
 check_PROGRAMS   = speed_profile
 #

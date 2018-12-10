@@ -426,8 +426,6 @@ top_srcdir = @top_srcdir@
 @CppAD_ADOLC_FALSE@ADOLC_SRC_FILES = 
 # -------------------------------------------------------------------------
 @CppAD_ADOLC_TRUE@ADOLC_SRC_FILES = base_adolc.cpp
-@CppAD_ADOLC_FALSE@ADOLC_EXTRA_FILES = base_adolc.cpp
-@CppAD_ADOLC_TRUE@ADOLC_EXTRA_FILES = 
 @CppAD_ADOLC_FALSE@ADOLC_LIB = 
 @CppAD_ADOLC_TRUE@ADOLC_LIB = -ladolc -lColPack -L$(ADOLC_DIR)/lib -L$(ADOLC_DIR)/lib64
 @CppAD_ADOLC_FALSE@ADOLC_FLAGS = 
@@ -435,8 +433,6 @@ top_srcdir = @top_srcdir@
 @CppAD_IPOPT_FALSE@IPOPT_SRC_FILES = 
 # -------------------------------------------------------------------------
 @CppAD_IPOPT_TRUE@IPOPT_SRC_FILES = ipopt_solve.cpp
-@CppAD_IPOPT_FALSE@IPOPT_EXTRA_FILES = ipopt_solve.cpp
-@CppAD_IPOPT_TRUE@IPOPT_EXTRA_FILES = 
 @CppAD_IPOPT_FALSE@IPOPT_LIB = 
 @CppAD_IPOPT_TRUE@IPOPT_LIB = -lipopt \
 @CppAD_IPOPT_TRUE@	$(CPPAD_IPOPT_LIBS) $(FCLIBS) $(PTHREAD_LIB) $(DL_LIB)
@@ -446,15 +442,6 @@ top_srcdir = @top_srcdir@
 @CppAD_EIGEN_FALSE@EIGEN_SRC_FILES = 
 # -------------------------------------------------------------------------
 @CppAD_EIGEN_TRUE@EIGEN_SRC_FILES = cppad_eigen.cpp eigen_mat_inv.cpp
-@CppAD_EIGEN_FALSE@EIGEN_EXTRA_FILES = cppad_eigen.cpp eigen_mat_inv.cpp
-@CppAD_EIGEN_TRUE@EIGEN_EXTRA_FILES = 
-# -------------------------------------------------------------------------
-# Microsoft project files and script to run a single test
-EXTRA_DIST = \
-	$(ADOLC_EXTRA_FILES) \
-	$(IPOPT_EXTRA_FILES) \
-	$(EIGEN_EXTRA_FILES)
-
 #
 #
 AM_CXXFLAGS = \

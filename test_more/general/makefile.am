@@ -23,11 +23,9 @@ endif
 # -------------------------------------------------------------------------
 if CppAD_ADOLC
 ADOLC_SRC_FILES   = base_adolc.cpp
-ADOLC_EXTRA_FILES =
 ADOLC_LIB         = -ladolc -lColPack -L$(ADOLC_DIR)/lib -L$(ADOLC_DIR)/lib64
 ADOLC_FLAGS       = -I$(ADOLC_DIR)/include
 else
-ADOLC_EXTRA_FILES = base_adolc.cpp
 ADOLC_SRC_FILES   =
 ADOLC_LIB         =
 ADOLC_FLAGS       =
@@ -35,12 +33,10 @@ endif
 # -------------------------------------------------------------------------
 if CppAD_IPOPT
 IPOPT_SRC_FILES   = ipopt_solve.cpp
-IPOPT_EXTRA_FILES =
 IPOPT_LIB         = -lipopt \
 	$(CPPAD_IPOPT_LIBS) $(FCLIBS) $(PTHREAD_LIB) $(DL_LIB)
 IPOPT_FLAGS       = -I$(IPOPT_DIR)/include
 else
-IPOPT_EXTRA_FILES = ipopt_solve.cpp
 IPOPT_SRC_FILES   =
 IPOPT_LIB         =
 IPOPT_FLAGS       =
@@ -48,17 +44,11 @@ endif
 # -------------------------------------------------------------------------
 if CppAD_EIGEN
 EIGEN_SRC_FILES     =  cppad_eigen.cpp eigen_mat_inv.cpp
-EIGEN_EXTRA_FILES   =
 else
 EIGEN_SRC_FILES     =
-EIGEN_EXTRA_FILES   = cppad_eigen.cpp eigen_mat_inv.cpp
 endif
 # -------------------------------------------------------------------------
 # Microsoft project files and script to run a single test
-EXTRA_DIST        =  \
-	$(ADOLC_EXTRA_FILES) \
-	$(IPOPT_EXTRA_FILES) \
-	$(EIGEN_EXTRA_FILES)
 #
 check_PROGRAMS    = general
 #

@@ -355,8 +355,6 @@ top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 #
-EXTRA_DIST = test.sh.in
-#
 # BEGIN OPTIMIZE
 AM_CXXFLAGS = \
 	$(CXX_FLAGS) \
