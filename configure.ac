@@ -20,10 +20,7 @@ dnl This avoids the autoconf and automake tools being launched by make
 AM_MAINTAINER_MODE
 
 dnl Set the default install prefix to the installers home directory
-dnl cygwin begin delete:
 AC_PREFIX_DEFAULT(${HOME})
-dnl cygwin end delete:
-dnl cygwin replace: AC_PREFIX_DEFAULT(/usr)
 
 dnl Run any macros required for proper operation of generated makefiles
 dnl Note this must come before AC_PROG_CC; see
@@ -34,11 +31,14 @@ dnl subdir-objects: create objects in sub-directories, same structure source
 dnl foreign: not GNU standard; no NEWS, AUTHORS, ...
 AM_INIT_AUTOMAKE([nostdinc subdir-objects -Wall foreign])
 
+dnl Have configure check source directory for the following file:
+dnl include/cppad/cppad.hpp
+AC_CONFIG_SRCDIR(include/cppad/cppad.hpp)
+
 # check if we have ar program
 have_ar='yes'
 AM_PROG_AR([have_ar='no'])
 AC_MSG_NOTICE([have_ar = $have_ar])
-
 
 dnl -----------------------------------------------------------------------
 dnl The case where enable_msvc != no is defined and supported by Ted Ralphs
@@ -51,7 +51,6 @@ AC_ARG_ENABLE([msvc],
 )
 AC_MSG_RESULT([$enable_msvc])
 
-
 dnl the prefix directory corresponding to CppAD -------------------------
 dnl The following seems to work but NONE is not in autoconf specifications
 AC_MSG_CHECKING([--prefix])
@@ -60,19 +59,6 @@ if test "$prefix" = "NONE" ; then
 else
 	AC_MSG_RESULT([$prefix])
 fi
-
-dnl Are we installing the documentation -----------------------------------
-dnl cygwin begin delete:
-AC_MSG_CHECKING([--with-Documentation])
-AC_ARG_WITH(Documentation,
-	AC_HELP_STRING([--with-Documentation], [default is no]),
-	[Documentation="yes"],
-	[Documentation="no"]
-)
-AM_CONDITIONAL(CppAD_DOCUMENTATION, test "$Documentation" = "yes")
-AC_MSG_RESULT([$Documentation])
-dnl cygwin end delete:
-dnl cygwin replace: AM_CONDITIONAL(CppAD_DOCUMENTATION, test "yes" = "yes")
 
 dnl Are we using standard vectors ----------------------------------------
 AC_MSG_CHECKING([--with-stdvector])
@@ -243,15 +229,9 @@ AC_ARG_VAR(CXX_FLAGS,
 # cxx_flags for fadbad and eigen
 if test "$CXX_FLAGS" != "" ; then
 	AC_MSG_RESULT([$CXX_FLAGS])
-	cxx_flags_fadbad=`echo "$CXX_FLAGS" | sed -e 's|-Wshadow||'`
-	cxx_flags_eigen="$cxx_flags_fadbda -Wno-long-long"
 else
 	AC_MSG_RESULT([no])
-	cxx_flags_fadbad=""
-	cxx_flags_eigen=""
 fi
-AC_SUBST(CXX_FLAGS_FADBAD, "$cxx_flags_fadbad")
-AC_SUBST(CXX_FLAGS_EIGEN,  "$cxx_flags_eigen")
 
 dnl The compiler OpenMP flags OPENMP_FLAGS ----------------------------------
 AC_MSG_CHECKING([OPENMP_FLAGS])
@@ -391,8 +371,6 @@ fi
 
 dnl -------------------------------------------------------------------------
 dnl Setting that cmake finds but autotools not kept up to date on
-dnl -------------------------------------------------------------------------
-
 AC_SUBST(cppad_cxx_flags, "")
 AC_SUBST(cppad_deprecated_01,  0)
 AC_SUBST(cppad_has_colpack, 0)
@@ -471,10 +449,6 @@ if test "$CXX" == "cl" || test "$CXX" == "icl"; then
 else
 	AC_MSG_RESULT([no])
 fi
-
-dnl Have configure check source directory for the following file:
-dnl include/cppad/cppad.hpp
-AC_CONFIG_SRCDIR(include/cppad/cppad.hpp)
 
 dnl AC_PROG_CP outputs CPP as command to run C preprocessor
 AC_PROG_CPP

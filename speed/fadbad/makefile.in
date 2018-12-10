@@ -186,8 +186,6 @@ CXX = @CXX@
 CXXDEPMODE = @CXXDEPMODE@
 CXXFLAGS = @CXXFLAGS@
 CXX_FLAGS = @CXX_FLAGS@
-CXX_FLAGS_EIGEN = @CXX_FLAGS_EIGEN@
-CXX_FLAGS_FADBAD = @CXX_FLAGS_FADBAD@
 CYGPATH_W = @CYGPATH_W@
 #
 #
@@ -342,11 +340,9 @@ top_srcdir = @top_srcdir@
 # Copy source file so that main.o does not end up in parent directory
 BUILT_SOURCES = main.cpp
 #
-#
-# Use special version of CXX_FLAGS with -Wshadow removed (if present).
 AM_CXXFLAGS = \
 	-DCPPAD_FADBAD_SPEED \
-	$(CXX_FLAGS_FADBAD) \
+	$(CXX_FLAGS) \
 	-I$(top_srcdir)/include \
 	-I$(FADBAD_DIR)/include \
 	$(BOOST_INCLUDE) \

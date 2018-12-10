@@ -169,16 +169,14 @@ cat << EOF
 $dir_list \\
 CXX_FLAGS=\"$cxx_flags\" \\
 OPENMP_FLAGS=-fopenmp \\
---with-$testvector \\
---with-Documentation
+--with-$testvector
 EOF
 	#
 	../configure > $log_dir/$log_file \
 		$dir_list \
 		CXX_FLAGS="$cxx_flags" \
 		OPENMP_FLAGS=-fopenmp \
-		--with-$testvector \
-		--with-Documentation
+		--with-$testvector
 	#
 	for file in $configure_file_list
 	do

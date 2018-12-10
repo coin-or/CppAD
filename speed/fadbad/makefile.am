@@ -21,11 +21,9 @@ DEFS          =
 #
 check_PROGRAMS   = speed_fadbad
 #
-#
-# Use special version of CXX_FLAGS with -Wshadow removed (if present).
 AM_CXXFLAGS =  \
 	-DCPPAD_FADBAD_SPEED \
-	$(CXX_FLAGS_FADBAD) \
+	$(CXX_FLAGS) \
 	-I$(top_srcdir)/include \
 	-I$(FADBAD_DIR)/include \
 	$(BOOST_INCLUDE) \

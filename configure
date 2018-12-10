@@ -660,8 +660,6 @@ MAX_NUM_THREADS
 CppAD_OPENMP_FALSE
 CppAD_OPENMP_TRUE
 OPENMP_FLAGS
-CXX_FLAGS_EIGEN
-CXX_FLAGS_FADBAD
 CXX_FLAGS
 cppad_has_boost
 BOOST_INCLUDE
@@ -695,8 +693,6 @@ POSTFIX_DIR
 cppad_eigenvector
 cppad_boostvector
 cppad_stdvector
-CppAD_DOCUMENTATION_FALSE
-CppAD_DOCUMENTATION_TRUE
 am__fastdepCC_FALSE
 am__fastdepCC_TRUE
 CCDEPMODE
@@ -791,7 +787,6 @@ enable_silent_rules
 enable_maintainer_mode
 enable_dependency_tracking
 enable_msvc
-with_Documentation
 with_stdvector
 with_boostvector
 with_eigenvector
@@ -1454,7 +1449,6 @@ Optional Features:
 Optional Packages:
   --with-PACKAGE[=ARG]    use PACKAGE [ARG=yes]
   --without-PACKAGE       do not use PACKAGE (same as --with-PACKAGE=no)
-  --with-Documentation    default is no
   --with-stdvector        default is no
   --with-boostvector      default is no
   --with-eigenvector      default is no
@@ -2912,6 +2906,8 @@ END
 fi
 
 
+
+
 # check if we have ar program
 have_ar='yes'
 DEPDIR="${am__leading_dot}deps"
@@ -4128,7 +4124,6 @@ esac
 { $as_echo "$as_me:${as_lineno-$LINENO}: have_ar = $have_ar" >&5
 $as_echo "$as_me: have_ar = $have_ar" >&6;}
 
-
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking --enable-msvc" >&5
 $as_echo_n "checking --enable-msvc... " >&6; }
 # Check whether --enable-msvc was given.
@@ -4142,7 +4137,6 @@ fi
 { $as_echo "$as_me:${as_lineno-$LINENO}: result: $enable_msvc" >&5
 $as_echo "$enable_msvc" >&6; }
 
-
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking --prefix" >&5
 $as_echo_n "checking --prefix... " >&6; }
 if test "$prefix" = "NONE" ; then
@@ -4152,28 +4146,6 @@ else
 	{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $prefix" >&5
 $as_echo "$prefix" >&6; }
 fi
-
-{ $as_echo "$as_me:${as_lineno-$LINENO}: checking --with-Documentation" >&5
-$as_echo_n "checking --with-Documentation... " >&6; }
-
-# Check whether --with-Documentation was given.
-if test "${with_Documentation+set}" = set; then :
-  withval=$with_Documentation; Documentation="yes"
-else
-  Documentation="no"
-
-fi
-
- if test "$Documentation" = "yes"; then
-  CppAD_DOCUMENTATION_TRUE=
-  CppAD_DOCUMENTATION_FALSE='#'
-else
-  CppAD_DOCUMENTATION_TRUE='#'
-  CppAD_DOCUMENTATION_FALSE=
-fi
-
-{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $Documentation" >&5
-$as_echo "$Documentation" >&6; }
 
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking --with-stdvector" >&5
 $as_echo_n "checking --with-stdvector... " >&6; }
@@ -4424,18 +4396,10 @@ $as_echo_n "checking CXX_FLAGS... " >&6; }
 if test "$CXX_FLAGS" != "" ; then
 	{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $CXX_FLAGS" >&5
 $as_echo "$CXX_FLAGS" >&6; }
-	cxx_flags_fadbad=`echo "$CXX_FLAGS" | sed -e 's|-Wshadow||'`
-	cxx_flags_eigen="$cxx_flags_fadbda -Wno-long-long"
 else
 	{ $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
 $as_echo "no" >&6; }
-	cxx_flags_fadbad=""
-	cxx_flags_eigen=""
 fi
-CXX_FLAGS_FADBAD="$cxx_flags_fadbad"
-
-CXX_FLAGS_EIGEN="$cxx_flags_eigen"
-
 
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking OPENMP_FLAGS" >&5
 $as_echo_n "checking OPENMP_FLAGS... " >&6; }
@@ -5755,7 +5719,6 @@ $as_echo "$as_me: WARNING: cannot build any libraries because ar is missing; e.g
 	" >&2;}
 fi
 
-
 cppad_cxx_flags=""
 
 cppad_deprecated_01=0
@@ -5943,8 +5906,6 @@ else
 	{ $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
 $as_echo "no" >&6; }
 fi
-
-
 
 ac_ext=c
 ac_cpp='$CPP $CPPFLAGS'
@@ -7239,10 +7200,6 @@ Usually this means the macro was only invoked conditionally." "$LINENO" 5
 fi
 if test -z "${am__fastdepCC_TRUE}" && test -z "${am__fastdepCC_FALSE}"; then
   as_fn_error $? "conditional \"am__fastdepCC\" was never defined.
-Usually this means the macro was only invoked conditionally." "$LINENO" 5
-fi
-if test -z "${CppAD_DOCUMENTATION_TRUE}" && test -z "${CppAD_DOCUMENTATION_FALSE}"; then
-  as_fn_error $? "conditional \"CppAD_DOCUMENTATION\" was never defined.
 Usually this means the macro was only invoked conditionally." "$LINENO" 5
 fi
 if test -z "${CppAD_POSTFIX_TRUE}" && test -z "${CppAD_POSTFIX_FALSE}"; then
