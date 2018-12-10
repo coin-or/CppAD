@@ -16,11 +16,14 @@ DEFS          =
 #
 check_PROGRAMS    = sparse
 #
-AM_CXXFLAGS       = $(CXX_FLAGS)
+AM_CXXFLAGS =  \
+	$(CXX_FLAGS) \
+	-I$(top_srcdir)/include \
+	$(BOOST_INCLUDE) \
+	$(EIGEN_INCLUDE)
 #
-AM_CPPFLAGS       = -I. -I$(top_srcdir) $(BOOST_INCLUDE) $(EIGEN_INCLUDE)
 #
-if CppAD_EIGEN_DIR
+if CppAD_EIGEN
 EIGEN_SRC_FILES  = sparse2eigen.cpp
 else
 EIGEN_SRC_FILES  =

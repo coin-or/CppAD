@@ -20,12 +20,26 @@ then
 	echo "bin/package.sh: must be executed from its parent directory"
 	exit 1
 fi
-if ! git show-ref origin/gh-pages >& /dev/null
+include_doc='yes'
+if [ "$1" != '' ]
 then
-	echo 'bin/package.sh: git cannot find origin/gh-pages branch'
-	echo 'use the following command to fetch it:'
-	echo '	git fetch origin gh-pages'
-	exit 1
+	if [ "$1" == '--no_doc' ]
+	then
+		include_doc='no'
+	else
+		echo 'usage: bin/package.sh [--no_doc]'
+		exit 1
+	fi
+fi
+if [ "$include_doc" == 'yes' ]
+then
+	if ! git show-ref origin/gh-pages >& /dev/null
+	then
+		echo 'bin/package.sh: git cannot find origin/gh-pages branch'
+		echo 'use the following command to fetch it:'
+		echo '	git fetch origin gh-pages'
+		exit 1
+	fi
 fi
 echo_eval() {
      echo $*
@@ -53,25 +67,32 @@ s|commit *||
 p
 : end
 EOF
-#
-# use gh-pages if they exist for this version
-git_hash=`git log origin/gh-pages | sed -n -f $src_dir/package.$$ | head -1`
-if [ "$git_hash" != '' ]
+# -----------------------------------------------------------------------------
+if [ "$include_doc" == 'yes' ]
 then
-	echo 'create ./doc'
-	mkdir doc
-	list=`git ls-tree --name-only $git_hash:doc`
-	for file in $list
-	do
-		git show $git_hash:doc/$file > doc/$file
-	done
-elif which run_omhelp.sh > /dev/null
-then
-	# omhelp is available, so build documentation for this version
-	echo_eval run_omhelp.sh doc
-else
+	#
+	# use gh-pages if they exist for this version
+	git_hash=`git log origin/gh-pages | sed -n -f $src_dir/package.$$ | head -1`
+	if [ "$git_hash" != '' ]
+	then
+		echo 'create ./doc'
+		mkdir doc
+		list=`git ls-tree --name-only $git_hash:doc`
+		for file in $list
+		do
+			git show $git_hash:doc/$file > doc/$file
+		done
+	elif which run_omhelp.sh > /dev/null
+	then
+		# omhelp is available, so build documentation for this version
+		echo_eval run_omhelp.sh doc
+	else
 cat << EOF
 Cannot find gh-pages documentation for this version: $version
+and cannot find run_omhelp.sh on this system.
+
+If you wish to skip the documentation for this system use
+bin/package.sh --no_doc. Otherwise, use the following steps:
 
 1. Use 'git log origin/gh-pages' to see which versions have docuimentation.
 
@@ -85,8 +106,9 @@ recent version of bin/package.sh
 
 5. Re-run  bin/package.sh"
 EOF
-	rm package.$$
-	exit 1
+		rm package.$$
+		exit 1
+	fi
 fi
 # -----------------------------------------------------------------------------
 # change_list
@@ -115,14 +137,17 @@ echo_eval rm -rf build/cppad-*
 echo_eval mkdir build/cppad-$version
 # -----------------------------------------------------------------------------
 # cppad-$version.tgz
-git ls-files -z | xargs -0 tar -czvf build/cppad-$version/tar.tgz
+git ls-files -z | xargs -0 tar -czf build/cppad-$version/tar.tgz
 # -----------------------------------------------------------------------------
 # cppad-$version.tgz
 echo "create build/cppad-$version.tgz"
 cd build/cppad-$version
 tar -xzf tar.tgz
 rm tar.tgz
-cp -r ../../doc doc
+if [ "$include_doc" == 'yes' ]
+then
+	cp -r ../../doc doc
+fi
 cd ..
 tar --create cppad-$version --gzip --file=cppad-$version.tgz
 rm -r cppad-$version

@@ -367,15 +367,16 @@ EXTRA_DIST = \
 	gprof.sed
 
 #
-AM_CPPFLAGS = -I$(top_srcdir) $(BOOST_INCLUDE) $(EIGEN_INCLUDE)
 #
-# BEGIN OPTIMIZE
-AM_CXXFLAGS = -pg -DCPPAD_PROFILE_SPEED $(CXX_FLAGS)
-# END OPTIMIZE
+AM_CXXFLAGS = \
+	-pg \
+	-DCPPAD_PROFILE_SPEED \
+	$(CXX_FLAGS) \
+	-I$(top_srcdir)/include \
+	$(BOOST_INCLUDE) \
+	$(EIGEN_INCLUDE)
+
 #
-# BEGIN DEBUG
-# AM_CXXFLAGS = $(CXX_FLAGS) -DCPPAD_PROFILE_SPEED
-# END DEBUG
 #
 AM_LDFLAGS = -pg
 #
@@ -672,20 +673,20 @@ uninstall-am:
 #
 main.cpp: $(srcdir)/../main.cpp
 	cp $(srcdir)/../main.cpp main.cpp
-ode.cpp: $(srcdir)/../include/cppad/ode.cpp
-	cp $(srcdir)/../include/cppad/ode.cpp ode.cpp
-det_lu.cpp: $(srcdir)/../include/cppad/det_lu.cpp
-	cp $(srcdir)/../include/cppad/det_lu.cpp det_lu.cpp
-det_minor.cpp: $(srcdir)/../include/cppad/det_minor.cpp
-	cp $(srcdir)/../include/cppad/det_minor.cpp det_minor.cpp
-mat_mul.cpp: $(srcdir)/../include/cppad/mat_mul.cpp
-	cp $(srcdir)/../include/cppad/mat_mul.cpp mat_mul.cpp
-poly.cpp: $(srcdir)/../include/cppad/poly.cpp
-	cp $(srcdir)/../include/cppad/poly.cpp poly.cpp
-sparse_hessian.cpp: $(srcdir)/../include/cppad/sparse_hessian.cpp
-	cp $(srcdir)/../include/cppad/sparse_hessian.cpp sparse_hessian.cpp
-sparse_jacobian.cpp: $(srcdir)/../include/cppad/sparse_jacobian.cpp
-	cp $(srcdir)/../include/cppad/sparse_jacobian.cpp sparse_jacobian.cpp
+ode.cpp: $(srcdir)/../cppad/ode.cpp
+	cp $(srcdir)/../cppad/ode.cpp ode.cpp
+det_lu.cpp: $(srcdir)/../cppad/det_lu.cpp
+	cp $(srcdir)/../cppad/det_lu.cpp det_lu.cpp
+det_minor.cpp: $(srcdir)/../cppad/det_minor.cpp
+	cp $(srcdir)/../cppad/det_minor.cpp det_minor.cpp
+mat_mul.cpp: $(srcdir)/../cppad/mat_mul.cpp
+	cp $(srcdir)/../cppad/mat_mul.cpp mat_mul.cpp
+poly.cpp: $(srcdir)/../cppad/poly.cpp
+	cp $(srcdir)/../cppad/poly.cpp poly.cpp
+sparse_hessian.cpp: $(srcdir)/../cppad/sparse_hessian.cpp
+	cp $(srcdir)/../cppad/sparse_hessian.cpp sparse_hessian.cpp
+sparse_jacobian.cpp: $(srcdir)/../cppad/sparse_jacobian.cpp
+	cp $(srcdir)/../cppad/sparse_jacobian.cpp sparse_jacobian.cpp
 link_det_lu.cpp: $(srcdir)/../src/link_det_lu.cpp
 	cp $(srcdir)/../src/link_det_lu.cpp link_det_lu.cpp
 link_det_minor.cpp: $(srcdir)/../src/link_det_minor.cpp

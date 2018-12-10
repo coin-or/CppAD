@@ -354,20 +354,16 @@ top_srcdir = @top_srcdir@
 # Copy source file so that main.o does not end up in parent directory
 BUILT_SOURCES = main.cpp
 #
-AM_CPPFLAGS = \
-	-I$(top_srcdir) \
+#
+AM_CXXFLAGS = \
+	-DCPPAD_ADOLC_SPEED \
+	$(CXX_FLAGS) \
+	-I$(top_srcdir)/include \
 	-I$(ADOLC_DIR)/include \
 	$(BOOST_INCLUDE) \
 	$(EIGEN_INCLUDE)
 
 #
-# BEGIN OPTIMIZE
-AM_CXXFLAGS = -DCPPAD_ADOLC_SPEED $(CXX_FLAGS)
-# END OPTIMIZE
-#
-# BEGIN DEBUG
-# AM_CXXFLAGS   = $(CXX_FLAGS) -DCPPAD_ADOLC_SPEED
-# END DEBUG
 #
 LDADD = -lspeed -ladolc -lColPack
 AM_LDFLAGS = -L../src -L$(ADOLC_DIR)/lib -L$(ADOLC_DIR)/lib64

@@ -345,20 +345,14 @@ top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 #
-# BEGIN OPTIMIZE
-AM_CXXFLAGS = $(CXX_FLAGS)
-# END OPTIMIZE
-#
-# BEGIN DEBUG
-# AM_CXXFLAGS   = $(CXX_FLAGS)
-# END DEBUG
-#
-AM_CPPFLAGS = \
-	-I. \
-	-I$(top_srcdir) \
-	$(BOOST_INCLUDE)  \
+AM_CXXFLAGS = \
+	$(CXX_FLAGS) \
+	-I$(top_srcdir)/include \
+	$(BOOST_INCLUDE) \
 	$(EIGEN_INCLUDE)
 
+#
+#
 #
 noinst_LIBRARIES = libspeed.a
 libspeed_a_SOURCES = \

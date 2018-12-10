@@ -16,13 +16,13 @@ DEFS          =
 #
 check_PROGRAMS    = solve
 #
-AM_CXXFLAGS       = $(CXX_FLAGS)
-#
-AM_CPPFLAGS       = -I. \
-	-I$(top_srcdir) \
+AM_CXXFLAGS =  \
+	$(CXX_FLAGS) \
+	-I$(top_srcdir)/include \
 	$(BOOST_INCLUDE) \
 	$(EIGEN_INCLUDE) \
 	-I$(IPOPT_DIR)/include
+#
 #
 LDADD             = \
                     $(CPPAD_IPOPT_LIBS) \

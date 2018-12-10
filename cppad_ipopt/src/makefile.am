@@ -15,14 +15,13 @@
 DEFS          =
 #
 #
-AM_CXXFLAGS               = $(CXX_FLAGS)
-#
-AM_CPPFLAGS               = \
-	-I. \
-	-I$(top_srcdir) \
+AM_CXXFLAGS =  \
+	$(CXX_FLAGS) \
+	-I$(top_srcdir)/include \
 	$(BOOST_INCLUDE) \
 	$(EIGEN_INCLUDE) \
 	-I$(IPOPT_DIR)/include
+#
 #
 # make building the library conditional on having IPOPT_DIR specified
 if CppAD_IPOPT

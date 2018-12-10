@@ -345,9 +345,13 @@ EXTRA_DIST = \
 	speed_program.cpp
 
 #
-AM_CPPFLAGS = -I. -I$(top_srcdir) $(BOOST_INCLUDE) $(EIGEN_INCLUDE)
 #
-AM_CXXFLAGS = $(CXX_FLAGS)
+AM_CXXFLAGS = \
+	$(CXX_FLAGS) \
+	-I$(top_srcdir)/include \
+	$(BOOST_INCLUDE) \
+	$(EIGEN_INCLUDE)
+
 #
 LDADD = ../src/libspeed.a
 #
@@ -642,6 +646,9 @@ uninstall-am:
 
 .PRECIOUS: makefile
 
+#
+../src/libspeed.a:
+	(cd ../src; make libspeed.a)
 
 test: check
 	./speed_example

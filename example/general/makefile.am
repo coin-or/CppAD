@@ -26,24 +26,14 @@ ADOLC_LIB         =
 ADOLC_FLAGS       =
 endif
 # -------------------------------------------------------------------------
-if CppAD_HAVE_AR
-if CppAD_EIGEN_DIR
-# make a special library so can have it's own compile flags (see configure.ac)
+if CppAD_EIGEN
+EIGEN_SRC_FILES     =  eigen_det.cpp eigen_array.cpp
 EIGEN_EXTRA_FILES   =
-noinst_LIBRARIES    = libeigen.a
-libeigen_a_SOURCES  =  eigen_det.cpp eigen_array.cpp
-EIGEN_LIB           = -L. -leigen
+EIGEN_LIB           = -leigen
 EIGEN_FLAGS         =
-libeigen_a_CXXFLAGS = \
-	$(CXX_FLAGS_EIGEN) \
-	-I$(EIGEN_DIR)/include
 else
 EIGEN_EXTRA_FILES   = eigen_det.cpp eigen_array.cpp
-EIGEN_LIB           =
-EIGEN_FLAGS         =
-endif
-else
-EIGEN_EXTRA_FILES   = eigen_det.cpp eigen_array.cpp
+EIGEN_SRC_FILES     =
 EIGEN_LIB           =
 EIGEN_FLAGS         =
 endif
@@ -55,24 +45,21 @@ EXTRA_DIST        =  \
 #
 check_PROGRAMS    = general
 #
-if CppAD_MS_COMPILER
-AM_CXXFLAGS       = $(ADOLC_FLAGS) $(EIGEN_FLAGS) $(CXX_FLAGS)
-else
-AM_CXXFLAGS       = $(ADOLC_FLAGS) $(EIGEN_FLAGS) $(CXX_FLAGS)
-endif
-#
-AM_CPPFLAGS       = \
-	-I. \
-	-I$(top_srcdir) \
+AM_CXXFLAGS =  \
+	$(ADOLC_FLAGS) \
+	$(EIGEN_FLAGS) \
+	$(CXX_FLAGS) \
+	-I$(top_srcdir)/include \
 	$(BOOST_INCLUDE) \
 	$(EIGEN_INCLUDE) \
 	$(ADOLC_FLAGS) \
 	$(EIGEN_FLAGS)
 #
-LDADD        =  $(ADOLC_LIB)  $(BTHREAD_LIB) $(EIGEN_LIB) $(PTHREAD_LIB)
+LDADD        =  $(ADOLC_LIB)
 #
 general_SOURCES   = \
 	$(ADOLC_SRC_FILES) \
+	$(EIGEN_SRC_FILES) \
 	\
 	abort_recording.cpp \
 	base2ad.cpp \

@@ -12,7 +12,7 @@
 dnl Process this file with autoconf to produce a configure script.
 dnl   package   version              bug-report
 AC_INIT([cppad], [20181121], [cppad@list.coin-or.org])
-AM_SILENT_RULES([yes])
+AM_SILENT_RULES([no])
 
 dnl By defalut disable maintainer mode when running configure;
 dnl --enable-maintainer-mode will enable it.
@@ -39,99 +39,6 @@ have_ar='yes'
 AM_PROG_AR([have_ar='no'])
 AC_MSG_NOTICE([have_ar = $have_ar])
 
-dnl ----------------------------------------------------------------------
-AC_MSG_NOTICE([*** Check command line arguments that are longer used ****])
-
-if test "$CPP_ERROR_WARN" != "" ; then
-    AC_MSG_ERROR([The CPP_ERROR_WARN configure option is now CXX_FLAGS])
-fi
-dnl
-AC_ARG_WITH(SpeedExample, AC_HELP_STRING(
-	[--with-SpeedExample], [is not necessary, see install instructions.]),
-	[SpeedExample="yes"], [SpeedExample="no"]
-)
-if test "$SpeedExample" = "yes" ; then
-    AC_MSG_ERROR([--with-SpeedExample not necessary, see install instructions.])
-fi
-dnl
-AC_ARG_WITH(profiling, AC_HELP_STRING(
-	[--with-profiling], [is not necessary, see install instructions.]),
-	[profiling="yes"], [profiling="no"]
-)
-if test "$profiling" = "yes" ; then
-    AC_MSG_ERROR([--with-profiling not necessary, see install instructions.])
-fi
-dnl
-AC_ARG_WITH(Speed, AC_HELP_STRING(
-	[--with-Speed], [is not necessary, see install instructions.]),
-	[Speed="yes"], [Speed="no"]
-)
-if test "$Speed" = "yes" ; then
-    AC_MSG_ERROR([--with-Speed not necessary, see install instructions.])
-fi
-dnl
-AC_ARG_WITH(Introduction, AC_HELP_STRING(
-	[--with-Introduction], [is not necessary, see install instructions.]),
-	[Introduction="yes"], [Introduction="no"]
-)
-if test "$Introduction" = "yes" ; then
-    AC_MSG_ERROR([--with-Introduction not necessary, see install instructions.])
-fi
-dnl
-AC_ARG_WITH(Example, AC_HELP_STRING(
-	[--with-Example], [is not necessary, see install instructions.]),
-	[Example="yes"], [Example="no"]
-)
-if test "$Example" = "yes" ; then
-    AC_MSG_ERROR([--with-Example not necessary, see install instructions.])
-fi
-dnl
-AC_ARG_WITH(TestMore, AC_HELP_STRING(
-	[--with-TestMore], [is not necessary, see install instructions.]),
-	[TestMore="yes"], [TestMore="no"]
-)
-if test "$TestMore" = "yes" ; then
-    AC_MSG_ERROR([--with-TestMore not necessary, see install instructions.])
-fi
-dnl
-AC_ARG_WITH(PrintFor, AC_HELP_STRING(
-	[--with-PrintFor], [is not necessary, see install instructions.]),
-	[PrintFor="yes"], [PrintFor="no"]
-)
-if test "$PrintFor" = "yes" ; then
-    AC_MSG_ERROR([--with-PrintFor not necessary, see install instructions.])
-fi
-AC_ARG_WITH(sparse_set,
-	AC_HELP_STRING([--with-sparse_set], [no longer available]),
-	[sparse_set="yes"],
-	[sparse_set="no"]
-)
-if test "$sparse_set" = "yes" ; then
-	AC_MSG_ERROR([--with-sparse_set is no longer available])
-fi
-AC_ARG_WITH(sparse_list,
-	AC_HELP_STRING([--with-sparse_list], [no longer necessary]),
-	[sparse_set="yes"],
-	[sparse_set="no"]
-)
-if test "$sparse_set" = "yes" ; then
-	AC_MSG_ERROR([--with-sparse_set is no longer necessary])
-fi
-AC_ARG_WITH(deprecated, AC_HELP_STRING(
-	[--with-deprecated],
-	[include deprectated features that are on the chopping block]
-	),
-	[deprecated="yes"],
-	[deprecated="no"]
-)
-AM_CONDITIONAL(CppAD_DEPRECATED, test "$deprecated" = 'yes' )
-if test "$deprecated" = "yes" ; then
-	AC_MSG_ERROR(
-		[autotools version does not install features on the chopping block]
-	)
-fi
-dnl --------------------------------------------------------------------------
-AC_MSG_NOTICE([******  Check command line arguments that are used ***********])
 
 dnl -----------------------------------------------------------------------
 dnl The case where enable_msvc != no is defined and supported by Ted Ralphs
@@ -252,7 +159,7 @@ AC_MSG_CHECKING([EIGEN_DIR])
 AC_ARG_VAR(EIGEN_DIR,
 	[value of configure prefix directory during Eigen install]
 )
-AM_CONDITIONAL(CppAD_EIGEN_DIR, test "$EIGEN_DIR" != "")
+AM_CONDITIONAL(CppAD_EIGEN, test "$EIGEN_DIR" != "")
 if test "$EIGEN_DIR" != "" ; then
 	AC_MSG_RESULT([$EIGEN_DIR])
 	AC_SUBST(EIGEN_INCLUDE, [-I$EIGEN_DIR/include])
@@ -482,24 +389,16 @@ if test "$have_ar" = 'no'; then
 	)
 fi
 
-dnl test_one.sh.in settings for cppad_cxx_flags (no longer used ?)
-AC_SUBST(cppad_cxx_flags, "-g -O0")
+dnl -------------------------------------------------------------------------
+dnl Setting that cmake finds but autotools not kept up to date on
+dnl -------------------------------------------------------------------------
 
-dnl autotools version does not support installing deprecated features
+AC_SUBST(cppad_cxx_flags, "")
 AC_SUBST(cppad_deprecated_01,  0)
-
-dnl autotools version does not colpack
 AC_SUBST(cppad_has_colpack, 0)
-
-dnl autotools version will not assume mkstemp or tmpnam_s are available.
 AC_SUBST(cppad_has_mkstemp, 0)
 AC_SUBST(cppad_has_tmpnam_s, 0)
-
-dnl autotools version cannot use c++11 compiler
-dnl so supress corresponding features
 AC_SUBST(cppad_cplusplus_201100_ok, 0)
-
-dnl autotools version does not check if using g++
 AC_SUBST(compiler_has_conversion_warn, 0)
 
 dnl autotools version sets is_pod without testing system, cmake is better
@@ -539,6 +438,7 @@ AC_SUBST(is_pod_specialize_11, "
 AM_SUBST_NOTMAKE(is_pod_specialize_98)
 AM_SUBST_NOTMAKE(is_pod_specialize_11)
 
+dnl -------------------------------------------------------------------------
 dnl Determine which definition we are using for CPPAD_TESTVECTOR
 if test "$stdvector$boostvector$eigenvector" = "nonono" ; then
 	AC_SUBST(cppad_cppadvector, 1)
@@ -883,9 +783,16 @@ dnl END AC_CONFIG_FILES
 
 dnl copy config.hpp to source directory
 AC_CONFIG_COMMANDS(
-[configure.hpp],
-[cp include/cppad/configure.hpp  $abs_top_srcdir/include/cppad/configure.hpp],
+    [configure.hpp],
+    [cp include/cppad/configure.hpp  \
+        $abs_top_srcdir/include/cppad/configure.hpp],
 [abs_top_srcdir=$abs_top_srcdir]
+)
+AC_CONFIG_COMMANDS(
+    [is_pod.hpp],
+    [cp include/cppad/local/is_pod.hpp  \
+        $abs_top_srcdir/include/cppad/local/is_pod.hpp],
+    [abs_top_srcdir=$abs_top_srcdir]
 )
 dnl scripts that set library path before running test
 AC_CONFIG_COMMANDS(

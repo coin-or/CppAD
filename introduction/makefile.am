@@ -21,8 +21,11 @@ EXTRA_DIST        =  \
 #
 check_PROGRAMS    = introduction
 #
-AM_CPPFLAGS       = -I. -I$(top_srcdir) $(BOOST_INCLUDE) $(EIGEN_INCLUDE)
-AM_CXXFLAGS       = $(CXX_FLAGS)
+AM_CXXFLAGS =  \
+	$(CXX_FLAGS) \
+	-I$(top_srcdir)/include \
+	$(BOOST_INCLUDE) \
+	$(EIGEN_INCLUDE)
 #
 introduction_SOURCES   = \
 	introduction.cpp \

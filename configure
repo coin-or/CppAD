@@ -682,8 +682,8 @@ CppAD_FADBAD_TRUE
 FADBAD_DIR
 cppad_has_eigen
 EIGEN_INCLUDE
-CppAD_EIGEN_DIR_FALSE
-CppAD_EIGEN_DIR_TRUE
+CppAD_EIGEN_FALSE
+CppAD_EIGEN_TRUE
 EIGEN_DIR
 cppad_has_adolc
 CppAD_ADOLC_FALSE
@@ -697,8 +697,6 @@ cppad_boostvector
 cppad_stdvector
 CppAD_DOCUMENTATION_FALSE
 CppAD_DOCUMENTATION_TRUE
-CppAD_DEPRECATED_FALSE
-CppAD_DEPRECATED_TRUE
 am__fastdepCC_FALSE
 am__fastdepCC_TRUE
 CCDEPMODE
@@ -792,16 +790,6 @@ enable_option_checking
 enable_silent_rules
 enable_maintainer_mode
 enable_dependency_tracking
-with_SpeedExample
-with_profiling
-with_Speed
-with_Introduction
-with_Example
-with_TestMore
-with_PrintFor
-with_sparse_set
-with_sparse_list
-with_deprecated
 enable_msvc
 with_Documentation
 with_stdvector
@@ -1466,17 +1454,6 @@ Optional Features:
 Optional Packages:
   --with-PACKAGE[=ARG]    use PACKAGE [ARG=yes]
   --without-PACKAGE       do not use PACKAGE (same as --with-PACKAGE=no)
-  --with-SpeedExample     is not necessary, see install instructions.
-  --with-profiling        is not necessary, see install instructions.
-  --with-Speed            is not necessary, see install instructions.
-  --with-Introduction     is not necessary, see install instructions.
-  --with-Example          is not necessary, see install instructions.
-  --with-TestMore         is not necessary, see install instructions.
-  --with-PrintFor         is not necessary, see install instructions.
-  --with-sparse_set       no longer available
-  --with-sparse_list      no longer necessary
-  --with-deprecated       include deprectated features that are on the
-                          chopping block
   --with-Documentation    default is no
   --with-stdvector        default is no
   --with-boostvector      default is no
@@ -2307,7 +2284,7 @@ fi
 case $enable_silent_rules in # (((
   yes) AM_DEFAULT_VERBOSITY=0;;
    no) AM_DEFAULT_VERBOSITY=1;;
-    *) AM_DEFAULT_VERBOSITY=0;;
+    *) AM_DEFAULT_VERBOSITY=1;;
 esac
 am_make=${MAKE-make}
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking whether $am_make supports nested variables" >&5
@@ -4151,143 +4128,6 @@ esac
 { $as_echo "$as_me:${as_lineno-$LINENO}: have_ar = $have_ar" >&5
 $as_echo "$as_me: have_ar = $have_ar" >&6;}
 
-{ $as_echo "$as_me:${as_lineno-$LINENO}: *** Check command line arguments that are longer used ****" >&5
-$as_echo "$as_me: *** Check command line arguments that are longer used ****" >&6;}
-
-if test "$CPP_ERROR_WARN" != "" ; then
-    as_fn_error $? "The CPP_ERROR_WARN configure option is now CXX_FLAGS" "$LINENO" 5
-fi
-
-# Check whether --with-SpeedExample was given.
-if test "${with_SpeedExample+set}" = set; then :
-  withval=$with_SpeedExample; SpeedExample="yes"
-else
-  SpeedExample="no"
-
-fi
-
-if test "$SpeedExample" = "yes" ; then
-    as_fn_error $? "--with-SpeedExample not necessary, see install instructions." "$LINENO" 5
-fi
-
-# Check whether --with-profiling was given.
-if test "${with_profiling+set}" = set; then :
-  withval=$with_profiling; profiling="yes"
-else
-  profiling="no"
-
-fi
-
-if test "$profiling" = "yes" ; then
-    as_fn_error $? "--with-profiling not necessary, see install instructions." "$LINENO" 5
-fi
-
-# Check whether --with-Speed was given.
-if test "${with_Speed+set}" = set; then :
-  withval=$with_Speed; Speed="yes"
-else
-  Speed="no"
-
-fi
-
-if test "$Speed" = "yes" ; then
-    as_fn_error $? "--with-Speed not necessary, see install instructions." "$LINENO" 5
-fi
-
-# Check whether --with-Introduction was given.
-if test "${with_Introduction+set}" = set; then :
-  withval=$with_Introduction; Introduction="yes"
-else
-  Introduction="no"
-
-fi
-
-if test "$Introduction" = "yes" ; then
-    as_fn_error $? "--with-Introduction not necessary, see install instructions." "$LINENO" 5
-fi
-
-# Check whether --with-Example was given.
-if test "${with_Example+set}" = set; then :
-  withval=$with_Example; Example="yes"
-else
-  Example="no"
-
-fi
-
-if test "$Example" = "yes" ; then
-    as_fn_error $? "--with-Example not necessary, see install instructions." "$LINENO" 5
-fi
-
-# Check whether --with-TestMore was given.
-if test "${with_TestMore+set}" = set; then :
-  withval=$with_TestMore; TestMore="yes"
-else
-  TestMore="no"
-
-fi
-
-if test "$TestMore" = "yes" ; then
-    as_fn_error $? "--with-TestMore not necessary, see install instructions." "$LINENO" 5
-fi
-
-# Check whether --with-PrintFor was given.
-if test "${with_PrintFor+set}" = set; then :
-  withval=$with_PrintFor; PrintFor="yes"
-else
-  PrintFor="no"
-
-fi
-
-if test "$PrintFor" = "yes" ; then
-    as_fn_error $? "--with-PrintFor not necessary, see install instructions." "$LINENO" 5
-fi
-
-# Check whether --with-sparse_set was given.
-if test "${with_sparse_set+set}" = set; then :
-  withval=$with_sparse_set; sparse_set="yes"
-else
-  sparse_set="no"
-
-fi
-
-if test "$sparse_set" = "yes" ; then
-	as_fn_error $? "--with-sparse_set is no longer available" "$LINENO" 5
-fi
-
-# Check whether --with-sparse_list was given.
-if test "${with_sparse_list+set}" = set; then :
-  withval=$with_sparse_list; sparse_set="yes"
-else
-  sparse_set="no"
-
-fi
-
-if test "$sparse_set" = "yes" ; then
-	as_fn_error $? "--with-sparse_set is no longer necessary" "$LINENO" 5
-fi
-
-# Check whether --with-deprecated was given.
-if test "${with_deprecated+set}" = set; then :
-  withval=$with_deprecated; deprecated="yes"
-else
-  deprecated="no"
-
-fi
-
- if test "$deprecated" = 'yes' ; then
-  CppAD_DEPRECATED_TRUE=
-  CppAD_DEPRECATED_FALSE='#'
-else
-  CppAD_DEPRECATED_TRUE='#'
-  CppAD_DEPRECATED_FALSE=
-fi
-
-if test "$deprecated" = "yes" ; then
-	as_fn_error $? "autotools version does not install features on the chopping block
-	" "$LINENO" 5
-fi
-{ $as_echo "$as_me:${as_lineno-$LINENO}: ******  Check command line arguments that are used ***********" >&5
-$as_echo "$as_me: ******  Check command line arguments that are used ***********" >&6;}
 
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking --enable-msvc" >&5
 $as_echo_n "checking --enable-msvc... " >&6; }
@@ -4456,11 +4296,11 @@ fi
 $as_echo_n "checking EIGEN_DIR... " >&6; }
 
  if test "$EIGEN_DIR" != ""; then
-  CppAD_EIGEN_DIR_TRUE=
-  CppAD_EIGEN_DIR_FALSE='#'
+  CppAD_EIGEN_TRUE=
+  CppAD_EIGEN_FALSE='#'
 else
-  CppAD_EIGEN_DIR_TRUE='#'
-  CppAD_EIGEN_DIR_FALSE=
+  CppAD_EIGEN_TRUE='#'
+  CppAD_EIGEN_FALSE=
 fi
 
 if test "$EIGEN_DIR" != "" ; then
@@ -5915,22 +5755,18 @@ $as_echo "$as_me: WARNING: cannot build any libraries because ar is missing; e.g
 	" >&2;}
 fi
 
-cppad_cxx_flags="-g -O0"
 
+cppad_cxx_flags=""
 
 cppad_deprecated_01=0
 
-
 cppad_has_colpack=0
-
 
 cppad_has_mkstemp=0
 
 cppad_has_tmpnam_s=0
 
-
 cppad_cplusplus_201100_ok=0
-
 
 compiler_has_conversion_warn=0
 
@@ -7221,6 +7057,8 @@ ac_config_files="$ac_config_files include/cppad/configure.hpp include/cppad/loca
 
 ac_config_commands="$ac_config_commands configure.hpp"
 
+ac_config_commands="$ac_config_commands is_pod.hpp"
+
 ac_config_commands="$ac_config_commands example_ipopt_solve_test.sh"
 
 ac_config_commands="$ac_config_commands cppad_ipopt_example_test.sh"
@@ -7403,10 +7241,6 @@ if test -z "${am__fastdepCC_TRUE}" && test -z "${am__fastdepCC_FALSE}"; then
   as_fn_error $? "conditional \"am__fastdepCC\" was never defined.
 Usually this means the macro was only invoked conditionally." "$LINENO" 5
 fi
-if test -z "${CppAD_DEPRECATED_TRUE}" && test -z "${CppAD_DEPRECATED_FALSE}"; then
-  as_fn_error $? "conditional \"CppAD_DEPRECATED\" was never defined.
-Usually this means the macro was only invoked conditionally." "$LINENO" 5
-fi
 if test -z "${CppAD_DOCUMENTATION_TRUE}" && test -z "${CppAD_DOCUMENTATION_FALSE}"; then
   as_fn_error $? "conditional \"CppAD_DOCUMENTATION\" was never defined.
 Usually this means the macro was only invoked conditionally." "$LINENO" 5
@@ -7419,8 +7253,8 @@ if test -z "${CppAD_ADOLC_TRUE}" && test -z "${CppAD_ADOLC_FALSE}"; then
   as_fn_error $? "conditional \"CppAD_ADOLC\" was never defined.
 Usually this means the macro was only invoked conditionally." "$LINENO" 5
 fi
-if test -z "${CppAD_EIGEN_DIR_TRUE}" && test -z "${CppAD_EIGEN_DIR_FALSE}"; then
-  as_fn_error $? "conditional \"CppAD_EIGEN_DIR\" was never defined.
+if test -z "${CppAD_EIGEN_TRUE}" && test -z "${CppAD_EIGEN_FALSE}"; then
+  as_fn_error $? "conditional \"CppAD_EIGEN\" was never defined.
 Usually this means the macro was only invoked conditionally." "$LINENO" 5
 fi
 if test -z "${CppAD_FADBAD_TRUE}" && test -z "${CppAD_FADBAD_FALSE}"; then
@@ -8036,6 +7870,8 @@ cat >>$CONFIG_STATUS <<_ACEOF || ac_write_fail=1
 AMDEP_TRUE="$AMDEP_TRUE" ac_aux_dir="$ac_aux_dir"
 abs_top_srcdir=$abs_top_srcdir
 
+abs_top_srcdir=$abs_top_srcdir
+
 
 
 
@@ -8091,6 +7927,7 @@ do
     "test_more/compare_c/makefile") CONFIG_FILES="$CONFIG_FILES test_more/compare_c/makefile" ;;
     "test_more/general/makefile") CONFIG_FILES="$CONFIG_FILES test_more/general/makefile" ;;
     "configure.hpp") CONFIG_COMMANDS="$CONFIG_COMMANDS configure.hpp" ;;
+    "is_pod.hpp") CONFIG_COMMANDS="$CONFIG_COMMANDS is_pod.hpp" ;;
     "example_ipopt_solve_test.sh") CONFIG_COMMANDS="$CONFIG_COMMANDS example_ipopt_solve_test.sh" ;;
     "cppad_ipopt_example_test.sh") CONFIG_COMMANDS="$CONFIG_COMMANDS cppad_ipopt_example_test.sh" ;;
     "cppad_ipopt_speed_test.sh") CONFIG_COMMANDS="$CONFIG_COMMANDS cppad_ipopt_speed_test.sh" ;;
@@ -8617,7 +8454,10 @@ $as_echo X"$file" |
   done
 }
  ;;
-    "configure.hpp":C) cp include/cppad/configure.hpp  $abs_top_srcdir/include/cppad/configure.hpp ;;
+    "configure.hpp":C) cp include/cppad/configure.hpp  \
+        $abs_top_srcdir/include/cppad/configure.hpp ;;
+    "is_pod.hpp":C) cp include/cppad/local/is_pod.hpp  \
+        $abs_top_srcdir/include/cppad/local/is_pod.hpp ;;
     "example_ipopt_solve_test.sh":C) chmod +x example/ipopt_solve/test.sh ;;
     "cppad_ipopt_example_test.sh":C) chmod +x cppad_ipopt/example/test.sh ;;
     "cppad_ipopt_speed_test.sh":C) chmod +x cppad_ipopt/speed/test.sh ;;

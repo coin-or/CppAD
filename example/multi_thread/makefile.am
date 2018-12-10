@@ -40,20 +40,13 @@ endif
 #
 check_PROGRAMS    = $(OPENMP_TEST) $(BTHREAD_TEST) $(PTHREAD_TEST)
 #
-if CppAD_MS_COMPILER
-# AM_CXXFLAGS     = $(CXX_FLAGS)
-AM_CXXFLAGS       = $(CXX_FLAGS)
-else
-# AM_CXXFLAGS     = $(CXX_FLAGS)
-AM_CXXFLAGS       = $(CXX_FLAGS)
-endif
-#
-AM_CPPFLAGS       = \
-	-I. \
-	-I$(top_srcdir) \
+AM_CXXFLAGS =  \
+	$(CXX_FLAGS) \
+	-I$(top_srcdir)/include \
 	$(BOOST_INCLUDE) \
 	$(EIGEN_INCLUDE) \
 	$(OPENMP_FLAGS)
+#
 #
 AM_LDFLAGS        = $(OPENMP_FLAGS)
 LDADD             = $(BOOST_LIB) $(BTHREAD_LIB) $(PTHREAD_LIB)

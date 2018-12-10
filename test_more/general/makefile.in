@@ -13,7 +13,6 @@
 # PARTICULAR PURPOSE.
 
 @SET_MAKE@
-
 VPATH = @srcdir@
 am__is_gnu_make = { \
   if test -z '$(MAKELEVEL)'; then \
@@ -98,24 +97,12 @@ DIST_COMMON = $(srcdir)/makefile.am $(am__DIST_COMMON)
 mkinstalldirs = $(install_sh) -d
 CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
-LIBRARIES = $(noinst_LIBRARIES)
-ARFLAGS = cru
-AM_V_AR = $(am__v_AR_@AM_V@)
-am__v_AR_ = $(am__v_AR_@AM_DEFAULT_V@)
-am__v_AR_0 = @echo "  AR      " $@;
-am__v_AR_1 = 
-libeigen_a_AR = $(AR) $(ARFLAGS)
-libeigen_a_LIBADD =
-am__libeigen_a_SOURCES_DIST = cppad_eigen.cpp eigen_mat_inv.cpp
-@CppAD_EIGEN_DIR_TRUE@am_libeigen_a_OBJECTS =  \
-@CppAD_EIGEN_DIR_TRUE@	libeigen_a-cppad_eigen.$(OBJEXT) \
-@CppAD_EIGEN_DIR_TRUE@	libeigen_a-eigen_mat_inv.$(OBJEXT)
-libeigen_a_OBJECTS = $(am_libeigen_a_OBJECTS)
-am__general_SOURCES_DIST = base_adolc.cpp ipopt_solve.cpp \
-	alloc_openmp.cpp general.cpp acos.cpp acosh.cpp add.cpp \
-	add_eq.cpp add_zero.cpp adfun_copy.cpp asin.cpp asinh.cpp \
-	assign.cpp atan2.cpp atan.cpp atanh.cpp atomic_sparsity.cpp \
-	azmul.cpp base_alloc.cpp bool_sparsity.cpp checkpoint.cpp \
+am__general_SOURCES_DIST = base_adolc.cpp cppad_eigen.cpp \
+	eigen_mat_inv.cpp ipopt_solve.cpp alloc_openmp.cpp general.cpp \
+	acos.cpp acosh.cpp add.cpp add_eq.cpp add_zero.cpp \
+	adfun_copy.cpp asin.cpp asinh.cpp assign.cpp atan2.cpp \
+	atan.cpp atanh.cpp atomic_sparsity.cpp azmul.cpp \
+	base_alloc.cpp bool_sparsity.cpp checkpoint.cpp \
 	check_simple_vector.cpp compare_change.cpp compare.cpp \
 	cond_exp_ad.cpp cond_exp.cpp cond_exp_rev.cpp copy.cpp cos.cpp \
 	cosh.cpp dbl_epsilon.cpp dependency.cpp div.cpp div_eq.cpp \
@@ -136,11 +123,13 @@ am__general_SOURCES_DIST = base_adolc.cpp ipopt_solve.cpp \
 	test_vector.cpp to_string.cpp value.cpp vec_ad.cpp \
 	vec_ad_par.cpp vec_unary.cpp
 @CppAD_ADOLC_TRUE@am__objects_1 = base_adolc.$(OBJEXT)
-@CppAD_IPOPT_TRUE@am__objects_2 = ipopt_solve.$(OBJEXT)
-@CppAD_OPENMP_TRUE@am__objects_3 = alloc_openmp.$(OBJEXT)
+@CppAD_EIGEN_TRUE@am__objects_2 = cppad_eigen.$(OBJEXT) \
+@CppAD_EIGEN_TRUE@	eigen_mat_inv.$(OBJEXT)
+@CppAD_IPOPT_TRUE@am__objects_3 = ipopt_solve.$(OBJEXT)
+@CppAD_OPENMP_TRUE@am__objects_4 = alloc_openmp.$(OBJEXT)
 am_general_OBJECTS = $(am__objects_1) $(am__objects_2) \
-	$(am__objects_3) general.$(OBJEXT) acos.$(OBJEXT) \
-	acosh.$(OBJEXT) add.$(OBJEXT) add_eq.$(OBJEXT) \
+	$(am__objects_3) $(am__objects_4) general.$(OBJEXT) \
+	acos.$(OBJEXT) acosh.$(OBJEXT) add.$(OBJEXT) add_eq.$(OBJEXT) \
 	add_zero.$(OBJEXT) adfun_copy.$(OBJEXT) asin.$(OBJEXT) \
 	asinh.$(OBJEXT) assign.$(OBJEXT) atan2.$(OBJEXT) \
 	atan.$(OBJEXT) atanh.$(OBJEXT) atomic_sparsity.$(OBJEXT) \
@@ -183,7 +172,7 @@ am__DEPENDENCIES_1 =
 @CppAD_IPOPT_TRUE@	$(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) \
 @CppAD_IPOPT_TRUE@	$(am__DEPENDENCIES_1)
 general_DEPENDENCIES = $(am__DEPENDENCIES_1) $(am__DEPENDENCIES_2) \
-	$(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1)
+	$(am__DEPENDENCIES_1)
 AM_V_P = $(am__v_P_@AM_V@)
 am__v_P_ = $(am__v_P_@AM_DEFAULT_V@)
 am__v_P_0 = false
@@ -200,10 +189,6 @@ DEFAULT_INCLUDES =
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__depfiles_maybe = depfiles
 am__mv = mv -f
-AM_V_lt = $(am__v_lt_@AM_V@)
-am__v_lt_ = $(am__v_lt_@AM_DEFAULT_V@)
-am__v_lt_0 = --silent
-am__v_lt_1 = 
 CXXCOMPILE = $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) \
 	$(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS)
 AM_V_CXX = $(am__v_CXX_@AM_V@)
@@ -229,9 +214,8 @@ AM_V_CCLD = $(am__v_CCLD_@AM_V@)
 am__v_CCLD_ = $(am__v_CCLD_@AM_DEFAULT_V@)
 am__v_CCLD_0 = @echo "  CCLD    " $@;
 am__v_CCLD_1 = 
-SOURCES = $(libeigen_a_SOURCES) $(general_SOURCES)
-DIST_SOURCES = $(am__libeigen_a_SOURCES_DIST) \
-	$(am__general_SOURCES_DIST)
+SOURCES = $(general_SOURCES)
+DIST_SOURCES = $(am__general_SOURCES_DIST)
 am__can_run_installinfo = \
   case $$AM_UPDATE_INFO_DIR in \
     n|no|NO) false;; \
@@ -459,18 +443,11 @@ top_srcdir = @top_srcdir@
 
 @CppAD_IPOPT_FALSE@IPOPT_FLAGS = 
 @CppAD_IPOPT_TRUE@IPOPT_FLAGS = -I$(IPOPT_DIR)/include
-@CppAD_EIGEN_DIR_FALSE@EIGEN_EXTRA_FILES = cppad_eigen.cpp eigen_mat_inv.cpp
+@CppAD_EIGEN_FALSE@EIGEN_SRC_FILES = 
 # -------------------------------------------------------------------------
-# make a special library so can have it's own compile flags (see configure.ac)
-@CppAD_EIGEN_DIR_TRUE@EIGEN_EXTRA_FILES = 
-@CppAD_EIGEN_DIR_TRUE@noinst_LIBRARIES = libeigen.a
-@CppAD_EIGEN_DIR_TRUE@libeigen_a_SOURCES = cppad_eigen.cpp eigen_mat_inv.cpp
-@CppAD_EIGEN_DIR_FALSE@EIGEN_LIB = 
-@CppAD_EIGEN_DIR_TRUE@EIGEN_LIB = -L. -leigen
-@CppAD_EIGEN_DIR_TRUE@libeigen_a_CXXFLAGS = \
-@CppAD_EIGEN_DIR_TRUE@	$(CXX_FLAGS_EIGEN) \
-@CppAD_EIGEN_DIR_TRUE@	 -I$(EIGEN_DIR)/include
-
+@CppAD_EIGEN_TRUE@EIGEN_SRC_FILES = cppad_eigen.cpp eigen_mat_inv.cpp
+@CppAD_EIGEN_FALSE@EIGEN_EXTRA_FILES = cppad_eigen.cpp eigen_mat_inv.cpp
+@CppAD_EIGEN_TRUE@EIGEN_EXTRA_FILES = 
 # -------------------------------------------------------------------------
 # Microsoft project files and script to run a single test
 EXTRA_DIST = \
@@ -479,8 +456,12 @@ EXTRA_DIST = \
 	$(EIGEN_EXTRA_FILES)
 
 #
-AM_CPPFLAGS = -I. \
-	-I$(top_srcdir) \
+#
+AM_CXXFLAGS = \
+	$(ADOLC_FLAGS) \
+	$(IPOPT_FLAGS) \
+	$(CXX_FLAGS) \
+	-I$(top_srcdir)/include \
 	$(BOOST_INCLUDE) \
 	$(EIGEN_INCLUDE) \
 	$(ADOLC_FLAGS) \
@@ -488,14 +469,13 @@ AM_CPPFLAGS = -I. \
 	$(OPENMP_FLAGS)
 
 #
-AM_CXXFLAGS = $(ADOLC_FLAGS) $(IPOPT_FLAGS) $(CXX_FLAGS)
-#
 AM_LDFLAGS = $(OPENMP_FLAGS)
-LDADD = $(ADOLC_LIB) $(IPOPT_LIB) $(EIGEN_LIB) $(OPENMP_FLAGS)
+LDADD = $(ADOLC_LIB) $(IPOPT_LIB) $(OPENMP_FLAGS)
 #
 # BEGIN_SORT_THIS_LINE_PLUS_6
 general_SOURCES = \
 	$(ADOLC_SRC_FILES) \
+	$(EIGEN_SRC_FILES) \
 	$(IPOPT_SRC_FILES) \
 	$(OPENMP_SRC_FILES) \
 	general.cpp \
@@ -630,14 +610,6 @@ $(ACLOCAL_M4): @MAINTAINER_MODE_TRUE@ $(am__aclocal_m4_deps)
 	cd $(top_builddir) && $(MAKE) $(AM_MAKEFLAGS) am--refresh
 $(am__aclocal_m4_deps):
 
-clean-noinstLIBRARIES:
-	-test -z "$(noinst_LIBRARIES)" || rm -f $(noinst_LIBRARIES)
-
-libeigen.a: $(libeigen_a_OBJECTS) $(libeigen_a_DEPENDENCIES) $(EXTRA_libeigen_a_DEPENDENCIES) 
-	$(AM_V_at)-rm -f libeigen.a
-	$(AM_V_AR)$(libeigen_a_AR) libeigen.a $(libeigen_a_OBJECTS) $(libeigen_a_LIBADD)
-	$(AM_V_at)$(RANLIB) libeigen.a
-
 clean-checkPROGRAMS:
 	-test -z "$(check_PROGRAMS)" || rm -f $(check_PROGRAMS)
 
@@ -679,11 +651,13 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/copy.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/cos.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/cosh.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/cppad_eigen.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/dbl_epsilon.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/dependency.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/div.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/div_eq.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/div_zero_one.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/eigen_mat_inv.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/erf.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/exp.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/expm1.Po@am__quote@
@@ -701,8 +675,6 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/hes_sparsity.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ipopt_solve.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/jacobian.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libeigen_a-cppad_eigen.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libeigen_a-eigen_mat_inv.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/log.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/log10.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/log1p.Po@am__quote@
@@ -768,34 +740,6 @@ distclean-compile:
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='$<' object='$@' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXXCOMPILE) -c -o $@ `$(CYGPATH_W) '$<'`
-
-libeigen_a-cppad_eigen.o: cppad_eigen.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libeigen_a_CXXFLAGS) $(CXXFLAGS) -MT libeigen_a-cppad_eigen.o -MD -MP -MF $(DEPDIR)/libeigen_a-cppad_eigen.Tpo -c -o libeigen_a-cppad_eigen.o `test -f 'cppad_eigen.cpp' || echo '$(srcdir)/'`cppad_eigen.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libeigen_a-cppad_eigen.Tpo $(DEPDIR)/libeigen_a-cppad_eigen.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='cppad_eigen.cpp' object='libeigen_a-cppad_eigen.o' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libeigen_a_CXXFLAGS) $(CXXFLAGS) -c -o libeigen_a-cppad_eigen.o `test -f 'cppad_eigen.cpp' || echo '$(srcdir)/'`cppad_eigen.cpp
-
-libeigen_a-cppad_eigen.obj: cppad_eigen.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libeigen_a_CXXFLAGS) $(CXXFLAGS) -MT libeigen_a-cppad_eigen.obj -MD -MP -MF $(DEPDIR)/libeigen_a-cppad_eigen.Tpo -c -o libeigen_a-cppad_eigen.obj `if test -f 'cppad_eigen.cpp'; then $(CYGPATH_W) 'cppad_eigen.cpp'; else $(CYGPATH_W) '$(srcdir)/cppad_eigen.cpp'; fi`
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libeigen_a-cppad_eigen.Tpo $(DEPDIR)/libeigen_a-cppad_eigen.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='cppad_eigen.cpp' object='libeigen_a-cppad_eigen.obj' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libeigen_a_CXXFLAGS) $(CXXFLAGS) -c -o libeigen_a-cppad_eigen.obj `if test -f 'cppad_eigen.cpp'; then $(CYGPATH_W) 'cppad_eigen.cpp'; else $(CYGPATH_W) '$(srcdir)/cppad_eigen.cpp'; fi`
-
-libeigen_a-eigen_mat_inv.o: eigen_mat_inv.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libeigen_a_CXXFLAGS) $(CXXFLAGS) -MT libeigen_a-eigen_mat_inv.o -MD -MP -MF $(DEPDIR)/libeigen_a-eigen_mat_inv.Tpo -c -o libeigen_a-eigen_mat_inv.o `test -f 'eigen_mat_inv.cpp' || echo '$(srcdir)/'`eigen_mat_inv.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libeigen_a-eigen_mat_inv.Tpo $(DEPDIR)/libeigen_a-eigen_mat_inv.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='eigen_mat_inv.cpp' object='libeigen_a-eigen_mat_inv.o' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libeigen_a_CXXFLAGS) $(CXXFLAGS) -c -o libeigen_a-eigen_mat_inv.o `test -f 'eigen_mat_inv.cpp' || echo '$(srcdir)/'`eigen_mat_inv.cpp
-
-libeigen_a-eigen_mat_inv.obj: eigen_mat_inv.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libeigen_a_CXXFLAGS) $(CXXFLAGS) -MT libeigen_a-eigen_mat_inv.obj -MD -MP -MF $(DEPDIR)/libeigen_a-eigen_mat_inv.Tpo -c -o libeigen_a-eigen_mat_inv.obj `if test -f 'eigen_mat_inv.cpp'; then $(CYGPATH_W) 'eigen_mat_inv.cpp'; else $(CYGPATH_W) '$(srcdir)/eigen_mat_inv.cpp'; fi`
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libeigen_a-eigen_mat_inv.Tpo $(DEPDIR)/libeigen_a-eigen_mat_inv.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='eigen_mat_inv.cpp' object='libeigen_a-eigen_mat_inv.obj' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libeigen_a_CXXFLAGS) $(CXXFLAGS) -c -o libeigen_a-eigen_mat_inv.obj `if test -f 'eigen_mat_inv.cpp'; then $(CYGPATH_W) 'eigen_mat_inv.cpp'; else $(CYGPATH_W) '$(srcdir)/eigen_mat_inv.cpp'; fi`
 
 ID: $(am__tagged_files)
 	$(am__define_uniq_tagged_files); mkid -fID $$unique
@@ -882,7 +826,7 @@ distdir: $(DISTFILES)
 check-am: all-am
 	$(MAKE) $(AM_MAKEFLAGS) $(check_PROGRAMS)
 check: check-am
-all-am: makefile $(LIBRARIES)
+all-am: makefile
 installdirs:
 install: install-am
 install-exec: install-exec-am
@@ -916,8 +860,7 @@ maintainer-clean-generic:
 	@echo "it deletes files that may require special tools to rebuild."
 clean: clean-am
 
-clean-am: clean-checkPROGRAMS clean-generic clean-noinstLIBRARIES \
-	mostlyclean-am
+clean-am: clean-checkPROGRAMS clean-generic mostlyclean-am
 
 distclean: distclean-am
 	-rm -rf ./$(DEPDIR)
@@ -987,18 +930,17 @@ uninstall-am:
 .MAKE: check-am install-am install-strip
 
 .PHONY: CTAGS GTAGS TAGS all all-am check check-am clean \
-	clean-checkPROGRAMS clean-generic clean-noinstLIBRARIES \
-	cscopelist-am ctags ctags-am distclean distclean-compile \
-	distclean-generic distclean-tags distdir dvi dvi-am html \
-	html-am info info-am install install-am install-data \
-	install-data-am install-dvi install-dvi-am install-exec \
-	install-exec-am install-html install-html-am install-info \
-	install-info-am install-man install-pdf install-pdf-am \
-	install-ps install-ps-am install-strip installcheck \
-	installcheck-am installdirs maintainer-clean \
-	maintainer-clean-generic mostlyclean mostlyclean-compile \
-	mostlyclean-generic pdf pdf-am ps ps-am tags tags-am uninstall \
-	uninstall-am
+	clean-checkPROGRAMS clean-generic cscopelist-am ctags ctags-am \
+	distclean distclean-compile distclean-generic distclean-tags \
+	distdir dvi dvi-am html html-am info info-am install \
+	install-am install-data install-data-am install-dvi \
+	install-dvi-am install-exec install-exec-am install-html \
+	install-html-am install-info install-info-am install-man \
+	install-pdf install-pdf-am install-ps install-ps-am \
+	install-strip installcheck installcheck-am installdirs \
+	maintainer-clean maintainer-clean-generic mostlyclean \
+	mostlyclean-compile mostlyclean-generic pdf pdf-am ps ps-am \
+	tags tags-am uninstall uninstall-am
 
 .PRECIOUS: makefile
 

@@ -103,9 +103,9 @@ am__atomic_SOURCES_DIST = eigen_cholesky.cpp eigen_mat_inv.cpp \
 	forward.cpp get_started.cpp mat_mul.cpp mul_level.cpp \
 	norm_sq.cpp ode.cpp reciprocal.cpp rev_sparse_hes.cpp \
 	rev_sparse_jac.cpp reverse.cpp set_sparsity.cpp tangent.cpp
-@CppAD_EIGEN_DIR_TRUE@am__objects_1 = eigen_cholesky.$(OBJEXT) \
-@CppAD_EIGEN_DIR_TRUE@	eigen_mat_inv.$(OBJEXT) \
-@CppAD_EIGEN_DIR_TRUE@	eigen_mat_mul.$(OBJEXT)
+@CppAD_EIGEN_TRUE@am__objects_1 = eigen_cholesky.$(OBJEXT) \
+@CppAD_EIGEN_TRUE@	eigen_mat_inv.$(OBJEXT) \
+@CppAD_EIGEN_TRUE@	eigen_mat_mul.$(OBJEXT)
 am_atomic_OBJECTS = $(am__objects_1) atomic.$(OBJEXT) \
 	base2ad.$(OBJEXT) checkpoint.$(OBJEXT) extended_ode.$(OBJEXT) \
 	for_sparse_hes.$(OBJEXT) for_sparse_jac.$(OBJEXT) \
@@ -350,23 +350,23 @@ target_alias = @target_alias@
 top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
-@CppAD_EIGEN_DIR_FALSE@EIGEN_SRC_FILES = 
+@CppAD_EIGEN_FALSE@EIGEN_SRC_FILES = 
 #
-@CppAD_EIGEN_DIR_TRUE@EIGEN_SRC_FILES = eigen_cholesky.cpp eigen_mat_inv.cpp eigen_mat_mul.cpp
-@CppAD_EIGEN_DIR_TRUE@EIGEN_EXTRA_FILES = 
-@CppAD_EIGEN_DIR_FALSE@EIGEN_EXTEA_FILES = eigen_cholesky.cpp eigen_mat_inv.cpp eigen_mat_mul.cpp
+@CppAD_EIGEN_TRUE@EIGEN_SRC_FILES = eigen_cholesky.cpp eigen_mat_inv.cpp eigen_mat_mul.cpp
+@CppAD_EIGEN_TRUE@EIGEN_EXTRA_FILES = 
+@CppAD_EIGEN_FALSE@EIGEN_EXTEA_FILES = eigen_cholesky.cpp eigen_mat_inv.cpp eigen_mat_mul.cpp
 #
 EXTRA_DIST = \
 	$(EIGEN_EXTRA_FILES)
 
 #
-AM_CXXFLAGS = $(CXX_FLAGS)
-#
-AM_CPPFLAGS = -I. \
-	-I$(top_srcdir) \
+AM_CXXFLAGS = \
+	$(CXX_FLAGS) \
+	-I$(top_srcdir)/include \
 	$(BOOST_INCLUDE) \
 	$(EIGEN_INCLUDE)
 
+#
 #
 atomic_SOURCES = \
 	$(EIGEN_SRC_FILES) \

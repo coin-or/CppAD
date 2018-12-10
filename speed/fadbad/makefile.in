@@ -342,21 +342,17 @@ top_srcdir = @top_srcdir@
 # Copy source file so that main.o does not end up in parent directory
 BUILT_SOURCES = main.cpp
 #
-AM_CPPFLAGS = \
-	-I$(top_srcdir) \
+#
+# Use special version of CXX_FLAGS with -Wshadow removed (if present).
+AM_CXXFLAGS = \
+	-DCPPAD_FADBAD_SPEED \
+	$(CXX_FLAGS_FADBAD) \
+	-I$(top_srcdir)/include \
 	-I$(FADBAD_DIR)/include \
 	$(BOOST_INCLUDE) \
 	$(EIGEN_INCLUDE)
 
 #
-# BEGIN OPTIMIZE
-# Use special version of CXX_FLAGS with -Wshadow removed (if present).
-AM_CXXFLAGS = -DCPPAD_FADBAD_SPEED $(CXX_FLAGS_FADBAD)
-# END OPTIMIZE
-#
-# BEGIN DEBUG
-# AM_CXXFLAGS   = -DCPPAD_FADBAD_SPEED $(CXX_FLAGS_FADBAD)
-# END DEBUG
 #
 LDADD = ../src/libspeed.a
 #
@@ -651,6 +647,9 @@ uninstall-am:
 
 main.cpp:
 	cp $(srcdir)/../main.cpp main.cpp
+#
+../src/libspeed.a:
+	(cd ../src; make libspeed.a)
 
 test: check
 	./speed_fadbad correct 123

@@ -389,19 +389,15 @@ top_srcdir = @top_srcdir@
 @CppAD_PTHREAD_FALSE@PTHREAD_TEST = 
 #
 @CppAD_PTHREAD_TRUE@PTHREAD_TEST = pthread_test
-# AM_CXXFLAGS     = $(CXX_FLAGS)
-@CppAD_MS_COMPILER_FALSE@AM_CXXFLAGS = $(CXX_FLAGS)
 #
-# AM_CXXFLAGS     = $(CXX_FLAGS)
-@CppAD_MS_COMPILER_TRUE@AM_CXXFLAGS = $(CXX_FLAGS)
-#
-AM_CPPFLAGS = \
-	-I. \
-	-I$(top_srcdir) \
+AM_CXXFLAGS = \
+	$(CXX_FLAGS) \
+	-I$(top_srcdir)/include \
 	$(BOOST_INCLUDE) \
 	$(EIGEN_INCLUDE) \
 	$(OPENMP_FLAGS)
 
+#
 #
 AM_LDFLAGS = $(OPENMP_FLAGS)
 LDADD = $(BOOST_LIB) $(BTHREAD_LIB) $(PTHREAD_LIB)

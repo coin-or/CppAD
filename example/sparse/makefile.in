@@ -107,7 +107,7 @@ am__sparse_SOURCES_DIST = sparse.cpp sparse2eigen.cpp colpack_hes.cpp \
 	sparse_jac_rev.cpp sparse_sub_hes.cpp sparsity_sub.cpp \
 	subgraph_hes2jac.cpp subgraph_jac_rev.cpp subgraph_reverse.cpp \
 	subgraph_sparsity.cpp sub_sparse_hes.cpp
-@CppAD_EIGEN_DIR_TRUE@am__objects_1 = sparse2eigen.$(OBJEXT)
+@CppAD_EIGEN_TRUE@am__objects_1 = sparse2eigen.$(OBJEXT)
 am_sparse_OBJECTS = sparse.$(OBJEXT) $(am__objects_1) \
 	colpack_hes.$(OBJEXT) colpack_hessian.$(OBJEXT) \
 	colpack_jac.$(OBJEXT) colpack_jacobian.$(OBJEXT) \
@@ -360,12 +360,16 @@ top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 #
-AM_CXXFLAGS = $(CXX_FLAGS)
+AM_CXXFLAGS = \
+	$(CXX_FLAGS) \
+	-I$(top_srcdir)/include \
+	$(BOOST_INCLUDE) \
+	$(EIGEN_INCLUDE)
+
+@CppAD_EIGEN_FALSE@EIGEN_SRC_FILES = 
 #
-AM_CPPFLAGS = -I. -I$(top_srcdir) $(BOOST_INCLUDE) $(EIGEN_INCLUDE)
-@CppAD_EIGEN_DIR_FALSE@EIGEN_SRC_FILES = 
 #
-@CppAD_EIGEN_DIR_TRUE@EIGEN_SRC_FILES = sparse2eigen.cpp
+@CppAD_EIGEN_TRUE@EIGEN_SRC_FILES = sparse2eigen.cpp
 #
 # BEGIN_SORT_THIS_LINE_PLUS_3
 sparse_SOURCES = sparse.cpp \

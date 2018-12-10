@@ -16,12 +16,12 @@ DEFS          =
 #
 check_PROGRAMS    = optimize
 #
-AM_CXXFLAGS       = $(CXX_FLAGS)
-#
-AM_CPPFLAGS       = -I. \
-	-I$(top_srcdir) \
+AM_CXXFLAGS =  \
+	$(CXX_FLAGS) \
+	-I$(top_srcdir)/include \
 	$(BOOST_INCLUDE) \
 	$(EIGEN_INCLUDE)
+#
 #
 optimize_SOURCES   = \
 	compare_op.cpp \

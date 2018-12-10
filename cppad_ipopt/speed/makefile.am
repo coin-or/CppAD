@@ -19,18 +19,25 @@ EXTRA_DIST = test.sh.in
 check_PROGRAMS    = speed
 #
 # BEGIN OPTIMIZE
-AM_CXXFLAGS       = $(CXX_FLAGS)
-# END OPTIMIZE
-#
-# BEGIN DEBUG
-# AM_CXXFLAGS     = $(CXX_FLAGS)
-# END DEBUG
-#
-AM_CPPFLAGS       = -I. \
-	-I$(top_srcdir) \
+AM_CXXFLAGS =  \
+	$(CXX_FLAGS) \
+	-I$(top_srcdir)/include \
 	$(BOOST_INCLUDE) \
 	$(EIGEN_INCLUDE) \
 	-I$(IPOPT_DIR)/include
+# END OPTIMIZE
+#
+# BEGIN DEBUG
+# \
+	AM_CXXFLAGS =  \
+	 \
+	$(CXX_FLAGS) \
+	-I$(top_srcdir)/include \
+	$(BOOST_INCLUDE) \
+	$(EIGEN_INCLUDE) \
+	-I$(IPOPT_DIR)/include
+# END DEBUG
+#
 #
 LDADD             = \
                     -lcppad_ipopt \

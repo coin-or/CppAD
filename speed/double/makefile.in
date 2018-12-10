@@ -341,15 +341,15 @@ top_srcdir = @top_srcdir@
 # Copy source file so that main.o does not end up in parent directory
 BUILT_SOURCES = main.cpp
 #
-AM_CPPFLAGS = -I$(top_srcdir) $(BOOST_INCLUDE) $(EIGEN_INCLUDE)
 #
-# BEGIN OPTIMIZE
-AM_CXXFLAGS = -DCPPAD_DOUBLE_SPEED $(CXX_FLAGS)
-# END OPTIMIZE
+AM_CXXFLAGS = \
+	-DCPPAD_DOUBLE_SPEED \
+	$(CXX_FLAGS) \
+	-I$(top_srcdir)/include \
+	$(BOOST_INCLUDE) \
+	$(EIGEN_INCLUDE)
+
 #
-# BEGIN DEBUG
-# AM_CXXFLAGS   = $(CXX_FLAGS) -DCPPAD_DOUBLE_SPEED
-# END DEBUG
 #
 LDADD = ../src/libspeed.a
 #
@@ -644,6 +644,9 @@ uninstall-am:
 
 main.cpp:
 	cp $(srcdir)/../main.cpp main.cpp
+#
+../src/libspeed.a:
+	(cd ../src; make libspeed.a)
 
 test: check
 	./speed_double correct 123

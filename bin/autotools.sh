@@ -162,7 +162,7 @@ then
 	then
 		dir_list="$dir_list IPOPT_DIR=$IPOPT_DIR"
 	fi
-	cxx_flags="-Wall -ansi -pedantic-errors -std=c++11 -Wshadow"
+	cxx_flags="-Wall -ansi -pedantic-errors -std=c++11 -Wshadow -DNDEBUG -O2"
 	cxx_flags="$cxx_flags -isystem $EIGEN_DIR/include"
 cat << EOF
 ../configure > $log_file \\
@@ -195,7 +195,7 @@ then
 	date >> $log_dir/$log_file
 	# -----------------------------------------------------------------------
 	# build/cppad-$version.tgz
-	bin/package.sh
+	bin/package.sh --no_doc
 	# --------------------------------------------------------------
 	echo_eval cd build
 	#
@@ -207,11 +207,6 @@ then
 	#
 	echo "bin/autotools.sh configure >> $log_file"
 	bin/autotools.sh configure >> $log_dir/$log_file
-	#
-	echo "cat configure.log >> $log_file"
-	cat $log_dir/configure.log >> $log_dir/$log_file
-	echo 'rm configure.log'
-	rm $log_dir/configure.log
 	#
 	# ----------------------------------------------------------------------
 	echo_eval cd build

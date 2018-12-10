@@ -16,7 +16,7 @@ then
 	exit 1
 fi
 # -----------------------------------------------------------------------------
-list=`ls | sed -n '/\.[0-9]*$/p'`
+list=`ls | sed -n -e '/^new.[0-9]*$/d' -e '/\.[0-9]*$/p'`
 if [ "$list" != '' ]
 then
     echo 'Use following command to remove temporary files:'

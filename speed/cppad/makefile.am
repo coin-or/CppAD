@@ -20,18 +20,20 @@ DEFS          =
 #
 check_PROGRAMS   = speed_cppad
 #
-AM_CPPFLAGS   = -I$(top_srcdir) $(BOOST_INCLUDE) $(EIGEN_INCLUDE)
 #
-# BEGIN OPTIMIZE
-AM_CXXFLAGS   = -DCPPAD_CPPAD_SPEED $(CXX_FLAGS)
-# END OPTIMIZE
+AM_CXXFLAGS =  \
+	-DCPPAD_CPPAD_SPEED \
+	$(CXX_FLAGS) \
+	-I$(top_srcdir)/include \
+	$(BOOST_INCLUDE) \
+	$(EIGEN_INCLUDE)
 #
-# BEGIN DEBUG
-# AM_CXXFLAGS   = $(CXX_FLAGS) -DCPPAD_CPPAD_SPEED
-# END DEBUG
 #
 # directly address the library so works with windows
-LDADD           = ../src/libspeed.a
+LDADD = ../src/libspeed.a
+#
+../src/libspeed.a:
+	(cd ../src; make libspeed.a)
 #
 speed_cppad_SOURCES = \
 	main.cpp \

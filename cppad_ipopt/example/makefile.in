@@ -358,15 +358,15 @@ EXTRA_DIST = \
 	ode2.omh
 
 #
-AM_CXXFLAGS = $(CXX_FLAGS)
-#
-AM_CPPFLAGS = -I. \
-	-I$(top_srcdir) \
+AM_CXXFLAGS = \
+	$(CXX_FLAGS) \
+	-I$(top_srcdir)/include \
 	-I$(top_srcdir)/cppad_ipopt/src \
 	$(BOOST_INCLUDE) \
 	$(EIGEN_INCLUDE) \
 	-I$(IPOPT_DIR)/include
 
+#
 #
 LDADD = \
                     -lcppad_ipopt \

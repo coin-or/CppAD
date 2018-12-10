@@ -15,15 +15,18 @@
 DEFS          =
 #
 # Make sure that ../cppad-uninstalled.pc works for determining cflags
-CPPAD_INCLUDE = -I$(top_srcdir)
+CPPAD_INCLUDE = -I$(top_srcdir)/include
 #
 EXTRA_DIST = abs_normal.omh
 #
 check_PROGRAMS    = abs_normal
 #
-AM_CPPFLAGS       = $(CPPAD_INCLUDE) $(BOOST_INCLUDE) $(EIGEN_INCLUDE)
 #
-AM_CXXFLAGS       = $(CXX_FLAGS)
+AM_CXXFLAGS =  \
+	$(CXX_FLAGS) \
+	$(CPPAD_INCLUDE) \
+	$(BOOST_INCLUDE) \
+	$(EIGEN_INCLUDE)
 #
 abs_normal_SOURCES = \
 	abs_eval.cpp \

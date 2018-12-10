@@ -21,22 +21,21 @@ DEFS          =
 #
 check_PROGRAMS   = speed_fadbad
 #
-AM_CPPFLAGS   = \
-	-I$(top_srcdir) \
+#
+# Use special version of CXX_FLAGS with -Wshadow removed (if present).
+AM_CXXFLAGS =  \
+	-DCPPAD_FADBAD_SPEED \
+	$(CXX_FLAGS_FADBAD) \
+	-I$(top_srcdir)/include \
 	-I$(FADBAD_DIR)/include \
 	$(BOOST_INCLUDE) \
 	$(EIGEN_INCLUDE)
 #
-# BEGIN OPTIMIZE
-# Use special version of CXX_FLAGS with -Wshadow removed (if present).
-AM_CXXFLAGS   = -DCPPAD_FADBAD_SPEED $(CXX_FLAGS_FADBAD)
-# END OPTIMIZE
 #
-# BEGIN DEBUG
-# AM_CXXFLAGS   = -DCPPAD_FADBAD_SPEED $(CXX_FLAGS_FADBAD)
-# END DEBUG
+LDADD = ../src/libspeed.a
 #
-LDADD           = ../src/libspeed.a
+../src/libspeed.a:
+	(cd ../src; make libspeed.a)
 #
 speed_fadbad_SOURCES = \
 	main.cpp \
