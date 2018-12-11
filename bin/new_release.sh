@@ -8,7 +8,7 @@
 # This Source Code may also be made available under the following
 # Secondary License when the conditions for such availability set forth
 # in the Eclipse Public License, Version 2.0 are satisfied:
-#            GNU General Public License, Version 3.0.
+#       GNU General Public License, Version 2.0 or later.
 # -----------------------------------------------------------------------------
 svn_repo="https://projects.coin-or.org/svn/CppAD"
 stable_version="20180000" # start each stable_version at yyyy0000

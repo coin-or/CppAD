@@ -9,7 +9,7 @@ CppAD is distributed under the terms of the
 This Source Code may also be made available under the following
 Secondary License when the conditions for such availability set forth
 in the Eclipse Public License, Version 2.0 are satisfied:
-           GNU General Public License, Version 3.0.
+      GNU General Public License, Version 2.0 or later.
 ---------------------------------------------------------------------------- */
 
 /*
@@ -69,7 +69,6 @@ $children%
 The file
 $cref fabs.cpp$$
 contains an example and test of this function.
-It returns true if it succeeds and false otherwise.
 
 $end
 -------------------------------------------------------------------------------

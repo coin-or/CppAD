@@ -9,7 +9,7 @@ CppAD is distributed under the terms of the
 This Source Code may also be made available under the following
 Secondary License when the conditions for such availability set forth
 in the Eclipse Public License, Version 2.0 are satisfied:
-           GNU General Public License, Version 3.0.
+      GNU General Public License, Version 2.0 or later.
 ---------------------------------------------------------------------------- */
 /*
 $begin cppad_ipopt_nlp$$
@@ -577,7 +577,6 @@ The file
 $cref ipopt_nlp_get_started.cpp$$ is an example and test of
 $code cppad_ipopt_nlp$$  that uses the
 $cref/simple representation/cppad_ipopt_nlp/Simple Representation/$$.
-It returns true if it succeeds and false otherwise.
 The section $cref ipopt_nlp_ode$$ discusses an example that
 uses a more complex representation.
 

@@ -7,7 +7,7 @@ CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
   This Source Code may also be made available under the following
   Secondary License when the conditions for such availability set forth
   in the Eclipse Public License, Version 2.0 are satisfied:
-             GNU General Public License, Version 3.0.
+        GNU General Public License, Version 2.0 or later.
 -----------------------------------------------------------------------------
 $begin exp_2.hpp$$
 $spell
@@ -158,7 +158,6 @@ $children%
 $head Verification$$
 The file $cref exp_2_for0.cpp$$ contains a routine
 that verifies the values computed above.
-It returns true for success and false for failure.
 
 $head Exercises$$
 $list number$$
@@ -337,7 +336,6 @@ $children%
 $head Verification$$
 The file $cref exp_2_for1.cpp$$ contains a routine
 which verifies the values computed above.
-It returns true for success and false for failure.
 
 $head Exercises$$
 $list number$$
@@ -529,7 +527,6 @@ $children%
 $head Verification$$
 The file $cref exp_2_rev1.cpp$$ contains a routine
 which verifies the values computed above.
-It returns true for success and false for failure.
 It only tests the partial derivatives of
 $latex f_j$$ that might not be equal to the corresponding
 partials of $latex f_{j+1}$$; i.e., the
@@ -723,7 +720,6 @@ $children%
 $head Verification$$
 The file $cref exp_2_for2.cpp$$ contains a routine
 which verifies the values computed above.
-It returns true for success and false for failure.
 
 $head Exercises$$
 $list number$$
@@ -984,7 +980,6 @@ $children%
 $head Verification$$
 The file $cref exp_2_rev2.cpp$$ contains a routine
 which verifies the values computed above.
-It returns true for success and false for failure.
 It only tests the partial derivatives of
 $latex f_j$$ that might not be equal to the corresponding
 partials of $latex f_{j+1}$$; i.e., the

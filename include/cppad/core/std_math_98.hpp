@@ -9,7 +9,7 @@ CppAD is distributed under the terms of the
 This Source Code may also be made available under the following
 Secondary License when the conditions for such availability set forth
 in the Eclipse Public License, Version 2.0 are satisfied:
-           GNU General Public License, Version 3.0.
+      GNU General Public License, Version 2.0 or later.
 ---------------------------------------------------------------------------- */
 /*
 -------------------------------------------------------------------------------
@@ -44,7 +44,6 @@ $children%
 The file
 $cref acos.cpp$$
 contains an example and test of this function.
-It returns true if it succeeds and false otherwise.
 
 $end
 -------------------------------------------------------------------------------
@@ -79,7 +78,6 @@ $children%
 The file
 $cref asin.cpp$$
 contains an example and test of this function.
-It returns true if it succeeds and false otherwise.
 
 $end
 -------------------------------------------------------------------------------
@@ -114,7 +112,6 @@ $children%
 The file
 $cref atan.cpp$$
 contains an example and test of this function.
-It returns true if it succeeds and false otherwise.
 
 $end
 -------------------------------------------------------------------------------
@@ -149,7 +146,6 @@ $children%
 The file
 $cref cos.cpp$$
 contains an example and test of this function.
-It returns true if it succeeds and false otherwise.
 
 $end
 -------------------------------------------------------------------------------
@@ -184,7 +180,6 @@ $children%
 The file
 $cref cosh.cpp$$
 contains an example and test of this function.
-It returns true if it succeeds and false otherwise.
 
 $end
 -------------------------------------------------------------------------------
@@ -219,7 +214,6 @@ $children%
 The file
 $cref exp.cpp$$
 contains an example and test of this function.
-It returns true if it succeeds and false otherwise.
 
 $end
 -------------------------------------------------------------------------------
@@ -253,7 +247,6 @@ $children%
 The file
 $cref log.cpp$$
 contains an example and test of this function.
-It returns true if it succeeds and false otherwise.
 
 $end
 -------------------------------------------------------------------------------
@@ -286,7 +279,6 @@ $children%
 The file
 $cref log10.cpp$$
 contains an example and test of this function.
-It returns true if it succeeds and false otherwise.
 
 $end
 -------------------------------------------------------------------------------
@@ -321,7 +313,6 @@ $children%
 The file
 $cref sin.cpp$$
 contains an example and test of this function.
-It returns true if it succeeds and false otherwise.
 
 $end
 -------------------------------------------------------------------------------
@@ -356,7 +347,6 @@ $children%
 The file
 $cref sinh.cpp$$
 contains an example and test of this function.
-It returns true if it succeeds and false otherwise.
 
 $end
 -------------------------------------------------------------------------------
@@ -391,7 +381,6 @@ $children%
 The file
 $cref sqrt.cpp$$
 contains an example and test of this function.
-It returns true if it succeeds and false otherwise.
 
 $end
 -------------------------------------------------------------------------------
@@ -426,7 +415,6 @@ $children%
 The file
 $cref tan.cpp$$
 contains an example and test of this function.
-It returns true if it succeeds and false otherwise.
 
 $end
 -------------------------------------------------------------------------------
@@ -461,7 +449,6 @@ $children%
 The file
 $cref tanh.cpp$$
 contains an example and test of this function.
-It returns true if it succeeds and false otherwise.
 
 $end
 -------------------------------------------------------------------------------

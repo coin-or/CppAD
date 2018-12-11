@@ -8,7 +8,7 @@
 # This Source Code may also be made available under the following
 # Secondary License when the conditions for such availability set forth
 # in the Eclipse Public License, Version 2.0 are satisfied:
-#            GNU General Public License, Version 3.0.
+#       GNU General Public License, Version 2.0 or later.
 # -----------------------------------------------------------------------------
 # build script for use with autotools install
 # -----------------------------------------------------------------------------

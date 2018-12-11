@@ -9,7 +9,7 @@ CppAD is distributed under the terms of the
 This Source Code may also be made available under the following
 Secondary License when the conditions for such availability set forth
 in the Eclipse Public License, Version 2.0 are satisfied:
-           GNU General Public License, Version 3.0.
+      GNU General Public License, Version 2.0 or later.
 ---------------------------------------------------------------------------- */
 /*
 $begin exp_2$$
@@ -116,7 +116,6 @@ contains a C++ implementation of this function.
 $head Test$$
 The file $cref exp_2.cpp$$
 contains a test of this implementation.
-It returns true for success and false for failure.
 
 
 $head Exercises$$

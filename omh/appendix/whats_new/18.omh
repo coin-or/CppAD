@@ -7,7 +7,7 @@ CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
   This Source Code may also be made available under the following
   Secondary License when the conditions for such availability set forth
   in the Eclipse Public License, Version 2.0 are satisfied:
-             GNU General Public License, Version 3.0.
+        GNU General Public License, Version 2.0 or later.
 -------------------------------------------------------------------------- */
 
 $begin whats_new_18$$
@@ -57,6 +57,7 @@ $subhead 12-11$$
 In the documentation and examples change the $codei%Vector%Type%$$
 to $icode%TypeVector%$$ for $icode Type$$ denoting various types; e.g.,
 $code Bool$$, $code Size$$, $code Double$$, ... 
+Change alternative license from GPL-3.0 to GPL-2.0 or later.
 
 $subhead 11-22$$
 $list number$$

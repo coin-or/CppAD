@@ -3,7 +3,6 @@
 # 1. Do not update copyright date when do this edit
 # 6. Convert tabs to spaces.
 # 7. Change CPPAD_TESTVECTOR to a template type (see Eigen entry in wishlist).
-# 9. Change Vector<T> -> <T>Vector for T = Base, Size, Bool (T != Set)
 # 13. Remove CPPAD_INLINE_FRIEND_TEMPLATE_FUNCTION
 # 14. Remove all inlines for functions that depend on template parameters.
 # 17. Remove 'It returns true if it succeeds and false otherwise.'
@@ -35,14 +34,5 @@
 # '
 # ----------------------------------------------------------------------------
 # Put other sed commands below here and without # at start of line
-s|VectorAD|ADVector|g
-s|VectorADBase|ADBaseVector|g
-s|VectorBase|BaseVector|g
-s|VectorBool|BoolVector|g
-s|VectorDouble|DoubleVector|g
-s|VectorFloat|FloatVector|g
-s|VectorKey|KeyVector|g
-s|VectorSet|SetVector|g
-s|VectorSize|SizeVector|g
-s|VectorSize_t|SizeVector|g
-
+s|     GNU General Public License, Version 3.0.|GNU General Public License, Version 2.0 or later.|
+/It returns true.*false/d

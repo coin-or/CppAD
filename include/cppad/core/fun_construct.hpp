@@ -9,7 +9,7 @@ CppAD is distributed under the terms of the
 This Source Code may also be made available under the following
 Secondary License when the conditions for such availability set forth
 in the Eclipse Public License, Version 2.0 are satisfied:
-           GNU General Public License, Version 3.0.
+      GNU General Public License, Version 2.0 or later.
 ---------------------------------------------------------------------------- */
 /*
 $begin FunConstruct$$
@@ -200,7 +200,6 @@ $subhead Sequence Constructor$$
 The file
 $cref independent.cpp$$
 contains an example and test of the sequence constructor.
-It returns true if it succeeds and false otherwise.
 
 $subhead Default Constructor$$
 The files
@@ -218,7 +217,6 @@ The file
 $cref fun_assign.cpp$$
 contains an example and test of the $codei%ADFun<%Base%>%$$
 assignment operator.
-It returns true if it succeeds and false otherwise.
 
 $end
 ----------------------------------------------------------------------------

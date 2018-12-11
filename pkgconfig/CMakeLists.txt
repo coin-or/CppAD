@@ -7,7 +7,7 @@
 # This Source Code may also be made available under the following
 # Secondary License when the conditions for such availability set forth
 # in the Eclipse Public License, Version 2.0 are satisfied:
-#            GNU General Public License, Version 3.0.
+#       GNU General Public License, Version 2.0 or later.
 # -----------------------------------------------------------------------------
 # Construct cppad.pc from cppad.pc.in; see
 # http://people.freedesktop.org/~dbn/pkg-config-guide.html
