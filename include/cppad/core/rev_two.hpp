@@ -55,9 +55,9 @@ Note that the $cref ADFun$$ object $icode f$$ is not $code const$$
 $head x$$
 The argument $icode x$$ has prototype
 $codei%
-	const %VectorBase% &%x%
+	const %BaseVector% &%x%
 %$$
-(see $cref/VectorBase/RevTwo/VectorBase/$$ below)
+(see $cref/BaseVector/RevTwo/BaseVector/$$ below)
 and its size
 must be equal to $icode n$$, the dimension of the
 $cref/domain/seq_property/Domain/$$ space for $icode f$$.
@@ -67,9 +67,9 @@ that point at which to evaluate the partial derivatives listed above.
 $head i$$
 The argument $icode i$$ has prototype
 $codei%
-	const %VectorSize_t% &%i%
+	const %SizeVector_t% &%i%
 %$$
-(see $cref/VectorSize_t/RevTwo/VectorSize_t/$$ below)
+(see $cref/SizeVector_t/RevTwo/SizeVector_t/$$ below)
 We use $icode p$$ to denote the size of the vector $icode i$$.
 All of the indices in $icode i$$
 must be less than $icode m$$, the dimension of the
@@ -79,9 +79,9 @@ for $latex \ell = 0 , \ldots , p-1$$, $latex i[ \ell ]  < m$$.
 $head j$$
 The argument $icode j$$ has prototype
 $codei%
-	const %VectorSize_t% &%j%
+	const %SizeVector_t% &%j%
 %$$
-(see $cref/VectorSize_t/RevTwo/VectorSize_t/$$ below)
+(see $cref/SizeVector_t/RevTwo/SizeVector_t/$$ below)
 and its size must be equal to $icode p$$,
 the size of the vector $icode i$$.
 All of the indices in $icode j$$
@@ -91,9 +91,9 @@ for $latex \ell = 0 , \ldots , p-1$$, $latex j[ \ell ]  < n$$.
 $head ddw$$
 The result $icode ddw$$ has prototype
 $codei%
-	%VectorBase% %ddw%
+	%BaseVector% %ddw%
 %$$
-(see $cref/VectorBase/RevTwo/VectorBase/$$ below)
+(see $cref/BaseVector/RevTwo/BaseVector/$$ below)
 and its size is $latex n * p$$.
 It contains the requested partial derivatives; to be specific,
 for $latex k = 0 , \ldots , n - 1 $$
@@ -104,14 +104,14 @@ $latex \[
 	\DD{ F_{i[ \ell ]} }{ x_{j[ \ell ]} }{ x_k } (x)
 \] $$
 
-$head VectorBase$$
-The type $icode VectorBase$$ must be a $cref SimpleVector$$ class with
+$head BaseVector$$
+The type $icode BaseVector$$ must be a $cref SimpleVector$$ class with
 $cref/elements of type Base/SimpleVector/Elements of Specified Type/$$.
 The routine $cref CheckSimpleVector$$ will generate an error message
 if this is not the case.
 
-$head VectorSize_t$$
-The type $icode VectorSize_t$$ must be a $cref SimpleVector$$ class with
+$head SizeVector_t$$
+The type $icode SizeVector_t$$ must be a $cref SimpleVector$$ class with
 $cref/elements of type size_t/SimpleVector/Elements of Specified Type/$$.
 The routine $cref CheckSimpleVector$$ will generate an error message
 if this is not the case.
@@ -141,11 +141,11 @@ $end
 namespace CppAD {
 
 template <typename Base, typename RecBase>
-template <typename VectorBase, typename VectorSize_t>
-VectorBase ADFun<Base,RecBase>::RevTwo(
-	const VectorBase   &x,
-	const VectorSize_t &i,
-	const VectorSize_t &j)
+template <typename BaseVector, typename SizeVector_t>
+BaseVector ADFun<Base,RecBase>::RevTwo(
+	const BaseVector   &x,
+	const SizeVector_t &i,
+	const SizeVector_t &j)
 {	size_t i1;
 	size_t j1;
 	size_t k;
@@ -155,11 +155,11 @@ VectorBase ADFun<Base,RecBase>::RevTwo(
 	size_t m = Range();
 	size_t p = i.size();
 
-	// check VectorBase is Simple Vector class with Base elements
-	CheckSimpleVector<Base, VectorBase>();
+	// check BaseVector is Simple Vector class with Base elements
+	CheckSimpleVector<Base, BaseVector>();
 
-	// check VectorSize_t is Simple Vector class with size_t elements
-	CheckSimpleVector<size_t, VectorSize_t>();
+	// check SizeVector_t is Simple Vector class with size_t elements
+	CheckSimpleVector<size_t, SizeVector_t>();
 
 	CPPAD_ASSERT_KNOWN(
 		x.size() == n,
@@ -173,20 +173,20 @@ VectorBase ADFun<Base,RecBase>::RevTwo(
 	Forward(0, x);
 
 	// dimension the return value
-	VectorBase ddw(n * p);
+	BaseVector ddw(n * p);
 
 	// direction vector in argument space
-	VectorBase dx(n);
+	BaseVector dx(n);
 	for(j1 = 0; j1 < n; j1++)
 		dx[j1] = Base(0.0);
 
 	// direction vector in range space
-	VectorBase w(m);
+	BaseVector w(m);
 	for(i1 = 0; i1 < m; i1++)
 		w[i1] = Base(0.0);
 
 	// place to hold the results of a reverse calculation
-	VectorBase r(n * 2);
+	BaseVector r(n * 2);
 
 	// check the indices in i and j
 	for(l = 0; l < p; l++)

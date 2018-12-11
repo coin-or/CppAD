@@ -174,7 +174,7 @@ namespace CppAD {
 		size_t                      p  ,
 		CppAD::vector<Float>&       fp )
 	{	using CppAD::vector;
-		typedef vector<Float> VectorFloat;
+		typedef vector<Float> FloatVector;
 
 		size_t n = x.size();
 		CPPAD_ASSERT_KNOWN( p == 0 || p == 1,
@@ -197,11 +197,11 @@ namespace CppAD {
 
 			// initial value for y(x, t); i.e. y(x, 0)
 			// (is a reference to x)
-			const VectorFloat& yi = x;
+			const FloatVector& yi = x;
 
 			// final value for y(x, t); i.e., y(x, 1)
 			// (is a reference to fp)
-			VectorFloat& yf = fp;
+			FloatVector& yf = fp;
 
 			// Use fourth order Runge-Kutta to solve ODE
 			yf = CppAD::Runge45(F, M, ti, tf, yi);

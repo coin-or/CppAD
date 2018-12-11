@@ -50,7 +50,7 @@ base type for the operator; i.e., this operation sequence was recorded
 using AD< Base > and computations by this routine are done using type
  Base.
 
-\tparam VectorBase
+\tparam BaseVector
 is a Simple Vector class with elements of type Base.
 
 \param q
@@ -88,8 +88,8 @@ for the independent variables as specified by previous calls to Forward.
 
 */
 template <typename Base, typename RecBase>
-template <typename VectorBase>
-VectorBase ADFun<Base,RecBase>::Reverse(size_t q, const VectorBase &w)
+template <typename BaseVector>
+BaseVector ADFun<Base,RecBase>::Reverse(size_t q, const BaseVector &w)
 {	// used to identify the RecBase type in calls to sweeps
 	RecBase not_used_rec_base;
 
@@ -105,8 +105,8 @@ VectorBase ADFun<Base,RecBase>::Reverse(size_t q, const VectorBase &w)
 	// number of dependent variables
 	size_t m = dep_taddr_.size();
 
-	// check VectorBase is Simple Vector class with Base type elements
-	CheckSimpleVector<Base, VectorBase>();
+	// check BaseVector is Simple Vector class with Base type elements
+	CheckSimpleVector<Base, BaseVector>();
 
 	CPPAD_ASSERT_KNOWN(
 		size_t(w.size()) == m || size_t(w.size()) == (m * q),
@@ -175,7 +175,7 @@ VectorBase ADFun<Base,RecBase>::Reverse(size_t q, const VectorBase &w)
 	);
 
 	// return the derivative values
-	VectorBase value(n * q);
+	BaseVector value(n * q);
 	for(j = 0; j < n; j++)
 	{	CPPAD_ASSERT_UNKNOWN( ind_taddr_[j] < num_var_tape_  );
 

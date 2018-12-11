@@ -191,8 +191,8 @@ This vector is initialized to have size Range() and its elements are false.
 */
 
 template <typename Base, typename RecBase>
-template <typename VectorBool>
-void ADFun<Base,RecBase>::subgraph_reverse( const VectorBool& select_domain )
+template <typename BoolVector>
+void ADFun<Base,RecBase>::subgraph_reverse( const BoolVector& select_domain )
 {	using local::pod_vector;
 	//
 	CPPAD_ASSERT_UNKNOWN(
@@ -291,12 +291,12 @@ some of the elements of this vector are set to have value ell
 the ell-th dependent variable).
 */
 template <typename Base, typename RecBase>
-template <typename Addr, typename VectorBase, typename SizeVector>
+template <typename Addr, typename BaseVector, typename SizeVector>
 void ADFun<Base,RecBase>::subgraph_reverse_helper(
 	size_t      q   ,
 	size_t      ell ,
 	SizeVector& col ,
-	VectorBase& dw  )
+	BaseVector& dw  )
 {	using local::pod_vector;
 	// used to identify the RecBase type in calls to sweeps
 	RecBase not_used_rec_base;
@@ -306,8 +306,8 @@ void ADFun<Base,RecBase>::subgraph_reverse_helper(
 	typename local::play::const_random_iterator<Addr> random_itr =
 		play_.template get_random<Addr>();
 
-	// check VectorBase is Simple Vector class with Base type elements
-	CheckSimpleVector<Base, VectorBase>();
+	// check BaseVector is Simple Vector class with Base type elements
+	CheckSimpleVector<Base, BaseVector>();
 	CPPAD_ASSERT_KNOWN(
 		q > 0,
 		"The second argument to Reverse must be greater than zero."
@@ -461,12 +461,12 @@ void ADFun<Base,RecBase>::subgraph_reverse_helper(
 
 */
 template <typename Base, typename RecBase>
-template <typename VectorBase, typename SizeVector>
+template <typename BaseVector, typename SizeVector>
 void ADFun<Base,RecBase>::subgraph_reverse(
 	size_t      q   ,
 	size_t      ell ,
 	SizeVector& col ,
-	VectorBase& dw  )
+	BaseVector& dw  )
 {	using local::pod_vector;
 	//
 	// call proper version of helper function

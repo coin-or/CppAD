@@ -31,18 +31,18 @@ $codei%index_sort(%keys%, %ind%)%$$
 $head keys$$
 The argument $icode keys$$ has prototype
 $codei%
-	const %VectorKey%& %keys%
+	const %KeyVector%& %keys%
 %$$
-where $icode VectorKey$$ is
+where $icode KeyVector$$ is
 a $cref SimpleVector$$ class with elements that support the $code <$$
 operation.
 
 $head ind$$
 The argument $icode ind$$ has prototype
 $codei%
-	%VectorSize%& %ind%
+	%SizeVector%& %ind%
 %$$
-where $icode VectorSize$$ is
+where $icode SizeVector$$ is
 a $cref SimpleVector$$ class with elements of type $code size_t$$.
 The routine $cref CheckSimpleVector$$ will generate an error message
 if this is not the case.
@@ -116,11 +116,11 @@ public:
 /*!
 Compute the indices that sort a vector of keys
 
-\tparam VectorKey
+\tparam KeyVector
 Simple vector type that deterimene the sorting order by < operator
 on its elements.
 
-\tparam VectorSize
+\tparam SizeVector
 Simple vector type with elements of size_t
 that is used to return index values.
 
@@ -135,10 +135,10 @@ The output value of its elements satisfy
 ( keys[ ind[i] ] < keys[ ind[i+1] ] ) == false
 \endcode
 */
-template <class VectorKey, class VectorSize>
-void index_sort(const VectorKey& keys, VectorSize& ind)
-{	typedef typename VectorKey::value_type Compare;
-	CheckSimpleVector<size_t, VectorSize>();
+template <class KeyVector, class SizeVector>
+void index_sort(const KeyVector& keys, SizeVector& ind)
+{	typedef typename KeyVector::value_type Compare;
+	CheckSimpleVector<size_t, SizeVector>();
 
 	typedef index_sort_element<Compare> element;
 

@@ -55,9 +55,9 @@ Note that the $cref ADFun$$ object $icode f$$ is not $code const$$
 $head x$$
 The argument $icode x$$ has prototype
 $codei%
-	const %VectorBase% &%x%
+	const %BaseVector% &%x%
 %$$
-(see $cref/VectorBase/ForTwo/VectorBase/$$ below)
+(see $cref/BaseVector/ForTwo/BaseVector/$$ below)
 and its size
 must be equal to $icode n$$, the dimension of the
 $cref/domain/seq_property/Domain/$$ space for $icode f$$.
@@ -67,9 +67,9 @@ that point at which to evaluate the partial derivatives listed above.
 $head j$$
 The argument $icode j$$ has prototype
 $codei%
-	const %VectorSize_t% &%j%
+	const %SizeVector_t% &%j%
 %$$
-(see $cref/VectorSize_t/ForTwo/VectorSize_t/$$ below)
+(see $cref/SizeVector_t/ForTwo/SizeVector_t/$$ below)
 We use $icode p$$ to denote the size of the vector $icode j$$.
 All of the indices in $icode j$$
 must be less than $icode n$$; i.e.,
@@ -78,9 +78,9 @@ for $latex \ell = 0 , \ldots , p-1$$, $latex j[ \ell ]  < n$$.
 $head k$$
 The argument $icode k$$ has prototype
 $codei%
-	const %VectorSize_t% &%k%
+	const %SizeVector_t% &%k%
 %$$
-(see $cref/VectorSize_t/ForTwo/VectorSize_t/$$ below)
+(see $cref/SizeVector_t/ForTwo/SizeVector_t/$$ below)
 and its size must be equal to $icode p$$,
 the size of the vector $icode j$$.
 All of the indices in $icode k$$
@@ -90,9 +90,9 @@ for $latex \ell = 0 , \ldots , p-1$$, $latex k[ \ell ]  < n$$.
 $head ddy$$
 The result $icode ddy$$ has prototype
 $codei%
-	%VectorBase% %ddy%
+	%BaseVector% %ddy%
 %$$
-(see $cref/VectorBase/ForTwo/VectorBase/$$ below)
+(see $cref/BaseVector/ForTwo/BaseVector/$$ below)
 and its size is $latex m * p$$.
 It contains the requested partial derivatives; to be specific,
 for $latex i = 0 , \ldots , m - 1 $$
@@ -103,14 +103,14 @@ $latex \[
 	\DD{ F_i }{ x_{j[ \ell ]} }{ x_{k[ \ell ]} } (x)
 \] $$
 
-$head VectorBase$$
-The type $icode VectorBase$$ must be a $cref SimpleVector$$ class with
+$head BaseVector$$
+The type $icode BaseVector$$ must be a $cref SimpleVector$$ class with
 $cref/elements of type Base/SimpleVector/Elements of Specified Type/$$.
 The routine $cref CheckSimpleVector$$ will generate an error message
 if this is not the case.
 
-$head VectorSize_t$$
-The type $icode VectorSize_t$$ must be a $cref SimpleVector$$ class with
+$head SizeVector_t$$
+The type $icode SizeVector_t$$ must be a $cref SimpleVector$$ class with
 $cref/elements of type size_t/SimpleVector/Elements of Specified Type/$$.
 The routine $cref CheckSimpleVector$$ will generate an error message
 if this is not the case.
@@ -140,11 +140,11 @@ $end
 namespace CppAD {
 
 template <typename Base, typename RecBase>
-template <typename VectorBase, typename VectorSize_t>
-VectorBase ADFun<Base,RecBase>::ForTwo(
-	const VectorBase   &x,
-	const VectorSize_t &j,
-	const VectorSize_t &k)
+template <typename BaseVector, typename SizeVector_t>
+BaseVector ADFun<Base,RecBase>::ForTwo(
+	const BaseVector   &x,
+	const SizeVector_t &j,
+	const SizeVector_t &k)
 {	size_t i;
 	size_t j1;
 	size_t k1;
@@ -154,11 +154,11 @@ VectorBase ADFun<Base,RecBase>::ForTwo(
 	size_t m = Range();
 	size_t p = j.size();
 
-	// check VectorBase is Simple Vector class with Base type elements
-	CheckSimpleVector<Base, VectorBase>();
+	// check BaseVector is Simple Vector class with Base type elements
+	CheckSimpleVector<Base, BaseVector>();
 
-	// check VectorSize_t is Simple Vector class with size_t elements
-	CheckSimpleVector<size_t, VectorSize_t>();
+	// check SizeVector_t is Simple Vector class with size_t elements
+	CheckSimpleVector<size_t, SizeVector_t>();
 
 	CPPAD_ASSERT_KNOWN(
 		x.size() == n,
@@ -173,11 +173,11 @@ VectorBase ADFun<Base,RecBase>::ForTwo(
 
 
 	// dimension the return value
-	VectorBase ddy(m * p);
+	BaseVector ddy(m * p);
 
 	// allocate memory to hold all possible diagonal Taylor coefficients
 	// (for large sparse cases, this is not efficient)
-	VectorBase D(m * n);
+	BaseVector D(m * n);
 
 	// boolean flag for which diagonal coefficients are computed
 	CppAD::vector<bool> c(n);
@@ -185,12 +185,12 @@ VectorBase ADFun<Base,RecBase>::ForTwo(
 		c[j1] = false;
 
 	// direction vector in argument space
-	VectorBase dx(n);
+	BaseVector dx(n);
 	for(j1 = 0; j1 < n; j1++)
 		dx[j1] = Base(0.0);
 
 	// result vector in range space
-	VectorBase dy(m);
+	BaseVector dy(m);
 
 	// compute the diagonal coefficients that are needed
 	for(l = 0; l < p; l++)

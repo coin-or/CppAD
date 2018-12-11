@@ -48,7 +48,7 @@ namespace{
 		}
 	};
 
-	template <class VectorKey, class VectorSize>
+	template <class KeyVector, class SizeVector>
 	bool vector_case(void)
 	{	bool ok = true;
 		size_t i, j;
@@ -56,11 +56,11 @@ namespace{
 		size_t second[] = { 0, 1, 0, 1, 0, 1, 0, 1};
 		size_t size     = sizeof(first) / sizeof(first[0]);
 
-		VectorKey keys(size);
+		KeyVector keys(size);
 		for(i = 0; i < size; i++)
 			keys[i] = Key(first[i], second[i]);
 
-		VectorSize ind(size);
+		SizeVector ind(size);
 		CppAD::index_sort(keys, ind);
 
 		// check that all the indices are different

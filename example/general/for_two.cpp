@@ -27,8 +27,8 @@ $end
 # include <cppad/cppad.hpp>
 namespace { // -----------------------------------------------------
 // define the template function in empty namespace
-// bool ForTwoCases<VectorBase, VectorSize_t>(void)
-template <class VectorBase, class VectorSize_t>
+// bool ForTwoCases<BaseVector, SizeVector_t>(void)
+template <class BaseVector, class SizeVector_t>
 bool ForTwoCases()
 {	bool ok = true;
 	using CppAD::AD;
@@ -61,19 +61,19 @@ bool ForTwoCases()
 	CppAD::ADFun<double> f(X, Y);
 
 	// new value for the independent variable vector
-	VectorBase x(n);
+	BaseVector x(n);
 	x[0] = 2.;
 	x[1] = 1.;
 
 	// set j and k to compute specific second partials of y
 	size_t p = 2;
-	VectorSize_t j(p);
-	VectorSize_t k(p);
+	SizeVector_t j(p);
+	SizeVector_t k(p);
 	j[0] = 0; k[0] = 0; // for second partial w.r.t. x[0] and x[0]
 	j[1] = 0; k[1] = 1; // for second partial w.r.t x[0] and x[1]
 
 	// compute the second partials
-	VectorBase ddy(m * p);
+	BaseVector ddy(m * p);
 	ddy = f.ForTwo(x, j, k);
 	/*
 	partial of y w.r.t x[0] is
@@ -98,13 +98,13 @@ bool ForTwoCases()
 # include <valarray>
 bool ForTwo(void)
 {	bool ok = true;
-        // Run with VectorBase equal to three different cases
+        // Run with BaseVector equal to three different cases
         // all of which are Simple Vectors with elements of type double.
 	ok &= ForTwoCases< CppAD::vector <double>, std::vector<size_t> >();
 	ok &= ForTwoCases< std::vector   <double>, std::vector<size_t> >();
 	ok &= ForTwoCases< std::valarray <double>, std::vector<size_t> >();
 
-        // Run with VectorSize_t equal to two other cases
+        // Run with SizeVector_t equal to two other cases
         // which are Simple Vectors with elements of type size_t.
 	ok &= ForTwoCases< std::vector <double>, CppAD::vector<size_t> >();
 	ok &= ForTwoCases< std::vector <double>, std::valarray<size_t> >();

@@ -67,9 +67,9 @@ Note that the $cref ADFun$$ object $icode f$$ is not $code const$$
 $head x$$
 The argument $icode x$$ has prototype
 $codei%
-	const %VectorBase%& %x%
+	const %BaseVector%& %x%
 %$$
-(see $cref/VectorBase/sparse_hessian/VectorBase/$$ below)
+(see $cref/BaseVector/sparse_hessian/BaseVector/$$ below)
 and its size
 must be equal to $icode n$$, the dimension of the
 $cref/domain/seq_property/Domain/$$ space for $icode f$$.
@@ -79,7 +79,7 @@ that point at which to evaluate the Hessian.
 $head w$$
 The argument $icode w$$ has prototype
 $codei%
-	const %VectorBase%& %w%
+	const %BaseVector%& %w%
 %$$
 and size $latex m$$.
 It specifies the value of $latex w_i$$ in the expression
@@ -91,9 +91,9 @@ the calculation of $icode hes$$ may be).
 $head p$$
 The argument $icode p$$ is optional and has prototype
 $codei%
-	const %VectorSet%& %p%
+	const %SetVector%& %p%
 %$$
-(see $cref/VectorSet/sparse_hessian/VectorSet/$$ below)
+(see $cref/SetVector/sparse_hessian/SetVector/$$ below)
 If it has elements of type $code bool$$,
 its size is $latex n * n$$.
 If it has elements of type $code std::set<size_t>$$,
@@ -133,10 +133,10 @@ $codei%
 $head row, col$$
 The arguments $icode row$$ and $icode col$$ are optional and have prototype
 $codei%
-	const %VectorSize%& %row%
-	const %VectorSize%& %col%
+	const %SizeVector%& %row%
+	const %SizeVector%& %col%
 %$$
-(see $cref/VectorSize/sparse_hessian/VectorSize/$$ below).
+(see $cref/SizeVector/sparse_hessian/SizeVector/$$ below).
 They specify which rows and columns of $latex H (x)$$ are
 returned and in what order.
 We use $latex K$$ to denote the value $icode%hes%.size()%$$
@@ -151,7 +151,7 @@ in the sparsity pattern $icode p$$.
 $head hes$$
 The result $icode hes$$ has prototype
 $codei%
-	%VectorBase% %hes%
+	%BaseVector% %hes%
 %$$
 In the case where $icode row$$ and $icode col$$ are not present,
 the size of $icode hes$$ is $latex n * n$$ and
@@ -255,15 +255,15 @@ not counting the zero order forward sweep,
 or the work to combine multiple columns into a single
 forward-reverse sweep pair.
 
-$head VectorBase$$
-The type $icode VectorBase$$ must be a $cref SimpleVector$$ class with
+$head BaseVector$$
+The type $icode BaseVector$$ must be a $cref SimpleVector$$ class with
 $cref/elements of type/SimpleVector/Elements of Specified Type/$$
 $icode Base$$.
 The routine $cref CheckSimpleVector$$ will generate an error message
 if this is not the case.
 
-$head VectorSet$$
-The type $icode VectorSet$$ must be a $cref SimpleVector$$ class with
+$head SetVector$$
+The type $icode SetVector$$ must be a $cref SimpleVector$$ class with
 $cref/elements of type/SimpleVector/Elements of Specified Type/$$
 $code bool$$ or $code std::set<size_t>$$;
 see $cref/sparsity pattern/glossary/Sparsity Pattern/$$ for a discussion
@@ -272,15 +272,15 @@ The routine $cref CheckSimpleVector$$ will generate an error message
 if this is not the case.
 
 $subhead Restrictions$$
-If $icode VectorSet$$ has elements of $code std::set<size_t>$$,
+If $icode SetVector$$ has elements of $code std::set<size_t>$$,
 then $icode%p%[%i%]%$$ must return a reference (not a copy) to the
 corresponding set.
 According to section 26.3.2.3 of the 1998 C++ standard,
 $code std::valarray< std::set<size_t> >$$ does not satisfy
 this condition.
 
-$head VectorSize$$
-The type $icode VectorSize$$ must be a $cref SimpleVector$$ class with
+$head SizeVector$$
+The type $icode SizeVector$$ must be a $cref SimpleVector$$ class with
 $cref/elements of type/SimpleVector/Elements of Specified Type/$$
 $code size_t$$.
 The routine $cref CheckSimpleVector$$ will generate an error message
@@ -364,14 +364,14 @@ Private helper function that does computation for all Sparse Hessian cases.
 \tparam Base
 is the base type for the recording that is stored in this ADFun<Base object.
 
-\tparam VectorBase
+\tparam BaseVector
 is a simple vector class with elements of type Base.
 
-\tparam VectorSet
+\tparam SetVector
 is a simple vector class with elements of type
  bool or std::set<size_t>.
 
-\tparam VectorSize
+\tparam SizeVector
 is sparse_pack or sparse_list.
 
 \param x [in]
@@ -414,14 +414,14 @@ forward sweep, or the time to combine computations, is proportional to this
 return value.
 */
 template <class Base, class RecBase>
-template <class VectorBase, class VectorSet, class VectorSize>
+template <class BaseVector, class SetVector, class SizeVector>
 size_t ADFun<Base,RecBase>::SparseHessianCompute(
-	const VectorBase&           x           ,
-	const VectorBase&           w           ,
-	      VectorSet&            sparsity    ,
-	const VectorSize&           user_row    ,
-	const VectorSize&           user_col    ,
-	      VectorBase&           hes         ,
+	const BaseVector&           x           ,
+	const BaseVector&           w           ,
+	      SetVector&            sparsity    ,
+	const SizeVector&           user_row    ,
+	const SizeVector&           user_col    ,
+	      BaseVector&           hes         ,
 	      sparse_hessian_work&  work        )
 {
 	using   CppAD::vectorBool;
@@ -438,8 +438,8 @@ size_t ADFun<Base,RecBase>::SparseHessianCompute(
 	const Base zero(0);
 	const Base one(1);
 
-	// check VectorBase is Simple Vector class with Base type elements
-	CheckSimpleVector<Base, VectorBase>();
+	// check BaseVector is Simple Vector class with Base type elements
+	CheckSimpleVector<Base, BaseVector>();
 
 	// number of components of Hessian that are required
 	size_t K = hes.size();
@@ -516,7 +516,7 @@ size_t ADFun<Base,RecBase>::SparseHessianCompute(
 		}
 
 		// put sorting indices in color order
-		VectorSize key(K);
+		SizeVector key(K);
 		order.resize(K);
 		for(k = 0; k < K; k++)
 			key[k] = color[ row[k] ];
@@ -528,10 +528,10 @@ size_t ADFun<Base,RecBase>::SparseHessianCompute(
 		n_color = std::max(n_color, color[ell] + 1);
 
 	// direction vector for calls to forward (rows of the Hessian)
-	VectorBase u(n);
+	BaseVector u(n);
 
 	// location for return values from reverse (columns of the Hessian)
-	VectorBase ddw(2 * n);
+	BaseVector ddw(2 * n);
 
 	// initialize the return value
 	for(k = 0; k < K; k++)
@@ -598,14 +598,14 @@ The C++ source code corresponding to this operation is
 \tparam Base
 is the base type for the recording that is stored in this ADFun<Base object.
 
-\tparam VectorBase
+\tparam BaseVector
 is a simple vector class with elements of type Base.
 
-\tparam VectorSet
+\tparam SetVector
 is a simple vector class with elements of type
  bool or std::set<size_t>.
 
-\tparam VectorSize
+\tparam SizeVector
 is a simple vector class with elements of type size_t.
 
 \param x [in]
@@ -648,14 +648,14 @@ forward sweep, or the time to combine computations, is proportional to this
 return value.
 */
 template <class Base, class RecBase>
-template <class VectorBase, class VectorSet, class VectorSize>
+template <class BaseVector, class SetVector, class SizeVector>
 size_t ADFun<Base,RecBase>::SparseHessian(
-	const VectorBase&     x    ,
-	const VectorBase&     w    ,
-	const VectorSet&      p    ,
-	const VectorSize&     row  ,
-	const VectorSize&     col  ,
-	VectorBase&           hes  ,
+	const BaseVector&     x    ,
+	const BaseVector&     w    ,
+	const SetVector&      p    ,
+	const SizeVector&     row  ,
+	const SizeVector&     col  ,
+	BaseVector&           hes  ,
 	sparse_hessian_work&  work )
 {
 	size_t n    = Domain();
@@ -695,7 +695,7 @@ size_t ADFun<Base,RecBase>::SparseHessian(
 	if( K == 0 )
 		return n_sweep;
 
-	typedef typename VectorSet::value_type Set_type;
+	typedef typename SetVector::value_type Set_type;
 	typedef typename local::internal_sparsity<Set_type>::pattern_type Pattern_type;
 	Pattern_type s;
 	if( work.color.size() == 0 )
@@ -720,10 +720,10 @@ The C++ source code coresponding to this operation is
 is the base type for the recording that is stored in this
 ADFun<Base object.
 
-\tparam VectorBase
+\tparam BaseVector
 is a simple vector class with elements of the Base.
 
-\tparam VectorSet
+\tparam SetVector
 is a simple vector class with elements of type
  bool or std::set<size_t>.
 
@@ -745,21 +745,21 @@ at the point specified by x
 (where n is the domain dimension for this ADFun<Base> object).
 */
 template <class Base, class RecBase>
-template <class VectorBase, class VectorSet>
-VectorBase ADFun<Base,RecBase>::SparseHessian(
-	const VectorBase& x, const VectorBase& w, const VectorSet& p
+template <class BaseVector, class SetVector>
+BaseVector ADFun<Base,RecBase>::SparseHessian(
+	const BaseVector& x, const BaseVector& w, const SetVector& p
 )
 {	size_t i, j, k;
 
 	size_t n = Domain();
-	VectorBase hes(n * n);
+	BaseVector hes(n * n);
 
 	CPPAD_ASSERT_KNOWN(
 		size_t(x.size()) == n,
 		"SparseHessian: size of x not equal domain size for f."
 	);
 
-	typedef typename VectorSet::value_type Set_type;
+	typedef typename SetVector::value_type Set_type;
 	typedef typename local::internal_sparsity<Set_type>::pattern_type Pattern_type;
 
 	// initialize the return value as zero
@@ -789,7 +789,7 @@ VectorBase ADFun<Base,RecBase>::SparseHessian(
 		}
 	}
 	size_t K = k;
-	VectorBase H(K);
+	BaseVector H(K);
 
 	// now we have folded this into the following case
 	SparseHessianCompute(x, w, s, row, col, H, work);
@@ -813,7 +813,7 @@ The C++ source code coresponding to this operation is
 is the base type for the recording that is stored in this
 ADFun<Base object.
 
-\tparam VectorBase
+\tparam BaseVector
 is a simple vector class with elements of the Base.
 
 \param x [in]
@@ -831,16 +831,16 @@ at the point specified by x
 (where n is the domain dimension for this ADFun<Base> object).
 */
 template <class Base, class RecBase>
-template <class VectorBase>
-VectorBase ADFun<Base,RecBase>::SparseHessian(const VectorBase &x, const VectorBase &w)
+template <class BaseVector>
+BaseVector ADFun<Base,RecBase>::SparseHessian(const BaseVector &x, const BaseVector &w)
 {	size_t i, j, k;
-	typedef CppAD::vectorBool VectorBool;
+	typedef CppAD::vectorBool BoolVector;
 
 	size_t m = Range();
 	size_t n = Domain();
 
 	// determine the sparsity pattern p for Hessian of w^T F
-	VectorBool r(n * n);
+	BoolVector r(n * n);
 	for(j = 0; j < n; j++)
 	{	for(k = 0; k < n; k++)
 			r[j * n + k] = false;
@@ -848,10 +848,10 @@ VectorBase ADFun<Base,RecBase>::SparseHessian(const VectorBase &x, const VectorB
 	}
 	ForSparseJac(n, r);
 	//
-	VectorBool s(m);
+	BoolVector s(m);
 	for(i = 0; i < m; i++)
 		s[i] = w[i] != 0;
-	VectorBool p = RevSparseHes(n, s);
+	BoolVector p = RevSparseHes(n, s);
 
 	// compute sparse Hessian
 	return SparseHessian(x, w, p);

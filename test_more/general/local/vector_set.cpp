@@ -14,11 +14,11 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 
 namespace { //  BEGIN empty namespace
 
-template <class VectorSet>
+template <class SetVector>
 bool test_no_other(void)
 {	bool ok = true;
 
-	VectorSet vec_set;
+	SetVector vec_set;
 	size_t n_set = 4;
 	size_t end   = 5;
 	//
@@ -82,7 +82,7 @@ bool test_no_other(void)
 	ok &= ! vec_set.is_element(source, source+2);
 	//
 	// now check the elements in set 0 by iterating over them
-	typename VectorSet::const_iterator itr(vec_set, target);
+	typename SetVector::const_iterator itr(vec_set, target);
 	ok &= *itr     == source+1;
 	ok &= *(++itr) == source+2;
 	ok &= *(++itr) == end;
@@ -103,11 +103,11 @@ bool test_no_other(void)
 	return ok;
 }
 
-template <class VectorSet>
+template <class SetVector>
 bool test_yes_other(void)
 {	bool ok = true;
 
-	VectorSet vec_set, other_vec;
+	SetVector vec_set, other_vec;
 	size_t n_set = 4;
 	size_t end   = 5;
 	vec_set.resize(n_set, end);
@@ -146,11 +146,11 @@ bool test_yes_other(void)
 	return ok;
 }
 
-template <class VectorSet>
+template <class SetVector>
 bool test_intersection(void)
 {	bool ok = true;
 	//
-	VectorSet vec_set;
+	SetVector vec_set;
 	size_t n_set = 3;
 	size_t end   = 5;
 	vec_set.resize(n_set, end);
@@ -169,12 +169,12 @@ bool test_intersection(void)
 	size_t right  = 1;
 	vec_set.binary_intersection(target, left, right, vec_set);
 	//
-	typename VectorSet::const_iterator itr1(vec_set, target);
+	typename SetVector::const_iterator itr1(vec_set, target);
 	ok &= *itr1     == 2;
 	ok &= *(++itr1) == end;
 	//
 	// other[1] = set[1]
-	VectorSet other;
+	SetVector other;
 	other.resize(n_set, end);
 	target        = 1;
 	size_t source = 1;
@@ -186,18 +186,18 @@ bool test_intersection(void)
 	right  = 1;
 	vec_set.binary_intersection(target, left, right, other);
 	//
-	typename VectorSet::const_iterator itr2(vec_set, target);
+	typename SetVector::const_iterator itr2(vec_set, target);
 	ok &= *itr2     == 2;
 	ok &= *(++itr2) == end;
 	//
 	return ok;
 }
 
-template<class VectorSet>
+template<class SetVector>
 bool test_post(void)
 {	bool ok = true;
 	//
-	VectorSet vec_set;
+	SetVector vec_set;
 	size_t n_set = 3;
 	size_t end   = 5;
 	vec_set.resize(n_set, end);
@@ -213,7 +213,7 @@ bool test_post(void)
 	vec_set.post_element(target, 4);
 	vec_set.process_post(target);
 	//
-	typename VectorSet::const_iterator itr1(vec_set, target);
+	typename SetVector::const_iterator itr1(vec_set, target);
 	ok &= *itr1     == 1;
 	ok &= *(++itr1) == 2;
 	ok &= *(++itr1) == 4;
@@ -225,7 +225,7 @@ bool test_post(void)
 	vec_set.post_element(target, 2);
 	vec_set.process_post(target);
 	//
-	typename VectorSet::const_iterator itr2(vec_set, target);
+	typename SetVector::const_iterator itr2(vec_set, target);
 	ok &= *itr2     == 1;
 	ok &= *(++itr2) == 2;
 	ok &= *(++itr2) == 4;

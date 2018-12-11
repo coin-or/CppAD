@@ -67,9 +67,9 @@ as $codei%AD<%Base%>%$$ variables.
 $head x$$
 The vector $icode x$$ has prototype
 $codei%
-	%VectorAD% &%x%
+	%ADVector% &%x%
 %$$
-(see $icode VectorAD$$ below).
+(see $icode ADVector$$ below).
 The size of the vector $icode x$$, must be greater than zero,
 and is the number of independent variables for this
 AD operation sequence.
@@ -105,7 +105,7 @@ If this argument is false, $icode abort_op_index$$ must be zero.
 $head dynamic$$
 If this argument is present, it has prototype
 $codei%
-	const %VectorAD%& %dynamic%
+	const %ADVector%& %dynamic%
 %$$
 (see $icode Vector$$ below).
 It specifies the independent
@@ -123,8 +123,8 @@ It is more efficient to compute other dynamic parameters before calling
 $code Independent$$ and include them in the
 independent dynamic parameter vector $icode dynamic$$.
 
-$head VectorAD$$
-The type $icode VectorAD$$ must be a $cref SimpleVector$$ class with
+$head ADVector$$
+The type $icode ADVector$$ must be a $cref SimpleVector$$ class with
 $cref/elements of type/SimpleVector/Elements of Specified Type/$$
 $codei%AD<%Base%>%$$.
 The routine $cref CheckSimpleVector$$ will generate an error message
@@ -168,7 +168,7 @@ namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 /*!
 Declaration of independent variables.
 
-\tparam VectorAD
+\tparam ADVector
 This is simple vector type with elements of type AD<Base>.
 
 \param x
@@ -184,17 +184,17 @@ should comparison operators be recorded.
 \param dynamic
 is the dynamic parameter vector.
 */
-template <typename VectorAD>
+template <typename ADVector>
 inline void Independent(
-	VectorAD&  x              ,
+	ADVector&  x              ,
 	size_t     abort_op_index ,
 	bool       record_compare ,
-	VectorAD&  dynamic        )
+	ADVector&  dynamic        )
 {	CPPAD_ASSERT_KNOWN(
 		abort_op_index == 0 || record_compare,
 		"Independent: abort_op_index is non-zero and record_compare is false."
 	);
-	typedef typename VectorAD::value_type ADBase;
+	typedef typename ADVector::value_type ADBase;
 	typedef typename ADBase::value_type   Base;
 	CPPAD_ASSERT_KNOWN(
 		ADBase::tape_ptr() == CPPAD_NULL,
@@ -209,7 +209,7 @@ inline void Independent(
 /*!
 Declare independent variables using default for dynamic.
 
-\tparam VectorAD
+\tparam ADVector
 This is simple vector type with elements of type AD<Base>.
 
 \param x
@@ -222,16 +222,16 @@ of operations). The value zero corresponds to not aborting (will not match).
 \param record_compare
 should comparison operators be recorded.
 */
-template <typename VectorAD>
-inline void Independent(VectorAD &x, size_t abort_op_index, bool record_compare)
-{	VectorAD dynamic(0); // empty vector
+template <typename ADVector>
+inline void Independent(ADVector &x, size_t abort_op_index, bool record_compare)
+{	ADVector dynamic(0); // empty vector
 	Independent(x, abort_op_index, record_compare, dynamic);
 }
 // ---------------------------------------------------------------------------
 /*!
 Declare independent variables using default for record_compare and dynamic.
 
-\tparam VectorAD
+\tparam ADVector
 This is simple vector type with elements of type AD<Base>.
 
 \param x
@@ -241,10 +241,10 @@ Vector of the independent variablers.
 operator index at which execution will be aborted (during  the recording
 of operations). The value zero corresponds to not aborting (will not match).
 */
-template <typename VectorAD>
-inline void Independent(VectorAD &x, size_t abort_op_index)
+template <typename ADVector>
+inline void Independent(ADVector &x, size_t abort_op_index)
 {	bool     record_compare = true;
-	VectorAD dynamic(0); // empty vector
+	ADVector dynamic(0); // empty vector
 	Independent(x, abort_op_index, record_compare, dynamic);
 }
 // ---------------------------------------------------------------------------
@@ -252,17 +252,17 @@ inline void Independent(VectorAD &x, size_t abort_op_index)
 Declare independent variables using default for
 record_compare, abort_op_index, and dynamic.
 
-\tparam VectorAD
+\tparam ADVector
 This is simple vector type with elements of type AD<Base>.
 
 \param x
 Vector of the independent variablers.
 */
-template <typename VectorAD>
-inline void Independent(VectorAD &x)
+template <typename ADVector>
+inline void Independent(ADVector &x)
 {	size_t   abort_op_index = 0;
 	bool     record_compare = true;
-	VectorAD dynamic(0); // empty vector
+	ADVector dynamic(0); // empty vector
 	Independent(x, abort_op_index, record_compare, dynamic);
 }
 

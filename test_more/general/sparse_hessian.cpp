@@ -55,17 +55,17 @@ bool rc_tridiagonal(void)
 	CppAD::ADFun<double> f(a_x, a_y);
 
 	// determine the sparsity pattern p for Hessian of w^T f
-	typedef CppAD::vector< std::set<size_t> > VectorSet;
-	VectorSet p_r(n);
+	typedef CppAD::vector< std::set<size_t> > SetVector;
+	SetVector p_r(n);
 	for(j = 0; j < n; j++)
 		p_r[j].insert(j);
 	f.ForSparseJac(n, p_r);
 	//
-	VectorSet p_s(1);
+	SetVector p_s(1);
 	for(i = 0; i < m; i++)
 		if( w[i] != 0 )
 			p_s[0].insert(i);
-	VectorSet p_h = f.RevSparseHes(n, p_s);
+	SetVector p_h = f.RevSparseHes(n, p_s);
 
 	// requres the upper triangle of the Hessian
 	size_t K = 2 * n - 1;
@@ -99,7 +99,7 @@ bool rc_tridiagonal(void)
 }
 
 
-template <class VectorBase, class VectorBool>
+template <class BaseVector, class BoolVector>
 bool bool_case()
 {	bool ok = true;
 	using CppAD::AD;
@@ -124,21 +124,21 @@ bool bool_case()
 	CppAD::ADFun<double> f(X, Y);
 
 	// new value for the independent variable vector
-	VectorBase x(n);
+	BaseVector x(n);
 	for(i = 0; i < n; i++)
 		x[i] = double(i);
 
 	// second derivative of y[1]
-	VectorBase w(m);
+	BaseVector w(m);
 	w[0] = 1.;
-	VectorBase h( n * n );
+	BaseVector h( n * n );
 	h = f.SparseHessian(x, w);
 	/*
 	    [ 2 1 0 ]
 	h = [ 1 2 0 ]
             [ 0 0 2 ]
 	*/
-	VectorBase check(n * n);
+	BaseVector check(n * n);
 	check[0] = 2.; check[1] = 1.; check[2] = 0.;
 	check[3] = 1.; check[4] = 2.; check[5] = 0.;
 	check[6] = 0.; check[7] = 0.; check[8] = 2.;
@@ -146,7 +146,7 @@ bool bool_case()
 		ok &=  NearEqual(check[k], h[k], eps99, eps99 );
 
 	// determine the sparsity pattern p for Hessian of w^T F
-	VectorBool r(n * n);
+	BoolVector r(n * n);
 	for(j = 0; j < n; j++)
 	{	for(k = 0; k < n; k++)
 		r[j * n + k] = false;
@@ -154,10 +154,10 @@ bool bool_case()
 	}
 	f.ForSparseJac(n, r);
 	//
-	VectorBool s(m);
+	BoolVector s(m);
 	for(i = 0; i < m; i++)
 		s[i] = w[i] != 0;
-	VectorBool p = f.RevSparseHes(n, s);
+	BoolVector p = f.RevSparseHes(n, s);
 
 	// test passing sparsity pattern
 	h = f.SparseHessian(x, w, p);
@@ -166,7 +166,7 @@ bool bool_case()
 
 	return ok;
 }
-template <class VectorBase, class VectorSet>
+template <class BaseVector, class SetVector>
 bool set_case()
 {	bool ok = true;
 	using CppAD::AD;
@@ -191,21 +191,21 @@ bool set_case()
 	CppAD::ADFun<double> f(X, Y);
 
 	// new value for the independent variable vector
-	VectorBase x(n);
+	BaseVector x(n);
 	for(i = 0; i < n; i++)
 		x[i] = double(i);
 
 	// second derivative of y[1]
-	VectorBase w(m);
+	BaseVector w(m);
 	w[0] = 1.;
-	VectorBase h( n * n );
+	BaseVector h( n * n );
 	h = f.SparseHessian(x, w);
 	/*
 	    [ 2 1 0 ]
 	h = [ 1 2 0 ]
             [ 0 0 2 ]
 	*/
-	VectorBase check(n * n);
+	BaseVector check(n * n);
 	check[0] = 2.; check[1] = 1.; check[2] = 0.;
 	check[3] = 1.; check[4] = 2.; check[5] = 0.;
 	check[6] = 0.; check[7] = 0.; check[8] = 2.;
@@ -213,16 +213,16 @@ bool set_case()
 		ok &=  NearEqual(check[k], h[k], eps99, eps99 );
 
 	// determine the sparsity pattern p for Hessian of w^T F
-	VectorSet r(n);
+	SetVector r(n);
 	for(j = 0; j < n; j++)
 		r[j].insert(j);
 	f.ForSparseJac(n, r);
 	//
-	VectorSet s(1);
+	SetVector s(1);
 	for(i = 0; i < m; i++)
 		if( w[i] != 0 )
 			s[0].insert(i);
-	VectorSet p = f.RevSparseHes(n, s);
+	SetVector p = f.RevSparseHes(n, s);
 
 	// test passing sparsity pattern
 	h = f.SparseHessian(x, w, p);

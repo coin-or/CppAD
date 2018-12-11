@@ -30,7 +30,7 @@ Multiple orders, one direction, forward mode Taylor coefficieints.
 The type used during the forward mode computations; i.e., the corresponding
 recording of operations used the type AD<Base>.
 
-\tparam VectorBase
+\tparam BaseVector
 is a Simple Vector class with eleements of type Base.
 
 \param q
@@ -74,10 +74,10 @@ and there is no variable with index zero.)
 */
 
 template <typename Base, typename RecBase>
-template <typename VectorBase>
-VectorBase ADFun<Base,RecBase>::Forward(
+template <typename BaseVector>
+BaseVector ADFun<Base,RecBase>::Forward(
 	size_t              q         ,
-	const VectorBase&   xq        ,
+	const BaseVector&   xq        ,
 	      std::ostream& s         )
 {
 	// used to identify the RecBase type in calls to sweeps
@@ -93,7 +93,7 @@ VectorBase ADFun<Base,RecBase>::Forward(
 	size_t m = dep_taddr_.size();
 
 	// check Vector is Simple Vector class with Base type elements
-	CheckSimpleVector<Base, VectorBase>();
+	CheckSimpleVector<Base, BaseVector>();
 
 
 	CPPAD_ASSERT_KNOWN(
@@ -181,7 +181,7 @@ VectorBase ADFun<Base,RecBase>::Forward(
 	}
 
 	// return Taylor coefficients for dependent variables
-	VectorBase yq;
+	BaseVector yq;
 	if( p == q )
 	{	yq.resize(m);
 		for(i = 0; i < m; i++)
@@ -272,7 +272,7 @@ One order, multiple directions, forward mode Taylor coefficieints.
 The type used during the forward mode computations; i.e., the corresponding
 recording of operations used the type AD<Base>.
 
-\tparam VectorBase
+\tparam BaseVector
 is a Simple Vector class with eleements of type Base.
 
 \param q
@@ -327,11 +327,11 @@ and there is no variable with index zero.)
 */
 
 template <typename Base, typename RecBase>
-template <typename VectorBase>
-VectorBase ADFun<Base,RecBase>::Forward(
+template <typename BaseVector>
+BaseVector ADFun<Base,RecBase>::Forward(
 	size_t              q         ,
 	size_t              r         ,
-	const VectorBase&   xq        )
+	const BaseVector&   xq        )
 {
 	// used to identify the RecBase type in calls to sweeps
 	RecBase not_used_rec_base;
@@ -346,7 +346,7 @@ VectorBase ADFun<Base,RecBase>::Forward(
 	size_t m = dep_taddr_.size();
 
 	// check Vector is Simple Vector class with Base type elements
-	CheckSimpleVector<Base, VectorBase>();
+	CheckSimpleVector<Base, BaseVector>();
 
 	CPPAD_ASSERT_KNOWN( q > 0, "Forward(q, r, xq): q == 0" );
 	CPPAD_ASSERT_KNOWN(
@@ -408,7 +408,7 @@ VectorBase ADFun<Base,RecBase>::Forward(
 	);
 
 	// return Taylor coefficients for dependent variables
-	VectorBase yq;
+	BaseVector yq;
 	yq.resize(r * m);
 	for(i = 0; i < m; i++)
 	{	CPPAD_ASSERT_UNKNOWN( dep_taddr_[i] < num_var_tape_  );

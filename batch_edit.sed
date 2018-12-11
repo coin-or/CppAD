@@ -35,18 +35,14 @@
 # '
 # ----------------------------------------------------------------------------
 # Put other sed commands below here and without # at start of line
-s|\\arg\[2\]|arg[2]|
-#
-s|^\\a | |
-s|^\\c | |
-#
-s| \\a | |g
-s| \\c | |g
-#
-s|\t\\a |\t|g
-s|\t\\c |\t|g
-#
-s|(\\a |(|g
-s|(\\c |(|g
-#
-#
+s|VectorAD|ADVector|g
+s|VectorADBase|ADBaseVector|g
+s|VectorBase|BaseVector|g
+s|VectorBool|BoolVector|g
+s|VectorDouble|DoubleVector|g
+s|VectorFloat|FloatVector|g
+s|VectorKey|KeyVector|g
+s|VectorSet|SetVector|g
+s|VectorSize|SizeVector|g
+s|VectorSize_t|SizeVector|g
+

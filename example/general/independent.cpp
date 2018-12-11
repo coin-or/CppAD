@@ -26,8 +26,8 @@ $end
 # include <cppad/cppad.hpp>
 
 namespace { // --------------------------------------------------------
-// define the template function Test<VectorAD>(void) in empty namespace
-template <class VectorAD>
+// define the template function Test<ADVector>(void) in empty namespace
+template <class ADVector>
 bool Test(void)
 {	bool ok = true;
 	using CppAD::AD;
@@ -36,12 +36,12 @@ bool Test(void)
 
 	// domain space vector
 	size_t  n  = 2;
-	VectorAD X(n);  // VectorAD is the template parameter in call to Test
+	ADVector X(n);  // ADVector is the template parameter in call to Test
 	X[0] = 0.;
 	X[1] = 1.;
 
 	// declare independent variables and start recording
-	// use the template parameter VectorAD for the vector type
+	// use the template parameter ADVector for the vector type
 	CppAD::Independent(X);
 
 	AD<double> a = X[0] + X[1];      // first AD operation
@@ -49,12 +49,12 @@ bool Test(void)
 
 	// range space vector
 	size_t m = 2;
-	VectorAD Y(m);  // VectorAD is the template paraemter in call to Test
+	ADVector Y(m);  // ADVector is the template paraemter in call to Test
 	Y[0] = a;
 	Y[1] = b;
 
 	// create f: X -> Y and stop tape recording
-	// use the template parameter VectorAD for the vector type
+	// use the template parameter ADVector for the vector type
 	CppAD::ADFun<double> f(X, Y);
 
 	// check value
@@ -95,7 +95,7 @@ bool Test(void)
 bool Independent(void)
 {	bool ok = true;
 	typedef CppAD::AD<double> ADdouble;
-	// Run with VectorAD equal to three different cases
+	// Run with ADVector equal to three different cases
 	// all of which are Simple Vectors with elements of type AD<double>.
 	ok &= Test< CppAD::vector  <ADdouble> >();
 	ok &= Test< std::vector    <ADdouble> >();

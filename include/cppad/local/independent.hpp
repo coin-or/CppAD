@@ -20,7 +20,7 @@ Start recording AD<Base> operations.
 /*!
 Start recording AD<Base> operations: Implementation in local namespace.
 
-\tparam VectorAD
+\tparam ADVector
 This is simple vector type with elements of type AD<Base>.
 
 \param x
@@ -37,15 +37,15 @@ of operations). The value zero corresponds to not aborting (will not match).
 Vector of dynamic parameters.
 */
 template <typename Base>
-template <typename VectorAD>
+template <typename ADVector>
 void ADTape<Base>::Independent(
-	VectorAD&    x               ,
+	ADVector&    x               ,
 	size_t       abort_op_index  ,
 	bool         record_compare  ,
-	VectorAD&    dynamic
+	ADVector&    dynamic
 ) {
-	// check VectorAD is Simple Vector class with AD<Base> elements
-	CheckSimpleVector< AD<Base>, VectorAD>();
+	// check ADVector is Simple Vector class with AD<Base> elements
+	CheckSimpleVector< AD<Base>, ADVector>();
 
 	// dimension of the domain space
 	size_t n = x.size();

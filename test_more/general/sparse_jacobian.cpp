@@ -104,7 +104,7 @@ bool rc_tridiagonal(void)
 	return ok;
 }
 
-template <class VectorBase, class VectorSet>
+template <class BaseVector, class SetVector>
 bool rc_set(void)
 {	bool ok = true;
 	using CppAD::AD;
@@ -131,7 +131,7 @@ bool rc_set(void)
 	CppAD::ADFun<double> f(X, Y);
 
 	// new value for the independent variable vector
-	VectorBase x(n);
+	BaseVector x(n);
 	for(j = 0; j < n; j++)
 		x[j] = double(j);
 
@@ -141,13 +141,13 @@ bool rc_set(void)
 	jac = [ 0 0 3 4    ]
 	      [ 5 6 0 7*x_3]
 	*/
-	VectorBase check(m * n);
+	BaseVector check(m * n);
 	check[0] = 1.; check[1] = 2.; check[2]  = 0.; check[3]  = 0.;
 	check[4] = 0.; check[5] = 0.; check[6]  = 3.; check[7]  = 4.;
 	check[8] = 5.; check[9] = 6.; check[10] = 0.; check[11] = 7.*x[3];
 
 	// sparsity pattern
-	VectorSet s(m), p(m);
+	SetVector s(m), p(m);
 	for(i = 0; i < m; i++)
 		s[i].insert(i);
 	p   = f.RevSparseJac(m, s);
@@ -155,7 +155,7 @@ bool rc_set(void)
 	// Use forward mode to compute columns 0 and 2
 	// (make sure order of rows and columns does not matter)
 	CPPAD_TESTVECTOR(size_t) r(3), c(3);
-	VectorBase jac(3);
+	BaseVector jac(3);
 	r[0] = 2; c[0] = 0;
 	r[1] = 1; c[1] = 2;
 	r[2] = 0; c[2] = 0;
@@ -184,7 +184,7 @@ bool rc_set(void)
 
 	return ok;
 }
-template <class VectorBase, class VectorBool>
+template <class BaseVector, class BoolVector>
 bool rc_bool(void)
 {	bool ok = true;
 	using CppAD::AD;
@@ -211,7 +211,7 @@ bool rc_bool(void)
 	CppAD::ADFun<double> f(X, Y);
 
 	// new value for the independent variable vector
-	VectorBase x(n);
+	BaseVector x(n);
 	for(j = 0; j < n; j++)
 		x[j] = double(j);
 
@@ -221,11 +221,11 @@ bool rc_bool(void)
 	jac = [ 0 0 3 4    ]
 	      [ 5 6 0 7*x_3]
 	*/
-	VectorBase check(m * n);
+	BaseVector check(m * n);
 	check[0] = 1.; check[1] = 2.; check[2]  = 0.; check[3]  = 0.;
 	check[4] = 0.; check[5] = 0.; check[6]  = 3.; check[7]  = 4.;
 	check[8] = 5.; check[9] = 6.; check[10] = 0.; check[11] = 7.*x[3];
-	VectorBool s(m * n);
+	BoolVector s(m * n);
 	s[0] = true;   s[1] = true;   s[2] = false;   s[3] = false;
 	s[4] = false;  s[5] = false;  s[6] = true;    s[7] = true;
 	s[8] = true;   s[9] = true;  s[10] = false;  s[11] = true;
@@ -233,7 +233,7 @@ bool rc_bool(void)
 	// Use forward mode to compute columns 0 and 2
 	// (make sure order of rows and columns does not matter)
 	CPPAD_TESTVECTOR(size_t) r(3), c(3);
-	VectorBase jac(3);
+	BaseVector jac(3);
 	r[0] = 2; c[0] = 0;
 	r[1] = 1; c[1] = 2;
 	r[2] = 0; c[2] = 0;
@@ -264,7 +264,7 @@ bool rc_bool(void)
 }
 
 
-template <class VectorBase, class VectorBool>
+template <class BaseVector, class BoolVector>
 bool reverse_bool(void)
 {	bool ok = true;
 	using CppAD::AD;
@@ -291,19 +291,19 @@ bool reverse_bool(void)
 	CppAD::ADFun<double> f(X, Y);
 
 	// new value for the independent variable vector
-	VectorBase x(n);
+	BaseVector x(n);
 	for(j = 0; j < n; j++)
 		x[j] = double(j);
 
 	// Jacobian of y without sparsity pattern
-	VectorBase jac(m * n);
+	BaseVector jac(m * n);
 	jac = f.SparseJacobian(x);
 	/*
 	      [ 1 2 0 0    ]
 	jac = [ 0 0 3 4    ]
 	      [ 5 6 7 8*x_3]
 	*/
-	VectorBase check(m * n);
+	BaseVector check(m * n);
 	check[0] = 1.; check[1] = 2.; check[2]  = 0.; check[3]  = 0.;
 	check[4] = 0.; check[5] = 0.; check[6]  = 3.; check[7]  = 4.;
 	check[8] = 5.; check[9] = 6.; check[10] = 7.; check[11] = 8.*x[3];
@@ -311,8 +311,8 @@ bool reverse_bool(void)
 		ok &=  NearEqual(check[k], jac[k], eps99, eps99 );
 
 	// test passing sparsity pattern
-	VectorBool s(m * m);
-	VectorBool p(m * n);
+	BoolVector s(m * m);
+	BoolVector p(m * n);
 	for(i = 0; i < m; i++)
 	{	for(k = 0; k < m; k++)
 			s[i * m + k] = false;
@@ -326,7 +326,7 @@ bool reverse_bool(void)
 	return ok;
 }
 
-template <class VectorBase, class VectorSet>
+template <class BaseVector, class SetVector>
 bool reverse_set(void)
 {	bool ok = true;
 	using CppAD::AD;
@@ -353,19 +353,19 @@ bool reverse_set(void)
 	CppAD::ADFun<double> f(X, Y);
 
 	// new value for the independent variable vector
-	VectorBase x(n);
+	BaseVector x(n);
 	for(j = 0; j < n; j++)
 		x[j] = double(j);
 
 	// Jacobian of y without sparsity pattern
-	VectorBase jac(m * n);
+	BaseVector jac(m * n);
 	jac = f.SparseJacobian(x);
 	/*
 	      [ 1 1 0 0  ]
 	jac = [ 0 0 1 1  ]
 	      [ 1 1 1 x_3]
 	*/
-	VectorBase check(m * n);
+	BaseVector check(m * n);
 	check[0] = 1.; check[1] = 1.; check[2]  = 0.; check[3]  = 0.;
 	check[4] = 0.; check[5] = 0.; check[6]  = 1.; check[7]  = 1.;
 	check[8] = 1.; check[9] = 1.; check[10] = 1.; check[11] = x[3];
@@ -373,7 +373,7 @@ bool reverse_set(void)
 		ok &=  NearEqual(check[k], jac[k], eps99, eps99 );
 
 	// test passing sparsity pattern
-	VectorSet s(m), p(m);
+	SetVector s(m), p(m);
 	for(i = 0; i < m; i++)
 		s[i].insert(i);
 	p   = f.RevSparseJac(m, s);
@@ -384,7 +384,7 @@ bool reverse_set(void)
 	return ok;
 }
 
-template <class VectorBase, class VectorBool>
+template <class BaseVector, class BoolVector>
 bool forward_bool(void)
 {	bool ok = true;
 	using CppAD::AD;
@@ -412,12 +412,12 @@ bool forward_bool(void)
 	CppAD::ADFun<double> f(X, Y);
 
 	// new value for the independent variable vector
-	VectorBase x(n);
+	BaseVector x(n);
 	for(j = 0; j < n; j++)
 		x[j] = double(j);
 
 	// Jacobian of y without sparsity pattern
-	VectorBase jac(m * n);
+	BaseVector jac(m * n);
 	jac = f.SparseJacobian(x);
 	/*
 	      [ 1 0 1   ]
@@ -425,7 +425,7 @@ bool forward_bool(void)
 	      [ 0 1 1   ]
 	      [ 0 1 x_2 ]
 	*/
-	VectorBase check(m * n);
+	BaseVector check(m * n);
 	check[0] = 1.; check[1]  = 0.; check[2]  = 1.;
 	check[3] = 1.; check[4]  = 0.; check[5]  = 1.;
 	check[6] = 0.; check[7]  = 1.; check[8]  = 1.;
@@ -434,8 +434,8 @@ bool forward_bool(void)
 		ok &=  NearEqual(check[k], jac[k], eps99, eps99 );
 
 	// test passing sparsity pattern
-	VectorBool r(n * n);
-	VectorBool p(m * n);
+	BoolVector r(n * n);
+	BoolVector p(m * n);
 	for(j = 0; j < n; j++)
 	{	for(k = 0; k < n; k++)
 			r[j * n + k] = false;
@@ -449,7 +449,7 @@ bool forward_bool(void)
 	return ok;
 }
 
-template <class VectorBase, class VectorSet>
+template <class BaseVector, class SetVector>
 bool forward_set(void)
 {	bool ok = true;
 	using CppAD::AD;
@@ -477,12 +477,12 @@ bool forward_set(void)
 	CppAD::ADFun<double> f(X, Y);
 
 	// new value for the independent variable vector
-	VectorBase x(n);
+	BaseVector x(n);
 	for(j = 0; j < n; j++)
 		x[j] = double(j);
 
 	// Jacobian of y without sparsity pattern
-	VectorBase jac(m * n);
+	BaseVector jac(m * n);
 	jac = f.SparseJacobian(x);
 	/*
 	      [ 1 0 1   ]
@@ -490,7 +490,7 @@ bool forward_set(void)
 	      [ 0 1 1   ]
 	      [ 0 1 x_2 ]
 	*/
-	VectorBase check(m * n);
+	BaseVector check(m * n);
 	check[0] = 1.; check[1]  = 0.; check[2]  = 1.;
 	check[3] = 1.; check[4]  = 0.; check[5]  = 1.;
 	check[6] = 0.; check[7]  = 1.; check[8]  = 1.;
@@ -499,7 +499,7 @@ bool forward_set(void)
 		ok &=  NearEqual(check[k], jac[k], eps99, eps99 );
 
 	// test passing sparsity pattern
-	VectorSet r(n), p(m);
+	SetVector r(n), p(m);
 	for(j = 0; j < n; j++)
 		r[j].insert(j);
 	p   = f.ForSparseJac(n, r);

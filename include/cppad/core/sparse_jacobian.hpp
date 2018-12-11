@@ -74,9 +74,9 @@ Note that the $cref ADFun$$ object $icode f$$ is not $code const$$
 $head x$$
 The argument $icode x$$ has prototype
 $codei%
-	const %VectorBase%& %x%
+	const %BaseVector%& %x%
 %$$
-(see $cref/VectorBase/sparse_jacobian/VectorBase/$$ below)
+(see $cref/BaseVector/sparse_jacobian/BaseVector/$$ below)
 and its size
 must be equal to $icode n$$, the dimension of the
 $cref/domain/seq_property/Domain/$$ space for $icode f$$.
@@ -86,9 +86,9 @@ that point at which to evaluate the Jacobian.
 $head p$$
 The argument $icode p$$ is optional and has prototype
 $codei%
-	const %VectorSet%& %p%
+	const %SetVector%& %p%
 %$$
-(see $cref/VectorSet/sparse_jacobian/VectorSet/$$ below).
+(see $cref/SetVector/sparse_jacobian/SetVector/$$ below).
 If it has elements of type $code bool$$,
 its size is $latex m * n$$.
 If it has elements of type $code std::set<size_t>$$,
@@ -121,10 +121,10 @@ for the internal calculations is unspecified.
 $head row, col$$
 The arguments $icode row$$ and $icode col$$ are optional and have prototype
 $codei%
-	const %VectorSize%& %row%
-	const %VectorSize%& %col%
+	const %SizeVector%& %row%
+	const %SizeVector%& %col%
 %$$
-(see $cref/VectorSize/sparse_jacobian/VectorSize/$$ below).
+(see $cref/SizeVector/sparse_jacobian/SizeVector/$$ below).
 They specify which rows and columns of $latex F^{(1)} (x)$$ are
 computes and in what order.
 Not all the non-zero entries in $latex F^{(1)} (x)$$ need be computed,
@@ -139,7 +139,7 @@ $latex row[k] < m$$ and $latex col[k] < n$$.
 $head jac$$
 The result $icode jac$$ has prototype
 $codei%
-	%VectorBase%& %jac%
+	%BaseVector%& %jac%
 %$$
 In the case where the arguments $icode row$$ and $icode col$$ are not present,
 the size of $icode jac$$ is $latex m * n$$ and
@@ -217,15 +217,15 @@ This is proportional to the total work that $code SparseJacobian$$ does,
 not counting the zero order forward sweep,
 or the work to combine multiple columns (rows) into a single sweep.
 
-$head VectorBase$$
-The type $icode VectorBase$$ must be a $cref SimpleVector$$ class with
+$head BaseVector$$
+The type $icode BaseVector$$ must be a $cref SimpleVector$$ class with
 $cref/elements of type/SimpleVector/Elements of Specified Type/$$
 $icode Base$$.
 The routine $cref CheckSimpleVector$$ will generate an error message
 if this is not the case.
 
-$head VectorSet$$
-The type $icode VectorSet$$ must be a $cref SimpleVector$$ class with
+$head SetVector$$
+The type $icode SetVector$$ must be a $cref SimpleVector$$ class with
 $cref/elements of type/SimpleVector/Elements of Specified Type/$$
 $code bool$$ or $code std::set<size_t>$$;
 see $cref/sparsity pattern/glossary/Sparsity Pattern/$$ for a discussion
@@ -234,15 +234,15 @@ The routine $cref CheckSimpleVector$$ will generate an error message
 if this is not the case.
 
 $subhead Restrictions$$
-If $icode VectorSet$$ has elements of $code std::set<size_t>$$,
+If $icode SetVector$$ has elements of $code std::set<size_t>$$,
 then $icode%p%[%i%]%$$ must return a reference (not a copy) to the
 corresponding set.
 According to section 26.3.2.3 of the 1998 C++ standard,
 $code std::valarray< std::set<size_t> >$$ does not satisfy
 this condition.
 
-$head VectorSize$$
-The type $icode VectorSize$$ must be a $cref SimpleVector$$ class with
+$head SizeVector$$
+The type $icode SizeVector$$ must be a $cref SimpleVector$$ class with
 $cref/elements of type/SimpleVector/Elements of Specified Type/$$
 $code size_t$$.
 The routine $cref CheckSimpleVector$$ will generate an error message
@@ -314,13 +314,13 @@ Private helper function forward mode cases
 is the base type for the recording that is stored in this
 <code>ADFun<Base></code> object.
 
-\tparam VectorBase
+\tparam BaseVector
 is a simple vector class with elements of type Base.
 
-\tparam VectorSet
+\tparam SetVector
 is either sparse_pack or sparse_list.
 
-\tparam VectorSize
+\tparam SizeVector
 is a simple vector class with elements of type size_t.
 
 \param x [in]
@@ -361,13 +361,13 @@ forward sweep, or the time to combine computations, is proportional to this
 return value.
 */
 template <class Base, class RecBase>
-template <class VectorBase, class VectorSet, class VectorSize>
+template <class BaseVector, class SetVector, class SizeVector>
 size_t ADFun<Base,RecBase>::SparseJacobianFor(
-	const VectorBase&            x           ,
-	      VectorSet&             p_transpose ,
-	const VectorSize&            row         ,
-	const VectorSize&            col         ,
-	      VectorBase&            jac         ,
+	const BaseVector&            x           ,
+	      SetVector&             p_transpose ,
+	const SizeVector&            row         ,
+	const SizeVector&            col         ,
+	      BaseVector&            jac         ,
 	       sparse_jacobian_work& work        )
 {
 	size_t j, k, ell;
@@ -382,8 +382,8 @@ size_t ADFun<Base,RecBase>::SparseJacobianFor(
 	const Base zero(0);
 	const Base one(1);
 
-	// check VectorBase is Simple Vector class with Base type elements
-	CheckSimpleVector<Base, VectorBase>();
+	// check BaseVector is Simple Vector class with Base type elements
+	CheckSimpleVector<Base, BaseVector>();
 
 	CPPAD_ASSERT_UNKNOWN( size_t(x.size()) == n );
 	CPPAD_ASSERT_UNKNOWN( color.size() == 0 || color.size() == n );
@@ -427,7 +427,7 @@ size_t ADFun<Base,RecBase>::SparseJacobianFor(
 		);
 
 		// put sorting indices in color order
-		VectorSize key(K);
+		SizeVector key(K);
 		order.resize(K);
 		for(k = 0; k < K; k++)
 			key[k] = color[ col[k] ];
@@ -443,7 +443,7 @@ size_t ADFun<Base,RecBase>::SparseJacobianFor(
 
 # if CPPAD_SPARSE_JACOBIAN_MAX_MULTIPLE_DIRECTION == 1
 	// direction vector and return values for calls to forward
-	VectorBase dx(n), dy(m);
+	BaseVector dx(n), dy(m);
 
 	// loop over colors
 	k = 0;
@@ -477,7 +477,7 @@ size_t ADFun<Base,RecBase>::SparseJacobianFor(
 	while( count_color < n_color )
 	{	// number of colors we will do this time
 		size_t r = std::min(max_r , n_color - count_color);
-		VectorBase dx(n * r), dy(m * r);
+		BaseVector dx(n * r), dy(m * r);
 
 		// loop over colors we will do this tme
 		for(ell = 0; ell < r; ell++)
@@ -511,13 +511,13 @@ Private helper function for reverse mode cases.
 is the base type for the recording that is stored in this
 <code>ADFun<Base></code> object.
 
-\tparam VectorBase
+\tparam BaseVector
 is a simple vector class with elements of type Base.
 
-\tparam VectorSet
+\tparam SetVector
 is either sparse_pack or sparse_list.
 
-\tparam VectorSize
+\tparam SizeVector
 is a simple vector class with elements of type size_t.
 
 \param x [in]
@@ -558,13 +558,13 @@ forward sweep, or the time to combine computations, is proportional to this
 return value.
 */
 template <class Base, class RecBase>
-template <class VectorBase, class VectorSet, class VectorSize>
+template <class BaseVector, class SetVector, class SizeVector>
 size_t ADFun<Base,RecBase>::SparseJacobianRev(
-	const VectorBase&           x           ,
-	      VectorSet&            p           ,
-	const VectorSize&           row         ,
-	const VectorSize&           col         ,
-	      VectorBase&           jac         ,
+	const BaseVector&           x           ,
+	      SetVector&            p           ,
+	const SizeVector&           row         ,
+	const SizeVector&           col         ,
+	      BaseVector&           jac         ,
 	      sparse_jacobian_work& work        )
 {
 	size_t i, k, ell;
@@ -579,8 +579,8 @@ size_t ADFun<Base,RecBase>::SparseJacobianRev(
 	const Base zero(0);
 	const Base one(1);
 
-	// check VectorBase is Simple Vector class with Base type elements
-	CheckSimpleVector<Base, VectorBase>();
+	// check BaseVector is Simple Vector class with Base type elements
+	CheckSimpleVector<Base, BaseVector>();
 
 	CPPAD_ASSERT_UNKNOWN( size_t(x.size()) == n );
 	CPPAD_ASSERT_UNKNOWN (color.size() == m || color.size() == 0 );
@@ -624,7 +624,7 @@ size_t ADFun<Base,RecBase>::SparseJacobianRev(
 		);
 
 		// put sorting indices in color order
-		VectorSize key(K);
+		SizeVector key(K);
 		order.resize(K);
 		for(k = 0; k < K; k++)
 			key[k] = color[ row[k] ];
@@ -635,10 +635,10 @@ size_t ADFun<Base,RecBase>::SparseJacobianRev(
 		n_color = std::max(n_color, color[i] + 1);
 
 	// weighting vector for calls to reverse
-	VectorBase w(m);
+	BaseVector w(m);
 
 	// location for return values from Reverse
-	VectorBase dw(n);
+	BaseVector dw(n);
 
 	// initialize the return value
 	for(k = 0; k < K; k++)
@@ -681,14 +681,14 @@ The C++ source code corresponding to this operation is
 is the base type for the recording that is stored in this
 <code>ADFun<Base></code> object.
 
-\tparam VectorBase
+\tparam BaseVector
 is a simple vector class with elements of type Base.
 
-\tparam VectorSet
+\tparam SetVector
 is a simple vector class with elements of type
  bool or std::set<size_t>.
 
-\tparam VectorSize
+\tparam SizeVector
 is a simple vector class with elements of type size_t.
 
 \param x [in]
@@ -724,13 +724,13 @@ forward sweep, or the time to combine computations, is proportional to this
 return value.
 */
 template <class Base, class RecBase>
-template <class VectorBase, class VectorSet, class VectorSize>
+template <class BaseVector, class SetVector, class SizeVector>
 size_t ADFun<Base,RecBase>::SparseJacobianForward(
-	const VectorBase&     x    ,
-	const VectorSet&      p    ,
-	const VectorSize&     row  ,
-	const VectorSize&     col  ,
-	VectorBase&           jac  ,
+	const BaseVector&     x    ,
+	const SetVector&      p    ,
+	const SizeVector&     row  ,
+	const SizeVector&     col  ,
+	BaseVector&           jac  ,
 	sparse_jacobian_work& work )
 {
 	size_t n = Domain();
@@ -772,7 +772,7 @@ size_t ADFun<Base,RecBase>::SparseJacobianForward(
 	if( K == 0 )
 		return n_sweep;
 
-	typedef typename VectorSet::value_type Set_type;
+	typedef typename SetVector::value_type Set_type;
 	typedef typename local::internal_sparsity<Set_type>::pattern_type Pattern_type;
 	Pattern_type s_transpose;
 	if( work.color.size() == 0 )
@@ -796,14 +796,14 @@ The C++ source code corresponding to this operation is
 is the base type for the recording that is stored in this
 <code>ADFun<Base></code> object.
 
-\tparam VectorBase
+\tparam BaseVector
 is a simple vector class with elements of type Base.
 
-\tparam VectorSet
+\tparam SetVector
 is a simple vector class with elements of type
  bool or std::set<size_t>.
 
-\tparam VectorSize
+\tparam SizeVector
 is a simple vector class with elements of type size_t.
 
 \param x [in]
@@ -839,13 +839,13 @@ forward sweep, or the time to combine computations, is proportional to this
 return value.
 */
 template <class Base, class RecBase>
-template <class VectorBase, class VectorSet, class VectorSize>
+template <class BaseVector, class SetVector, class SizeVector>
 size_t ADFun<Base,RecBase>::SparseJacobianReverse(
-	const VectorBase&     x    ,
-	const VectorSet&      p    ,
-	const VectorSize&     row  ,
-	const VectorSize&     col  ,
-	VectorBase&           jac  ,
+	const BaseVector&     x    ,
+	const SetVector&      p    ,
+	const SizeVector&     row  ,
+	const SizeVector&     col  ,
+	BaseVector&           jac  ,
 	sparse_jacobian_work& work )
 {
 	size_t m = Range();
@@ -887,7 +887,7 @@ size_t ADFun<Base,RecBase>::SparseJacobianReverse(
 	if( K == 0 )
 		return n_sweep;
 
-	typedef typename VectorSet::value_type Set_type;
+	typedef typename SetVector::value_type Set_type;
 	typedef typename local::internal_sparsity<Set_type>::pattern_type Pattern_type;
 	Pattern_type s;
 	if( work.color.size() == 0 )
@@ -911,10 +911,10 @@ The C++ source code corresponding to this operation is
 is the base type for the recording that is stored in this
 <code>ADFun<Base></code> object.
 
-\tparam VectorBase
+\tparam BaseVector
 is a simple vector class with elements of type Base.
 
-\tparam VectorSet
+\tparam SetVector
 is a simple vector class with elements of type
  bool or std::set<size_t>.
 
@@ -929,23 +929,23 @@ Will be a vector if size m * n containing the Jacobian at the
 specified point (in row major order).
 */
 template <class Base, class RecBase>
-template <class VectorBase, class VectorSet>
-VectorBase ADFun<Base,RecBase>::SparseJacobian(
-	const VectorBase& x, const VectorSet& p
+template <class BaseVector, class SetVector>
+BaseVector ADFun<Base,RecBase>::SparseJacobian(
+	const BaseVector& x, const SetVector& p
 )
 {	size_t i, j, k;
 
 	size_t m = Range();
 	size_t n = Domain();
-	VectorBase jac(m * n);
+	BaseVector jac(m * n);
 
 	CPPAD_ASSERT_KNOWN(
 		size_t(x.size()) == n,
 		"SparseJacobian: size of x not equal domain size for f."
 	);
-	CheckSimpleVector<Base, VectorBase>();
+	CheckSimpleVector<Base, BaseVector>();
 
-	typedef typename VectorSet::value_type Set_type;
+	typedef typename SetVector::value_type Set_type;
 	typedef typename local::internal_sparsity<Set_type>::pattern_type Pattern_type;
 
 	// initialize the return value as zero
@@ -978,7 +978,7 @@ VectorBase ADFun<Base,RecBase>::SparseJacobian(
 			}
 		}
 		size_t K = k;
-		VectorBase J(K);
+		BaseVector J(K);
 
 		// now we have folded this into the following case
 		SparseJacobianFor(x, s_transpose, row, col, J, work);
@@ -1008,7 +1008,7 @@ VectorBase ADFun<Base,RecBase>::SparseJacobian(
 			}
 		}
 		size_t K = k;
-		VectorBase J(K);
+		BaseVector J(K);
 
 		// now we have folded this into the following case
 		SparseJacobianRev(x, s, row, col, J, work);
@@ -1033,7 +1033,7 @@ The C++ source code corresponding to this operation is
 is the base type for the recording that is stored in this
 <code>ADFun<Base></code> object.
 
-\tparam VectorBase
+\tparam BaseVector
 is a simple vector class with elements of the Base.
 
 \param x [in]
@@ -1044,21 +1044,21 @@ Will be a vector of size m * n containing the Jacobian at the
 specified point (in row major order).
 */
 template <class Base, class RecBase>
-template <class VectorBase>
-VectorBase ADFun<Base,RecBase>::SparseJacobian( const VectorBase& x )
-{	typedef CppAD::vectorBool   VectorBool;
+template <class BaseVector>
+BaseVector ADFun<Base,RecBase>::SparseJacobian( const BaseVector& x )
+{	typedef CppAD::vectorBool   BoolVector;
 
 	size_t m = Range();
 	size_t n = Domain();
 
 	// sparsity pattern for Jacobian
-	VectorBool p(m * n);
+	BoolVector p(m * n);
 
 	if( n <= m )
 	{	size_t j, k;
 
 		// use forward mode
-		VectorBool r(n * n);
+		BoolVector r(n * n);
 		for(j = 0; j < n; j++)
 		{	for(k = 0; k < n; k++)
 				r[j * n + k] = false;
@@ -1070,7 +1070,7 @@ VectorBase ADFun<Base,RecBase>::SparseJacobian( const VectorBase& x )
 	{	size_t i, k;
 
 		// use reverse mode
-		VectorBool s(m * m);
+		BoolVector s(m * m);
 		for(i = 0; i < m; i++)
 		{	for(k = 0; k < m; k++)
 				s[i * m + k] = false;

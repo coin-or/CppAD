@@ -1411,7 +1411,7 @@ template <> inline bool is_pod<sparse_list::pair_size_t>(void)
 /*!
 Copy a user vector of sets sparsity pattern to an internal sparse_list object.
 
-\tparam VectorSet
+\tparam SetVector
 is a simple vector with elements of type std::set<size_t>.
 
 \param internal
@@ -1435,10 +1435,10 @@ if true, the user sparsity patter is the transposed.
 is the error message to display if some values in the user sparstiy
 pattern are not valid.
 */
-template<class VectorSet>
+template<class SetVector>
 void sparsity_user2internal(
 	sparse_list&            internal  ,
-	const VectorSet&        user      ,
+	const SetVector&        user      ,
 	size_t                  n_set     ,
 	size_t                  end       ,
 	bool                    transpose ,

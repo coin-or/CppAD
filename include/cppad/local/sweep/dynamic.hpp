@@ -58,7 +58,7 @@ Compute dynamic parameters.
 \tparam Base
 The type of the parameters.
 
-\tparam VectorBase
+\tparam BaseVector
 is a simple vector class with elements of type Base.
 
 \param ind_dynamic
@@ -95,10 +95,10 @@ where
 The arguments for each dynamic parameter have index value
 lower than the index value for the parameter.
 */
-template <class Base, class VectorBase>
+template <class Base, class BaseVector>
 void dynamic(
 	pod_vector_maybe<Base>&       all_par_vec     ,
-	const VectorBase&             ind_dynamic     ,
+	const BaseVector&             ind_dynamic     ,
 	const pod_vector<bool>&       dyn_par_is      ,
 	const pod_vector<addr_t>&     dyn_ind2par_ind ,
 	const pod_vector<opcode_t>&   dyn_par_op      ,

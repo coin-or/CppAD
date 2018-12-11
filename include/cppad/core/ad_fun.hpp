@@ -160,128 +160,128 @@ private:
 
 	// vector of bool version of ForSparseJac
 	// (doxygen in cppad/core/for_sparse_jac.hpp)
-	template <class VectorSet>
+	template <class SetVector>
 	void ForSparseJacCase(
 		bool               set_type  ,
 		bool               transpose ,
 		bool               dependency,
 		size_t             q         ,
-		const VectorSet&   r         ,
-		VectorSet&         s
+		const SetVector&   r         ,
+		SetVector&         s
 	);
 
 	// vector of std::set<size_t> version of ForSparseJac
 	// (doxygen in cppad/core/for_sparse_jac.hpp)
-	template <class VectorSet>
+	template <class SetVector>
 	void ForSparseJacCase(
 		const std::set<size_t>&  set_type  ,
 		bool                     transpose ,
 		bool                     dependency,
 		size_t                   q         ,
-		const VectorSet&         r         ,
-		VectorSet&               s
+		const SetVector&         r         ,
+		SetVector&               s
 	);
 
 	// vector of bool version of RevSparseJac
 	// (doxygen in cppad/core/rev_sparse_jac.hpp)
-	template <class VectorSet>
+	template <class SetVector>
 	void RevSparseJacCase(
 		bool               set_type  ,
 		bool               transpose ,
 		bool               dependency,
 		size_t             p         ,
-		const VectorSet&   s         ,
-		VectorSet&         r
+		const SetVector&   s         ,
+		SetVector&         r
 	);
 
 	// vector of std::set<size_t> version of RevSparseJac
 	// (doxygen in cppad/core/rev_sparse_jac.hpp)
-	template <class VectorSet>
+	template <class SetVector>
 	void RevSparseJacCase(
 		const std::set<size_t>&  set_type  ,
 		bool                     transpose ,
 		bool                     dependency,
 		size_t                   p         ,
-		const VectorSet&         s         ,
-		VectorSet&               r
+		const SetVector&         s         ,
+		SetVector&               r
 	);
 
 	// vector of bool version of ForSparseHes
 	// (doxygen in cppad/core/for_sparse_hes.hpp)
-	template <class VectorSet>
+	template <class SetVector>
 	void ForSparseHesCase(
 		bool               set_type  ,
-		const VectorSet&   r         ,
-		const VectorSet&   s         ,
-		VectorSet&         h
+		const SetVector&   r         ,
+		const SetVector&   s         ,
+		SetVector&         h
 	);
 
 	// vector of std::set<size_t> version of ForSparseHes
 	// (doxygen in cppad/core/for_sparse_hes.hpp)
-	template <class VectorSet>
+	template <class SetVector>
 	void ForSparseHesCase(
 		const std::set<size_t>&  set_type  ,
-		const VectorSet&         r         ,
-		const VectorSet&         s         ,
-		VectorSet&               h
+		const SetVector&         r         ,
+		const SetVector&         s         ,
+		SetVector&               h
 	);
 
 	// vector of bool version of RevSparseHes
 	// (doxygen in cppad/core/rev_sparse_hes.hpp)
-	template <class VectorSet>
+	template <class SetVector>
 	void RevSparseHesCase(
 		bool               set_type  ,
 		bool               transpose ,
 		size_t             q         ,
-		const VectorSet&   s         ,
-		VectorSet&         h
+		const SetVector&   s         ,
+		SetVector&         h
 	);
 
 	// vector of std::set<size_t> version of RevSparseHes
 	// (doxygen in cppad/core/rev_sparse_hes.hpp)
-	template <class VectorSet>
+	template <class SetVector>
 	void RevSparseHesCase(
 		const std::set<size_t>&  set_type  ,
 		bool                     transpose ,
 		size_t                   q         ,
-		const VectorSet&         s         ,
-		VectorSet&               h
+		const SetVector&         s         ,
+		SetVector&               h
 	);
 
 	// Forward mode version of SparseJacobian
 	// (doxygen in cppad/core/sparse_jacobian.hpp)
-	template <class VectorBase, class VectorSet, class VectorSize>
+	template <class BaseVector, class SetVector, class SizeVector>
 	size_t SparseJacobianFor(
-		const VectorBase&           x               ,
-		      VectorSet&            p_transpose     ,
-		const VectorSize&           row             ,
-		const VectorSize&           col             ,
-		      VectorBase&           jac             ,
+		const BaseVector&           x               ,
+		      SetVector&            p_transpose     ,
+		const SizeVector&           row             ,
+		const SizeVector&           col             ,
+		      BaseVector&           jac             ,
 		      sparse_jacobian_work& work
 	);
 
 	// Reverse mode version of SparseJacobian
 	// (doxygen in cppad/core/sparse_jacobian.hpp)
-	template <class VectorBase, class VectorSet, class VectorSize>
+	template <class BaseVector, class SetVector, class SizeVector>
 	size_t SparseJacobianRev(
-		const VectorBase&           x               ,
-		      VectorSet&            p               ,
-		const VectorSize&           row             ,
-		const VectorSize&           col             ,
-		      VectorBase&           jac             ,
+		const BaseVector&           x               ,
+		      SetVector&            p               ,
+		const SizeVector&           row             ,
+		const SizeVector&           col             ,
+		      BaseVector&           jac             ,
 		      sparse_jacobian_work& work
 	);
 
 	// combined sparse_list and sparse_pack version of SparseHessian
 	// (doxygen in cppad/core/sparse_hessian.hpp)
-	template <class VectorBase, class VectorSet, class VectorSize>
+	template <class BaseVector, class SetVector, class SizeVector>
 	size_t SparseHessianCompute(
-		const VectorBase&              x           ,
-		const VectorBase&              w           ,
-		      VectorSet&               sparsity    ,
-		const VectorSize&              row         ,
-		const VectorSize&              col         ,
-		      VectorBase&              hes         ,
+		const BaseVector&              x           ,
+		const BaseVector&              w           ,
+		      SetVector&               sparsity    ,
+		const SizeVector&              row         ,
+		const SizeVector&              col         ,
+		      BaseVector&              hes         ,
 		      sparse_hessian_work&     work
 	);
 
@@ -323,64 +323,64 @@ public:
 	void Dependent(const ADvector &x, const ADvector &y);
 
 	/// new_dynamic user API
-	template <typename VectorBase>
-	void new_dynamic(const VectorBase& dynamic);
+	template <typename BaseVector>
+	void new_dynamic(const BaseVector& dynamic);
 
 	/// forward mode user API, one order multiple directions.
-	template <typename VectorBase>
-	VectorBase Forward(size_t q, size_t r, const VectorBase& x);
+	template <typename BaseVector>
+	BaseVector Forward(size_t q, size_t r, const BaseVector& x);
 
 	/// forward mode user API, multiple directions one order.
-	template <typename VectorBase>
-	VectorBase Forward(size_t q,
-		const VectorBase& x, std::ostream& s = std::cout
+	template <typename BaseVector>
+	BaseVector Forward(size_t q,
+		const BaseVector& x, std::ostream& s = std::cout
 	);
 
 	/// reverse mode sweep
-	template <typename VectorBase>
-	VectorBase Reverse(size_t p, const VectorBase &v);
+	template <typename BaseVector>
+	BaseVector Reverse(size_t p, const BaseVector &v);
 
 	// forward Jacobian sparsity pattern
 	// (doxygen in cppad/core/for_sparse_jac.hpp)
-	template <typename VectorSet>
-	VectorSet ForSparseJac(
-		size_t q, const VectorSet &r, bool transpose = false,
+	template <typename SetVector>
+	SetVector ForSparseJac(
+		size_t q, const SetVector &r, bool transpose = false,
 		bool dependency = false
 	);
 
 	// reverse Jacobian sparsity pattern
 	// (doxygen in cppad/core/rev_sparse_jac.hpp)
-	template <typename VectorSet>
-	VectorSet RevSparseJac(
-		size_t q, const VectorSet &s, bool transpose = false,
+	template <typename SetVector>
+	SetVector RevSparseJac(
+		size_t q, const SetVector &s, bool transpose = false,
 		bool dependency = false
 	);
 
 	// subgraph_reverse: select domain
 	// (doxygen in cppad/core/subgraph_reverse.hpp)
-	template <typename VectorBool>
+	template <typename BoolVector>
 	void subgraph_reverse(
-		const VectorBool&                   select_domain
+		const BoolVector&                   select_domain
 	);
 
 	// subgraph_reverse: compute derivative
 	// (doxygen in cppad/core/subgraph_reverse.hpp)
-	template <typename Addr, typename VectorBase, typename SizeVector>
+	template <typename Addr, typename BaseVector, typename SizeVector>
 	void subgraph_reverse_helper(
 		size_t                               q         ,
 		size_t                               ell       ,
 		SizeVector&                          col       ,
-		VectorBase&                          dw
+		BaseVector&                          dw
 	);
 
 	// subgraph_reverse: compute derivative
 	// (doxygen in cppad/core/subgraph_reverse.hpp)
-	template <typename VectorBase, typename SizeVector>
+	template <typename BaseVector, typename SizeVector>
 	void subgraph_reverse(
 		size_t                               q         ,
 		size_t                               ell       ,
 		SizeVector&                          col       ,
-		VectorBase&                          dw
+		BaseVector&                          dw
 	);
 
 	// subgraph_jac_rev: compute Jacobian
@@ -492,9 +492,9 @@ public:
 
 	// forward mode Hessian sparsity pattern
 	// (see doxygen in cppad/core/for_sparse_hes.hpp)
-	template <typename VectorSet>
-	VectorSet ForSparseHes(
-		const VectorSet &r, const VectorSet &s
+	template <typename SetVector>
+	SetVector ForSparseHes(
+		const SetVector &r, const SetVector &s
 	);
 
 	// internal set sparsity version of ForSparseHes
@@ -507,9 +507,9 @@ public:
 
 	// reverse mode Hessian sparsity pattern
 	// (see doxygen in cppad/core/rev_sparse_hes.hpp)
-	template <typename VectorSet>
-	VectorSet RevSparseHes(
-		size_t q, const VectorSet &s, bool transpose = false
+	template <typename SetVector>
+	SetVector RevSparseHes(
+		size_t q, const SetVector &s, bool transpose = false
 	);
 
 	// internal set sparsity version of RevSparseHes
@@ -673,90 +673,90 @@ public:
 	}
 
 	/// calculate entire Jacobian
-	template <typename VectorBase>
-	VectorBase Jacobian(const VectorBase &x);
+	template <typename BaseVector>
+	BaseVector Jacobian(const BaseVector &x);
 
 	/// calculate Hessian for one component of f
-	template <typename VectorBase>
-	VectorBase Hessian(const VectorBase &x, const VectorBase &w);
-	template <typename VectorBase>
-	VectorBase Hessian(const VectorBase &x, size_t i);
+	template <typename BaseVector>
+	BaseVector Hessian(const BaseVector &x, const BaseVector &w);
+	template <typename BaseVector>
+	BaseVector Hessian(const BaseVector &x, size_t i);
 
 	/// forward mode calculation of partial w.r.t one domain component
-	template <typename VectorBase>
-	VectorBase ForOne(
-		const VectorBase   &x ,
+	template <typename BaseVector>
+	BaseVector ForOne(
+		const BaseVector   &x ,
 		size_t              j );
 
 	/// reverse mode calculation of derivative of one range component
-	template <typename VectorBase>
-	VectorBase RevOne(
-		const VectorBase   &x ,
+	template <typename BaseVector>
+	BaseVector RevOne(
+		const BaseVector   &x ,
 		size_t              i );
 
 	/// forward mode calculation of a subset of second order partials
-	template <typename VectorBase, typename VectorSize_t>
-	VectorBase ForTwo(
-		const VectorBase   &x ,
-		const VectorSize_t &J ,
-		const VectorSize_t &K );
+	template <typename BaseVector, typename SizeVector_t>
+	BaseVector ForTwo(
+		const BaseVector   &x ,
+		const SizeVector_t &J ,
+		const SizeVector_t &K );
 
 	/// reverse mode calculation of a subset of second order partials
-	template <typename VectorBase, typename VectorSize_t>
-	VectorBase RevTwo(
-		const VectorBase   &x ,
-		const VectorSize_t &I ,
-		const VectorSize_t &J );
+	template <typename BaseVector, typename SizeVector_t>
+	BaseVector RevTwo(
+		const BaseVector   &x ,
+		const SizeVector_t &I ,
+		const SizeVector_t &J );
 
 	/// calculate sparse Jacobians
-	template <typename VectorBase>
-	VectorBase SparseJacobian(
-		const VectorBase &x
+	template <typename BaseVector>
+	BaseVector SparseJacobian(
+		const BaseVector &x
 	);
-	template <typename VectorBase, typename VectorSet>
-	VectorBase SparseJacobian(
-		const VectorBase &x ,
-		const VectorSet  &p
+	template <typename BaseVector, typename SetVector>
+	BaseVector SparseJacobian(
+		const BaseVector &x ,
+		const SetVector  &p
 	);
-	template <class VectorBase, class VectorSet, class VectorSize>
+	template <class BaseVector, class SetVector, class SizeVector>
 	size_t SparseJacobianForward(
-		const VectorBase&     x     ,
-		const VectorSet&      p     ,
-		const VectorSize&     r     ,
-		const VectorSize&     c     ,
-		VectorBase&           jac   ,
+		const BaseVector&     x     ,
+		const SetVector&      p     ,
+		const SizeVector&     r     ,
+		const SizeVector&     c     ,
+		BaseVector&           jac   ,
 		sparse_jacobian_work& work
 	);
-	template <class VectorBase, class VectorSet, class VectorSize>
+	template <class BaseVector, class SetVector, class SizeVector>
 	size_t SparseJacobianReverse(
-		const VectorBase&     x    ,
-		const VectorSet&      p    ,
-		const VectorSize&     r    ,
-		const VectorSize&     c    ,
-		VectorBase&           jac  ,
+		const BaseVector&     x    ,
+		const SetVector&      p    ,
+		const SizeVector&     r    ,
+		const SizeVector&     c    ,
+		BaseVector&           jac  ,
 		sparse_jacobian_work& work
 	);
 
 	/// calculate sparse Hessians
-	template <typename VectorBase>
-	VectorBase SparseHessian(
-		const VectorBase&    x  ,
-		const VectorBase&    w
+	template <typename BaseVector>
+	BaseVector SparseHessian(
+		const BaseVector&    x  ,
+		const BaseVector&    w
 	);
-	template <typename VectorBase, typename VectorBool>
-	VectorBase SparseHessian(
-		const VectorBase&    x  ,
-		const VectorBase&    w  ,
-		const VectorBool&    p
+	template <typename BaseVector, typename BoolVector>
+	BaseVector SparseHessian(
+		const BaseVector&    x  ,
+		const BaseVector&    w  ,
+		const BoolVector&    p
 	);
-	template <class VectorBase, class VectorSet, class VectorSize>
+	template <class BaseVector, class SetVector, class SizeVector>
 	size_t SparseHessian(
-		const VectorBase&    x   ,
-		const VectorBase&    w   ,
-		const VectorSet&     p   ,
-		const VectorSize&    r   ,
-		const VectorSize&    c   ,
-		VectorBase&          hes ,
+		const BaseVector&    x   ,
+		const BaseVector&    w   ,
+		const SetVector&     p   ,
+		const SizeVector&    r   ,
+		const SizeVector&    c   ,
+		BaseVector&          hes ,
 		sparse_hessian_work& work
 	);
 

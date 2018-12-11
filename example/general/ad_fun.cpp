@@ -53,13 +53,13 @@ namespace {
 		{	f.Dependent(x, y); }
 
 		// same as ADFun<Base>::Jacobian
-		template <class VectorBase>
-		VectorBase jacobian(const VectorBase& x)
+		template <class BaseVector>
+		BaseVector jacobian(const BaseVector& x)
 		{	return f.Jacobian(x); }
 
 		// same as ADFun<Base>::Hessian
-	        template <typename VectorBase>
-		VectorBase hessian(const VectorBase &x, const VectorBase &w)
+	        template <typename BaseVector>
+		BaseVector hessian(const BaseVector &x, const BaseVector &w)
 		{	return f.Hessian(x, w); }
 	};
 

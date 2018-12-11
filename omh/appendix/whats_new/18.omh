@@ -53,6 +53,11 @@ $section Changes and Additions to CppAD During 2018$$
 
 $head Branch: batch_edit$$
 
+$subhead 12-11$$
+In the documentation and examples change the $codei%Vector%Type%$$
+to $icode%TypeVector%$$ for $icode Type$$ denoting various types; e.g.,
+$code Bool$$, $code Size$$, $code Double$$, ... 
+
 $subhead 11-22$$
 $list number$$
 Change the $cref license$$ to be $code EPL-2.0$$

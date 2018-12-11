@@ -57,12 +57,12 @@ private :
 	friend void parallel_ad(void);
 
 	// template friend functions where template parameter is not bound
-	template <class VectorAD>
+	template <class ADVector>
 	friend void Independent(
-		VectorAD&  x              ,
+		ADVector&  x              ,
 		size_t     abort_op_index ,
 		bool       record_compare ,
-		VectorAD&  dynamic
+		ADVector&  dynamic
 	);
 
 	// one argument functions

@@ -25,10 +25,10 @@ Coloring algorithm for a symmetric sparse matrix.
 CppAD algorithm for determining which rows of a symmetric sparse matrix can be
 computed together.
 
-\tparam VectorSize
+\tparam SizeVector
 is a simple vector class with elements of type size_t.
 
-\tparam VectorSet
+\tparam SetVector
 is a vector_of_sets class.
 
 \param pattern [in]
@@ -77,9 +77,9 @@ j1 != j and color[j1] == color[j],
 This routine tries to minimize, with respect to the choice of colors,
 the maximum, with respect to k, of <code>color[ row[k] ]</code>.
 */
-template <class VectorSet>
+template <class SetVector>
 void color_symmetric_cppad(
-	const VectorSet&        pattern   ,
+	const SetVector&        pattern   ,
 	CppAD::vector<size_t>&  row       ,
 	CppAD::vector<size_t>&  col       ,
 	CppAD::vector<size_t>&  color     )
@@ -147,7 +147,7 @@ void color_symmetric_cppad(
 
 			// Forbid rows i2 != i1 that have non-zero sparsity at (i2, j1).
 			// Note that this is the same as non-zero sparsity at (j1, i2)
-			typename VectorSet::const_iterator pattern_itr(pattern, j1);
+			typename SetVector::const_iterator pattern_itr(pattern, j1);
 			size_t i2 = *pattern_itr;
 			while( i2 != pattern.end() )
 			{	size_t c2 = color[i2];
@@ -221,9 +221,9 @@ can be computed together.
 
 \copydetails CppAD::local::color_symmetric_cppad
 */
-template <class VectorSet>
+template <class SetVector>
 void color_symmetric_colpack(
-	const VectorSet&        pattern   ,
+	const SetVector&        pattern   ,
 	CppAD::vector<size_t>&  row       ,
 	CppAD::vector<size_t>&  col       ,
 	CppAD::vector<size_t>&  color     )
@@ -242,7 +242,7 @@ void color_symmetric_colpack(
 	size_t n_nonzero_total = 0;
 	for(i = 0; i < m; i++)
 	{	n_nonzero[i] = 0;
-		typename VectorSet::const_iterator pattern_itr(pattern, i);
+		typename SetVector::const_iterator pattern_itr(pattern, i);
 		j = *pattern_itr;
 		while( j != pattern.end() )
 		{	n_nonzero[i]++;
@@ -262,7 +262,7 @@ void color_symmetric_colpack(
 			"Matrix is too large for colpack"
 		);
 		adolc_pattern[i][0] = static_cast<unsigned int>( n_nonzero[i] );
-		typename VectorSet::const_iterator pattern_itr(pattern, i);
+		typename SetVector::const_iterator pattern_itr(pattern, i);
 		j = *pattern_itr;
 		k = 1;
 		while(j != pattern.end() )

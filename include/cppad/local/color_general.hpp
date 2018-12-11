@@ -25,10 +25,10 @@ Coloring algorithm for a general sparse matrix.
 Determine which rows of a general sparse matrix can be computed together;
 i.e., do not have non-zero entries with the same column index.
 
-\tparam VectorSize
+\tparam SizeVector
 is a simple vector class with elements of type size_t.
 
-\tparam VectorSet
+\tparam SetVector
 is vector_of_sets class.
 
 \param pattern [in]
@@ -68,11 +68,11 @@ This routine tries to minimize, with respect to the choice of colors,
 the maximum, with respct to k, of <code>color[ row[k] ]</code>
 (not counting the indices k for which row[k] == m).
 */
-template <class VectorSet, class VectorSize>
+template <class SetVector, class SizeVector>
 void color_general_cppad(
-	const VectorSet&        pattern ,
-	const VectorSize&       row     ,
-	const VectorSize&       col     ,
+	const SetVector&        pattern ,
+	const SizeVector&       row     ,
+	const SizeVector&       col     ,
 	CppAD::vector<size_t>&  color   )
 {
 	size_t K = row.size();
@@ -91,7 +91,7 @@ void color_general_cppad(
 			row_appear[i] = false;
 
 	// rows and columns that appear
-	VectorSet c2r_appear, r2c_appear;
+	SetVector c2r_appear, r2c_appear;
 	c2r_appear.resize(n, m);
 	r2c_appear.resize(m, n);
 	for(size_t k = 0;  k < K; k++)
@@ -107,10 +107,10 @@ void color_general_cppad(
 		r2c_appear.process_post(i);
 
 	// for each column, which rows are non-zero and do not appear
-	VectorSet not_appear;
+	SetVector not_appear;
 	not_appear.resize(n, m);
 	for(size_t i = 0; i < m; i++)
-	{	typename VectorSet::const_iterator pattern_itr(pattern, i);
+	{	typename SetVector::const_iterator pattern_itr(pattern, i);
 		size_t j = *pattern_itr;
 		while( j != pattern.end() )
 		{	if( ! c2r_appear.is_element(j , i) )
@@ -152,11 +152,11 @@ void color_general_cppad(
 		// Forbid colors for which this row would destroy results:
 		//
 		// for each column that is non-zero for this row
-		typename VectorSet::const_iterator pattern_itr(pattern, i);
+		typename SetVector::const_iterator pattern_itr(pattern, i);
 		size_t j = *pattern_itr;
 		while( j != pattern.end() )
 		{	// for each row that appears with this column
-			typename VectorSet::const_iterator c2r_itr(c2r_appear, j);
+			typename SetVector::const_iterator c2r_itr(c2r_appear, j);
 			size_t r = *c2r_itr;
 			while( r != c2r_appear.end() )
 			{	// if this is not the same row, forbid its color
@@ -172,12 +172,12 @@ void color_general_cppad(
 		// Forbid colors that destroy results needed for this row.
 		//
 		// for each column that appears with this row
-		typename VectorSet::const_iterator r2c_itr(r2c_appear, i);
+		typename SetVector::const_iterator r2c_itr(r2c_appear, i);
 		j = *r2c_itr;
 		while( j != r2c_appear.end() )
 		{	// For each row that is non-zero for this column
 			// (the appear rows have already been checked above).
-			typename VectorSet::const_iterator not_itr(not_appear, j);
+			typename SetVector::const_iterator not_itr(not_appear, j);
 			size_t r = *not_itr;
 			while( r != not_appear.end() )
 			{	// if this is not the same row, forbid its color
@@ -206,11 +206,11 @@ can be computed together.
 
 \copydetails color_general
 */
-template <class VectorSet, class VectorSize>
+template <class SetVector, class SizeVector>
 void color_general_colpack(
-	const VectorSet&        pattern ,
-	const VectorSize&       row     ,
-	const VectorSize&       col     ,
+	const SetVector&        pattern ,
+	const SizeVector&       row     ,
+	const SizeVector&       col     ,
 	CppAD::vector<size_t>&  color   )
 {
 	size_t m = pattern.n_set();
@@ -221,7 +221,7 @@ void color_general_colpack(
 	size_t n_nonzero_total = 0;
 	for(size_t i = 0; i < m; i++)
 	{	n_nonzero[i] = 0;
-		typename VectorSet::const_iterator pattern_itr(pattern, i);
+		typename SetVector::const_iterator pattern_itr(pattern, i);
 		size_t j = *pattern_itr;
 		while( j != pattern.end() )
 		{	n_nonzero[i]++;
@@ -241,7 +241,7 @@ void color_general_colpack(
 			"Matrix is too large for colpack"
 		);
 		adolc_pattern[i][0] = static_cast<unsigned int>( n_nonzero[i] );
-		typename VectorSet::const_iterator pattern_itr(pattern, i);
+		typename SetVector::const_iterator pattern_itr(pattern, i);
 		size_t j = *pattern_itr;
 		size_t k = 1;
 		while(j != pattern.end() )

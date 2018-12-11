@@ -18,7 +18,7 @@ Two old Forward example now used just for valiadation testing
 
 namespace { // Begin empty namespace
 
-template <typename VectorDouble> // vector class, elements of type double
+template <typename DoubleVector> // vector class, elements of type double
 bool ForwardCases(void)
 {	bool ok = true;
 
@@ -40,24 +40,24 @@ bool ForwardCases(void)
 	ADFun<double> F(X, Y);
 
 	// use zero order to evaluate F[ (3, 4) ]
-	VectorDouble x0( F.Domain() );
-	VectorDouble y0( F.Range() );
+	DoubleVector x0( F.Domain() );
+	DoubleVector y0( F.Range() );
 	x0[0]    = 3.;
 	x0[1]    = 4.;
 	y0       = F.Forward(0, x0);
 	ok      &= NearEqual(y0[0] , x0[0]*x0[0]*x0[1], eps99, eps99);
 
 	// evaluate derivative of F in X[0] direction
-	VectorDouble x1( F.Domain() );
-	VectorDouble y1( F.Range() );
+	DoubleVector x1( F.Domain() );
+	DoubleVector y1( F.Range() );
 	x1[0]    = 1.;
 	x1[1]    = 0.;
 	y1       = F.Forward(1, x1);
 	ok      &= NearEqual(y1[0] , 2.*x0[0]*x0[1], eps99, eps99);
 
 	// evaluate second derivative of F in X[0] direction
-	VectorDouble x2( F.Domain() );
-	VectorDouble y2( F.Range() );
+	DoubleVector x2( F.Domain() );
+	DoubleVector y2( F.Range() );
 	x2[0]       = 0.;
 	x2[1]       = 0.;
 	y2          = F.Forward(2, x2);

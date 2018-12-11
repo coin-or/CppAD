@@ -91,9 +91,9 @@ the $cref/dependency pattern/dependency.cpp/Dependency Pattern/$$
 $head r$$
 The argument $icode s$$ has prototype
 $codei%
-	const %VectorSet%& %r%
+	const %SetVector%& %r%
 %$$
-see $cref/VectorSet/RevSparseJac/VectorSet/$$ below.
+see $cref/SetVector/RevSparseJac/SetVector/$$ below.
 
 $subhead transpose false$$
 If $icode r$$ has elements of type $code bool$$,
@@ -118,9 +118,9 @@ for the matrix $latex R^\R{T} \in \B{R}^{m \times q}$$.
 $head s$$
 The return value $icode s$$ has prototype
 $codei%
-	%VectorSet% %s%
+	%SetVector% %s%
 %$$
-see $cref/VectorSet/RevSparseJac/VectorSet/$$ below.
+see $cref/SetVector/RevSparseJac/SetVector/$$ below.
 
 $subhead transpose false$$
 If it has elements of type $code bool$$,
@@ -142,8 +142,8 @@ It specifies a
 $cref/sparsity pattern/glossary/Sparsity Pattern/$$
 for the matrix $latex S(x)^\R{T} \in {n \times q}$$.
 
-$head VectorSet$$
-The type $icode VectorSet$$ must be a $cref SimpleVector$$ class with
+$head SetVector$$
+The type $icode SetVector$$ must be a $cref SimpleVector$$ class with
 $cref/elements of type/SimpleVector/Elements of Specified Type/$$
 $code bool$$ or $code std::set<size_t>$$;
 see $cref/sparsity pattern/glossary/Sparsity Pattern/$$ for a discussion
@@ -188,7 +188,7 @@ All of the description in the public member function
 \param set_type
 is a bool value.
 This argument is used to dispatch to the proper source code
-depending on the value of VectorSet::value_type.
+depending on the value of SetVector::value_type.
 
 \param transpose
 See RevSparseJac(q, r, transpose, dependency)
@@ -208,14 +208,14 @@ RevSparseJac(q, r, transpose).
 */
 
 template <class Base, class RecBase>
-template <class VectorSet>
+template <class SetVector>
 void ADFun<Base,RecBase>::RevSparseJacCase(
 	bool                set_type          ,
 	bool                transpose         ,
 	bool                dependency        ,
 	size_t              q                 ,
-	const VectorSet&    r                 ,
-	VectorSet&          s                 )
+	const SetVector&    r                 ,
+	SetVector&          s                 )
 {
 	// used to identify the RecBase type in calls to sweeps
 	RecBase not_used_rec_base;
@@ -226,8 +226,8 @@ void ADFun<Base,RecBase>::RevSparseJacCase(
 	// dimension of the result vector
 	s.resize( q * n );
 
-	// check VectorSet is Simple Vector class with bool elements
-	CheckSimpleVector<bool, VectorSet>();
+	// check SetVector is Simple Vector class with bool elements
+	CheckSimpleVector<bool, SetVector>();
 	//
 	CPPAD_ASSERT_KNOWN(
 		q > 0,
@@ -308,7 +308,7 @@ All of the description in the public member function
 \param set_type
 is a std::set<size_t> object.
 This argument is used to dispatch to the proper source code
-depending on the value of VectorSet::value_type.
+depending on the value of SetVector::value_type.
 
 \param transpose
 See RevSparseJac(q, r, transpose, dependency)
@@ -327,14 +327,14 @@ is the return value for the corresponding call to RevSparseJac(q, r, transpose)
 */
 
 template <class Base, class RecBase>
-template <class VectorSet>
+template <class SetVector>
 void ADFun<Base,RecBase>::RevSparseJacCase(
 	const std::set<size_t>&      set_type          ,
 	bool                         transpose         ,
 	bool                         dependency        ,
 	size_t                       q                 ,
-	const VectorSet&             r                 ,
-	VectorSet&                   s                 )
+	const SetVector&             r                 ,
+	SetVector&                   s                 )
 {
 	// used to identify the RecBase type in calls to sweeps
 	RecBase not_used_rec_base;
@@ -347,8 +347,8 @@ void ADFun<Base,RecBase>::RevSparseJacCase(
 	// temporary indices
 	std::set<size_t>::const_iterator itr_1;
 
-	// check VectorSet is Simple Vector class with sets for elements
-	CheckSimpleVector<std::set<size_t>, VectorSet>(
+	// check SetVector is Simple Vector class with sets for elements
+	CheckSimpleVector<std::set<size_t>, SetVector>(
 		local::one_element_std_set<size_t>(), local::two_element_std_set<size_t>()
 	);
 
@@ -453,7 +453,7 @@ The C++ source code corresponding to this operation is
 \tparam Base
 is the base type for this recording.
 
-\tparam VectorSet
+\tparam SetVector
 is a simple vector with elements of type bool.
 or std::set<size_t>.
 
@@ -483,22 +483,22 @@ for \f$ S(x) \f$ (\f$ S(x)^T \f$) where
 \f]
 and \f$ F \f$ is the function corresponding to the operation sequence
 and x is any argument value.
-If VectorSet::value_type is bool,
+If SetVector::value_type is bool,
 the return value has size \f$ q * n \f$ ( \f$ n * q \f$).
-If VectorSet::value_type is std::set<size_t>,
+If SetVector::value_type is std::set<size_t>,
 the return value has size \f$ q \f$ ( \f$ n \f$)
 and with all its elements between zero and \f$ n - 1 \f$ (\f$ q - 1 \f$).
 */
 template <class Base, class RecBase>
-template <class VectorSet>
-VectorSet ADFun<Base,RecBase>::RevSparseJac(
+template <class SetVector>
+SetVector ADFun<Base,RecBase>::RevSparseJac(
 	size_t              q          ,
-	const VectorSet&    r          ,
+	const SetVector&    r          ,
 	bool                transpose  ,
 	bool                dependency )
 {
-	VectorSet s;
-	typedef typename VectorSet::value_type Set_type;
+	SetVector s;
+	typedef typename SetVector::value_type Set_type;
 
 	RevSparseJacCase(
 		Set_type()    ,

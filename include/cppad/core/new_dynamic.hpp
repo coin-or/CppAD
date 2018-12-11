@@ -50,9 +50,9 @@ Note that the $cref ADFun$$ object $icode f$$ is not $code const$$.
 $head dynamic$$
 This argument has prototype
 $codei%
-	const %VectorBase%& %dynamic%
+	const %BaseVector%& %dynamic%
 %$$
-(see $icode VectorBase$$ below).
+(see $icode BaseVector$$ below).
 It specifies a new value for the independent
 $cref/dynamic/glossary/Parameter/Dynamic/$$ parameters.
 It size must be the same as the size of the independent
@@ -61,8 +61,8 @@ in the call to $code Independent$$ that started
 the recording for $icode f$$; see
 $cref/size_dyn_ind/seq_property/size_dyn_ind/$$.
 
-$head VectorBase$$
-The type $icode VectorBase$$ must be a $cref SimpleVector$$ class with
+$head BaseVector$$
+The type $icode BaseVector$$ must be a $cref SimpleVector$$ class with
 $cref/elements of type/SimpleVector/Elements of Specified Type/$$
 $icode Base$$.
 
@@ -99,16 +99,16 @@ Change the dynamic parameters in this ADFun object
 is the vector of new values for the dynamic parameters.
 */
 template <typename Base, typename RecBase>
-template <typename VectorBase>
-void ADFun<Base,RecBase>::new_dynamic(const VectorBase& dynamic)
+template <typename BaseVector>
+void ADFun<Base,RecBase>::new_dynamic(const BaseVector& dynamic)
 {	using local::pod_vector;
 	CPPAD_ASSERT_KNOWN(
 		size_t( dynamic.size() ) == play_.num_dynamic_ind() ,
 		"f.new_dynamic: dynamic.size() different from corresponding "
 		"call to Independent"
 	);
-	// check VectorBase is Simple Vector class with Base elements
-	CheckSimpleVector<Base, VectorBase>();
+	// check BaseVector is Simple Vector class with Base elements
+	CheckSimpleVector<Base, BaseVector>();
 
 	// retrieve player information about the dynamic parameters
 	local::pod_vector_maybe<Base>&     all_par_vec( play_.all_par_vec() );

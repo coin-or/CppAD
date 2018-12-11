@@ -53,7 +53,7 @@ where $latex B$$ is the space corresponding to objects of type $icode Base$$.
 $head x$$
 If the argument $icode x$$ is present, it has prototype
 $codei%
-	const %VectorAD% &%x%
+	const %ADVector% &%x%
 %$$
 It must be the vector argument in the previous call to
 $cref Independent$$.
@@ -70,13 +70,13 @@ $codei%
 $head y$$
 If the argument $icode y$$ is present, it has prototype
 $codei%
-	const %VectorAD% &%y%
+	const %ADVector% &%y%
 %$$
 The sequence of operations that map $icode x$$
 to $icode y$$ are stored in the ADFun object $icode f$$.
 
-$head VectorAD$$
-The type $icode VectorAD$$ must be a $cref SimpleVector$$ class with
+$head ADVector$$
+The type $icode ADVector$$ must be a $cref SimpleVector$$ class with
 $cref/elements of type/SimpleVector/Elements of Specified Type/$$
 $codei%AD<%Base%>%$$.
 The routine $cref CheckSimpleVector$$ will generate an error message
@@ -404,7 +404,7 @@ in this ADFun<Base> object f.
 is the base for the recording that will be stored in the object f;
 i.e., the operations were recorded using the type AD<Base>.
 
-\tparam VectorAD
+\tparam ADVector
 is a simple vector class with elements of typea AD<Base>.
 
 \param x
@@ -424,8 +424,8 @@ corresponding to the value of the x vector
 are stored in this ADFun object.
 */
 template <typename Base, typename RecBase>
-template <typename VectorAD>
-ADFun<Base,RecBase>::ADFun(const VectorAD &x, const VectorAD &y)
+template <typename ADVector>
+ADFun<Base,RecBase>::ADFun(const ADVector &x, const ADVector &y)
 {
 	// used to identify the RecBase type in calls to sweeps
 	RecBase not_used_rec_base;

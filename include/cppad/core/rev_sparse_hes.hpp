@@ -100,15 +100,15 @@ $codei%
 %$$
 see $cref/r/ForSparseJac/r/$$.
 The type of the elements of
-$cref/VectorSet/RevSparseHes/VectorSet/$$ must be the
+$cref/SetVector/RevSparseHes/SetVector/$$ must be the
 same as the type of the elements of $icode r$$.
 
 $head s$$
 The argument $icode s$$ has prototype
 $codei%
-	const %VectorSet%& %s%
+	const %SetVector%& %s%
 %$$
-(see $cref/VectorSet/RevSparseHes/VectorSet/$$ below)
+(see $cref/SetVector/RevSparseHes/SetVector/$$ below)
 If it has elements of type $code bool$$,
 its size is $latex m$$.
 If it has elements of type $code std::set<size_t>$$,
@@ -121,9 +121,9 @@ for the vector $icode S$$.
 $head h$$
 The result $icode h$$ has prototype
 $codei%
-	%VectorSet%& %h%
+	%SetVector%& %h%
 %$$
-(see $cref/VectorSet/RevSparseHes/VectorSet/$$ below).
+(see $cref/SetVector/RevSparseHes/SetVector/$$ below).
 
 $subhead transpose false$$
 If $icode h$$ has elements of type $code bool$$,
@@ -145,14 +145,14 @@ It specifies a
 $cref/sparsity pattern/glossary/Sparsity Pattern/$$
 for the matrix $latex H(x)^\R{T}$$.
 
-$head VectorSet$$
-The type $icode VectorSet$$ must be a $cref SimpleVector$$ class with
+$head SetVector$$
+The type $icode SetVector$$ must be a $cref SimpleVector$$ class with
 $cref/elements of type/SimpleVector/Elements of Specified Type/$$
 $code bool$$ or $code std::set<size_t>$$;
 see $cref/sparsity pattern/glossary/Sparsity Pattern/$$ for a discussion
 of the difference.
 The type of the elements of
-$cref/VectorSet/RevSparseHes/VectorSet/$$ must be the
+$cref/SetVector/RevSparseHes/SetVector/$$ must be the
 same as the type of the elements of $icode r$$.
 
 $head Entire Sparsity Pattern$$
@@ -208,7 +208,7 @@ applies.
 
 \param set_type
 is a bool value. This argument is used to dispatch to the proper source
-code depending on the vlaue of VectorSet::value_type.
+code depending on the vlaue of SetVector::value_type.
 
 \param transpose
 See RevSparseHes(q, s).
@@ -223,13 +223,13 @@ See RevSparseHes(q, s).
 is the return value for the corresponging call to RevSparseJac(q, s).
 */
 template <class Base, class RecBase>
-template <class VectorSet>
+template <class SetVector>
 void ADFun<Base,RecBase>::RevSparseHesCase(
 	bool              set_type         ,
 	bool              transpose        ,
 	size_t            q                ,
-	const VectorSet&  s                ,
-	VectorSet&        h                )
+	const SetVector&  s                ,
+	SetVector&        h                )
 {
 	// used to identify the RecBase type in calls to sweeps
 	RecBase not_used_rec_base;
@@ -250,8 +250,8 @@ void ADFun<Base,RecBase>::RevSparseHesCase(
 	// temporary indices
 	size_t i, j;
 
-	// check Vector is Simple VectorSet class with bool elements
-	CheckSimpleVector<bool, VectorSet>();
+	// check Vector is Simple SetVector class with bool elements
+	CheckSimpleVector<bool, SetVector>();
 
 	CPPAD_ASSERT_KNOWN(
 		q == for_jac_sparse_pack_.end(),
@@ -329,7 +329,7 @@ applies.
 \param set_type
 is a std::set<size_t> value.
 This argument is used to dispatch to the proper source
-code depending on the vlaue of VectorSet::value_type.
+code depending on the vlaue of SetVector::value_type.
 
 \param transpose
 See RevSparseHes(q, s).
@@ -344,13 +344,13 @@ See RevSparseHes(q, s).
 is the return value for the corresponging call to RevSparseJac(q, s).
 */
 template <class Base, class RecBase>
-template <class VectorSet>
+template <class SetVector>
 void ADFun<Base,RecBase>::RevSparseHesCase(
 	const std::set<size_t>&   set_type         ,
 	bool                      transpose        ,
 	size_t                    q                ,
-	const VectorSet&          s                ,
-	VectorSet&                h                )
+	const SetVector&          s                ,
+	SetVector&                h                )
 {
 	// used to identify the RecBase type in calls to sweeps
 	RecBase not_used_rec_base;
@@ -376,8 +376,8 @@ void ADFun<Base,RecBase>::RevSparseHesCase(
 	size_t i, j;
 	std::set<size_t>::const_iterator itr_1;
 
-	// check VectorSet is Simple Vector class with sets for elements
-	CheckSimpleVector<std::set<size_t>, VectorSet>(
+	// check SetVector is Simple Vector class with sets for elements
+	CheckSimpleVector<std::set<size_t>, SetVector>(
 		local::one_element_std_set<size_t>(), local::two_element_std_set<size_t>()
 	);
 
@@ -462,7 +462,7 @@ The C++ source code corresponding to this operation is
 \tparam Base
 is the base type for this recording.
 
-\tparam VectorSet
+\tparam SetVector
 is a simple vector with elements of type bool
 or std::set<size_t>.
 
@@ -502,13 +502,13 @@ and x is any argument value.
 */
 
 template <class Base, class RecBase>
-template <class VectorSet>
-VectorSet ADFun<Base,RecBase>::RevSparseHes(
-	size_t q,  const VectorSet& s, bool transpose
+template <class SetVector>
+SetVector ADFun<Base,RecBase>::RevSparseHes(
+	size_t q,  const SetVector& s, bool transpose
 )
 {
-	VectorSet h;
-	typedef typename VectorSet::value_type Set_type;
+	SetVector h;
+	typedef typename SetVector::value_type Set_type;
 
 	// Should check to make sure q is same as in previous call to
 	// forward sparse Jacobian.

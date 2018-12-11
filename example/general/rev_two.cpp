@@ -27,8 +27,8 @@ $end
 # include <cppad/cppad.hpp>
 namespace { // -----------------------------------------------------
 // define the template function in empty namespace
-// bool RevTwoCases<VectorBase, VectorSize_t>(void)
-template <class VectorBase, class VectorSize_t>
+// bool RevTwoCases<BaseVector, SizeVector_t>(void)
+template <class BaseVector, class SizeVector_t>
 bool RevTwoCases()
 {	bool ok = true;
 	using CppAD::AD;
@@ -61,19 +61,19 @@ bool RevTwoCases()
 	CppAD::ADFun<double> f(X, Y);
 
 	// new value for the independent variable vector
-	VectorBase x(n);
+	BaseVector x(n);
 	x[0] = 2.;
 	x[1] = 1.;
 
 	// set i and j to compute specific second partials of y
 	size_t p = 2;
-	VectorSize_t i(p);
-	VectorSize_t j(p);
+	SizeVector_t i(p);
+	SizeVector_t j(p);
 	i[0] = 0; j[0] = 0; // for partials y[0] w.r.t x[0] and x[k]
 	i[1] = 1; j[1] = 1; // for partials y[1] w.r.t x[1] and x[k]
 
 	// compute the second partials
-	VectorBase ddw(n * p);
+	BaseVector ddw(n * p);
 	ddw = f.RevTwo(x, i, j);
 
 	// partials of y[0] w.r.t x[0] is 2 * x[0] * exp(x[1])
@@ -93,13 +93,13 @@ bool RevTwoCases()
 # include <valarray>
 bool RevTwo(void)
 {	bool ok = true;
-        // Run with VectorBase equal to three different cases
+        // Run with BaseVector equal to three different cases
         // all of which are Simple Vectors with elements of type double.
 	ok &= RevTwoCases< CppAD::vector <double>, std::vector<size_t> >();
 	ok &= RevTwoCases< std::vector   <double>, std::vector<size_t> >();
 	ok &= RevTwoCases< std::valarray <double>, std::vector<size_t> >();
 
-        // Run with VectorSize_t equal to two other cases
+        // Run with SizeVector_t equal to two other cases
         // which are Simple Vectors with elements of type size_t.
 	ok &= RevTwoCases< std::vector <double>, CppAD::vector<size_t> >();
 	ok &= RevTwoCases< std::vector <double>, std::valarray<size_t> >();
