@@ -127,6 +127,7 @@ cat << EOF > $src_dir/package.$$
 /^uw_copy_040507.html\$/d
 EOF
 change_list=`git ls-files | sed -f $src_dir/package.$$`
+rm $src_dir/package.$$
 # ----------------------------------------------------------------------------
 # clean up old results
 if [ ! -e 'build' ]
