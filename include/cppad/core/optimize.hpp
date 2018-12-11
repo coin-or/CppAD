@@ -197,7 +197,7 @@ but the same funcition and derivative values.
 \tparam Base
 base type for the operator; i.e., this operation was recorded
 using AD<Base> and computations by this routine are done using type
-\a Base.
+ Base.
 
 \param options
 \li

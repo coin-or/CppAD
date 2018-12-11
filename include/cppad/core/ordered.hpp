@@ -29,7 +29,7 @@ Check if an AD<Base> is greater than zero.
 value we are checking.
 
 \return
-returns true iff the \c x is greater than zero.
+returns true iff the x is greater than zero.
 */
 template <class Base>
 CPPAD_INLINE_FRIEND_TEMPLATE_FUNCTION
@@ -43,7 +43,7 @@ Check if an AD<Base> is greater than or equal zero.
 value we are checking.
 
 \return
-returns true iff the \c x is greater than or equal zero.
+returns true iff the x is greater than or equal zero.
 */
 template <class Base>
 CPPAD_INLINE_FRIEND_TEMPLATE_FUNCTION
@@ -57,7 +57,7 @@ Check if an AD<Base> is less than zero.
 value we are checking.
 
 \return
-returns true iff the \c x is less than zero.
+returns true iff the x is less than zero.
 */
 template <class Base>
 CPPAD_INLINE_FRIEND_TEMPLATE_FUNCTION
@@ -71,7 +71,7 @@ Check if an AD<Base> is less than or equal zero.
 value we are checking.
 
 \return
-returns true iff the \c x is less than or equal zero.
+returns true iff the x is less than or equal zero.
 */
 template <class Base>
 CPPAD_INLINE_FRIEND_TEMPLATE_FUNCTION
@@ -88,8 +88,8 @@ value we are checking if it is greater than or equal other.
 value we are checking if it is less than other.
 
 \return
-returns true iff the absolute value of \c x is greater than or equal
-absolute value of \c y.
+returns true iff the absolute value of x is greater than or equal
+absolute value of y.
 */
 template <class Base>
 CPPAD_INLINE_FRIEND_TEMPLATE_FUNCTION

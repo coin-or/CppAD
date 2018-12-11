@@ -30,15 +30,15 @@ where Rel is one of the following: Lt, Le, Eq, Ge, Gt.
 
 \tparam Base
 base type for the operator; i.e., this operation was recorded
-using AD< \a Base > and computations by this routine are done using type
-\a Base.
+using AD< Base > and computations by this routine are done using type
+ Base.
 
 \param i_z
 is the AD variable index corresponding to the variable z.
 
 \param arg
 \n
-\a arg[0]
+ arg[0]
 is static cast to size_t from the enum type
 \verbatim
 	enum CompareOp {
@@ -54,36 +54,36 @@ for this operation.
 Note that arg[0] cannot be equal to CompareNe.
 \n
 \n
-\a arg[1] & 1
+ arg[1] & 1
 \n
 If this is zero, y_0 is a parameter. Otherwise it is a variable.
 \n
 \n
-\a arg[1] & 2
+ arg[1] & 2
 \n
 If this is zero, y_1 is a parameter. Otherwise it is a variable.
 \n
 \n
-\a arg[1] & 4
+ arg[1] & 4
 \n
 If this is zero, y_2 is a parameter. Otherwise it is a variable.
 \n
 \n
-\a arg[1] & 8
+ arg[1] & 8
 \n
 If this is zero, y_3 is a parameter. Otherwise it is a variable.
 \n
 \n
-\a arg[2 + j ] for j = 0, 1, 2, 3
+ arg[2 + j ] for j = 0, 1, 2, 3
 \n
 is the index corresponding to y_j.
 
 \param num_par
-is the total number of values in the vector \a parameter.
+is the total number of values in the vector parameter.
 
 \param parameter
 For j = 0, 1, 2, 3,
-if y_j is a parameter, \a parameter [ arg[2 + j] ] is its value.
+if y_j is a parameter, parameter [ arg[2 + j] ] is its value.
 
 \param cap_order
 number of columns in the matrix containing the Taylor coefficients.
@@ -126,7 +126,7 @@ is the AD variable index corresponding to the variable z.
 
 \param arg
 \n
-\a arg[0]
+ arg[0]
 is static cast to size_t from the enum type
 \verbatim
 	enum CompareOp {
@@ -142,32 +142,32 @@ for this operation.
 Note that arg[0] cannot be equal to CompareNe.
 \n
 \n
-\a arg[1] & 1
+ arg[1] & 1
 \n
 If this is zero, y_0 is a parameter. Otherwise it is a variable.
 \n
 \n
-\a arg[1] & 2
+ arg[1] & 2
 \n
 If this is zero, y_1 is a parameter. Otherwise it is a variable.
 \n
 \n
-\a arg[1] & 4
+ arg[1] & 4
 \n
 If this is zero, y_2 is a parameter. Otherwise it is a variable.
 \n
 \n
-\a arg[1] & 8
+ arg[1] & 8
 \n
 If this is zero, y_3 is a parameter. Otherwise it is a variable.
 \n
 \n
-\a arg[2 + j ] for j = 0, 1, 2, 3
+ arg[2 + j ] for j = 0, 1, 2, 3
 \n
 is the index corresponding to y_j.
 
 \param num_par
-is the total number of values in the vector \a parameter.
+is the total number of values in the vector parameter.
 
 \par Checked Assertions
 \li NumArg(CExpOp) == 6
@@ -198,15 +198,15 @@ where Rel is one of the following: Lt, Le, Eq, Ge, Gt.
 
 \tparam Base
 base type for the operator; i.e., this operation was recorded
-using AD< \a Base > and computations by this routine are done using type
-\a Base.
+using AD< Base > and computations by this routine are done using type
+ Base.
 
 \param i_z
 is the AD variable index corresponding to the variable z.
 
 \param arg
 \n
-\a arg[0]
+ arg[0]
 is static cast to size_t from the enum type
 \verbatim
 	enum CompareOp {
@@ -222,36 +222,36 @@ for this operation.
 Note that arg[0] cannot be equal to CompareNe.
 \n
 \n
-\a arg[1] & 1
+ arg[1] & 1
 \n
 If this is zero, y_0 is a parameter. Otherwise it is a variable.
 \n
 \n
-\a arg[1] & 2
+ arg[1] & 2
 \n
 If this is zero, y_1 is a parameter. Otherwise it is a variable.
 \n
 \n
-\a arg[1] & 4
+ arg[1] & 4
 \n
 If this is zero, y_2 is a parameter. Otherwise it is a variable.
 \n
 \n
-\a arg[1] & 8
+ arg[1] & 8
 \n
 If this is zero, y_3 is a parameter. Otherwise it is a variable.
 \n
 \n
-\a arg[2 + j ] for j = 0, 1, 2, 3
+ arg[2 + j ] for j = 0, 1, 2, 3
 \n
 is the index corresponding to y_j.
 
 \param num_par
-is the total number of values in the vector \a parameter.
+is the total number of values in the vector parameter.
 
 \param parameter
 For j = 0, 1, 2, 3,
-if y_j is a parameter, \a parameter [ arg[2 + j] ] is its value.
+if y_j is a parameter, parameter [ arg[2 + j] ] is its value.
 
 \param cap_order
 number of columns in the matrix containing the Taylor coefficients.
@@ -381,15 +381,15 @@ where Rel is one of the following: Lt, Le, Eq, Ge, Gt.
 
 \tparam Base
 base type for the operator; i.e., this operation was recorded
-using AD< \a Base > and computations by this routine are done using type
-\a Base.
+using AD< Base > and computations by this routine are done using type
+ Base.
 
 \param i_z
 is the AD variable index corresponding to the variable z.
 
 \param arg
 \n
-\a arg[0]
+ arg[0]
 is static cast to size_t from the enum type
 \verbatim
 	enum CompareOp {
@@ -405,36 +405,36 @@ for this operation.
 Note that arg[0] cannot be equal to CompareNe.
 \n
 \n
-\a arg[1] & 1
+ arg[1] & 1
 \n
 If this is zero, y_0 is a parameter. Otherwise it is a variable.
 \n
 \n
-\a arg[1] & 2
+ arg[1] & 2
 \n
 If this is zero, y_1 is a parameter. Otherwise it is a variable.
 \n
 \n
-\a arg[1] & 4
+ arg[1] & 4
 \n
 If this is zero, y_2 is a parameter. Otherwise it is a variable.
 \n
 \n
-\a arg[1] & 8
+ arg[1] & 8
 \n
 If this is zero, y_3 is a parameter. Otherwise it is a variable.
 \n
 \n
-\a arg[2 + j ] for j = 0, 1, 2, 3
+ arg[2 + j ] for j = 0, 1, 2, 3
 \n
 is the index corresponding to y_j.
 
 \param num_par
-is the total number of values in the vector \a parameter.
+is the total number of values in the vector parameter.
 
 \param parameter
 For j = 0, 1, 2, 3,
-if y_j is a parameter, \a parameter [ arg[2 + j] ] is its value.
+if y_j is a parameter, parameter [ arg[2 + j] ] is its value.
 
 \param cap_order
 number of columns in the matrix containing the Taylor coefficients.
@@ -551,15 +551,15 @@ where Rel is one of the following: Lt, Le, Eq, Ge, Gt.
 
 \tparam Base
 base type for the operator; i.e., this operation was recorded
-using AD< \a Base > and computations by this routine are done using type
-\a Base.
+using AD< Base > and computations by this routine are done using type
+ Base.
 
 \param i_z
 is the AD variable index corresponding to the variable z.
 
 \param arg
 \n
-\a arg[0]
+ arg[0]
 is static cast to size_t from the enum type
 \verbatim
 	enum CompareOp {
@@ -575,36 +575,36 @@ for this operation.
 Note that arg[0] cannot be equal to CompareNe.
 \n
 \n
-\a arg[1] & 1
+ arg[1] & 1
 \n
 If this is zero, y_0 is a parameter. Otherwise it is a variable.
 \n
 \n
-\a arg[1] & 2
+ arg[1] & 2
 \n
 If this is zero, y_1 is a parameter. Otherwise it is a variable.
 \n
 \n
-\a arg[1] & 4
+ arg[1] & 4
 \n
 If this is zero, y_2 is a parameter. Otherwise it is a variable.
 \n
 \n
-\a arg[1] & 8
+ arg[1] & 8
 \n
 If this is zero, y_3 is a parameter. Otherwise it is a variable.
 \n
 \n
-\a arg[2 + j ] for j = 0, 1, 2, 3
+ arg[2 + j ] for j = 0, 1, 2, 3
 \n
 is the index corresponding to y_j.
 
 \param num_par
-is the total number of values in the vector \a parameter.
+is the total number of values in the vector parameter.
 
 \param parameter
 For j = 0, 1, 2, 3,
-if y_j is a parameter, \a parameter [ arg[2 + j] ] is its value.
+if y_j is a parameter, parameter [ arg[2 + j] ] is its value.
 
 \param cap_order
 number of columns in the matrix containing the Taylor coefficients.
@@ -621,10 +621,10 @@ number of columns in the matrix containing the Taylor coefficients.
 \b Input:
 For j = 0, 1, 2, 3,
 if y_j is a variable then
-\a taylor [ \a arg[2+j] * cap_order + 0 ]
+ taylor [ arg[2+j] * cap_order + 0 ]
 is the zero order Taylor coefficient corresponding to y_j.
 \n
-\b Output: \a taylor [ \a i_z * \a cap_order + 0 ]
+\b Output: taylor [ i_z * cap_order + 0 ]
 is the zero order Taylor coefficient corresponding to z.
 */
 template <class Base>
@@ -706,15 +706,15 @@ where Rel is one of the following: Lt, Le, Eq, Ge, Gt.
 
 \tparam Base
 base type for the operator; i.e., this operation was recorded
-using AD< \a Base > and computations by this routine are done using type
-\a Base.
+using AD< Base > and computations by this routine are done using type
+ Base.
 
 \param i_z
 is the AD variable index corresponding to the variable z.
 
 \param arg
 \n
-\a arg[0]
+ arg[0]
 is static cast to size_t from the enum type
 \verbatim
 	enum CompareOp {
@@ -730,36 +730,36 @@ for this operation.
 Note that arg[0] cannot be equal to CompareNe.
 \n
 \n
-\a arg[1] & 1
+ arg[1] & 1
 \n
 If this is zero, y_0 is a parameter. Otherwise it is a variable.
 \n
 \n
-\a arg[1] & 2
+ arg[1] & 2
 \n
 If this is zero, y_1 is a parameter. Otherwise it is a variable.
 \n
 \n
-\a arg[1] & 4
+ arg[1] & 4
 \n
 If this is zero, y_2 is a parameter. Otherwise it is a variable.
 \n
 \n
-\a arg[1] & 8
+ arg[1] & 8
 \n
 If this is zero, y_3 is a parameter. Otherwise it is a variable.
 \n
 \n
-\a arg[2 + j ] for j = 0, 1, 2, 3
+ arg[2 + j ] for j = 0, 1, 2, 3
 \n
 is the index corresponding to y_j.
 
 \param num_par
-is the total number of values in the vector \a parameter.
+is the total number of values in the vector parameter.
 
 \param parameter
 For j = 0, 1, 2, 3,
-if y_j is a parameter, \a parameter [ arg[2 + j] ] is its value.
+if y_j is a parameter, parameter [ arg[2 + j] ] is its value.
 
 \param cap_order
 number of columns in the matrix containing the Taylor coefficients.
@@ -777,13 +777,13 @@ is the order of the Taylor coefficient of z that we are  computing.
 
 \param taylor
 \b Input:
-For j = 0, 1, 2, 3 and k = 0 , ... , \a d,
+For j = 0, 1, 2, 3 and k = 0 , ... , d,
 if y_j is a variable then
-\a taylor [ \a arg[2+j] * cap_order + k ]
+ taylor [ arg[2+j] * cap_order + k ]
 is the k-th order Taylor coefficient corresponding to y_j.
 \n
-\a taylor [ \a i_z * \a cap_order + k ]
-for k = 0 , ... , \a d
+ taylor [ i_z * cap_order + k ]
+for k = 0 , ... , d
 is the k-th order Taylor coefficient corresponding to z.
 
 \param nc_partial
@@ -791,21 +791,21 @@ number of columns in the matrix containing the Taylor coefficients.
 
 \param partial
 \b Input:
-For j = 0, 1, 2, 3 and k = 0 , ... , \a d,
+For j = 0, 1, 2, 3 and k = 0 , ... , d,
 if y_j is a variable then
-\a partial [ \a arg[2+j] * nc_partial + k ]
+ partial [ arg[2+j] * nc_partial + k ]
 is the partial derivative of G( z , y , x , w , u , ... )
 with respect to the k-th order Taylor coefficient corresponding to y_j.
 \n
-\b Input: \a partial [ \a i_z * \a cap_order + k ]
-for k = 0 , ... , \a d
+\b Input: partial [ i_z * cap_order + k ]
+for k = 0 , ... , d
 is the partial derivative of G( z , y , x , w , u , ... )
 with respect to the k-th order Taylor coefficient corresponding to z.
 \n
 \b Output:
-For j = 0, 1, 2, 3 and k = 0 , ... , \a d,
+For j = 0, 1, 2, 3 and k = 0 , ... , d,
 if y_j is a variable then
-\a partial [ \a arg[2+j] * nc_partial + k ]
+ partial [ arg[2+j] * nc_partial + k ]
 is the partial derivative of H( y , x , w , u , ... )
 with respect to the k-th order Taylor coefficient corresponding to y_j.
 
@@ -899,7 +899,7 @@ is the AD variable index corresponding to the variable z.
 
 \param arg
 \n
-\a arg[0]
+ arg[0]
 is static cast to size_t from the enum type
 \verbatim
 	enum CompareOp {
@@ -915,32 +915,32 @@ for this operation.
 Note that arg[0] cannot be equal to CompareNe.
 \n
 \n
-\a arg[1] & 1
+ arg[1] & 1
 \n
 If this is zero, y_0 is a parameter. Otherwise it is a variable.
 \n
 \n
-\a arg[1] & 2
+ arg[1] & 2
 \n
 If this is zero, y_1 is a parameter. Otherwise it is a variable.
 \n
 \n
-\a arg[1] & 4
+ arg[1] & 4
 \n
 If this is zero, y_2 is a parameter. Otherwise it is a variable.
 \n
 \n
-\a arg[1] & 8
+ arg[1] & 8
 \n
 If this is zero, y_3 is a parameter. Otherwise it is a variable.
 \n
 \n
-\a arg[2 + j ] for j = 0, 1, 2, 3
+ arg[2 + j ] for j = 0, 1, 2, 3
 \n
 is the index corresponding to y_j.
 
 \param num_par
-is the total number of values in the vector \a parameter.
+is the total number of values in the vector parameter.
 
 \par Checked Assertions
 \li NumArg(CExpOp) == 6
@@ -1038,7 +1038,7 @@ is the AD variable index corresponding to the variable z.
 
 \param arg
 \n
-\a arg[0]
+ arg[0]
 is static cast to size_t from the enum type
 \verbatim
 	enum CompareOp {
@@ -1054,32 +1054,32 @@ for this operation.
 Note that arg[0] cannot be equal to CompareNe.
 \n
 \n
-\a arg[1] & 1
+ arg[1] & 1
 \n
 If this is zero, y_0 is a parameter. Otherwise it is a variable.
 \n
 \n
-\a arg[1] & 2
+ arg[1] & 2
 \n
 If this is zero, y_1 is a parameter. Otherwise it is a variable.
 \n
 \n
-\a arg[1] & 4
+ arg[1] & 4
 \n
 If this is zero, y_2 is a parameter. Otherwise it is a variable.
 \n
 \n
-\a arg[1] & 8
+ arg[1] & 8
 \n
 If this is zero, y_3 is a parameter. Otherwise it is a variable.
 \n
 \n
-\a arg[2 + j ] for j = 0, 1, 2, 3
+ arg[2 + j ] for j = 0, 1, 2, 3
 \n
 is the index corresponding to y_j.
 
 \param num_par
-is the total number of values in the vector \a parameter.
+is the total number of values in the vector parameter.
 
 \par Checked Assertions
 \li NumArg(CExpOp) == 6
@@ -1179,7 +1179,7 @@ is the AD variable index corresponding to the variable z.
 
 \param arg
 \n
-\a arg[0]
+ arg[0]
 is static cast to size_t from the enum type
 \verbatim
 	enum CompareOp {
@@ -1195,32 +1195,32 @@ for this operation.
 Note that arg[0] cannot be equal to CompareNe.
 \n
 \n
-\a arg[1] & 1
+ arg[1] & 1
 \n
 If this is zero, y_0 is a parameter. Otherwise it is a variable.
 \n
 \n
-\a arg[1] & 2
+ arg[1] & 2
 \n
 If this is zero, y_1 is a parameter. Otherwise it is a variable.
 \n
 \n
-\a arg[1] & 4
+ arg[1] & 4
 \n
 If this is zero, y_2 is a parameter. Otherwise it is a variable.
 \n
 \n
-\a arg[1] & 8
+ arg[1] & 8
 \n
 If this is zero, y_3 is a parameter. Otherwise it is a variable.
 \n
 \n
-\a arg[2 + j ] for j = 0, 1, 2, 3
+ arg[2 + j ] for j = 0, 1, 2, 3
 \n
 is the index corresponding to y_j.
 
 \param num_par
-is the total number of values in the vector \a parameter.
+is the total number of values in the vector parameter.
 
 \par Checked Assertions
 \li NumArg(CExpOp) == 6
@@ -1232,36 +1232,36 @@ is the total number of values in the vector \a parameter.
 
 
 \param jac_reverse
-\a jac_reverse[i_z]
+ jac_reverse[i_z]
 is false (true) if the Jacobian of G with respect to z is always zero
 (may be non-zero).
 \n
 \n
-\a jac_reverse[ arg[4] ]
+ jac_reverse[ arg[4] ]
 If y_2 is a variable,
-\a jac_reverse[ arg[4] ]
+ jac_reverse[ arg[4] ]
 is false (true) if the Jacobian with respect to y_2 is always zero
 (may be non-zero).
 On input, it corresponds to the function G,
 and on output it corresponds to the function H.
 \n
 \n
-\a jac_reverse[ arg[5] ]
+ jac_reverse[ arg[5] ]
 If y_3 is a variable,
-\a jac_reverse[ arg[5] ]
+ jac_reverse[ arg[5] ]
 is false (true) if the Jacobian with respect to y_3 is always zero
 (may be non-zero).
 On input, it corresponds to the function G,
 and on output it corresponds to the function H.
 
 \param hes_sparsity
-The set with index \a i_z in \a hes_sparsity
+The set with index i_z in hes_sparsity
 is the Hessian sparsity pattern for the function G
 where one of the partials is with respect to z.
 \n
 \n
 If y_2 is a variable,
-the set with index \a arg[4] in \a hes_sparsity
+the set with index arg[4] in hes_sparsity
 is the Hessian sparsity pattern
 where one of the partials is with respect to y_2.
 On input, this pattern corresponds to the function G.
@@ -1269,7 +1269,7 @@ On output, this pattern corresponds to the function H.
 \n
 \n
 If y_3 is a variable,
-the set with index \a arg[5] in \a hes_sparsity
+the set with index arg[5] in hes_sparsity
 is the Hessian sparsity pattern
 where one of the partials is with respect to y_3.
 On input, this pattern corresponds to the function G.

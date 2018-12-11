@@ -47,11 +47,11 @@ W(u) = \sum_{k=0}^{q-1} ( w^{(k)} )^{\rm T}
 
 \tparam Base
 base type for the operator; i.e., this operation sequence was recorded
-using AD< \a Base > and computations by this routine are done using type
-\a Base.
+using AD< Base > and computations by this routine are done using type
+ Base.
 
 \tparam VectorBase
-is a Simple Vector class with elements of type \a Base.
+is a Simple Vector class with elements of type Base.
 
 \param q
 is the number of the number of Taylor coefficients that are being
@@ -60,12 +60,12 @@ differentiated (per variable).
 \param w
 is the weighting for each of the Taylor coefficients corresponding
 to dependent variables.
-If the argument \a w has size <tt>m * q </tt>,
+If the argument w has size <tt>m * q </tt>,
 for \f$ k = 0 , \ldots , q-1 \f$ and \f$ i = 0, \ldots , m-1 \f$,
 \f[
 	w_i^{(k)} = w [ i * q + k ]
 \f]
-If the argument \a w has size \c m ,
+If the argument w has size m ,
 for \f$ k = 0 , \ldots , q-1 \f$ and \f$ i = 0, \ldots , m-1 \f$,
 \f[
 w_i^{(k)} = \left\{ \begin{array}{ll}

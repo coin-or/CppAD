@@ -28,46 +28,46 @@ and the print occurs during the zero order forward mode computation.
 
 \tparam Base
 base type for the operator; i.e., this operation was recorded
-using AD< \a Base > and computations by this routine are done using type
-\a Base .
+using AD< Base > and computations by this routine are done using type
+ Base .
 
 \param s_out
 the results are printed on this output stream.
 
 \param arg
-\a arg[0] & 1
+ arg[0] & 1
 \n
-If this is zero, \a pos is a parameter. Otherwise it is a variable.
+If this is zero, pos is a parameter. Otherwise it is a variable.
 \n
-\a arg[0] & 2
+ arg[0] & 2
 \n
-If this is zero, \a var is a parameter. Otherwise it is a variable.
+If this is zero, var is a parameter. Otherwise it is a variable.
 \n
 \n
-\a arg[1]
+ arg[1]
 \n
-If \a pos is a parameter, <code>parameter[arg[1]]</code> is its value.
+If pos is a parameter, <code>parameter[arg[1]]</code> is its value.
 Othwise <code>taylor[ size_t(arg[1]) * cap_order + 0 ]</code> is the zero
-order Taylor coefficient for \a pos.
+order Taylor coefficient for pos.
 \n
 \n
-\a arg[2]
+ arg[2]
 \n
-index of the text to be printed before \a var
-if \a pos is not a positive value.
+index of the text to be printed before var
+if pos is not a positive value.
 \n
 \n
-\a arg[3]
+ arg[3]
 \n
-If \a var is a parameter, <code>parameter[arg[3]]</code> is its value.
+If var is a parameter, <code>parameter[arg[3]]</code> is its value.
 Othwise <code>taylor[ size_t(arg[3]) * cap_order + 0 ]</code> is the zero
-order Taylor coefficient for \a var.
+order Taylor coefficient for var.
 \n
 \n
-\a arg[4]
+ arg[4]
 \n
-index of the text to be printed after \a var
-if \a pos is not a positive value.
+index of the text to be printed after var
+if pos is not a positive value.
 
 \param num_text
 is the total number of text characters on the tape
@@ -79,7 +79,7 @@ that will be printed. All the characters from there to (but not including)
 the first '\\0' are printed.
 
 \param num_par
-is the total number of values in the \a parameter vector
+is the total number of values in the parameter vector
 
 \param parameter
 Contains the value of parameters.
@@ -95,8 +95,8 @@ Contains the value of variables.
 \li NumRes(PriOp)  == 0
 \li text          !=  CPPAD_NULL
 \li arg[1]         <  num_text
-\li if \a pos is a parameter, arg[1] < num_par
-\li if \a var is a parameter, arg[3] < num_par
+\li if pos is a parameter, arg[1] < num_par
+\li if var is a parameter, arg[3] < num_par
 */
 template <class Base>
 inline void forward_pri_0(

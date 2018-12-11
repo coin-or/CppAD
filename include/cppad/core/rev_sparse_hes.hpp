@@ -207,20 +207,20 @@ All of the description in the public member function RevSparseHes(q, s)
 applies.
 
 \param set_type
-is a \c bool value. This argument is used to dispatch to the proper source
-code depending on the vlaue of \c VectorSet::value_type.
+is a bool value. This argument is used to dispatch to the proper source
+code depending on the vlaue of VectorSet::value_type.
 
 \param transpose
-See \c RevSparseHes(q, s).
+See RevSparseHes(q, s).
 
 \param q
-See \c RevSparseHes(q, s).
+See RevSparseHes(q, s).
 
 \param s
-See \c RevSparseHes(q, s).
+See RevSparseHes(q, s).
 
 \param h
-is the return value for the corresponging call to \c RevSparseJac(q, s).
+is the return value for the corresponging call to RevSparseJac(q, s).
 */
 template <class Base, class RecBase>
 template <class VectorSet>
@@ -327,21 +327,21 @@ All of the description in the public member function RevSparseHes(q, s)
 applies.
 
 \param set_type
-is a \c std::set<size_t> value.
+is a std::set<size_t> value.
 This argument is used to dispatch to the proper source
-code depending on the vlaue of \c VectorSet::value_type.
+code depending on the vlaue of VectorSet::value_type.
 
 \param transpose
-See \c RevSparseHes(q, s).
+See RevSparseHes(q, s).
 
 \param q
-See \c RevSparseHes(q, s).
+See RevSparseHes(q, s).
 
 \param s
-See \c RevSparseHes(q, s).
+See RevSparseHes(q, s).
 
 \param h
-is the return value for the corresponging call to \c RevSparseJac(q, s).
+is the return value for the corresponging call to RevSparseJac(q, s).
 */
 template <class Base, class RecBase>
 template <class VectorSet>
@@ -463,42 +463,42 @@ The C++ source code corresponding to this operation is
 is the base type for this recording.
 
 \tparam VectorSet
-is a simple vector with elements of type \c bool
-or \c std::set<size_t>.
+is a simple vector with elements of type bool
+or std::set<size_t>.
 
 \param transpose
-is true (false) if \c is is equal to \f$ H(x) \f$ (\f$ H(x)^T \f$)
+is true (false) if is is equal to \f$ H(x) \f$ (\f$ H(x)^T \f$)
 where
 \f[
 	H(x) = R^T (S * F)^{(2)} (x)
 \f]
 where \f$ F \f$ is the function corresponding to the operation sequence
-and \a x is any argument value.
+and x is any argument value.
 
 \param q
-is the value of \a q in the
+is the value of q in the
 by the previous call of the form
 \verbatim
 	f.ForSparseJac(q, r, packed)
 \endverbatim
-The value \c r in this call is a sparsity pattern for the matrix \f$ R \f$.
-The type of the element of \c r for the previous call to \c ForSparseJac
-must be the same as the type of the elements of \c s.
+The value r in this call is a sparsity pattern for the matrix \f$ R \f$.
+The type of the element of r for the previous call to ForSparseJac
+must be the same as the type of the elements of s.
 
 \param s
-is a vector with size \c m that specifies the sparsity pattern
+is a vector with size m that specifies the sparsity pattern
 for the vector \f$ S \f$,
-where \c m is the number of dependent variables
-corresponding to the operation sequence stored in \a play.
+where m is the number of dependent variables
+corresponding to the operation sequence stored in play.
 
 \return
-If \c transpose is false (true),
+If transpose is false (true),
 the return vector is a sparsity pattern for \f$ H(x) \f$ (\f$ H(x)^T \f$).
 \f[
 	H(x) = R^T ( S * F)^{(2)} (x)
 \f]
 where \f$ F \f$ is the function corresponding to the operation sequence
-and \a x is any argument value.
+and x is any argument value.
 */
 
 template <class Base, class RecBase>

@@ -71,9 +71,9 @@ is the number of independent variables on the tape.
 
 \param dep_taddr
 On input this vector contains the indices for each of the dependent
-variable values in the operation sequence corresponding to \a play.
+variable values in the operation sequence corresponding to play.
 Upon return it contains the indices for the same variables but in
-the operation sequence corresponding to \a rec.
+the operation sequence corresponding to rec.
 
 \param play
 This is the operation sequence that we are optimizing.
@@ -83,7 +83,7 @@ It is const except for the fact that play->setup_random is called.
 The input contents of this recording must be empty; i.e.,
 it corresponds to directly after the default constructor.
 Upon return, it contains an optimized verison of the
-operation sequence corresponding to \a play.
+operation sequence corresponding to play.
 */
 
 template <class Addr, class Base>

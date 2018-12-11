@@ -35,8 +35,8 @@ The C++ source code corresponding to this operation is
 
 \tparam Base
 base type for the operator; i.e., this operation was recorded
-using AD< \a Base > and computations by this routine are done using type
-\a Base.
+using AD< Base > and computations by this routine are done using type
+ Base.
 
 \param p
 lowest order of the Taylor coefficients that we are computing.
@@ -46,22 +46,22 @@ highest order of the Taylor coefficients that we are computing.
 
 \param i_z
 variable index corresponding to the last (primary) result for this operation;
-i.e. the row index in \a taylor corresponding to z.
-The auxillary results are called y_j have index \a i_z - j.
+i.e. the row index in taylor corresponding to z.
+The auxillary results are called y_j have index i_z - j.
 
 \param arg
 arg[0]: is the variable index corresponding to x.
 \n
 arg[1]: is the parameter index corresponding to the value zero.
 \n
-\arg[2]: is  the parameter index correspodning to the value 2 / sqrt(pi).
+arg[2]: is  the parameter index correspodning to the value 2 / sqrt(pi).
 
 \param parameter
 parameter[ arg[1] ] is the value zero,
 and parameter[ arg[2] ] is the value 2 / sqrt(pi).
 
 \param cap_order
-maximum number of orders that will fit in the \c taylor array.
+maximum number of orders that will fit in the taylor array.
 
 \param taylor
 \b Input:
@@ -168,27 +168,27 @@ The C++ source code corresponding to this operation is
 
 \tparam Base
 base type for the operator; i.e., this operation was recorded
-using AD< \a Base > and computations by this routine are done using type
-\a Base.
+using AD< Base > and computations by this routine are done using type
+ Base.
 
 \param i_z
 variable index corresponding to the last (primary) result for this operation;
-i.e. the row index in \a taylor corresponding to z.
-The auxillary results are called y_j have index \a i_z - j.
+i.e. the row index in taylor corresponding to z.
+The auxillary results are called y_j have index i_z - j.
 
 \param arg
 arg[0]: is the variable index corresponding to x.
 \n
 arg[1]: is the parameter index corresponding to the value zero.
 \n
-\arg[2]: is  the parameter index correspodning to the value 2 / sqrt(pi).
+arg[2]: is  the parameter index correspodning to the value 2 / sqrt(pi).
 
 \param parameter
 parameter[ arg[1] ] is the value zero,
 and parameter[ arg[2] ] is the value 2 / sqrt(pi).
 
 \param cap_order
-maximum number of orders that will fit in the \c taylor array.
+maximum number of orders that will fit in the taylor array.
 
 \param taylor
 \b Input:
@@ -266,8 +266,8 @@ The C++ source code corresponding to this operation is
 
 \tparam Base
 base type for the operator; i.e., this operation was recorded
-using AD< \a Base > and computations by this routine are done using type
-\a Base.
+using AD< Base > and computations by this routine are done using type
+ Base.
 
 \param q
 order of the Taylor coefficients that we are computing.
@@ -277,7 +277,7 @@ number of directions for the Taylor coefficients that we afre computing.
 
 \param i_z
 variable index corresponding to the last (primary) result for this operation;
-i.e. the row index in \a taylor corresponding to z.
+i.e. the row index in taylor corresponding to z.
 The auxillary results have index i_z - j for j = 0 , ... , 4
 (and include z).
 
@@ -286,14 +286,14 @@ arg[0]: is the variable index corresponding to x.
 \n
 arg[1]: is the parameter index corresponding to the value zero.
 \n
-\arg[2]: is  the parameter index correspodning to the value 2 / sqrt(pi).
+arg[2]: is  the parameter index correspodning to the value 2 / sqrt(pi).
 
 \param parameter
 parameter[ arg[1] ] is the value zero,
 and parameter[ arg[2] ] is the value 2 / sqrt(pi).
 
 \param cap_order
-maximum number of orders that will fit in the \c taylor array.
+maximum number of orders that will fit in the taylor array.
 
 \par tpv
 We use the notation
@@ -409,8 +409,8 @@ The C++ source code corresponding to this operation is
 
 \tparam Base
 base type for the operator; i.e., this operation was recorded
-using AD< \a Base > and computations by this routine are done using type
-\a Base.
+using AD< Base > and computations by this routine are done using type
+ Base.
 
 \param d
 highest order Taylor of the Taylor coefficients that we are computing
@@ -418,22 +418,22 @@ the partial derivatives with respect to.
 
 \param i_z
 variable index corresponding to the last (primary) result for this operation;
-i.e. the row index in \a taylor corresponding to z.
-The auxillary results are called y_j have index \a i_z - j.
+i.e. the row index in taylor corresponding to z.
+The auxillary results are called y_j have index i_z - j.
 
 \param arg
 arg[0]: is the variable index corresponding to x.
 \n
 arg[1]: is the parameter index corresponding to the value zero.
 \n
-\arg[2]: is  the parameter index correspodning to the value 2 / sqrt(pi).
+arg[2]: is  the parameter index correspodning to the value 2 / sqrt(pi).
 
 \param parameter
 parameter[ arg[1] ] is the value zero,
 and parameter[ arg[2] ] is the value 2 / sqrt(pi).
 
 \param cap_order
-maximum number of orders that will fit in the \c taylor array.
+maximum number of orders that will fit in the taylor array.
 
 \param taylor
 \b Input:

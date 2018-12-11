@@ -41,7 +41,7 @@ less than or equal this value.
 
 \param arg [in]
 \n
-\a arg[0]
+ arg[0]
 is static cast to size_t from the enum type
 \verbatim
 	enum CompareOp {
@@ -57,27 +57,27 @@ for this operation.
 Note that arg[0] cannot be equal to CompareNe.
 \n
 \n
-\a arg[1] & 1
+ arg[1] & 1
 \n
 If this is zero, left is an AD<Base> parameter.
 Otherwise it is an AD<Base> variable.
 \n
 \n
-\a arg[1] & 2
+ arg[1] & 2
 \n
 If this is zero, right is an AD<Base> parameter.
 Otherwise it is an AD<Base> variable.
 \n
-\a arg[2]
+ arg[2]
 is the index corresponding to left in comparision.
 \n
-\a arg[3]
+ arg[3]
 is the index corresponding to right in comparision.
 \n
-\a arg[4]
+ arg[4]
 is the number of operations to skip if the comparision result is true.
 \n
-\a arg[5]
+ arg[5]
 is the number of operations to skip if the comparision result is false.
 \n
 <tt>arg[5+i]</tt>

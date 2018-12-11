@@ -183,11 +183,11 @@ namespace {
 	is the dimension of the range space for the function f(x).
 
 	\param row [out]
-	the input size and elements of \c row do not matter.
+	the input size and elements of row do not matter.
 	Upon return it is the chosen row indices.
 
 	\param col [out]
-	the input size and elements of \c col do not matter.
+	the input size and elements of col do not matter.
 	Upon return it is the chosen column indices.
 	*/
 	void choose_row_col(
@@ -242,7 +242,7 @@ namespace {
 Package specific implementation of a sparse Jacobian claculation.
 
 \param size [in]
-is the size of the domain space; i.e. specifies \c n.
+is the size of the domain space; i.e. specifies n.
 
 \param repeat [in]
 number of times tha the test is repeated.
@@ -257,7 +257,7 @@ is the row indices correpsonding to non-zero Jacobian entries.
 is the column indices corresponding to non-zero Jacobian entries.
 
 \param x [out]
-is a vector of size \c n containing
+is a vector of size n containing
 the argument at which the Jacobian was evaluated during the last repetition.
 
 \param jacobian [out]
@@ -393,12 +393,12 @@ void speed_sparse_jacobian(size_t size, size_t repeat)
 Sparse Jacobian speed test information.
 
 \param size [in]
-is the \c size parameter in the corresponding call to speed_sparse_jacobian.
+is the size parameter in the corresponding call to speed_sparse_jacobian.
 
 \param n_sweep [out]
 The input value of this parameter does not matter.
-Upon return, it is the value \c n_sweep retruned by the corresponding
-call to \c link_sparse_jacobian.
+Upon return, it is the value n_sweep retruned by the corresponding
+call to link_sparse_jacobian.
 */
 void info_sparse_jacobian(size_t size, size_t& n_sweep)
 {	size_t n      = size;

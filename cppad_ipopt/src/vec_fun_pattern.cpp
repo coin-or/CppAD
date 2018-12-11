@@ -27,19 +27,19 @@ Determine a sparsity patterns for each function in a vector of functions.
 is the number of functions that we are computing the sparsity pattern for.
 
 \param p
-is a vector with size \c K.
+is a vector with size K.
 For <tt>k = 0 , ... , K-1, p[k]</tt>
 is dimension of the range space for \f$ r_k (u) \f$; i.e.,
 \f$ r_k (u) \in {\bf R}^{p(k)} \f$.
 
 \param q
-is a vector with size \c K.
+is a vector with size K.
 For <tt>k = 0 , ... , K-1, q[k]</tt>
 is dimension of the domain space for \f$ r_k (u) \f$; i.e.,
 \f$ u \in {\bf R}^{q(k)} \f$.
 
 \param retape
-is a vector with size \c K.
+is a vector with size K.
 For <tt>k = 0 , ... , K-1</tt>,
 if <tt>retape[k]</tt> is true,
 the function object <tt>r[k]</tt> is a valid representation
@@ -48,7 +48,7 @@ Otherwise, the function object must be retaped for each
 value of \f$ u \f$.
 
 \param r_fun
-is the vector of AD function objects which has size size \c K.
+is the vector of AD function objects which has size size K.
 For <tt>k = 0 , ... , K-1</tt>,
 if <tt>retape[k]</tt> is true, <tt>r_fun[k]</tt> is not used.
 If <tt>retape[k]</tt> is false, <tt>r_fun[k]</tt> is not used.
@@ -59,11 +59,11 @@ The following non-constant member functions will be called:
 	r_fun[k].ForSparseJac(q[k], pattern_domain)
 	r_fun[k].RevSparseHes(p[k], pattern_range)
 \endverbatim
-The following \c const member functions <tt>r_fun[k].Range()</tt>
+The following const member functions <tt>r_fun[k].Range()</tt>
 and <tt>r_fun[k].Domain()</tt> may also be called.
 
 \param pattern_jac_r
-is a vector with size \c K.
+is a vector with size K.
 On input, For <tt>k = 0 , ... , K-1, pattern_jac_r[k]</tt>
 is a vector of length p[k] * q[k]
 and the value of its elements does not matter.
@@ -71,7 +71,7 @@ On output it is a CppAD sparsity pattern for the Jacobian of
 \f$ r_k (u) \f$.
 
 \param pattern_hes_r
-is a vector with size \c K.
+is a vector with size K.
 On input, For <tt>k = 0 , ... , K-1, pattern_hes_r[k]</tt>
 is a vector of length q[k] * q[k]
 and the value of its elements does not matter.

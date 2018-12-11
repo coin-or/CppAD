@@ -166,17 +166,17 @@ All of the description in the public member function ForSparseHes(q, s)
 applies.
 
 \param set_type
-is a \c bool value. This argument is used to dispatch to the proper source
-code depending on the vlaue of \c VectorSet::value_type.
+is a bool value. This argument is used to dispatch to the proper source
+code depending on the vlaue of VectorSet::value_type.
 
 \param r
-See \c ForSparseHes(r, s).
+See ForSparseHes(r, s).
 
 \param s
-See \c ForSparseHes(r, s).
+See ForSparseHes(r, s).
 
 \param h
-is the return value for the corresponging call to \c ForSparseJac(q, s).
+is the return value for the corresponging call to ForSparseJac(q, s).
 */
 template <class Base, class RecBase>
 template <class VectorSet>
@@ -295,18 +295,18 @@ All of the description in the public member function ForSparseHes(q, s)
 applies.
 
 \param set_type
-is a \c std::set<size_t> value.
+is a std::set<size_t> value.
 This argument is used to dispatch to the proper source
-code depending on the vlaue of \c VectorSet::value_type.
+code depending on the vlaue of VectorSet::value_type.
 
 \param r
-See \c ForSparseHes(r, s).
+See ForSparseHes(r, s).
 
 \param s
-See \c ForSparseHes(q, s).
+See ForSparseHes(q, s).
 
 \param h
-is the return value for the corresponging call to \c ForSparseJac(q, s).
+is the return value for the corresponging call to ForSparseJac(q, s).
 */
 template <class Base, class RecBase>
 template <class VectorSet>
@@ -440,20 +440,20 @@ The C++ source code corresponding to this operation is
 is the base type for this recording.
 
 \tparam VectorSet
-is a simple vector with elements of type \c bool
-or \c std::set<size_t>.
+is a simple vector with elements of type bool
+or std::set<size_t>.
 
 \param r
-is a vector with size \c n that specifies the sparsity pattern
+is a vector with size n that specifies the sparsity pattern
 for the diagonal of the matrix \f$ R \f$,
-where \c n is the number of independent variables
-corresponding to the operation sequence stored in \a play.
+where n is the number of independent variables
+corresponding to the operation sequence stored in play.
 
 \param s
-is a vector with size \c m that specifies the sparsity pattern
+is a vector with size m that specifies the sparsity pattern
 for the vector \f$ S \f$,
-where \c m is the number of dependent variables
-corresponding to the operation sequence stored in \a play.
+where m is the number of dependent variables
+corresponding to the operation sequence stored in play.
 
 \return
 The return vector is a sparsity pattern for \f$ H(x) \f$
@@ -461,7 +461,7 @@ The return vector is a sparsity pattern for \f$ H(x) \f$
 	H(x) = R^T ( S * F)^{(2)} (x) R
 \f]
 where \f$ F \f$ is the function corresponding to the operation sequence
-and \a x is any argument value.
+and x is any argument value.
 */
 
 template <class Base, class RecBase>

@@ -28,7 +28,7 @@ The C++ source code corresponding to this operation is
 \endverbatim
 In the documentation below,
 this operations is for the case where both x and y are variables
-and the argument \a parameter is not used.
+and the argument parameter is not used.
 
 \copydetails CppAD::local::forward_binary_op
 */
@@ -70,7 +70,7 @@ The C++ source code corresponding to this operation is
 \endverbatim
 In the documentation below,
 this operations is for the case where both x and y are variables
-and the argument \a parameter is not used.
+and the argument parameter is not used.
 
 \copydetails CppAD::local::forward_binary_op_dir
 */
@@ -115,7 +115,7 @@ The C++ source code corresponding to this operation is
 \endverbatim
 In the documentation below,
 this operations is for the case where both x and y are variables
-and the argument \a parameter is not used.
+and the argument parameter is not used.
 
 \copydetails CppAD::local::forward_binary_op_0
 */
@@ -149,7 +149,7 @@ The C++ source code corresponding to this operation is
 \endverbatim
 In the documentation below,
 this operations is for the case where both x and y are variables
-and the argument \a parameter is not used.
+and the argument parameter is not used.
 
 \copydetails CppAD::local::reverse_binary_op
 */

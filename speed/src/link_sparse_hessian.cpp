@@ -196,11 +196,11 @@ namespace {
 	is the dimension of the argument space for the function f(x).
 
 	\param row [out]
-	the input size and elements of \c row do not matter.
+	the input size and elements of row do not matter.
 	Upon return it is the chosen row indices.
 
 	\param col [out]
-	the input size and elements of \c col do not matter.
+	the input size and elements of col do not matter.
 	Upon return it is the chosen column indices.
 	*/
 	void choose_row_col(
@@ -239,13 +239,13 @@ namespace {
 Package specific implementation of a sparse Hessian claculation.
 
 \param size [in]
-is the size of the domain space; i.e. specifies \c n.
+is the size of the domain space; i.e. specifies n.
 
 \param repeat [in]
 number of times tha the test is repeated.
 
 \param x [out]
-is a vector of size \c n containing
+is a vector of size n containing
 the argument at which the Hessian was evaluated during the last repetition.
 
 \param row [in]
@@ -391,12 +391,12 @@ void speed_sparse_hessian(size_t size, size_t repeat)
 Sparse Hessian speed test information.
 
 \param size [in]
-is the \c size parameter in the corresponding call to speed_sparse_hessian.
+is the size parameter in the corresponding call to speed_sparse_hessian.
 
 \param n_sweep [out]
 The input value of this parameter does not matter.
-Upon return, it is the value \c n_sweep retruned by the corresponding
-call to \c link_sparse_hessian.
+Upon return, it is the value n_sweep retruned by the corresponding
+call to link_sparse_hessian.
 */
 void info_sparse_hessian(size_t size, size_t& n_sweep)
 {	size_t n      = size;

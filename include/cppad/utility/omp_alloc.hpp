@@ -254,9 +254,9 @@ $end
 	/*!
 	Use omp_alloc to get a specified amount of memory.
 
-	If the memory allocated by a previous call to \c get_memory is now
-	avaialable, and \c min_bytes is between its previous value
-	and the previous \c cap_bytes, this memory allocation will have
+	If the memory allocated by a previous call to get_memory is now
+	avaialable, and min_bytes is between its previous value
+	and the previous cap_bytes, this memory allocation will have
 	optimal speed. Otherwise, the memory allocation is more complicated and
 	may have to wait for other threads to complete an allocation.
 
@@ -321,20 +321,20 @@ $cref omp_alloc.cpp$$
 $end
 */
 	/*!
-	Return memory that was obtained by \c get_memory.
+	Return memory that was obtained by get_memory.
 	If  <code>max_num_threads(0) == 1</code>,
 	the memory is returned to the system.
-	Otherwise, it is retained by \c omp_alloc and available for use by
-	\c get_memory for this thread.
+	Otherwise, it is retained by omp_alloc and available for use by
+	get_memory for this thread.
 
 	\param v_ptr [in]
-	Value of the pointer returned by \c get_memory and still in use.
+	Value of the pointer returned by get_memory and still in use.
 	After this call, this pointer will available (and not in use).
 
 	\par
 	We must either be in sequential (not parallel) execution mode,
 	or the current thread must be the same as for the corresponding call
-	to \c get_memory.
+	to get_memory.
 	*/
 	static void return_memory(void* v_ptr)
 	{	thread_alloc::return_memory(v_ptr); }
@@ -584,7 +584,7 @@ $end
 	all the elements of the array.
 
 	\par
-	The \c extra_ field, in the \c omp_alloc node before the return value,
+	The extra_ field, in the omp_alloc node before the return value,
 	is set to size_out.
 	*/
 	template <class Type>
@@ -649,13 +649,13 @@ $end
 	The type of the elements of the array.
 
 	\param array [in]
-	A value returned by \c create_array that has not yet been deleted.
-	The \c Type destructor is used to destroy each of the elements
+	A value returned by create_array that has not yet been deleted.
+	The Type destructor is used to destroy each of the elements
 	of the array.
 
 	\par
 	Durring parallel execution, the current thread must be the same
-	as during the corresponding call to \c create_array.
+	as during the corresponding call to create_array.
 	*/
 	template <class Type>
 	static void delete_array(Type* array)

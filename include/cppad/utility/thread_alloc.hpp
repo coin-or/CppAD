@@ -48,7 +48,7 @@ Minimum number of double values that will fit in an allocation.
 
 /*!
 \def CPPAD_TRACE_CAPACITY
-If NDEBUG is not defined, print all calls to \c get_memory and \c return_memory
+If NDEBUG is not defined, print all calls to get_memory and return_memory
 that correspond to this capacity and thread CPPAD_TRACE_THREAD.
 (Note that if CPPAD_TRACE_CAPACITY is zero, or any other value not in the list
 of capacities, no tracing will be done.)
@@ -57,7 +57,7 @@ of capacities, no tracing will be done.)
 
 /*!
 \def CPPAD_TRACE_THREAD
-If NDEBUG is not defined, print all calls to \c get_memory and \c return_memory
+If NDEBUG is not defined, print all calls to get_memory and return_memory
 that correspond to this thead and capacity CPPAD_TRACE_CAPACITY.
 */
 # define CPPAD_TRACE_THREAD 0
@@ -72,7 +72,7 @@ objects with static storage duration (3.7.1) shall be zero-initialized
 Capacity vector for memory allocation block sizes.
 
 Only one of these objects should be created and used as a
-static variable inside of the \c thread_alloc::capacity_info function.
+static variable inside of the thread_alloc::capacity_info function.
 */
 
 /*!
@@ -154,8 +154,8 @@ private:
 	if true, the value returned by this return is changed.
 
 	\param new_value [in]
-	if \a set is true, this is the new value returned by this routine.
-	Otherwise, \c new_value is ignored.
+	if set is true, this is the new value returned by this routine.
+	Otherwise, new_value is ignored.
 
 	\return
 	the current setting for this routine (which is initially false).
@@ -174,16 +174,16 @@ private:
 	Is the thread number for this information pointer.
 
 	\param clear
-	If \a clear is true, then the information pointer for this thread
-	is deleted and the \c CPPAD_NULL pointer is returned.
+	If clear is true, then the information pointer for this thread
+	is deleted and the CPPAD_NULL pointer is returned.
 	There must be no memory currently in either the inuse or avaialble
 	lists when this routine is called.
 
 	\return
 	is the current informaiton pointer for this thread.
-	If \a clear is false, and the current pointer is CPPAD_NULL,
+	If clear is false, and the current pointer is CPPAD_NULL,
 	a new infromation record is allocated and its pointer returned.
-	In this case, if \c info is the retured pointer,
+	In this case, if info is the retured pointer,
 	<code>info->count_inuse == 0</code> and
 	<code>info->count_available == 0</code>.
 	In addition,
@@ -246,14 +246,14 @@ private:
 	// -----------------------------------------------------------------------
 	/*!
 	Increase the number of bytes of memory that are currently in use; i.e.,
-	that been obtained with \c get_memory and not yet returned.
+	that been obtained with get_memory and not yet returned.
 
 	\param inc [in]
 	amount to increase memory in use.
 
 	\param thread [in]
 	Thread for which we are increasing the number of bytes in use
-	(must be less than \c num_threads).
+	(must be less than num_threads).
 	Durring parallel execution, this must be the thread
 	that is currently executing.
 	*/
@@ -294,14 +294,14 @@ private:
 	// -----------------------------------------------------------------------
 	/*!
 	Decrease the number of bytes of memory that are currently in use; i.e.,
-	that been obtained with \c get_memory and not yet returned.
+	that been obtained with get_memory and not yet returned.
 
 	\param dec [in]
 	amount to decrease number of bytes in use.
 
 	\param thread [in]
 	Thread for which we are decreasing the number of bytes in use
-	(must be less than \c num_threads).
+	(must be less than num_threads).
 	Durring parallel execution, this must be the thread
 	that is currently executing.
 	*/
@@ -343,14 +343,14 @@ private:
 	Set and get the number of threads that are sharing memory.
 
 	\param number_new
-	If \c number is zero, we are only retreiving the current maximum
+	If number is zero, we are only retreiving the current maximum
 	number of threads. Otherwise, we are setting and retreiving
 	maximum number of threads.
 
 	\return
 	the number of threads that are sharing memory.
-	If \c number_new is non-zero, the return value is equal to
-	\c number_new.
+	If number_new is non-zero, the return value is equal to
+	number_new.
 	*/
 	static size_t set_get_num_threads(size_t number_new)
 	{	static size_t number_user = 1;
@@ -368,21 +368,21 @@ private:
 	Set and call the routine that determine the current thread number.
 
 	\return
-	returns value for the most recent setting for \a thread_num_new.
-	If \a set is true,
-	or the most recent setting is \c CPPAD_NULL (its initial value),
+	returns value for the most recent setting for thread_num_new.
+	If set is true,
+	or the most recent setting is CPPAD_NULL (its initial value),
 	the return value is zero.
 	Otherwise the routine corresponding to the most recent setting
-	is called and its value returned by \c set_get_thread_num.
+	is called and its value returned by set_get_thread_num.
 
 	\param thread_num_new [in]
-	If \a set is false, \a thread_num_new it is not used.
-	Otherwise, the current value of \c thread_num_new becomes the
+	If set is false, thread_num_new it is not used.
+	Otherwise, the current value of thread_num_new becomes the
 	most recent setting for thread_num.
 
 	\param set
-	If \a set is true, then \a thread_num_new is becomes the most
-	recent setting for this \c set_get_thread_num.
+	If set is true, then thread_num_new is becomes the most
+	recent setting for this set_get_thread_num.
 	*/
 	static size_t set_get_thread_num(
 		size_t (*thread_num_new)(void)  ,
@@ -746,9 +746,9 @@ $end
 	/*!
 	Use thread_alloc to get a specified amount of memory.
 
-	If the memory allocated by a previous call to \c get_memory is now
-	avaialable, and \c min_bytes is between its previous value
-	and the previous \c cap_bytes, this memory allocation will have
+	If the memory allocated by a previous call to get_memory is now
+	avaialable, and min_bytes is between its previous value
+	and the previous cap_bytes, this memory allocation will have
 	optimal speed. Otherwise, the memory allocation is more complicated and
 	may have to wait for other threads to complete an allocation.
 
@@ -914,20 +914,20 @@ $cref thread_alloc.cpp$$
 $end
 */
 	/*!
-	Return memory that was obtained by \c get_memory.
+	Return memory that was obtained by get_memory.
 	If  <code>num_threads() == 1</code>,
 	the memory is returned to the system.
-	Otherwise, it is retained by \c thread_alloc and available for use by
-	\c get_memory for this thread.
+	Otherwise, it is retained by thread_alloc and available for use by
+	get_memory for this thread.
 
 	\param v_ptr [in]
-	Value of the pointer returned by \c get_memory and still in use.
+	Value of the pointer returned by get_memory and still in use.
 	After this call, this pointer will available (and not in use).
 
 	\par
 	We must either be in sequential (not parallel) execution mode,
 	or the current thread must be the same as for the corresponding call
-	to \c get_memory.
+	to get_memory.
 	*/
 	static void return_memory(void* v_ptr)
 	{	size_t num_cap   = capacity_info()->number;
@@ -1340,7 +1340,7 @@ $end
 	all the elements of the array.
 
 	\par
-	The \c extra_ field, in the \c thread_alloc node before the return value,
+	The extra_ field, in the thread_alloc node before the return value,
 	is set to size_out.
 	*/
 	template <class Type>
@@ -1422,13 +1422,13 @@ $end
 	The type of the elements of the array.
 
 	\param array [in]
-	A value returned by \c create_array that has not yet been deleted.
-	The \c Type destructor is used to destroy each of the elements
+	A value returned by create_array that has not yet been deleted.
+	The Type destructor is used to destroy each of the elements
 	of the array.
 
 	\par
 	Durring parallel execution, the current thread must be the same
-	as during the corresponding call to \c create_array.
+	as during the corresponding call to create_array.
 	*/
 	template <class Type>
 	static void delete_array(Type* array)
@@ -1485,7 +1485,7 @@ $end
 	Return to the system all thread_alloc memory that is not currently inuse.
 
 	\return
-	If no \c thread_alloc memory is currently inuse,
+	If no thread_alloc memory is currently inuse,
 	all memory is returned to the system and the return value is true.
 	Otherwise the return value is false.
 	*/

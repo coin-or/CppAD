@@ -183,24 +183,24 @@ Reverse mode Jacobian sparsity patterns.
 Private helper function for RevSparseJac(q, r, transpose) boolean sparsity.
 
 All of the description in the public member function
-\c RevSparseJac(q, r, transpose) apply.
+ RevSparseJac(q, r, transpose) apply.
 
 \param set_type
-is a \c bool value.
+is a bool value.
 This argument is used to dispatch to the proper source code
-depending on the value of \c VectorSet::value_type.
+depending on the value of VectorSet::value_type.
 
 \param transpose
-See \c RevSparseJac(q, r, transpose, dependency)
+See RevSparseJac(q, r, transpose, dependency)
 
 \param dependency
-See \c RevSparseJac(q, r, transpose, dependency)
+See RevSparseJac(q, r, transpose, dependency)
 
 \param q
-See \c RevSparseJac(q, r, transpose, dependency)
+See RevSparseJac(q, r, transpose, dependency)
 
 \param r
-See \c RevSparseJac(q, r, transpose, dependency)
+See RevSparseJac(q, r, transpose, dependency)
 
 \param s
 is the return value for the corresponding call to
@@ -303,24 +303,24 @@ void ADFun<Base,RecBase>::RevSparseJacCase(
 Private helper function for RevSparseJac(q, r, transpose) set sparsity
 
 All of the description in the public member function
-\c RevSparseJac(q, r, transpose) apply.
+ RevSparseJac(q, r, transpose) apply.
 
 \param set_type
-is a \c std::set<size_t> object.
+is a std::set<size_t> object.
 This argument is used to dispatch to the proper source code
-depending on the value of \c VectorSet::value_type.
+depending on the value of VectorSet::value_type.
 
 \param transpose
-See \c RevSparseJac(q, r, transpose, dependency)
+See RevSparseJac(q, r, transpose, dependency)
 
 \param dependency
-See \c RevSparseJac(q, r, transpose, dependency)
+See RevSparseJac(q, r, transpose, dependency)
 
 \param q
-See \c RevSparseJac(q, r, transpose, dependency)
+See RevSparseJac(q, r, transpose, dependency)
 
 \param r
-See \c RevSparseJac(q, r, transpose, dependency)
+See RevSparseJac(q, r, transpose, dependency)
 
 \param s
 is the return value for the corresponding call to RevSparseJac(q, r, transpose)
@@ -454,8 +454,8 @@ The C++ source code corresponding to this operation is
 is the base type for this recording.
 
 \tparam VectorSet
-is a simple vector with elements of type \c bool.
-or \c std::set<size_t>.
+is a simple vector with elements of type bool.
+or std::set<size_t>.
 
 \param q
 is the number of rows in the matrix \f$ R \f$.
@@ -476,16 +476,16 @@ This is used by the optimizer to obtain the correct dependency relations.
 
 
 \return
-If \c transpose is false (true), the return value is a sparsity pattern
+If transpose is false (true), the return value is a sparsity pattern
 for \f$ S(x) \f$ (\f$ S(x)^T \f$) where
 \f[
 	S(x) = R * F^{(1)} (x)
 \f]
 and \f$ F \f$ is the function corresponding to the operation sequence
-and \a x is any argument value.
-If \c VectorSet::value_type is \c bool,
+and x is any argument value.
+If VectorSet::value_type is bool,
 the return value has size \f$ q * n \f$ ( \f$ n * q \f$).
-If \c VectorSet::value_type is \c std::set<size_t>,
+If VectorSet::value_type is std::set<size_t>,
 the return value has size \f$ q \f$ ( \f$ n \f$)
 and with all its elements between zero and \f$ n - 1 \f$ (\f$ q - 1 \f$).
 */

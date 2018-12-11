@@ -26,22 +26,22 @@ namespace cppad_ipopt {
 Records operation sequence for \f$ r_k (u) \f$ at \f$u = [ J \circ n ] (x)\f$.
 
 \tparam NumVector
-is the type of the argumen \c x. It can either be
+is the type of the argumen x. It can either be
 <tt>Ipopt::Number*</tt> or
 <tt>CppAD::vector<Ipopt::Number></tt>; i.e., <tt>NumberVector</tt>.
 
 \param fg_info
 Given a value \f$ u \in {\bf R}^{q[k]} \f$,
-\c fg_info returns the value \f$ r_k (u) \in {\bf R}^{p[k]} \f$.
+ fg_info returns the value \f$ r_k (u) \in {\bf R}^{p[k]} \f$.
 using the syntax
 \verbatim
 	fg_info->eval_r(k, u);
 \endverbatim
-No other use is made of \c fg_info.
+No other use is made of fg_info.
 
 \param k
-is a value less that \c K specifying
-the index value for \c k in the evaluation <tt>eval_r</tt>.
+is a value less that K specifying
+the index value for k in the evaluation <tt>eval_r</tt>.
 
 \param p
 <tt>p[k]</tt> is dimension of the range space for \f$ r_k (u) \f$; i.e.,
@@ -52,10 +52,10 @@ the index value for \c k in the evaluation <tt>eval_r</tt>.
 \f$ u \in {\bf R}^{q(k)} \f$.
 
 \param n
-is the length of the vector \c x.
+is the length of the vector x.
 
 \param x
-the length of \c x is equal to \c n and the point
+the length of x is equal to n and the point
 \f[
 	u = [ J \circ n ] (x)
 \f]
@@ -69,11 +69,11 @@ by selecting an ordered subset of the possible indices
 Hence, <tt>0 <= J[j] < n</tt> for <tt>j = 0 , ... , q[k]-1</tt>.
 
 \param r_fun
-is the vector of AD function objects which has size size greater than \c k.
+is the vector of AD function objects which has size size greater than k.
 Only the function object <tt>r_fun[k]</tt> is referenced.
 The input value of this function object does not matter.
 On output it is a recording of the function \f$ r_k (u) \f$
-at the value of \f$ u \f$ specified by \c x and \c J.
+at the value of \f$ u \f$ specified by x and J.
 */
 
 template <class NumVector>

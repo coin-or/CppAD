@@ -258,20 +258,20 @@ We wish to compute the Jacobian
 and possibly also the Hessian, of \f$ V (x) \f$.
 
 \tparam BaseVector
-The type \c BaseVector must be a SimpleVector class.
-We use \c Base to refer to the type of the elements of
-\c BaseVector; i.e.,
+The type BaseVector must be a SimpleVector class.
+We use Base to refer to the type of the elements of
+ BaseVector; i.e.,
 <tt>BaseVector::value_type</tt>.
 
 \param x
-is a vector with size \c n.
+is a vector with size n.
 It specifies the point at which we evaluating
 the Jacobian \f$ V^{(1)} (x) \f$
 (and possibly the Hessian \f$ V^{(2)} (x) \f$).
 
 
 \param y
-is a vector with size \c m.
+is a vector with size m.
 It must be equal to \f$ Y(x) \f$; i.e.,
 it must solve the implicit equation
 \f[
@@ -279,56 +279,56 @@ it must solve the implicit equation
 \f]
 
 \param fun
-The argument \c fun is an object of type \c Fun
+The argument fun is an object of type Fun
 wich must support the member functions listed below.
-CppAD will may be recording operations of the type  \c AD<Base>
+CppAD will may be recording operations of the type  AD<Base>
 when these member functions are called.
 These member functions must not stop such a recording; e.g.,
-they must not call \c AD<Base>::abort_recording.
+they must not call AD<Base>::abort_recording.
 
 \par Fun::ad_vector</tt>
 The type <tt>Fun::ad_vector</tt> must be a
-SimpleVector class with elements of type  \c AD<Base>; i.e.
+SimpleVector class with elements of type  AD<Base>; i.e.
 <tt>Fun::ad_vector::value_type</tt>
-is equal to  \c AD<Base>.
+is equal to  AD<Base>.
 
 \par fun.ell
-the type \c Fun must support the syntax
+the type Fun must support the syntax
 \verbatim
 	ell = fun.ell()
 \endverbatim
-where \c ell is a \c size_t value that is set to \f$ \ell \f$; i.e.,
+where ell is a size_t value that is set to \f$ \ell \f$; i.e.,
 the number of terms in the summation.
 
 \par fun.s
-The type \c Fun must support the syntax
+The type Fun must support the syntax
 \verbatim
 	s_k = fun.s(k, x, y)
 \endverbatim
-The argument \c k has prototype <tt>size_t k</tt>.
-The argument \c x has prototype <tt>const Fun::ad_vector& x</tt>
-and its size must be equal to \c n.
-The argument \c y has prototype <tt>const Fun::ad_vector& y</tt>
-and its size must be equal to \c m.
-The return value \c s_k has prototype \c AD<Base> s_k
+The argument k has prototype <tt>size_t k</tt>.
+The argument x has prototype <tt>const Fun::ad_vector& x</tt>
+and its size must be equal to n.
+The argument y has prototype <tt>const Fun::ad_vector& y</tt>
+and its size must be equal to m.
+The return value s_k has prototype AD<Base> s_k
 and its value must be given by \f$ s_k = S_k ( x , y ) \f$.
 
 \par fun.sy
-The type \c Fun must support the syntax
+The type Fun must support the syntax
 \verbatim
 	sy_k = fun.sy(k, x, y)
 \endverbatim
-The argument \c k has prototype <tt>size_t k</tt>.
-The argument \c x has prototype <tt>const Fun::ad_vector& x</tt>
-and its size must be equal to \c n.
-The argument \c y has prototype <tt>const Fun::ad_vector& y</tt>
-and its size must be equal to \c m.
-The return value \c sy_k has prototype <tt>Fun::ad_vector& sy_k</tt>,
-its size is \c m
+The argument k has prototype <tt>size_t k</tt>.
+The argument x has prototype <tt>const Fun::ad_vector& x</tt>
+and its size must be equal to n.
+The argument y has prototype <tt>const Fun::ad_vector& y</tt>
+and its size must be equal to m.
+The return value sy_k has prototype <tt>Fun::ad_vector& sy_k</tt>,
+its size is m
 and its value must be given by \f$ sy_k = \partial_y S_k ( x , y ) \f$.
 
 \param jac
-is a vector with size \c n or zero.
+is a vector with size n or zero.
 The input values of its elements do not matter.
 If it has size zero, it is not affected. Otherwise, on output
 it contains the Jacobian of \f$ V (x) \f$; i.e.,
@@ -336,7 +336,7 @@ for \f$ j = 0 , \ldots , n-1 \f$,
 \f[
 	jac[ j ] = V^{(1)} (x)_j
 \f] $$
-where \c x is the first argument to \c opt_val_hes.
+where x is the first argument to opt_val_hes.
 
 \param hes
 is a vector with size <tt>n * n</tt> or zero.
@@ -354,7 +354,7 @@ If <tt>hes.size() == 0</tt>, the return value is not defined.
 Otherwise,
 the return value is the sign of the determinant for
 \f$ \partial_{yy}^2 F(x , y) \f$$.
-If it is zero, then the matrix is singular and \c hes is not set
+If it is zero, then the matrix is singular and hes is not set
 to its specified value.
 */
 

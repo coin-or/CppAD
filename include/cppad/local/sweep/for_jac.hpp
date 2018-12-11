@@ -56,10 +56,10 @@ is the number of independent variables on the tape.
 
 \param numvar
 is the total number of variables on the tape; i.e.,
-\a play->num_var_rec().
+ play->num_var_rec().
 
 \param play
-The information stored in \a play
+The information stored in play
 is a recording of the operations corresponding to a function
 \f[
 	F : {\bf R}^n \rightarrow {\bf R}^m
@@ -68,14 +68,14 @@ where \f$ n \f$ is the number of independent variables
 and \f$ m \f$ is the number of dependent variables.
 
 \param var_sparsity
-\b Input: For j = 1 , ... , \a n,
+\b Input: For j = 1 , ... , n,
 the sparsity pattern for the independent variable with index (j-1)
-corresponds to the set with index j in \a var_sparsity.
+corresponds to the set with index j in var_sparsity.
 \n
 \n
-\b Output: For i = \a n + 1 , ... , \a numvar - 1,
+\b Output: For i = n + 1 , ... , numvar - 1,
 the sparsity pattern for the variable with index i on the tape
-corresponds to the set with index i in \a var_sparsity.
+corresponds to the set with index i in var_sparsity.
 
 \par Checked Assertions:
 \li numvar == var_sparsity.n_set()

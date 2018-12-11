@@ -748,7 +748,7 @@ user defined atomic operations.
 	forward, reverse, for_jac_sparse, rev_jac_sparse, rev_hes_sparse
 )
 Defines the function <tt>afun(id, ax, ay)</tt>
-where \c id is \c ax and \c ay are vectors with <tt>AD<Base></tt> elements.
+where id is ax and ay are vectors with <tt>AD<Base></tt> elements.
 
 \par Tvector
 the Simple Vector template class for this function.
@@ -758,8 +758,8 @@ the base type for the atomic operation.
 
 \par afun
 name of the CppAD defined function that corresponding to this operation.
-Note that \c afun, preceeded by a pound sign,
-is a version of \c afun with quotes arround it.
+Note that afun, preceeded by a pound sign,
+is a version of afun with quotes arround it.
 
 \par forward
 name of the user defined function that computes corresponding

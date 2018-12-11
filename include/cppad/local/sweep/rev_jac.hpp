@@ -53,11 +53,11 @@ is the number of independent variables on the tape.
 
 \param numvar
 is the total number of variables on the tape; i.e.,
-\a play->num_var_rec().
-This is also the number of rows in the entire sparsity pattern \a RevJac.
+ play->num_var_rec().
+This is also the number of rows in the entire sparsity pattern RevJac.
 
 \param play
-The information stored in \a play
+The information stored in play
 is a recording of the operations corresponding to a function
 \f[
 	F : {\bf R}^n \rightarrow {\bf R}^m
@@ -66,22 +66,22 @@ where \f$ n \f$ is the number of independent variables
 and \f$ m \f$ is the number of dependent variables.
 
 \param var_sparsity
-For i = 0 , ... , \a numvar - 1,
+For i = 0 , ... , numvar - 1,
 (all the variables on the tape)
 the forward Jacobian sparsity pattern for variable i
-corresponds to the set with index i in \a var_sparsity.
+corresponds to the set with index i in var_sparsity.
 \b
 \b
 \b Input:
-For i = 0 , ... , \a numvar - 1,
+For i = 0 , ... , numvar - 1,
 the forward Jacobian sparsity pattern for variable i is an input
 if i corresponds to a dependent variable.
 Otherwise the sparsity patten is empty.
 \n
 \n
-\b Output: For j = 1 , ... , \a n,
+\b Output: For j = 1 , ... , n,
 the sparsity pattern for the dependent variable with index (j-1)
-is given by the set with index index j in \a var_sparsity.
+is given by the set with index index j in var_sparsity.
 
 \param not_used_rec_base
 Specifies RecBase for this call.

@@ -365,11 +365,11 @@ Private helper function that does computation for all Sparse Hessian cases.
 is the base type for the recording that is stored in this ADFun<Base object.
 
 \tparam VectorBase
-is a simple vector class with elements of type \a Base.
+is a simple vector class with elements of type Base.
 
 \tparam VectorSet
 is a simple vector class with elements of type
-\c bool or \c std::set<size_t>.
+ bool or std::set<size_t>.
 
 \tparam VectorSize
 is sparse_pack or sparse_list.
@@ -400,10 +400,10 @@ The return value <code>hes[k]</code> is the second partial of
 <code>row[k]</code> and <code>col[k]</code> component of \f$ x\f$.
 
 \param work
-This structure contains information that is computed by \c SparseHessianCompute.
-If the sparsity pattern, \c row vector, or \c col vectors
-are not the same between calls to \c SparseHessianCompute,
-\c work.clear() must be called to reinitialize \c work.
+This structure contains information that is computed by SparseHessianCompute.
+If the sparsity pattern, row vector, or col vectors
+are not the same between calls to SparseHessianCompute,
+ work.clear() must be called to reinitialize work.
 
 \return
 Is the number of first order forward sweeps used to compute the
@@ -599,14 +599,14 @@ The C++ source code corresponding to this operation is
 is the base type for the recording that is stored in this ADFun<Base object.
 
 \tparam VectorBase
-is a simple vector class with elements of type \a Base.
+is a simple vector class with elements of type Base.
 
 \tparam VectorSet
 is a simple vector class with elements of type
-\c bool or \c std::set<size_t>.
+ bool or std::set<size_t>.
 
 \tparam VectorSize
-is a simple vector class with elements of type \c size_t.
+is a simple vector class with elements of type size_t.
 
 \param x [in]
 is a vector specifing the point at which to compute the Hessian.
@@ -634,10 +634,10 @@ The return value <code>hes[k]</code> is the second partial of
 <code>row[k]</code> and <code>col[k]</code> component of \f$ x\f$.
 
 \param work
-This structure contains information that is computed by \c SparseHessianCompute.
-If the sparsity pattern, \c row vector, or \c col vectors
-are not the same between calls to \c SparseHessian,
-\c work.clear() must be called to reinitialize \c work.
+This structure contains information that is computed by SparseHessianCompute.
+If the sparsity pattern, row vector, or col vectors
+are not the same between calls to SparseHessian,
+ work.clear() must be called to reinitialize work.
 
 \return
 Is the number of first order forward sweeps used to compute the
@@ -721,11 +721,11 @@ is the base type for the recording that is stored in this
 ADFun<Base object.
 
 \tparam VectorBase
-is a simple vector class with elements of the \a Base.
+is a simple vector class with elements of the Base.
 
 \tparam VectorSet
 is a simple vector class with elements of type
-\c bool or \c std::set<size_t>.
+ bool or std::set<size_t>.
 
 \param x [in]
 is a vector specifing the point at which to compute the Hessian.
@@ -733,16 +733,16 @@ is a vector specifing the point at which to compute the Hessian.
 \param w [in]
 The Hessian is computed for a weighted sum of the components
 of the function corresponding to this ADFun<Base> object.
-The argument \a w specifies the weights for each component.
+The argument w specifies the weights for each component.
 It must have size equal to the range dimension for this ADFun<Base> object.
 
 \param p [in]
 is a sparsity pattern for the Hessian.
 
 \return
-Will be a vector of size \c n * n containing the Hessian of
-at the point specified by \a x
-(where \c n is the domain dimension for this ADFun<Base> object).
+Will be a vector of size n * n containing the Hessian of
+at the point specified by x
+(where n is the domain dimension for this ADFun<Base> object).
 */
 template <class Base, class RecBase>
 template <class VectorBase, class VectorSet>
@@ -814,7 +814,7 @@ is the base type for the recording that is stored in this
 ADFun<Base object.
 
 \tparam VectorBase
-is a simple vector class with elements of the \a Base.
+is a simple vector class with elements of the Base.
 
 \param x [in]
 is a vector specifing the point at which to compute the Hessian.
@@ -822,13 +822,13 @@ is a vector specifing the point at which to compute the Hessian.
 \param w [in]
 The Hessian is computed for a weighted sum of the components
 of the function corresponding to this ADFun<Base> object.
-The argument \a w specifies the weights for each component.
+The argument w specifies the weights for each component.
 It must have size equal to the range dimension for this ADFun<Base> object.
 
 \return
-Will be a vector of size \c n * n containing the Hessian of
-at the point specified by \a x
-(where \c n is the domain dimension for this ADFun<Base> object).
+Will be a vector of size n * n containing the Hessian of
+at the point specified by x
+(where n is the domain dimension for this ADFun<Base> object).
 */
 template <class Base, class RecBase>
 template <class VectorBase>

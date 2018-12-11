@@ -25,7 +25,7 @@ Check if certain properties is true for any possible AD tape play back.
 Determine if an AD<Base> object is a parameter, and could never have
 a different value during any tape playback.
 
-An AD<Base> object \c x is identically a parameter if and only if
+An AD<Base> object x is identically a parameter if and only if
 all of the objects in the following chain are parameters:
 \code
 	x , x.value , x.value.value , ...
@@ -37,7 +37,7 @@ no matter what the independent variable values are at any level.
 values that we are checking for identically a pamameter.
 
 \return
-returns true iff \c x is identically a parameter.
+returns true iff x is identically a parameter.
 */
 template <class Base>
 bool IdenticalCon(const AD<Base> &x)
@@ -52,7 +52,7 @@ object that we are checking.
 
 \return
 returns true if and only if
-\c x is equals zero and is identically a parameter \ref CppAD::IdenticalCon.
+ x is equals zero and is identically a parameter \ref CppAD::IdenticalCon.
 */
 template <class Base>
 bool IdenticalZero(const AD<Base> &x)
@@ -67,7 +67,7 @@ object that we are checking.
 
 \return
 returns true if and only if
-\c x is equals one and is identically a parameter \ref CppAD::IdenticalCon.
+ x is equals one and is identically a parameter \ref CppAD::IdenticalCon.
 */
 template <class Base>
 bool IdenticalOne(const AD<Base> &x)

@@ -46,20 +46,20 @@ i.e., x.
 
 
 \param sparsity
-\b Input: The set with index \a arg[0] in \a sparsity
+\b Input: The set with index arg[0] in sparsity
 is the sparsity bit pattern for x.
 This identifies which of the independent variables the variable x
 depends on.
 \n
 \n
-\b Output: The set with index \a i_z in \a sparsity
+\b Output: The set with index i_z in sparsity
 is the sparsity bit pattern for z.
 This identifies which of the independent variables the variable z
 depends on.
 \n
 
 \par Checked Assertions:
-\li \a i_x < \a i_z
+\li i_x < i_z
 */
 
 template <class Vector_set>
@@ -108,19 +108,19 @@ i.e. the row index in sparsity corresponding to x.
 
 \param sparsity
 \b Input:
-The set with index \a i_z in \a sparsity
+The set with index i_z in sparsity
 is the sparsity bit pattern for G with respect to the variable z.
 \n
 \b Input:
-The set with index \a i_x in \a sparsity
+The set with index i_x in sparsity
 is the sparsity bit pattern for G with respect to the variable x.
 \n
 \b Output:
-The set with index \a i_x in \a sparsity
+The set with index i_x in sparsity
 is the sparsity bit pattern for H with respect to the variable x.
 
 \par Checked Assertions:
-\li \a i_x < \a i_z
+\li i_x < i_z
 */
 
 template <class Vector_set>

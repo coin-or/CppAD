@@ -36,17 +36,17 @@ the function call
 \verbatim
 	fg_info->index(k, ell, I, J);
 \endverbatim
-is made by \c jac_g_map.
-The values \c k and \c ell are inputs.
-The input size of \c I ( \c J )
+is made by jac_g_map.
+The values k and ell are inputs.
+The input size of I ( J )
 is greater than or equal <tt>p[k] ( q[k] )</tt>
 and this size is not changed.
-The input values of the elements of \c I and \c J are not specified.
-The output value of the elements of \c I define
+The input values of the elements of I and J are not specified.
+The output value of the elements of I define
 \f[
 I_{k, \ell} = ( {\rm I[0]} , \cdots , {\rm I[p[k]-1]} )
 \f]
-The output value of the elements of \c J define
+The output value of the elements of J define
 \f[
 J_{k, \ell} = ( {\rm J[0]} , \cdots , {\rm J[q[k]-1]} )
 \f]
@@ -64,39 +64,39 @@ is the number of functions \f$ r_k ( u ) \f$ used for the representation of
 \f$ f(x) \f$ and \f$ g(x) \f$.
 
 \param L
-is a vector with size \c K.
+is a vector with size K.
 For <tt>k = 0 , ... , K-1, L[k]</tt>
 is the number of terms that use \f$ r_k (u) \f$
 in the representation of \f$ f(x) \f$ and \f$ g(x) \f$.
 
 \param p
-is a vector with size \c K.
+is a vector with size K.
 For <tt>k = 0 , ... , K-1, p[k]</tt>
 is dimension of the range space for \f$ r_k (u) \f$; i.e.,
 \f$ r_k (u) \in {\bf R}^{p(k)} \f$.
 
 \param q
-is a vector with size \c K.
+is a vector with size K.
 For <tt>k = 0 , ... , K-1, q[k]</tt>
 is dimension of the domain space for \f$ r_k (u) \f$; i.e.,
 \f$ u \in {\bf R}^{q(k)} \f$.
 
 \param pattern_jac_r
-is a vector with size \c K.
+is a vector with size K.
 For <tt>k = 0 , ... , K-1, pattern_jac_r[k]</tt>
 is a CppAD sparsity pattern for the Jacobian of the function
 \f$ r_k : {\bf R}^{q(k)} \rightarrow {\bf R}^{p(k)} \f$.
 As such, <tt>pattern_jac_r[k].size() == p[k] * q[k]</tt>.
 
 \param I
-is a work vector of length greater than or equal <tt>p[k]</tt> for all \c k.
+is a work vector of length greater than or equal <tt>p[k]</tt> for all k.
 The input and output value of its elements are unspecified.
-The size of \c I is not changed.
+The size of I is not changed.
 
 \param J
-is a work vector of length greater than or equal <tt>q[k]</tt> for all \c k.
+is a work vector of length greater than or equal <tt>q[k]</tt> for all k.
 The input and output value of its elements are unspecified.
-The size of \c J is not changed.
+The size of J is not changed.
 
 \param index_jac_g:
 On input, this is empty; i.e., <tt>index_jac_g.size() == 0</tt>.

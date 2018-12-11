@@ -141,12 +141,12 @@ Otherwise, this smybol should be zero.
 Is the type used to store address on the tape. If not size_t, then
 <code>sizeof(CPPAD_TAPE_ADDR_TYPE) <= sizeof( size_t )</code>
 to conserve memory.
-This type must support \c std::numeric_limits,
-the \c <= operator,
-and conversion to \c size_t.
+This type must support std::numeric_limits,
+the <= operator,
+and conversion to size_t.
 Make sure that the type chosen returns true for is_pod<CPPAD_TAPE_ADDR_TYPE>
 in pod_vector.hpp.
-This type is later defined as \c addr_t in the CppAD namespace.
+This type is later defined as addr_t in the CppAD namespace.
 */
 # define CPPAD_TAPE_ADDR_TYPE @cppad_tape_addr_type@
 
@@ -155,12 +155,12 @@ This type is later defined as \c addr_t in the CppAD namespace.
 Is the type used to store tape identifiers. If not size_t, then
 <code>sizeof(CPPAD_TAPE_ID_TYPE) <= sizeof( size_t )</code>
 to conserve memory.
-This type must support \c std::numeric_limits,
-the \c <= operator,
-and conversion to \c size_t.
+This type must support std::numeric_limits,
+the <= operator,
+and conversion to size_t.
 Make sure that the type chosen returns true for is_pod<CPPAD_TAPE_ID_TYPE>
 in pod_vector.hpp.
-This type is later defined as \c tape_id_t in the CppAD namespace.
+This type is later defined as tape_id_t in the CppAD namespace.
 */
 # define CPPAD_TAPE_ID_TYPE @cppad_tape_id_type@
 

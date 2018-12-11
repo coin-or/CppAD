@@ -244,7 +244,7 @@ can then be used to put an operation sequence in this ADFun object.
 
 \tparam Base
 is the base for the recording that can be stored in this ADFun object;
-i.e., operation sequences that were recorded using the type \c AD<Base>.
+i.e., operation sequences that were recorded using the type AD<Base>.
 */
 template <typename Base, typename RecBase>
 ADFun<Base,RecBase>::ADFun(void) :
@@ -294,14 +294,14 @@ The C++ syntax for this operation is
 \verbatim
 	g = f
 \endverbatim
-where \c g and \c f are ADFun<Base> ADFun objects.
-A copy of the the operation sequence currently stored in \c f
-is placed in this ADFun object (called \c g above).
+where g and f are ADFun<Base> ADFun objects.
+A copy of the the operation sequence currently stored in f
+is placed in this ADFun object (called g above).
 Any information currently stored in this ADFun object is lost.
 
 \tparam Base
 is the base for the recording that can be stored in this ADFun object;
-i.e., operation sequences that were recorded using the type \c AD<Base>.
+i.e., operation sequences that were recorded using the type AD<Base>.
 
 \param f
 ADFun object containing the operation sequence to be copied.
@@ -397,30 +397,30 @@ The C++ syntax for this operation is
 	ADFun<Base> f(x, y)
 \endverbatim
 The operation sequence that started with the previous call
-\c Independent(x), and that ends with this operation, is stored
-in this \c ADFun<Base> object \c f.
+ Independent(x), and that ends with this operation, is stored
+in this ADFun<Base> object f.
 
 \tparam Base
-is the base for the recording that will be stored in the object \c f;
-i.e., the operations were recorded using the type \c AD<Base>.
+is the base for the recording that will be stored in the object f;
+i.e., the operations were recorded using the type AD<Base>.
 
 \tparam VectorAD
-is a simple vector class with elements of typea \c AD<Base>.
+is a simple vector class with elements of typea AD<Base>.
 
 \param x
 is the independent variable vector for this ADFun object.
-The domain dimension of this object will be the size of \a x.
+The domain dimension of this object will be the size of x.
 
 \param y
 is the dependent variable vector for this ADFun object.
-The range dimension of this object will be the size of \a y.
+The range dimension of this object will be the size of y.
 
 \par Taylor Coefficients
 A zero order forward mode sweep is done,
 and if NDEBUG is not defined the resulting values for the
-depenedent variables are checked against the values in \a y.
+depenedent variables are checked against the values in y.
 Thus, the zero order Taylor coefficients
-corresponding to the value of the \a x vector
+corresponding to the value of the x vector
 are stored in this ADFun object.
 */
 template <typename Base, typename RecBase>

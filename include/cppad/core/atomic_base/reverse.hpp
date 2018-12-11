@@ -264,16 +264,16 @@ Link from reverse mode sweep to users routine.
 highest order for this reverse mode calculation.
 
 \param tx [in]
-Taylor coefficients corresponding to \c x for this calculation.
+Taylor coefficients corresponding to x for this calculation.
 
 \param ty [in]
-Taylor coefficient corresponding to \c y for this calculation
+Taylor coefficient corresponding to y for this calculation
 
 \param px [out]
-Partials w.r.t. the \c x Taylor coefficients.
+Partials w.r.t. the x Taylor coefficients.
 
 \param py [in]
-Partials w.r.t. the \c y Taylor coefficients.
+Partials w.r.t. the y Taylor coefficients.
 
 See atomic_reverse mode use documentation
 */

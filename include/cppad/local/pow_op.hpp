@@ -24,7 +24,7 @@ Compute forward mode Taylor coefficients for result of op = PowvvOp.
 
 In the documentation below,
 this operations is for the case where both x and y are variables
-and the argument \a parameter is not used.
+and the argument parameter is not used.
 
 \copydetails CppAD::local::forward_pow_op
 */
@@ -130,7 +130,7 @@ The C++ source code corresponding to this operation is
 \endverbatim
 In the documentation below,
 this operations is for the case where both x and y are variables
-and the argument \a parameter is not used.
+and the argument parameter is not used.
 
 \copydetails CppAD::local::forward_pow_op_0
 */
@@ -172,7 +172,7 @@ The C++ source code corresponding to this operation is
 \endverbatim
 In the documentation below,
 this operations is for the case where both x and y are variables
-and the argument \a parameter is not used.
+and the argument parameter is not used.
 
 \copydetails CppAD::local::reverse_pow_op
 */

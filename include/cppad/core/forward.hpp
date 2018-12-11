@@ -285,8 +285,8 @@ Taylor coefficients per variable.
 
 \param r
 is the number of directions for this calculation.
-If <code>q != 1</code>, \c r must be the same as in the previous
-call to Forward where \c q was equal to one.
+If <code>q != 1</code>, r must be the same as in the previous
+call to Forward where q was equal to one.
 
 \param xq
 contains Taylor coefficients for the independent variables.
@@ -299,7 +299,7 @@ and the ell-th direction.
 
 \return
 contains Taylor coefficients for the dependent variables.
-The size of the return value \c y is <code>r*m</code>.
+The size of the return value y is <code>r*m</code>.
 For <code>i = 0, ... , m-1</code>,
 <code>ell = 0, ... , r-1</code>,
 <code>y[ r*i + ell ]</code>
@@ -308,7 +308,7 @@ and the ell-th direction.
 
 \par taylor_
 The Taylor coefficients up to order <code>q-1</code> are inputs
-and the coefficents of order \c q are outputs.
+and the coefficents of order q are outputs.
 Let <code>N = num_var_tape_</code>, and
 <code>C = cap_order_taylor_</code>.
 Note that for

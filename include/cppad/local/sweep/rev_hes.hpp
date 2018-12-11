@@ -47,12 +47,12 @@ is the number of independent variables on the tape.
 
 \param numvar
 is the total number of variables on the tape; i.e.,
-\a play->num_var_rec().
+ play->num_var_rec().
 This is also the number of rows in the entire sparsity pattern
-\a rev_hes_sparse.
+ rev_hes_sparse.
 
 \param play
-The information stored in \a play
+The information stored in play
 is a recording of the operations corresponding to a function
 \f[
 	F : {\bf R}^n \rightarrow {\bf R}^m
@@ -61,36 +61,36 @@ where \f$ n \f$ is the number of independent variables
 and \f$ m \f$ is the number of dependent variables.
 
 \param for_jac_sparse
-For i = 0 , ... , \a numvar - 1,
+For i = 0 , ... , numvar - 1,
 (for all the variables on the tape),
 the forward Jacobian sparsity pattern for the variable with index i
-corresponds to the set with index i in \a for_jac_sparse.
+corresponds to the set with index i in for_jac_sparse.
 
 \param RevJac
 \b Input:
-For i = 0, ... , \a numvar - 1
+For i = 0, ... , numvar - 1
 the if the variable with index i on the tape is an dependent variable and
-included in the Hessian, \a RevJac[ i ] is equal to true,
+included in the Hessian, RevJac[ i ] is equal to true,
 otherwise it is equal to false.
 \n
 \n
-\b Output: The values in \a RevJac upon return are not specified; i.e.,
+\b Output: The values in RevJac upon return are not specified; i.e.,
 it is used for temporary work space.
 
 \param rev_hes_sparse
 The reverse Hessian sparsity pattern for the variable with index i
-corresponds to the set with index i in \a rev_hes_sparse.
+corresponds to the set with index i in rev_hes_sparse.
 \n
 \n
-\b Input: For i = 0 , ... , \a numvar - 1
+\b Input: For i = 0 , ... , numvar - 1
 the reverse Hessian sparsity pattern for the variable with index i is empty.
 \n
 \n
-\b Output: For j = 1 , ... , \a n,
+\b Output: For j = 1 , ... , n,
 the reverse Hessian sparsity pattern for the independent dependent variable
 with index (j-1) is given by the set with index j
-in \a rev_hes_sparse.
-The values in the rest of \a rev_hes_sparse are not specified; i.e.,
+in rev_hes_sparse.
+The values in the rest of rev_hes_sparse are not specified; i.e.,
 they are used for temporary work space.
 
 \param not_used_rec_base

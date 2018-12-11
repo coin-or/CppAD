@@ -1003,7 +1003,7 @@ public:
 	is the index in this sparse_list object of the set being assinged.
 
 	\param other_source
-	is the index in the other \c sparse_list object of the
+	is the index in the other sparse_list object of the
 	set that we are using as the value to assign to the target set.
 
 	\param other
@@ -1416,7 +1416,7 @@ is a simple vector with elements of type std::set<size_t>.
 
 \param internal
 The input value of sparisty does not matter.
-Upon return it contains the same sparsity pattern as \c user
+Upon return it contains the same sparsity pattern as user
 (or the transposed sparsity pattern).
 
 \param user

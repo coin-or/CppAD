@@ -37,9 +37,9 @@ is computed (otherwise undefined values are used).
 is a hash code that is between zero and CPPAD_HASH_TABLE_SIZE - 1.
 
 \par Checked Assertions
-\li \c std::numeric_limits<unsigned short>::max() >= CPPAD_HASH_TABLE_SIZE
-\li \c sizeof(value) is even
-\li \c sizeof(unsigned short)  == 2
+\li std::numeric_limits<unsigned short>::max() >= CPPAD_HASH_TABLE_SIZE
+\li sizeof(value) is even
+\li sizeof(unsigned short)  == 2
 */
 template <class Value>
 unsigned short local_hash_code(const Value& value)
@@ -92,29 +92,29 @@ DisOp
 AddvvOp, DivvvOp, MulvvOp, PowvvOp, SubvvOp, ZmulvvOp
 
 \param arg
-is a vector of length \c NumArg(op) or 2 (which ever is smaller),
+is a vector of length NumArg(op) or 2 (which ever is smaller),
 containing the corresponding argument indices for this operator.
 
 \param npar
 is the number of parameters corresponding to this operation sequence.
 
 \param par
-is a vector of length \a npar containing the parameters
+is a vector of length npar containing the parameters
 for this operation sequence; i.e.,
-given a parameter index of \c i, the corresponding parameter value is
-\a par[i].
+given a parameter index of i, the corresponding parameter value is
+ par[i].
 
 
 \return
 is a hash code that is between zero and CPPAD_HASH_TABLE_SIZE - 1.
 
 \par Checked Assertions
-\c op must be one of the operators specified above. In addition,
-\li \c std::numeric_limits<unsigned short>::max() >= CPPAD_HASH_TABLE_SIZE
-\li \c sizeof(size_t) is even
-\li \c sizeof(Base) is even
-\li \c sizeof(unsigned short)  == 2
-\li \c size_t(op) < size_t(NumberOp) <= CPPAD_HASH_TABLE_SIZE
+ op must be one of the operators specified above. In addition,
+\li std::numeric_limits<unsigned short>::max() >= CPPAD_HASH_TABLE_SIZE
+\li sizeof(size_t) is even
+\li sizeof(Base) is even
+\li sizeof(unsigned short)  == 2
+\li size_t(op) < size_t(NumberOp) <= CPPAD_HASH_TABLE_SIZE
 \li if the j-th argument for this operation is a parameter, arg[j] < npar.
 */
 

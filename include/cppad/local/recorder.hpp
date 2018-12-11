@@ -26,8 +26,8 @@ Class used to store an operation sequence while it is being recorded
 (the operation sequence is copied to the player class for playback).
 
 \tparam Base
-This is an AD< \a Base > operation sequence recording; i.e.,
-it records operations of type AD< \a Base >.
+This is an AD< Base > operation sequence recording; i.e.,
+it records operations of type AD< Base >.
 */
 template <class Base>
 class recorder {
@@ -545,7 +545,7 @@ The following syntax
 \endverbatim
 places the values passed to PutArg at the current end of the
 operation argument indices for the recording.
-\a arg0 comes before \a arg1, etc.
+ arg0 comes before arg1, etc.
 The proper number of operation argument indices
 corresponding to the operation code op is given by
 \verbatim

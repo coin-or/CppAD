@@ -128,14 +128,14 @@ recording of operations used the type AD<Base>.
 
 \param c
 is the number of orders to allocate memory for.
-If <code>c == 0</code> then \c r must also be zero.
+If <code>c == 0</code> then r must also be zero.
 In this case num_order_taylor_, cap_order_taylor_, and num_direction_taylor_
 are all set to zero.
 In addition, taylor_.clear() is called.
 
 \param r
 is the number of directions to allocate memory for.
-If <code>c == 1</code> then \c r must also be one.
+If <code>c == 1</code> then r must also be one.
 In all cases, it must hold that
 <code>
 	r == num_direction_taylor_ || num_order_taylor <= 1
@@ -148,7 +148,7 @@ value and c. This minimum is the number of orders that are copied to the
 new taylor coefficient buffer.
 
 \par num_direction_taylor_
-The output value of num_direction_taylor_ is equal to \c r.
+The output value of num_direction_taylor_ is equal to r.
 */
 
 template <typename Base, typename RecBase>
@@ -231,9 +231,9 @@ value and c. This minimum is the number of orders that are copied to the
 new taylor coefficient buffer.
 
 \par num_direction_taylor_
-If \c is zero (one), \c num_direction_taylor_ is set to zero (one).
-Otherwise, if \c num_direction_taylor_ is zero, it is set to one.
-Othwerwise, \c num_direction_taylor_ is not modified.
+If is zero (one), num_direction_taylor_ is set to zero (one).
+Otherwise, if num_direction_taylor_ is zero, it is set to one.
+Othwerwise, num_direction_taylor_ is not modified.
 */
 
 template <typename Base, typename RecBase>

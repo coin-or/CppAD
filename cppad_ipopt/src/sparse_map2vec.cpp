@@ -43,16 +43,16 @@ for(i = 0; i < sparse.size(); i++)
 is the total number of possibly non-zero entries.
 
 \param i_row
-The input size and element values for \c i_row do not matter.
-On output, it has size \c n_nz
+The input size and element values for i_row do not matter.
+On output, it has size n_nz
 and <tt>i_row[k]</tt> contains the row index corresponding to the
-\c k-th possibly non-zero entry.
+ k-th possibly non-zero entry.
 
 \param j_col
-The input size and element values for \c j_col do not matter.
-On output, it has size \c n_nz
+The input size and element values for j_col do not matter.
+On output, it has size n_nz
 and <tt>j_col[k]</tt> contains the column index corresponding to the
-\c k-th possibly non-zero entry.
+ k-th possibly non-zero entry.
 */
 void sparse_map2vec(
 	const CppAD::vector< std::map<size_t, size_t> > sparse,

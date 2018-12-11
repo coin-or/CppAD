@@ -161,7 +161,7 @@ using <tt>bool F(Base x)</tt>.
 base for the AD type of arguments to this unary bool valued function.
 
 \param unary_name
-name of this unary function; i.e., \c F.
+name of this unary function; i.e., F.
 */
 # define CPPAD_BOOL_UNARY(Base, unary_name)                        \
      inline bool unary_name (const CppAD::AD<Base> &x)             \
@@ -201,7 +201,7 @@ using <tt>bool F(Base x, Base y)</tt>.
 base for the AD type of arguments to this binary bool valued function.
 
 \param binary_name
-name of this binary function; i.e., \c F.
+name of this binary function; i.e., F.
 */
 
 # define CPPAD_BOOL_BINARY(Base, binary_name)                      \

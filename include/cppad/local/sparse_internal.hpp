@@ -37,7 +37,7 @@ type of an element in the sparsity structrue.
 is the type of the corresponding internal sparsity pattern.
 */
 template <class Element_type> struct internal_sparsity;
-/// Specilization for \c bool elements.
+/// Specilization for bool elements.
 template <>
 struct internal_sparsity<bool>
 {

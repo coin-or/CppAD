@@ -117,18 +117,18 @@ public:
 Compute the indices that sort a vector of keys
 
 \tparam VectorKey
-Simple vector type that deterimene the sorting order by \c < operator
+Simple vector type that deterimene the sorting order by < operator
 on its elements.
 
 \tparam VectorSize
-Simple vector type with elements of \c size_t
+Simple vector type with elements of size_t
 that is used to return index values.
 
 \param keys [in]
 values that determine the sorting order.
 
 \param ind [out]
-must have the same size as \c keys.
+must have the same size as keys.
 The input value of its elements does not matter.
 The output value of its elements satisfy
 \code

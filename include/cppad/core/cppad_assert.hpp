@@ -95,16 +95,16 @@ $end
 
 /*!
 \def CPPAD_ASSERT_KNOWN(exp, msg)
-Check that \a exp is true, if not print \a msg and terminate execution.
+Check that exp is true, if not print msg and terminate execution.
 
-The C++ expression \a exp is expected to be true.
+The C++ expression exp is expected to be true.
 If it is false,
-the CppAD use has made an error that is described by \a msg.
-If the preprocessor symbol \a NDEBUG is not defined,
-and \a exp is false,
+the CppAD use has made an error that is described by msg.
+If the preprocessor symbol NDEBUG is not defined,
+and exp is false,
 this macro will report the source code line number at
 which this expected result occurred.
-In addition, it will print the specified error message \a msg.
+In addition, it will print the specified error message msg.
 */
 # ifdef NDEBUG
 # define CPPAD_ASSERT_KNOWN(exp, msg)  // do nothing
@@ -122,13 +122,13 @@ In addition, it will print the specified error message \a msg.
 
 /*!
 \def CPPAD_ASSERT_UNKNOWN(exp)
-Check that \a exp is true, if not terminate execution.
+Check that exp is true, if not terminate execution.
 
-The C++ expression \a exp is expected to be true.
+The C++ expression exp is expected to be true.
 If it is false,
 CppAD has detected an error but does not know the cause of the error.
-If the preprocessor symbol \a NDEBUG is not defined,
-and \a exp is false,
+If the preprocessor symbol NDEBUG is not defined,
+and exp is false,
 this macro will report the source code line number at
 which this expected result occurred.
 */
@@ -148,9 +148,9 @@ which this expected result occurred.
 
 /*!
 \def CPPAD_ASSERT_NARG_NRES(op, n_arg, n_res)
-Check that operator \a op has the specified number of of arguments and results.
+Check that operator op has the specified number of of arguments and results.
 
-If \a NDEBUG is not defined and either the number of arguments
+If NDEBUG is not defined and either the number of arguments
 or the number of results are not as expected,
 execution is terminated and the source code line number is reported.
 */
@@ -162,8 +162,8 @@ execution is terminated and the source code line number is reported.
 \def CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL
 Check that the first call to a routine is not during parallel execution mode.
 
-If \c NDEBUG is defined, this macro has no effect
-(not even the definition of (\c assert_first_call).
+If NDEBUG is defined, this macro has no effect
+(not even the definition of (assert_first_call).
 Otherwise, the variable
 \code
 	static bool assert_first_call

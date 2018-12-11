@@ -61,7 +61,7 @@ Class used to hold function objects
 
 \tparam Base
 A function object has a recording of <tt>AD<Base></tt> operations.
-It does it calculations using \c Base operations.
+It does it calculations using Base operations.
 */
 
 

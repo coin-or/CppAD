@@ -161,9 +161,9 @@ This macro defines the operation
 \verbatim
 	CondExpRel(left, right, exp_if_true, exp_if_false)
 \endverbatim
-The argument \c Type is the \c Base type for this base require operation.
-The argument \c Rel is one of \c Lt, \c Le, \c Eq, \c Ge, \c Gt.
-The argument \c Op is the corresponding \c CompareOp value.
+The argument Type is the Base type for this base require operation.
+The argument Rel is one of Lt, Le, Eq, Ge, Gt.
+The argument Op is the corresponding CompareOp value.
 */
 # define CPPAD_COND_EXP_BASE_REL(Type, Rel, Op)       \
 	inline Type CondExp##Rel(                        \
@@ -184,7 +184,7 @@ The macro defines the operations
 	CondExpGe(left, right, exp_if_true, exp_if_false)
 	CondExpGt(left, right, exp_if_true, exp_if_false)
 \endverbatim
-The argument \c Type is the \c Base type for this base require operation.
+The argument Type is the Base type for this base require operation.
 */
 # define CPPAD_COND_EXP_REL(Type)                     \
 	CPPAD_COND_EXP_BASE_REL(Type, Lt, CompareLt)     \
@@ -201,7 +201,7 @@ that have comparision operators.
 is the type of the left and right operands to the comparision operator.
 
 \tparam ResultType
-is the type of the result, which is the same as \c CompareType except
+is the type of the result, which is the same as CompareType except
 during forward and reverse mode sparese calculations.
 
 \param cop
@@ -226,7 +226,7 @@ is the return value is the comparision results in true.
 is the return value is the comparision results in false.
 
 \return
-see \c exp_if_true and \c exp_if_false above.
+see exp_if_true and exp_if_false above.
 */
 template <class CompareType, class ResultType>
 ResultType CondExpTemplate(

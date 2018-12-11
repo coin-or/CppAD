@@ -34,11 +34,11 @@ typedef CPPAD_VEC_ENUM_TYPE opcode_t;
 
 
 /*!
-Type used to distinguish different AD< \a Base > atomic operations.
+Type used to distinguish different AD< Base > atomic operations.
 
 Each of the operators ends with the characters Op. Ignoring the Op at the end,
 the operators appear in alphabetical order. Binary operation where both
-operands have type AD< \a Base > use the following convention for thier endings:
+operands have type AD< Base > use the following convention for thier endings:
 \verbatim
     Ending  Left-Operand  Right-Operand
       pvOp     parameter       variable
@@ -553,7 +553,7 @@ void printOpField(
 Prints a single operator and its operands
 
 \tparam Base
-Is the base type for these AD< \a Base > operations.
+Is the base type for these AD< Base > operations.
 
 \param os
 is the output stream that the information is printed on.
@@ -869,7 +869,7 @@ void printOp(
 Prints the result values correspnding to an operator.
 
 \tparam Base
-Is the base type for these AD< \a Base > operations.
+Is the base type for these AD< Base > operations.
 
 \tparam Value
 Determines the type of the values that we are printing.

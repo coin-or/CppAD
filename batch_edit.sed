@@ -4,7 +4,6 @@
 # 6. Convert tabs to spaces.
 # 7. Change CPPAD_TESTVECTOR to a template type (see Eigen entry in wishlist).
 # 9. Change Vector<T> -> <T>Vector for T = Base, Size, Bool (T != Set)
-# 12. Remove all doxygen \a commands (not used consistently)
 # 13. Remove CPPAD_INLINE_FRIEND_TEMPLATE_FUNCTION
 # 14. Remove all inlines for functions that depend on template parameters.
 # 17. Remove 'It returns true if it succeeds and false otherwise.'
@@ -36,10 +35,18 @@
 # '
 # ----------------------------------------------------------------------------
 # Put other sed commands below here and without # at start of line
-s|\\in B|\\in \\B{R}|g
-s|\\times B|\\times \\B{R}|g
-s|\\rightarrow B|\\rightarrow \\B{R}|g
-s|B^|\\B{R}^|g
+s|\\arg\[2\]|arg[2]|
 #
-s|: B|: \\B{R}|g
-s|"\([^"]*\): \\B{R}|"\1: B|
+s|^\\a | |
+s|^\\c | |
+#
+s| \\a | |g
+s| \\c | |g
+#
+s|\t\\a |\t|g
+s|\t\\c |\t|g
+#
+s|(\\a |(|g
+s|(\\c |(|g
+#
+#

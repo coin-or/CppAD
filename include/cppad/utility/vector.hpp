@@ -365,7 +365,7 @@ public:
 
 	/// copy constructor
 	inline vector(
-		/// the *this vector will be a copy of \c x
+		/// the *this vector will be a copy of x
 		const vector& x
 	) : capacity_(0), length_(0), data_(CPPAD_NULL)
 	{	resize(x.length_);
@@ -706,7 +706,7 @@ public:
 	}
 	/// copy constructor
 	inline vectorBool(
-		/// the *this vector will be a copy of \c v
+		/// the *this vector will be a copy of v
 		const vectorBool& v
 	) : n_unit_(0), length_(v.length_), data_(CPPAD_NULL)
 	{	if( length_ > 0 )

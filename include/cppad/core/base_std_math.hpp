@@ -173,7 +173,7 @@ This macro defines the function
 \verbatim
 	y = CppAD:Fun(x)
 \endverbatim
-where the argument \c x and return value \c y have type \c Type
+where the argument x and return value y have type Type
 using the corresponding function <code>std::Fun</code>.
 */
 # define CPPAD_STANDARD_MATH_UNARY(Type, Fun) \

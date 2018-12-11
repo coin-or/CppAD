@@ -719,7 +719,7 @@ The set of evaluation methods for this class is
 \verbatim
 	{ eval_f, eval_grad_f, eval_g, eval_jac_g, eval_h }
 \endverbatim
-Note that the \c bool return flag for the evaluations methods
+Note that the bool return flag for the evaluations methods
 does not appear in the Ipopt documentation.
 Looking at the code, it seems to be a flag telling Ipopt to abort
 when the flag is false.
@@ -889,7 +889,7 @@ private:
 	Mapping from (i, j) in Jacobian of g(x) to Ipopt sparsity structure
 
 	For <tt>i = 0 , ... , m_-1, index_jac_g_[i]</tt>
-	is a standard map from column index values \c j to the corresponding
+	is a standard map from column index values j to the corresponding
 	index in the Ipopt sparsity structure for the Jacobian of g(x).
 	*/
 	IndexMap                         index_jac_g_;
@@ -898,7 +898,7 @@ private:
 	Mapping from (i, j) in Hessian of fg(x) to Ipopt sparsity structure
 
 	For <tt>i = 0 , ... , n_-1, index_hes_fg_[i]</tt>
-	is a standard map from column index values \c j to the corresponding
+	is a standard map from column index values j to the corresponding
 	index in the Ipopt sparsity structure for the Hessian of the Lagragian.
 	*/
 	IndexMap                         index_hes_fg_;
@@ -920,9 +920,9 @@ private:
 	*/
 	BoolVector             tape_ok_;
 
-	/// work space of size equal maximum of <tt>q[k]</tt> w.r.t \c k.
+	/// work space of size equal maximum of <tt>q[k]</tt> w.r.t k.
 	SizeVector             J_;
-	/// work space of size equal maximum of <tt>p[k]</tt> w.r.t \c k.
+	/// work space of size equal maximum of <tt>p[k]</tt> w.r.t k.
 	SizeVector             I_;
 	// ------------------------------------------------------------
 	// Private Methods

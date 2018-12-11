@@ -164,7 +164,7 @@ user define discrete functions
 /*!
 \def CPPAD_DISCRETE_FUNCTION(Base, name)
 Defines the function <code>name(ax, ay)</code>
-where \c ax and \c ay are vectors with <code>AD<Base></code> elements.
+where ax and ay are vectors with <code>AD<Base></code> elements.
 
 \par Base
 is the base type for the discrete function.
@@ -228,11 +228,11 @@ public:
 	is the user's name for this discrete function.
 
 	\param f
-	user routine that implements this function for \c Base class.
+	user routine that implements this function for Base class.
 
 	\par
 	This constructor can ont be used in parallel mode because it changes
-	the static object \c List.
+	the static object List.
 	*/
 	discrete(const char* Name, F f) :
 	name_(Name)
@@ -253,7 +253,7 @@ public:
 	is the argument for this call.
 
 	\return
-	the return value is called \c ay above.
+	the return value is called ay above.
 	*/
 	AD<Base> ad(const AD<Base> &ax) const
 	{

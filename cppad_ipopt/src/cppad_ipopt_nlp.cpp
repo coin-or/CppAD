@@ -70,8 +70,8 @@ pointer to object where final results are stored.
 (The object pointed to must not be deleted before this cppad_ipopt_nlp object).
 
 \par Constants
-The following values are set by the constructor and are \c const
-or effectively \c const; i.e., they are set by the constructor and should
+The following values are set by the constructor and are const
+or effectively const; i.e., they are set by the constructor and should
 not be changed:
 \verbatim
 	n_, m_, x_i_, x_l_, x_u_, g_l_, g_u_, K_, L_, p_, q_, retape_,
@@ -80,26 +80,26 @@ not be changed:
 	nnz_h_lag_, iRow_h_lag_, jCol_h_lag_,
 \endverbatim
 In addition, the function calls <tt>fg_info->set_n(n)</tt>
-and <tt>fg_info->set_m(m)</tt> are used to set the values of \c n
-and \c m in \c fg_info.
+and <tt>fg_info->set_m(m)</tt> are used to set the values of n
+and m in fg_info.
 
 \par Variables
 The following arrays have fixed size which is set during this constructor:
 
-\li \c tape_ok_ has size \c K_. It is initialized as true for indices
-\c k such that <tt>retape[k]</tt> is false.
+\li tape_ok_ has size K_. It is initialized as true for indices
+ k such that <tt>retape[k]</tt> is false.
 
-\li \c r_fun_ has size \c K_. It is initilaize with the default
-\c ADFun constructor. Then, for indices \c k such that
+\li r_fun_ has size K_. It is initilaize with the default
+ ADFun constructor. Then, for indices k such that
 <tt>retape[k]</tt> is false, the operation sequence corresponding
 to \f$ r_k (u) \f$ is stored in <tt>r_fun_[k]</tt>.
 
-\li \c I_ has size equal to the maximum of <tt>p[k]</tt> w.r.t \c k.
+\li I_ has size equal to the maximum of <tt>p[k]</tt> w.r.t k.
 
-\li \c J_ has size equal to the maximum of <tt>q[k]</tt> w.r.t \c k.
+\li J_ has size equal to the maximum of <tt>q[k]</tt> w.r.t k.
 
 \par NDEBUG
-If the preprocessor symbol \c NEBUG is not defined,
+If the preprocessor symbol NEBUG is not defined,
 certain of the assumptions about the function calls of the form
 \verbatim
 	fg_info->index(k, ell, I, J)
@@ -247,16 +247,16 @@ cppad_ipopt_nlp::~cppad_ipopt_nlp()
 Return dimension information about optimization problem.
 
 \param[out] n
-is set to the value \c n_.
+is set to the value n_.
 
 \param[out] m
-is set to the value \c m_.
+is set to the value m_.
 
 \param[out] nnz_jac_g
-is set to the value of \c nnz_jac_g_.
+is set to the value of nnz_jac_g_.
 
 \param[out] nnz_h_lag
-is set to the vlaue of \c nnz_h_lag_.
+is set to the vlaue of nnz_h_lag_.
 
 \param[out] index_style
 is set to C_STYLE; i.e., zeoro based indexing is used in the
@@ -281,33 +281,33 @@ Return bound information about optimization problem.
 
 \param[in] n
 is the dimension of the domain space for f(x) and g(x); i.e.,
-it must be equal to \c n_.
+it must be equal to n_.
 
 \param[out] x_l
-is a vector of size \c n.
+is a vector of size n.
 The input value of its elements does not matter.
 On output, it is a copy of the lower bound for \f$ x \f$; i.e.,
-\c x_l_.
+ x_l_.
 
 \param[out] x_u
-is a vector of size \c n.
+is a vector of size n.
 The input value of its elements does not matter.
 On output, it is a copy of the upper bound for \f$ x \f$; i.e.,
-\c x_u_.
+ x_u_.
 
 \param[in] m
 is the dimension of the range space for g(x). i.e.,
-it must be equal to \c m_.
+it must be equal to m_.
 
 \param[out] g_l
-is a vector of size \c m.
+is a vector of size m.
 The input value of its elements does not matter.
-On output, it is a copy of the lower bound for \f$ g(x) \f$; i.e., \c g_l_.
+On output, it is a copy of the lower bound for \f$ g(x) \f$; i.e., g_l_.
 
 \param[out] g_u
-is a vector of size \c m.
+is a vector of size m.
 The input value of its elements does not matter.
-On output, it is a copy of the upper bound for \f$ g(x) \f$; i.e, \c g_u_.
+On output, it is a copy of the upper bound for \f$ g(x) \f$; i.e, g_u_.
 */
 bool cppad_ipopt_nlp::get_bounds_info(Index n, Number* x_l, Number* x_u,
                             Index m, Number* g_l, Number* g_u)
@@ -334,15 +334,15 @@ Return initial x value where optimiation is started.
 
 \param[in] n
 must be equal to the domain dimension for f(x) and g(x); i.e.,
-it must be equal to \c n_.
+it must be equal to n_.
 
 \param[in] init_x
 must be equal to true.
 
 \param[out] x
-is a vector of size \c n.
+is a vector of size n.
 The input value of its elements does not matter.
-On output, it is a copy of the initial value for \f$ x \f$; i.e. \c x_i_.
+On output, it is a copy of the initial value for \f$ x \f$; i.e. x_i_.
 
 \param[in] init_z
 must be equal to false.
@@ -355,7 +355,7 @@ is not used.
 
 \param[in] m
 must be equal to the range dimension for g(x); i.e.,
-it must be equal to \c m_.
+it must be equal to m_.
 
 \param init_lambda
 must be equal to false.
@@ -385,18 +385,18 @@ bool cppad_ipopt_nlp::get_starting_point(Index n, bool init_x, Number* x,
 Evaluate the objective fucntion f(x).
 
 \param[in] n
-is the dimension of the argument space for f(x); i.e., must be equal \c n_.
+is the dimension of the argument space for f(x); i.e., must be equal n_.
 
 \param[in] x
-is a vector of size \c n containing the point at which to evaluate
+is a vector of size n containing the point at which to evaluate
 the function f(x).
 
 \param[in] new_x
 is false if the previous call to any one of the
-\ref Deprecated_Evaluation_Methods used the same value for \c x.
+\ref Deprecated_Evaluation_Methods used the same value for x.
 
 \param[out] obj_value
-is the value of the objective f(x) at this value of \c x.
+is the value of the objective f(x) at this value of x.
 
 \return
 The return value is always true; see \ref Deprecated_Evaluation_Methods.
@@ -405,8 +405,8 @@ The return value is always true; see \ref Deprecated_Evaluation_Methods.
 This routine could be more efficient
 (for certain when when L[k] > 1 and retape[k] is true)
 if the users also provided a version
-of the function <tt>fg_info->eval_r(k, u)</tt> where \c u was of type
-\c NumberVector.
+of the function <tt>fg_info->eval_r(k, u)</tt> where u was of type
+ NumberVector.
 */
 bool cppad_ipopt_nlp::eval_f(
 	Index n, const Number* x, bool new_x, Number& obj_value
@@ -471,18 +471,18 @@ bool cppad_ipopt_nlp::eval_f(
 Evaluate the gradient of f(x).
 
 \param[in] n
-is the dimension of the argument space for f(x); i.e., must be equal \c n_.
+is the dimension of the argument space for f(x); i.e., must be equal n_.
 
 \param[in] x
-has a vector of size \c n containing the point at which to evaluate
+has a vector of size n containing the point at which to evaluate
 the gradient of f(x).
 
 \param[in] new_x
 is false if the previous call to any one of the
-\ref Deprecated_Evaluation_Methods used the same value for \c x.
+\ref Deprecated_Evaluation_Methods used the same value for x.
 
 \param[out] grad_f
-is a vector of size \c n.
+is a vector of size n.
 The input value of its elements does not matter.
 The output value of its elements is the gradient of f(x)
 at this value of.
@@ -564,24 +564,24 @@ bool cppad_ipopt_nlp::eval_grad_f(
 Evaluate the function g(x).
 
 \param[in] n
-is the dimension of the argument space for g(x); i.e., must be equal \c n_.
+is the dimension of the argument space for g(x); i.e., must be equal n_.
 
 \param[in] x
-has a vector of size \c n containing the point at which to evaluate
+has a vector of size n containing the point at which to evaluate
 the constraint function g(x).
 
 \param[in] new_x
 is false if the previous call to any one of the
-\ref Deprecated_Evaluation_Methods used the same value for \c x.
+\ref Deprecated_Evaluation_Methods used the same value for x.
 
 \param[in] m
-is the dimension of the range space for g(x); i.e., must be equal to \c m_.
+is the dimension of the range space for g(x); i.e., must be equal to m_.
 
 \param[out] g
-is a vector of size \c m.
+is a vector of size m.
 The input value of its elements does not matter.
 The output value of its elements is
-the value of the function g(x) at this value of \c x.
+the value of the function g(x) at this value of x.
 
 \return
 The return value is always true; see \ref Deprecated_Evaluation_Methods.
@@ -652,28 +652,28 @@ bool cppad_ipopt_nlp::eval_g(
 Evaluate the Jacobian of g(x).
 
 \param[in] n
-is the dimension of the argument space for g(x); i.e., must be equal \c n_.
+is the dimension of the argument space for g(x); i.e., must be equal n_.
 
 \param x
-if \c values is not \c NULL,
-\c x is a vector of size \c n containing the point at which to evaluate
+if values is not NULL,
+ x is a vector of size n containing the point at which to evaluate
 the gradient of g(x).
 
 \param[in] new_x
 is false if the previous call to any one of the
-\ref Deprecated_Evaluation_Methods used the same value for \c x.
+\ref Deprecated_Evaluation_Methods used the same value for x.
 
 \param[in] m
-is the dimension of the range space for g(x); i.e., must be equal to \c m_.
+is the dimension of the range space for g(x); i.e., must be equal to m_.
 
 \param[in] nele_jac
 is the number of possibly non-zero elements in the Jacobian of g(x);
-i.e., must be equal to \c nnz_jac_g_.
+i.e., must be equal to nnz_jac_g_.
 
 \param iRow
-if \c values is not \c NULL, \c iRow is not defined.
-if \c values is \c NULL, \c iRow
-is a vector with size \c nele_jac.
+if values is not NULL, iRow is not defined.
+if values is NULL, iRow
+is a vector with size nele_jac.
 The input value of its elements does not matter.
 On output,
 For <tt>k = 0 , ... , nele_jac-1, iRow[k]</tt> is the
@@ -681,9 +681,9 @@ base zero row index for the
 k-th possibly non-zero entry in the Jacobian of g(x).
 
 \param jCol
-if \c values is not \c NULL, \c jCol is not defined.
-if \c values is \c NULL, \c jCol
-is a vector with size \c nele_jac.
+if values is not NULL, jCol is not defined.
+if values is NULL, jCol
+is a vector with size nele_jac.
 The input value of its elements does not matter.
 On output,
 For <tt>k = 0 , ... , nele_jac-1, jCol[k]</tt> is the
@@ -691,8 +691,8 @@ base zero column index for the
 k-th possibly non-zero entry in the Jacobian of g(x).
 
 \param values
-if \c values is not \c NULL, \c values
-is a vector with size \c nele_jac.
+if values is not NULL, values
+is a vector with size nele_jac.
 The input value of its elements does not matter.
 On output,
 For <tt>k = 0 , ... , nele_jac-1, values[k]</tt> is the
@@ -794,42 +794,42 @@ H(x, \sigma, \lambda )
 \f]
 
 \param[in] n
-is the dimension of the argument space for g(x); i.e., must be equal \c n_.
+is the dimension of the argument space for g(x); i.e., must be equal n_.
 
 \param x
-if \c values is not \c NULL, \c x
-is a vector of size \c n containing the point at which to evaluate
+if values is not NULL, x
+is a vector of size n containing the point at which to evaluate
 the Hessian of the Lagrangian.
 
 \param[in] new_x
 is false if the previous call to any one of the
-\ref Deprecated_Evaluation_Methods used the same value for \c x.
+\ref Deprecated_Evaluation_Methods used the same value for x.
 
 \param[in] obj_factor
 the value \f$ \sigma \f$ multiplying the Hessian of
 f(x) in the expression for \ref Deprecated_Hessian_of_the_Lagragian.
 
 \param[in] m
-is the dimension of the range space for g(x); i.e., must be equal to \c m_.
+is the dimension of the range space for g(x); i.e., must be equal to m_.
 
 \param[in] lambda
-if \c values is not \c NULL, \c lambda
-is a vector of size \c m specifing the value of \f$ \lambda \f$
+if values is not NULL, lambda
+is a vector of size m specifing the value of \f$ \lambda \f$
 in the expression for \ref Deprecated_Hessian_of_the_Lagragian.
 
 \param[in] new_lambda
-is true if the previous call to \c eval_h had the same value for
-\c lambda and false otherwise.
+is true if the previous call to eval_h had the same value for
+ lambda and false otherwise.
 (Not currently used.)
 
 \param[in] nele_hess
 is the number of possibly non-zero elements in the Hessian of the Lagragian;
-i.e., must be equal to \c nnz_h_lag_.
+i.e., must be equal to nnz_h_lag_.
 
 \param iRow
-if \c values is not \c NULL, \c iRow is not defined.
-if \c values is \c NULL, \c iRow
-is a vector with size \c nele_jac.
+if values is not NULL, iRow is not defined.
+if values is NULL, iRow
+is a vector with size nele_jac.
 The input value of its elements does not matter.
 On output,
 For <tt>k = 0 , ... , nele_jac-1, iRow[k]</tt> is the
@@ -837,9 +837,9 @@ base zero row index for the
 k-th possibly non-zero entry in the Hessian of the Lagragian.
 
 \param jCol
-if \c values is not \c NULL, \c jCol is not defined.
-if \c values is \c NULL, \c jCol
-is a vector with size \c nele_jac.
+if values is not NULL, jCol is not defined.
+if values is NULL, jCol
+is a vector with size nele_jac.
 The input value of its elements does not matter.
 On output,
 For <tt>k = 0 , ... , nele_jac-1, jCol[k]</tt> is the
@@ -847,8 +847,8 @@ base zero column index for the
 k-th possibly non-zero entry in the Hessian of the Lagragian.
 
 \param values
-if \c values is not \c NULL, it
-is a vector with size \c nele_jac.
+if values is not NULL, it
+is a vector with size nele_jac.
 The input value of its elements does not matter.
 On output,
 For <tt>k = 0 , ... , nele_jac-1, values[k]</tt> is the
@@ -963,48 +963,48 @@ which gets mapped to a correponding value for
 
 \param[in] n
 is the dimension of the domain space for f(x) and g(x); i.e.,
-it must be equal to \c n_.
+it must be equal to n_.
 
 \param[in] x
-is a vector with size \c n specifing the final solution.
+is a vector with size n specifing the final solution.
 \n
-<tt>solution_->x</tt> is set to be a vector with size \c n
+<tt>solution_->x</tt> is set to be a vector with size n
 and to have the same element values.
 
 \param[in] z_L
-is a vector with size \c n specifing the Lagragian multipliers for the
+is a vector with size n specifing the Lagragian multipliers for the
 constraint \f$ x^l \leq x \f$.
 \n
-<tt>solution_->z_l</tt> is set to be a vector with size \c n
+<tt>solution_->z_l</tt> is set to be a vector with size n
 and to have the same element values.
 
 \param[in] z_U
-is a vector with size \c n specifing the Lagragian multipliers for the
+is a vector with size n specifing the Lagragian multipliers for the
 constraint \f$ x \leq x^u \f$.
 \n
-<tt>solution_->z_u</tt> is set to be a vector with size \c n
+<tt>solution_->z_u</tt> is set to be a vector with size n
 and to have the same element values.
 
 \param[in] m
 is the dimension of the range space for g(x). i.e.,
-it must be equal to \c m_.
+it must be equal to m_.
 
 \param[in] g
-is a vector with size \c m containing the value of the constraint function
-g(x) at the final solution for \c x.
+is a vector with size m containing the value of the constraint function
+g(x) at the final solution for x.
 \n
-<tt>solution_->g</tt> is set to be a vector with size \c m
+<tt>solution_->g</tt> is set to be a vector with size m
 and to have the same element values.
 
 \param[in] lambda
-is a vector with size \c m specifing the Lagragian multipliers for the
+is a vector with size m specifing the Lagragian multipliers for the
 constraints \f$ g^l \leq g(x) \leq g^u \f$.
 \n
-<tt>solution_->lambda</tt> is set to be a vector with size \c m
+<tt>solution_->lambda</tt> is set to be a vector with size m
 and to have the same element values.
 
 \param[in] obj_value
-is the value of the objective function f(x) at the final solution for \c x.
+is the value of the objective function f(x) at the final solution for x.
 \n
 <tt>solution_->obj_value</tt> is set to have the same value.
 
@@ -1015,8 +1015,8 @@ is unspecified (by Ipopt) and hence not used.
 is unspecified (by Ipopt) and hence not used.
 
 \par solution_[out]
-the pointer \c solution_ , which is equal to the pointer \c solution
-in the constructor for \c cppad_ipopt_nlp,
+the pointer solution_ , which is equal to the pointer solution
+in the constructor for cppad_ipopt_nlp,
 is used to set output values (see documentation above).
 */
 void cppad_ipopt_nlp::finalize_solution(

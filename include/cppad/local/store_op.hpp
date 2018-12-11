@@ -151,37 +151,37 @@ i.e., StpvOp, StvpOp, or StvvOp.
 
 \param arg
 \n
-\a arg[0]
+ arg[0]
 is the offset corresponding to this VecAD vector in the combined array.
 \n
 \n
-\a arg[2]
+ arg[2]
 \n
-The set with index \a arg[2] in \a var_sparsity
+The set with index arg[2] in var_sparsity
 is the sparsity pattern corresponding to y.
-(Note that \a arg[2] > 0 because y is a variable.)
+(Note that arg[2] > 0 because y is a variable.)
 
 \param num_combined
 is the total number of elements in the VecAD address array.
 
 \param combined
-\a combined [ arg[0] - 1 ]
-is the index of the set in \a vecad_sparsity corresponding
+ combined [ arg[0] - 1 ]
+is the index of the set in vecad_sparsity corresponding
 to the sparsity pattern for the vector v.
 We use the notation i_v below which is defined by
 \verbatim
-	i_v = combined[ \a arg[0] - 1 ]
+	i_v = combined[ arg[0] - 1 ]
 \endverbatim
 
 \param var_sparsity
-The set  with index \a arg[2] in \a var_sparsity
+The set  with index arg[2] in var_sparsity
 is the sparsity pattern for y.
 This is an input for forward mode operations.
 For reverse mode operations:
 The sparsity pattern for v is added to the spartisy pattern for y.
 
 \param vecad_sparsity
-The set with index \a i_v in \a vecad_sparsity
+The set with index i_v in vecad_sparsity
 is the sparsity pattern for v.
 This is an input for reverse mode operations.
 For forward mode operations, the sparsity pattern for y is added
@@ -190,10 +190,10 @@ to the sparsity pattern for the vector v.
 \par Checked Assertions
 \li NumArg(op) == 3
 \li NumRes(op) == 0
-\li 0 <  \a arg[0]
-\li \a arg[0] < \a num_combined
-\li \a arg[2] < \a var_sparsity.n_set()
-\li i_v       < \a vecad_sparsity.n_set()
+\li 0 <  arg[0]
+\li arg[0] < num_combined
+\li arg[2] < var_sparsity.n_set()
+\li i_v       < vecad_sparsity.n_set()
 */
 template <class Vector_set>
 inline void sparse_store_op(
@@ -456,12 +456,12 @@ and it uses them to compute the sparsity patterns for
 \copydetails CppAD::local::sparse_store_op
 
 \param var_jacobian
-\a var_jacobian[ \a arg[2] ]
+ var_jacobian[ arg[2] ]
 is false (true) if the Jacobian of G with respect to y is always zero
 (may be non-zero).
 
 \param vecad_jacobian
-\a vecad_jacobian[i_v]
+ vecad_jacobian[i_v]
 is false (true) if the Jacobian with respect to x is always zero
 (may be non-zero).
 On input, it corresponds to the function G,

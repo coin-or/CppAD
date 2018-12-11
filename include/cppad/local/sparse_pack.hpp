@@ -44,7 +44,7 @@ private:
 	/// Possible elements in each set are 0, 1, ..., end_ - 1
 	/// (set by constructor and resize).
 	size_t end_;
-	/// Number of \c Pack values necessary to represent \c end_ bits.
+	/// Number of Pack values necessary to represent end_ bits.
 	/// (set by constructor and resize).
 	size_t n_pack_;
 	/// Data for all the sets.
@@ -152,7 +152,7 @@ public:
 	/*!
 	Change number of sets, set end, and initialize all sets as empty
 
-	If \c n_set is zero, any memory currently allocated for this object
+	If n_set is zero, any memory currently allocated for this object
 	is freed. Otherwise, new memory may be allocated for the sets (if needed).
 
 	\param n_set
@@ -302,15 +302,15 @@ public:
 	Assign one set equal to another set.
 
 	\param this_target
-	is the index (in this \c sparse_pack object) of the set being assinged.
+	is the index (in this sparse_pack object) of the set being assinged.
 
 	\param other_value
-	is the index (in the other \c sparse_pack object) of the
+	is the index (in the other sparse_pack object) of the
 	that we are using as the value to assign to the target set.
 
 	\param other
-	is the other \c sparse_pack object (which may be the same as this
-	\c sparse_pack object).
+	is the other sparse_pack object (which may be the same as this
+	sparse_pack object).
 
 	\par Checked Assertions
 	\li this_target  < n_set_
@@ -336,21 +336,21 @@ public:
 	Assing a set equal to the union of two other sets.
 
 	\param this_target
-	is the index (in this \c sparse_pack object) of the set being assinged.
+	is the index (in this sparse_pack object) of the set being assinged.
 
 	\param this_left
-	is the index (in this \c sparse_pack object) of the
+	is the index (in this sparse_pack object) of the
 	left operand for the union operation.
-	It is OK for \a this_target and \a this_left to be the same value.
+	It is OK for this_target and this_left to be the same value.
 
 	\param other_right
-	is the index (in the other \c sparse_pack object) of the
+	is the index (in the other sparse_pack object) of the
 	right operand for the union operation.
-	It is OK for \a this_target and \a other_right to be the same value.
+	It is OK for this_target and other_right to be the same value.
 
 	\param other
-	is the other \c sparse_pack object (which may be the same as this
-	\c sparse_pack object).
+	is the other sparse_pack object (which may be the same as this
+	sparse_pack object).
 
 	\par Checked Assertions
 	\li this_target <  n_set_
@@ -381,21 +381,21 @@ public:
 	Assing a set equal to the intersection of two other sets.
 
 	\param this_target
-	is the index (in this \c sparse_pack object) of the set being assinged.
+	is the index (in this sparse_pack object) of the set being assinged.
 
 	\param this_left
-	is the index (in this \c sparse_pack object) of the
+	is the index (in this sparse_pack object) of the
 	left operand for the intersection operation.
-	It is OK for \a this_target and \a this_left to be the same value.
+	It is OK for this_target and this_left to be the same value.
 
 	\param other_right
-	is the index (in the other \c sparse_pack object) of the
+	is the index (in the other sparse_pack object) of the
 	right operand for the intersection operation.
-	It is OK for \a this_target and \a other_right to be the same value.
+	It is OK for this_target and other_right to be the same value.
 
 	\param other
-	is the other \c sparse_pack object (which may be the same as this
-	\c sparse_pack object).
+	is the other sparse_pack object (which may be the same as this
+	sparse_pack object).
 
 	\par Checked Assertions
 	\li this_target <  n_set_
@@ -596,7 +596,7 @@ is a simple vector with elements of type std::set<size_t>.
 
 \param internal
 The input value of sparisty does not matter.
-Upon return it contains the same sparsity pattern as \c user
+Upon return it contains the same sparsity pattern as user
 (or the transposed sparsity pattern).
 
 \param user

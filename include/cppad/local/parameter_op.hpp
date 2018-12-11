@@ -32,38 +32,38 @@ where some of the components of the vector y are parameters.
 
 \tparam Base
 base type for the operator; i.e., this operation was recorded
-using AD< \a Base > and computations by this routine are done using type
-\a Base .
+using AD< Base > and computations by this routine are done using type
+ Base .
 
 \param i_z
 variable index corresponding to the result for this operation;
-i.e. the row index in \a taylor corresponding to the component of y
+i.e. the row index in taylor corresponding to the component of y
 that is a parameter.
 
 \param arg
-\a arg[0]
+ arg[0]
 \n
 index corresponding to the parameter value for this operator.
 
 \param num_par
-is the number of parameters in \a parameter.
+is the number of parameters in parameter.
 
 \param parameter
-\b Input: \a parameter[ \a arg[0] ] is the value of a component
+\b Input: parameter[ arg[0] ] is the value of a component
 of y that is a parameter.
 
 \param cap_order
 number of colums in the matrix containing all the Taylor coefficients.
 
 \param taylor
-\b Output: \a taylor [ \a i_z * \a cap_order + 0 ]
+\b Output: taylor [ i_z * cap_order + 0 ]
 is the zero order Taylor coefficient corresponding to z.
 
 \par Checked Assertions where op is the unary operator with one result:
 \li NumArg(op) == 1
 \li NumRes(op) == 1
-\li \a size_t(arg[0]) < num_par
-\li \a 0 < \a cap_order
+\li size_t(arg[0]) < num_par
+\li 0 < cap_order
 */
 template <class Base>
 inline void forward_par_op_0(

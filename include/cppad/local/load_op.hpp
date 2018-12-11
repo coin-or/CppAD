@@ -183,12 +183,12 @@ i.e., LdpOp or LdvOp.
 
 \param i_z
 is the AD variable index corresponding to the variable z; i.e.,
-the set with index \a i_z in \a var_sparsity is the sparsity pattern
+the set with index i_z in var_sparsity is the sparsity pattern
 correpsonding to z.
 
 \param arg
 \n
-\a arg[0]
+ arg[0]
 is the offset corresponding to this VecAD vector in the VecAD combined array.
 
 \param num_combined
@@ -198,20 +198,20 @@ is the total number of elements in the VecAD combinded array.
 is the VecAD combined array.
 \n
 \n
-\a combined[ \a arg[0] - 1 ]
-is the index of the set corresponding to the vector v  in \a vecad_sparsity.
+ combined[ arg[0] - 1 ]
+is the index of the set corresponding to the vector v  in vecad_sparsity.
 We use the notation i_v for this value; i.e.,
 \verbatim
-	i_v = combined[ \a arg[0] - 1 ]
+	i_v = combined[ arg[0] - 1 ]
 \endverbatim
 
 \param var_sparsity
-The set with index \a i_z in \a var_sparsity is the sparsity pattern for z.
+The set with index i_z in var_sparsity is the sparsity pattern for z.
 This is an output for forward mode operations,
 and an input for reverse mode operations.
 
 \param vecad_sparsity
-The set with index \a i_v is the sparsity pattern for the vector v.
+The set with index i_v is the sparsity pattern for the vector v.
 This is an input for forward mode operations.
 For reverse mode operations,
 the sparsity pattern for z is added to the sparsity pattern for v.
@@ -219,9 +219,9 @@ the sparsity pattern for z is added to the sparsity pattern for v.
 \par Checked Assertions
 \li NumArg(op) == 3
 \li NumRes(op) == 1
-\li 0         <  \a arg[0]
-\li \a arg[0] < \a num_combined
-\li i_v       < \a vecad_sparsity.n_set()
+\li 0         <  arg[0]
+\li arg[0] < num_combined
+\li i_v       < vecad_sparsity.n_set()
 */
 template <class Vector_set, class Addr>
 inline void sparse_load_op(
@@ -485,8 +485,8 @@ and it uses them to compute the partial derivatives of
 
 \tparam Base
 base type for the operator; i.e., this operation was recorded
-using AD< \a Base > and computations by this routine are done using type
-\a Base.
+using AD< Base > and computations by this routine are done using type
+ Base.
 
 \param op
 is the code corresponding to this operator; i.e., LdpOp or LdvOp
@@ -500,7 +500,7 @@ derivative with respect to.
 is the AD variable index corresponding to the variable z.
 
 \param arg
-\a arg[2]
+ arg[2]
 Is the index of this vecad load instruction in the
 var_by_load_op array.
 
@@ -513,23 +513,23 @@ matrix of Taylor coefficients (not used).
 
 \param nc_partial
 number of colums in the matrix containing all the partial derivatives
-(not used if \a arg[2] is zero).
+(not used if arg[2] is zero).
 
 \param partial
-If \a arg[2] is zero, y[x] is a parameter
-and no values need to be modified; i.e., \a partial is not used.
+If arg[2] is zero, y[x] is a parameter
+and no values need to be modified; i.e., partial is not used.
 Otherwise, y[x] is a variable and:
 \n
 \n
-\a partial [ \a i_z * \a nc_partial + k ]
-for k = 0 , ... , \a d
+ partial [ i_z * nc_partial + k ]
+for k = 0 , ... , d
 is the partial derivative of G
 with respect to the k-th order Taylor coefficient for z.
 \n
 \n
-If \a arg[2] is not zero,
-\a partial [ \a arg[2] * \a nc_partial + k ]
-for k = 0 , ... , \a d
+If arg[2] is not zero,
+ partial [ arg[2] * nc_partial + k ]
+for k = 0 , ... , d
 is the partial derivative with respect to
 the k-th order Taylor coefficient for x.
 On input, it corresponds to the function G,
@@ -650,12 +650,12 @@ Reverse mode Hessian sparsity operations for LdpOp and LdvOp
 \copydetails CppAD::local::sparse_load_op
 
 \param var_jacobian
-\a var_jacobian[i_z]
+ var_jacobian[i_z]
 is false (true) if the Jacobian of G with respect to z is always zero
 (many be non-zero).
 
 \param vecad_jacobian
-\a vecad_jacobian[i_v]
+ vecad_jacobian[i_v]
 is false (true) if the Jacobian with respect to x is always zero
 (may be non-zero).
 On input, it corresponds to the function G,

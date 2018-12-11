@@ -139,7 +139,7 @@ Different versions of Dependent function.
 */
 
 /*!
-Determine the \c tape corresponding to this exeuction thread and then use
+Determine the tape corresponding to this exeuction thread and then use
 <code>Dependent(tape, y)</code> to store this tapes recording in a function.
 
 \param y [in]
@@ -161,7 +161,7 @@ void ADFun<Base,RecBase>::Dependent(const ADvector &y)
 
 
 /*!
-Determine the \c tape corresponding to this exeuction thread and then use
+Determine the tape corresponding to this exeuction thread and then use
 <code>Dependent(tape, y)</code> to store this tapes recording in a function.
 
 \param x [in]

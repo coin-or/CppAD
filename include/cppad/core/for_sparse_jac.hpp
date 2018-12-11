@@ -234,23 +234,23 @@ All of the description in the public member function ForSparseJac(q, r)
 applies.
 
 \param set_type
-is a \c bool value. This argument is used to dispatch to the proper source
-code depending on the value of \c VectorSet::value_type.
+is a bool value. This argument is used to dispatch to the proper source
+code depending on the value of VectorSet::value_type.
 
 \param transpose
-See \c ForSparseJac(q, r, transpose, dependency).
+See ForSparseJac(q, r, transpose, dependency).
 
 \param dependency
-See \c ForSparseJac(q, r, transpose, dependency).
+See ForSparseJac(q, r, transpose, dependency).
 
 \param q
-See \c ForSparseJac(q, r, transpose, dependency).
+See ForSparseJac(q, r, transpose, dependency).
 
 \param r
-See \c ForSparseJac(q, r, transpose, dependency).
+See ForSparseJac(q, r, transpose, dependency).
 
 \param s
-is the return value for the corresponding call to \c ForSparseJac(q, r).
+is the return value for the corresponding call to ForSparseJac(q, r).
 */
 
 template <class Base, class RecBase>
@@ -347,30 +347,30 @@ void ADFun<Base,RecBase>::ForSparseJacCase(
 }
 // ---------------------------------------------------------------------------
 /*!
-Private helper function for \c ForSparseJac(q, r) set sparsity.
+Private helper function for ForSparseJac(q, r) set sparsity.
 
-All of the description in the public member function \c ForSparseJac(q, r)
+All of the description in the public member function ForSparseJac(q, r)
 applies.
 
 \param set_type
-is a \c std::set<size_t> object.
+is a std::set<size_t> object.
 This argument is used to dispatch to the proper source
-code depending on the value of \c VectorSet::value_type.
+code depending on the value of VectorSet::value_type.
 
 \param transpose
-See \c ForSparseJac(q, r, transpose, dependency).
+See ForSparseJac(q, r, transpose, dependency).
 
 \param dependency
-See \c ForSparseJac(q, r, transpose, dependency).
+See ForSparseJac(q, r, transpose, dependency).
 
 \param q
-See \c ForSparseJac(q, r, transpose, dependency).
+See ForSparseJac(q, r, transpose, dependency).
 
 \param r
-See \c ForSparseJac(q, r, transpose, dependency).
+See ForSparseJac(q, r, transpose, dependency).
 
 \param s
-is the return value for the corresponding call to \c ForSparseJac(q, r).
+is the return value for the corresponding call to ForSparseJac(q, r).
 */
 template <class Base, class RecBase>
 template <class VectorSet>
@@ -506,8 +506,8 @@ The C++ source code corresponding to this operation is
 is the base type for this recording.
 
 \tparam VectorSet
-is a simple vector with elements of type \c bool
-or \c std::set<size_t>.
+is a simple vector with elements of type bool
+or std::set<size_t>.
 
 \param q
 is the number of columns in the matrix \f$ R \f$.
@@ -527,26 +527,26 @@ considered to be non-zero:
 This is used by the optimizer to obtain the correct dependency relations.
 
 \return
-The value of \c transpose is false (true),
+The value of transpose is false (true),
 the return value is a sparsity pattern for \f$ S(x) \f$ (\f$ S(x)^T \f$) where
 \f[
 	S(x) = F^{(1)} (x) * R
 \f]
 where \f$ F \f$ is the function corresponding to the operation sequence
-and \a x is any argument value.
-If \c VectorSet::value_type is \c bool,
+and x is any argument value.
+If VectorSet::value_type is bool,
 the return value has size \f$ m * q \f$ (\f$ q * m \f$).
-where \c m is the number of dependent variables
-corresponding to the operation sequence stored in \c f.
-If \c VectorSet::value_type is \c std::set<size_t>,
+where m is the number of dependent variables
+corresponding to the operation sequence stored in f.
+If VectorSet::value_type is std::set<size_t>,
 the return value has size \f$ m \f$ ( \f$ q \f$ )
 and with all its elements between zero and
 \f$ q - 1 \f$ ( \f$ m - 1 \f$).
 
 \par Side Effects
-If \c VectorSet::value_type is \c bool,
+If VectorSet::value_type is bool,
 the forward sparsity pattern for all of the variables on the
-tape is stored in \c for_jac_sparse_pack__.
+tape is stored in for_jac_sparse_pack__.
 In this case
 \verbatim
 	for_jac_sparse_pack_.n_set() == num_var_tape_
@@ -556,9 +556,9 @@ In this case
 \endverbatim
 \n
 \n
-If \c VectorSet::value_type is \c std::set<size_t>,
+If VectorSet::value_type is std::set<size_t>,
 the forward sparsity pattern for all of the variables on the
-tape is stored in \c for_jac_sparse_set__.
+tape is stored in for_jac_sparse_set__.
 In this case
 \verbatim
 	for_jac_sparse_set_.n_set()   == num_var_tape_
@@ -633,9 +633,9 @@ On output, s is the sparsity pattern for the matrix \f$ S(x) \f$
 or \f$ S(x)^T \f$ depending on transpose.
 
 \par Side Effects
-If \c VectorSet::value_type is \c bool,
+If VectorSet::value_type is bool,
 the forward sparsity pattern for all of the variables on the
-tape is stored in \c for_jac_sparse_pack__.
+tape is stored in for_jac_sparse_pack__.
 In this case
 \verbatim
 	for_jac_sparse_pack_.n_set() == num_var_tape_
@@ -645,9 +645,9 @@ In this case
 \endverbatim
 \n
 \n
-If \c VectorSet::value_type is \c std::set<size_t>,
+If VectorSet::value_type is std::set<size_t>,
 the forward sparsity pattern for all of the variables on the
-tape is stored in \c for_jac_sparse_set__.
+tape is stored in for_jac_sparse_set__.
 In this case
 \verbatim
 	for_jac_sparse_set_.n_set()   == num_var_tape_

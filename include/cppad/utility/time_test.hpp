@@ -159,11 +159,11 @@ type that supports the same syntax.
 
 \param test
 The function, or function object, that supports the operation
-<code>test(repeat)</code> where \c repeat is the number of times
+<code>test(repeat)</code> where repeat is the number of times
 to repeat the tests operaiton that is being timed.
 
 \param time_min
-is the minimum amount of time that \c test should take to preform
+is the minimum amount of time that test should take to preform
 the repetitions of the operation being timed.
 */
 template <class Test>
@@ -195,16 +195,16 @@ type that supports the same syntax.
 \param test
 The function, or function object, that supports the operation
 <code>test(size, repeat)</code> where
-\c is the size for this test and
-\c repeat is the number of times
+ is the size for this test and
+ repeat is the number of times
 to repeat the tests operaiton that is being timed.
 
 \param time_min
-is the minimum amount of time that \c test should take to preform
+is the minimum amount of time that test should take to preform
 the repetitions of the operation being timed.
 
 \param test_size
-will be used for the value of \c size in the call to \c test.
+will be used for the value of size in the call to test.
 */
 template <class Test>
 double time_test(Test test, double time_min, size_t test_size)

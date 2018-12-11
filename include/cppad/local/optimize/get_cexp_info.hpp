@@ -31,8 +31,8 @@ and there are conditional expressions in the operation sequence.
 
 \tparam Base
 base type for the operator; i.e., this operation was recorded
-using AD< \a Base > and computations by this routine are done using type
-\a Base.
+using AD< Base > and computations by this routine are done using type
+ Base.
 
 \param play
 This is the old operation sequence.

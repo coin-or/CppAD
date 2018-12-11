@@ -767,8 +767,8 @@ public:
 	k-th possibly non-zero entry in the Jacobian of g(x).
 
 	\param values
-	if \c values is not \c NULL, \c values
-	is a vector with size \c nele_jac.
+	if values is not NULL, values
+	is a vector with size nele_jac.
 	The input value of its elements does not matter.
 	On output,
 	For <tt>k = 0 , ... , nele_jac-1, values[k]</tt> is the

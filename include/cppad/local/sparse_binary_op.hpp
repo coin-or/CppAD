@@ -42,7 +42,7 @@ variable index corresponding to the result for this operation;
 i.e., z.
 
 \param arg
-\a arg[0]
+ arg[0]
 variable index corresponding to the left operand for this operator;
 i.e., x.
 \n
@@ -52,28 +52,28 @@ i.e., y.
 
 \param sparsity
 \b Input:
-The set with index \a arg[0] in \a sparsity
+The set with index arg[0] in sparsity
 is the sparsity bit pattern for x.
 This identifies which of the independent variables the variable x
 depends on.
 \n
 \n
 \b Input:
-The set with index \a arg[1] in \a sparsity
+The set with index arg[1] in sparsity
 is the sparsity bit pattern for y.
 This identifies which of the independent variables the variable y
 depends on.
 \n
 \n
 \b Output:
-The set with index \a i_z in \a sparsity
+The set with index i_z in sparsity
 is the sparsity bit pattern for z.
 This identifies which of the independent variables the variable z
 depends on.
 
 \par Checked Assertions:
-\li \a arg[0] < \a i_z
-\li \a arg[1] < \a i_z
+\li arg[0] < i_z
+\li arg[1] < i_z
 */
 
 template <class Vector_set>
@@ -121,7 +121,7 @@ variable index corresponding to the result for this operation;
 i.e., z.
 
 \param arg
-\a arg[0]
+ arg[0]
 variable index corresponding to the left operand for this operator;
 i.e., x.
 
@@ -131,17 +131,17 @@ variable index corresponding to the right operand for this operator;
 i.e., y.
 
 \param sparsity
-The set with index \a i_z in \a sparsity
+The set with index i_z in sparsity
 is the sparsity pattern for z corresponding ot the function G.
 \n
 \n
-The set with index \a arg[0] in \a sparsity
+The set with index arg[0] in sparsity
 is the sparsity pattern for x.
 On input, it corresponds to the function G,
 and on output it corresponds to H.
 \n
 \n
-The set with index \a arg[1] in \a sparsity
+The set with index arg[1] in sparsity
 is the sparsity pattern for y.
 On input, it corresponds to the function G,
 and on output it corresponds to H.
@@ -149,8 +149,8 @@ and on output it corresponds to H.
 \n
 
 \par Checked Assertions:
-\li \a arg[0] < \a i_z
-\li \a arg[1] < \a i_z
+\li arg[0] < i_z
+\li arg[1] < i_z
 */
 template <class Vector_set>
 inline void reverse_sparse_jacobian_binary_op(

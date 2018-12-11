@@ -43,7 +43,7 @@ that specifies which column indices to compute.
 \n
 \n
 Input:
-For each  valid index \c k, the index pair
+For each  valid index k, the index pair
 <code>(row[k], col[k])</code> must be present in the sparsity pattern.
 It may be that some entries in the sparsity pattern do not need to be computed;
 i.e, do not appear in the set of

@@ -36,9 +36,9 @@ is computed (otherwise undefined values are used).
 is a hash code that is between zero and CPPAD_HASH_TABLE_SIZE - 1.
 
 \par Checked Assertions
-\li \c std::numeric_limits<unsigned short>::max() >= CPPAD_HASH_TABLE_SIZE
-\li \c sizeof(value) is even
-\li \c sizeof(unsigned short)  == 2
+\li std::numeric_limits<unsigned short>::max() >= CPPAD_HASH_TABLE_SIZE
+\li sizeof(value) is even
+\li sizeof(unsigned short)  == 2
 */
 template <class Value>
 unsigned short hash_code(const Value& value)

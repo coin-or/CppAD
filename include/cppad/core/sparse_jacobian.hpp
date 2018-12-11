@@ -315,44 +315,44 @@ is the base type for the recording that is stored in this
 <code>ADFun<Base></code> object.
 
 \tparam VectorBase
-is a simple vector class with elements of type \a Base.
+is a simple vector class with elements of type Base.
 
 \tparam VectorSet
 is either sparse_pack or sparse_list.
 
 \tparam VectorSize
-is a simple vector class with elements of type \c size_t.
+is a simple vector class with elements of type size_t.
 
 \param x [in]
 is a vector specifing the point at which to compute the Jacobian.
 
 \param p_transpose [in]
 If <code>work.color.size() != 0</code>,
-then \c p_transpose is not used.
+then p_transpose is not used.
 Otherwise, it is a
 sparsity pattern for the transpose of the Jacobian of this ADFun<Base> object.
-Note that we do not change the values in \c p_transpose,
-but is not \c const because we use its iterator facility.
+Note that we do not change the values in p_transpose,
+but is not const because we use its iterator facility.
 
 \param row [in]
 is the vector of row indices for the returned Jacobian values.
 
 \param col [in]
 is the vector of columns indices for the returned Jacobian values.
-It must have the same size as \c row.
+It must have the same size as row.
 
 \param jac [out]
-is the vector of Jacobian values. We use \c K to denote the size of \c jac.
+is the vector of Jacobian values. We use K to denote the size of jac.
 The return value <code>jac[k]</code> is the partial of the
 <code>row[k]</code> range component of the function with respect
 the the <code>col[k]</code> domain component of its argument.
 
 \param work
 <code>work.color_method</code> is an input. The rest of
-this structure contains information that is computed by \c SparseJacobainFor.
-If the sparsity pattern, \c row vector, or \c col vectors
-are not the same between calls to \c SparseJacobianFor,
-\c work.clear() must be called to reinitialize \c work.
+this structure contains information that is computed by SparseJacobainFor.
+If the sparsity pattern, row vector, or col vectors
+are not the same between calls to SparseJacobianFor,
+ work.clear() must be called to reinitialize work.
 
 \return
 Is the number of first order forward sweeps used to compute the
@@ -512,44 +512,44 @@ is the base type for the recording that is stored in this
 <code>ADFun<Base></code> object.
 
 \tparam VectorBase
-is a simple vector class with elements of type \a Base.
+is a simple vector class with elements of type Base.
 
 \tparam VectorSet
 is either sparse_pack or sparse_list.
 
 \tparam VectorSize
-is a simple vector class with elements of type \c size_t.
+is a simple vector class with elements of type size_t.
 
 \param x [in]
 is a vector specifing the point at which to compute the Jacobian.
 
 \param p [in]
-If <code>work.color.size() != 0</code>, then \c p is not used.
+If <code>work.color.size() != 0</code>, then p is not used.
 Otherwise, it is a
 sparsity pattern for the Jacobian of this ADFun<Base> object.
-Note that we do not change the values in \c p,
-but is not \c const because we use its iterator facility.
+Note that we do not change the values in p,
+but is not const because we use its iterator facility.
 
 \param row [in]
 is the vector of row indices for the returned Jacobian values.
 
 \param col [in]
 is the vector of columns indices for the returned Jacobian values.
-It must have the same size as \c row.
+It must have the same size as row.
 
 \param jac [out]
 is the vector of Jacobian values.
-It must have the same size as \c row.
+It must have the same size as row.
 The return value <code>jac[k]</code> is the partial of the
 <code>row[k]</code> range component of the function with respect
 the the <code>col[k]</code> domain component of its argument.
 
 \param work
 <code>work.color_method</code> is an input. The rest of
-This structure contains information that is computed by \c SparseJacobainRev.
-If the sparsity pattern, \c row vector, or \c col vectors
-are not the same between calls to \c SparseJacobianRev,
-\c work.clear() must be called to reinitialize \c work.
+This structure contains information that is computed by SparseJacobainRev.
+If the sparsity pattern, row vector, or col vectors
+are not the same between calls to SparseJacobianRev,
+ work.clear() must be called to reinitialize work.
 
 \return
 Is the number of first order reverse sweeps used to compute the
@@ -682,14 +682,14 @@ is the base type for the recording that is stored in this
 <code>ADFun<Base></code> object.
 
 \tparam VectorBase
-is a simple vector class with elements of type \a Base.
+is a simple vector class with elements of type Base.
 
 \tparam VectorSet
 is a simple vector class with elements of type
-\c bool or \c std::set<size_t>.
+ bool or std::set<size_t>.
 
 \tparam VectorSize
-is a simple vector class with elements of type \c size_t.
+is a simple vector class with elements of type size_t.
 
 \param x [in]
 is a vector specifing the point at which to compute the Jacobian.
@@ -702,20 +702,20 @@ is the vector of row indices for the returned Jacobian values.
 
 \param col [in]
 is the vector of columns indices for the returned Jacobian values.
-It must have the same size as \c row.
+It must have the same size as row.
 
 \param jac [out]
 is the vector of Jacobian values.
-It must have the same size as \c row.
+It must have the same size as row.
 The return value <code>jac[k]</code> is the partial of the
 <code>row[k]</code> range component of the function with respect
 the the <code>col[k]</code> domain component of its argument.
 
 \param work [in,out]
 this structure contains information that depends on the function object,
-sparsity pattern, \c row vector, and \c col vector.
-If they are not the same between calls to \c SparseJacobianForward,
-\c work.clear() must be called to reinitialize them.
+sparsity pattern, row vector, and col vector.
+If they are not the same between calls to SparseJacobianForward,
+ work.clear() must be called to reinitialize them.
 
 \return
 Is the number of first order forward sweeps used to compute the
@@ -797,14 +797,14 @@ is the base type for the recording that is stored in this
 <code>ADFun<Base></code> object.
 
 \tparam VectorBase
-is a simple vector class with elements of type \a Base.
+is a simple vector class with elements of type Base.
 
 \tparam VectorSet
 is a simple vector class with elements of type
-\c bool or \c std::set<size_t>.
+ bool or std::set<size_t>.
 
 \tparam VectorSize
-is a simple vector class with elements of type \c size_t.
+is a simple vector class with elements of type size_t.
 
 \param x [in]
 is a vector specifing the point at which to compute the Jacobian.
@@ -817,20 +817,20 @@ is the vector of row indices for the returned Jacobian values.
 
 \param col [in]
 is the vector of columns indices for the returned Jacobian values.
-It must have the same size as \c row.
+It must have the same size as row.
 
 \param jac [out]
 is the vector of Jacobian values.
-It must have the same size as \c row.
+It must have the same size as row.
 The return value <code>jac[k]</code> is the partial of the
 <code>row[k]</code> range component of the function with respect
 the the <code>col[k]</code> domain component of its argument.
 
 \param work [in,out]
 this structure contains information that depends on the function object,
-sparsity pattern, \c row vector, and \c col vector.
-If they are not the same between calls to \c SparseJacobianReverse,
-\c work.clear() must be called to reinitialize them.
+sparsity pattern, row vector, and col vector.
+If they are not the same between calls to SparseJacobianReverse,
+ work.clear() must be called to reinitialize them.
 
 \return
 Is the number of first order reverse sweeps used to compute the
@@ -912,11 +912,11 @@ is the base type for the recording that is stored in this
 <code>ADFun<Base></code> object.
 
 \tparam VectorBase
-is a simple vector class with elements of type \a Base.
+is a simple vector class with elements of type Base.
 
 \tparam VectorSet
 is a simple vector class with elements of type
-\c bool or \c std::set<size_t>.
+ bool or std::set<size_t>.
 
 \param x [in]
 is a vector specifing the point at which to compute the Jacobian.
@@ -925,7 +925,7 @@ is a vector specifing the point at which to compute the Jacobian.
 is the sparsity pattern for the Jacobian that we are calculating.
 
 \return
-Will be a vector if size \c m * n containing the Jacobian at the
+Will be a vector if size m * n containing the Jacobian at the
 specified point (in row major order).
 */
 template <class Base, class RecBase>
@@ -1034,13 +1034,13 @@ is the base type for the recording that is stored in this
 <code>ADFun<Base></code> object.
 
 \tparam VectorBase
-is a simple vector class with elements of the \a Base.
+is a simple vector class with elements of the Base.
 
 \param x [in]
 is a vector specifing the point at which to compute the Jacobian.
 
 \return
-Will be a vector of size \c m * n containing the Jacobian at the
+Will be a vector of size m * n containing the Jacobian at the
 specified point (in row major order).
 */
 template <class Base, class RecBase>

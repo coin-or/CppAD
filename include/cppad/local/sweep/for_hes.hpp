@@ -47,12 +47,12 @@ is the number of independent variables on the tape.
 
 \param numvar
 is the total number of variables on the tape; i.e.,
-\a play->num_var_rec().
+ play->num_var_rec().
 This is also the number of rows in the entire sparsity pattern
-\a for_hes_sparse.
+ for_hes_sparse.
 
 \param play
-The information stored in \a play
+The information stored in play
 is a recording of the operations corresponding to a function
 \f[
 	F : {\bf R}^n \rightarrow {\bf R}^m
@@ -61,14 +61,14 @@ where \f$ n \f$ is the number of independent variables
 and \f$ m \f$ is the number of dependent variables.
 
 \param for_jac_sparse
-For i = 0 , ... , \a numvar - 1,
+For i = 0 , ... , numvar - 1,
 (for all the variables on the tape),
 the forward Jacobian sparsity pattern for the variable with index i
-corresponds to the set with index i in \a for_jac_sparse.
+corresponds to the set with index i in for_jac_sparse.
 
 \param rev_jac_sparse
 \b Input:
-For i = 0, ... , \a numvar - 1
+For i = 0, ... , numvar - 1
 the if the function we are computing the Hessian for has a non-zero
 derivative w.r.t. variable with index i,
 the set with index i has element zero.
@@ -76,19 +76,19 @@ Otherwise it has no elements.
 
 \param for_hes_sparse
 The forward Hessian sparsity pattern for the variable with index i
-corresponds to the set with index i in \a for_hes_sparse.
+corresponds to the set with index i in for_hes_sparse.
 The number of rows in this sparsity patter is n+1 and the row
 with index zero is not used.
 \n
 \n
-\b Input: For i = 1 , ... , \a n
+\b Input: For i = 1 , ... , n
 the forward Hessian sparsity pattern for the variable with index i is empty.
 \n
 \n
-\b Output: For j = 1 , ... , \a n,
+\b Output: For j = 1 , ... , n,
 the forward Hessian sparsity pattern for the independent dependent variable
 with index (j-1) is given by the set with index j
-in \a for_hes_sparse.
+in for_hes_sparse.
 
 \param not_used_rec_base
 Specifies RecBase for this call.

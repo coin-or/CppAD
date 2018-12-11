@@ -122,17 +122,17 @@ File that implements a memory check at end of a CppAD program
 
 /*!
 Function that checks
-allocator \c thread_alloc for misuse that results in memory leaks.
+allocator thread_alloc for misuse that results in memory leaks.
 Deprecated routines in track_new_del.hpp and omp_alloc.hpp are also checked.
 
 \param add_static [in]
-The amount specified by \c add_static is added to the amount
+The amount specified by add_static is added to the amount
 of memory that is expected to be used by thread zero for static variables.
 
 \return
-If \c add_static is non-zero, the return value is \c false.
+If add_static is non-zero, the return value is false.
 Otherwise, if one of the following errors is detected,
-the return value is \c true:
+the return value is true:
 
 \li
 Thread zero does not have the expected amount of inuse memory

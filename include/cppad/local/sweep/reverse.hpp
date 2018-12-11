@@ -25,7 +25,7 @@ Compute derivatives of arbitrary order Taylor coefficients.
 /*
 \def CPPAD_ATOMIC_CALL
 This avoids warnings when NDEBUG is defined and atom_ok is not used.
-If \c NDEBUG is defined, this resolves to
+If NDEBUG is defined, this resolves to
 \code
 	atom_fun->reverse
 \endcode
@@ -66,11 +66,11 @@ is the number of independent variables on the tape.
 
 \param numvar
 is the total number of variables on the tape.
-This is also equal to the number of rows in the matrix \a Taylor; i.e.,
+This is also equal to the number of rows in the matrix Taylor; i.e.,
 play->num_var_rec().
 
 \param play
-The information stored in \a play
+The information stored in play
 is a recording of the operations corresponding to the function
 \f[
 	F : {\bf R}^n \rightarrow {\bf R}^m
@@ -109,27 +109,27 @@ with respect to all the Taylor coefficients
 \f$ u^{(k)} \f$ for \f$ k = 0 , ... , d \f$.
 
 \param J
-Is the number of columns in the coefficient matrix \a Taylor.
-This must be greater than or equal \a d + 1.
+Is the number of columns in the coefficient matrix Taylor.
+This must be greater than or equal d + 1.
 
 \param Taylor
-For i = 1 , ... , \a numvar, and for k = 0 , ... , \a d,
-\a Taylor [ i * J + k ]
+For i = 1 , ... , numvar, and for k = 0 , ... , d,
+ Taylor [ i * J + k ]
 is the k-th order Taylor coefficient corresponding to
 variable with index i on the tape.
 The value \f$ u \in {\bf R}^{n \times d} \f$,
 at which the derivative is computed,
 is defined by
-\f$ u_j^{(k)} \f$ = \a Taylor [ j * J + k ]
-for j = 1 , ... , \a n, and for k = 0 , ... , \a d.
+\f$ u_j^{(k)} \f$ = Taylor [ j * J + k ]
+for j = 1 , ... , n, and for k = 0 , ... , d.
 
 \param K
-Is the number of columns in the partial derivative matrix \a Partial.
-It must be greater than or equal \a d + 1.
+Is the number of columns in the partial derivative matrix Partial.
+It must be greater than or equal d + 1.
 
 \param Partial
 \b Input:
-The last \f$ m \f$ rows of \a Partial are inputs.
+The last \f$ m \f$ rows of Partial are inputs.
 The matrix \f$ w \f$, used to define \f$ W(u) \f$,
 is specified by these rows.
 For i = 0 , ... , m - 1,
@@ -138,14 +138,14 @@ for k = 0 , ... , d,
 \n
 \n
 \b Temporary:
-For i = n+1 , ... , \a numvar - 1 and for k = 0 , ... , d,
-the value of \a Partial [ i * K + k ] is used for temporary work space
+For i = n+1 , ... , numvar - 1 and for k = 0 , ... , d,
+the value of Partial [ i * K + k ] is used for temporary work space
 and its output value is not defined.
 \n
 \n
 \b Output:
 For j = 1 , ... , n and for k = 0 , ... , d,
-\a Partial [ j * K + k ]
+ Partial [ j * K + k ]
 is the partial derivative of \f$ W( u ) \f$ with
 respect to \f$ u_j^{(k)} \f$.
 
@@ -185,7 +185,7 @@ Specifies RecBase for this call.
 
 \par Assumptions
 The first operator on the tape is a BeginOp,
-and the next \a n operators are InvOp operations for the
+and the next n operators are InvOp operations for the
 corresponding independent variables; see play->check_inv_op(n_ind).
 */
 template <class Addr, class Base, class Iterator, class RecBase>

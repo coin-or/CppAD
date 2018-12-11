@@ -257,16 +257,16 @@ lowerest order for this forward mode calculation.
 highest order for this forward mode calculation.
 
 \param vx [in]
-if size not zero, which components of \c x are variables
+if size not zero, which components of x are variables
 
 \param vy [out]
-if size not zero, which components of \c y are variables
+if size not zero, which components of y are variables
 
 \param tx [in]
-Taylor coefficients corresponding to \c x for this calculation.
+Taylor coefficients corresponding to x for this calculation.
 
 \param ty [out]
-Taylor coefficient corresponding to \c y for this calculation
+Taylor coefficient corresponding to y for this calculation
 
 See the forward mode in user's documentation for base_atomic
 */

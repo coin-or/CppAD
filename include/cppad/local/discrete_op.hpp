@@ -32,8 +32,8 @@ calculated as zero).
 
 \tparam Base
 base type for the operator; i.e., this operation was recorded
-using AD< \a Base > and computations by this routine are done using type
-\a Base .
+using AD< Base > and computations by this routine are done using type
+ Base .
 
 \param p
 is the lowest order Taylor coefficient that will be calculated.
@@ -47,18 +47,18 @@ that will be calculated (except for order zero wich only has one direction).
 
 \param i_z
 variable index corresponding to the result for this operation;
-i.e. the row index in \a taylor corresponding to z.
+i.e. the row index in taylor corresponding to z.
 
 \param arg
-\a arg[0]
+ arg[0]
 \n
 is the index, in the order of the discrete functions defined by the user,
 for this discrete function.
 \n
 \n
-\a arg[1]
+ arg[1]
 variable index corresponding to the argument for this operator;
-i.e. the row index in \a taylor corresponding to x.
+i.e. the row index in taylor corresponding to x.
 
 \param cap_order
 maximum number of orders that will fit in the taylor array.

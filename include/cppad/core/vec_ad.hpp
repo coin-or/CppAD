@@ -319,10 +319,10 @@ Prints an error message if the correspinding compound assignment is used.
 
 THis macro is used to print an error message if any of the
 compound assignments are used with the VecAD_reference class.
-The argument \c op is one of the following:
+The argument op is one of the following:
 += , -= , *= , /=.
-The argument \c name, is a string literal with the name of the
-compound assignment \c op.
+The argument name, is a string literal with the name of the
+compound assignment op.
 */
 # define CPPAD_VEC_AD_COMPUTED_ASSIGNMENT(op, name)                     \
 VecAD_reference& operator op (const VecAD_reference<Base> &right)       \

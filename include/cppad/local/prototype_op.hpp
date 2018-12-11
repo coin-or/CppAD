@@ -27,8 +27,8 @@ Prototype for forward mode unary operator with one result (not used).
 
 \tparam Base
 base type for the operator; i.e., this operation was recorded
-using AD< \a Base > and computations by this routine are done using type
-\a Base.
+using AD< Base > and computations by this routine are done using type
+ Base.
 
 \param p
 lowest order of the Taylor coefficient that we are computing.
@@ -38,14 +38,14 @@ highest order of the Taylor coefficient that we are computing.
 
 \param i_z
 variable index corresponding to the result for this operation;
-i.e. the row index in \a taylor corresponding to z.
+i.e. the row index in taylor corresponding to z.
 
 \param i_x
 variable index corresponding to the argument for this operator;
-i.e. the row index in \a taylor corresponding to x.
+i.e. the row index in taylor corresponding to x.
 
 \param cap_order
-maximum number of orders that will fit in the \c taylor array.
+maximum number of orders that will fit in the taylor array.
 
 \param taylor
 \b Input: <code>taylor [ i_x * cap_order + k ]</code>,
@@ -85,8 +85,8 @@ Prototype for multiple direction forward mode unary operator with one result
 
 \tparam Base
 base type for the operator; i.e., this operation was recorded
-using AD< \a Base > and computations by this routine are done using type
-\a Base.
+using AD< Base > and computations by this routine are done using type
+ Base.
 
 \param q
 order of the Taylor coefficients that we are computing.
@@ -96,14 +96,14 @@ number of directions for Taylor coefficients that we are computing.
 
 \param i_z
 variable index corresponding to the last (primary) result for this operation;
-i.e. the row index in \a taylor corresponding to z.
+i.e. the row index in taylor corresponding to z.
 
 \param i_x
 variable index corresponding to the argument for this operator;
-i.e. the row index in \a taylor corresponding to x.
+i.e. the row index in taylor corresponding to x.
 
 \param cap_order
-maximum number of orders that will fit in the \c taylor array.
+maximum number of orders that will fit in the taylor array.
 
 \par tpv
 We use the notation
@@ -158,32 +158,32 @@ inline void forward_unary1_op_dir(
 Prototype for zero order forward mode unary operator with one result (not used).
 \tparam Base
 base type for the operator; i.e., this operation was recorded
-using AD< \a Base > and computations by this routine are done using type
-\a Base .
+using AD< Base > and computations by this routine are done using type
+ Base .
 
 \param i_z
 variable index corresponding to the result for this operation;
-i.e. the row index in \a taylor corresponding to z.
+i.e. the row index in taylor corresponding to z.
 
 \param i_x
 variable index corresponding to the argument for this operator;
-i.e. the row index in \a taylor corresponding to x.
+i.e. the row index in taylor corresponding to x.
 
 \param cap_order
-maximum number of orders that will fit in the \c taylor array.
+maximum number of orders that will fit in the taylor array.
 
 \param taylor
-\b Input: \a taylor [ \a i_x * \a cap_order + 0 ]
+\b Input: taylor [ i_x * cap_order + 0 ]
 is the zero order Taylor coefficient corresponding to x.
 \n
-\b Output: \a taylor [ \a i_z * \a cap_order + 0 ]
+\b Output: taylor [ i_z * cap_order + 0 ]
 is the zero order Taylor coefficient corresponding to z.
 
 \par Checked Assertions
 \li NumArg(op) == 1
 \li NumRes(op) == 1
-\li \a i_x < \a i_z
-\li \a 0 < \a cap_order
+\li i_x < i_z
+\li 0 < cap_order
 */
 template <class Base>
 inline void forward_unary1_op_0(
@@ -208,8 +208,8 @@ and it uses them to compute the partial derivatives of
 
 \tparam Base
 base type for the operator; i.e., this operation was recorded
-using AD< \a Base > and computations by this routine are done using type
-\a Base .
+using AD< Base > and computations by this routine are done using type
+ Base .
 
 \param d
 highest order Taylor coefficient that
@@ -217,54 +217,54 @@ we are computing the partial derivatives with respect to.
 
 \param i_z
 variable index corresponding to the result for this operation;
-i.e. the row index in \a taylor to z.
+i.e. the row index in taylor to z.
 
 \param i_x
 variable index corresponding to the argument for this operation;
-i.e. the row index in \a taylor corresponding to x.
+i.e. the row index in taylor corresponding to x.
 
 \param cap_order
-maximum number of orders that will fit in the \c taylor array.
+maximum number of orders that will fit in the taylor array.
 
 \param taylor
-\a taylor [ \a i_x * \a cap_order + k ]
-for k = 0 , ... , \a d
+ taylor [ i_x * cap_order + k ]
+for k = 0 , ... , d
 is the k-th order Taylor coefficient corresponding to x.
 \n
-\a taylor [ \a i_z * \a cap_order + k ]
-for k = 0 , ... , \a d
+ taylor [ i_z * cap_order + k ]
+for k = 0 , ... , d
 is the k-th order Taylor coefficient corresponding to z.
 
 \param nc_partial
 number of colums in the matrix containing all the partial derivatives.
 
 \param partial
-\b Input: \a partial [ \a i_x * \a nc_partial + k ]
-for k = 0 , ... , \a d
+\b Input: partial [ i_x * nc_partial + k ]
+for k = 0 , ... , d
 is the partial derivative of G( z , x , w , u , ... ) with respect to
 the k-th order Taylor coefficient for x.
 \n
-\b Input: \a partial [ \a i_z * \a nc_partial + k ]
-for k = 0 , ... , \a d
+\b Input: partial [ i_z * nc_partial + k ]
+for k = 0 , ... , d
 is the partial derivative of G( z , x , w , u , ... ) with respect to
 the k-th order Taylor coefficient for z.
 \n
-\b Output: \a partial [ \a i_x * \a nc_partial + k ]
-for k = 0 , ... , \a d
+\b Output: partial [ i_x * nc_partial + k ]
+for k = 0 , ... , d
 is the partial derivative of H( x , w , u , ... ) with respect to
 the k-th order Taylor coefficient for x.
 \n
-\b Output: \a partial [ \a i_z * \a nc_partial + k ]
-for k = 0 , ... , \a d
+\b Output: partial [ i_z * nc_partial + k ]
+for k = 0 , ... , d
 may be used as work space; i.e., may change in an unspecified manner.
 
 
 \par Checked Assumptions
 \li NumArg(op) == 1
 \li NumRes(op) == 1
-\li \a i_x < \a i_z
-\li \a d < \a cap_order
-\li \a d < \a nc_partial
+\li i_x < i_z
+\li d < cap_order
+\li d < nc_partial
 */
 template <class Base>
 inline void reverse_unary1_op(
@@ -287,8 +287,8 @@ Prototype for forward mode unary operator with two results (not used).
 
 \tparam Base
 base type for the operator; i.e., this operation was recorded
-using AD< \a Base > and computations by this routine are done using type
-\a Base.
+using AD< Base > and computations by this routine are done using type
+ Base.
 
 \param p
 lowest order of the Taylor coefficients that we are computing.
@@ -298,15 +298,15 @@ highest order of the Taylor coefficients that we are computing.
 
 \param i_z
 variable index corresponding to the last (primary) result for this operation;
-i.e. the row index in \a taylor corresponding to z.
-The auxillary result is called y has index \a i_z - 1.
+i.e. the row index in taylor corresponding to z.
+The auxillary result is called y has index i_z - 1.
 
 \param i_x
 variable index corresponding to the argument for this operator;
-i.e. the row index in \a taylor corresponding to x.
+i.e. the row index in taylor corresponding to x.
 
 \param cap_order
-maximum number of orders that will fit in the \c taylor array.
+maximum number of orders that will fit in the taylor array.
 
 \param taylor
 \b Input: <code>taylor [ i_x * cap_order + k ]</code>
@@ -356,8 +356,8 @@ Prototype for multiple direction forward mode unary operator with two results
 
 \tparam Base
 base type for the operator; i.e., this operation was recorded
-using AD< \a Base > and computations by this routine are done using type
-\a Base.
+using AD< Base > and computations by this routine are done using type
+ Base.
 
 \param q
 order of the Taylor coefficients that we are computing.
@@ -367,15 +367,15 @@ number of directions for Taylor coefficients that we are computing.
 
 \param i_z
 variable index corresponding to the last (primary) result for this operation;
-i.e. the row index in \a taylor corresponding to z.
-The auxillary result is called y has index \a i_z - 1.
+i.e. the row index in taylor corresponding to z.
+The auxillary result is called y has index i_z - 1.
 
 \param i_x
 variable index corresponding to the argument for this operator;
-i.e. the row index in \a taylor corresponding to x.
+i.e. the row index in taylor corresponding to x.
 
 \param cap_order
-maximum number of orders that will fit in the \c taylor array.
+maximum number of orders that will fit in the taylor array.
 
 \par tpv
 We use the notation
@@ -437,37 +437,37 @@ inline void forward_unary2_op_dir(
 Prototype for zero order forward mode unary operator with two results (not used).
 \tparam Base
 base type for the operator; i.e., this operation was recorded
-using AD< \a Base > and computations by this routine are done using type
-\a Base .
+using AD< Base > and computations by this routine are done using type
+ Base .
 
 \param i_z
 variable index corresponding to the last (primary) result for this operation;
-i.e. the row index in \a taylor corresponding to z.
-The auxillary result is called y and has index \a i_z - 1.
+i.e. the row index in taylor corresponding to z.
+The auxillary result is called y and has index i_z - 1.
 
 \param i_x
 variable index corresponding to the argument for this operator;
-i.e. the row index in \a taylor corresponding to x.
+i.e. the row index in taylor corresponding to x.
 
 \param cap_order
-maximum number of orders that will fit in the \c taylor array.
+maximum number of orders that will fit in the taylor array.
 
 \param taylor
-\b Input: \a taylor [ \a i_x * \a cap_order + 0 ]
+\b Input: taylor [ i_x * cap_order + 0 ]
 is the zero order Taylor coefficient corresponding to x.
 \n
-\b Output: \a taylor [ \a i_z * \a cap_order + 0 ]
+\b Output: taylor [ i_z * cap_order + 0 ]
 is the zero order Taylor coefficient corresponding to z.
 \n
-\b Output: \a taylor [ ( \a i_z - 1 ) * \a cap_order + j ]
+\b Output: taylor [ ( i_z - 1 ) * cap_order + j ]
 is the j-th order Taylor coefficient corresponding to
 the autillary result y.
 
 \par Checked Assertions
 \li NumArg(op) == 1
 \li NumRes(op) == 2
-\li \a i_x + 1 < \a i_z
-\li \a j < \a cap_order
+\li i_x + 1 < i_z
+\li j < cap_order
 */
 template <class Base>
 inline void forward_unary2_op_0(
@@ -492,8 +492,8 @@ and it uses them to compute the partial derivatives of
 
 \tparam Base
 base type for the operator; i.e., this operation was recorded
-using AD< \a Base > and computations by this routine are done using type
-\a Base .
+using AD< Base > and computations by this routine are done using type
+ Base .
 
 \param d
 highest order Taylor coefficient that
@@ -501,27 +501,27 @@ we are computing the partial derivatives with respect to.
 
 \param i_z
 variable index corresponding to the last (primary) result for this operation;
-i.e. the row index in \a taylor to z.
-The auxillary result is called y and has index \a i_z - 1.
+i.e. the row index in taylor to z.
+The auxillary result is called y and has index i_z - 1.
 
 \param i_x
 variable index corresponding to the argument for this operation;
-i.e. the row index in \a taylor corresponding to x.
+i.e. the row index in taylor corresponding to x.
 
 \param cap_order
-maximum number of orders that will fit in the \c taylor array.
+maximum number of orders that will fit in the taylor array.
 
 \param taylor
-\a taylor [ \a i_x * \a cap_order + k ]
-for k = 0 , ... , \a d
+ taylor [ i_x * cap_order + k ]
+for k = 0 , ... , d
 is the k-th order Taylor coefficient corresponding to x.
 \n
-\a taylor [ \a i_z * \a cap_order + k ]
-for k = 0 , ... , \a d
+ taylor [ i_z * cap_order + k ]
+for k = 0 , ... , d
 is the k-th order Taylor coefficient corresponding to z.
 \n
-\a taylor [ ( \a i_z - 1) * \a cap_order + k ]
-for k = 0 , ... , \a d
+ taylor [ ( i_z - 1) * cap_order + k ]
+for k = 0 , ... , d
 is the k-th order Taylor coefficient corresponding to
 the auxillary variable y.
 
@@ -529,38 +529,38 @@ the auxillary variable y.
 number of colums in the matrix containing all the partial derivatives.
 
 \param partial
-\b Input: \a partial [ \a i_x * \a nc_partial + k ]
-for k = 0 , ... , \a d
+\b Input: partial [ i_x * nc_partial + k ]
+for k = 0 , ... , d
 is the partial derivative of
 G( z , y , x , w , u , ... )
 with respect to the k-th order Taylor coefficient for x.
 \n
-\b Input: \a partial [ \a i_z * \a nc_partial + k ]
-for k = 0 , ... , \a d
+\b Input: partial [ i_z * nc_partial + k ]
+for k = 0 , ... , d
 is the partial derivative of G( z , y , x , w , u , ... ) with respect to
 the k-th order Taylor coefficient for z.
 \n
-\b Input: \a partial [ ( \a i_z - 1) * \a nc_partial + k ]
-for k = 0 , ... , \a d
+\b Input: partial [ ( i_z - 1) * nc_partial + k ]
+for k = 0 , ... , d
 is the partial derivative of G( z , x , w , u , ... ) with respect to
 the k-th order Taylor coefficient for the auxillary variable y.
 \n
-\b Output: \a partial [ \a i_x * \a nc_partial + k ]
-for k = 0 , ... , \a d
+\b Output: partial [ i_x * nc_partial + k ]
+for k = 0 , ... , d
 is the partial derivative of H( x , w , u , ... ) with respect to
 the k-th order Taylor coefficient for x.
 \n
-\b Output: \a partial [ \a ( i_z - j ) * \a nc_partial + k ]
-for j = 0 , 1 , and for k = 0 , ... , \a d
+\b Output: partial [ ( i_z - j ) * nc_partial + k ]
+for j = 0 , 1 , and for k = 0 , ... , d
 may be used as work space; i.e., may change in an unspecified manner.
 
 
 \par Checked Assumptions
 \li NumArg(op) == 1
 \li NumRes(op) == 2
-\li \a i_x + 1 < \a i_z
-\li \a d < \a cap_order
-\li \a d < \a nc_partial
+\li i_x + 1 < i_z
+\li d < cap_order
+\li d < nc_partial
 */
 template <class Base>
 inline void reverse_unary2_op(
@@ -582,8 +582,8 @@ Prototype forward mode x op y (not used)
 
 \tparam Base
 base type for the operator; i.e., this operation was recorded
-using AD< \a Base > and computations by this routine are done using type
-\a Base.
+using AD< Base > and computations by this routine are done using type
+ Base.
 
 \param p
 lowest order of the Taylor coefficient that we are computing.
@@ -593,26 +593,26 @@ highest order of the Taylor coefficient that we are computing.
 
 \param i_z
 variable index corresponding to the result for this operation;
-i.e. the row index in \a taylor corresponding to z.
+i.e. the row index in taylor corresponding to z.
 
 \param arg
-\a arg[0]
+ arg[0]
 index corresponding to the left operand for this operator;
 i.e. the index corresponding to x.
 \n
-\a arg[1]
+ arg[1]
 index corresponding to the right operand for this operator;
 i.e. the index corresponding to y.
 
 \param parameter
-If x is a parameter, \a parameter [ \a arg[0] ]
+If x is a parameter, parameter [ arg[0] ]
 is the value corresponding to x.
 \n
-If y is a parameter, \a parameter [ \a arg[1] ]
+If y is a parameter, parameter [ arg[1] ]
 is the value corresponding to y.
 
 \param cap_order
-maximum number of orders that will fit in the \c taylor array.
+maximum number of orders that will fit in the taylor array.
 
 \param taylor
 \b Input: If x is a variable,
@@ -658,8 +658,8 @@ Prototype multiple direction forward mode x op y (not used)
 
 \tparam Base
 base type for the operator; i.e., this operation was recorded
-using AD< \a Base > and computations by this routine are done using type
-\a Base.
+using AD< Base > and computations by this routine are done using type
+ Base.
 
 \param q
 is the order of the Taylor coefficients that we are computing.
@@ -669,26 +669,26 @@ number of directions for Taylor coefficients that we are computing
 
 \param i_z
 variable index corresponding to the result for this operation;
-i.e. the row index in \a taylor corresponding to z.
+i.e. the row index in taylor corresponding to z.
 
 \param arg
-\a arg[0]
+ arg[0]
 index corresponding to the left operand for this operator;
 i.e. the index corresponding to x.
 \n
-\a arg[1]
+ arg[1]
 index corresponding to the right operand for this operator;
 i.e. the index corresponding to y.
 
 \param parameter
-If x is a parameter, \a parameter [ \a arg[0] ]
+If x is a parameter, parameter [ arg[0] ]
 is the value corresponding to x.
 \n
-If y is a parameter, \a parameter [ \a arg[1] ]
+If y is a parameter, parameter [ arg[1] ]
 is the value corresponding to y.
 
 \param cap_order
-maximum number of orders that will fit in the \c taylor array.
+maximum number of orders that will fit in the taylor array.
 
 \par tpv
 We use the notation
@@ -753,40 +753,40 @@ Prototype zero order forward mode x op y (not used)
 
 \tparam Base
 base type for the operator; i.e., this operation was recorded
-using AD< \a Base > and computations by this routine are done using type
-\a Base.
+using AD< Base > and computations by this routine are done using type
+ Base.
 
 \param i_z
 variable index corresponding to the result for this operation;
-i.e. the row index in \a taylor corresponding to z.
+i.e. the row index in taylor corresponding to z.
 
 \param arg
-\a arg[0]
+ arg[0]
 index corresponding to the left operand for this operator;
 i.e. the index corresponding to x.
 \n
-\a arg[1]
+ arg[1]
 index corresponding to the right operand for this operator;
 i.e. the index corresponding to y.
 
 \param parameter
-If x is a parameter, \a parameter [ \a arg[0] ]
+If x is a parameter, parameter [ arg[0] ]
 is the value corresponding to x.
 \n
-If y is a parameter, \a parameter [ \a arg[1] ]
+If y is a parameter, parameter [ arg[1] ]
 is the value corresponding to y.
 
 \param cap_order
-maximum number of orders that will fit in the \c taylor array.
+maximum number of orders that will fit in the taylor array.
 
 \param taylor
-\b Input: If x is a variable, \a taylor [ \a arg[0] * \a cap_order + 0 ]
+\b Input: If x is a variable, taylor [ arg[0] * cap_order + 0 ]
 is the zero order Taylor coefficient corresponding to x.
 \n
-\b Input: If y is a variable, \a taylor [ \a arg[1] * \a cap_order + 0 ]
+\b Input: If y is a variable, taylor [ arg[1] * cap_order + 0 ]
 is the zero order Taylor coefficient corresponding to y.
 \n
-\b Output: \a taylor [ \a i_z * \a cap_order + 0 ]
+\b Output: taylor [ i_z * cap_order + 0 ]
 is the zero order Taylor coefficient corresponding to z.
 
 \par Checked Assertions
@@ -817,8 +817,8 @@ and it uses them to compute the partial derivatives of
 
 \tparam Base
 base type for the operator; i.e., this operation was recorded
-using AD< \a Base > and computations by this routine are done using type
-\a Base .
+using AD< Base > and computations by this routine are done using type
+ Base .
 
 \param d
 highest order Taylor coefficient that
@@ -826,81 +826,81 @@ we are computing the partial derivatives with respect to.
 
 \param i_z
 variable index corresponding to the result for this operation;
-i.e. the row index in \a taylor corresponding to z.
+i.e. the row index in taylor corresponding to z.
 
 \param arg
-\a arg[0]
+ arg[0]
 index corresponding to the left operand for this operator;
 i.e. the index corresponding to x.
 \n
-\a arg[1]
+ arg[1]
 index corresponding to the right operand for this operator;
 i.e. the index corresponding to y.
 
 \param parameter
-If x is a parameter, \a parameter [ \a arg[0] ]
+If x is a parameter, parameter [ arg[0] ]
 is the value corresponding to x.
 \n
-If y is a parameter, \a parameter [ \a arg[1] ]
+If y is a parameter, parameter [ arg[1] ]
 is the value corresponding to y.
 
 \param cap_order
-maximum number of orders that will fit in the \c taylor array.
+maximum number of orders that will fit in the taylor array.
 
 \param taylor
-\a taylor [ \a i_z * \a cap_order + k ]
-for k = 0 , ... , \a d
+ taylor [ i_z * cap_order + k ]
+for k = 0 , ... , d
 is the k-th order Taylor coefficient corresponding to z.
 \n
-If x is a variable, \a taylor [ \a arg[0] * \a cap_order + k ]
-for k = 0 , ... , \a d
+If x is a variable, taylor [ arg[0] * cap_order + k ]
+for k = 0 , ... , d
 is the k-th order Taylor coefficient corresponding to x.
 \n
-If y is a variable, \a taylor [ \a arg[1] * \a cap_order + k ]
-for k = 0 , ... , \a d
+If y is a variable, taylor [ arg[1] * cap_order + k ]
+for k = 0 , ... , d
 is the k-th order Taylor coefficient corresponding to y.
 
 \param nc_partial
 number of colums in the matrix containing all the partial derivatives.
 
 \param partial
-\b Input: \a partial [ \a i_z * \a nc_partial + k ]
-for k = 0 , ... , \a d
+\b Input: partial [ i_z * nc_partial + k ]
+for k = 0 , ... , d
 is the partial derivative of
 G( z , y , x , w , u , ... )
 with respect to the k-th order Taylor coefficient for z.
 \n
-\b Input: If x is a variable, \a partial [ \a arg[0] * \a nc_partial + k ]
-for k = 0 , ... , \a d
+\b Input: If x is a variable, partial [ arg[0] * nc_partial + k ]
+for k = 0 , ... , d
 is the partial derivative of G( z , y , x , w , u , ... ) with respect to
 the k-th order Taylor coefficient for x.
 \n
-\b Input: If y is a variable, \a partial [ \a arg[1] * \a nc_partial + k ]
-for k = 0 , ... , \a d
+\b Input: If y is a variable, partial [ arg[1] * nc_partial + k ]
+for k = 0 , ... , d
 is the partial derivative of G( z , x , w , u , ... ) with respect to
 the k-th order Taylor coefficient for the auxillary variable y.
 \n
-\b Output: If x is a variable, \a partial [ \a arg[0] * \a nc_partial + k ]
-for k = 0 , ... , \a d
+\b Output: If x is a variable, partial [ arg[0] * nc_partial + k ]
+for k = 0 , ... , d
 is the partial derivative of H( y , x , w , u , ... ) with respect to
 the k-th order Taylor coefficient for x.
 \n
-\b Output: If y is a variable, \a partial [ \a arg[1] * \a nc_partial + k ]
-for k = 0 , ... , \a d
+\b Output: If y is a variable, partial [ arg[1] * nc_partial + k ]
+for k = 0 , ... , d
 is the partial derivative of H( y , x , w , u , ... ) with respect to
 the k-th order Taylor coefficient for y.
 \n
-\b Output: \a partial [ \a i_z * \a nc_partial + k ]
-for k = 0 , ... , \a d
+\b Output: partial [ i_z * nc_partial + k ]
+for k = 0 , ... , d
 may be used as work space; i.e., may change in an unspecified manner.
 
 \par Checked Assumptions
 \li NumArg(op) == 2
 \li NumRes(op) == 1
-\li \a If x is a variable, arg[0] < \a i_z
-\li \a If y is a variable, arg[1] < \a i_z
-\li \a d < \a cap_order
-\li \a d < \a nc_partial
+\li If x is a variable, arg[0] < i_z
+\li If y is a variable, arg[1] < i_z
+\li d < cap_order
+\li d < nc_partial
 */
 template <class Base>
 inline void reverse_binary_op(
@@ -922,8 +922,8 @@ Prototype for forward mode z = pow(x, y) (not used).
 
 \tparam Base
 base type for the operator; i.e., this operation was recorded
-using AD< \a Base > and computations by this routine are done using type
-\a Base.
+using AD< Base > and computations by this routine are done using type
+ Base.
 
 \param p
 lowest order of the Taylor coefficient that we are computing.
@@ -933,7 +933,7 @@ highest order of the Taylor coefficient that we are computing.
 
 \param i_z
 variable index corresponding to the last (primary) result for this operation;
-i.e. the row index in \a taylor corresponding to z.
+i.e. the row index in taylor corresponding to z.
 Note that there are three results for this operation,
 below they are referred to as z_0, z_1, z_2 and correspond to
 \verbatim
@@ -944,23 +944,23 @@ below they are referred to as z_0, z_1, z_2 and correspond to
 It follows that the final result is equal to z; i.e., z = z_2 = pow(x, y).
 
 \param arg
-\a arg[0]
+ arg[0]
 index corresponding to the left operand for this operator;
 i.e. the index corresponding to x.
 \n
-\a arg[1]
+ arg[1]
 index corresponding to the right operand for this operator;
 i.e. the index corresponding to y.
 
 \param parameter
-If x is a parameter, \a parameter [ \a arg[0] ]
+If x is a parameter, parameter [ arg[0] ]
 is the value corresponding to x.
 \n
-If y is a parameter, \a parameter [ \a arg[1] ]
+If y is a parameter, parameter [ arg[1] ]
 is the value corresponding to y.
 
 \param cap_order
-maximum number of orders that will fit in the \c taylor array.
+maximum number of orders that will fit in the taylor array.
 
 \param taylor
 \b Input: If x is a variable,
@@ -1006,8 +1006,8 @@ Prototype for multiple direction forward mode z = pow(x, y) (not used).
 
 \tparam Base
 base type for the operator; i.e., this operation was recorded
-using AD< \a Base > and computations by this routine are done using type
-\a Base.
+using AD< Base > and computations by this routine are done using type
+ Base.
 
 \param q
 order of the Taylor coefficient that we are computing.
@@ -1017,7 +1017,7 @@ is the number of Taylor coefficient directions that we are computing
 
 \param i_z
 variable index corresponding to the last (primary) result for this operation;
-i.e. the row index in \a taylor corresponding to z.
+i.e. the row index in taylor corresponding to z.
 Note that there are three results for this operation,
 below they are referred to as z_0, z_1, z_2 and correspond to
 \verbatim
@@ -1028,23 +1028,23 @@ below they are referred to as z_0, z_1, z_2 and correspond to
 It follows that the final result is equal to z; i.e., z = z_2 = pow(x, y).
 
 \param arg
-\a arg[0]
+ arg[0]
 index corresponding to the left operand for this operator;
 i.e. the index corresponding to x.
 \n
-\a arg[1]
+ arg[1]
 index corresponding to the right operand for this operator;
 i.e. the index corresponding to y.
 
 \param parameter
-If x is a parameter, \a parameter [ \a arg[0] ]
+If x is a parameter, parameter [ arg[0] ]
 is the value corresponding to x.
 \n
-If y is a parameter, \a parameter [ \a arg[1] ]
+If y is a parameter, parameter [ arg[1] ]
 is the value corresponding to y.
 
 \param cap_order
-maximum number of orders that will fit in the \c taylor array.
+maximum number of orders that will fit in the taylor array.
 
 \par tpv
 We use the notation
@@ -1113,12 +1113,12 @@ Prototype for zero order forward mode z = pow(x, y) (not used).
 
 \tparam Base
 base type for the operator; i.e., this operation was recorded
-using AD< \a Base > and computations by this routine are done using type
-\a Base.
+using AD< Base > and computations by this routine are done using type
+ Base.
 
 \param i_z
 variable index corresponding to the last (primary) result for this operation;
-i.e. the row index in \a taylor corresponding to z.
+i.e. the row index in taylor corresponding to z.
 Note that there are three results for this operation,
 below they are referred to as z_0, z_1, z_2 and correspond to
 \verbatim
@@ -1129,39 +1129,39 @@ below they are referred to as z_0, z_1, z_2 and correspond to
 It follows that the final result is equal to z; i.e., z = z_2 = pow(x, y).
 
 \param arg
-\a arg[0]
+ arg[0]
 index corresponding to the left operand for this operator;
 i.e. the index corresponding to x.
 \n
-\a arg[1]
+ arg[1]
 index corresponding to the right operand for this operator;
 i.e. the index corresponding to y.
 
 \param parameter
-If x is a parameter, \a parameter [ \a arg[0] ]
+If x is a parameter, parameter [ arg[0] ]
 is the value corresponding to x.
 \n
-If y is a parameter, \a parameter [ \a arg[1] ]
+If y is a parameter, parameter [ arg[1] ]
 is the value corresponding to y.
 
 \param cap_order
-maximum number of orders that will fit in the \c taylor array.
+maximum number of orders that will fit in the taylor array.
 
 \param taylor
-\b Input: If x is a variable, \a taylor [ \a arg[0] * \a cap_order + 0 ]
+\b Input: If x is a variable, taylor [ arg[0] * cap_order + 0 ]
 is the zero order Taylor coefficient corresponding to x.
 \n
-\b Input: If y is a variable, \a taylor [ \a arg[1] * \a cap_order + 0 ]
+\b Input: If y is a variable, taylor [ arg[1] * cap_order + 0 ]
 is the k-th order Taylor coefficient corresponding to y.
 \n
-\b Output: \a taylor [ \a (i_z - 2 + j) * \a cap_order + 0 ]
+\b Output: taylor [ (i_z - 2 + j) * cap_order + 0 ]
 is the zero order Taylor coefficient corresponding to z_j.
 
 \par Checked Assertions
 \li NumArg(op) == 2
 \li NumRes(op) == 3
-\li If x is a variable, \a arg[0] < \a i_z - 2
-\li If y is a variable, \a arg[1] < \a i_z - 2
+\li If x is a variable, arg[0] < i_z - 2
+\li If y is a variable, arg[1] < i_z - 2
 */
 template <class Base>
 inline void forward_pow_op_0(
@@ -1186,8 +1186,8 @@ and it uses them to compute the partial derivatives of
 
 \tparam Base
 base type for the operator; i.e., this operation was recorded
-using AD< \a Base > and computations by this routine are done using type
-\a Base .
+using AD< Base > and computations by this routine are done using type
+ Base .
 
 \param d
 highest order Taylor coefficient that
@@ -1195,7 +1195,7 @@ we are computing the partial derivatives with respect to.
 
 \param i_z
 variable index corresponding to the last (primary) result for this operation;
-i.e. the row index in \a taylor corresponding to z.
+i.e. the row index in taylor corresponding to z.
 Note that there are three results for this operation,
 below they are referred to as z_0, z_1, z_2 and correspond to
 \verbatim
@@ -1206,78 +1206,78 @@ below they are referred to as z_0, z_1, z_2 and correspond to
 It follows that the final result is equal to z; i.e., z = z_2 = pow(x, y).
 
 \param arg
-\a arg[0]
+ arg[0]
 index corresponding to the left operand for this operator;
 i.e. the index corresponding to x.
 \n
-\a arg[1]
+ arg[1]
 index corresponding to the right operand for this operator;
 i.e. the index corresponding to y.
 
 \param parameter
-If x is a parameter, \a parameter [ \a arg[0] ]
+If x is a parameter, parameter [ arg[0] ]
 is the value corresponding to x.
 \n
-If y is a parameter, \a parameter [ \a arg[1] ]
+If y is a parameter, parameter [ arg[1] ]
 is the value corresponding to y.
 
 \param cap_order
-maximum number of orders that will fit in the \c taylor array.
+maximum number of orders that will fit in the taylor array.
 
 \param taylor
-\a taylor [ \a (i_z - 2 + j) * \a cap_order + k ]
-for j = 0, 1, 2 and k = 0 , ... , \a d
+ taylor [ (i_z - 2 + j) * cap_order + k ]
+for j = 0, 1, 2 and k = 0 , ... , d
 is the k-th order Taylor coefficient corresponding to z_j.
 \n
-If x is a variable, \a taylor [ \a arg[0] * \a cap_order + k ]
-for k = 0 , ... , \a d
+If x is a variable, taylor [ arg[0] * cap_order + k ]
+for k = 0 , ... , d
 is the k-th order Taylor coefficient corresponding to x.
 \n
-If y is a variable, \a taylor [ \a arg[1] * \a cap_order + k ]
-for k = 0 , ... , \a d
+If y is a variable, taylor [ arg[1] * cap_order + k ]
+for k = 0 , ... , d
 is the k-th order Taylor coefficient corresponding to y.
 
 \param nc_partial
 number of colums in the matrix containing all the partial derivatives.
 
 \param partial
-\b Input: \a partial [ \a (i_z - 2 + j) * \a nc_partial + k ]
-for j = 0, 1, 2, and k = 0 , ... , \a d
+\b Input: partial [ (i_z - 2 + j) * nc_partial + k ]
+for j = 0, 1, 2, and k = 0 , ... , d
 is the partial derivative of
 G( z , y , x , w , u , ... )
 with respect to the k-th order Taylor coefficient for z_j.
 \n
-\b Input: If x is a variable, \a partial [ \a arg[0] * \a nc_partial + k ]
-for k = 0 , ... , \a d
+\b Input: If x is a variable, partial [ arg[0] * nc_partial + k ]
+for k = 0 , ... , d
 is the partial derivative of G( z , y , x , w , u , ... ) with respect to
 the k-th order Taylor coefficient for x.
 \n
-\b Input: If y is a variable, \a partial [ \a arg[1] * \a nc_partial + k ]
-for k = 0 , ... , \a d
+\b Input: If y is a variable, partial [ arg[1] * nc_partial + k ]
+for k = 0 , ... , d
 is the partial derivative of G( z , x , w , u , ... ) with respect to
 the k-th order Taylor coefficient for the auxillary variable y.
 \n
-\b Output: If x is a variable, \a partial [ \a arg[0] * \a nc_partial + k ]
-for k = 0 , ... , \a d
+\b Output: If x is a variable, partial [ arg[0] * nc_partial + k ]
+for k = 0 , ... , d
 is the partial derivative of H( y , x , w , u , ... ) with respect to
 the k-th order Taylor coefficient for x.
 \n
-\b Output: If y is a variable, \a partial [ \a arg[1] * \a nc_partial + k ]
-for k = 0 , ... , \a d
+\b Output: If y is a variable, partial [ arg[1] * nc_partial + k ]
+for k = 0 , ... , d
 is the partial derivative of H( y , x , w , u , ... ) with respect to
 the k-th order Taylor coefficient for y.
 \n
-\b Output: \a partial [ \a ( i_z - j ) * \a nc_partial + k ]
-for j = 0 , 1 , 2 and for k = 0 , ... , \a d
+\b Output: partial [ ( i_z - j ) * nc_partial + k ]
+for j = 0 , 1 , 2 and for k = 0 , ... , d
 may be used as work space; i.e., may change in an unspecified manner.
 
 \par Checked Assumptions
 \li NumArg(op) == 2
 \li NumRes(op) == 3
-\li \a If x is a variable, arg[0] < \a i_z - 2
-\li \a If y is a variable, arg[1] < \a i_z - 2
-\li \a d < \a cap_order
-\li \a d < \a nc_partial
+\li If x is a variable, arg[0] < i_z - 2
+\li If y is a variable, arg[1] < i_z - 2
+\li d < cap_order
+\li d < nc_partial
 */
 template <class Base>
 inline void reverse_pow_op(
@@ -1320,35 +1320,35 @@ variable index corresponding to the argument for this operator;
 i.e. the row index in sparsity corresponding to x.
 
 \param rev_jacobian
-\a rev_jacobian[i_z]
+ rev_jacobian[i_z]
 is all false (true) if the Jacobian of G with respect to z must be zero
 (may be non-zero).
 \n
 \n
-\a rev_jacobian[i_x]
+ rev_jacobian[i_x]
 is all false (true) if the Jacobian with respect to x must be zero
 (may be non-zero).
 On input, it corresponds to the function G,
 and on output it corresponds to the function H.
 
 \param for_jac_sparsity
-The set with index \a i_x in for_jac_sparsity
+The set with index i_x in for_jac_sparsity
 is the forward mode Jacobian sparsity pattern for the variable x.
 
 \param rev_hes_sparsity
-The set with index \a i_z in in \a rev_hes_sparsity
+The set with index i_z in in rev_hes_sparsity
 is the Hessian sparsity pattern for the fucntion G
 where one of the partials derivative is with respect to z.
 \n
 \n
-The set with index \a i_x in \a rev_hes_sparsity
+The set with index i_x in rev_hes_sparsity
 is the Hessian sparsity pattern
 where one of the partials derivative is with respect to x.
 On input, it corresponds to the function G,
 and on output it corresponds to the function H.
 
 \par Checked Assertions:
-\li \a i_x < \a i_z
+\li i_x < i_z
 */
 
 template <class Vector_set>
@@ -1382,9 +1382,9 @@ variable index corresponding to the result for this operation;
 i.e. the row index in sparsity corresponding to z.
 
 \param arg
-\a arg[0]
+ arg[0]
 variable index corresponding to the left operand for this operator;
-i.e. the set with index \a arg[0] in \a var_sparsity
+i.e. the set with index arg[0] in var_sparsity
 is the spasity pattern correspoding to x.
 \n
 \n arg[1]
@@ -1392,54 +1392,54 @@ variable index corresponding to the right operand for this operator;
 i.e. the row index in sparsity patterns corresponding to y.
 
 \param jac_reverse
-\a jac_reverse[i_z]
+ jac_reverse[i_z]
 is false (true) if the Jacobian of G with respect to z is always zero
 (may be non-zero).
 \n
 \n
-\a jac_reverse[ \a arg[0] ]
+ jac_reverse[ arg[0] ]
 is false (true) if the Jacobian with respect to x is always zero
 (may be non-zero).
 On input, it corresponds to the function G,
 and on output it corresponds to the function H.
 \n
 \n
-\a jac_reverse[ \a arg[1] ]
+ jac_reverse[ arg[1] ]
 is false (true) if the Jacobian with respect to y is always zero
 (may be non-zero).
 On input, it corresponds to the function G,
 and on output it corresponds to the function H.
 
 \param for_jac_sparsity
-The set with index \a arg[0] in \a for_jac_sparsity for the
+The set with index arg[0] in for_jac_sparsity for the
 is the forward Jacobian sparsity pattern for x.
 \n
 \n
-The set with index \a arg[1] in \a for_jac_sparsity
+The set with index arg[1] in for_jac_sparsity
 is the forward sparsity pattern for y.
 
 \param rev_hes_sparsity
-The set wiht index \a i_x in \a rev_hes_sparsity
+The set wiht index i_x in rev_hes_sparsity
 is the Hessian sparsity pattern for the function G
 where one of the partial derivatives is with respect to z.
 \n
 \n
-The set with index \a arg[0] in  \a rev_hes_sparsity
+The set with index arg[0] in  rev_hes_sparsity
 is the Hessian sparsity pattern where one of the
 partial derivatives is with respect to x.
 On input, it corresponds to the function G,
 and on output it correspondst to H.
 \n
 \n
-The set with index \a arg[1] in \a rev_hes_sparsity
+The set with index arg[1] in rev_hes_sparsity
 is the Hessian sparsity pattern where one of the
 partial derivatives is with respect to y.
 On input, it corresponds to the function G,
 and on output it correspondst to H.
 
 \par Checked Assertions:
-\li \a arg[0] < \a i_z
-\li \a arg[1] < \a i_z
+\li arg[0] < i_z
+\li arg[1] < i_z
 */
 template <class Vector_set>
 inline void reverse_sparse_hessian_binary_op(

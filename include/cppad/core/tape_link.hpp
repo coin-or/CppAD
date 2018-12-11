@@ -123,7 +123,7 @@ tape for this thread which is a user error.
 
 \return
 is a pointer to the tape that is currently recording AD<Base> operations
-for the current thread (and it is not \c CPPAD_NULL).
+for the current thread (and it is not CPPAD_NULL).
 
 \par Restrictions
 This routine should only be called if there is a tape recording operaitons
@@ -157,21 +157,21 @@ is the base type corresponding to AD<Base> operations.
 This argument determines if we are creating a new tape, or deleting an
 old one.
 
-- \c new_tape_manage :
+- new_tape_manage :
 Creates and a new tape.
 It is assumed that there is no tape recording AD<Base> operations
-for this thread when \c tape_manage is called.
+for this thread when tape_manage is called.
 
-- \c delete_tape_manage :
+- delete_tape_manage :
 It is assumed that there is a tape recording AD<Base> operations
-for this thread when \c tape_manage is called.
+for this thread when tape_manage is called.
 The value of <tt>*tape_id_ptr(thread)</tt> will be advanced by
-\c CPPAD_MAX_NUM_THREADS.
+ CPPAD_MAX_NUM_THREADS.
 
 
 \return
 - <tt>job == new_tape_manage</tt>: a pointer to the new tape is returned.
-- <tt>job == delete_tape_manage</tt>: the value \c CPPAD_NULL is returned.
+- <tt>job == delete_tape_manage</tt>: the value CPPAD_NULL is returned.
 */
 template <class Base>
 local::ADTape<Base>*  AD<Base>::tape_manage(tape_manage_enum job)
@@ -248,7 +248,7 @@ The current thread must be given by
 \return
 is a pointer to the tape that is currently recording AD<Base> operations
 for the current thread.
-This value must not be \c CPPAD_NULL; i.e., there must be a tape currently
+This value must not be CPPAD_NULL; i.e., there must be a tape currently
 recording AD<Base> operations for this thread.
 */
 

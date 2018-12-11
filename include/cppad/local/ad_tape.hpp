@@ -154,7 +154,7 @@ value of the parameter that we are placing in the tape as a variable.
 variable index (for this recording) correpsonding to the parameter.
 
 \par 2DO
-All these operates are preformed in \c Rec_, so we should
+All these operates are preformed in Rec_, so we should
 move this routine from <tt>ADTape<Base></tt> to <tt>recorder<Base></tt>.
 */
 template <class Base>
@@ -189,13 +189,13 @@ initial values for the <tt>VecAD<Base></tt> object
 \return
 index of the start of this vector in the list of vector indices.
 The value for this vector index is the length of the vector.
-There are \c length indices following for this vector.
+There are length indices following for this vector.
 The values for these vector indices are the corresponding
 parameter indices in the tape for the initial value of the corresponding
 vec_ad element.
 
 \par 2DO
-All these operates are preformed in \c Rec_, so we should
+All these operates are preformed in Rec_, so we should
 move this routine from <tt>ADTape<Base></tt> to <tt>recorder<Base></tt>.
 */
 template <class Base>
